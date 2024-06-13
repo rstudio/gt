@@ -94,7 +94,7 @@ length,length.kilometer,length.mile,0.621371
 length,length.kilometer,length.yard,1094
 length,length.kilometer,length.foot,3281
 length,length.kilometer,length.inch,39370.1
-length,length.kilometer,length.nautical mile,0.539957
+length,length.kilometer,length.nautical_mile,0.539957
 length,length.meter,length.kilometer,0.001
 length,length.meter,length.centimeter,100
 length,length.meter,length.millimeter,1000
@@ -104,7 +104,7 @@ length,length.meter,length.mile,0.000621371
 length,length.meter,length.yard,1.09361
 length,length.meter,length.foot,3.28084
 length,length.meter,length.inch,39.3701
-length,length.meter,length.nautical mile,0.000539957
+length,length.meter,length.nautical_mile,0.000539957
 length,length.centimeter,length.kilometer,1.00E-05
 length,length.centimeter,length.meter,0.01
 length,length.centimeter,length.millimeter,10
@@ -114,7 +114,7 @@ length,length.centimeter,length.mile,6.21E-06
 length,length.centimeter,length.yard,0.0109361
 length,length.centimeter,length.foot,0.0328084
 length,length.centimeter,length.inch,0.393701
-length,length.centimeter,length.nautical mile,5.40E-06
+length,length.centimeter,length.nautical_mile,5.40E-06
 length,length.millimeter,length.kilometer,1.00E-06
 length,length.millimeter,length.meter,0.001
 length,length.millimeter,length.centimeter,0.1
@@ -124,7 +124,7 @@ length,length.millimeter,length.mile,6.21E-07
 length,length.millimeter,length.yard,0.00109361
 length,length.millimeter,length.foot,0.00328084
 length,length.millimeter,length.inch,0.0393701
-length,length.millimeter,length.nautical mile,5.40E-07
+length,length.millimeter,length.nautical_mile,5.40E-07
 length,length.micrometer,length.kilometer,1.00E-09
 length,length.micrometer,length.meter,1.00E-06
 length,length.micrometer,length.centimeter,0.0001
@@ -134,7 +134,7 @@ length,length.micrometer,length.mile,6.21E-10
 length,length.micrometer,length.yard,1.09E-06
 length,length.micrometer,length.foot,3.28E-06
 length,length.micrometer,length.inch,3.94E-05
-length,length.micrometer,length.nautical mile,5.40E-10
+length,length.micrometer,length.nautical_mile,5.40E-10
 length,length.nanometer,length.kilometer,1.00E-12
 length,length.nanometer,length.meter,1.00E-09
 length,length.nanometer,length.centimeter,1.00E-07
@@ -144,7 +144,7 @@ length,length.nanometer,length.mile,6.21E-13
 length,length.nanometer,length.yard,1.09E-09
 length,length.nanometer,length.foot,3.28E-09
 length,length.nanometer,length.inch,3.94E-08
-length,length.nanometer,length.nautical mile,5.40E-13
+length,length.nanometer,length.nautical_mile,5.40E-13
 length,length.mile,length.kilometer,1.60934
 length,length.mile,length.meter,1609.34
 length,length.mile,length.centimeter,160934
@@ -154,7 +154,7 @@ length,length.mile,length.nanometer,1.61E+12
 length,length.mile,length.yard,1760
 length,length.mile,length.foot,5280
 length,length.mile,length.inch,63360
-length,length.mile,length.nautical mile,0.868976
+length,length.mile,length.nautical_mile,0.868976
 length,length.yard,length.kilometer,0.0009144
 length,length.yard,length.meter,0.9144
 length,length.yard,length.centimeter,91.44
@@ -164,7 +164,7 @@ length,length.yard,length.nanometer,9.14E+08
 length,length.yard,length.mile,0.000568182
 length,length.yard,length.foot,3
 length,length.yard,length.inch,36
-length,length.yard,length.nautical mile,0.000493737
+length,length.yard,length.nautical_mile,0.000493737
 length,length.foot,length.kilometer,0.0003048
 length,length.foot,length.meter,0.3048
 length,length.foot,length.centimeter,30.48
@@ -174,7 +174,7 @@ length,length.foot,length.nanometer,3.05E+08
 length,length.foot,length.mile,0.000189394
 length,length.foot,length.yard,0.333333
 length,length.foot,length.inch,12
-length,length.foot,length.nautical mile,0.000164579
+length,length.foot,length.nautical_mile,0.000164579
 length,length.inch,length.kilometer,0.0000254
 length,length.inch,length.meter,0.0254
 length,length.inch,length.centimeter,2.54
@@ -184,17 +184,17 @@ length,length.inch,length.nanometer,2.54E+07
 length,length.inch,length.mile,1.58E-05
 length,length.inch,length.yard,0.0277778
 length,length.inch,length.foot,0.0833333
-length,length.inch,length.nautical mile,1.37E-05
-length,length.nautical mile,length.kilometer,1.852
-length,length.nautical mile,length.meter,1852
-length,length.nautical mile,length.centimeter,185200
-length,length.nautical mile,length.millimeter,1.85E+06
-length,length.nautical mile,length.micrometer,1.85E+09
-length,length.nautical mile,length.nanometer,1.85E+12
-length,length.nautical mile,length.mile,1.15078
-length,length.nautical mile,length.yard,2025.37
-length,length.nautical mile,length.foot,6076.12
-length,length.nautical mile,length.inch,72913.4
+length,length.inch,length.nautical_mile,1.37E-05
+length,length.nautical_mile,length.kilometer,1.852
+length,length.nautical_mile,length.meter,1852
+length,length.nautical_mile,length.centimeter,185200
+length,length.nautical_mile,length.millimeter,1.85E+06
+length,length.nautical_mile,length.micrometer,1.85E+09
+length,length.nautical_mile,length.nanometer,1.85E+12
+length,length.nautical_mile,length.mile,1.15078
+length,length.nautical_mile,length.yard,2025.37
+length,length.nautical_mile,length.foot,6076.12
+length,length.nautical_mile,length.inch,72913.4
 energy,energy.joule,energy.kilojoule,0.001
 energy,energy.joule,energy.gram_calorie,0.239006
 energy,energy.joule,energy.kilocalorie,0.000239006
