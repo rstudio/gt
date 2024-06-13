@@ -87,3 +87,6 @@ spelled_num <-
       zh = col_character()
     )
   )
+
+# Drop spec() attribute
+spelled_num <- spelled_num[]

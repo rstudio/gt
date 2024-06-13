@@ -6,3 +6,6 @@ country_names_additional <-
     col_types = cols(.default = col_character()),
     na = ""
   )
+
+# Drop spec() attribute
+country_names_additional <- country_names_additional[]
