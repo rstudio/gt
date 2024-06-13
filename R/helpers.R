@@ -524,6 +524,68 @@ currency <- function(
   currency_list
 }
 
+#' Get a conversion factor across two measurement units of a given class
+#'
+#' @description
+#'
+#' The `unit_conversion()` helper function gives us a conversion factor for
+#' transforming a value from one form of measurement units to a target form.
+#' For example if you have a length value that is expressed in miles you could
+#' transform that value to one in kilometers through multiplication of the value
+#' by the conversion factor (in this case `1.60934`).
+#'
+#' @param from *Units for the input value*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   The keyword representing the units for the value that requires unit
+#'   conversion. In the case where the value has units of miles, the necessary
+#'   input is `"length.mile"`.
+#'
+#' @param to *Desired units for the value*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   The keyword representing the target units for the value with units defined
+#'   in `from`. In the case where input value has units of miles and we would
+#'   rather want the value to be expressed as kilometers, the `to` value should
+#'   be `"length.kilometer"`.
+#'
+#' @return A single numerical value.
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-7
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+unit_conversion <- function(from, to) {
+
+  force(from)
+  force(to)
+
+  if (!(from %in% conversion_factors[["from"]])) {
+    cli::cli_abort("The unit supplied in `from` is not known.")
+  }
+  if (!(to %in% conversion_factors[["to"]])) {
+    cli::cli_abort("The unit supplied in `to` is not known.")
+  }
+
+  if (from == to) {
+    return(1.0)
+  }
+
+  row_conversion <-
+    dplyr::filter(conversion_factors, from == {{ from }}, to == {{ to }})
+
+  if (nrow(row_conversion) < 1) {
+    cli::cli_abort("The conversion specified cannot be performed.")
+  }
+
+  row_conversion[["conv_factor"]]
+}
 
 #' Supply nanoplot options to `cols_nanoplot()`
 #'
@@ -778,7 +840,7 @@ currency <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-7
+#' 8-8
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
@@ -984,7 +1046,7 @@ nanoplot_options <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-8
+#' 8-9
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
