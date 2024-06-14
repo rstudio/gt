@@ -534,6 +534,12 @@ currency <- function(
 #' transform that value to one in kilometers through multiplication of the value
 #' by the conversion factor (in this case `1.60934`).
 #'
+#' For `unit_conversion()` to understand the source and destination units, you
+#' need to provide a keyword value for the `from` and `to` arguments. To aid as
+#' a reference for this, call [info_unit_conversions()] to display an
+#' information table that contains all of the keywords for every conversion
+#' type.
+#'
 #' @param from *Units for the input value*
 #'
 #'   `scalar<character>` // **required**
