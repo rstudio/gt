@@ -183,6 +183,8 @@ render_as_ihtml <- function(data, id) {
   column_labels_border_bottom_width <- opt_val(data = data, option = "column_labels_border_bottom_width")
   column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
 
+  rownames_to_stub <- stub_rownames_has_column(data)
+
   emoji_symbol_fonts <-
     c(
       "Apple Color Emoji", "Segoe UI Emoji",
@@ -452,7 +454,7 @@ render_as_ihtml <- function(data, id) {
       data = data_tbl,
       columns = col_defs,
       columnGroups = colgroups_def,
-      rownames = NULL,
+      rownames = rownames_to_stub,
       groupBy = NULL,
       sortable = use_sorting,
       resizable = use_resizers,
