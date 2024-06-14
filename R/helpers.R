@@ -615,10 +615,10 @@ unit_conversion <- function(from, to) {
   force(to)
 
   if (!(from %in% conversion_factors[["from"]])) {
-    cli::cli_abort("The unit supplied in `from` is not known.")
+    cli::cli_abort("The unit supplied in {.arg from} is not known.")
   }
   if (!(to %in% conversion_factors[["to"]])) {
-    cli::cli_abort("The unit supplied in `to` is not known.")
+    cli::cli_abort("The unit supplied in {.arg to} is not known.")
   }
 
   if (from == to) {
