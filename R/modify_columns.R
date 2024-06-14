@@ -2644,16 +2644,17 @@ cols_add <- function(
 #' `r man_get_image_tag(file = "man_cols_nanoplot_5.png")`
 #' }}
 #'
-#' Notice that we hid the columns containing the value streams with
-#' [cols_hide()] because, while useful, they don't need to be displayed to
-#' anybody viewing a table. We have a lot of data points and a connecting line
-#' is not as valuable here. It's more interesting to see the clusters of the
-#' differently priced pizzas over the entire day. Specifying a `currency` in
-#' [nanoplot_options()] is a nice touch since the *y* values are sale prices in
-#' U.S. Dollars (hovering over data points gives correctly formatted values).
-#' Finally, having a reference line based on the median gives pretty useful
-#' information. Seems like customers preferred getting the `"chicken"`-type
-#' pizzas in large size!
+#' Notice that the columns containing the value streams are hid due to the 
+#' default argument `autohide = TRUE` because, while useful, they don't need to 
+#' be displayed to anybody viewing a table. Since we have a lot of data points 
+#' and a connecting line is not as valuable here, we also set 
+#' `show_data_line = FALSE` in [nanoplot_options()]. It's more interesting to 
+#' see the clusters of the differently priced pizzas over the entire day. 
+#' Specifying a `currency` in [nanoplot_options()] is a nice touch since the *y* 
+#' values are sale prices in U.S. Dollars (hovering over data points gives 
+#' correctly formatted values). Finally, having a reference line based on the 
+#' median gives pretty useful information. Seems like customers preferred 
+#' getting the `"chicken"`-type pizzas in large size!
 #'
 #' Box plots can be generated, and we just need to use `plot_type = "boxplot"`
 #' to make that type of nanoplot. Using a small portion of the [`pizzaplace`]
