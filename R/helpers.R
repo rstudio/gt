@@ -628,6 +628,9 @@ unit_conversion <- function(from, to) {
   row_conversion <-
     dplyr::filter(conversion_factors, from == {{ from }}, to == {{ to }})
 
+  # In the case where units are valid and available in the internal dataset,
+  # they may be across categories; such pairings do not allow for a conversion
+  # to take place
   if (nrow(row_conversion) < 1) {
     cli::cli_abort("The conversion specified cannot be performed.")
   }
