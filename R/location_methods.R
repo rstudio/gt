@@ -92,7 +92,9 @@ add_summary_location_row <- function(
             FUN = function(summary_data_item) {
 
               id_vals <- names(summary_data_item$fns)
-
+              if (":SUMMARY:" %in% summary_data_item$groups) {
+                return(id_vals)
+              }
               if (isTRUE(summary_data_item$groups)) {
                 id_vals
               } else if (group %in% summary_data_item$groups) {

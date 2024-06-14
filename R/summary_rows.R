@@ -397,6 +397,12 @@ summary_rows <- function(
 
   # Return data unchanged if there are no groups and this summary is not
   # a grand summary
+  # Resolve the group names
+  groups <-
+    resolve_groups(
+      expr = {{ groups }},
+      vector = available_groups
+    )
   if (length(available_groups) < 1) {
     if (!(
       is.character(groups) &&
@@ -407,12 +413,7 @@ summary_rows <- function(
     }
   }
 
-  # Resolve the group names
-  groups <-
-    resolve_groups(
-      expr = {{ groups }},
-      vector = available_groups
-    )
+
 
   # Return data unchanged if no groups were resolved
   if (is.null(groups)) {
