@@ -33,6 +33,12 @@ transforming a value from one form of measurement units to a target form.
 For example if you have a length value that is expressed in miles you could
 transform that value to one in kilometers through multiplication of the value
 by the conversion factor (in this case \code{1.60934}).
+
+For \code{unit_conversion()} to understand the source and destination units, you
+need to provide a keyword value for the \code{from} and \code{to} arguments. To aid as
+a reference for this, call \code{\link[=info_unit_conversions]{info_unit_conversions()}} to display an
+information table that contains all of the keywords for every conversion
+type.
 }
 \section{Examples}{
 
