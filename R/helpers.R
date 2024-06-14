@@ -553,6 +553,54 @@ currency <- function(
 #'
 #' @return A single numerical value.
 #'
+#' @section Examples:
+#'
+#' Let's use a portion of the [`towny`] dataset and create a table showing
+#' population, density, and land area for 10 municipalities. The `land_area_km2`
+#' values are in units of square kilometers, however, we'd rather the values
+#' were in square miles. We can convert the numeric values while formatting the
+#' values with [`fmt_number()`] by using `unit_conversion()` in the `scale_by`
+#' argument since the return value of that is a conversion factor (which is
+#' applied to each value by multiplication). The same is done for converting the
+#' 'people per square kilometer' values in `density_2021` to 'people per square
+#' mile', however, the units to convert are in the denominator so the inverse
+#' of the conversion factor must be used.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::arrange(desc(density_2021)) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::select(name, population_2021, density_2021, land_area_km2) |>
+#'   gt(rowname_col = "name") |>
+#'   fmt_integer(columns = population_2021) |>
+#'   fmt_number(
+#'     columns = land_area_km2,
+#'     decimals = 1,
+#'     scale_by = unit_conversion(
+#'       from = "area.square_kilometer",
+#'       to = "area.square_mile"
+#'     )
+#'   ) |>
+#'   fmt_number(
+#'     columns = density_2021,
+#'     decimals = 1,
+#'     scale_by = 1 / unit_conversion(
+#'       from = "area.square_kilometer",
+#'       to = "area.square_mile"
+#'     )
+#'   ) |>
+#'   cols_label(
+#'     land_area_km2 = "Land Area,<br>sq. mi",
+#'     population_2021 = "Population",
+#'     density_2021 = "Density,<br>ppl / sq. mi",
+#'     .fn = md
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_unit_conversion_1.png")`
+#' }}
+#'
 #' @family helper functions
 #' @section Function ID:
 #' 8-7
