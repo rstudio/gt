@@ -574,16 +574,17 @@ streams in each row (having the same number of values) we can now make a
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_5.png" alt="This image of a table was generated from the fifth code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
 
-Notice that we hid the columns containing the value streams with
-\code{\link[=cols_hide]{cols_hide()}} because, while useful, they don't need to be displayed to
-anybody viewing a table. We have a lot of data points and a connecting line
-is not as valuable here. It's more interesting to see the clusters of the
-differently priced pizzas over the entire day. Specifying a \code{currency} in
-\code{\link[=nanoplot_options]{nanoplot_options()}} is a nice touch since the \emph{y} values are sale prices in
-U.S. Dollars (hovering over data points gives correctly formatted values).
-Finally, having a reference line based on the median gives pretty useful
-information. Seems like customers preferred getting the \code{"chicken"}-type
-pizzas in large size!
+Notice that the columns containing the value streams are hid due to the
+default argument \code{autohide = TRUE} because, while useful, they don't need to
+be displayed to anybody viewing a table. Since we have a lot of data points
+and a connecting line is not as valuable here, we also set
+\code{show_data_line = FALSE} in \code{\link[=nanoplot_options]{nanoplot_options()}}. It's more interesting to
+see the clusters of the differently priced pizzas over the entire day.
+Specifying a \code{currency} in \code{\link[=nanoplot_options]{nanoplot_options()}} is a nice touch since the \emph{y}
+values are sale prices in U.S. Dollars (hovering over data points gives
+correctly formatted values). Finally, having a reference line based on the
+median gives pretty useful information. Seems like customers preferred
+getting the \code{"chicken"}-type pizzas in large size!
 
 Box plots can be generated, and we just need to use \code{plot_type = "boxplot"}
 to make that type of nanoplot. Using a small portion of the \code{\link{pizzaplace}}
