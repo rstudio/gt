@@ -289,7 +289,7 @@ can be modified with \code{nanoplot_options()} within the \code{options} argumen
 }
 \section{Function ID}{
 
-8-7
+8-8
 }
 
 \section{Function Introduced}{
@@ -315,6 +315,7 @@ Other helper functions:
 \code{\link{px}()},
 \code{\link{random_id}()},
 \code{\link{stub}()},
-\code{\link{system_fonts}()}
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
 \concept{helper functions}
