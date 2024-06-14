@@ -394,6 +394,9 @@
     <loc>https://gt.rstudio.com/reference/info_time_style.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/reference/info_unit_conversions.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/reference/local_image.html</loc>
   </url>
   <url>
@@ -605,6 +608,9 @@
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/towny.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/unit_conversion.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/vec_fmt_bytes.html</loc>
