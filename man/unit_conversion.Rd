@@ -34,6 +34,55 @@ For example if you have a length value that is expressed in miles you could
 transform that value to one in kilometers through multiplication of the value
 by the conversion factor (in this case \code{1.60934}).
 }
+\section{Examples}{
+
+
+Let's use a portion of the \code{\link{towny}} dataset and create a table showing
+population, density, and land area for 10 municipalities. The \code{land_area_km2}
+values are in units of square kilometers, however, we'd rather the values
+were in square miles. We can convert the numeric values while formatting the
+values with \code{\link[=fmt_number]{fmt_number()}} by using \code{unit_conversion()} in the \code{scale_by}
+argument since the return value of that is a conversion factor (which is
+applied to each value by multiplication). The same is done for converting the
+'people per square kilometer' values in \code{density_2021} to 'people per square
+mile', however, the units to convert are in the denominator so the inverse
+of the conversion factor must be used.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::arrange(desc(density_2021)) |>
+  dplyr::slice_head(n = 10) |>
+  dplyr::select(name, population_2021, density_2021, land_area_km2) |>
+  gt(rowname_col = "name") |>
+  fmt_integer(columns = population_2021) |>
+  fmt_number(
+    columns = land_area_km2,
+    decimals = 1,
+    scale_by = unit_conversion(
+      from = "area.square_kilometer",
+      to = "area.square_mile"
+    )
+  ) |>
+  fmt_number(
+    columns = density_2021,
+    decimals = 1,
+    scale_by = 1 / unit_conversion(
+      from = "area.square_kilometer",
+      to = "area.square_mile"
+    )
+  ) |>
+  cols_label(
+    land_area_km2 = "Land Area,<br>sq. mi",
+    population_2021 = "Population",
+    density_2021 = "Density,<br>ppl / sq. mi",
+    .fn = md
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_unit_conversion_1.png" alt="This image of a table was generated from the first code example in the `unit_conversion()` help file." style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 8-7
