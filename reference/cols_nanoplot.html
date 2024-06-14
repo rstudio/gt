@@ -690,16 +690,17 @@ streams in each row (having the same number of values) we can now make a
 <span>  <span class="fu"><a href="../reference/cols_align.html">cols_align</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">pizzas_sold</span>, align <span class="op">=</span> <span class="st">"center"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/opt_all_caps.html">opt_all_caps</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_5.png" alt="This image of a table was generated from the fifth code example in the `cols_nanoplot()` help file." style="width:100%;"></p>
-<p>Notice that we hid the columns containing the value streams with
-<code><a href="cols_hide.html">cols_hide()</a></code> because, while useful, they don't need to be displayed to
-anybody viewing a table. We have a lot of data points and a connecting line
-is not as valuable here. It's more interesting to see the clusters of the
-differently priced pizzas over the entire day. Specifying a <code>currency</code> in
-<code><a href="nanoplot_options.html">nanoplot_options()</a></code> is a nice touch since the <em>y</em> values are sale prices in
-U.S. Dollars (hovering over data points gives correctly formatted values).
-Finally, having a reference line based on the median gives pretty useful
-information. Seems like customers preferred getting the <code>"chicken"</code>-type
-pizzas in large size!</p>
+<p>Notice that the columns containing the value streams are hid due to the
+default argument <code>autohide = TRUE</code> because, while useful, they don't need to
+be displayed to anybody viewing a table. Since we have a lot of data points
+and a connecting line is not as valuable here, we also set
+<code>show_data_line = FALSE</code> in <code><a href="nanoplot_options.html">nanoplot_options()</a></code>. It's more interesting to
+see the clusters of the differently priced pizzas over the entire day.
+Specifying a <code>currency</code> in <code><a href="nanoplot_options.html">nanoplot_options()</a></code> is a nice touch since the <em>y</em>
+values are sale prices in U.S. Dollars (hovering over data points gives
+correctly formatted values). Finally, having a reference line based on the
+median gives pretty useful information. Seems like customers preferred
+getting the <code>"chicken"</code>-type pizzas in large size!</p>
 <p>Box plots can be generated, and we just need to use <code>plot_type = "boxplot"</code>
 to make that type of nanoplot. Using a small portion of the <code><a href="pizzaplace.html">pizzaplace</a></code>
 dataset, we will create a simple table that displays a box plot of pizza
