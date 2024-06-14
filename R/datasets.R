@@ -606,12 +606,12 @@
 #'
 #' @description
 #'
-#' A dataset with information on all 308 Paris Metro stations as of February
-#' 2023. Each record represents a station, describing which Metro lines are
-#' serviced by the station, which other connections are available, and annual
-#' passenger volumes. Basic location information is provided for each station in
-#' terms where they reside on a municipal level, and, through latitude/longitude
-#' coordinates.
+#' A dataset with information on all 314 Paris Metro stations as of June 2024.
+#' Each record represents a station, describing which Metro lines are serviced
+#' by the station, which other connections are available, and annual passenger
+#' volumes. Basic location information is provided for each station in terms
+#' of where they reside on a municipal level, and, through latitude/longitude
+#' coordinate values.
 #'
 #' The system has 16 lines (numbered from 1 to 14, with two additional lines:
 #' 3bis and 7bis) and covers over 200 kilometers of track. The Metro runs on
@@ -627,7 +627,7 @@
 #' to the Transilien rail network, tramway stations, several major train
 #' stations (e.g., Gare du Nord, Gare de l'Est, etc.), and many bus lines.
 #'
-#' @format A tibble with 308 rows and 11 variables:
+#' @format A tibble with 314 rows and 11 variables:
 #' \describe{
 #' \item{name}{The name of the station.}
 #' \item{caption}{In some cases, a station will have a caption that might
