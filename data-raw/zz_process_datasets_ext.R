@@ -20,6 +20,7 @@ usethis::use_data(
   currencies, currency_symbols, locales, default_locales,
   palettes_strips, google_font_tbl, google_styles_tbl, google_axes_tbl,
   css_colors, fractions, durations, styles_colors_params,
-  spelled_num, flag_tbl, country_names, country_names_additional, tf_words,
+  spelled_num, flag_tbl, country_names, country_names_additional,
+  tf_words, conversion_factors,
   internal = TRUE, overwrite = TRUE
 )
