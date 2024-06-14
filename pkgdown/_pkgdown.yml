@@ -269,6 +269,7 @@ reference:
     - info_google_fonts
     - info_flags
     - info_icons
+    - info_unit_conversions
 
   - title: Shiny
     desc: >
