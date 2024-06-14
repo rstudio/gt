@@ -824,3 +824,41 @@ info_flags <- function() {
 info_icons <- function() {
   readRDS(system_file("gt_tables/info_icons.rds"))
 }
+
+#' View a table with all units that can be converted by `unit_conversion()`
+#'
+#' @description
+#'
+#' [unit_conversion()] can be used to yield conversion factors across compatible
+#' pairs of units. This is useful for expressing values in different units and
+#' the conversion can be performed via the `scale_by` argument available in
+#' several formatting functions. When calling [unit_conversion()], one must
+#' supply two string-based keywords to specify the value's current units and the
+#' desired units. All of these keywords are provided in the table shown by
+#' calling `info_unit_conversions()`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Get a table of info on all the available keywords for unit conversions.
+#'
+#' ```r
+#' info_unit_conversions()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_info_unit_conversions_1.png")`
+#' }}
+#'
+#' @family information functions
+#' @section Function ID:
+#' 11-9
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+info_unit_conversions <- function() {
+  readRDS(system_file("gt_tables/info_conversions.rds"))
+}
