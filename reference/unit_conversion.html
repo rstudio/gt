@@ -153,16 +153,16 @@ of the conversion factor must be used.</p>
 <span>    columns <span class="op">=</span> <span class="va">land_area_km2</span>,</span>
 <span>    decimals <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    scale_by <span class="op">=</span> <span class="fu"><a href="../reference/unit_conversion.html">unit_conversion</a></span><span class="op">(</span></span>
-<span>      from <span class="op">=</span> <span class="st">"area.square_kilometer"</span>,</span>
-<span>      to <span class="op">=</span> <span class="st">"area.square_mile"</span></span>
+<span>      from <span class="op">=</span> <span class="st">"area.square-kilometer"</span>,</span>
+<span>      to <span class="op">=</span> <span class="st">"area.square-mile"</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">density_2021</span>,</span>
 <span>    decimals <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    scale_by <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="../reference/unit_conversion.html">unit_conversion</a></span><span class="op">(</span></span>
-<span>      from <span class="op">=</span> <span class="st">"area.square_kilometer"</span>,</span>
-<span>      to <span class="op">=</span> <span class="st">"area.square_mile"</span></span>
+<span>      from <span class="op">=</span> <span class="st">"area.square-kilometer"</span>,</span>
+<span>      to <span class="op">=</span> <span class="st">"area.square-mile"</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_label.html">cols_label</a></span><span class="op">(</span></span>
