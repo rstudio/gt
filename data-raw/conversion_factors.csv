@@ -1,6 +1,6 @@
 type,from,to,conv_factor
-acceleration,g-force,meter-per-square-second,9.80665
-acceleration,meter-per-square-second,g-force,0.101971621297793
+acceleration,acceleration.g-force,acceleration.meter-per-square-second,9.80665
+acceleration,acceleration.meter-per-square-second,acceleration.g-force,0.101971621297793
 angle,angle.arc-second,angle.degree,2.78E-04
 angle,angle.arc-second,angle.gradian,3.09E-04
 angle,angle.arc-second,angle.milliradian,4.85E-06
