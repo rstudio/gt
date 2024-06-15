@@ -414,7 +414,7 @@ readr::write_rds(
 rm(palettes_tbl_gt, color_pkgs, palettes_strips_df)
 
 #
-# Build table for `info_conversions()` -> `info_icons.rds`
+# Build table for `info_conversions()` -> `info_conversions.rds`
 #
 
 conversions_tbl <-
@@ -422,8 +422,9 @@ conversions_tbl <-
   dplyr::select(type, from) %>%
   dplyr::distinct() %>%
   dplyr::mutate(name = gsub(".*\\.", "", from)) %>%
-  dplyr::mutate(name = gsub("_", " ", name)) %>%
+  dplyr::mutate(name = gsub("-", " ", name)) %>%
   dplyr::mutate(name = gsub("us ", "US ", name)) %>%
+  dplyr::mutate(name = gsub("g force", "g-force", name)) %>%
   dplyr::mutate(name = gsub("british ", "British ", name)) %>%
   dplyr::mutate(name = gsub("std", "std.", name)) %>%
   dplyr::select(type, name, from)
