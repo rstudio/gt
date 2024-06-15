@@ -583,16 +583,16 @@ currency <- function(
 #'     columns = land_area_km2,
 #'     decimals = 1,
 #'     scale_by = unit_conversion(
-#'       from = "area.square_kilometer",
-#'       to = "area.square_mile"
+#'       from = "area.square-kilometer",
+#'       to = "area.square-mile"
 #'     )
 #'   ) |>
 #'   fmt_number(
 #'     columns = density_2021,
 #'     decimals = 1,
 #'     scale_by = 1 / unit_conversion(
-#'       from = "area.square_kilometer",
-#'       to = "area.square_mile"
+#'       from = "area.square-kilometer",
+#'       to = "area.square-mile"
 #'     )
 #'   ) |>
 #'   cols_label(
