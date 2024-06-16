@@ -423,9 +423,13 @@ conversions_tbl <-
   dplyr::distinct() %>%
   dplyr::mutate(name = gsub(".*\\.", "", from)) %>%
   dplyr::mutate(name = gsub("-", " ", name)) %>%
-  dplyr::mutate(name = gsub("us ", "US ", name)) %>%
+  dplyr::mutate(name = gsub("therm us", "US therm", name)) %>%
   dplyr::mutate(name = gsub("g force", "g-force", name)) %>%
   dplyr::mutate(name = gsub("british ", "British ", name)) %>%
+  dplyr::mutate(name = gsub("imperial$", "(Imperial)", name)) %>%
+  dplyr::mutate(name = gsub("foodcalorie", "food calorie", name)) %>%
+  dplyr::mutate(name = gsub("foot pound", "foot-pound", name)) %>%
+  dplyr::mutate(name = gsub("pound force", "pound-force", name)) %>%
   dplyr::mutate(name = gsub("std", "std.", name)) %>%
   dplyr::select(type, name, from)
 
