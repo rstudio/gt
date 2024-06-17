@@ -683,6 +683,9 @@ as_latex <- function(data) {
 
   # Composition of LaTeX ----------------------------------------------------
 
+  # Create a df containing width types for each column
+  colwidth_df <- create_colwidth_df_l(data = data)
+
   # Create a LaTeX fragment for the start of the table
   table_start <- create_table_start_l(data = data)
 
@@ -690,10 +693,10 @@ as_latex <- function(data) {
   heading_component <- create_heading_component_l(data = data)
 
   # Create the columns component
-  columns_component <- create_columns_component_l(data = data)
+  columns_component <- create_columns_component_l(data = data, colwidth_df = colwidth_df)
 
   # Create the body component
-  body_component <- create_body_component_l(data = data)
+  body_component <- create_body_component_l(data = data, colwidth_df = colwidth_df)
 
   # Create the footnotes component
   footer_component <- create_footer_component_l(data = data)

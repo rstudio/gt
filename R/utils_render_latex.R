@@ -107,13 +107,23 @@ latex_group_row <- function(
     group_name,
     n_cols,
     top_border = TRUE,
-    bottom_border = TRUE
+    bottom_border = TRUE,
+    colwidth_df
 ) {
+
+  # The width of the group row should be that of the entire table
+  tab_width <- colwidth_df$tbl_width[1L]
+  use_width <- if (is.na(tab_width)) "l" else sprintf(">{\\raggedright\\arraybackslash}m{%s}", tab_width)
+
+  if (is.na(group_name)) {
+    row_txt <- paste0("\\multicolumn{", n_cols, "}{", use_width, "}{\\rule{0pt}{0pt}} \\\\[-3.2ex] \n")
+  } else {
+    row_txt <- paste0("\\multicolumn{", n_cols, "}{", use_width, "}{", group_name, "} \\\\[2.5pt] \n")
+  }
 
   paste0(
     ifelse(top_border, "\\midrule\\addlinespace[2.5pt]\n", ""),
-    "\\multicolumn{", n_cols, "}{l}{", group_name,
-    "} \\\\ \n",
+    row_txt,
     ifelse(bottom_border, "\\midrule\\addlinespace[2.5pt]\n", ""),
     collapse = ""
   )
@@ -151,7 +161,7 @@ create_table_start_l <- function(data) {
     unlist(
       dplyr::pull(
         dplyr::arrange(
-          dplyr::filter(boxh_df, type %in% c("default", "stub")),
+          dplyr::filter(boxh_df, type %in% c("default")),
           dplyr::desc(type)
         ),
         column_width
@@ -177,12 +187,24 @@ create_table_start_l <- function(data) {
 
     if ("group_label" %in% stub_layout) {
 
-      group_label_width <-
-        unlist(
-          dplyr::pull(dplyr::filter(boxh_df, type == "row_group"), column_width)
-        )
+      # TODO: This section assumes that the width of the group_label
+      # is the same as the column width for the stub. There should be
+      # a way to set the group_label when it is its own column.
+      # (Previous code version looked for "row_group" in boxh_df, which
+      # does not exist.)
+      if ('stub' %in% boxh_df$type) {
+
+        stub_width <- convert_to_pt(unlist(boxh_df$column_width[boxh_df$type == 'stub'])[1L])
+        group_label_width <- sprintf('%.2fpt', rep(stub_width, times = 2L) / 2)
+
+      } else {
+        group_label_width <- c("", "")
+      }
 
       col_widths <- c(group_label_width, col_widths)
+    } else if (length(stub_layout) == 1L) {
+
+      col_widths <- c(unlist(boxh_df$column_width[boxh_df$type == 'stub'][[1L]]), col_widths)
     }
 
     for (i in seq_along(col_widths)) {
@@ -237,7 +259,7 @@ create_table_start_l <- function(data) {
 
         } else {
 
-          col_widths[i] <- paste0(convert_to_px(col_widths[i]) * 0.75, "pt")
+          col_widths[i] <- paste0(convert_to_px(col_widths[i]) * 0.75, "pt -2\\tabcolsep-1.5\\arrayrulewidth")
 
         }
 
@@ -366,7 +388,7 @@ create_heading_component_l <- function(data) {
 #' Create the columns component of a table
 #'
 #' @noRd
-create_columns_component_l <- function(data) {
+create_columns_component_l <- function(data, colwidth_df) {
 
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
@@ -416,10 +438,29 @@ create_columns_component_l <- function(data) {
       ""
     )
 
-    if (length(stub_layout) > 0) {
+    if (length(stub_layout) > 1L) {
+      # If stub_layout == 1L, multicolumn is not needed and stub_label is already defined
+      stub_df <- dplyr::filter(colwidth_df, type == 'stub')
+      stub_width <-
+        if (stub_df$pt > 0) {
+          sprintf("%.2fpt", stub_df$pt)
+        } else if (stub_df$lw > 0) {
+          sprintf("%.2f\\linewidth", stub_df$lw)
+        } else {
+          ""
+        }
 
       stub_label <-
-        paste0("\\multicolumn{", length(stub_layout), "}{l}{", stub_label, "}")
+        paste0(
+          "\\multicolumn{",
+          length(stub_layout),
+          "}{>{\\centering\\arraybackslash}m{",
+          stub_width,
+          " -2\\tabcolsep-1.5\\arrayrulewidth}}{",
+          stub_label,
+          "}"
+        )
+
     }
 
     headings_labels <- prepend_vec(headings_labels, stub_label)
@@ -474,13 +515,24 @@ create_columns_component_l <- function(data) {
       is_spanner_na <- is.na(spanners_rle$values)
       is_spanner_single <- spanners_rle$lengths == 1
 
+      span_widths <- calculate_multicolumn_width_text_l(begins = begins, ends = ends, colwidth_df = colwidth_df)
+      tex_widths <-
+        ifelse(
+          span_widths == "",
+          "c",
+          paste0(">{\\centering\\arraybackslash}m{", span_widths, "}")
+        )
+
       multicol <-
         ifelse(
           is_spanner_na, "",
           ifelse(
             is_spanner_single, spanners_rle$labels,
             sprintf(
-              "\\multicolumn{%d}{c}{%s}", spanners_rle$lengths, spanners_rle$labels
+              "\\multicolumn{%d}{%s}{%s}",
+              spanners_rle$lengths,
+              tex_widths,
+              spanners_rle$labels
             )
           )
         )
@@ -489,11 +541,12 @@ create_columns_component_l <- function(data) {
       # multicolumn statement that's the same width as that in the columns
       # row; this is to prevent the automatic vertical line that would otherwise
       # appear here
-      if (length(stub_layout) > 0) {
+      if (length(stub_layout) > 1L) {
 
+        tex_stub_width <- calculate_multicolumn_width_text_l(begins = 1, ends = 2, colwidth_df = colwidth_df)
         multicol <-
           c(
-            paste0("\\multicolumn{", length(stub_layout), "}{l}{}"),
+            paste0("\\multicolumn{", length(stub_layout), "}{>{\\raggedright\\arraybackslash}m{", tex_stub_width, "}}{}"),
             multicol[-seq_along(stub_layout)]
           )
       }
@@ -518,7 +571,7 @@ create_columns_component_l <- function(data) {
 }
 
 #' @noRd
-create_body_component_l <- function(data) {
+create_body_component_l <- function(data, colwidth_df) {
 
   summaries_present <- dt_summary_exists(data = data)
   list_of_summaries <- dt_summary_df_get(data = data)
@@ -547,8 +600,15 @@ create_body_component_l <- function(data) {
   if ("group_label" %in% stub_layout) {
 
     for (i in seq_len(nrow(groups_rows_df))) {
+      n_rows_in_group <- groups_rows_df$row_end[i] - groups_rows_df$row_start[i] + 1L
+      if (groups_rows_df$has_summary_rows[i]) {
+        n_rows_in_group <- n_rows_in_group + dim(list_of_summaries$summary_df_data_list[[i]])[1L]
+      }
       row_splits_body[[groups_rows_df$row_start[i]]][1] <-
-        groups_rows_df$group_label[i]
+        sprintf("\\multirow{%d}{=}{%s}",
+                n_rows_in_group,
+                groups_rows_df$group_label[i])
+        #groups_rows_df$group_label[i]
     }
   }
 
@@ -613,17 +673,17 @@ create_body_component_l <- function(data) {
 
   }
 
-  # Replace an NA group with a small amount of vertical space
-  if (any(is.na(groups_rows_df$group_label))) {
-
-    groups_rows_df <-
-      dplyr::mutate(
-        groups_rows_df,
-        group_label = ifelse(
-          is.na(group_label), "\\vspace*{-5mm}", group_label
-        )
-      )
-  }
+  # # Replace an NA group with a small amount of vertical space
+  # if (any(is.na(groups_rows_df$group_label))) {
+  #
+  #   groups_rows_df <-
+  #     dplyr::mutate(
+  #       groups_rows_df,
+  #       group_label = ifelse(
+  #         is.na(group_label), "\\vspace*{-5mm}", group_label
+  #       )
+  #     )
+  # }
 
   current_group_id <- character(0L)
 
@@ -677,7 +737,8 @@ create_body_component_l <- function(data) {
               group_name = group_label,
               n_cols = n_cols,
               top_border = i != 1,
-              bottom_border = TRUE
+              bottom_border = TRUE,
+              colwidth_df = colwidth_df
             )
 
           body_section <- append(body_section, list(group_heading_row))
@@ -880,7 +941,6 @@ summary_rows_for_group_l <- function(
   row_splits_summary <- split_row_content(summary_df)
 
   if (stub_is_2) {
-
     row_splits_summary <-
       lapply(
         row_splits_summary,
@@ -1590,5 +1650,103 @@ create_fontsize_statement_l <- function(data) {
 
   fs_statement
 
+}
+
+create_colwidth_df_l <- function(data) {
+
+  boxhead <- dt_boxhead_get(data)
+  tbl_width <- dt_options_get_value(data = data, option = 'table_width')
+  stub_layout <- get_stub_layout(data = data)
+
+  n <- dim(boxhead)[1L]
+  width_df <- data.frame(
+    type = boxhead$type,
+    unspec = rep(0, times = n),
+    lw = rep(0, times = n),
+    pt = rep(0, times = n)
+  )
+
+  for (i in 1:n) {
+    raw <- unlist(boxhead$column_width[i])[1L]
+
+    if (is.null(raw) || raw == "") {
+      next
+    } else if (endsWith(raw, "%")) {
+      pct <- as.numeric(gsub("%", "", raw))
+
+      if (tbl_width == 'auto') {
+        width_df$lw[i] <- pct
+      } else {
+        width_df$pt[i] <- pct * convert_to_pt(tbl_width)
+      }
+    } else {
+      width_df$pt[i] <- convert_to_pt(raw)
+    }
+  }
+
+  if (length(stub_layout) > 1L) {
+    if ('stub' %in% width_df$type) {
+      stub_row_group <-
+        mutate(
+          filter(width_df, type == 'stub'),
+          type = 'stub_row_group',
+          lw = lw / 2,
+          pt = pt / 2
+        )
+
+      width_df$pt[width_df$type == 'stub'] <- width_df$pt[width_df$type == 'stub'] / 2
+      width_df$lw[width_df$type == 'stub'] <- width_df$lw[width_df$type == 'stub'] / 2
+    } else {
+      stub_row_group <- data.frame(type = 'stub_row_group', lw = 0, pt = 0)
+    }
+
+    width_df <- bind_rows(stub_row_group, width_df)
+  }
+
+  width_df$unspec <- as.integer(width_df$lw == 0 & width_df$pt == 0)
+
+  if (tbl_width == 'auto') {
+    if (any(width_df$lw > 0)) {
+      width_df$tbl_width <- "\\linewidth"
+    } else {
+      if (all(width_df$pt > 0)) {
+        width_df$tbl_width <- sprintf("%fpt", sum(width_df$pt))
+      } else {
+        width_df$tbl_width <- NA_real_
+      }
+    }
+  } else {
+    width_df$tbl_width <- tbl_width
+  }
+
+  width_df
+}
+
+calculate_multicolumn_width_text_l <- function(begins, ends, colwidth_df) {
+
+  out_text <- rep("", times = length(begins))
+
+  for (i in seq_along(begins)) {
+    ind <- seq(from = begins[i], to = ends[i])
+
+    # If any of the combined columns has an unspecified width, it can't be determined
+    # so it is left blank
+    if (any(colwidth_df$unspec[ind] > 0)) next
+
+    pt_total <- sum(colwidth_df$pt[ind], na.rm = TRUE)
+    lw_total <- sum(colwidth_df$lw[ind], na.rm = TRUE)
+
+    if (pt_total <= 0 && lw_total <= 0) {
+      next
+    } else if (pt_total <= 0) {
+      out_text[i] <- sprintf("%.2f\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth", lw_total)
+    } else if (lw_total <= 0) {
+      out_text[i] <- sprintf("%.2fpt -2\\tabcolsep-1.5\\arrayrulewidth", pt_total)
+    } else {
+      out_text[i] <- sprintf("%.2fpt + %.2f\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth", pt_total, lw_total)
+    }
+  }
+
+  out_text
 }
 
