@@ -448,6 +448,17 @@ render_as_ihtml <- function(data, id) {
       pageButtonCurrentStyle = NULL
     )
 
+  # use of special .rownames doesn't work.
+  # Workaround https://github.com/glin/reactable/issues/378
+  # rstudio/gt#1702
+  if (rownames_to_stub) {
+    rowname_col <- dt_boxhead_get_var_stub(data)
+    if (length(rowname_col) == 1) {
+      # avoid base R error when setting duplicate row names.
+      attr(data_tbl, "row.names") <-  as.character(data$`_data`[[rowname_col]])
+    }
+  }
+
   # Create the htmlwidget
   x <-
     reactable::reactable(
