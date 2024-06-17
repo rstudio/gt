@@ -119,8 +119,10 @@ render_as_ihtml <- function(data, id) {
       "*" = "Failing that, look at whether all columns have been inadvertently hidden."
     ))
   }
+
   #nocov end
 
+  rownames_to_stub <- stub_rownames_has_column(data)
   # use of special .rownames doesn't work.
   # Workaround https://github.com/glin/reactable/issues/378
   # rstudio/gt#1702
@@ -192,8 +194,6 @@ render_as_ihtml <- function(data, id) {
   column_labels_border_bottom_style <- opt_val(data = data, option = "column_labels_border_bottom_style")
   column_labels_border_bottom_width <- opt_val(data = data, option = "column_labels_border_bottom_width")
   column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
-
-  rownames_to_stub <- stub_rownames_has_column(data)
 
   emoji_symbol_fonts <-
     c(
