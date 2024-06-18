@@ -96,6 +96,7 @@ test_that("Styling at various locations is kept when using `row_group_order()`",
 
   # Expect that all summary and grand summary cells (and their stub locations)
   # have the same styles applied regardless of the use of `row_group_order()`
+  skip_if_not_installed("rvest")
   summary_tbl_styled_1 %>%
     selection_value("style") %>%
     expect_equal(rep("font-style: italic; font-weight: bold;", 15))
