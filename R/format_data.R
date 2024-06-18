@@ -418,8 +418,7 @@
 #'   cols_label(
 #'     name ~ "Municipality",
 #'     latitude = "Location"
-#'   ) |>
-#'   cols_hide(columns = dec_digits)
+#'   )
 #' ```
 #'
 #' \if{html}{\out{
