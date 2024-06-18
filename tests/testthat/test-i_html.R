@@ -68,6 +68,13 @@ test_that("Interactive tables won't fail when using different options", {
     tab_source_note(source_note = "Source Note.") %>%
     tab_footnote(footnote = "Footnote.") %>%
     opt_interactive()
+  # #1702
+  tbl_gt_i_23 <-
+    gt(exibble, rownames_to_stub = TRUE) %>%
+    opt_interactive()
+  tbl_gt_i_24 <-
+    gt(mtcars_short, rowname_col = "vs") %>%
+    opt_interactive()
 
   capture_output(expect_no_error(tbl_gt_i_01))
   capture_output(expect_no_error(tbl_gt_i_02))
@@ -91,4 +98,6 @@ test_that("Interactive tables won't fail when using different options", {
   capture_output(expect_no_error(tbl_gt_i_20))
   capture_output(expect_no_error(tbl_gt_i_21))
   capture_output(expect_no_error(tbl_gt_i_22))
+  capture_output(expect_no_error(tbl_gt_i_23))
+  capture_output(expect_no_error(tbl_gt_i_24))
 })
