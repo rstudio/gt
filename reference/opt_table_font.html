@@ -208,9 +208,9 @@ multiple computer systems. Any of the following keywords can be used:</p><ul><li
 
 <p>Use a subset of the <code><a href="sp500.html">sp500</a></code> dataset to create a small <strong>gt</strong> table. We'll
 use <code><a href="fmt_currency.html">fmt_currency()</a></code> to display a dollar sign for the first row of monetary
-values. Then, set a larger font size for the table and use the <code>"Merriweather"</code>
-font (from <em>Google Fonts</em>, via <code><a href="google_font.html">google_font()</a></code>) with two system font
-fallbacks (<code>"Cochin"</code> and the generic <code>"serif"</code>).</p>
+values. Then, set a larger font size for the table and use the
+<code>"Merriweather"</code> font (from <em>Google Fonts</em>, via <code><a href="google_font.html">google_font()</a></code>) with two
+system font fallbacks (<code>"Cochin"</code> and the generic <code>"serif"</code>).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">sp500</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">volume</span>, <span class="op">-</span><span class="va">adj_close</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -226,8 +226,8 @@ fallbacks (<code>"Cochin"</code> and the generic <code>"serif"</code>).</p>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_font_1.png" alt="This image of a table was generated from the first code example in the `opt_table_font()` help file." style="width:100%;"></p>
-<p>Use the <code><a href="sza.html">sza</a></code> dataset to create an eleven-row table, two-column table.
-Within <code>opt_table_font()</code>, use the <code>stack</code> argument to define the use of the
+<p>With the <code><a href="sza.html">sza</a></code> dataset we'll create a two-column, eleven-row table. Within
+<code>opt_table_font()</code>, the <code>stack</code> argument will be supplied with the
 <code>"rounded-sans"</code> font stack. This sets up a family of fonts with rounded,
 curved letterforms that should be locally available in different computing
 environments.</p>
