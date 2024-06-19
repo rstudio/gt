@@ -492,6 +492,12 @@ fmt_number <- function(
         all_args_except = c("data", "columns", "rows")
       )
     )
+  # Assume that if decimals = 0, function = fmt_integer, fmt_number otherwise
+  if (identical(decimals, 0)) {
+    fn_call <- call("fmt_integer")
+  } else {
+    fn_call <- call("fmt_number")
+  }
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
@@ -499,7 +505,8 @@ fmt_number <- function(
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
-        data = data
+        data = data,
+        call = fn_call
       )
 
     param_tbl <-
@@ -562,12 +569,6 @@ fmt_number <- function(
   #
   # End support for `gt_column()` objects passed to compatible arguments
   #
-  # Assume that if decimals = 0, function = fmt_integer, fmt_number otherwise
-  if (identical(decimals, 0)) {
-    fn_call <- call("fmt_integer")
-  } else {
-    fn_call <- call("fmt_number")
-  }
   check_column_valid(data, {{ columns }}, valid_class, call = fn_call)
 
   # Set the `formatC_format` option according to whether number
