@@ -243,10 +243,9 @@ tab_header <- function(
 #'
 #'   The columns to serve as components of the spanner. Can either be a series
 #'   of column names provided in `c()`, a vector of column indices, or a select
-#'   helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. This argument works in tandem with the
-#'   `spanners` argument.
+#'   helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]. This argument works in
+#'   tandem with the `spanners` argument.
 #'
 #' @param spanners *Spanners to target*
 #'
@@ -887,9 +886,8 @@ resolve_spanned_column_names <- function(
 #'
 #'   The columns to consider for the splitting, relabeling, and spanner setting
 #'   operations. Can either be a series of column names provided in `c()`, a
-#'   vector of column indices, or a select helper function. Examples of select
-#'   helper functions include [starts_with()], [ends_with()], [contains()],
-#'   [matches()], [one_of()], [num_range()], and [everything()].
+#'   vector of column indices, or a select helper function (e.g. [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [num_range()], and [everything()]).
 #'
 #' @param split *Splitting side*
 #'
@@ -1462,10 +1460,9 @@ str_split_across <- function(
 #'
 #'   The rows to be made components of the row group. We can supply a vector of
 #'   row ID values within `c()`, a vector of row indices, or use select helpers
-#'   here. Examples of select helper functions include [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()]. We can also use expressions to filter down to the rows we
-#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]. We can also use expressions to filter
+#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param id *Row group ID*
 #'
@@ -1900,10 +1897,9 @@ tab_stubhead <- function(
 #'
 #'   The rows to consider for the indentation change. We can supply a vector of
 #'   row ID values within `c()`, a vector of row indices, or use select helpers
-#'   here. Examples of select helper functions include [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()]. We can also use expressions to filter down to the rows we
-#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   here (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]). We can also use expressions to filter
+#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param indent *Indentation directive*
 #'

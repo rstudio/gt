@@ -41,10 +41,9 @@
 #'
 #'   The columns to which the targeting operations are constrained.  Can either
 #'   be a series of column names provided in `c()`, a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. This argument works in tandem with the
-#'   `spanners` argument.
+#'   or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]). This argument
+#'   works in tandem with the `spanners` argument.
 #'
 #' @param rows *Rows to target*
 #'
@@ -54,10 +53,10 @@
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
 #'   supply a vector of row IDs within `c()`, a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()],  [num_range()], and [everything()]). We can also use
+#'   expressions to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param values *Values for targeting*
 #'

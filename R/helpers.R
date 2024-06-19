@@ -1351,9 +1351,9 @@ cells_stubhead <- function() {
 #'   `<spanner-targeting expression>` // *default:* `everything()`
 #'
 #'   The spanners to which targeting operations are constrained. Can either be a
-#'   series of spanner ID values provided in `c()` or a select helper function.
-#'   Examples of select helper functions include [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   series of spanner ID values provided in `c()` or a select helper function
+#'   (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]).
 #'
 #' @return A list object with the classes `cells_column_spanners` and
 #' `location_cells`.
@@ -1508,9 +1508,8 @@ cells_column_labels <- function(columns = everything()) {
 #'
 #'   The row groups to which targeting operations are constrained. Can either be
 #'   a series of row group ID values provided in `c()` or a select helper
-#'   function. Examples of select helper functions include [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()].
+#'   function (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]).
 #'
 #' @return A list object with the classes `cells_row_groups` and
 #'   `location_cells`.
@@ -1615,11 +1614,10 @@ cells_group <- function(groups = everything()) {
 #'   The rows to which targeting operations are constrained. The default
 #'   [everything()] results in all rows in `columns` being formatted.
 #'   Alternatively, we can supply a vector of row IDs within `c()`, a vector of
-#'   row indices, or a select helper function. Examples of select helper
-#'   functions include [starts_with()], [ends_with()], [contains()],
-#'   [matches()], [one_of()], [num_range()], and [everything()]. We can also use
-#'   expressions to filter down to the rows we need (e.g., `[colname_1] > 100 &
-#'   [colname_2] < 50`).
+#'   row indices, or a select helper function (e.g. [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [num_range()], and [everything()]).
+#'   We can also use expressions to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @return A list object with the classes `cells_stub` and `location_cells`.
 #'
@@ -1690,9 +1688,8 @@ cells_stub <- function(rows = everything()) {
 #'
 #'   The columns to which targeting operations are constrained. Can either
 #'   be a series of column names provided in `c()`, a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
+#'   or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]).
 #'
 #' @param rows *Rows to target*
 #'
@@ -1702,10 +1699,9 @@ cells_stub <- function(rows = everything()) {
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
 #'   supply a vector of row IDs within `c()`, a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]). We can also use expressions to
+#'   filter down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @return A list object with the classes `cells_body` and `location_cells`.
 #'
@@ -1811,11 +1807,10 @@ cells_body <- function(
 #'   The row groups to which targeting operations are constrained. This aids in
 #'   targeting the summary rows that reside in certain row groups. Can either be
 #'   a series of row group ID values provided in `c()` or a select helper
-#'   function. Examples of select helper functions include [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()].
 #'
 #' @inheritParams cells_body
+#'   function (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()].
 #'
 #' @return A list object with the classes `cells_summary` and `location_cells`.
 #'
@@ -2060,10 +2055,10 @@ cells_grand_summary <- function(
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
 #'   supply a vector of row IDs within `c()`, a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]). We can also use
+#'   expressions to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @return A list object with the classes `cells_stub_summary` and
 #'   `location_cells`.
@@ -2175,10 +2170,10 @@ cells_stub_summary <- function(
 #'   We can specify which rows should be targeted. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
 #'   supply a vector of row IDs within `c()`, a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()] and [everything()]). We can also use expressions
+#'   to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @return A list object with the classes `cells_stub_grand_summary` and
 #'   `location_cells`.

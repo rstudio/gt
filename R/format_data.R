@@ -55,9 +55,8 @@
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   Can either be a series of column names provided in `c()`, a vector of
-#'   column indices, or a select helper function. Examples of select helper
-#'   functions include [starts_with()], [ends_with()], [contains()],
-#'   [matches()], [one_of()], [num_range()], and [everything()].
+#'   column indices, or a select helper function (e.g. [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [num_range()] and [everything()]).
 #'
 #' @param rows *Rows to target*
 #'
@@ -67,10 +66,9 @@
 #'   undergo formatting. The default [everything()] results in all rows in
 #'   `columns` being formatted. Alternatively, we can supply a vector of row
 #'   captions within `c()`, a vector of row indices, or a select helper
-#'   function. Examples of select helper functions include [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()]. We can also use expressions to filter down to the rows we
-#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   function (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]). We can also use expressions to filter
+#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param decimals *Number of decimal places*
 #'
