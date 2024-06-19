@@ -74,7 +74,7 @@ normalize_locale <- function(locale = NULL) {
 #' @param locale The user-supplied `locale` value, found in several `fmt_*()`
 #'   functions. This is expected as `NULL` if not supplied by the user.
 #' @noRd
-validate_locale <- function(locale, call = caller_env()) {
+validate_locale <- function(locale, call = rlang::caller_env()) {
 
   # Stop function if the `locale` provided
   # isn't a valid one
@@ -96,7 +96,7 @@ validate_locale <- function(locale, call = caller_env()) {
 #' @param currency The user-supplied `currency` value, found in the
 #'   `fmt_currency()` function.
 #' @noRd
-validate_currency <- function(currency, call = caller_env()) {
+validate_currency <- function(currency, call = rlang::caller_env()) {
 
   # If `currency` isn't a custom currency object
   # (`gt_currency`), then validate the supplied symbol
