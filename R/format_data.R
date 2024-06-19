@@ -11399,12 +11399,19 @@ download_file <- function(uri) {
   filename
 }
 
+convert_to_pt <- function(x) {
+
+  convert_to_px(x) * 0.75
+
+}
+
 convert_to_px <- function(x) {
 
-  units <- tolower(gsub("\\d+","", x))
+  units <- tolower(gsub("[[:digit:]\\.\\,]+","", x))
   value <- as.numeric(gsub(units, "", x))
 
   px_conversion <- c(
+    "pt" = 4 / 3,
     "in" = 96,
     "cm" = 37.7952755906,
     "emu" = 1 / 9525,

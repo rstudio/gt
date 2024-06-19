@@ -990,3 +990,32 @@ test_that("cols_width() correctly specifies LaTeX table when column widths are s
 
 })
 
+test_that("column widths are accurately reflected in Latex multicolumn statements", {
+
+  set.seed(1234)
+  tbl_random1 <- data.frame(x = c('a', 'b', 'c', 'd', 'e'),
+               y = runif(5),
+               z = runif(5),
+               m = runif(5),
+               n = runif(5),
+               w = runif(5))
+
+  gt(tbl_random1,
+     rowname_col = 'x',
+     row_group_as_column = FALSE) %>%
+    fmt_number(decimals = 3) %>%
+    tab_row_group(label = 'Only row group label',
+                  rows = 1:2) %>%
+    cols_width(everything() ~ '2cm') %>%
+    tab_spanner(label = 'Spanner with a long title that should be wrapped', columns = c('y', 'z')) %>%
+    tab_spanner(label = 'Spanner2', columns = c('n', 'w')) %>%
+    tab_spanner(label = 'Another long spanner that needs to wrap even more than the other', columns = c('z', 'm')) %>%
+    summary_rows(fns = list("mean")) %>%
+    as_latex() %>%
+    expect_snapshot()
+
+
+})
+
+
+

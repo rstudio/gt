@@ -77,7 +77,7 @@ test_that("A gt table contains the expected stubhead label", {
   expect_match(
     as_latex(tbl_latex) %>% as.character(),
     paste0(
-      ".*multicolumn\\{1\\}\\{l\\}\\{the mtcars\\} & mpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb",
+      ".*the mtcars & mpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb",
       ".*"
       )
   )
