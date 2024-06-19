@@ -72,6 +72,7 @@ Suggests:
     tidyr,
     webshot2 (>= 0.1.0),
     withr
+Config/Needs/coverage: officer
 ByteCompile: true
 Config/testthat/edition: 3
 Config/testthat/parallel: true

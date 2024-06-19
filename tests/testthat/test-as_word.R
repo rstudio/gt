@@ -1,4 +1,4 @@
-skip_on_ci()
+skip_on_cran()
 
 #' @title Add gt table into a Word document
 #' @description Add a gt into a Word document.
@@ -83,7 +83,7 @@ body_add_gt <- function(
 }
 
 # Function to skip tests if Suggested packages not available on system
-check_suggests_xml <- function() {
+check_suggests <- function() {
   skip_if_not_installed("officer")
 }
 
@@ -255,7 +255,7 @@ test_that("word ooxml escapes special characters in gt object footer", {
 
 test_that("tables can be added to a word doc", {
 
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble_min <-
@@ -350,7 +350,7 @@ test_that("tables can be added to a word doc", {
 test_that("tables with special characters can be added to a word doc", {
 
   skip_on_ci()
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble_min <-
@@ -436,7 +436,7 @@ test_that("tables with special characters can be added to a word doc", {
 
 test_that("tables with embedded titles can be added to a word doc", {
 
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble_min <-
@@ -523,7 +523,7 @@ test_that("tables with embedded titles can be added to a word doc", {
 
 test_that("tables with spans can be added to a word doc", {
 
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble_min <- exibble[1:2,] %>%
@@ -619,7 +619,7 @@ test_that("tables with spans can be added to a word doc", {
 
 test_that("tables with multi-level spans can be added to a word doc", {
 
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble_min <- exibble[1:2,] %>%
@@ -724,7 +724,7 @@ test_that("tables with multi-level spans can be added to a word doc", {
 
 test_that("tables with summaries can be added to a word doc", {
 
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble_min <- exibble %>%
@@ -890,7 +890,7 @@ test_that("tables with summaries can be added to a word doc", {
 
 test_that("tables with grand summaries but no rownames can be added to a word doc", {
 
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble_min <- exibble %>%
@@ -1022,7 +1022,7 @@ test_that("tables with grand summaries but no rownames can be added to a word do
 
 test_that("tables with footnotes can be added to a word doc", {
 
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble_min <-
@@ -1125,7 +1125,7 @@ test_that("tables with footnotes can be added to a word doc", {
 
 test_that("tables with source notes can be added to a word doc", {
 
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble_min <- exibble[1:2, ] %>%
@@ -1212,7 +1212,7 @@ test_that("tables with source notes can be added to a word doc", {
 
 test_that("long tables can be added to a word doc", {
 
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_letters <- dplyr::tibble(
@@ -1281,7 +1281,7 @@ test_that("long tables can be added to a word doc", {
 
 test_that("long tables with spans can be added to a word doc", {
 
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_letters <- dplyr::tibble(
@@ -1354,7 +1354,7 @@ test_that("long tables with spans can be added to a word doc", {
 
 test_that("tables with cell & text coloring can be added to a word doc - no spanner", {
 
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble_min <- exibble[1:4,] %>%
@@ -1538,7 +1538,7 @@ test_that("tables with cell & text coloring can be added to a word doc - no span
 
 test_that("tables with cell & text coloring can be added to a word doc - with spanners", {
 
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble_min <- exibble[1:4,] %>%
@@ -1633,7 +1633,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with sp
 
 test_that("tables with cell & text coloring can be added to a word doc - with source_notes and footnotes", {
 
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble_min <- exibble[1:2,] %>%
@@ -1713,7 +1713,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with so
 
 test_that("footnotes styling gets applied to footer marks", {
 
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble_min <- exibble[1:2,] %>%
@@ -1784,7 +1784,7 @@ test_that("footnotes styling gets applied to footer marks", {
 
 test_that("tables with cell & text coloring can be added to a word doc - with summaries (grand/group)", {
 
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble_min <- exibble %>%
@@ -1959,7 +1959,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
 test_that("tables preserves spaces in text & can be added to a word doc", {
 
   skip_on_ci()
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble <-
@@ -2032,7 +2032,7 @@ test_that("tables preserves spaces in text & can be added to a word doc", {
 test_that("tables respects column and cell alignment and can be added to a word doc", {
 
   skip_on_ci()
-  check_suggests_xml()
+  check_suggests()
 
   ## simple table
   gt_exibble <-
@@ -2132,7 +2132,7 @@ test_that("tables respects column and cell alignment and can be added to a word 
 test_that("markdown in the tables works out",{
 
   skip_on_ci()
-  check_suggests_xml()
+  check_suggests()
 
   text_1a <- "
 ### This is Markdown.
@@ -2271,7 +2271,7 @@ There's a quick reference [here](https://commonmark.org/help/).
 test_that("markdown with urls work",{
 
   skip_on_ci()
-  check_suggests_xml()
+  check_suggests()
 
   text_sample <- "
   Hyperlink [here](https://commonmark.org/help/) and to [google](https://www.google.com)
@@ -2321,7 +2321,7 @@ test_that("markdown with urls work",{
 test_that("markdown with img refs work",{
 
   skip_on_ci()
-  check_suggests_xml()
+  check_suggests()
 
   ref_png <- file.path(system.file(package = "gt"),"/graphics/test_image.png")
   ref_svg <- file.path(system.file(package = "gt"),"/graphics/test_image.svg")
@@ -2380,7 +2380,7 @@ test_that("markdown with img refs work",{
 test_that("table with image refs work - local only",{
 
   skip_on_ci()
-  check_suggests_xml()
+  check_suggests()
 
   ref_png <- file.path(system.file(package = "gt"),"/graphics/test_image.png")
   ref_svg <- file.path(system.file(package = "gt"),"/graphics/test_image.svg")
@@ -2466,7 +2466,7 @@ test_that("table with image refs work - local only",{
 test_that("table with image refs work - https",{
 
   skip_on_ci()
-  check_suggests_xml()
+  check_suggests()
 
   https_image_gt <- dplyr::tribble(
     ~https_image,
@@ -2511,7 +2511,7 @@ test_that("table with image refs work - https",{
 test_that("table with image refs work - local only - setting image widths and heights",{
 
   skip_on_ci()
-  check_suggests_xml()
+  check_suggests()
 
   ref_png <- file.path(system.file(package = "gt"),"/graphics/test_image.png")
   ref_svg <- file.path(system.file(package = "gt"),"/graphics/test_image.svg")
