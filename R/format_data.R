@@ -5610,8 +5610,7 @@ fmt_date <- function(
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
   valid_class <- c("Date", "POSIXt", "character")
-  extra_msg <- "Allowed types are `Date`, `POSIXt`, and `character` (with
-      ISO-8601 formatted dates)."
+  extra_msg <- c(i = "If character data is supplied, it should be ISO-8601 formatted dates.")
   check_column_valid(data, {{ columns }}, valid_class, extra_msg = extra_msg)
 
   # Pass `data`, `columns`, `rows`, and the formatting

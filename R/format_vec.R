@@ -3362,7 +3362,7 @@ check_column_valid <- function(data,
 
   if (!all_valid) {
     cli::cli_abort(c(
-      "{.arg columns} must be {.or {valid_classes}}.",
+      "{.arg columns} must be {.or {valid_classes}} data.",
       extra_msg
     ), call = call)
   }
