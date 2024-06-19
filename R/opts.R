@@ -1390,8 +1390,8 @@ opt_table_outline <- function(
   # Get vector of `tab_options()` arg names for the table border styles
   options_vec <- get_tab_options_arg_vec(pattern = pattern)
 
-  if (is.null(width)) width <- NA_character_
-  if (is.null(color)) color <- NA_character_
+  width <- width %||% NA_character_
+  color <- color %||% NA_character_
 
   values_vec <-
     dplyr::case_when(
