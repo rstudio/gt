@@ -221,7 +221,7 @@ table (e.g., with \code{\link[=cols_label]{cols_label()}}, \code{\link[=tab_head
     color = "gray",
     add_row_striping = FALSE
   ) |>
-  opt_table_outline(style = "invisible") \%>\%
+  opt_table_outline(style = "invisible") |>
   tab_style(
     style = cell_fill(color = "gray95"),
     locations = cells_body(columns = l_time_domain)

@@ -281,7 +281,7 @@ country codes like \code{"SU"} ('USSR'), \code{"CS"} ('Czechoslovakia'), and \co
   dplyr::select(
     contains("title"), run_time, director, countries_of_origin, imdb_url
   ) |>
-  gt() \%>\%
+  gt() |>
   tab_header(title = "Feature Films in Competition at the 1959 Festival") |>
   fmt_country(columns = countries_of_origin, sep = ", ") |>
   fmt_url(

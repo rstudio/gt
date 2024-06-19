@@ -296,7 +296,7 @@ the URLs by eliminating any leading \code{"https://"} or \code{"www."} parts.
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_stub()
-  ) \%>\%
+  ) |>
   opt_vertical_padding(scale = 0.75)
 }\if{html}{\out{</div>}}
 
@@ -344,7 +344,7 @@ the film's title, its original title (if present), and the link icon.
   dplyr::select(
     contains("title"), run_time, director, imdb_url
   ) |>
-  gt() \%>\%
+  gt() |>
   tab_header(title = "Feature Films in Competition at the 2021 Festival") |>
   fmt_url(
     columns = imdb_url,

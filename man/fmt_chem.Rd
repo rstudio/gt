@@ -172,7 +172,7 @@ products of photolysis reactions). These columns will be formatted by
 \code{fmt_chem()}. The compound formulas will be merged with the compound
 names with \code{\link[=cols_merge]{cols_merge()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{photolysis \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{photolysis |>
   dplyr::filter(cmpd_name \%in\% c(
     "hydrogen peroxide", "nitrous acid",
     "nitric acid", "acetaldehyde",
