@@ -171,6 +171,7 @@ render_as_ihtml <- function(data, id) {
 
   # Get options settable in `tab_options()`
   opt_val <- dt_options_get_value
+  height <- opt_val(data = data, option = "ihtml_height")
   use_pagination <- opt_val(data = data, option = "ihtml_use_pagination")
   use_pagination_info <- opt_val(data = data, option = "ihtml_use_pagination_info")
   use_search <- opt_val(data = data, option = "ihtml_use_search")
@@ -551,7 +552,7 @@ render_as_ihtml <- function(data, id) {
       rowStyle = NULL,
       fullWidth = TRUE,
       width = table_width,
-      height = "auto",
+      height = height,
       theme = tbl_theme,
       language = lang_defs,
       elementId = id,
