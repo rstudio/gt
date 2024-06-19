@@ -700,6 +700,90 @@ values are sale prices in U.S. Dollars (hovering over data points gives
 correctly formatted values). Finally, having a reference line based on the
 median gives pretty useful information. Seems like customers preferred
 getting the <code>"chicken"</code>-type pizzas in large size!</p>
+<p>Using the <code><a href="gibraltar.html">gibraltar</a></code> dataset, let's make a series of nanoplots across the
+meteorological parameters of temperature, humidity, and wind speed. We'll
+want to customize the appearance of the plots across three columns and we
+can make this somewhat simpler by assigning a common set of options through
+<code><a href="nanoplot_options.html">nanoplot_options()</a></code>. In this table we want to make comparisons across
+nanoplots in a particular column easier, so, we'll set <code>autoscale = TRUE</code> so
+that there is a common y-axis scale for each of the parameters (based on the
+extents of the data).</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">nanoplot_options_list</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/nanoplot_options.html">nanoplot_options</a></span><span class="op">(</span></span>
+<span>    data_point_radius <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>,</span>
+<span>    data_point_stroke_width <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>,</span>
+<span>    data_point_stroke_color <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>    data_point_fill_color <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>    data_line_stroke_width <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>,</span>
+<span>    data_line_stroke_color <span class="op">=</span> <span class="st">"gray"</span>,</span>
+<span>    show_data_line <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    show_data_points <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    show_data_area <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">gibraltar</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&lt;=</span> <span class="st">"2023-05-14"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu">hms</span><span class="fu">::</span><span class="fu">as_hms</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">time</span>, <span class="st">":00"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>humidity <span class="op">=</span> <span class="va">humidity</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">time</span>, <span class="va">temp</span>, <span class="va">humidity</span>, <span class="va">wind_speed</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
+<span>    time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">time</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span>,</span>
+<span>    temp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">temp</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span>,</span>
+<span>    humidity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">humidity</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span>,</span>
+<span>    wind_speed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">wind_speed</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span>,</span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>is_satsun <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html" class="external-link">wday</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"date"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Meteorological Summary of Gibraltar Station"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Data taken from May 1-14, 2023."</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_date.html">fmt_date</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="../reference/stub.html">stub</a></span><span class="op">(</span><span class="op">)</span>, date_style <span class="op">=</span> <span class="st">"wd_m_day_year"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_nanoplot.html">cols_nanoplot</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="va">temp</span>,</span>
+<span>    columns_x_vals <span class="op">=</span> <span class="va">time</span>,</span>
+<span>    expand_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">86400</span><span class="op">)</span>,</span>
+<span>    autoscale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    new_col_name <span class="op">=</span> <span class="st">"temperature_nano"</span>,</span>
+<span>    new_col_label <span class="op">=</span> <span class="st">"Temperature"</span>,</span>
+<span>    options <span class="op">=</span> <span class="va">nanoplot_options_list</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_nanoplot.html">cols_nanoplot</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="va">humidity</span>,</span>
+<span>    columns_x_vals <span class="op">=</span> <span class="va">time</span>,</span>
+<span>    expand_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">86400</span><span class="op">)</span>,</span>
+<span>    autoscale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    new_col_name <span class="op">=</span> <span class="st">"humidity_nano"</span>,</span>
+<span>    new_col_label <span class="op">=</span> <span class="st">"Humidity"</span>,</span>
+<span>    options <span class="op">=</span> <span class="va">nanoplot_options_list</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_nanoplot.html">cols_nanoplot</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="va">wind_speed</span>,</span>
+<span>    columns_x_vals <span class="op">=</span> <span class="va">time</span>,</span>
+<span>    expand_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">86400</span><span class="op">)</span>,</span>
+<span>    autoscale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    new_col_name <span class="op">=</span> <span class="st">"wind_speed_nano"</span>,</span>
+<span>    new_col_label <span class="op">=</span> <span class="st">"Wind Speed"</span>,</span>
+<span>    options <span class="op">=</span> <span class="va">nanoplot_options_list</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_units.html">cols_units</a></span><span class="op">(</span></span>
+<span>    temperature_nano <span class="op">=</span> <span class="st">":degree:C"</span>,</span>
+<span>    humidity_nano <span class="op">=</span> <span class="st">"% (RH)"</span>,</span>
+<span>    wind_speed_nano <span class="op">=</span> <span class="st">"m s^-1"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">is_satsun</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#E5FEFE"</span><span class="op">)</span>,</span>
+<span>    values <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    targets <span class="op">=</span> <span class="st">"row"</span>,</span>
+<span>    extents <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"body"</span>, <span class="st">"stub"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_text.html">cell_text</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"center"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_column_labels.html">cells_column_labels</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_6.png" alt="This image of a table was generated from the sixth code example in the `cols_nanoplot()` help file." style="width:100%;"></p>
 <p>Box plots can be generated, and we just need to use <code>plot_type = "boxplot"</code>
 to make that type of nanoplot. Using a small portion of the <code><a href="pizzaplace.html">pizzaplace</a></code>
 dataset, we will create a simple table that displays a box plot of pizza
@@ -737,7 +821,7 @@ hover.</p>
 <span>    targets <span class="op">=</span> <span class="st">"row"</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>column_labels.hidden <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_6.png" alt="This image of a table was generated from the sixth code example in the `cols_nanoplot()` help file." style="width:100%;"></p>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_7.png" alt="This image of a table was generated from the seventh code example in the `cols_nanoplot()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
