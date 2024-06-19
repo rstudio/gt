@@ -506,7 +506,7 @@ gtsave_filename <- function(path, filename) {
 
   # The use of `fs::path_abs()` works around
   # the saving code in `htmltools::save_html()`
-  # See htmltools Issue #165 for more details
+  # See rstudio/htmltools#165 for more details
   as.character(
     fs::path_expand(
       fs::path_abs(

@@ -7832,7 +7832,7 @@ get_localized_duration_patterns <- function(
         grepl("type", colnames(durations), fixed = TRUE)
     ] %>%
     dplyr::filter(type == .env$type) %>%
-    dplyr::select(-type)
+    dplyr::select(-"type")
 
   colnames(pattern_tbl) <- gsub("(duration|-|unitPattern-count)", "", colnames(pattern_tbl))
 
@@ -8788,7 +8788,7 @@ format_tf_by_context <- function(
 
 make_span_with_color <- function(text, color = NULL) {
 
-  if (is.null(color) | is.null(text) | is.na(color)) {
+  if (is.null(color) || is.null(text) || is.na(color)) {
     return(text)
   }
 
@@ -11075,7 +11075,7 @@ fmt_image <- function(
   #
 
   # If width & height not provided, default width to '2em' and let width scale
-  if (is.null(height) & is.null(width)) {
+  if (is.null(height) && is.null(width)) {
     height <- "2em"
   }
 

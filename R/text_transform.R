@@ -402,6 +402,7 @@ text_case_match <- function(
       # a character base class (like fontawesome icons) become
       # stripped of other classes and acceptable input for
       # the `case_match()` function
+      # See https://github.com/r-lib/vctrs/issues/1622 for vctrs::vec_case_match
       for (i in seq_along(x_list)) {
 
         x_list[[i]] <- rlang::set_env(x_list[[i]])
