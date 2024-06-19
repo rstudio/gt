@@ -588,7 +588,7 @@ fmt_number <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -1326,7 +1326,7 @@ fmt_scientific <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -1790,7 +1790,7 @@ fmt_engineering <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -3170,7 +3170,7 @@ fmt_fraction <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -4176,7 +4176,7 @@ fmt_roman <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -4456,7 +4456,7 @@ fmt_index <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -4866,7 +4866,7 @@ fmt_spelled_num <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -5245,7 +5245,7 @@ fmt_bytes <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -5619,7 +5619,7 @@ fmt_date <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -5965,7 +5965,7 @@ fmt_time <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -6964,7 +6964,7 @@ fmt_datetime <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -7443,7 +7443,7 @@ fmt_duration <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
