@@ -7327,19 +7327,7 @@ fmt_duration <- function(
     ))
   }
 
-  if (
-    !is.null(max_output_units) &&
-    (
-      !is.numeric(max_output_units) ||
-      length(max_output_units) != 1 ||
-      max_output_units < 1
-    )
-  ) {
-    cli::cli_abort(c(
-      "The numeric value supplied for `max_output_units` is invalid.",
-      "*" = "Must either be `NULL` or an integer value greater than zero."
-    ))
-  }
+  check_number_whole(max_output_units, min = 1, allow_null = TRUE)
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
