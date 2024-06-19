@@ -515,7 +515,9 @@ create_columns_component_l <- function(data, colwidth_df) {
       is_spanner_na <- is.na(spanners_rle$values)
       is_spanner_single <- spanners_rle$lengths == 1
 
-      span_widths <- calculate_multicolumn_width_text_l(begins = begins, ends = ends, colwidth_df = colwidth_df)
+      firsts <- utils::head(cumsum(c(1L, spanners_rle$lengths)), -1L)
+      lasts <- cumsum(spanners_rle$lengths)
+      span_widths <- calculate_multicolumn_width_text_l(begins = firsts, ends = lasts, colwidth_df = colwidth_df)
       tex_widths <-
         ifelse(
           span_widths == "",
@@ -1676,6 +1678,8 @@ create_colwidth_df_l <- function(data) {
 
       if (tbl_width == 'auto') {
         width_df$lw[i] <- pct
+      } else if (endsWith(tbl_width, "%")) {
+        width_df$lw[i] <- pct * as.numeric(gsub("%", "", tbl_width))
       } else {
         width_df$pt[i] <- pct * convert_to_pt(tbl_width)
       }
@@ -1687,8 +1691,8 @@ create_colwidth_df_l <- function(data) {
   if (length(stub_layout) > 1L) {
     if ('stub' %in% width_df$type) {
       stub_row_group <-
-        mutate(
-          filter(width_df, type == 'stub'),
+        dplyr::mutate(
+          dplyr::filter(width_df, type == 'stub'),
           type = 'stub_row_group',
           lw = lw / 2,
           pt = pt / 2
@@ -1700,7 +1704,7 @@ create_colwidth_df_l <- function(data) {
       stub_row_group <- data.frame(type = 'stub_row_group', lw = 0, pt = 0)
     }
 
-    width_df <- bind_rows(stub_row_group, width_df)
+    width_df <- dplyr::bind_rows(stub_row_group, width_df)
   }
 
   width_df$unspec <- as.integer(width_df$lw == 0 & width_df$pt == 0)
