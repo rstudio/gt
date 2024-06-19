@@ -1718,17 +1718,87 @@ fmt_scientific <- function(
 #'
 #' @section Examples:
 #'
-#' Use the [`exibble`] dataset to create a **gt** table. Format the `num` column
-#' to display values in engineering notation using `fmt_engineering()`.
+#' Let's define a data frame that contains two columns of values (one `small`
+#' and one `large`). After creating a simple **gt** table from `small_large_tbl`
+#' we'll call `fmt_engineering()` on both columns.
 #'
 #' ```r
-#' exibble |>
+#' small_large_tbl <-
+#'   dplyr::tibble(
+#'     small = 10^(-12:-1),
+#'     large = 10^(1:12)
+#'   )
+#'
+#' small_large_tbl |>
 #'   gt() |>
-#'   fmt_engineering(columns = num)
+#'   fmt_engineering()
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_engineering_1.png")`
+#' }}
+#'
+#' Notice that within the form of *m* x 10^*n*, the *n* values move in steps of
+#' 3 (away from `0`), and *m* values can have 1-3 digits before the decimal.
+#' Further to this, any values where *n* is `0` results in a display of only *m*
+#' (the first two values in the `large` column demonstrates this).
+#'
+#' Engineering notation expresses values so that they are align to certain SI
+#' prefixes. Here is a table that compares select SI prefixes and their symbols
+#' to decimal and engineering-notation representations of the key numbers.
+#'
+#' ```r
+#' prefixes_tbl <-
+#'   dplyr::tibble(
+#'     name = c(
+#'       "peta", "tera", "giga", "mega", "kilo",
+#'       NA,
+#'       "milli", "micro", "nano", "pico", "femto"
+#'     ),
+#'     symbol = c(
+#'       "P", "T", "G", "M", "k",
+#'       NA,
+#'       "m", ":micro:", "n", "p", "f"
+#'     ),
+#'     decimal = c(10^(seq(15, -15, -3))),
+#'     engineering = decimal
+#'   )
+#'
+#' prefixes_tbl |>
+#'   gt() |>
+#'   fmt_number(columns = decimal, n_sigfig = 1) |>
+#'   fmt_engineering(columns = engineering) |>
+#'   fmt_units(columns = symbol) |>
+#'   sub_missing()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_engineering_2.png")`
+#' }}
+#'
+#' The default method of styling the notation uses the '*m* x 10^*n*'
+#' construction but this can be changed to a '*m*E*n*' style via the `exp_style`
+#' argument. We can supply any single letter here and optionally affix a `"1"`
+#' to indicate there should not be any zero-padding of the *n* value. Two calls
+#' of `fmt_engineering()` are used here to show different options for styling
+#' in engineering notation.
+#'
+#' ```r
+#' small_large_tbl |>
+#'   gt() |>
+#'   fmt_engineering(
+#'     columns = small,
+#'     exp_style = "E"
+#'   ) |>
+#'   fmt_engineering(
+#'     columns = large,
+#'     exp_style = "e1",
+#'     force_sign_n = TRUE
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_engineering_3.png")`
 #' }}
 #'
 #' @family data formatting functions
