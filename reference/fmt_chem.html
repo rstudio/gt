@@ -247,7 +247,7 @@ chemistry notation (the first has compounds, and the second column has the
 products of photolysis reactions). These columns will be formatted by
 <code>fmt_chem()</code>. The compound formulas will be merged with the compound
 names with <code><a href="cols_merge.html">cols_merge()</a></code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">photolysis</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">photolysis</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">cmpd_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"hydrogen peroxide"</span>, <span class="st">"nitrous acid"</span>,</span>
 <span>    <span class="st">"nitric acid"</span>, <span class="st">"acetaldehyde"</span>,</span>
