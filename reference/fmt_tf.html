@@ -143,9 +143,8 @@ a vector of colors (up to a length of 3) to the <code>colors</code> argument.</p
 <dd><p><em>Columns to target</em></p>
 <p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>Can either be a series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of
-column indices, or a select helper function. Examples of select helper
-functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
+column indices, or a select helper function (e.g. <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>,
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code> and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>).</p></dd>
 
 
 <dt>rows</dt>
@@ -155,10 +154,9 @@ functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_w
 undergo formatting. The default <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> results in all rows in
 <code>columns</code> being formatted. Alternatively, we can supply a vector of row
 captions within <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of row indices, or a select helper
-function. Examples of select helper functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and
-<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>. We can also use expressions to filter down to the rows we
-need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></dd>
+function (e.g. <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>,
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>). We can also use expressions to filter
+down to the rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></dd>
 
 
 <dt>tf_style</dt>

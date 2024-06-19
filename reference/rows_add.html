@@ -120,10 +120,10 @@ exists in the table. Two-sided formulas with column-resolving expressions
 (e.g, <code>&lt;expr&gt; ~ &lt;value vector&gt;</code>) can also be used, where the left-hand side
 corresponds to selections of columns. Column names should be enclosed in
 <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> and select helpers like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> can be used in the LHS. The
-length of the longest vector in <code>&lt;value vector&gt;</code> determines how many new
-rows will be added. Single values in <code>&lt;value vector&gt;</code> will be repeated down
-in cases where there are multiple rows to be added.</p></dd>
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> can be used in the LHS. The length of the
+longest vector in <code>&lt;value vector&gt;</code> determines how many new rows will be added.
+Single values in <code>&lt;value vector&gt;</code> will be repeated down in cases where
+there are multiple rows to be added.</p></dd>
 
 
 <dt>.list</dt>

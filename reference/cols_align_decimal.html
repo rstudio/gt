@@ -102,10 +102,9 @@ this type of alignment).</p>
 <p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>The columns for which decimal alignment should be applied. Can either be a
 series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices, or a
-select helper function. Examples of select helper functions include
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>. By default this is set to <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>
-which means that decimal alignment will be attempted on all columns.</p></dd>
+select helper function (e.g. <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>,
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>). By default this is set to
+<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> which means that the decimal alignment affects all columns.</p></dd>
 
 
 <dt>dec_mark</dt>
