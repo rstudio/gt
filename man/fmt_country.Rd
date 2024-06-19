@@ -309,6 +309,42 @@ country codes like \code{"SU"} ('USSR'), \code{"CS"} ('Czechoslovakia'), and \co
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_3.png" alt="This image of a table was generated from the third code example in the `fmt_country()` help file." style="width:100\%;">
 }}
+
+Country names can sometimes pair nicely with flag-based graphics. In this
+example (using a different portion of the \code{\link{films}} dataset) we use
+\code{fmt_country()} along with \code{\link[=fmt_flag]{fmt_flag()}}. The formatted country names are then
+merged into the same cells as the icons via \code{\link[=cols_merge]{cols_merge()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{films |>
+  dplyr::filter(director == "Jean-Pierre Dardenne, Luc Dardenne") |>
+  dplyr::select(title, year, run_time, countries_of_origin) |>
+  gt() |>
+  tab_header(title = "In Competition Films by the Dardenne Bros.") |>
+  cols_add(country_flag = countries_of_origin) |>
+  fmt_flag(columns = country_flag) |>
+  fmt_country(columns = countries_of_origin, sep = ", ") |>
+  cols_merge(
+    columns = c(countries_of_origin, country_flag),
+    pattern = "\{2\}<br>\{1\}"
+  ) |>
+  tab_style(
+    style = cell_text(size = px(9)),
+    locations = cells_body(columns = countries_of_origin)
+  ) |>
+  cols_merge(columns = c(title, year), pattern = "\{1\} (\{2\})") |>
+  opt_vertical_padding(scale = 0.5) |>
+  opt_horizontal_padding(scale = 3) |>
+  opt_table_font(font = google_font("PT Sans")) |>
+  opt_stylize(style = 1, color = "blue") |>
+  tab_options(
+    heading.title.font.size = px(26),
+    column_labels.hidden = TRUE
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_country()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
