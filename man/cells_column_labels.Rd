@@ -12,7 +12,7 @@ cells_column_labels(columns = everything())
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to which targeting operations are constrained. Can either
-be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
+be a series of column names provided in \code{c()}, a vector of column indices,
 or a select helper function. Examples of select helper functions include
 \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
 \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}

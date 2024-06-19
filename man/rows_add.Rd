@@ -31,7 +31,7 @@ name in \code{.data}. Name-value pairs, in the form of
 exists in the table. Two-sided formulas with column-resolving expressions
 (e.g, \verb{<expr> ~ <value vector>}) can also be used, where the left-hand side
 corresponds to selections of columns. Column names should be enclosed in
-\code{\link[=c]{c()}} and select helpers like \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{c()} and select helpers like \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
 \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}} can be used in the LHS. The
 length of the longest vector in \verb{<value vector>} determines how many new
 rows will be added. Single values in \verb{<value vector>} will be repeated down

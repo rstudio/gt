@@ -1790,7 +1790,7 @@ extract_summary <- function(data) {
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for extraction. The default [everything()] results in all
 #'   rows in `columns` being formatted. Alternatively, we can supply a vector of
-#'   row IDs within [c()], a vector of row indices, or a select helper function.
+#'   row IDs within `c()`, a vector of row indices, or a select helper function.
 #'   Examples of select helper functions include [starts_with()], [ends_with()],
 #'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
 #'   We can also use expressions to filter down to the rows we need (e.g.,

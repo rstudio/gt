@@ -51,7 +51,7 @@
 #'   exists in the table. Two-sided formulas with column-resolving expressions
 #'   (e.g, `<expr> ~ <value vector>`) can also be used, where the left-hand side
 #'   corresponds to selections of columns. Column names should be enclosed in
-#'   [c()] and select helpers like [starts_with()], [ends_with()], [contains()],
+#'   `c()` and select helpers like [starts_with()], [ends_with()], [contains()],
 #'   [matches()], [one_of()], and [everything()] can be used in the LHS. The
 #'   length of the longest vector in `<value vector>` determines how many new
 #'   rows will be added. Single values in `<value vector>` will be repeated down

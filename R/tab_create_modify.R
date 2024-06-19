@@ -242,7 +242,7 @@ tab_header <- function(
 #'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
 #'
 #'   The columns to serve as components of the spanner. Can either be a series
-#'   of column names provided in [c()], a vector of column indices, or a select
+#'   of column names provided in `c()`, a vector of column indices, or a select
 #'   helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. This argument works in tandem with the
@@ -886,7 +886,7 @@ resolve_spanned_column_names <- function(
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to consider for the splitting, relabeling, and spanner setting
-#'   operations. Can either be a series of column names provided in [c()], a
+#'   operations. Can either be a series of column names provided in `c()`, a
 #'   vector of column indices, or a select helper function. Examples of select
 #'   helper functions include [starts_with()], [ends_with()], [contains()],
 #'   [matches()], [one_of()], [num_range()], and [everything()].
@@ -1461,7 +1461,7 @@ str_split_across <- function(
 #'   `<row-targeting expression>` // **required**
 #'
 #'   The rows to be made components of the row group. We can supply a vector of
-#'   row ID values within [c()], a vector of row indices, or use select helpers
+#'   row ID values within `c()`, a vector of row indices, or use select helpers
 #'   here. Examples of select helper functions include [starts_with()],
 #'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
 #'   [everything()]. We can also use expressions to filter down to the rows we
@@ -1899,7 +1899,7 @@ tab_stubhead <- function(
 #'   `<row-targeting expression>` // **required**
 #'
 #'   The rows to consider for the indentation change. We can supply a vector of
-#'   row ID values within [c()], a vector of row indices, or use select helpers
+#'   row ID values within `c()`, a vector of row indices, or use select helpers
 #'   here. Examples of select helper functions include [starts_with()],
 #'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
 #'   [everything()]. We can also use expressions to filter down to the rows we

@@ -23,7 +23,7 @@ Expressions for the assignment of column widths for the table columns in
 left-hand side corresponds to selections of columns and the right-hand side
 evaluates to single-length character values in the form \verb{\{##\}px} (i.e.,
 pixel dimensions); the \code{\link[=px]{px()}} helper function is best used for this
-purpose. Column names should be enclosed in \code{\link[=c]{c()}}. The column-based select
+purpose. Column names should be enclosed in \code{c()}. The column-based select
 helpers \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
 \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}} can be used in the LHS. Subsequent
 expressions that operate on the columns assigned previously will result in

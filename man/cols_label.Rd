@@ -22,7 +22,7 @@ Expressions for the assignment of column labels for the table columns in
 \code{.data}. Two-sided formulas (e.g., \verb{<LHS> ~ <RHS>}) can be used, where the
 left-hand side corresponds to selections of columns and the right-hand side
 evaluates to single-length values for the label to apply. Column names
-should be enclosed in \code{\link[=c]{c()}}. Select helpers like \code{\link[=starts_with]{starts_with()}},
+should be enclosed in \code{c()}. Select helpers like \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}
 can be used in the LHS. Named arguments are also valid as input for simple
 mappings of column name to label text; they should be of the form \verb{<column name> = <label>}. Subsequent expressions that operate on the columns

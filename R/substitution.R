@@ -38,7 +38,7 @@
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which substitution operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
+#'   be a series of column names provided in `c()`, a vector of column indices,
 #'   or a select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()].
@@ -50,7 +50,7 @@
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
+#'   supply a vector of row IDs within `c()`, a vector of row indices, or a
 #'   select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
@@ -243,7 +243,7 @@ fmt_missing <- function(
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which substitution operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
+#'   be a series of column names provided in `c()`, a vector of column indices,
 #'   or a select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()].
@@ -255,7 +255,7 @@ fmt_missing <- function(
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
+#'   supply a vector of row IDs within `c()`, a vector of row indices, or a
 #'   select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
@@ -402,7 +402,7 @@ sub_zero <- function(
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which substitution operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
+#'   be a series of column names provided in `c()`, a vector of column indices,
 #'   or a select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()].
@@ -414,7 +414,7 @@ sub_zero <- function(
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
+#'   supply a vector of row IDs within `c()`, a vector of row indices, or a
 #'   select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
@@ -677,7 +677,7 @@ sub_small_vals <- function(
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which substitution operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
+#'   be a series of column names provided in `c()`, a vector of column indices,
 #'   or a select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()].
@@ -689,7 +689,7 @@ sub_small_vals <- function(
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
+#'   supply a vector of row IDs within `c()`, a vector of row indices, or a
 #'   select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
@@ -963,7 +963,7 @@ check_sub_fn_sign <- function(sign, call = rlang::caller_env()) {
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which substitution operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
+#'   be a series of column names provided in `c()`, a vector of column indices,
 #'   or a select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()].
@@ -975,7 +975,7 @@ check_sub_fn_sign <- function(sign, call = rlang::caller_env()) {
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
+#'   supply a vector of row IDs within `c()`, a vector of row indices, or a
 #'   select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
