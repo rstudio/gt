@@ -9227,7 +9227,7 @@ fmt_units <- function(
 #' names with [cols_merge()].
 #'
 #' ```r
-#' photolysis %>%
+#' photolysis |>
 #'   dplyr::filter(cmpd_name %in% c(
 #'     "hydrogen peroxide", "nitrous acid",
 #'     "nitric acid", "acetaldehyde",
@@ -9670,7 +9670,7 @@ format_units_by_context <- function(
 #'   tab_style(
 #'     style = cell_text(weight = "bold"),
 #'     locations = cells_stub()
-#'   ) %>%
+#'   ) |>
 #'   opt_vertical_padding(scale = 0.75)
 #' ```
 #'
@@ -9720,7 +9720,7 @@ format_units_by_context <- function(
 #'   dplyr::select(
 #'     contains("title"), run_time, director, imdb_url
 #'   ) |>
-#'   gt() %>%
+#'   gt() |>
 #'   tab_header(title = "Feature Films in Competition at the 2021 Festival") |>
 #'   fmt_url(
 #'     columns = imdb_url,
@@ -12149,7 +12149,7 @@ fmt_flag <- function(
 #'   dplyr::select(
 #'     contains("title"), run_time, director, countries_of_origin, imdb_url
 #'   ) |>
-#'   gt() %>%
+#'   gt() |>
 #'   tab_header(title = "Feature Films in Competition at the 1959 Festival") |>
 #'   fmt_country(columns = countries_of_origin, sep = ", ") |>
 #'   fmt_url(
@@ -13182,7 +13182,7 @@ fmt_icon <- function(
 #'     color = "gray",
 #'     add_row_striping = FALSE
 #'   ) |>
-#'   opt_table_outline(style = "invisible") %>%
+#'   opt_table_outline(style = "invisible") |>
 #'   tab_style(
 #'     style = cell_fill(color = "gray95"),
 #'     locations = cells_body(columns = l_time_domain)
