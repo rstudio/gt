@@ -4347,6 +4347,10 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   page number. With `"simple"`, only the 'previous' and 'next' buttons are
 #'   displayed.
 #'
+#' @param ihtml.height *Height of interactive HTML table*
+#'
+#'   Height of the table in pixels. Defaults to `"auto"` for automatic sizing.
+#'
 #' @param page.orientation *Set RTF page orientation*
 #'
 #'   For RTF output, this provides an two options for page
@@ -4711,6 +4715,7 @@ tab_options <- function(
     ihtml.page_size_default = NULL,
     ihtml.page_size_values = NULL,
     ihtml.pagination_type = NULL,
+    ihtml.height = NULL,
     page.orientation = NULL,
     page.numbering = NULL,
     page.header.use_tbl_headings = NULL,

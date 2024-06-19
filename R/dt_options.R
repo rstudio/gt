@@ -224,6 +224,7 @@ dt_options_tbl <-
     "container_overflow_x",              FALSE,  "container",        "overflow","auto",
     "container_overflow_y",              FALSE,  "container",        "overflow","auto",
     "ihtml_active",                      FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_height",                      FALSE,  "interactive",      "px",      "auto",
     "ihtml_use_pagination",              FALSE,  "interactive",      "logical", TRUE,
     "ihtml_use_pagination_info",         FALSE,  "interactive",      "logical", TRUE,
     "ihtml_use_sorting",                 FALSE,  "interactive",      "logical", TRUE,

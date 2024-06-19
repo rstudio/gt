@@ -1,5 +1,7 @@
 # gt (development version)
 
+* `opt_interactive()` gains `height` to help specify your widget's height (@olivroy, #1544).
+
 * `opt_interactive()` now shows row names if `rownames_to_stub = TRUE` (@olivroy, #1702). 
 
 * `data_color()` throws a more informative error message if `rows` didn't resolve to anything (@olivroy, #1659).
