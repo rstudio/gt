@@ -1127,34 +1127,50 @@ fmt_integer <- function(
 #'
 #' @section Examples:
 #'
-#' Let's use the [`exibble`] dataset to create a simple **gt** table. We'll
-#' elect to the `num` column as partially numeric and partially in scientific
-#' notation. This is done with two separate calls of [fmt_number()] and
-#' `fmt_scientific()`. We'll use the expressions `num > 500` and `num <= 500` in
-#' the functions' respective `rows` arguments to target formatting to specific
-#' cells.
+#' Let's define a data frame that contains two columns of values (one `small`
+#' and one `large`). After creating a simple **gt** table from `small_large_tbl`
+#' we'll call `fmt_scientific()` on both columns.
 #'
 #' ```r
-#' exibble |>
-#'   gt() |>
-#'   fmt_number(
-#'     columns = num,
-#'     rows = num > 500,
-#'     decimals = 1,
-#'     scale_by = 1/1000,
-#'     pattern = "{x}K"
-#'   ) |>
-#'   fmt_scientific(
-#'     columns = num,
-#'     rows = num <= 500,
-#'     decimals = 1
+#' small_large_tbl <-
+#'   dplyr::tibble(
+#'     small = 10^(-12:-1),
+#'     large = 10^(1:12)
 #'   )
+#'
+#' small_large_tbl |>
+#'   gt() |>
+#'   fmt_scientific()
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_scientific_1.png")`
 #' }}
 #'
+#' The default method of styling the notation uses the '*m* x 10^*n*'
+#' construction but this can be changed to a '*m*E*n*' style via the `exp_style`
+#' argument. We can supply any single letter here and optionally affix a `"1"`
+#' to indicate there should not be any zero-padding of the *n* value. Two calls
+#' of `fmt_scientific()` are used here to show different options for styling
+#' in scientific notation.
+#'
+#' ```r
+#' small_large_tbl |>
+#'   gt() |>
+#'   fmt_scientific(
+#'     columns = small,
+#'     exp_style = "E"
+#'   ) |>
+#'   fmt_scientific(
+#'     columns = large,
+#'     exp_style = "e1",
+#'     force_sign_n = TRUE
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_scientific_2.png")`
+#' }}
 #'
 #' Taking a portion of the [`reactions`] dataset, we can create a **gt** table
 #' that contains reaction rate constants that should be expressed in scientific
@@ -1189,7 +1205,7 @@ fmt_integer <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_fmt_scientific_2.png")`
+#' `r man_get_image_tag(file = "man_fmt_scientific_3.png")`
 #' }}
 #'
 #' The [`constants`] table contains a plethora of data on the fundamental
@@ -1220,7 +1236,7 @@ fmt_integer <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_fmt_scientific_3.png")`
+#' `r man_get_image_tag(file = "man_fmt_scientific_4.png")`
 #' }}
 #'
 #' @family data formatting functions
