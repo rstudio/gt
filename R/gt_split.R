@@ -54,10 +54,9 @@
 #'
 #'   Any columns where vertical splitting across should occur. The splits occur
 #'   to the right of the resolved column names. Can either be a series of column
-#'   names provided in [c()], a vector of column indices, or a select helper
-#'   function. Examples of select helper functions include [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()].
+#'   names provided in `c()`, a vector of column indices, or a select helper
+#'   function (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]).
 #'
 #' @return An object of class `gt_group`.
 #'

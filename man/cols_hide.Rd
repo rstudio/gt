@@ -19,10 +19,9 @@ This is the \strong{gt} table object that is commonly created through use of the
 \verb{<column-targeting expression>} // \strong{required}
 
 The columns to hide in the output display table. Can either be a series of
-column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select
-helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+column names provided in \code{c()}, a vector of column indices, or a select
+helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
 }
 \value{
 An object of class \code{gt_tbl}. \code{data} will be unaltered if \code{columns} is
