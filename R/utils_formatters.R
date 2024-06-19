@@ -74,7 +74,7 @@ normalize_locale <- function(locale = NULL) {
 #' @param locale The user-supplied `locale` value, found in several `fmt_*()`
 #'   functions. This is expected as `NULL` if not supplied by the user.
 #' @noRd
-validate_locale <- function(locale) {
+validate_locale <- function(locale, call = caller_env()) {
 
   # Stop function if the `locale` provided
   # isn't a valid one
@@ -86,8 +86,8 @@ validate_locale <- function(locale) {
 
     cli::cli_abort(c(
       "The supplied `locale` is not available in the list of supported locales.",
-      "*" = "Use {.help [{.fn info_locales}](gt::info_locales)} to see which locales can be used."
-    ))
+      "i" = "Use {.run [info_locales()](gt::info_locales())} to see which locales can be used."
+    ), call = call)
   }
 }
 
@@ -96,7 +96,7 @@ validate_locale <- function(locale) {
 #' @param currency The user-supplied `currency` value, found in the
 #'   `fmt_currency()` function.
 #' @noRd
-validate_currency <- function(currency) {
+validate_currency <- function(currency, call = caller_env()) {
 
   # If `currency` isn't a custom currency object
   # (`gt_currency`), then validate the supplied symbol
@@ -116,9 +116,9 @@ validate_currency <- function(currency) {
   ) {
     cli::cli_abort(c(
       "The supplied `currency` is not available in the list of supported currencies.",
-      "*" = "Use the {.help [{.fn info_currencies}](gt::info_currencies)} function to see which currencies can be used.",
-      "*" = "See {.help [{.fn fmt_currency}](gt::fmt_currency)} to better understand which input types are valid."
-    ))
+      "i" = "Use {.run [info_currencies()](gt::info_currencies())} to see which currencies can be used.",
+      "i" = "See {.help [{.fn fmt_currency}](gt::fmt_currency)} to better understand which input types are valid."
+    ), call = call)
   }
 }
 
