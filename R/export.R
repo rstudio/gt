@@ -502,7 +502,7 @@ gtsave_file_ext <- function(filename) {
 #' @noRd
 gtsave_filename <- function(path, filename) {
 
-  if (is.null(path)) path <- "."
+  path <- path %||% "."
 
   # The use of `fs::path_abs()` works around
   # the saving code in `htmltools::save_html()`

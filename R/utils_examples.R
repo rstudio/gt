@@ -177,33 +177,13 @@ write_gt_examples_qmd_files <- function(
 ) {
 
   if (is.null(topics)) {
+    gt_datasets_and_shiny_fns <-
+      c("countrypops", "sza", "gtcars", "sp500", "pizzaplace", "exibble",
+        "towny", "peeps", "films", "metro", "gibraltar", "constants",
+        "illness", "reactions", "photolysis", "nuclides", "rx_adsl",
+        "rx_addv", "render_gt", "gt_output")
 
-    topics <-
-      base::setdiff(
-        get_topic_names(),
-        c(
-          "countrypops",
-          "sza",
-          "gtcars",
-          "sp500",
-          "pizzaplace",
-          "exibble",
-          "towny",
-          "peeps",
-          "films",
-          "metro",
-          "gibraltar",
-          "constants",
-          "illness",
-          "reactions",
-          "photolysis",
-          "nuclides",
-          "rx_adsl",
-          "rx_addv",
-          "render_gt",
-          "gt_output"
-        )
-      )
+    topics <- base::setdiff(get_topic_names(), gt_datasets_and_shiny_fns)
   }
 
   if (!dir.exists(paths = output_dir)) {

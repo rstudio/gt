@@ -87,7 +87,9 @@ validate_locale <- function(locale, call = rlang::caller_env()) {
     cli::cli_abort(c(
       "The supplied `locale` is not available in the list of supported locales.",
       "i" = "Use {.run [info_locales()](gt::info_locales())} to see which locales can be used."
-    ), call = call)
+      ),
+      call = call
+    )
   }
 }
 
@@ -118,7 +120,9 @@ validate_currency <- function(currency, call = rlang::caller_env()) {
       "The supplied `currency` is not available in the list of supported currencies.",
       "i" = "Use {.run [info_currencies()](gt::info_currencies())} to see which currencies can be used.",
       "i" = "See {.help [{.fn fmt_currency}](gt::fmt_currency)} to better understand which input types are valid."
-    ), call = call)
+      ),
+      call = call
+    )
   }
 }
 
@@ -180,9 +184,7 @@ get_locale_dec_mark <- function(locale = NULL, default) {
 get_locale_range_pattern <- function(locale = NULL) {
 
   # If `locale` is NULL then set the locale to 'en'
-  if (is.null(locale)) {
-    locale <- "en"
-  }
+  locale <- locale %||% "en"
 
   # Get the correct `range_pattern` value from the `gt:::locales` lookup table
   range_pattern <-
@@ -237,9 +239,7 @@ get_locale_idx_set <- function(locale = NULL) {
 get_locale_num_spellout <- function(locale = NULL) {
 
   # If `locale` is NULL then set locale as 'en'
-  if (is.null(locale)) {
-    locale <- "en"
-  }
+  locale <- locale %||% "en"
 
   # If `locale` contains `sr-Latn` then set locale as 'sr-Latn'
   if (grepl("sr-Latn", locale)) {
@@ -278,9 +278,7 @@ get_locale_num_spellout <- function(locale = NULL) {
 get_locale_no_table_data_text <- function(locale = NULL) {
 
   # If `locale` is NULL then use the 'en' locale
-  if (is.null(locale)) {
-    locale <- "en"
-  }
+  locale <- locale %||% "en"
 
   # Get the correct `no_table_data_text` value from the
   # `gt:::locales` lookup table
@@ -318,12 +316,10 @@ get_locale_segments <- function(locale) {
 #' @noRd
 resolve_locale <- function(data, locale) {
 
-  if (is.null(locale)) {
-    locale <- dt_locale_get_value(data = data)
-  }
+  locale <- locale %||% dt_locale_get_value(data = data)
 
   # An 'undetermined' locale should map back to the `"en"` locale
-  if (!is.null(locale) && locale == "und") {
+  if (identical(locale, "und")) {
     locale <- "en"
   }
 

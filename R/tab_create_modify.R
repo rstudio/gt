@@ -3404,10 +3404,7 @@ tab_style <- function(
       FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        x <- names(x)
-        if (is.null(x)) {
-          x <- "bare"
-        }
+        x <- names(x) %||% "bare"
         if (any(grepl("cell_border", x))) {
           x <- "cell_border"
         }

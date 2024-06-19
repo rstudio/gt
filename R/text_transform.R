@@ -225,9 +225,7 @@ text_case_when <- function(
 
       # Don't accept that `.default = NULL` should mean `NA`,
       # it should simply return the original data
-      if (is.null(.default)) {
-        .default <- x
-      }
+      .default <- .default %||% x
 
       # Need to coerce all RHS formula parts to character;
       # this ensure that objects that have classes that include
@@ -397,9 +395,7 @@ text_case_match <- function(
 
       # Don't accept that `.default = NULL` should mean `NA`,
       # it should simply return the original data
-      if (is.null(.default)) {
-        .default <- x
-      }
+      .default <- .default %||% x
 
       # Need to coerce all RHS formula parts to character;
       # this ensure that objects that have classes that include

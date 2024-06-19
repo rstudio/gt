@@ -3958,9 +3958,7 @@ fmt_currency <- function(
 
   # Resolve the currency either from direct input in `currency` or
   # through a locale
-  if (is.null(currency)) {
-    currency <- get_locale_currency_code(locale = locale)
-  }
+  currency <- currency %||% get_locale_currency_code(locale = locale)
 
   # Stop function if `currency` does not have a valid value
   validate_currency(currency = currency)
@@ -7820,7 +7818,7 @@ get_localized_duration_patterns <- function(
     locale
 ) {
 
-  if (is.null(locale)) locale <- "en"
+  locale <- locale %||% "en"
 
   if (type == "wide") type <- "long"
 
@@ -8598,9 +8596,7 @@ fmt_tf <- function(
   locale <- resolve_locale(data = data, locale = locale)
 
   # If `locale` is NULL then use the 'en' locale
-  if (is.null(locale)) {
-    locale <- "en"
-  }
+  locale <- locale %||% "en"
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
@@ -12210,9 +12206,7 @@ fmt_country <- function(
   locale <- resolve_locale(data = data, locale = locale)
 
   # If `locale` is NULL then use the 'en' locale
-  if (is.null(locale)) {
-    locale <- "en"
-  }
+  locale <- locale %||% "en"
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the

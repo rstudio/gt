@@ -2786,15 +2786,9 @@ cols_nanoplot <- function(
     data_vals_plot_x <- NULL
   }
 
-  if (is.null(plot_height)) {
-    plot_height <- "2em"
-  }
-
-  if (is.null(options)) {
-    options_plots <- nanoplot_options()
-  } else {
-    options_plots <- options
-  }
+  plot_height <- plot_height %||% "2em"
+  # use nanoplots_options() by default for options_plots if options not set.
+  options_plots <- options %||% nanoplot_options()
 
   # Get all `y` vals into a vector
   all_y_vals <- unlist(data_vals_plot_y)
@@ -3885,9 +3879,7 @@ cols_merge <- function(
       excl_stub = FALSE
     )
 
-  if (is.null(pattern)) {
-    pattern <- paste0("{", seq_along(columns), "}", collapse = " ")
-  }
+  pattern <- pattern %||% paste0("{", seq_along(columns), "}", collapse = " ")
 
   # Resolve the rows supplied in the `rows` argument
   resolved_rows_idx <-
