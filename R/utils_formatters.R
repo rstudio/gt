@@ -74,7 +74,7 @@ normalize_locale <- function(locale = NULL) {
 #' @param locale The user-supplied `locale` value, found in several `fmt_*()`
 #'   functions. This is expected as `NULL` if not supplied by the user.
 #' @noRd
-validate_locale <- function(locale) {
+validate_locale <- function(locale, call = rlang::caller_env()) {
 
   # Stop function if the `locale` provided
   # isn't a valid one
@@ -86,8 +86,10 @@ validate_locale <- function(locale) {
 
     cli::cli_abort(c(
       "The supplied `locale` is not available in the list of supported locales.",
-      "*" = "Use {.help [{.fn info_locales}](gt::info_locales)} to see which locales can be used."
-    ))
+      "i" = "Use {.run [info_locales()](gt::info_locales())} to see which locales can be used."
+      ),
+      call = call
+    )
   }
 }
 
@@ -96,7 +98,7 @@ validate_locale <- function(locale) {
 #' @param currency The user-supplied `currency` value, found in the
 #'   `fmt_currency()` function.
 #' @noRd
-validate_currency <- function(currency) {
+validate_currency <- function(currency, call = rlang::caller_env()) {
 
   # If `currency` isn't a custom currency object
   # (`gt_currency`), then validate the supplied symbol
@@ -116,9 +118,11 @@ validate_currency <- function(currency) {
   ) {
     cli::cli_abort(c(
       "The supplied `currency` is not available in the list of supported currencies.",
-      "*" = "Use the {.help [{.fn info_currencies}](gt::info_currencies)} function to see which currencies can be used.",
-      "*" = "See {.help [{.fn fmt_currency}](gt::fmt_currency)} to better understand which input types are valid."
-    ))
+      "i" = "Use {.run [info_currencies()](gt::info_currencies())} to see which currencies can be used.",
+      "i" = "See {.help [{.fn fmt_currency}](gt::fmt_currency)} to better understand which input types are valid."
+      ),
+      call = call
+    )
   }
 }
 
@@ -180,9 +184,7 @@ get_locale_dec_mark <- function(locale = NULL, default) {
 get_locale_range_pattern <- function(locale = NULL) {
 
   # If `locale` is NULL then set the locale to 'en'
-  if (is.null(locale)) {
-    locale <- "en"
-  }
+  locale <- locale %||% "en"
 
   # Get the correct `range_pattern` value from the `gt:::locales` lookup table
   range_pattern <-
@@ -237,9 +239,7 @@ get_locale_idx_set <- function(locale = NULL) {
 get_locale_num_spellout <- function(locale = NULL) {
 
   # If `locale` is NULL then set locale as 'en'
-  if (is.null(locale)) {
-    locale <- "en"
-  }
+  locale <- locale %||% "en"
 
   # If `locale` contains `sr-Latn` then set locale as 'sr-Latn'
   if (grepl("sr-Latn", locale)) {
@@ -278,9 +278,7 @@ get_locale_num_spellout <- function(locale = NULL) {
 get_locale_no_table_data_text <- function(locale = NULL) {
 
   # If `locale` is NULL then use the 'en' locale
-  if (is.null(locale)) {
-    locale <- "en"
-  }
+  locale <- locale %||% "en"
 
   # Get the correct `no_table_data_text` value from the
   # `gt:::locales` lookup table
@@ -318,12 +316,10 @@ get_locale_segments <- function(locale) {
 #' @noRd
 resolve_locale <- function(data, locale) {
 
-  if (is.null(locale)) {
-    locale <- dt_locale_get_value(data = data)
-  }
+  locale <- locale %||% dt_locale_get_value(data = data)
 
   # An 'undetermined' locale should map back to the `"en"` locale
-  if (!is.null(locale) && locale == "und") {
+  if (identical(locale, "und")) {
     locale <- "en"
   }
 

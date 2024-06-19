@@ -3340,6 +3340,34 @@ check_vector_valid <- function(x, valid_classes = NULL, call = rlang::caller_env
   invisible()
 }
 
+check_column_valid <- function(data,
+                               columns,
+                               valid_classes,
+                               extra_msg = NULL,
+                               call = rlang::caller_env()) {
+  # This option is FALSE by default
+  if (!isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
+    return()
+  }
+
+  all_valid <- column_classes_are_valid(
+    data = data,
+    columns = {{ columns }},
+    valid_classes = valid_classes,
+    call = call
+  )
+  if (all_valid) {
+    return()
+  }
+
+  if (!all_valid) {
+    cli::cli_abort(c(
+      "{.arg columns} must be {.or {valid_classes}} data.",
+      extra_msg
+    ), call = call)
+  }
+}
+
 render_as_vector <- function(data, output) {
   dt_body_get(build_data(data, context = output))[["x"]]
 }

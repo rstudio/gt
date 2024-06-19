@@ -24,9 +24,7 @@
 
 kable_caption <- function(label, caption, format) {
 
-  if (is.null(label)) {
-    label <- knitr::opts_current$get("label")
-  }
+  label <- label %||% knitr::opts_current$get("label")
 
   if (!is.null(caption) && !is.na(caption)) {
 

@@ -866,13 +866,8 @@ normalize_summary_fns <- function(fns) {
         fn <- stats::as.formula(paste0("~", value, "(.)"))
       }
 
-      if (is.null(id)) {
-        id <- value
-      }
-
-      if (is.null(label)) {
-        label <- value
-      }
+      id    <- id    %||% value
+      label <- label %||% value
 
     } else if (rlang::is_formula(value)) {
 

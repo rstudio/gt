@@ -303,7 +303,7 @@ rm_spanners <- function(
     # Ensure that `levels` is numeric vector
     if (!is.numeric(levels)) {
       cli::cli_abort(
-        "If using {levels} to remove spanners, it must be a numeric vector."
+        "If using {.arg levels} to remove spanners, it must be a numeric vector."
       )
     }
 
