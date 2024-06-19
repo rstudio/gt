@@ -225,9 +225,7 @@ text_case_when <- function(
 
       # Don't accept that `.default = NULL` should mean `NA`,
       # it should simply return the original data
-      if (is.null(.default)) {
-        .default <- x
-      }
+      .default <- .default %||% x
 
       # Need to coerce all RHS formula parts to character;
       # this ensure that objects that have classes that include
@@ -397,15 +395,14 @@ text_case_match <- function(
 
       # Don't accept that `.default = NULL` should mean `NA`,
       # it should simply return the original data
-      if (is.null(.default)) {
-        .default <- x
-      }
+      .default <- .default %||% x
 
       # Need to coerce all RHS formula parts to character;
       # this ensure that objects that have classes that include
       # a character base class (like fontawesome icons) become
       # stripped of other classes and acceptable input for
       # the `case_match()` function
+      # See https://github.com/r-lib/vctrs/issues/1622 for vctrs::vec_case_match
       for (i in seq_along(x_list)) {
 
         x_list[[i]] <- rlang::set_env(x_list[[i]])

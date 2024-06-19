@@ -2400,8 +2400,7 @@ validate_length_one <- function(x, name, call = rlang::caller_env()) {
   }
 }
 
-validate_table_id <- function(id, call = caller_env()) {
-
+validate_table_id <- function(id, call = rlang::caller_env()) {
   check_string(id, allow_na = FALSE, allow_null = TRUE, call = call)
 }
 

@@ -3404,10 +3404,7 @@ tab_style <- function(
       FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        x <- names(x)
-        if (is.null(x)) {
-          x <- "bare"
-        }
+        x <- names(x) %||% "bare"
         if (any(grepl("cell_border", x))) {
           x <- "cell_border"
         }
@@ -3555,7 +3552,7 @@ tab_style <- function(
   }
 
   #
-  # End support for `gt_column()`
+  # End support for `from_column()`
   #
 
   # Determine if there is a `cell_text` list within the main list;
