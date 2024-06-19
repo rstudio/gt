@@ -383,27 +383,37 @@ to view an info table.</p>
     
 
 
-<p>Let's use the <code><a href="exibble.html">exibble</a></code> dataset to create a simple <strong>gt</strong> table. We'll
-elect to the <code>num</code> column as partially numeric and partially in scientific
-notation. This is done with two separate calls of <code><a href="fmt_number.html">fmt_number()</a></code> and
-<code>fmt_scientific()</code>. We'll use the expressions <code>num &gt; 500</code> and <code>num &lt;= 500</code> in
-the functions' respective <code>rows</code> arguments to target formatting to specific
-cells.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
+<p>Let's define a data frame that contains two columns of values (one <code>small</code>
+and one <code>large</code>). After creating a simple <strong>gt</strong> table from <code>small_large_tbl</code>
+we'll call <code>fmt_scientific()</code> on both columns.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_large_tbl</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>    small <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="op">-</span><span class="fl">12</span><span class="op">:</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,</span>
+<span>    large <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">small_large_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="va">num</span>,</span>
-<span>    rows <span class="op">=</span> <span class="va">num</span> <span class="op">&gt;</span> <span class="fl">500</span>,</span>
-<span>    decimals <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    scale_by <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">1000</span>,</span>
-<span>    pattern <span class="op">=</span> <span class="st">"{x}K"</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_scientific.html">fmt_scientific</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_1.png" alt="This image of a table was generated from the first code example in the `fmt_scientific()` help file." style="width:100%;"></p>
+<p>The default method of styling the notation uses the '<em>m</em> x 10^<em>n</em>'
+construction but this can be changed to a '<em>m</em>E<em>n</em>' style via the <code>exp_style</code>
+argument. We can supply any single letter here and optionally affix a <code>"1"</code>
+to indicate there should not be any zero-padding of the <em>n</em> value. Two calls
+of <code>fmt_scientific()</code> are used here to show different options for styling
+in scientific notation.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">small_large_tbl</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_scientific.html">fmt_scientific</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="va">small</span>,</span>
+<span>    exp_style <span class="op">=</span> <span class="st">"E"</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_scientific.html">fmt_scientific</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="va">num</span>,</span>
-<span>    rows <span class="op">=</span> <span class="va">num</span> <span class="op">&lt;=</span> <span class="fl">500</span>,</span>
-<span>    decimals <span class="op">=</span> <span class="fl">1</span></span>
+<span>    columns <span class="op">=</span> <span class="va">large</span>,</span>
+<span>    exp_style <span class="op">=</span> <span class="st">"e1"</span>,</span>
+<span>    force_sign_n <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_1.png" alt="This image of a table was generated from the first code example in the `fmt_scientific()` help file." style="width:100%;"></p>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_2.png" alt="This image of a table was generated from the second code example in the `fmt_scientific()` help file." style="width:100%;"></p>
 <p>Taking a portion of the <code><a href="reactions.html">reactions</a></code> dataset, we can create a <strong>gt</strong> table
 that contains reaction rate constants that should be expressed in scientific
 notation. All of the numeric values in the filtered table require that
@@ -432,7 +442,7 @@ number of decimal places is fixed to <code>2</code>, which is fine for this tabl
 <span>  <span class="fu"><a href="../reference/opt_horizontal_padding.html">opt_horizontal_padding</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/opt_table_font.html">opt_table_font</a></span><span class="op">(</span>font <span class="op">=</span> <span class="fu"><a href="../reference/google_font.html">google_font</a></span><span class="op">(</span><span class="st">"IBM Plex Sans"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>stub.font.weight <span class="op">=</span> <span class="st">"500"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_2.png" alt="This image of a table was generated from the second code example in the `fmt_scientific()` help file." style="width:100%;"></p>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_3.png" alt="This image of a table was generated from the third code example in the `fmt_scientific()` help file." style="width:100%;"></p>
 <p>The <code><a href="constants.html">constants</a></code> table contains a plethora of data on the fundamental
 physical constants and values range from very small to very large, warranting
 the use of figures in scientific notation. Because the values differ in the
@@ -456,7 +466,7 @@ number of significant digits.</p>
 <span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"sf"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_units.html">fmt_units</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">units</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/sub_missing.html">sub_missing</a></span><span class="op">(</span>missing_text <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_3.png" alt="This image of a table was generated from the third code example in the `fmt_scientific()` help file." style="width:100%;"></p>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_scientific()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
