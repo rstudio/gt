@@ -122,6 +122,18 @@ render_as_ihtml <- function(data, id) {
 
   #nocov end
 
+  rownames_to_stub <- stub_rownames_has_column(data)
+  # use of special .rownames doesn't work.
+  # Workaround https://github.com/glin/reactable/issues/378
+  # rstudio/gt#1702
+  if (rownames_to_stub) {
+    rowname_col <- dt_boxhead_get_var_stub(data)
+    if (length(rowname_col) == 1) {
+      # avoid base R error when setting duplicate row names.
+      attr(data_tbl, "row.names") <-  as.character(data$`_data`[[rowname_col]])
+    }
+  }
+
   # Obtain column label attributes
   column_names  <- dt_boxhead_get_vars_default(data = data)
   column_labels <- dt_boxhead_get_vars_labels_default(data = data)
@@ -182,8 +194,6 @@ render_as_ihtml <- function(data, id) {
   column_labels_border_bottom_style <- opt_val(data = data, option = "column_labels_border_bottom_style")
   column_labels_border_bottom_width <- opt_val(data = data, option = "column_labels_border_bottom_width")
   column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
-
-  rownames_to_stub <- stub_rownames_has_column(data)
 
   emoji_symbol_fonts <-
     c(

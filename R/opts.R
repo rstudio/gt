@@ -1506,9 +1506,9 @@ opt_table_outline <- function(
 #'
 #' Use a subset of the [`sp500`] dataset to create a small **gt** table. We'll
 #' use [fmt_currency()] to display a dollar sign for the first row of monetary
-#' values. Then, set a larger font size for the table and use the `"Merriweather"`
-#' font (from *Google Fonts*, via [google_font()]) with two system font
-#' fallbacks (`"Cochin"` and the generic `"serif"`).
+#' values. Then, set a larger font size for the table and use the
+#' `"Merriweather"` font (from *Google Fonts*, via [google_font()]) with two
+#' system font fallbacks (`"Cochin"` and the generic `"serif"`).
 #'
 #' ```r
 #' sp500 |>
@@ -1531,8 +1531,8 @@ opt_table_outline <- function(
 #' `r man_get_image_tag(file = "man_opt_table_font_1.png")`
 #' }}
 #'
-#' Use the [`sza`] dataset to create an eleven-row table, two-column table.
-#' Within `opt_table_font()`, use the `stack` argument to define the use of the
+#' With the [`sza`] dataset we'll create a two-column, eleven-row table. Within
+#' `opt_table_font()`, the `stack` argument will be supplied with the
 #' `"rounded-sans"` font stack. This sets up a family of fonts with rounded,
 #' curved letterforms that should be locally available in different computing
 #' environments.
