@@ -7363,7 +7363,7 @@ fmt_duration <- function(
     ))
   }
 
-  check_number_whole(max_output_units, min = 1, allow_null = TRUE)
+  check_number_whole(max_output_units, min = 1, allow_null = TRUE, allow_infinite = TRUE)
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
