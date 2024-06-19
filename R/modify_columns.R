@@ -2644,16 +2644,16 @@ cols_add <- function(
 #' `r man_get_image_tag(file = "man_cols_nanoplot_5.png")`
 #' }}
 #'
-#' Notice that the columns containing the value streams are hid due to the 
-#' default argument `autohide = TRUE` because, while useful, they don't need to 
-#' be displayed to anybody viewing a table. Since we have a lot of data points 
-#' and a connecting line is not as valuable here, we also set 
-#' `show_data_line = FALSE` in [nanoplot_options()]. It's more interesting to 
-#' see the clusters of the differently priced pizzas over the entire day. 
-#' Specifying a `currency` in [nanoplot_options()] is a nice touch since the *y* 
-#' values are sale prices in U.S. Dollars (hovering over data points gives 
-#' correctly formatted values). Finally, having a reference line based on the 
-#' median gives pretty useful information. Seems like customers preferred 
+#' Notice that the columns containing the value streams are hid due to the
+#' default argument `autohide = TRUE` because, while useful, they don't need to
+#' be displayed to anybody viewing a table. Since we have a lot of data points
+#' and a connecting line is not as valuable here, we also set
+#' `show_data_line = FALSE` in [nanoplot_options()]. It's more interesting to
+#' see the clusters of the differently priced pizzas over the entire day.
+#' Specifying a `currency` in [nanoplot_options()] is a nice touch since the *y*
+#' values are sale prices in U.S. Dollars (hovering over data points gives
+#' correctly formatted values). Finally, having a reference line based on the
+#' median gives pretty useful information. Seems like customers preferred
 #' getting the `"chicken"`-type pizzas in large size!
 #'
 #' Box plots can be generated, and we just need to use `plot_type = "boxplot"`
@@ -2786,15 +2786,9 @@ cols_nanoplot <- function(
     data_vals_plot_x <- NULL
   }
 
-  if (is.null(plot_height)) {
-    plot_height <- "2em"
-  }
-
-  if (is.null(options)) {
-    options_plots <- nanoplot_options()
-  } else {
-    options_plots <- options
-  }
+  plot_height <- plot_height %||% "2em"
+  # use nanoplots_options() by default for options_plots if options not set.
+  options_plots <- options %||% nanoplot_options()
 
   # Get all `y` vals into a vector
   all_y_vals <- unlist(data_vals_plot_y)
@@ -3885,9 +3879,7 @@ cols_merge <- function(
       excl_stub = FALSE
     )
 
-  if (is.null(pattern)) {
-    pattern <- paste0("{", seq_along(columns), "}", collapse = " ")
-  }
+  pattern <- pattern %||% paste0("{", seq_along(columns), "}", collapse = " ")
 
   # Resolve the rows supplied in the `rows` argument
   resolved_rows_idx <-

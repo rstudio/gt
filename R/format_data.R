@@ -418,8 +418,7 @@
 #'   cols_label(
 #'     name ~ "Municipality",
 #'     latitude = "Location"
-#'   ) |>
-#'   cols_hide(columns = dec_digits)
+#'   )
 #' ```
 #'
 #' \if{html}{\out{
@@ -492,6 +491,12 @@ fmt_number <- function(
         all_args_except = c("data", "columns", "rows")
       )
     )
+  # Assume that if decimals = 0, function = fmt_integer, fmt_number otherwise
+  if (identical(decimals, 0)) {
+    fn_call <- call("fmt_integer")
+  } else {
+    fn_call <- call("fmt_number")
+  }
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
@@ -499,7 +504,8 @@ fmt_number <- function(
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
-        data = data
+        data = data,
+        call = fn_call
       )
 
     param_tbl <-
@@ -539,14 +545,11 @@ fmt_number <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -565,19 +568,8 @@ fmt_number <- function(
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    isTRUE(getOption("gt.strict_column_fmt", TRUE)) &&
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    cli::cli_abort(
-      "The `fmt_number()` and `fmt_integer()` functions can only be
-      used on `columns` with numeric data."
-    )
-  }
+  valid_class <- c("numeric", "integer")
+  check_column_valid(data, {{ columns }}, valid_class, call = fn_call)
 
   # Set the `formatC_format` option according to whether number
   # formatting with significant figures is to be performed
@@ -597,7 +589,7 @@ fmt_number <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -956,7 +948,7 @@ fmt_integer <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   fmt_number(
@@ -1156,6 +1148,43 @@ fmt_integer <- function(
 #' `r man_get_image_tag(file = "man_fmt_scientific_1.png")`
 #' }}
 #'
+#'
+#' Taking a portion of the [`reactions`] dataset, we can create a **gt** table
+#' that contains reaction rate constants that should be expressed in scientific
+#' notation. All of the numeric values in the filtered table require that
+#' type of formatting so `fmt_scientific()` can be called without requiring any
+#' specification of column names in the `columns` argument. By default, the
+#' number of decimal places is fixed to `2`, which is fine for this table.
+#'
+#' ```r
+#' reactions |>
+#'   dplyr::filter(cmpd_type == "mercaptan") |>
+#'   dplyr::select(cmpd_name, cmpd_formula, OH_k298, Cl_k298, NO3_k298) |>
+#'   gt(rowname_col = "cmpd_name") |>
+#'   tab_header(title = "Gas-phase reactions of selected mercaptan compounds") |>
+#'   tab_spanner(
+#'     label = md("Reaction Rate Constant (298 K),<br>{{cm^3 molecules^–1 s^–1}}"),
+#'     columns = ends_with("k298")
+#'   ) |>
+#'   fmt_chem(columns = cmpd_formula) |>
+#'   fmt_scientific() |>
+#'   sub_missing() |>
+#'   cols_label(
+#'     cmpd_formula = "",
+#'     OH_k298 = "OH",
+#'     NO3_k298 = "{{%NO3%}}",
+#'     Cl_k298 = "Cl"
+#'   ) |>
+#'   opt_stylize() |>
+#'   opt_horizontal_padding(scale = 3) |>
+#'   opt_table_font(font = google_font("IBM Plex Sans")) |>
+#'   tab_options(stub.font.weight = "500")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_scientific_2.png")`
+#' }}
+#'
 #' The [`constants`] table contains a plethora of data on the fundamental
 #' physical constants and values range from very small to very large, warranting
 #' the use of figures in scientific notation. Because the values differ in the
@@ -1184,7 +1213,7 @@ fmt_integer <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_fmt_scientific_2.png")`
+#' `r man_get_image_tag(file = "man_fmt_scientific_3.png")`
 #' }}
 #'
 #' @family data formatting functions
@@ -1291,11 +1320,8 @@ fmt_scientific <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -1318,19 +1344,8 @@ fmt_scientific <- function(
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    isTRUE(getOption("gt.strict_column_fmt", TRUE)) &&
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    cli::cli_abort(
-      "The `fmt_scientific()` function can only be used on `columns`
-    with numeric data."
-    )
-  }
+  valid_class <- c("numeric", "integer")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # If `n_sigfig` is defined (and not `NA`) modify the number of
   # decimal places and keep all trailing zeros
@@ -1349,7 +1364,7 @@ fmt_scientific <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -1780,11 +1795,8 @@ fmt_engineering <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -1807,19 +1819,8 @@ fmt_engineering <- function(
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    isTRUE(getOption("gt.strict_column_fmt", TRUE)) &&
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    cli::cli_abort(
-      "The `fmt_engineering()` function can only be used on `columns`
-    with numeric data."
-    )
-  }
+  valid_class <- c("numeric", "integer")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -1827,7 +1828,7 @@ fmt_engineering <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -2416,14 +2417,11 @@ fmt_percent <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -2434,20 +2432,8 @@ fmt_percent <- function(
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_percent()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   if (scale_values) {
     scale_by <- 100
@@ -2774,15 +2760,12 @@ fmt_partsper <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   to_units <- rlang::arg_match(to_units)
   system <- rlang::arg_match(system)
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -2793,20 +2776,8 @@ fmt_partsper <- function(
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_partsper()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Scale values according to `to_units` value
   if (scale_values) {
@@ -3187,15 +3158,12 @@ fmt_fraction <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
   layout <- rlang::arg_match(layout)
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -3225,19 +3193,8 @@ fmt_fraction <- function(
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "{.fn fmt_fraction} must be used on `columns` with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Use locale-based `sep_mark` if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -3248,7 +3205,7 @@ fmt_fraction <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -3981,14 +3938,11 @@ fmt_currency <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -3999,26 +3953,12 @@ fmt_currency <- function(
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_currency()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Resolve the currency either from direct input in `currency` or
   # through a locale
-  if (is.null(currency)) {
-    currency <- get_locale_currency_code(locale = locale)
-  }
+  currency <- currency %||% get_locale_currency_code(locale = locale)
 
   # Stop function if `currency` does not have a valid value
   validate_currency(currency = currency)
@@ -4251,32 +4191,17 @@ fmt_roman <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   case <- rlang::arg_match(case)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_roman()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -4284,7 +4209,7 @@ fmt_roman <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -4536,15 +4461,12 @@ fmt_index <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   case <- rlang::arg_match(case)
   index_algo <- rlang::arg_match(index_algo)
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -4558,20 +4480,8 @@ fmt_index <- function(
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_index()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -4579,7 +4489,7 @@ fmt_index <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -4965,11 +4875,8 @@ fmt_spelled_num <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -4983,20 +4890,8 @@ fmt_spelled_num <- function(
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_spelled_num()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -5004,7 +4899,7 @@ fmt_spelled_num <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -5331,14 +5226,11 @@ fmt_bytes <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   standard <- rlang::arg_match(standard)
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -5349,20 +5241,8 @@ fmt_bytes <- function(
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_bytes()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -5398,7 +5278,7 @@ fmt_bytes <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -5741,11 +5621,8 @@ fmt_date <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("Date", "POSIXt", "character")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -5764,21 +5641,9 @@ fmt_date <- function(
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(c(
-        "The `fmt_date()` function can only be used on `columns` of certain types.",
-        "*" = "Allowed types are `Date`, `POSIXt`, and `character` (with
-      ISO-8601 formatted dates)."
-      ))
-    }
-  }
+  valid_class <- c("Date", "POSIXt", "character")
+  extra_msg <- c(i = "If character data is supplied, it should be ISO-8601 formatted dates.")
+  check_column_valid(data, {{ columns }}, valid_class, extra_msg = extra_msg)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -5786,7 +5651,7 @@ fmt_date <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -6101,11 +5966,8 @@ fmt_time <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("Date", "POSIXt", "character")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -6124,21 +5986,10 @@ fmt_time <- function(
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(c(
-        "The `fmt_time()` function can only be used on `columns` of certain types.",
-        "*" = "Allowed types are `Date`, `POSIXt`, and `character` (in
-      `HH:MM:SS` format)."
-      ))
-    }
-  }
+  valid_class <- c("Date", "POSIXt", "character")
+  msg <- c(i = "Allowed types are `Date`, `POSIXt`, and `character` (in
+      `HH:MM:SS` format).")
+  check_column_valid(data, {{ columns }}, valid_class, msg)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -6146,7 +5997,7 @@ fmt_time <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -7097,11 +6948,8 @@ fmt_datetime <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("Date", "POSIXct", "character")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -7136,21 +6984,10 @@ fmt_datetime <- function(
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(c(
-        "The `fmt_datetime()` function can only be used on `columns` of certain types.",
-        "*" = "Allowed types are `Date`, `POSIXct`, and `character` (with
-      ISO-8601 formatted dates)"
-      ))
-    }
-  }
+  valid_class <- c("Date", "POSIXct", "character")
+  msg <- c(i = "Allowed types are `Date`, `POSIXct`, and `character` (with
+      ISO-8601 formatted dates)")
+  check_column_valid(data, {{ columns }}, valid_class, msg)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -7158,7 +6995,7 @@ fmt_datetime <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -7495,8 +7332,6 @@ fmt_duration <- function(
   duration_style <- rlang::arg_match(duration_style)
   system <- rlang::arg_match(system)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer", "difftime")
   check_chr_has_length(output_units, allow_null = TRUE, allow_0 = FALSE)
   check_chr_has_length(input_units, allow_null = TRUE, allow_0 = FALSE)
   # Stop function if `locale` does not have a valid value; normalize locale
@@ -7526,37 +7361,13 @@ fmt_duration <- function(
     ))
   }
 
-  if (
-    !is.null(max_output_units) &&
-    (
-      !is.numeric(max_output_units) ||
-      length(max_output_units) != 1 ||
-      max_output_units < 1
-    )
-  ) {
-    cli::cli_abort(c(
-      "The numeric value supplied for `max_output_units` is invalid.",
-      "*" = "Must either be `NULL` or an integer value greater than zero."
-    ))
-  }
+  check_number_whole(max_output_units, min = 1, allow_null = TRUE, allow_infinite = TRUE)
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(c(
-        "The `fmt_duration()` function can only be used on `columns` of certain types.",
-        "*" = "Allowed types are `numeric` and `difftime`."
-      ))
-    }
-  }
+  valid_class <- c("numeric", "integer", "difftime")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Stop function if any columns have numeric data and `input_units` is NULL
   if (
@@ -7649,7 +7460,7 @@ fmt_duration <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -8007,7 +7818,7 @@ get_localized_duration_patterns <- function(
     locale
 ) {
 
-  if (is.null(locale)) locale <- "en"
+  locale <- locale %||% "en"
 
   if (type == "wide") type <- "long"
 
@@ -8021,7 +7832,7 @@ get_localized_duration_patterns <- function(
         grepl("type", colnames(durations), fixed = TRUE)
     ] %>%
     dplyr::filter(type == .env$type) %>%
-    dplyr::select(-type)
+    dplyr::select(-"type")
 
   colnames(pattern_tbl) <- gsub("(duration|-|unitPattern-count)", "", colnames(pattern_tbl))
 
@@ -8212,26 +8023,13 @@ fmt_bins <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("character", "factor")
+
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_bins()` function can only be used on `columns`
-      with character or factor data."
-      )
-    }
-  }
+  valid_class <- c("character", "factor")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -8788,11 +8586,8 @@ fmt_tf <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("logical", "numeric")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -8801,27 +8596,13 @@ fmt_tf <- function(
   locale <- resolve_locale(data = data, locale = locale)
 
   # If `locale` is NULL then use the 'en' locale
-  if (is.null(locale)) {
-    locale <- "en"
-  }
+  locale <- locale %||% "en"
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_tf()` function can only be used on `columns`
-      with logical or numerical data."
-      )
-    }
-  }
+  valid_class <- c("logical", "numeric")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Obtain the vector of `TRUE`/`FALSE` text values
   tf_vals_vec <- get_tf_vals(tf_style = tf_style, locale = locale)
@@ -9007,7 +8788,7 @@ format_tf_by_context <- function(
 
 make_span_with_color <- function(text, color = NULL) {
 
-  if (is.null(color) | is.null(text) | is.na(color)) {
+  if (is.null(color) || is.null(text) || is.na(color)) {
     return(text)
   }
 
@@ -9191,26 +8972,11 @@ fmt_units <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("character", "factor")
-
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_units()` function can only be used on `columns`
-      with character or factor data."
-      )
-    }
-  }
+  valid_class <- c("character", "factor")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -9485,26 +9251,11 @@ fmt_chem <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("character", "factor")
-
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_chem()` function can only be used on `columns`
-      with character or factor data."
-      )
-    }
-  }
+  valid_class <- c("character", "factor")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -10005,30 +9756,14 @@ fmt_url <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("character", "factor")
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    isTRUE(getOption("gt.strict_column_fmt", TRUE)) &&
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_url()` function can only be used on `columns`
-      with character or factor data."
-      )
-    }
-  }
+  valid_class <- c("character", "factor")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   if (as_button) {
 
@@ -10745,29 +10480,14 @@ fmt_email <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("character", "factor")
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_email()` function can only be used on `columns`
-      with character or factor data."
-      )
-    }
-  }
+  valid_class <- c("character", "factor")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   if (as_button) {
 
@@ -11351,11 +11071,11 @@ fmt_image <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # If width & height not provided, default width to '2em' and let width scale
-  if (is.null(height) & is.null(width)) {
+  if (is.null(height) && is.null(width)) {
     height <- "2em"
   }
 
@@ -11983,11 +11703,8 @@ fmt_flag <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("character", "factor")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -11996,26 +11713,13 @@ fmt_flag <- function(
   locale <- resolve_locale(data = data, locale = locale)
 
   # If `locale` is NULL then use the 'en' locale
-  if (is.null(locale)) {
-    locale <- "en"
-  }
+  locale <- locale %||% "en"
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "{.fn fmt_flag} must be used on `columns` with character or factor data."
-      )
-    }
-  }
+  valid_class <- c("character", "factor")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Create a vector of valid 2- and 3-letter country codes
   valid_country_codes <-
@@ -12388,6 +12092,43 @@ fmt_flag <- function(
 #' `r man_get_image_tag(file = "man_fmt_country_3.png")`
 #' }}
 #'
+#' Country names can sometimes pair nicely with flag-based graphics. In this
+#' example (using a different portion of the [`films`] dataset) we use
+#' `fmt_country()` along with [fmt_flag()]. The formatted country names are then
+#' merged into the same cells as the icons via [cols_merge()].
+#'
+#' ```r
+#' films |>
+#'   dplyr::filter(director == "Jean-Pierre Dardenne, Luc Dardenne") |>
+#'   dplyr::select(title, year, run_time, countries_of_origin) |>
+#'   gt() |>
+#'   tab_header(title = "In Competition Films by the Dardenne Bros.") |>
+#'   cols_add(country_flag = countries_of_origin) |>
+#'   fmt_flag(columns = country_flag) |>
+#'   fmt_country(columns = countries_of_origin, sep = ", ") |>
+#'   cols_merge(
+#'     columns = c(countries_of_origin, country_flag),
+#'     pattern = "{2}<br>{1}"
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(size = px(9)),
+#'     locations = cells_body(columns = countries_of_origin)
+#'   ) |>
+#'   cols_merge(columns = c(title, year), pattern = "{1} ({2})") |>
+#'   opt_vertical_padding(scale = 0.5) |>
+#'   opt_horizontal_padding(scale = 3) |>
+#'   opt_table_font(font = google_font("PT Sans")) |>
+#'   opt_stylize(style = 1, color = "blue") |>
+#'   tab_options(
+#'     heading.title.font.size = px(26),
+#'     column_labels.hidden = TRUE
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_country_4.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-25
@@ -12462,11 +12203,8 @@ fmt_country <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("character", "factor")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -12475,27 +12213,13 @@ fmt_country <- function(
   locale <- resolve_locale(data = data, locale = locale)
 
   # If `locale` is NULL then use the 'en' locale
-  if (is.null(locale)) {
-    locale <- "en"
-  }
+  locale <- locale %||% "en"
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "{.fn fmt_country} must be used on `columns` with character or
-        factor data."
-      )
-    }
-  }
+  valid_class <- c("character", "factor")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Create a vector of valid 2- and 3-letter country codes
   valid_country_codes <-
@@ -13066,7 +12790,7 @@ fmt_icon <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
@@ -13079,26 +12803,11 @@ fmt_icon <- function(
     a11y <- "deco"
   }
 
-  # Declare formatting function compatibility
-  compat <- c("character", "factor")
-
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_icon()` function can only be used on `columns`
-      with character or factor data."
-      )
-    }
-  }
+  valid_class <- c("character", "factor")
+  check_column_valid(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -13479,7 +13188,7 @@ fmt_markdown <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
@@ -13695,7 +13404,7 @@ fmt_passthrough <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Pass `data`, `columns`, `rows`, and the formatting

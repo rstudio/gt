@@ -514,13 +514,13 @@ rtf_tbl_row <- function(
 
   cell_count <- length(x)
 
-  if (!is.null(widths)) {
-    widths_twips <- cumsum(widths)
-  } else {
+  if (is.null(widths)) {
     widths_twips <- cumsum(rep(page_body_width / cell_count, cell_count))
+  } else {
+    widths_twips <- cumsum(widths)
   }
 
-  if (is.null(height)) height <- 425
+  height <- height %||% 425
 
   # Set border values
   if (!is.null(borders)) {
@@ -641,7 +641,7 @@ rtf_tbl_cell <- function(
   v_align <- substr(rlang::arg_match(v_align), 1, 1)
 
   # Set default padding values if `padding = NULL`
-  if (is.null(padding)) padding <- c(25, 85, 25, 85)
+  padding <- padding %||% c(25, 85, 25, 85)
 
   # Set padding in units of twips, in the order left, top, bottom, right
   padding_units <-
@@ -798,10 +798,7 @@ footnote_mark_to_rtf <- function(
   }
 
   spec <- get_footnote_spec_by_location(data = data, location = location)
-
-  if (is.null(spec)) {
-    spec <- "^i"
-  }
+  spec <- spec %||% "^i"
 
   if (grepl("\\(|\\[", spec)) mark <- paste0("(", mark)
   if (grepl("\\)|\\]", spec)) mark <- paste0(mark, ")")

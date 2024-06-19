@@ -776,9 +776,7 @@ data_color <- function(
   if (is.null(fn)) {
 
     # If no palette is provided, use the default palette
-    if (is.null(palette)) {
-      palette <- palette()
-    }
+    palette <- palette %||% palette()
 
     # Obtain a palette from the paletteer package if the
     # `palette` value is of the special form `<package>::<palette>`

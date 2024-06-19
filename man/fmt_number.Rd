@@ -425,8 +425,7 @@ values that reflects the measurement precision of each value.
   cols_label(
     name ~ "Municipality",
     latitude = "Location"
-  ) |>
-  cols_hide(columns = dec_digits)
+  )
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
