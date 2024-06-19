@@ -265,16 +265,84 @@ to view an info table.
 \section{Examples}{
 
 
-Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Format the \code{num} column
-to display values in engineering notation using \code{fmt_engineering()}.
+Let's define a data frame that contains two columns of values (one \code{small}
+and one \code{large}). After creating a simple \strong{gt} table from \code{small_large_tbl}
+we'll call \code{fmt_engineering()} on both columns.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_large_tbl <-
+  dplyr::tibble(
+    small = 10^(-12:-1),
+    large = 10^(1:12)
+  )
+
+small_large_tbl |>
   gt() |>
-  fmt_engineering(columns = num)
+  fmt_engineering()
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_engineering_1.png" alt="This image of a table was generated from the first code example in the `fmt_engineering()` help file." style="width:100\%;">
+}}
+
+Notice that within the form of \emph{m} x 10^\emph{n}, the \emph{n} values move in steps of
+3 (away from \code{0}), and \emph{m} values can have 1-3 digits before the decimal.
+Further to this, any values where \emph{n} is \code{0} results in a display of only \emph{m}
+(the first two values in the \code{large} column demonstrates this).
+
+Engineering notation expresses values so that they are align to certain SI
+prefixes. Here is a table that compares select SI prefixes and their symbols
+to decimal and engineering-notation representations of the key numbers.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{prefixes_tbl <-
+  dplyr::tibble(
+    name = c(
+      "peta", "tera", "giga", "mega", "kilo",
+      NA,
+      "milli", "micro", "nano", "pico", "femto"
+    ),
+    symbol = c(
+      "P", "T", "G", "M", "k",
+      NA,
+      "m", ":micro:", "n", "p", "f"
+    ),
+    decimal = c(10^(seq(15, -15, -3))),
+    engineering = decimal
+  )
+
+prefixes_tbl |>
+  gt() |>
+  fmt_number(columns = decimal, n_sigfig = 1) |>
+  fmt_engineering(columns = engineering) |>
+  fmt_units(columns = symbol) |>
+  sub_missing()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_engineering_2.png" alt="This image of a table was generated from the second code example in the `fmt_engineering()` help file." style="width:100\%;">
+}}
+
+The default method of styling the notation uses the '\emph{m} x 10^\emph{n}'
+construction but this can be changed to a '\emph{m}E\emph{n}' style via the \code{exp_style}
+argument. We can supply any single letter here and optionally affix a \code{"1"}
+to indicate there should not be any zero-padding of the \emph{n} value. Two calls
+of \code{fmt_engineering()} are used here to show different options for styling
+in engineering notation.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_large_tbl |>
+  gt() |>
+  fmt_engineering(
+    columns = small,
+    exp_style = "E"
+  ) |>
+  fmt_engineering(
+    columns = large,
+    exp_style = "e1",
+    force_sign_n = TRUE
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_engineering_3.png" alt="This image of a table was generated from the third code example in the `fmt_engineering()` help file." style="width:100\%;">
 }}
 }
 

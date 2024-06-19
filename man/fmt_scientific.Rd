@@ -279,31 +279,47 @@ to view an info table.
 \section{Examples}{
 
 
-Let's use the \code{\link{exibble}} dataset to create a simple \strong{gt} table. We'll
-elect to the \code{num} column as partially numeric and partially in scientific
-notation. This is done with two separate calls of \code{\link[=fmt_number]{fmt_number()}} and
-\code{fmt_scientific()}. We'll use the expressions \code{num > 500} and \code{num <= 500} in
-the functions' respective \code{rows} arguments to target formatting to specific
-cells.
+Let's define a data frame that contains two columns of values (one \code{small}
+and one \code{large}). After creating a simple \strong{gt} table from \code{small_large_tbl}
+we'll call \code{fmt_scientific()} on both columns.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
-  gt() |>
-  fmt_number(
-    columns = num,
-    rows = num > 500,
-    decimals = 1,
-    scale_by = 1/1000,
-    pattern = "\{x\}K"
-  ) |>
-  fmt_scientific(
-    columns = num,
-    rows = num <= 500,
-    decimals = 1
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_large_tbl <-
+  dplyr::tibble(
+    small = 10^(-12:-1),
+    large = 10^(1:12)
   )
+
+small_large_tbl |>
+  gt() |>
+  fmt_scientific()
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_1.png" alt="This image of a table was generated from the first code example in the `fmt_scientific()` help file." style="width:100\%;">
+}}
+
+The default method of styling the notation uses the '\emph{m} x 10^\emph{n}'
+construction but this can be changed to a '\emph{m}E\emph{n}' style via the \code{exp_style}
+argument. We can supply any single letter here and optionally affix a \code{"1"}
+to indicate there should not be any zero-padding of the \emph{n} value. Two calls
+of \code{fmt_scientific()} are used here to show different options for styling
+in scientific notation.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{small_large_tbl |>
+  gt() |>
+  fmt_scientific(
+    columns = small,
+    exp_style = "E"
+  ) |>
+  fmt_scientific(
+    columns = large,
+    exp_style = "e1",
+    force_sign_n = TRUE
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_2.png" alt="This image of a table was generated from the second code example in the `fmt_scientific()` help file." style="width:100\%;">
 }}
 
 Taking a portion of the \code{\link{reactions}} dataset, we can create a \strong{gt} table
@@ -338,7 +354,7 @@ number of decimal places is fixed to \code{2}, which is fine for this table.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_2.png" alt="This image of a table was generated from the second code example in the `fmt_scientific()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_3.png" alt="This image of a table was generated from the third code example in the `fmt_scientific()` help file." style="width:100\%;">
 }}
 
 The \code{\link{constants}} table contains a plethora of data on the fundamental
@@ -368,7 +384,7 @@ number of significant digits.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_3.png" alt="This image of a table was generated from the third code example in the `fmt_scientific()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_scientific()` help file." style="width:100\%;">
 }}
 }
 

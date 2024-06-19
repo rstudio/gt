@@ -4,7 +4,7 @@ check_suggests <- function() {
 }
 
 test_that("The stub can be formatted with `fmt_*()` functions", {
-
+  check_suggests()
   # Create a tibble for testing the stub and row groups
   tbl_1 <-
     dplyr::tibble(
@@ -196,6 +196,7 @@ test_that("The stub can be formatted with `fmt_*()` functions", {
 })
 
 test_that("The stub can be formatted with `fmt_*()` functions and `stub()", {
+  check_suggests()
 
   # Create a tibble for testing the stub and row groups
   tbl_1 <-
