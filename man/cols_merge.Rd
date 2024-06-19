@@ -28,11 +28,10 @@ The columns for which the merging operations should be applied. The first
 column resolved will be the target column (i.e., undergo mutation) and the
 other columns will serve to provide input. Can either be a series of column
 names provided in \code{c()}, a vector of column indices, or a select helper
-function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}. A vector is recommended because in that case we are
-absolutely certain about the order of columns, and, that order information
-is needed for this and other arguments.}
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). A vector is recommended because in that
+case we are absolutely certain about the order of columns, and, that order
+information is needed for this and other arguments.}
 
 \item{hide_columns}{\emph{Subset of \code{columns} to hide}
 
@@ -52,10 +51,10 @@ In conjunction with \code{columns}, we can specify which of their rows should
 participate in the merging process. The default \code{\link[=everything]{everything()}} results in
 all rows in \code{columns} being formatted. Alternatively, we can supply a
 vector of row IDs within \code{c()}, a vector of row indices, or a select
-helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
-down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use
+expressions to filter down to the rows we need
+(e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{pattern}{\emph{Formatting pattern}
 

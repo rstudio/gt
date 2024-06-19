@@ -20,11 +20,10 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 The columns for which the moving operations should be applied. Can either
 be a series of column names provided in \code{c()}, a vector of column indices,
-or a select helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. The columns move as a group to the
-right-most side of the table. The order of the remaining columns will be
-preserved.}
+or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. The columns
+move as a group to the right-most side of the table. The order of the
+remaining columns will be preserved.}
 }
 \value{
 An object of class \code{gt_tbl}.

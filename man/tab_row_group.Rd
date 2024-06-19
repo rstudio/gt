@@ -27,10 +27,9 @@ The text to use for the row group label. We can optionally use \code{\link[=md]{
 
 The rows to be made components of the row group. We can supply a vector of
 row ID values within \code{c()}, a vector of row indices, or use select helpers
-here. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
-need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+(e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{id}{\emph{Row group ID}
 
