@@ -141,7 +141,9 @@ one of three options for the layout of pagination controls. The default is
 with a stepper for the page number. With \code{"simple"}, only the 'previous'
 and 'next' buttons are displayed.}
 
-\item{height}{Height of the table in pixels. Defaults to \code{"auto"} for automatic sizing.}
+\item{height}{\emph{Height of interactive HTML table}
+
+Height of the table in pixels. Defaults to \code{"auto"} for automatic sizing.}
 }
 \value{
 An object of class \code{gt_tbl}.

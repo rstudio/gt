@@ -334,7 +334,7 @@ get_colorized_params <- function(
 #'   with a stepper for the page number. With `"simple"`, only the 'previous'
 #'   and 'next' buttons are displayed.
 #'
-#' @param ihtml.height *Height of interactive HTML table*
+#' @param height *Height of interactive HTML table*
 #'
 #'   Height of the table in pixels. Defaults to `"auto"` for automatic sizing.
 #'
