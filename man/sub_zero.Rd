@@ -19,10 +19,9 @@ This is the \strong{gt} table object that is commonly created through use of the
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to which substitution operations are constrained. Can either
-be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
-or a select helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+be a series of column names provided in \code{c()}, a vector of column indices,
+or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
 
 \item{rows}{\emph{Rows to target}
 
@@ -31,11 +30,11 @@ or a select helper function. Examples of select helper functions include
 In conjunction with \code{columns}, we can specify which of their rows should
 form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
 results in all rows in \code{columns} being formatted. Alternatively, we can
-supply a vector of row IDs within \code{\link[=c]{c()}}, a vector of row indices, or a
-select helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
-down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+supply a vector of row IDs within \code{c()}, a vector of row indices, or a
+select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use
+expressions to filter down to the rows we need
+(e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{zero_text}{\emph{Replacement text for zero values}
 
