@@ -2386,9 +2386,6 @@ fmt_percent <- function(
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
   validate_locale(locale = locale)
@@ -7347,8 +7344,6 @@ fmt_duration <- function(
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-
-  # Declare formatting function compatibility
   valid_class <- c("numeric", "integer", "difftime")
   check_column_valid(data, {{ columns }}, valid_class)
 
