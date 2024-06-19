@@ -514,7 +514,7 @@ info_locales <- function(begins_with = NULL) {
     dplyr::mutate(
       tab_1,
       group = dplyr::case_when(
-        !(group %in% c(",", "⹁", "،", ".", "’")) ~ "space",
+        group %in% c("\u00a0", "\u202f") ~ "space",
         .default = group
       )
     )
