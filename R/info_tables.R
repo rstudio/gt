@@ -438,11 +438,12 @@ info_currencies <- function(
 #' formatting of each locale.
 #'
 #' @details
-#' There are 712 locales, which means that a very long display table is provided
-#' by default. To trim down the output table size, we can provide an initial
-#' letter corresponding to the base locale ID to `begins_with`. This will filter
-#' locales in the info table to just the set that begins with the supplied
-#' letter.
+#'
+#' There are `r nrow(locales)` locales, which means that a very long display
+#' table is provided by default. To trim down the output table size, we can
+#' provide an initial letter corresponding to the base locale ID to
+#' `begins_with`. This will filter locales in the info table to just the set
+#' that begins with the supplied letter.
 #'
 #' @param begins_with *Show locales beginning with a specific letter*
 #'
@@ -456,11 +457,10 @@ info_currencies <- function(
 #'
 #' @section Examples:
 #'
-#' Get a table of info on all of the locales where the base locale ID begins
-#' with a `"v"`.
+#' Get a table of info on all of the locales supported by **gt**.
 #'
 #' ```r
-#' info_locales(begins_with = "v")
+#' info_locales()
 #' ```
 #'
 #' \if{html}{\out{
@@ -494,6 +494,7 @@ info_locales <- function(begins_with = NULL) {
       loc, locale, lang_desc, script_desc,
       territory_desc, variant_desc, group, decimal
     )
+
   tab_1 <-
     dplyr::mutate(
       tab_1,
@@ -508,29 +509,35 @@ info_locales <- function(begins_with = NULL) {
           )
       )
     )
+
+  tab_1 <-
+    dplyr::mutate(
+      tab_1,
+      group = dplyr::case_when(
+        !(group %in% c(",", "⹁", "،", ".", "’")) ~ "space",
+        .default = group
+      )
+    )
+
   tab_1 <- dplyr::select(tab_1, "locale", "display_name", "group", "decimal")
   tab_1$display_name <- gsub(" (NA, NA, NA)", "", tab_1$display_name, fixed = TRUE)
   tab_1$display_name <- gsub(", NA, NA", "", tab_1$display_name, fixed = TRUE)
   tab_1$display_name <- gsub("NA, ", "", tab_1$display_name, fixed = TRUE)
   tab_1$display_name <- gsub(", NA)", ")", tab_1$display_name, fixed = TRUE)
   tab_1$value <- 11027
-  tab_1 <- gt(tab_1)
 
-  for (i in seq_len(nrow(loc))) {
-
-    tab_1 <-
-      fmt_number(
-        tab_1,
-        columns = "value",
-        rows = i,
-        locale = loc$locale[i]
-      )
-  }
-
-  tab_1 %>%
-    tab_spanner(
-      label = "Separators",
-      columns = c("group", "decimal")
+  gt(tab_1) %>%
+    tab_header(
+      title = md("Locales Supported in **gt**"),
+      subtitle = md("Locale codes are used in several `fmt_*()` functions.<br><br>")
+    ) %>%
+    fmt_number(
+      columns = "value",
+      locale = from_column("locale")
+    ) %>%
+    text_transform(
+      fn = function(x) sub("space", "\U02420", x),
+      locations = cells_body(columns = group)
     ) %>%
     cols_merge(
       columns = c("locale", "display_name"),
@@ -546,22 +553,44 @@ info_locales <- function(begins_with = NULL) {
       align = "center",
       columns = c("group", "decimal")
     ) %>%
-    tab_header(
-      title = md("Locales Supported in **gt**"),
-      subtitle = md("Locale codes are used in several `fmt_*()` functions")
+    tab_style(
+      style = css(position = "sticky", top = "-1em", `z-index` = 10),
+      locations = cells_column_labels()
     ) %>%
     tab_style(
-      style = cell_text(align = "left"),
-      locations = list(
-        cells_title(groups = "title"),
-        cells_title(groups = "subtitle")
-      )
+      style = cell_text(size = px(24)),
+      locations = cells_title(groups = "title")
+    ) %>%
+    tab_style(
+      style = cell_text(size = px(18)),
+      locations = cells_title(groups = "subtitle")
     ) %>%
     tab_style(
       style = cell_text(size = px(32)),
       locations = cells_body(columns = c(group, decimal))
     ) %>%
-    tab_options(data_row.padding = "5px")
+    opt_all_caps() %>%
+    opt_stylize(style = 6) %>%
+    opt_align_table_header(align = "left") %>%
+    opt_table_lines(extent = "none") %>%
+    opt_horizontal_padding(scale = 2) %>%
+    opt_css(
+      css = "
+      #unit_conversion .gt_group_heading {
+        padding-top: 18px;
+        padding-bottom: 4px;
+        padding-left: 10px;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }"
+    ) %>%
+    tab_options(
+      table.border.top.style = "hidden",
+      column_labels.border.bottom.style = "hidden",
+      container.height = px(620),
+      data_row.padding = "5px",
+      table.width = px(600)
+    )
 }
 
 #' View a table with info on color palettes
