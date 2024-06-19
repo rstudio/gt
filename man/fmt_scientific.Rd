@@ -308,6 +308,41 @@ cells.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_1.png" alt="This image of a table was generated from the first code example in the `fmt_scientific()` help file." style="width:100\%;">
 }}
 
+Taking a portion of the \code{\link{reactions}} dataset, we can create a \strong{gt} table
+that contains reaction rate constants that should be expressed in scientific
+notation. All of the numeric values in the filtered table require that
+type of formatting so \code{fmt_scientific()} can be called without requiring any
+specification of column names in the \code{columns} argument. By default, the
+number of decimal places is fixed to \code{2}, which is fine for this table.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{reactions |>
+  dplyr::filter(cmpd_type == "mercaptan") |>
+  dplyr::select(cmpd_name, cmpd_formula, OH_k298, Cl_k298, NO3_k298) |>
+  gt(rowname_col = "cmpd_name") |>
+  tab_header(title = "Gas-phase reactions of selected mercaptan compounds") |>
+  tab_spanner(
+    label = md("Reaction Rate Constant (298 K),<br>\{\{cm^3 molecules^–1 s^–1\}\}"),
+    columns = ends_with("k298")
+  ) |>
+  fmt_chem(columns = cmpd_formula) |>
+  fmt_scientific() |>
+  sub_missing() |>
+  cols_label(
+    cmpd_formula = "",
+    OH_k298 = "OH",
+    NO3_k298 = "\{\{\%NO3\%\}\}",
+    Cl_k298 = "Cl"
+  ) |>
+  opt_stylize() |>
+  opt_horizontal_padding(scale = 3) |>
+  opt_table_font(font = google_font("IBM Plex Sans")) |>
+  tab_options(stub.font.weight = "500")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_2.png" alt="This image of a table was generated from the second code example in the `fmt_scientific()` help file." style="width:100\%;">
+}}
+
 The \code{\link{constants}} table contains a plethora of data on the fundamental
 physical constants and values range from very small to very large, warranting
 the use of figures in scientific notation. Because the values differ in the
@@ -335,7 +370,7 @@ number of significant digits.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_2.png" alt="This image of a table was generated from the second code example in the `fmt_scientific()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_3.png" alt="This image of a table was generated from the third code example in the `fmt_scientific()` help file." style="width:100\%;">
 }}
 }
 
