@@ -3555,7 +3555,7 @@ tab_style <- function(
   }
 
   #
-  # End support for `gt_column()`
+  # End support for `from_column()`
   #
 
   # Determine if there is a `cell_text` list within the main list;

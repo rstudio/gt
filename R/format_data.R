@@ -544,6 +544,10 @@ fmt_number <- function(
     return(data)
   }
 
+  #
+  # End support for `from_column()` objects passed to compatible arguments
+  #
+
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
 
@@ -565,9 +569,6 @@ fmt_number <- function(
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
   valid_class <- c("numeric", "integer")
-  #
-  # End support for `gt_column()` objects passed to compatible arguments
-  #
   check_column_valid(data, {{ columns }}, valid_class, call = fn_call)
 
   # Set the `formatC_format` option according to whether number
@@ -947,7 +948,7 @@ fmt_integer <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   fmt_number(
@@ -1319,7 +1320,7 @@ fmt_scientific <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Stop function if `locale` does not have a valid value; normalize locale
@@ -1794,7 +1795,7 @@ fmt_engineering <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Stop function if `locale` does not have a valid value; normalize locale
@@ -2416,7 +2417,7 @@ fmt_percent <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
@@ -2759,7 +2760,7 @@ fmt_partsper <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
@@ -3157,7 +3158,7 @@ fmt_fraction <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
@@ -3937,7 +3938,7 @@ fmt_currency <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
@@ -4192,7 +4193,7 @@ fmt_roman <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
@@ -4462,7 +4463,7 @@ fmt_index <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
@@ -4876,7 +4877,7 @@ fmt_spelled_num <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Stop function if `locale` does not have a valid value; normalize locale
@@ -5227,7 +5228,7 @@ fmt_bytes <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
@@ -5622,7 +5623,7 @@ fmt_date <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Stop function if `locale` does not have a valid value; normalize locale
@@ -5967,7 +5968,7 @@ fmt_time <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Stop function if `locale` does not have a valid value; normalize locale
@@ -6948,6 +6949,10 @@ fmt_datetime <- function(
     return(data)
   }
 
+  #
+  # End support for `from_column()` objects passed to compatible arguments
+  #
+
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
   validate_locale(locale = locale)
@@ -6981,11 +6986,6 @@ fmt_datetime <- function(
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
-
-  #
-  # End support for `gt_column()` objects passed to compatible arguments
-  #
-
   valid_class <- c("Date", "POSIXct", "character")
   msg <- c(i = "Allowed types are `Date`, `POSIXct`, and `character` (with
       ISO-8601 formatted dates)")
@@ -8588,7 +8588,7 @@ fmt_tf <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Stop function if `locale` does not have a valid value; normalize locale
@@ -9760,7 +9760,7 @@ fmt_url <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # In this case where strict mode is being used (with the option
@@ -10484,8 +10484,9 @@ fmt_email <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
+
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
@@ -11074,7 +11075,7 @@ fmt_image <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # If width & height not provided, default width to '2em' and let width scale
@@ -11698,6 +11699,10 @@ fmt_flag <- function(
     return(data)
   }
 
+  #
+  # End support for `from_column()` objects passed to compatible arguments
+  #
+
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
   validate_locale(locale = locale)
@@ -11707,9 +11712,6 @@ fmt_flag <- function(
   # If `locale` is NULL then use the 'en' locale
   locale <- locale %||% "en"
 
-  #
-  # End support for `gt_column()` objects passed to compatible arguments
-  #
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
@@ -12197,6 +12199,10 @@ fmt_country <- function(
     return(data)
   }
 
+  #
+  # End support for `from_column()` objects passed to compatible arguments
+  #
+
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
   validate_locale(locale = locale)
@@ -12208,9 +12214,6 @@ fmt_country <- function(
     locale <- "en"
   }
 
-  #
-  # End support for `gt_column()` objects passed to compatible arguments
-  #
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
@@ -12785,6 +12788,10 @@ fmt_icon <- function(
     return(data)
   }
 
+  #
+  # End support for `from_column()` objects passed to compatible arguments
+  #
+
   # Ensure that arguments are matched
   a11y <- rlang::arg_match(a11y)
 
@@ -12795,9 +12802,6 @@ fmt_icon <- function(
     a11y <- "deco"
   }
 
-  #
-  # End support for `gt_column()` objects passed to compatible arguments
-  #
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
@@ -13183,7 +13187,7 @@ fmt_markdown <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
@@ -13399,7 +13403,7 @@ fmt_passthrough <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Pass `data`, `columns`, `rows`, and the formatting
