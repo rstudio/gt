@@ -220,6 +220,7 @@ get_colorized_params <- function(
 #' - `ihtml.page_size_default`
 #' - `ihtml.page_size_values`
 #' - `ihtml.pagination_type`
+#' - `ihtml.height`
 #'
 #' @inheritParams fmt_number
 #'
@@ -333,6 +334,10 @@ get_colorized_params <- function(
 #'   with a stepper for the page number. With `"simple"`, only the 'previous'
 #'   and 'next' buttons are displayed.
 #'
+#' @param ihtml.height *Height of interactive HTML table*
+#'
+#'   Height of the table in pixels. Defaults to `"auto"` for automatic sizing.
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
@@ -413,7 +418,8 @@ opt_interactive <- function(
     use_page_size_select = FALSE,
     page_size_default = 10,
     page_size_values = c(10, 25, 50, 100),
-    pagination_type = c("numbers", "jump", "simple")
+    pagination_type = c("numbers", "jump", "simple"),
+    height = "auto"
 ) {
 
   # Perform input object validation
@@ -436,7 +442,8 @@ opt_interactive <- function(
     ihtml.use_page_size_select = use_page_size_select,
     ihtml.page_size_default = page_size_default,
     ihtml.page_size_values = page_size_values,
-    ihtml.pagination_type = pagination_type
+    ihtml.pagination_type = pagination_type,
+    ihtml.height = height
   )
 }
 

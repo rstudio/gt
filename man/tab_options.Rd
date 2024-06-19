@@ -177,6 +177,7 @@ tab_options(
   ihtml.page_size_default = NULL,
   ihtml.page_size_values = NULL,
   ihtml.pagination_type = NULL,
+  ihtml.height = NULL,
   page.orientation = NULL,
   page.numbering = NULL,
   page.header.use_tbl_headings = NULL,
@@ -587,6 +588,10 @@ series of page-number buttons is presented along with 'previous' and 'next'
 buttons. The \code{"jump"} option provides an input field with a stepper for the
 page number. With \code{"simple"}, only the 'previous' and 'next' buttons are
 displayed.}
+
+\item{ihtml.height}{\emph{Height of interactive HTML table}
+
+Height of the table in pixels. Defaults to \code{"auto"} for automatic sizing.}
 
 \item{page.orientation}{\emph{Set RTF page orientation}
 

@@ -19,7 +19,8 @@ opt_interactive(
   use_page_size_select = FALSE,
   page_size_default = 10,
   page_size_values = c(10, 25, 50, 100),
-  pagination_type = c("numbers", "jump", "simple")
+  pagination_type = c("numbers", "jump", "simple"),
+  height = "auto"
 )
 }
 \arguments{
@@ -139,6 +140,8 @@ one of three options for the layout of pagination controls. The default is
 'previous' and 'next' buttons. The \code{"jump"} option provides an input field
 with a stepper for the page number. With \code{"simple"}, only the 'previous'
 and 'next' buttons are displayed.}
+
+\item{height}{Height of the table in pixels. Defaults to \code{"auto"} for automatic sizing.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -166,6 +169,7 @@ This function serves as a shortcut for setting the following options in
 \item \code{ihtml.page_size_default}
 \item \code{ihtml.page_size_values}
 \item \code{ihtml.pagination_type}
+\item \code{ihtml.height}
 }
 }
 \section{Examples}{
