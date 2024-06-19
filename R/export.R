@@ -1793,11 +1793,10 @@ extract_summary <- function(data) {
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for extraction. The default [everything()] results in all
 #'   rows in `columns` being formatted. Alternatively, we can supply a vector of
-#'   row IDs within [c()], a vector of row indices, or a select helper function.
-#'   Examples of select helper functions include [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
+#'   row IDs within `c()`, a vector of row indices, or a select helper function
+#'   (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]). We can also use expressions to filter
+#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @return A vector of cell data extracted from a **gt** table.
 #'

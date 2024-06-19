@@ -38,10 +38,9 @@
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which substitution operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
+#'   be a series of column names provided in `c()`, a vector of column indices,
+#'   or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]).
 #'
 #' @param rows *Rows to target*
 #'
@@ -50,11 +49,11 @@
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   supply a vector of row IDs within `c()`, a vector of row indices, or a
+#'   select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]. We can also use
+#'   expressions to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param missing_text *Replacement text for `NA` values*
 #'
@@ -236,30 +235,7 @@ fmt_missing <- function(
 #' be better for explanatory purposes. `sub_zero()` allows for this replacement
 #' through its `zero_text` argument.
 #'
-#' @inheritParams fmt_number
-#'
-#' @param columns *Columns to target*
-#'
-#'   `<column-targeting expression>` // *default:* `everything()`
-#'
-#'   The columns to which substitution operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#'
-#' @param rows *Rows to target*
-#'
-#'   `<row-targeting expression>` // *default:* `everything()`
-#'
-#'   In conjunction with `columns`, we can specify which of their rows should
-#'   form a constraint for targeting operations. The default [everything()]
-#'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#' @inheritParams sub_missing
 #'
 #' @param zero_text *Replacement text for zero values*
 #'
@@ -395,30 +371,7 @@ sub_zero <- function(
 #' set by the `sign` option). Note that the interval does not include the `0` or
 #' the `threshold` value. Should you need to include zero values, use [sub_zero()].
 #'
-#' @inheritParams fmt_number
-#'
-#' @param columns *Columns to target*
-#'
-#'   `<column-targeting expression>` // *default:* `everything()`
-#'
-#'   The columns to which substitution operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#'
-#' @param rows *Rows to target*
-#'
-#'   `<row-targeting expression>` // *default:* `everything()`
-#'
-#'   In conjunction with `columns`, we can specify which of their rows should
-#'   form a constraint for targeting operations. The default [everything()]
-#'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#' @inheritParams sub_missing
 #'
 #' @param threshold *Threshold value*
 #'
@@ -670,30 +623,7 @@ sub_small_vals <- function(
 #' this replacement through specification of a `threshold`, a `large_pattern`,
 #' and the sign (positive or negative) of the values to be considered.
 #'
-#' @inheritParams fmt_number
-#'
-#' @param columns *Columns to target*
-#'
-#'   `<column-targeting expression>` // *default:* `everything()`
-#'
-#'   The columns to which substitution operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#'
-#' @param rows *Rows to target*
-#'
-#'   `<row-targeting expression>` // *default:* `everything()`
-#'
-#'   In conjunction with `columns`, we can specify which of their rows should
-#'   form a constraint for targeting operations. The default [everything()]
-#'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#' @inheritParams sub_missing
 #'
 #' @param threshold *Threshold value*
 #'
@@ -956,30 +886,7 @@ check_sub_fn_sign <- function(sign, call = rlang::caller_env()) {
 #' `sub_values()` can be good choice. We can target cells for replacement
 #' through value, regex, and custom matching rules.
 #'
-#' @inheritParams fmt_number
-#'
-#' @param columns *Columns to target*
-#'
-#'   `<column-targeting expression>` // *default:* `everything()`
-#'
-#'   The columns to which substitution operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#'
-#' @param rows *Rows to target*
-#'
-#'   `<row-targeting expression>` // *default:* `everything()`
-#'
-#'   In conjunction with `columns`, we can specify which of their rows should
-#'   form a constraint for targeting operations. The default [everything()]
-#'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#' @inheritParams sub_missing
 #'
 #' @param values *Values to match on*
 #'

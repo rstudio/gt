@@ -38,11 +38,11 @@ This is the \strong{gt} table object that is commonly created through use of the
 \verb{<column-targeting expression>} // \strong{required}
 
 The columns which contain the numeric data to be plotted as nanoplots. Can
-either be a series of column names provided in \code{\link[=c]{c()}}, a vector of column
-indices, or a select helper function. Examples of select helper functions
-include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. Data collected from the
-columns will be concatenated together in the order of resolution.}
+either be a series of column names provided in \code{c()}, a vector of column
+indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). Data
+collected from the columns will be concatenated together in the order of
+resolution.}
 
 \item{rows}{\emph{Rows that should contain nanoplots}
 
@@ -50,11 +50,10 @@ columns will be concatenated together in the order of resolution.}
 
 With \code{rows} we can specify which rows should contain nanoplots in the new
 column. The default \code{\link[=everything]{everything()}} results in all rows in \code{columns} being
-formatted. Alternatively, we can supply a vector of row IDs within \code{\link[=c]{c()}}, a
-vector of row indices, or a select helper function. Examples of select
-helper functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use
-expressions to filter down to the rows we need (e.g.,
+formatted. Alternatively, we can supply a vector of row IDs within \code{c()}, a
+vector of row indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).
+We can also use expressions to filter down to the rows we need(e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{plot_type}{\emph{The type of nanoplot to display}
@@ -118,11 +117,11 @@ viewable, set \code{autohide = FALSE}.}
 We can optionally obtain data for the independent variable (i.e., the
 \emph{x}-axis data) if specifying columns in \code{columns_x_vals}. This is only for
 the \code{"line"} type of plot (set via the \code{plot_type} argument). We can supply
-either be a series of column names provided in \code{\link[=c]{c()}}, a vector of column
-indices, or a select helper function. Examples of select helper functions
-include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. Data collected from the
-columns will be concatenated together in the order of resolution.}
+either be a series of column names provided in \code{c()}, a vector of column
+indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). Data
+collected from the columns will be concatenated together in the order of
+resolution.}
 
 \item{reference_line}{\emph{Add a reference line}
 

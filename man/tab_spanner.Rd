@@ -36,11 +36,10 @@ in the text.}
 \verb{<column-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
 
 The columns to serve as components of the spanner. Can either be a series
-of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select
-helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. This argument works in tandem with the
-\code{spanners} argument.}
+of column names provided in \code{c()}, a vector of column indices, or a select
+helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. This argument works in
+tandem with the \code{spanners} argument.}
 
 \item{spanners}{\emph{Spanners to target}
 
