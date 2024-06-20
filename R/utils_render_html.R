@@ -53,19 +53,19 @@ footnote_mark_to_html <- function(
 
   is_sup <- grepl("\\^", spec)
 
-  if (grepl("\\.", spec)) mark <- paste0(mark, ".")
-  if (grepl("\\(", spec)) mark <- paste0("(", mark)
-  if (grepl("\\[", spec)) mark <- paste0("[", mark)
-  if (grepl("\\)", spec)) mark <- paste0(mark, ")")
-  if (grepl("\\]", spec)) mark <- paste0(mark, "]")
+  if (grepl(".", spec, fixed = TRUE)) mark <- paste0(mark, ".")
+  if (grepl("(", spec, fixed = TRUE)) mark <- paste0("(", mark)
+  if (grepl("[", spec, fixed = TRUE)) mark <- paste0("[", mark)
+  if (grepl(")", spec, fixed = TRUE)) mark <- paste0(mark, ")")
+  if (grepl("]", spec, fixed = TRUE)) mark <- paste0(mark, "]")
 
-  if (grepl("i", spec)) {
+  if (grepl("i", spec, fixed = TRUE)) {
     font_style <- "italic"
   } else {
     font_style <- "normal"
   }
 
-  if (grepl("b", spec)) {
+  if (grepl("b", spec, fixed = TRUE)) {
     font_weight <- "bold"
   } else {
     font_weight <- "normal"

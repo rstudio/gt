@@ -51,9 +51,9 @@ footnote_mark_to_latex <- function(
     spec <- "^i"
   }
 
-  if (grepl("\\.", spec)) mark <- sprintf_unless_na("%s.", mark)
-  if (grepl("b", spec)) mark <- sprintf_unless_na("\\textbf{%s}", mark)
-  if (grepl("i", spec)) mark <- sprintf_unless_na("\\textit{%s}", mark)
+  if (grepl(".", spec, fixed = TRUE)) mark <- sprintf_unless_na("%s.", mark)
+  if (grepl("b", spec, fixed = TRUE)) mark <- sprintf_unless_na("\\textbf{%s}", mark)
+  if (grepl("i", spec, fixed = TRUE)) mark <- sprintf_unless_na("\\textit{%s}", mark)
   if (grepl("\\(|\\[", spec)) mark <- sprintf_unless_na("(%s", mark)
   if (grepl("\\)|\\]", spec)) mark <- sprintf_unless_na("%s)", mark)
 
@@ -1674,7 +1674,7 @@ create_colwidth_df_l <- function(data) {
     if (is.null(raw) || raw == "") {
       next
     } else if (endsWith(raw, "%")) {
-      pct <- as.numeric(gsub("%", "", raw))
+      pct <- as.numeric(gsub("%", "", raw, fixed = TRUE))
 
       if (tbl_width == "auto") {
         width_df$lw[i] <- pct

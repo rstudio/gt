@@ -80,8 +80,8 @@ validate_locale <- function(locale, call = rlang::caller_env()) {
   # isn't a valid one
   if (
     !is.null(locale) &&
-    !(gsub("_", "-", locale) %in% locales[["locale"]]) &&
-    !(gsub("_", "-", locale) %in% default_locales[["default_locale"]])
+    !(gsub("_", "-", locale, fixed = TRUE) %in% locales[["locale"]]) &&
+    !(gsub("_", "-", locale, fixed = TRUE) %in% default_locales[["default_locale"]])
   ) {
 
     cli::cli_abort(c(
@@ -287,13 +287,13 @@ get_locale_no_table_data_text <- function(locale = NULL) {
 
 get_locale_segments <- function(locale) {
 
-  if (!grepl("-", locale)) {
+  if (!grepl("-", locale, fixed = TRUE)) {
     return(locale)
   }
 
   segments <- locale
 
-  while (grepl("-", locale)) {
+  while (grepl("-", locale, fixed = TRUE)) {
 
     locale <- gsub("-[^-]*$", "", locale)
     segments <- c(segments, locale)
@@ -504,9 +504,9 @@ format_num_to_str <- function(
   # conform to the Indian numbering system
   if (system == "ind") {
 
-    is_inf <- grepl("Inf", x_str)
+    is_inf <- grepl("Inf", x_str, fixed = TRUE)
     x_str_numeric <- x_str[!is_inf]
-    has_decimal <- grepl("\\.", x_str_numeric)
+    has_decimal <- grepl(".", x_str_numeric, fixed = TRUE)
     is_negative <- grepl("^-", x_str_numeric)
 
     integer_parts <- sub("\\..*", "", x_str_numeric)

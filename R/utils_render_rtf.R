@@ -808,8 +808,8 @@ footnote_mark_to_rtf <- function(
       paste0(
       "{",
       if (grepl("\\^", spec)) "\\super " else NULL,
-      if (grepl("i", spec)) "\\i " else NULL,
-      if (grepl("b", spec)) "\\b " else NULL
+      if (grepl("i", spec, fixed = TRUE)) "\\i " else NULL,
+      if (grepl("b", spec, fixed = TRUE)) "\\b " else NULL
       )
     ),
     mark,
@@ -852,7 +852,7 @@ escape_rtf_unicode <- function(x) {
     x <- enc2utf8(x)
   }
 
-  chars <- unlist(strsplit(x, ""))
+  chars <- unlist(strsplit(x, "", fixed = TRUE))
   codepoints <- utf8ToInt(x)
   needs_escape <- codepoints > 127
   codepoints_subset <- codepoints[needs_escape]

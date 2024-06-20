@@ -168,7 +168,7 @@ generate_nanoplot <- function(
 
   # If the number of y_vals is `1` and we requested a 'bar' plot, then
   # reset several parameters
-  if (num_y_vals == 1 && grepl("bar", plot_type)) {
+  if (num_y_vals == 1 && grepl("bar", plot_type, fixed = TRUE)) {
 
     single_horizontal_bar <- TRUE
     show_data_points <- FALSE

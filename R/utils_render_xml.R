@@ -297,7 +297,7 @@ xml_border <- function(
       bottom = "bottom"
     )
 
-  color <- toupper(gsub("#", "", color))
+  color <- toupper(gsub("#", "", color, fixed = TRUE))
 
   htmltools::tag(
     `_tag_name` = xml_tag_type(dir, app),
@@ -757,8 +757,8 @@ footnote_mark_to_xml <- function(
         xml_baseline_adj(
           v_align = if (grepl("\\^", spec)) "superscript" else "baseline"
         ),
-        if (grepl("i", spec)) xml_i(active = TRUE) else NULL,
-        if (grepl("b", spec)) xml_b(active = TRUE) else NULL
+        if (grepl("i", spec, fixed = TRUE)) xml_i(active = TRUE) else NULL,
+        if (grepl("b", spec, fixed = TRUE)) xml_b(active = TRUE) else NULL
       ),
       xml_t(mark)
     )
