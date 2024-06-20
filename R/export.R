@@ -1180,7 +1180,7 @@ as_word_tbl_body <- function(
 #' @export
 as_gtable <- function(data, plot = FALSE, text_grob = grid::textGrob) {
 
-  data <- build_data(data = data, context = "html")
+  data <- build_data(data = data, context = "grid")
   data <- add_css_styles(data = data)
 
   caption_component <- create_caption_component_g(data = data)

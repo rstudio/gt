@@ -998,6 +998,9 @@ process_text <- function(text, context = "html") {
 
     return(text)
 
+  } else if (context == "grid") {
+    # Skip any formatting
+    return(as.character(text))
   } else {
 
     # Text processing in the default case
