@@ -566,22 +566,23 @@ get_alignment_at_body_cell <- function(
   # set there (this has higher specificity)
   #
 
-  styles_filtered_tbl <-
-    dplyr::filter(
-      styles_tbl,
-      locname == "data" & colname == .env$colname & rownum == .env$rownum
-    )
+  cnd <-
+    styles_tbl$locname == "data" &
+    styles_tbl$colname == colname &
+    styles_tbl$rownum == rownum
 
-  if (nrow(styles_tbl) < 1L) {
+  styles_filtered_tbl <- styles_tbl[cnd, , drop = FALSE]
+
+  if (nrow(styles_filtered_tbl) < 1L) {
     return(column_alignment)
   }
 
   # Extract the list of styles from the table
   cell_styles_list <- styles_filtered_tbl$styles
 
-  if (length(cell_styles_list) < 1L) {
-    return(column_alignment)
-  }
+  # if (length(cell_styles_list) < 1L) {
+  #   return(column_alignment)
+  # }
 
   # Get the `align` property in `cell_styles_list` (element may not be present)
   cell_text_align <- cell_styles_list[[1L]]$cell_text$align
