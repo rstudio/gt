@@ -721,7 +721,7 @@ stub_rownames_has_column <- function(data) {
 stub_group_names_has_column <- function(data) {
 
   # If there aren't any row groups then the result is always FALSE
-  if (nrow(dt_groups_rows_get(data = data)) < 1) {
+  if (nrow(dt_groups_rows_get(data = data)) < 1L) {
     return(FALSE)
   }
 

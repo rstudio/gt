@@ -1683,7 +1683,7 @@ create_footnotes_component_h <- function(data) {
   n_cols_total <- get_effective_number_of_columns(data = data)
 
   # Get the distinct set of `fs_id` & `footnotes` values in the `footnotes_tbl`
-  footnotes_tbl <- dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
+  footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
   # Get the style attrs for the footnotes
   if ("footnotes" %in% styles_tbl$locname) {

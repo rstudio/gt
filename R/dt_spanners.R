@@ -49,7 +49,7 @@ dt_spanners_init <- function(data) {
       # The spanner level
       spanner_level = integer(0L),
       # Should be columns be gathered under a single spanner label?
-      gather = logical(0),
+      gather = logical(0L),
       built = NA_character_
     )
 
@@ -275,7 +275,7 @@ dt_spanners_print_matrix <- function(
   # Get the height of the spanner matrix
   spanner_height <- max(spanners_tbl[["spanner_level"]])
 
-  vars_vec <- rep(NA_character_, length(vars))
+  vars_vec <- rep_len(NA_character_, length(vars))
   names(vars_vec) <- vars
 
   # Initialize matrix to serve as boxhead representation

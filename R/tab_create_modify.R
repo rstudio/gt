@@ -4768,7 +4768,7 @@ tab_options <- function(
         SIMPLIFY = FALSE
       )
     )
-  new_df <- dplyr::select(new_df, -type)
+  new_df$type <- NULL
 
   # This rearranges the rows in the `opts_df` table, but this
   # shouldn't be a problem

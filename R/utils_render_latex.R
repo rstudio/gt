@@ -904,8 +904,7 @@ summary_rows_for_group_l <- function(
   summary_df <-
     dplyr::select(
       list_of_summaries$summary_df_display_list[[group_id]],
-      dplyr::all_of(rowname_col_private),
-      dplyr::all_of(default_vars)
+      dplyr::all_of(c(rowname_col_private, default_vars))
     )
 
   for (col_name in names(summary_df)) {
@@ -1029,8 +1028,7 @@ create_footer_component_l <- function(data) {
   # Create a formatted footnotes string
   if (nrow(footnotes_tbl) > 0) {
 
-    footnotes_tbl <-
-      dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
+    footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
     # Create a vector of formatted footnotes
     footnotes <-
@@ -1359,9 +1357,8 @@ derive_table_width_statement_l <- function(data) {
 
     tw <- as.numeric(gsub('%', '', table_width))
 
-    side_width <-
-      ((100 - tw) / 200) %>%
-      format(scientific = FALSE, trim = TRUE)
+    side_width <- (100 - tw) / 200
+    side_width <- format(side_width, scientific = FALSE, trim = TRUE)
 
     statement <- paste0(
       "\\setlength\\",

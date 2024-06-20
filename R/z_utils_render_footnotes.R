@@ -311,7 +311,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
         rownum = level
       )
 
-    if (nrow(spanner_label_df) > 0) {
+    if (nrow(spanner_label_df) > 0L) {
 
       tmp <- tbl
       tmp$colnum <- NULL
@@ -361,7 +361,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     tbl <- dplyr::left_join(tbl, lookup_tbl, by = "footnotes")
     tbl$fs_id <- ifelse(tbl$locname == "none", NA_character_, tbl$fs_id)
 
-    if (nrow(tbl) > 0) {
+    if (nrow(tbl) > 0L) {
 
       # Retain the row that only contain `locname == "none"`
       tbl_no_loc <- dplyr::filter(tbl, locname == "none")
@@ -369,7 +369,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
       # Modify `fs_id` to contain the footnote marks we need
       tbl <- dplyr::filter(tbl, locname != "none")
 
-      if (nrow(tbl) > 0) {
+      if (nrow(tbl) > 0L) {
 
         tbl$fs_id <- as.integer(tbl$fs_id)
         tbl$fs_id <- process_footnote_marks(tbl$fs_id, marks = footnote_marks)
@@ -667,8 +667,7 @@ set_footnote_marks_row_groups <- function(data, context = "html") {
       dplyr::group_by(grpname) %>%
       dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
       dplyr::ungroup() %>%
-      dplyr::select(grpname, fs_id_coalesced) %>%
-      dplyr::distinct()
+      dplyr::distinct(grpname, fs_id_coalesced)
 
     for (i in seq_len(nrow(footnotes_row_groups_marks))) {
 

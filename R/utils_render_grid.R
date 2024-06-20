@@ -768,7 +768,7 @@ create_footnotes_component_g <- function(data) {
   styles_tbl <- dt_styles_get(data = data)
   n_cols_total <- get_effective_number_of_columns(data = data)
 
-  footnotes_tbl <- dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
+  footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
   style <- NA
   if ("footnotes" %in% styles_tbl$locname) {
