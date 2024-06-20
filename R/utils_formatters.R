@@ -111,8 +111,8 @@ validate_currency <- function(currency, call = rlang::caller_env()) {
   # Stop function if the `currency` provided isn't a valid one
   if (
     !(
-      currency_char %in% currency_symbols$curr_symbol |
-      currency_char %in% currencies$curr_code |
+      currency_char %in% currency_symbols$curr_symbol ||
+      currency_char %in% currencies$curr_code ||
       currency_char %in% currencies$curr_number
     )
   ) {

@@ -180,7 +180,7 @@ create_table_start_l <- function(data) {
 
   if (!is.null(col_widths)) {
 
-    col_defs <- c()
+    col_defs <- NULL
 
     # TODO: check that length of `col_widths` is equal to that
     # of `col_alignment`
@@ -1584,7 +1584,7 @@ apply_cell_styles_l <- function(content, style_obj) {
   if (is.null(use_indent)) return(NULL)
 
   # Documentation says numbers without units default to px
-  if (is.numeric(use_indent)) use_indent <- paste0(use_indent, 'px')
+  if (is.numeric(use_indent)) use_indent <- paste0(use_indent, "px")
 
   paste0(
     "\\hspace{",
@@ -1676,7 +1676,7 @@ create_colwidth_df_l <- function(data) {
     } else if (endsWith(raw, "%")) {
       pct <- as.numeric(gsub("%", "", raw))
 
-      if (tbl_width == 'auto') {
+      if (tbl_width == "auto") {
         width_df$lw[i] <- pct
       } else if (endsWith(tbl_width, "%")) {
         width_df$lw[i] <- pct * as.numeric(gsub("%", "", tbl_width))
@@ -1753,4 +1753,3 @@ calculate_multicolumn_width_text_l <- function(begins, ends, colwidth_df) {
 
   out_text
 }
-

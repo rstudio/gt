@@ -3731,14 +3731,14 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
   cols <- resolved$columns
 
-  colnames <- names(cols)
+  col_names <- names(cols)
 
   data <-
     dt_styles_add(
       data = data,
       locname = "columns_columns",
       grpname = NA_character_,
-      colname = colnames,
+      colname = col_names,
       locnum = 4,
       rownum = NA_integer_,
       styles = style

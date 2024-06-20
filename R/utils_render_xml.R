@@ -397,8 +397,7 @@ xml_ilvl <- function(..., val, app = "word") {
 
 xml_numId <- function(..., val, app = "word") {
 
-  stopifnot(is.numeric(val))
-  stopifnot(val > 0)
+  stopifnot(is.numeric(val), val > 0)
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("numId", app),
@@ -921,7 +920,7 @@ xml_a_graphic_frame_locks <- function(noChangeAspect = TRUE, noCrop = FALSE, noR
   htmltools::tag(
     `_tag_name` = "a:graphicFrameLocks",
     varArgs = as.list(c(
-      `xmlns:a`="http://schemas.openxmlformats.org/drawingml/2006/main",
+      `xmlns:a` = "http://schemas.openxmlformats.org/drawingml/2006/main",
       locks_list
     ))
   )
@@ -955,7 +954,7 @@ xml_pic_pic <- function(...) {
   htmltools::tag(
     `_tag_name` = "pic:pic",
     varArgs = list(
-      `xmlns:pic`="http://schemas.openxmlformats.org/drawingml/2006/picture",
+      `xmlns:pic` = "http://schemas.openxmlformats.org/drawingml/2006/picture",
       ...
     )
   )
@@ -1045,7 +1044,7 @@ xml_a_stretch_rect <- function() {
     `_tag_name` = "a:stretch",
     varArgs = list(
       htmltools::tag(
-        `_tag_name` = "a:fillRect",varArgs = list()
+        `_tag_name` = "a:fillRect", varArgs = list()
       )
     )
   )
@@ -1185,7 +1184,7 @@ create_table_props_component_xml <- function(data, align = c("center", "start", 
       ),
       xml_tblW(type = "auto", w = 0),
       xml_tblLook(),
-      xml_jc(val = c(center="center",start = "start",end = "end",end = "right",start = "left")[[align]])
+      xml_jc(val = c(center = "center", start = "start", end = "end", end = "right", start = "left")[[align]])
     )
 
   # table_cols <- xml_tblGrid(

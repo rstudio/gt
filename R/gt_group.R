@@ -915,8 +915,8 @@ generate_gt_tbl_info_list <- function(gt_tbl) {
         vapply(
           summary_list,
           FUN.VALUE = integer(1L),
-          FUN = function(x) nrow(x))
-      )
+          FUN = nrow
+      ))
 
     if (!is.null(summary_list[["::GRAND_SUMMARY"]])) {
       n_summary_rows_grand <- nrow(summary_list[["::GRAND_SUMMARY"]])

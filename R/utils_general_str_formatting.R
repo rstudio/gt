@@ -622,5 +622,5 @@ rtl_modern_unicode_charset <-
     syriac_unicode_charset,
     thaana_unicode_charset,
     samaritan_unicode_charset,
-    mandaic_unicode_charset,sep = "|"
+    mandaic_unicode_charset, sep = "|"
   )

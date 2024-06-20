@@ -447,7 +447,7 @@ body_cells_g <- function(data) {
   }
 
   # Weave even/odd classes into matrix
-  cell_classes <- rep(list(odd_class, even_class), length.out = n_rows)
+  cell_classes <- rep_len(list(odd_class, even_class), n_rows)
   cell_classes <- inject(rbind(!!!cell_classes))
 
   # Set column alignment

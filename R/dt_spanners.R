@@ -82,7 +82,7 @@ dt_spanners_add <- function(
     error_vars <-
       vars[vars %in% unlist(spanners_at_level[["vars"]])]
     cli::cli_abort(c(
-      "x" ="Can't create the {.val {spanner_id}} spanner.",
+      "x" = "Can't create the {.val {spanner_id}} spanner.",
       "!" = "Column{?s} {.code {error_vars}} belong{?s/} to an existing spanner.",
       "i" = "Specify {.arg columns} appropriately by using other variable names."
       ),

@@ -341,7 +341,7 @@ reorder_styles <- function(data) {
   for (i in seq_len(sz)) {
     if (
       !is.na(styles_tbl$rownum[i]) &&
-      !grepl("summary_cells", styles_tbl$locname[i])
+      !grepl("summary_cells", styles_tbl$locname[i], fixed = TRUE)
     ) {
       tmp_mask[i] <- TRUE
       tmp_rownum[i] <- which(rownum_final == styles_tbl$rownum[i])

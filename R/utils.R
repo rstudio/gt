@@ -557,7 +557,7 @@ get_alignment_at_body_cell <- function(
   # Get cell alignment set by `tab_style`
   styles_tbl <- dt_styles_get(data = data)
 
-  if (nrow(styles_tbl) < 1) {
+  if (nrow(styles_tbl) < 1L) {
     return(column_alignment)
   }
 
@@ -1993,8 +1993,8 @@ num_suffix_ind <- function(
   suffix_index[is.na(suffix_index)] <- 0
 
   # Add a leading space to all non-empty suffix labels
-  suffix_labels[suffix_labels != ""] <-
-    paste0(" ", suffix_labels[suffix_labels != ""])
+  suffix_labels[nzchar(suffix_labels)] <-
+    paste0(" ", suffix_labels[nzchar(suffix_labels)])
 
   # Create and return a tibble with `scale_by`
   # and `suffix` values

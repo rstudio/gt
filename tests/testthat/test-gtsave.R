@@ -133,7 +133,7 @@ test_that("HTML saving with `gtsave()` is successful with different path defs", 
   #
 
   # Form final path, check for non-existence
-  path_1 <- normalizePath(tempfile(fileext = ".html"), winslash = "/", mustWork = F)
+  path_1 <- normalizePath(tempfile(fileext = ".html"), winslash = "/", mustWork = FALSE)
   on.exit(unlink(path_1))
   expect_false(file.exists(path_1))
 
@@ -485,7 +485,7 @@ test_that("gtsave() creates docx files as expected", {
 
   gt_exibble <- exibble %>% gt()
 
-  temp_docx <- file.path(tempdir(),"test.docx")
+  temp_docx <- file.path(tempdir(), "test.docx")
   on.exit(unlink(temp_docx))
   expect_false(file.exists(temp_docx))
 
@@ -494,7 +494,7 @@ test_that("gtsave() creates docx files as expected", {
   # Check for existence
   expect_true(file.exists(temp_docx))
 
-  temp_docx_xml <- xml2::read_xml(unz(temp_docx,"word/document.xml"))
+  temp_docx_xml <- xml2::read_xml(unz(temp_docx, "word/document.xml"))
 
   temp_docx_xml %>%
     xml2::xml_find_first(".//w:tbl") %>%
@@ -517,7 +517,7 @@ test_that("gtsave() creates docx files even when a table has special characters"
     ) %>%
     gt()
 
-  temp_docx <- file.path(tempdir(),"test.docx")
+  temp_docx <- file.path(tempdir(), "test.docx")
   on.exit(unlink(temp_docx))
   expect_false(file.exists(temp_docx))
 
@@ -526,7 +526,7 @@ test_that("gtsave() creates docx files even when a table has special characters"
   # Check for existence
   expect_true(file.exists(temp_docx))
 
-  temp_docx_xml <- xml2::read_xml(unz(temp_docx,"word/document.xml"))
+  temp_docx_xml <- xml2::read_xml(unz(temp_docx, "word/document.xml"))
 
   temp_docx_xml %>%
     xml2::xml_find_first(".//w:tbl") %>%

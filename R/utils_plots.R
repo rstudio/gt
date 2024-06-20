@@ -784,7 +784,7 @@ generate_nanoplot <- function(
   start_data_y_points <- start_data_y_points[is_non_na]
   end_data_y_points <- end_data_y_points[is_non_na]
 
-  is_not_length_one <- !(start_data_y_points == end_data_y_points)
+  is_not_length_one <- start_data_y_points != end_data_y_points
 
   start_data_y_points <- start_data_y_points[is_not_length_one]
   end_data_y_points <- end_data_y_points[is_not_length_one]

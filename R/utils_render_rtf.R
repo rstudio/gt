@@ -388,7 +388,7 @@ parse_length_str <- function(
   if (
     !allow_negative &&
     length(non_na_vals) > 0 &&
-    any(!is.na(non_na_vals)) &&
+    !all(is.na(non_na_vals)) &&
     is.numeric(non_na_vals) &&
     any(non_na_vals < 0)
   ) {
@@ -1459,7 +1459,7 @@ create_body_component_rtf <- function(data) {
     )
 
   # Replace an NA group with an empty string
-  if (any(is.na(groups_rows_df$group_label))) {
+  if (anyNA(groups_rows_df$group_label)) {
 
     groups_rows_df <-
       dplyr::mutate(
@@ -1468,7 +1468,7 @@ create_body_component_rtf <- function(data) {
       )
   }
 
-  row_groups_present <- nrow(groups_rows_df) > 0
+  row_groups_present <- nrow(groups_rows_df) > 0L
   row_group_rows <- groups_rows_df$row_start
   row_group_labels <- groups_rows_df$group_label
 
