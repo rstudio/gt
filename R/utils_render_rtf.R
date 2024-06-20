@@ -1461,11 +1461,7 @@ create_body_component_rtf <- function(data) {
   # Replace an NA group with an empty string
   if (anyNA(groups_rows_df$group_label)) {
 
-    groups_rows_df <-
-      dplyr::mutate(
-        groups_rows_df,
-        group_label = ifelse(is.na(group_label), "", group_label)
-      )
+    groups_rows_df$group_label[is.na(groups_rows_df$label)] <- ""
   }
 
   row_groups_present <- nrow(groups_rows_df) > 0L

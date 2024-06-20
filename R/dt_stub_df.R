@@ -204,7 +204,8 @@ dt_stub_components <- function(data) {
     stub_components <- c(stub_components, "group_id")
   }
 
-  if (!all(is.na(stub_df[["row_id"]])) && !all(!nzchar(stub_df[["row_id"]]))) {
+  # check if some row_id are present and have non-empty chr
+  if (!all(is.na(stub_df[["row_id"]])) && any(nzchar(stub_df[["row_id"]]))) {
     stub_components <- c(stub_components, "row_id")
   }
 
