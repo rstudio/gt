@@ -140,7 +140,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     }
 
     # Re-combine `tbl_data` with `tbl`
-    tbl <- dplyr::bind_rows(tbl_not_data, tbl_data)
+    tbl <- vctrs::vec_rbind(tbl_not_data, tbl_data)
 
   } else {
     tbl$colnum <- NA_integer_
@@ -165,7 +165,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     tbl_row_groups$group_label <- NULL
 
     # Re-combine `tbl_not_row_groups` with `tbl_row_groups`
-    tbl <- dplyr::bind_rows(tbl_not_row_groups, tbl_row_groups)
+    tbl <- vctrs::vec_rbind(tbl_not_row_groups, tbl_row_groups)
   }
 
   # For the summary cells, insert a `rownum` based
@@ -304,11 +304,12 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     }
 
     spanner_label_df <-
-      dplyr::tibble(
+      data.frame(
         grpname = spanner_id,
         colname = spanner_start_colname,
         colnum = spanner_start_colnum,
-        rownum = level
+        rownum = level,
+        stringsAsFactors = FALSE
       )
 
     if (nrow(spanner_label_df) > 0L) {
@@ -324,7 +325,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
 
       # Re-combine `tbl_not_col_spanner_cells` with `tbl_not_col_spanner_cells`
       tbl <-
-        dplyr::bind_rows(
+        vctrs::vec_rbind(
           tbl_not_col_spanner_cells,
           tbl_column_spanner_cells
         )
@@ -375,7 +376,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
         tbl$fs_id <- process_footnote_marks(tbl$fs_id, marks = footnote_marks)
       }
 
-      tbl <- dplyr::bind_rows(tbl_no_loc, tbl)
+      tbl <- vctrs::vec_rbind(tbl_no_loc, tbl)
     }
   }
 

@@ -94,7 +94,7 @@ dt_groups_rows_build <- function(data, context) {
       dplyr::left_join(groups_rows, group_label_df, by = "group_id")
 
     groups_rows <-
-      dplyr::rename(groups_rows, group_label = built_group_label)
+      dplyr::rename(groups_rows, group_label = "built_group_label")
 
     groups_rows <-
       dplyr::select(groups_rows, group_id, group_label, dplyr::everything())
