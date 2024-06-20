@@ -803,21 +803,18 @@ resolve_spanner_level <- function(
   spanners_tbl <- dt_spanners_get(data = data)
 
   highest_level <- 0L
+  spanner_cols <- c("spanner_id", "vars", "spanner_level")
+  spanners_tbl <- spanners_tbl[ , spanner_cols, drop = FALSE]
 
-  spanners_tbl <- dplyr::select(spanners_tbl, spanner_id, vars, spanner_level)
-
-  highest_level <-
-    dplyr::filter(
-      spanners_tbl,
-      vapply(
-        vars,
-        FUN.VALUE = logical(1),
-        FUN = function(x) any(column_names %in% x)
-      )
-    ) %>%
-    dplyr::pull("spanner_level") %>%
-    max(0) # Max of ^ and 0
-
+  cnd_highest_level <-
+    vapply(
+      spanners_tbl$vars,
+      FUN.VALUE = logical(1L),
+      FUN = function(x) any(column_names %in% x)
+    )
+  highest_level <- spanners_tbl[cnd_highest_level, "spanner_level", drop = TRUE]
+  # Max of ^ and 0
+  highest_level <- max(c(0, highest_level))
   highest_level + 1L
 }
 

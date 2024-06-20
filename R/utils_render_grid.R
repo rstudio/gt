@@ -902,17 +902,16 @@ render_grid_svg <- function(label, style, margin) {
   # and they cannot be displayed interactively in {grid} anyway.
   label <- gsub("<title(.*?)</title>", "", label)
 
-  svg_string <- regexpr("<svg(.*?)>.*</svg>", label) %>%
-    regmatches(x = label) %>%
-    gsub(pattern = "\n", replacement = "") %>%
-    trimws()
+  svg_string <- regexpr("<svg(.*?)>.*</svg>", label)
+  svg_string <- regmatches(label, svg_string)
+  svg_string <- gsub("\n", "", svg_string)
+  svg_string <- trimws(svg_string)
 
-  svg_style <- regexpr("style=\"(.*?)\"", svg_string) %>%
-    regmatches(x = svg_string) %>%
-    gsub(pattern = "^style=\"|\"$", replacement = "") %>%
-    strsplit(";") %>%
-    unlist() %>%
-    trimws()
+  svg_style <- regexpr("style=\"(.*?)\"", svg_string)
+  svg_style <- regmatches(svg_string, svg_style)
+  svg_style <- gsub("^style=\"|\"$", "", svg_style)
+  svg_style <- strsplit(svg_style, ";", fixed = TRUE)
+  svg_style <- trimws(unlist(svg_style))
 
   width <- height <- NULL
 

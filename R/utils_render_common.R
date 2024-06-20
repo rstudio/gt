@@ -806,21 +806,19 @@ get_body_component_cell_matrix <- function(data) {
 
   if ("group_label" %in% stub_layout) {
 
-    groups_rows_df <-
-      dt_groups_rows_get(data = data) %>%
-      dplyr::select(group_id, group_label, row_start)
+    groups_rows_df <- dt_groups_rows_get(data = data)
+    groups_rows_df <- groups_rows_df[, c("group_id", "group_label", "row_start"), drop = FALSE]
 
-    group_label_matrix <-
-      dt_stub_df_get(data = data) %>%
-      dplyr::select(-row_id, -group_label) %>%
-      dplyr::inner_join(groups_rows_df, by = "group_id") %>%
-      dplyr::mutate(
-        row = dplyr::row_number(),
-        built = dplyr::if_else(row_start != row, "", built_group_label)
-      ) %>%
-      dplyr::select(built) %>%
-      as.matrix() %>%
-      unname()
+    stub_df <- dt_stub_df_get(data = data)
+    stub_df$row_id <- NULL
+    stub_df$group_label <- NULL
+    stub_df <- dplyr::inner_join(stub_df, groups_rows_df, by = "group_id")
+    stub_df$row <- seq_len(nrow(stub_df))
+    stub_df$built <- ""
+    cnd <- stub_df$row_start == stub_df$row
+    # Use built_group_label for row = row start
+    stub_df$built[cnd] <- stub_df$built_group_label[cnd]
+    group_label_matrix <- as.matrix(stub_df$built)
 
     body_matrix <- cbind(group_label_matrix, body_matrix)
   }

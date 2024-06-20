@@ -911,12 +911,12 @@ summary_rows_for_group_l <- function(
 
     loc_type <- if(summary_row_type == "grand") "grand_summary_cells" else "summary_cells"
 
-    styles_summary <- dt_styles_get(data) %>%
-      dplyr::filter(locname == loc_type,
-                    grpname == group_id) %>%
-      dplyr::mutate(colname = ifelse(is.na(colname) & colnum == 0,
-                              "::rowname::", colname)) %>%
-      dplyr::filter(colname == col_name)
+    styles_df <- dt_styles_get(data)
+    styles_df <- styles_df[styles_df$locname == loc_type & styles_df$grpname == group_id, , drop = FALSE]
+    # set colname to ::rowname:: if colname is present and colnum = 0
+    styles_df$colname[is.na(styles_df$colname) & styles_df$colnum == 0] <- "::rowname::"
+
+    styles_summary <- styles_df[styles_df$colname == col_name, , drop = FALSE]
 
     if (dim(styles_summary)[1L] > 0L) {
 
@@ -929,8 +929,9 @@ summary_rows_for_group_l <- function(
           row_pos <- row_num
         }
 
-        row_style <- dplyr::filter(styles_summary, rownum == row_num) %>%
-          consolidate_cell_styles_l()
+        # style each row
+        row_style <- styles_summary[styles_summary$rownum == row_num, , drop = FALSE]
+        row_style <- consolidate_cell_styles_l(row_style)
 
         summary_df[[col_name]][row_pos] <- apply_cell_styles_l(summary_df[[col_name]][row_pos], row_style)
       }

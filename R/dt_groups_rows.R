@@ -97,7 +97,7 @@ dt_groups_rows_build <- function(data, context) {
       dplyr::rename(groups_rows, group_label = "built_group_label")
 
     groups_rows <-
-      dplyr::select(groups_rows, group_id, group_label, dplyr::everything())
+      dplyr::relocate(groups_rows, "group_id", "group_label", .before = 0)
 
     others_group <-
       dt_options_get_value(

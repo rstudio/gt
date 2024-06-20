@@ -58,9 +58,10 @@ resolve_cells_body <- function(data, object, call = rlang::caller_env()) {
       resolved_columns_idx,
       resolved_rows_idx,
       stringsAsFactors = FALSE
-    ) %>%
-    dplyr::arrange(Var1) %>%
-    dplyr::distinct()
+    )
+  expansion <- dplyr::distinct(expansion)
+  # TODO consider sort_by when depending on 4.4?
+  epansion <- expansion[order(expansion$Var1), , drop = FALSE]
 
   # Create a list object
   cells_resolved <-

@@ -268,12 +268,10 @@ get_table_defs <- function(data) {
       option = "table_width"
     )
 
-  widths <-
-    boxh %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>% # This ensures that the `stub` is first
-    .$column_width %>%
-    unlist()
+  widths <- boxh[boxh$type %in% c("default", "stub"), , drop = FALSE]
+  # ensure that stub is first
+  widths <- widths[order(widths$type, decreasing = TRUE), "column_width", drop = TRUE]
+  widths <- unlist(widths)
 
   # Stop function if all length dimensions (where provided)
   # don't conform to accepted CSS length definitions

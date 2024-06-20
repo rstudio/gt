@@ -1562,10 +1562,8 @@ create_body_component_rtf <- function(data) {
           # stub case where summary rows follow
           if (x == 1) {
 
-            row_limits <-
-              groups_rows_df %>%
-              dplyr::filter(row_end == i) %>%
-              dplyr::select(group_id)
+            row_limits <- dplyr::filter(groups_rows_df, row_end == i)
+            row_limits <- row_limits[ , "group_id", drop = FALSE]
 
             if (nrow(row_limits) > 0) {
 

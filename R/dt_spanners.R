@@ -251,18 +251,14 @@ dt_spanners_print_matrix <- function(
   # (2) entries with no vars (after step 1) are removed, and
   # (3) `spanner_level` values have all gaps removed, being compressed
   #     down to start at 1 (e.g., 7, 5, 3, 1 -> 4, 3, 2, 1)
-  spanners_tbl <-
-    dplyr::mutate(spanners_tbl, vars = lapply(.data$vars, base::intersect, .env$vars))
+  spanners_tbl$vars <-
+    lapply(spanners_tbl$vars, base::intersect, vars)
 
-  # TODO Consider using lengths()
-  spanners_tbl <-
-    dplyr::filter(spanners_tbl, vapply(vars, length, integer(1)) > 0L)
+  # keep rows where vars is non-empty
+  spanners_tbl <- spanners_tbl[lengths(spanners_tbl$vars) > 0L, , drop = FALSE]
 
-  spanners_tbl <-
-    dplyr::mutate(
-      spanners_tbl,
-      spanner_level = match(spanner_level, sort(unique(spanner_level)))
-    )
+  spanners_tbl$spanner_level <-
+    match(spanners_tbl$spanner_level, sort(unique(spanners_tbl$spanner_level)))
 
   # If `spanners_tbl` is immediately empty then return a single-row
   # matrix of column vars/IDs (or not, if `omit_columns_row = TRUE`)

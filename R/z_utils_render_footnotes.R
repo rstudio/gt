@@ -85,29 +85,21 @@ resolve_footnotes_styles <- function(data, tbl_type) {
 
     spanner_ids <- unique(unlist(spanners$spanner_id))
 
-    tbl <-
-      dplyr::filter(
-        tbl,
-        locname != "columns_groups" | grpname %in% spanner_ids
-      )
+    tbl <- tbl[tbl$locname != "column_groups" | tbl$grpname %in% spanner_ids, , drop = FALSE]
   }
 
   # Filter by `grpname` in row groups
   if ("row_groups" %in% tbl[["locname"]]) {
 
     tbl <-
-      dplyr::bind_rows(
-        dplyr::filter(tbl, locname != "row_groups"),
-        dplyr::filter(tbl, locname == "row_groups", grpname %in% groups_rows_df$group_id)
+      vctrs::vec_rbind(
+        tbl[tbl$locname != "row_groups", , drop = FALSE],
+        tbl[tbl$locname == "row_groups" & tbl$grpname %in% groups_rows_df$group_id, , drop = FALSE]
       )
   }
 
   # Filter `tbl` by the remaining columns in `body`
-  tbl <-
-    dplyr::filter(
-      tbl,
-      colname %in% c(NA_character_, dt_boxhead_get_vars_default(data = data))
-    )
+  tbl <- tbl[is.na(tbl$colname) | tbl$colname %in%  dt_boxhead_get_vars_default(data = data), , drop = FALSE]
 
   # Return `data` unchanged if there are no rows in `tbl`
   if (nrow(tbl) == 0L) {
@@ -336,7 +328,8 @@ resolve_footnotes_styles <- function(data, tbl_type) {
   }
 
   # Sort the table rows
-  tbl <- dplyr::arrange(tbl, locnum, rownum, colnum)
+  order_of_tbl <- order(tbl$locnum, tbl$rownum, tbl$colnum)
+  tbl <- tbl[order_of_tbl, , drop = FALSE]
 
   # In the case of footnotes, populate table
   # column with footnote marks
@@ -365,10 +358,10 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     if (nrow(tbl) > 0L) {
 
       # Retain the row that only contain `locname == "none"`
-      tbl_no_loc <- dplyr::filter(tbl, locname == "none")
+      tbl_no_loc <- tbl[tbl$locname == "none", , drop = FALSE]
 
       # Modify `fs_id` to contain the footnote marks we need
-      tbl <- dplyr::filter(tbl, locname != "none")
+      tbl <- tbl[tbl$locname != "none", , drop = FALSE]
 
       if (nrow(tbl) > 0L) {
 
