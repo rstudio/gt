@@ -615,6 +615,7 @@ context_missing_text <- function(missing_text, context) {
     switch(
       context,
       html = ,
+      grid = ,
       latex = ,
       word =
         {

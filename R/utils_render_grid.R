@@ -347,6 +347,10 @@ create_body_component_g <- function(data) {
     }
   }
 
+  if (identical(rows, list())) {
+    return(NULL)
+  }
+
   sizes <- vctrs::list_sizes(rows)
   row_num <- rep(cumsum(sizes > 0), sizes)
 
