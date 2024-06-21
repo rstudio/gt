@@ -216,7 +216,7 @@ two levels of spanners. We can further touch up the labels after that with
     fn = function(x) gsub("pct", "\%", x)
   ) |>
   text_transform(
-    fn = function(x) gsub("\\\\.", " - ", x),
+    fn = function(x) gsub(".", " - ", x, fixed = TRUE),
     locations = cells_column_spanners()
   ) |>
   tab_style(

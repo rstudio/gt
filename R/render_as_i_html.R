@@ -146,8 +146,9 @@ render_as_ihtml <- function(data, id) {
 
   # Obtain widths for each visible column label
   boxh <- dt_boxhead_get(data = data)
-  column_widths <- dplyr::filter(boxh, type %in% c("default", "stub"))
-  column_widths <- dplyr::pull(dplyr::arrange(column_widths, dplyr::desc(type)), column_width)
+  column_widths <- boxh[boxh$type %in% c("default", "stub"), , drop = FALSE]
+  # ensure that stub is first
+  column_widths <- column_widths[order(column_widths$type, decreasing = TRUE), "column_width", drop = TRUE]
   column_widths <- unlist(column_widths)
 
   # Transform any column widths to integer values

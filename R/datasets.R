@@ -331,10 +331,10 @@
 #' \describe{
 #' \item{id}{The ID for the order, which consists of one or more pizzas at a
 #' given `date` and `time`.}
-#' \item{date}{A character representation of the `order` date, expressed in the
-#' ISO 8601 date format ('YYYY-MM-DD').}
-#' \item{time}{A character representation of the `order` time, expressed as a
-#' 24-hour time the ISO 8601 extended time format ('hh:mm:ss').}
+#' \item{date}{A character representation of the order date, expressed in the
+#' ISO 8601 date format (`YYYY-MM-DD`).}
+#' \item{time}{A character representation of the order time, expressed as a
+#' 24-hour time the ISO 8601 extended time format (`HH:MM:SS`).}
 #' \item{name}{The short name for the pizza.}
 #' \item{size}{The size of the pizza, which can either be `"S"`, `"M"`, `"L"`,
 #' `"XL"` (rare!), or `"XXL"` (even rarer!); most pizzas are available in the
@@ -559,7 +559,7 @@
 #' doesn't always coincide with the release year of the film. The film's title
 #' reflects the most common title of the film in English, where the
 #' `original_title` column provides the title of the film in its spoken language
-#' (transliterated to Roman letters where necessary).
+#' (transliterated to Roman script where necessary).
 #'
 #' @format A tibble with 1,851 rows and 8 variables:
 #' \describe{
@@ -570,8 +570,8 @@
 #' \item{director}{The director or set of co-directors for the film. Multiple
 #' directors are separated by a comma.}
 #' \item{languages}{The languages spoken in the film in the order of appearance.
-#' This consists of a ISO 639 language codes (primarily as two-letter codes,
-#' but using three-letter codes where necessary).}
+#' This consists of ISO 639 language codes (primarily as two-letter codes, but
+#' using three-letter codes where necessary).}
 #' \item{countries_of_origin}{The country or countries of origin for the
 #' production. Here, 2-letter ISO 3166-1 country codes (set in uppercase) are
 #' used.}
@@ -876,11 +876,11 @@
 #' amounts in the atmosphere, have been extensively studied by research groups
 #' since their persistence in the atmosphere requires specific attention. Many
 #' researchers have reported kinetic data on specific gas-phase reactions and
-#' these mainly involve oxidation reactions with OH, NO3 radicals, ozone, and
-#' chlorine (Cl) atoms.
+#' these mainly involve oxidation reactions with OH, nitrate radicals, ozone,
+#' and chlorine atoms.
 #'
 #' This compilation of rate constant (*k*) data as contains the values for rate
-#' constants at 298 K (in units of `cm^3 molecules^–1 s^–1`) as well as
+#' constants at 298 K (in units of `cm^3 molecules^-1 s^-1`) as well as
 #' parameters that allow for the calculation of rate constants at different
 #' temperatures (the temperature dependence parameters: `A`, `B`, and `n`).
 #' Uncertainty values/factors and temperature limits are also provided here

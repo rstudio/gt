@@ -790,16 +790,17 @@ test_that("Escapable characters in rownames are handled correctly in each output
     "\\intbl {\\f0 {\\f0\\fs20 rtf}}\\cell",
     fixed = TRUE
   )
+  tib <- dplyr::as_tibble(tbl)
 
   # Using a tibble (removes row names) and setting `column_1` as the stub
   expect_match( # stub from `column_1`
-    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
+    gt(tib, rowname_col = "column_1") %>%
       as_rtf() %>% as.character(),
     "\\intbl {\\f0 {\\f0\\fs20 \\'7brtf\\'7d}}\\cell",
     fixed = TRUE
   )
   expect_match( # `column_2`
-    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
+    gt(tib, rowname_col = "column_1") %>%
       as_rtf() %>% as.character(),
     "\\intbl {\\f0 {\\f0\\fs20 rtf}}\\cell",
     fixed = TRUE

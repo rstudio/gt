@@ -51,9 +51,9 @@ footnote_mark_to_latex <- function(
     spec <- "^i"
   }
 
-  if (grepl("\\.", spec)) mark <- sprintf_unless_na("%s.", mark)
-  if (grepl("b", spec)) mark <- sprintf_unless_na("\\textbf{%s}", mark)
-  if (grepl("i", spec)) mark <- sprintf_unless_na("\\textit{%s}", mark)
+  if (grepl(".", spec, fixed = TRUE)) mark <- sprintf_unless_na("%s.", mark)
+  if (grepl("b", spec, fixed = TRUE)) mark <- sprintf_unless_na("\\textbf{%s}", mark)
+  if (grepl("i", spec, fixed = TRUE)) mark <- sprintf_unless_na("\\textit{%s}", mark)
   if (grepl("\\(|\\[", spec)) mark <- sprintf_unless_na("(%s", mark)
   if (grepl("\\)|\\]", spec)) mark <- sprintf_unless_na("%s)", mark)
 
@@ -180,7 +180,7 @@ create_table_start_l <- function(data) {
 
   if (!is.null(col_widths)) {
 
-    col_defs <- c()
+    col_defs <- NULL
 
     # TODO: check that length of `col_widths` is equal to that
     # of `col_alignment`
@@ -904,20 +904,19 @@ summary_rows_for_group_l <- function(
   summary_df <-
     dplyr::select(
       list_of_summaries$summary_df_display_list[[group_id]],
-      dplyr::all_of(rowname_col_private),
-      dplyr::all_of(default_vars)
+      dplyr::all_of(c(rowname_col_private, default_vars))
     )
 
   for (col_name in names(summary_df)) {
 
     loc_type <- if(summary_row_type == "grand") "grand_summary_cells" else "summary_cells"
 
-    styles_summary <- dt_styles_get(data) %>%
-      dplyr::filter(locname == loc_type,
-                    grpname == group_id) %>%
-      dplyr::mutate(colname = ifelse(is.na(colname) & colnum == 0,
-                              "::rowname::", colname)) %>%
-      dplyr::filter(colname == col_name)
+    styles_df <- dt_styles_get(data)
+    styles_df <- styles_df[styles_df$locname == loc_type & styles_df$grpname == group_id, , drop = FALSE]
+    # set colname to ::rowname:: if colname is present and colnum = 0
+    styles_df$colname[is.na(styles_df$colname) & styles_df$colnum == 0] <- "::rowname::"
+
+    styles_summary <- styles_df[styles_df$colname == col_name, , drop = FALSE]
 
     if (dim(styles_summary)[1L] > 0L) {
 
@@ -930,8 +929,9 @@ summary_rows_for_group_l <- function(
           row_pos <- row_num
         }
 
-        row_style <- dplyr::filter(styles_summary, rownum == row_num) %>%
-          consolidate_cell_styles_l()
+        # style each row
+        row_style <- styles_summary[styles_summary$rownum == row_num, , drop = FALSE]
+        row_style <- consolidate_cell_styles_l(row_style)
 
         summary_df[[col_name]][row_pos] <- apply_cell_styles_l(summary_df[[col_name]][row_pos], row_style)
       }
@@ -1029,8 +1029,7 @@ create_footer_component_l <- function(data) {
   # Create a formatted footnotes string
   if (nrow(footnotes_tbl) > 0) {
 
-    footnotes_tbl <-
-      dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
+    footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
     # Create a vector of formatted footnotes
     footnotes <-
@@ -1359,9 +1358,8 @@ derive_table_width_statement_l <- function(data) {
 
     tw <- as.numeric(gsub('%', '', table_width))
 
-    side_width <-
-      ((100 - tw) / 200) %>%
-      format(scientific = FALSE, trim = TRUE)
+    side_width <- (100 - tw) / 200
+    side_width <- format(side_width, scientific = FALSE, trim = TRUE)
 
     statement <- paste0(
       "\\setlength\\",
@@ -1584,7 +1582,7 @@ apply_cell_styles_l <- function(content, style_obj) {
   if (is.null(use_indent)) return(NULL)
 
   # Documentation says numbers without units default to px
-  if (is.numeric(use_indent)) use_indent <- paste0(use_indent, 'px')
+  if (is.numeric(use_indent)) use_indent <- paste0(use_indent, "px")
 
   paste0(
     "\\hspace{",
@@ -1674,9 +1672,9 @@ create_colwidth_df_l <- function(data) {
     if (is.null(raw) || raw == "") {
       next
     } else if (endsWith(raw, "%")) {
-      pct <- as.numeric(gsub("%", "", raw))
+      pct <- as.numeric(gsub("%", "", raw, fixed = TRUE))
 
-      if (tbl_width == 'auto') {
+      if (tbl_width == "auto") {
         width_df$lw[i] <- pct
       } else if (endsWith(tbl_width, "%")) {
         width_df$lw[i] <- pct * as.numeric(gsub("%", "", tbl_width))
@@ -1753,4 +1751,3 @@ calculate_multicolumn_width_text_l <- function(begins, ends, colwidth_df) {
 
   out_text
 }
-

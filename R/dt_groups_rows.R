@@ -57,11 +57,12 @@ dt_groups_rows_build <- function(data, context) {
     stub_df[["rowname"]] <- as.character(table_body[[stub_var]])
   }
 
+  l <- length(ordering)
   groups_rows <-
     data.frame(
-      group_id = rep(NA_character_, length(ordering)),
-      row_start = rep(NA_integer_, length(ordering)),
-      row_end = rep(NA_integer_, length(ordering)),
+      group_id = rep_len(NA_character_, l),
+      row_start = rep_len(NA_integer_, l),
+      row_end = rep_len(NA_integer_, l),
       stringsAsFactors = FALSE
     )
 
@@ -93,10 +94,10 @@ dt_groups_rows_build <- function(data, context) {
       dplyr::left_join(groups_rows, group_label_df, by = "group_id")
 
     groups_rows <-
-      dplyr::rename(groups_rows, group_label = built_group_label)
+      dplyr::rename(groups_rows, group_label = "built_group_label")
 
     groups_rows <-
-      dplyr::select(groups_rows, group_id, group_label, dplyr::everything())
+      dplyr::relocate(groups_rows, "group_id", "group_label", .before = 0)
 
     others_group <-
       dt_options_get_value(
@@ -115,8 +116,8 @@ dt_groups_rows_build <- function(data, context) {
 
   if (nrow(groups_rows) > 0) {
 
-    groups_rows[["has_summary_rows"]] <- rep(FALSE, nrow(groups_rows))
-    groups_rows[["summary_row_side"]] <- rep(NA_character_, nrow(groups_rows))
+    groups_rows[["has_summary_rows"]] <- rep_len(FALSE, nrow(groups_rows))
+    groups_rows[["summary_row_side"]] <- rep_len(NA_character_, nrow(groups_rows))
 
     list_of_summaries <- dt_summary_df_get(data = data)
 

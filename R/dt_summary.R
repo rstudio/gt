@@ -178,8 +178,7 @@ dt_summary_build <- function(data, context) {
     if (identical(groups, grand_summary_col)) {
 
       select_data_tbl <-
-        dplyr::mutate(data_tbl, !!group_id_col_private := .env$grand_summary_col) %>%
-        dplyr::relocate(.env$group_id_col_private, .before = 1)
+        dplyr::mutate(data_tbl, !!group_id_col_private := .env$grand_summary_col, .before = 0)
 
     } else {
 
@@ -450,8 +449,7 @@ dt_summary_build <- function(data, context) {
       group_summary_display_df <-
         dplyr::filter(summary_dfs_display, .data[[group_id_col_private]] == .env$group)
 
-      group_summary_display_df <-
-        dplyr::mutate(group_summary_display_df, `::side::` = side)
+      group_summary_display_df$`::side::` <- side
 
       summary_df_data_list <-
         c(

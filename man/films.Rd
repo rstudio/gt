@@ -14,8 +14,8 @@ for English-speaking audiences. The \code{original_title} field is populated whe
 \item{director}{The director or set of co-directors for the film. Multiple
 directors are separated by a comma.}
 \item{languages}{The languages spoken in the film in the order of appearance.
-This consists of a ISO 639 language codes (primarily as two-letter codes,
-but using three-letter codes where necessary).}
+This consists of ISO 639 language codes (primarily as two-letter codes, but
+using three-letter codes where necessary).}
 \item{countries_of_origin}{The country or countries of origin for the
 production. Here, 2-letter ISO 3166-1 country codes (set in uppercase) are
 used.}
@@ -35,7 +35,7 @@ day). The \code{year} column refers to the year of the festival and this figure
 doesn't always coincide with the release year of the film. The film's title
 reflects the most common title of the film in English, where the
 \code{original_title} column provides the title of the film in its spoken language
-(transliterated to Roman letters where necessary).
+(transliterated to Roman script where necessary).
 }
 \section{Examples}{
 

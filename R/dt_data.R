@@ -57,8 +57,7 @@ dt_data_init <- function(
       ))
     }
 
-    data_tbl <- dplyr::mutate(data_tbl, !!sym(rownames_to_column) := data_rownames)
-    data_tbl <- dplyr::select(data_tbl, !!sym(rownames_to_column), dplyr::everything())
+    data_tbl <- dplyr::mutate(data_tbl, !!sym(rownames_to_column) := data_rownames, .before = 0)
   }
 
   dt_data_set(data = data, data_tbl = data_tbl)

@@ -1229,7 +1229,7 @@ cols_label_with <- function(
   # Apply the function call to each element of `old_label_list`
   new_label_list <- lapply(old_label_list, FUN = fn)
 
-  if (!all(vapply(new_label_list, FUN.VALUE = logical(1), FUN = is_character))) {
+  if (!all(vapply(new_label_list, FUN.VALUE = logical(1L), FUN = is_character))) {
     cli::cli_abort("{.arg fn} must return a character vector.")
   }
 

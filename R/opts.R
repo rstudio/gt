@@ -1029,31 +1029,25 @@ opt_horizontal_padding <- function(
 get_padding_option_value_list <- function(scale, type) {
 
   # Stop if `scale` is beyond an acceptable range
-  if (scale < 0 | scale > 3) {
-    cli::cli_abort(
-      "The value provided for `scale` ({scale}) must be between `0` and `3`."
-    )
-  }
+  check_number_decimal(scale, min = 0, max = 3)
 
   pattern <- if (type == "vertical") "_padding" else  "_padding_horizontal"
 
   # Get the padding parameters from `dt_options_tbl` that relate
   # to the `type` (either vertical or horizontal padding)
   padding_params <-
-    dplyr::pull(
-      dplyr::filter(dt_options_tbl, grepl(paste0(pattern, "$"), parameter)),
-      parameter
-    )
+    dplyr::filter(dt_options_tbl, grepl(paste0(pattern, "$"), parameter))
+  padding_params <- padding_params$parameter
 
   padding_options <- dplyr::filter(dt_options_tbl, parameter %in% padding_params)
-  padding_options <- dplyr::select(padding_options, parameter, value)
+  padding_options <- dplyr::select(padding_options, "parameter", "value")
   padding_options <-
     dplyr::mutate(
       padding_options,
       parameter = gsub(pattern, gsub("_", ".", pattern, fixed = TRUE), parameter, fixed = TRUE)
     )
   padding_options <- dplyr::mutate(padding_options, value = unlist(value))
-  padding_options <- dplyr::mutate(padding_options, px = as.numeric(gsub("px", "", value)))
+  padding_options <- dplyr::mutate(padding_options, px = as.numeric(gsub("px", "", value, fixed = TRUE)))
   padding_options <- dplyr::mutate(padding_options, px = px * scale)
 
   create_option_value_list(

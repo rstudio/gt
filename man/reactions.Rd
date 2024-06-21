@@ -78,11 +78,11 @@ atmospheric environment. Organic pollutants, which are present in trace
 amounts in the atmosphere, have been extensively studied by research groups
 since their persistence in the atmosphere requires specific attention. Many
 researchers have reported kinetic data on specific gas-phase reactions and
-these mainly involve oxidation reactions with OH, NO3 radicals, ozone, and
-chlorine (Cl) atoms.
+these mainly involve oxidation reactions with OH, nitrate radicals, ozone,
+and chlorine atoms.
 
 This compilation of rate constant (\emph{k}) data as contains the values for rate
-constants at 298 K (in units of \verb{cm^3 molecules^–1 s^–1}) as well as
+constants at 298 K (in units of \verb{cm^3 molecules^-1 s^-1}) as well as
 parameters that allow for the calculation of rate constants at different
 temperatures (the temperature dependence parameters: \code{A}, \code{B}, and \code{n}).
 Uncertainty values/factors and temperature limits are also provided here

@@ -557,7 +557,7 @@ get_alignment_at_body_cell <- function(
   # Get cell alignment set by `tab_style`
   styles_tbl <- dt_styles_get(data = data)
 
-  if (nrow(styles_tbl) < 1) {
+  if (nrow(styles_tbl) < 1L) {
     return(column_alignment)
   }
 
@@ -566,22 +566,23 @@ get_alignment_at_body_cell <- function(
   # set there (this has higher specificity)
   #
 
-  styles_filtered_tbl <-
-    dplyr::filter(
-      styles_tbl,
-      locname == "data" & colname == .env$colname & rownum == .env$rownum
-    )
+  cnd <-
+    styles_tbl$locname == "data" &
+    styles_tbl$colname == colname &
+    styles_tbl$rownum == rownum
 
-  if (nrow(styles_tbl) < 1L) {
+  styles_filtered_tbl <- styles_tbl[cnd, , drop = FALSE]
+
+  if (nrow(styles_filtered_tbl) < 1L) {
     return(column_alignment)
   }
 
   # Extract the list of styles from the table
   cell_styles_list <- styles_filtered_tbl$styles
 
-  if (length(cell_styles_list) < 1L) {
-    return(column_alignment)
-  }
+  # if (length(cell_styles_list) < 1L) {
+  #   return(column_alignment)
+  # }
 
   # Get the `align` property in `cell_styles_list` (element may not be present)
   cell_text_align <- cell_styles_list[[1L]]$cell_text$align
@@ -998,6 +999,9 @@ process_text <- function(text, context = "html") {
 
     return(text)
 
+  } else if (context == "grid") {
+    # Skip any formatting
+    return(as.character(text))
   } else {
 
     # Text processing in the default case
@@ -1147,66 +1151,66 @@ markdown_to_latex <- function(text, md_engine) {
 #'
 #' @importFrom xml2 read_xml xml_name xml_children xml_type xml_contents
 markdown_to_xml <- function(text) {
+  res <- vapply(
+    as.character(text),
+    FUN.VALUE = character(1L),
+    USE.NAMES = FALSE,
+    FUN = commonmark::markdown_xml
+  )
+  vapply(
+    res,
+    FUN.VALUE = character(1L),
+    USE.NAMES = FALSE,
+    FUN = function(cmark) {
 
-    vapply(
-      as.character(text),
-      FUN.VALUE = character(1L),
-      USE.NAMES = FALSE,
-      FUN = commonmark::markdown_xml
-    ) %>%
-    vapply(
-      FUN.VALUE = character(1L),
-      USE.NAMES = FALSE,
-      FUN = function(cmark) {
+      x <- xml2::read_xml(cmark)
 
-        x <- xml2::read_xml(cmark)
-
-        if (!identical(xml2::xml_name(x), "document")) {
-          stop("Unexpected result from markdown parsing: `document` element not found")
-        }
-
-        children <- xml2::xml_children(x)
-
-        apply_rules <- function(x, ...) {
-
-          if (inherits(x, "xml_nodeset")) {
-
-            results <- lapply(x, apply_rules)
-            do.call("paste0", c(results, collapse = "\n"))
-
-          } else {
-
-            output <- if (xml2::xml_type(x) == "element") {
-
-              rule <- cmark_rules_xml[[xml2::xml_name(x)]]
-
-              if (is.null(rule)) {
-
-                rlang::warn(
-                  paste0("Unknown commonmark element encountered: ", xml2::xml_name(x)),
-                  .frequency = "once",
-                  .frequency_id = "gt_commonmark_unknown_element"
-                )
-
-                apply_rules(xml2::xml_children(x))
-
-              } else if (is.function(rule)) {
-
-                rule(x, apply_rules, ...)
-
-              }
-            }
-
-          paste0(output, collapse = "")
-         }
-        }
-
-        res <- lapply(children, apply_rules)
-        res <- vapply(res, FUN = as.character, FUN.VALUE = character(1L))
-        res <-  paste0(res, collapse = "")
-        paste0("<md_container>", res, "</md_container>")
+      if (!identical(xml2::xml_name(x), "document")) {
+        stop("Unexpected result from markdown parsing: `document` element not found")
       }
-    )
+
+      children <- xml2::xml_children(x)
+
+      apply_rules <- function(x, ...) {
+
+        if (inherits(x, "xml_nodeset")) {
+
+           results <- lapply(x, apply_rules)
+          do.call("paste0", c(results, collapse = "\n"))
+
+         } else {
+
+          output <- if (xml2::xml_type(x) == "element") {
+
+            rule <- cmark_rules_xml[[xml2::xml_name(x)]]
+
+            if (is.null(rule)) {
+
+              rlang::warn(
+                paste0("Unknown commonmark element encountered: ", xml2::xml_name(x)),
+                .frequency = "once",
+                .frequency_id = "gt_commonmark_unknown_element"
+              )
+
+              apply_rules(xml2::xml_children(x))
+
+            } else if (is.function(rule)) {
+
+              rule(x, apply_rules, ...)
+
+            }
+          }
+
+        paste0(output, collapse = "")
+        }
+      }
+
+      res <- lapply(children, apply_rules)
+      res <- vapply(res, FUN = as.character, FUN.VALUE = character(1L))
+      res <-  paste0(res, collapse = "")
+      paste0("<md_container>", res, "</md_container>")
+    }
+  )
 
 }
 
@@ -1993,8 +1997,8 @@ num_suffix_ind <- function(
   suffix_index[is.na(suffix_index)] <- 0
 
   # Add a leading space to all non-empty suffix labels
-  suffix_labels[suffix_labels != ""] <-
-    paste0(" ", suffix_labels[suffix_labels != ""])
+  suffix_labels[nzchar(suffix_labels)] <-
+    paste0(" ", suffix_labels[nzchar(suffix_labels)])
 
   # Create and return a tibble with `scale_by`
   # and `suffix` values
