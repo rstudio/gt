@@ -75,6 +75,11 @@ test_that("Interactive tables won't fail when using different options", {
   tbl_gt_i_24 <-
     gt(mtcars_short, rowname_col = "vs") %>%
     opt_interactive()
+  # #1705
+  # FIXME the number of rows at the bottom is incorrect.
+  tbl_gt_i_25 <-
+    gt(mtcars_short, groupname_col = "vs") %>%
+    opt_interactive()
 
   capture_output(expect_no_error(tbl_gt_i_01))
   capture_output(expect_no_error(tbl_gt_i_02))
@@ -100,4 +105,5 @@ test_that("Interactive tables won't fail when using different options", {
   capture_output(expect_no_error(tbl_gt_i_22))
   capture_output(expect_no_error(tbl_gt_i_23))
   capture_output(expect_no_error(tbl_gt_i_24))
+  capture_output(expect_no_error(tbl_gt_i_25))
 })

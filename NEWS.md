@@ -18,6 +18,8 @@
 
 `tab_footnote()` and `tab_style()` now give better error messages when `locations` is not correctly specified (@olivroy, #475, #1638 , #1640).
 
+* `opt_interactive()` has better support for displaying group columns if present (`row_groups_as_column` has no effect on the output) (@olivroy, #1705).
+
 # gt 0.10.1
 
 ## Improvements to nanoplots

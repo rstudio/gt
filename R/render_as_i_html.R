@@ -98,15 +98,15 @@ render_as_ihtml <- function(data, id) {
     }
   }
 
-  # Obtain the underlying data table
-  data_tbl <- dt_data_get(data = data)
+  # Obtain the underlying data table (including group rows)
+  data_tbl0 <- dt_data_get(data = data)
 
   #
-  # Only preserve columns that are not hidden
+  # Only preserve columns that are not hidden (group cols will be added later)
   #
 
   data_tbl_vars <- dt_boxhead_get_vars_default(data = data)
-  data_tbl <- data_tbl[, data_tbl_vars, drop = FALSE]
+  data_tbl <- data_tbl0[, data_tbl_vars, drop = FALSE]
 
   #nocov start
 
@@ -138,6 +138,11 @@ render_as_ihtml <- function(data, id) {
   column_names  <- dt_boxhead_get_vars_default(data = data)
   column_labels <- dt_boxhead_get_vars_labels_default(data = data)
   column_alignments <- dt_boxhead_get_vars_align_default(data = data)
+  column_groups <- dt_boxhead_get_vars_groups(data = data)
+  # if dt_boxhead_get_vars_groups is fixed, this will no longer be necessary.
+  if (identical(column_groups, NA_character_)) {
+    column_groups <- NULL
+  }
 
   # Obtain widths for each visible column label
   boxh <- dt_boxhead_get(data = data)
@@ -230,6 +235,8 @@ render_as_ihtml <- function(data, id) {
           cell = function(value, index) formatted_cells[index],
           name = column_labels[x],
           align = column_alignments[x],
+          # TODO support `summary_rows()` via `aggregate` #1359
+          # TODO support `grand_summary_rows()` via `footer`. #1359
           headerStyle = list(`font-weight` = "normal"),
           width = if (is.null(column_widths) || is.na(column_widths[x])) NULL else column_widths[x],
           html = TRUE
@@ -238,6 +245,45 @@ render_as_ihtml <- function(data, id) {
     )
   names(col_defs) <- column_names
 
+  # Customize groupname_col and add to data_tbl
+  if (!is.null(column_groups)) {
+    # FIXME how should row_groups_as_column behave?
+    # FIXME find a way to remove borders to act like it is the value for the group
+    # should it just be a normal row at the left?
+    group_col_defs <- list()
+    # Hack from glin/reactable#94 to hide the number of observations
+    grp_fn <- reactable::JS("
+      function(cellInfo) {
+        return cellInfo.value
+      }")
+    for (i in seq_along(column_groups)) {
+      group_col_defs[[i]] <- reactable::colDef(
+        name = "",
+        grouped = grp_fn,
+        # FIXME Should groups be sticky? (or provide a way to do this)
+        sticky = NULL
+      )
+
+    }
+    names(group_col_defs) <- column_groups
+    # Add group colDef to general col_def
+    col_defs <- c(col_defs, group_col_defs)
+    groupname_col <- column_groups
+    # for defaultExpanded = TRUE
+    expand_groupname_col <- TRUE
+
+    # modify data_tbl to include
+    data_tbl <- dplyr::bind_cols(
+      data_tbl,
+      data_tbl0[ , groupname_col, drop = FALSE]
+    )
+
+    # Set number of rows to FALSE, since it is inacurrate
+    # Otherwise, it just shows the number of groups
+  }  else {
+    groupname_col <- NULL
+    expand_groupname_col <- FALSE
+  }
   #
   # Generate custom styles for `defaultColDef`
   #
@@ -467,7 +513,7 @@ render_as_ihtml <- function(data, id) {
       columns = col_defs,
       columnGroups = colgroups_def,
       rownames = rownames_to_stub,
-      groupBy = NULL,
+      groupBy = groupname_col,
       sortable = use_sorting,
       resizable = use_resizers,
       filterable = use_filters,
@@ -487,7 +533,7 @@ render_as_ihtml <- function(data, id) {
       minRows = 1,
       paginateSubRows = FALSE,
       details = NULL,
-      defaultExpanded = FALSE,
+      defaultExpanded = expand_groupname_col,
       selection = NULL,
       selectionId = NULL,
       defaultSelected = NULL,
