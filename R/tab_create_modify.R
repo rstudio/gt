@@ -803,21 +803,18 @@ resolve_spanner_level <- function(
   spanners_tbl <- dt_spanners_get(data = data)
 
   highest_level <- 0L
+  spanner_cols <- c("spanner_id", "vars", "spanner_level")
+  spanners_tbl <- spanners_tbl[ , spanner_cols, drop = FALSE]
 
-  spanners_tbl <- dplyr::select(spanners_tbl, spanner_id, vars, spanner_level)
-
-  highest_level <-
-    dplyr::filter(
-      spanners_tbl,
-      vapply(
-        vars,
-        FUN.VALUE = logical(1),
-        FUN = function(x) any(column_names %in% x)
-      )
-    ) %>%
-    dplyr::pull("spanner_level") %>%
-    max(0) # Max of ^ and 0
-
+  cnd_highest_level <-
+    vapply(
+      spanners_tbl$vars,
+      FUN.VALUE = logical(1L),
+      FUN = function(x) any(column_names %in% x)
+    )
+  highest_level <- spanners_tbl[cnd_highest_level, "spanner_level", drop = TRUE]
+  # Max of ^ and 0
+  highest_level <- max(c(0, highest_level))
   highest_level + 1L
 }
 
@@ -1044,7 +1041,7 @@ resolve_spanned_column_names <- function(
 #'     fn = function(x) gsub("pct", "%", x)
 #'   ) |>
 #'   text_transform(
-#'     fn = function(x) gsub("\\.", " - ", x),
+#'     fn = function(x) gsub(".", " - ", x, fixed = TRUE),
 #'     locations = cells_column_spanners()
 #'   ) |>
 #'   tab_style(
@@ -3615,8 +3612,8 @@ tab_style <- function(
         # to sentence case
         # cell_grand_summary_row -> grand summary row
         readable_table_part <- attr(loc, "class")[[1]]
-        readable_table_part <- sub("cells_", "", readable_table_part)
-        readable_table_part <- gsub("_", " ", readable_table_part)
+        readable_table_part <- sub("cells_", "", readable_table_part, fixed = TRUE)
+        readable_table_part <- gsub("_", " ", readable_table_part, fixed = TRUE)
 
         cli::cli_abort(
           "Failed to style the {readable_table_part} of the table.",
@@ -3731,14 +3728,14 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
   cols <- resolved$columns
 
-  colnames <- names(cols)
+  col_names <- names(cols)
 
   data <-
     dt_styles_add(
       data = data,
       locname = "columns_columns",
       grpname = NA_character_,
-      colname = colnames,
+      colname = col_names,
       locnum = 4,
       rownum = NA_integer_,
       styles = style
@@ -4768,7 +4765,7 @@ tab_options <- function(
         SIMPLIFY = FALSE
       )
     )
-  new_df <- dplyr::select(new_df, -type)
+  new_df$type <- NULL
 
   # This rearranges the rows in the `opts_df` table, but this
   # shouldn't be a problem

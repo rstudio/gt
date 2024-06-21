@@ -682,8 +682,7 @@ info_paletteer <- function(color_pkgs = NULL) {
   palettes_strips_df <-
     dplyr::filter(palettes_strips, package %in% color_pkgs)
 
-  palettes_strips <-
-    dplyr::pull(palettes_strips_df, colors)
+  palettes_strips <- palettes_strips_df$colors
 
   palettes_strips_df %>%
     dplyr::select(package, palette, length) %>%

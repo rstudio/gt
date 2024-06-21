@@ -3390,7 +3390,6 @@ determine_output_format <- function() {
     return("latex")
   } else if (knitr_is_word_output()) {
     return("word")
-  } else {
-    return("html")
   }
+  "html"
 }

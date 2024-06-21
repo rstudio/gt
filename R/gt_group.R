@@ -787,7 +787,7 @@ grp_options <- function(
         SIMPLIFY = FALSE
       )
     )
-  new_df <- dplyr::select(new_df, -type)
+  new_df$type <- NULL
 
   # This rearranges the rows in the `opts_df` table, but this
   # shouldn't be a problem
@@ -915,8 +915,8 @@ generate_gt_tbl_info_list <- function(gt_tbl) {
         vapply(
           summary_list,
           FUN.VALUE = integer(1L),
-          FUN = function(x) nrow(x))
-      )
+          FUN = nrow
+      ))
 
     if (!is.null(summary_list[["::GRAND_SUMMARY"]])) {
       n_summary_rows_grand <- nrow(summary_list[["::GRAND_SUMMARY"]])

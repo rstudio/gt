@@ -7844,9 +7844,8 @@ values_to_durations <- function(
 
     } else if (out_style == "iso") {
 
-      x_str[i] <-
-        paste0("P", paste0(x_df_i$formatted, collapse = "")) %>%
-        tidy_sub("D", "DT", fixed = TRUE)
+      x_str[i] <- paste0("P", paste0(x_df_i$formatted, collapse = ""))
+      x_str[i] <- tidy_sub(x_str[i], "D", "DT", fixed = TRUE)
 
     } else {
       x_str[i] <- paste0(x_df_i$formatted, collapse = " ")
@@ -7914,9 +7913,9 @@ get_localized_duration_patterns <- function(
         colnames(durations)
       ) |
         grepl("type", colnames(durations), fixed = TRUE)
-    ] %>%
-    dplyr::filter(type == .env$type) %>%
-    dplyr::select(-"type")
+    ]
+  pattern_tbl <- pattern_tbl[pattern_tbl$type == type, , drop = FALSE]
+  pattern_tbl$type <- NULL
 
   colnames(pattern_tbl) <- gsub("(duration|-|unitPattern-count)", "", colnames(pattern_tbl))
 

@@ -427,17 +427,17 @@ test_that("fmt_percent() works correctly with stubs", {
   # stub as markdown
 
   for (test_case in c("raw", "markdown", "html")) {
-    tab <- tbl |>
-      gt(rowname_col = test_case) |>
-      fmt_percent(columns = pct_col, decimals = 2, dec_mark = ".") |>
+    tab <- tbl %>%
+      gt(rowname_col = test_case) %>%
+      fmt_percent(columns = pct_col, decimals = 2, dec_mark = ".") %>%
       render_formats_test(context = "html")
 
     expect_equal(tab[["pct_col"]], c("75.00%", "25.00%"))
 
     # with row filter
-    tab <- tbl |>
-      gt(rowname_col = test_case) |>
-      fmt_percent(columns = pct_col, decimals = 2, dec_mark = ".", rows = contains("gt")) |>
+    tab <- tbl %>%
+      gt(rowname_col = test_case) %>%
+      fmt_percent(columns = pct_col, decimals = 2, dec_mark = ".", rows = contains("gt")) %>%
       render_formats_test(context = "html")
 
     expect_equal(tab[["pct_col"]], c("0.75", "25.00%"))

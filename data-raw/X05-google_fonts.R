@@ -122,8 +122,7 @@ for (file in all_files) {
         dplyr::bind_rows(
           google_axes_tbl,
           dplyr::as_tibble(read.dcf(textConnection(axes[[i]]))) %>%
-            dplyr::mutate(name = font_name) %>%
-            dplyr::select(name, dplyr::everything())
+            dplyr::mutate(name = font_name, .before = 0)
         )
     }
   }

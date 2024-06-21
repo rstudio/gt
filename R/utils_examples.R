@@ -39,10 +39,9 @@ get_topic_names <- function() {
   # Exclude any topics that have `.` or `-` characters within their names,
   # and, exclude the 'pipe' and 'reexports' topic
   topic_names[
-    !grepl("\\.", topic_names) &
-      !grepl("-", topic_names) &
-      !grepl("^pipe$", topic_names) &
-      !grepl("^reexports$", topic_names)
+    !grepl(".", topic_names, fixed = TRUE) &
+      !grepl("-", topic_names, fixed = TRUE) &
+      !topic_names %in% c("pipe", "reexports")
   ]
 }
 
@@ -223,7 +222,7 @@ write_gt_examples_qmd_files <- function(
         family <- as.integer(unlist(strsplit(id_val, split = "-"))[[1]])
         number <- as.integer(unlist(strsplit(id_val, split = "-"))[[2]])
 
-      } else if (any(grepl("Dataset ID ", help_file_lines))) {
+      } else if (any(grepl("Dataset ID ", help_file_lines, fixed = TRUE))) {
 
         type <- "dataset"
         id_idx <- grep("\\section{Dataset ID and Badge}{", help_file_lines, fixed = TRUE) + 2
