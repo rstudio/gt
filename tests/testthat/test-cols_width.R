@@ -919,7 +919,7 @@ test_that("cols_width() correctly specifies LaTeX table when column widths are s
         c(...),
         "\\}\\n"
       ),
-      collapse = ''
+      collapse = ""
     )
 
   }
@@ -934,7 +934,7 @@ test_that("cols_width() correctly specifies LaTeX table when column widths are s
                c(5L, 3L, 2L, 1L)),
         "\\}\\n"
       ),
-      collapse = ''
+      collapse = ""
     )
 
   # Expect that all column widths are expressed as percentage of \linewidth

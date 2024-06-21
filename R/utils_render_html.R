@@ -53,19 +53,19 @@ footnote_mark_to_html <- function(
 
   is_sup <- grepl("\\^", spec)
 
-  if (grepl("\\.", spec)) mark <- paste0(mark, ".")
-  if (grepl("\\(", spec)) mark <- paste0("(", mark)
-  if (grepl("\\[", spec)) mark <- paste0("[", mark)
-  if (grepl("\\)", spec)) mark <- paste0(mark, ")")
-  if (grepl("\\]", spec)) mark <- paste0(mark, "]")
+  if (grepl(".", spec, fixed = TRUE)) mark <- paste0(mark, ".")
+  if (grepl("(", spec, fixed = TRUE)) mark <- paste0("(", mark)
+  if (grepl("[", spec, fixed = TRUE)) mark <- paste0("[", mark)
+  if (grepl(")", spec, fixed = TRUE)) mark <- paste0(mark, ")")
+  if (grepl("]", spec, fixed = TRUE)) mark <- paste0(mark, "]")
 
-  if (grepl("i", spec)) {
+  if (grepl("i", spec, fixed = TRUE)) {
     font_style <- "italic"
   } else {
     font_style <- "normal"
   }
 
-  if (grepl("b", spec)) {
+  if (grepl("b", spec, fixed = TRUE)) {
     font_weight <- "bold"
   } else {
     font_weight <- "normal"
@@ -268,12 +268,10 @@ get_table_defs <- function(data) {
       option = "table_width"
     )
 
-  widths <-
-    boxh %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>% # This ensures that the `stub` is first
-    .$column_width %>%
-    unlist()
+  widths <- boxh[boxh$type %in% c("default", "stub"), , drop = FALSE]
+  # ensure that stub is first
+  widths <- widths[order(widths$type, decreasing = TRUE), "column_width", drop = TRUE]
+  widths <- unlist(widths)
 
   # Stop function if all length dimensions (where provided)
   # don't conform to accepted CSS length definitions
@@ -1683,7 +1681,7 @@ create_footnotes_component_h <- function(data) {
   n_cols_total <- get_effective_number_of_columns(data = data)
 
   # Get the distinct set of `fs_id` & `footnotes` values in the `footnotes_tbl`
-  footnotes_tbl <- dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
+  footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
   # Get the style attrs for the footnotes
   if ("footnotes" %in% styles_tbl$locname) {

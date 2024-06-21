@@ -451,7 +451,7 @@ body_cells_g <- function(data) {
   }
 
   # Weave even/odd classes into matrix
-  cell_classes <- rep(list(odd_class, even_class), length.out = n_rows)
+  cell_classes <- rep_len(list(odd_class, even_class), n_rows)
   cell_classes <- inject(rbind(!!!cell_classes))
 
   # Set column alignment
@@ -772,7 +772,7 @@ create_footnotes_component_g <- function(data) {
   styles_tbl <- dt_styles_get(data = data)
   n_cols_total <- get_effective_number_of_columns(data = data)
 
-  footnotes_tbl <- dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
+  footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
   style <- NA
   if ("footnotes" %in% styles_tbl$locname) {
@@ -906,17 +906,16 @@ render_grid_svg <- function(label, style, margin) {
   # and they cannot be displayed interactively in {grid} anyway.
   label <- gsub("<title(.*?)</title>", "", label)
 
-  svg_string <- regexpr("<svg(.*?)>.*</svg>", label) %>%
-    regmatches(x = label) %>%
-    gsub(pattern = "\n", replacement = "") %>%
-    trimws()
+  svg_string <- regexpr("<svg(.*?)>.*</svg>", label)
+  svg_string <- regmatches(label, svg_string)
+  svg_string <- gsub("\n", "", svg_string)
+  svg_string <- trimws(svg_string)
 
-  svg_style <- regexpr("style=\"(.*?)\"", svg_string) %>%
-    regmatches(x = svg_string) %>%
-    gsub(pattern = "^style=\"|\"$", replacement = "") %>%
-    strsplit(";") %>%
-    unlist() %>%
-    trimws()
+  svg_style <- regexpr("style=\"(.*?)\"", svg_string)
+  svg_style <- regmatches(svg_string, svg_style)
+  svg_style <- gsub("^style=\"|\"$", "", svg_style)
+  svg_style <- strsplit(svg_style, ";", fixed = TRUE)
+  svg_style <- trimws(unlist(svg_style))
 
   width <- height <- NULL
 
@@ -947,7 +946,7 @@ render_grid_svg <- function(label, style, margin) {
       viewbox <- c(0, 0, 0, 0)
       svg_tag <- regexpr("^<svg(.*?)>", svg_string) %>%
         regmatches(x = svg_string)
-      if (grepl("width", svg_tag) && grepl("height", svg_tag)) {
+      if (grepl("width", svg_tag, fixed = TRUE) && grepl("height", svg_tag, fixed = TRUE)) {
         # Try extract width from tag
         w <- regexpr("width=(.*?) ", svg_tag) %>%
           regmatches(x = svg_tag)

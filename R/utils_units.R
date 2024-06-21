@@ -119,7 +119,7 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
           }
 
           # Superscript following closing ']'
-          if (grepl("\\]", x) && grepl("[0-9+-]", x) && nchar(x) > 1) {
+          if (grepl("]", x, fixed = TRUE) && grepl("[0-9+-]", x) && nchar(x) > 1) {
             x <- gsub("^(.*)(\\])([0-9+-]*)$", "\\1\\2^\\3", x)
           }
 
