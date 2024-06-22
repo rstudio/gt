@@ -620,6 +620,14 @@ unit_conversion <- function(from, to) {
   force(from)
   force(to)
 
+  if (from %in% temperature_keywords() && to %in% temperature_keywords()) {
+
+    from <- normalize_temp_keyword(from)
+    to <- normalize_temp_keyword(to)
+
+    return(temperature_conversions(from = from, to = to))
+  }
+
   if (!(from %in% conversion_factors[["from"]])) {
     cli::cli_abort("The unit supplied in {.arg from} is not known.")
   }
@@ -642,6 +650,91 @@ unit_conversion <- function(from, to) {
   }
 
   row_conversion[["conv_factor"]]
+}
+
+temperature_keywords <- function() {
+  c(
+    "temperature.celsius",
+    "temp.celsius",
+    "celsius",
+    "temperature.C",
+    "temp.C",
+    "C",
+    "temperature.fahrenheit",
+    "temp.fahrenheit",
+    "fahrenheit",
+    "temperature.F",
+    "temp.F",
+    "F",
+    "temperature.kelvin",
+    "temp.kelvin",
+    "kelvin",
+    "temperature.K",
+    "temp.K",
+    "K",
+    "temperature.rankine",
+    "temp.rankine",
+    "rankine",
+    "temperature.R",
+    "temp.R",
+    "R"
+  )
+}
+
+normalize_temp_keyword <- function(keyword) {
+
+  switch(
+    keyword,
+    temperature.celsius =,
+    temp.celsius =,
+    celsius =,
+    temperature.C =,
+    temp.C =,
+    C = "C",
+    temperature.fahrenheit =,
+    temp.fahrenheit =,
+    fahrenheit =,
+    temperature.F =,
+    temp.F =,
+    `F` = "F",
+    temperature.kelvin =,
+    temp.kelvin =,
+    kelvin =,
+    temperature.K =,
+    temp.K =,
+    K = "K",
+    temperature.rankine =,
+    temp.rankine =,
+    rankine =,
+    temperature.R =,
+    temp.R =,
+    R = "R"
+  )
+}
+
+temperature_conversions <- function(from, to) {
+
+  from_to <- paste0(from, to)
+
+  switch(
+    from_to,
+    "CF" = function(x) (1.8 * x) + 32,
+    "CK" = function(x) x + 273.15,
+    "CR" = function(x) (1.8 * x) + 491.67,
+    "FC" = function(x) (x - 32) * 5/9,
+    "FK" = function(x) (x + 459.67) / 1.8,
+    "FR" = function(x) x + 459.67,
+    "KC" = function(x) x - 273.15,
+    "KF" = function(x) ((x - 273.15) * 1.8) + 32,
+    "KR" = function(x) x * 1.8,
+    "RC" = function(x) (x - 32 - 459.67) / 1.8,
+    "RF" = function(x) x - 459.67,
+    "RK" = function(x) x / 1.8,
+    "CC" = ,
+    "FF" = ,
+    "KK" = ,
+    "RR" = 1
+  )
 }
 
 #' Supply nanoplot options to `cols_nanoplot()`
