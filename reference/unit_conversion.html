@@ -172,6 +172,56 @@ of the conversion factor must be used.</p>
 <span>    .fn <span class="op">=</span> <span class="va">md</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_unit_conversion_1.png" alt="This image of a table was generated from the first code example in the `unit_conversion()` help file." style="width:100%;"></p>
+<p>With a small slice of the <code><a href="gibraltar.html">gibraltar</a></code> dataset, let's display the
+temperature values in terms of degrees Celsius (present in the data) <em>and</em> as
+temperatures in degrees Fahrenheit (achievable via conversion). We can
+duplicate the <code>temp</code> column through <code><a href="cols_add.html">cols_add()</a></code> (naming the new column as
+<code>temp_f</code>) and when formatting through <code><a href="fmt_integer.html">fmt_integer()</a></code> we can call
+<code>unit_conversion()</code> within the <code>scale_by</code> argument to perform this
+transformation while formatting the values as integers.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gibraltar</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
+<span>    <span class="va">date</span> <span class="op">==</span> <span class="st">"2023-05-15"</span>,</span>
+<span>    <span class="va">time</span> <span class="op">&gt;=</span> <span class="st">"06:00"</span>,</span>
+<span>    <span class="va">time</span> <span class="op">&lt;=</span> <span class="st">"12:00"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">temp</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Air Temperature During Late Morning Hours at LXGB Stn."</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"May 15, 2023"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_add.html">cols_add</a></span><span class="op">(</span>temp_f <span class="op">=</span> <span class="va">temp</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_move.html">cols_move</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">temp_f</span>, after <span class="op">=</span> <span class="va">temp</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_spanner.html">tab_spanner</a></span><span class="op">(</span></span>
+<span>    label <span class="op">=</span> <span class="st">"Temperature"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="va">temp</span>,</span>
+<span>    decimals <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_integer.html">fmt_integer</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="va">temp_f</span>,</span>
+<span>    scale_by <span class="op">=</span> <span class="fu"><a href="../reference/unit_conversion.html">unit_conversion</a></span><span class="op">(</span></span>
+<span>      from <span class="op">=</span> <span class="st">"temperature.C"</span>,</span>
+<span>      to <span class="op">=</span> <span class="st">"temperature.F"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_label.html">cols_label</a></span><span class="op">(</span></span>
+<span>    time <span class="op">=</span> <span class="st">"Time"</span>,</span>
+<span>    temp <span class="op">=</span> <span class="st">"{{degC}}"</span>,</span>
+<span>    temp_f <span class="op">=</span> <span class="st">"{{degF}}"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_width.html">cols_width</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">80</span><span class="op">)</span>,</span>
+<span>    <span class="va">time</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/opt_horizontal_padding.html">opt_horizontal_padding</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/opt_vertical_padding.html">opt_vertical_padding</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/opt_align_table_header.html">opt_align_table_header</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>heading.title.font.size <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">16</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_unit_conversion_2.png" alt="This image of a table was generated from the second code example in the `unit_conversion()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
