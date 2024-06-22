@@ -639,7 +639,7 @@ as_raw_html <- function(
 #' The `gt_packages.sty` file would then contain the listed dependencies above:
 #'
 #' \preformatted{
-#'   \usepackage{booktabs, caption, longtable, rotating, colortbl, array}
+#'   \usepackage{booktabs, caption, longtable, colortbl, array}
 #' }
 #'
 #' @section Examples:

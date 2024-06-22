@@ -994,7 +994,6 @@ create_table_end_l <- function(data) {
 
 #' @noRd
 create_wrap_end_l <- function(data) {
-
   ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
          "\\endgroup\n",
          "\\end{table}\n")
