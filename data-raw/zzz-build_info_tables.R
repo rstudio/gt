@@ -436,6 +436,18 @@ conversions_tbl <-
 conversions_tbl_gt <-
   conversions_tbl %>%
   gt(groupname_col = "type", id = "unit_conversion") %>%
+  rows_add(
+    type = "temperature", name = "degree Celsius", from = "temperature.celsius",
+  ) |>
+  rows_add(
+    type = "temperature", name = "degree Fahrenheit", from = "temperature.fahrenheit"
+  ) |>
+  rows_add(
+    type = "temperature", name = "kelvin", from = "temperature.kelvin"
+  ) |>
+  rows_add(
+    type = "temperature", name = "rankine", from = "temperature.rankine"
+  ) |>
   cols_label(
     name = "Unit",
     from = "Keyword"
@@ -492,7 +504,12 @@ conversions_tbl_gt <-
       text-decoration: underline;
       text-underline-offset: 2px;
     }"
-  )
+  ) %>%
+  row_group_order(groups = c(
+    "acceleration", "angle", "area", "consumption", "digital",
+    "duration", "energy", "force", "length", "mass",
+    "pressure", "speed", "temperature", "torque", "volume"
+  ))
 
 readr::write_rds(
   conversions_tbl_gt,

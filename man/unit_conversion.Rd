@@ -87,6 +87,62 @@ of the conversion factor must be used.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_unit_conversion_1.png" alt="This image of a table was generated from the first code example in the `unit_conversion()` help file." style="width:100\%;">
 }}
+
+With a small slice of the \code{\link{gibraltar}} dataset, let's display the
+temperature values in terms of degrees Celsius (present in the data) \emph{and} as
+temperatures in degrees Fahrenheit (achievable via conversion). We can
+duplicate the \code{temp} column through \code{\link[=cols_add]{cols_add()}} (naming the new column as
+\code{temp_f}) and when formatting through \code{\link[=fmt_integer]{fmt_integer()}} we can call
+\code{unit_conversion()} within the \code{scale_by} argument to perform this
+transformation while formatting the values as integers.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gibraltar |>
+  dplyr::filter(
+    date == "2023-05-15",
+    time >= "06:00",
+    time <= "12:00"
+  ) |>
+  dplyr::select(time, temp) |>
+  gt() |>
+  tab_header(
+    title = "Air Temperature During Late Morning Hours at LXGB Stn.",
+    subtitle = "May 15, 2023"
+  ) |>
+  cols_add(temp_f = temp) |>
+  cols_move(columns = temp_f, after = temp) |>
+  tab_spanner(
+    label = "Temperature",
+    columns = starts_with("temp")
+  ) |>
+  fmt_number(
+    columns = temp,
+    decimals = 1
+  ) |>
+  fmt_integer(
+    columns = temp_f,
+    scale_by = unit_conversion(
+      from = "temperature.C",
+      to = "temperature.F"
+    )
+  ) |>
+  cols_label(
+    time = "Time",
+    temp = "\{\{degC\}\}",
+    temp_f = "\{\{degF\}\}"
+  ) |>
+  cols_width(
+    starts_with("temp") ~ px(80),
+    time ~ px(100)
+  ) |>
+  opt_horizontal_padding(scale = 3) |>
+  opt_vertical_padding(scale = 0.5) |>
+  opt_align_table_header(align = "left") |>
+  tab_options(heading.title.font.size = px(16))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_unit_conversion_2.png" alt="This image of a table was generated from the second code example in the `unit_conversion()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{

@@ -602,8 +602,18 @@ fmt_number <- function(
             system = system
           )
 
-        # Scale the `x` values by the `scale_by` values in `suffix_df`
-        x <- scale_x_values(x, scale_by = suffix_df$scale_by)
+        # Determine whether `scale_by` is supplied as a function; if it isn't
+        # the only other pathway involves getting the vector of values produced
+        # by the `create_suffix_df()` function
+        if (rlang::is_function(scale_by)) {
+          to_scale_by <- scale_by
+        } else {
+          to_scale_by <- suffix_df$scale_by
+        }
+
+        # Scale the `x` values using `to_scale_by` (either a function or
+        # a numeric vector)
+        x <- scale_x_values(x, scale_by = to_scale_by)
 
         # Format numeric values to character-based numbers
         x_str <-
@@ -1402,7 +1412,17 @@ fmt_scientific <- function(
             system = "intl"
           )
 
-        # Scale the `x` values by the `scale_by` values in `suffix_df`
+        # Determine whether `scale_by` is supplied as a function; if it isn't
+        # the only other pathway involves getting the vector of values produced
+        # by the `create_suffix_df()` function
+        if (rlang::is_function(scale_by)) {
+          to_scale_by <- scale_by
+        } else {
+          to_scale_by <- suffix_df$scale_by
+        }
+
+        # Scale the `x` values using `to_scale_by` (either a function or
+        # a numeric vector)
         x <- scale_x_values(x, scale_by = suffix_df$scale_by)
 
         x_str <-
@@ -1936,7 +1956,17 @@ fmt_engineering <- function(
             system = "intl"
           )
 
-        # Scale the `x_vals` by the `scale_by` values
+        # Determine whether `scale_by` is supplied as a function; if it isn't
+        # the only other pathway involves getting the vector of values produced
+        # by the `create_suffix_df()` function
+        if (rlang::is_function(scale_by)) {
+          to_scale_by <- scale_by
+        } else {
+          to_scale_by <- suffix_df$scale_by
+        }
+
+        # Scale the `x` values using `to_scale_by` (either a function or
+        # a numeric vector)
         x <- scale_x_values(x, suffix_df$scale_by)
 
         zero_x <- x == 0
@@ -2135,7 +2165,17 @@ fmt_symbol <- function(
             system = system
           )
 
-        # Scale the `x_vals` by the `scale_by` value
+        # Determine whether `scale_by` is supplied as a function; if it isn't
+        # the only other pathway involves getting the vector of values produced
+        # by the `create_suffix_df()` function
+        if (rlang::is_function(scale_by)) {
+          to_scale_by <- scale_by
+        } else {
+          to_scale_by <- suffix_df$scale_by
+        }
+
+        # Scale the `x` values using `to_scale_by` (either a function or
+        # a numeric vector)
         x <- scale_x_values(x, suffix_df$scale_by)
 
         is_negative_x <- x < 0

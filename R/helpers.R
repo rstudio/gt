@@ -607,6 +607,63 @@ currency <- function(
 #' `r man_get_image_tag(file = "man_unit_conversion_1.png")`
 #' }}
 #'
+#' With a small slice of the [`gibraltar`] dataset, let's display the
+#' temperature values in terms of degrees Celsius (present in the data) *and* as
+#' temperatures in degrees Fahrenheit (achievable via conversion). We can
+#' duplicate the `temp` column through [cols_add()] (naming the new column as
+#' `temp_f`) and when formatting through [fmt_integer()] we can call
+#' `unit_conversion()` within the `scale_by` argument to perform this
+#' transformation while formatting the values as integers.
+#'
+#' ```r
+#' gibraltar |>
+#'   dplyr::filter(
+#'     date == "2023-05-15",
+#'     time >= "06:00",
+#'     time <= "12:00"
+#'   ) |>
+#'   dplyr::select(time, temp) |>
+#'   gt() |>
+#'   tab_header(
+#'     title = "Air Temperature During Late Morning Hours at LXGB Stn.",
+#'     subtitle = "May 15, 2023"
+#'   ) |>
+#'   cols_add(temp_f = temp) |>
+#'   cols_move(columns = temp_f, after = temp) |>
+#'   tab_spanner(
+#'     label = "Temperature",
+#'     columns = starts_with("temp")
+#'   ) |>
+#'   fmt_number(
+#'     columns = temp,
+#'     decimals = 1
+#'   ) |>
+#'   fmt_integer(
+#'     columns = temp_f,
+#'     scale_by = unit_conversion(
+#'       from = "temperature.C",
+#'       to = "temperature.F"
+#'     )
+#'   ) |>
+#'   cols_label(
+#'     time = "Time",
+#'     temp = "{{degC}}",
+#'     temp_f = "{{degF}}"
+#'   ) |>
+#'   cols_width(
+#'     starts_with("temp") ~ px(80),
+#'     time ~ px(100)
+#'   ) |>
+#'   opt_horizontal_padding(scale = 3) |>
+#'   opt_vertical_padding(scale = 0.5) |>
+#'   opt_align_table_header(align = "left") |>
+#'   tab_options(heading.title.font.size = px(16))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_unit_conversion_2.png")`
+#' }}
+#'
 #' @family helper functions
 #' @section Function ID:
 #' 8-7
@@ -619,6 +676,14 @@ unit_conversion <- function(from, to) {
 
   force(from)
   force(to)
+
+  if (from %in% temperature_keywords() && to %in% temperature_keywords()) {
+
+    from <- normalize_temp_keyword(from)
+    to <- normalize_temp_keyword(to)
+
+    return(temperature_conversions(from = from, to = to))
+  }
 
   if (!(from %in% conversion_factors[["from"]])) {
     cli::cli_abort("The unit supplied in {.arg from} is not known.")
@@ -642,6 +707,91 @@ unit_conversion <- function(from, to) {
   }
 
   row_conversion[["conv_factor"]]
+}
+
+temperature_keywords <- function() {
+  c(
+    "temperature.celsius",
+    "temp.celsius",
+    "celsius",
+    "temperature.C",
+    "temp.C",
+    "C",
+    "temperature.fahrenheit",
+    "temp.fahrenheit",
+    "fahrenheit",
+    "temperature.F",
+    "temp.F",
+    "F",
+    "temperature.kelvin",
+    "temp.kelvin",
+    "kelvin",
+    "temperature.K",
+    "temp.K",
+    "K",
+    "temperature.rankine",
+    "temp.rankine",
+    "rankine",
+    "temperature.R",
+    "temp.R",
+    "R"
+  )
+}
+
+normalize_temp_keyword <- function(keyword) {
+
+  switch(
+    keyword,
+    temperature.celsius =,
+    temp.celsius =,
+    celsius =,
+    temperature.C =,
+    temp.C =,
+    C = "C",
+    temperature.fahrenheit =,
+    temp.fahrenheit =,
+    fahrenheit =,
+    temperature.F =,
+    temp.F =,
+    `F` = "F",
+    temperature.kelvin =,
+    temp.kelvin =,
+    kelvin =,
+    temperature.K =,
+    temp.K =,
+    K = "K",
+    temperature.rankine =,
+    temp.rankine =,
+    rankine =,
+    temperature.R =,
+    temp.R =,
+    R = "R"
+  )
+}
+
+temperature_conversions <- function(from, to) {
+
+  from_to <- paste0(from, to)
+
+  switch(
+    from_to,
+    "CF" = function(x) (1.8 * x) + 32,
+    "CK" = function(x) x + 273.15,
+    "CR" = function(x) (1.8 * x) + 491.67,
+    "FC" = function(x) (x - 32) * 5/9,
+    "FK" = function(x) (x + 459.67) / 1.8,
+    "FR" = function(x) x + 459.67,
+    "KC" = function(x) x - 273.15,
+    "KF" = function(x) ((x - 273.15) * 1.8) + 32,
+    "KR" = function(x) x * 1.8,
+    "RC" = function(x) (x - 32 - 459.67) / 1.8,
+    "RF" = function(x) x - 459.67,
+    "RK" = function(x) x / 1.8,
+    "CC" = ,
+    "FF" = ,
+    "KK" = ,
+    "RR" = 1
+  )
 }
 
 #' Supply nanoplot options to `cols_nanoplot()`
