@@ -23,7 +23,7 @@ containing the LaTeX code.
 }
 \details{
 LaTeX packages required to generate tables are:
-booktabs, caption, longtable, rotating, colortbl, array, anyfontsize.
+booktabs, caption, longtable, colortbl, array, anyfontsize.
 
 In the event packages are not automatically added during the render phase
 of the document, please create and include a style file to load them.
@@ -40,7 +40,7 @@ output:
 The \code{gt_packages.sty} file would then contain the listed dependencies above:
 
 \preformatted{
-  \usepackage{booktabs, caption, longtable, rotating, colortbl, array}
+  \usepackage{booktabs, caption, longtable, colortbl, array}
 }
 }
 \section{Examples}{
