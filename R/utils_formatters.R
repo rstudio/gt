@@ -399,6 +399,11 @@ get_currency_decimals <- function(
 #' @noRd
 scale_x_values <- function(x, scale_by) {
 
+  # Should `scale_by` be a function, call that function directly on `x`
+  if (rlang::is_function(scale_by)) {
+    return(scale_by(x))
+  }
+
   len <- length(scale_by)
 
   # Stop function if the length of `scale_by`

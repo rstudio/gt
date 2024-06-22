@@ -1868,6 +1868,10 @@ num_suffix <- function(
   # scale value or apply any suffixes
   if (length(suffixes) == 0) {
 
+    if (rlang::is_function(scale_by)) {
+      scale_by <- 1L
+    }
+
     return(
       dplyr::tibble(
         scale_by = rep_len(scale_by, length(x)),
@@ -1944,6 +1948,10 @@ num_suffix_ind <- function(
   # provide a tibble that will ultimately not
   # scale value or apply any suffixes
   if (length(suffixes) == 0) {
+
+    if (rlang::is_function(scale_by)) {
+      scale_by <- 1L
+    }
 
     return(
       dplyr::tibble(
