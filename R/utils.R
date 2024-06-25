@@ -2164,25 +2164,6 @@ split_scientific_notn <- function(x_str) {
   list(num = num_part, exp = exp_part)
 }
 
-#nocov start
-
-#' Wrapper for `gsub()` where `x` is the first argument
-#'
-#' This function is wrapper for `gsub()` that uses default argument values and
-#' rearranges first three arguments for better pipelining
-#' @param x,pattern,replacement,fixed Select arguments from the `gsub()`
-#'   function.
-#' @noRd
-tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
-  gsub(pattern, replacement, x, fixed = fixed)
-}
-
-tidy_sub <- function(x, pattern, replacement, fixed = FALSE) {
-  sub(pattern, replacement, x, fixed = fixed)
-}
-
-#nocov end
-
 #' Create a vector of marks to use for footnotes
 #'
 #' @noRd
