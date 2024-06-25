@@ -7470,9 +7470,9 @@ fmt_duration <- function(
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
 
-  if (is_true(trim_zero_units)) {
+  if (isTRUE(trim_zero_units)) {
     trim_zero_units <- c("leading", "trailing", "internal")
-  } else if (is_false(trim_zero_units)) {
+  } else if (isFALSE(trim_zero_units)) {
     trim_zero_units <- NULL
   } else if (is.character(trim_zero_units) && length(trim_zero_units) > 0) {
     # Validate that `trim_zero_units` contains only the allowed keywords

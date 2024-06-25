@@ -2016,17 +2016,6 @@ num_suffix_ind <- function(
   )
 }
 
-#' An `isFALSE`-based helper function
-#'
-#' `is_false()` is similar to the `isFALSE()` function that was
-#' introduced in R 3.5.0 except that this implementation works with earlier
-#' versions of R.
-#' @param x The single value to test for whether it is `FALSE`.
-#' @noRd
-is_false <- function(x) {
-  is.logical(x) && length(x) == 1L && !is.na(x) && !x
-}
-
 #' Normalize all suffixing input values
 #'
 #' This function normalizes the `suffixing` input to a character vector which is

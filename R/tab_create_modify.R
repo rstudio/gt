@@ -4818,7 +4818,7 @@ preprocess_tab_option <- function(option, var_name, type) {
       overflow = {
         if (isTRUE(option)) {
           "auto"
-        } else if (is_false(option)) {
+        } else if (isFALSE(option)) {
           "hidden"
         } else {
           option
