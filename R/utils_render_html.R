@@ -398,7 +398,7 @@ create_heading_component_h <- function(data) {
   # Get the style attrs for the title
   if ("title" %in% styles_tbl$locname) {
 
-    title_style_rows <- dplyr::filter(styles_tbl, locname == "title")
+    title_style_rows <- styles_tbl[styles_tbl$locname == "title", ]
 
     if (nrow(title_style_rows) > 0) {
       title_styles <- title_style_rows$html_style
@@ -431,7 +431,7 @@ create_heading_component_h <- function(data) {
 
   # Get the style attrs for the subtitle
   if (subtitle_defined && "subtitle" %in% styles_tbl$locname) {
-    subtitle_style_rows <- dplyr::filter(styles_tbl, locname == "subtitle")
+    subtitle_style_rows <- styles_tbl[styles_tbl$locname == "subtitle", ]
 
     if (nrow(subtitle_style_rows) > 0) {
       subtitle_styles <- subtitle_style_rows$html_style

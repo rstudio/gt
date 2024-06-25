@@ -2370,7 +2370,7 @@ validate_table_id <- function(id, call = rlang::caller_env()) {
 }
 
 validate_n_sigfig <- function(n_sigfig, call = rlang::caller_env()) {
-  check_number_whole(n_sigfig, allow_na = FALSE, min = 1, call  = call)
+  check_number_whole(n_sigfig, allow_na = FALSE, min = 1, call = call)
 }
 
 validate_css_lengths <- function(x) {

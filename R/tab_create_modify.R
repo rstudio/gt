@@ -4748,6 +4748,7 @@ tab_options <- function(
   new_df <-
     dplyr::tibble(
       parameter = tidy_gsub(names(arg_vals), ".", "_", fixed = TRUE),
+    vctrs::data_frame(
       value = unname(arg_vals)
     )
   new_df <-
