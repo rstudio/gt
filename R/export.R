@@ -289,7 +289,7 @@ gt_save_webshot <- function(
   tempfile_ <- tempfile(fileext = ".html")
 
   # Reverse slashes on Windows filesystems
-  tempfile_ <- gsub("\\\\", "/", tempfile_)
+  tempfile_ <- normalizePath(tempfile_, "/", mustWork = FALSE)
 
   # Save gt table as HTML using the `gt_save_html()` function
   gt_save_html(
