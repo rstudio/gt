@@ -55,7 +55,7 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
 #' @param view The value for `print()`s `browse` argument.
 #'
 #' @keywords internal
-#'
+#' @rdname print.gt_tbl
 #' @export
 print.gt_group <- function(x, ..., view = interactive()) {
 
@@ -247,8 +247,7 @@ as.tags.gt_tbl <- function(x, ...) {
 #' @param x Object to be printed.
 #' @param ... Any additional parameters.
 #'
-#' @noRd
-#'
+#' @rdname print.gt_tbl
 #' @export
 print.rtf_text <- function(x, ...) {
 
