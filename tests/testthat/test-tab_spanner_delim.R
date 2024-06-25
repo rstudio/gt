@@ -1,6 +1,3 @@
-# Create a shortened version of `iris`
-iris_short <- iris[1:5, ]
-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
@@ -1349,13 +1346,13 @@ test_that("tab_spanner_delim() works with complex splits", {
 test_that("tab_spanner_delim() won't overwrite any set column labels", {
 
   tbl_1 <-
-    iris[1:5,] %>%
+    iris_short %>%
     gt() %>%
     cols_label(Sepal.Width = md("Sepal.*W*idth")) %>%
     tab_spanner_delim(".")
 
   tbl_2 <-
-    iris[1:5,] %>%
+    iris_short %>%
     gt() %>%
     tab_spanner_delim(".") %>%
     cols_label(Sepal.Width = md("Sepal.*W*idth"))
@@ -1366,13 +1363,13 @@ test_that("tab_spanner_delim() won't overwrite any set column labels", {
   )
 
   tbl_3 <-
-    iris[1:5,] %>%
+    iris_short %>%
     gt() %>%
     cols_label(Sepal.Width = html("<em>Sepal.Width</em>")) %>%
     tab_spanner_delim(".")
 
   tbl_4 <-
-    iris[1:5,] %>%
+    iris_short %>%
     gt() %>%
     tab_spanner_delim(".") %>%
     cols_label(Sepal.Width = html("<em>Sepal.Width</em>"))

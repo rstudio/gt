@@ -40,6 +40,8 @@ tidy_grepl <- function(x, pattern) {
   )
 }
 
-
 # Create a shortened version of `mtcars`
 mtcars_short <- datasets::mtcars[1:5, ]
+
+# Create a shortened version of `iris`
+iris_short <- datasets::iris[1:5, ]
