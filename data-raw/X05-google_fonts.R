@@ -79,7 +79,7 @@ for (file in all_files) {
     unlist(stringr::str_extract_all(pb, pattern = "fonts \\{(\\n|.)*?\\}")) %>%
     gt:::tidy_gsub("(fonts \\{\n  |\\}$|\"|$)", "") %>%
     gt:::tidy_gsub("\n  ", "\n") %>%
-    gt:::tidy_gsub("\n$", "") %>%
+    trimws("right", "\n") %>%
     stringr::str_split("\n")
 
   font_info <-
@@ -87,8 +87,8 @@ for (file in all_files) {
     gt:::tidy_gsub("axes \\{.*", "") %>%
     gt:::tidy_gsub("subsets:.*", "") %>%
     gt:::tidy_gsub("\n{2,}", "\n") %>%
-    gt:::tidy_gsub("\n$", "") %>%
     gt:::tidy_gsub("\"", "") %>%
+    trimws("right", "\n") %>%
     stringr::str_split("\n") %>%
     unlist()
 
@@ -108,13 +108,13 @@ for (file in all_files) {
       )
   }
 
-  if (str_detect(pb, "axes \\{")) {
+  if (grepl("axes {", pb, fixed = TRUE)) {
 
     axes <-
       unlist(stringr::str_extract_all(pb, pattern = "axes(\\n|.)*?\\}")) %>%
       gt:::tidy_gsub("(axes \\{\n  |\\}$|\"|$)", "") %>%
       gt:::tidy_gsub("\n  ", "\n") %>%
-      gt:::tidy_gsub("\n$", "") %>%
+      trimws("right", "\n") %>%
       stringr::str_split("\n")
 
     for (i in seq_len(length(axes))) {
