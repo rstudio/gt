@@ -4806,6 +4806,28 @@ tab_options <- function(
   data
 }
 
+dt_options_get_default_value <- function(option) {
+
+  # Validate the provided `option` value
+  if (length(option) != 1) {
+    cli::cli_abort("A character vector of length one must be provided.")
+  }
+  if (!(option %in% dt_options_tbl$parameter)) {
+    cli::cli_abort("The `option` provided is invalid.")
+  }
+
+  dt_options_tbl$value[[which(dt_options_tbl$parameter == option)]]
+}
+
+# Get vector of argument names (excluding `data`) from `tab_options`
+tab_options_arg_names <- base::setdiff(names(formals(tab_options)), "data")
+
+# Create vector of all args from `tab_options()` by
+# use of a regex pattern
+get_tab_options_arg_vec <- function(pattern) {
+  grep(pattern = pattern, tab_options_arg_names, value = TRUE)
+}
+
 preprocess_tab_option <- function(option, var_name, type) {
 
   # Perform pre-processing on the option depending on `type`
