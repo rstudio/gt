@@ -2180,18 +2180,6 @@ tidy_sub <- function(x, pattern, replacement, fixed = FALSE) {
   sub(pattern, replacement, x, fixed = fixed)
 }
 
-tidy_grepl <- function(x, pattern) {
-
-  vapply(
-    pattern,
-    FUN = function(pattern) {
-      grepl(pattern = pattern, x = x)
-    },
-    FUN.VALUE = logical(1),
-    USE.NAMES = FALSE
-  )
-}
-
 #nocov end
 
 #' Create a vector of marks to use for footnotes
