@@ -82,7 +82,6 @@ print.gt_group <- function(x, ..., view = interactive()) {
 #' @param x An object of class `gt_tbl`.
 #' @param ... Any additional parameters.
 #'
-#' @keywords internal
 #' @noRd
 #' @exportS3Method knitr::knit_print
 knit_print.gt_tbl <- function(x, ..., inline = FALSE) {
@@ -122,7 +121,6 @@ knit_print.gt_tbl <- function(x, ..., inline = FALSE) {
 #' @param x An object of class `gt_group`.
 #' @param ... Any additional parameters.
 #'
-#' @keywords internal
 #' @noRd
 #' @exportS3Method knitr::knit_print
 knit_print.gt_group <- function(x, ...) {
@@ -186,7 +184,6 @@ knit_print.gt_group <- function(x, ...) {
 #' @param x Object to be converted.
 #' @param ... Any additional parameters.
 #'
-#' @keywords internal
 #' @noRd
 #' @importFrom htmltools as.tags
 #' @export
@@ -250,7 +247,7 @@ as.tags.gt_tbl <- function(x, ...) {
 #' @param x Object to be printed.
 #' @param ... Any additional parameters.
 #'
-#' @keywords internal
+#' @noRd
 #'
 #' @export
 print.rtf_text <- function(x, ...) {

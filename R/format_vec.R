@@ -3281,6 +3281,7 @@ vec_fmt_duration <- function(
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_markdown()].
+#'
 #' @export
 vec_fmt_markdown <- function(
     x,
@@ -3335,6 +3336,7 @@ check_vector_valid <- function(x, valid_classes = NULL, call = rlang::caller_env
 
   invisible()
 }
+
 # In the case where strict mode is being used (options("gt.strict_column_fmt" = TRUE),
 # stop the function if any of the resolved columns have data that is incompatible
 # with the formatter
