@@ -644,7 +644,7 @@ xml_fldChar <- function(
 ) {
 
   fldCharType <- rlang::arg_match(fldCharType)
-  stopifnot(is_bool(dirty))
+  check_bool(dirty)
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("fldChar", app),
