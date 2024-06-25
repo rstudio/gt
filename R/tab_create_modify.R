@@ -4756,15 +4756,11 @@ tab_options <- function(
       dplyr::select(opts_df, parameter, type),
       by = "parameter"
     )
-  new_df <-
-    dplyr::mutate(
-      new_df,
-      value = mapply(
+  new_df$value <- mapply(
         preprocess_tab_option,
-        option = value, var_name = parameter, type = type,
+        option = new_df$value, var_name = new_df$parameter, type = new_df$type,
         SIMPLIFY = FALSE
       )
-    )
   new_df$type <- NULL
 
   # This rearranges the rows in the `opts_df` table, but this

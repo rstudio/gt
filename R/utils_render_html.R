@@ -1686,7 +1686,7 @@ create_footnotes_component_h <- function(data) {
   # Get the style attrs for the footnotes
   if ("footnotes" %in% styles_tbl$locname) {
 
-    footnotes_style <- dplyr::filter(styles_tbl, locname == "footnotes")
+    footnotes_style <- styles_tbl[styles_tbl$locname == "footnotes", ]
 
     footnotes_styles <-
       if (nrow(footnotes_style) > 0) {
