@@ -736,8 +736,8 @@ process_text <- function(text, context = "html") {
             }
           )
 
-        non_na_text <- tidy_gsub(non_na_text, "^", "<div data-qmd-base64=\"")
-        non_na_text <- tidy_gsub(non_na_text, "$", "\">")
+        # Tweak start and end of non_na_text
+        non_na_text <- paste0("<div data-qmd-base64=\"", non_na_text, "\">")
 
         non_na_text <-
           paste0(
@@ -918,8 +918,8 @@ process_text <- function(text, context = "html") {
         }
       }
 
-      non_na_text <- tidy_gsub(non_na_text, "^", "<span class='gt_from_md'>")
-      non_na_text <- tidy_gsub(non_na_text, "$", "</span>")
+      # Tweak start and end of non_na_text
+      non_na_text <- paste0("<span class='gt_from_md'>", non_na_text, "</span>")
 
       text[!is.na(text)] <- non_na_text
       text <- as.character(text)
@@ -1063,8 +1063,8 @@ md_to_html <- function(x, md_engine) {
         }
       )
 
-    non_na_x <- tidy_gsub(non_na_x, "^", "<div class='gt_from_md'>")
-    non_na_x <- tidy_gsub(non_na_x, "$", "</div>")
+    # Tweak start and end of non_na_x
+    non_na_x <- paste0("<div class='gt_from_md'>", non_na_x, "</div>")
 
   } else {
 
@@ -1082,8 +1082,8 @@ md_to_html <- function(x, md_engine) {
         }
       )
 
-    non_na_x <- tidy_gsub(non_na_x, "^", "<div data-qmd=\"")
-    non_na_x <- tidy_gsub(non_na_x, "$", "\">")
+    # Tweak start and end of non_na_x
+    non_na_x <- paste0("<div data-qmd=\"", non_na_x, "\">")
 
     non_na_x <-
       paste0(
