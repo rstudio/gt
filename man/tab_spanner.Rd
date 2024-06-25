@@ -251,8 +251,7 @@ third and final call of \code{tab_spanner()} doesn't further affect the ordering
 of columns.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
-  dplyr::arrange(desc(population_2021)) |>
-  dplyr::slice_head(n = 5) |>
+  dplyr::slice_max(population_2021, n = 5) |>
   dplyr::select(
     name, latitude, longitude,
     ends_with("2016"), ends_with("2021")
