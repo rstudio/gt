@@ -1034,9 +1034,9 @@ process_text <- function(text, context = "html") {
 #' @noRd
 unescape_html <- function(text) {
 
-  text <- tidy_gsub(text, "&lt;", "<")
-  text <- tidy_gsub(text, "&gt;", ">")
-  text <- tidy_gsub(text, "&amp;", "&")
+  text <- gsub("&lt;", "<", text, fixed = TRUE)
+  text <- gsub("&gt;", ">", text, fixed = TRUE)
+  text <- gsub("&amp;", "&", text, fixed = TRUE)
   text
 }
 
@@ -1135,9 +1135,9 @@ markdown_to_latex <- function(text, md_engine) {
           }
 
           if (names(md_engine_fn) == "commonmark") {
-            tidy_gsub(md_engine_fn[[1]](text = x), "\\n$", "")
+            gsub("\\n$", "", md_engine_fn[[1]](text = x))
           } else {
-            tidy_gsub(md_engine_fn[[1]](text = x, format = "latex"), "\\n$", "")
+            gsub("\\n$", "", md_engine_fn[[1]](text = x, format = "latex"))
           }
         }
       )
@@ -1765,7 +1765,7 @@ markdown_to_text <- function(text) {
 
           }
 
-          tidy_gsub(commonmark::markdown_text(x), "\\n$", "")
+          gsub("\\n$", "", commonmark::markdown_text(x))
         }
       )
     )
@@ -1791,7 +1791,8 @@ apply_pattern_fmt_x <- function(values, pattern) {
     values,
     FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
-    FUN = function(x) tidy_gsub(x = pattern, "{x}", x, fixed = TRUE)
+    # replace {x} by x in string pattern
+    FUN = function(x) gsub("{x}", replacement = x, x = pattern, fixed = TRUE)
   )
 }
 

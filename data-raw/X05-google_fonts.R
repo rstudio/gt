@@ -73,7 +73,7 @@ google_axes_tbl <-
 # font metrics and other items of information
 for (file in all_files) {
 
-  pb <- gt:::tidy_gsub(readr::read_file(file), "#.*?\n", "\n")
+  pb <- gsub("#.*?\n", "\n", readr::read_file(file))
 
   font_variants <-
     unlist(stringr::str_extract_all(pb, pattern = "fonts \\{(\\n|.)*?\\}")) %>%

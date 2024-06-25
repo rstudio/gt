@@ -1399,7 +1399,7 @@ fmt_scientific <- function(
 
         # Define the `replace_minus()` function
         replace_minus <- function(x) {
-           tidy_gsub(x, "-", minus_mark, fixed = TRUE)
+           gsub("-", minus_mark, x, fixed = TRUE)
         }
 
         # Create the `suffix_df` object
@@ -1943,7 +1943,7 @@ fmt_engineering <- function(
 
         # Define the `replace_minus()` function
         replace_minus <- function(x) {
-          tidy_gsub(x, "-", minus_mark, fixed = TRUE)
+          gsub("-", minus_mark, x, fixed = TRUE)
         }
 
         # Create the `suffix_df` object
@@ -7656,16 +7656,16 @@ validate_duration_input_units <- function(input_units, call = rlang::caller_env(
 normalize_duration_input_units <- function(input_units) {
 
   # Ensure that key transforms occur
-  input_units <- tidy_sub(input_units, "secs", "seconds")
-  input_units <- tidy_sub(input_units, "mins", "minutes")
+  input_units <- sub("secs", "seconds", input_units, fixed = TRUE)
+  input_units <- sub("mins", "minutes", input_units, fixed = TRUE)
   input_units
 }
 
 normalize_duration_output_units <- function(output_units) {
 
   # Ensure that key transforms occur and that the output units are a unique set
-  output_units <- tidy_sub(output_units, "secs", "seconds")
-  output_units <- tidy_sub(output_units, "mins", "minutes")
+  output_units <- sub("secs", "seconds", output_units, fixed = TRUE)
+  output_units <- sub("mins", "minutes", output_units, fixed = TRUE)
   output_units <- unique(output_units)
 
   # Ensure that the order of output units is from greatest to smallest
@@ -7885,7 +7885,7 @@ values_to_durations <- function(
     } else if (out_style == "iso") {
 
       x_str[i] <- paste0("P", paste0(x_df_i$formatted, collapse = ""))
-      x_str[i] <- tidy_sub(x_str[i], "D", "DT", fixed = TRUE)
+      x_str[i] <- sub("D", "DT", x_str[i], fixed = TRUE)
 
     } else {
       x_str[i] <- paste0(x_df_i$formatted, collapse = " ")

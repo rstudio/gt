@@ -1820,7 +1820,7 @@ create_default_option_value_list <- function(tab_options_args) {
   lapply(
     stats::setNames(, tab_options_args),
     FUN = function(x) {
-      dt_options_get_default_value(tidy_gsub(x, ".", "_", fixed = TRUE))
+      dt_options_get_default_value(gsub(".", "_", x, fixed = TRUE))
     }
   )
 }
