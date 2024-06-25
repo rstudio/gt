@@ -3339,13 +3339,16 @@ check_vector_valid <- function(x, valid_classes = NULL, call = rlang::caller_env
 
   invisible()
 }
-
-check_column_valid <- function(data,
-                               columns,
-                               valid_classes,
-                               extra_msg = NULL,
-                               call = rlang::caller_env()) {
-  # This option is FALSE by default
+# In the case where strict mode is being used (options("gt.strict_column_fmt" = TRUE),
+# stop the function if any of the resolved columns have data that is incompatible
+# with the formatter
+check_columns_valid_if_strict <- function(data,
+                                          columns,
+                                          valid_classes,
+                                          extra_msg = NULL,
+                                          call = rlang::caller_env()) {
+  # Don't check if strict mode is not enabled
+  # strict mode is opt-in, not the default
   if (!isTRUE(getOption("gt.strict_column_fmt", FALSE))) {
     return()
   }
