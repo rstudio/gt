@@ -84,6 +84,7 @@ print.gt_group <- function(x, ..., view = interactive()) {
 #'
 #' @keywords internal
 #' @noRd
+#' @exportS3Method knitr::knit_print
 knit_print.gt_tbl <- function(x, ..., inline = FALSE) {
 
   # TODO: Add print method for interactive HTML table
@@ -123,6 +124,7 @@ knit_print.gt_tbl <- function(x, ..., inline = FALSE) {
 #'
 #' @keywords internal
 #' @noRd
+#' @exportS3Method knitr::knit_print
 knit_print.gt_group <- function(x, ...) {
 
   if (knitr_is_rtf_output()) {
@@ -186,6 +188,7 @@ knit_print.gt_group <- function(x, ...) {
 #'
 #' @keywords internal
 #' @noRd
+#' @exportS3Method htmltools::as.tags
 as.tags.gt_tbl <- function(x, ...) {
 
   table_id <- dt_options_get_value(x, option = "table_id")
