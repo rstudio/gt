@@ -185,6 +185,8 @@ styles_to_html <- function(styles) {
       styles,
       FUN.VALUE = character(1L), USE.NAMES = FALSE,
       FUN = function(x) {
+        # TODO Maybe these checks are to be reviewed?
+        # names(c(1, 2, 3)) = NULL names(c(1, 2, "x" = 3)) = "", "", "x"
         if (any(is.null(names(x)))) {
           style <- as.character(x)
         } else if (all(names(x) != "")) {
@@ -280,15 +282,14 @@ get_table_defs <- function(data) {
   # If all of the widths are defined as px values for all columns,
   # then ensure that the width values are strictly respected as
   # absolute width values (even if a table width has already been set)
-  if (all(grepl("px", widths)) && table_width == "auto") {
-    table_width <- "0px"
-  }
+  if (table_width == "auto") {
 
-  if (all(grepl("%", widths)) && table_width == "auto") {
-    table_width <- "100%"
-  }
-
-  if (table_width != "auto") {
+    if (all(grepl("px", widths, fixed = TRUE))) {
+      table_width <- "0px"
+    } else if (all(grepl("%", widths, fixed = TRUE))) {
+      table_width <- "100%"
+    }
+  } else {
     table_style <- paste(table_style, paste0("width: ", table_width), sep = "; ")
   }
 

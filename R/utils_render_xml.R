@@ -3246,10 +3246,7 @@ copy_to_media <- function(path, media_dir) {
 }
 
 basename_clean <- function(x) {
-
-  basename(x) %>%
-    tidy_gsub("\\s+", "") %>%
-    tidy_gsub("_", "")
+  gsub("\\s+|_", "", basename(x))
 }
 
 ## conveniently zip up word doc temp folder
