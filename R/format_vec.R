@@ -3346,7 +3346,7 @@ check_column_valid <- function(data,
                                extra_msg = NULL,
                                call = rlang::caller_env()) {
   # This option is FALSE by default
-  if (!isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
+  if (!isTRUE(getOption("gt.strict_column_fmt", FALSE))) {
     return()
   }
 
