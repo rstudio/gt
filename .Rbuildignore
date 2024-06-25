@@ -60,7 +60,6 @@ tests/testthat/test-fmt_date_time.R
 tests/testthat/test-fmt_duration.R
 tests/testthat/_snaps/fmt_duration.md
 
-
 tests/testthat/test-fmt_email.R
 tests/testthat/test-fmt_engineering.R
 tests/testthat/test-fmt_flag.R
@@ -90,7 +89,6 @@ tests/testthat/test-fmt_url.R
 
 tests/testthat/test-footer.R
 tests/testthat/_snaps/footer.md
-
 
 tests/testthat/test-group_column_label.R
 tests/testthat/_snaps/group_column_label.md

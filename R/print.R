@@ -39,7 +39,7 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
     return(rlang::exec("displayHTML", as_raw_html(x)))
   }
 
-  html_tbl <- as.tags.gt_tbl(x, ...)
+  html_tbl <- as.tags(x, ...)
 
   # Use `print()` to print to the console
   print(html_tbl, browse = view, ...)
@@ -65,7 +65,7 @@ print.gt_group <- function(x, ..., view = interactive()) {
 
   for (i in seq_tbls) {
 
-    html_tbl_i <- as.tags.gt_tbl(grp_pull(x, which = i), ...)
+    html_tbl_i <- as.tags(grp_pull(x, which = i), ...)
     html_tbls <- htmltools::tagList(html_tbls, html_tbl_i)
   }
 
@@ -107,7 +107,7 @@ knit_print.gt_tbl <- function(x, ..., inline = FALSE) {
   } else {
 
     # Default to HTML output
-    x <- as.tags.gt_tbl(x, ...)
+    x <- as.tags(x, ...)
   }
 
   # Use `knit_print()` to print in a code chunk
@@ -163,7 +163,7 @@ knit_print.gt_group <- function(x, ...) {
 
     for (i in seq_tbls) {
 
-      html_tbl_i <- as.tags.gt_tbl(grp_pull(x, which = i), ...)
+      html_tbl_i <- as.tags(grp_pull(x, which = i), ...)
       html_tbls <- htmltools::tagList(html_tbls, html_tbl_i)
     }
 
@@ -188,7 +188,8 @@ knit_print.gt_group <- function(x, ...) {
 #'
 #' @keywords internal
 #' @noRd
-#' @exportS3Method htmltools::as.tags
+#' @importFrom htmltools as.tags
+#' @export
 as.tags.gt_tbl <- function(x, ...) {
 
   table_id <- dt_options_get_value(x, option = "table_id")

@@ -241,7 +241,7 @@ gt_save_html <- function(
 
     } else {
 
-      html <- htmltools::as.tags(data)
+      html <- as.tags(data)
     }
 
     return(htmltools::save_html(html, filename, ...))
@@ -578,7 +578,7 @@ as_raw_html <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  html_table <- as.character(as.tags.gt_tbl(data))
+  html_table <- as.character(as.tags(data))
 
   if (inline_css) {
 
