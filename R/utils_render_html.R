@@ -289,7 +289,9 @@ get_table_defs <- function(data) {
     } else if (all(grepl("%", widths, fixed = TRUE))) {
       table_width <- "100%"
     }
-  } else {
+  }
+
+  if (table_width != "auto") {
     table_style <- paste(table_style, paste0("width: ", table_width), sep = "; ")
   }
 
