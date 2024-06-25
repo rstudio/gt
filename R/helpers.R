@@ -1400,7 +1400,6 @@ stub <- function() {
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_title <- function(groups = c("title", "subtitle")) {
 
@@ -1542,7 +1541,6 @@ cells_stubhead <- function() {
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_column_spanners <- function(spanners = everything()) {
 
@@ -1625,7 +1623,6 @@ cells_column_spanners <- function(spanners = everything()) {
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_column_labels <- function(columns = everything()) {
 
@@ -1705,7 +1702,6 @@ cells_column_labels <- function(columns = everything()) {
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_row_groups <- function(groups = everything()) {
 
@@ -1805,7 +1801,6 @@ cells_group <- function(groups = everything()) {
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_stub <- function(rows = everything()) {
 
@@ -1916,7 +1911,6 @@ cells_stub <- function(rows = everything()) {
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_body <- function(
     columns = everything(),
@@ -2052,7 +2046,6 @@ cells_body <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_summary <- function(
     groups = everything(),
@@ -2161,7 +2154,6 @@ cells_summary <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_grand_summary <- function(
     columns = everything(),
@@ -2279,7 +2271,6 @@ cells_grand_summary <- function(
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
 #'
-#' @import rlang
 #' @export
 cells_stub_summary <- function(
     groups = everything(),
@@ -2375,7 +2366,6 @@ cells_stub_summary <- function(
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
 #'
-#' @import rlang
 #' @export
 cells_stub_grand_summary <- function(rows = everything()) {
 
@@ -2453,7 +2443,6 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
 #'
-#' @import rlang
 #' @export
 cells_footnotes <- function() {
 
@@ -2510,7 +2499,6 @@ cells_footnotes <- function() {
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
 #'
-#' @import rlang
 #' @export
 cells_source_notes <- function() {
 

@@ -1400,7 +1400,6 @@ vec_fmt_currency <- function(
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_roman()].
 #'
-#' @import rlang
 #' @export
 vec_fmt_roman <- function(
     x,
@@ -1520,7 +1519,6 @@ vec_fmt_roman <- function(
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_index()].
 #'
-#' @import rlang
 #' @export
 vec_fmt_index <- function(
     x,
@@ -1661,7 +1659,6 @@ vec_fmt_index <- function(
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_spelled_num()].
 #'
-#' @import rlang
 #' @export
 vec_fmt_spelled_num <- function(
     x,
@@ -3284,7 +3281,6 @@ vec_fmt_duration <- function(
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_markdown()].
-#'
 #' @export
 vec_fmt_markdown <- function(
     x,

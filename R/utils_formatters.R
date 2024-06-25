@@ -27,7 +27,6 @@
 #' @param table The table to filter down to one row.
 #' @param column The column from which the single value should be obtained.
 #' @param ... The arguments passed to `dplyr::filter()`.
-#' @import rlang
 #' @noRd
 filter_table_to_value <- function(
     table,

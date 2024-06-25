@@ -62,7 +62,6 @@
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 gt_group <- function(
     ...,
@@ -197,7 +196,6 @@ grp_pull <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 grp_add <- function(
     .data,
@@ -338,7 +336,6 @@ grp_add <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 grp_clone <- function(
     data,

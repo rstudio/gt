@@ -1723,7 +1723,6 @@ extract_body <- function(
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
-#'
 #' @export
 extract_summary <- function(data) {
 

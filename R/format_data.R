@@ -436,7 +436,6 @@
 #'
 #' The vector-formatting version of this function: [vec_fmt_number()]
 #'
-#' @import rlang
 #' @export
 fmt_number <- function(
     data,
@@ -868,7 +867,6 @@ fmt_number <- function(
 #'
 #' The vector-formatting version of this function: [vec_fmt_integer()]
 #'
-#' @import rlang
 #' @export
 fmt_integer <- function(
     data,
@@ -1247,7 +1245,6 @@ fmt_integer <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_scientific()].
 #'
-#' @import rlang
 #' @export
 fmt_scientific <- function(
     data,
@@ -1802,7 +1799,6 @@ fmt_scientific <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_engineering()].
 #'
-#' @import rlang
 #' @export
 fmt_engineering <- function(
     data,
@@ -2432,7 +2428,6 @@ fmt_symbol <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_percent()].
 #'
-#' @import rlang
 #' @export
 fmt_percent <- function(
     data,
@@ -2772,7 +2767,6 @@ fmt_percent <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_partsper()].
 #'
-#' @import rlang
 #' @export
 fmt_partsper <- function(
     data,
@@ -3185,7 +3179,6 @@ fmt_partsper <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_fraction()].
 #'
-#' @import rlang
 #' @export
 fmt_fraction <- function(
     data,
@@ -3938,7 +3931,6 @@ round_gt <- function(x, digits = 0) {
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_currency()].
 #'
-#' @import rlang
 #' @export
 fmt_currency <- function(
     data,
@@ -4230,7 +4222,6 @@ fmt_currency <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_roman()].
 #'
-#' @import rlang
 #' @export
 fmt_roman <- function(
     data,
@@ -4491,7 +4482,6 @@ fmt_roman <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_index()].
 #'
-#' @import rlang
 #' @export
 fmt_index <- function(
     data,
@@ -4908,7 +4898,6 @@ get_letters_from_div <- function(x, set) {
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_spelled_num()].
 #'
-#' @import rlang
 #' @export
 fmt_spelled_num <- function(
     data,
@@ -5226,7 +5215,6 @@ fmt_spelled_num <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_bytes()].
 #'
-#' @import rlang
 #' @export
 fmt_bytes <- function(
     data,
@@ -5645,7 +5633,6 @@ fmt_bytes <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_date()].
 #'
-#' @import rlang
 #' @export
 fmt_date <- function(
     data,
@@ -5987,7 +5974,6 @@ fmt_date <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_time()].
 #'
-#' @import rlang
 #' @export
 fmt_time <- function(
     data,
@@ -6954,7 +6940,6 @@ fmt_time <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_datetime()].
 #'
-#' @import rlang
 #' @export
 fmt_datetime <- function(
     data,
@@ -7388,7 +7373,6 @@ fmt_datetime <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_duration()].
 #'
-#' @import rlang
 #' @export
 fmt_duration <- function(
     data,
@@ -8088,7 +8072,6 @@ extract_duration_pattern <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_bins <- function(
     data,
@@ -8581,7 +8564,6 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' @section Function Introduced:
 #' *In Development*
 #'
-#' @import rlang
 #' @export
 fmt_tf <- function(
     data,
@@ -9031,7 +9013,6 @@ make_span_with_color <- function(text, color = NULL) {
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_units <- function(
     data,
@@ -9307,7 +9288,6 @@ fmt_units <- function(
 #' @section Function Introduced:
 #' *In Development*
 #'
-#' @import rlang
 #' @export
 fmt_chem <- function(
     data,
@@ -9737,7 +9717,6 @@ format_units_by_context <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_url <- function(
     data,
@@ -10461,7 +10440,6 @@ add_anchor_attr <- function(
 #' @section Function Introduced:
 #' *In Development*
 #'
-#' @import rlang
 #' @export
 fmt_email <- function(
     data,
@@ -11053,7 +11031,6 @@ generate_email_links <- function(email_address, anchor_attr, label_str) {
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_image <- function(
     data,
@@ -11691,7 +11668,6 @@ get_image_hw_ratio <- function(filepath) {
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_flag <- function(
     data,
@@ -12191,7 +12167,6 @@ fmt_flag <- function(
 #' @section Function Introduced:
 #' *In Development*
 #'
-#' @import rlang
 #' @export
 fmt_country <- function(
     data,
@@ -12746,7 +12721,6 @@ fmt_country <- function(
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_icon <- function(
     data,
@@ -13175,7 +13149,6 @@ fmt_icon <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_markdown()].
 #'
-#' @import rlang
 #' @export
 fmt_markdown <- function(
     data,
@@ -13388,7 +13361,6 @@ fmt_markdown <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 fmt_passthrough <- function(
     data,
@@ -13649,7 +13621,6 @@ fmt_passthrough <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_auto <- function(
     data,
@@ -13967,7 +13938,6 @@ fmt_auto <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 fmt <- function(
     data,

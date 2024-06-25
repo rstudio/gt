@@ -640,7 +640,6 @@ tab_header <- function(
 #' @seealso [tab_spanner_delim()] to create spanners and new column labels with
 #'   delimited column names.
 #'
-#' @import rlang
 #' @export
 tab_spanner <- function(
     data,
@@ -1110,7 +1109,6 @@ resolve_spanned_column_names <- function(
 #' @seealso [tab_spanner()] to manually create spanners with more control over
 #'   spanner labels.
 #'
-#' @import rlang
 #' @export
 tab_spanner_delim <- function(
     data,
@@ -1639,7 +1637,6 @@ str_split_across <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 tab_row_group <- function(
     data,
@@ -2048,7 +2045,6 @@ tab_stubhead <- function(
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
-#' @import rlang
 #' @export
 tab_stub_indent <- function(
     data,

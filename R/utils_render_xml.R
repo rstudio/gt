@@ -1836,10 +1836,7 @@ create_columns_component_xml <- function(
   do.call(htmltools::tagList, rev(table_col_headings_list))
 }
 
-#' Create the table body component (OOXML)
-#'
-#' @importFrom rlang `%||%`
-#' @noRd
+# Create the table body component (OOXML)
 create_body_component_xml <- function(
     data,
     split = FALSE,
@@ -2522,12 +2519,7 @@ white_space_in_text <- function(x, whitespace = NULL) {
   x
 }
 
-#' Define OOXML table cells
-#'
-#' paragrah
-#'
-#' @importFrom rlang `%||%`
-#' @noRd
+# Define OOXML table cells
 xml_table_cell <- function(
     content = NULL,
     size = NULL,
@@ -2605,7 +2597,6 @@ process_cell_content <- function(x, ...) {
     paste0(collapse = "")
 }
 
-#' @importFrom xml2 xml_find_all xml_text xml_attr `xml_attr<-` `xml_text<-`
 process_cell_content_ooxml_t <- function(
     x,
     ...,
@@ -2630,7 +2621,6 @@ process_cell_content_ooxml_t <- function(
   x
 }
 
-#' @importFrom xml2 xml_find_all xml_find_first xml_children xml_add_sibling xml_remove xml_ns xml_name
 process_cell_content_ooxml_r <- function(
     x,
     ...,
@@ -2703,7 +2693,6 @@ process_cell_content_ooxml_r <- function(
   x
 }
 
-#' @importFrom xml2 xml_find_all xml_find_first xml_children xml_add_sibling xml_add_child xml_remove xml_ns xml_name
 process_cell_content_ooxml_p <- function(
     x,
     ...,
@@ -2780,7 +2769,6 @@ process_cell_content_ooxml_p <- function(
   x
 }
 
-#' @importFrom xml2 xml_find_all xml_find_first xml_children xml_child xml_add_sibling xml_remove xml_ns xml_name
 process_white_space_br_in_xml <- function(x, ..., whitespace = NULL) {
 
   ## Options for white space: normal, nowrap, pre, pre-wrap, pre-line, break-spaces
@@ -2831,7 +2819,6 @@ process_white_space_br_in_xml <- function(x, ..., whitespace = NULL) {
   x
 }
 
-#' @importFrom xml2 xml_find_all xml_children xml_child xml_add_sibling xml_remove xml_ns xml_name
 process_drop_empty_styling_nodes <- function(x) {
 
   paragraph_styles <- xml_find_all(x, ".//w:pPr")
@@ -2887,7 +2874,6 @@ add_text_style.shiny.tag <- function(x, style) {
 # character to xml conversion ----
 
 ## if wrapped in xml, convert to html
-#' @importFrom xml2 read_xml xml_children
 parse_to_xml <- function(x, ...) {
 
   ##check if wrapped in ooxml
@@ -2950,7 +2936,6 @@ parse_to_xml <- function(x, ...) {
     xml_children()
 }
 
-#' @importFrom xml2 as_xml_document xml_children
 as_xml_node <- function(x, create_ns = FALSE) {
 
   x <- paste(

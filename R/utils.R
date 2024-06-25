@@ -1145,11 +1145,7 @@ markdown_to_latex <- function(text, md_engine) {
   )
 }
 
-#' Transform Markdown text to ooxml
-#'
-#' @noRd
-#'
-#' @importFrom xml2 read_xml xml_name xml_children xml_type xml_contents
+# Transform Markdown text to ooxml
 markdown_to_xml <- function(text) {
   res <- vapply(
     as.character(text),
