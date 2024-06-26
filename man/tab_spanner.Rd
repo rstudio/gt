@@ -414,7 +414,7 @@ display of nicely-formatted units.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(
-    name, ends_with(c("2001", "2006)), matches("2001_2006")
+    name, ends_with(c("2001", "2006")), matches("2001_2006")
   ) |>
   dplyr::filter(population_2001 > 100000) |>
   dplyr::slice_max(pop_change_2001_2006_pct, n = 10) |>
