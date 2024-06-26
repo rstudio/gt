@@ -641,6 +641,6 @@
     Condition
       Error in `tab_footnote()`:
       ! Can't add footnote "Grand summary cell footnote.".
-      Caused by error in `add_grand_summary_location_row()`:
+      Caused by error in `cells_grand_summary()`:
       ! The following grand summary row indices do not exist in the data: 15.
 
