@@ -223,31 +223,31 @@ test_that("get_currency_exponent() works correctly", {
 
   # Expect that various currency codes (3-letter)
   # return a currency exponent
-  get_currency_exponent(currency = "BIF") %>%
-    expect_equal(0)
+  bif_exp <- get_currency_exponent(currency = "BIF")
+  expect_equal(bif_exp, 0)
 
-  get_currency_exponent(currency = "AED") %>%
-    expect_equal(2)
+  aed_exp <- get_currency_exponent(currency = "AED")
+  expect_equal(aed_exp, 2)
 
-  get_currency_exponent(currency = "TND") %>%
-    expect_equal(3)
+  tnd_exp <- get_currency_exponent(currency = "TND")
+  expect_equal(tnd_exp, 3)
 
-  get_currency_exponent(currency = "CLF") %>%
-    expect_equal(4)
+  clf_exp <- get_currency_exponent(currency = "CLF")
+  # other code
+  clf_exp2 <- get_currency_exponent(currency = 990)
+  expect_equal(clf_exp, 4)
+  expect_equal(clf_exp2, 4)
 
   # Expect that various currency codes (3-number)
   # return a currency exponent
-  get_currency_exponent(currency = "533") %>%
-    expect_equal(2)
+  awg_exp <- get_currency_exponent(currency = "533")
+  expect_equal(awg_exp, 2)
 
-  get_currency_exponent(currency = "152") %>%
-    expect_equal(0)
+  clp_exp <- get_currency_exponent(currency = "152")
+  expect_equal(clp_exp, 0)
 
-  get_currency_exponent(currency = 990) %>%
-    expect_equal(4)
-
-  get_currency_exponent(currency = 886) %>%
-    expect_equal(2)
+  yer_exp <- get_currency_exponent(currency = 886)
+  expect_equal(yer_exp, 2)
 
   # Expect an exponent of 0 if the currency
   # exponent field is NA
@@ -274,10 +274,9 @@ test_that("process_text() works correctly", {
 
   # Expect that text with the class `character` will
   # be returned from `process_text` as is
-  process_text(text = simple_text) %>%
-    expect_equal(simple_text)
-
-  simple_text %>% expect_type("character")
+  processed <- process_text(text = simple_text)
+  expect_equal(processed, simple_text)
+  expect_type(processed, "character")
 
   # Expect that text with the class `from_markdown` will
   # be returned from `process_text` as character-based
@@ -285,7 +284,7 @@ test_that("process_text() works correctly", {
   process_text(text = md_text) %>%
     expect_equal("<span class='gt_from_md'>this is <em>text</em> interpreted as <strong>markdown</strong></span>")
 
-  md_text %>% expect_s3_class("from_markdown")
+  expect_s3_class(md_text, "from_markdown")
   process_text(text = md_text) %>% expect_type("character")
 
   # Expect that text with the class `html` will
@@ -294,8 +293,8 @@ test_that("process_text() works correctly", {
   process_text(text = html_text) %>%
     expect_equal(as.character(html_text))
 
-  html_text %>% expect_s3_class("html")
-  html_text %>% expect_type("character")
+  expect_s3_class(html_text, "html")
+  expect_type(html_text, "character")
   process_text(text = html_text) %>% expect_type("character")
 })
 
