@@ -202,7 +202,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, c), pattern = "{1}{2}<<{3}>>")
 
   expect_equal(
-    (tbl_gt_1 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_1, "html")[["a"]],
     c("111", "2NA2", "33", "4NA")
   )
 
@@ -212,7 +212,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     sub_missing(missing_text = "X")
 
   expect_equal(
-    (tbl_gt_2 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_2, "html")[["a"]],
     c("111", "2X2", "33X", "4XX")
   )
 
@@ -221,7 +221,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, c), pattern = "{1}<<{2}<<{3}>>>>")
 
   expect_equal(
-    (tbl_gt_3 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_3, "html")[["a"]],
     c("111", "2", "33", "4")
   )
 
@@ -230,7 +230,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, c), pattern = "{1}<<{2}-{3}>>")
 
   expect_equal(
-    (tbl_gt_4 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_4, "html")[["a"]],
     c("11-1", "2", "3", "4")
   )
 
@@ -239,7 +239,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, c), pattern = "<<{1}-{2}-{3}>>")
 
   expect_equal(
-    (tbl_gt_5 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_5, "html")[["a"]],
     c("1-1-1", "", "", "")
   )
 
@@ -248,7 +248,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, c), pattern = "<<{1}<<{2}<<{3}>>>>>>")
 
   expect_equal(
-    (tbl_gt_6 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_6, "html")[["a"]],
     c("111", "2", "33", "4")
   )
 
@@ -257,7 +257,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, c), pattern = "<<<<<<X>>>>>>")
 
   expect_equal(
-    (tbl_gt_7 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_7, "html")[["a"]],
     rep("X", 4)
   )
 
@@ -266,7 +266,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, d), pattern = "{1}{2}<<{3}>>")
 
   expect_equal(
-    (tbl_gt_9 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_9, "html")[["a"]],
     c("111", "2NA2", "33", "4NA")
   )
 
@@ -276,7 +276,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, d), pattern = "{1}{2}<<{3}>>")
 
   expect_equal(
-    (tbl_gt_10 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_10, "html")[["a"]],
     c("111", "2X2", "33X", "4XX")
   )
 
@@ -285,7 +285,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, e), pattern = "{1}{2}<<{3}>>")
 
   expect_equal(
-    (tbl_gt_11 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_11, "html")[["a"]],
     c("11TRUE", "2NAFALSE", "33", "4NA")
   )
 
@@ -873,7 +873,7 @@ test_that("cols_merge_n_pct() works correctly", {
     expect_equal("")
 
   expect_equal(
-    (tbl_html %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_html, "html")[["a"]],
     c(
       "1 (7.1%)", "5 (35.7%)", "0", "2 (14.3%)",
       "NA", "6 (42.9%)", "5", "NA", "0", "NA"
@@ -881,7 +881,7 @@ test_that("cols_merge_n_pct() works correctly", {
   )
 
   expect_equal(
-    (tbl_html %>% render_formats_test("html"))[["b"]],
+    render_formats_test(tbl_html, "html")[["b"]],
     c(
       "7.1%", "35.7%", "0.0%", "14.3%",
       "NA", "42.9%", "NA", "100,000.0%", "NA",

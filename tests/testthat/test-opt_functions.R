@@ -1,8 +1,3 @@
-# Helper function to compare a contiguous set of HTML fragments with raw html
-html_fragment_within <- function(raw_html, ...) {
-  grepl(paste0("\\Q", c(...), "\\E", "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)
-}
-
 test_that("opt_footnote_marks() sets the correct options", {
 
   set_marks <- c("*", "+", "~", "<", ">")
