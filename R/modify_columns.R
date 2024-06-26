@@ -1575,6 +1575,16 @@ cols_units <- function(
       new_units <- rlang::eval_tidy(rlang::f_rhs(units_i))
     }
 
+    # basic check on units value.
+    withCallingHandlers(
+      check_string(new_units, call = NULL, arg = "unit"),
+      error = function(e) {
+        cli::cli_abort(
+          "Incorrect unit for column{?s} {.var {columns}}.",
+          parent = e
+        )
+      })
+
     for (j in seq_along(columns)) {
 
       # For each of the resolved columns, add the units text to the boxhead
