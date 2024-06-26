@@ -963,8 +963,8 @@ cols_label <- function(
 
       if (!(columns %in% column_vars)) {
         cli::cli_abort(c(
-          "The column name supplied to `cols_label()` (`{columns}`) is not valid.",
-          "*" = "Include column names or a tidyselect statement on the LHS."
+          "Can't find column{?s} {.var {columns}} in the data.",
+          "i" = "The LHS should include column names or a tidyselect statement."
         ))
       }
 
@@ -1541,8 +1541,8 @@ cols_units <- function(
 
       if (!(columns %in% column_vars)) {
         cli::cli_abort(c(
-          "The column name supplied to `cols_units()` (`{columns}`) is not valid.",
-          "*" = "Include column names or a tidyselect statement on the LHS."
+          "Can't find column{?s} {.var {columns}} in the data.",
+          "i" = "The LHS should include column names or a tidyselect statement."
         ))
       }
 
@@ -1558,7 +1558,7 @@ cols_units <- function(
       if (is.null(cols)) {
         cli::cli_abort(c(
           "A formula supplied to `cols_units()` must be two-sided.",
-          "*" = "Include column names or a tidyselect statement on the LHS."
+          "i" = "The LHS should include column names or a tidyselect statement."
         ))
       }
 
