@@ -26,8 +26,19 @@ html_fragment_within <- function(raw_html, ...) {
   grepl(paste0("\\Q", c(...), "\\E", "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)
 }
 
-# Create a shortened version of `mtcars`
-mtcars_short <- datasets::mtcars[1:5, ]
+
+# Helper to ensure all patterns are matched
+tidy_grepl <- function(x, pattern) {
+
+  vapply(
+    pattern,
+    FUN = function(pattern) {
+      grepl(pattern = pattern, x = x)
+    },
+    FUN.VALUE = logical(1L),
+    USE.NAMES = FALSE
+  )
+}
 
 expect_merge_locale_sep <- function(locale = NULL, global_locale = NULL, sep = NULL, expected_sep) {
   tbl <- data.frame(
@@ -41,3 +52,9 @@ expect_merge_locale_sep <- function(locale = NULL, global_locale = NULL, sep = N
   actual_merge_sep <- dt_col_merge_get(merged_gt)[[1]]$sep
   expect_equal(actual_merge_sep, expected_sep, label = paste0("locale = ", locale))
 }
+
+# Create a shortened version of `mtcars`
+mtcars_short <- datasets::mtcars[1:5, ]
+
+# Create a shortened version of `iris`
+iris_short <- datasets::iris[1:5, ]

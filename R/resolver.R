@@ -27,7 +27,6 @@
 #' @param data A table object that is created using the `gt()` function.
 #' @param object The list object created by the `cells_body()` function.
 #'
-#' @import rlang
 #' @noRd
 resolve_cells_body <- function(data, object, call = rlang::caller_env()) {
 

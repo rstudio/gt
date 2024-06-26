@@ -158,8 +158,7 @@ test_that("cols_label_with() works correctly", {
 
   towny_gt_tbl <-
     towny %>%
-    dplyr::arrange(desc(population_2021)) %>%
-    dplyr::slice_head(n = 5) %>%
+    dplyr::slice_max(population_2021, n = 5) %>%
     dplyr::select(name, latitude, longitude, ends_with("2016"), ends_with("2021")) %>%
     gt() %>%
     tab_spanner(columns = starts_with("pop"), label = "Population") %>%

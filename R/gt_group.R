@@ -62,7 +62,6 @@
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 gt_group <- function(
     ...,
@@ -197,7 +196,6 @@ grp_pull <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 grp_add <- function(
     .data,
@@ -338,7 +336,6 @@ grp_add <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 grp_clone <- function(
     data,
@@ -768,8 +765,8 @@ grp_options <- function(
   arg_vals <- set_super_options(arg_vals = arg_vals)
 
   new_df <-
-    dplyr::tibble(
-      parameter = tidy_gsub(names(arg_vals), ".", "_", fixed = TRUE),
+    vctrs::data_frame(
+      parameter = gsub(".", "_", names(arg_vals), fixed = TRUE),
       value = unname(arg_vals)
     )
   new_df <-
@@ -778,14 +775,11 @@ grp_options <- function(
       dplyr::select(opts_df, parameter, type),
       by = "parameter"
     )
-  new_df <-
-    dplyr::mutate(
-      new_df,
-      value = mapply(
-        preprocess_tab_option,
-        option = value, var_name = parameter, type = type,
-        SIMPLIFY = FALSE
-      )
+  new_df$value <-
+    mapply(
+      preprocess_tab_option,
+      option = new_df$value, var_name = new_df$parameter, type = new_df$type,
+      SIMPLIFY = FALSE
     )
   new_df$type <- NULL
 

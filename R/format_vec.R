@@ -1400,7 +1400,6 @@ vec_fmt_currency <- function(
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_roman()].
 #'
-#' @import rlang
 #' @export
 vec_fmt_roman <- function(
     x,
@@ -1520,7 +1519,6 @@ vec_fmt_roman <- function(
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_index()].
 #'
-#' @import rlang
 #' @export
 vec_fmt_index <- function(
     x,
@@ -1661,7 +1659,6 @@ vec_fmt_index <- function(
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_spelled_num()].
 #'
-#' @import rlang
 #' @export
 vec_fmt_spelled_num <- function(
     x,
@@ -3340,13 +3337,17 @@ check_vector_valid <- function(x, valid_classes = NULL, call = rlang::caller_env
   invisible()
 }
 
-check_column_valid <- function(data,
-                               columns,
-                               valid_classes,
-                               extra_msg = NULL,
-                               call = rlang::caller_env()) {
-  # This option is FALSE by default
-  if (!isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
+# In the case where strict mode is being used (options("gt.strict_column_fmt" = TRUE),
+# stop the function if any of the resolved columns have data that is incompatible
+# with the formatter
+check_columns_valid_if_strict <- function(data,
+                                          columns,
+                                          valid_classes,
+                                          extra_msg = NULL,
+                                          call = rlang::caller_env()) {
+  # Don't check if strict mode is not enabled
+  # strict mode is opt-in, not the default
+  if (!isTRUE(getOption("gt.strict_column_fmt", FALSE))) {
     return()
   }
 

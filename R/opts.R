@@ -1820,32 +1820,9 @@ create_default_option_value_list <- function(tab_options_args) {
   lapply(
     stats::setNames(, tab_options_args),
     FUN = function(x) {
-      dt_options_get_default_value(tidy_gsub(x, ".", "_", fixed = TRUE))
+      dt_options_get_default_value(gsub(".", "_", x, fixed = TRUE))
     }
   )
-}
-
-dt_options_get_default_value <- function(option) {
-
-  # Validate the provided `option` value
-  if (length(option) != 1) {
-    cli::cli_abort("A character vector of length one must be provided.")
-  }
-  if (!(option %in% dt_options_tbl$parameter)) {
-    cli::cli_abort("The `option` provided is invalid.")
-  }
-
-  dt_options_tbl$value[[which(dt_options_tbl$parameter == option)]]
-}
-
-# Get vector of argument names (excluding `data`) from `tab_options`
-#' @include tab_create_modify.R
-tab_options_arg_names <- base::setdiff(names(formals(tab_options)), "data")
-
-# Create vector of all args from `tab_options()` by
-# use of a regex pattern
-get_tab_options_arg_vec <- function(pattern) {
-  grep(pattern = pattern, tab_options_arg_names, value = TRUE)
 }
 
 # Validate any vector of `tab_options()` argument names

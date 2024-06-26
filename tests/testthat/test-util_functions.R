@@ -442,12 +442,6 @@ test_that("process_footnote_marks() works correctly", {
         "\u2055\u2055", "‖‖", "††", "§§", "¶¶"))
 })
 
-test_that("tidy_gsub()/tidy_sub() functions work with Unicode chars", {
-
-  expect_true(identical(tidy_sub(".", ".", "\u00B1", fixed = TRUE), "\u00B1"))
-  expect_true(identical(tidy_gsub(".", ".", "\u00B1", fixed = TRUE), "\u00B1"))
-})
-
 test_that("glue_gt() works in a safe manner", {
 
   lst <- list(a = "foo", b = c("bar", "baz"))

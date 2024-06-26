@@ -241,7 +241,7 @@ gt_save_html <- function(
 
     } else {
 
-      html <- htmltools::as.tags(data)
+      html <- as.tags(data)
     }
 
     return(htmltools::save_html(html, filename, ...))
@@ -289,7 +289,7 @@ gt_save_webshot <- function(
   tempfile_ <- tempfile(fileext = ".html")
 
   # Reverse slashes on Windows filesystems
-  tempfile_ <- tidy_gsub(tempfile_, "\\\\", "/")
+  tempfile_ <- normalizePath(tempfile_, "/", mustWork = FALSE)
 
   # Save gt table as HTML using the `gt_save_html()` function
   gt_save_html(
@@ -578,7 +578,7 @@ as_raw_html <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  html_table <- as.character(as.tags.gt_tbl(data))
+  html_table <- as.character(as.tags(data))
 
   if (inline_css) {
 
@@ -1723,7 +1723,6 @@ extract_body <- function(
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
-#'
 #' @export
 extract_summary <- function(data) {
 

@@ -286,8 +286,7 @@ categories of municipality for this subset of data.
   dplyr::select(name, csd_type, population_2021) |>
   dplyr::filter(csd_type \%in\% c("city", "town")) |>
   dplyr::group_by(csd_type) |>
-  dplyr::arrange(desc(population_2021)) |>
-  dplyr::slice_head(n = 5) |>
+  dplyr::slice_max(population_2021, n = 5) |>
   dplyr::ungroup() |>
   dplyr::mutate(
     csd_type = ifelse(csd_type == "town", "house-chimney", "city")
