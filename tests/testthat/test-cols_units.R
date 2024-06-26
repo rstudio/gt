@@ -32,3 +32,11 @@ test_that("cols_units() errors well with wrong input", {
   })
 })
 
+test_that("cols_units() works when unit is caught", {
+  d <- data.frame(
+    col1 = 1,
+    col2 = 2
+  )
+  tab <- cols_units(gt(d), everything() ~ "1")
+  expect_no_error(render_as_html(tab))
+})
