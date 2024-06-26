@@ -4756,15 +4756,11 @@ tab_options <- function(
       dplyr::select(opts_df, parameter, type),
       by = "parameter"
     )
-  new_df <-
-    dplyr::mutate(
-      new_df,
-      value = mapply(
+  new_df$value <- mapply(
         preprocess_tab_option,
-        option = value, var_name = parameter, type = type,
+        option = new_df$value, var_name = new_df$parameter, type = new_df$type,
         SIMPLIFY = FALSE
       )
-    )
   new_df$type <- NULL
 
   # This rearranges the rows in the `opts_df` table, but this
@@ -4809,7 +4805,8 @@ tab_options <- function(
   data
 }
 
-preprocess_tab_option <- function(option, var_name, type) {
+# call is set to caller_env(2) to skip the mapply() call in tab_options() and grp_options()
+preprocess_tab_option <- function(option, var_name, type, call = rlang::caller_env(2)) {
 
   # Perform pre-processing on the option depending on `type`
   option <-
@@ -4834,14 +4831,14 @@ preprocess_tab_option <- function(option, var_name, type) {
       option
     )
 
-  # Perform `stopifnot()` checks by `type`
+  # Perform `check_*()` checks by `type`
   switch(
     type,
-    logical = stopifnot(rlang::is_scalar_logical(option), !anyNA(option)),
+    logical = check_bool(option, arg = var_name, call = call),
     overflow = ,
     px = ,
-    value = stopifnot(rlang::is_scalar_character(option), !anyNA(option)),
-    values = stopifnot(rlang::is_character(option), length(option) >= 1L, !anyNA(option))
+    value = check_string(option, arg = var_name, allow_na = FALSE, call = call),
+    values = check_chr_has_length(option, arg = var_name, call = call)
   )
 
   option
