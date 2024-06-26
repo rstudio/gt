@@ -1,3 +1,22 @@
+test_that("cols_units() works with formulas (and is consistent with cols_label())", {
+  # Test that you can override some things with everything()
+  d <- data.frame(
+    col1 = 1,
+    col2 = 2
+  )
+  # tab0 and tab1 will not have the same units as `cols_label()`
+  tab0 <- cols_units(gt(d), col2 ~ "aa", everything() ~ "degree")
+  tab1 <- cols_units(gt(d), everything() ~ "degree", col2 ~ "aa")
+
+  expect_no_error(render_as_html(tab0))
+  expect_no_error(render_as_html(tab1))
+  units0 <- dt_boxhead_get(tab0)$column_units
+  units1 <- dt_boxhead_get(tab1)$column_units
+  # col2 is silently ignored if specified first.
+  expect_equal(units0, c("degree", "degree"))
+  # col2 specified after, so works
+  expect_equal(units1, c("degree", "aa"))
+})
 
 test_that("cols_units() errors well with wrong input", {
   # Test that you can override some things with everything()
