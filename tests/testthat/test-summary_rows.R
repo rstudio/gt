@@ -39,43 +39,36 @@ test_that("summary_rows() can make group-wise summaries", {
 
   # Expect that the internal `summary` list object has a length
   # of `1` since there was only one call of `summary_rows()`
-  length(summary) %>% expect_equal(1)
+  expect_length(summary, 1)
 
   # For the single list component in `summary`, expect specific
   # names within it
-  summary[[1]] %>%
-    expect_named(
-      c(
-        "groups", "columns", "fns", "fmt", "side",
-        "missing_text", "formatter", "formatter_options"
-      )
+  expect_named(
+    summary[[1]],
+    c(
+      "groups", "columns", "fns", "fmt", "side",
+      "missing_text", "formatter", "formatter_options"
     )
+  )
 
   # Expect the `groups` provided in `summary[[1]]$groups`
-  summary[[1]]$groups %>% expect_equal("W02")
+  expect_equal(summary[[1]]$groups, "W02")
 
   # Expect the `columns` provided in `summary[[1]]$columns`
-  summary[[1]]$columns %>% expect_equal(c("open", "high", "low", "close"))
-
-  # Expect that `summary[[1]]$fns` is a `list` object
-  summary[[1]]$fns %>% expect_type("list")
+  expect_equal(summary[[1]]$columns , c("open", "high", "low", "close"))
+  expect_type(summary[[1]]$fns, "list")
 
   # Expect that the components of `summary[[1]]$fns` are lists
-  summary[[1]]$fns$average %>% expect_type("list")
-  summary[[1]]$fns$total %>% expect_type("list")
-  summary[[1]]$fns$`std dev` %>% expect_type("list")
+  expect_type(summary[[1]]$fns$average, "list")
+  expect_type(summary[[1]]$fns$total, "list")
+  expect_type(summary[[1]]$fns$`std dev`, "list")
 
-  # Expect that `summary[[1]]$missing_text` has a specific value
-  summary[[1]]$missing_text %>% expect_equal("---")
-
-  # Expect that `summary[[1]]$formatter` is NULL
-  expect_null(summary[[1]]$formatter)
-
-  # Expect that `summary[[1]]$formatter_options` is a list
+  # Expect that
+  expect_equal(summary[[1]]$missing_text, "---")
+  expect_equal(summary[[1]]$formatter, NULL)
+  # expect a zero-length list
   expect_type(summary[[1]]$formatter_options, "list")
-
-  # Expect that `summary[[1]]$formatter_options` is of length 0
-  summary[[1]]$formatter_options %>% expect_length(0)
+  expect_length(summary[[1]]$formatter_options, 0)
 
   # Create a table with summary rows for the `W02` group;
   # the 3 summary rows for this group represent the mean, sum,
@@ -1761,8 +1754,8 @@ test_that("Extracting a summary from a gt table is possible", {
 
   # Expect that each component of the list inherits
   # from `tbl_df`
-  expect_s3_class(gt_tbl_summary_groupwise$summary_df_data_list[[1]], "tbl_df")
-  expect_s3_class(gt_tbl_summary_groupwise$summary_df_data_list[[2]], "tbl_df")
+  expect_s3_class(gt_tbl_summary_groupwise$summary_df_data_list[[1]], "data.frame")
+  expect_s3_class(gt_tbl_summary_groupwise$summary_df_data_list[[2]], "data.frame")
 
   # Expect specific column names for each of the
   # tibbles in `gt_tbl_summary_groupwise`
@@ -2294,7 +2287,7 @@ test_that("normalize_summary_fns() works with a variety of inputs", {
 
     out <- normalize_summary_fns(fns = fns)
 
-    expect_equal(length(out), 1)
+    expect_length(out, 1)
     expect_type(out, "list")
 
     # Get id
@@ -2510,7 +2503,7 @@ test_that("normalize_fmt_fns() works with a variety of inputs", {
 
     out <- normalize_fmt_fns(fmt = fmt)
 
-    expect_equal(length(out), 1)
+    expect_length(out, 1)
     expect_type(out, "list")
 
     # Get formula

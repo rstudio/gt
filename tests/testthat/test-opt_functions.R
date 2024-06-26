@@ -1,8 +1,3 @@
-# Helper function to compare a contiguous set of HTML fragments with raw html
-html_fragment_within <- function(raw_html, ...) {
-  grepl(paste0("\\Q", c(...), "\\E", "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)
-}
-
 test_that("opt_footnote_marks() sets the correct options", {
 
   set_marks <- c("*", "+", "~", "<", ">")
@@ -360,14 +355,14 @@ test_that("opt_table_font() sets the correct options", {
 
   # Expect that equally valid inputs include wrapping in a list or `c()`
   expect_equal(
-    tbl %>% opt_table_font(font = google_font(name = "Dancing Script")) %>% compile_scss(),
-    tbl %>% opt_table_font(font = list(google_font(name = "Dancing Script"))) %>% compile_scss(),
+    opt_table_font(tbl, font = google_font(name = "Dancing Script")) %>% compile_scss(),
+    opt_table_font(tbl, font = list(google_font(name = "Dancing Script"))) %>% compile_scss(),
     ignore_attr = TRUE
   )
 
   expect_equal(
-    tbl %>% opt_table_font(font = google_font(name = "Dancing Script")) %>% compile_scss(),
-    tbl %>% opt_table_font(font = c(google_font(name = "Dancing Script"))) %>% compile_scss(),
+    opt_table_font(tbl, font = google_font(name = "Dancing Script")) %>% compile_scss(),
+    opt_table_font(tbl, font = c(google_font(name = "Dancing Script"))) %>% compile_scss(),
     ignore_attr = TRUE
   )
 
@@ -430,16 +425,16 @@ test_that("opt_table_font() sets the correct options", {
   # Expect that weights given as numbers or strings create the
   # same outputs (e.g., 500 and "500")
   expect_equal(
-    tbl %>% opt_table_font(font = google_font(name = "Dancing Script"), weight = 500) %>% compile_scss(),
-    tbl %>% opt_table_font(font = google_font(name = "Dancing Script"), weight = "500") %>% compile_scss(),
+    opt_table_font(tbl, font = google_font(name = "Dancing Script"), weight = 500) %>% compile_scss(),
+    opt_table_font(tbl, font = google_font(name = "Dancing Script"), weight = "500") %>% compile_scss(),
     ignore_attr = TRUE
   )
 
   # Expect an error if input to `font` is not a character vector
   # or a list (but no errors otherwise)
-  expect_error(tbl %>% opt_table_font(font = c(TRUE, FALSE)))
-  expect_error(tbl %>% opt_table_font(font = 1:3))
-  expect_no_error(tbl %>% opt_table_font(font = c("Courier", "Comic Sans MS")))
-  expect_no_error(tbl %>% opt_table_font(font = list("Courier", "Comic Sans MS")))
-  expect_no_error(tbl %>% opt_table_font(font = LETTERS))
+  expect_error(opt_table_font(tbl, font = c(TRUE, FALSE)))
+  expect_error(opt_table_font(tbl, font = 1:3))
+  expect_no_error(opt_table_font(tbl, font = c("Courier", "Comic Sans MS")))
+  expect_no_error(opt_table_font(tbl, font = list("Courier", "Comic Sans MS")))
+  expect_no_error(opt_table_font(tbl, font = LETTERS))
 })

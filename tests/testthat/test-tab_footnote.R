@@ -782,29 +782,29 @@ test_that("The `list_of_summaries` table is structured correctly", {
   gtcars_built_summary_df_display <- dt_summary_df_display_get(data = gtcars_built)
 
   # Expect that the list of summaries has length `2`
-  expect_equal(length(gtcars_built_summary_df), 2)
+  expect_length(gtcars_built_summary_df, 2)
 
   # Expect specific names in the `list_of_summaries` list
-  expect_equal(
-    names(gtcars_built_summary_df),
+  expect_named(
+    gtcars_built_summary_df,
     c("summary_df_data_list", "summary_df_display_list")
   )
 
   # Expect three tibbles in the `summary_df_data_list` component
-  expect_equal(length(gtcars_built_summary_df_data$summary_df_data_list), 3)
+  expect_length(gtcars_built_summary_df_data$summary_df_data_list, 3)
 
   # Expect three tibbles in the `summary_df_display_list` component
-  expect_equal(length(gtcars_built_summary_df_display$summary_df_display_list), 3)
+  expect_length(gtcars_built_summary_df_display$summary_df_display_list, 3)
 
   # Expect specific names for the subcomponents of the
   # `summary_df_data_list` and `summary_df_data_list`
   # parent components
-  expect_equal(
-    names(gtcars_built_summary_df_data$summary_df_data_list),
+  expect_named(
+    gtcars_built_summary_df_data$summary_df_data_list,
     c("BMW", "Audi", "::GRAND_SUMMARY")
   )
-  expect_equal(
-    names(gtcars_built_summary_df_display$summary_df_display_list),
+  expect_named(
+    gtcars_built_summary_df_display$summary_df_display_list,
     c("::GRAND_SUMMARY", "Audi", "BMW")
   )
 
