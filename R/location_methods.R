@@ -206,7 +206,8 @@ add_grand_summary_location_row <- function(
     columns <-
       resolve_cols_c(
         expr = !!loc$columns,
-        data = data
+        data = data,
+        call = call
       )
 
     if (length(columns) == 0) {
@@ -225,7 +226,8 @@ add_grand_summary_location_row <- function(
     resolve_vector_i(
       expr = !!loc$rows,
       vector = id_vals,
-      item_label = "grand summary row"
+      item_label = "grand summary row",
+      call = call
     )
 
   if (length(rows) == 0) {
