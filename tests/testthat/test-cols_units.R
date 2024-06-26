@@ -32,7 +32,7 @@ test_that("cols_units() errors well with wrong input", {
   })
 })
 
-test_that("cols_units() works when unit is caught", {
+test_that("cols_units() works when unit is caught (#1733)", {
   d <- data.frame(
     col1 = 1,
     col2 = 2
