@@ -26,5 +26,22 @@ html_fragment_within <- function(raw_html, ...) {
   grepl(paste0("\\Q", c(...), "\\E", "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)
 }
 
+
+# Helper to ensure all patterns are matched
+tidy_grepl <- function(x, pattern) {
+
+  vapply(
+    pattern,
+    FUN = function(pattern) {
+      grepl(pattern = pattern, x = x)
+    },
+    FUN.VALUE = logical(1L),
+    USE.NAMES = FALSE
+  )
+}
+
 # Create a shortened version of `mtcars`
 mtcars_short <- datasets::mtcars[1:5, ]
+
+# Create a shortened version of `iris`
+iris_short <- datasets::iris[1:5, ]

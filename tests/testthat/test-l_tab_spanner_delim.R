@@ -1,6 +1,3 @@
-# Create a shortened version of `iris`
-iris_short <- iris[1:5, ]
-
 test_that("tab_spanner_delim() works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; split the column

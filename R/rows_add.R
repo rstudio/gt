@@ -341,7 +341,6 @@
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
-#' @import rlang
 #' @export
 rows_add <- function(
     .data,

@@ -27,7 +27,6 @@
 #' @param table The table to filter down to one row.
 #' @param column The column from which the single value should be obtained.
 #' @param ... The arguments passed to `dplyr::filter()`.
-#' @import rlang
 #' @noRd
 filter_table_to_value <- function(
     table,
@@ -1015,7 +1014,7 @@ format_minus <- function(
   minus_mark <- context_minus_mark(context)
 
   # Handle replacement of the minus mark
-  tidy_gsub(x_str, "-", minus_mark, fixed = TRUE)
+  gsub("-", minus_mark, x_str, fixed = TRUE)
 }
 
 #' Transform currency values to accounting style
@@ -1054,7 +1053,7 @@ format_as_accounting <- function(
   # Selectively remove minus sign and paste between parentheses
   x_str[x_lt0] <-
     paste_between(
-      tidy_gsub(x_str[x_lt0], minus_mark, "", fixed = TRUE),
+      gsub(minus_mark, "", x_str[x_lt0], fixed = TRUE),
       x_2 = parens_marks
     )
 
@@ -1099,7 +1098,7 @@ prettify_scientific_notation <- function(
   minus_mark <- context_minus_mark(context)
 
   # Handle replacement of the minus mark in number and exponent parts
-  tidy_gsub(x, "-", minus_mark, fixed = TRUE)
+  gsub("-", minus_mark, x, fixed = TRUE)
 }
 
 #' Create the tibble with suffixes and scaling values

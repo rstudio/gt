@@ -436,7 +436,6 @@
 #'
 #' The vector-formatting version of this function: [vec_fmt_number()]
 #'
-#' @import rlang
 #' @export
 fmt_number <- function(
     data,
@@ -563,11 +562,8 @@ fmt_number <- function(
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by, system)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("numeric", "integer")
-  check_column_valid(data, {{ columns }}, valid_class, call = fn_call)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class, call = fn_call)
 
   # Set the `formatC_format` option according to whether number
   # formatting with significant figures is to be performed
@@ -871,7 +867,6 @@ fmt_number <- function(
 #'
 #' The vector-formatting version of this function: [vec_fmt_integer()]
 #'
-#' @import rlang
 #' @export
 fmt_integer <- function(
     data,
@@ -1250,7 +1245,6 @@ fmt_integer <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_scientific()].
 #'
-#' @import rlang
 #' @export
 fmt_scientific <- function(
     data,
@@ -1365,11 +1359,8 @@ fmt_scientific <- function(
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by, system = "intl")
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("numeric", "integer")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # If `n_sigfig` is defined (and not `NA`) modify the number of
   # decimal places and keep all trailing zeros
@@ -1399,7 +1390,7 @@ fmt_scientific <- function(
 
         # Define the `replace_minus()` function
         replace_minus <- function(x) {
-           tidy_gsub(x, "-", minus_mark, fixed = TRUE)
+           gsub("-", minus_mark, x, fixed = TRUE)
         }
 
         # Create the `suffix_df` object
@@ -1808,7 +1799,6 @@ fmt_scientific <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_engineering()].
 #'
-#' @import rlang
 #' @export
 fmt_engineering <- function(
     data,
@@ -1920,11 +1910,8 @@ fmt_engineering <- function(
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by, system = "intl")
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("numeric", "integer")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -1943,7 +1930,7 @@ fmt_engineering <- function(
 
         # Define the `replace_minus()` function
         replace_minus <- function(x) {
-          tidy_gsub(x, "-", minus_mark, fixed = TRUE)
+          gsub("-", minus_mark, x, fixed = TRUE)
         }
 
         # Create the `suffix_df` object
@@ -2441,7 +2428,6 @@ fmt_symbol <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_percent()].
 #'
-#' @import rlang
 #' @export
 fmt_percent <- function(
     data,
@@ -2553,11 +2539,8 @@ fmt_percent <- function(
   locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("numeric", "integer")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   if (scale_values) {
     scale_by <- 100
@@ -2784,7 +2767,6 @@ fmt_percent <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_partsper()].
 #'
-#' @import rlang
 #' @export
 fmt_partsper <- function(
     data,
@@ -2897,11 +2879,8 @@ fmt_partsper <- function(
   locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("numeric", "integer")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Scale values according to `to_units` value
   if (scale_values) {
@@ -3200,7 +3179,6 @@ fmt_partsper <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_fraction()].
 #'
-#' @import rlang
 #' @export
 fmt_fraction <- function(
     data,
@@ -3314,11 +3292,8 @@ fmt_fraction <- function(
     ))
   }
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("numeric", "integer")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Use locale-based `sep_mark` if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -3956,7 +3931,6 @@ round_gt <- function(x, digits = 0) {
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_currency()].
 #'
-#' @import rlang
 #' @export
 fmt_currency <- function(
     data,
@@ -4074,11 +4048,8 @@ fmt_currency <- function(
   locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("numeric", "integer")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Resolve the currency either from direct input in `currency` or
   # through a locale
@@ -4251,7 +4222,6 @@ fmt_currency <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_roman()].
 #'
-#' @import rlang
 #' @export
 fmt_roman <- function(
     data,
@@ -4321,11 +4291,8 @@ fmt_roman <- function(
   # Ensure that arguments are matched
   case <- rlang::arg_match(case)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("numeric", "integer")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -4515,7 +4482,6 @@ fmt_roman <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_index()].
 #'
-#' @import rlang
 #' @export
 fmt_index <- function(
     data,
@@ -4601,11 +4567,8 @@ fmt_index <- function(
   # Use locale-based `idx_set` if a locale ID is provided
   idx_set <- get_locale_idx_set(locale)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("numeric", "integer")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -4935,7 +4898,6 @@ get_letters_from_div <- function(x, set) {
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_spelled_num()].
 #'
-#' @import rlang
 #' @export
 fmt_spelled_num <- function(
     data,
@@ -5011,11 +4973,8 @@ fmt_spelled_num <- function(
   # Obtain a locale-based `num_spellout_set` vector
   num_spellout_set <- get_locale_num_spellout(locale = locale)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("numeric", "integer")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -5256,7 +5215,6 @@ fmt_spelled_num <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_bytes()].
 #'
-#' @import rlang
 #' @export
 fmt_bytes <- function(
     data,
@@ -5362,11 +5320,8 @@ fmt_bytes <- function(
   locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("numeric", "integer")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -5678,7 +5633,6 @@ fmt_bytes <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_date()].
 #'
-#' @import rlang
 #' @export
 fmt_date <- function(
     data,
@@ -5762,12 +5716,9 @@ fmt_date <- function(
                      parent = e)
     })
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("Date", "POSIXt", "character")
   extra_msg <- c(i = "If character data is supplied, it should be ISO-8601 formatted dates.")
-  check_column_valid(data, {{ columns }}, valid_class, extra_msg = extra_msg)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class, extra_msg = extra_msg)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -6023,7 +5974,6 @@ fmt_date <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_time()].
 #'
-#' @import rlang
 #' @export
 fmt_time <- function(
     data,
@@ -6107,13 +6057,10 @@ fmt_time <- function(
                      parent = e)
     })
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("Date", "POSIXt", "character")
   msg <- c(i = "Allowed types are `Date`, `POSIXt`, and `character` (in
       `HH:MM:SS` format).")
-  check_column_valid(data, {{ columns }}, valid_class, msg)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class, msg)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -6993,7 +6940,6 @@ fmt_time <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_datetime()].
 #'
-#' @import rlang
 #' @export
 fmt_datetime <- function(
     data,
@@ -7105,13 +7051,10 @@ fmt_datetime <- function(
       })
   }
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("Date", "POSIXct", "character")
   msg <- c(i = "Allowed types are `Date`, `POSIXct`, and `character` (with
       ISO-8601 formatted dates)")
-  check_column_valid(data, {{ columns }}, valid_class, msg)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class, msg)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -7430,7 +7373,6 @@ fmt_datetime <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_duration()].
 #'
-#' @import rlang
 #' @export
 fmt_duration <- function(
     data,
@@ -7470,9 +7412,9 @@ fmt_duration <- function(
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
 
-  if (is_true(trim_zero_units)) {
+  if (isTRUE(trim_zero_units)) {
     trim_zero_units <- c("leading", "trailing", "internal")
-  } else if (is_false(trim_zero_units)) {
+  } else if (isFALSE(trim_zero_units)) {
     trim_zero_units <- NULL
   } else if (is.character(trim_zero_units) && length(trim_zero_units) > 0) {
     # Validate that `trim_zero_units` contains only the allowed keywords
@@ -7487,11 +7429,8 @@ fmt_duration <- function(
 
   check_number_whole(max_output_units, min = 1, allow_null = TRUE, allow_infinite = TRUE)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("numeric", "integer", "difftime")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Stop function if any columns have numeric data and `input_units` is NULL
   if (
@@ -7656,16 +7595,16 @@ validate_duration_input_units <- function(input_units, call = rlang::caller_env(
 normalize_duration_input_units <- function(input_units) {
 
   # Ensure that key transforms occur
-  input_units <- tidy_sub(input_units, "secs", "seconds")
-  input_units <- tidy_sub(input_units, "mins", "minutes")
+  input_units <- sub("secs", "seconds", input_units, fixed = TRUE)
+  input_units <- sub("mins", "minutes", input_units, fixed = TRUE)
   input_units
 }
 
 normalize_duration_output_units <- function(output_units) {
 
   # Ensure that key transforms occur and that the output units are a unique set
-  output_units <- tidy_sub(output_units, "secs", "seconds")
-  output_units <- tidy_sub(output_units, "mins", "minutes")
+  output_units <- sub("secs", "seconds", output_units, fixed = TRUE)
+  output_units <- sub("mins", "minutes", output_units, fixed = TRUE)
   output_units <- unique(output_units)
 
   # Ensure that the order of output units is from greatest to smallest
@@ -7885,7 +7824,7 @@ values_to_durations <- function(
     } else if (out_style == "iso") {
 
       x_str[i] <- paste0("P", paste0(x_df_i$formatted, collapse = ""))
-      x_str[i] <- tidy_sub(x_str[i], "D", "DT", fixed = TRUE)
+      x_str[i] <- sub("D", "DT", x_str[i], fixed = TRUE)
 
     } else {
       x_str[i] <- paste0(x_df_i$formatted, collapse = " ")
@@ -8133,7 +8072,6 @@ extract_duration_pattern <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_bins <- function(
     data,
@@ -8146,13 +8084,8 @@ fmt_bins <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-
-
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("character", "factor")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -8631,7 +8564,6 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' @section Function Introduced:
 #' *In Development*
 #'
-#' @import rlang
 #' @export
 fmt_tf <- function(
     data,
@@ -8721,11 +8653,8 @@ fmt_tf <- function(
   # If `locale` is NULL then use the 'en' locale
   locale <- locale %||% "en"
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("logical", "numeric")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Obtain the vector of `TRUE`/`FALSE` text values
   tf_vals_vec <- get_tf_vals(tf_style = tf_style, locale = locale)
@@ -9084,7 +9013,6 @@ make_span_with_color <- function(text, color = NULL) {
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_units <- function(
     data,
@@ -9095,11 +9023,8 @@ fmt_units <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("character", "factor")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -9363,7 +9288,6 @@ fmt_units <- function(
 #' @section Function Introduced:
 #' *In Development*
 #'
-#' @import rlang
 #' @export
 fmt_chem <- function(
     data,
@@ -9374,11 +9298,8 @@ fmt_chem <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("character", "factor")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -9796,7 +9717,6 @@ format_units_by_context <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_url <- function(
     data,
@@ -9882,11 +9802,8 @@ fmt_url <- function(
   # End support for `from_column()` objects passed to compatible arguments
   #
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("character", "factor")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   if (as_button) {
 
@@ -10523,7 +10440,6 @@ add_anchor_attr <- function(
 #' @section Function Introduced:
 #' *In Development*
 #'
-#' @import rlang
 #' @export
 fmt_email <- function(
     data,
@@ -10606,11 +10522,8 @@ fmt_email <- function(
   # End support for `from_column()` objects passed to compatible arguments
   #
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("character", "factor")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   if (as_button) {
 
@@ -11118,7 +11031,6 @@ generate_email_links <- function(email_address, anchor_attr, label_str) {
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_image <- function(
     data,
@@ -11756,7 +11668,6 @@ get_image_hw_ratio <- function(filepath) {
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_flag <- function(
     data,
@@ -11838,11 +11749,8 @@ fmt_flag <- function(
   # If `locale` is NULL then use the 'en' locale
   locale <- locale %||% "en"
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("character", "factor")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Create a vector of valid 2- and 3-letter country codes
   valid_country_codes <-
@@ -12259,7 +12167,6 @@ fmt_flag <- function(
 #' @section Function Introduced:
 #' *In Development*
 #'
-#' @import rlang
 #' @export
 fmt_country <- function(
     data,
@@ -12338,11 +12245,8 @@ fmt_country <- function(
   # If `locale` is NULL then use the 'en' locale
   locale <- locale %||% "en"
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("character", "factor")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Create a vector of valid 2- and 3-letter country codes
   valid_country_codes <-
@@ -12669,8 +12573,7 @@ fmt_country <- function(
 #'   dplyr::select(name, csd_type, population_2021) |>
 #'   dplyr::filter(csd_type %in% c("city", "town")) |>
 #'   dplyr::group_by(csd_type) |>
-#'   dplyr::arrange(desc(population_2021)) |>
-#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::slice_max(population_2021, n = 5) |>
 #'   dplyr::ungroup() |>
 #'   dplyr::mutate(
 #'     csd_type = ifelse(csd_type == "town", "house-chimney", "city")
@@ -12818,7 +12721,6 @@ fmt_country <- function(
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_icon <- function(
     data,
@@ -12926,11 +12828,8 @@ fmt_icon <- function(
     a11y <- "deco"
   }
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
   valid_class <- c("character", "factor")
-  check_column_valid(data, {{ columns }}, valid_class)
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -13250,7 +13149,6 @@ fmt_icon <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_markdown()].
 #'
-#' @import rlang
 #' @export
 fmt_markdown <- function(
     data,
@@ -13463,7 +13361,6 @@ fmt_markdown <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 fmt_passthrough <- function(
     data,
@@ -13724,7 +13621,6 @@ fmt_passthrough <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_auto <- function(
     data,
@@ -14042,7 +13938,6 @@ fmt_auto <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 fmt <- function(
     data,

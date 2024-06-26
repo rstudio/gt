@@ -218,7 +218,7 @@ migrate_unformatted_to_output <- function(data, context) {
                 )
             }
 
-            x <- tidy_gsub(x, "\\s+$", "")
+            x <- trimws(x, "right", " ")
             x <- process_text(x, context = context)
             x <- paste(x, collapse = ", ")
             x

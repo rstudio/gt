@@ -185,11 +185,13 @@ styles_to_html <- function(styles) {
       styles,
       FUN.VALUE = character(1L), USE.NAMES = FALSE,
       FUN = function(x) {
+        # TODO Maybe these checks are to be reviewed?
+        # names(c(1, 2, 3)) = NULL names(c(1, 2, "x" = 3)) = "", "", "x"
         if (any(is.null(names(x)))) {
           style <- as.character(x)
         } else if (all(names(x) != "")) {
           x <- cell_style_to_html(x)
-          style <- tidy_gsub(paste0(names(x), ": ", x, ";", collapse = " "), ";;", ";")
+          style <- gsub(";;", ";", paste0(names(x), ": ", x, ";", collapse = " "))
         } else {
           style <- as.character(x)
         }
@@ -198,7 +200,7 @@ styles_to_html <- function(styles) {
     )
 
   styles_out <- paste(styles_out, collapse = " ")
-  styles_out <- tidy_gsub(styles_out, "\n", " ")
+  styles_out <- gsub("\n", " ", styles_out)
 
   styles_out
 }
@@ -280,12 +282,13 @@ get_table_defs <- function(data) {
   # If all of the widths are defined as px values for all columns,
   # then ensure that the width values are strictly respected as
   # absolute width values (even if a table width has already been set)
-  if (all(grepl("px", widths)) && table_width == "auto") {
-    table_width <- "0px"
-  }
+  if (table_width == "auto") {
 
-  if (all(grepl("%", widths)) && table_width == "auto") {
-    table_width <- "100%"
+    if (all(grepl("px", widths, fixed = TRUE))) {
+      table_width <- "0px"
+    } else if (all(grepl("%", widths, fixed = TRUE))) {
+      table_width <- "100%"
+    }
   }
 
   if (table_width != "auto") {
@@ -398,7 +401,7 @@ create_heading_component_h <- function(data) {
   # Get the style attrs for the title
   if ("title" %in% styles_tbl$locname) {
 
-    title_style_rows <- dplyr::filter(styles_tbl, locname == "title")
+    title_style_rows <- styles_tbl[styles_tbl$locname == "title", ]
 
     if (nrow(title_style_rows) > 0) {
       title_styles <- title_style_rows$html_style
@@ -431,7 +434,7 @@ create_heading_component_h <- function(data) {
 
   # Get the style attrs for the subtitle
   if (subtitle_defined && "subtitle" %in% styles_tbl$locname) {
-    subtitle_style_rows <- dplyr::filter(styles_tbl, locname == "subtitle")
+    subtitle_style_rows <- styles_tbl[styles_tbl$locname == "subtitle", ]
 
     if (nrow(subtitle_style_rows) > 0) {
       subtitle_styles <- subtitle_style_rows$html_style
@@ -445,7 +448,7 @@ create_heading_component_h <- function(data) {
 
   title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
 
-  subtitle_classes <- tidy_sub(title_classes, "title", "subtitle")
+  subtitle_classes <- sub("title", "subtitle", title_classes, fixed = TRUE)
 
   if (!subtitle_defined) {
     title_classes <- c(title_classes, "gt_bottom_border")

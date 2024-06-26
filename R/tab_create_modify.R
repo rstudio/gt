@@ -436,8 +436,7 @@ tab_header <- function(
 #'
 #' ```r
 #' towny |>
-#'   dplyr::arrange(desc(population_2021)) |>
-#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::slice_max(population_2021, n = 5) |>
 #'   dplyr::select(
 #'     name, latitude, longitude,
 #'     ends_with("2016"), ends_with("2021")
@@ -641,7 +640,6 @@ tab_header <- function(
 #' @seealso [tab_spanner_delim()] to create spanners and new column labels with
 #'   delimited column names.
 #'
-#' @import rlang
 #' @export
 tab_spanner <- function(
     data,
@@ -1111,7 +1109,6 @@ resolve_spanned_column_names <- function(
 #' @seealso [tab_spanner()] to manually create spanners with more control over
 #'   spanner labels.
 #'
-#' @import rlang
 #' @export
 tab_spanner_delim <- function(
     data,
@@ -1640,7 +1637,6 @@ str_split_across <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 tab_row_group <- function(
     data,
@@ -2049,7 +2045,6 @@ tab_stubhead <- function(
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
-#' @import rlang
 #' @export
 tab_stub_indent <- function(
     data,
@@ -3199,12 +3194,11 @@ tab_caption <- function(
 #' ```r
 #' towny |>
 #'   dplyr::filter(csd_type == "city") |>
-#'   dplyr::arrange(desc(population_2021)) |>
 #'   dplyr::select(
 #'     name, land_area_km2, density_2016, density_2021,
 #'     population_2016, population_2021
 #'   ) |>
-#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::slice_max(population_2021, n = 5) |>
 #'   gt(rowname_col = "name") |>
 #'   tab_header(
 #'     title = md(paste("Largest Five", fontawesome::fa("city") , "in `towny`")),
@@ -3337,8 +3331,7 @@ tab_caption <- function(
 #' ```r
 #' sp500 |>
 #'   dplyr::filter(date > "2015-01-01") |>
-#'   dplyr::arrange(date) |>
-#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::slice_min(date, n = 5) |>
 #'   dplyr::select(date, open, close) |>
 #'   gt(rowname_col = "date") |>
 #'   fmt_currency(columns = c(open, close)) |>
@@ -4746,8 +4739,8 @@ tab_options <- function(
   arg_vals <- set_super_options(arg_vals = arg_vals)
 
   new_df <-
-    dplyr::tibble(
-      parameter = tidy_gsub(names(arg_vals), ".", "_", fixed = TRUE),
+    vctrs::data_frame(
+      parameter = gsub(".", "_", names(arg_vals), fixed = TRUE),
       value = unname(arg_vals)
     )
   new_df <-
@@ -4805,6 +4798,28 @@ tab_options <- function(
   data
 }
 
+dt_options_get_default_value <- function(option) {
+
+  # Validate the provided `option` value
+  if (length(option) != 1) {
+    cli::cli_abort("A character vector of length one must be provided.")
+  }
+  if (!(option %in% dt_options_tbl$parameter)) {
+    cli::cli_abort("The `option` provided is invalid.")
+  }
+
+  dt_options_tbl$value[[which(dt_options_tbl$parameter == option)]]
+}
+
+# Get vector of argument names (excluding `data`) from `tab_options`
+tab_options_arg_names <- base::setdiff(names(formals(tab_options)), "data")
+
+# Create vector of all args from `tab_options()` by
+# use of a regex pattern
+get_tab_options_arg_vec <- function(pattern) {
+  grep(pattern = pattern, tab_options_arg_names, value = TRUE)
+}
+
 # call is set to caller_env(2) to skip the mapply() call in tab_options() and grp_options()
 preprocess_tab_option <- function(option, var_name, type, call = rlang::caller_env(2)) {
 
@@ -4815,7 +4830,7 @@ preprocess_tab_option <- function(option, var_name, type, call = rlang::caller_e
       overflow = {
         if (isTRUE(option)) {
           "auto"
-        } else if (is_false(option)) {
+        } else if (isFALSE(option)) {
           "hidden"
         } else {
           option

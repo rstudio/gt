@@ -198,7 +198,6 @@ text_replace <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 text_case_when <- function(
     .data,
@@ -364,7 +363,6 @@ text_case_when <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 text_case_match <- function(
     .data,

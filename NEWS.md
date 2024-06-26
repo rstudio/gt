@@ -1,5 +1,7 @@
 # gt (development version)
 
+* gt now depends on R 3.6 (@olivroy, #1731).
+
 * `opt_interactive()` gains `height` to help specify your widget's height (@olivroy, #1544).
 
 * `opt_interactive()` now shows row names if `rownames_to_stub = TRUE` (@olivroy, #1702). 
