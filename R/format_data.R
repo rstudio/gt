@@ -9315,7 +9315,7 @@ fmt_units <- function(
 #' ```r
 #' nuclides |>
 #'   dplyr::filter(element %in% c("H", "C")) |>
-#'   dplyr::mutate(nuclide = gsub("\\d+$", "", nuclide)) |>
+#'   dplyr::mutate(nuclide = gsub("[0-9]+$", "", nuclide)) |>
 #'   dplyr::select(nuclide, atomic_mass, half_life, decay_1, is_stable) |>
 #'   gt(rowname_col = "nuclide") |>
 #'   tab_header(title = "Isotopes of Hydrogen and Carbon") |>
