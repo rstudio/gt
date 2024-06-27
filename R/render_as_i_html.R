@@ -218,21 +218,71 @@ render_as_ihtml <- function(data, id) {
 
   if (table_width == "auto") table_width <- NULL
 
+
+  #
+  # Determine which columns will undergo some formatting
+  #
+  formats <- dt_formats_get(data = data)
+
+  # Get a list of vectors that include columns taking part
+  # in some formatting operation
+  formatted_columns <-
+    lapply(
+      formats,
+      FUN = function(x) {
+
+        columns <- x$cols
+        rows <- x$rows
+        compat <- x$compat
+
+        compat_columns <- c()
+
+        for (col in columns) {
+
+          if (
+            col %in% colnames(data_tbl) &&
+            is_compatible_formatter(
+              table = data_tbl,
+              column = col,
+              rows = rows,
+              compat = compat
+            )
+          ) {
+            compat_columns <- c(compat_columns, col)
+          }
+
+        }
+        compat_columns
+      }
+    )
+
+  # Flatten this list of vectors to a single vector of unique column names
+  formatted_columns <- unique(flatten_list(formatted_columns))
+
   # Create a list of column definitions
   col_defs <-
     lapply(
       seq_along(column_names),
       FUN = function(x) {
 
-        formatted_cells <-
-          extract_cells(
-            data = data,
-            columns = column_names[x],
-            output = "html"
-          )
+        # Only perform extraction of formatted cells if there is an
+        # indication that formatting will be performed on a column`
+        if (column_names[x] %in% formatted_columns) {
+
+          formatted_cells <-
+            extract_cells(
+              data = data,
+              columns = column_names[x],
+              output = "html"
+            )
+
+          cell_fn <- function(value, index) formatted_cells[index]
+        } else {
+          cell_fn <- NULL
+        }
 
         reactable::colDef(
-          cell = function(value, index) formatted_cells[index],
+          cell = cell_fn,
           name = column_labels[x],
           align = column_alignments[x],
           # TODO support `summary_rows()` via `aggregate` #1359
