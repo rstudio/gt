@@ -126,7 +126,7 @@ create_heading_component_g <- function(data) {
   subtitle_text <- paste0(heading$subtitle, footnote_subtitle_marks)
 
   title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
-  subtitle_classes <- tidy_sub(title_classes, "title", "subtitle")
+  subtitle_classes <- sub("title", "subtitle", title_classes, fixed = TRUE)
 
   if (!subtitle_defined) {
     title_classes <- c("gt_bottom_border", title_classes)

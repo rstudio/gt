@@ -23,8 +23,6 @@
 
 
 # Build common table components from a `gt_tbl` object
-#' @import rlang
-#' @noRd
 build_data <- function(data, context) {
 
   # Perform input object validation

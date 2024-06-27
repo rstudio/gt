@@ -534,18 +534,10 @@ test_that("The currency() helper works correctly", {
 
   # Expect that the object produced by `currency()` is a
   # list with `gt_currency` class
-  expect_type(
-    currency(html = "&#8383;", latex = "BTC", default = "BTC"),
-    "list"
-  )
-
-  expect_s3_class(
-    currency(html = "&#8383;", latex = "BTC", default = "BTC"),
-    "gt_currency"
-  )
-
-  # Expect as many components as there are named arguments
-  expect_length(currency(html = "&#8383;", latex = "BTC", default = "BTC"), 3)
+  cur <- currency(html = "&#8383;", latex = "BTC", default = "BTC")
+  expect_type(cur, "list")
+  expect_s3_class(cur, "gt_currency")
+  expect_length(cur, 3)
   expect_length(currency(html = "&#8383;", default = "BTC"), 2)
   expect_length(currency(default = "BTC"), 1)
 
@@ -553,12 +545,14 @@ test_that("The currency() helper works correctly", {
   # to the `default` context
   single_default_currency <- currency("BTC")
 
-  single_default_currency %>% expect_type("list")
-  single_default_currency %>% expect_s3_class("gt_currency")
-  single_default_currency %>% expect_length(1)
-  single_default_currency %>% expect_named("default")
-  single_default_currency[[1]] %>% expect_equal("BTC")
+  expect_type(single_default_currency, "list")
+  expect_s3_class(single_default_currency, "gt_currency")
+  expect_length(single_default_currency, 1)
+  expect_named(single_default_currency, "default")
+  expect_equal(single_default_currency[[1]], "BTC")
+})
 
+test_that("currency() errors" , {
   # Expect an error if nothing is provided
   expect_error(currency())
 
@@ -574,7 +568,9 @@ test_that("The currency() helper works correctly", {
 
   # Expect an error if there are duplicate names
   expect_error(currency(html = "&#8383;", default = "BTC", default = "BT"))
+})
 
+test_that("fmt_currency() works with the currency() helper", {
   # Create an input data frame four columns: two
   # character-based and two that are numeric
   data_tbl <-

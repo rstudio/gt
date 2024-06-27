@@ -204,12 +204,11 @@ text treatment.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::filter(csd_type == "city") |>
-  dplyr::arrange(desc(population_2021)) |>
   dplyr::select(
     name, land_area_km2, density_2016, density_2021,
     population_2016, population_2021
   ) |>
-  dplyr::slice_head(n = 5) |>
+  dplyr::slice_max(population_2021, n = 5) |>
   gt(rowname_col = "name") |>
   tab_header(
     title = md(paste("Largest Five", fontawesome::fa("city") , "in `towny`")),
@@ -340,8 +339,7 @@ values.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(date > "2015-01-01") |>
-  dplyr::arrange(date) |>
-  dplyr::slice_head(n = 5) |>
+  dplyr::slice_min(date, n = 5) |>
   dplyr::select(date, open, close) |>
   gt(rowname_col = "date") |>
   fmt_currency(columns = c(open, close)) |>

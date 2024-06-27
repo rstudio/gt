@@ -254,9 +254,10 @@ google_font_tbl_int <-
   dplyr::filter(name %in% recommended) %>%
   dplyr::left_join(styles_summary, by = "name") %>%
   dplyr::mutate(
-    category = gt:::str_title_case(tolower(category)) %>%
-      gt:::tidy_gsub("_", " ") %>%
-      gt:::tidy_gsub("serif", "Serif")
+    category = tolower(category),
+    category = gt:::str_title_case(category),
+    category = gsub("_", " ", category, fixed = TRUE),
+    category = gsub("serif", "Serif", category, fixed = TRUE)
   ) %>%
   dplyr::select(-license, -date_added, -designer) %>%
   dplyr::mutate(samp = paste0(LETTERS[1:13], letters[1:13], collapse = ""))

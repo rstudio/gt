@@ -135,7 +135,6 @@
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
 #'
-#' @import rlang
 #' @export
 sub_missing <- function(
     data,
@@ -200,7 +199,6 @@ sub_missing <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @keywords internal
 #' @export
 fmt_missing <- function(
@@ -317,7 +315,6 @@ fmt_missing <- function(
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
 #'
-#' @import rlang
 #' @export
 sub_zero <- function(
     data,
@@ -503,7 +500,6 @@ sub_zero <- function(
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
 #'
-#' @import rlang
 #' @export
 sub_small_vals <- function(
     data,
@@ -756,7 +752,6 @@ sub_small_vals <- function(
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
 #'
-#' @import rlang
 #' @export
 sub_large_vals <- function(
     data,
@@ -1041,7 +1036,6 @@ check_sub_fn_sign <- function(sign, call = rlang::caller_env()) {
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
 #'
-#' @import rlang
 #' @export
 sub_values <- function(
     data,

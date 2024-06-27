@@ -242,7 +242,7 @@ swap_adjacent_text_groups <- function(
     function(x) {
 
       # Return `x` as is if both patterns aren't present
-      if (is_false(grepl(pattern_1, x)) || is_false(grepl(pattern_2, x))) {
+      if (!grepl(pattern_1, x) || !grepl(pattern_2, x)) {
         return(x)
       }
 

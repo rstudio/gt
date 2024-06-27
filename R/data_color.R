@@ -679,7 +679,6 @@
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 data_color <- function(
     data,

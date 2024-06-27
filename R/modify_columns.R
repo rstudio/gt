@@ -271,7 +271,6 @@ determine_which_character_number <- function(
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
 #'
-#' @import rlang
 #' @export
 cols_align_decimal <- function(
     data,
@@ -903,7 +902,6 @@ cols_width <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cols_label <- function(
     .data,
@@ -965,8 +963,8 @@ cols_label <- function(
 
       if (!(columns %in% column_vars)) {
         cli::cli_abort(c(
-          "The column name supplied to `cols_label()` (`{columns}`) is not valid.",
-          "*" = "Include column names or a tidyselect statement on the LHS."
+          "Can't find column{?s} {.var {columns}} in the data.",
+          "i" = "The LHS should include column names or a tidyselect statement."
         ))
       }
 
@@ -1192,7 +1190,6 @@ cols_label <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (March 31, 2023)
 #'
-#' @import rlang
 #' @export
 cols_label_with <- function(
     data,
@@ -1501,7 +1498,6 @@ cols_label_with <- function(
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
-#' @import rlang
 #' @export
 cols_units <- function(
     .data,
@@ -1545,8 +1541,8 @@ cols_units <- function(
 
       if (!(columns %in% column_vars)) {
         cli::cli_abort(c(
-          "The column name supplied to `cols_units()` (`{columns}`) is not valid.",
-          "*" = "Include column names or a tidyselect statement on the LHS."
+          "Can't find column{?s} {.var {columns}} in the data.",
+          "i" = "The LHS should include column names or a tidyselect statement."
         ))
       }
 
@@ -1562,7 +1558,7 @@ cols_units <- function(
       if (is.null(cols)) {
         cli::cli_abort(c(
           "A formula supplied to `cols_units()` must be two-sided.",
-          "*" = "Include column names or a tidyselect statement on the LHS."
+          "i" = "The LHS should include column names or a tidyselect statement."
         ))
       }
 
@@ -1578,6 +1574,16 @@ cols_units <- function(
 
       new_units <- rlang::eval_tidy(rlang::f_rhs(units_i))
     }
+
+    # basic check on units value.
+    withCallingHandlers(
+      check_string(new_units, call = NULL, arg = "unit"),
+      error = function(e) {
+        cli::cli_abort(
+          "Incorrect unit for column{?s} {.var {columns}}.",
+          parent = e
+        )
+      })
 
     for (j in seq_along(columns)) {
 
@@ -1798,7 +1804,6 @@ cols_units <- function(
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
-#' @import rlang
 #' @export
 cols_add <- function(
     .data,
@@ -2795,7 +2800,6 @@ cols_add <- function(
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
-#' @import rlang
 #' @export
 cols_nanoplot <- function(
     data,
@@ -3213,7 +3217,6 @@ generate_data_vals_list <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cols_move <- function(
     data,
@@ -3361,7 +3364,6 @@ cols_move <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cols_move_to_start <- function(
     data,
@@ -3483,7 +3485,6 @@ cols_move_to_start <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cols_move_to_end <- function(
     data,
@@ -3619,7 +3620,6 @@ cols_move_to_end <- function(
 #'
 #' @seealso [cols_unhide()] to perform the inverse operation.
 #'
-#' @import rlang
 #' @export
 cols_hide <- function(
     data,
@@ -3729,7 +3729,6 @@ cols_hide <- function(
 #'
 #' @seealso [cols_hide()] to perform the inverse operation.
 #'
-#' @import rlang
 #' @export
 cols_unhide <- function(
     data,
@@ -3940,7 +3939,6 @@ cols_unhide <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cols_merge <- function(
     data,
@@ -4151,7 +4149,6 @@ cols_merge <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cols_merge_uncert <- function(
     data,
@@ -4344,7 +4341,6 @@ cols_merge_uncert <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cols_merge_range <- function(
     data,
@@ -4591,7 +4587,6 @@ cols_merge_resolver <- function(
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
 #'
-#' @import rlang
 #' @export
 cols_merge_n_pct <- function(
     data,

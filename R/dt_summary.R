@@ -229,6 +229,8 @@ dt_summary_build <- function(data, context) {
                 .data[[group_id_col_private]]
               )
 
+            # TODO find a way to switch to across()
+            # https://github.com/tidyverse/dplyr/issues/6707
             select_data_tbl <-
               dplyr::ungroup(
                 dplyr::summarize_at(
@@ -238,14 +240,8 @@ dt_summary_build <- function(data, context) {
                 )
               )
 
-            select_data_tbl <-
-              dplyr::mutate_all(
-                select_data_tbl,
-                .funs = function(x) {
-                  x[is.nan(x)] <- NA
-                  x
-                }
-              )
+            # Replace NaN by NA
+            select_data_tbl[is.na(select_data_tbl)] <- NA
 
             select_data_tbl <-
               dplyr::mutate(
@@ -297,14 +293,9 @@ dt_summary_build <- function(data, context) {
         locale = resolve_locale(data = data, locale = NULL)
       )
 
-    summary_dfs_display_gt[["_data"]] <-
-      dplyr::mutate_all(
-        summary_dfs_display_gt[["_data"]],
-        .funs = function(x) {
-          x[is.nan(x)] <- NA
-          x
-        }
-      )
+    # Replace NaN with NA
+    summary_dfs_display_gt[["_data"]][is.na(summary_dfs_display_gt[["_data"]])] <-
+      NA
 
     summary_dfs_display_gt[["_stub_df"]] <-
       dplyr::mutate(
@@ -321,7 +312,7 @@ dt_summary_build <- function(data, context) {
       # Determine if we are actually formatting a grand summary section;
       # in that case we'd want to ignore any supplied group directive
       group_is_grand_summary <-
-        length(groups) == 1 && groups == "::GRAND_SUMMARY"
+        identical(groups, "::GRAND_SUMMARY")
 
       if (!is.null(format_lhs) && !group_is_grand_summary) {
 
@@ -348,7 +339,7 @@ dt_summary_build <- function(data, context) {
             # formatted to the group
 
             fmt_expr_lines <- deparse(rlang::f_rhs(fmt_exprs[[k]]))
-            fmt_expr_lines <- gsub("^\\s+", "", fmt_expr_lines)
+            fmt_expr_lines <- trimws(fmt_expr_lines, "left", " ")
             format_fn_grp <- paste(fmt_expr_lines, collapse = "")
 
             fmt_expr_names <- names(rlang::f_rhs(fmt_exprs[[k]]))
@@ -416,14 +407,7 @@ dt_summary_build <- function(data, context) {
     summary_dfs_display[["::group_id::"]] <- summary_dfs_data[["::group_id::"]]
     summary_dfs_display[["::row_id::"]] <- summary_dfs_data[["::row_id::"]]
 
-    summary_dfs_display <-
-      dplyr::mutate_all(
-        summary_dfs_display,
-        .funs = function(x) {
-          x[x == "NA"] <- NA
-          x
-        }
-      )
+    summary_dfs_display[summary_dfs_display == "NA"] <- NA
 
     summary_dfs_display$`::rowname::` <- NA_character_
 

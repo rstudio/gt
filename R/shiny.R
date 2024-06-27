@@ -174,7 +174,7 @@ render_gt <- function(
           table.align = align
         )
 
-      html_tbl <- as.tags.gt_tbl(result)
+      html_tbl <- as.tags(result)
 
       dependencies <-
         lapply(

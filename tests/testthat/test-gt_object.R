@@ -130,9 +130,8 @@ test_that("A gt table can be made from a table with no rows", {
   expect_tab(tab = tab, df = data_e)
 
   # Expect that the `stub_df` data frame is empty
-  dt_stub_df_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(0)
+  n_rows <- nrow(dt_stub_df_get(data = tab))
+  expect_equal(n_rows, 0)
 
   # Create a `gt_tbl` object with `gt()` and a
   # grouped version of the `data_e` dataset
@@ -539,33 +538,30 @@ test_that("rowname_col in gt() will be overridden by `rownames_to_stub = TRUE`",
     build_data(context = "html")
 
   # Expect that no groups are available in the gt object
-  built_tbl$`_row_groups` %>% expect_equal(character(0L))
-
+  expect_equal(built_tbl$`_row_groups`, character(0L))
   # Expect no rows in `_groups_rows`
-  built_tbl$`_groups_rows` %>%
-    nrow() %>%
-    expect_equal(0)
+  expect_equal(nrow(built_tbl$`_groups_rows`), 0L)
 
-  built_tbl$`_boxhead` %>% .[, 1:2] %>%
-    expect_equal(
-      dplyr::tibble(
-        var = c("__GT_ROWNAME_PRIVATE__", colnames(mtcars)),
-        type = c("stub", rep("default", 11))
-      )
+  expect_equal(
+    built_tbl$`_boxhead`[, 1:2],
+    dplyr::tibble(
+      var = c("__GT_ROWNAME_PRIVATE__", colnames(mtcars)),
+      type = c("stub", rep("default", 11))
     )
+  )
 
-  built_tbl$`_stub_df` %>%
-    expect_equal(
-      dplyr::tibble(
-        rownum_i = 1:10,
-        row_id = rownames(mtcars)[1:10],
-        group_id = NA_character_,
-        group_label = list(NULL),
-        indent = NA_character_,
-        built_group_label = ""
-      ),
-      ignore_attr = TRUE
-    )
+  expect_equal(
+    built_tbl$`_stub_df`,
+    dplyr::tibble(
+      rownum_i = 1:10,
+      row_id = rownames(mtcars)[1:10],
+      group_id = NA_character_,
+      group_label = list(NULL),
+      indent = NA_character_,
+      built_group_label = ""
+    ),
+    ignore_attr = TRUE
+  )
 
   # Render the HTML table and read the HTML with the `xml2::read_html()` fn
   html_tbl <-

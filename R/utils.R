@@ -736,8 +736,8 @@ process_text <- function(text, context = "html") {
             }
           )
 
-        non_na_text <- tidy_gsub(non_na_text, "^", "<div data-qmd-base64=\"")
-        non_na_text <- tidy_gsub(non_na_text, "$", "\">")
+        # Tweak start and end of non_na_text
+        non_na_text <- paste0("<div data-qmd-base64=\"", non_na_text, "\">")
 
         non_na_text <-
           paste0(
@@ -918,8 +918,8 @@ process_text <- function(text, context = "html") {
         }
       }
 
-      non_na_text <- tidy_gsub(non_na_text, "^", "<span class='gt_from_md'>")
-      non_na_text <- tidy_gsub(non_na_text, "$", "</span>")
+      # Tweak start and end of non_na_text
+      non_na_text <- paste0("<span class='gt_from_md'>", non_na_text, "</span>")
 
       text[!is.na(text)] <- non_na_text
       text <- as.character(text)
@@ -1034,9 +1034,9 @@ process_text <- function(text, context = "html") {
 #' @noRd
 unescape_html <- function(text) {
 
-  text <- tidy_gsub(text, "&lt;", "<")
-  text <- tidy_gsub(text, "&gt;", ">")
-  text <- tidy_gsub(text, "&amp;", "&")
+  text <- gsub("&lt;", "<", text, fixed = TRUE)
+  text <- gsub("&gt;", ">", text, fixed = TRUE)
+  text <- gsub("&amp;", "&", text, fixed = TRUE)
   text
 }
 
@@ -1063,8 +1063,8 @@ md_to_html <- function(x, md_engine) {
         }
       )
 
-    non_na_x <- tidy_gsub(non_na_x, "^", "<div class='gt_from_md'>")
-    non_na_x <- tidy_gsub(non_na_x, "$", "</div>")
+    # Tweak start and end of non_na_x
+    non_na_x <- paste0("<div class='gt_from_md'>", non_na_x, "</div>")
 
   } else {
 
@@ -1082,8 +1082,8 @@ md_to_html <- function(x, md_engine) {
         }
       )
 
-    non_na_x <- tidy_gsub(non_na_x, "^", "<div data-qmd=\"")
-    non_na_x <- tidy_gsub(non_na_x, "$", "\">")
+    # Tweak start and end of non_na_x
+    non_na_x <- paste0("<div data-qmd=\"", non_na_x, "\">")
 
     non_na_x <-
       paste0(
@@ -1135,9 +1135,9 @@ markdown_to_latex <- function(text, md_engine) {
           }
 
           if (names(md_engine_fn) == "commonmark") {
-            tidy_gsub(md_engine_fn[[1]](text = x), "\\n$", "")
+            gsub("\\n$", "", md_engine_fn[[1]](text = x))
           } else {
-            tidy_gsub(md_engine_fn[[1]](text = x, format = "latex"), "\\n$", "")
+            gsub("\\n$", "", md_engine_fn[[1]](text = x, format = "latex"))
           }
         }
       )
@@ -1145,11 +1145,7 @@ markdown_to_latex <- function(text, md_engine) {
   )
 }
 
-#' Transform Markdown text to ooxml
-#'
-#' @noRd
-#'
-#' @importFrom xml2 read_xml xml_name xml_children xml_type xml_contents
+# Transform Markdown text to ooxml
 markdown_to_xml <- function(text) {
   res <- vapply(
     as.character(text),
@@ -1765,7 +1761,7 @@ markdown_to_text <- function(text) {
 
           }
 
-          tidy_gsub(commonmark::markdown_text(x), "\\n$", "")
+          gsub("\\n$", "", commonmark::markdown_text(x))
         }
       )
     )
@@ -1791,7 +1787,8 @@ apply_pattern_fmt_x <- function(values, pattern) {
     values,
     FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
-    FUN = function(x) tidy_gsub(x = pattern, "{x}", x, fixed = TRUE)
+    # replace {x} by x in string pattern
+    FUN = function(x) gsub("{x}", replacement = x, x = pattern, fixed = TRUE)
   )
 }
 
@@ -2016,17 +2013,6 @@ num_suffix_ind <- function(
   )
 }
 
-#' An `isFALSE`-based helper function
-#'
-#' `is_false()` is similar to the `isFALSE()` function that was
-#' introduced in R 3.5.0 except that this implementation works with earlier
-#' versions of R.
-#' @param x The single value to test for whether it is `FALSE`.
-#' @noRd
-is_false <- function(x) {
-  is.logical(x) && length(x) == 1L && !is.na(x) && !x
-}
-
 #' Normalize all suffixing input values
 #'
 #' This function normalizes the `suffixing` input to a character vector which is
@@ -2173,61 +2159,6 @@ split_scientific_notn <- function(x_str) {
 
   list(num = num_part, exp = exp_part)
 }
-
-#nocov start
-
-#' Wrapper for `gsub()` where `x` is the first argument
-#'
-#' This function is wrapper for `gsub()` that uses default argument values and
-#' rearranges first three arguments for better pipelining
-#' @param x,pattern,replacement,fixed Select arguments from the `gsub()`
-#'   function.
-#' @noRd
-tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
-
-  if (!utf8_aware_sub) {
-
-    # See variable definition for utf8_aware_sub for more info
-    x <- enc2utf8(as.character(x))
-    replacement <- enc2utf8(as.character(replacement))
-
-    res <- gsub(pattern, replacement, x, fixed = fixed)
-    Encoding(res) <- "UTF-8"
-    res
-
-  } else {
-    gsub(pattern, replacement, x, fixed = fixed)
-  }
-}
-
-tidy_sub <- function(x, pattern, replacement, fixed = FALSE) {
-
-  if (!utf8_aware_sub) {
-    # See variable definition for utf8_aware_sub for more info
-    x <- enc2utf8(as.character(x))
-    replacement <- enc2utf8(as.character(replacement))
-
-    res <- sub(pattern, replacement, x, fixed = fixed)
-    Encoding(res) <- "UTF-8"
-    res
-  } else {
-    sub(pattern, replacement, x, fixed = fixed)
-  }
-}
-
-tidy_grepl <- function(x, pattern) {
-
-  vapply(
-    pattern,
-    FUN = function(pattern) {
-      grepl(pattern = pattern, x = x)
-    },
-    FUN.VALUE = logical(1),
-    USE.NAMES = FALSE
-  )
-}
-
-#nocov end
 
 #' Create a vector of marks to use for footnotes
 #'
@@ -2417,7 +2348,7 @@ validate_table_id <- function(id, call = rlang::caller_env()) {
 }
 
 validate_n_sigfig <- function(n_sigfig, call = rlang::caller_env()) {
-  check_number_whole(n_sigfig, allow_na = FALSE, min = 1, call  = call)
+  check_number_whole(n_sigfig, allow_na = FALSE, min = 1, call = call)
 }
 
 validate_css_lengths <- function(x) {
