@@ -451,30 +451,29 @@ are kept. After the data is introduced to <code><a href="gt.html">gt()</a></code
 labels using two calls of <code>tab_spanner()</code>. In the second of those, we
 incorporate unit notation text (within <code>"{{"</code>/<code>"}}"</code>) in the <code>label</code> to get a
 display of nicely-formatted units.</p>
-<p></p><div class="sourceCode r"><pre><code>towny |&gt;
-  dplyr::select(
-    name, ends_with(c("2001", "2006)), matches("2001_2006")
-  ) |&gt;
-  dplyr::filter(population_2001 &gt; 100000) |&gt;
-  dplyr::slice_max(pop_change_2001_2006_pct, n = 10) |&gt;
-  gt() |&gt;
-  fmt_integer() |&gt;
-  fmt_percent(columns = matches("change"), decimals = 1) |&gt;
-  tab_spanner(
-    label = "Population",
-    columns = starts_with("population")
-  ) |&gt;
-  tab_spanner(
-    label = "Density, {{*persons* km^-2}}",
-    columns = starts_with("density")
-  ) |&gt;
-  cols_label(
-    ends_with("01") ~ "2001",
-    ends_with("06") ~ "2006",
-    matches("change") ~ md("Population Change,&lt;br&gt;2001 to 2006")
-  ) |&gt;
-  cols_width(everything() ~ px(120))
-</code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">towny</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span></span>
+<span>    <span class="va">name</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2001"</span>, <span class="st">"2006"</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"2001_2006"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">population_2001</span> <span class="op">&gt;</span> <span class="fl">100000</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_max</a></span><span class="op">(</span><span class="va">pop_change_2001_2006_pct</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_integer.html">fmt_integer</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_percent.html">fmt_percent</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"change"</span><span class="op">)</span>, decimals <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_spanner.html">tab_spanner</a></span><span class="op">(</span></span>
+<span>    label <span class="op">=</span> <span class="st">"Population"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"population"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_spanner.html">tab_spanner</a></span><span class="op">(</span></span>
+<span>    label <span class="op">=</span> <span class="st">"Density, {{*persons* km^-2}}"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"density"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_label.html">cols_label</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"01"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"2001"</span>,</span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"06"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"2006"</span>,</span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"change"</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"Population Change,&lt;br&gt;2001 to 2006"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_width.html">cols_width</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">120</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_7.png" alt="This image of a table was generated from the seventh code example in the `tab_spanner()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
