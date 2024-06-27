@@ -112,6 +112,9 @@ get_example_text <- function(topic) {
     example_lines <- gsub("\n\n$", "", example_lines)
     example_lines <- gsub("\n\n\n", "\n\n", example_lines)
 
+    # Replace `\\\\\\\\` with `\\`
+    example_lines <- gsub("\\\\\\\\", "\\", example_lines, fixed = TRUE)
+
     examples_out <- c(examples_out, example_lines)
   }
 
