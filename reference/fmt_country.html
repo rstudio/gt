@@ -293,6 +293,20 @@ with names across 574 locales: <code>"AD"</code>, <code>"AE"</code>, <code>"AF"<
     
 
 
+<p>The <code><a href="peeps.html">peeps</a></code> dataset will be used to generate a small <strong>gt</strong> table
+containing only the people born in the 1980s. The <code>country</code> column contains
+3-letter country codes and those will be transformed to country names with
+<code>fmt_country()</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">peeps</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"198"</span>, <span class="va">dob</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name_given</span>, <span class="va">name_family</span>, <span class="va">country</span>, <span class="va">dob</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">name_family</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_country.html">fmt_country</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">country</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_merge.html">cols_merge</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">name_given</span>, <span class="va">name_family</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/opt_vertical_padding.html">opt_vertical_padding</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>column_labels.hidden <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_1.png" alt="This image of a table was generated from the first code example in the `fmt_country()` help file." style="width:100%;"></p>
 <p>Use the <code><a href="countrypops.html">countrypops</a></code> dataset to create a <strong>gt</strong> table. We will only
 include a few columns and rows from that table. The <code>country_code_3</code> column
 has 3-letter country codes in the format required for <code>fmt_country()</code> and
@@ -312,7 +326,7 @@ using that function transforms the codes to country names.</p>
 <span>    country_code_3 <span class="op">=</span> <span class="st">"Country"</span>,</span>
 <span>    population <span class="op">=</span> <span class="st">"Population (2021)"</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_1.png" alt="This image of a table was generated from the first code example in the `fmt_country()` help file." style="width:100%;"></p>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_2.png" alt="This image of a table was generated from the second code example in the `fmt_country()` help file." style="width:100%;"></p>
 <p>The country names derived from country codes can be localized. Let's
 translate some of those country names into three different languages using
 different <code>locale</code> values in separate calls of <code>fmt_country()</code>.</p>
@@ -349,7 +363,7 @@ different <code>locale</code> values in separate calls of <code>fmt_country()</c
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_align.html">cols_align</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"center"</span>, columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"2a|2b|2c"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/opt_horizontal_padding.html">opt_horizontal_padding</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_2.png" alt="This image of a table was generated from the second code example in the `fmt_country()` help file." style="width:100%;"></p>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_3.png" alt="This image of a table was generated from the third code example in the `fmt_country()` help file." style="width:100%;"></p>
 <p>Let's make another <strong>gt</strong> table, this time using the <code><a href="films.html">films</a></code> dataset. The
 <code>countries_of_origin</code> column contains 2-letter country codes and some cells
 contain multiple countries (separated by commas). We'll use <code>fmt_country()</code>
@@ -383,7 +397,7 @@ country codes like <code>"SU"</code> ('USSR'), <code>"CS"</code> ('Czechoslovaki
 <span>  <span class="fu"><a href="../reference/opt_table_font.html">opt_table_font</a></span><span class="op">(</span>stack <span class="op">=</span> <span class="st">"classical-humanist"</span>, weight <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/opt_stylize.html">opt_stylize</a></span><span class="op">(</span>style <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>heading.title.font.size <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">26</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_3.png" alt="This image of a table was generated from the third code example in the `fmt_country()` help file." style="width:100%;"></p>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_country()` help file." style="width:100%;"></p>
 <p>Country names can sometimes pair nicely with flag-based graphics. In this
 example (using a different portion of the <code><a href="films.html">films</a></code> dataset) we use
 <code>fmt_country()</code> along with <code><a href="fmt_flag.html">fmt_flag()</a></code>. The formatted country names are then
@@ -413,7 +427,7 @@ merged into the same cells as the icons via <code><a href="cols_merge.html">cols
 <span>    heading.title.font.size <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">26</span><span class="op">)</span>,</span>
 <span>    column_labels.hidden <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_country()` help file." style="width:100%;"></p>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_5.png" alt="This image of a table was generated from the fifth code example in the `fmt_country()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
