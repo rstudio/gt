@@ -55,28 +55,36 @@ rows as a list object.
 summary_extracted
 #> $summary_df_data_list
 #> $summary_df_data_list$W02
-#>   group_id row_id rowname date    open     high      low    close week
-#> 1      W02    min     min   NA 2005.55 2029.610 1992.440 2002.610   NA
-#> 2      W02    max     max   NA 2063.45 2064.430 2038.330 2062.140   NA
-#> 3      W02    avg     avg   NA 2035.24 2048.562 2016.854 2031.208   NA
+#> # A tibble: 3 x 9
+#>   group_id row_id rowname  date  open  high   low close  week
+#>   <chr>    <chr>  <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+#> 1 W02      min    min        NA 2006. 2030. 1992. 2003.    NA
+#> 2 W02      max    max        NA 2063. 2064. 2038. 2062.    NA
+#> 3 W02      avg    avg        NA 2035. 2049. 2017. 2031.    NA
 #> 
 #> $summary_df_data_list$W03
-#>   group_id row_id rowname date     open     high      low   close week
-#> 1      W03    min     min   NA 1992.250 2018.400 1988.120 1992.67   NA
-#> 2      W03    max     max   NA 2046.130 2056.930 2022.580 2028.26   NA
-#> 3      W03    avg     avg   NA 2020.422 2033.288 1999.772 2014.93   NA
+#> # A tibble: 3 x 9
+#>   group_id row_id rowname  date  open  high   low close  week
+#>   <chr>    <chr>  <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+#> 1 W03      min    min        NA 1992. 2018. 1988. 1993.    NA
+#> 2 W03      max    max        NA 2046. 2057. 2023. 2028.    NA
+#> 3 W03      avg    avg        NA 2020. 2033. 2000. 2015.    NA
 #> 
 #> $summary_df_data_list$W04
-#>   group_id row_id rowname date     open     high      low   close week
-#> 1      W04    min     min   NA 2020.190 2028.940 2004.490 2022.55   NA
-#> 2      W04    max     max   NA 2062.980 2064.620 2050.540 2063.15   NA
-#> 3      W04    avg     avg   NA 2034.557 2048.707 2023.362 2042.41   NA
+#> # A tibble: 3 x 9
+#>   group_id row_id rowname  date  open  high   low close  week
+#>   <chr>    <chr>  <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+#> 1 W04      min    min        NA 2020. 2029. 2004. 2023.    NA
+#> 2 W04      max    max        NA 2063. 2065. 2051. 2063.    NA
+#> 3 W04      avg    avg        NA 2035. 2049. 2023. 2042.    NA
 #> 
 #> $summary_df_data_list$W05
-#>   group_id row_id rowname date     open     high      low    close week
-#> 1      W05    min     min   NA 2002.450 2023.320 1989.180 1994.990   NA
-#> 2      W05    max     max   NA 2050.420 2057.620 2040.970 2057.090   NA
-#> 3      W05    avg     avg   NA 2030.484 2039.186 2008.986 2021.008   NA
+#> # A tibble: 3 x 9
+#>   group_id row_id rowname  date  open  high   low close  week
+#>   <chr>    <chr>  <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+#> 1 W05      min    min        NA 2002. 2023. 1989. 1995.    NA
+#> 2 W05      max    max        NA 2050. 2058. 2041. 2057.    NA
+#> 3 W05      avg    avg        NA 2030. 2039. 2009. 2021.    NA
 }\if{html}{\out{</div>}}
 
 Use the summary list to make a new \strong{gt} table. The key thing is to use
