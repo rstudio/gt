@@ -199,6 +199,26 @@ with names across 574 locales: \code{"AD"}, \code{"AE"}, \code{"AF"}, \code{"AG"
 \section{Examples}{
 
 
+The \code{\link{peeps}} dataset will be used to generate a small \strong{gt} table
+containing only the people born in the 1980s. The \code{country} column contains
+3-letter country codes and those will be transformed to country names with
+\code{fmt_country()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{peeps |>
+  dplyr::filter(grepl("198", dob)) |>
+  dplyr::select(name_given, name_family, country, dob) |>
+  dplyr::arrange(country, name_family) |>
+  gt() |>
+  fmt_country(columns = country) |>
+  cols_merge(columns = c(name_given, name_family)) |>
+  opt_vertical_padding(scale = 0.5) |>
+  tab_options(column_labels.hidden = TRUE)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_1.png" alt="This image of a table was generated from the first code example in the `fmt_country()` help file." style="width:100\%;">
+}}
+
 Use the \code{\link{countrypops}} dataset to create a \strong{gt} table. We will only
 include a few columns and rows from that table. The \code{country_code_3} column
 has 3-letter country codes in the format required for \code{fmt_country()} and
@@ -222,7 +242,7 @@ using that function transforms the codes to country names.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_1.png" alt="This image of a table was generated from the first code example in the `fmt_country()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_2.png" alt="This image of a table was generated from the second code example in the `fmt_country()` help file." style="width:100\%;">
 }}
 
 The country names derived from country codes can be localized. Let's
@@ -265,7 +285,7 @@ different \code{locale} values in separate calls of \code{fmt_country()}.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_2.png" alt="This image of a table was generated from the second code example in the `fmt_country()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_3.png" alt="This image of a table was generated from the third code example in the `fmt_country()` help file." style="width:100\%;">
 }}
 
 Let's make another \strong{gt} table, this time using the \code{\link{films}} dataset. The
@@ -305,7 +325,7 @@ country codes like \code{"SU"} ('USSR'), \code{"CS"} ('Czechoslovakia'), and \co
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_3.png" alt="This image of a table was generated from the third code example in the `fmt_country()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_country()` help file." style="width:100\%;">
 }}
 
 Country names can sometimes pair nicely with flag-based graphics. In this
@@ -341,7 +361,7 @@ merged into the same cells as the icons via \code{\link[=cols_merge]{cols_merge(
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_country()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_5.png" alt="This image of a table was generated from the fifth code example in the `fmt_country()` help file." style="width:100\%;">
 }}
 }
 
