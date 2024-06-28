@@ -1670,16 +1670,17 @@ create_colwidth_df_l <- function(data) {
     raw <- unlist(boxhead$column_width[i])[1L]
 
     if (is.null(raw) || raw == "") {
+      width_df$unspec[i] <- 1L
       next
     } else if (endsWith(raw, "%")) {
       pct <- as.numeric(gsub("%", "", raw, fixed = TRUE))
 
       if (tbl_width == "auto") {
-        width_df$lw[i] <- pct
+        width_df$lw[i] <- pct / 100
       } else if (endsWith(tbl_width, "%")) {
-        width_df$lw[i] <- pct * as.numeric(gsub("%", "", tbl_width))
+        width_df$lw[i] <- pct * as.numeric(gsub("%", "", tbl_width)) / 1e4
       } else {
-        width_df$pt[i] <- pct * convert_to_pt(tbl_width)
+        width_df$pt[i] <- pct / 100 * convert_to_pt(tbl_width)
       }
     } else {
       width_df$pt[i] <- convert_to_pt(raw)
@@ -1705,20 +1706,27 @@ create_colwidth_df_l <- function(data) {
     width_df <- dplyr::bind_rows(stub_row_group, width_df)
   }
 
-  width_df$unspec <- as.integer(width_df$lw == 0 & width_df$pt == 0)
-
   if (tbl_width == 'auto') {
-    if (any(width_df$lw > 0)) {
-      width_df$tbl_width <- "\\linewidth"
+    if (any(width_df$unspec > 0)) {
+      # If any of the column widths are unspecified, a table width can't be inferred
+      width_df$tbl_width <- NA_real_
     } else {
-      if (all(width_df$pt > 0)) {
-        width_df$tbl_width <- sprintf("%fpt", sum(width_df$pt))
+      pt_total <- sum(width_df$pt)
+      lw_total <- sum(width_df$lw)
+
+      if (pt_total <= 0) {
+        width_df$tbl_width <- glue::glue("{lw_total}\\linewidth")
+      } else if (lw_total <= 0) {
+        width_df$tbl_width <- glue::glue("{pt_total}pt")
       } else {
-        width_df$tbl_width <- NA_real_
+        width_df$tbl_width <- glue::glue("{pt_total}pt+{lw_total}\\linewidth")
       }
     }
+  } else if (endsWith(tbl_width, "%")) {
+    lw_multiple <- as.numeric(gsub("%", "", tbl_width, fixed = TRUE)) / 100
+    width_df$tbl_width <- glue::glue("{lw_multiple}\\linewidth")
   } else {
-    width_df$tbl_width <- tbl_width
+    width_df$tbl_width <- glue::glue("{convert_to_pt(tbl_width)}pt")
   }
 
   width_df
