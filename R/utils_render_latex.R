@@ -130,12 +130,10 @@ latex_group_row <- function(
 }
 
 #' @noRd
-create_table_start_l <- function(data) {
+create_table_start_l <- function(data, colwidth_df) {
 
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
-
-  boxh_df <- dt_boxhead_get(data = data)
 
   # Get default alignments for body columns
   col_alignment <- dt_boxhead_get_vars_align_default(data = data)
@@ -156,18 +154,6 @@ create_table_start_l <- function(data) {
     longtable_post_length <- ""
   }
 
-  # Obtain widths for each visible column label
-  col_widths <-
-    unlist(
-      dplyr::pull(
-        dplyr::arrange(
-          dplyr::filter(boxh_df, type %in% c("default")),
-          dplyr::desc(type)
-        ),
-        column_width
-      )
-    )
-
   # Generate the column definitions for visible columns
   # these can either be simple `l`, `c`, `r` directive if a width isn't set
   # for a column, or, use `p{<width>}` statements with leading `>{...}`
@@ -177,39 +163,15 @@ create_table_start_l <- function(data) {
   # - `>{\centering\arraybackslash}` <- center alignment
   # the `\arraybackslash` command is used to restore the behavior of the
   # `\\` command in the table (all of this uses the CTAN `array` package)
-
-  if (!is.null(col_widths)) {
+  if (any(colwidth_df$unspec < 1L)) {
 
     col_defs <- NULL
 
-    # TODO: check that length of `col_widths` is equal to that
-    # of `col_alignment`
+    for (i in seq_along(col_alignment)) {
 
-    if ("group_label" %in% stub_layout) {
-
-      # TODO: This section assumes that the width of the group_label
-      # is the same as the column width for the stub. There should be
-      # a way to set the group_label when it is its own column.
-      # (Previous code version looked for "row_group" in boxh_df, which
-      # does not exist.)
-      if ('stub' %in% boxh_df$type) {
-
-        stub_width <- convert_to_pt(unlist(boxh_df$column_width[boxh_df$type == 'stub'])[1L])
-        group_label_width <- sprintf('%.2fpt', rep(stub_width, times = 2L) / 2)
-
+      if (colwidth_df$unspec[i] == 1L) {
+        col_defs_i <- substr(col_alignment[i], 1, 1)
       } else {
-        group_label_width <- c("", "")
-      }
-
-      col_widths <- c(group_label_width, col_widths)
-    } else if (length(stub_layout) == 1L) {
-
-      col_widths <- c(unlist(boxh_df$column_width[boxh_df$type == 'stub'][[1L]]), col_widths)
-    }
-
-    for (i in seq_along(col_widths)) {
-
-      if (col_widths[i] != "") {
 
         align <-
           switch(
@@ -220,60 +182,14 @@ create_table_start_l <- function(data) {
             ">{\\raggedright\\arraybackslash}"
           )
 
-        # Check if column width was set using gt::pct and
-        # convert to Latex friendly terminology (i.e.,
-        # '14.7%' becomes '0.147\\linewidth')
-        if (grepl("^[[:digit:].]+%$", col_widths[i])) {
-
-          table_width <- dt_options_get_value(data = data, option = "table_width")
-
-          col_pct <- as.numeric(gsub("%$", "", col_widths[i])) / 100
-
-          if (table_width == "auto") {
-
-            # Table width not specified, use all available space
-            col_scalar <- col_pct
-            tab_unit <- "\\linewidth"
-
-          } else if (endsWith(table_width, suffix = '%')) {
-
-            # If table width is expressed as a percentage, adjust the scaler
-            col_scalar <- col_pct * as.numeric(gsub('%', '', table_width)) / 100
-            tab_unit <- "\\linewidth"
-
-          } else {
-
-            # When table width is expressed in units, convert to points
-            col_scalar <- col_pct * convert_to_px(table_width) * 0.75 # 0.75 converts pixels to points
-            tab_unit <- "pt"
-
-          }
-
-          col_widths[i] <-
-            paste0(
-              "\\dimexpr ",
-              col_scalar,
-              tab_unit,
-              "-2\\tabcolsep-1.5\\arrayrulewidth"
-            )
-
-        } else {
-
-          col_widths[i] <- paste0(convert_to_px(col_widths[i]) * 0.75, "pt -2\\tabcolsep-1.5\\arrayrulewidth")
-
-        }
-
         col_defs_i <-
           paste0(
             align,
             "p{",
-            col_widths[i],
+            create_singlecolumn_width_text_l(pt = colwidth_df$pt[i], lw = colwidth_df$lw[i]),
             "}"
           )
 
-      } else {
-
-        col_defs_i <- substr(col_alignment[i], 1, 1)
       }
 
       col_defs <- c(col_defs, col_defs_i)
@@ -1748,14 +1664,26 @@ calculate_multicolumn_width_text_l <- function(begins, ends, colwidth_df) {
 
     if (pt_total <= 0 && lw_total <= 0) {
       next
-    } else if (pt_total <= 0) {
-      out_text[i] <- sprintf("%.2f\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth", lw_total)
-    } else if (lw_total <= 0) {
-      out_text[i] <- sprintf("%.2fpt -2\\tabcolsep-1.5\\arrayrulewidth", pt_total)
     } else {
-      out_text[i] <- sprintf("%.2fpt + %.2f\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth", pt_total, lw_total)
+      out_text[i] <- create_singlecolumn_width_text_l(pt = pt_total, lw = lw_total)
     }
   }
 
   out_text
+}
+
+create_singlecolumn_width_text_l <- function(pt, lw) {
+
+  if (pt <= 0L && lw <= 0L) {
+    out_txt <- "0pt"
+  } else if (pt <= 0L) {
+    out_txt <- sprintf("%.2f\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth", lw)
+  } else if (lw <= 0L) {
+    out_txt <- sprintf("%.2fpt -2\\tabcolsep-1.5\\arrayrulewidth", pt)
+  } else {
+    out_txt <- sprintf("%.2fpt + %.2f\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth", pt, lw)
+  }
+
+  out_txt
+
 }
