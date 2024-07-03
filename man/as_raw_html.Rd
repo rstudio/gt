@@ -36,12 +36,12 @@ emailing context.
 
 Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a header
 with \code{\link[=tab_header]{tab_header()}} and then export the table as HTML code with inlined CSS
-styles using the \code{as_raw_html()} function.
+styles using \code{as_raw_html()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_html <-
   gtcars |>
   dplyr::select(mfr, model, msrp) |>
-  dplyr::slice(1:5) |>
+  dplyr::slice_head(n = 5) |>
   gt() |>
   tab_header(
     title = md("Data listing from **gtcars**"),
@@ -67,6 +67,7 @@ document but rather an HTML fragment.
 
 \seealso{
 Other table export functions: 
+\code{\link{as_gtable}()},
 \code{\link{as_latex}()},
 \code{\link{as_rtf}()},
 \code{\link{as_word}()},

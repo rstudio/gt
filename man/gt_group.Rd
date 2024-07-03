@@ -31,7 +31,7 @@ contained \strong{gt} tables? By default this is \code{FALSE}.}
 An object of class \code{gt_group}.
 }
 \description{
-The \code{gt_group()} function creates a container for storage of multiple \strong{gt}
+\code{gt_group()} creates a container for storage of multiple \strong{gt}
 tables. This type of object allows for flexibility in printing multiple
 tables in different output formats. For example, if printing multiple tables
 in a paginated output environment (e.g., RTF, Word, etc.), each \strong{gt} table

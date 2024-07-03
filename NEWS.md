@@ -1,10 +1,26 @@
 # gt (development version)
 
+* gt now depends on R 3.6 (@olivroy, #1731).
+
+* `opt_interactive()` gains `height` to help specify your widget's height (@olivroy, #1544).
+
+* `opt_interactive()` now shows row names if `rownames_to_stub = TRUE` (@olivroy, #1702). 
+
+* `data_color()` throws a more informative error message if `rows` didn't resolve to anything (@olivroy, #1659).
+
 * PDF output now allows the font size of a table to be set using the table.font.size parameter in the tab_options function (#1472).  The font sizes of individual table cells (including those in the body, stubs, column headings, etc.) can be set using tab_style function. Several other options specified in tab_style are now reflected in PDF output.
 
 * `data_color()` throws a more informative error if a calculation failed (@olivroy, #1373).
 
 * `gtsave()` saves correctly to .rtf if using `cols_label()` and `summary_rows()` or `grand_summary_rows()` (@olivroy, #1233)
+
+* interactive tables are now rendering the first level of column groups, added by `tab_spanner()` (@obsaditelnost, #1618)
+
+* `cols_hide()` no longer errors if no column was supplied. Error messages are also clearer when supplying a column that doesn't exist (@olivroy, #1631).
+
+* `cols_units()`, `tab_footnote()` and `tab_style()` now give better error messages when `locations` is not correctly specified (@olivroy, #475, #1638 , #1640, #1733).
+
+* `opt_interactive()` has better support for displaying group columns if present (`row_groups_as_column` has no effect on the output) (@olivroy, #1705).
 
 # gt 0.10.1
 
@@ -293,7 +309,7 @@
 
 * The `docx` output format is now better detected in R Markdown and Quarto (#1040). (#1084, thanks @cderv!)
 
-* Replaced all `match.arg()` calls with **rlang**'s `match_arg()` for better error output (#672). (#1099, thanks @mojister!)
+* Replaced all `match.arg()` calls with `rlang::arg_match()` for better error output (#672). (#1099, thanks @mojister!)
 
 * Project website improvements; we now have a doublet of sites: (1) https://gt.rstudio.com and (2) https://gt.rstudio.com/dev (#1074, thanks @ddsjoberg!)
 

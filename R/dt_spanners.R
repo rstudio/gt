@@ -41,15 +41,15 @@ dt_spanners_init <- function(data) {
       # The spanner label
       spanner_label = list(),
       # The spanner units
-      spanner_units = character(0),
+      spanner_units = character(0L),
       # The spanner pattern
-      spanner_pattern = character(0),
+      spanner_pattern = character(0L),
       # The spanner ID
-      spanner_id = character(0),
+      spanner_id = character(0L),
       # The spanner level
-      spanner_level = integer(0),
+      spanner_level = integer(0L),
       # Should be columns be gathered under a single spanner label?
-      gather = logical(0),
+      gather = logical(0L),
       built = NA_character_
     )
 
@@ -65,7 +65,8 @@ dt_spanners_add <- function(
     spanner_id,
     spanner_level,
     gather,
-    replace
+    replace,
+    call = rlang::caller_env()
 ) {
 
   spanners <- dt_spanners_get(data = data)
@@ -79,14 +80,13 @@ dt_spanners_add <- function(
   ) {
 
     error_vars <-
-      paste(
-        vars[vars %in% unlist(spanners_at_level[["vars"]])],
-        collapse = ", "
-      )
-
-    cli::cli_abort(
-      "The column(s) used (`{error_vars}`) for the new spanner `{spanner_id}`
-      belong to an existing spanner."
+      vars[vars %in% unlist(spanners_at_level[["vars"]])]
+    cli::cli_abort(c(
+      "x" = "Can't create the {.val {spanner_id}} spanner.",
+      "!" = "Column{?s} {.code {error_vars}} belong{?s/} to an existing spanner.",
+      "i" = "Specify {.arg columns} appropriately by using other variable names."
+      ),
+      call = call
     )
   }
 
@@ -122,7 +122,7 @@ dt_spanners_build <- function(data, context) {
   spanners$built <-
     vapply(
       spanners$spanner_label,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       FUN = function(label) process_text(label, context = context)
     )
 
@@ -232,15 +232,15 @@ dt_spanners_print_matrix <- function(
 
   spanners_tbl <- dt_spanners_get(data = data)
 
-  if (!include_hidden) {
-    vars <- dt_boxhead_get_vars_default(data = data)
-  } else {
+  if (include_hidden) {
     vars <- dt_boxhead_get_vars(data = data)
+  } else {
+    vars <- dt_boxhead_get_vars_default(data = data)
   }
 
   # If `spanners_tbl` is immediately empty then return a single-row
   # matrix of column vars/IDs (or not, if `omit_columns_row = TRUE`)
-  if (nrow(spanners_tbl) < 1) {
+  if (nrow(spanners_tbl) < 1L) {
     return(
       empty_spanner_matrix(vars = vars, omit_columns_row = omit_columns_row)
     )
@@ -251,21 +251,18 @@ dt_spanners_print_matrix <- function(
   # (2) entries with no vars (after step 1) are removed, and
   # (3) `spanner_level` values have all gaps removed, being compressed
   #     down to start at 1 (e.g., 7, 5, 3, 1 -> 4, 3, 2, 1)
-  spanners_tbl <-
-    dplyr::mutate(spanners_tbl, vars = lapply(.data$vars, base::intersect, .env$vars))
+  spanners_tbl$vars <-
+    lapply(spanners_tbl$vars, base::intersect, vars)
 
-  spanners_tbl <-
-    dplyr::filter(spanners_tbl, vapply(vars, length, integer(1)) > 0)
+  # keep rows where vars is non-empty
+  spanners_tbl <- spanners_tbl[lengths(spanners_tbl$vars) > 0L, , drop = FALSE]
 
-  spanners_tbl <-
-    dplyr::mutate(
-      spanners_tbl,
-      spanner_level = match(spanner_level, sort(unique(spanner_level)))
-    )
+  spanners_tbl$spanner_level <-
+    match(spanners_tbl$spanner_level, sort(unique(spanners_tbl$spanner_level)))
 
   # If `spanners_tbl` is immediately empty then return a single-row
   # matrix of column vars/IDs (or not, if `omit_columns_row = TRUE`)
-  if (nrow(spanners_tbl) < 1) {
+  if (nrow(spanners_tbl) < 1L) {
     return(
       empty_spanner_matrix(vars = vars, omit_columns_row = omit_columns_row)
     )
@@ -274,7 +271,7 @@ dt_spanners_print_matrix <- function(
   # Get the height of the spanner matrix
   spanner_height <- max(spanners_tbl[["spanner_level"]])
 
-  vars_vec <- rep(NA_character_, length(vars))
+  vars_vec <- rep_len(NA_character_, length(vars))
   names(vars_vec) <- vars
 
   # Initialize matrix to serve as boxhead representation
@@ -291,7 +288,7 @@ dt_spanners_print_matrix <- function(
   columns_mat <- columns_mat[rev(seq_len(nrow(columns_mat))), , drop = FALSE]
 
   if (!omit_columns_row) {
-    columns_mat <- rbind(columns_mat, matrix(vars, nrow = 1, ncol = length(vars)))
+    columns_mat <- rbind(columns_mat, matrix(vars, nrow = 1L, ncol = length(vars)))
   }
 
   columns_mat
@@ -299,11 +296,11 @@ dt_spanners_print_matrix <- function(
 
 empty_spanner_matrix <- function(vars, omit_columns_row) {
 
-  columns_mat <- matrix(vars, nrow = 1, ncol = length(vars))
+  columns_mat <- matrix(vars, nrow = 1L, ncol = length(vars))
   colnames(columns_mat) <- vars
 
   if (omit_columns_row) {
-    columns_mat <- columns_mat[-1, , drop = FALSE]
+    columns_mat <- columns_mat[-1L, , drop = FALSE]
   }
 
   columns_mat

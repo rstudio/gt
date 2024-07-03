@@ -51,9 +51,9 @@ footnote_mark_to_latex <- function(
     spec <- "^i"
   }
 
-  if (grepl("\\.", spec)) mark <- sprintf_unless_na("%s.", mark)
-  if (grepl("b", spec)) mark <- sprintf_unless_na("\\textbf{%s}", mark)
-  if (grepl("i", spec)) mark <- sprintf_unless_na("\\textit{%s}", mark)
+  if (grepl(".", spec, fixed = TRUE)) mark <- sprintf_unless_na("%s.", mark)
+  if (grepl("b", spec, fixed = TRUE)) mark <- sprintf_unless_na("\\textbf{%s}", mark)
+  if (grepl("i", spec, fixed = TRUE)) mark <- sprintf_unless_na("\\textit{%s}", mark)
   if (grepl("\\(|\\[", spec)) mark <- sprintf_unless_na("(%s", mark)
   if (grepl("\\)|\\]", spec)) mark <- sprintf_unless_na("%s)", mark)
 
@@ -107,13 +107,23 @@ latex_group_row <- function(
     group_name,
     n_cols,
     top_border = TRUE,
-    bottom_border = TRUE
+    bottom_border = TRUE,
+    colwidth_df
 ) {
+
+  # The width of the group row should be that of the entire table
+  tab_width <- colwidth_df$tbl_width[1L]
+  use_width <- if (is.na(tab_width)) "l" else sprintf(">{\\raggedright\\arraybackslash}m{%s}", tab_width)
+
+  if (is.na(group_name)) {
+    row_txt <- paste0("\\multicolumn{", n_cols, "}{", use_width, "}{\\rule{0pt}{0pt}} \\\\[-3.2ex] \n")
+  } else {
+    row_txt <- paste0("\\multicolumn{", n_cols, "}{", use_width, "}{", group_name, "} \\\\[2.5pt] \n")
+  }
 
   paste0(
     ifelse(top_border, "\\midrule\\addlinespace[2.5pt]\n", ""),
-    "\\multicolumn{", n_cols, "}{l}{", group_name,
-    "} \\\\ \n",
+    row_txt,
     ifelse(bottom_border, "\\midrule\\addlinespace[2.5pt]\n", ""),
     collapse = ""
   )
@@ -151,7 +161,7 @@ create_table_start_l <- function(data) {
     unlist(
       dplyr::pull(
         dplyr::arrange(
-          dplyr::filter(boxh_df, type %in% c("default", "stub")),
+          dplyr::filter(boxh_df, type %in% c("default")),
           dplyr::desc(type)
         ),
         column_width
@@ -170,19 +180,31 @@ create_table_start_l <- function(data) {
 
   if (!is.null(col_widths)) {
 
-    col_defs <- c()
+    col_defs <- NULL
 
     # TODO: check that length of `col_widths` is equal to that
     # of `col_alignment`
 
     if ("group_label" %in% stub_layout) {
 
-      group_label_width <-
-        unlist(
-          dplyr::pull(dplyr::filter(boxh_df, type == "row_group"), column_width)
-        )
+      # TODO: This section assumes that the width of the group_label
+      # is the same as the column width for the stub. There should be
+      # a way to set the group_label when it is its own column.
+      # (Previous code version looked for "row_group" in boxh_df, which
+      # does not exist.)
+      if ('stub' %in% boxh_df$type) {
+
+        stub_width <- convert_to_pt(unlist(boxh_df$column_width[boxh_df$type == 'stub'])[1L])
+        group_label_width <- sprintf('%.2fpt', rep(stub_width, times = 2L) / 2)
+
+      } else {
+        group_label_width <- c("", "")
+      }
 
       col_widths <- c(group_label_width, col_widths)
+    } else if (length(stub_layout) == 1L) {
+
+      col_widths <- c(unlist(boxh_df$column_width[boxh_df$type == 'stub'][[1L]]), col_widths)
     }
 
     for (i in seq_along(col_widths)) {
@@ -201,29 +223,29 @@ create_table_start_l <- function(data) {
         # Check if column width was set using gt::pct and
         # convert to Latex friendly terminology (i.e.,
         # '14.7%' becomes '0.147\\linewidth')
-        if (grepl('^[[:digit:].]+%$', col_widths[i])) {
+        if (grepl("^[[:digit:].]+%$", col_widths[i])) {
 
-          table_width <- dt_options_get_value(data = data, option = 'table_width')
+          table_width <- dt_options_get_value(data = data, option = "table_width")
 
-          col_pct <- as.numeric(gsub('%$', '', col_widths[i])) / 100
+          col_pct <- as.numeric(gsub("%$", "", col_widths[i])) / 100
 
-          if (table_width == 'auto') {
+          if (table_width == "auto") {
 
             # Table width not specified, use all available space
             col_scalar <- col_pct
-            tab_unit <- '\\linewidth'
+            tab_unit <- "\\linewidth"
 
           } else if (endsWith(table_width, suffix = '%')) {
 
             # If table width is expressed as a percentage, adjust the scaler
             col_scalar <- col_pct * as.numeric(gsub('%', '', table_width)) / 100
-            tab_unit <- '\\linewidth'
+            tab_unit <- "\\linewidth"
 
           } else {
 
             # When table width is expressed in units, convert to points
             col_scalar <- col_pct * convert_to_px(table_width) * 0.75 # 0.75 converts pixels to points
-            tab_unit <- 'pt'
+            tab_unit <- "pt"
 
           }
 
@@ -237,7 +259,7 @@ create_table_start_l <- function(data) {
 
         } else {
 
-          col_widths[i] <- paste0(convert_to_px(col_widths[i]) * 0.75, "pt")
+          col_widths[i] <- paste0(convert_to_px(col_widths[i]) * 0.75, "pt -2\\tabcolsep-1.5\\arrayrulewidth")
 
         }
 
@@ -272,8 +294,8 @@ create_table_start_l <- function(data) {
   # If a table width is specified, add an extra column
   # space to fill in enough space to match the width
   extra_sep <- ''
-  if (dt_options_get_value(data = data, option = 'table_width') != 'auto')
-    extra_sep <- '@{\\extracolsep{\\fill}}'
+  if (dt_options_get_value(data = data, option = "table_width") != "auto")
+    extra_sep <- "@{\\extracolsep{\\fill}}"
 
   # Generate setup statements for table including default left
   # alignments and vertical lines for any stub columns
@@ -366,7 +388,7 @@ create_heading_component_l <- function(data) {
 #' Create the columns component of a table
 #'
 #' @noRd
-create_columns_component_l <- function(data) {
+create_columns_component_l <- function(data, colwidth_df) {
 
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
@@ -416,10 +438,29 @@ create_columns_component_l <- function(data) {
       ""
     )
 
-    if (length(stub_layout) > 0) {
+    if (length(stub_layout) > 1L) {
+      # If stub_layout == 1L, multicolumn is not needed and stub_label is already defined
+      stub_df <- dplyr::filter(colwidth_df, type == 'stub')
+      stub_width <-
+        if (stub_df$pt > 0) {
+          sprintf("%.2fpt", stub_df$pt)
+        } else if (stub_df$lw > 0) {
+          sprintf("%.2f\\linewidth", stub_df$lw)
+        } else {
+          ""
+        }
 
       stub_label <-
-        paste0("\\multicolumn{", length(stub_layout), "}{l}{", stub_label, "}")
+        paste0(
+          "\\multicolumn{",
+          length(stub_layout),
+          "}{>{\\centering\\arraybackslash}m{",
+          stub_width,
+          " -2\\tabcolsep-1.5\\arrayrulewidth}}{",
+          stub_label,
+          "}"
+        )
+
     }
 
     headings_labels <- prepend_vec(headings_labels, stub_label)
@@ -474,13 +515,26 @@ create_columns_component_l <- function(data) {
       is_spanner_na <- is.na(spanners_rle$values)
       is_spanner_single <- spanners_rle$lengths == 1
 
+      firsts <- utils::head(cumsum(c(1L, spanners_rle$lengths)), -1L)
+      lasts <- cumsum(spanners_rle$lengths)
+      span_widths <- calculate_multicolumn_width_text_l(begins = firsts, ends = lasts, colwidth_df = colwidth_df)
+      tex_widths <-
+        ifelse(
+          span_widths == "",
+          "c",
+          paste0(">{\\centering\\arraybackslash}m{", span_widths, "}")
+        )
+
       multicol <-
         ifelse(
           is_spanner_na, "",
           ifelse(
             is_spanner_single, spanners_rle$labels,
             sprintf(
-              "\\multicolumn{%d}{c}{%s}", spanners_rle$lengths, spanners_rle$labels
+              "\\multicolumn{%d}{%s}{%s}",
+              spanners_rle$lengths,
+              tex_widths,
+              spanners_rle$labels
             )
           )
         )
@@ -489,11 +543,12 @@ create_columns_component_l <- function(data) {
       # multicolumn statement that's the same width as that in the columns
       # row; this is to prevent the automatic vertical line that would otherwise
       # appear here
-      if (length(stub_layout) > 0) {
+      if (length(stub_layout) > 1L) {
 
+        tex_stub_width <- calculate_multicolumn_width_text_l(begins = 1, ends = 2, colwidth_df = colwidth_df)
         multicol <-
           c(
-            paste0("\\multicolumn{", length(stub_layout), "}{l}{}"),
+            paste0("\\multicolumn{", length(stub_layout), "}{>{\\raggedright\\arraybackslash}m{", tex_stub_width, "}}{}"),
             multicol[-seq_along(stub_layout)]
           )
       }
@@ -518,7 +573,7 @@ create_columns_component_l <- function(data) {
 }
 
 #' @noRd
-create_body_component_l <- function(data) {
+create_body_component_l <- function(data, colwidth_df) {
 
   summaries_present <- dt_summary_exists(data = data)
   list_of_summaries <- dt_summary_df_get(data = data)
@@ -547,8 +602,15 @@ create_body_component_l <- function(data) {
   if ("group_label" %in% stub_layout) {
 
     for (i in seq_len(nrow(groups_rows_df))) {
+      n_rows_in_group <- groups_rows_df$row_end[i] - groups_rows_df$row_start[i] + 1L
+      if (groups_rows_df$has_summary_rows[i]) {
+        n_rows_in_group <- n_rows_in_group + dim(list_of_summaries$summary_df_data_list[[i]])[1L]
+      }
       row_splits_body[[groups_rows_df$row_start[i]]][1] <-
-        groups_rows_df$group_label[i]
+        sprintf("\\multirow{%d}{=}{%s}",
+                n_rows_in_group,
+                groups_rows_df$group_label[i])
+        #groups_rows_df$group_label[i]
     }
   }
 
@@ -590,7 +652,7 @@ create_body_component_l <- function(data) {
     )
 
   # Apply formatting to group labels
-  if (dim(groups_rows_df)[1L] > 0 && any(!is.na(groups_rows_df$group_label))) {
+  if (dim(groups_rows_df)[1L] > 0 && !all(is.na(groups_rows_df$group_label))) {
 
     styles_tbl <- dt_styles_get(data)
 
@@ -613,19 +675,19 @@ create_body_component_l <- function(data) {
 
   }
 
-  # Replace an NA group with a small amount of vertical space
-  if (any(is.na(groups_rows_df$group_label))) {
+  # # Replace an NA group with a small amount of vertical space
+  # if (any(is.na(groups_rows_df$group_label))) {
+  #
+  #   groups_rows_df <-
+  #     dplyr::mutate(
+  #       groups_rows_df,
+  #       group_label = ifelse(
+  #         is.na(group_label), "\\vspace*{-5mm}", group_label
+  #       )
+  #     )
+  # }
 
-    groups_rows_df <-
-      dplyr::mutate(
-        groups_rows_df,
-        group_label = ifelse(
-          is.na(group_label), "\\vspace*{-5mm}", group_label
-        )
-      )
-  }
-
-  current_group_id <- character(0)
+  current_group_id <- character(0L)
 
   body_rows <-
     lapply(
@@ -677,7 +739,8 @@ create_body_component_l <- function(data) {
               group_name = group_label,
               n_cols = n_cols,
               top_border = i != 1,
-              bottom_border = TRUE
+              bottom_border = TRUE,
+              colwidth_df = colwidth_df
             )
 
           body_section <- append(body_section, list(group_heading_row))
@@ -841,34 +904,34 @@ summary_rows_for_group_l <- function(
   summary_df <-
     dplyr::select(
       list_of_summaries$summary_df_display_list[[group_id]],
-      dplyr::all_of(rowname_col_private),
-      dplyr::all_of(default_vars)
+      dplyr::all_of(c(rowname_col_private, default_vars))
     )
 
   for (col_name in names(summary_df)) {
 
-    loc_type <- if(summary_row_type == 'grand') 'grand_summary_cells' else 'summary_cells'
+    loc_type <- if(summary_row_type == "grand") "grand_summary_cells" else "summary_cells"
 
-    styles_summary <- dt_styles_get(data) %>%
-      dplyr::filter(locname == loc_type,
-                    grpname == group_id) %>%
-      dplyr::mutate(colname = ifelse(is.na(colname) & colnum == 0,
-                              "::rowname::", colname)) %>%
-      dplyr::filter(colname == col_name)
+    styles_df <- dt_styles_get(data)
+    styles_df <- styles_df[styles_df$locname == loc_type & styles_df$grpname == group_id, , drop = FALSE]
+    # set colname to ::rowname:: if colname is present and colnum = 0
+    styles_df$colname[is.na(styles_df$colname) & styles_df$colnum == 0] <- "::rowname::"
 
-    if (dim(styles_summary)[1L] > 0) {
+    styles_summary <- styles_df[styles_df$colname == col_name, , drop = FALSE]
+
+    if (dim(styles_summary)[1L] > 0L) {
 
       for (row_num in sort(unique(styles_summary$rownum))) {
         # The value of colnum in styles_summary differs for
         # group and grand summaries
-        if (summary_row_type == 'group') {
+        if (summary_row_type == "group") {
           row_pos <- (row_num - floor(row_num)) * 100L
         } else {
           row_pos <- row_num
         }
 
-        row_style <- dplyr::filter(styles_summary, rownum == row_num) %>%
-          consolidate_cell_styles_l()
+        # style each row
+        row_style <- styles_summary[styles_summary$rownum == row_num, , drop = FALSE]
+        row_style <- consolidate_cell_styles_l(row_style)
 
         summary_df[[col_name]][row_pos] <- apply_cell_styles_l(summary_df[[col_name]][row_pos], row_style)
       }
@@ -880,7 +943,6 @@ summary_rows_for_group_l <- function(
   row_splits_summary <- split_row_content(summary_df)
 
   if (stub_is_2) {
-
     row_splits_summary <-
       lapply(
         row_splits_summary,
@@ -896,7 +958,7 @@ summary_rows_for_group_l <- function(
     paste0(
       vapply(
         row_splits_summary,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         latex_body_row,
         type = "row"
       ),
@@ -967,8 +1029,7 @@ create_footer_component_l <- function(data) {
   # Create a formatted footnotes string
   if (nrow(footnotes_tbl) > 0) {
 
-    footnotes_tbl <-
-      dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
+    footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
     # Create a vector of formatted footnotes
     footnotes <-
@@ -980,7 +1041,7 @@ create_footer_component_l <- function(data) {
         ),
         vapply(
           footnotes_tbl[["footnotes"]],
-          FUN.VALUE = character(1),
+          FUN.VALUE = character(1L),
           #FUN = process_text,
           FUN = function(x, context, styles_obj) apply_cell_styles_l(process_text(x, context = context), styles_obj),
           context = "latex",
@@ -1001,7 +1062,7 @@ create_footer_component_l <- function(data) {
   }
 
   # Create a formatted source notes string
-  if (length(source_notes_vec) > 0) {
+  if (length(source_notes_vec) > 0L) {
 
     if (source_notes_multiline) {
       source_notes <- paste_right(paste(source_notes_vec, collapse = "\\\\\n"), "\\\\\n")
@@ -1011,7 +1072,7 @@ create_footer_component_l <- function(data) {
 
     styles_source <-
       consolidate_cell_styles_l(
-        dplyr::filter(dt_styles_get(data), locname == 'source_notes')
+        dplyr::filter(dt_styles_get(data), locname == "source_notes")
       )
 
     source_notes <- apply_cell_styles_l(source_notes, styles_source)
@@ -1044,7 +1105,7 @@ create_body_rows_l <- function(
 
   stub_layout <- get_stub_layout(data = data)
 
-  stub_is_2 <- length(stub_layout) > 1
+  stub_is_2 <- length(stub_layout) > 1L
 
   if (is.null(stub_layout)) {
     vars <- default_vars
@@ -1064,7 +1125,7 @@ create_body_rows_l <- function(
     unname(
       unlist(
         lapply(
-          seq_len(length(row_splits_body)),
+          seq_along(row_splits_body),
           FUN = function(x) {
 
             content <- row_splits_body[[x]]
@@ -1072,7 +1133,7 @@ create_body_rows_l <- function(
 
             styles_tbl_i <- dplyr::filter(styles_tbl, rownum == x)
 
-            if (nrow(styles_tbl_i) < 1) {
+            if (nrow(styles_tbl_i) < 1L) {
               # Remove any latex footnote encoding
               content <- remove_footnote_encoding(content)
               return(paste(paste(content, collapse = " & "), "\\\\ \n"))
@@ -1145,14 +1206,14 @@ remove_footnote_encoding <- function(x) {
 convert_font_size_l <- function(x) {
 
   size_map <- c(
-    `xx-small` = '\\tiny',
-    `x-small` = '\\scriptsize',
-    small = '\\small',
-    medium = '\\normalsize',
-    large = '\\large',
-    `x-large` = '\\Large',
-    `xx-large` = '\\LARGE',
-    `xxx-large` = '\\huge'
+    `xx-small` = "\\tiny",
+    `x-small` = "\\scriptsize",
+    small = "\\small",
+    medium = "\\normalsize",
+    large = "\\large",
+    `x-large` = "\\Large",
+    `xx-large` = "\\LARGE",
+    `xxx-large` = "\\huge"
   )
 
   if (as.character(x) %in% names(size_map))
@@ -1170,7 +1231,7 @@ create_summary_rows_l <- function(
 
   list_of_summaries <- dt_summary_df_get(data = data)
 
-  if (length(list_of_summaries) < 1) {
+  if (length(list_of_summaries) < 1L) {
     return(rep_len("", n_rows))
   }
 
@@ -1210,8 +1271,10 @@ create_summary_rows_l <- function(
           summary_df <-
             dplyr::select(
               list_of_summaries$summary_df_display_list[[group_id]],
-              dplyr::all_of(rowname_col_private),
-              dplyr::all_of(default_vars)
+              dplyr::all_of(c(
+                rowname_col_private,
+                default_vars
+              ))
             )
 
           row_splits_summary <- split_row_content(summary_df)
@@ -1237,7 +1300,7 @@ create_summary_rows_l <- function(
             paste0(
               vapply(
                 row_splits_summary,
-                FUN.VALUE = character(1),
+                FUN.VALUE = character(1L),
                 latex_body_row,
                 type = "row"
               ),
@@ -1295,9 +1358,8 @@ derive_table_width_statement_l <- function(data) {
 
     tw <- as.numeric(gsub('%', '', table_width))
 
-    side_width <-
-      ((100 - tw) / 200) %>%
-      format(scientific = FALSE, trim = TRUE)
+    side_width <- (100 - tw) / 200
+    side_width <- format(side_width, scientific = FALSE, trim = TRUE)
 
     statement <- paste0(
       "\\setlength\\",
@@ -1338,7 +1400,7 @@ derive_table_width_statement_l <- function(data) {
 #' @noRd
 consolidate_cell_styles_l <- function(styles_df) {
 
-  styles_col <- styles_df[['styles']]
+  styles_col <- styles_df[["styles"]]
 
   # If only one set of styles is supplied the function isn't necessary
   if (length(styles_col) == 1L) return(styles_col[[1L]])
@@ -1381,13 +1443,12 @@ apply_cell_styles_l <- function(content, style_obj) {
     mark[ind] <- gsub(".*%%%(right|left):(.*)$", "\\2", content[ind])
   }
 
-  if (length(style_obj) > 0) {
+  if (length(style_obj) > 0L) {
     # Apply changes that have to be made to the content
-    x <- just_content %>%
-      .apply_style_color_l(style_obj) %>%
-      .apply_style_fill_l(style_obj) %>%
-      .apply_style_transform_l(style_obj) %>%
-      .apply_style_decorate_l(style_obj)
+    x <- .apply_style_color_l(just_content, style_obj)
+    x <- .apply_style_fill_l(x, style_obj)
+    x <- .apply_style_transform_l(x, style_obj)
+    x <- .apply_style_decorate_l(x, style_obj)
 
     # Apply changes that can be made to the bracketed environment
     out_text <- paste0(
@@ -1504,7 +1565,7 @@ apply_cell_styles_l <- function(content, style_obj) {
 
 .apply_style_fill_l <- function(x, style_obj) {
 
-  if (is.null(style_obj[['cell_fill']][['color']])) return(x)
+  if (is.null(style_obj[["cell_fill"]][["color"]])) return(x)
 
   paste0(
     "\\cellcolor[HTML]{",
@@ -1516,12 +1577,12 @@ apply_cell_styles_l <- function(content, style_obj) {
 
 .apply_style_indentation_l <- function(style_obj) {
 
-  use_indent <- style_obj[['cell_text']][['indent']]
+  use_indent <- style_obj[["cell_text"]][["indent"]]
 
   if (is.null(use_indent)) return(NULL)
 
   # Documentation says numbers without units default to px
-  if (is.numeric(use_indent)) use_indent <- paste0(use_indent, 'px')
+  if (is.numeric(use_indent)) use_indent <- paste0(use_indent, "px")
 
   paste0(
     "\\hspace{",
@@ -1591,3 +1652,102 @@ create_fontsize_statement_l <- function(data) {
 
 }
 
+create_colwidth_df_l <- function(data) {
+
+  boxhead <- dt_boxhead_get(data)
+  tbl_width <- dt_options_get_value(data = data, option = 'table_width')
+  stub_layout <- get_stub_layout(data = data)
+
+  n <- dim(boxhead)[1L]
+  width_df <- data.frame(
+    type = boxhead$type,
+    unspec = rep(0, times = n),
+    lw = rep(0, times = n),
+    pt = rep(0, times = n)
+  )
+
+  for (i in 1:n) {
+    raw <- unlist(boxhead$column_width[i])[1L]
+
+    if (is.null(raw) || raw == "") {
+      next
+    } else if (endsWith(raw, "%")) {
+      pct <- as.numeric(gsub("%", "", raw, fixed = TRUE))
+
+      if (tbl_width == "auto") {
+        width_df$lw[i] <- pct
+      } else if (endsWith(tbl_width, "%")) {
+        width_df$lw[i] <- pct * as.numeric(gsub("%", "", tbl_width))
+      } else {
+        width_df$pt[i] <- pct * convert_to_pt(tbl_width)
+      }
+    } else {
+      width_df$pt[i] <- convert_to_pt(raw)
+    }
+  }
+
+  if (length(stub_layout) > 1L) {
+    if ('stub' %in% width_df$type) {
+      stub_row_group <-
+        dplyr::mutate(
+          dplyr::filter(width_df, type == 'stub'),
+          type = 'stub_row_group',
+          lw = lw / 2,
+          pt = pt / 2
+        )
+
+      width_df$pt[width_df$type == 'stub'] <- width_df$pt[width_df$type == 'stub'] / 2
+      width_df$lw[width_df$type == 'stub'] <- width_df$lw[width_df$type == 'stub'] / 2
+    } else {
+      stub_row_group <- data.frame(type = 'stub_row_group', lw = 0, pt = 0)
+    }
+
+    width_df <- dplyr::bind_rows(stub_row_group, width_df)
+  }
+
+  width_df$unspec <- as.integer(width_df$lw == 0 & width_df$pt == 0)
+
+  if (tbl_width == 'auto') {
+    if (any(width_df$lw > 0)) {
+      width_df$tbl_width <- "\\linewidth"
+    } else {
+      if (all(width_df$pt > 0)) {
+        width_df$tbl_width <- sprintf("%fpt", sum(width_df$pt))
+      } else {
+        width_df$tbl_width <- NA_real_
+      }
+    }
+  } else {
+    width_df$tbl_width <- tbl_width
+  }
+
+  width_df
+}
+
+calculate_multicolumn_width_text_l <- function(begins, ends, colwidth_df) {
+
+  out_text <- rep("", times = length(begins))
+
+  for (i in seq_along(begins)) {
+    ind <- seq(from = begins[i], to = ends[i])
+
+    # If any of the combined columns has an unspecified width, it can't be determined
+    # so it is left blank
+    if (any(colwidth_df$unspec[ind] > 0)) next
+
+    pt_total <- sum(colwidth_df$pt[ind], na.rm = TRUE)
+    lw_total <- sum(colwidth_df$lw[ind], na.rm = TRUE)
+
+    if (pt_total <= 0 && lw_total <= 0) {
+      next
+    } else if (pt_total <= 0) {
+      out_text[i] <- sprintf("%.2f\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth", lw_total)
+    } else if (lw_total <= 0) {
+      out_text[i] <- sprintf("%.2fpt -2\\tabcolsep-1.5\\arrayrulewidth", pt_total)
+    } else {
+      out_text[i] <- sprintf("%.2fpt + %.2f\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth", pt_total, lw_total)
+    }
+  }
+
+  out_text
+}

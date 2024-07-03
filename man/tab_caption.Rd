@@ -35,8 +35,8 @@ in each of these system.
 
 
 With three columns from the \code{\link{gtcars}} dataset, let's create a \strong{gt} table.
-First, we'll add a header part with the \code{\link[=tab_header]{tab_header()}} function. After that,
-a caption is added through use of \code{tab_caption()}.
+First, we'll add a header part with \code{\link[=tab_header]{tab_header()}}. After that, a caption is
+added with \code{tab_caption()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(mfr, model, msrp) |>
@@ -72,11 +72,11 @@ Other part creation/modification functions:
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
-\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
-\code{\link{tab_style_body}()},
-\code{\link{tab_style}()}
+\code{\link{tab_style}()},
+\code{\link{tab_style_body}()}
 }
 \concept{part creation/modification functions}

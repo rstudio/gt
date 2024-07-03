@@ -157,21 +157,9 @@ data_4 <-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
-
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
-}
-
-test_that("The `tab_footnote()` function works correctly", {
+test_that("tab_footnote() works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -334,27 +322,6 @@ test_that("The `tab_footnote()` function works correctly", {
       )
     )
 
-  # Expect an error if columns couldn't be resolved
-  expect_error(
-    data %>%
-      tab_footnote(
-        footnote = "Summary cell footnote.",
-        locations = cells_summary(
-          groups = "Mercs", columns = starts_with("x"), rows = 2)
-      )
-  )
-
-  # Expect an error if rows couldn't be resolved
-  expect_error(
-    data %>%
-      tab_footnote(
-        footnote = "Summary cell footnote.",
-        locations = cells_summary(
-          groups = "Mercs", columns = starts_with("m"), rows = starts_with("x")
-        )
-      )
-  )
-
   # Apply a footnote to a single cell in a grand
   # summary section
   tab <-
@@ -384,25 +351,6 @@ test_that("The `tab_footnote()` function works correctly", {
       )
     )
 
-  # Expect an error if columns couldn't be resolved
-  expect_error(
-    data %>%
-      tab_footnote(
-        footnote = "Grand summary cell footnote.",
-        locations = cells_grand_summary(
-          columns = starts_with("x"), rows = 2)
-      )
-  )
-
-  # Expect an error if rows couldn't be resolved
-  expect_error(
-    data %>%
-      tab_footnote(
-        footnote = "Grand summary cell footnote.",
-        locations = cells_grand_summary(
-          columns = starts_with("m"), rows = starts_with("x"))
-      )
-  )
 
   # Apply a footnote to a single cell in a group
   # summary section, and, to a single cell in a grand
@@ -558,16 +506,6 @@ test_that("The `tab_footnote()` function works correctly", {
     unique() %>%
     expect_equal("hp")
 
-  # Expect an error in `tab_footnote` when a value for `rows` isn't
-  # in the table
-  expect_error(
-    data %>%
-      tab_footnote(
-        footnote = "Footnote error.",
-        locations = cells_body(columns = "disp", rows = "Mazda RX7")
-      )
-  )
-
   # Apply a footnote to a single data cell; this time, use `c()`
   # to specify the `rows`
   tab <-
@@ -671,7 +609,7 @@ test_that("The `tab_footnote()` function works correctly", {
   # the correct order
   tbl_html %>%
     selection_text(selection = "[class='gt_footnote_marks']") %>%
-    tidy_gsub("\\s+", "") %>%
+    trimws("right", " ") %>%
     expect_equal(rep(as.character(1:4), 2))
 })
 
@@ -794,29 +732,29 @@ test_that("The `list_of_summaries` table is structured correctly", {
   gtcars_built_summary_df_display <- dt_summary_df_display_get(data = gtcars_built)
 
   # Expect that the list of summaries has length `2`
-  expect_equal(length(gtcars_built_summary_df), 2)
+  expect_length(gtcars_built_summary_df, 2)
 
   # Expect specific names in the `list_of_summaries` list
-  expect_equal(
-    names(gtcars_built_summary_df),
+  expect_named(
+    gtcars_built_summary_df,
     c("summary_df_data_list", "summary_df_display_list")
   )
 
   # Expect three tibbles in the `summary_df_data_list` component
-  expect_equal(length(gtcars_built_summary_df_data$summary_df_data_list), 3)
+  expect_length(gtcars_built_summary_df_data$summary_df_data_list, 3)
 
   # Expect three tibbles in the `summary_df_display_list` component
-  expect_equal(length(gtcars_built_summary_df_display$summary_df_display_list), 3)
+  expect_length(gtcars_built_summary_df_display$summary_df_display_list, 3)
 
   # Expect specific names for the subcomponents of the
   # `summary_df_data_list` and `summary_df_data_list`
   # parent components
-  expect_equal(
-    names(gtcars_built_summary_df_data$summary_df_data_list),
+  expect_named(
+    gtcars_built_summary_df_data$summary_df_data_list,
     c("BMW", "Audi", "::GRAND_SUMMARY")
   )
-  expect_equal(
-    names(gtcars_built_summary_df_display$summary_df_display_list),
+  expect_named(
+    gtcars_built_summary_df_display$summary_df_display_list,
     c("::GRAND_SUMMARY", "Audi", "BMW")
   )
 
@@ -1136,4 +1074,107 @@ test_that("Footnotes work with group labels in 2-column stub arrangements", {
   gt_tbl %>% render_as_html() %>% expect_snapshot()
   gt_tbl %>% as_latex() %>% as.character() %>% expect_snapshot()
   gt_tbl %>% as_rtf() %>% expect_snapshot()
+})
+
+test_that("tab_footnote() produces helpful error messages (#475).", {
+  # Create a table with footnotes in various cell types
+  tbl <-
+    dplyr::tribble(
+      ~date, ~rowname, ~value_1, ~value_2,
+      "2018-02-10", "1", 20.4, 361.1,
+      "2018-02-10", "2", 10.9, 743.3,
+      "2018-02-10", "3", 34.6, 344.7,
+      "2018-02-10", "4", 8.3, 342.3,
+      "2018-02-11", "5", 28.3, 234.9,
+      "2018-02-11", "6", 75.5, 190.9,
+      "2018-02-11", "7", 63.1, 2.3,
+      "2018-02-11", "8", 25.8, 184.3,
+      "2018-02-11", "9", 5.2, 197.2,
+      "2018-02-11", "10", 55.3, 284.6
+    )
+
+  start_gt <- gt(data = tbl, groupname_col = "date", rowname_col = "rowname") %>%
+    tab_spanner(
+      label = "values",
+      columns = starts_with("value")
+    )
+
+  expect_snapshot(error = TRUE, {
+    tab_footnote(
+      start_gt,
+      footnote = "First data cell.",
+      locations = cells_body(columns = "valuer", rows = 1)
+    )
+    tab_footnote(
+      start_gt,
+      footnote = "First data cell.",
+      locations = cells_column_labels(columns = "valuer")
+    )
+    tab_footnote(
+      start_gt,
+      footnote = "First data cell.",
+      locations = cells_column_spanners("valuer")
+    )
+    tab_footnote(
+      start_gt,
+      footnote = "First data cell.",
+      locations = cells_column_spanners(3)
+    )
+
+    # Expect an error in `tab_footnote` when a value for `rows` isn't
+    # in the table
+    tab_footnote(
+      start_gt,
+      footnote = "Footnote error.",
+      locations = cells_body(columns = "value_1", rows = "Mazda RX7")
+    )
+  })
+})
+
+test_that("tab_footnote() errors well when it can't resolve location", {
+  expect_snapshot(error = TRUE, {
+    # Expect an error if columns couldn't be resolved
+    tab_footnote(
+      data,
+      footnote = "Summary cell footnote.",
+      locations = cells_summary(
+        groups = "Mercs", columns = starts_with("x"), rows = 2
+      )
+    )
+
+    # Expect an error if rows couldn't be resolved
+    tab_footnote(
+      data,
+      footnote = "Summary cell footnote.",
+      locations = cells_summary(
+        groups = "Mercs", columns = starts_with("m"), rows = starts_with("x")
+      )
+    )
+
+    # Expect an error if columns couldn't be resolved
+    tab_footnote(
+      data,
+      footnote = "Grand summary cell footnote.",
+      locations = cells_grand_summary(
+        columns = starts_with("x"), rows = 2
+      )
+    )
+
+    # Expect an error if rows couldn't be resolved
+    tab_footnote(
+      data,
+      footnote = "Grand summary cell footnote.",
+      locations = cells_grand_summary(
+        columns = starts_with("m"), rows = starts_with("x")
+      )
+    )
+
+    tab_footnote(
+      data,
+      footnote = "Grand summary cell footnote.",
+      locations = cells_grand_summary(
+        columns = starts_with("m"), rows = 15
+      )
+    )
+  })
 })

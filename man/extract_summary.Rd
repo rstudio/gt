@@ -19,9 +19,9 @@ A list of data frames containing summary data.
 }
 \description{
 Get a list of summary row data frames from a \code{gt_tbl} object where summary
-rows were added via the \code{\link[=summary_rows]{summary_rows()}} function. The output data frames
-contain the \code{group_id} and \code{rowname} columns, whereby \code{rowname} contains
-descriptive stub labels for the summary rows.
+rows were added via \code{\link[=summary_rows]{summary_rows()}}. The output data frames contain the
+\code{group_id} and \code{rowname} columns, whereby \code{rowname} contains descriptive stub
+labels for the summary rows.
 }
 \section{Examples}{
 
@@ -104,7 +104,7 @@ Use the summary list to make a new \strong{gt} table. The key thing is to use
 
 \section{Function ID}{
 
-13-7
+13-8
 }
 
 \section{Function Introduced}{
@@ -114,6 +114,7 @@ Use the summary list to make a new \strong{gt} table. The key thing is to use
 
 \seealso{
 Other table export functions: 
+\code{\link{as_gtable}()},
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},

@@ -100,7 +100,7 @@ Here is a glimpse at the data available in \code{illness}.
 
 \section{Dataset ID and Badge}{
 
-DATA-10
+DATA-13
 
 \if{html}{\out{
 <div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_illness.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
@@ -117,8 +117,13 @@ Other datasets:
 \code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{films}},
+\code{\link{gibraltar}},
 \code{\link{gtcars}},
 \code{\link{metro}},
+\code{\link{nuclides}},
+\code{\link{peeps}},
+\code{\link{photolysis}},
 \code{\link{pizzaplace}},
 \code{\link{reactions}},
 \code{\link{rx_addv}},

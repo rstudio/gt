@@ -1,4 +1,4 @@
-test_that("The `col_width_resolver_rtf()` function works correctly", {
+test_that("col_width_resolver_rtf() works correctly", {
 
   tw <- function(x) {
     paste0(x, "tw")
@@ -145,7 +145,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
   )
 })
 
-test_that("The `parse_length_str()` function works correctly", {
+test_that("parse_length_str() works correctly", {
 
   lengths_vec_list <-
     list(
@@ -214,7 +214,7 @@ test_that("The `parse_length_str()` function works correctly", {
     }
 
   parse_length_str(
-    lengths_vec = character(0),
+    lengths_vec = character(0L),
     allow_negative = TRUE
   ) %>%
     {
@@ -223,8 +223,8 @@ test_that("The `parse_length_str()` function works correctly", {
       expect_equal(nrow(.), 0)
     }
 
-  # The `parse_length_str()` function doesn't check for valid
-  # units so anything that fits the `(%|[a-z]+)` will work
+  # `parse_length_str()` doesn't check for valid units
+  # so anything that fits the `(%|[a-z]+)` will work
   parse_length_str(
     lengths_vec = "6.234points"
   ) %>%
@@ -242,7 +242,7 @@ test_that("The `parse_length_str()` function works correctly", {
   )
 })
 
-test_that("The `abs_len_to_twips()` function works correctly", {
+test_that("abs_len_to_twips() works correctly", {
 
   lengths_vec_list <-
     list(

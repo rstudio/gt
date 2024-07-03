@@ -1,24 +1,9 @@
-# Create a shorter version of `mtcars`
-mtcars_short <- mtcars[1:5, ]
-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
-
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
-}
-
-test_that("The `text_transform()` function works correctly", {
+test_that("text_transform() works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -189,7 +174,7 @@ test_that("The `text_transform()` function works correctly", {
     expect_match(".*\\.(00|25|50|75)$")
 })
 
-test_that("`text_transform()` works in the body even when rows/columns are reordered", {
+test_that("text_transform() works in the body even when rows/columns are reordered", {
 
   # Use `tab_row_group()` to create new row groups (this reorders
   # the data table) and use `text_transform()` in two separate calls
@@ -223,7 +208,7 @@ test_that("`text_transform()` works in the body even when rows/columns are reord
     selection_text("tr td:nth-child(2)") %>%
     expect_equal(c("22.8!", "21.4", "18.7", "21", "21"))
 
-  # Reorder the groups with the `row_group_order()` function
+  # Reorder the groups with `row_group_order()`
   tbl_html <-
     tbl_html %>%
     row_group_order(groups = c("Mazda", "DatsunHornet"))
@@ -261,10 +246,10 @@ test_that("`text_transform()` works in the body even when rows/columns are reord
     expect_equal(c("21", "21", "22.8!", "21.4", "18.7"))
 })
 
-test_that("`text_transform()` works in column labels", {
+test_that("text_transform() works in column labels", {
 
-  # Create a gt table and modify two different column names
-  # with the `text_transform()` function
+  # Create a gt table and modify
+  # two different column names with `text_transform()`
   tbl_html <-
     mtcars_short %>%
     gt(rownames_to_stub = TRUE) %>%
@@ -297,10 +282,10 @@ test_that("`text_transform()` works in column labels", {
     )
 })
 
-test_that("`text_transform()` works on row labels in the stub", {
+test_that("text_transform() works on row labels in the stub", {
 
-  # Create a gt table and modify two different column names
-  # with the `text_transform()` function
+  # Create a gt table and modify
+  # two different column names with `text_transform()`
   tbl_html <-
     mtcars_short %>%
     gt(rownames_to_stub = TRUE) %>%
@@ -333,10 +318,10 @@ test_that("`text_transform()` works on row labels in the stub", {
     )
 })
 
-test_that("`text_transform()` works on row group labels", {
+test_that("text_transform() works on row group labels", {
 
-  # Create a gt table and modify the two different row group labels
-  # with the `text_transform()` function
+  # Create a gt table and modify the two different
+  # row group labels with `text_transform()`
   tbl_html <-
     exibble %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
@@ -353,8 +338,8 @@ test_that("`text_transform()` works on row group labels", {
     expect_equal(c("GRP_A", "GRP_B"))
 
 
-  # Create a gt table and modify the first row group label
-  # with the `text_transform()` function
+  # Create a gt table and modify the
+  # first row group label with `text_transform()`
   tbl_html <-
     exibble %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
@@ -384,8 +369,7 @@ test_that("`text_transform()` works on row group labels", {
       rows = hp > 600
     )
 
-  # Modify the first row group label with
-  # the `text_transform()` function
+  # Modify the first row group label with `text_transform()`
   tbl_html <-
     tbl_gt %>%
     text_transform(
@@ -400,7 +384,7 @@ test_that("`text_transform()` works on row group labels", {
     selection_text("[class='gt_group_heading']") %>%
     expect_equal(c("super powerful", "POWERFUL"))
 
-  # Modify all group labels with the `text_transform()` function
+  # Modify all group labels with `text_transform()`
   tbl_html <-
     tbl_gt %>%
     text_transform(
@@ -413,9 +397,9 @@ test_that("`text_transform()` works on row group labels", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_group_heading']") %>%
-    expect_equal(character(0))
+    expect_equal(character(0L))
 
-  # Modify all group labels with the `text_transform()` function
+  # Modify all group labels with `text_transform()`
   tbl_html <-
     tbl_gt %>%
     text_transform(

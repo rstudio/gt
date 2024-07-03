@@ -54,10 +54,9 @@
 #'
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
-#'   Can either be a series of column names provided in [c()], a vector of
-#'   column indices, or a select helper function. Examples of select helper
-#'   functions include [starts_with()], [ends_with()], [contains()],
-#'   [matches()], [one_of()], [num_range()], and [everything()].
+#'   Can either be a series of column names provided in `c()`, a vector of
+#'   column indices, or a select helper function (e.g. [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [num_range()] and [everything()]).
 #'
 #' @param rows *Rows to target*
 #'
@@ -66,11 +65,10 @@
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   undergo formatting. The default [everything()] results in all rows in
 #'   `columns` being formatted. Alternatively, we can supply a vector of row
-#'   captions within [c()], a vector of row indices, or a select helper
-#'   function. Examples of select helper functions include [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()]. We can also use expressions to filter down to the rows we
-#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   captions within `c()`, a vector of row indices, or a select helper
+#'   function (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]). We can also use expressions to filter
+#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param decimals *Number of decimal places*
 #'
@@ -79,9 +77,7 @@
 #'   This corresponds to the exact number of decimal places to use. A value
 #'   such as `2.34` can, for example, be formatted with `0` decimal places and
 #'   it would result in `"2"`. With `4` decimal places, the formatted value
-#'   becomes `"2.3400"`. The trailing zeros can be removed with
-#'   `drop_trailing_zeros = TRUE`. If you always need `decimals = 0`, the
-#'   [fmt_integer()] function should be considered.
+#'   becomes `"2.3400"`.
 #'
 #' @param n_sigfig *Number of significant figures*
 #'
@@ -219,20 +215,20 @@
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported. A
-#'   locale ID can be also set in the initial [gt()] function call (where it
-#'   would be used automatically by any function with a `locale` argument) but a
-#'   `locale` value provided here will override that global locale.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported. A locale ID can
+#'   be also set in the initial [gt()] function call (where it would be used
+#'   automatically by any function with a `locale` argument) but a `locale`
+#'   value provided here will override that global locale.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_number()` formatting function is compatible with body cells that are
-#' of the `"numeric"` or `"integer"` types. Any other types of body cells are
-#' ignored during formatting. This is to say that cells of incompatible data
-#' types may be targeted, but there will be no attempt to format them.
+#' `fmt_number()` is compatible with body cells that are of the `"numeric"` or
+#' `"integer"` types. Any other types of body cells are ignored during
+#' formatting. This is to say that cells of incompatible data types may be
+#' targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -275,10 +271,10 @@
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_number()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_number()` to
+#' obtain varying parameter values from a specified column within the table.
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `decimals`
 #' - `n_sigfig`
@@ -298,11 +294,10 @@
 #' Please note that for all of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -316,13 +311,13 @@
 #' Note that a `locale` value provided here will override any global locale
 #' setting performed in [gt()]'s own `locale` argument (it is settable there as
 #' a value received by all other functions that have a `locale` argument). As a
-#' useful reference on which locales are supported, we can use the
-#' [info_locales()] function to view an info table.
+#' useful reference on which locales are supported, we can call [info_locales()]
+#' to view an info table.
 #'
 #' @section Examples:
 #'
-#' Let's use the [`exibble`] dataset to create a **gt** table. With the
-#' `fmt_number()` function, we'll format the `num` column to have three decimal
+#' Let's use the [`exibble`] dataset to create a **gt** table. With
+#' `fmt_number()`, we'll format the `num` column to have three decimal
 #' places (with `decimals = 3`) and omit the use of digit separators (with
 #' `use_seps = FALSE`).
 #'
@@ -407,9 +402,8 @@
 #' column of values that specify how many decimal digits to retain. Such a
 #' column can be added via [cols_add()] or it can be part of the input table for
 #' [gt()]. With that column available, it can be referenced in the `decimals`
-#' argument with the [from_column()] helper function. This approach yields a
-#' display of coordinate values that reflects the measurement precision of each
-#' value.
+#' argument with [from_column()]. This approach yields a display of coordinate
+#' values that reflects the measurement precision of each value.
 #'
 #' ```r
 #' towny |>
@@ -422,8 +416,7 @@
 #'   cols_label(
 #'     name ~ "Municipality",
 #'     latitude = "Location"
-#'   ) |>
-#'   cols_hide(columns = dec_digits)
+#'   )
 #' ```
 #'
 #' \if{html}{\out{
@@ -437,13 +430,12 @@
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @seealso The [fmt_integer()] function might be more useful if you really need
-#'   to format numeric values to appear as integers (i.e., no decimals will be
-#'   shown and input values are rounded as necessary). Need to do numeric
-#'   formatting on a vector? Take a look at the vector-formatting version of
-#'   this function: [vec_fmt_number()].
+#' @seealso
+#' The integer-formatting function (format rounded values (i.e., no decimals shown and
+#'input values are rounded as necessary): [fmt_integer()].
 #'
-#' @import rlang
+#' The vector-formatting version of this function: [vec_fmt_number()]
+#'
 #' @export
 fmt_number <- function(
     data,
@@ -496,14 +488,21 @@ fmt_number <- function(
         all_args_except = c("data", "columns", "rows")
       )
     )
+  # Assume that if decimals = 0, function = fmt_integer, fmt_number otherwise
+  if (identical(decimals, 0)) {
+    fn_call <- call("fmt_integer")
+  } else {
+    fn_call <- call("fmt_number")
+  }
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
-        data = data
+        data = data,
+        call = fn_call
       )
 
     param_tbl <-
@@ -543,14 +542,11 @@ fmt_number <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -566,23 +562,8 @@ fmt_number <- function(
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by, system)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_number()` and `fmt_integer()` functions can only be
-      used on `columns` with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class, call = fn_call)
 
   # Set the `formatC_format` option according to whether number
   # formatting with significant figures is to be performed
@@ -602,7 +583,7 @@ fmt_number <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -617,8 +598,18 @@ fmt_number <- function(
             system = system
           )
 
-        # Scale the `x` values by the `scale_by` values in `suffix_df`
-        x <- scale_x_values(x, scale_by = suffix_df$scale_by)
+        # Determine whether `scale_by` is supplied as a function; if it isn't
+        # the only other pathway involves getting the vector of values produced
+        # by the `create_suffix_df()` function
+        if (rlang::is_function(scale_by)) {
+          to_scale_by <- scale_by
+        } else {
+          to_scale_by <- suffix_df$scale_by
+        }
+
+        # Scale the `x` values using `to_scale_by` (either a function or
+        # a numeric vector)
+        x <- scale_x_values(x, scale_by = to_scale_by)
 
         # Format numeric values to character-based numbers
         x_str <-
@@ -714,10 +705,10 @@ fmt_number <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_integer()` formatting function is compatible with body cells that
-#' are of the `"numeric"` or `"integer"` types. Any other types of body cells
-#' are ignored during formatting. This is to say that cells of incompatible data
-#' types may be targeted, but there will be no attempt to format them.
+#' `fmt_integer()` is compatible with body cells that are of the `"numeric"` or
+#' `"integer"` types. Any other types of body cells are ignored during
+#' formatting. This is to say that cells of incompatible data types may be
+#' targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -760,10 +751,10 @@ fmt_number <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_integer()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of  `fmt_integer()` to
+#' obtain varying parameter values from a specified column within the table.
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `use_seps`
 #' - `accounting`
@@ -778,11 +769,10 @@ fmt_number <- function(
 #' Please note that for all of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -795,14 +785,14 @@ fmt_number <- function(
 #' Note that a `locale` value provided here will override any global locale
 #' setting performed in [gt()]'s own `locale` argument (it is settable there as
 #' a value received by all other functions that have a `locale` argument). As a
-#' useful reference on which locales are supported, we can use the
-#' [info_locales()] function to view an info table.
+#' useful reference on which locales are supported, we can call [info_locales()]
+#' to view an info table.
 #'
 #' @section Examples:
 #'
 #' For this example, we'll use two columns from the [`exibble`] dataset and
-#' create a simple **gt** table. With the `fmt_integer()` function, we'll format
-#' the `num` column as integer values having no digit separators (with the
+#' create a simple **gt** table. With `fmt_integer()`, we'll format the `num`
+#' column as integer values having no digit separators (with the
 #' `use_seps = FALSE` option).
 #'
 #' ```r
@@ -872,12 +862,11 @@ fmt_number <- function(
 #' @section Function Introduced:
 #' `v0.3.1` (August 9, 2021)
 #'
-#' @seealso The [fmt_number()] function might be more of what you need if you'd
-#'   like decimal values in your outputs. Need to do integer-based formatting on
-#'   a vector? Take a look at the vector-formatting version of this function:
-#'   [vec_fmt_integer()].
+#' @seealso
+#' Format number with decimal values: [fmt_number()]
 #'
-#' @import rlang
+#' The vector-formatting version of this function: [vec_fmt_integer()]
+#'
 #' @export
 fmt_integer <- function(
     data,
@@ -923,7 +912,7 @@ fmt_integer <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -962,7 +951,7 @@ fmt_integer <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   fmt_number(
@@ -1046,10 +1035,10 @@ fmt_integer <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_scientific()` formatting function is compatible with body cells that
-#' are of the `"numeric"` or `"integer"` types. Any other types of body cells
-#' are ignored during formatting. This is to say that cells of incompatible data
-#' types may be targeted, but there will be no attempt to format them.
+#' `fmt_scientific()` is compatible with body cells that are of the `"numeric"`
+#' or `"integer"` types. Any other types of body cells are ignored during
+#' formatting. This is to say that cells of incompatible data types may be
+#' targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -1092,10 +1081,10 @@ fmt_integer <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_scientific()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_scientific()` to
+#' obtain varying parameter values from a specified column within the table.
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `decimals`
 #' - `drop_trailing_zeros`
@@ -1112,11 +1101,10 @@ fmt_integer <- function(
 #' Please note that for all of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -1130,37 +1118,90 @@ fmt_integer <- function(
 #' Note that a `locale` value provided here will override any global locale
 #' setting performed in [gt()]'s own `locale` argument (it is settable there as
 #' a value received by all other functions that have a `locale` argument). As a
-#' useful reference on which locales are supported, we can use the
-#' [info_locales()] function to view an info table.
+#' useful reference on which locales are supported, we can call [info_locales()]
+#' to view an info table.
 #'
 #' @section Examples:
 #'
-#' Let's use the [`exibble`] dataset to create a simple **gt** table. We'll
-#' elect to the `num` column as partially numeric and partially in scientific
-#' notation. This is done with two separate calls of [fmt_number()] and
-#' `fmt_scientific()`. We'll use the expressions `num > 500` and `num <= 500` in
-#' the functions' respective `rows` arguments to target formatting to specific
-#' cells.
+#' Let's define a data frame that contains two columns of values (one `small`
+#' and one `large`). After creating a simple **gt** table from `small_large_tbl`
+#' we'll call `fmt_scientific()` on both columns.
 #'
 #' ```r
-#' exibble |>
-#'   gt() |>
-#'   fmt_number(
-#'     columns = num,
-#'     rows = num > 500,
-#'     decimals = 1,
-#'     scale_by = 1/1000,
-#'     pattern = "{x}K"
-#'   ) |>
-#'   fmt_scientific(
-#'     columns = num,
-#'     rows = num <= 500,
-#'     decimals = 1
+#' small_large_tbl <-
+#'   dplyr::tibble(
+#'     small = 10^(-12:-1),
+#'     large = 10^(1:12)
 #'   )
+#'
+#' small_large_tbl |>
+#'   gt() |>
+#'   fmt_scientific()
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_scientific_1.png")`
+#' }}
+#'
+#' The default method of styling the notation uses the '*m* x 10^*n*'
+#' construction but this can be changed to a '*m*E*n*' style via the `exp_style`
+#' argument. We can supply any single letter here and optionally affix a `"1"`
+#' to indicate there should not be any zero-padding of the *n* value. Two calls
+#' of `fmt_scientific()` are used here to show different options for styling
+#' in scientific notation.
+#'
+#' ```r
+#' small_large_tbl |>
+#'   gt() |>
+#'   fmt_scientific(
+#'     columns = small,
+#'     exp_style = "E"
+#'   ) |>
+#'   fmt_scientific(
+#'     columns = large,
+#'     exp_style = "e1",
+#'     force_sign_n = TRUE
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_scientific_2.png")`
+#' }}
+#'
+#' Taking a portion of the [`reactions`] dataset, we can create a **gt** table
+#' that contains reaction rate constants that should be expressed in scientific
+#' notation. All of the numeric values in the filtered table require that
+#' type of formatting so `fmt_scientific()` can be called without requiring any
+#' specification of column names in the `columns` argument. By default, the
+#' number of decimal places is fixed to `2`, which is fine for this table.
+#'
+#' ```r
+#' reactions |>
+#'   dplyr::filter(cmpd_type == "mercaptan") |>
+#'   dplyr::select(cmpd_name, cmpd_formula, OH_k298, Cl_k298, NO3_k298) |>
+#'   gt(rowname_col = "cmpd_name") |>
+#'   tab_header(title = "Gas-phase reactions of selected mercaptan compounds") |>
+#'   tab_spanner(
+#'     label = md("Reaction Rate Constant (298 K),<br>{{cm^3 molecules^–1 s^–1}}"),
+#'     columns = ends_with("k298")
+#'   ) |>
+#'   fmt_chem(columns = cmpd_formula) |>
+#'   fmt_scientific() |>
+#'   sub_missing() |>
+#'   cols_label(
+#'     cmpd_formula = "",
+#'     OH_k298 = "OH",
+#'     NO3_k298 = "{{%NO3%}}",
+#'     Cl_k298 = "Cl"
+#'   ) |>
+#'   opt_stylize() |>
+#'   opt_horizontal_padding(scale = 3) |>
+#'   opt_table_font(font = google_font("IBM Plex Sans")) |>
+#'   tab_options(stub.font.weight = "500")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_scientific_3.png")`
 #' }}
 #'
 #' The [`constants`] table contains a plethora of data on the fundamental
@@ -1191,7 +1232,7 @@ fmt_integer <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_fmt_scientific_2.png")`
+#' `r man_get_image_tag(file = "man_fmt_scientific_4.png")`
 #' }}
 #'
 #' @family data formatting functions
@@ -1204,7 +1245,6 @@ fmt_integer <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_scientific()].
 #'
-#' @import rlang
 #' @export
 fmt_scientific <- function(
     data,
@@ -1256,7 +1296,7 @@ fmt_scientific <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -1298,11 +1338,8 @@ fmt_scientific <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -1322,23 +1359,8 @@ fmt_scientific <- function(
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by, system = "intl")
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_scientific()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # If `n_sigfig` is defined (and not `NA`) modify the number of
   # decimal places and keep all trailing zeros
@@ -1357,7 +1379,7 @@ fmt_scientific <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -1368,7 +1390,7 @@ fmt_scientific <- function(
 
         # Define the `replace_minus()` function
         replace_minus <- function(x) {
-           tidy_gsub(x, "-", minus_mark, fixed = TRUE)
+           gsub("-", minus_mark, x, fixed = TRUE)
         }
 
         # Create the `suffix_df` object
@@ -1381,7 +1403,17 @@ fmt_scientific <- function(
             system = "intl"
           )
 
-        # Scale the `x` values by the `scale_by` values in `suffix_df`
+        # Determine whether `scale_by` is supplied as a function; if it isn't
+        # the only other pathway involves getting the vector of values produced
+        # by the `create_suffix_df()` function
+        if (rlang::is_function(scale_by)) {
+          to_scale_by <- scale_by
+        } else {
+          to_scale_by <- suffix_df$scale_by
+        }
+
+        # Scale the `x` values using `to_scale_by` (either a function or
+        # a numeric vector)
         x <- scale_x_values(x, scale_by = suffix_df$scale_by)
 
         x_str <-
@@ -1442,7 +1474,7 @@ fmt_scientific <- function(
           n_part <- replace_minus(n_part)
 
           x_str[!small_pos] <-
-            paste0(m_part, exp_marks[1], n_part, exp_marks[2])
+            paste0(m_part, exp_marks[1L], n_part, exp_marks[2L])
 
         } else {
 
@@ -1459,13 +1491,13 @@ fmt_scientific <- function(
           n_part <-
             vapply(
               x_str,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               USE.NAMES = FALSE,
               FUN = function(x) {
 
                 if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
 
-                x <- unlist(strsplit(x, "e"))[2]
+                x <- unlist(strsplit(x, "e"))[2L]
 
                 if (grepl("-", x)) {
                   x <- gsub("-", "", x)
@@ -1483,7 +1515,7 @@ fmt_scientific <- function(
           x_str_left <-
             vapply(
               x_str,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               USE.NAMES = FALSE,
               FUN = function(x) {
                 if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
@@ -1496,7 +1528,7 @@ fmt_scientific <- function(
             n_part <-
               vapply(
                 seq_along(n_part),
-                FUN.VALUE = character(1),
+                FUN.VALUE = character(1L),
                 USE.NAMES = FALSE,
                 FUN = function(i) {
                   if (!grepl("-", n_part[i])) {
@@ -1586,11 +1618,10 @@ fmt_scientific <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_engineering()` formatting function is compatible with body cells
-#' that are of the `"numeric"` or `"integer"` types. Any other types of body
-#' cells are ignored during formatting. This is to say that cells of
-#' incompatible data types may be targeted, but there will be no attempt to
-#' format them.
+#' `fmt_engineering()` is compatible with body cells that are of the
+#' `"numeric"` or `"integer"` types. Any other types of body cells are ignored
+#' during formatting. This is to say that cells of incompatible data types may
+#' be targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -1633,10 +1664,10 @@ fmt_scientific <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_engineering()` to obtain varying parameter values from a specified
-#' column within the table. This means that each row could be formatted a little
-#' bit differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_engineering()` to
+#' obtain varying parameter values from a specified column within the table.
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `decimals`
 #' - `drop_trailing_zeros`
@@ -1653,11 +1684,10 @@ fmt_scientific <- function(
 #' Please note that for all of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -1671,23 +1701,92 @@ fmt_scientific <- function(
 #' Note that a `locale` value provided here will override any global locale
 #' setting performed in [gt()]'s own `locale` argument (it is settable there as
 #' a value received by all other functions that have a `locale` argument). As a
-#' useful reference on which locales are supported, we can use the
-#' [info_locales()] function to view an info table.
+#' useful reference on which locales are supported, we can call [info_locales()]
+#' to view an info table.
 #'
 #' @section Examples:
 #'
-#' Use the [`exibble`] dataset to create a **gt** table. Format the `num` column
-#' to display values in engineering notation using the `fmt_engineering()`
-#' function.
+#' Let's define a data frame that contains two columns of values (one `small`
+#' and one `large`). After creating a simple **gt** table from `small_large_tbl`
+#' we'll call `fmt_engineering()` on both columns.
 #'
 #' ```r
-#' exibble |>
+#' small_large_tbl <-
+#'   dplyr::tibble(
+#'     small = 10^(-12:-1),
+#'     large = 10^(1:12)
+#'   )
+#'
+#' small_large_tbl |>
 #'   gt() |>
-#'   fmt_engineering(columns = num)
+#'   fmt_engineering()
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_engineering_1.png")`
+#' }}
+#'
+#' Notice that within the form of *m* x 10^*n*, the *n* values move in steps of
+#' 3 (away from `0`), and *m* values can have 1-3 digits before the decimal.
+#' Further to this, any values where *n* is `0` results in a display of only *m*
+#' (the first two values in the `large` column demonstrates this).
+#'
+#' Engineering notation expresses values so that they are align to certain SI
+#' prefixes. Here is a table that compares select SI prefixes and their symbols
+#' to decimal and engineering-notation representations of the key numbers.
+#'
+#' ```r
+#' prefixes_tbl <-
+#'   dplyr::tibble(
+#'     name = c(
+#'       "peta", "tera", "giga", "mega", "kilo",
+#'       NA,
+#'       "milli", "micro", "nano", "pico", "femto"
+#'     ),
+#'     symbol = c(
+#'       "P", "T", "G", "M", "k",
+#'       NA,
+#'       "m", ":micro:", "n", "p", "f"
+#'     ),
+#'     decimal = c(10^(seq(15, -15, -3))),
+#'     engineering = decimal
+#'   )
+#'
+#' prefixes_tbl |>
+#'   gt() |>
+#'   fmt_number(columns = decimal, n_sigfig = 1) |>
+#'   fmt_engineering(columns = engineering) |>
+#'   fmt_units(columns = symbol) |>
+#'   sub_missing()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_engineering_2.png")`
+#' }}
+#'
+#' The default method of styling the notation uses the '*m* x 10^*n*'
+#' construction but this can be changed to a '*m*E*n*' style via the `exp_style`
+#' argument. We can supply any single letter here and optionally affix a `"1"`
+#' to indicate there should not be any zero-padding of the *n* value. Two calls
+#' of `fmt_engineering()` are used here to show different options for styling
+#' in engineering notation.
+#'
+#' ```r
+#' small_large_tbl |>
+#'   gt() |>
+#'   fmt_engineering(
+#'     columns = small,
+#'     exp_style = "E"
+#'   ) |>
+#'   fmt_engineering(
+#'     columns = large,
+#'     exp_style = "e1",
+#'     force_sign_n = TRUE
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_engineering_3.png")`
 #' }}
 #'
 #' @family data formatting functions
@@ -1700,7 +1799,6 @@ fmt_scientific <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_engineering()].
 #'
-#' @import rlang
 #' @export
 fmt_engineering <- function(
     data,
@@ -1750,7 +1848,7 @@ fmt_engineering <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -1791,11 +1889,8 @@ fmt_engineering <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -1815,23 +1910,8 @@ fmt_engineering <- function(
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by, system = "intl")
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_engineering()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -1839,7 +1919,7 @@ fmt_engineering <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -1850,7 +1930,7 @@ fmt_engineering <- function(
 
         # Define the `replace_minus()` function
         replace_minus <- function(x) {
-          tidy_gsub(x, "-", minus_mark, fixed = TRUE)
+          gsub("-", minus_mark, x, fixed = TRUE)
         }
 
         # Create the `suffix_df` object
@@ -1863,7 +1943,17 @@ fmt_engineering <- function(
             system = "intl"
           )
 
-        # Scale the `x_vals` by the `scale_by` values
+        # Determine whether `scale_by` is supplied as a function; if it isn't
+        # the only other pathway involves getting the vector of values produced
+        # by the `create_suffix_df()` function
+        if (rlang::is_function(scale_by)) {
+          to_scale_by <- scale_by
+        } else {
+          to_scale_by <- suffix_df$scale_by
+        }
+
+        # Scale the `x` values using `to_scale_by` (either a function or
+        # a numeric vector)
         x <- scale_x_values(x, suffix_df$scale_by)
 
         zero_x <- x == 0
@@ -1903,7 +1993,7 @@ fmt_engineering <- function(
         n_part <-
           vapply(
             power_3,
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
               if (x > 0 && force_sign_n) {
@@ -1946,7 +2036,7 @@ fmt_engineering <- function(
           n_part <-
             vapply(
               power_3,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               USE.NAMES = FALSE,
               FUN = function(x) {
                 if (grepl("-", x)) {
@@ -1965,7 +2055,7 @@ fmt_engineering <- function(
             n_part <-
               vapply(
                 seq_along(n_part),
-                FUN.VALUE = character(1),
+                FUN.VALUE = character(1L),
                 USE.NAMES = FALSE,
                 FUN = function(i) {
                   if (power_3[i] >= 0) {
@@ -2062,7 +2152,17 @@ fmt_symbol <- function(
             system = system
           )
 
-        # Scale the `x_vals` by the `scale_by` value
+        # Determine whether `scale_by` is supplied as a function; if it isn't
+        # the only other pathway involves getting the vector of values produced
+        # by the `create_suffix_df()` function
+        if (rlang::is_function(scale_by)) {
+          to_scale_by <- scale_by
+        } else {
+          to_scale_by <- suffix_df$scale_by
+        }
+
+        # Scale the `x` values using `to_scale_by` (either a function or
+        # a numeric vector)
         x <- scale_x_values(x, suffix_df$scale_by)
 
         is_negative_x <- x < 0
@@ -2158,8 +2258,8 @@ fmt_symbol <- function(
 #' With numeric values in a **gt** table, we can perform percentage-based
 #' formatting. It is assumed the input numeric values are proportional values
 #' and, in this case, the values will be automatically multiplied by `100`
-#' before decorating with a percent sign (the other case is accommodated though
-#' setting the `scale_values` to `FALSE`). For more control over percentage
+#' before decorating with a percent sign (the other case is accommodated through
+#' setting `scale_values = FALSE`). For more control over percentage
 #' formatting, we can use the following options:
 #'
 #' - percent sign placement: the percent sign can be placed after or
@@ -2206,10 +2306,10 @@ fmt_symbol <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_percent()` formatting function is compatible with body cells that
-#' are of the `"numeric"` or `"integer"` types. Any other types of body cells
-#' are ignored during formatting. This is to say that cells of incompatible data
-#' types may be targeted, but there will be no attempt to format them.
+#' `fmt_percent()` is compatible with body cells that are of the `"numeric"` or
+#' `"integer"` types. Any other types of body cells are ignored during
+#' formatting. This is to say that cells of incompatible data types may be
+#' targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -2252,10 +2352,10 @@ fmt_symbol <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_percent()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_percent()` to
+#' obtain varying parameter values from a specified column within the table.
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `decimals`
 #' - `drop_trailing_zeros`
@@ -2275,11 +2375,10 @@ fmt_symbol <- function(
 #' Please note that for all of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -2293,14 +2392,14 @@ fmt_symbol <- function(
 #' Note that a `locale` value provided here will override any global locale
 #' setting performed in [gt()]'s own `locale` argument (it is settable there as
 #' a value received by all other functions that have a `locale` argument). As a
-#' useful reference on which locales are supported, we can use the
-#' [info_locales()] function to view an info table.
+#' useful reference on which locales are supported, we can call[info_locales()]
+#' to view an info table.
 #'
 #' @section Examples:
 #'
 #' Use a summarized version of the [`pizzaplace`] dataset to create a **gt**
-#' table. With the `fmt_percent()` function, we can format the `frac_of_quota`
-#' column to display values as percentages (to one decimal place).
+#' table. With `fmt_percent()`, we can format the `frac_of_quota` column to
+#' display values as percentages (to one decimal place).
 #'
 #' ```r
 #' pizzaplace |>
@@ -2329,7 +2428,6 @@ fmt_symbol <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_percent()].
 #'
-#' @import rlang
 #' @export
 fmt_percent <- function(
     data,
@@ -2385,7 +2483,7 @@ fmt_percent <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -2429,14 +2527,11 @@ fmt_percent <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -2444,23 +2539,8 @@ fmt_percent <- function(
   locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_percent()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   if (scale_values) {
     scale_by <- 100
@@ -2568,10 +2648,10 @@ fmt_percent <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_partsper()` formatting function is compatible with body cells that
-#' are of the `"numeric"` or `"integer"` types. Any other types of body cells
-#' are ignored during formatting. This is to say that cells of incompatible data
-#' types may be targeted, but there will be no attempt to format them.
+#' `fmt_partsper()` is compatible with body cells that are of the `"numeric"` or
+#' `"integer"` types. Any other types of body cells are ignored during
+#' formatting. This is to say that cells of incompatible data types may be
+#' targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -2614,10 +2694,10 @@ fmt_percent <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_partsper()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_partsper()` to
+#' obtain varying parameter values from a specified column within the table.
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `to_units`
 #' - `symbol`
@@ -2637,11 +2717,10 @@ fmt_percent <- function(
 #' Please note that for all of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -2655,8 +2734,8 @@ fmt_percent <- function(
 #' Note that a `locale` value provided here will override any global locale
 #' setting performed in [gt()]'s own `locale` argument (it is settable there as
 #' a value received by all other functions that have a `locale` argument). As a
-#' useful reference on which locales are supported, we can use the
-#' [info_locales()] function to view an info table.
+#' useful reference on which locales are supported, we can call [info_locales()]
+#' to view an info table.
 #'
 #' @section Examples:
 #'
@@ -2688,7 +2767,6 @@ fmt_percent <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_partsper()].
 #'
-#' @import rlang
 #' @export
 fmt_partsper <- function(
     data,
@@ -2744,7 +2822,7 @@ fmt_partsper <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -2788,15 +2866,12 @@ fmt_partsper <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   to_units <- rlang::arg_match(to_units)
   system <- rlang::arg_match(system)
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -2804,23 +2879,8 @@ fmt_partsper <- function(
   locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_partsper()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Scale values according to `to_units` value
   if (scale_values) {
@@ -2954,10 +3014,10 @@ fmt_partsper <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_fraction()` formatting function is compatible with body cells that
-#' are of the `"numeric"` or `"integer"` types. Any other types of body cells
-#' are ignored during formatting. This is to say that cells of incompatible data
-#' types may be targeted, but there will be no attempt to format them.
+#' `fmt_fraction()` is compatible with body cells that are of the `"numeric"` or
+#' `"integer"` types. Any other types of body cells are ignored during
+#' formatting. This is to say that cells of incompatible data types may be
+#' targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -3000,10 +3060,10 @@ fmt_partsper <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_fraction()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_fraction()` to
+#' obtain varying parameter values from a specified column within the table.
+#' This means that each row could be formatted a little bit ifferently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `accuracy`
 #' - `simplify`
@@ -3017,11 +3077,10 @@ fmt_partsper <- function(
 #' Please note that for all of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -3035,18 +3094,18 @@ fmt_partsper <- function(
 #' Note that a `locale` value provided here will override any global locale
 #' setting performed in [gt()]'s own `locale` argument (it is settable there as
 #' a value received by all other functions that have a `locale` argument). As a
-#' useful reference on which locales are supported, we can use the
-#' [info_locales()] function to view an info table.
+#' useful reference on which locales are supported, we can call [info_locales()]
+#' to view an info table.
 #'
 #' @section Examples:
 #'
 #' Using a summarized version of the [`pizzaplace`] dataset, let's create a
-#' **gt** table. With the `fmt_fraction()` function we can format the `f_sold`
-#' and `f_income` columns to display fractions. As for how the fractions are
-#' represented, we are electing to use `accuracy = 10`. This gives all fractions
-#' as tenths. We won't simplify the fractions (by using `simplify = FALSE`) and
-#' this means that a fraction like `5/10` won't become `1/2`. With `layout =
-#' "diagonal"`, we get a diagonal display of all fractions.
+#' **gt** table. With `fmt_fraction()` we can format the `f_sold` and `f_income`
+#' columns to display fractions. As for how the fractions are represented, we
+#' are electing to use `accuracy = 10`. This gives all fractions as tenths.
+#' We won't simplify the fractions (by using `simplify = FALSE`) and this means
+#' that a fraction like `5/10` won't become `1/2`. With `layout ="diagonal"`,
+#' we get a diagonal display of all fractions.
 #'
 #' ```r
 #' pizzaplace |>
@@ -3120,7 +3179,6 @@ fmt_partsper <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_fraction()].
 #'
-#' @import rlang
 #' @export
 fmt_fraction <- function(
     data,
@@ -3164,7 +3222,7 @@ fmt_fraction <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -3202,15 +3260,12 @@ fmt_fraction <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
   layout <- rlang::arg_match(layout)
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -3227,14 +3282,7 @@ fmt_fraction <- function(
 
   } else if (is.numeric(accuracy)) {
 
-    if (accuracy < 1) {
-
-      cli::cli_abort(c(
-        "The numeric value supplied for `accuracy` is invalid.",
-        "*" = "Must be an integer value greater than zero."
-      ))
-    }
-
+    check_number_whole(accuracy, min = 1, allow_infinite = FALSE)
   } else {
 
     cli::cli_abort(c(
@@ -3244,22 +3292,8 @@ fmt_fraction <- function(
     ))
   }
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "{.fn fmt_fraction} must be used on `columns` with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Use locale-based `sep_mark` if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -3270,7 +3304,7 @@ fmt_fraction <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -3546,7 +3580,7 @@ round_gt <- function(x, digits = 0) {
 #' @description
 #'
 #' With numeric values in a **gt** table, we can perform currency-based
-#' formatting with the `fmt_currency()` function. The function supports both
+#' formatting with `fmt_currency()`. The function supports both
 #' automatic formatting with either a three-letter or a numeric currency code.
 #' We can also specify a custom currency that is formatted according to one or
 #' more output contexts with the [currency()] helper function. We have fine
@@ -3574,8 +3608,8 @@ round_gt <- function(x, digits = 0) {
 #' formatting specific to the chosen locale; it will also retrieve the locale's
 #' currency if none is explicitly given
 #'
-#' We can use the [info_currencies()] function for a useful reference on all of
-#' the possible inputs to the `currency` argument.
+#' We can call [info_currencies()] for a useful reference on all of the valid
+#' inputs to the `currency` argument.
 #'
 #' @inheritParams fmt_number
 #'
@@ -3656,10 +3690,10 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_currency()` formatting function is compatible with body cells that
-#' are of the `"numeric"` or `"integer"` types. Any other types of body cells
-#' are ignored during formatting. This is to say that cells of incompatible data
-#' types may be targeted, but there will be no attempt to format them.
+#' `fmt_currency()` is compatible with body cells that are of the `"numeric"` or
+#' `"integer"` types. Any other types of body cells are ignored during
+#' formatting. This is to say that cells of incompatible data types may be
+#' targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -3702,10 +3736,10 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_currency()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_currency()` to
+#' obtain varying parameter values from a specified column within the table.
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `currency`
 #' - `use_subunits`
@@ -3727,11 +3761,10 @@ round_gt <- function(x, digits = 0) {
 #' Please note that for all of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -3747,8 +3780,8 @@ round_gt <- function(x, digits = 0) {
 #' Note that a `locale` value provided here will override any global locale
 #' setting performed in [gt()]'s own `locale` argument (it is settable there as
 #' a value received by all other functions that have a `locale` argument). As a
-#' useful reference on which locales are supported, we can use the
-#' [info_locales()] function to view an info table.
+#' useful reference on which locales are supported, we can call [info_locales()]
+#' to view an info table.
 #'
 #' @section Examples:
 #'
@@ -3799,9 +3832,9 @@ round_gt <- function(x, digits = 0) {
 #' number of `"hawaiian"` pizzas sold (and revenue generated) by month. In the
 #' **gt** table, we'll format only the `revenue` column. The `currency` value is
 #' automatically U.S. Dollars when don't supply either a currency code or a
-#' locale. We'll also create a grand summary with the [grand_summary_rows()]
-#' function. Within that summary row, the total revenue needs to be formatted
-#' with `fmt_currency()` and we can do that within the `fmt` argument.
+#' locale. We'll also create a grand summary with [grand_summary_rows()]. Within
+#' that summary row, the total revenue needs to be formatted with
+#' `fmt_currency()` and we can do that within the `fmt` argument.
 #'
 #' ```r
 #' pizzaplace |>
@@ -3831,8 +3864,8 @@ round_gt <- function(x, digits = 0) {
 #' locale's assumed currency and not have to supply a `currency` value (doing so
 #' would override the locale's default currency). With a column of locale
 #' values, we can format currency values on a row-by-row basis through the use
-#' of the [from_column()] helper function. Here, we'll reference the `locale`
-#' column in the argument of the same name.
+#' of [from_column()]. Here, we'll reference the `locale` column in the argument
+#' of the same name.
 #'
 #' ```r
 #' dplyr::tibble(
@@ -3898,7 +3931,6 @@ round_gt <- function(x, digits = 0) {
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_currency()].
 #'
-#' @import rlang
 #' @export
 fmt_currency <- function(
     data,
@@ -3958,7 +3990,7 @@ fmt_currency <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -4004,14 +4036,11 @@ fmt_currency <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -4019,29 +4048,12 @@ fmt_currency <- function(
   locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_currency()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Resolve the currency either from direct input in `currency` or
   # through a locale
-  if (is.null(currency)) {
-    currency <- get_locale_currency_code(locale = locale)
-  }
+  currency <- currency %||% get_locale_currency_code(locale = locale)
 
   # Stop function if `currency` does not have a valid value
   validate_currency(currency = currency)
@@ -4098,10 +4110,10 @@ fmt_currency <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_roman()` formatting function is compatible with body cells that are
-#' of the `"numeric"` or `"integer"` types. Any other types of body cells are
-#' ignored during formatting. This is to say that cells of incompatible data
-#' types may be targeted, but there will be no attempt to format them.
+#' `fmt_roman()` is compatible with body cells that are of the `"numeric"` or
+#' `"integer"` types. Any other types of body cells are ignored during
+#' formatting. This is to say that cells of incompatible data types may be
+#' targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -4144,10 +4156,10 @@ fmt_currency <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_roman()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_roman()` to obtain
+#' varying parameter values from a specified column within the table. This means
+#' that each row could be formatted a little bit differently. These arguments
+#' provide support for [from_column()]:
 #'
 #' - `case`
 #' - `pattern`
@@ -4155,11 +4167,10 @@ fmt_currency <- function(
 #' Please note that for both of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Examples:
 #'
@@ -4211,7 +4222,6 @@ fmt_currency <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_roman()].
 #'
-#' @import rlang
 #' @export
 fmt_roman <- function(
     data,
@@ -4243,7 +4253,7 @@ fmt_roman <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -4275,32 +4285,14 @@ fmt_roman <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   case <- rlang::arg_match(case)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_roman()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -4308,7 +4300,7 @@ fmt_roman <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -4381,10 +4373,10 @@ fmt_roman <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_index()` formatting function is compatible with body cells that are
-#' of the `"numeric"` or `"integer"` types. Any other types of body cells are
-#' ignored during formatting. This is to say that cells of incompatible data
-#' types may be targeted, but there will be no attempt to format them.
+#' `fmt_index()` is compatible with body cells that are of the `"numeric"` or
+#' `"integer"` types. Any other types of body cells are ignored during
+#' formatting. This is to say that cells of incompatible data types may be
+#' targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -4427,10 +4419,10 @@ fmt_roman <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_index()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_index()` to obtain
+#' varying parameter values from a specified column within the table. This means
+#' that each row could be formatted a little bit differently. These arguments
+#' provide support for [from_column()]:
 #'
 #' - `case`
 #' - `index_algo`
@@ -4440,16 +4432,15 @@ fmt_roman <- function(
 #' Please note that for all of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Examples:
 #'
 #' Using a summarized version of the [`towny`] dataset, let's create a **gt**
-#' table. Here, the `fmt_index()` function is used to transform incremental
+#' table. Here, `fmt_index()` is used to transform incremental
 #' integer values into capitalized letters (in the `ranking` column). With
 #' [cols_merge()] that formatted column of `"A"` to `"E"` values is merged with
 #' the `census_div` column to create an indexed listing of census subdivisions,
@@ -4463,10 +4454,8 @@ fmt_roman <- function(
 #'     population = sum(population_2021),
 #'     .groups = "drop_last"
 #'   ) |>
-#'   dplyr::arrange(population) |>
-#'   dplyr::slice_head(n = 5) |>
-#'   dplyr::mutate(ranking = dplyr::row_number()) |>
-#'   dplyr::select(ranking, dplyr::everything()) |>
+#'   dplyr::slice_min(population, n = 5) |>
+#'   dplyr::mutate(ranking = dplyr::row_number(), .before = 0) |>
 #'   gt() |>
 #'   fmt_integer() |>
 #'   fmt_index(columns = ranking, pattern = "{x}.") |>
@@ -4493,7 +4482,6 @@ fmt_roman <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_index()].
 #'
-#' @import rlang
 #' @export
 fmt_index <- function(
     data,
@@ -4529,7 +4517,7 @@ fmt_index <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -4563,15 +4551,12 @@ fmt_index <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   case <- rlang::arg_match(case)
   index_algo <- rlang::arg_match(index_algo)
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -4582,23 +4567,8 @@ fmt_index <- function(
   # Use locale-based `idx_set` if a locale ID is provided
   idx_set <- get_locale_idx_set(locale)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_index()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -4606,7 +4576,7 @@ fmt_index <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -4634,7 +4604,7 @@ fmt_index <- function(
         x_str[x_is_a_number] <-
           vapply(
             x[x_is_a_number],
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) index_fn(x, set = idx_set)
           )
@@ -4675,7 +4645,7 @@ index_excel <- function(num, set) {
   result <-
     vapply(
       num,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         get_letters_from_div(x, set = set)
@@ -4707,13 +4677,12 @@ get_letters_from_div <- function(x, set) {
 #' @description
 #'
 #' With numeric values in a **gt** table we can transform those to numbers that
-#' are spelled out with the `fmt_spelled_num()` function. Any values from `0` to
-#' `100` can be spelled out so, for example, the value `23` will be formatted as
-#' `"twenty-three"`. Providing a locale ID will result in the number spelled out
-#' in the locale's language rules. For example, should a Swedish locale (`"sv"`)
-#' be provided, the input value `23` will yield `"tjugotre"`. In addition to
-#' this, we can optionally use the `pattern` argument for decoration of the
-#' formatted values.
+#' are spelled out with `fmt_spelled_num()`. Any values from `0` to `100` can be
+#' spelled out so, for example, the value `23` will be formatted as `"twenty-three"`.
+#' Providing a locale ID will result in the number spelled out in the locale's
+#' language rules. For example, should a Swedish locale (`"sv"`) be provided,
+#' the value `23` will yield `"tjugotre"`. In addition to this, we can
+#' optionally use the `pattern` argument for decoration of the formatted values.
 #'
 #' @inheritParams fmt_number
 #'
@@ -4721,11 +4690,10 @@ get_letters_from_div <- function(x, set) {
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_spelled_num()` formatting function is compatible with body cells
-#' that are of the `"numeric"` or `"integer"` types. Any other types of body
-#' cells are ignored during formatting. This is to say that cells of
-#' incompatible data types may be targeted, but there will be no attempt to
-#' format them.
+#' `fmt_spelled_num()` is compatible with body cells that are of the `"numeric"`
+#' or `"integer"` types. Any other types of body cells are ignored during
+#' formatting. This is to say that cells of incompatible data types may be
+#' targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -4768,10 +4736,10 @@ get_letters_from_div <- function(x, set) {
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_spelled_num()` to obtain varying parameter values from a specified
-#' column within the table. This means that each row could be formatted a little
-#' bit differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_spelled_num()` to
+#' obtain varying parameter values from a specified column within the table.
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `pattern`
 #' - `locale`
@@ -4779,11 +4747,10 @@ get_letters_from_div <- function(x, set) {
 #' Please note that for both of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Supported locales:
 #'
@@ -4814,17 +4781,14 @@ get_letters_from_div <- function(x, set) {
 #' @section Examples:
 #'
 #' Let's use a summarized version of the [`gtcars`] dataset to create a
-#' **gt** table. The `fmt_spelled_num()` function is used to transform
+#' **gt** table. `fmt_spelled_num()` is used to transform
 #' integer values into spelled-out numbering (in the `n` column). That formatted
 #' column of numbers-as-words is given cell background colors via [data_color()]
 #' (the underlying numerical values are always available).
 #'
 #' ```r
 #' gtcars |>
-#'   dplyr::select(mfr, ctry_origin) |>
-#'   dplyr::group_by(mfr, ctry_origin) |>
-#'   dplyr::count() |>
-#'   dplyr::ungroup() |>
+#'   dplyr::count(mfr, ctry_origin) |>
 #'   dplyr::arrange(ctry_origin) |>
 #'   gt(rowname_col = "mfr", groupname_col = "ctry_origin") |>
 #'   cols_label(n = "No. of Entries") |>
@@ -4846,10 +4810,10 @@ get_letters_from_div <- function(x, set) {
 #' }}
 #'
 #' With a considerable amount of **dplyr** and **tidyr** work done to the
-#' [`pizzaplace`] dataset, we can create a new **gt** table. The
-#' `fmt_spelled_num()` function will be used here to transform the integer
-#' values in the `rank` column. We'll do so with a special `pattern` that puts
-#' the word 'Number' in front of every spelled-out number.
+#' [`pizzaplace`] dataset, we can create a new **gt** table. `fmt_spelled_num()`
+#' will be used here to transform the integer values in the `rank` column.
+#' We'll do so with a special `pattern` that puts the word 'Number' in front of
+#' every spelled-out number.
 #'
 #' ```r
 #' pizzaplace |>
@@ -4880,6 +4844,50 @@ get_letters_from_div <- function(x, set) {
 #' `r man_get_image_tag(file = "man_fmt_spelled_num_2.png")`
 #' }}
 #'
+#' Let's make a table that compares how the numbers from `1` to `10` are spelled
+#' across a small selection of languages. Here we use `fmt_spelled_num()` with
+#' each column, ensuring that the `locale` value matches that of the column
+#' name.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   num = 1:10,
+#'   en = num,
+#'   fr = num,
+#'   de = num,
+#'   es = num,
+#'   pl = num,
+#'   bg = num,
+#'   ko = num,
+#'   zh = num
+#' ) |>
+#'   gt(rowname_col = "num") |>
+#'   fmt_spelled_num(columns = en, locale = "en") |>
+#'   fmt_spelled_num(columns = fr, locale = "fr") |>
+#'   fmt_spelled_num(columns = de, locale = "de") |>
+#'   fmt_spelled_num(columns = es, locale = "es") |>
+#'   fmt_spelled_num(columns = pl, locale = "pl") |>
+#'   fmt_spelled_num(columns = bg, locale = "bg") |>
+#'   fmt_spelled_num(columns = ko, locale = "ko") |>
+#'   fmt_spelled_num(columns = zh, locale = "zh") |>
+#'   cols_label_with(fn = function(x) md(paste0("`", x, "`"))) |>
+#'   tab_spanner(
+#'     label = "Numbers in the specified locale",
+#'     columns = everything()
+#'   ) |>
+#'   cols_align(align = "left", columns = everything()) |>
+#'   cols_width(
+#'     c(en, fr, de, es, pl, bg) ~ px(100),
+#'     c(ko, zh) ~ px(50)
+#'   ) |>
+#'   opt_horizontal_padding(scale = 2) |>
+#'   opt_vertical_padding(scale = 0.5)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_spelled_num_3.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-11
@@ -4890,7 +4898,6 @@ get_letters_from_div <- function(x, set) {
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_spelled_num()].
 #'
-#' @import rlang
 #' @export
 fmt_spelled_num <- function(
     data,
@@ -4922,7 +4929,7 @@ fmt_spelled_num <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -4954,11 +4961,8 @@ fmt_spelled_num <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -4969,23 +4973,8 @@ fmt_spelled_num <- function(
   # Obtain a locale-based `num_spellout_set` vector
   num_spellout_set <- get_locale_num_spellout(locale = locale)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_spelled_num()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -4993,7 +4982,7 @@ fmt_spelled_num <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -5040,7 +5029,7 @@ fmt_spelled_num <- function(
 #' @description
 #'
 #' With numeric values in a **gt** table, we can transform those to values of
-#' bytes with human readable units. The `fmt_bytes()` function allows for the
+#' bytes with human readable units. `fmt_bytes()` allows for the
 #' formatting of byte sizes to either of two common representations: (1) with
 #' decimal units (powers of 1000, examples being `"kB"` and `"MB"`), and (2)
 #' with binary units (powers of 1024, examples being `"KiB"` and `"MiB"`).
@@ -5099,10 +5088,10 @@ fmt_spelled_num <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_bytes()` formatting function is compatible with body cells that are
-#' of the `"numeric"` or `"integer"` types. Any other types of body cells are
-#' ignored during formatting. This is to say that cells of incompatible data
-#' types may be targeted, but there will be no attempt to format them.
+#' `fmt_bytes()` is compatible with body cells that are of the `"numeric"` or
+#' `"integer"` types. Any other types of body cells are ignored during
+#' formatting. This is to say that cells of incompatible data types may be
+#' targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -5145,10 +5134,10 @@ fmt_spelled_num <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_bytes()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_bytes()` to obtain
+#' varying parameter values from a specified column within the table. This means
+#' that each row could be formatted a little bit differently. These arguments
+#' provide support for [from_column()]:
 #'
 #' - `standard`
 #' - `decimals`
@@ -5166,11 +5155,10 @@ fmt_spelled_num <- function(
 #' Please note that for each of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -5184,14 +5172,14 @@ fmt_spelled_num <- function(
 #' Note that a `locale` value provided here will override any global locale
 #' setting performed in [gt()]'s own `locale` argument (it is settable there as
 #' a value received by all other functions that have a `locale` argument). As a
-#' useful reference on which locales are supported, we can use the
-#' [info_locales()] function to view an info table.
+#' useful reference on which locales are supported, we can call [info_locales()]
+#' to view an info table.
 #'
 #' @section Examples:
 #'
 #' Use a single column from the [`exibble`] dataset and create a simple **gt**
-#' table. We'll format the `num` column to display as byte sizes in the decimal
-#' standard through use of the `fmt_bytes()` function.
+#' table. We'll use `fmt_bytes()` to format the `num` column to display as byte
+#' sizes in the decimal standard.
 #'
 #' ```r
 #' exibble |>
@@ -5204,7 +5192,7 @@ fmt_spelled_num <- function(
 #' `r man_get_image_tag(file = "man_fmt_bytes_1.png")`
 #' }}
 #'
-#' Let's create an analogous table again by using the `fmt_bytes()` function,
+#' Let's create an analogous table again by using `fmt_bytes()`,
 #' this time showing byte sizes as binary values by using `standard = "binary"`.
 #'
 #' ```r
@@ -5227,7 +5215,6 @@ fmt_spelled_num <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_bytes()].
 #'
-#' @import rlang
 #' @export
 fmt_bytes <- function(
     data,
@@ -5279,7 +5266,7 @@ fmt_bytes <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -5321,14 +5308,11 @@ fmt_bytes <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
   standard <- rlang::arg_match(standard)
-
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -5336,23 +5320,8 @@ fmt_bytes <- function(
   locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_bytes()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
-  }
+  valid_class <- c("numeric", "integer")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -5388,7 +5357,7 @@ fmt_bytes <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -5455,11 +5424,10 @@ fmt_bytes <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_date()` formatting function is compatible with body cells that are
-#' of the `"Date"`, `"POSIXt"` or `"character"` types. Any other types of body
-#' cells are ignored during formatting. This is to say that cells of
-#' incompatible data types may be targeted, but there will be no attempt to
-#' format them.
+#' `fmt_date()` is compatible with body cells that are of the `"Date"`,
+#' `"POSIXt"` or `"character"` types. Any other types of body cells are ignored
+#' during formatting. This is to say that cells of incompatible data types may
+#' be targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -5502,10 +5470,10 @@ fmt_bytes <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_date()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_date()` to obtain
+#' varying parameter values from a specified column within the table. This means
+#' that each row could be formatted a little bit differently. These arguments
+#' provide support for [from_column()]:
 #'
 #' - `date_style`
 #' - `pattern`
@@ -5514,11 +5482,10 @@ fmt_bytes <- function(
 #' Please note that for each of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Formatting with the `date_style` argument:
 #'
@@ -5576,8 +5543,8 @@ fmt_bytes <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' We can use the [info_date_style()] function within the console to view a
-#' similar table of date styles with example output.
+#' We can call [info_date_style()] in the console to view a similar table
+#' of date styles with example output.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -5587,14 +5554,14 @@ fmt_bytes <- function(
 #' global locale setting performed in [gt()]'s own `locale` argument (it is
 #' settable there as a value received by all other functions that have a
 #' `locale` argument). As a useful reference on which locales are supported, we
-#' can use the [info_locales()] function to view an info table.
+#' can call [info_locales()] to view an info table.
 #'
 #' @section Examples:
 #'
 #' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
-#' (keeping only the `date` and `time` columns). With the `fmt_date()` function,
-#' we'll format the `date` column to display dates formatted with the
-#' `"month_day_year"` date style.
+#' (keeping only the `date` and `time` columns). With `fmt_date()`, we'll format
+#' the `date` column to display dates formatted with the `"month_day_year"`
+#' date style.
 #'
 #' ```r
 #' exibble |>
@@ -5666,7 +5633,6 @@ fmt_bytes <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_date()].
 #'
-#' @import rlang
 #' @export
 fmt_date <- function(
     data,
@@ -5700,7 +5666,7 @@ fmt_date <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -5733,11 +5699,8 @@ fmt_date <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("Date", "POSIXt", "character")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -5746,26 +5709,16 @@ fmt_date <- function(
   locale <- resolve_locale(data = data, locale = locale)
 
   # Transform `date_style` to `date_format_str`
-  date_format_str <- get_date_format(date_style = date_style)
+  date_format_str <- withCallingHandlers(
+    get_date_format(date_style = date_style),
+    error = function(e) {
+      cli::cli_abort("Invalid date style. See {.run gt::info_date_style()}.",
+                     parent = e)
+    })
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(c(
-        "The `fmt_date()` function can only be used on `columns` of certain types.",
-        "*" = "Allowed types are `Date`, `POSIXt`, and `character` (with
-      ISO-8601 formatted dates)."
-      ))
-    }
-  }
+  valid_class <- c("Date", "POSIXt", "character")
+  extra_msg <- c(i = "If character data is supplied, it should be ISO-8601 formatted dates.")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class, extra_msg = extra_msg)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -5773,7 +5726,7 @@ fmt_date <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -5782,11 +5735,13 @@ fmt_date <- function(
         # Convert incoming values to POSIXlt but provide a friendly error
         # if the values cannot be parsed by `as.POSIXlt()`
         date <-
-          tryCatch(
+          withCallingHandlers(
             as.POSIXlt(x, tz = "GMT"),
-            error = function(cond) {
+            error = function(e) {
               cli::cli_abort(
-                "One or more of the provided date/datetime values are invalid."
+                "One or more of the provided date/datetime values are invalid.",
+                call = call("fmt_date"),
+                parent = e
               )
             }
           )
@@ -5826,11 +5781,10 @@ fmt_date <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_time()` formatting function is compatible with body cells that are
-#' of the `"Date"`, `"POSIXt"` or `"character"` types. Any other types of body
-#' cells are ignored during formatting. This is to say that cells of
-#' incompatible data types may be targeted, but there will be no attempt to
-#' format them.
+#' `fmt_time()` is compatible with body cells that are of the `"Date"`,
+#' `"POSIXt"` or `"character"` types. Any other types of body cells are ignored
+#' during formatting. This is to say that cells of incompatible data types may
+#' be targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -5873,10 +5827,10 @@ fmt_date <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_time()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_time()` to obtain
+#' varying parameter values from a specified column within the table. This means
+#' that each row could be formatted a little bit differently. These arguments
+#' provide support for [from_column()]:
 #'
 #' - `time_style`
 #' - `pattern`
@@ -5885,11 +5839,10 @@ fmt_date <- function(
 #' Please note that for each of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Formatting with the `time_style` argument:
 #'
@@ -5932,8 +5885,8 @@ fmt_date <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use the [info_time_style()] function within the console to view a
-#' similar table of time styles with example output.
+#' We can call [info_time_style()] in the console to view a similar table of
+#' time styles with example output.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -5943,14 +5896,13 @@ fmt_date <- function(
 #' global locale setting performed in [gt()]'s own `locale` argument (it is
 #' settable there as a value received by all other functions that have a
 #' `locale` argument). As a useful reference on which locales are supported, we
-#' can use the [info_locales()] function to view an info table.
+#' can use [info_locales()] to view an info table.
 #'
 #' @section Examples:
 #'
 #' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
 #' (keeping only the `date` and `time` columns). Format the `time` column with
-#' the `fmt_time()` function to display times formatted with the `"h_m_s_p"`
-#' time style.
+#' `fmt_time()` to display times formatted with the `"h_m_s_p"` time style.
 #'
 #' ```r
 #' exibble |>
@@ -6022,7 +5974,6 @@ fmt_date <- function(
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_time()].
 #'
-#' @import rlang
 #' @export
 fmt_time <- function(
     data,
@@ -6056,7 +6007,7 @@ fmt_time <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -6089,11 +6040,8 @@ fmt_time <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("Date", "POSIXt", "character")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -6102,26 +6050,17 @@ fmt_time <- function(
   locale <- resolve_locale(data = data, locale = locale)
 
   # Transform `time_style` to `time_format_str`
-  time_format_str <- get_time_format(time_style = time_style)
+  time_format_str <- withCallingHandlers(
+    get_time_format(time_style = time_style),
+    error = function(e) {
+      cli::cli_abort("Invalid time style. See {.run gt::info_time_style()}.",
+                     parent = e)
+    })
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(c(
-        "The `fmt_time()` function can only be used on `columns` of certain types.",
-        "*" = "Allowed types are `Date`, `POSIXt`, and `character` (in
-      `HH:MM:SS` format)."
-      ))
-    }
-  }
+  valid_class <- c("Date", "POSIXt", "character")
+  msg <- c(i = "Allowed types are `Date`, `POSIXt`, and `character` (in
+      `HH:MM:SS` format).")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class, msg)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -6129,7 +6068,7 @@ fmt_time <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -6145,11 +6084,13 @@ fmt_time <- function(
         # Convert incoming values to POSIXlt but provide a friendly error
         # if the values cannot be parsed by `as.POSIXlt()`
         time <-
-          tryCatch(
+          withCallingHandlers(
             as.POSIXlt(x, tz = "GMT"),
-            error = function(cond) {
+            error = function(e) {
               cli::cli_abort(
-                "One or more of the provided date/time/datetime values are invalid."
+                "One or more of the provided date/time/datetime values are invalid.",
+                call = call("fmt_time"),
+                parent = e
               )
             }
           )
@@ -6212,11 +6153,10 @@ fmt_time <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_datetime()` formatting function is compatible with body cells that
-#' are of the `"Date"`, `"POSIXct"` or `"character"` types. Any other types of
-#' body cells are ignored during formatting. This is to say that cells of
-#' incompatible data types may be targeted, but there will be no attempt to
-#' format them.
+#' `fmt_datetime()` is compatible with body cells that are of the `"Date"`,
+#' `"POSIXct"` or `"character"` types. Any other types of body cells are ignored
+#' during formatting. This is to say that cells of incompatible data types may
+#' be targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -6259,10 +6199,10 @@ fmt_time <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_datetime()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_datetime()` to
+#' obtain varying parameter values from a specified column within the table.
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `date_style`
 #' - `time_style`
@@ -6275,11 +6215,10 @@ fmt_time <- function(
 #' Please note that for each of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Formatting with the `date_style` argument:
 #'
@@ -6337,8 +6276,8 @@ fmt_time <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' We can use the [info_date_style()] function within the console to view a
-#' similar table of date styles with example output.
+#' We can call [info_date_style()] in the console to view a similar table of
+#' date styles with example output.
 #'
 #' @section Formatting with the `time_style` argument:
 #'
@@ -6352,7 +6291,7 @@ fmt_time <- function(
 #' The following table provides a listing of all time styles and their output
 #' values (corresponding to an input time of `14:35:00`). It is noted which of
 #' these represent 12- or 24-hour time. Some of the flexible formats (those
-#' that begin with `"E"`) include the the day of the week. Keep this in mind
+#' that begin with `"E"`) include the day of the week. Keep this in mind
 #' when pairing such `time_style` values with a `date_style` so as to avoid
 #' redundant or repeating information.
 #'
@@ -6384,8 +6323,8 @@ fmt_time <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use the [info_time_style()] function within the console to view a
-#' similar table of time styles with example output.
+#' We can call [info_time_style()] in the console to view a similar table of
+#' time styles with example output.
 #'
 #' @section Formatting with a *CLDR* datetime pattern:
 #'
@@ -6920,7 +6859,7 @@ fmt_time <- function(
 #' global locale setting performed in [gt()]'s own `locale` argument (it is
 #' settable there as a value received by all other functions that have a
 #' `locale` argument). As a useful reference on which locales are supported, we
-#' can use the [info_locales()] function to view an info table.
+#' can call [info_locales()] to view an info table.
 #'
 #' @section Examples:
 #'
@@ -7001,7 +6940,6 @@ fmt_time <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_datetime()].
 #'
-#' @import rlang
 #' @export
 fmt_datetime <- function(
     data,
@@ -7043,7 +6981,7 @@ fmt_datetime <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -7080,11 +7018,8 @@ fmt_datetime <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
-
-  # Declare formatting function compatibility
-  compat <- c("Date", "POSIXct", "character")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -7095,35 +7030,31 @@ fmt_datetime <- function(
   if (!is.null(format)) {
 
     # Ensure that the format code meets some basic validation requirements
-    check_format_code(format = format)
+    check_string(format)
 
   } else {
 
-    # Transform `date_style` to `date_format`
-    date_format_str <- get_date_format(date_style = date_style)
+    # Transform `date_style` to `date_format_str`
+    date_format_str <- withCallingHandlers(
+      get_date_format(date_style = date_style),
+      error = function(e) {
+        cli::cli_abort("Invalid date style. See {.run gt::info_date_style()} for valid inputs.",
+                       parent = e)
+      })
 
-    # Transform `time_style` to `time_format`
-    time_format_str <- get_time_format(time_style = time_style)
+    # Transform `time_style` to `time_format_str`
+    time_format_str <- withCallingHandlers(
+      get_time_format(time_style = time_style),
+      error = function(e) {
+        cli::cli_abort("Invalid time style. See {.run gt::info_time_style()} for valid inputs.",
+                       parent = e)
+      })
   }
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(c(
-        "The `fmt_datetime()` function can only be used on `columns` of certain types.",
-        "*" = "Allowed types are `Date`, `POSIXct`, and `character` (with
-      ISO-8601 formatted dates)"
-      ))
-    }
-  }
+  valid_class <- c("Date", "POSIXct", "character")
+  msg <- c(i = "Allowed types are `Date`, `POSIXct`, and `character` (with
+      ISO-8601 formatted dates)")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class, msg)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -7131,7 +7062,7 @@ fmt_datetime <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -7155,11 +7086,13 @@ fmt_datetime <- function(
               tz <- tz %||% "GMT"
 
               datetime <-
-                tryCatch(
+                withCallingHandlers(
                   as.POSIXlt(x),
-                  error = function(cond) {
+                  error = function(e) {
                     cli::cli_abort(
-                      "One or more of the provided date/datetime values are invalid."
+                      "One or more of the provided date/datetime values are invalid.",
+                      call = call("fmt_datetime"),
+                      parent = e
                     )
                   }
                 )
@@ -7204,11 +7137,14 @@ fmt_datetime <- function(
         # Convert incoming values to POSIXlt but provide a friendly error
         # if the values cannot be parsed by `as.POSIXlt()`
         datetime <-
-          tryCatch(
+          withCallingHandlers(
             as.POSIXlt(x),
-            error = function(cond) {
+            error = function(e) {
               cli::cli_abort(
-                "One or more of the provided date/datetime values are invalid."
+                # possibly Error in `fmt()` caused by error in `as.POSIXlt`
+                "One or more of the provided date/datetime values are invalid.",
+                call = call("fmt_datetime"),
+                parent = e
               )
             }
           )
@@ -7341,11 +7277,10 @@ fmt_datetime <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_duration()` formatting function is compatible with body cells that
-#' are of the `"numeric"`, `"integer"`, or `"difftime"` types. Any other types
-#' of body cells are ignored during formatting. This is to say that cells of
-#' incompatible data types may be targeted, but there will be no attempt to
-#' format them.
+#' `fmt_duration()` is compatible with body cells that are of the `"numeric"`,
+#' `"integer"`, or `"difftime"` types. Any other types of body cells are ignored
+#' during formatting. This is to say that cells of incompatible data types may
+#' be targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -7398,8 +7333,8 @@ fmt_datetime <- function(
 #' Note that a `locale` value provided here will override any global locale
 #' setting performed in [gt()]'s own `locale` argument (it is settable there as
 #' a value received by all other functions that have a `locale` argument). As a
-#' useful reference on which locales are supported, we can use the
-#' [info_locales()] function to view an info table.
+#' useful reference on which locales are supported, we can call [info_locales()]
+#' to view an info table.
 #'
 #' @section Examples:
 #'
@@ -7438,7 +7373,6 @@ fmt_datetime <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_duration()].
 #'
-#' @import rlang
 #' @export
 fmt_duration <- function(
     data,
@@ -7464,9 +7398,8 @@ fmt_duration <- function(
   duration_style <- rlang::arg_match(duration_style)
   system <- rlang::arg_match(system)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer", "difftime")
-
+  check_chr_has_length(output_units, allow_null = TRUE, allow_0 = FALSE)
+  check_chr_has_length(input_units, allow_null = TRUE, allow_0 = FALSE)
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
   validate_locale(locale = locale)
@@ -7479,13 +7412,13 @@ fmt_duration <- function(
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
 
-  if (is_true(trim_zero_units)) {
+  if (isTRUE(trim_zero_units)) {
     trim_zero_units <- c("leading", "trailing", "internal")
-  } else if (is_false(trim_zero_units)) {
+  } else if (isFALSE(trim_zero_units)) {
     trim_zero_units <- NULL
   } else if (is.character(trim_zero_units) && length(trim_zero_units) > 0) {
     # Validate that `trim_zero_units` contains only the allowed keywords
-    validate_trim_zero_units(trim_zero_units = trim_zero_units)
+    rlang::arg_match(trim_zero_units, c("leading", "trailing", "internal"), multiple = TRUE)
   } else {
     cli::cli_abort(c(
       "The value provided for `trim_zero_units` is invalid. Either use:",
@@ -7494,50 +7427,23 @@ fmt_duration <- function(
     ))
   }
 
-  if (
-    !is.null(max_output_units) &&
-    (
-      !is.numeric(max_output_units) ||
-      length(max_output_units) != 1 ||
-      max_output_units < 1
-    )
-  ) {
-    cli::cli_abort(c(
-      "The numeric value supplied for `max_output_units` is invalid.",
-      "*" = "Must either be `NULL` or an integer value greater than zero."
-    ))
-  }
+  check_number_whole(max_output_units, min = 1, allow_null = TRUE, allow_infinite = TRUE)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(c(
-        "The `fmt_duration()` function can only be used on `columns` of certain types.",
-        "*" = "Allowed types are `numeric` and `difftime`."
-      ))
-    }
-  }
+  valid_class <- c("numeric", "integer", "difftime")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Stop function if any columns have numeric data and `input_units` is NULL
   if (
+    is.null(input_units) &&
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
       valid_classes = "difftime"
-    ) &&
-    is.null(input_units)
+    )
   ) {
     cli::cli_abort(c(
-      "When there are numeric columns to format, `input_units` must not be `NULL`.",
-      "*" = "Use one of \"seconds\", \"minutes\", \"hours\", \"days\", or \"weeks\"."
+      "{.arg input_units} must be supplied when there are numeric columns to format.",
+      "i" = "Use one of \"seconds\", \"minutes\", \"hours\", \"days\", or \"weeks\"."
     ))
   }
 
@@ -7556,19 +7462,18 @@ fmt_duration <- function(
   }
 
   # Resolve output units
-  if (is.null(output_units)) {
+  output_units <- output_units %||% c("weeks", "days", "hours", "minutes", "seconds")
+  # Stop function if `output_units` isn't a character vector, isn't of
+  # the right length (1 or greater), and does not contain valid values
+  output_units <- rlang::arg_match(
+    output_units,
+    values = c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds"),
+    # Error message will naturally improve as r-lib/rlang#1682 is fixed
+    multiple = TRUE
+  )
 
-    output_units <- c("weeks", "days", "hours", "minutes", "seconds")
-
-  } else {
-
-    # Stop function if `output_units` isn't a character vector, isn't of
-    # the right length (1 or greater), and does not contain valid values
-    validate_duration_output_units(output_units = output_units)
-
-    # Normalize the valid set of provided `output_units`
-    output_units <- normalize_duration_output_units(output_units = output_units)
-  }
+  # Normalize the valid set of provided `output_units`
+  output_units <- normalize_duration_output_units(output_units = output_units)
 
   # If `duration_style` is of the "iso" or "colon-sep" types, then
   # some options need to be overridden
@@ -7618,7 +7523,7 @@ fmt_duration <- function(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    compat = compat,
+    compat = valid_class,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       use_latex_math_mode = FALSE,
@@ -7674,85 +7579,32 @@ fmt_duration <- function(
   )
 }
 
-validate_trim_zero_units <- function(trim_zero_units) {
-
-  if (!all(trim_zero_units %in% c("leading", "trailing", "internal"))) {
-
-    cli::cli_abort(c(
-      "The character vector provided for `trim_zero_units` is invalid.",
-      "*" = "It should only contain any of the keywords \"leading\", \"trailing\",
-      or ", "\"internal\"."
-    ))
-  }
-}
-
-validate_duration_input_units <- function(input_units) {
+validate_duration_input_units <- function(input_units, call = rlang::caller_env()) {
 
   if (is.null(input_units)) {
     return(NULL)
   }
-
-  if (!is.character(input_units)) {
-
-    cli::cli_abort(
-      "The `input_units` input to `fmt_duration()` must be a character vector."
-    )
-  }
-
   time_parts_vec <- c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds")
-
-  if (!all(input_units %in% time_parts_vec) || length(input_units) != 1) {
-
-    cli::cli_abort(c(
-      "The value of `input_units` for `fmt_duration()` is invalid.",
-      "*" = "Only one of the \"weeks\", \"days\", \"hours\", \"minutes\", or
-      \"seconds\" time parts should be present."
-    ))
-  }
+  rlang::arg_match0(
+    input_units,
+    time_parts_vec,
+    error_call = call
+  )
 }
 
 normalize_duration_input_units <- function(input_units) {
 
   # Ensure that key transforms occur
-  input_units <- tidy_sub(input_units, "secs", "seconds")
-  input_units <- tidy_sub(input_units, "mins", "minutes")
+  input_units <- sub("secs", "seconds", input_units, fixed = TRUE)
+  input_units <- sub("mins", "minutes", input_units, fixed = TRUE)
   input_units
-}
-
-validate_duration_output_units <- function(output_units) {
-
-  if (!is.character(output_units)) {
-
-    cli::cli_abort(
-      "The `output_units` input to `fmt_duration()` must be a character vector."
-    )
-  }
-
-  if (length(output_units) < 1) {
-
-    cli::cli_abort(
-      "The `output_units` input to `fmt_duration()` must be a vector with at
-      least one element."
-    )
-  }
-
-  time_parts_vec <- c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds")
-
-  if (!all(output_units %in% time_parts_vec)) {
-
-    cli::cli_abort(c(
-      "There are invalid components in the `output_units` input to `fmt_duration()`.",
-      "*" = "Only the \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\`
-      time parts should be present."
-    ))
-  }
 }
 
 normalize_duration_output_units <- function(output_units) {
 
   # Ensure that key transforms occur and that the output units are a unique set
-  output_units <- tidy_sub(output_units, "secs", "seconds")
-  output_units <- tidy_sub(output_units, "mins", "minutes")
+  output_units <- sub("secs", "seconds", output_units, fixed = TRUE)
+  output_units <- sub("mins", "minutes", output_units, fixed = TRUE)
   output_units <- unique(output_units)
 
   # Ensure that the order of output units is from greatest to smallest
@@ -7961,10 +7813,8 @@ values_to_durations <- function(
 
       # Assemble the remaining time parts
       hms_part <-
-        x_df_i %>%
-        dplyr::filter(time_part %in% c("hours", "minutes", "seconds")) %>%
-        dplyr::pull(formatted) %>%
-        paste(collapse = ":")
+        x_df_i[x_df_i$time_part %in% c("hours", "minutes", "seconds"), "formatted", drop = TRUE]
+      hms_part <- paste(hms_part, collapse = ":")
 
       d_part <-
         ifelse("days" %in% x_df_i$time_part, paste0(x_df_i$formatted[1], "/"), "")
@@ -7973,9 +7823,8 @@ values_to_durations <- function(
 
     } else if (out_style == "iso") {
 
-      x_str[i] <-
-        paste0("P", paste0(x_df_i$formatted, collapse = "")) %>%
-        tidy_sub("D", "DT", fixed = TRUE)
+      x_str[i] <- paste0("P", paste0(x_df_i$formatted, collapse = ""))
+      x_str[i] <- sub("D", "DT", x_str[i], fixed = TRUE)
 
     } else {
       x_str[i] <- paste0(x_df_i$formatted, collapse = " ")
@@ -8031,7 +7880,7 @@ get_localized_duration_patterns <- function(
     locale
 ) {
 
-  if (is.null(locale)) locale <- "en"
+  locale <- locale %||% "en"
 
   if (type == "wide") type <- "long"
 
@@ -8043,9 +7892,9 @@ get_localized_duration_patterns <- function(
         colnames(durations)
       ) |
         grepl("type", colnames(durations), fixed = TRUE)
-    ] %>%
-    dplyr::filter(type == .env$type) %>%
-    dplyr::select(-type)
+    ]
+  pattern_tbl <- pattern_tbl[pattern_tbl$type == type, , drop = FALSE]
+  pattern_tbl$type <- NULL
 
   colnames(pattern_tbl) <- gsub("(duration|-|unitPattern-count)", "", colnames(pattern_tbl))
 
@@ -8075,7 +7924,9 @@ extract_duration_pattern <- function(
 
 #' Format column data containing bin/interval information
 #'
-#' When using the `cut()` function (or other functions that use it in some way)
+#' @description
+#'
+#' When using `cut()` (or other functions that use it in some way)
 #' you get bins that can look like this: `"(0,10]"`, `"(10,15]"`, `"(15,20]"`,
 #' `"(20,40]"`. This interval notation expresses the lower and upper limits of
 #' each range. The square or round brackets define whether each of the endpoints
@@ -8095,7 +7946,7 @@ extract_duration_pattern <- function(
 #'   of `"--"` indicates that an en dash will be used for the range separator.
 #'   Using `"---"` will be taken to mean that an em dash should be used. Should
 #'   you want these special symbols to be taken literally, they can be supplied
-#'   within the base [I()] function.
+#'   within [base::I()].
 #'
 #' @param fmt *Formatting expressions*
 #'
@@ -8109,10 +7960,10 @@ extract_duration_pattern <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_bins()` formatting function is compatible with body cells that are
-#' of the `"character"` or `"factor"` types. Any other types of body cells are
-#' ignored during formatting. This is to say that cells of incompatible data
-#' types may be targeted, but there will be no attempt to format them.
+#' `fmt_bins()` is compatible with body cells that are  of the `"character"` or
+#' `"factor"` types. Any other types of body cells are ignored during formatting.
+#' This is to say that cells of incompatible data types may be targeted, but
+#' there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -8166,14 +8017,13 @@ extract_duration_pattern <- function(
 #' @section Examples:
 #'
 #' Use the [`countrypops`] dataset to create a **gt** table. Before even getting
-#' to the [gt()] call, we use the `cut()` function in conjunction with the
-#' [scales::breaks_log()] function to create some highly customized bins.
-#' Consequently each country's population in the 2021 year is assigned to a bin.
-#' These bins have a characteristic type of formatting that can be used as input
-#' to `fmt_bins()`, and using that formatting function allows us to customize
-#' the presentation of those ranges. For instance, here we are formatting the
-#' left and right values of the ranges with the [fmt_integer()] function (using
-#' formula syntax).
+#' to the [gt()] call, we use `cut()` in conjunction with [scales::breaks_log()]
+#' to create some highly customized bins. Consequently each country's population
+#' in the 2021 year is assigned to a bin. These bins have a characteristic type
+#' of formatting that can be used as input to `fmt_bins()`, and using that
+#' formatting function allows us to customize the presentation of those ranges.
+#' For instance, here we are formatting the left and right values of the ranges
+#' with [fmt_integer()] (using formula syntax).
 #'
 #' ```r
 #' countrypops |>
@@ -8222,7 +8072,6 @@ extract_duration_pattern <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_bins <- function(
     data,
@@ -8235,26 +8084,8 @@ fmt_bins <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("character", "factor")
-
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_bins()` function can only be used on `columns`
-      with character or factor data."
-      )
-    }
-  }
+  valid_class <- c("character", "factor")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -8355,12 +8186,673 @@ format_bins_by_context <- function(x, sep, fmt, context) {
   x_str
 }
 
+
+#' Format `TRUE` and `FALSE` values
+#'
+#' @description
+#'
+#' There can be times where logical values are useful in a **gt** table. You
+#' might want to express a 'yes' or 'no', a 'true' or 'false', or, perhaps use
+#' pairings of complementary symbols that make sense in a table. The `fmt_tf()`
+#' function has a set of `tf_style` presets that can be used to quickly map
+#' `TRUE`/`FALSE` values to strings (which are automatically translated
+#' according to a given `locale` value), or, symbols like up/down or left/right
+#' arrows and open/closed shapes.
+#'
+#' While the presets are nice, you can provide your own mappings through the
+#' `true_val` and `false_val` arguments. With those you could provide text
+#' (perhaps a Unicode symbol?) or even a **fontawesome** icon by using
+#' `fontawesome::fa("<icon name>")`. The function will automatically handle
+#' alignment when `auto_align = TRUE` and try to give you the best look
+#' depending on the options chosen. For extra customization, you can also apply
+#' color to the individual `TRUE`, `FALSE`, and `NA` mappings. Just supply
+#' a vector of colors (up to a length of 3) to the `colors` argument.
+#'
+#' @inheritParams fmt_number
+#'
+#' @param tf_style *Predefined style for `TRUE`/`FALSE` formatting*
+#'
+#'   `scalar<character>|scalar<numeric|integer>(1<=val<=10)` // *default:* `"true-false"`
+#'
+#'   The `TRUE`/`FALSE` mapping style to use. By default this is the short name
+#'   `"true-false"` which corresponds to the words 'true' and 'false'. Two other
+#'   `tf_style` values produce words: `"yes-no"` and `"up-down"`. All three of
+#'   these options for `tf_style` are locale-aware through the `locale` option,
+#'   so, a `"yes"` value will instead be `"ja"` when `locale = "de"`. Options
+#'   4 through to 10 involve pairs of symbols (e.g., `"check-mark"` displays
+#'   a check mark for `TRUE` and an X symbol for `FALSE`).
+#'
+#' @param true_val *Text to use for `TRUE` values*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   While the choice of a `tf_style` will typically supply the `true_val` and
+#'   `false_val` text, we could override this and supply text for any `TRUE`
+#'   values.  This doesn't need to be used in conjunction with `false_val`.
+#'
+#' @param false_val *Text to use for `FALSE` values*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   While the choice of a `tf_style` will typically supply the `true_val` and
+#'   `false_val` text, we could override this and supply text for any `FALSE`
+#'   values. This doesn't need to be used in conjunction with `true_val`.
+#'
+#' @param na_val *Text to use for `NA` values*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   None of the `tf_style` presets will replace any missing values encountered
+#'   in the targeted cells. While we always have the option to use
+#'   [sub_missing()] for `NA` replacement, we have the opportunity to do that
+#'   here with the `na_val` option. This is useful because we also have the
+#'   means to add color to the `na_val` text or symbol and doing that requires
+#'   that a replacement value for `NA`s is specified here.
+#'
+#' @param colors *Colors to use for the resulting strings or symbols*
+#'
+#'   `vector<character>` // *default:* `NULL` (`optional`)
+#'
+#'   Providing a vector of color values to `colors` will progressively add color
+#'   to the formatted result depending on the number of colors provided. With a
+#'   single color, all formatted values will be in that color. Giving two colors
+#'   results in `TRUE` values being the first color, and `FALSE` values
+#'   receiving the second. With the three color option, the final color will be
+#'   given to any `NA` values replaced through `na_val`.
+#'
+#' @param auto_align *Automatic alignment of the formatted column*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   The input values may have resulted in an alignment that is not as suitable
+#'   once formatting has occurred. With `auto_align = TRUE`, the formatted
+#'   values will be inspected and this may result in a favorable change in
+#'   alignment. Typically, symbols will be center aligned whereas words will
+#'   receive a left alignment (for words in LTR languages).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' `fmt_tf()` is compatible with body cells that are of the `"logical"`
+#' (preferred) or `"numeric"` types. Any other types of body cells are ignored
+#' during formatting. This is to say that cells of incompatible data types may
+#' be targeted, but there will be no attempt to format them.
+#'
+#' There is a special caveat when attempting to format numerical values: the
+#' values must either be exactly `1` (the analogue for `TRUE`) or exactly `0`
+#' (the analogue for `FALSE`). Any other numerical values will be disregarded
+#' and left as is. Because of these restrictions, it is recommended that only
+#' logical values undergo formatting.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' [from_column()] can be used with certain arguments of `fmt_tf()` to obtain
+#' varying parameter values from a specified column within the table. This means
+#' that each row could be formatted a little bit differently. These arguments
+#' provide support for [from_column()]:
+#'
+#' - `tf_style`
+#' - `pattern`
+#' - `true_val`
+#' - `false_val`
+#' - `na_val`
+#' - `locale`
+#'
+#' Please note that for each of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
+#'
+#' @section Formatting with the `tf_style` argument:
+#'
+#' We can supply a preset `TRUE`/`FALSE` style to the `tf_style` argument to
+#' handle the formatting of logical values. There are several such styles and
+#' the first three of them can handle localization to any supported locale
+#' (i.e., the pairs of words for each style will be translated to the language
+#' of the `locale`) value.
+#'
+#' The following table provides a listing of all valid `tf_style` values and a
+#' description of their output values. The output from styles `4` to `10` are
+#' described in terms of the Unicode character names used for the `TRUE` and
+#' `FALSE` values.
+#'
+#' |    | TF Style      | Output (for `TRUE` and `FALSE`)                 |
+#' |----|---------------|-------------------------------------------------|
+#' | 1  | `"true-false"`| `"true"`, `"false"` (`locale`-aware)            |
+#' | 2  | `"yes-no"`    | `"yes"`, `"no"` (`locale`-aware)                |
+#' | 3  | `"up-down"`   | `"up"`, `"down"` (`locale`-aware)               |
+#' | 4  | `"check-mark"`| `<Heavy Check Mark>`, `<Heavy Ballot X>`        |
+#' | 5  | `"circles"`   | `<Black Circle>`, `<Heavy Circle>`              |
+#' | 6  | `"squares"`   | `<Black Square>`,  `<White Square>`             |
+#' | 7  | `"diamonds"`  | `<Black Diamond>`, `<White Diamond>`            |
+#' | 8  | `"arrows"`    | `<Upwards Arrow>`, `<Downwards Arrow>`          |
+#' | 9  | `"triangles"` | `<Black Up-Pointing Triangle>`, `<Black Down-Pointing Triangle>`|
+#' | 10 | `"triangles-lr"`| `<Heavy Check Mark>`, `<Heavy Ballot X>`      |
+#'
+#' @section Adapting output to a specific `locale`:
+#'
+#' This formatting function can adapt outputs according to a provided `locale`
+#' value. Examples include `"en"` for English (United States) and `"fr"` for
+#' French (France). Note that a `locale` value provided here will override any
+#' global locale setting performed in [gt()]'s own `locale` argument (it is
+#' settable there as a value received by all other functions that have a
+#' `locale` argument). As a useful reference on which locales are supported, we
+#' can call [info_locales()] to view an info table.
+#'
+#' @section Examples:
+#'
+#' Let's use a subset of the [`sp500`] dataset to create a small **gt** table
+#' containing opening and closing price data for a week in 2013. We can add
+#' a logical column (`dir`) with [cols_add()]; the expression used determines
+#' whether the `close` value is greater than the `open` value. That new column
+#' is inserted between `open` and `close`. Then, we use `fmt_tf()` to generate
+#' up and down arrows in the `dir` column. We elect to use green upward arrows
+#' and red downward arrows (through the `colors` option). With a little numeric
+#' formatting and changes to the column labels, the table becomes more presentable.
+#'
+#' ```r
+#' sp500 |>
+#'   dplyr::filter(date >= "2013-01-07" & date <= "2013-01-12") |>
+#'   dplyr::arrange(date) |>
+#'   dplyr::select(-c(adj_close, volume, high, low)) |>
+#'   gt(rowname_col = "date") |>
+#'   cols_add(dir = close > open, .after = open) |>
+#'   fmt_tf(
+#'     columns = dir,
+#'     tf_style = "arrows",
+#'     colors = c("green", "red")
+#'   ) |>
+#'   fmt_currency(columns = c(open, close)) |>
+#'   cols_label(
+#'     open = "Opening",
+#'     close = "Closing",
+#'     dir = ""
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_tf_1.png")`
+#' }}
+#'
+#' The [`reactions`] dataset contains chemical kinetic information on a wide
+#' variety of atmospherically-relevant compounds. It might be interesting to get
+#' a summary (for a small subset of compounds) for which rate constants are
+#' available for the selected compounds. We first start by selecting the
+#' relevant rows and columns. Then we generate logical columns for each of the
+#' reaction types (i.e., if a value is `NA` then there's no measurement, so
+#' that's `FALSE`). Once the **gt** table has been created, we can use
+#' `fmt_tf()` to provide open and filled circles to indicate whether a
+#' particular reaction has been measured and presented in the literature.
+#'
+#' ```r
+#' reactions |>
+#'   dplyr::filter(cmpd_type %in% c("carboxylic acid", "alkyne", "allene")) |>
+#'   dplyr::select(cmpd_name, cmpd_type, ends_with("k298")) |>
+#'   dplyr::mutate(across(ends_with("k298"), is.na)) |>
+#'   gt(rowname_col = "cmpd_name", groupname_col = "cmpd_type") |>
+#'   tab_spanner(
+#'     label = "Has a measured rate constant",
+#'     columns = ends_with("k298")
+#'   ) |>
+#'   tab_stub_indent(
+#'     rows = everything(),
+#'     indent = 2
+#'   ) |>
+#'   fmt_tf(
+#'     columns = ends_with("k298"),
+#'     tf_style = "circles"
+#'   ) |>
+#'   cols_label(
+#'     OH_k298 = "OH",
+#'     O3_k298 = "Ozone",
+#'     NO3_k298 = "Nitrate",
+#'     Cl_k298 = "Chlorine"
+#'   ) |>
+#'   cols_width(
+#'     stub() ~ px(200),
+#'     ends_with("k298") ~ px(80)
+#'   ) |>
+#'   opt_vertical_padding(scale = 0.35)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_tf_2.png")`
+#' }}
+#'
+#' There are census-based population values in the [`towny`] dataset and quite a
+#' few small towns within it. Let's look at the ten smallest towns (according
+#' to the 2021 figures) and work out whether their populations have increased or
+#' declined since 1996. Also, let's determine which of these towns even have a
+#' website. After that data preparation, the data is made into a **gt** table
+#' and `fmt_tf()` can be used in the `website` and `pop_dir` columns (which both
+#' have `TRUE`/`FALSE` values). Each of these `fmt_tf()` calls will either
+#' produce `"yes"`/`"no"` or `"up"`/`"down"` strings (set via the `tf_style`
+#' option).
+#'
+#' ```r
+#' towny |>
+#'   dplyr::arrange(population_2021) |>
+#'   dplyr::mutate(website = !is.na(website))  |>
+#'   dplyr::mutate(pop_dir = population_2021 > population_1996) |>
+#'   dplyr::select(name, website, population_1996, population_2021, pop_dir) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt(rowname_col = "name") |>
+#'   tab_spanner(
+#'     label = "Population",
+#'     columns = starts_with("pop")
+#'   ) |>
+#'   tab_stubhead(label = "Town") |>
+#'   fmt_tf(
+#'     columns = website,
+#'     tf_style = "yes-no",
+#'     auto_align = FALSE
+#'   ) |>
+#'   fmt_tf(
+#'     columns = pop_dir,
+#'     tf_style = "up-down",
+#'     pattern = "It's {x}."
+#'   ) |>
+#'   cols_label_with(
+#'     columns = starts_with("population"),
+#'     fn = function(x) sub("population_", "", x)
+#'   ) |>
+#'   cols_label(
+#'     website = md("Has a  \n website?"),
+#'     pop_dir = "Pop. direction?"
+#'   ) |>
+#'   opt_horizontal_padding(scale = 2)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_tf_3.png")`
+#' }}
+#'
+#' If formatting to words instead of symbols (with the hyphenated `tf_style`
+#' keywords), the words themselves can be translated to different languages
+#' if providing a `locale` value. In this next example, we're manually creating
+#' a tibble with locale codes and their associated languages. The `yes` and `up`
+#' columns all receive `TRUE` whereas `no` and `down` will all be `FALSE`.
+#' With two calls of `fmt_tf()` for each of these pairings, we get the columns'
+#' namesake words. To have these words translated, the `locale` argument is
+#' pointed toward values in the `code` column by using [from_column()].
+#'
+#' ```r
+#' dplyr::tibble(
+#'   code = c("de", "fr", "is", "tr", "ka", "lt", "ca", "bg", "lv"),
+#'   lang = c(
+#'     "German", "French", "Icelandic", "Turkish", "Georgian",
+#'     "Lithuanian", "Catalan", "Bulgarian", "Latvian"
+#'   ),
+#'   yes = TRUE,
+#'   no = FALSE,
+#'   up = TRUE,
+#'   down = FALSE
+#' ) |>
+#'   gt(rowname_col = "lang") |>
+#'   tab_header(title = "Common words in a few languages") |>
+#'   fmt_tf(
+#'     columns = c(yes, no),
+#'     tf_style = "yes-no",
+#'     locale = from_column("code")
+#'   ) |>
+#'   fmt_tf(
+#'     columns = c(up, down),
+#'     tf_style = "up-down",
+#'     locale = from_column("code")
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(lang, code),
+#'     pattern = "{1} ({2})"
+#'   ) |>
+#'   cols_width(
+#'     stub() ~ px(150),
+#'     everything() ~ px(80)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_tf_4.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-18
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+fmt_tf <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    tf_style = "true-false",
+    pattern = "{x}",
+    true_val = NULL,
+    false_val = NULL,
+    na_val = NULL,
+    colors = NULL,
+    auto_align = TRUE,
+    locale = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - tf_style
+  # - pattern
+  # - true_val
+  # - false_val
+  # - na_val
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = "fmt_tf",
+        all_args_except = c("data", "columns", "rows", "colors", "auto_align")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using `resolve_vars()`
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_tf(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          tf_style = p_i$tf_style %||% tf_style,
+          pattern = p_i$pattern %||% pattern,
+          true_val = p_i$true_val %||% true_val,
+          false_val = p_i$false_val %||% false_val,
+          na_val = p_i$na_val %||% na_val,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # If `locale` is NULL then use the 'en' locale
+  locale <- locale %||% "en"
+
+  valid_class <- c("logical", "numeric")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
+
+  # Obtain the vector of `TRUE`/`FALSE` text values
+  tf_vals_vec <- get_tf_vals(tf_style = tf_style, locale = locale)
+
+  # If there are any values provided to `true_val` or `false_val`, use
+  # those in preference to the values obtained from `get_tf_vals()`
+  true_val <- true_val %||% tf_vals_vec[1]
+  false_val <- false_val %||% tf_vals_vec[2]
+
+  if (auto_align) {
+
+    # As a first pass, assume that the `true_val` and `false_val` values that
+    # are returned from one of the styles that produce text should result in
+    # a left alignment of values
+    if (
+      is.character(tf_style) && !(tf_style %in% tf_formats_text()) ||
+      is.numeric(tf_style) && !(tf_style %in% seq_along(tf_formats_text()))
+    ) {
+      alignment <- "center"
+    } else {
+      alignment <- "left"
+    }
+
+    # If an HTML entity is detected, prefer center alignment
+    if (grepl("^&.*", true_val) || grepl("^&.*", false_val)) {
+      alignment <- "center"
+    }
+
+    if (nchar(true_val) <= 1 || nchar(false_val) <= 1) {
+      alignment <- "center"
+    }
+
+    # If using SVG graphics for either of `true_val` or `false_val` then
+    # we'd prefer to have center alignment of the icons
+    if (
+      grepl("^<svg ", true_val) || grepl("^<svg ", false_val)
+    ) {
+      alignment <- "center"
+    }
+
+    data <-
+      cols_align(
+        data = data,
+        align = alignment,
+        columns = {{ columns }}
+      )
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          colors = colors,
+          pattern = pattern,
+          context = "html"
+        )
+      },
+      latex = function(x) {
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          colors = colors,
+          pattern = pattern,
+          context = "latex"
+        )
+      },
+      rtf = function(x) {
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          colors = colors,
+          pattern = pattern,
+          context = "rtf"
+        )
+      },
+      word = function(x) {
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          colors = colors,
+          pattern = pattern,
+          context = "word"
+        )
+      },
+      default = function(x) {
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          colors = colors,
+          pattern = pattern,
+          context = "plain"
+        )
+      }
+    )
+  )
+}
+
+format_tf_by_context <- function(
+    x,
+    true_val,
+    false_val,
+    na_val,
+    colors,
+    pattern,
+    context
+) {
+
+  # Generate an vector of empty strings that will eventually
+  # contain all of the text values
+  x_str <- character(length(x))
+
+  x_str_non_missing <- x[!is.na(x)]
+
+  if (!is.null(colors)) {
+    true_val_color <- colors[1]
+
+    if (is.na(colors[2])) {
+      false_val_color <- colors[1]
+    } else {
+      false_val_color <- colors[2]
+    }
+
+    na_val_color <- colors[3]
+
+  } else {
+    true_val_color <- false_val_color <- na_val_color <- NULL
+  }
+
+  if (context == "html" && !is.null(colors)) {
+
+    # Ensure that any empty strings are replaced with a '<br />'
+    # when in an HTML context; this avoids the potential collapse of
+    # rows with only empty strings
+    if (!is.null(true_val) && true_val == "") {
+      true_val <- "<br />"
+    }
+    if (!is.null(false_val) && false_val == "") {
+      false_val <- "<br />"
+    }
+    if (!is.null(na_val) && na_val == "") {
+      na_val <- "<br />"
+    }
+
+    true_val <- make_span_with_color(text = true_val, color = true_val_color)
+    false_val <- make_span_with_color(text = false_val, color = false_val_color)
+    na_val <- make_span_with_color(text = na_val, color = na_val_color)
+  }
+
+  # Replace any `TRUE` values, or, numbers that are exactly `1`
+  x_str_non_missing[
+    x_str_non_missing == TRUE | x_str_non_missing == 1
+  ] <- true_val
+
+  # Replace any `FALSE` values, or, numbers that are exactly `0`
+  x_str_non_missing[
+    x_str_non_missing == FALSE | x_str_non_missing == 0
+  ] <- false_val
+
+  # Handle formatting of pattern
+  x_str_non_missing <- apply_pattern_fmt_x(x_str_non_missing, pattern = pattern)
+
+  x_str[!is.na(x)] <- x_str_non_missing
+  x_str[is.na(x)] <- na_val %||% NA_character_
+  x_str
+}
+
+make_span_with_color <- function(text, color = NULL) {
+
+  if (is.null(color) || is.null(text) || is.na(color)) {
+    return(text)
+  }
+
+  paste0("<span style=\"color:", color, ";\">", text, "</span>")
+}
+
 #' Format measurement units
 #'
 #' @description
 #'
-#' The `fmt_units()` function lets you better format measurement units in the
-#' table body. These must conform to **gt**'s specialized units notation (e.g.,
+#' `fmt_units()` lets you better format measurement units in the table body.
+#' These must conform to **gt**'s specialized units notation (e.g.,
 #' `"J Hz^-1 mol^-1"` can be used to generate units for the
 #' *molar Planck constant*) for the best conversion. The notation here provides
 #' several conveniences for defining units, so as long as the values to be
@@ -8422,7 +8914,7 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #'
 #' - `"m/s"` and `"m / s"` both render as `"m/s"`
 #' - `"m s^-1"` will appear with the `"-1"` exponent intact
-#' - `"m /s"` gives the the same result, as `"/<unit>"` is equivalent to
+#' - `"m /s"` gives the same result, as `"/<unit>"` is equivalent to
 #'   `"<unit>^-1"`
 #' - `"E_h"` will render an `"E"` with the `"h"` subscript
 #' - `"t_i^2.5"` provides a `t` with an `"i"` subscript and a `"2.5"` exponent
@@ -8516,12 +9008,11 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-18
+#' 3-19
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_units <- function(
     data,
@@ -8532,26 +9023,8 @@ fmt_units <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("character", "factor")
-
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_units()` function can only be used on `columns`
-      with character or factor data."
-      )
-    }
-  }
+  valid_class <- c("character", "factor")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -8579,7 +9052,306 @@ fmt_units <- function(
   )
 }
 
-format_units_by_context <- function(x, context = "html") {
+
+#' Format chemical formulas
+#'
+#' @description
+#'
+#' `fmt_chem()` lets you format chemical formulas or even chemical
+#' reactions in the table body. Often the input text will be in a common form
+#' representing single compounds (like `"C2H4O"`, for acetaldehyde) but chemical
+#' reactions can be used (e.g., `2CH3OH -> CH3OCH3 + H2O"`). So long as the
+#' text within the targeted cells conforms to **gt**'s specialized chemistry
+#' notation, the appropriate conversions will occur. Details pertaining to
+#' chemistry notation can be found in the section entitled
+#' *How to use **gt**'s chemistry notation*.
+#'
+#' @inheritParams fmt_number
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section How to use **gt**'s chemistry notation:
+#'
+#' The chemistry notation involves a shorthand of writing chemical formulas and
+#' chemical reactions, if needed. It should feel familiar in its basic usage and
+#' the more advanced typesetting tries to limit the amount of syntax needed.
+#' It's always best to show examples on usage:
+#'
+#' - `"CH3O2"` and `"(NH4)2S"` will render with subscripted numerals
+#' - Charges can be expressed with terminating `"+"` or `"-"`, as in `"H+"` and
+#'   `"[AgCl2]-"`; if any charges involve the use of a number, the following
+#'   incantations could be used: `"CrO4^2-"`, `"Fe^n+"`, `"Y^99+"`, `"Y^{99+}"`
+#'   (the final two forms produce equivalent output)
+#' - Stoichiometric values can be included with whole values prepending formulas
+#'   (e.g.,  `"2H2O2"`) or by setting them off with a space, like this:
+#'   `"2 H2O2"`, `"0.5 H2O"`, `"1/2 H2O"`, `"(1/2) H2O"`
+#' - Certain standalone, lowercase letters or combinations thereof will be
+#'   automatically stylized to fit conventions; `"NO_x"` and `"x Na(NH4)HPO4"`
+#'   will have italicized 'x' characters and you can always italicize letters
+#'   by surrounding with `"*"` (as in `"*n* H2O"` or `"*n*-C5H12"`)
+#' - Chemical isotopes can be rendered using either of these two constructions
+#'   preceding an element: `"^{227}_{90}Th"` or `"^227_90Th"`; nuclides can
+#'   be represented in a similar manner, here are two examples:
+#'   `"^{0}_{-1}n^{-}"`, `"^0_-1n-"`
+#' - Chemical reactions can use `"+"` signs and a variety of reaction arrows:
+#'   (1) `"A -> B"`, (2) `"A <- B"`, (3) `"A <-> B"`, (4) `"A <--> B"`, (5)
+#'   `"A <=> B"`, (6) `"A <=>> B"`, or (7) `"A <<=> B"`
+#' - Center dots (useful in addition compounds) can be added by using a single
+#'   `"."` or `"*"` character, surrounded by spaces; here are two equivalent
+#'   examples `"KCr(SO4)2 . 12 H2O"` and `"KCr(SO4)2 * 12 H2O"`
+#' - Single and double bonds can be shown by inserting a `"-"` or `"="` between
+#'   adjacent characters (i.e., these shouldn't be at the beginning or end of
+#'   the markup); two examples: `"C6H5-CHO"`, `"CH3CH=CH2"`
+#' - as with units notation, Greek letters can be inserted by surrounding the
+#'   letter name with `":"`; here's an example that describes the delta value
+#'   of carbon-13: `":delta: ^13C"`
+#'
+#' @section Examples:
+#'
+#' Let's use the [`reactions`] dataset and create a new **gt** table. The table
+#' will be filtered down to only a few rows and columns. The column
+#' `cmpd_formula` contains chemical formulas and the formatting of those will be
+#' performed by `fmt_chem()`. Certain column labels with chemical names
+#' (`o3_k298` and `no3_k298`) can be handled within [cols_label()] by using
+#' surrounding the text with `"{{%"`/`"%}}"`.
+#'
+#' ```r
+#' reactions |>
+#'   dplyr::filter(cmpd_type == "terminal monoalkene") |>
+#'   dplyr::filter(grepl("^1-", cmpd_name)) |>
+#'   dplyr::select(cmpd_name, cmpd_formula, ends_with("k298")) |>
+#'   gt() |>
+#'   tab_header(title = "Gas-phase reactions of selected terminal alkenes") |>
+#'   tab_spanner(
+#'     label = "Reaction Rate Constant at 298 K",
+#'     columns = ends_with("k298")
+#'   ) |>
+#'   fmt_chem(columns = cmpd_formula) |>
+#'   fmt_scientific() |>
+#'   sub_missing() |>
+#'   cols_label(
+#'     cmpd_name = "Alkene",
+#'     cmpd_formula = "Formula",
+#'     OH_k298 = "OH",
+#'     O3_k298 = "{{%O3%}}",
+#'     NO3_k298 = "{{%NO3%}}",
+#'     Cl_k298 = "Cl"
+#'   ) |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_chem_1.png")`
+#' }}
+#'
+#' Taking just a few rows from the [`photolysis`] dataset, let's create a new
+#' **gt** table. The `cmpd_formula` and `products` columns both contain text in
+#' chemistry notation (the first has compounds, and the second column has the
+#' products of photolysis reactions). These columns will be formatted by
+#' `fmt_chem()`. The compound formulas will be merged with the compound
+#' names with [cols_merge()].
+#'
+#' ```r
+#' photolysis |>
+#'   dplyr::filter(cmpd_name %in% c(
+#'     "hydrogen peroxide", "nitrous acid",
+#'     "nitric acid", "acetaldehyde",
+#'     "methyl peroxide", "methyl nitrate",
+#'     "ethyl nitrate", "isopropyl nitrate"
+#'   )) |>
+#'   dplyr::select(-c(l, m, n, quantum_yield, type)) |>
+#'   gt() |>
+#'   tab_header(title = "Photolysis pathways of selected VOCs") |>
+#'   fmt_chem(columns = c(cmpd_formula, products)) |>
+#'   cols_nanoplot(
+#'     columns = sigma_298_cm2,
+#'     columns_x_vals = wavelength_nm,
+#'     expand_x = c(200, 400),
+#'     new_col_name = "cross_section",
+#'     new_col_label = "Absorption Cross Section",
+#'     options = nanoplot_options(
+#'       show_data_points = FALSE,
+#'       data_line_stroke_width = 4,
+#'       data_line_stroke_color = "black",
+#'       show_data_area = FALSE
+#'     )
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(cmpd_name, cmpd_formula),
+#'     pattern = "{1}, {2}"
+#'   ) |>
+#'   cols_label(
+#'     cmpd_name = "Compound",
+#'     products = "Products"
+#'   ) |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_chem_2.png")`
+#' }}
+#'
+#' `fmt_chem()` can handle the typesetting of nuclide notation.
+#' Let's take a subset of columns and rows from the [`nuclides`] dataset and
+#' make a new **gt** table. The contents of the `nuclide` column contains
+#' isotopes of hydrogen and carbon and this is placed in the table stub. Using
+#' `fmt_chem()` makes it so that the subscripted and superscripted values are
+#' properly formatted to the convention of formatting nuclides.
+#'
+#' ```r
+#' nuclides |>
+#'   dplyr::filter(element %in% c("H", "C")) |>
+#'   dplyr::mutate(nuclide = gsub("[0-9]+$", "", nuclide)) |>
+#'   dplyr::select(nuclide, atomic_mass, half_life, decay_1, is_stable) |>
+#'   gt(rowname_col = "nuclide") |>
+#'   tab_header(title = "Isotopes of Hydrogen and Carbon") |>
+#'   tab_stubhead(label = "Isotope") |>
+#'   fmt_chem(columns = nuclide) |>
+#'   fmt_scientific(columns = half_life) |>
+#'   fmt_number(
+#'     columns = atomic_mass,
+#'     decimals = 4,
+#'     scale_by = 1 / 1e6
+#'   ) |>
+#'   sub_missing(
+#'     columns = half_life,
+#'     rows = is_stable,
+#'     missing_text = md("**STABLE**")
+#'   ) |>
+#'   sub_missing(columns = half_life, rows = !is_stable) |>
+#'   sub_missing(columns = decay_1) |>
+#'   data_color(
+#'     columns = decay_1,
+#'     target_columns = c(atomic_mass, half_life, decay_1),
+#'     palette = "LaCroixColoR::PassionFruit",
+#'     na_color = "white"
+#'   ) |>
+#'   cols_label_with(fn = function(x) tools::toTitleCase(gsub("_", " ", x))) |>
+#'   cols_label(decay_1 = "Decay Mode") |>
+#'   cols_width(
+#'     stub() ~ px(70),
+#'     c(atomic_mass, half_life, decay_1) ~ px(120)
+#'   ) |>
+#'   cols_hide(columns = c(is_stable)) |>
+#'   cols_align(align = "center", columns = decay_1) |>
+#'   opt_align_table_header(align = "left") |>
+#'   opt_vertical_padding(scale = 0.5)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_chem_3.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-20
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+fmt_chem <- function(
+    data,
+    columns = everything(),
+    rows = everything()
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  valid_class <- c("character", "factor")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+        format_units_by_context(
+          x,
+          is_chemical_formula = TRUE,
+          context = "html"
+        )
+      },
+      latex = function(x) {
+        format_units_by_context(
+          x,
+          is_chemical_formula = TRUE,
+          context = "latex"
+        )
+      },
+      rtf = function(x) {
+        format_units_by_context(
+          x,
+          is_chemical_formula = TRUE,
+          context = "rtf"
+        )
+      },
+      word = function(x) {
+        format_units_by_context(
+          x,
+          is_chemical_formula = TRUE,
+          context = "word"
+        )
+      },
+      default = function(x) {
+        format_units_by_context(
+          x,
+          is_chemical_formula = TRUE,
+          context = "plain"
+        )
+      }
+    )
+  )
+}
+
+format_units_by_context <- function(
+    x,
+    is_chemical_formula = FALSE,
+    context = "html"
+) {
 
   # Generate an vector of empty strings that will eventually
   # contain all of the ranged value text
@@ -8592,10 +9364,16 @@ format_units_by_context <- function(x, context = "html") {
   x_str_non_missing <-
     vapply(
       seq_along(x_str_non_missing),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        render_units(define_units(x_str_non_missing[x]), context = context)
+        render_units(
+          define_units(
+            x_str_non_missing[x],
+            is_chemical_formula = is_chemical_formula
+          ),
+        context = context
+        )
       }
     )
 
@@ -8608,7 +9386,7 @@ format_units_by_context <- function(x, context = "html") {
 #'
 #' @description
 #'
-#' Should cells contain URLs, the `fmt_url()` function can be used to make them
+#' Should cells contain URLs, `fmt_url()` can be used to make them
 #' navigable links. This should be expressly used on columns that contain *only*
 #' URL text (i.e., no URLs as part of a larger block of text). Should you have
 #' such a column of data, there are options for how the links should be styled.
@@ -8630,8 +9408,8 @@ format_units_by_context <- function(x, context = "html") {
 #'
 #'   The visible 'label' to use for the link. If `NULL` (the default)
 #'   the URL will serve as the label. There are two non-`NULL` options: (1) a
-#'   static text can be used for the label by providing a string, and (2) a
-#'   function can be provided to fashion a label from every URL.
+#'   piece of static text can be used for the label by providing a string, and
+#'   (2) a function can be provided to fashion a label from every URL.
 #'
 #' @param as_button *Style link as a button*
 #'
@@ -8680,10 +9458,10 @@ format_units_by_context <- function(x, context = "html") {
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_url()` formatting function is compatible with body cells that are
-#' of the `"character"` or `"factor"` types. Any other types of body cells are
-#' ignored during formatting. This is to say that cells of incompatible data
-#' types may be targeted, but there will be no attempt to format them.
+#' `fmt_url()` is compatible with body cells that are of the `"character"` or
+#' `"factor"` types. Any other types of body cells are ignored during formatting.
+#' This is to say that cells of incompatible data types may be targeted, but
+#' there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -8726,10 +9504,10 @@ format_units_by_context <- function(x, context = "html") {
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_url()` to obtain varying parameter values from a specified column within
-#' the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_url()` to obtain
+#' varying parameter values from a specified column within the table. This means
+#' that each row could be formatted a little bit differently. These arguments
+#' provide support for [from_column()]:
 #'
 #' - `label`
 #' - `as_button`
@@ -8742,18 +9520,17 @@ format_units_by_context <- function(x, context = "html") {
 #' Please note that for each of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Examples:
 #'
 #' Using a portion of the [`towny`] dataset, let's create a **gt** table. We can
-#' use the `fmt_url()` function on the `website` column to generate navigable
-#' links to websites. By default the links are underlined and the color will be
-#' chosen for you (it's dark cyan).
+#' use `fmt_url()` on the `website` column to generate navigable links to
+#' websites. By default the links are underlined and the color will be chosen
+#' for you (it's dark cyan).
 #'
 #' ```r
 #' towny |>
@@ -8783,7 +9560,7 @@ format_units_by_context <- function(x, context = "html") {
 #' the `label` argument (and we'll use the word `"site"` for this). The link
 #' underline is removable with `show_underline = FALSE`. With this change, it
 #' seems sensible to merge the link to the `"name"` column and enclose the link
-#' text in parentheses (the [cols_merge()] function handles all that).
+#' text in parentheses ([cols_merge()] handles all that).
 #'
 #' ```r
 #' towny |>
@@ -8816,9 +9593,9 @@ format_units_by_context <- function(x, context = "html") {
 #' `r man_get_image_tag(file = "man_fmt_url_2.png")`
 #' }}
 #'
-#' The `fmt_url()` function allows for the styling of links as 'buttons'. This
-#' is as easy as setting `as_button = TRUE`. Doing that unlocks the ability to
-#' set a `button_fill` color. This color can automatically selected by **gt**
+#' `fmt_url()` allows for the styling of links as 'buttons'. This is as easy as
+#' setting `as_button = TRUE`. Doing that unlocks the ability to  set a
+#' `button_fill` color. This color can automatically selected by **gt**
 #' (this is the default) but here we're using `"steelblue"`. The `label`
 #' argument also accepts a function! We can choose to adapt the label text from
 #' the URLs by eliminating any leading `"https://"` or `"www."` parts.
@@ -8853,7 +9630,7 @@ format_units_by_context <- function(x, context = "html") {
 #'   tab_style(
 #'     style = cell_text(weight = "bold"),
 #'     locations = cells_stub()
-#'   ) %>%
+#'   ) |>
 #'   opt_vertical_padding(scale = 0.75)
 #' ```
 #'
@@ -8862,8 +9639,8 @@ format_units_by_context <- function(x, context = "html") {
 #' }}
 #'
 #' It's perhaps inevitable that you'll come across missing values in your column
-#' of URLs. The `fmt_url()` function will preserve input `NA` values, allowing
-#' you to handle them with [sub_missing()]. Here's an example of that.
+#' of URLs. `fmt_url()` will preserve input `NA` values, allowing you to handle
+#' them with [sub_missing()]. Here's an example of that.
 #'
 #' ```r
 #' towny |>
@@ -8889,14 +9666,57 @@ format_units_by_context <- function(x, context = "html") {
 #' `r man_get_image_tag(file = "man_fmt_url_4.png")`
 #' }}
 #'
+#' Links can be presented as icons. Let's take a look at an example of this type
+#' of presentation with a table based on the [`films`] dataset. The `imdb_url`
+#' column contains the URL information and in the `fmt_url()` call, we can use
+#' `fontawesome::fa()` to specify a `label`. In this case we elect to use the
+#' `"link"` icon and we can make some sizing adjustments to the icon here to
+#' ensure the layout looks optimal. We also use [`cols_merge()`] to combine
+#' the film's title, its original title (if present), and the link icon.
+#'
+#' ```r
+#' films |>
+#'   dplyr::filter(year == 2021) |>
+#'   dplyr::select(
+#'     contains("title"), run_time, director, imdb_url
+#'   ) |>
+#'   gt() |>
+#'   tab_header(title = "Feature Films in Competition at the 2021 Festival") |>
+#'   fmt_url(
+#'     columns = imdb_url,
+#'     label = fontawesome::fa(
+#'       name = "link",
+#'       height = "0.75em",
+#'       vertical_align = "0em"
+#'      ),
+#'     color = "gray65"
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(title, original_title, imdb_url),
+#'     pattern = "{1}<< ({2})>> {3}"
+#'   ) |>
+#'   cols_label(
+#'     title = "Film",
+#'     run_time = "Length",
+#'     director = "Director(s)",
+#'   ) |>
+#'   tab_options(heading.title.font.size = px(26)) |>
+#'   opt_vertical_padding(scale = 0.4) |>
+#'   opt_horizontal_padding(scale = 2) |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_url_5.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-19
+#' 3-21
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_url <- function(
     data,
@@ -8942,7 +9762,7 @@ fmt_url <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -8979,29 +9799,11 @@ fmt_url <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
-  # Declare formatting function compatibility
-  compat <- c("character", "factor")
-
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_url()` function can only be used on `columns`
-      with character or factor data."
-      )
-    }
-  }
+  valid_class <- c("character", "factor")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   if (as_button) {
 
@@ -9134,80 +9936,19 @@ fmt_url <- function(
         x_str_non_missing <- x[!is.na(x)]
 
         if (!is.null(label)) {
+
           if (rlang::is_function(label)) {
             label_str <- label(x_str_non_missing)
           } else {
             label_str <- label
           }
+
         } else {
 
-          if (any(grepl("\\[.*?\\]\\(.*?\\)", x_str_non_missing))) {
+          md_url_parsed <- parse_md_urls(text = x_str_non_missing)
 
-            # Generate labels
-            label_str <-
-              vapply(
-                x_str_non_missing,
-                FUN.VALUE = character(1),
-                USE.NAMES = FALSE,
-                FUN = function(x) {
-                  if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
-                    out <- sub("\\[(.*?)\\]\\(.*?\\)", "\\1", x)
-                  } else {
-                    out <- x
-                  }
-                  out
-                }
-              )
-
-            # Generate href values
-            x_str_non_missing <-
-              vapply(
-                x_str_non_missing,
-                FUN.VALUE = character(1),
-                USE.NAMES = FALSE,
-                FUN = function(x) {
-                  if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
-                    out <- sub("\\[.*?\\]\\((.*?)\\)", "\\1", x)
-                  } else {
-                    out <- x
-                  }
-                  out
-                }
-              )
-
-          } else {
-            label_str <- x_str_non_missing
-          }
-        }
-
-        add_anchor_attr <- function(
-            init = NULL,
-            arg,
-            nm,
-            values = NULL,
-            error_arg = caller_arg(arg),
-            error_call = caller_env()
-        ) {
-
-          if (!is.null(values)) {
-
-            arg <-
-              rlang::arg_match(
-                arg,
-                values = values,
-                error_arg = error_arg,
-                error_call = error_call
-              )
-          }
-
-          if (!is_string(arg)) {
-            cli::cli_abort(
-              "{.arg {nm}} must be a string, not {.obj_type_friendly {arg}}",
-              call = error_call
-            )
-          }
-
-          paste0(init, " ", nm, "=\"", arg, "\"")
+          x_str_non_missing <- md_url_parsed$href
+          label_str <- md_url_parsed$label
         }
 
         target <- target %||% "_blank"
@@ -9325,13 +10066,788 @@ fmt_url <- function(
   )
 }
 
+parse_md_urls <- function(text) {
+
+  if (any(grepl("\\[.*?\\]\\(.*?\\)", text))) {
+
+    # Generate labels
+    label_str <-
+      vapply(
+        text,
+        FUN.VALUE = character(1L),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
+            out <- sub("\\[(.*?)\\]\\(.*?\\)", "\\1", x)
+          } else {
+            out <- x
+          }
+          out
+        }
+      )
+
+    # Generate href values
+    href_str <-
+      vapply(
+        text,
+        FUN.VALUE = character(1L),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
+            out <- sub("\\[.*?\\]\\((.*?)\\)", "\\1", x)
+          } else {
+            out <- x
+          }
+          out
+        }
+      )
+
+  } else {
+    href_str <- text
+    label_str <- text
+  }
+
+  list(
+    href = href_str,
+    label = label_str
+  )
+}
+
+add_anchor_attr <- function(
+    init = NULL,
+    arg,
+    nm,
+    values = NULL,
+    error_arg = rlang::caller_arg(arg),
+    error_call = rlang::caller_env()
+) {
+
+  if (!is.null(values)) {
+
+    arg <-
+      rlang::arg_match(
+        arg,
+        values = values,
+        error_arg = error_arg,
+        error_call = error_call
+      )
+  }
+
+  if (!rlang::is_string(arg)) {
+    cli::cli_abort(
+      "{.arg {nm}} must be a string, not {.obj_type_friendly {arg}}",
+      call = error_call
+    )
+  }
+
+  paste0(init, " ", nm, "=\"", arg, "\"")
+}
+
+#' Format email addresses to generate 'mailto:' links
+#'
+#' @description
+#'
+#' Should cells contain email addresses, `fmt_email()` can be used to make email
+#' addresses work well with email clients on the user system. This should be
+#' expressly used on columns that contain *only* email addresses (i.e., no email
+#' addresses as part of a larger block of text). Should you have such a column of
+#' data, there are options for how the email addresses should be styled. They can
+#' be of the conventional style (with underlines and text coloring that sets it
+#' apart from other text), or, they can appear to be button-like (with a
+#' surrounding box that can be filled with a color of your choosing).
+#'
+#' Email addresses in data cells are trusted as email addresses. We can also
+#' provide more readable labels with the `display_name` argument. Supplying a
+#' single value there will show the same label for all email addresses but
+#' display names from an adjacent column could be used via a [from_column()]
+#' call within `display_name`.
+#'
+#' @inheritParams fmt_number
+#'
+#' @param display_name *Display name for the email address*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The display name is the visible 'label' to use for the email address. If
+#'   `NULL` (the default) the address itself will serve as the display name.
+#'   There are two non-`NULL` options: (1) a piece of static text can be used
+#'   for the display name by providing a string, and (2) a function can be
+#'   provided to fashion a display name from every email address.
+#'
+#' @param as_button *Style email address as a button*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   An option to style the email address as a button. By default, this is
+#'   `FALSE`. If this option is chosen then the `button_fill` argument becomes
+#'   usable.
+#'
+#' @param color *Link color*
+#'
+#'   `scalar<character>` // *default:* `"auto"`
+#'
+#'   The color used for the resulting email address and its underline. This is
+#'   `"auto"` by default; this allows **gt** to choose an appropriate color
+#'   based on various factors (such as the background `button_fill` when
+#'   `as_button` is `TRUE`).
+#'
+#' @param show_underline *Show the link underline*
+#'
+#'   `scalar<character>|scalar<logical>` // *default:* `"auto"`
+#'
+#'   Should the email address be decorated with an underline? By default this is
+#'   `"auto"` which means that **gt** will choose `TRUE` when
+#'   `as_button = FALSE` and `FALSE` in the other case. The underline will be
+#'   the same color as that set in the `color` option.
+#'
+#' @param button_fill,button_width,button_outline *Button options*
+#'
+#'   `scalar<character>` // *default:* `"auto"`
+#'
+#'   Options for styling an email address as a button (and only applies if
+#'   `as_button = TRUE`). All of these options are by default set to `"auto"`,
+#'   allowing **gt** to choose appropriate fill, width, and outline values.
+#'
+#' @param target *The 'target' anchor element attribute*
+#'
+#'   `scalar<character>` // *default:* `NULL`
+#'
+#'   The anchor element 'target' attribute value. For a description of the
+#'   'target' attribute and its  allowed values, refer to the
+#'   [MDN Web Docs reference on the anchor HTML element](
+#'   https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attributes).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' `fmt_email()` is compatible with body cells that are of the `"character"` or
+#' `"factor"` types. Any other types of body cells are ignored during formatting.
+#' This is to say that cells of incompatible data types may be targeted, but
+#' there will be no attempt to format them.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' [from_column()] can be used with certain arguments of `fmt_email()` to obtain
+#' varying parameter values from a specified column within the table. This means
+#' that each row could be formatted a little bit differently. These arguments
+#' provide support for [from_column()]:
+#'
+#' - `display_name`
+#' - `as_button`
+#' - `color`
+#' - `show_underline`
+#' - `button_fill`
+#' - `button_width`
+#' - `button_outline`
+#'
+#' Please note that for each of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
+#'
+#' @section Examples:
+#'
+#' Let's take ten rows from the [`peeps`] dataset and create a table of contact
+#' information with mailing addresses and email addresses. With the column that
+#' contains email addresses (`email_addr`), we can use `fmt_email()` to generate
+#' 'mailto:' links. Clicking any of these formatted email addresses should
+#' result in new message creation (depending on the OS integration with an email
+#' client).
+#'
+#' ```r
+#' peeps |>
+#'   dplyr::filter(country == "AUS") |>
+#'   dplyr::select(
+#'     starts_with("name"),
+#'     address, city, state_prov, postcode, country, email_addr
+#'   ) |>
+#'   dplyr::mutate(city = toupper(city)) |>
+#'   gt(rowname_col = "name_family") |>
+#'   tab_header(title = "Our Contacts in Australia") |>
+#'   tab_stubhead(label = "Name") |>
+#'   fmt_email(columns = email_addr) |>
+#'   fmt_country(columns = country) |>
+#'   cols_merge(
+#'     columns = c(address, city, state_prov, postcode, country),
+#'     pattern = "{1}<br>{2} {3} {4}<br>{5}"
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(name_family, name_given),
+#'     pattern = "{1},<br>{2}"
+#'   ) |>
+#'   cols_label(
+#'     address = "Mailing Address",
+#'     email_addr = "Email"
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(size = "x-small"),
+#'     locations = cells_body(columns = address)
+#'   ) |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_email_1.png")`
+#' }}
+#'
+#' We can further condense the table by reducing the email link to an icon. The
+#' approach we take here is the use of a **fontawesome** icon within the
+#' `display_name` argument. The icon used is `"envelope"` and each icon produced
+#' serves as a clickable 'mailto:' link. By adjusting one of the [cols_merge()]
+#' calls, we can place the icon/link next to the name of the person.
+#'
+#' ```r
+#' peeps |>
+#'   dplyr::filter(country == "AUS") |>
+#'   dplyr::select(
+#'     starts_with("name"),
+#'     address, city, state_prov, postcode, country, email_addr
+#'   ) |>
+#'   dplyr::mutate(city = toupper(city)) |>
+#'   gt(rowname_col = "name_family") |>
+#'   tab_header(title = "Our Contacts in Australia") |>
+#'   fmt_email(
+#'     columns = email_addr,
+#'     display_name = fontawesome::fa(
+#'       name = "envelope",
+#'       height = "0.75em",
+#'       fill = "gray"
+#'     )
+#'   ) |>
+#'   fmt_country(columns = country) |>
+#'   cols_merge(
+#'     columns = c(address, city, state_prov, postcode, country),
+#'     pattern = "{1}<br>{2} {3} {4}<br>{5}"
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(name_family, name_given, email_addr),
+#'     pattern = "{1}, {2} {3}"
+#'   ) |>
+#'   cols_width(everything() ~ px(200)) |>
+#'   tab_style(
+#'     style = cell_text(size = px(11)),
+#'     locations = cells_body(columns = address)
+#'   ) |>
+#'   tab_options(column_labels.hidden = TRUE) |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_email_2.png")`
+#' }}
+#'
+#' Another option is to display the names of the email recipients instead of the
+#' email addresses, making the display names serve as 'mailto:' links. We can do
+#' this by using [from_column()] in the `display_name` argument. The display
+#' names in this case are the combined given and family names, handled earlier
+#' through a `dplyr::mutate()` call. With some space conserved, we take the
+#' opportunity here to add in phone information for each person.
+#'
+#' ```r
+#' peeps |>
+#'   dplyr::filter(country == "AUS") |>
+#'   dplyr::mutate(name = paste(name_given, name_family)) |>
+#'   dplyr::mutate(city = toupper(city)) |>
+#'   dplyr::mutate(phone_number = gsub("^\\(0|\\)", "", phone_number)) |>
+#'   dplyr::select(
+#'     name, address, city, state_prov, postcode, country,
+#'     email_addr, phone_number, country_code
+#'   ) |>
+#'   gt(rowname_col = "email_addr") |>
+#'   tab_header(title = "Our Contacts in Australia") |>
+#'   tab_stubhead(label = "Name") |>
+#'   fmt_email(
+#'     columns = email_addr,
+#'     display_name = from_column("name"),
+#'     color = "gray25"
+#'   ) |>
+#'   cols_hide(columns = name) |>
+#'   fmt_country(columns = country) |>
+#'   cols_merge(
+#'     columns = c(address, city, state_prov, postcode, country),
+#'     pattern = "{1}<br>{2} {3} {4}<br>{5}"
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(phone_number, country_code),
+#'     pattern = "+{2} {1}"
+#'   ) |>
+#'   cols_label(
+#'     address = "Mailing Address",
+#'     email_addr = "Email",
+#'     phone_number = "Phone"
+#'   ) |>
+#'   cols_move_to_start(columns = phone_number) |>
+#'   cols_width(everything() ~ px(170)) |>
+#'   tab_style(
+#'     style = cell_text(size = px(11)),
+#'     locations = cells_body(columns = address)
+#'   ) |>
+#'   cols_align(align = "left") |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_email_3.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-22
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+fmt_email <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    display_name = NULL,
+    as_button = FALSE,
+    color = "auto",
+    show_underline = "auto",
+    button_fill = "auto",
+    button_width = "auto",
+    button_outline = "auto",
+    target = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - display_name
+  # - as_button
+  # - color
+  # - show_underline
+  # - button_fill
+  # - button_width
+  # - button_outline
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = "fmt_email",
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using `resolve_vars()`
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_email(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          display_name = p_i$display_name %||% display_name,
+          as_button = p_i$as_button %||% as_button,
+          color = p_i$color %||% color,
+          show_underline = p_i$show_underline %||% show_underline,
+          button_fill = p_i$button_fill %||% button_fill,
+          button_width = p_i$button_width %||% button_width,
+          button_outline = p_i$button_outline %||% button_outline
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `from_column()` objects passed to compatible arguments
+  #
+
+  valid_class <- c("character", "factor")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
+
+  if (as_button) {
+
+    #
+    # All determinations of `color`, `show_underline`, `button_fill` and
+    # `button_width` for the case where `as_button = TRUE`; each of the
+    # above arguments are set to "auto" by default
+    #
+
+    # In the button case, we opt to never show an underline unless it's
+    # requested by the user (i.e., `show_underline = TRUE`)
+    if (show_underline == "auto") {
+      show_underline <- FALSE
+    }
+
+    if (button_width == "auto") {
+      button_width <- NULL
+    }
+
+    button_outline_color <- button_outline
+    button_outline_style <- "solid"
+    button_outline_width <- "2px"
+
+    # There are various combinations of "auto" or not with `button_fill` and
+    # `color` that need to be handled delicately so as to ensure contrast
+    # between foreground text and background fill is maximized
+    if (button_fill == "auto" && color == "auto") {
+
+      # Choose a fixed and standard color combination if both options are
+      # 'auto'; these will be 'steelblue' and 'white'
+      button_fill <- "#4682B4"
+      color <- "#FFFFFF"
+
+    } else if (button_fill == "auto" && color != "auto") {
+
+      # Case where text color is chosen but background is left to gt
+      # to determine; will either by light blue or dark blue based on the
+      # brightness of the text color (can be of poor contrast if user chooses
+      # a text color somewhere in the mid range of brightness, but nothing
+      # really can be done there to compensate)
+
+      # Ensure that the incoming `color` is transformed to hexadecimal form
+      color <- html_color(colors = color, alpha = NULL)
+
+      # Use `ideal_fgnd_color()` in a backwards manner only to see whether
+      # the proxy background color is light (#FFFFFF) or dark (#000000)
+      bgrnd_bw <-
+        ideal_fgnd_color(
+          bgnd_color = color,
+          algo = "apca"
+        )
+
+      if (bgrnd_bw == "#FFFFFF") {
+        # Background should be light so using 'lightblue'
+        button_fill <- "#ADD8E6"
+      } else {
+        # Background should be dark so using 'darkblue'
+        button_fill <- "#00008B"
+      }
+
+      if (button_outline == "auto") {
+        button_outline_color <- "#BEBEBE"
+        button_outline_style <- "none"
+      }
+
+    } else if (button_fill != "auto" && color == "auto") {
+
+      # Ensure that the incoming `button_fill` is transformed
+      # to hexadecimal form
+      button_fill <- html_color(colors = button_fill, alpha = NULL)
+
+      # Case where background color is chosen for foreground text color is
+      # not; this is the simple case where `ideal_fgnd_color()` is well suited
+      # to determine the text color (either black or white)
+      color <-
+        ideal_fgnd_color(
+          bgnd_color = button_fill,
+          algo = "apca"
+        )
+
+      if (button_outline == "auto") {
+
+        button_outline_color <- "#DFDFDF"
+
+        if (button_fill %in% c(
+          "#FFFFFF", "#FFFFFF", "#FAF5EF", "#FAFAFA",
+          "#FFFEFC", "#FBFCFA", "#FBFAF2"
+        )) {
+          button_outline_style <- "solid"
+        } else {
+          button_outline_style <- "none"
+        }
+      }
+    } else {
+
+      # Ensure that the incoming `color` is transformed to hexadecimal form
+      color <- html_color(colors = color, alpha = NULL)
+    }
+
+  } else {
+
+    if (show_underline == "auto") {
+      show_underline <- TRUE
+    }
+
+    if (color == "auto") {
+
+      color <- "#008B8B"
+
+    } else {
+
+      # Ensure that the incoming `color` is transformed to hexadecimal form
+      color <- html_color(colors = color, alpha = NULL)
+    }
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+
+        # Generate an vector of empty strings that will eventually
+        # contain all of the link text
+        x_str <- character(length(x))
+
+        x_str_non_missing <- x[!is.na(x)]
+
+        if (length(x) == 1 && is.na(x)) {
+          return(x)
+        }
+
+        # Normalize all addresses with commas separating them
+        x_str_non_missing <- gsub(",\\s+", ",", x_str_non_missing)
+
+        # Trim leading and trailing space characters
+        x_str_non_missing <- gsub("^\\s+|\\s+$", "", x_str_non_missing)
+
+        if (!is.null(display_name)) {
+
+          if (rlang::is_function(display_name)) {
+            label_str <- display_name(x_str_non_missing)
+          } else {
+            label_str <- display_name
+          }
+
+        } else {
+          label_str <- x_str_non_missing
+        }
+
+        target <- target %||% "_blank"
+        target_values <- NULL
+
+        if (grepl("^_", target)) {
+          target_values <- c("_blank", "_self", "_parent", "_top")
+        }
+
+        anchor_attr <-
+          add_anchor_attr(
+            arg = target,
+            nm = "target",
+            values = target_values
+          )
+
+        if (target == "_blank") {
+
+          anchor_attr <-
+            add_anchor_attr(
+              anchor_attr,
+              arg = "noopener noreferrer",
+              nm = "rel"
+            )
+        }
+
+        anchor_attr <-
+          add_anchor_attr(
+            anchor_attr,
+            arg = paste0(
+              "color:", color[1], ";",
+              "text-decoration:",
+              if (show_underline) "underline" else "none", ";",
+              if (show_underline) "text-underline-position: under;" else NULL,
+              "display: inline-block;",
+              if (as_button) {
+                paste0(
+                  "background-color: ", button_fill, ";",
+                  "padding: 8px 12px;",
+                  if (!is.null(button_width)) {
+                    paste0("width: ", button_width, "; text-align: center;")
+                  } else {
+                    NULL
+                  },
+                  "outline-style: ", button_outline_style, "; ",
+                  "outline-color: ", button_outline_color, "; ",
+                  "outline-width: ", button_outline_width, ";"
+                )
+              } else {
+                NULL
+              }
+            ),
+            nm = "style"
+          )
+
+        x_str_non_missing <-
+          mapply(
+            SIMPLIFY = TRUE,
+            USE.NAMES = FALSE,
+            x_str_non_missing,
+            label_str,
+            FUN = function(x, label_str) {
+
+              if (grepl(" ", x)) {
+
+                email_separated <- unlist(strsplit(x, " "))
+
+                if (x == label_str) {
+
+                  label_separated <- unlist(strsplit(label_str, " "))
+
+                } else if (
+                  grepl("^<", label_str) &&
+                  grepl(">$", label_str) &&
+                  !grepl("^<svg", label_str)
+                ) {
+
+                  label_separated <- unlist(strsplit(label_str, ">\\s*<"))
+
+                  label_separated <-
+                    gsub("<", "", label_separated, fixed = TRUE)
+                  label_separated <-
+                    gsub(">", "", label_separated, fixed = TRUE)
+
+                  label_separated <- gsub("^\\s+|\\s+$", "", label_separated)
+
+                  if (length(label_separated) == 1) {
+                    label_separated <-
+                      rep_len(label_separated, length(email_separated))
+                  }
+
+                  if (length(label_separated) != length(email_separated)) {
+                    cli::cli_abort(
+                      "Labels supplied between `<`/`>` must match the length
+                      of email addresses"
+                    )
+                  }
+
+                } else {
+                  label_separated <- rep_len(label_str, length(email_separated))
+                }
+
+                email_str_separated <- c()
+
+                for (i in seq_along(email_separated)) {
+
+                  email_str_i <-
+                    generate_email_links(
+                      email_address = email_separated[i],
+                      anchor_attr = anchor_attr,
+                      label_str = label_separated[i]
+                    )
+
+                  email_str_separated <- c(email_str_separated, email_str_i)
+                }
+
+                email_str <- paste(email_str_separated, collapse = " ")
+
+              } else {
+
+                email_str <-
+                  generate_email_links(
+                    email_address = x,
+                    anchor_attr = anchor_attr,
+                    label_str = label_str
+                  )
+              }
+
+              email_str
+            }
+          )
+
+        x_str[!is.na(x)] <- x_str_non_missing
+        x_str[is.na(x)] <- NA_character_
+        x_str
+      },
+    latex = function(x) {
+      x
+    },
+    rtf = function(x) {
+      x
+    },
+    word = function(x) {
+      x
+    },
+    default = function(x) {
+      x
+    }
+    )
+  )
+}
+
+generate_email_links <- function(email_address, anchor_attr, label_str) {
+
+  paste0(
+    "<span style=\"white-space: pre;\">",
+    "<a",
+    " href=\"mailto:", email_address, "\"",
+    anchor_attr,
+    ">",
+    label_str,
+    "</a>",
+    "</span>"
+  )
+}
+
 #' Format image paths to generate images in cells
 #'
 #' @description
 #'
-#' To more easily insert graphics into body cells, we can use the `fmt_image()`
-#' function. This allows for one or more images to be placed in the targeted
-#' cells. The cells need to contain some reference to an image file, either: (1)
+#' To more easily insert graphics into body cells, we can use `fmt_image()`.
+#' This allows for one or more images to be placed in the targeted cells.
+#' The cells need to contain some reference to an image file, either: (1)
 #' complete http/https or local paths to the files; (2) the file names, where a
 #' common path can be provided via `path`; or (3) a fragment of the file name,
 #' where the `file_pattern` helps to compose the entire file name and `path`
@@ -9425,10 +10941,10 @@ fmt_url <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_image()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_image()` to obtain
+#' varying parameter values from a specified column within the table. This means
+#' that each row could be formatted a little bit differently. These arguments
+#' provide support for [from_column()]:
 #'
 #' - `height`
 #' - `width`
@@ -9440,11 +10956,10 @@ fmt_url <- function(
 #' Please note that for each of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Examples:
 #'
@@ -9455,11 +10970,11 @@ fmt_url <- function(
 #' graphics for all of these lines within the package (the path for the
 #' directory containing the images can be accessed via
 #' `system.file("metro_svg", package = "gt")`), and the filenames roughly
-#' correspond to the data in those two columns. The `fmt_image()` function can
-#' be used with these inputs since the `path` and `file_pattern` arguments allow
-#' us to compose complete and valid file locations. What you get from all of
-#' this are sequences of images in the table cells, taken from the referenced
-#' graphics files on disk.
+#' correspond to the data in those two columns. `fmt_image()` can be used with
+#' these inputs since the `path` and `file_pattern` arguments allow us to
+#' compose complete and valid file locations. What you get from all of this are
+#' sequences of images in the table cells, taken from the referenced graphics
+#' files on disk.
 #'
 #' ```r
 #' metro |>
@@ -9511,12 +11026,11 @@ fmt_url <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-20
+#' 3-23
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_image <- function(
     data,
@@ -9556,7 +11070,7 @@ fmt_image <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -9592,11 +11106,11 @@ fmt_image <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # If width & height not provided, default width to '2em' and let width scale
-  if (is.null(height) & is.null(width)) {
+  if (is.null(height) && is.null(width)) {
     height <- "2em"
   }
 
@@ -9618,7 +11132,7 @@ fmt_image <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -9744,7 +11258,7 @@ fmt_image <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -9836,12 +11350,19 @@ download_file <- function(uri) {
   filename
 }
 
+convert_to_pt <- function(x) {
+
+  convert_to_px(x) * 0.75
+
+}
+
 convert_to_px <- function(x) {
 
-  units <- tolower(gsub("\\d+","", x))
+  units <- tolower(gsub("[[:digit:]\\.\\,]+","", x))
   value <- as.numeric(gsub(units, "", x))
 
   px_conversion <- c(
+    "pt" = 4 / 3,
     "in" = 96,
     "cm" = 37.7952755906,
     "emu" = 1 / 9525,
@@ -9907,13 +11428,14 @@ get_image_hw_ratio <- function(filepath) {
 #' involves iconography representing different countries, and the `fmt_flag()`
 #' function helps with inserting a flag icon (or multiple) in body cells. To
 #' make this work seamlessly, the input cells need to contain some reference to
-#' a country, and this is in the form of a 2-letter ISO 3166-1 country code
-#' (e.g., Egypt has the `"EG"` country code). This function will parse the
+#' a country, and this can be in the form of a 2- or 3-letter ISO 3166-1 country
+#' code (e.g., Egypt has the `"EG"` country code). This function will parse the
 #' targeted body cells for those codes (and the [countrypops] dataset contains
-#' all of them) and insert the appropriate flag graphics. Multiple flags can be
-#' included per cell by separating country codes with commas (e.g., `"GB,TT"`).
-#' The `sep` argument allows for a common separator to be applied between flag
-#' icons.
+#' all of them) and insert the appropriate flag graphics.
+#'
+#' Multiple flags can be included per cell by separating country codes with
+#' commas (e.g., `"GB,TT"`). The `sep` argument allows for a common separator
+#' to be applied between flag icons.
 #'
 #' @inheritParams fmt_number
 #'
@@ -9936,17 +11458,18 @@ get_image_hw_ratio <- function(filepath) {
 #'
 #'   `scalar<logical>` // *default:* `TRUE`
 #'
-#'   An option to display a tooltip for the country name (in English) when
+#'   An option to display a tooltip for the country name (in the language
+#'   according to the `locale` value, set either here or in [gt()]) when
 #'   hovering over the flag icon.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_flag()` formatting function is compatible with body cells that are
-#' of the `"character"` or `"factor"` types. Any other types of body cells are
-#' ignored during formatting. This is to say that cells of incompatible data
-#' types may be targeted, but there will be no attempt to format them.
+#' `fmt_flag()` is compatible with body cells that are of the `"character"` or
+#' `"factor"` types. Any other types of body cells are ignored during
+#' formatting. This is to say that cells of incompatible data types may be
+#' targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -9989,52 +11512,80 @@ get_image_hw_ratio <- function(filepath) {
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_flag()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_flag()` to obtain
+#' varying parameter values from a specified column within the table. This means
+#' that each row could be formatted a little bit differently. These arguments
+#' provide support for [from_column()]:
 #'
 #' - `height`
 #' - `sep`
 #' - `use_title`
+#' - `locale`
 #'
 #' Please note that for each of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
-#' @section Flag icons that can be used:
+#' @section Supported regions:
+#'
+#' The following 242 regions (most of which comprise countries) are supported
+#' with names across 574 locales: `"AD"`, `"AE"`, `"AF"`, `"AG"`, `"AI"`,
+#' `"AL"`, `"AM"`, `"AO"`, `"AR"`, `"AS"`, `"AT"`, `"AU"`, `"AW"`, `"AX"`,
+#' `"AZ"`, `"BA"`, `"BB"`, `"BD"`, `"BE"`, `"BF"`, `"BG"`, `"BH"`, `"BI"`,
+#' `"BJ"`, `"BL"`, `"BM"`, `"BN"`, `"BO"`, `"BR"`, `"BS"`, `"BT"`, `"BW"`,
+#' `"BY"`, `"BZ"`, `"CA"`, `"CC"`, `"CD"`, `"CF"`, `"CG"`, `"CH"`, `"CI"`,
+#' `"CK"`, `"CL"`, `"CM"`, `"CN"`, `"CO"`, `"CR"`, `"CU"`, `"CV"`, `"CW"`,
+#' `"CY"`, `"CZ"`, `"DE"`, `"DJ"`, `"DK"`, `"DM"`, `"DO"`, `"DZ"`, `"EC"`,
+#' `"EE"`, `"EG"`, `"EH"`, `"ER"`, `"ES"`, `"ET"`, `"EU"`, `"FI"`, `"FJ"`,
+#' `"FK"`, `"FM"`, `"FO"`, `"FR"`, `"GA"`, `"GB"`, `"GD"`, `"GE"`, `"GF"`,
+#' `"GG"`, `"GH"`, `"GI"`, `"GL"`, `"GM"`, `"GN"`, `"GP"`, `"GQ"`, `"GR"`,
+#' `"GS"`, `"GT"`, `"GU"`, `"GW"`, `"GY"`, `"HK"`, `"HN"`, `"HR"`, `"HT"`,
+#' `"HU"`, `"ID"`, `"IE"`, `"IL"`, `"IM"`, `"IN"`, `"IO"`, `"IQ"`, `"IR"`,
+#' `"IS"`, `"IT"`, `"JE"`, `"JM"`, `"JO"`, `"JP"`, `"KE"`, `"KG"`, `"KH"`,
+#' `"KI"`, `"KM"`, `"KN"`, `"KP"`, `"KR"`, `"KW"`, `"KY"`, `"KZ"`, `"LA"`,
+#' `"LB"`, `"LC"`, `"LI"`, `"LK"`, `"LR"`, `"LS"`, `"LT"`, `"LU"`, `"LV"`,
+#' `"LY"`, `"MA"`, `"MC"`, `"MD"`, `"ME"`, `"MF"`, `"MG"`, `"MH"`, `"MK"`,
+#' `"ML"`, `"MM"`, `"MN"`, `"MO"`, `"MP"`, `"MQ"`, `"MR"`, `"MS"`, `"MT"`,
+#' `"MU"`, `"MV"`, `"MW"`, `"MX"`, `"MY"`, `"MZ"`, `"NA"`, `"NC"`, `"NE"`,
+#' `"NF"`, `"NG"`, `"NI"`, `"NL"`, `"NO"`, `"NP"`, `"NR"`, `"NU"`, `"NZ"`,
+#' `"OM"`, `"PA"`, `"PE"`, `"PF"`, `"PG"`, `"PH"`, `"PK"`, `"PL"`, `"PM"`,
+#' `"PN"`, `"PR"`, `"PS"`, `"PT"`, `"PW"`, `"PY"`, `"QA"`, `"RE"`, `"RO"`,
+#' `"RS"`, `"RU"`, `"RW"`, `"SA"`, `"SB"`, `"SC"`, `"SD"`, `"SE"`, `"SG"`,
+#' `"SI"`, `"SK"`, `"SL"`, `"SM"`, `"SN"`, `"SO"`, `"SR"`, `"SS"`, `"ST"`,
+#' `"SV"`, `"SX"`, `"SY"`, `"SZ"`, `"TC"`, `"TD"`, `"TF"`, `"TG"`, `"TH"`,
+#' `"TJ"`, `"TK"`, `"TL"`, `"TM"`, `"TN"`, `"TO"`, `"TR"`, `"TT"`, `"TV"`,
+#' `"TW"`, `"TZ"`, `"UA"`, `"UG"`, `"US"`, `"UY"`, `"UZ"`, `"VA"`, `"VC"`,
+#' `"VE"`, `"VG"`, `"VI"`, `"VN"`, `"VU"`, `"WF"`, `"WS"`, `"YE"`, `"YT"`,
+#' `"ZA"`, `"ZM"`, and `"ZW"`.
 #'
 #' You can view the entire set of supported flag icons as an informative table
-#' by using the [info_flags()] function. In the information table that is
-#' provided, you'll see every flag icon and the associated identifier that can
-#' be used with `fmt_flag()`.
+#' by calling [info_flags()].
 #'
 #' @section Examples:
 #'
 #' Use the [`countrypops`] dataset to create a **gt** table. We will only
 #' include a few columns and rows from that table. The `country_code_2` column
 #' has 2-letter country codes in the format required for `fmt_flag()` and using
-#' that function transforms the codes in circular flag icons.
+#' that function transforms the codes to circular flag icons.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::filter(year == 2021) |>
 #'   dplyr::filter(grepl("^S", country_name)) |>
 #'   dplyr::arrange(country_name) |>
-#'   dplyr::select(-country_code_3, -year) |>
+#'   dplyr::select(-country_name, -year) |>
 #'   dplyr::slice_head(n = 10) |>
 #'   gt() |>
-#'   cols_move_to_start(columns = country_code_2) |>
 #'   fmt_integer() |>
 #'   fmt_flag(columns = country_code_2) |>
+#'   fmt_country(columns = country_code_3) |>
 #'   cols_label(
 #'     country_code_2 = "",
-#'     country_name = "Country",
+#'     country_code_3 = "Country",
 #'     population = "Population (2021)"
 #'   )
 #' ```
@@ -10073,10 +11624,10 @@ get_image_hw_ratio <- function(filepath) {
 #' `r man_get_image_tag(file = "man_fmt_flag_2.png")`
 #' }}
 #'
-#' The `fmt_flag()` function works well even when there are multiple country
-#' codes within the same cell. It can operate on comma-separated codes without
-#' issue. When rendered to HTML, hovering over each of the flag icons results in
-#' tooltip text showing the name of the country.
+#' `fmt_flag()` works well even when there are multiple country codes within the
+#' same cell. It can operate on comma-separated codes without issue. When
+#' rendered to HTML, hovering over each of the flag icons results in tooltip
+#' text showing the name of the country.
 #'
 #' ```r
 #' countrypops |>
@@ -10112,12 +11663,11 @@ get_image_hw_ratio <- function(filepath) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-21
+#' 3-24
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_flag <- function(
     data,
@@ -10125,7 +11675,8 @@ fmt_flag <- function(
     rows = everything(),
     height = "1em",
     sep = " ",
-    use_title = TRUE
+    use_title = TRUE,
+    locale = NULL
 ) {
 
   # Perform input object validation
@@ -10140,6 +11691,7 @@ fmt_flag <- function(
   # - height
   # - sep
   # - use_title
+  # - locale
 
   arg_vals <-
     mget(
@@ -10151,7 +11703,7 @@ fmt_flag <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -10176,7 +11728,8 @@ fmt_flag <- function(
           rows = resolved_rows_idx[i],
           height = p_i$height %||% height,
           sep = p_i$sep %||% sep,
-          use_title = p_i$use_title %||% use_title
+          use_title = p_i$use_title %||% use_title,
+          locale = p_i$locale %||% locale
         )
     }
 
@@ -10184,28 +11737,27 @@ fmt_flag <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
-  # Declare formatting function compatibility
-  compat <- c("character", "factor")
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
 
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
+  # If `locale` is NULL then use the 'en' locale
+  locale <- locale %||% "en"
+
+  valid_class <- c("character", "factor")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
+
+  # Create a vector of valid 2- and 3-letter country codes
+  valid_country_codes <-
+    c(
+      country_names[, ][["country_code_2"]],
+      country_names[, ][["country_code_3"]]
     )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "{.fn fmt_flag} must be used on `columns` with character or factor data."
-      )
-    }
-  }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -10225,7 +11777,7 @@ fmt_flag <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -10242,22 +11794,36 @@ fmt_flag <- function(
                 height <- paste0(height, "px")
               }
 
-              # TODO: Parse to ensure that `country_code` values are valid
-
               out <- c()
 
               for (y in seq_along(countries)) {
 
+                country_i <- toupper(countries[y])
+                country_i_len <- nchar(country_i)
+
+                # Check whether the country code is valid
+                if (!(country_i %in% valid_country_codes))  {
+                  cli::cli_abort(
+                    "The country code provided (\"{country_i}\") is invalid."
+                  )
+                }
+
                 flag_svg <-
                   flag_tbl[
-                    flag_tbl[["country_code_2"]] == countries[y],
+                    flag_tbl[[
+                      paste0("country_code_", country_i_len)]] == country_i,
                   ][["country_flag"]]
 
+                # If displaying a title, obtain that from `country_names`
                 if (use_title) {
-                  flag_title <-
-                    flag_tbl[
-                      flag_tbl[["country_code_2"]] == countries[y],
-                    ][["country_name"]]
+
+                  country_index <-
+                    which(
+                      country_names[[
+                        paste0("country_code_", country_i_len)]] == country_i
+                    )
+
+                  flag_title <- country_names[country_index, ][[locale]]
                 }
 
                 out_y <-
@@ -10309,6 +11875,487 @@ fmt_flag <- function(
       },
       default = function(x) {
         x
+      }
+    )
+  )
+}
+
+#' Generate country names from their corresponding country codes
+#'
+#' @description
+#'
+#' Tables that have comparable data between countries often need to have the
+#' country name included. While this seems like a fairly simple task, being
+#' consistent with country names is surprisingly difficult. The `fmt_country()`
+#' function can help in this regard by supplying a country name based on a
+#' 2- or 3-letter ISO 3166-1 country code (e.g., Singapore has the `"SG"`
+#' country code). The resulting country names have been obtained from the
+#' Unicode *CLDR* (Common Locale Data Repository), which is a good source since
+#' all country names are agreed upon by consensus. Furthermore, the country
+#' names can be localized through the `locale` argument (either in this function
+#' or through the initial [gt()] call).
+#'
+#' Multiple country names can be included per cell by separating country codes
+#' with commas (e.g., `"RO,BM"`). And it is okay if the codes are set in either
+#' uppercase or lowercase letters. The `sep` argument allows for a common
+#' separator to be applied between country names.
+#'
+#' @inheritParams fmt_number
+#'
+#' @param sep *Separator between country names*
+#'
+#'   `scalar<character>` // *default:* `" "`
+#'
+#'   In the output of country names within a body cell, `sep` provides the
+#'   separator between each instance. By default, this is a single space
+#'   character (`" "`).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' `fmt_country()` function is compatible with body cells that are of the
+#' `"character"` or `"factor"` types. Any other types of body cells are ignored
+#' during formatting. This is to say that cells of incompatible data types may
+#' be targeted, but there will be no attempt to format them.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' [from_column()] can be used with certain arguments of `fmt_country()` to
+#' obtain varying parameter values from a specified column within the table.
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
+#'
+#' - `pattern`
+#' - `sep`
+#' - `locale`
+#'
+#' Please note that for each of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
+#'
+#' @section Supported regions:
+#'
+#' The following 242 regions (most of which comprise countries) are supported
+#' with names across 574 locales: `"AD"`, `"AE"`, `"AF"`, `"AG"`, `"AI"`,
+#' `"AL"`, `"AM"`, `"AO"`, `"AR"`, `"AS"`, `"AT"`, `"AU"`, `"AW"`, `"AX"`,
+#' `"AZ"`, `"BA"`, `"BB"`, `"BD"`, `"BE"`, `"BF"`, `"BG"`, `"BH"`, `"BI"`,
+#' `"BJ"`, `"BL"`, `"BM"`, `"BN"`, `"BO"`, `"BR"`, `"BS"`, `"BT"`, `"BW"`,
+#' `"BY"`, `"BZ"`, `"CA"`, `"CC"`, `"CD"`, `"CF"`, `"CG"`, `"CH"`, `"CI"`,
+#' `"CK"`, `"CL"`, `"CM"`, `"CN"`, `"CO"`, `"CR"`, `"CU"`, `"CV"`, `"CW"`,
+#' `"CY"`, `"CZ"`, `"DE"`, `"DJ"`, `"DK"`, `"DM"`, `"DO"`, `"DZ"`, `"EC"`,
+#' `"EE"`, `"EG"`, `"EH"`, `"ER"`, `"ES"`, `"ET"`, `"EU"`, `"FI"`, `"FJ"`,
+#' `"FK"`, `"FM"`, `"FO"`, `"FR"`, `"GA"`, `"GB"`, `"GD"`, `"GE"`, `"GF"`,
+#' `"GG"`, `"GH"`, `"GI"`, `"GL"`, `"GM"`, `"GN"`, `"GP"`, `"GQ"`, `"GR"`,
+#' `"GS"`, `"GT"`, `"GU"`, `"GW"`, `"GY"`, `"HK"`, `"HN"`, `"HR"`, `"HT"`,
+#' `"HU"`, `"ID"`, `"IE"`, `"IL"`, `"IM"`, `"IN"`, `"IO"`, `"IQ"`, `"IR"`,
+#' `"IS"`, `"IT"`, `"JE"`, `"JM"`, `"JO"`, `"JP"`, `"KE"`, `"KG"`, `"KH"`,
+#' `"KI"`, `"KM"`, `"KN"`, `"KP"`, `"KR"`, `"KW"`, `"KY"`, `"KZ"`, `"LA"`,
+#' `"LB"`, `"LC"`, `"LI"`, `"LK"`, `"LR"`, `"LS"`, `"LT"`, `"LU"`, `"LV"`,
+#' `"LY"`, `"MA"`, `"MC"`, `"MD"`, `"ME"`, `"MF"`, `"MG"`, `"MH"`, `"MK"`,
+#' `"ML"`, `"MM"`, `"MN"`, `"MO"`, `"MP"`, `"MQ"`, `"MR"`, `"MS"`, `"MT"`,
+#' `"MU"`, `"MV"`, `"MW"`, `"MX"`, `"MY"`, `"MZ"`, `"NA"`, `"NC"`, `"NE"`,
+#' `"NF"`, `"NG"`, `"NI"`, `"NL"`, `"NO"`, `"NP"`, `"NR"`, `"NU"`, `"NZ"`,
+#' `"OM"`, `"PA"`, `"PE"`, `"PF"`, `"PG"`, `"PH"`, `"PK"`, `"PL"`, `"PM"`,
+#' `"PN"`, `"PR"`, `"PS"`, `"PT"`, `"PW"`, `"PY"`, `"QA"`, `"RE"`, `"RO"`,
+#' `"RS"`, `"RU"`, `"RW"`, `"SA"`, `"SB"`, `"SC"`, `"SD"`, `"SE"`, `"SG"`,
+#' `"SI"`, `"SK"`, `"SL"`, `"SM"`, `"SN"`, `"SO"`, `"SR"`, `"SS"`, `"ST"`,
+#' `"SV"`, `"SX"`, `"SY"`, `"SZ"`, `"TC"`, `"TD"`, `"TF"`, `"TG"`, `"TH"`,
+#' `"TJ"`, `"TK"`, `"TL"`, `"TM"`, `"TN"`, `"TO"`, `"TR"`, `"TT"`, `"TV"`,
+#' `"TW"`, `"TZ"`, `"UA"`, `"UG"`, `"US"`, `"UY"`, `"UZ"`, `"VA"`, `"VC"`,
+#' `"VE"`, `"VG"`, `"VI"`, `"VN"`, `"VU"`, `"WF"`, `"WS"`, `"YE"`, `"YT"`,
+#' `"ZA"`, `"ZM"`, and `"ZW"`.
+#'
+#' @section Examples:
+#'
+#' The [`peeps`] dataset will be used to generate a small **gt** table
+#' containing only the people born in the 1980s. The `country` column contains
+#' 3-letter country codes and those will be transformed to country names with
+#' `fmt_country()`.
+#'
+#' ```r
+#' peeps |>
+#'   dplyr::filter(grepl("198", dob)) |>
+#'   dplyr::select(name_given, name_family, country, dob) |>
+#'   dplyr::arrange(country, name_family) |>
+#'   gt() |>
+#'   fmt_country(columns = country) |>
+#'   cols_merge(columns = c(name_given, name_family)) |>
+#'   opt_vertical_padding(scale = 0.5) |>
+#'   tab_options(column_labels.hidden = TRUE)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_country_1.png")`
+#' }}
+#'
+#' Use the [`countrypops`] dataset to create a **gt** table. We will only
+#' include a few columns and rows from that table. The `country_code_3` column
+#' has 3-letter country codes in the format required for `fmt_country()` and
+#' using that function transforms the codes to country names.
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(year == 2021) |>
+#'   dplyr::filter(grepl("^S", country_name)) |>
+#'   dplyr::arrange(country_name) |>
+#'   dplyr::select(-country_name, -year) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   fmt_integer() |>
+#'   fmt_flag(columns = country_code_2) |>
+#'   fmt_country(columns = country_code_3) |>
+#'   cols_label(
+#'     country_code_2 = "",
+#'     country_code_3 = "Country",
+#'     population = "Population (2021)"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_country_2.png")`
+#' }}
+#'
+#' The country names derived from country codes can be localized. Let's
+#' translate some of those country names into three different languages using
+#' different `locale` values in separate calls of `fmt_country()`.
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(year == 2021) |>
+#'   dplyr::arrange(desc(population)) |>
+#'   dplyr::filter(
+#'     dplyr::row_number() > max(dplyr::row_number()) - 5 |
+#'     dplyr::row_number() <= 5
+#'   ) |>
+#'   dplyr::select(
+#'     country_code_fl = country_code_2,
+#'     country_code_2a = country_code_2,
+#'     country_code_2b = country_code_2,
+#'     country_code_2c = country_code_2,
+#'     population
+#'   ) |>
+#'   gt(rowname_col = "country_code_fl") |>
+#'   fmt_integer() |>
+#'   fmt_flag(columns = stub()) |>
+#'   fmt_country(columns = ends_with("a")) |>
+#'   fmt_country(columns = ends_with("b"), locale = "ja") |>
+#'   fmt_country(columns = ends_with("c"), locale = "ar") |>
+#'   cols_label(
+#'     ends_with("a") ~ "`en`",
+#'     ends_with("b") ~ "`ja`",
+#'     ends_with("c") ~ "`ar`",
+#'     population = "Population",
+#'     .fn = md
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Country name in specified locale",
+#'     columns = matches("2a|2b|2c")
+#'   ) |>
+#'   cols_align(align = "center", columns = matches("2a|2b|2c")) |>
+#'   opt_horizontal_padding(scale = 2)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_country_3.png")`
+#' }}
+#'
+#' Let's make another **gt** table, this time using the [`films`] dataset. The
+#' `countries_of_origin` column contains 2-letter country codes and some cells
+#' contain multiple countries (separated by commas). We'll use `fmt_country()`
+#' on that column and also specify that the rendered country names should be
+#' separated by a comma and a space character. Also note that historical
+#' country codes like `"SU"` ('USSR'), `"CS"` ('Czechoslovakia'), and `"YU"`
+#' ('Yugoslavia') are permitted as inputs for `fmt_country()`.
+#'
+#' ```r
+#' films |>
+#'   dplyr::filter(year == 1959) |>
+#'   dplyr::select(
+#'     contains("title"), run_time, director, countries_of_origin, imdb_url
+#'   ) |>
+#'   gt() |>
+#'   tab_header(title = "Feature Films in Competition at the 1959 Festival") |>
+#'   fmt_country(columns = countries_of_origin, sep = ", ") |>
+#'   fmt_url(
+#'     columns = imdb_url,
+#'     label = fontawesome::fa("imdb", fill = "black")
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(title, original_title, imdb_url),
+#'     pattern = "{1}<< ({2})>> {3}"
+#'   ) |>
+#'   cols_label(
+#'     title = "Film",
+#'     run_time = "Length",
+#'     director = "Director",
+#'     countries_of_origin = "Country"
+#'   ) |>
+#'   opt_vertical_padding(scale = 0.5) |>
+#'   opt_table_font(stack = "classical-humanist", weight = "bold") |>
+#'   opt_stylize(style = 1, color = "gray") |>
+#'   tab_options(heading.title.font.size = px(26))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_country_4.png")`
+#' }}
+#'
+#' Country names can sometimes pair nicely with flag-based graphics. In this
+#' example (using a different portion of the [`films`] dataset) we use
+#' `fmt_country()` along with [fmt_flag()]. The formatted country names are then
+#' merged into the same cells as the icons via [cols_merge()].
+#'
+#' ```r
+#' films |>
+#'   dplyr::filter(director == "Jean-Pierre Dardenne, Luc Dardenne") |>
+#'   dplyr::select(title, year, run_time, countries_of_origin) |>
+#'   gt() |>
+#'   tab_header(title = "In Competition Films by the Dardenne Bros.") |>
+#'   cols_add(country_flag = countries_of_origin) |>
+#'   fmt_flag(columns = country_flag) |>
+#'   fmt_country(columns = countries_of_origin, sep = ", ") |>
+#'   cols_merge(
+#'     columns = c(countries_of_origin, country_flag),
+#'     pattern = "{2}<br>{1}"
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(size = px(9)),
+#'     locations = cells_body(columns = countries_of_origin)
+#'   ) |>
+#'   cols_merge(columns = c(title, year), pattern = "{1} ({2})") |>
+#'   opt_vertical_padding(scale = 0.5) |>
+#'   opt_horizontal_padding(scale = 3) |>
+#'   opt_table_font(font = google_font("PT Sans")) |>
+#'   opt_stylize(style = 1, color = "blue") |>
+#'   tab_options(
+#'     heading.title.font.size = px(26),
+#'     column_labels.hidden = TRUE
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_country_5.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-25
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+fmt_country <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    pattern = "{x}",
+    sep = " ",
+    locale = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - pattern
+  # - sep
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = "fmt_country",
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using `resolve_vars()`
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_country(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          pattern = p_i$pattern %||% pattern,
+          sep = p_i$sep %||% sep,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # If `locale` is NULL then use the 'en' locale
+  locale <- locale %||% "en"
+
+  valid_class <- c("character", "factor")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
+
+  # Create a vector of valid 2- and 3-letter country codes
+  valid_country_codes <-
+    c(
+      country_names[, ][["country_code_2"]],
+      country_names[, ][["country_code_3"]],
+      country_names_additional[, ][["country_code_2"]],
+      country_names_additional[, ][["country_code_3"]]
+    )
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      use_latex_math_mode = FALSE,
+      format_fn = function(x, context) {
+
+        # Generate an vector of empty strings that will eventually
+        # contain all of the link text
+        x_str <- character(length(x))
+
+        x_str_non_missing <- x[!is.na(x)]
+
+        x_str_non_missing <-
+          vapply(
+            seq_along(x_str_non_missing),
+            FUN.VALUE = character(1L),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+
+              if (grepl(",", x_str_non_missing[x])) {
+                countries <-
+                  toupper(unlist(strsplit(x_str_non_missing[x], ",\\s*")))
+              } else {
+                countries <- toupper(x_str_non_missing[x])
+              }
+
+              out <- c()
+
+              for (y in seq_along(countries)) {
+
+                country_i <- toupper(countries[y])
+                country_i_len <- nchar(country_i)
+
+                # Check whether the country code is valid
+                if (!(country_i %in% valid_country_codes))  {
+                  cli::cli_abort(
+                    "The country code provided (\"{country_i}\") is invalid."
+                  )
+                }
+
+                country_index <-
+                  which(
+                    country_names[[
+                      paste0("country_code_", country_i_len)]] == country_i
+                  )
+
+                if (length(country_index) < 1) {
+
+                  country_additional_index <-
+                    which(
+                      country_names_additional[[
+                        paste0("country_code_", country_i_len)]] == country_i
+                    )
+
+                  out_y <-
+                    country_names_additional[
+                      country_additional_index, ][["name"]]
+
+                } else {
+
+                  out_y <- country_names[country_index, ][[locale]]
+                }
+
+                out <- c(out, out_y)
+              }
+
+              paste0(out, collapse = sep)
+            }
+          )
+
+        x_str[!is.na(x)] <- x_str_non_missing
+        x_str[is.na(x)] <- NA_character_
+        x_str
       }
     )
   )
@@ -10369,13 +12416,16 @@ fmt_flag <- function(
 #'
 #' @param fill_color *Color of the icon fill*
 #'
-#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'   `scalar<character>|vector<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The fill color of the icon can be set with `fill_color`; providing a single
 #'   color here will change the color of the fill but not of the icon's 'stroke'
-#'   or outline (use `stroke_color` to modify that). If not provided then the
-#'   default value of `"currentColor"` is applied so that the fill matches the
-#'   color of the parent HTML element's color attribute.
+#'   or outline (use `stroke_color` to modify that). A named vector or named
+#'   list comprising the icon names with corresponding fill colors can
+#'   alternatively be used here (e.g.,
+#'   `list("circle-check" = "green", "circle-xmark" = "red"`). If nothing is
+#'   provided then the default value of `"currentColor"` is applied so that the
+#'   fill matches the color of the parent HTML element's color attribute.
 #'
 #' @param fill_alpha *Transparency value for icon fill*
 #'
@@ -10421,10 +12471,10 @@ fmt_flag <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' The `fmt_icon()` formatting function is compatible with body cells that are
-#' of the `"character"` or `"factor"` types. Any other types of body cells are
-#' ignored during formatting. This is to say that cells of incompatible data
-#' types may be targeted, but there will be no attempt to format them.
+#' `fmt_icon()` is compatible with body cells that are of the
+#' `"character"` or `"factor"` types. Any other types of body cells are ignored
+#' during formatting. This is to say that cells of incompatible data types may
+#' be targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -10467,10 +12517,10 @@ fmt_flag <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_icon()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_icon()` to obtain
+#' varying parameter values from a specified column within the table. This means
+#' that each row could be formatted a little bit differently. These arguments
+#' provide support for [from_column()]:
 #'
 #' - `height`
 #' - `sep`
@@ -10487,24 +12537,23 @@ fmt_flag <- function(
 #' Please note that for each of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Icons that can be used:
 #'
-#' The `fmt_icon()` function relies on an installation of the **fontawesome**
-#' package to operate and every icon within that package can be accessed here
-#' with either an icon name or a full name. For example, the *Arrow Down* icon
-#' has an icon name of `"arrow-down"` and its corresponding full name is
+#' `fmt_icon()` relies on an installation of the **fontawesome** package to
+#' operate and every icon within that package can be accessed here with either
+#' an icon name or a full name. For example, the *Arrow Down* icon has an icon
+#' name of `"arrow-down"` and its corresponding full name is
 #' `"fas fa-arrow-down"`. In most cases you'll want to use the shorter name, but
 #' some icons have both a *Solid* (`"fas"`) and a *Regular* (`"far"`) variant so
 #' only the full name can disambiguate the pairing. In the latest release of
 #' **fontawesome** (`v0.5.2`), there are 2,025 icons and you can view the entire
-#' icon listing by using the [info_icons()] function. What you'll get from that
-#' is an information table showing every icon and associated set of identifiers.
+#' icon listing by calling [info_icons()]. What you'll get from that is an
+#' information table showing every icon and associated set of identifiers.
 #'
 #' @section Examples:
 #'
@@ -10545,8 +12594,7 @@ fmt_flag <- function(
 #'   dplyr::select(name, csd_type, population_2021) |>
 #'   dplyr::filter(csd_type %in% c("city", "town")) |>
 #'   dplyr::group_by(csd_type) |>
-#'   dplyr::arrange(desc(population_2021)) |>
-#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::slice_max(population_2021, n = 5) |>
 #'   dplyr::ungroup() |>
 #'   dplyr::mutate(
 #'     csd_type = ifelse(csd_type == "town", "house-chimney", "city")
@@ -10570,11 +12618,10 @@ fmt_flag <- function(
 #' Depending on which train services are offered at the subset of stations,
 #' *Font Awesome* icon names will be applied to cells where the different
 #' services exist (the specific names are `"train-subway"`, `"train"`, and
-#' `"train-tram"`). With **tidyr**'s `unite()` function, those icon names
-#' can be converged into a single column (`services`) with the `NA` values
-#' removed. Since the names correspond to icons and they are in the correct
-#' format (separated by commas), they can be formatted as *Font Awesome* icons
-#' with the `fmt_icon()` function.
+#' `"train-tram"`). With `tidyr::unite()`, those icon names can be converged
+#' into a single column (`services`) with the `NA` values removed. Since the
+#' names correspond to icons and they are in the correct format (separated by
+#' commas), they can be formatted as *Font Awesome* icons with `fmt_icon()`.
 #'
 #' ```r
 #' metro |>
@@ -10615,8 +12662,8 @@ fmt_flag <- function(
 #' `"star-half"` icons. In this case, it is useful to generate the repeating
 #' sequence of icon names (separated by commas) in the `rating` column before
 #' introducing the table to [gt()]. We can make use of the numerical rating
-#' values in `stars` within the `fmt_icon()` function with a little help from
-#' the [from_column()] helper. Using that, we can dynamically adjust the icon's
+#' values in `stars` within `fmt_icon()` with a little help from
+#' [from_column()]. Using that, we can dynamically adjust the icon's
 #' `fill_alpha` (i.e., opacity) value and accentuate the films with higher
 #' scores.
 #'
@@ -10650,14 +12697,51 @@ fmt_flag <- function(
 #' `r man_get_image_tag(file = "man_fmt_icon_4.png")`
 #' }}
 #'
+#' A fairly common thing to do with icons in tables is to indicate whether
+#' a quantity is either higher or lower than another. Up and down arrow symbols
+#' can serve as good visual indicators for this purpose. We can make use of the
+#' `"up-arrow"` and `"down-arrow"` icons here. The `fmt_icon()` function has to
+#' find those text values in cells to generate the icons, so, lets generate the
+#' text within a new column with [cols_add()] (an expression is used therein to
+#' generate the correct text given the `close` and `open` values). Following
+#' that, `fmt_icon()` is used and its `fill_color` argument is provided with a
+#' named vector that indicates which color should be used for each icon.
+#'
+#' ```r
+#' sp500 |>
+#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::select(date, open, close) |>
+#'   dplyr::arrange(-dplyr::row_number()) |>
+#'   gt(rowname_col = "date") |>
+#'   cols_add(week = date, .after = date) |>
+#'   cols_add(dir = ifelse(close > open, "arrow-up", "arrow-down")) |>
+#'   cols_merge(columns = c(date, week), pattern = "{1} ({2})") |>
+#'   fmt_date(columns = date, date_style = "m_day_year") |>
+#'   fmt_datetime(columns = week, format = "w", pattern = "W{x}") |>
+#'   fmt_currency() |>
+#'   fmt_icon(
+#'     columns = dir,
+#'     fill_color = c("arrow-up" = "green", "arrow-down" = "red")
+#'   ) |>
+#'   cols_label(
+#'     open = "Opening Value",
+#'     close = "Closing Value",
+#'     dir = ""
+#'   ) |>
+#'   opt_stylize(style = 1, color = "gray")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_icon_5.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-22
+#' 3-26
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_icon <- function(
     data,
@@ -10681,7 +12765,7 @@ fmt_icon <- function(
 
   # Determine if the fontawesome package is installed and stop the
   # function if it is not present
-  rlang::check_installed("fontawesome", "to insert icons with `fmt_icons()`.")
+  rlang::check_installed("fontawesome", "to insert icons with `fmt_icon()`.")
 
   #
   # Begin support for `from_column()` objects passed to compatible arguments
@@ -10711,7 +12795,7 @@ fmt_icon <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -10752,7 +12836,7 @@ fmt_icon <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
@@ -10765,26 +12849,8 @@ fmt_icon <- function(
     a11y <- "deco"
   }
 
-  # Declare formatting function compatibility
-  compat <- c("character", "factor")
-
-  # In this case where strict mode is being used (with the option
-  # called "gt.strict_column_fmt"), stop the function if any of the
-  # resolved columns have data that is incompatible with this formatter
-  if (
-    !column_classes_are_valid(
-      data = data,
-      columns = {{ columns }},
-      valid_classes = compat
-    )
-  ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_icon()` function can only be used on `columns`
-      with character or factor data."
-      )
-    }
-  }
+  valid_class <- c("character", "factor")
+  check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -10801,10 +12867,12 @@ fmt_icon <- function(
 
         x_str_non_missing <- x[!is.na(x)]
 
+        fill_color_named <- rlang::is_named(fill_color)
+
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -10827,11 +12895,22 @@ fmt_icon <- function(
 
               for (y in seq_along(icons)) {
 
+                icon_name_i <- icons[y]
+
+                if (
+                  fill_color_named &&
+                  rlang::has_name(fill_color, name = icon_name_i)
+                ) {
+                  fill_color_i <- fill_color[[icon_name_i]]
+                } else {
+                  fill_color_i <- fill_color
+                }
+
                 out_y <-
                   as.character(
                     fontawesome::fa(
                       name = icons[y],
-                      fill = fill_color,
+                      fill = fill_color_i,
                       fill_opacity = fill_alpha,
                       stroke = stroke_color,
                       stroke_width = stroke_width,
@@ -10939,16 +13018,15 @@ fmt_icon <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with the `md_engine` argument
-#' of `fmt_markdown()` to obtain varying parameter values from a specified
-#' column within the table. This means that each row could be formatted a little
-#' bit differently.
+#' [from_column()] can be used with the `md_engine` argument of `fmt_markdown()`
+#' to obtain varying parameter values from a specified column within the table.
+#' This means that each row could be formatted a little bit differently.
 #'
 #' Please note that for this argument (`md_engine`), a [from_column()] call
 #' needs to reference a column that has data of the `character` type. Additional
-#' columns for parameter values can be generated with the [cols_add()] function
-#' (if not already present). Columns that contain parameter data can also be
-#' hidden from final display with [cols_hide()].
+#' columns for parameter values can be generated with [cols_add()] (if not
+#' already present). Columns that contain parameter data can also be hidden from
+#' final display with [cols_hide()].
 #'
 #' @section Examples:
 #'
@@ -10986,8 +13064,8 @@ fmt_icon <- function(
 #' "
 #' ```
 #'
-#' Arrange the text snippets as a tibble using the `dplyr::tribble()` function.
-#' then, create a **gt** table and format all columns with `fmt_markdown()`.
+#' Arrange the text snippets as a tibble using `dplyr::tribble()`, then, create
+#' a **gt** table and format all columns with `fmt_markdown()`.
 #'
 #' ```r
 #' dplyr::tribble(
@@ -11004,8 +13082,8 @@ fmt_icon <- function(
 #' `r man_get_image_tag(file = "man_fmt_markdown_1.png")`
 #' }}
 #'
-#' The `fmt_markdown()` function can also handle LaTeX math formulas enclosed
-#' in `"$..$"` (inline math) and also `"$$..$$"` (display math). The following
+#' `fmt_markdown()` can also handle LaTeX math formulas enclosed in
+#' `"$..$"` (inline math) and also `"$$..$$"` (display math). The following
 #' table has body cells that contain mathematical formulas in display mode
 #' (i.e., the formulas are surrounded by `"$$"`). Further to this, math can be
 #' used within [md()] wherever there is the possibility to insert text into the
@@ -11063,7 +13141,7 @@ fmt_icon <- function(
 #'     color = "gray",
 #'     add_row_striping = FALSE
 #'   ) |>
-#'   opt_table_outline(style = "invisible") %>%
+#'   opt_table_outline(style = "invisible") |>
 #'   tab_style(
 #'     style = cell_fill(color = "gray95"),
 #'     locations = cells_body(columns = l_time_domain)
@@ -11084,7 +13162,7 @@ fmt_icon <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-23
+#' 3-27
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -11092,7 +13170,6 @@ fmt_icon <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_markdown()].
 #'
-#' @import rlang
 #' @export
 fmt_markdown <- function(
     data,
@@ -11122,7 +13199,7 @@ fmt_markdown <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -11153,7 +13230,7 @@ fmt_markdown <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Ensure that arguments are matched
@@ -11183,7 +13260,7 @@ fmt_markdown <- function(
           "\n$", "",
           vapply(
             x,
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             commonmark::markdown_text
           )
@@ -11197,7 +13274,7 @@ fmt_markdown <- function(
 #'
 #' @description
 #'
-#' We can format values with the `fmt_passthrough()` function, which does little
+#' We can format values with `fmt_passthrough()`, which does little
 #' more than: (1) coercing to `character` (as all the `fmt_*()` functions do),
 #' and (2) applying decorator text via the `pattern` argument (the default is to
 #' apply nothing). This formatting function is useful when don't want to modify
@@ -11258,10 +13335,10 @@ fmt_markdown <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' `fmt_passthrough()` to obtain varying parameter values from a specified
-#' column within the table. This means that each row could be formatted a little
-#' bit differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_passthrough()` to
+#' obtain varying parameter values from a specified column within the table.
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `escape`
 #' - `pattern`
@@ -11269,11 +13346,10 @@ fmt_markdown <- function(
 #' Please note that for both of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Examples:
 #'
@@ -11301,12 +13377,11 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-24
+#' 3-28
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 fmt_passthrough <- function(
     data,
@@ -11338,7 +13413,7 @@ fmt_passthrough <- function(
 
   if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
+    # Resolve the row numbers using `resolve_vars()`
     resolved_rows_idx <-
       resolve_rows_i(
         expr = {{ rows }},
@@ -11370,7 +13445,7 @@ fmt_passthrough <- function(
   }
 
   #
-  # End support for `gt_column()` objects passed to compatible arguments
+  # End support for `from_column()` objects passed to compatible arguments
   #
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -11456,15 +13531,14 @@ fmt_passthrough <- function(
 #'
 #' @description
 #'
-#' The `fmt_auto()` function will automatically apply formatting of various
-#' types in a way that best suits the data table provided. The function will
-#' attempt to format numbers such that they are condensed to an optimal width,
-#' either with scientific notation or large-number suffixing. Currency values
-#' are detected by currency codes embedded in the column name and formatted in
-#' the correct way. Although the functionality here is comprehensive it's still
-#' possible to reduce the scope of automatic formatting with the `scope`
-#' argument and also by choosing a subset of columns and rows to which the
-#' formatting will be applied.
+#' `fmt_auto()` will automatically apply formatting of various types in a way
+#' that best suits the data table provided. The function will attempt to format
+#' numbers such that they are condensed to an optimal width, either with
+#' scientific notation or large-number suffixing. Currency values are detected
+#' by currency codes embedded in the column name and formatted in the correct
+#' way. Although the functionality here is comprehensive it's still possible to
+#' reduce the scope of automatic formatting with the `scope` argument and also
+#' by choosing a subset of columns and rows to which the formatting will be applied.
 #'
 #' @inheritParams fmt_number
 #'
@@ -11563,12 +13637,11 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-25
+#' 3-29
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 fmt_auto <- function(
     data,
@@ -11687,7 +13760,7 @@ fmt_auto <- function(
 
         # Set `row_suf_vec` as a zero-length vector because the
         # preference is to not have any suffixed numbers at all
-        rows_suf_vec <- integer(0)
+        rows_suf_vec <- integer(0L)
       }
 
       if (lg_num_pref == "suf") {
@@ -11781,9 +13854,8 @@ fmt_auto <- function(
 #'
 #' @description
 #'
-#' The `fmt()` function provides a way to execute custom formatting
-#' functionality with raw data values in a way that can consider all output
-#' contexts.
+#' `fmt()` provides a way to execute custom formatting functionality with raw
+#' data values in a way that can consider all output contexts.
 #'
 #' Along with the `columns` and `rows` arguments that provide some precision in
 #' targeting data cells, the `fns` argument allows you to define one or more
@@ -11882,12 +13954,11 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-26
+#' 3-30
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 fmt <- function(
     data,

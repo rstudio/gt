@@ -32,12 +32,7 @@
 #' smaller tables across multiple pages (in RTF and Word outputs, primarily via
 #' [gtsave()]), or, with breaks between them when the output context is HTML.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams fmt_number
 #'
 #' @param row_every_n *Split at every n rows*
 #'
@@ -59,10 +54,9 @@
 #'
 #'   Any columns where vertical splitting across should occur. The splits occur
 #'   to the right of the resolved column names. Can either be a series of column
-#'   names provided in [c()], a vector of column indices, or a select helper
-#'   function. Examples of select helper functions include [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()].
+#'   names provided in `c()`, a vector of column indices, or a select helper
+#'   function (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]).
 #'
 #' @return An object of class `gt_group`.
 #'
@@ -190,7 +184,7 @@ gt_split <- function(
       visible_col_vars <- dt_boxhead_get_vars_default(data = data)
 
       # Stop function if any of the columns to split at aren't visible columns
-      if (any(!(col_slice_at %in% visible_col_vars))) {
+      if (!all(col_slice_at %in% visible_col_vars)) {
         cli::cli_abort(
           "All values provided in `col_slice_at` must correspond to visible columns."
         )
@@ -214,7 +208,7 @@ gt_split <- function(
 
       col_range_list <-
         split(
-          seq_len(length(visible_col_vars)),
+          seq_along(visible_col_vars),
           col_slice_vec
         )
 

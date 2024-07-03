@@ -8,19 +8,9 @@ test_tbl <-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
-
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
-}
+check_suggests()
 
 test_that("The correct color values are obtained when defining a palette", {
 
@@ -28,8 +18,11 @@ test_that("The correct color values are obtained when defining a palette", {
 
   # Obtain a palette of 12 colors in #RRGGBB format
   pal_12 <-
-    paletteer::paletteer_d(palette = "rcartocolor::Vivid") %>% as.character() %>%
-    gsub("FF$", "", .)
+    gsub(
+      "FF$",
+      "",
+      as.character(paletteer::paletteer_d(palette = "rcartocolor::Vivid"))
+    )
 
   # Create a `tbl_html` object by using `data_color` with the #RRGGBB
   # colors on the month column (which is of the `character` class)
@@ -1126,6 +1119,14 @@ test_that("Certain errors can be expected (and some things don't error)", {
       data_color(
         columns = c(num, currency),
         target_columns = c(row, group),
+      )
+  )
+  # Expect an error if rows resolve to an empty selection.
+  expect_error(
+    exibble %>%
+      gt() %>%
+      data_color(
+        rows = num == 1000 # not contained in data.
       )
   )
 })

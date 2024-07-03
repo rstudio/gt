@@ -1,39 +1,36 @@
 Type: Package
 Package: gt
-Version: 0.10.1.9000
 Title: Easily Create Presentation-Ready Display Tables
-Description: Build display tables from tabular data with an easy-to-use set of
-    functions. With its progressive approach, we can construct display tables
-    with a cohesive set of table parts. Table values can be formatted using any
-    of the included formatting functions. Footnotes and cell styles can be 
-    precisely added through a location targeting system. The way in which 'gt'
-    handles things for you means that you don't often have to worry about the
-    fine details.
+Version: 0.10.1.9000
 Authors@R: c(
-    person("Richard", "Iannone", , "rich@posit.co", c("aut", "cre"),
+    person("Richard", "Iannone", , "rich@posit.co", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3925-190X")),
-    person("Joe", "Cheng", , "joe@posit.co", "aut"),
-    person("Barret", "Schloerke", , "barret@posit.co", "aut",
+    person("Joe", "Cheng", , "joe@posit.co", role = "aut"),
+    person("Barret", "Schloerke", , "barret@posit.co", role = "aut",
            comment = c(ORCID = "0000-0001-9986-114X")),
-    person("Ellis", "Hughes", , "ellis.h.hughes@gsk.com", "aut",
-           comment = c(ORCID = "0000-0003-0637-4436")),   
-    person("Alexandra", "Lauer", , "alexandralauer1@gmail.com", "aut",
-           comment = c(ORCID = "0000-0002-4191-6301")),    
-    person("JooYoung", "Seo", , "jseo1005@illinois.edu", "aut",
+    person("Ellis", "Hughes", , "ellis.h.hughes@gsk.com", role = "aut",
+           comment = c(ORCID = "0000-0003-0637-4436")),
+    person("Alexandra", "Lauer", , "alexandralauer1@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0002-4191-6301")),
+    person("JooYoung", "Seo", , "jseo1005@illinois.edu", role = "aut",
            comment = c(ORCID = "0000-0002-4064-6012")),
-    person("Ken", "Brevoort", , "ken@brevoort.com", "aut",
+    person("Ken", "Brevoort", , "ken@brevoort.com", role = "aut",
            comment = c(ORCID = "0000-0002-4001-8358")),
+    person("Olivier", "Roy", role = "aut"),
     person("Posit Software, PBC", role = c("cph", "fnd"))
-    )
+  )
+Description: Build display tables from tabular data with an easy-to-use
+    set of functions. With its progressive approach, we can construct
+    display tables with a cohesive set of table parts. Table values can be
+    formatted using any of the included formatting functions. Footnotes
+    and cell styles can be precisely added through a location targeting
+    system. The way in which 'gt' handles things for you means that you
+    don't often have to worry about the fine details.
 License: MIT + file LICENSE
 URL: https://gt.rstudio.com, https://github.com/rstudio/gt
 BugReports: https://github.com/rstudio/gt/issues
-Encoding: UTF-8
-LazyData: true
-ByteCompile: true
-RoxygenNote: 7.2.3
 Depends:
-    R (>= 3.2.0)
+    R (>= 3.6.0)
 Imports:
     base64enc (>= 0.1-3),
     bigD (>= 0.2),
@@ -49,14 +46,13 @@ Imports:
     magrittr (>= 2.0.2),
     markdown (>= 1.5),
     reactable (>= 0.4.3),
-    rlang (>= 1.0.2),
+    rlang (>= 1.1.0),
     sass (>= 0.4.5),
     scales (>= 1.2.1),
     tidyselect (>= 1.2.0),
     vctrs,
     xml2 (>= 1.3.3)
 Suggests:
-    covr,
     digest (>= 0.6.31),
     fontawesome (>= 0.5.2),
     ggplot2,
@@ -69,87 +65,18 @@ Suggests:
     paletteer,
     RColorBrewer,
     rmarkdown (>= 2.20),
+    rsvg,
     rvest,
     shiny (>= 1.7.4),
     testthat (>= 3.1.9),
     tidyr,
     webshot2 (>= 0.1.0),
     withr
-Roxygen: list(markdown = TRUE)
-Collate: 
-    'as_data_frame.R'
-    'build_data.R'
-    'compile_scss.R'
-    'data_color.R'
-    'datasets.R'
-    'dt__.R'
-    'dt_body.R'
-    'dt_boxhead.R'
-    'dt_cols_merge.R'
-    'dt_data.R'
-    'dt_footnotes.R'
-    'dt_formats.R'
-    'dt_groups_rows.R'
-    'dt_has_built.R'
-    'dt_heading.R'
-    'dt_locale.R'
-    'dt_options.R'
-    'dt_row_groups.R'
-    'dt_source_notes.R'
-    'dt_spanners.R'
-    'dt_stub_df.R'
-    'dt_stubhead.R'
-    'dt_styles.R'
-    'dt_substitutions.R'
-    'dt_summary.R'
-    'dt_transforms.R'
-    'export.R'
-    'format_data.R'
-    'format_vec.R'
-    'gt-package.R'
-    'gt.R'
-    'gt_group.R'
-    'gt_preview.R'
-    'gt_split.R'
-    'helpers.R'
-    'image.R'
-    'info_tables.R'
-    'knitr-utils.R'
-    'location_methods.R'
-    'modify_columns.R'
-    'modify_rows.R'
-    'tab_create_modify.R'
-    'opts.R'
-    'print.R'
-    'reexports.R'
-    'render_as_gtable.R'
-    'render_as_html.R'
-    'render_as_i_html.R'
-    'resolver.R'
-    'rows_add.R'
-    'shiny.R'
-    'substitution.R'
-    'summary_rows.R'
-    'tab_info.R'
-    'tab_remove.R'
-    'tab_style_body.R'
-    'text_transform.R'
-    'utils.R'
-    'utils_color_contrast.R'
-    'utils_environments.R'
-    'utils_examples.R'
-    'utils_formatters.R'
-    'utils_general_str_formatting.R'
-    'utils_pipe.R'
-    'utils_plots.R'
-    'utils_render_common.R'
-    'utils_render_grid.R'
-    'utils_render_html.R'
-    'utils_render_latex.R'
-    'utils_render_rtf.R'
-    'utils_render_xml.R'
-    'utils_units.R'
-    'z_utils_render_footnotes.R'
-    'zzz.R'
+Config/Needs/coverage: officer
+ByteCompile: true
 Config/testthat/edition: 3
 Config/testthat/parallel: true
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1

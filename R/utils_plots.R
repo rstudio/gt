@@ -168,7 +168,7 @@ generate_nanoplot <- function(
 
   # If the number of y_vals is `1` and we requested a 'bar' plot, then
   # reset several parameters
-  if (num_y_vals == 1 && grepl("bar", plot_type)) {
+  if (num_y_vals == 1 && grepl("bar", plot_type, fixed = TRUE)) {
 
     single_horizontal_bar <- TRUE
     show_data_points <- FALSE
@@ -784,7 +784,7 @@ generate_nanoplot <- function(
   start_data_y_points <- start_data_y_points[is_non_na]
   end_data_y_points <- end_data_y_points[is_non_na]
 
-  is_not_length_one <- !(start_data_y_points == end_data_y_points)
+  is_not_length_one <- start_data_y_points != end_data_y_points
 
   start_data_y_points <- start_data_y_points[is_not_length_one]
   end_data_y_points <- end_data_y_points[is_not_length_one]
@@ -1211,11 +1211,11 @@ generate_nanoplot <- function(
     box_thickness <- data_point_radius[1] * 6
 
     # Calculate statistics for boxplot
-    stat_p05 = unname(stats::quantile(y_vals, probs = 0.05, na.rm = TRUE))
-    stat_q_1 = unname(stats::quantile(y_vals, probs = 0.25, na.rm = TRUE))
-    stat_med = unname(stats::quantile(y_vals, probs = 0.50, na.rm = TRUE))
-    stat_q_3 = unname(stats::quantile(y_vals, probs = 0.75, na.rm = TRUE))
-    stat_p95 = unname(stats::quantile(y_vals, probs = 0.95, na.rm = TRUE))
+    stat_p05 <- unname(stats::quantile(y_vals, probs = 0.05, na.rm = TRUE))
+    stat_q_1 <- unname(stats::quantile(y_vals, probs = 0.25, na.rm = TRUE))
+    stat_med <- unname(stats::quantile(y_vals, probs = 0.50, na.rm = TRUE))
+    stat_q_3 <- unname(stats::quantile(y_vals, probs = 0.75, na.rm = TRUE))
+    stat_p95 <- unname(stats::quantile(y_vals, probs = 0.95, na.rm = TRUE))
 
     if (length(y_vals) > 25) {
 
@@ -1882,7 +1882,7 @@ generate_nanoplot <- function(
       area_x <- data_x_points[start_data_y_points[i]:end_data_y_points[i]]
       area_y <- data_y_points[start_data_y_points[i]:end_data_y_points[i]]
 
-      area_path_string <- c()
+      area_path_string <- NULL # same as c()
 
       for (j in seq_along(area_x)) {
 
@@ -1894,7 +1894,7 @@ generate_nanoplot <- function(
         c(
           area_path_string,
           paste0(area_x[length(area_x)], ",", bottom_y - safe_y_d + data_point_radius),
-          paste0(area_x[1], ",", bottom_y - safe_y_d + data_point_radius)
+          paste0(area_x[1L], ",", bottom_y - safe_y_d + data_point_radius)
         )
 
       area_path_i <- paste0("M", paste(area_path_i, collapse = ","), "Z")
@@ -1967,11 +1967,11 @@ reference_line_keywords <- function() {
 
 normalize_option_vector <- function(vec, num_y_vals) {
 
-  if (length(vec) != 1 && length(vec) != num_y_vals) {
+  if (length(vec) != 1L && length(vec) != num_y_vals) {
     cli::cli_abort("Every option must have either length 1 or `length(y_vals)`.")
   }
 
-  if (length(vec) == 1) vec <- rep(vec, num_y_vals)
+  if (length(vec) == 1L) vec <- rep(vec, num_y_vals)
   vec
 }
 
@@ -2002,7 +2002,7 @@ normalize_to_list <- function(...) {
   value_list_unique_nm <- names(value_list)
   value_list_vec <- unlist(value_list)
 
-  if (length(unique(value_list_vec)) == 1) {
+  if (length(unique(value_list_vec)) == 1L) {
     value_list_vec <- jitter(value_list_vec, amount = 1 / 100000)
   }
 
@@ -2266,7 +2266,7 @@ process_number_stream <- function(number_stream) {
 process_time_stream <- function(time_stream) {
 
   time_stream <- unlist(strsplit(time_stream, split = "\\s*[;,]\\s*"))
-  time_stream <- gsub("T", " ", time_stream)
+  time_stream <- gsub("T", " ", time_stream, fixed = TRUE)
 
   time_stream_vals <- as.POSIXct(time_stream, tz = "UTC")
   time_stream_vals <- as.numeric(time_stream_vals)

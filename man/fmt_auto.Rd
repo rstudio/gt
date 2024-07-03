@@ -25,10 +25,9 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
-Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
-column indices, or a select helper function. Examples of select helper
-functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+Can either be a series of column names provided in \code{c()}, a vector of
+column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}} and \code{\link[=everything]{everything()}}).}
 
 \item{rows}{\emph{Rows to target}
 
@@ -37,11 +36,10 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
 \code{columns} being formatted. Alternatively, we can supply a vector of row
-captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
-function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
-need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+captions within \code{c()}, a vector of row indices, or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{scope}{\emph{Scope of automatic formatting}
 
@@ -66,25 +64,24 @@ values only).}
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
-function as a useful reference for all of the locales that are supported. A
-locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
-would be used automatically by any function with a \code{locale} argument) but a
-\code{locale} value provided here will override that global locale.}
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported. A locale ID can
+be also set in the initial \code{\link[=gt]{gt()}} function call (where it would be used
+automatically by any function with a \code{locale} argument) but a \code{locale}
+value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{fmt_auto()} function will automatically apply formatting of various
-types in a way that best suits the data table provided. The function will
-attempt to format numbers such that they are condensed to an optimal width,
-either with scientific notation or large-number suffixing. Currency values
-are detected by currency codes embedded in the column name and formatted in
-the correct way. Although the functionality here is comprehensive it's still
-possible to reduce the scope of automatic formatting with the \code{scope}
-argument and also by choosing a subset of columns and rows to which the
-formatting will be applied.
+\code{fmt_auto()} will automatically apply formatting of various types in a way
+that best suits the data table provided. The function will attempt to format
+numbers such that they are condensed to an optimal width, either with
+scientific notation or large-number suffixing. Currency values are detected
+by currency codes embedded in the column name and formatted in the correct
+way. Although the functionality here is comprehensive it's still possible to
+reduce the scope of automatic formatting with the \code{scope} argument and also
+by choosing a subset of columns and rows to which the formatting will be applied.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
@@ -164,7 +161,7 @@ scientific notation. This is done by using the \code{lg_num_pref = "suf"} option
 
 \section{Function ID}{
 
-3-25
+3-29
 }
 
 \section{Function Introduced}{
@@ -175,12 +172,16 @@ scientific notation. This is done by using the \code{lg_num_pref = "suf"} option
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt}()},
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
@@ -196,10 +197,10 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
-\code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},

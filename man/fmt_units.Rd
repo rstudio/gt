@@ -18,10 +18,9 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
-Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
-column indices, or a select helper function. Examples of select helper
-functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+Can either be a series of column names provided in \code{c()}, a vector of
+column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}} and \code{\link[=everything]{everything()}}).}
 
 \item{rows}{\emph{Rows to target}
 
@@ -30,18 +29,17 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
 \code{columns} being formatted. Alternatively, we can supply a vector of row
-captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
-function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
-need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+captions within \code{c()}, a vector of row indices, or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{fmt_units()} function lets you better format measurement units in the
-table body. These must conform to \strong{gt}'s specialized units notation (e.g.,
+\code{fmt_units()} lets you better format measurement units in the table body.
+These must conform to \strong{gt}'s specialized units notation (e.g.,
 \code{"J Hz^-1 mol^-1"} can be used to generate units for the
 \emph{molar Planck constant}) for the best conversion. The notation here provides
 several conveniences for defining units, so as long as the values to be
@@ -102,7 +100,7 @@ best shown with examples:
 \itemize{
 \item \code{"m/s"} and \code{"m / s"} both render as \code{"m/s"}
 \item \code{"m s^-1"} will appear with the \code{"-1"} exponent intact
-\item \code{"m /s"} gives the the same result, as \code{"/<unit>"} is equivalent to
+\item \code{"m /s"} gives the same result, as \code{"/<unit>"} is equivalent to
 \code{"<unit>^-1"}
 \item \code{"E_h"} will render an \code{"E"} with the \code{"h"} subscript
 \item \code{"t_i^2.5"} provides a \code{t} with an \code{"i"} subscript and a \code{"2.5"} exponent
@@ -198,7 +196,7 @@ but rather \code{"<unit_1> <unit_2>^-1"}).
 
 \section{Function ID}{
 
-3-18
+3-19
 }
 
 \section{Function Introduced}{
@@ -209,13 +207,17 @@ but rather \code{"<unit_1> <unit_2>^-1"}).
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt}()},
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
@@ -231,9 +233,9 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt_url}()},
-\code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},

@@ -39,10 +39,9 @@ get_topic_names <- function() {
   # Exclude any topics that have `.` or `-` characters within their names,
   # and, exclude the 'pipe' and 'reexports' topic
   topic_names[
-    !grepl("\\.", topic_names) &
-      !grepl("-", topic_names) &
-      !grepl("^pipe$", topic_names) &
-      !grepl("^reexports$", topic_names)
+    !grepl(".", topic_names, fixed = TRUE) &
+      !grepl("-", topic_names, fixed = TRUE) &
+      !topic_names %in% c("pipe", "reexports")
   ]
 }
 
@@ -50,7 +49,7 @@ get_example_text <- function(topic) {
 
   topic_names <- names(get_package_docs())
 
-  examples_out <- c()
+  examples_out <- NULL # same as c
 
   for (i in seq_along(topic)) {
 
@@ -73,7 +72,7 @@ get_example_text <- function(topic) {
     }
 
     examples_start_idx <-
-      grep("\\section{Examples}{", help_file_lines, fixed = TRUE) + 1
+      grep("\\section{Examples}{", help_file_lines, fixed = TRUE) + 1L
 
     examples_end_idx <-
       grep(
@@ -106,12 +105,15 @@ get_example_text <- function(topic) {
     example_lines <- gsub("\\\\code\\{(.*?)\\}", "`\\1`", example_lines)
     example_lines <- gsub("\\\\verb\\{(.*?)\\}", "`\\1`", example_lines)
 
-    example_lines <- example_lines %>% paste(collapse = "\n")
+    example_lines <- paste(example_lines, collapse = "\n")
 
     # Remove leading and trailing whitespace
-    example_lines <- example_lines %>% gsub("^\n\n", "", .)
-    example_lines <- example_lines %>% gsub("\n\n$", "", .)
-    example_lines <- example_lines %>% gsub("\n\n\n", "\n\n", .)
+    example_lines <- gsub("^\n\n", "", example_lines)
+    example_lines <- gsub("\n\n$", "", example_lines)
+    example_lines <- gsub("\n\n\n", "\n\n", example_lines)
+
+    # Replace `\\\\\\\\` with `\\`
+    example_lines <- gsub("\\\\\\\\", "\\", example_lines, fixed = TRUE)
 
     examples_out <- c(examples_out, example_lines)
   }
@@ -177,27 +179,13 @@ write_gt_examples_qmd_files <- function(
 ) {
 
   if (is.null(topics)) {
+    gt_datasets_and_shiny_fns <-
+      c("countrypops", "sza", "gtcars", "sp500", "pizzaplace", "exibble",
+        "towny", "peeps", "films", "metro", "gibraltar", "constants",
+        "illness", "reactions", "photolysis", "nuclides", "rx_adsl",
+        "rx_addv", "render_gt", "gt_output")
 
-    topics <-
-      base::setdiff(
-        get_topic_names(),
-        c(
-          "countrypops",
-          "sza",
-          "gtcars",
-          "sp500",
-          "pizzaplace",
-          "exibble",
-          "towny",
-          "metro",
-          "constants",
-          "illness",
-          "rx_adsl",
-          "rx_addv",
-          "render_gt",
-          "gt_output"
-        )
-      )
+    topics <- base::setdiff(get_topic_names(), gt_datasets_and_shiny_fns)
   }
 
   if (!dir.exists(paths = output_dir)) {
@@ -213,11 +201,11 @@ write_gt_examples_qmd_files <- function(
 
     index_tbl <-
       dplyr::tibble(
-        name = character(0),
-        title = character(0),
-        type = character(0),
-        family = integer(0),
-        number = integer(0)
+        name = character(0L),
+        title = character(0L),
+        type = character(0L),
+        family = integer(0L),
+        number = integer(0L)
       )
 
     pkg_docs <- get_package_docs()
@@ -237,7 +225,7 @@ write_gt_examples_qmd_files <- function(
         family <- as.integer(unlist(strsplit(id_val, split = "-"))[[1]])
         number <- as.integer(unlist(strsplit(id_val, split = "-"))[[2]])
 
-      } else if (any(grepl("Dataset ID ", help_file_lines))) {
+      } else if (any(grepl("Dataset ID ", help_file_lines, fixed = TRUE))) {
 
         type <- "dataset"
         id_idx <- grep("\\section{Dataset ID and Badge}{", help_file_lines, fixed = TRUE) + 2
@@ -274,7 +262,7 @@ write_gt_examples_qmd_files <- function(
       dplyr::mutate(
         name = dplyr::case_when(
           type == "function" ~ paste0(
-            "[", name, "()](gt-", name , ".qmd)"
+            "[", name, "()](gt-", name, ".qmd)"
           ),
           .default = name
         )

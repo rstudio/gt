@@ -5,18 +5,6 @@ test_tbl <-
   dplyr::group_by(month) %>%
   dplyr::summarize(min_sza = min(sza))
 
-# Function to skip tests if Suggested packages not available on system
-check_suggests <- function() {
-  skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
-}
-
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
-
 test_that("The various color utility functions work correctly", {
 
   # Assign various color vectors that are of different specifications
@@ -27,8 +15,8 @@ test_that("The various color utility functions work correctly", {
   c_s_hex_a <- c("#f0A1", "#000F", "#32ba")
   c_rgba <- c("rgba(255,170,0,0.5)", "rgba(255,187,52,1)", "rgba(20,255,0,1.0)")
 
-  # Expect that the `is_rgba_col()` function will identify valid
-  # color strings in the 'rgba()' CSS format
+  # Expect that `is_rgba_col()` will identify valid color strings
+  # in the 'rgba()' CSS format
   is_rgba_col(
     colors = c(
       c_rgba,
@@ -60,7 +48,7 @@ test_that("The various color utility functions work correctly", {
     c("#FF00AA11", "#000000FF", "#3322BBAA")
   )
 
-  # Expect that the `rgba_to_hex()` function reliably returns
+  # Expect that `rgba_to_hex()` reliably returns
   # color strings in the hexadecimal format of #RRGGBBAA
   # when supplied 'rgba()' format strings
   expect_equal(
@@ -291,7 +279,7 @@ test_that("The various color utility functions work correctly", {
   s_hex_colors <-
     vapply(
       c(as.character(0:9), LETTERS[1:6]),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         paste0("#", paste(rep(x, 3), collapse = ""))
@@ -301,7 +289,7 @@ test_that("The various color utility functions work correctly", {
   hex_colors <-
     vapply(
       c(as.character(0:9), LETTERS[1:6]),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         paste0("#", paste(rep(x, 6), collapse = ""))
@@ -484,7 +472,7 @@ test_that("The various color utility functions work correctly", {
   expect_error(adjust_luminance(colors = c_hex, steps = +2.1))
 })
 
-test_that("The `cell_fill()` function accepts colors of various types", {
+test_that("cell_fill() accepts colors of various types", {
 
   # Create a `tbl_html` object by using `tab_style` with
   # the `cell_fill()` helper function and a color name

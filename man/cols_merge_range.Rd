@@ -47,11 +47,11 @@ is to ensure that exactly one column is provided here.}
 In conjunction with \code{columns}, we can specify which of their rows should
 participate in the merging process. The default \code{\link[=everything]{everything()}} results in
 all rows in \code{columns} being formatted. Alternatively, we can supply a
-vector of row IDs within \code{\link[=c]{c()}}, a vector of row indices, or a select
-helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
-down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+vector of row IDs within \code{c()}, a vector of row indices, or a select
+helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use
+expressions to filter down to the rows we need
+(e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{autohide}{\emph{Automatic hiding of the \code{col_end} column}
 
@@ -79,22 +79,21 @@ function.}
 
 An optional locale identifier that can be used for applying a \code{sep} pattern
 specific to a locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
-function as a useful reference for all of the locales that are supported. A
-locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
-would be used automatically by any function with a \code{locale} argument) but a
-\code{locale} value provided here will override that global locale.}
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} as a
+useful reference for all of the locales that are supported. A locale ID can
+be also set in the initial \code{\link[=gt]{gt()}} function call (where it would be used
+automatically by any function with a \code{locale} argument) but a \code{locale}
+value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{cols_merge_range()} function is a specialized variant of the
-\code{\link[=cols_merge]{cols_merge()}} function. It operates by taking a two columns that constitute
-a range of values (\code{col_begin} and \code{col_end}) and merges them into a single
-column. What results is a column containing both values separated by a long
-dash (e.g., \verb{12.0 — 20.0}). The column specified in \code{col_end} is dropped from
-the output table.
+\code{cols_merge_range()} is a specialized variant of \code{\link[=cols_merge]{cols_merge()}}. It operates
+by taking a two columns that constitute a range of values (\code{col_begin} and
+\code{col_end}) and merges them into a single column. What results is a column
+containing both values separated by a long dash (e.g., \verb{12.0 — 20.0}). The
+column specified in \code{col_end} is dropped from the output table.
 }
 \section{Comparison with other column-merging functions}{
 
@@ -112,9 +111,9 @@ the merged column
 }
 
 Any resulting \code{NA} values in the \code{col_begin} column following the merge
-operation can be easily formatted using the \code{\link[=sub_missing]{sub_missing()}} function.
-Separate calls of \code{\link[=sub_missing]{sub_missing()}} can be used for the \code{col_begin} and
-\code{col_end} columns for finer control of the replacement values.
+operation can be easily formatted using \code{\link[=sub_missing]{sub_missing()}}. Separate calls of
+\code{\link[=sub_missing]{sub_missing()}} can be used for the \code{col_begin} and \code{col_end} columns for
+finer control of the replacement values.
 
 This function is part of a set of four column-merging functions. The other
 three are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
@@ -162,17 +161,17 @@ better describe the content.
 \seealso{
 Other column modification functions: 
 \code{\link{cols_add}()},
-\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_hide}()},
-\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
+\code{\link{cols_label_with}()},
+\code{\link{cols_merge}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_uncert}()},
-\code{\link{cols_merge}()},
+\code{\link{cols_move}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
-\code{\link{cols_move}()},
 \code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
 \code{\link{cols_units}()},

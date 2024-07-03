@@ -23,13 +23,13 @@ Expressions for the assignment of column widths for the table columns in
 left-hand side corresponds to selections of columns and the right-hand side
 evaluates to single-length character values in the form \verb{\{##\}px} (i.e.,
 pixel dimensions); the \code{\link[=px]{px()}} helper function is best used for this
-purpose. Column names should be enclosed in \code{\link[=c]{c()}}. The column-based select
-helpers \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}} can be used in the LHS. Subsequent
-expressions that operate on the columns assigned previously will result in
-overwriting column width values (both in the same \code{cols_width()} call and
-across separate calls). All other columns can be assigned a default width
-value by using \code{everything()} on the left-hand side.}
+purpose. Column names should be enclosed in \code{c()}. The column-based select
+helpers \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, and
+\code{\link[=everything]{everything()}} can be used in the LHS. Subsequent expressions that operate
+on the columns assigned previously will result in overwriting column width
+values (both in the same \code{cols_width()} call and across separate calls).
+All other columns can be assigned a default width value by using
+\code{everything()} on the left-hand side.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
@@ -98,18 +98,18 @@ named arguments in \code{...}, specifying the exact widths for table columns
 \seealso{
 Other column modification functions: 
 \code{\link{cols_add}()},
-\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_hide}()},
-\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
+\code{\link{cols_label_with}()},
+\code{\link{cols_merge}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},
-\code{\link{cols_merge}()},
+\code{\link{cols_move}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
-\code{\link{cols_move}()},
 \code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
 \code{\link{cols_units}()}

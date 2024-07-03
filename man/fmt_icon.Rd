@@ -33,10 +33,9 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
-Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
-column indices, or a select helper function. Examples of select helper
-functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+Can either be a series of column names provided in \code{c()}, a vector of
+column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}} and \code{\link[=everything]{everything()}}).}
 
 \item{rows}{\emph{Rows to target}
 
@@ -45,11 +44,10 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
 \code{columns} being formatted. Alternatively, we can supply a vector of row
-captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
-function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
-need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+captions within \code{c()}, a vector of row indices, or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{height}{\emph{Height of icon}
 
@@ -91,13 +89,16 @@ decimal value between \code{0} and \code{1}.}
 
 \item{fill_color}{\emph{Color of the icon fill}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>|vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The fill color of the icon can be set with \code{fill_color}; providing a single
 color here will change the color of the fill but not of the icon's 'stroke'
-or outline (use \code{stroke_color} to modify that). If not provided then the
-default value of \code{"currentColor"} is applied so that the fill matches the
-color of the parent HTML element's color attribute.}
+or outline (use \code{stroke_color} to modify that). A named vector or named
+list comprising the icon names with corresponding fill colors can
+alternatively be used here (e.g.,
+\verb{list("circle-check" = "green", "circle-xmark" = "red"}). If nothing is
+provided then the default value of \code{"currentColor"} is applied so that the
+fill matches the color of the parent HTML element's color attribute.}
 
 \item{fill_alpha}{\emph{Transparency value for icon fill}
 
@@ -155,10 +156,10 @@ argument allows for a common separator to be applied between flag icons.
 \section{Compatibility of formatting function with data values}{
 
 
-The \code{fmt_icon()} formatting function is compatible with body cells that are
-of the \code{"character"} or \code{"factor"} types. Any other types of body cells are
-ignored during formatting. This is to say that cells of incompatible data
-types may be targeted, but there will be no attempt to format them.
+\code{fmt_icon()} is compatible with body cells that are of the
+\code{"character"} or \code{"factor"} types. Any other types of body cells are ignored
+during formatting. This is to say that cells of incompatible data types may
+be targeted, but there will be no attempt to format them.
 }
 
 \section{Targeting cells with \code{columns} and \code{rows}}{
@@ -205,10 +206,10 @@ more complex predicate expression.
 \section{Compatibility of arguments with the \code{from_column()} helper function}{
 
 
-The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
-\code{fmt_icon()} to obtain varying parameter values from a specified column
-within the table. This means that each row could be formatted a little bit
-differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{fmt_icon()} to obtain
+varying parameter values from a specified column within the table. This means
+that each row could be formatted a little bit differently. These arguments
+provide support for \code{\link[=from_column]{from_column()}}:
 \itemize{
 \item \code{height}
 \item \code{sep}
@@ -226,26 +227,25 @@ differently. These arguments provide support for \code{\link[=from_column]{from_
 Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
 call needs to reference a column that has data of the correct type (this is
 different for each argument). Additional columns for parameter values can be
-generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
-that contain parameter data can also be hidden from final display with
-\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
-\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
-closed set.
+generated with \code{\link[=cols_add]{cols_add()}} (if not already present). Columns that contain
+parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+Finally, there is no limitation to how many arguments the \code{\link[=from_column]{from_column()}}
+helper is applied so long as the arguments belong to this closed set.
 }
 
 \section{Icons that can be used}{
 
 
-The \code{fmt_icon()} function relies on an installation of the \strong{fontawesome}
-package to operate and every icon within that package can be accessed here
-with either an icon name or a full name. For example, the \emph{Arrow Down} icon
-has an icon name of \code{"arrow-down"} and its corresponding full name is
+\code{fmt_icon()} relies on an installation of the \strong{fontawesome} package to
+operate and every icon within that package can be accessed here with either
+an icon name or a full name. For example, the \emph{Arrow Down} icon has an icon
+name of \code{"arrow-down"} and its corresponding full name is
 \code{"fas fa-arrow-down"}. In most cases you'll want to use the shorter name, but
 some icons have both a \emph{Solid} (\code{"fas"}) and a \emph{Regular} (\code{"far"}) variant so
 only the full name can disambiguate the pairing. In the latest release of
 \strong{fontawesome} (\code{v0.5.2}), there are 2,025 icons and you can view the entire
-icon listing by using the \code{\link[=info_icons]{info_icons()}} function. What you'll get from that
-is an information table showing every icon and associated set of identifiers.
+icon listing by calling \code{\link[=info_icons]{info_icons()}}. What you'll get from that is an
+information table showing every icon and associated set of identifiers.
 }
 
 \section{Examples}{
@@ -286,8 +286,7 @@ categories of municipality for this subset of data.
   dplyr::select(name, csd_type, population_2021) |>
   dplyr::filter(csd_type \%in\% c("city", "town")) |>
   dplyr::group_by(csd_type) |>
-  dplyr::arrange(desc(population_2021)) |>
-  dplyr::slice_head(n = 5) |>
+  dplyr::slice_max(population_2021, n = 5) |>
   dplyr::ungroup() |>
   dplyr::mutate(
     csd_type = ifelse(csd_type == "town", "house-chimney", "city")
@@ -311,11 +310,10 @@ Let's use a portion of the \code{\link{metro}} dataset to create a \strong{gt} t
 Depending on which train services are offered at the subset of stations,
 \emph{Font Awesome} icon names will be applied to cells where the different
 services exist (the specific names are \code{"train-subway"}, \code{"train"}, and
-\code{"train-tram"}). With \strong{tidyr}'s \code{unite()} function, those icon names
-can be converged into a single column (\code{services}) with the \code{NA} values
-removed. Since the names correspond to icons and they are in the correct
-format (separated by commas), they can be formatted as \emph{Font Awesome} icons
-with the \code{fmt_icon()} function.
+\code{"train-tram"}). With \code{tidyr::unite()}, those icon names can be converged
+into a single column (\code{services}) with the \code{NA} values removed. Since the
+names correspond to icons and they are in the correct format (separated by
+commas), they can be formatted as \emph{Font Awesome} icons with \code{fmt_icon()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
   dplyr::select(name, lines, connect_rer, connect_tramway, location) |>
@@ -355,8 +353,8 @@ will attempt to format a numerical score (0 to 4) to use the \code{"star"} and
 \code{"star-half"} icons. In this case, it is useful to generate the repeating
 sequence of icon names (separated by commas) in the \code{rating} column before
 introducing the table to \code{\link[=gt]{gt()}}. We can make use of the numerical rating
-values in \code{stars} within the \code{fmt_icon()} function with a little help from
-the \code{\link[=from_column]{from_column()}} helper. Using that, we can dynamically adjust the icon's
+values in \code{stars} within \code{fmt_icon()} with a little help from
+\code{\link[=from_column]{from_column()}}. Using that, we can dynamically adjust the icon's
 \code{fill_alpha} (i.e., opacity) value and accentuate the films with higher
 scores.
 
@@ -388,11 +386,48 @@ scores.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_icon_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_icon()` help file." style="width:100\%;">
 }}
+
+A fairly common thing to do with icons in tables is to indicate whether
+a quantity is either higher or lower than another. Up and down arrow symbols
+can serve as good visual indicators for this purpose. We can make use of the
+\code{"up-arrow"} and \code{"down-arrow"} icons here. The \code{fmt_icon()} function has to
+find those text values in cells to generate the icons, so, lets generate the
+text within a new column with \code{\link[=cols_add]{cols_add()}} (an expression is used therein to
+generate the correct text given the \code{close} and \code{open} values). Following
+that, \code{fmt_icon()} is used and its \code{fill_color} argument is provided with a
+named vector that indicates which color should be used for each icon.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::slice_head(n = 10) |>
+  dplyr::select(date, open, close) |>
+  dplyr::arrange(-dplyr::row_number()) |>
+  gt(rowname_col = "date") |>
+  cols_add(week = date, .after = date) |>
+  cols_add(dir = ifelse(close > open, "arrow-up", "arrow-down")) |>
+  cols_merge(columns = c(date, week), pattern = "\{1\} (\{2\})") |>
+  fmt_date(columns = date, date_style = "m_day_year") |>
+  fmt_datetime(columns = week, format = "w", pattern = "W\{x\}") |>
+  fmt_currency() |>
+  fmt_icon(
+    columns = dir,
+    fill_color = c("arrow-up" = "green", "arrow-down" = "red")
+  ) |>
+  cols_label(
+    open = "Opening Value",
+    close = "Closing Value",
+    dir = ""
+  ) |>
+  opt_stylize(style = 1, color = "gray")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_icon_5.png" alt="This image of a table was generated from the fifth code example in the `fmt_icon()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
 
-3-22
+3-26
 }
 
 \section{Function Introduced}{
@@ -403,13 +438,17 @@ scores.
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt}()},
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
@@ -424,10 +463,10 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
-\code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},

@@ -26,7 +26,7 @@ elements in the text.}
 
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-Text to be used in the table subtitle. We can elect to use the \code{\link[=md]{md()}} and
+Text to be used in the table subtitle. We can elect to use \code{\link[=md]{md()}} or
 \code{\link[=html]{html()}} helper functions to style the text as Markdown or to retain HTML
 elements in the text.}
 
@@ -42,7 +42,7 @@ An object of class \code{gt_tbl}.
 }
 \description{
 We can add a table header to the \strong{gt} table with a title and even a
-subtitle using the \code{tab_header()} function. A table header is an optional
+subtitle using \code{tab_header()}. A table header is an optional
 table part that is positioned just above the column labels table part. We
 have the flexibility to use Markdown or HTML formatting for the header's
 title and subtitle with the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} helper functions.
@@ -52,9 +52,8 @@ title and subtitle with the \code{\link[=md]{md()}} and \code{\link[=html]{html(
 
 Let's use a small portion of the \code{\link{gtcars}} dataset to create a \strong{gt} table.
 A header part can be added to the table with the \code{tab_header()} function.
-We'll add a title and the optional subtitle as well. With the \code{\link[=md]{md()}} helper
-function, we can make sure the Markdown formatting is interpreted and
-transformed.
+We'll add a title and the optional subtitle as well. With \code{\link[=md]{md()}}, we can
+make sure the Markdown formatting is interpreted and transformed.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(mfr, model, msrp) |>
@@ -83,16 +82,13 @@ to help arrange and generate the HTML. Here's an example of that, where two
     title =
       htmltools::tagList(
         htmltools::tags$div(
-          style = htmltools::css(
-            `text-align` = "center"
-          ),
           htmltools::HTML(
             web_image("https://www.r-project.org/logo/Rlogo.png")
-          )
+          ),
+          style = htmltools::css(`text-align` = "center")
         ),
         htmltools::tags$div(
-          "Data listing from ",
-          htmltools::tags$strong("gtcars")
+          "Data listing from ", htmltools::tags$strong("gtcars")
         )
       )
   )
@@ -102,8 +98,8 @@ to help arrange and generate the HTML. Here's an example of that, where two
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_header_2.png" alt="This image of a table was generated from the second code example in the `tab_header()` help file." style="width:100\%;">
 }}
 
-If using HTML but doing something far simpler, we can use the \code{\link[=html]{html()}} helper
-function to declare that the text provided is HTML.
+If using HTML but doing something far simpler, we can wrap our title or
+subtitle inside \code{\link[=html]{html()}} to declare that the text provided is HTML.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(mfr, model, msrp) |>
@@ -117,6 +113,61 @@ function to declare that the text provided is HTML.
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_header_3.png" alt="This image of a table was generated from the third code example in the `tab_header()` help file." style="width:100\%;">
+}}
+
+Sometimes, aligning the heading elements to the left can improve the
+presentation of a table. Here, we use the \code{\link{nuclides}} dataset to generate a
+display of natural abundance values for several stable isotopes.
+\code{\link[=opt_align_table_header]{opt_align_table_header()}} is used with \code{align = "left"} to make it so the
+title and subtitle are left aligned in the header area.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{nuclides |>
+  dplyr::filter(!is.na(abundance)) |>
+  dplyr::filter(abundance != 1) |>
+  dplyr::filter(z >= 1 & z <= 8) |>
+  dplyr::mutate(element = paste0(element, ", **z = ", z, "**")) |>
+  dplyr::mutate(nuclide = gsub("\\\\d+$", "", nuclide)) |>
+  dplyr::select(nuclide, element, atomic_mass, abundance, abundance_uncert) |>
+  gt(
+    rowname_col = "nuclide",
+    groupname_col = "element",
+    process_md = TRUE
+  ) |>
+  tab_header(
+    title = "Natural Abundance Values",
+    subtitle = md("For elements having atomic numbers from `1` to `8`.")
+  ) |>
+  tab_stubhead(label = "Isotope") |>
+  tab_stub_indent(
+    rows = everything(),
+    indent = 1
+  ) |>
+  fmt_chem(columns = stub()) |>
+  fmt_number(
+    columns = atomic_mass,
+    decimals = 4,
+    scale_by = 1 / 1e6
+  ) |>
+  fmt_percent(
+    columns = contains("abundance"),
+    decimals = 4
+  ) |>
+  cols_merge_uncert(
+    col_val = abundance,
+    col_uncert = abundance_uncert
+  ) |>
+  cols_label_with(fn = function(x) tools::toTitleCase(gsub("_", " ", x))) |>
+  cols_width(
+    stub() ~ px(70),
+    atomic_mass ~ px(120),
+    abundance ~ px(200)
+  ) |>
+  opt_align_table_header(align = "left") |>
+  opt_vertical_padding(scale = 0.5)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_header_4.png" alt="This image of a table was generated from the fourth code example in the `tab_header()` help file." style="width:100\%;">
 }}
 }
 
@@ -138,11 +189,11 @@ Other part creation/modification functions:
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
-\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
-\code{\link{tab_style_body}()},
-\code{\link{tab_style}()}
+\code{\link{tab_style}()},
+\code{\link{tab_style_body}()}
 }
 \concept{part creation/modification functions}

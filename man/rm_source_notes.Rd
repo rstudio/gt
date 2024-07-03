@@ -28,10 +28,10 @@ all source notes will be removed).}
 An object of class \code{gt_tbl}.
 }
 \description{
-If you have one or more source notes that ought to be removed, the
-\code{rm_source_notes()} function allows for such a selective removal. The table
-footer is an optional table part that is positioned below the table body,
-containing areas for both the source notes and footnotes.
+If you have one or more source notes that ought to be removed,
+\code{rm_source_notes()} allows for such a selective removal. The table footer is
+an optional table part that is positioned below the table body, containing
+areas for both the source notes and footnotes.
 
 This function for removal is useful if you have received a \strong{gt} table
 (perhaps through an API that returns \strong{gt} objects) but would prefer that
@@ -43,10 +43,10 @@ integer values.
 \section{Examples}{
 
 
-Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. The
-\code{\link[=tab_source_note]{tab_source_note()}} function is used to add a source note to the table footer
-that cites the data source (or, it could just be arbitrary text). We'll use
-the function twice, in effect adding two source notes to the footer.
+Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table.
+\code{\link[=tab_source_note]{tab_source_note()}} is used to add a source note to the table footer that
+cites the data source (or, it could just be arbitrary text). We'll use the
+function twice, in effect adding two source notes to the footer.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
   gtcars |>
@@ -65,7 +65,7 @@ gt_tbl
 }}
 
 If you decide that you don't want the source notes in the \code{gt_tbl} object,
-they can be removed with the \code{rm_source_notes()} function.
+they can be removed with \code{rm_source_notes()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{rm_source_notes(data = gt_tbl)
 }\if{html}{\out{</div>}}

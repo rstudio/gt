@@ -23,7 +23,7 @@ containing the LaTeX code.
 }
 \details{
 LaTeX packages required to generate tables are:
-booktabs, caption, longtable, colortbl, array, anyfontsize.
+booktabs, caption, longtable, colortbl, array, anyfontsize, multirow.
 
 In the event packages are not automatically added during the render phase
 of the document, please create and include a style file to load them.
@@ -79,6 +79,7 @@ just the LaTeX code as a single-element vector.
 
 \seealso{
 Other table export functions: 
+\code{\link{as_gtable}()},
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
 \code{\link{as_word}()},

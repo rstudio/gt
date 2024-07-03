@@ -9,10 +9,10 @@ A tibble with 49,574 rows and 7 variables:
 \describe{
 \item{id}{The ID for the order, which consists of one or more pizzas at a
 given \code{date} and \code{time}.}
-\item{date}{A character representation of the \code{order} date, expressed in the
-ISO 8601 date format ('YYYY-MM-DD').}
-\item{time}{A character representation of the \code{order} time, expressed as a
-24-hour time the ISO 8601 extended time format ('hh:mm:ss').}
+\item{date}{A character representation of the order date, expressed in the
+ISO 8601 date format (\code{YYYY-MM-DD}).}
+\item{time}{A character representation of the order time, expressed as a
+24-hour time the ISO 8601 extended time format (\code{HH:MM:SS}).}
 \item{name}{The short name for the pizza.}
 \item{size}{The size of the pizza, which can either be \code{"S"}, \code{"M"}, \code{"L"},
 \code{"XL"} (rare!), or \code{"XXL"} (even rarer!); most pizzas are available in the
@@ -158,9 +158,14 @@ Other datasets:
 \code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{films}},
+\code{\link{gibraltar}},
 \code{\link{gtcars}},
 \code{\link{illness}},
 \code{\link{metro}},
+\code{\link{nuclides}},
+\code{\link{peeps}},
+\code{\link{photolysis}},
 \code{\link{reactions}},
 \code{\link{rx_addv}},
 \code{\link{rx_adsl}},

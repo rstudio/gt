@@ -38,11 +38,11 @@ This is the \strong{gt} table object that is commonly created through use of the
 \verb{<column-targeting expression>} // \strong{required}
 
 The columns which contain the numeric data to be plotted as nanoplots. Can
-either be a series of column names provided in \code{\link[=c]{c()}}, a vector of column
-indices, or a select helper function. Examples of select helper functions
-include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. Data collected from the
-columns will be concatenated together in the order of resolution.}
+either be a series of column names provided in \code{c()}, a vector of column
+indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). Data
+collected from the columns will be concatenated together in the order of
+resolution.}
 
 \item{rows}{\emph{Rows that should contain nanoplots}
 
@@ -50,11 +50,10 @@ columns will be concatenated together in the order of resolution.}
 
 With \code{rows} we can specify which rows should contain nanoplots in the new
 column. The default \code{\link[=everything]{everything()}} results in all rows in \code{columns} being
-formatted. Alternatively, we can supply a vector of row IDs within \code{\link[=c]{c()}}, a
-vector of row indices, or a select helper function. Examples of select
-helper functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use
-expressions to filter down to the rows we need (e.g.,
+formatted. Alternatively, we can supply a vector of row IDs within \code{c()}, a
+vector of row indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).
+We can also use expressions to filter down to the rows we need(e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{plot_type}{\emph{The type of nanoplot to display}
@@ -118,11 +117,11 @@ viewable, set \code{autohide = FALSE}.}
 We can optionally obtain data for the independent variable (i.e., the
 \emph{x}-axis data) if specifying columns in \code{columns_x_vals}. This is only for
 the \code{"line"} type of plot (set via the \code{plot_type} argument). We can supply
-either be a series of column names provided in \code{\link[=c]{c()}}, a vector of column
-indices, or a select helper function. Examples of select helper functions
-include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. Data collected from the
-columns will be concatenated together in the order of resolution.}
+either be a series of column names provided in \code{c()}, a vector of column
+indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). Data
+collected from the columns will be concatenated together in the order of
+resolution.}
 
 \item{reference_line}{\emph{Add a reference line}
 
@@ -534,7 +533,7 @@ time instants: the second of the day that a pizza was sold (this is true
 pizza analytics). We also have the sell price for a pizza, and that'll serve
 as the \emph{y} values. The pizzas belong to four different groups (in the \code{type}
 column) and we'll group by that and create value streams with
-\code{paste(..., collapse = ",")} in the \strong{dplyr} summarize call. With two value
+\code{paste(..., collapse = ",")} inside  the \code{dplyr::summarize()} call. With two value
 streams in each row (having the same number of values) we can now make a
 \strong{gt} table with nanoplots.
 
@@ -574,16 +573,107 @@ streams in each row (having the same number of values) we can now make a
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_5.png" alt="This image of a table was generated from the fifth code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
 
-Notice that we hid the columns containing the value streams with
-\code{\link[=cols_hide]{cols_hide()}} because, while useful, they don't need to be displayed to
-anybody viewing a table. We have a lot of data points and a connecting line
-is not as valuable here. It's more interesting to see the clusters of the
-differently priced pizzas over the entire day. Specifying a \code{currency} in
-\code{\link[=nanoplot_options]{nanoplot_options()}} is a nice touch since the \emph{y} values are sale prices in
-U.S. Dollars (hovering over data points gives correctly formatted values).
-Finally, having a reference line based on the median gives pretty useful
-information. Seems like customers preferred getting the \code{"chicken"}-type
-pizzas in large size!
+Notice that the columns containing the value streams are hid due to the
+default argument \code{autohide = TRUE} because, while useful, they don't need to
+be displayed to anybody viewing a table. Since we have a lot of data points
+and a connecting line is not as valuable here, we also set
+\code{show_data_line = FALSE} in \code{\link[=nanoplot_options]{nanoplot_options()}}. It's more interesting to
+see the clusters of the differently priced pizzas over the entire day.
+Specifying a \code{currency} in \code{\link[=nanoplot_options]{nanoplot_options()}} is a nice touch since the \emph{y}
+values are sale prices in U.S. Dollars (hovering over data points gives
+correctly formatted values). Finally, having a reference line based on the
+median gives pretty useful information. Seems like customers preferred
+getting the \code{"chicken"}-type pizzas in large size!
+
+Using the \code{\link{gibraltar}} dataset, let's make a series of nanoplots across the
+meteorological parameters of temperature, humidity, and wind speed. We'll
+want to customize the appearance of the plots across three columns and we
+can make this somewhat simpler by assigning a common set of options through
+\code{\link[=nanoplot_options]{nanoplot_options()}}. In this table we want to make comparisons across
+nanoplots in a particular column easier, so, we'll set \code{autoscale = TRUE} so
+that there is a common y-axis scale for each of the parameters (based on the
+extents of the data).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{nanoplot_options_list <-
+  nanoplot_options(
+    data_point_radius = px(4),
+    data_point_stroke_width = px(2),
+    data_point_stroke_color = "black",
+    data_point_fill_color = "white",
+    data_line_stroke_width = px(4),
+    data_line_stroke_color = "gray",
+    show_data_line = TRUE,
+    show_data_points = TRUE,
+    show_data_area = FALSE,
+  )
+
+gibraltar |>
+  dplyr::filter(date <= "2023-05-14") |>
+  dplyr::mutate(time = as.numeric(hms::as_hms(paste0(time, ":00")))) |>
+  dplyr::mutate(humidity = humidity * 100) |>
+  dplyr::select(date, time, temp, humidity, wind_speed) |>
+  dplyr::group_by(date) |>
+  dplyr::summarize(
+    time = paste(time, collapse = ","),
+    temp = paste(temp, collapse = ","),
+    humidity = paste(humidity, collapse = ","),
+    wind_speed = paste(wind_speed, collapse = ","),
+  ) |>
+  dplyr::mutate(is_satsun = lubridate::wday(date) \%in\% c(1, 7)) |>
+  gt(rowname_col = "date") |>
+  tab_header(
+    title = "Meteorological Summary of Gibraltar Station",
+    subtitle = "Data taken from May 1-14, 2023."
+  ) |>
+  fmt_date(columns = stub(), date_style = "wd_m_day_year") |>
+  cols_nanoplot(
+    columns = temp,
+    columns_x_vals = time,
+    expand_x = c(0, 86400),
+    autoscale = TRUE,
+    new_col_name = "temperature_nano",
+    new_col_label = "Temperature",
+    options = nanoplot_options_list
+  ) |>
+  cols_nanoplot(
+    columns = humidity,
+    columns_x_vals = time,
+    expand_x = c(0, 86400),
+    autoscale = TRUE,
+    new_col_name = "humidity_nano",
+    new_col_label = "Humidity",
+    options = nanoplot_options_list
+  ) |>
+  cols_nanoplot(
+    columns = wind_speed,
+    columns_x_vals = time,
+    expand_x = c(0, 86400),
+    autoscale = TRUE,
+    new_col_name = "wind_speed_nano",
+    new_col_label = "Wind Speed",
+    options = nanoplot_options_list
+  ) |>
+  cols_units(
+    temperature_nano = ":degree:C",
+    humidity_nano = "\% (RH)",
+    wind_speed_nano = "m s^-1"
+  ) |>
+  cols_hide(columns = is_satsun) |>
+  tab_style_body(
+    style = cell_fill(color = "#E5FEFE"),
+    values = TRUE,
+    targets = "row",
+    extents = c("body", "stub")
+  ) |>
+  tab_style(
+    style = cell_text(align = "center"),
+    locations = cells_column_labels()
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_6.png" alt="This image of a table was generated from the sixth code example in the `cols_nanoplot()` help file." style="width:100\%;">
+}}
 
 Box plots can be generated, and we just need to use \code{plot_type = "boxplot"}
 to make that type of nanoplot. Using a small portion of the \code{\link{pizzaplace}}
@@ -626,7 +716,7 @@ hover.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_6.png" alt="This image of a table was generated from the sixth code example in the `cols_nanoplot()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_7.png" alt="This image of a table was generated from the seventh code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
 }
 
@@ -643,18 +733,18 @@ hover.
 \seealso{
 Other column modification functions: 
 \code{\link{cols_add}()},
-\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_hide}()},
-\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
+\code{\link{cols_label_with}()},
+\code{\link{cols_merge}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},
-\code{\link{cols_merge}()},
+\code{\link{cols_move}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
-\code{\link{cols_move}()},
 \code{\link{cols_unhide}()},
 \code{\link{cols_units}()},
 \code{\link{cols_width}()}

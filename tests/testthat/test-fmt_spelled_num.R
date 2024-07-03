@@ -1,4 +1,4 @@
-test_that("The `fmt_spelled_num()` function works correctly", {
+test_that("fmt_spelled_num() works correctly", {
 
   # Create an input data frame two columns: one
   # character-based and one that is numeric
@@ -31,8 +31,8 @@ test_that("The `fmt_spelled_num()` function works correctly", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  char <- (tab %>% dt_data_get())[["char"]]
-  num <- (tab %>% dt_data_get())[["num"]]
+  char <- dt_data_get(tab)[["char"]]
+  num <- dt_data_get(tab)[["num"]]
 
   # Expect the extracted values to match those of the original dataset
   expect_equal(data_tbl$char, char)
@@ -91,6 +91,7 @@ test_that("The `fmt_spelled_num()` function works correctly", {
   )
 
   # Expect that two columns being formatted (one entirely NA) will work
+  # FIXME creates many warning File not found (on windows)
   expect_equal(
     (na_col_tbl %>%
        fmt_spelled_num(columns = a) %>%

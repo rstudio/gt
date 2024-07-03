@@ -39,7 +39,7 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
     return(rlang::exec("displayHTML", as_raw_html(x)))
   }
 
-  html_tbl <- as.tags.gt_tbl(x, ...)
+  html_tbl <- as.tags(x, ...)
 
   # Use `print()` to print to the console
   print(html_tbl, browse = view, ...)
@@ -55,7 +55,7 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
 #' @param view The value for `print()`s `browse` argument.
 #'
 #' @keywords internal
-#'
+#' @rdname print.gt_tbl
 #' @export
 print.gt_group <- function(x, ..., view = interactive()) {
 
@@ -65,7 +65,7 @@ print.gt_group <- function(x, ..., view = interactive()) {
 
   for (i in seq_tbls) {
 
-    html_tbl_i <- as.tags.gt_tbl(grp_pull(x, which = i), ...)
+    html_tbl_i <- as.tags(grp_pull(x, which = i), ...)
     html_tbls <- htmltools::tagList(html_tbls, html_tbl_i)
   }
 
@@ -82,9 +82,9 @@ print.gt_group <- function(x, ..., view = interactive()) {
 #' @param x An object of class `gt_tbl`.
 #' @param ... Any additional parameters.
 #'
-#' @keywords internal
 #' @noRd
-knit_print.gt_tbl <- function(x, ...) {
+#' @exportS3Method knitr::knit_print
+knit_print.gt_tbl <- function(x, ..., inline = FALSE) {
 
   # TODO: Add print method for interactive HTML table
 
@@ -106,11 +106,11 @@ knit_print.gt_tbl <- function(x, ...) {
   } else {
 
     # Default to HTML output
-    x <- as.tags.gt_tbl(x, ...)
+    x <- as.tags(x, ...)
   }
 
   # Use `knit_print()` to print in a code chunk
-  knitr::knit_print(x, ...)
+  knitr::knit_print(x, ..., inline = FALSE)
 }
 
 #' Knit print a collection of **gt** tables
@@ -121,8 +121,8 @@ knit_print.gt_tbl <- function(x, ...) {
 #' @param x An object of class `gt_group`.
 #' @param ... Any additional parameters.
 #'
-#' @keywords internal
 #' @noRd
+#' @exportS3Method knitr::knit_print
 knit_print.gt_group <- function(x, ...) {
 
   if (knitr_is_rtf_output()) {
@@ -137,7 +137,7 @@ knit_print.gt_group <- function(x, ...) {
 
   } else if (knitr_is_word_output()) {
 
-    word_tbls <- c()
+    word_tbls <- NULL
 
     seq_tbls <- seq_len(nrow(x$gt_tbls))
 
@@ -161,7 +161,7 @@ knit_print.gt_group <- function(x, ...) {
 
     for (i in seq_tbls) {
 
-      html_tbl_i <- as.tags.gt_tbl(grp_pull(x, which = i), ...)
+      html_tbl_i <- as.tags(grp_pull(x, which = i), ...)
       html_tbls <- htmltools::tagList(html_tbls, html_tbl_i)
     }
 
@@ -184,8 +184,9 @@ knit_print.gt_group <- function(x, ...) {
 #' @param x Object to be converted.
 #' @param ... Any additional parameters.
 #'
-#' @keywords internal
 #' @noRd
+#' @importFrom htmltools as.tags
+#' @export
 as.tags.gt_tbl <- function(x, ...) {
 
   table_id <- dt_options_get_value(x, option = "table_id")
@@ -246,8 +247,7 @@ as.tags.gt_tbl <- function(x, ...) {
 #' @param x Object to be printed.
 #' @param ... Any additional parameters.
 #'
-#' @keywords internal
-#'
+#' @rdname print.gt_tbl
 #' @export
 print.rtf_text <- function(x, ...) {
 

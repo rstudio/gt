@@ -197,7 +197,7 @@
     Code
       .
     Output
-      [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"num\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"fctr\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"date\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"time\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"datetime\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"currency\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"row\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"group\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"num\" class=\"gt_row gt_right\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span> 0.1111</td>\n<td headers=\"char\" class=\"gt_row gt_left\">apricot</td>\n<td headers=\"fctr\" class=\"gt_row gt_center\">one</td>\n<td headers=\"date\" class=\"gt_row gt_right\">2015-01-15</td>\n<td headers=\"time\" class=\"gt_row gt_right\">13:35</td>\n<td headers=\"datetime\" class=\"gt_row gt_right\">2018-01-01 02:22</td>\n<td headers=\"currency\" class=\"gt_row gt_right\">49.95</td>\n<td headers=\"row\" class=\"gt_row gt_left\">row_1</td>\n<td headers=\"group\" class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"9\"> A footnote.</td>\n    </tr>\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"9\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span> A footnote.</td>\n    </tr>\n  </tfoot>\n</table>"
+      [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"num\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"fctr\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"date\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"time\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"datetime\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"currency\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"row\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"group\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"num\" class=\"gt_row gt_right\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> 0.1111</td>\n<td headers=\"char\" class=\"gt_row gt_left\">apricot</td>\n<td headers=\"fctr\" class=\"gt_row gt_center\">one</td>\n<td headers=\"date\" class=\"gt_row gt_right\">2015-01-15</td>\n<td headers=\"time\" class=\"gt_row gt_right\">13:35</td>\n<td headers=\"datetime\" class=\"gt_row gt_right\">2018-01-01 02:22</td>\n<td headers=\"currency\" class=\"gt_row gt_right\">49.95</td>\n<td headers=\"row\" class=\"gt_row gt_left\">row_1</td>\n<td headers=\"group\" class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"9\"> A footnote.</td>\n    </tr>\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"9\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> A footnote.</td>\n    </tr>\n  </tfoot>\n</table>"
 
 ---
 
@@ -294,7 +294,7 @@
     Code
       .
     Output
-      [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"num\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"fctr\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"date\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"time\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"datetime\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"currency\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"row\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"group\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"num\" class=\"gt_row gt_right\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span> 0.1111</td>\n<td headers=\"char\" class=\"gt_row gt_left\">apricot</td>\n<td headers=\"fctr\" class=\"gt_row gt_center\">one</td>\n<td headers=\"date\" class=\"gt_row gt_right\">2015-01-15</td>\n<td headers=\"time\" class=\"gt_row gt_right\">13:35</td>\n<td headers=\"datetime\" class=\"gt_row gt_right\">2018-01-01 02:22</td>\n<td headers=\"currency\" class=\"gt_row gt_right\">49.95</td>\n<td headers=\"row\" class=\"gt_row gt_left\">row_1</td>\n<td headers=\"group\" class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  \n  <tfoot>\n    <tr class=\"gt_footnotes\">\n      <td class=\"gt_footnote\" colspan=\"9\">\n        <div style=\"padding-bottom:2px;\"> A footnote.  A second footnote. <span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span> location note</div>\n      </td>\n    </tr>\n  </tfoot>\n</table>"
+      [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"num\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"fctr\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"date\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"time\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"datetime\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"currency\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"row\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"group\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"num\" class=\"gt_row gt_right\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> 0.1111</td>\n<td headers=\"char\" class=\"gt_row gt_left\">apricot</td>\n<td headers=\"fctr\" class=\"gt_row gt_center\">one</td>\n<td headers=\"date\" class=\"gt_row gt_right\">2015-01-15</td>\n<td headers=\"time\" class=\"gt_row gt_right\">13:35</td>\n<td headers=\"datetime\" class=\"gt_row gt_right\">2018-01-01 02:22</td>\n<td headers=\"currency\" class=\"gt_row gt_right\">49.95</td>\n<td headers=\"row\" class=\"gt_row gt_left\">row_1</td>\n<td headers=\"group\" class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  \n  <tfoot>\n    <tr class=\"gt_footnotes\">\n      <td class=\"gt_footnote\" colspan=\"9\">\n        <div style=\"padding-bottom:2px;\"> A footnote.  A second footnote. <span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> location note</div>\n      </td>\n    </tr>\n  </tfoot>\n</table>"
 
 ---
 
@@ -391,28 +391,28 @@
     Code
       .
     Output
-      [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"char\" class=\"gt_row gt_left\"><span class='gt_from_md'>apricot</span><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span></td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"1\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span> note</td>\n    </tr>\n  </tfoot>\n</table>"
+      [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"char\" class=\"gt_row gt_left\"><span class='gt_from_md'>apricot</span><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span></td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"1\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> note</td>\n    </tr>\n  </tfoot>\n</table>"
 
 ---
 
     Code
       .
     Output
-      [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"char\" class=\"gt_row gt_left\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span> <span class='gt_from_md'>apricot</span></td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"1\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span> note</td>\n    </tr>\n  </tfoot>\n</table>"
+      [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"char\" class=\"gt_row gt_left\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> <span class='gt_from_md'>apricot</span></td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"1\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> note</td>\n    </tr>\n  </tfoot>\n</table>"
 
 # Footnotes work with group labels in 2-column stub arrangements
 
     Code
       .
     Output
-      [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"2\" scope=\"colgroup\" id=\"\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"Pizzas Sold\">Pizzas Sold</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr class=\"gt_row_group_first\"><td headers=\"peppr_salami stub_2_1 stub_1\" rowspan=\"4\" class=\"gt_row gt_left gt_stub_row_group\">peppr_salami<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span></td>\n<th id=\"stub_2_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">L</th>\n<td headers=\"peppr_salami stub_2_1 Pizzas Sold\" class=\"gt_row gt_right\">696</td></tr>\n    <tr><th id=\"Pizzas Sold_2\" scope=\"row\" class=\"gt_row gt_left gt_stub\">M</th>\n<td headers=\"peppr_salami Pizzas Sold_2 Pizzas Sold\" class=\"gt_row gt_right\">428</td></tr>\n    <tr><th id=\"Pizzas Sold_3\" scope=\"row\" class=\"gt_row gt_left gt_stub\">S</th>\n<td headers=\"peppr_salami Pizzas Sold_3 Pizzas Sold\" class=\"gt_row gt_right\">322</td></tr>\n    <tr><th id=\"summary_stub_peppr_salami_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row\">sum</th>\n<td headers=\"peppr_salami summary_stub_peppr_salami_1 Pizzas Sold\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row\">1,446</td></tr>\n    <tr class=\"gt_row_group_first\"><td headers=\"soppressata stub_2_4 stub_1\" rowspan=\"4\" class=\"gt_row gt_left gt_stub_row_group\">soppressata</td>\n<th id=\"stub_2_4\" scope=\"row\" class=\"gt_row gt_left gt_stub\">L</th>\n<td headers=\"soppressata stub_2_4 Pizzas Sold\" class=\"gt_row gt_right\">405</td></tr>\n    <tr><th id=\"Pizzas Sold_5\" scope=\"row\" class=\"gt_row gt_left gt_stub\">M</th>\n<td headers=\"soppressata Pizzas Sold_5 Pizzas Sold\" class=\"gt_row gt_right\">268</td></tr>\n    <tr><th id=\"Pizzas Sold_6\" scope=\"row\" class=\"gt_row gt_left gt_stub\">S</th>\n<td headers=\"soppressata Pizzas Sold_6 Pizzas Sold\" class=\"gt_row gt_right\">288</td></tr>\n    <tr><th id=\"summary_stub_soppressata_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row\">sum</th>\n<td headers=\"soppressata summary_stub_soppressata_1 Pizzas Sold\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row\">961</td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"3\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span> The Pepper-Salami.</td>\n    </tr>\n  </tfoot>\n</table>"
+      [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"2\" scope=\"colgroup\" id=\"\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"Pizzas Sold\">Pizzas Sold</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr class=\"gt_row_group_first\"><td headers=\"peppr_salami stub_2_1 stub_1\" rowspan=\"4\" class=\"gt_row gt_left gt_stub_row_group\">peppr_salami<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span></td>\n<th id=\"stub_2_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">L</th>\n<td headers=\"peppr_salami stub_2_1 Pizzas Sold\" class=\"gt_row gt_right\">696</td></tr>\n    <tr><th id=\"Pizzas Sold_2\" scope=\"row\" class=\"gt_row gt_left gt_stub\">M</th>\n<td headers=\"peppr_salami Pizzas Sold_2 Pizzas Sold\" class=\"gt_row gt_right\">428</td></tr>\n    <tr><th id=\"Pizzas Sold_3\" scope=\"row\" class=\"gt_row gt_left gt_stub\">S</th>\n<td headers=\"peppr_salami Pizzas Sold_3 Pizzas Sold\" class=\"gt_row gt_right\">322</td></tr>\n    <tr><th id=\"summary_stub_peppr_salami_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row\">sum</th>\n<td headers=\"peppr_salami summary_stub_peppr_salami_1 Pizzas Sold\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row\">1,446</td></tr>\n    <tr class=\"gt_row_group_first\"><td headers=\"soppressata stub_2_4 stub_1\" rowspan=\"4\" class=\"gt_row gt_left gt_stub_row_group\">soppressata</td>\n<th id=\"stub_2_4\" scope=\"row\" class=\"gt_row gt_left gt_stub\">L</th>\n<td headers=\"soppressata stub_2_4 Pizzas Sold\" class=\"gt_row gt_right\">405</td></tr>\n    <tr><th id=\"Pizzas Sold_5\" scope=\"row\" class=\"gt_row gt_left gt_stub\">M</th>\n<td headers=\"soppressata Pizzas Sold_5 Pizzas Sold\" class=\"gt_row gt_right\">268</td></tr>\n    <tr><th id=\"Pizzas Sold_6\" scope=\"row\" class=\"gt_row gt_left gt_stub\">S</th>\n<td headers=\"soppressata Pizzas Sold_6 Pizzas Sold\" class=\"gt_row gt_right\">288</td></tr>\n    <tr><th id=\"summary_stub_soppressata_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row\">sum</th>\n<td headers=\"soppressata summary_stub_soppressata_1 Pizzas Sold\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row\">961</td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"3\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> The Pepper-Salami.</td>\n    </tr>\n  </tfoot>\n</table>"
 
 ---
 
     Code
       .
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.4pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|l|r}\n\\toprule\n\\multicolumn{2}{l}{} & Pizzas Sold \\\\ \n\\midrule\\addlinespace[2.5pt]\npeppr\\_salami\\textsuperscript{\\textit{1}} & L & 696 \\\\ \n & M & 428 \\\\ \n & S & 322 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & 1,446 \\\\ \n\\midrule\\addlinespace[2.5pt]\nsoppressata & L & 405 \\\\ \n & M & 268 \\\\ \n & S & 288 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & 961 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}The Pepper-Salami.\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.4pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|l|r}\n\\toprule\n\\multicolumn{2}{>{\\centering\\arraybackslash}m{ -2\\tabcolsep-1.5\\arrayrulewidth}}{} & Pizzas Sold \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{4}{=}{peppr\\_salami\\textsuperscript{\\textit{1}}} & L & 696 \\\\ \n & M & 428 \\\\ \n & S & 322 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & 1,446 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{4}{=}{soppressata} & L & 405 \\\\ \n & M & 268 \\\\ \n & S & 288 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & 961 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}The Pepper-Salami.\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -551,4 +551,96 @@
       \row
       
       }
+
+# tab_footnote() produces helpful error messages (#475).
+
+    Code
+      tab_footnote(start_gt, footnote = "First data cell.", locations = cells_body(
+        columns = "valuer", rows = 1))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "First data cell.".
+      Caused by error in `cells_body()`:
+      ! Can't select columns that don't exist.
+      x Column `valuer` doesn't exist.
+    Code
+      tab_footnote(start_gt, footnote = "First data cell.", locations = cells_column_labels(
+        columns = "valuer"))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "First data cell.".
+      Caused by error in `cells_column_labels()`:
+      ! Can't select columns that don't exist.
+      x Column `valuer` doesn't exist.
+    Code
+      tab_footnote(start_gt, footnote = "First data cell.", locations = cells_column_spanners(
+        "valuer"))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "First data cell.".
+      Caused by error in `cells_column_spanners()`:
+      ! Spanner `valuer` does not exist in the data.
+    Code
+      tab_footnote(start_gt, footnote = "First data cell.", locations = cells_column_spanners(
+        3))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "First data cell.".
+      Caused by error in `cells_column_spanners()`:
+      ! The following spanner indices do not exist in the data: 3.
+    Code
+      tab_footnote(start_gt, footnote = "Footnote error.", locations = cells_body(
+        columns = "value_1", rows = "Mazda RX7"))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Footnote error.".
+      Caused by error in `cells_body()`:
+      ! Row `Mazda RX7` does not exist in the data.
+
+# tab_footnote() errors well when it can't resolve location
+
+    Code
+      tab_footnote(data, footnote = "Summary cell footnote.", locations = cells_summary(
+        groups = "Mercs", columns = starts_with("x"), rows = 2))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Summary cell footnote.".
+      Caused by error in `cells_summary()`:
+      ! The location requested could not be resolved.
+      * Review the expression provided as `columns`.
+    Code
+      tab_footnote(data, footnote = "Summary cell footnote.", locations = cells_summary(
+        groups = "Mercs", columns = starts_with("m"), rows = starts_with("x")))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Summary cell footnote.".
+      Caused by error in `cells_summary()`:
+      ! The location requested could not be resolved.
+      * Review the expression provided as `rows`.
+    Code
+      tab_footnote(data, footnote = "Grand summary cell footnote.", locations = cells_grand_summary(
+        columns = starts_with("x"), rows = 2))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Grand summary cell footnote.".
+      Caused by error in `cells_grand_summary()`:
+      ! The location requested could not be resolved.
+      * Review the expression provided as `columns`.
+    Code
+      tab_footnote(data, footnote = "Grand summary cell footnote.", locations = cells_grand_summary(
+        columns = starts_with("m"), rows = starts_with("x")))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Grand summary cell footnote.".
+      Caused by error in `cells_grand_summary()`:
+      ! The location requested could not be resolved.
+      * Review the expression provided as `rows`.
+    Code
+      tab_footnote(data, footnote = "Grand summary cell footnote.", locations = cells_grand_summary(
+        columns = starts_with("m"), rows = 15))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Grand summary cell footnote.".
+      Caused by error in `cells_grand_summary()`:
+      ! The following grand summary row indices do not exist in the data: 15.
 

@@ -1,4 +1,4 @@
-test_that("The `fmt_number()` function works correctly in the HTML context", {
+test_that("fmt_number() works correctly in the HTML context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -22,10 +22,10 @@ test_that("The `fmt_number()` function works correctly in the HTML context", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  char_1 <- (tab %>% dt_data_get())[["char_1"]]
-  char_2 <- (tab %>% dt_data_get())[["char_2"]]
-  num_1 <- (tab %>% dt_data_get())[["num_1"]]
-  num_2 <- (tab %>% dt_data_get())[["num_2"]]
+  char_1 <- dt_data_get(tab)[["char_1"]]
+  char_2 <- dt_data_get(tab)[["char_2"]]
+  num_1 <- dt_data_get(tab)[["num_1"]]
+  num_2 <- dt_data_get(tab)[["num_2"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -304,7 +304,7 @@ test_that("The `fmt_number()` function works correctly in the HTML context", {
   )
 })
 
-test_that("The `fmt_number()` function can scale/suffix larger numbers", {
+test_that("fmt_number() can scale/suffix larger numbers", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -526,7 +526,7 @@ test_that("The `fmt_number()` function can scale/suffix larger numbers", {
   )
 })
 
-test_that("The `fmt_number()` function format to specified significant figures", {
+test_that("fmt_number() formats to specified significant figures", {
 
   # These numbers will be used in tests of formatting
   # correctly to n significant figures
@@ -682,7 +682,7 @@ test_that("The `fmt_number()` function format to specified significant figures",
   expect_error(tab %>% fmt_number(columns = num, n_sigfig = -1L))
 })
 
-test_that("The `drop_trailing_dec_mark` option works in select `fmt_*()` functions", {
+test_that("`drop_trailing_dec_mark` works in select `fmt_*()` functions", {
 
   # These numbers will be used in tests with `drop_trailing_dec_mark = FALSE`
   numbers <- c(0.001, 0.01, 0.1, 0, 1, 1.1, 1.12, 50000, -1.5, -5, -500.1)
@@ -837,7 +837,7 @@ test_that("The `drop_trailing_dec_mark` option works in select `fmt_*()` functio
   )
 })
 
-test_that("The `fmt_number()` fn with `suffixing = TRUE` works with small numbers", {
+test_that("fmt_number() with `suffixing = TRUE` works with small numbers", {
 
   # Create an input data frame with a single column
   data_tbl <-
@@ -899,7 +899,7 @@ test_that("Rownames and groupnames aren't included in `columns = TRUE`", {
   )
 })
 
-test_that("The `fmt_number()` fn can render values in the Indian numbering system", {
+test_that("fmt_number() can render values in the Indian numbering system", {
 
   # These numbers will be used in tests of formatting
   # values to the Indian numbering system
@@ -1077,14 +1077,18 @@ test_that("The `fmt_number()` fn can render values in the Indian numbering syste
       "(Inf Cr)"
     )
   )
-  expect_warning(
-    expect_equal(
-      (tab %>%
-         fmt_number(columns = num, suffixing = TRUE, system = "ind") %>%
-         render_formats_test(context = "html"))[["num"]],
-      (tab %>%
-         fmt_number(columns = num, suffixing = TRUE, scale_by = 200, system = "ind") %>%
-         render_formats_test(context = "html"))[["num"]]
-    )
+
+  expect_no_warning(
+    compared_tab <- tab %>%
+      fmt_number(columns = num, suffixing = TRUE, system = "ind")
+  )
+  # scale_by warning
+  expect_snapshot(
+    expected_tab <- tab %>%
+      fmt_number(columns = num, suffixing = TRUE, scale_by = 200, system = "ind")
+  )
+  expect_equal(
+    render_formats_test(compared_tab, context = "html")[["num"]],
+    render_formats_test(expected_tab, context = "html")[["num"]]
   )
 })

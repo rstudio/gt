@@ -50,11 +50,11 @@ vector.}
 In conjunction with \code{columns}, we can specify which of their rows should
 participate in the merging process. The default \code{\link[=everything]{everything()}} results in
 all rows in \code{columns} being formatted. Alternatively, we can supply a
-vector of row IDs within \code{\link[=c]{c()}}, a vector of row indices, or a select
-helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
-down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+vector of row IDs within \code{c()}, a vector of row indices, or a select
+helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}},  \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use
+expressions to filter down to the rows we need
+(e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{sep}{\emph{Separator text for uncertainties}
 
@@ -78,13 +78,13 @@ before, they just won't be displayed in the finalized table.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{cols_merge_uncert()} function is a specialized variant of the
-\code{\link[=cols_merge]{cols_merge()}} function. It takes as input a base value column (\code{col_val})
-and either: (1) a single uncertainty column, or (2) two columns representing
-lower and upper uncertainty bounds. These columns will be essentially merged
-in a single column (that of \code{col_val}). What results is a column with values
-and associated uncertainties (e.g., \verb{12.0 ± 0.1}), and any columns specified
-in \code{col_uncert} are hidden from appearing the output table.
+\code{cols_merge_uncert()} is a specialized variant of \code{\link[=cols_merge]{cols_merge()}}. It takes as
+input a base value column (\code{col_val}) and either: (1) a single uncertainty
+column, or (2) two columns representing lower and upper uncertainty bounds.
+These columns will be essentially merged in a single column (that of
+\code{col_val}). What results is a column with values and associated uncertainties
+(e.g., \verb{12.0 ± 0.1}), and any columns specified in \code{col_uncert} are hidden
+from appearing the output table.
 }
 \section{Comparison with other column-merging functions}{
 
@@ -103,7 +103,7 @@ merged column (e.g., \code{NA} + \code{NA} = \code{NA})
 }
 
 Any resulting \code{NA} values in the \code{col_val} column following the merge
-operation can be easily formatted using the \code{\link[=sub_missing]{sub_missing()}} function.
+operation can be easily formatted using \code{\link[=sub_missing]{sub_missing()}}.
 
 This function is part of a set of four column-merging functions. The other
 three are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
@@ -157,17 +157,17 @@ updated with \code{\link[=cols_label]{cols_label()}} to better describe the cont
 \seealso{
 Other column modification functions: 
 \code{\link{cols_add}()},
-\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_hide}()},
-\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
+\code{\link{cols_label_with}()},
+\code{\link{cols_merge}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
-\code{\link{cols_merge}()},
+\code{\link{cols_move}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
-\code{\link{cols_move}()},
 \code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
 \code{\link{cols_units}()},

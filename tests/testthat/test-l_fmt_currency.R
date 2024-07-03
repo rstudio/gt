@@ -1,4 +1,4 @@
-test_that("The `fmt_currency()` function works correctly", {
+test_that("fmt_currency() works correctly", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric

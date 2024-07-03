@@ -26,13 +26,12 @@
 #'
 #' @description
 #'
-#' We can modify the display order of any row groups in a **gt** object with the
-#' `row_group_order()` function. The `groups` argument takes a vector of row
-#' group ID values. After this function is invoked, the row groups will adhere
-#' to this revised ordering. It isn't necessary to provide all row ID values in
-#' `groups`, rather, what is provided will assume the specified ordering at the
-#' top of the table and the remaining row groups will follow in their original
-#' ordering.
+#' We can modify the display order of any row groups in a **gt** object with
+#' `row_group_order()`. The `groups` argument takes a vector of row group ID values.
+#' After this function is invoked, the row groups will adhere to this revised
+#' ordering. It isn't necessary to provide all row ID values in `groups`, rather,
+#' what is provided will assume the specified ordering at the top of the table
+#' and the remaining row groups will follow in their original ordering.
 #'
 #' @inheritParams cols_align
 #'
@@ -94,7 +93,7 @@ row_group_order <- function(
   arrange_groups <- dt_row_groups_get(data = data)
 
   # Stop function if any value in `groups` doesn't match a group name
-  if (any(!groups %in% arrange_groups)) {
+  if (!all(groups %in% arrange_groups)) {
 
     cli::cli_abort(c(
       "All values given as `groups` must correspond to `group_id` values.",

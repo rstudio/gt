@@ -18,22 +18,20 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{scalar<character>} // \strong{required}
 
-The text to be used as the stubhead label. We can optionally use the \code{\link[=md]{md()}}
-and \code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML
-elements in the text.}
+The text to be used as the stubhead label. We can optionally use \code{\link[=md]{md()}} or
+\code{\link[=html]{html()}} to style the text as Markdown or to retain HTML elements in the text.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-We can add a label to the stubhead of a \strong{gt} table with the
-\code{tab_stubhead()} function. The stubhead is the lone part of the table that is
-positioned left of the column labels, and above the stub. If a stub does not
-exist, then there is no stubhead (so no visible change will be made when
-using this function in that case). We have the flexibility to use Markdown
-formatting for the stubhead label via the \code{\link[=md]{md()}} helper function.
-Furthermore, if the table is intended for HTML output, we can use HTML inside
-of \code{\link[=html]{html()}} for the stubhead label.
+We can add a label to the stubhead of a \strong{gt} table with \code{tab_stubhead()}.
+The stubhead is the lone part of the table that is positioned left of the
+column labels, and above the stub. If a stub does not exist, then there is no
+stubhead (so no visible change will be made when using this function in that
+case). We have the flexibility to use Markdown formatting for the stubhead
+label via the \code{\link[=md]{md()}} helper function. Furthermore, if the table is intended
+for HTML output, we can use HTML inside of \code{\link[=html]{html()}} for the stubhead label.
 }
 \section{Examples}{
 
@@ -41,7 +39,7 @@ of \code{\link[=html]{html()}} for the stubhead label.
 Using a small subset of the \code{\link{gtcars}} dataset, we can create a \strong{gt} table
 with row labels. Since we have row labels in the stub (via use of
 \code{rowname_col = "model"} in the \code{\link[=gt]{gt()}} function call) we have a stubhead, so,
-let's add a stubhead label (\code{"car"}) with the \code{tab_stubhead()} function to
+let's add a stubhead label (\code{"car"}) with \code{tab_stubhead()} to
 describe what's in the stub.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
@@ -69,6 +67,64 @@ package.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_2.png" alt="This image of a table was generated from the second code example in the `tab_stubhead()` help file." style="width:100\%;">
 }}
+
+If the stub is two columns wide (made possible by using
+\code{row_group_as_column = TRUE} in the \code{\link[=gt]{gt()}} statement), the stubhead will be a
+merged cell atop those two stub columns representing the row group and the
+row label. Here's an example of that type of situation in a table that uses
+the \code{\link{peeps}} dataset.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{peeps |>
+  dplyr::filter(country \%in\% c("POL", "DEU")) |>
+  dplyr::group_by(country) |>
+  dplyr::filter(dplyr::row_number() \%in\% 1:5) |>
+  dplyr::ungroup() |>
+  dplyr::mutate(name = paste0(toupper(name_family), ", ", name_given)) |>
+  dplyr::select(name, address, city, postcode, country) |>
+  gt(
+    rowname_col = "name",
+    groupname_col = "country",
+    row_group_as_column = TRUE
+  ) |>
+  tab_stubhead(label = "Country Code / Person") |>
+  tab_style(
+    style = cell_text(transform = "capitalize"),
+    locations = cells_column_labels()
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_3.png" alt="This image of a table was generated from the third code example in the `tab_stubhead()` help file." style="width:100\%;">
+}}
+
+The stubhead cell and its text can be styled using \code{\link[=tab_style]{tab_style()}} with
+\code{\link[=cells_stubhead]{cells_stubhead()}}. In this example, using the \code{\link{reactions}} dataset, we
+style the stubhead label so that it is vertically centered with text that is
+highly emboldened.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{reactions |>
+  dplyr::filter(cmpd_type == "nitrophenol") |>
+  dplyr::select(cmpd_name, OH_k298, Cl_k298) |>
+  dplyr::filter(!(is.na(OH_k298) & is.na(Cl_k298))) |>
+  gt(rowname_col = "cmpd_name") |>
+  tab_spanner(
+    label = "Rate constant at 298 K, in \{\{cm^3 molecules^–1 s^–1⁠\}\}",
+    columns = ends_with("k298")
+  ) |>
+  tab_stubhead(label = "Nitrophenol Compound") |>
+  fmt_scientific() |>
+  sub_missing() |>
+  cols_label_with(fn = function(x) sub("_k298", "", x)) |>
+  cols_width(everything() ~ px(200)) |>
+  tab_style(
+    style = cell_text(v_align = "middle", weight = "800"),
+    locations = cells_stubhead()
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_4.png" alt="This image of a table was generated from the fourth code example in the `tab_stubhead()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -90,10 +146,10 @@ Other part creation/modification functions:
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
-\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_stub_indent}()},
-\code{\link{tab_style_body}()},
-\code{\link{tab_style}()}
+\code{\link{tab_style}()},
+\code{\link{tab_style_body}()}
 }
 \concept{part creation/modification functions}

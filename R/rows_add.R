@@ -51,11 +51,11 @@
 #'   exists in the table. Two-sided formulas with column-resolving expressions
 #'   (e.g, `<expr> ~ <value vector>`) can also be used, where the left-hand side
 #'   corresponds to selections of columns. Column names should be enclosed in
-#'   [c()] and select helpers like [starts_with()], [ends_with()], [contains()],
-#'   [matches()], [one_of()], and [everything()] can be used in the LHS. The
-#'   length of the longest vector in `<value vector>` determines how many new
-#'   rows will be added. Single values in `<value vector>` will be repeated down
-#'   in cases where there are multiple rows to be added.
+#'   `c()` and select helpers like [starts_with()], [ends_with()], [contains()],
+#'   [matches()], and [everything()] can be used in the LHS. The length of the
+#'   longest vector in `<value vector>` determines how many new rows will be added.
+#'   Single values in `<value vector>` will be repeated down in cases where
+#'   there are multiple rows to be added.
 #'
 #' @param .list *Alternative to `...`*
 #'
@@ -205,23 +205,23 @@
 #' }}
 #'
 #' All missing values were substituted with an empty string (`""`), and that was
-#' done by using the [sub_missing()] function. We removed the top border of the
+#' done by using [sub_missing()]. We removed the top border of the
 #' new rows with a call to [tab_style()], targeting those rows where the row
 #' labels end with `"end"`. Finally, we get rid of the row labels with the use
-#' of the [text_case_when()] function, using a similar strategy of targeting the
+#' of [text_case_when()], using a similar strategy of targeting the
 #' name of the row label.
 #'
 #' Another application is starting from nothing (really just the definition of
 #' columns) and building up a table using several invocations of `rows_add()`.
 #' This might be useful in interactive or programmatic applications. Here's an
-#' example where two columns are defined with **dplyr**'s `tibble()` function
+#' example where two columns are defined with `dplyr::tibble()`
 #' (and no rows are present initially); with two calls of `rows_add()`, two
 #' separate rows are added.
 #'
 #' ```r
 #' dplyr::tibble(
 #'   time = lubridate::POSIXct(),
-#'   event = character(0)
+#'   event = character(0L)
 #' ) |>
 #'   gt() |>
 #'   rows_add(
@@ -313,9 +313,9 @@
 #'
 #' ```r
 #' dplyr::tibble(
-#'   msrp = numeric(0),
-#'   item = character(0),
-#'   type = character(0)
+#'   msrp = numeric(0L),
+#'   item = character(0L),
+#'   type = character(0L)
 #' ) |>
 #'   gt() |>
 #'   rows_add(
@@ -341,7 +341,6 @@
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
-#' @import rlang
 #' @export
 rows_add <- function(
     .data,
@@ -381,19 +380,12 @@ rows_add <- function(
 
   if (!is.null(.n_empty)) {
 
-    # Ensure that `.n_empty` is an integer if anything is provided
-    if (!rlang::is_integerish(.n_empty)) {
-      cli::cli_abort("An integer value should be supplied for `.n_empty`.")
-    }
+    # Ensure that `.n_empty` is an integer if anything is provided `.n_empty` is not negative
+    check_number_whole(.n_empty, min = 0)
 
     # If the `.n_empty` should evaluate to `0` return the data unchanged
-    if (as.integer(.n_empty) == 0) {
+    if (as.integer(.n_empty) == 0L) {
       return(.data)
-    }
-
-    # Ensure that `.n_empty` is not negative
-    if (as.integer(.n_empty) < 0) {
-      cli::cli_abort("The value for `.n_empty` cannot be negative.")
     }
 
     # Generate empty rows with `NA` values
@@ -411,7 +403,7 @@ rows_add <- function(
     #
 
     normalized_row_data_items <- list()
-    row_data_items_to_remove <- c()
+    row_data_items_to_remove <- NULL # c()
 
     for (i in seq_along(row_data_list)) {
 
@@ -470,8 +462,11 @@ rows_add <- function(
 
     # Ensure that the column names resolved belong to the internal
     # data table of `data_tbl`
-    if (any(!(names(row_data_list) %in% colnames(data_tbl)))) {
-      cli::cli_abort("All column names referenced must be present in the data.")
+    if (!all(names(row_data_list) %in% colnames(data_tbl))) {
+      cols_not_found <- setdiff(names(row_data_list), colnames(data_tbl))
+      cli::cli_abort(c(
+        "All column names referenced must be present in the data.",
+        "x" = "Can't find columns {.val {cols_not_found}}."))
     }
   }
 
@@ -519,7 +514,7 @@ rows_add <- function(
 
   # Stop function if expressions are given to both `.before` and `.after`
   if (!is.null(resolved_rows_before_idx) && !is.null(resolved_rows_after_idx)) {
-    cli::cli_abort("Expressions cannot be given to both `.before` and `.after`.")
+    cli::cli_abort("Only one of `.before` and `.after` can be supplied.")
   }
 
   #

@@ -5,7 +5,7 @@
 \alias{metro}
 \title{The stations of the Paris Metro}
 \format{
-A tibble with 308 rows and 11 variables:
+A tibble with 314 rows and 11 variables:
 \describe{
 \item{name}{The name of the station.}
 \item{caption}{In some cases, a station will have a caption that might
@@ -38,12 +38,12 @@ show \code{NA} values.}
 metro
 }
 \description{
-A dataset with information on all 308 Paris Metro stations as of February
-2023. Each record represents a station, describing which Metro lines are
-serviced by the station, which other connections are available, and annual
-passenger volumes. Basic location information is provided for each station in
-terms where they reside on a municipal level, and, through latitude/longitude
-coordinates.
+A dataset with information on all 314 Paris Metro stations as of June 2024.
+Each record represents a station, describing which Metro lines are serviced
+by the station, which other connections are available, and annual passenger
+volumes. Basic location information is provided for each station in terms
+of where they reside on a municipal level, and, through latitude/longitude
+coordinate values.
 
 The system has 16 lines (numbered from 1 to 14, with two additional lines:
 3bis and 7bis) and covers over 200 kilometers of track. The Metro runs on
@@ -65,7 +65,7 @@ stations (e.g., Gare du Nord, Gare de l'Est, etc.), and many bus lines.
 Here is a glimpse at the data available in \code{metro}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(metro)
-#> Rows: 308
+#> Rows: 314
 #> Columns: 11
 #> $ name               <chr> "Argentine", "Bastille", "Bérault", "Champs-Élysées~
 #> $ caption            <chr> NA, NA, NA, "Grand Palais", NA, NA, NA, NA, NA, NA,~
@@ -83,7 +83,7 @@ Here is a glimpse at the data available in \code{metro}.
 
 \section{Dataset ID and Badge}{
 
-DATA-8
+DATA-10
 
 \if{html}{\out{
 <div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_metro.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
@@ -100,8 +100,13 @@ Other datasets:
 \code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{films}},
+\code{\link{gibraltar}},
 \code{\link{gtcars}},
 \code{\link{illness}},
+\code{\link{nuclides}},
+\code{\link{peeps}},
+\code{\link{photolysis}},
 \code{\link{pizzaplace}},
 \code{\link{reactions}},
 \code{\link{rx_addv}},

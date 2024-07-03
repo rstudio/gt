@@ -1,4 +1,4 @@
-test_that("The `gtsave()` function creates an HTML file based on the extension", {
+test_that("gtsave() creates an HTML file based on the extension", {
 
   # Create a filename with path, having the
   # .html extension
@@ -133,7 +133,7 @@ test_that("HTML saving with `gtsave()` is successful with different path defs", 
   #
 
   # Form final path, check for non-existence
-  path_1 <- tempfile(fileext = ".html")
+  path_1 <- normalizePath(tempfile(fileext = ".html"), winslash = "/", mustWork = FALSE)
   on.exit(unlink(path_1))
   expect_false(file.exists(path_1))
 
@@ -145,7 +145,7 @@ test_that("HTML saving with `gtsave()` is successful with different path defs", 
   path_n <- length(split_path)
 
   # Set working directory
-  setwd(file.path(paste0("/", paste(split_path[2:3], collapse = "/"))))
+  setwd(file.path(paste0(ifelse(.Platform$OS.type == "windows", split_path[1], ""), "/", paste(split_path[2:3], collapse = "/"))))
 
   # Write the file
   exibble %>%
@@ -167,7 +167,7 @@ test_that("HTML saving with `gtsave()` is successful with different path defs", 
   #
 
   # Form final path, check for non-existence
-  path_2 <- tempfile(fileext = ".html")
+  path_2 <- normalizePath(tempfile(fileext = ".html"), winslash = "/", mustWork = F)
   on.exit(unlink(path_2))
   expect_false(file.exists(path_2))
 
@@ -179,7 +179,7 @@ test_that("HTML saving with `gtsave()` is successful with different path defs", 
   path_n <- length(split_path)
 
   # Set working directory
-  setwd(file.path(paste0("/", paste(split_path[2:3], collapse = "/"))))
+  setwd(file.path(paste0(ifelse(.Platform$OS.type == "windows", split_path[1], ""), "/", paste(split_path[2:3], collapse = "/"))))
 
   # Write the file
   exibble %>%
@@ -220,6 +220,8 @@ test_that("HTML saving with `gtsave()` is successful with different path defs", 
     path_3 %>% readLines() %>% paste(collapse = "\n") %>%
       tidy_grepl("<!DOCTYPE html>")
   )
+
+  skip_on_os("windows")
 
   # [#4] Filename starting with ~/, absolute path (expect that path is ignored)
 
@@ -276,7 +278,7 @@ test_that("HTML saving with `gt_save_html()` with different path defs works", {
   #
 
   # Form final path, check for non-existence
-  path_1 <- tempfile(fileext = ".html")
+  path_1 <- normalizePath(tempfile(fileext = ".html"), winslash = "/", mustWork = F)
   on.exit(unlink(path_1))
   expect_false(file.exists(path_1))
 
@@ -288,7 +290,7 @@ test_that("HTML saving with `gt_save_html()` with different path defs works", {
   path_n <- length(split_path)
 
   # Set working directory
-  setwd(file.path(paste0("/", paste(split_path[2:3], collapse = "/"))))
+  setwd(file.path(paste0(ifelse(.Platform$OS.type == "windows", split_path[1], ""), "/", paste(split_path[2:3], collapse = "/"))))
 
   # Write the file
   exibble %>%
@@ -310,7 +312,7 @@ test_that("HTML saving with `gt_save_html()` with different path defs works", {
   #
 
   # Form final path, check for non-existence
-  path_2 <- tempfile(fileext = ".html")
+  path_2 <- normalizePath(tempfile(fileext = ".html"), winslash = "/", mustWork = F)
   on.exit(unlink(path_2))
   expect_false(file.exists(path_2))
 
@@ -322,7 +324,7 @@ test_that("HTML saving with `gt_save_html()` with different path defs works", {
   path_n <- length(split_path)
 
   # Set working directory
-  setwd(file.path(paste0("/", paste(split_path[2:3], collapse = "/"))))
+  setwd(file.path(paste0(ifelse(.Platform$OS.type == "windows", split_path[1], ""), "/", paste(split_path[2:3], collapse = "/"))))
 
   # Write the file
   exibble %>%
@@ -363,6 +365,8 @@ test_that("HTML saving with `gt_save_html()` with different path defs works", {
     path_3 %>% readLines() %>% paste(collapse = "\n") %>%
       tidy_grepl("<!DOCTYPE html>")
   )
+
+  skip_on_os("windows")
 
   # [#4] Filename starting with ~/, absolute path (expect that path is ignored)
 
@@ -409,7 +413,7 @@ test_that("HTML saving with `gt_save_html()` with different path defs works", {
   )
 })
 
-# test_that("the `gtsave()` function creates a LaTeX file based on the extension", {
+# test_that("gtsave() creates a LaTeX file based on the extension", {
 
   # # Create a filename with path, having the
   # # .html extension
@@ -464,7 +468,7 @@ test_that("HTML saving with `gt_save_html()` with different path defs works", {
   #     fixed = TRUE)
 # })
 
-test_that("The `gtsave()` function stops in some cases", {
+test_that("gtsave() errors with bad filename input", {
 
   # Expect an error if the file extension doesn't
   # correspond to a saving function
@@ -474,14 +478,14 @@ test_that("The `gtsave()` function stops in some cases", {
   expect_error(exibble %>% gt() %>% gtsave(filename = "exibble"))
 })
 
-test_that("The `gtsave()` function creates docx files as expected", {
+test_that("gtsave() creates docx files as expected", {
 
   skip_on_ci()
   skip_on_covr()
 
   gt_exibble <- exibble %>% gt()
 
-  temp_docx <- file.path(tempdir(),"test.docx")
+  temp_docx <- file.path(tempdir(), "test.docx")
   on.exit(unlink(temp_docx))
   expect_false(file.exists(temp_docx))
 
@@ -490,7 +494,7 @@ test_that("The `gtsave()` function creates docx files as expected", {
   # Check for existence
   expect_true(file.exists(temp_docx))
 
-  temp_docx_xml <- xml2::read_xml(unz(temp_docx,"word/document.xml"))
+  temp_docx_xml <- xml2::read_xml(unz(temp_docx, "word/document.xml"))
 
   temp_docx_xml %>%
     xml2::xml_find_first(".//w:tbl") %>%
@@ -498,7 +502,7 @@ test_that("The `gtsave()` function creates docx files as expected", {
     expect_snapshot()
 })
 
-test_that("The `gtsave()` fn creates docx files even when a table has special characters", {
+test_that("gtsave() creates docx files even when a table has special characters", {
 
   skip_on_ci()
   skip_on_covr()
@@ -513,7 +517,7 @@ test_that("The `gtsave()` fn creates docx files even when a table has special ch
     ) %>%
     gt()
 
-  temp_docx <- file.path(tempdir(),"test.docx")
+  temp_docx <- file.path(tempdir(), "test.docx")
   on.exit(unlink(temp_docx))
   expect_false(file.exists(temp_docx))
 
@@ -522,7 +526,7 @@ test_that("The `gtsave()` fn creates docx files even when a table has special ch
   # Check for existence
   expect_true(file.exists(temp_docx))
 
-  temp_docx_xml <- xml2::read_xml(unz(temp_docx,"word/document.xml"))
+  temp_docx_xml <- xml2::read_xml(unz(temp_docx, "word/document.xml"))
 
   temp_docx_xml %>%
     xml2::xml_find_first(".//w:tbl") %>%

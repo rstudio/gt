@@ -1,4 +1,4 @@
-# The `fmt_auto()` function works correctly
+# fmt_auto() works correctly
 
     Code
       .

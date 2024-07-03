@@ -289,7 +289,7 @@ can be modified with \code{nanoplot_options()} within the \code{options} argumen
 }
 \section{Function ID}{
 
-8-7
+8-8
 }
 
 \section{Function Introduced}{
@@ -303,22 +303,8 @@ Other helper functions:
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_body}()},
-\code{\link{cells_column_labels}()},
-\code{\link{cells_column_spanners}()},
-\code{\link{cells_footnotes}()},
-\code{\link{cells_grand_summary}()},
-\code{\link{cells_row_groups}()},
-\code{\link{cells_source_notes}()},
-\code{\link{cells_stub_grand_summary}()},
-\code{\link{cells_stub_summary}()},
-\code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
-\code{\link{cells_summary}()},
-\code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
-\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{from_column}()},
 \code{\link{google_font}()},
@@ -329,6 +315,7 @@ Other helper functions:
 \code{\link{px}()},
 \code{\link{random_id}()},
 \code{\link{stub}()},
-\code{\link{system_fonts}()}
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
 \concept{helper functions}

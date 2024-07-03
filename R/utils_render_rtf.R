@@ -82,7 +82,7 @@ rtf_fonttbl <- function(
   fontinfo_values <-
     vapply(
       seq_along(fonts),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         gsub("{x}", font_sequence[x], unlist(fonts[x]), fixed = TRUE)
@@ -206,7 +206,7 @@ rtf_header <- function(
   ansi_code_page_key <- rtf_key("ansicpg", .ansi_code_page)
 
   # Get a vector of the different object types
-  object_types <- vapply(dots_list, class, FUN.VALUE = character(1), USE.NAMES = FALSE)
+  object_types <- vapply(dots_list, class, FUN.VALUE = character(1L), USE.NAMES = FALSE)
 
   # TODO: Validate the `object_types` vector
 
@@ -380,7 +380,7 @@ parse_length_str <- function(
     } else {
       NA_character_
     }
-  }, character(1))
+  }, character(1L))
 
   # Check for negative values and stop of `allow_negative = FALSE`
   non_na_vals <- vals[!is.na(vals)]
@@ -388,7 +388,7 @@ parse_length_str <- function(
   if (
     !allow_negative &&
     length(non_na_vals) > 0 &&
-    any(!is.na(non_na_vals)) &&
+    !all(is.na(non_na_vals)) &&
     is.numeric(non_na_vals) &&
     any(non_na_vals < 0)
   ) {
@@ -415,16 +415,15 @@ parse_length_str <- function(
 
 abs_len_to_twips <- function(lengths_df) {
 
-  lengths_df %>%
-    dplyr::left_join(
+  res <- dplyr::left_join(
+      lengths_df,
       twip_factors_df,
       by = c("unit" = "unit")
-    ) %>%
-    dplyr::mutate(
-      value = ifelse(!is.na(conv), value * conv, value),
-      unit = ifelse(!is.na(conv), "tw", unit)
-    ) %>%
-    dplyr::select(value, unit)
+    )
+  res$value[!is.na(res$conv)] <- res$value[!is.na(res$conv)] * res$conv[!is.na(res$conv)]
+  res$unit[!is.na(res$conv)] <- "tw"
+
+  dplyr::select(res, "value", "unit")
 }
 
 # The `col_width_resolver_rtf()` function returns a vector of
@@ -490,12 +489,12 @@ col_width_resolver_rtf <- function(
   # Avoid divide-by-zero
   if (pct_used != 0) {
     # Normalize pct to add up to 100
-    col_widths$value[is_pct] <- col_widths$value[is_pct] * (100 / pct_used)
+    col_widths$value[which(is_pct)] <- col_widths$value[which(is_pct)] * (100 / pct_used)
   }
 
   # Convert % to tw
-  col_widths$value[is_pct] <- twips_remaining * col_widths$value[is_pct] / 100
-  col_widths$unit[is_pct] <- "tw"
+  col_widths$value[which(is_pct)] <- twips_remaining * col_widths$value[which(is_pct)] / 100
+  col_widths$unit[which(is_pct)] <- "tw"
   is_abs <- is_abs | TRUE
   is_pct <- is_pct & FALSE
 
@@ -515,13 +514,13 @@ rtf_tbl_row <- function(
 
   cell_count <- length(x)
 
-  if (!is.null(widths)) {
-    widths_twips <- cumsum(widths)
-  } else {
+  if (is.null(widths)) {
     widths_twips <- cumsum(rep(page_body_width / cell_count, cell_count))
+  } else {
+    widths_twips <- cumsum(widths)
   }
 
-  if (is.null(height)) height <- 425
+  height <- height %||% 425
 
   # Set border values
   if (!is.null(borders)) {
@@ -642,7 +641,7 @@ rtf_tbl_cell <- function(
   v_align <- substr(rlang::arg_match(v_align), 1, 1)
 
   # Set default padding values if `padding = NULL`
-  if (is.null(padding)) padding <- c(25, 85, 25, 85)
+  padding <- padding %||% c(25, 85, 25, 85)
 
   # Set padding in units of twips, in the order left, top, bottom, right
   padding_units <-
@@ -669,7 +668,7 @@ rtf_tbl_cell <- function(
       paste(
         vapply(
           borders,
-          FUN.VALUE = character(1),
+          FUN.VALUE = character(1L),
           USE.NAMES = FALSE,
           FUN = function(x) {
 
@@ -799,10 +798,7 @@ footnote_mark_to_rtf <- function(
   }
 
   spec <- get_footnote_spec_by_location(data = data, location = location)
-
-  if (is.null(spec)) {
-    spec <- "^i"
-  }
+  spec <- spec %||% "^i"
 
   if (grepl("\\(|\\[", spec)) mark <- paste0("(", mark)
   if (grepl("\\)|\\]", spec)) mark <- paste0(mark, ")")
@@ -812,8 +808,8 @@ footnote_mark_to_rtf <- function(
       paste0(
       "{",
       if (grepl("\\^", spec)) "\\super " else NULL,
-      if (grepl("i", spec)) "\\i " else NULL,
-      if (grepl("b", spec)) "\\b " else NULL
+      if (grepl("i", spec, fixed = TRUE)) "\\i " else NULL,
+      if (grepl("b", spec, fixed = TRUE)) "\\b " else NULL
       )
     ),
     mark,
@@ -839,7 +835,7 @@ escape_rtf <- function(text) {
   x <- gsub("{", "\\'7b", x, fixed = TRUE)
   x <- gsub("}", "\\'7d", x, fixed = TRUE)
 
-  x <- vapply(x, FUN.VALUE = character(1), FUN = escape_rtf_unicode, USE.NAMES = FALSE)
+  x <- vapply(x, FUN.VALUE = character(1L), FUN = escape_rtf_unicode, USE.NAMES = FALSE)
 
   text[!na_text] <- x
 
@@ -856,7 +852,7 @@ escape_rtf_unicode <- function(x) {
     x <- enc2utf8(x)
   }
 
-  chars <- unlist(strsplit(x, ""))
+  chars <- unlist(strsplit(x, "", fixed = TRUE))
   codepoints <- utf8ToInt(x)
   needs_escape <- codepoints > 127
   codepoints_subset <- codepoints[needs_escape]
@@ -1463,16 +1459,12 @@ create_body_component_rtf <- function(data) {
     )
 
   # Replace an NA group with an empty string
-  if (any(is.na(groups_rows_df$group_label))) {
+  if (anyNA(groups_rows_df$group_label)) {
 
-    groups_rows_df <-
-      dplyr::mutate(
-        groups_rows_df,
-        group_label = ifelse(is.na(group_label), "", group_label)
-      )
+    groups_rows_df$group_label[is.na(groups_rows_df$label)] <- ""
   }
 
-  row_groups_present <- nrow(groups_rows_df) > 0
+  row_groups_present <- nrow(groups_rows_df) > 0L
   row_group_rows <- groups_rows_df$row_start
   row_group_labels <- groups_rows_df$group_label
 
@@ -1570,10 +1562,8 @@ create_body_component_rtf <- function(data) {
           # stub case where summary rows follow
           if (x == 1) {
 
-            row_limits <-
-              groups_rows_df %>%
-              dplyr::filter(row_end == i) %>%
-              dplyr::select(group_id)
+            row_limits <- dplyr::filter(groups_rows_df, row_end == i)
+            row_limits <- row_limits[ , "group_id", drop = FALSE]
 
             if (nrow(row_limits) > 0) {
 
@@ -1723,8 +1713,7 @@ create_body_component_rtf <- function(data) {
     grand_summary_df <-
       dplyr::select(
         list_of_summaries$summary_df_display_list[[grand_summary_col]],
-        dplyr::all_of(rowname_col_private),
-        dplyr::all_of(default_vars_names)
+        dplyr::all_of(c(rowname_col_private, default_vars_names))
       )
 
     for (j in seq_len(nrow(grand_summary_df))) {
@@ -1952,7 +1941,7 @@ generate_notes_list <- function(
   if (nrow(footnotes_tbl) > 0) {
 
     footnotes_tbl <-
-      dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
+      dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
     footnote_text <- footnotes_tbl[["footnotes"]]
     footnote_mark <- footnotes_tbl[["fs_id"]]
@@ -1960,7 +1949,7 @@ generate_notes_list <- function(
     footnote_text <-
       vapply(
         footnote_text,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = process_text,
         context = "rtf"

@@ -23,11 +23,11 @@ argument and return a character vector of the same length as the input \code{x}.
 
 \item{locations}{\emph{Locations to target}
 
-\verb{<locations expressions>} // \emph{default:} \code{cells_body()}
+\code{\link[=location-helper]{<locations expressions>}} // \emph{default:} \code{cells_body()}
 
 The cell or set of cells to be associated with the text transformation.
-Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},
-\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_column_spanners]{cells_column_spanners()}} helper functions can
+Only \code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}},
+\code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_stub]{cells_stub()}}, and \code{\link[=cells_body]{cells_body()}} can
 be used here. We can enclose several of these calls within a \code{list()} if we
 wish to make the transformation happen at different locations.}
 }
@@ -36,7 +36,7 @@ An object of class \code{gt_tbl}.
 }
 \description{
 Text transforming in \strong{gt} is the act of modifying formatted strings in
-targeted cells. The \code{text_transform()} function provides the most flexibility
+targeted cells. \code{text_transform()} provides the most flexibility
 of all the \verb{text_*()} functions in their family of functions. With it, you
 target the cells to undergo modification in the \code{locations} argument while
 also supplying a function to the \code{fn} argument. The function given to \code{fn}
@@ -52,7 +52,7 @@ Use a subset of the \code{\link{sp500}} dataset to create a \strong{gt} table. T
 text in the \code{date} column using a function supplied to \code{text_transform()}
 (via the \code{fn} argument). Note that the \code{x} in the \verb{fn = function (x)} part
 consists entirely of ISO 8601 date strings (which are acceptable as input to
-the \code{\link[=vec_fmt_date]{vec_fmt_date()}} and \code{\link[=vec_fmt_datetime]{vec_fmt_datetime()}} functions).
+\code{\link[=vec_fmt_date]{vec_fmt_date()}} and \code{\link[=vec_fmt_datetime]{vec_fmt_datetime()}}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::slice_head(n = 10) |>
@@ -88,18 +88,15 @@ table. First, the numeric values in the \code{n} column are formatted as
 spelled-out numbers with \code{\link[=fmt_spelled_num]{fmt_spelled_num()}}. The output values are indeed
 spelled out but exclusively with lowercase letters. We actually want these
 words to begin with a capital letter and end with a period. To make this
-possible, the \code{text_transform()} function will be used since it can modify
+possible, \code{text_transform()} will be used since it can modify
 already-formatted text. Through the \code{fn} argument, we provide a custom
 function that uses R's \code{toTitleCase()} operating on \code{x} (the numbers-as-text
-strings) within a \code{paste0()} so that a period can be properly placed.
+strings) within \code{paste0()} so that a period can be properly placed.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
-  dplyr::select(mfr, ctry_origin) |>
   dplyr::filter(ctry_origin \%in\% c("Germany", "Italy", "Japan")) |>
-  dplyr::group_by(mfr, ctry_origin) |>
-  dplyr::count() |>
-  dplyr::ungroup() |>
-  dplyr::arrange(ctry_origin, desc(n)) |>
+  dplyr::count(mfr, ctry_origin, sort = TRUE) |>
+  dplyr::arrange(ctry_origin) |>
   gt(rowname_col = "mfr", groupname_col = "ctry_origin") |>
   cols_label(n = "No. of Entries") |>
   tab_stub_indent(rows = everything(), indent = 2) |>

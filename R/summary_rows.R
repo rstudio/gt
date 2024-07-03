@@ -39,21 +39,19 @@
 #'   `<row-group-targeting expression>` // *default:* `everything()`
 #'
 #'   The row groups to which targeting operations are constrained. Can either be
-#'   a series of row group ID values provided in [c()] or a select helper
-#'   function. Examples of select helper functions include [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()]. By default this is set to [everything()], which means that
-#'   all available groups will obtain summary rows.
+#'   a series of row group ID values provided in `c()` or a select helper
+#'   function (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]). By default this is set to [everything()],
+#'   which means that all available groups will obtain summary rows.
 #'
 #' @param columns *Columns to target*
 #'
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns for which the summaries should be calculated. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
+#'   be a series of column names provided in `c()`, a vector of column indices,
+#'   or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]).
 #'
 #' @param fns *Aggregation Expressions*
 #'
@@ -272,16 +270,16 @@
 #'
 #' @section Extraction of summary rows:
 #'
-#' Should we need to obtain the summary data for external purposes, the
-#' [extract_summary()] function can be used with a `gt_tbl` object where summary
-#' rows were added via `summary_rows()` or [grand_summary_rows()].
+#' Should we need to obtain the summary data for external purposes,
+#' [extract_summary()] can be used with a `gt_tbl` object where summary rows
+#' were added via `summary_rows()` or [grand_summary_rows()].
 #'
 #' @section Examples:
 #'
 #' Use a modified version of [`sp500`] dataset to create a **gt** table with row
 #' groups and row labels. Create the summary rows labeled `min`, `max`, and
-#' `avg` by row group (where each each row group is a week number) with the
-#' `summary_rows()` function.
+#' `avg` by row group (where each each row group is a week number) with
+#' `summary_rows()`.
 #'
 #' ```r
 #' sp500 |>
@@ -452,9 +450,10 @@ summary_rows <- function(
         !!rowname_col_private := rep("", nrow(data$`_data`))
       )
     data$`_data` <-
-      dplyr::select(
+      dplyr::relocate(
         data$`_data`,
-        dplyr::everything(), dplyr::all_of(rowname_col_private)
+        dplyr::all_of(rowname_col_private),
+        .after = dplyr::last_col()
       )
 
     # Get the `stub_df` object from `data`
@@ -482,7 +481,7 @@ summary_rows <- function(
     fmt_args <-
       vapply(
         seq_along(formatter_options),
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           paste0(names(formatter_options[x]), " = ", formatter_options[x])
@@ -688,15 +687,15 @@ summary_rows <- function(
 #'
 #' @section Extraction of summary rows:
 #'
-#' Should we need to obtain the summary data for external purposes, the
-#' [extract_summary()] function can be used with a `gt_tbl` object where summary
-#' rows were added via `grand_summary_rows()` or [summary_rows()].
+#' Should we need to obtain the summary data for external purposes,
+#' [extract_summary()] can be used with a `gt_tbl` object where summary rows
+#' were added via `grand_summary_rows()` or [summary_rows()].
 #'
 #' @section Examples:
 #'
 #' Use a modified version of the [`sp500`] dataset to create a **gt** table with
 #' row groups and row labels. Create the grand summary rows `min`, `max`, and
-#' `avg` for the table with the `grand_summary_rows()` function.
+#' `avg` for the table with `grand_summary_rows()`.
 #'
 #' ```r
 #' sp500 |>
@@ -865,13 +864,8 @@ normalize_summary_fns <- function(fns) {
         fn <- stats::as.formula(paste0("~", value, "(.)"))
       }
 
-      if (is.null(id)) {
-        id <- value
-      }
-
-      if (is.null(label)) {
-        label <- value
-      }
+      id    <- id    %||% value
+      label <- label %||% value
 
     } else if (rlang::is_formula(value)) {
 

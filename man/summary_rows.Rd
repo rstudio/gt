@@ -29,21 +29,19 @@ This is the \strong{gt} table object that is commonly created through use of the
 \verb{<row-group-targeting expression>} // \emph{default:} \code{everything()}
 
 The row groups to which targeting operations are constrained. Can either be
-a series of row group ID values provided in \code{\link[=c]{c()}} or a select helper
-function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}. By default this is set to \code{\link[=everything]{everything()}}, which means that
-all available groups will obtain summary rows.}
+a series of row group ID values provided in \code{c()} or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). By default this is set to \code{\link[=everything]{everything()}},
+which means that all available groups will obtain summary rows.}
 
 \item{columns}{\emph{Columns to target}
 
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns for which the summaries should be calculated. Can either
-be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
-or a select helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+be a series of column names provided in \code{c()}, a vector of column indices,
+or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
 
 \item{fns}{\emph{Aggregation Expressions}
 
@@ -282,9 +280,9 @@ RHS formatting expression. Like this:
 \section{Extraction of summary rows}{
 
 
-Should we need to obtain the summary data for external purposes, the
-\code{\link[=extract_summary]{extract_summary()}} function can be used with a \code{gt_tbl} object where summary
-rows were added via \code{summary_rows()} or \code{\link[=grand_summary_rows]{grand_summary_rows()}}.
+Should we need to obtain the summary data for external purposes,
+\code{\link[=extract_summary]{extract_summary()}} can be used with a \code{gt_tbl} object where summary rows
+were added via \code{summary_rows()} or \code{\link[=grand_summary_rows]{grand_summary_rows()}}.
 }
 
 \section{Examples}{
@@ -292,8 +290,8 @@ rows were added via \code{summary_rows()} or \code{\link[=grand_summary_rows]{gr
 
 Use a modified version of \code{\link{sp500}} dataset to create a \strong{gt} table with row
 groups and row labels. Create the summary rows labeled \code{min}, \code{max}, and
-\code{avg} by row group (where each each row group is a week number) with the
-\code{summary_rows()} function.
+\code{avg} by row group (where each each row group is a week number) with
+\code{summary_rows()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>

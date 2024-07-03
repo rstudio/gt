@@ -18,20 +18,18 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{scalar<character>} // \strong{required}
 
-The text to use for the row group label. We can optionally use the \code{\link[=md]{md()}}
-and \code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML
-elements in the text.}
+The text to use for the row group label. We can optionally use \code{\link[=md]{md()}} or
+\code{\link[=html]{html()}} to style the text as Markdown or to retain HTML elements in the text.}
 
 \item{rows}{\emph{Rows to target}
 
 \verb{<row-targeting expression>} // \strong{required}
 
 The rows to be made components of the row group. We can supply a vector of
-row ID values within \code{\link[=c]{c()}}, a vector of row indices, or use select helpers
-here. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
-need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+row ID values within \code{c()}, a vector of row indices, or use select helpers
+(e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{id}{\emph{Row group ID}
 
@@ -64,11 +62,11 @@ This argument is deprecated. Instead use \code{label}.}
 An object of class \code{gt_tbl}.
 }
 \description{
-We can create a row group from a collection of rows with the
-\code{tab_row_group()} function. This requires specification of the rows to be
-included, either by supplying row labels, row indices, or through use of a
-select helper function like \code{\link[=starts_with]{starts_with()}}. To modify the order of row
-groups, we can use the \code{\link[=row_group_order]{row_group_order()}} function.
+We can create a row group from a collection of rows with \code{tab_row_group()}.
+This requires specification of the rows to be included, either by supplying
+row labels, row indices, or through use of a select helper function like
+\code{\link[=starts_with]{starts_with()}}. To modify the order of row groups, we can use
+\code{\link[=row_group_order]{row_group_order()}}.
 
 To set a default row group label for any rows not formally placed in a row
 group, we can use a separate call to \verb{tab_options(row_group.default_label = <label>)}. If this is not done and there are rows that haven't been placed
@@ -80,9 +78,9 @@ will be automatically placed into a row group without a label.
 
 Using a subset of the \code{\link{gtcars}} dataset, let's create a simple \strong{gt} table
 with row labels (from the \code{model} column) inside of a stub. This eight-row
-table begins with no row groups at all but with a single use of the
-\code{tab_row_group()} function, we can specify a row group that will contain any
-rows where the car model begins with a number.
+table begins with no row groups at all but with a single use of
+\code{tab_row_group()}, we can specify a row group that will contain any rows
+where the car model begins with a number.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(model, year, hp, trq) |>
@@ -103,8 +101,7 @@ begin with a number. That second row group is a catch-all \code{NA} group, and i
 doesn't display a label at all. Rather, it is set off from the other group
 with a double line. This may be a preferable way to display the arrangement
 of one distinct group and an 'others' or default group. If that's the case
-but you'd like the order reversed, the \code{\link[=row_group_order]{row_group_order()}} function can be
-used for that.
+but you'd like the order reversed, you can use \code{\link[=row_group_order]{row_group_order()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(model, year, hp, trq) |>
@@ -234,11 +231,11 @@ Other part creation/modification functions:
 \code{\link{tab_info}()},
 \code{\link{tab_options}()},
 \code{\link{tab_source_note}()},
-\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
-\code{\link{tab_style_body}()},
-\code{\link{tab_style}()}
+\code{\link{tab_style}()},
+\code{\link{tab_style_body}()}
 }
 \concept{part creation/modification functions}

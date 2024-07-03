@@ -36,8 +36,8 @@ rendered... to HTML.
 
 
 Use the \code{\link{exibble}} dataset to create a \strong{gt} table. When adding a title
-through the \code{\link[=tab_header]{tab_header()}} function, we'll use the \code{html()} helper to signify
-to \strong{gt} that we're using HTML formatting.
+through \code{\link[=tab_header]{tab_header()}}, we'll use the \code{html()} helper to signify to \strong{gt}
+that we're using HTML formatting.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(currency, char) |>
@@ -66,22 +66,8 @@ Other helper functions:
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_body}()},
-\code{\link{cells_column_labels}()},
-\code{\link{cells_column_spanners}()},
-\code{\link{cells_footnotes}()},
-\code{\link{cells_grand_summary}()},
-\code{\link{cells_row_groups}()},
-\code{\link{cells_source_notes}()},
-\code{\link{cells_stub_grand_summary}()},
-\code{\link{cells_stub_summary}()},
-\code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
-\code{\link{cells_summary}()},
-\code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
-\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{from_column}()},
 \code{\link{google_font}()},
@@ -92,6 +78,7 @@ Other helper functions:
 \code{\link{px}()},
 \code{\link{random_id}()},
 \code{\link{stub}()},
-\code{\link{system_fonts}()}
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
 \concept{helper functions}

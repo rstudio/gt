@@ -37,11 +37,10 @@ retrieval of the necessary values.
 
 
 Let's use a portion of the \code{\link{gtcars}} dataset to create a \strong{gt} table. We'll
-use the \code{\link[=tab_spanner]{tab_spanner()}} function to group two columns together under a
-spanner column with the ID and label \code{"performance"}. Finally, we can use the
-\code{tab_info()} function in a separate, interactive statement so that we can
-inspect a table that summarizes the ID values any associated label text for
-all parts of the table.
+use \code{\link[=tab_spanner]{tab_spanner()}} to group two columns together under a spanner column with
+the ID and label \code{"performance"}. Finally, we can use\code{tab_info()} in a
+separate, interactive statement so that we can inspect a table that
+summarizes the ID values any associated label text for all parts of the table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
   gtcars |>
@@ -79,11 +78,11 @@ Other part creation/modification functions:
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
-\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
-\code{\link{tab_style_body}()},
-\code{\link{tab_style}()}
+\code{\link{tab_style}()},
+\code{\link{tab_style_body}()}
 }
 \concept{part creation/modification functions}

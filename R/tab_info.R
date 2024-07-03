@@ -24,11 +24,10 @@
 #' @section Examples:
 #'
 #' Let's use a portion of the [`gtcars`] dataset to create a **gt** table. We'll
-#' use the [tab_spanner()] function to group two columns together under a
-#' spanner column with the ID and label `"performance"`. Finally, we can use the
-#' `tab_info()` function in a separate, interactive statement so that we can
-#' inspect a table that summarizes the ID values any associated label text for
-#' all parts of the table.
+#' use [tab_spanner()] to group two columns together under a spanner column with
+#' the ID and label `"performance"`. Finally, we can use`tab_info()` in a
+#' separate, interactive statement so that we can inspect a table that
+#' summarizes the ID values any associated label text for all parts of the table.
 #'
 #' ```r
 #' gt_tbl <-
@@ -59,12 +58,13 @@
 tab_info <- function(data) {
 
   empty_tbl <-
-    dplyr::tibble(
-      id = character(0),
-      i = integer(0),
-      label = character(0),
-      type = character(0),
-      location = character(0)
+    data.frame(
+      id = character(0L),
+      i = integer(0L),
+      label = character(0L),
+      type = character(0L),
+      location = character(0L),
+      stringsAsFactors = FALSE
     )
 
   built_data <- build_data(data, context = "html")
@@ -75,12 +75,12 @@ tab_info <- function(data) {
 
   boxhead <- dt_boxhead_get(data = data)
 
-  columns <- dplyr::select(boxhead, id = var, label = column_label, type)
-  columns <- dplyr::filter(columns, type %in% c("default", "stub", "hidden"))
-  columns <- dplyr::mutate(columns, label = unlist(label))
-  columns <- dplyr::mutate(columns, location = "Columns")
-  columns <- dplyr::mutate(columns, i = seq_len(nrow(columns)))
-  columns <- dplyr::select(columns, id, i, label, type, location)
+  columns <- dplyr::select(boxhead, id = "var", label = "column_label", "type")
+  columns <- columns[columns$type %in% c("default", "stub", "hidden"), ]
+  columns$label <- unlist(columns$label)
+  columns$location <- "Columns"
+  columns$i <- seq_len(nrow(columns))
+  columns <- columns[, c("id", "i", "label", "type", "location")]
 
   #
   # Rows
@@ -95,34 +95,36 @@ tab_info <- function(data) {
 
     rowname_col <- dt_boxhead_get_var_stub(data = data)
 
-    row_name_vals <- dplyr::pull(dplyr::select(data_df, dplyr::all_of(rowname_col)), 1)
+    row_name_vals <- data_df[ , rowname_col[1], drop = TRUE]
 
-    rownames <- dplyr::select(stub_df, id = row_id, i = rownum_i)
-    rownames <- dplyr::mutate(rownames, label = row_name_vals)
-    rownames <- dplyr::mutate(rownames, type = NA_character_)
-    rownames <- dplyr::mutate(rownames, location = "Rows")
-    rownames <- dplyr::select(rownames, id, i, label, type, location)
+    rownames <- dplyr::select(stub_df, id = "row_id", i = "rownum_i")
+    rownames$label <-  row_name_vals
+    rownames$type <-  NA_character_
+    rownames$location <-  "Rows"
+    rownames <- rownames[, c("id", "i", "label", "type", "location")]
 
   } else if (nrow(stub_df) == 1) {
 
     rownames <-
-      dplyr::tibble(
+      data.frame(
         id = "<< Single index value of 1 >>",
         i = NA_integer_,
         label = NA_character_,
         type = NA_character_,
-        location = "Rows"
+        location = "Rows",
+        stringsAsFactors = FALSE
       )
 
   } else if (nrow(stub_df) == 0) {
 
     rownames <-
-      dplyr::tibble(
+      data.frame(
         id = "<< No rows in table >>",
         i = NA_integer_,
         label = NA_character_,
         type = NA_character_,
-        location = "Rows"
+        location = "Rows",
+        stringsAsFactors = FALSE
       )
 
   } else {
@@ -132,12 +134,13 @@ tab_info <- function(data) {
     rownum_desc <- paste0("<< Index values ", min(rownum_i), " to ", max(rownum_i), " >>")
 
     rownames <-
-      dplyr::tibble(
+      data.frame(
         id = rownum_desc,
         i = NA_integer_,
         label = NA_character_,
         type = NA_character_,
-        location = "Rows"
+        location = "Rows",
+        stringsAsFactors = FALSE
       )
   }
 
@@ -149,12 +152,12 @@ tab_info <- function(data) {
 
     span_df <- dt_spanners_get(data = data)
 
-    spanners <- dplyr::select(span_df, id = spanner_id, label = spanner_label, i = spanner_level)
-    spanners <- dplyr::mutate(spanners, type = NA_character_)
-    spanners <- dplyr::mutate(spanners, i = as.integer(i))
-    spanners <- dplyr::mutate(spanners, label = unlist(label))
-    spanners <- dplyr::mutate(spanners, location = "Spanners")
-    spanners <- dplyr::select(spanners, id, i, label, type, location)
+    spanners <- dplyr::select(span_df, id = "spanner_id", label = "spanner_label", i = "spanner_level")
+    spanners$type <- NA_character_
+    spanners$i <- as.integer(spanners$i)
+    spanners$label <- unlist(spanners$label)
+    spanners$location <- "Spanners"
+    spanners <- spanners[, c("id", "i", "label", "type", "location")]
 
   } else {
     spanners <- empty_tbl
@@ -169,12 +172,11 @@ tab_info <- function(data) {
     groups_rows <- dt_row_groups_get(data = data)
 
     row_groups <- dplyr::select(stub_df, id = group_id, label = group_label)
-    row_groups <- dplyr::group_by(row_groups, id)
-    row_groups <- dplyr::filter(row_groups, dplyr::row_number() == 1)
+    row_groups <- dplyr::filter(row_groups, dplyr::row_number() == 1, .by = "id")
     row_groups <- dplyr::mutate(row_groups, i = which(groups_rows %in% id))
-    row_groups <- dplyr::mutate(row_groups, type = NA_character_)
-    row_groups <- dplyr::mutate(row_groups, label = unlist(label))
-    row_groups <- dplyr::mutate(row_groups, location = "Row Groups")
+    row_groups$type <- NA_character_
+    row_groups$label <- unlist(row_groups$label)
+    row_groups$location <- "Row Groups"
     row_groups <- dplyr::select(row_groups, id, i, label, type, location)
 
   } else {
@@ -206,17 +208,17 @@ tab_info <- function(data) {
             names(list_of_summaries$summary_df_data_list[[group_id]][["rowname"]])
 
           group_summary_i <-
-            dplyr::bind_rows(
-              dplyr::tibble(
+            vctrs::vec_rbind(
+              vctrs::data_frame(
                 id = group_id,
                 i = NA_integer_,
                 label = NA_character_,
                 type = "::group_id::",
                 location = "Group Summary"
               ),
-              dplyr::tibble(
+              vctrs::data_frame(
                 id = group_summary_row_id,
-                i = seq_len(length(group_summary_row_id)),
+                i = seq_along(group_summary_row_id),
                 label = group_summary_row_id,
                 type = group_id,
                 location = "Group Summary"
@@ -242,9 +244,9 @@ tab_info <- function(data) {
         names(list_of_summaries$summary_df_data_list[[grand_summary_col]][["rowname"]])
 
       grand_summary <-
-        dplyr::tibble(
+        vctrs::data_frame(
           id = grand_summary_row_id,
-          i = seq_len(length(grand_summary_row_id)),
+          i = seq_along(grand_summary_row_id),
           label = grand_summary_row_id,
           type = NA_character_,
           location = "Grand Summary"
@@ -254,7 +256,7 @@ tab_info <- function(data) {
     }
 
     summaries <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         group_summary,
         grand_summary
       )
@@ -268,7 +270,7 @@ tab_info <- function(data) {
   #
 
   combined_tbl <-
-    dplyr::bind_rows(
+    vctrs::vec_rbind(
       columns,
       rownames,
       spanners,

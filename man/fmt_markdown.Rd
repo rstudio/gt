@@ -23,10 +23,9 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
-Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
-column indices, or a select helper function. Examples of select helper
-functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+Can either be a series of column names provided in \code{c()}, a vector of
+column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}} and \code{\link[=everything]{everything()}}).}
 
 \item{rows}{\emph{Rows to target}
 
@@ -35,11 +34,10 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
 \code{columns} being formatted. Alternatively, we can supply a vector of row
-captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
-function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
-need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+captions within \code{c()}, a vector of row indices, or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{md_engine}{\emph{Choice of Markdown engine}
 
@@ -101,16 +99,15 @@ more complex predicate expression.
 \section{Compatibility of arguments with the \code{from_column()} helper function}{
 
 
-The \code{\link[=from_column]{from_column()}} helper function can be used with the \code{md_engine} argument
-of \code{fmt_markdown()} to obtain varying parameter values from a specified
-column within the table. This means that each row could be formatted a little
-bit differently.
+\code{\link[=from_column]{from_column()}} can be used with the \code{md_engine} argument of \code{fmt_markdown()}
+to obtain varying parameter values from a specified column within the table.
+This means that each row could be formatted a little bit differently.
 
 Please note that for this argument (\code{md_engine}), a \code{\link[=from_column]{from_column()}} call
 needs to reference a column that has data of the \code{character} type. Additional
-columns for parameter values can be generated with the \code{\link[=cols_add]{cols_add()}} function
-(if not already present). Columns that contain parameter data can also be
-hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+columns for parameter values can be generated with \code{\link[=cols_add]{cols_add()}} (if not
+already present). Columns that contain parameter data can also be hidden from
+final display with \code{\link[=cols_hide]{cols_hide()}}.
 }
 
 \section{Examples}{
@@ -149,8 +146,8 @@ There's a quick reference [here](https://commonmark.org/help/).
 "
 }\if{html}{\out{</div>}}
 
-Arrange the text snippets as a tibble using the \code{dplyr::tribble()} function.
-then, create a \strong{gt} table and format all columns with \code{fmt_markdown()}.
+Arrange the text snippets as a tibble using \code{dplyr::tribble()}, then, create
+a \strong{gt} table and format all columns with \code{fmt_markdown()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tribble(
   ~Markdown, ~md,
@@ -166,8 +163,8 @@ then, create a \strong{gt} table and format all columns with \code{fmt_markdown(
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_markdown_1.png" alt="This image of a table was generated from the first code example in the `fmt_markdown()` help file." style="width:100\%;">
 }}
 
-The \code{fmt_markdown()} function can also handle LaTeX math formulas enclosed
-in \code{"$..$"} (inline math) and also \code{"$$..$$"} (display math). The following
+\code{fmt_markdown()} can also handle LaTeX math formulas enclosed in
+\code{"$..$"} (inline math) and also \code{"$$..$$"} (display math). The following
 table has body cells that contain mathematical formulas in display mode
 (i.e., the formulas are surrounded by \code{"$$"}). Further to this, math can be
 used within \code{\link[=md]{md()}} wherever there is the possibility to insert text into the
@@ -224,7 +221,7 @@ table (e.g., with \code{\link[=cols_label]{cols_label()}}, \code{\link[=tab_head
     color = "gray",
     add_row_striping = FALSE
   ) |>
-  opt_table_outline(style = "invisible") \%>\%
+  opt_table_outline(style = "invisible") |>
   tab_style(
     style = cell_fill(color = "gray95"),
     locations = cells_body(columns = l_time_domain)
@@ -246,7 +243,7 @@ table (e.g., with \code{\link[=cols_label]{cols_label()}}, \code{\link[=tab_head
 
 \section{Function ID}{
 
-3-23
+3-27
 }
 
 \section{Function Introduced}{
@@ -260,13 +257,17 @@ The vector-formatting version of this function:
 
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt}()},
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
@@ -281,10 +282,10 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
-\code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},

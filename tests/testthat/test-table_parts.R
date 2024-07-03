@@ -1,21 +1,6 @@
-# Create a shorter version of `mtcars`
-mtcars_short <- mtcars[1:5, ]
-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
-}
-
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
-
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
 }
 
 # Gets the text from a row group label
@@ -280,7 +265,7 @@ test_that("Row groups can be successfully generated with `tab_row_group()", {
   # row group labels
   expect_match(
     tbl_html,
-    regexp = "<span class='gt_from_md'><strong><em>void</em></strong></span><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span>",
+    regexp = "<span class='gt_from_md'><strong><em>void</em></strong></span><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span>",
     fixed = TRUE
   )
   expect_match(

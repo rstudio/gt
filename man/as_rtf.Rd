@@ -85,6 +85,7 @@ with \code{\link[=tab_header]{tab_header()}} and then export the table as RTF co
 
 \seealso{
 Other table export functions: 
+\code{\link{as_gtable}()},
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
 \code{\link{as_word}()},

@@ -67,8 +67,8 @@ set to \code{FALSE}.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{opt_table_font()} function makes it possible to define fonts used for an
-entire \strong{gt} table. Any font names supplied in \code{font} will (by default, with
+\code{opt_table_font()} makes it possible to define fonts used for an entire
+\strong{gt} table. Any font names supplied in \code{font} will (by default, with
 \code{add = TRUE}) be placed before the names present in the existing font stack
 (i.e., they will take precedence). You can choose to base the font stack on
 those provided by \code{\link[=system_fonts]{system_fonts()}} by providing a valid keyword for a themed
@@ -76,16 +76,16 @@ set and optionally prepending \code{font} values to that.
 
 Take note that you could still have entirely different fonts in specific
 locations of the table. For that you would need to use \code{\link[=tab_style]{tab_style()}} or
-\code{\link[=tab_style_body]{tab_style_body()}} in conjunction with the \code{\link[=cell_text]{cell_text()}} helper function.
+\code{\link[=tab_style_body]{tab_style_body()}} in conjunction with \code{\link[=cell_text]{cell_text()}}.
 }
 \section{Possibilities for the \code{font} argument}{
 
 
 We have the option to supply one or more font names for the \code{font} argument.
 They can be enclosed in \code{c()} or a \code{list()}. You can generate this list or
-vector with a combination of font names, and you can freely use the
-\code{\link[=google_font]{google_font()}}, \code{\link[=default_fonts]{default_fonts()}}, and \code{\link[=system_fonts]{system_fonts()}} functions to help
-compose your font family.
+vector with a combination of font names, and you can freely use
+\code{\link[=google_font]{google_font()}}, \code{\link[=default_fonts]{default_fonts()}}, and \code{\link[=system_fonts]{system_fonts()}} to help compose
+your font family.
 }
 
 \section{Possibilities for the \code{stack} argument}{
@@ -95,7 +95,7 @@ There are several themed font stacks available via the \code{\link[=system_fonts
 helper function. That function can be used to generate all or a segment of a
 vector supplied to the \code{font} argument. However, using the \code{stack} argument
 with one of the 15 keywords for the font stacks available in
-\code{\link[=system_fonts]{system_fonts()}}, we could be sure that the typeface class will work across
+\code{system_fonts()}, we could be sure that the typeface class will work across
 multiple computer systems. Any of the following keywords can be used:
 \itemize{
 \item \code{"system-ui"}
@@ -120,8 +120,8 @@ multiple computer systems. Any of the following keywords can be used:
 
 
 Use a subset of the \code{\link{sp500}} dataset to create a small \strong{gt} table. We'll
-use the \code{\link[=fmt_currency]{fmt_currency()}} function to display a dollar sign for the first row
-of monetary values. Then, set a larger font size for the table and use the
+use \code{\link[=fmt_currency]{fmt_currency()}} to display a dollar sign for the first row of monetary
+values. Then, set a larger font size for the table and use the
 \code{"Merriweather"} font (from \emph{Google Fonts}, via \code{\link[=google_font]{google_font()}}) with two
 system font fallbacks (\code{"Cochin"} and the generic \code{"serif"}).
 
@@ -145,8 +145,8 @@ system font fallbacks (\code{"Cochin"} and the generic \code{"serif"}).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_font_1.png" alt="This image of a table was generated from the first code example in the `opt_table_font()` help file." style="width:100\%;">
 }}
 
-Use the \code{\link{sza}} dataset to create an eleven-row table, two-column table.
-Within \code{opt_table_font()}, use the \code{stack} argument to define the use of the
+With the \code{\link{sza}} dataset we'll create a two-column, eleven-row table. Within
+\code{opt_table_font()}, the \code{stack} argument will be supplied with the
 \code{"rounded-sans"} font stack. This sets up a family of fonts with rounded,
 curved letterforms that should be locally available in different computing
 environments.

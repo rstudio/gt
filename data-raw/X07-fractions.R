@@ -5,3 +5,6 @@ fractions <-
     file = "data-raw/fractions.csv",
     col_types = "ccccccccc"
   )
+
+# Drop spec() attribute
+fractions <- fractions[]

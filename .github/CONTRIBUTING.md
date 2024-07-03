@@ -22,5 +22,8 @@ Once there is consensus that a PR based on the issue would be helpful, adhering 
 *  Look at the build status badges before and after making changes; these badges are available in the package [README](https://github.com/rstudio/gt).  
 *  The **gt** package follows the tidyverse [style guide](http://style.tidyverse.org) so please adopt those style guidelines in your submitted code as best as possible.
 *  The internal documentation uses [roxygen2](https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html); if your contribution requires new or revised documentation ensure that the roxygen comments are added/modified (do not modify any `.Rd` files in the `man` folder).
+
+Many functions share parameters. For common parameters like `rows`, `columns`, `data`, we use [`@inheritParams`](https://roxygen2.r-lib.org/reference/tags-reuse.html) to document them. Only document these parameters if there is a special case for the function you are documenting. In this case, go to `R/format-data.R`, copy the parameter documentation to the desired function and add additional details.
+
 *  We use [testthat](https://cran.r-project.org/web/packages/testthat/) for code coverage; those contributions with test cases included are helpful easier to accept.
 * Ensure that you have signed the contributor license agreement. It will appear as a "Check" on your PR and a comment from "CLAassistant" will also appear explaining whether you have yet to sign. After you sign, you can click the "Recheck" link in that comment and the check will flip to reflect that you've signed.

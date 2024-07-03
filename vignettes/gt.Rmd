@@ -104,7 +104,7 @@ gt(islands_tbl[1:2,]) |>
   )
 ```
 
-A **source note** can be added to the table's **footer** through use of the `tab_source_note()` function. It works in the same way as `tab_header()` (it also allows for Markdown inputs) except it can be called multiple times---each invocation results in the addition of a source note.
+A **source note** can be added to the table's **footer** through use of `tab_source_note()`. It works in the same way as `tab_header()` (it also allows for Markdown inputs) except it can be called multiple times---each invocation results in the addition of a source note.
 
 ```{r}
 # Display the `islands_tbl` data with a heading and
@@ -122,7 +122,7 @@ gt_tbl <-
 gt_tbl
 ```
 
-Footnotes live inside the **Footer** part and their footnote marks are attached to cell data. Footnotes are added with the `tab_footnote()` function. The helper function `cells_body()` can be used with the `location` argument to specify which data cells should be the target of the footnote. The `cells_body()` helper has the two arguments `columns` and `rows`. For each of these, we can supply (1) a vector of colnames or rownames, (2) a vector of column/row indices, (3) bare column names wrapped in `c()` or row labels within `c()`, or (4) a select helper function (`starts_with()`, `ends_with()`, `contains()`, `matches()`, `one_of()`, and `everything()`). For `rows` specifically, we can use a conditional statement with column names as variables (e.g., `size > 15000`).
+Footnotes live inside the **Footer** part and their footnote marks are attached to cell data. Footnotes are added with `tab_footnote()`. The helper function `cells_body()` can be used with the `location` argument to specify which data cells should be the target of the footnote. `cells_body()` has the two arguments `columns` and `rows`. For each of these, we can supply (1) a vector of colnames or rownames, (2) a vector of column/row indices, (3) bare column names wrapped in `c()` or row labels within `c()`, or (4) a select helper function (`starts_with()`, `ends_with()`, `contains()`, `matches()`, `one_of()`, and `everything()`). For `rows` specifically, we can use a conditional statement with column names as variables (e.g., `size > 15000`).
 
 Here is a simple example on how a footnotes can be added to a table cell. Let's add a footnote that references the `North America` and `South America` cells in the `name` column:
 
@@ -163,7 +163,7 @@ gt_tbl <-
     )
   ) |>
   tab_footnote(
-    footnote = "The lowest by population.",
+    footnote = "The lowest by area.",
     locations = cells_body(
       columns = size,
       rows = size == min(size)
@@ -194,7 +194,7 @@ gt_tbl <-
 gt_tbl
 ```
 
-Notice that the landmass names are off the the left in an unstriped area? That's the **stub**. We can apply what's known as a **stubhead label**. This label can be added with the `tab_stubhead()` function:
+Notice that the landmass names are off the left in an unstriped area? That's the **stub**. We can apply what's known as a **stubhead label**. This label can be added with `tab_stubhead()`:
 
 ```{r}
 # Generate a simple table with a stub
@@ -243,7 +243,7 @@ gt_tbl <-
 gt_tbl
 ```
 
-Let's incorporate row groups into the display table. This divides rows into groups, creating *row groups*, and results in a display of a *row group labels* right above the each group. This can be easily done with a table containing row labels. We can make a new *row group* with each call of the `tab_row_group()` function. The inputs are row group names in the `label` argument, and row references in the `rows` argument. We can use any of the strategies to reference rows as we did we footnotes (e.g., vectors of names/indices, select helpers, etc.).
+Let's incorporate row groups into the display table. This divides rows into groups, creating *row groups*, and results in a display of a *row group labels* right above the each group. This can be easily done with a table containing row labels. We can make a new *row group* with each `tab_row_group()` call. The inputs are row group names in the `label` argument, and row references in the `rows` argument. We can use any of the strategies to reference rows as we did we footnotes (e.g., vectors of names/indices, select helpers, etc.).
 
 Here we will create three row groups (with row group labels `continent`, `country`, and `subregion`) to have a grouping of rows.
 
@@ -273,7 +273,7 @@ Three *row groups* have been made since there are three unique categories under 
 
 Having groups of rows in *row groups* is a great way to present information. Including data summaries particular to each group is a natural extension of this idea. This process of adding summary rows with *summary labels* is covered in a separate article (*Creating Summary Lines*).
 
-Another way to make row groups is to have a column of group names present in the input data table. For our above example with `islands_tbl`, having a `groupname` column with the categories `continent`, `country`, and `subregion` in the appropriate rows would produce row groups when using the `gt()` function's `groupname_col` argument (e.g., `gt(islands_tbl, rowname_col = "name", groupname_col = "groupname") |> ...`). Then, there would be no need to use the `tab_row_group()` statements. This strategy of supplying group names in a column can sometimes be advantageous since we can rely on functions such as those available in **dplyr** to generate the categories (e.g., using `case_when()` or `if_else()`).
+Another way to make row groups is to have a column of group names present in the input data table. For our above example with `islands_tbl`, having a `groupname` column with the categories `continent`, `country`, and `subregion` in the appropriate rows would produce row groups when using the `gt()` function's `groupname_col` argument (e.g., `gt(islands_tbl, rowname_col = "name", groupname_col = "groupname") |> ...`). Then, there would be no need to use `tab_row_group()`. This strategy of supplying group names in a column can sometimes be advantageous since we can rely on functions such as those available in **dplyr** to generate the categories (e.g., using `case_when()` or `if_else()`).
 
 ### The Column Labels
 
@@ -289,7 +289,7 @@ To better demonstrate how **Column Labels** work and are displayed, let's use an
 
 We know that all measurements took place in 1973, so a `year` column will be added to the dataset before it is passed to `gt()`. 
 
-Let's organize the time information under a `Time` *spanner column label*, and put the other columns under a `Measurement` *spanner column label*. We can do this with the `tab_spanner()` function.
+Let's organize the time information under a `Time` *spanner column label*, and put the other columns under a `Measurement` *spanner column label*. We can do this with `tab_spanner()`.
 
 ```{r}
 # Modify the `airquality` dataset by adding the year

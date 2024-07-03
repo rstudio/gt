@@ -43,13 +43,12 @@ supplying \code{NULL} to any of \code{color}, \code{style}, or \code{weight}.}
 A list object of class \code{cell_styles}.
 }
 \description{
-The \code{cell_borders()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
-function, which itself allows for the setting of custom styles to one or more
-cells. Specifically, the call to \code{cell_borders()} should be bound to the
-\code{styles} argument of \code{\link[=tab_style]{tab_style()}}. The \code{sides} argument is where we define
-which borders should be modified (e.g., \code{"left"}, \code{"right"}, etc.). With that
-selection, the \code{color}, \code{style}, and \code{weight} of the selected borders can
-then be modified.
+\code{cell_borders()} is to be used with \code{\link[=tab_style]{tab_style()}}, which itself allows for
+the setting of custom styles to one or more cells. Specifically, the call to
+\code{cell_borders()} should be bound to the \code{styles} argument of \code{\link[=tab_style]{tab_style()}}.
+The \code{sides} argument is where we define which borders should be modified
+(e.g., \code{"left"}, \code{"right"}, etc.). With that selection, the \code{color}, \code{style},
+and \code{weight} of the selected borders can then be modified.
 }
 \section{Examples}{
 
@@ -129,22 +128,8 @@ Other helper functions:
 \code{\link{adjust_luminance}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_body}()},
-\code{\link{cells_column_labels}()},
-\code{\link{cells_column_spanners}()},
-\code{\link{cells_footnotes}()},
-\code{\link{cells_grand_summary}()},
-\code{\link{cells_row_groups}()},
-\code{\link{cells_source_notes}()},
-\code{\link{cells_stub_grand_summary}()},
-\code{\link{cells_stub_summary}()},
-\code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
-\code{\link{cells_summary}()},
-\code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
-\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{from_column}()},
 \code{\link{google_font}()},
@@ -156,6 +141,7 @@ Other helper functions:
 \code{\link{px}()},
 \code{\link{random_id}()},
 \code{\link{stub}()},
-\code{\link{system_fonts}()}
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
 \concept{helper functions}

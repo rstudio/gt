@@ -23,13 +23,12 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{scalar<character>} // \strong{required}
 
-The text to be used in the footnote. We can optionally use the \code{\link[=md]{md()}} and
-\code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML elements
-in the footnote text.}
+The text to be used in the footnote. We can optionally use \code{\link[=md]{md()}} or \code{\link[=html]{html()}}
+to style the text as Markdown or to retain HTML elements in the footnote text.}
 
 \item{locations}{\emph{Locations to target}
 
-\verb{<locations expressions>} // \emph{default:} \code{NULL} (\code{optional})
+\code{\link[=location-helper]{<locations expressions>}} // \emph{default:} \code{NULL} (\code{optional})
 
 The cell or set of cells to be associated with the footnote. Supplying any
 of the \verb{cells_*()} helper functions is a useful way to target the location
@@ -56,8 +55,8 @@ depending on the alignment of the cell content.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{tab_footnote()} function can make it a painless process to add a
-footnote to a \strong{gt} table. There are commonly two components to a footnote:
+\code{tab_footnote()} can make it a painless process to add a footnote to a
+\strong{gt} table. There are commonly two components to a footnote:
 (1) a footnote mark that is attached to the targeted cell content, and (2)
 the footnote text itself that is placed in the table's footer area. Each unit
 of footnote text in the footer is linked to an element of text or otherwise
@@ -76,8 +75,8 @@ to right, top to bottom)
 
 Each call of \code{tab_footnote()} will either add a different footnote to the
 footer or reuse existing footnote text therein. One or more cells outside of
-the footer are targeted using the \verb{cells_*()} helper functions (e.g.,
-\code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, etc.). You can choose to \emph{not}
+the footer are targeted using the \code{\link[=location-helper]{cells_*()}} helper functions
+(e.g., \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, etc.). You can choose to \emph{not}
 attach a footnote mark by simply not specifying anything in the \code{locations}
 argument.
 
@@ -91,8 +90,8 @@ of the targeted cell content).
 
 There are several options for controlling the formatting of the footnotes,
 their marks, and related typesetting in the footer. All of these options are
-available within the \code{\link[=tab_options]{tab_options()}} function and a subset of these are
-exposed in their own \verb{opt_*()} functions.
+available within \code{\link[=tab_options]{tab_options()}} and a subset of these are exposed in their
+own \verb{opt_*()} functions.
 \subsection{Choosing the footnote marks}{
 
 We can modify the set of footnote marks with
@@ -167,9 +166,9 @@ we can control the separator between consecutive footnotes with the
 
 Using a subset of the \code{\link{sza}} dataset, let's create a new \strong{gt} table. The
 body cells in the \code{sza} column will receive background color fills according
-to their data values (with the \code{\link[=data_color]{data_color()}} function). After that, the use
-of \code{tab_footnote()} lets us add a footnote to the \code{sza} column label
-(explaining what the color gradient signifies).
+to their data values (with \code{\link[=data_color]{data_color()}}). After that, the use of
+\code{tab_footnote()} lets us add a footnote to the \code{sza} column label (explaining
+what the color gradient signifies).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(
@@ -367,11 +366,11 @@ Other part creation/modification functions:
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
-\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
-\code{\link{tab_style_body}()},
-\code{\link{tab_style}()}
+\code{\link{tab_style}()},
+\code{\link{tab_style_body}()}
 }
 \concept{part creation/modification functions}

@@ -28,10 +28,10 @@ footnotes will be removed).}
 An object of class \code{gt_tbl}.
 }
 \description{
-If you have one or more footnotes that ought to be removed, the
-\code{rm_footnotes()} function allows for such a selective removal. The table
-footer is an optional table part that is positioned below the table body,
-containing areas for both the footnotes and source notes.
+If you have one or more footnotes that ought to be removed, \code{rm_footnotes()}
+allows for such a selective removal. The table footer is an optional table
+part that is positioned below the table body, containing areas for both the
+footnotes and source notes.
 
 This function for removal is useful if you have received a \strong{gt} table
 (perhaps through an API that returns \strong{gt} objects) but would prefer that
@@ -44,7 +44,7 @@ values.
 
 
 Use a subset of the \code{\link{sza}} dataset to create a \strong{gt} table. Color the \code{sza}
-column using the \code{\link[=data_color]{data_color()}} function, then, use \code{\link[=tab_footnote]{tab_footnote()}} twice to
+column using \code{\link[=data_color]{data_color()}}, then, use \code{\link[=tab_footnote]{tab_footnote()}} twice to
 add two footnotes (each one targeting a different column label).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
@@ -87,7 +87,7 @@ gt_tbl
 }}
 
 If you decide that you don't want the footnotes in the \code{gt_tbl} object,
-they can be removed with the \code{rm_footnotes()} function.
+they can be removed with \code{rm_footnotes()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{rm_footnotes(data = gt_tbl)
 }\if{html}{\out{</div>}}

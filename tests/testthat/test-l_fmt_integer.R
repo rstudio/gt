@@ -1,4 +1,4 @@
-test_that("The `fmt_integer()` function works correctly in the LaTeX context", {
+test_that("fmt_integer() works correctly in the LaTeX context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -21,10 +21,10 @@ test_that("The `fmt_integer()` function works correctly in the LaTeX context", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  char_1 <- (tab %>% dt_data_get())[["char_1"]]
-  char_2 <- (tab %>% dt_data_get())[["char_2"]]
-  num_1 <- (tab %>% dt_data_get())[["num_1"]]
-  num_2 <- (tab %>% dt_data_get())[["num_2"]]
+  char_1 <- dt_data_get(tab)[["char_1"]]
+  char_2 <- dt_data_get(tab)[["char_2"]]
+  num_1 <- dt_data_get(tab)[["num_1"]]
+  num_2 <- dt_data_get(tab)[["num_2"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -184,7 +184,7 @@ test_that("The `fmt_integer()` function works correctly in the LaTeX context", {
   )
 })
 
-test_that("The `fmt_integer()` function can scale/suffix larger numbers", {
+test_that("fmt_integer() can scale/suffix larger numbers", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric

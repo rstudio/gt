@@ -83,11 +83,8 @@ literals.}
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
-function as a useful reference for all of the locales that are supported. A
-locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
-would be used automatically by any function with a \code{locale} argument) but a
-\code{locale} value provided here will override that global locale.}
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported.}
 
 \item{output}{\emph{Output format}
 
@@ -165,8 +162,8 @@ values (corresponding to an input date of \code{2000-02-29}).\tabular{llll}{
 }
 
 
-We can use the \code{\link[=info_date_style]{info_date_style()}} function within the console to view a
-similar table of date styles with example output.
+We can call \code{\link[=info_date_style]{info_date_style()}} in the console to view a similar table of
+date styles with example output.
 }
 
 \section{Formatting with the \code{time_style} argument}{
@@ -182,7 +179,7 @@ better option for locales other than \code{"en"} (the default locale).
 The following table provides a listing of all time styles and their output
 values (corresponding to an input time of \code{14:35:00}). It is noted which of
 these represent 12- or 24-hour time. Some of the flexible formats (those
-that begin with \code{"E"}) include the the day of the week. Keep this in mind
+that begin with \code{"E"}) include the day of the week. Keep this in mind
 when pairing such \code{time_style} values with a \code{date_style} so as to avoid
 redundant or repeating information.\tabular{llll}{
     \tab Time Style \tab Output \tab Notes \cr
@@ -214,8 +211,8 @@ redundant or repeating information.\tabular{llll}{
 }
 
 
-We can use the \code{\link[=info_time_style]{info_time_style()}} function within the console to view a
-similar table of time styles with example output.
+We can call \code{\link[=info_time_style]{info_time_style()}} in the console to view a similar table of
+time styles with example output.
 }
 
 \section{Formatting with a \emph{CLDR} datetime pattern}{

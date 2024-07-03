@@ -32,11 +32,10 @@ Details section for specifics on which alignments are applied).}
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns for which the alignment should be applied. Can either be a
-series of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a
-select helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. By default this is set to \code{\link[=everything]{everything()}}
-which means that the chosen alignment affects all columns.}
+series of column names provided in \code{c()}, a vector of column indices, or a
+select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). By default this is set to
+\code{\link[=everything]{everything()}} which means that the chosen alignment affects all columns.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -93,15 +92,15 @@ Other column modification functions:
 \code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_hide}()},
-\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
+\code{\link{cols_label_with}()},
+\code{\link{cols_merge}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},
-\code{\link{cols_merge}()},
+\code{\link{cols_move}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
-\code{\link{cols_move}()},
 \code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
 \code{\link{cols_units}()},

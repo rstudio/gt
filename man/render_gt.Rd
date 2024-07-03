@@ -69,16 +69,12 @@ An object of class \code{shiny.render.function}.
 \description{
 With \code{render_gt()} we can create a reactive \strong{gt} table that works
 wonderfully once assigned to an output slot (with \code{\link[=gt_output]{gt_output()}}). This
-function is to be used within Shiny's \code{server()} component. We have some
-options for controlling the size of the container holding the \strong{gt} table.
-The \code{width} and \code{height} arguments allow for sizing the container, and the
-\code{align} argument allows us to align the table within the container (some
-other fine-grained options for positioning are available in the
-\code{\link[=tab_options]{tab_options()}} function).
-
-We need to ensure that we have the \strong{shiny} package installed first. This
-is easily by using \code{install.packages("shiny")}. More information on creating
-Shiny apps can be found on the \href{https://shiny.posit.co}{Shiny website}.
+function is to be used within \href{https://shiny.posit.co}{Shiny}'s \code{server()}
+component. We have some options for controlling the size of the container
+holding the \strong{gt} table. The \code{width} and \code{height} arguments allow for sizing
+the container, and the \code{align} argument allows us to align the table within
+the container (some other fine-grained options for positioning are available
+in \code{\link[=tab_options]{tab_options()}}).
 }
 \section{Examples}{
 

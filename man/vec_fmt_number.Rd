@@ -37,9 +37,7 @@ vector of the same length. Values within the vector will be formatted.}
 This corresponds to the exact number of decimal places to use. A value
 such as \code{2.34} can, for example, be formatted with \code{0} decimal places and
 it would result in \code{"2"}. With \code{4} decimal places, the formatted value
-becomes \code{"2.3400"}. The trailing zeros can be removed with
-\code{drop_trailing_zeros = TRUE}. If you always need \code{decimals = 0}, the
-\code{\link[=fmt_integer]{fmt_integer()}} function should be considered.}
+becomes \code{"2.3400"}.}
 
 \item{n_sigfig}{\emph{Number of significant figures}
 
@@ -117,7 +115,12 @@ or the range will inherit a previous suffix (e.g., with
 will be in terms of millions).
 
 Any use of \code{suffixing} (where it is not set expressly as \code{FALSE}) means
-that any value provided to \code{scale_by} will be ignored.}
+that any value provided to \code{scale_by} will be ignored.
+
+If using \code{system = "ind"} then the default suffix set provided by
+\code{suffixing = TRUE} will be the equivalent of \code{c(NA, "L", "Cr")}. This
+doesn't apply suffixes to the thousands range, but does express values in
+\emph{lakhs} and \emph{crores}.}
 
 \item{pattern}{\emph{Specification of the formatting pattern}
 
@@ -162,11 +165,8 @@ This option is disregarded when using accounting notation with
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
-function as a useful reference for all of the locales that are supported. A
-locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
-would be used automatically by any function with a \code{locale} argument) but a
-\code{locale} value provided here will override that global locale.}
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported.}
 
 \item{output}{\emph{Output format}
 
@@ -282,8 +282,8 @@ The variant function intended for formatting \strong{gt} table data:
 Other vector formatting functions: 
 \code{\link{vec_fmt_bytes}()},
 \code{\link{vec_fmt_currency}()},
-\code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},

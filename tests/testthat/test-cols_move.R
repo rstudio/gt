@@ -1,13 +1,9 @@
-# Create a shortened version of `mtcars`
-mtcars_short <- mtcars[1:5, ]
-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
-test_that("The `cols_move()` function works correctly", {
+test_that("cols_move() works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -121,7 +117,7 @@ test_that("The `cols_move()` function works correctly", {
   )
 })
 
-test_that("The `cols_move_to_start()` function works correctly", {
+test_that("cols_move_to_start() works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -193,7 +189,7 @@ test_that("The `cols_move_to_start()` function works correctly", {
   )
 })
 
-test_that("The `cols_move_to_end()` function works correctly", {
+test_that("cols_move_to_end() works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()

@@ -26,8 +26,8 @@
 #'
 #' @description
 #'
-#' It's possible to add color to data cells according to their values with the
-#' `data_color()` function. There is a multitude of ways to perform data cell
+#' It's possible to add color to data cells according to their values with
+#' `data_color()` There is a multitude of ways to perform data cell
 #' colorizing here:
 #'
 #' - targeting: we can constrain which columns and rows should receive the
@@ -41,9 +41,8 @@
 #' argument controls this through keywords and other arguments act as inputs to
 #' specific methods
 #' - coloring function: a custom function can be supplied to the `fn` argument
-#' for finer control over color evaluation with data; the color mapping
-#' `col_*()` functions in the **scales** package can be used here or any
-#' function you might want to define
+#' for finer control over color evaluation with data; the `scales::col_*()`
+#' color mapping functions can be used here or any function you might want to define
 #' - color palettes: with `palette` we could supply a vector of colors, a
 #' **virdis** or **RColorBrewer** palette name, or, a palette from the
 #' **paletteer** package
@@ -60,7 +59,7 @@
 #' automatically recolor the foreground text to provide the best contrast (can
 #' be deactivated with `autocolor_text = FALSE`)
 #'
-#' The `data_color()` function won't fail with the default options used, but
+#' `data_color()` won't fail with the default options used, but
 #' that won't typically provide you the type of colorization you really need.
 #' You can however safely iterate through a collection of different options
 #' without running into too many errors.
@@ -72,10 +71,9 @@
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which cell data color operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
+#'   be a series of column names provided in `c()`, a vector of column indices,
+#'   or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]).
 #'
 #' @param rows *Rows to target*
 #'
@@ -84,12 +82,11 @@
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for cell data color operations. The default
 #'   [everything()] results in all rows in `columns` being formatted.
-#'   Alternatively, we can supply a vector of row IDs within [c()], a vector of
-#'   row indices, or a select helper function. Examples of select helper
-#'   functions include [starts_with()], [ends_with()], [contains()],
-#'   [matches()], [one_of()], [num_range()], and [everything()]. We can also use
-#'   expressions to filter down to the rows we need (e.g., `[colname_1] > 100 &
-#'   [colname_2] < 50`).
+#'   Alternatively, we can supply a vector of row IDs within `c()`, a vector of
+#'   row indices, or a select helper function (e.g. [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [num_range()], and [everything()]).
+#'   We can also use expressions to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param direction *Color computation direction*
 #'
@@ -207,10 +204,9 @@
 #'
 #'   A color-mapping function. The function should be able to take a vector of
 #'   data values as input and return an equal-length vector of color values. The
-#'   `col_*()` functions provided in the **scales** package (i.e.,
-#'   [scales::col_numeric()], [scales::col_bin()], and [scales::col_factor()])
-#'   can be invoked here with options, as those functions themselves return a
-#'   color-mapping function.
+#'   `scales::col_*()` functions (i.e.,[scales::col_numeric()],
+#'   [scales::col_bin()], and [scales::col_factor()]) can be invoked here with
+#'   options, as those functions themselves return a color-mapping function.
 #'
 #' @param apply_to *How to apply color*
 #'
@@ -284,7 +280,7 @@
 #'
 #' @section Color computation methods:
 #'
-#' The `data_color()` function offers four distinct methods for computing color
+#' `data_color()` offers four distinct methods for computing color
 #' based on cell data values. They are set by the `method` argument and the
 #' options go by the keywords `"numeric"`, `"bin"`, `"quantile"`, and
 #' `"factor"`. There are other arguments in `data_color()` that variously
@@ -295,36 +291,36 @@
 #' ### `"numeric"`
 #'
 #' The `"numeric"` method provides a simple linear mapping from continuous
-#' numeric data to an interpolated `palette`. Internally, this uses the
-#' [scales::col_numeric()] function. This method is suited for numeric data cell
+#' numeric data to an interpolated `palette`. Internally, this uses
+#' [scales::col_numeric()]. This method is suited for numeric data cell
 #' values and can make use of a supplied `domain` value, in the form of a
 #' two-element numeric vector describing the range of values, if provided.
 #'
 #' ### `"bin"`
 #'
 #' The `"bin"` method provides a mapping of continuous numeric data to
-#' value-based bins. Internally, this uses the [scales::col_bin()] function
-#' which itself uses [base::cut()]. As with the `"numeric"` method, `"bin"` is
-#' meant for numeric data cell values. The use of a `domain` value is supported
-#' with this method. The `bins` argument in `data_color()` is specific to this
-#' method, offering the ability to: (1) specify the number of bins, or (2)
-#' provide a vector of cut points.
+#' value-based bins. Internally, this uses [scales::col_bin()] which itself
+#' uses [base::cut()]. As with the `"numeric"` method, `"bin"` is meant for
+#' numeric data cell values. The use of a `domain` value is supported with this
+#' method. The `bins` argument in `data_color()` is specific to this method,
+#' offering the ability to: (1) specify the number of bins, or (2) provide a
+#' vector of cut points.
 #'
 #' ### `"quantile"`
 #'
 #' The `"quantile"` method provides a mapping of continuous numeric data to
-#' quantiles. Internally, this uses the [scales::col_quantile()] function which
-#' itself uses [stats::quantile()]. Input data cell values should be numeric, as
-#' with the `"numeric"` and `"bin"` methods. A numeric `domain` value is
-#' supported with this method. The `quantiles` argument in `data_color()`
-#' controls the number of equal-size quantiles to use.
+#' quantiles. Internally, this uses [scales::col_quantile()] which itself uses
+#' [stats::quantile()]. Input data cell values should be numeric, as with the
+#' `"numeric"` and `"bin"` methods. A numeric `domain` value is supported with
+#' this method. The `quantiles` argument in `data_color()` controls the number
+#' of equal-size quantiles to use.
 #'
 #' ### `"factor"`
 #'
 #' The `"factor"` method provides a mapping of factors to colors. With discrete
 #' palettes, color interpolation is used when the number of factors does not
-#' match the number of colors in the palette. Internally, this uses the
-#' [scales::col_factor()] function. Input data cell values can be of any type
+#' match the number of colors in the palette. Internally, this uses
+#' [scales::col_factor()]. Input data cell values can be of any type
 #' (i.e., factor, character, numeric values, and more are supported). The
 #' optional input to `domain` should take the form of categorical data. The
 #' `levels` and `ordered` arguments in `data_color()` support this method.
@@ -406,7 +402,7 @@
 #'
 #' @section Examples:
 #'
-#' The `data_color()` function can be used without any supplied arguments to
+#' `data_color()` can be used without any supplied arguments to
 #' colorize a **gt** table. Let's do this with the [`exibble`] dataset:
 #'
 #' ```r
@@ -522,11 +518,11 @@
 #' }}
 #'
 #' Using your own function in `fn` can be very useful if you want to make use of
-#' specialized arguments in the **scales** `col_*()` functions. You could even
+#' specialized arguments in the `scales::col_*()` functions. You could even
 #' supply your own specialized function for performing complex colorizing
 #' treatments!
 #'
-#' The `data_color()` function has a way to apply colorization indirectly to
+#' `data_color()` has a way to apply colorization indirectly to
 #' other columns. That is, you can apply colors to a column different from the
 #' one used to generate those specific colors. The trick is to use the
 #' `target_columns` argument. Let's do this with a more complete
@@ -602,7 +598,7 @@
 #'
 #' Now, it's time to use [`pizzaplace`] to create a **gt** table. The color
 #' palette to be used is the `"ggsci::red_material"` one (it's in the **ggsci**
-#' R package but also obtainable from the the **paletteer** package).
+#' R package but also obtainable from the **paletteer** package).
 #' Colorization will be applied to the to the `sold` and `income` columns. We
 #' don't have to specify those in `columns` because those are the only columns
 #' in the table. Also, the `domain` is not set here. We'll use the bounds of the
@@ -678,12 +674,11 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-32
+#' 3-36
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 data_color <- function(
     data,
@@ -725,6 +720,13 @@ data_color <- function(
 
   # If no color is provided to `na_color`, use gray as a default
   na_color <- na_color %||% "#808080"
+
+  # Error early if `palette = NA`, or is a numeric vector.
+  if (length(palette) > 0L && (is.numeric(palette) || anyNA(palette))) {
+    cli::cli_abort(c(
+      "`palette` must be a {.help [valid palette](gt::data_color)}, not a numeric vector."
+    ))
+  }
 
   # Defuse any function supplied to `fn`; if a function is supplied to `colors`
   # (previous argument for this purpose) then let that take precedent and
@@ -771,9 +773,7 @@ data_color <- function(
   if (is.null(fn)) {
 
     # If no palette is provided, use the default palette
-    if (is.null(palette)) {
-      palette <- palette()
-    }
+    palette <- palette %||% palette()
 
     # Obtain a palette from the paletteer package if the
     # `palette` value is of the special form `<package>::<palette>`
@@ -825,7 +825,7 @@ data_color <- function(
       if (nrow(palettes_tbl) < 1) {
         cli::cli_abort(c(
           "The palette name (supplied with the `<package>::<palette>`
-          syntax) is not associated with the {palette_pkg} package as a
+          syntax) is not associated with the {.pkg {palette_pkg}} package as a
           discrete palette.",
           "*" = "Ensure that the combination of palette package and palette
           name exists as a record in the table accessed with
@@ -889,18 +889,20 @@ data_color <- function(
 
   # Resolution of `rows` as row indices in the table
   resolved_rows <- resolve_rows_i(expr = {{ rows }}, data = data)
-
+  if (length(resolved_rows) == 0) {
+    cli::cli_abort("{.arg rows} resulted in an empty selection.")
+  }
   # Generate a table to accumulate all of the styles to be applied to the
   # body cells; in the end, this (along with all previously set styles) will
   # be used in a concluding `dt_styles_set()` call
   data_color_styles_tbl <-
-    dplyr::tibble(
-      locname = character(0),
-      grpname = character(0),
-      colname = character(0),
-      locnum = numeric(0),
-      rownum = integer(0),
-      colnum = integer(0),
+    vctrs::data_frame(
+      locname = character(0L),
+      grpname = character(0L),
+      colname = character(0L),
+      locnum = numeric(0L),
+      rownum = integer(0L),
+      colnum = integer(0L),
       styles = list()
     )
 
@@ -935,7 +937,7 @@ data_color <- function(
 
       # For the "auto" method, we are getting data values in a piece-wise
       # fashion and the strategy is to generate a color function (using
-      # a `col_*()` function from scales) for each piece of data; we can
+      # a `scales::col_*()` function) for each piece of data; we can
       # process vectors that are numeric with `scales::col_numeric()` and
       # vectors that are either character or factor with `scales::col_factor()`
 
@@ -953,9 +955,8 @@ data_color <- function(
               reverse = reverse
             ),
             error = function(e) {
-              cli::cli_abort(c(
+              cli::cli_abort(
                 "Failed to compute colors for column {.code {resolved_columns[i]}}.",
-                i = "Did the column include infinite values?"),
                 parent = e
               )
             }
@@ -993,7 +994,7 @@ data_color <- function(
       if (!is.numeric(data_vals) && direction == "row") {
 
         cli::cli_abort(c(
-          "The {.val numeric} method with {.code direction == {.val row}} cannot be used
+          "The {.val numeric} method with {.code direction = {.val row}} cannot be used
           when non-numeric columns are included.",
           "*" = "Either specify a collection of numeric columns or use the
           {.val factor} method."
@@ -1196,7 +1197,7 @@ data_color <- function(
 
 generate_data_color_styles_tbl <- function(columns, rows, color_styles) {
 
-  dplyr::tibble(
+  vctrs::data_frame(
     locname = "data",
     grpname = NA_character_,
     colname = columns,
@@ -1228,10 +1229,10 @@ screen_palette_for_col_factor <- function(palette, data_vals) {
 #' Are color values in rgba() format?
 #'
 #' The input for this is a character vector that should contain color strings.
-#' While users won't directly supply colors in rgba() format, the `html_color()`
-#' function can produce these types of color values and this utility function is
+#' While users won't directly supply colors in rgba() format, `html_color()`
+#' can produce these types of color values and this utility function is
 #' used in `rgba_to_hex()` to help convert colors *back* to hexadecimal
-#' (ultimately for the `ideal_fgnd_color()` function). The output of
+#' (ultimately for `ideal_fgnd_color()`). The output of
 #' `is_rgba_col()` is a vector of logical values (the same length as the input
 #' `colors` vector).
 #'
@@ -1343,7 +1344,7 @@ rgba_to_hex <- function(colors) {
   color_matrix <-
     matrix(
       rgba_vec,
-      ncol = 4,
+      ncol = 4L,
       dimnames = list(c(), c("r", "g", "b", "alpha")),
       byrow = TRUE
     )
@@ -1374,11 +1375,11 @@ rgba_to_hex <- function(colors) {
 #' alpha value for a color is not 1).
 #'
 #' @noRd
-html_color <- function(colors, alpha = NULL) {
+html_color <- function(colors, alpha = NULL, call = rlang::caller_env()) {
 
   # Stop function if there are any NA values in `colors`
   if (anyNA(colors)) {
-    cli::cli_abort("`colors` should not contain any `NA` values.")
+    cli::cli_abort("`colors` should not contain any `NA` values.", call = call)
   }
 
   is_rgba <- is_rgba_col(colors = colors)
@@ -1401,7 +1402,7 @@ html_color <- function(colors, alpha = NULL) {
 
     # Ensure that all color names are in the set of X11/R color
     # names or CSS color names
-    check_named_colors(named_colors)
+    check_named_colors(named_colors, call = call)
 
     # Translate the `transparent` color to #FFFFFF00 (white, transparent)
     named_colors[named_colors == "transparent"] <- "#FFFFFF00"
@@ -1414,7 +1415,7 @@ html_color <- function(colors, alpha = NULL) {
 
     if (any(is_css_excl_named)) {
 
-      # The `css_exclusive_colors()` function returns a named vector
+      # `css_exclusive_colors()` returns a named vector
       # of the CSS colors not in the X11/R set; the names are the hexadecimal
       # color values
       colors[is_css_excl_named] <-
@@ -1500,7 +1501,7 @@ valid_color_names <- function() {
   c(tolower(grDevices::colors()), names(css_exclusive_colors()), "transparent")
 }
 
-check_named_colors <- function(named_colors) {
+check_named_colors <- function(named_colors, call = rlang::caller_env()) {
 
   named_colors <- tolower(named_colors)
 
@@ -1510,7 +1511,7 @@ check_named_colors <- function(named_colors) {
 
     one_several_invalid <-
       ifelse(
-        length(invalid_colors) > 1,
+        length(invalid_colors) > 1L,
         "Several invalid color names were ",
         "An invalid color name was "
       )
@@ -1518,6 +1519,8 @@ check_named_colors <- function(named_colors) {
     cli::cli_abort(c(
       "{one_several_invalid} used ({str_catalog(invalid_colors, conj = 'and')}).",
       "*" = "Only R/X11 color names and CSS 3.0 color names can be used."
-    ))
+     ),
+     call = call
+     )
   }
 }

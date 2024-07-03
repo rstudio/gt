@@ -38,10 +38,9 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
-Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
-column indices, or a select helper function. Examples of select helper
-functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+Can either be a series of column names provided in \code{c()}, a vector of
+column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}} and \code{\link[=everything]{everything()}}).}
 
 \item{rows}{\emph{Rows to target}
 
@@ -50,11 +49,10 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
 \code{columns} being formatted. Alternatively, we can supply a vector of row
-captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
-function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
-need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+captions within \code{c()}, a vector of row indices, or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{currency}{\emph{Currency to use}
 
@@ -239,18 +237,18 @@ crore, and higher quantities.}
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
-function as a useful reference for all of the locales that are supported. A
-locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
-would be used automatically by any function with a \code{locale} argument) but a
-\code{locale} value provided here will override that global locale.}
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported. A locale ID can
+be also set in the initial \code{\link[=gt]{gt()}} function call (where it would be used
+automatically by any function with a \code{locale} argument) but a \code{locale}
+value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \strong{gt} table, we can perform currency-based
-formatting with the \code{fmt_currency()} function. The function supports both
+formatting with \code{fmt_currency()}. The function supports both
 automatic formatting with either a three-letter or a numeric currency code.
 We can also specify a custom currency that is formatted according to one or
 more output contexts with the \code{\link[=currency]{currency()}} helper function. We have fine
@@ -279,16 +277,16 @@ formatting specific to the chosen locale; it will also retrieve the locale's
 currency if none is explicitly given
 }
 
-We can use the \code{\link[=info_currencies]{info_currencies()}} function for a useful reference on all of
-the possible inputs to the \code{currency} argument.
+We can call \code{\link[=info_currencies]{info_currencies()}} for a useful reference on all of the valid
+inputs to the \code{currency} argument.
 }
 \section{Compatibility of formatting function with data values}{
 
 
-The \code{fmt_currency()} formatting function is compatible with body cells that
-are of the \code{"numeric"} or \code{"integer"} types. Any other types of body cells
-are ignored during formatting. This is to say that cells of incompatible data
-types may be targeted, but there will be no attempt to format them.
+\code{fmt_currency()} is compatible with body cells that are of the \code{"numeric"} or
+\code{"integer"} types. Any other types of body cells are ignored during
+formatting. This is to say that cells of incompatible data types may be
+targeted, but there will be no attempt to format them.
 }
 
 \section{Targeting cells with \code{columns} and \code{rows}}{
@@ -335,10 +333,10 @@ more complex predicate expression.
 \section{Compatibility of arguments with the \code{from_column()} helper function}{
 
 
-The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
-\code{fmt_currency()} to obtain varying parameter values from a specified column
-within the table. This means that each row could be formatted a little bit
-differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{fmt_currency()} to
+obtain varying parameter values from a specified column within the table.
+This means that each row could be formatted a little bit differently. These
+arguments provide support for \code{\link[=from_column]{from_column()}}:
 \itemize{
 \item \code{currency}
 \item \code{use_subunits}
@@ -361,11 +359,10 @@ differently. These arguments provide support for \code{\link[=from_column]{from_
 Please note that for all of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
 call needs to reference a column that has data of the correct type (this is
 different for each argument). Additional columns for parameter values can be
-generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
-that contain parameter data can also be hidden from final display with
-\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
-\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
-closed set.
+generated with \code{\link[=cols_add]{cols_add()}} (if not already present). Columns that contain
+parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+Finally, there is no limitation to how many arguments the \code{\link[=from_column]{from_column()}}
+helper is applied so long as the arguments belong to this closed set.
 }
 
 \section{Adapting output to a specific \code{locale}}{
@@ -383,8 +380,8 @@ code from the locale's territory.
 Note that a \code{locale} value provided here will override any global locale
 setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument (it is settable there as
 a value received by all other functions that have a \code{locale} argument). As a
-useful reference on which locales are supported, we can use the
-\code{\link[=info_locales]{info_locales()}} function to view an info table.
+useful reference on which locales are supported, we can call \code{\link[=info_locales]{info_locales()}}
+to view an info table.
 }
 
 \section{Examples}{
@@ -435,9 +432,9 @@ With the \code{\link{pizzaplace}} dataset, let's make a summary table that gets 
 number of \code{"hawaiian"} pizzas sold (and revenue generated) by month. In the
 \strong{gt} table, we'll format only the \code{revenue} column. The \code{currency} value is
 automatically U.S. Dollars when don't supply either a currency code or a
-locale. We'll also create a grand summary with the \code{\link[=grand_summary_rows]{grand_summary_rows()}}
-function. Within that summary row, the total revenue needs to be formatted
-with \code{fmt_currency()} and we can do that within the \code{fmt} argument.
+locale. We'll also create a grand summary with \code{\link[=grand_summary_rows]{grand_summary_rows()}}. Within
+that summary row, the total revenue needs to be formatted with
+\code{fmt_currency()} and we can do that within the \code{fmt} argument.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::filter(name == "hawaiian") |>
@@ -466,8 +463,8 @@ If supplying a \code{locale} value to \code{fmt_currency()}, we can opt use the
 locale's assumed currency and not have to supply a \code{currency} value (doing so
 would override the locale's default currency). With a column of locale
 values, we can format currency values on a row-by-row basis through the use
-of the \code{\link[=from_column]{from_column()}} helper function. Here, we'll reference the \code{locale}
-column in the argument of the same name.
+of \code{\link[=from_column]{from_column()}}. Here, we'll reference the \code{locale} column in the argument
+of the same name.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   amount = rep(50.84, 5),
@@ -538,12 +535,16 @@ The vector-formatting version of this function:
 
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt}()},
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
-\code{\link{fmt_datetime}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
@@ -559,10 +560,10 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
-\code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
