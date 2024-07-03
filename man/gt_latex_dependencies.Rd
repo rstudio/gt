@@ -46,7 +46,7 @@ gt(exibble)
 }
 \section{Function ID}{
 
-8-29
+8-30
 }
 
 \section{Function Introduced}{
@@ -71,6 +71,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
+\code{\link{row_group}()},
 \code{\link{stub}()},
 \code{\link{system_fonts}()},
 \code{\link{unit_conversion}()}

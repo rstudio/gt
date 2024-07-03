@@ -87,7 +87,7 @@ two font fallbacks: \code{"Cochin"} and the catchall \code{"Serif"} group.
 
 \section{Function ID}{
 
-8-30
+8-31
 }
 
 \section{Function Introduced}{
@@ -112,6 +112,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
+\code{\link{row_group}()},
 \code{\link{stub}()},
 \code{\link{system_fonts}()},
 \code{\link{unit_conversion}()}

@@ -50,7 +50,7 @@ the \code{"Comic Sansa"} and \code{"Menloa"} fonts shouldn't exist, is that we'l
 
 \section{Function ID}{
 
-8-31
+8-32
 }
 
 \section{Function Introduced}{
@@ -75,6 +75,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
+\code{\link{row_group}()},
 \code{\link{stub}()},
 \code{\link{system_fonts}()},
 \code{\link{unit_conversion}()}

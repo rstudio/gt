@@ -23,7 +23,7 @@ argument of variable length (the default is 10 letters).
 }
 \section{Function ID}{
 
-8-27
+8-28
 }
 
 \section{Function Introduced}{
@@ -48,6 +48,7 @@ Other helper functions:
 \code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
+\code{\link{row_group}()},
 \code{\link{stub}()},
 \code{\link{system_fonts}()},
 \code{\link{unit_conversion}()}

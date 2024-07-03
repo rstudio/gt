@@ -44,7 +44,7 @@ with \code{\link[=tab_style]{tab_style()}} in conjunction with the use of \code{
 
 \section{Function ID}{
 
-8-12
+8-13
 }
 
 \section{Function Introduced}{
