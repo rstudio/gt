@@ -270,9 +270,33 @@ get_table_defs <- function(data) {
       option = "table_width"
     )
 
-  widths <- boxh[boxh$type %in% c("default", "stub"), , drop = FALSE]
-  # ensure that stub is first
-  widths <- widths[order(widths$type, decreasing = TRUE), "column_width", drop = TRUE]
+  # Determine whether the row group is placed in the stub
+  row_group_as_column <-
+    dt_options_get_value(
+      data = data,
+      option = "row_group_as_column"
+    )
+
+  types <- c("default", "stub", if (row_group_as_column) "row_group" else NULL)
+
+  widths <- boxh[boxh$type %in% types, , drop = FALSE]
+
+  # Ensure that the `widths` df rows are sorted such that the `"row_group"` row
+  # is first (only if it's located in the stub), then `"stub"`, and then
+  # everything else
+  if ("stub" %in% widths[["type"]]) {
+    stub_idx <- which(widths$type == "stub")
+    othr_idx <- base::setdiff(seq_len(nrow(widths)), stub_idx)
+    widths <- dplyr::slice(widths, stub_idx, othr_idx)
+  }
+
+  if ("row_group" %in% widths[["type"]] && row_group_as_column) {
+    row_group_idx <- which(widths$type == "row_group")
+    othr_idx <- base::setdiff(seq_len(nrow(widths)), row_group_idx)
+    widths <- dplyr::slice(widths, row_group_idx, othr_idx)
+  }
+
+  widths <- widths[seq_len(nrow(widths)), "column_width", drop = TRUE]
   widths <- unlist(widths)
 
   # Stop function if all length dimensions (where provided)
