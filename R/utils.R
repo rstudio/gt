@@ -732,7 +732,7 @@ process_text <- function(text, context = "html") {
             FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(text) {
-              base64enc::base64encode(charToRaw(text))
+              base64enc::base64encode(charToRaw(as.character(text)))
             }
           )
 

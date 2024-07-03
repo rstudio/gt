@@ -9240,7 +9240,7 @@ fmt_units <- function(
 #' ```r
 #' nuclides |>
 #'   dplyr::filter(element %in% c("H", "C")) |>
-#'   dplyr::mutate(nuclide = gsub("\\d+$", "", nuclide)) |>
+#'   dplyr::mutate(nuclide = gsub("[0-9]+$", "", nuclide)) |>
 #'   dplyr::select(nuclide, atomic_mass, half_life, decay_1, is_stable) |>
 #'   gt(rowname_col = "nuclide") |>
 #'   tab_header(title = "Isotopes of Hydrogen and Carbon") |>
@@ -12011,6 +12011,27 @@ fmt_flag <- function(
 #'
 #' @section Examples:
 #'
+#' The [`peeps`] dataset will be used to generate a small **gt** table
+#' containing only the people born in the 1980s. The `country` column contains
+#' 3-letter country codes and those will be transformed to country names with
+#' `fmt_country()`.
+#'
+#' ```r
+#' peeps |>
+#'   dplyr::filter(grepl("198", dob)) |>
+#'   dplyr::select(name_given, name_family, country, dob) |>
+#'   dplyr::arrange(country, name_family) |>
+#'   gt() |>
+#'   fmt_country(columns = country) |>
+#'   cols_merge(columns = c(name_given, name_family)) |>
+#'   opt_vertical_padding(scale = 0.5) |>
+#'   tab_options(column_labels.hidden = TRUE)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_country_1.png")`
+#' }}
+#'
 #' Use the [`countrypops`] dataset to create a **gt** table. We will only
 #' include a few columns and rows from that table. The `country_code_3` column
 #' has 3-letter country codes in the format required for `fmt_country()` and
@@ -12035,7 +12056,7 @@ fmt_flag <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_fmt_country_1.png")`
+#' `r man_get_image_tag(file = "man_fmt_country_2.png")`
 #' }}
 #'
 #' The country names derived from country codes can be localized. Let's
@@ -12079,7 +12100,7 @@ fmt_flag <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_fmt_country_2.png")`
+#' `r man_get_image_tag(file = "man_fmt_country_3.png")`
 #' }}
 #'
 #' Let's make another **gt** table, this time using the [`films`] dataset. The
@@ -12120,7 +12141,7 @@ fmt_flag <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_fmt_country_3.png")`
+#' `r man_get_image_tag(file = "man_fmt_country_4.png")`
 #' }}
 #'
 #' Country names can sometimes pair nicely with flag-based graphics. In this
@@ -12157,7 +12178,7 @@ fmt_flag <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_fmt_country_4.png")`
+#' `r man_get_image_tag(file = "man_fmt_country_5.png")`
 #' }}
 #'
 #' @family data formatting functions
