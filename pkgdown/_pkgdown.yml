@@ -203,6 +203,7 @@ reference:
     - nanoplot_options
     - adjust_luminance
     - stub
+    - row_group
     - has_concept("location helper functions")
     - cell_text
     - cell_fill
