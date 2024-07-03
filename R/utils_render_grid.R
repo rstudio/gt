@@ -1386,3 +1386,8 @@ parse_css <- function(data) {
   table <- Reduce(defaults, classes[is_table])
   c(classes[-is_table], list(gt_table = table))
 }
+
+#' @export
+plot.gt_tbl <- function(x, y, ...) {
+  plot(as_gtable(x))
+}
