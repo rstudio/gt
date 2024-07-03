@@ -554,7 +554,8 @@ cols_width <- function(
       resolve_cols_c(
         expr = !!cols,
         data = .data,
-        excl_stub = FALSE
+        excl_stub = FALSE,
+        excl_group = FALSE
       )
 
     columns <- base::setdiff(columns, columns_used)

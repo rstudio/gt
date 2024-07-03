@@ -280,6 +280,22 @@ resolve_cols_i <- function(
       }
     }
 
+    # If we use the gt-specific select helper `row_group()` then we
+    # will retrieve the row_group var name and return the output in the
+    # same format as the return value for `tidyselect::eval_select()`
+    if (rlang::as_label(quo) == "row_group()") {
+
+      row_group_var <- dt_boxhead_get_vars_groups(data = data)
+
+      if (!is.null(row_group_var)) {
+        row_group_col <- 1
+        names(row_group_col) <- row_group_var
+        return(row_group_col)
+      } else {
+        return(NULL)
+      }
+    }
+
     # In most cases we would want to exclude the column that
     # represents the stub but that isn't always the case (e.g.,
     # when considering the stub for column sizing); the `excl_stub`
