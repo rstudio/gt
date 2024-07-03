@@ -205,7 +205,7 @@ two levels of spanners. We can further touch up the labels after that with
   dplyr::rename_with(
     .fn = function(x) \{
       x |>
-        gsub("(.*?)_(\\\\d\{4\})", "\\\\1.\\\\2", x = _) |>
+        gsub("(.*?)_([0-9]\{4\})", "\\\\1.\\\\2", x = _) |>
         gsub("pop_change", "Population Change", x = _)
     \}
   ) |>
