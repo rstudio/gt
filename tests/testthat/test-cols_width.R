@@ -187,6 +187,45 @@ test_that("cols_width() stores values correctly", {
     )
   )
 
+  expect_equal(
+    gt(
+      tbl_2,
+      rowname_col = "row",
+      groupname_col = "group",
+      row_group_as_column = TRUE
+    ) %>%
+      cols_width(
+        group ~ px(20),
+        everything() ~ px(100)
+      ) %>%
+      .$`_boxhead` %>%
+      dplyr::select(var, column_width) %>%
+      dplyr::mutate(column_width = unlist(column_width)),
+    dplyr::tibble(
+      var = c(paste0("col_", 1:4), "row", "group"),
+      column_width = c(rep("100px", 5), "20px")
+    )
+  )
+
+  expect_equal(
+    gt(
+      tbl_2,
+      groupname_col = "group",
+      row_group_as_column = TRUE
+    ) %>%
+      cols_width(
+        group ~ px(10),
+        row ~ px(30)
+      ) %>%
+      .$`_boxhead` %>%
+      dplyr::select(var, column_width) %>%
+      dplyr::mutate(column_width = unlist(column_width)),
+    dplyr::tibble(
+      var = c(paste0("col_", 1:4), "row", "group"),
+      column_width = c(rep("", 4), "30px", "10px")
+    )
+  )
+
   # Don't expect an error or a warning if a `group` column
   # is included in a `cols_width()` call
   expect_no_error(
@@ -204,8 +243,7 @@ test_that("cols_width() stores values correctly", {
       )
   )
 
-  # Expect an error if a column provided is not
-  # in the dataset
+  # Expect an error if a column provided is not in the dataset
   expect_error(
     gt(tbl) %>%
       cols_width(
