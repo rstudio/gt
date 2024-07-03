@@ -114,8 +114,9 @@ get_example_text <- function(topic) {
 
     # Replace `\\\\\\\\` with `\\`
     example_lines <- gsub("\\\\\\\\", "\\", example_lines, fixed = TRUE)
-    # fix mistake
+    # fix mistakes manually
     example_lines <- gsub("\\D+", "\\\\D+", example_lines, fixed = TRUE)
+    example_lines <- gsub("\\001.\\002", "\\\\1.\\\\2", example_lines, fixed = TRUE)
 
     examples_out <- c(examples_out, example_lines)
   }
