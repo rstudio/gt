@@ -137,7 +137,7 @@ test_that("cols_width() stores values correctly", {
       dplyr::mutate(column_width = unlist(column_width)),
     dplyr::tibble(
       var = c(paste0("col_", 1:4), "row", "group"),
-      column_width = c(paste0((1:4 * 100), "px"), "400px", "")
+      column_width = c(paste0((1:4 * 100), "px"), "400px", "400px")
     )
   )
 
@@ -168,7 +168,7 @@ test_that("cols_width() stores values correctly", {
       dplyr::mutate(column_width = unlist(column_width)),
     dplyr::tibble(
       var = c(paste0("col_", 1:4), "row", "group"),
-      column_width = c(rep("100px", 5), "")
+      column_width = rep("100px", 6)
     )
   )
 
@@ -183,7 +183,7 @@ test_that("cols_width() stores values correctly", {
       dplyr::mutate(column_width = unlist(column_width)),
     dplyr::tibble(
       var = c(paste0("col_", 1:4), "row", "group"),
-      column_width = c(rep("100px", 5), "")
+      column_width = c(rep("100px", 5), "50px")
     )
   )
 
