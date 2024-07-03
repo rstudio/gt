@@ -370,7 +370,7 @@ create_columns_component_l <- function(data, colwidth_df) {
         paste0(
           "\\multicolumn{",
           length(stub_layout),
-          "}{>{\\centering\\arraybackslash}m{",
+          "}{>{\\centering\\arraybackslash}m{\\dimexpr ",
           stub_width,
           " -2\\tabcolsep-1.5\\arrayrulewidth}}{",
           stub_label,
@@ -1677,11 +1677,11 @@ create_singlecolumn_width_text_l <- function(pt, lw) {
   if (pt <= 0L && lw <= 0L) {
     out_txt <- "0pt"
   } else if (pt <= 0L) {
-    out_txt <- sprintf("%.2f\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth", lw)
+    out_txt <- sprintf("\\dimexpr %.2f\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth", lw)
   } else if (lw <= 0L) {
-    out_txt <- sprintf("%.2fpt -2\\tabcolsep-1.5\\arrayrulewidth", pt)
+    out_txt <- sprintf("\\dimexpr %.2fpt -2\\tabcolsep-1.5\\arrayrulewidth", pt)
   } else {
-    out_txt <- sprintf("%.2fpt + %.2f\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth", pt, lw)
+    out_txt <- sprintf("\\dimexpr %.2fpt + %.2f\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth", pt, lw)
   }
 
   out_txt
