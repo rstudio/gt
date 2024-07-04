@@ -2520,7 +2520,7 @@ cols_add <- function(
 #'   ) |>
 #'   cols_label_with(
 #'     columns = -matches("plot"),
-#'     fn = function(x) gsub("\\D+", "", x)
+#'     fn = function(x) gsub("[^0-9]+", "", x)
 #'   ) |>
 #'   cols_align(align = "center", columns = matches("plot")) |>
 #'   cols_width(

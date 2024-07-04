@@ -141,7 +141,7 @@
 #'   dplyr::filter(abundance != 1) |>
 #'   dplyr::filter(z >= 1 & z <= 8) |>
 #'   dplyr::mutate(element = paste0(element, ", **z = ", z, "**")) |>
-#'   dplyr::mutate(nuclide = gsub("\\d+$", "", nuclide)) |>
+#'   dplyr::mutate(nuclide = gsub("[0-9]+$", "", nuclide)) |>
 #'   dplyr::select(nuclide, element, atomic_mass, abundance, abundance_uncert) |>
 #'   gt(
 #'     rowname_col = "nuclide",
