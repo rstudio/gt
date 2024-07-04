@@ -2,6 +2,8 @@
 
 * gt now depends on R 3.6 (@olivroy, #1731).
 
+* `info_time_style()` and `info_date_style()` gain a `locale` argument to preview datetime formatting in a given locale.
+
 * `opt_interactive()` gains `height` to help specify your widget's height (@olivroy, #1544).
 
 * `opt_interactive()` now shows row names if `rownames_to_stub = TRUE` (@olivroy, #1702). 

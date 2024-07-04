@@ -31,6 +31,7 @@
 #' reference to all styles, with associated format names and example outputs
 #' using a fixed date (`2000-02-29`).
 #'
+#' @param locale A locale.
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
@@ -54,7 +55,7 @@
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
-info_date_style <- function() {
+info_date_style <- function(locale = NULL) {
 
   date_formats() %>%
     dplyr::mutate(date = "2000-02-29") %>%
@@ -62,7 +63,7 @@ info_date_style <- function() {
       flexible ~ "FLEXIBLE",
       .default = ""
     )) %>%
-    gt(rowname_col = "format_number") %>%
+    gt(rowname_col = "format_number", locale = locale) %>%
     cols_hide(columns = format_code) %>%
     fmt_date(columns = date, rows = 1, date_style = 1) %>%
     fmt_date(columns = date, rows = 2, date_style = 2) %>%
@@ -142,6 +143,8 @@ info_date_style <- function() {
 #' reference to all styles, with associated format names and example outputs
 #' using a fixed time (`14:35`).
 #'
+#' @param locale A locale.
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
@@ -165,7 +168,7 @@ info_date_style <- function() {
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
-info_time_style <- function() {
+info_time_style <- function(locale = NULL) {
 
   time_formats() %>%
     dplyr::mutate(time = "14:35") %>%
@@ -173,7 +176,7 @@ info_time_style <- function() {
       flexible ~ "FLEXIBLE",
       TRUE ~ ""
     )) %>%
-    gt(rowname_col = "format_number") %>%
+    gt(rowname_col = "format_number", locale = locale) %>%
     cols_hide(columns = format_code) %>%
     fmt_time(columns = time, rows = 1, time_style = 1) %>%
     fmt_time(columns = time, rows = 2, time_style = 2) %>%
