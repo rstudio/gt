@@ -115,6 +115,20 @@ get_example_text <- function(topic) {
     # Replace `\\\\\\\\` with `\\`
     example_lines <- gsub("\\\\\\\\", "\\", example_lines, fixed = TRUE)
 
+    # Replacements in `text_replace()` example
+    if (topic %in% c("text_replace", "fmt_image")) {
+      example_lines <-
+        gsub("\\((.*?)\\)", "\\\\((.*?)\\\\)", example_lines, fixed = TRUE)
+      example_lines <-
+        gsub("<em>\\1</em>", "<em>\\\\1</em>", example_lines, fixed = TRUE)
+    }
+
+    # Replacements in `fmt_email()` example
+    if (topic == "fmt_email") {
+      example_lines <-
+        gsub("\\(0|\\)", "\\\\(0|\\\\)", example_lines, fixed = TRUE)
+    }
+
     examples_out <- c(examples_out, example_lines)
   }
 
@@ -183,7 +197,7 @@ write_gt_examples_qmd_files <- function(
       c("countrypops", "sza", "gtcars", "sp500", "pizzaplace", "exibble",
         "towny", "peeps", "films", "metro", "gibraltar", "constants",
         "illness", "reactions", "photolysis", "nuclides", "rx_adsl",
-        "rx_addv", "render_gt", "gt_output")
+        "rx_addv", "render_gt", "gt_output", "fmt_markdown")
 
     topics <- base::setdiff(get_topic_names(), gt_datasets_and_shiny_fns)
   }
