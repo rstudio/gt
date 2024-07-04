@@ -3621,7 +3621,7 @@ round_gt <- function(x, digits = 0) {
 #'   supplied as a 3-letter currency code (e.g., `"USD"` for U.S. Dollars,
 #'   `"EUR"` for the Euro currency). Use [info_currencies()] to get an
 #'   information table with all of the valid currency codes and examples of
-#'   each. Alternatively, we can provide a common currency name (e.g.,
+#'   each. Alternatively, we can provide a general currency type (e.g.,
 #'   `"dollar"`, `"pound"`, `"yen"`, etc.) to simplify the process. Use
 #'   [info_currencies()] with the `type == "symbol"` option to view an
 #'   information table with all of the supported currency symbol names along
