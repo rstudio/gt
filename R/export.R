@@ -687,7 +687,7 @@ as_latex <- function(data) {
   colwidth_df <- create_colwidth_df_l(data = data)
 
   # Create a LaTeX fragment for the start of the table
-  table_start <- create_table_start_l(data = data)
+  table_start <- create_table_start_l(data = data, colwidth_df = colwidth_df)
 
   # Create the heading component
   heading_component <- create_heading_component_l(data = data)
