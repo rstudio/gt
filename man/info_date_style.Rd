@@ -4,7 +4,10 @@
 \alias{info_date_style}
 \title{View a table with info on date styles}
 \usage{
-info_date_style()
+info_date_style(locale = NULL)
+}
+\arguments{
+\item{locale}{A locale.}
 }
 \value{
 An object of class \code{gt_tbl}.

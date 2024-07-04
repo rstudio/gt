@@ -4,7 +4,10 @@
 \alias{info_time_style}
 \title{View a table with info on time styles}
 \usage{
-info_time_style()
+info_time_style(locale = NULL)
+}
+\arguments{
+\item{locale}{A locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
