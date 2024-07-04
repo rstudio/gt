@@ -252,6 +252,7 @@ info_time_style <- function(locale = NULL) {
 #' demonstrate the default formatting of each currency.
 #'
 #' @details
+#'
 #' There are 172 currencies, which can lead to a verbose display table. To make
 #' this presentation more focused on retrieval, we can provide an initial letter
 #' corresponding to the 3-letter currency code to `begins_with`. This will
@@ -319,63 +320,95 @@ info_currencies <- function(
 
     if (!is.null(begins_with)) {
 
-      starting <-
-        substr(begins_with, 1, 1) %>%
-        toupper()
+      starting <- toupper(substr(begins_with, 1, 1))
 
       curr <-
-        currencies %>%
-        dplyr::filter(grepl(paste0("^", starting, ".*"), curr_code))
+        dplyr::filter(currencies, grepl(paste0("^", starting, ".*"), curr_code))
 
     } else {
       curr <- currencies
     }
-    tab_1 <- curr
-    tab_1$symbol <- NULL
+
+    tab_1 <- curr[, c(4, 1, 2, 3)]
     tab_1$value <- 49.95
-    tab_1 <- dplyr::relocate(tab_1, "curr_name")
-    tab_1 <- gt(tab_1)
 
-    for (i in seq_len(nrow(curr))) {
-
-      tab_1 <-
-        fmt_currency(
-          tab_1,
-          columns = "value",
-          rows = i,
-          currency = curr[[i, "curr_code"]]
-        )
-    }
+    tab_1 <- gt(tab_1, id = "currencies")
 
     tab_1 <-
-      tab_spanner(
+      fmt_currency(
         tab_1,
-        label = "Identifiers",
-        columns = c("curr_name", "curr_code", "curr_number")
+        columns = "value",
+        currency = from_column(column = "curr_code")
       )
+
     tab_1 <-
       cols_label(
         tab_1,
-        curr_name = html("Currency\nName"),
-        curr_code = html("Currency\nCode"),
-        curr_number = html("Currency\nNumber"),
-        exponent = "Exp",
-        value = html("Formatted\nCurrency"),
+        curr_name = md("Currency<br>Name"),
+        curr_code = md("Alpha<br>Code"),
+        curr_number = md("Numeric<br>Code"),
+        exponent = md("No. of<br>Subunits"),
+        value = md("Formatted<br>Currency"),
       )
+
+    tab_1 <-
+      cols_width(
+        tab_1,
+        curr_name ~ px(325),
+        curr_code ~ px(75),
+        curr_number ~ px(85),
+        exponent ~ px(85),
+        value ~ px(125)
+      )
+
     tab_1 <-
       tab_header(
         tab_1,
         title = md("Currencies Supported in **gt**"),
-        subtitle = md("Currency codes are used in the `fmt_currency()` function")
+        subtitle = md(
+          "Currency codes are used in the `fmt_currency()` function<br><br>"
+        )
       )
+
+    tab_1 <- opt_all_caps(tab_1)
+
+    tab_1 <- opt_stylize(tab_1, style = 6)
+
     tab_1 <-
       tab_style(
         tab_1,
-        style = cell_text(align = "left"),
-        locations = list(
-          cells_title(groups = "title"),
-          cells_title(groups = "subtitle")
-        )
+        style = cell_text(size = px(24)),
+        locations = cells_title(groups = "title")
+      )
+
+    tab_1 <-
+      tab_style(
+        tab_1,
+        style = cell_text(size = px(18)),
+        locations = cells_title(groups = "subtitle")
+      )
+
+    tab_1 <- opt_align_table_header(tab_1, align = "left")
+
+    tab_1 <- opt_table_lines(tab_1, extent = "none")
+
+    tab_1 <- opt_horizontal_padding(tab_1, scale = 2)
+
+    tab_1 <- opt_vertical_padding(tab_1, scale = 0.8)
+
+    tab_1 <-
+      tab_options(
+        tab_1,
+        table.border.top.style = "hidden",
+        column_labels.border.bottom.style = "hidden",
+        container.height = px(620)
+      )
+
+    tab_1 <-
+      tab_style(
+        tab_1,
+        style = css(position = "sticky", top = "-1em", `z-index` = 10),
+        locations = cells_column_labels()
       )
 
     return(tab_1)
@@ -389,40 +422,87 @@ info_currencies <- function(
     tab_1 <- currency_symbols
     tab_1$symbol <- NULL
     tab_1$value <- 49.95
-    tab_1 <- gt(tab_1)
 
-    for (i in seq_len(nrow(curr))) {
+    tab_1 <- gt(tab_1, id = "currency_symbols")
 
-      tab_1 <-
-        fmt_currency(
-          tab_1,
-          columns = "value",
-          rows = i,
-          currency = curr[[i, "curr_symbol"]]
-        )
-    }
+    tab_1 <-
+      fmt_currency(
+        tab_1,
+        columns = "value",
+        currency = from_column(column = "curr_symbol")
+      )
 
     tab_1 <-
       cols_label(
         tab_1,
-        curr_symbol = html("Currency\nSymbol"),
-        value = html("Formatted\nCurrency"),
+        curr_symbol = "Currency Symbol Keyword",
+        value = "Formatted Currency"
       )
+
+    tab_1 <-
+      cols_width(
+        tab_1,
+        curr_symbol ~ px(300),
+        value ~ px(300)
+      )
+
+    tab_1 <-
+      tab_style(
+        tab_1,
+        style = list(
+          cell_text(
+            font = system_fonts(name = "monospace-code"),
+            size = px(12)
+          ),
+          cell_borders(
+            sides = "r",
+            color = "lightblue",
+            weight = px(1.5))
+        ),
+        locations = cells_body(columns = curr_symbol)
+      )
+
+    tab_1 <- opt_all_caps(tab_1)
+
+    tab_1 <- opt_stylize(tab_1, style = 6)
+
+    tab_1 <-
+      tab_style(
+        tab_1,
+        style = cell_text(size = px(24)),
+        locations = cells_title(groups = "title")
+      )
+
+    tab_1 <-
+      tab_style(
+        tab_1,
+        style = cell_text(size = px(18)),
+        locations = cells_title(groups = "subtitle")
+      )
+
+    tab_1 <-
+      tab_options(
+        tab_1,
+        table.border.top.style = "hidden",
+        column_labels.border.bottom.style = "hidden"
+      )
+
     tab_1 <-
       tab_header(
         tab_1,
         title = md("Currencies Supported in **gt**"),
-        subtitle = md("Currency symbols are used in the `fmt_currency()` function")
-      )
-    tab_1 <-
-      tab_style(
-        tab_1,
-        style = cell_text(align = "left"),
-        locations = list(
-          cells_title(groups = "title"),
-          cells_title(groups = "subtitle")
+        subtitle = md(
+          "Currency symbols are used in the `fmt_currency()` function.<br><br>"
         )
       )
+
+    tab_1 <- opt_align_table_header(tab_1, align = "left")
+
+    tab_1 <- opt_table_lines(tab_1, extent = "none")
+
+    tab_1 <- opt_horizontal_padding(tab_1, scale = 2)
+
+    tab_1 <- opt_vertical_padding(tab_1, scale = 0.7)
 
     return(tab_1)
   }
