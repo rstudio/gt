@@ -1028,18 +1028,18 @@ resolve_spanned_column_names <- function(
 #'   dplyr::rename_with(
 #'     .fn = function(x) {
 #'       x |>
-#'         gsub("(.*?)_(\\d{4})", "\\1.\\2", x = _) |>
-#'         gsub("pop_change", "Population Change", x = _)
+#'         sub("pop_change_", "Population Change.", x = _) |>
+#'         sub("_pct", ".pct", x = _)
 #'     }
 #'   ) |>
 #'   gt(rowname_col = "name") |>
-#'   tab_spanner_delim(delim = "_") |>
+#'   tab_spanner_delim(delim = ".") |>
 #'   fmt_number(decimals = 1, scale_by = 100) |>
 #'   cols_label_with(
 #'     fn = function(x) gsub("pct", "%", x)
 #'   ) |>
 #'   text_transform(
-#'     fn = function(x) gsub(".", " - ", x, fixed = TRUE),
+#'     fn = function(x) gsub("_", " - ", x, fixed = TRUE),
 #'     locations = cells_column_spanners()
 #'   ) |>
 #'   tab_style(
