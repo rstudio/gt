@@ -366,17 +366,23 @@ create_columns_component_l <- function(data, colwidth_df) {
           ""
         }
 
-      stub_label <-
-        paste0(
-          "\\multicolumn{",
-          length(stub_layout),
-          "}{>{\\centering\\arraybackslash}m{\\dimexpr ",
-          stub_width,
-          " -2\\tabcolsep-1.5\\arrayrulewidth}}{",
-          stub_label,
-          "}"
-        )
+      if (stub_width == "") {
+        width_txt <- "c"
+      } else {
+        width_txt <-
+          sprintf(
+            ">{\\centering\\arraybackslash}m{\\dimexpr %s -2\\tabcolsep-1.5\\arrayrulewidth}",
+            stub_width
+          )
+      }
 
+      stub_label <-
+        sprintf(
+          "\\multicolumn{%d}{%s}{%s}",
+          length(stub_layout),
+          width_txt,
+          stub_label
+        )
     }
 
     headings_labels <- prepend_vec(headings_labels, stub_label)
@@ -462,9 +468,15 @@ create_columns_component_l <- function(data, colwidth_df) {
       if (length(stub_layout) > 1L) {
 
         tex_stub_width <- calculate_multicolumn_width_text_l(begins = 1, ends = 2, colwidth_df = colwidth_df)
+        if (tex_stub_width == "") {
+          mc_stub <- "l"
+        } else {
+          mc_stub <- sprintf(">{\\raggedright\\arraybackslash}m{%s}", tex_stub_width)
+        }
+
         multicol <-
           c(
-            paste0("\\multicolumn{", length(stub_layout), "}{>{\\raggedright\\arraybackslash}m{", tex_stub_width, "}}{}"),
+            sprintf("\\multicolumn{%d}{%s}{}", length(stub_layout), mc_stub),
             multicol[-seq_along(stub_layout)]
           )
       }
@@ -1603,7 +1615,7 @@ create_colwidth_df_l <- function(data) {
     }
   }
 
-  if (length(stub_layout) > 1L) {
+  if (length(stub_layout) > length(c('stub', 'row_group') %in% width_df$type)) {
     if ('stub' %in% width_df$type) {
       stub_row_group <-
         dplyr::mutate(
