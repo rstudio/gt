@@ -940,9 +940,10 @@ test_that("cols_width() correctly specifies LaTeX table when column widths are s
     prefix <- '>\\{\\\\(raggedright|raggedleft|centering)\\\\arraybackslash\\}'
 
     sprintf(
-      '%sp\\{\\\\dimexpr %s%s-2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}',
+      '%sp\\{\\\\dimexpr %.2f%s -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}',
       prefix,
-      format(x, scientific = FALSE, trim = TRUE),
+      x,
+      #format(x, scientific = FALSE, trim = TRUE),
       unit
     )
 
@@ -968,8 +969,8 @@ test_that("cols_width() correctly specifies LaTeX table when column widths are s
         "\\\\begin\\{longtable\\}\\{",
         "(@\\{\\\\extracolsep\\{\\\\fill\\}\\})*",
         # '>\\{\\\\ragged[[:alpha:]]+\\\\arraybackslash'
-       sprintf(">\\{\\\\(raggedright|raggedleft|centering)\\\\arraybackslash\\}p\\{\\\\dimexpr 0\\.%d\\\\linewidth-2\\\\tabcolsep-1.5\\\\arrayrulewidth}",
-               c(5L, 3L, 2L, 1L)),
+       sprintf(">\\{\\\\(raggedright|raggedleft|centering)\\\\arraybackslash\\}p\\{\\\\dimexpr 0\\.%d\\\\linewidth -2\\\\tabcolsep-1.5\\\\arrayrulewidth}",
+               c(50L, 30L, 20L, 10L)),
         "\\}\\n"
       ),
       collapse = ""
