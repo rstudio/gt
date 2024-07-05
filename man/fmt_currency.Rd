@@ -62,7 +62,7 @@ The currency to use for the numeric value. This input can be
 supplied as a 3-letter currency code (e.g., \code{"USD"} for U.S. Dollars,
 \code{"EUR"} for the Euro currency). Use \code{\link[=info_currencies]{info_currencies()}} to get an
 information table with all of the valid currency codes and examples of
-each. Alternatively, we can provide a common currency name (e.g.,
+each. Alternatively, we can provide a general currency type (e.g.,
 \code{"dollar"}, \code{"pound"}, \code{"yen"}, etc.) to simplify the process. Use
 \code{\link[=info_currencies]{info_currencies()}} with the \code{type == "symbol"} option to view an
 information table with all of the supported currency symbol names along
