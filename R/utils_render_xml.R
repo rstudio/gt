@@ -2344,10 +2344,7 @@ summary_rows_xml <- function(
     summary_df <-
       dplyr::select(
         list_of_summaries$summary_df_display_list[[group_id]],
-        dplyr::all_of(c(
-          rowname_col_private,
-          default_vars
-        ))
+        dplyr::all_of(c(rowname_col_private, default_vars))
       )
 
     summary_df_row <- function(j) {

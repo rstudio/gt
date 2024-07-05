@@ -400,8 +400,7 @@ test_that("tab_style() works with a single cell", {
   # Expect that the internal `styles_df` data frame will have
   # a single row
   dt_styles_get(data = tbl_html) %>%
-    nrow() %>%
-    expect_equal(1)
+    expect_1_row()
 
   # Apply a `yellow` background a single data cell; this time, use `c()`
   # to specify the `columns`

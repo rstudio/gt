@@ -44,7 +44,7 @@
       Error in `tab_style()`:
       ! Failed to style the column spanners of the table.
       Caused by error in `cells_column_spanners()`:
-      ! The following spanner indices do not exist in the data: 2.
+      ! Spanner 2 does not exist in the data.
 
 # tab style works with grand_summary
 
