@@ -548,15 +548,31 @@ resolve_groups <- function(expr, vector) {
 
     # Provide deprecation warning
     cli::cli_warn(c(
-      "Since gt v0.9.0, the `groups = NULL` option has been deprecated.",
-      "*" = "If this was intended for generation of grand summary rows, instead
-  use the `grand_summary_rows()` function."
+      "Since gt v0.9.0, `groups = NULL` is deprecated.",
+      "i" = "If this was intended for generation of grand summary rows,
+  use `grand_summary_rows()` instead."
     ))
 
     return(":GRAND_SUMMARY:")
   }
 
+  # Handle groups = FALSE supplied to not do any summary rows.
+  if (isFALSE(resolved)) {
+    resolved <- NULL
+  }
+
   if (length(resolved) < 1) {
+    # Error if groups = everything() and no row groups. Return NULL otherwise.
+    input <- tryCatch(rlang::as_label(quo), error = NULL)
+    if (identical(input, "everything()")) {
+      # Abort to suggest grand_summary_rows() instead. (#1292)
+      cli::cli_abort(c(
+        "Since gt v0.9.0, `groups = everything()` is deprecated in {.fn summary_rows} if no row groups are present.",
+        "i" = "Use `grand_summary_rows()` instead or add row groups."
+        ),
+        call = NULL
+      )
+    }
     return(NULL)
   }
 

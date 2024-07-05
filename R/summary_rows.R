@@ -393,18 +393,6 @@ summary_rows <- function(
   # Pull a character vector of available groups from `groups_rows_tbl`
   available_groups <- dplyr::pull(groups_rows_tbl, group_id)
 
-  # Return data unchanged if there are no groups and this summary is not
-  # a grand summary
-  if (length(available_groups) < 1) {
-    if (!(
-      is.character(groups) &&
-      length(groups) == 1 &&
-      groups == ":GRAND_SUMMARY:"
-    )) {
-      return(data)
-    }
-  }
-
   # Resolve the group names
   groups <-
     resolve_groups(
@@ -412,9 +400,14 @@ summary_rows <- function(
       vector = available_groups
     )
 
+  # Return data unchanged if there are no groups and this summary is not
+  # a grand summary
   # Return data unchanged if no groups were resolved
-  if (is.null(groups)) {
-    return(data)
+  return_unchanged <- is.null(groups) ||
+    (length(available_groups) < 1 && !identical(groups, ":GRAND_SUMMARY:"))
+
+  if (return_unchanged) {
+      return(data)
   }
 
   # Resolve the column names
