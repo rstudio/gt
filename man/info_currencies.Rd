@@ -12,9 +12,9 @@ info_currencies(type = c("code", "symbol"), begins_with = NULL)
 \verb{singl-kw:[code|symbol]} // \emph{default:} \code{"code"}
 
 The type of currency information provided. Can either be \code{code} where
-currency information corresponding to 3-letter currency codes is provided,
-or \code{symbol} where currency info for common currency names (e.g., dollar,
-pound, yen, etc.) is returned.}
+currency information corresponding to 3-letter/3-number currency codes is
+provided, or \code{symbol} where currency info for common currency names/symbols
+(e.g., dollar, pound, yen, etc.) is returned.}
 
 \item{begins_with}{\emph{Show currencies beginning with a specific letter}
 
