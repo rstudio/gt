@@ -31,7 +31,16 @@
 #' reference to all styles, with associated format names and example outputs
 #' using a fixed date (`2000-02-29`).
 #'
-#' @param locale A locale.
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for displaying formatted
+#'   date values according the locale's rules. Examples include `"en"` for
+#'   English (United States) and `"fr"` for French (France). We can call
+#'   [info_locales()] for a useful reference for all of the locales that are
+#'   supported.
+
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
@@ -57,81 +66,142 @@
 #' @export
 info_date_style <- function(locale = NULL) {
 
-  date_formats() %>%
-    dplyr::mutate(date = "2000-02-29") %>%
-    dplyr::mutate(flexible = dplyr::case_when(
-      flexible ~ "FLEXIBLE",
-      .default = ""
-    )) %>%
-    gt(rowname_col = "format_number", locale = locale) %>%
-    cols_hide(columns = format_code) %>%
-    fmt_date(columns = date, rows = 1, date_style = 1) %>%
-    fmt_date(columns = date, rows = 2, date_style = 2) %>%
-    fmt_date(columns = date, rows = 3, date_style = 3) %>%
-    fmt_date(columns = date, rows = 4, date_style = 4) %>%
-    fmt_date(columns = date, rows = 5, date_style = 5) %>%
-    fmt_date(columns = date, rows = 6, date_style = 6) %>%
-    fmt_date(columns = date, rows = 7, date_style = 7) %>%
-    fmt_date(columns = date, rows = 8, date_style = 8) %>%
-    fmt_date(columns = date, rows = 9, date_style = 9) %>%
-    fmt_date(columns = date, rows = 10, date_style = 10) %>%
-    fmt_date(columns = date, rows = 11, date_style = 11) %>%
-    fmt_date(columns = date, rows = 12, date_style = 12) %>%
-    fmt_date(columns = date, rows = 13, date_style = 13) %>%
-    fmt_date(columns = date, rows = 14, date_style = 14) %>%
-    fmt_date(columns = date, rows = 15, date_style = 15) %>%
-    fmt_date(columns = date, rows = 16, date_style = 16) %>%
-    fmt_date(columns = date, rows = 17, date_style = 17) %>%
-    fmt_date(columns = date, rows = 18, date_style = 18) %>%
-    fmt_date(columns = date, rows = 19, date_style = 19) %>%
-    fmt_date(columns = date, rows = 20, date_style = 20) %>%
-    fmt_date(columns = date, rows = 21, date_style = 21) %>%
-    fmt_date(columns = date, rows = 22, date_style = 22) %>%
-    fmt_date(columns = date, rows = 23, date_style = 23) %>%
-    fmt_date(columns = date, rows = 24, date_style = 24) %>%
-    fmt_date(columns = date, rows = 25, date_style = 25) %>%
-    fmt_date(columns = date, rows = 26, date_style = 26) %>%
-    fmt_date(columns = date, rows = 27, date_style = 27) %>%
-    fmt_date(columns = date, rows = 28, date_style = 28) %>%
-    fmt_date(columns = date, rows = 29, date_style = 29) %>%
-    fmt_date(columns = date, rows = 30, date_style = 30) %>%
-    fmt_date(columns = date, rows = 31, date_style = 31) %>%
-    fmt_date(columns = date, rows = 32, date_style = 32) %>%
-    fmt_date(columns = date, rows = 33, date_style = 33) %>%
-    fmt_date(columns = date, rows = 34, date_style = 34) %>%
-    fmt_date(columns = date, rows = 35, date_style = 35) %>%
-    fmt_date(columns = date, rows = 36, date_style = 36) %>%
-    fmt_date(columns = date, rows = 37, date_style = 37) %>%
-    fmt_date(columns = date, rows = 38, date_style = 38) %>%
-    fmt_date(columns = date, rows = 39, date_style = 39) %>%
-    fmt_date(columns = date, rows = 40, date_style = 40) %>%
-    fmt_date(columns = date, rows = 41, date_style = 41) %>%
-    tab_header(
-      title = "Date Formatting Options",
-      subtitle = md("Usable in the `fmt_date()` and `fmt_datetime()` functions")
-    ) %>%
+  if (is.null(locale)) {
+    locale <- "en"
+  }
+
+  date_df <- date_formats()
+
+  date_df$date <- "2000-02-29"
+
+  flexible_rows <- date_df[, "flexible"][["flexible"]]
+
+  date_df$flexible[flexible_rows] <- "FLEXIBLE"
+  date_df$flexible[!flexible_rows] <- ""
+
+  gt_tbl <- gt(date_df, rowname_col = "format_number", locale = locale)
+
+  gt_tbl <- cols_hide(gt_tbl, columns = format_code)
+
+  gt_tbl <-
+    fmt_date(
+      gt_tbl,
+      columns = date,
+      date_style = from_column(column = "format_name")
+    )
+
+  gt_tbl <-
     text_transform(
+      gt_tbl,
       locations = cells_body(
         columns = flexible,
         rows = flexible == "FLEXIBLE"
       ),
       fn = function(x) {
-        paste0("<span style='",
-          "color: darkslategray; font-weight: 700; font-size: smaller; border: solid 1px; background: aliceblue; border-color: mediumpurple; border-width: 2px; border-radius: 4px; padding: 0px 8px 0px 8px;",
+        paste0(
+          "<span style='",
+          "color: darkslategray; font-weight: 700; font-size: 12px; ",
+          "border: solid 1px; background: aliceblue; border-color: steelblue; ",
+          "border-width: 2px; border-radius: 4px; padding: 0px 8px 0px 8px;",
           "'>", x, "</span>"
         )
       }
-    ) %>%
-    opt_align_table_header(align = "left") %>%
+    )
+
+  gt_tbl <-
     cols_label(
+      gt_tbl,
       format_name = "Format Name",
       flexible = "",
-      date = "Formatted Date"
-    ) %>%
-    tab_style(
-      style = cell_text(font = "monospace"),
-      locations = cells_body(columns = date)
+      date = html(
+        paste0(
+          "Formatted Date (<span style=\"text-transform:none;\">",
+          locale,
+          "</span>)"
+        )
+      )
     )
+
+  gt_tbl <-
+    cols_width(
+      gt_tbl,
+      format_number ~ px(60),
+      format_name ~ px(220),
+      flexible ~ px(100),
+      date ~ px(315)
+    )
+
+  gt_tbl <- opt_align_table_header(gt_tbl, align = "left")
+
+  gt_tbl <- cols_align(gt_tbl, align = "center", columns = flexible)
+
+  gt_tbl <- cols_align(gt_tbl, align = "left", columns = date)
+
+  gt_tbl <-
+    tab_style(
+      gt_tbl,
+      style = cell_text(
+        font = system_fonts(name = "monospace-code"),
+        size = px(12)
+      ),
+      locations = cells_body(columns = format_name)
+    )
+
+  gt_tbl <-
+    tab_style(
+      gt_tbl,
+      style =
+        cell_borders(
+          sides = "r",
+          color = "lightblue",
+          weight = px(1.5)
+        ),
+      locations = cells_body(columns = format_name)
+    )
+
+  gt_tbl <- opt_all_caps(gt_tbl)
+
+  gt_tbl <- opt_stylize(gt_tbl, style = 6)
+
+  gt_tbl <-
+    tab_style(
+      gt_tbl,
+      style = cell_text(size = px(24)),
+      locations = cells_title(groups = "title")
+    )
+
+  gt_tbl <-
+    tab_style(
+      gt_tbl,
+      style = cell_text(size = px(18)),
+      locations = cells_title(groups = "subtitle")
+    )
+
+  gt_tbl <-
+    tab_options(
+      gt_tbl,
+      table.border.top.style = "hidden",
+      column_labels.border.bottom.style = "hidden"
+    )
+
+  gt_tbl <-
+    tab_header(
+      gt_tbl,
+      title = "Date Formatting Options",
+      subtitle = md(
+        "Usable in the `fmt_date()` and `fmt_datetime()` functions.<br><br>"
+      )
+    )
+
+  gt_tbl <- opt_align_table_header(gt_tbl, align = "left")
+
+  gt_tbl <- opt_table_lines(gt_tbl, extent = "none")
+
+  gt_tbl <- opt_horizontal_padding(gt_tbl, scale = 2)
+
+  gt_tbl <- opt_vertical_padding(gt_tbl, scale = 0.7)
+
+  gt_tbl
 }
 
 #' View a table with info on time styles
