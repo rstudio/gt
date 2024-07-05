@@ -36,29 +36,18 @@ expect_match_html <- function(object,
                               info = NULL,
                               label = NULL) {
   rendered <- render_as_html(object)
-  testthat::expect_match(
-    object = rendered,
-    regexp = regexp,
-    perl = perl,
-    fixed = fixed,
-    ...,
-    all = all,
-    info = info,
-    label = label
-  )
-}
-
-# Helper to ensure all patterns are matched
-tidy_grepl <- function(x, pattern) {
-
-  vapply(
-    pattern,
-    FUN = function(pattern) {
-      grepl(pattern = pattern, x = x)
-    },
-    FUN.VALUE = logical(1L),
-    USE.NAMES = FALSE
-  )
+  for (i in seq_along(regexp)) {
+    testthat::expect_match(
+      object = rendered,
+      regexp = regexp[i],
+      perl = perl,
+      fixed = fixed,
+      ...,
+      all = all,
+      info = info,
+      label = label
+    )
+  }
 }
 
 expect_merge_locale_sep <- function(locale = NULL, global_locale = NULL, sep = NULL, expected_sep) {
