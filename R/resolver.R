@@ -556,7 +556,22 @@ resolve_groups <- function(expr, vector) {
     return(":GRAND_SUMMARY:")
   }
 
+  # Handle groups = FALSE supplied to not do any summary rows.
+  if (isFALSE(resolved)) {
+    resolved <- NULL
+  }
+
   if (length(resolved) < 1) {
+    # 1292
+    input <- tryCatch(rlang::as_label(quo), error = NULL)
+    if (identical(input, "everything()")) {
+      cli::cli_warn(c(
+        "Since gt v0.9.0, the `groups = everything()` option has been deprecated in {.fn summary_rows}.",
+        "*" = "If this was intended for generation of grand summary rows, instead
+  use the `grand_summary_rows()` function."
+      ))
+      return(":GRAND_SUMMARY:")
+    }
     return(NULL)
   }
 
