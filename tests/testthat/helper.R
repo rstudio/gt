@@ -26,6 +26,27 @@ html_fragment_within <- function(raw_html, ...) {
   grepl(paste0("\\Q", c(...), "\\E", "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)
 }
 
+# shortcut for expect_match(render_as_html(object), regexp)
+expect_match_html <- function(object,
+                              regexp,
+                              perl = FALSE,
+                              fixed = FALSE,
+                              ...,
+                              all = TRUE,
+                              info = NULL,
+                              label = NULL) {
+  rendered <- render_as_html(object)
+  testthat::expect_match(
+    object = rendered,
+    regexp = regexp,
+    perl = perl,
+    fixed = fixed,
+    ...,
+    all = all,
+    info = info,
+    label = label
+  )
+}
 
 # Helper to ensure all patterns are matched
 tidy_grepl <- function(x, pattern) {
