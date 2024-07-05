@@ -399,11 +399,13 @@ summary_rows <- function(
       expr = {{ groups }},
       vector = available_groups
     )
+
   # Return data unchanged if there are no groups and this summary is not
   # a grand summary
   # Return data unchanged if no groups were resolved
   return_unchanged <- is.null(groups) ||
     (length(available_groups) < 1 && !identical(groups, ":GRAND_SUMMARY:"))
+
   if (return_unchanged) {
       return(data)
   }

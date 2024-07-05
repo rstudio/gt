@@ -562,13 +562,13 @@ resolve_groups <- function(expr, vector) {
   }
 
   if (length(resolved) < 1) {
-    # 1292
+    # Error if groups = everything() and no row groups. Return NULL otherwise.
     input <- tryCatch(rlang::as_label(quo), error = NULL)
     if (identical(input, "everything()")) {
+      # Abort to suggest grand_summary_rows() instead. (#1292)
       cli::cli_abort(c(
         "Since gt v0.9.0, the `groups = everything()` option has been deprecated in {.fn summary_rows} if no row groups are present.",
-        "*" = "If this was intended for generation of grand summary rows, instead
-  use the `grand_summary_rows()` function."
+        "*" = "Use `grand_summary_rows()` instead or add row groups."
       ))
     }
     return(NULL)

@@ -636,8 +636,8 @@ test_that("Using `groups = FALSE` in `summary_rows()` returns data unchanged", {
 })
 
 test_that("summary_rows() informs to use grand_summary_rows() if no groups are present (#1292).", {
-  expect_snapshot(
-    gt <- mtcars_short %>%
+  expect_snapshot(error = TRUE,
+    mtcars_short %>%
       dplyr::select(gear) %>%
       gt::gt(rownames_to_stub = TRUE) %>%
       gt::summary_rows(fns = "sum")

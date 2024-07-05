@@ -1,6 +1,6 @@
 # gt (development version)
 
-* `summary_rows()` now throws a more informative error message that you should use `grand_summary_rows()` if no groups are detected (@olivroy, #1292).
+* `summary_rows()` now throws a more informative error message that you should use `grand_summary_rows()` if no row groups are detected (@olivroy, #1292).
  This change was introduced in [gt 0.9.0](https://posit.co/blog/big-changes-to-making-summary-rows-in-gt-0-9-0/)
 * gt now depends on R 3.6 (@olivroy, #1731).
 

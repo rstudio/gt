@@ -1,12 +1,12 @@
 # summary_rows() informs to use grand_summary_rows() if no groups are present (#1292).
 
     Code
-      gt <- mtcars_short %>% dplyr::select(gear) %>% gt::gt(rownames_to_stub = TRUE) %>%
+      mtcars_short %>% dplyr::select(gear) %>% gt::gt(rownames_to_stub = TRUE) %>%
         gt::summary_rows(fns = "sum")
     Condition
-      Warning:
-      Since gt v0.9.0, the `groups = everything()` option has been deprecated in `summary_rows()`.
-      * If this was intended for generation of grand summary rows, instead use the `grand_summary_rows()` function.
+      Error in `resolve_groups()`:
+      ! Since gt v0.9.0, the `groups = everything()` option has been deprecated in `summary_rows()` if no row groups are present.
+      * Use `grand_summary_rows()` instead or add row groups.
 
 # Using `groups = NULL` in `summary_rows()` is a deprecated option
 
