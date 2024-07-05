@@ -1,3 +1,13 @@
+# summary_rows() informs to use grand_summary_rows() if no groups are present (#1292).
+
+    Code
+      mtcars %>% dplyr::select(gear) %>% gt::gt(rownames_to_stub = TRUE) %>% gt::summary_rows(
+        fns = "sum")
+    Condition
+      Error:
+      ! `everything()` must be used within a *selecting* function.
+      i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html> for details.
+
 # Using `groups = NULL` in `summary_rows()` is a deprecated option
 
     Code
