@@ -143,7 +143,15 @@ info_date_style <- function(locale = NULL) {
 #' reference to all styles, with associated format names and example outputs
 #' using a fixed time (`14:35`).
 #'
-#' @param locale A locale.
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for displaying formatted
+#'   time values according the locale's rules. Examples include `"en"` for
+#'   English (United States) and `"fr"` for French (France). We can call
+#'   [info_locales()] for a useful reference for all of the locales that are
+#'   supported.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -170,44 +178,33 @@ info_date_style <- function(locale = NULL) {
 #' @export
 info_time_style <- function(locale = NULL) {
 
-  time_formats() %>%
-    dplyr::mutate(time = "14:35") %>%
-    dplyr::mutate(flexible = dplyr::case_when(
-      flexible ~ "FLEXIBLE",
-      TRUE ~ ""
-    )) %>%
-    gt(rowname_col = "format_number", locale = locale) %>%
-    cols_hide(columns = format_code) %>%
-    fmt_time(columns = time, rows = 1, time_style = 1) %>%
-    fmt_time(columns = time, rows = 2, time_style = 2) %>%
-    fmt_time(columns = time, rows = 3, time_style = 3) %>%
-    fmt_time(columns = time, rows = 4, time_style = 4) %>%
-    fmt_time(columns = time, rows = 5, time_style = 5) %>%
-    fmt_time(columns = time, rows = 6, time_style = 6) %>%
-    fmt_time(columns = time, rows = 7, time_style = 7) %>%
-    fmt_time(columns = time, rows = 8, time_style = 8) %>%
-    fmt_time(columns = time, rows = 9, time_style = 9) %>%
-    fmt_time(columns = time, rows = 10, time_style = 10) %>%
-    fmt_time(columns = time, rows = 11, time_style = 11) %>%
-    fmt_time(columns = time, rows = 12, time_style = 12) %>%
-    fmt_time(columns = time, rows = 13, time_style = 13) %>%
-    fmt_time(columns = time, rows = 14, time_style = 14) %>%
-    fmt_time(columns = time, rows = 15, time_style = 15) %>%
-    fmt_time(columns = time, rows = 16, time_style = 16) %>%
-    fmt_time(columns = time, rows = 17, time_style = 17) %>%
-    fmt_time(columns = time, rows = 18, time_style = 18) %>%
-    fmt_time(columns = time, rows = 19, time_style = 19) %>%
-    fmt_time(columns = time, rows = 20, time_style = 20) %>%
-    fmt_time(columns = time, rows = 21, time_style = 21) %>%
-    fmt_time(columns = time, rows = 22, time_style = 22) %>%
-    fmt_time(columns = time, rows = 23, time_style = 23) %>%
-    fmt_time(columns = time, rows = 24, time_style = 24) %>%
-    fmt_time(columns = time, rows = 25, time_style = 25) %>%
-    tab_header(
-      title = "Time Formatting Options",
-      subtitle = md("Usable in the `fmt_time()` and `fmt_datetime()` functions")
-    ) %>%
+  if (is.null(locale)) {
+    locale <- "en"
+  }
+
+  time_df <- time_formats()
+
+  time_df$time <- "14:35"
+
+  flexible_rows <- time_df[, "flexible"][["flexible"]]
+
+  time_df$flexible[flexible_rows] <- "FLEXIBLE"
+  time_df$flexible[!flexible_rows] <- ""
+
+  gt_tbl <- gt(time_df, rowname_col = "format_number", locale = locale)
+
+  gt_tbl <- cols_hide(gt_tbl, columns = format_code)
+
+  gt_tbl <-
+    fmt_time(
+      gt_tbl,
+      columns = time,
+      time_style = from_column(column = "format_name")
+    )
+
+  gt_tbl <-
     text_transform(
+      gt_tbl,
       locations = cells_body(
         columns = flexible,
         rows = flexible == "FLEXIBLE"
@@ -215,28 +212,123 @@ info_time_style <- function(locale = NULL) {
       fn = function(x) {
         paste0(
           "<span style='",
-          "color: darkslategray; font-weight: 700; font-size: smaller; border: solid 1px; background: aliceblue; border-color: mediumpurple; border-width: 2px; border-radius: 4px; padding: 0px 8px 0px 8px;",
+          "color: darkslategray; font-weight: 700; font-size: 12px; ",
+          "border: solid 1px; background: aliceblue; border-color: steelblue; ",
+          "border-width: 2px; border-radius: 4px; padding: 0px 8px 0px 8px;",
           "'>", x, "</span>"
         )
       }
-    ) %>%
-    opt_align_table_header(align = "left") %>%
+    )
+
+  gt_tbl <-
     cols_label(
+      gt_tbl,
       format_name = "Format Name",
+      time_type = "12/24h",
       flexible = "",
-      time = "Formatted Time",
-      time_type = "12/24h"
-    ) %>%
+      time = html(
+        paste0(
+          "Formatted Time (<span style=\"text-transform:none;\">",
+          locale,
+          "</span>)"
+        )
+      )
+    )
+
+  gt_tbl <-
+    cols_width(
+      gt_tbl,
+      format_number ~ px(60),
+      format_name ~ px(140),
+      time_type ~ px(80),
+      flexible ~ px(100),
+      time ~ px(315)
+    )
+
+  gt_tbl <- opt_align_table_header(gt_tbl, align = "left")
+
+  gt_tbl <- sub_missing(gt_tbl, columns = time_type)
+
+  gt_tbl <-
+    cols_align(
+      gt_tbl,
+      align = "center",
+      columns = c(time_type, flexible)
+    )
+
+  gt_tbl <- cols_align(gt_tbl, align = "left", columns = time)
+
+  gt_tbl <- tab_style(
+    gt_tbl,
+    style = cell_text(size = "smaller"),
+    locations = cells_body(columns = time_type)
+  )
+
+  gt_tbl <-
     tab_style(
-      style = cell_text(size = "smaller"),
-      locations = cells_body(columns = time_type)
-    ) %>%
+      gt_tbl,
+      style = cell_text(
+        font = system_fonts(name = "monospace-code"),
+        size = px(12)
+      ),
+      locations = cells_body(columns = format_name)
+    )
+
+  gt_tbl <-
     tab_style(
-      style = cell_text(font = "monospace"),
-      locations = cells_body(columns = time)
-    ) %>%
-    sub_missing(columns = time_type) %>%
-    cols_align(align = "center", columns = time_type)
+      gt_tbl,
+      style =
+        cell_borders(
+          sides = "r",
+          color = "lightblue",
+          weight = px(1.5)
+        ),
+      locations = cells_body(columns = format_name)
+    )
+
+  gt_tbl <- opt_all_caps(gt_tbl)
+
+  gt_tbl <- opt_stylize(gt_tbl, style = 6)
+
+  gt_tbl <-
+    tab_style(
+      gt_tbl,
+      style = cell_text(size = px(24)),
+      locations = cells_title(groups = "title")
+    )
+
+  gt_tbl <-
+    tab_style(
+      gt_tbl,
+      style = cell_text(size = px(18)),
+      locations = cells_title(groups = "subtitle")
+    )
+
+  gt_tbl <-
+    tab_options(
+      gt_tbl,
+      table.border.top.style = "hidden",
+      column_labels.border.bottom.style = "hidden"
+    )
+
+  gt_tbl <-
+    tab_header(
+      gt_tbl,
+      title = "Time Formatting Options",
+      subtitle = md(
+        "Usable in the `fmt_time()` and `fmt_datetime()` functions.<br><br>"
+      )
+    )
+
+  gt_tbl <- opt_align_table_header(gt_tbl, align = "left")
+
+  gt_tbl <- opt_table_lines(gt_tbl, extent = "none")
+
+  gt_tbl <- opt_horizontal_padding(gt_tbl, scale = 2)
+
+  gt_tbl <- opt_vertical_padding(gt_tbl, scale = 0.7)
+
+  gt_tbl
 }
 
 #' View a table with info on supported currencies
