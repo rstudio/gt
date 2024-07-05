@@ -1199,10 +1199,7 @@ create_summary_rows_l <- function(
           summary_df <-
             dplyr::select(
               list_of_summaries$summary_df_display_list[[group_id]],
-              dplyr::all_of(c(
-                rowname_col_private,
-                default_vars
-              ))
+              dplyr::all_of(c(rowname_col_private, default_vars))
             )
 
           row_splits_summary <- split_row_content(summary_df)

@@ -1861,8 +1861,7 @@ summary_rows_for_group_h <- function(
   summary_df <-
     dplyr::select(
       list_of_summaries$summary_df_display_list[[group_id]],
-      dplyr::all_of(rowname_col_private),
-      dplyr::all_of(default_vars)
+      dplyr::all_of(c(rowname_col_private, default_vars))
     )
 
   # Get effective number of columns

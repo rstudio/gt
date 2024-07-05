@@ -1089,7 +1089,7 @@ data_color <- function(
       if (length(resolved_columns) > 1) {
 
         data_color_styles_tbl <-
-          dplyr::bind_rows(
+          vctrs::vec_rbind(
             data_color_styles_tbl,
             generate_data_color_styles_tbl(
               columns = resolved_target_columns[i],
@@ -1103,7 +1103,7 @@ data_color <- function(
         for (j in seq_along(resolved_target_columns)) {
 
           data_color_styles_tbl <-
-            dplyr::bind_rows(
+            vctrs::vec_rbind(
               data_color_styles_tbl,
               generate_data_color_styles_tbl(
                 columns = resolved_target_columns[j],
@@ -1118,7 +1118,7 @@ data_color <- function(
     } else {
 
       data_color_styles_tbl <-
-        dplyr::bind_rows(
+        vctrs::vec_rbind(
           data_color_styles_tbl,
           generate_data_color_styles_tbl(
             columns = if (direction == "column") resolved_columns[i] else resolved_columns,
@@ -1149,7 +1149,7 @@ data_color <- function(
         if (length(resolved_columns) > 1) {
 
           data_color_styles_tbl <-
-            dplyr::bind_rows(
+            vctrs::vec_rbind(
               data_color_styles_tbl,
               generate_data_color_styles_tbl(
                 columns = resolved_target_columns[i],
@@ -1163,7 +1163,7 @@ data_color <- function(
           for (j in seq_along(resolved_target_columns)) {
 
             data_color_styles_tbl <-
-              dplyr::bind_rows(
+              vctrs::vec_rbind(
                 data_color_styles_tbl,
                 generate_data_color_styles_tbl(
                   columns = resolved_target_columns[j],
@@ -1177,7 +1177,7 @@ data_color <- function(
       } else {
 
         data_color_styles_tbl <-
-          dplyr::bind_rows(
+          vctrs::vec_rbind(
             data_color_styles_tbl,
             generate_data_color_styles_tbl(
               columns = if (direction == "column") resolved_columns[i] else resolved_columns,
@@ -1191,7 +1191,7 @@ data_color <- function(
 
   dt_styles_set(
     data = data,
-    styles = dplyr::bind_rows(dt_styles_get(data = data), data_color_styles_tbl)
+    styles = vctrs::vec_rbind(dt_styles_get(data = data), data_color_styles_tbl)
   )
 }
 
