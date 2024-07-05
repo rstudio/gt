@@ -264,9 +264,9 @@ info_time_style <- function(locale = NULL) {
 #'   `singl-kw:[code|symbol]` // *default:* `"code"`
 #'
 #'   The type of currency information provided. Can either be `code` where
-#'   currency information corresponding to 3-letter currency codes is provided,
-#'   or `symbol` where currency info for common currency names (e.g., dollar,
-#'   pound, yen, etc.) is returned.
+#'   currency information corresponding to 3-letter/3-number currency codes is
+#'   provided, or `symbol` where currency info for common currency names/symbols
+#'   (e.g., dollar, pound, yen, etc.) is returned.
 #'
 #' @param begins_with *Show currencies beginning with a specific letter*
 #'
