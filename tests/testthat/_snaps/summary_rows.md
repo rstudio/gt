@@ -4,9 +4,9 @@
       mtcars_short %>% dplyr::select(gear) %>% gt::gt(rownames_to_stub = TRUE) %>%
         gt::summary_rows(fns = "sum")
     Condition
-      Error in `resolve_groups()`:
-      ! Since gt v0.9.0, the `groups = everything()` option has been deprecated in `summary_rows()` if no row groups are present.
-      * Use `grand_summary_rows()` instead or add row groups.
+      Error:
+      ! Since gt v0.9.0, `groups = everything()` is deprecated in `summary_rows()` if no row groups are present.
+      i Use `grand_summary_rows()` instead or add row groups.
 
 # Using `groups = NULL` in `summary_rows()` is a deprecated option
 
