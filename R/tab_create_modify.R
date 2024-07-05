@@ -1708,6 +1708,13 @@ tab_row_group <- function(
 
   stub_df <- dt_stub_df_get(data = data)
 
+  # If the label is marked as HTML or Markdown and there's no `id` set
+  # (assumed when `id` is equal to `label`), strip away HTML tags in the
+  # `id` value
+  if (id == label && (inherits(id, "html") || inherits(id, "from_markdown"))) {
+    id <- remove_html(as.character(id))
+  }
+
   # Place the `label` in the `groupname` column `stub_df`
   stub_df[resolved_rows_idx, "group_label"] <- list(list(label))
   stub_df[resolved_rows_idx, "group_id"] <- as.character(id)
