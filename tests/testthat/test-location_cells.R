@@ -907,18 +907,6 @@ test_that("Styles are correctly applied to HTML output with location functions",
     ) %>%
     expect_true()
 
-  # Expect an error if applying footnotes to the footnotes location
-  expect_error(
-    tbl %>%
-      gt() %>%
-      tab_footnote(
-        footnote = "This is a footnote",
-        locations = cells_body(1, 1)
-      ) %>%
-      tab_footnote(
-        footnote = "Illegal footnote",
-        locations = cells_footnotes()
-      )
   )
 
   #
@@ -940,15 +928,26 @@ test_that("Styles are correctly applied to HTML output with location functions",
       "<td class=\"gt_sourcenote\" style=\"background-color: #FF0000;\" colspan=\"5\">This is a source note</td>"
     ) %>%
     expect_true()
+})
 
-  # Expect an error if applying footnotes to the source notes location
-  expect_error(
-    tbl %>%
-      gt() %>%
+test_that("tab_footnote() errors if `locations = cells_source_notes()`", {
+  expect_snapshot(error = TRUE, {
+    gt(mtcars_short) %>%
       tab_source_note(source_note = "This is a source note") %>%
       tab_footnote(
         footnote = "Illegal footnote",
         locations = cells_source_notes()
       )
-  )
+  })
+})
+
+test_that("tab_footnote() errors if `locations = cells_footnotes()`", {
+  expect_snapshot(error = TRUE, {
+    gt(mtcars_short) %>%
+      tab_source_note(source_note = "This is a source note") %>%
+      tab_footnote(
+        footnote = "Illegal footnote",
+        locations = cells_footnotes()
+      )
+  })
 })

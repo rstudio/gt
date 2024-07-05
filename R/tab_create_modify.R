@@ -2859,7 +2859,7 @@ set_footnote.cells_source_notes <- function(
     footnote,
     placement
 ) {
-  cli::cli_abort("Footnotes cannot be applied to source notes.")
+  cli::cli_abort("Footnotes cannot be applied to source notes.", call = call("cells_source_notes"))
 }
 
 #' @export
@@ -2869,7 +2869,7 @@ set_footnote.cells_footnotes <- function(
     footnote,
     placement
 ) {
-  cli::cli_abort("Footnotes cannot be applied to other footnotes.")
+  cli::cli_abort("Footnotes cannot be applied to other footnotes.", call = call("cells_footnotes"))
 }
 
 #' Add a source note citation
