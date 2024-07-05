@@ -587,7 +587,7 @@
       Error in `tab_footnote()`:
       ! Can't add footnote "First data cell.".
       Caused by error in `cells_column_spanners()`:
-      ! The following spanner indices do not exist in the data: 3.
+      ! Spanner 3 does not exist in the data.
     Code
       tab_footnote(start_gt, footnote = "Footnote error.", locations = cells_body(
         columns = "value_1", rows = "Mazda RX7"))
@@ -642,5 +642,5 @@
       Error in `tab_footnote()`:
       ! Can't add footnote "Grand summary cell footnote.".
       Caused by error in `cells_grand_summary()`:
-      ! The following grand summary row indices do not exist in the data: 15.
+      ! Grand summary row 15 does not exist in the data.
 

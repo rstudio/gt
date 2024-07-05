@@ -153,17 +153,17 @@
       t_ft %>% rm_footnotes(footnotes = 0:1)
     Condition
       Error in `rm_footnotes()`:
-      ! The following footnote indices do not exist in the data: 0.
+      ! Footnote 0 does not exist in the data.
     Code
       t_ft %>% rm_footnotes(footnotes = 2:3)
     Condition
       Error in `rm_footnotes()`:
-      ! The following footnote indices do not exist in the data: 3.
+      ! Footnote 3 does not exist in the data.
     Code
       t_ft %>% rm_footnotes(footnotes = 3)
     Condition
       Error in `rm_footnotes()`:
-      ! The following footnote indices do not exist in the data: 3.
+      ! Footnote 3 does not exist in the data.
 
 # Table source notes can be removed using `rm_source_notes()`
 
@@ -201,15 +201,15 @@
       t_sn %>% rm_source_notes(source_notes = 0:1)
     Condition
       Error in `rm_source_notes()`:
-      ! The following source note indices do not exist in the data: 0.
+      ! Source note 0 does not exist in the data.
     Code
       t_sn %>% rm_source_notes(2:3)
     Condition
       Error in `rm_source_notes()`:
-      ! The following source note indices do not exist in the data: 3.
+      ! Source note 3 does not exist in the data.
     Code
       t_sn %>% rm_source_notes(3)
     Condition
       Error in `rm_source_notes()`:
-      ! The following source note indices do not exist in the data: 3.
+      ! Source note 3 does not exist in the data.
 

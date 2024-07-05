@@ -136,14 +136,14 @@ gt_split <- function(
   # Get row count for table (data rows)
   n_rows_data <- nrow(gt_tbl_built[["_stub_df"]])
 
-  row_slice_vec <- rep(1L, n_rows_data)
+  row_slice_vec <- rep.int(1L, n_rows_data)
 
-  row_every_n_idx <- c()
+  row_every_n_idx <- NULL
   if (!is.null(row_every_n)) {
     row_every_n_idx <- seq_len(n_rows_data)[seq(0, n_rows_data, row_every_n)]
   }
 
-  row_slice_i_idx <- c()
+  row_slice_i_idx <- NULL
   if (!is.null(row_slice_i)) {
     row_slice_i_idx <- row_slice_i
   }
@@ -193,7 +193,7 @@ gt_split <- function(
       # Obtain all of the column indices for vertical splitting
       col_idx <- which(visible_col_vars %in% col_slice_at)
 
-      col_slice_vec <- rep(1L, length(visible_col_vars))
+      col_slice_vec <- rep.int(1L, length(visible_col_vars))
 
       group_j <- 0L
 

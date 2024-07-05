@@ -599,8 +599,7 @@ summary_rows_g <- function(data, group_id, side_grand_summary = "bottom") {
   summary_df <-
     dplyr::select(
       summary_df,
-      dplyr::all_of(rowname_col_private),
-      dplyr::all_of(group_summary_vars)
+      dplyr::all_of(c(rowname_col_private, group_summary_vars)),
     )
 
   summary_row_type <- rep(summary_row_type, n_rows)
