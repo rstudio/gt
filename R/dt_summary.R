@@ -216,9 +216,9 @@ dt_summary_build <- function(data, context) {
 
               # Filter to only the groups targeted in the group-wise case
               select_data_tbl <-
-                dplyr::filter(
+                vctrs::vec_slice(
                   select_data_tbl,
-                  .data[[group_id_col_private]] %in% groups
+                  select_data_tbl[[group_id_col_private]] %in% groups
                 )
             }
 
@@ -418,20 +418,26 @@ dt_summary_build <- function(data, context) {
         unname(labels_processed[names(labels_processed) == summary_dfs_display[i, ][["::row_id::"]]])
     }
 
-    summary_dfs_display <-
-      dplyr::mutate_at(
-        summary_dfs_display,
-        .vars = columns_excl,
-        .funs = function(x) {NA_character_}
-      )
+    # set columns that we exclude as NA
+    summary_dfs_display[, columns_excl] <- NA_character_
 
     for (group in groups) {
 
+      # vctrs::vec_slice is a fast replacement of dplyr::filter
+      # but handles is.na() a little bit less fast.
       group_summary_data_df <-
-        dplyr::filter(summary_dfs_data, .data[[group_id_col_private]] == .env$group)
+        vctrs::vec_slice(
+          summary_dfs_data,
+          !is.na(summary_dfs_data[[group_id_col_private]]) &
+            summary_dfs_data[[group_id_col_private]] == group
+          )
 
       group_summary_display_df <-
-        dplyr::filter(summary_dfs_display, .data[[group_id_col_private]] == .env$group)
+        vctrs::vec_slice(
+          summary_dfs_display,
+          !is.na(summary_dfs_display[[group_id_col_private]]) &
+            summary_dfs_display[[group_id_col_private]] == group
+        )
 
       group_summary_display_df$`::side::` <- side
 
@@ -461,11 +467,18 @@ dt_summary_build <- function(data, context) {
     arrangement <-
       unique(summary_df_display_list[[i]][, rowname_col_private, drop = TRUE])
 
+    # remove ::group_id:: from data
+    summary_df_display_list[[i]][[group_id_col_private]] <- NULL
+    # find location of last_no_na for each row name
     summary_df_display_list[[i]] <-
-      summary_df_display_list[[i]] %>%
-      dplyr::select(-.env$group_id_col_private) %>%
-      dplyr::group_by(.data[[rowname_col_private]]) %>%
-      dplyr::summarize_all(last_non_na)
+      dplyr::summarise(
+        .data = summary_df_display_list[[i]],
+        dplyr::across(
+          dplyr::everything(),
+          .fns = last_non_na
+          ),
+        .by = dplyr::all_of(rowname_col_private)
+      )
 
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]][

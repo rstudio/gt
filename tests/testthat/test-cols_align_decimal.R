@@ -28,8 +28,8 @@ test_that("Decimal alignment works in the basic case", {
 
   # Expect that both tables result in the same HTML output
   expect_equal(
-    gt_tbl_1 %>% render_as_html(),
-    gt_tbl_2 %>% render_as_html()
+    render_as_html(gt_tbl_1),
+    render_as_html(gt_tbl_2)
   )
 
   # Perform snapshot test

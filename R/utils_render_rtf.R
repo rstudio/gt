@@ -1634,8 +1634,7 @@ create_body_component_rtf <- function(data) {
         summary_df <-
           dplyr::select(
             list_of_summaries$summary_df_display_list[[group_id]],
-            dplyr::all_of(rowname_col_private),
-            dplyr::all_of(default_vars_names)
+            dplyr::all_of(c(rowname_col_private, default_vars_names)),
           )
 
         n_summary_rows <- seq_len(nrow(summary_df))

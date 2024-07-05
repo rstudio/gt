@@ -96,7 +96,7 @@ dt_data_add_rows <- function(
   if (is.null(before) && is.null(after)) {
 
     updated_data_tbl <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         data_tbl,
         row_data_tbl
       )
@@ -104,7 +104,7 @@ dt_data_add_rows <- function(
   } else if (!is.null(before) && is.null(after)) {
 
     updated_data_tbl <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         data_tbl[(1:before) - 1, ],
         row_data_tbl,
         data_tbl[before:nrow(data_tbl), ]
@@ -115,7 +115,7 @@ dt_data_add_rows <- function(
     if (after == nrow(data_tbl)) {
 
       updated_data_tbl <-
-        dplyr::bind_rows(
+        vctrs::vec_rbind(
           data_tbl,
           row_data_tbl
         )
@@ -123,7 +123,7 @@ dt_data_add_rows <- function(
     } else {
 
       updated_data_tbl <-
-        dplyr::bind_rows(
+        vctrs::vec_rbind(
           data_tbl[1:after, ],
           row_data_tbl,
           data_tbl[(after + 1):nrow(data_tbl), ]
@@ -151,9 +151,9 @@ dt_data_add_rows <- function(
       } else {
         NA_character_
       },
-      group_label = rep(list(NULL), nrow_row_data_tbl),
-      indent = rep(NA_character_, nrow_row_data_tbl),
-      built_group_label = rep(NA_character_, nrow_row_data_tbl)
+      group_label = rep_len(list(NULL), nrow_row_data_tbl),
+      indent = rep_len(NA_character_, nrow_row_data_tbl),
+      built_group_label = rep_len(NA_character_, nrow_row_data_tbl)
     )
 
   #
@@ -204,7 +204,7 @@ dt_data_add_rows <- function(
   if (is.null(before) && is.null(after)) {
 
     stub_df_updated <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         stub_df,
         stub_df_add
       )
@@ -212,7 +212,7 @@ dt_data_add_rows <- function(
   } else if (!is.null(before) && is.null(after)) {
 
     stub_df_updated <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         stub_df[(1:before) - 1, ],
         stub_df_add,
         stub_df[before:nrow(data_tbl), ]
@@ -223,7 +223,7 @@ dt_data_add_rows <- function(
     if (after == nrow(data_tbl)) {
 
       stub_df_updated <-
-        dplyr::bind_rows(
+        vctrs::vec_rbind(
           stub_df,
           stub_df_add
         )
@@ -231,7 +231,7 @@ dt_data_add_rows <- function(
     } else {
 
     stub_df_updated <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         stub_df[1:after, ],
         stub_df_add,
         stub_df[(after + 1):nrow(data_tbl), ]

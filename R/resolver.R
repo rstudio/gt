@@ -608,7 +608,12 @@ normalize_resolved <- function(
     } else if (length(resolved) == item_count) {
       # Do nothing
     } else {
-      resolver_stop_on_logical(item_label = item_label, call = call)
+      resolver_stop_on_logical(
+        item_label = item_label,
+        actual_length = length(resolved),
+        expected_length = item_count,
+        call = call
+      )
     }
 
   } else if (is.numeric(resolved)) {
@@ -636,12 +641,14 @@ normalize_resolved <- function(
 
 resolver_stop_on_logical <- function(
     item_label,
+    actual_length,
+    expected_length,
     call = rlang::caller_env()
 ) {
 
   cli::cli_abort(
-    "The number of logical values must either be `1` or the number
-    of {item_label}s.",
+    "If logical, {.arg {item_label}s} must have length 1 or {expected_length}, \\
+     not {actual_length}.",
     call = call
   )
 }
@@ -651,10 +658,12 @@ resolver_stop_on_numeric <- function(
     unknown_resolved,
     call = rlang::caller_env()
 ) {
-
+  item_label <- cap_first_letter(item_label)
+  # Specify cli pluralization
+  l <- length(unknown_resolved)
   cli::cli_abort(
-    "The following {item_label} indices do not exist in the data:
-    {paste0(unknown_resolved, collapse = ', ')}.",
+    "{item_label}{cli::qty(l)}{?s} {unknown_resolved} {cli::qty(l)}do{?es/} \\
+    not exist in the data.",
     call = call
   )
 }
@@ -664,7 +673,8 @@ resolver_stop_on_character <- function(
     unknown_resolved,
     call = rlang::caller_env()
 ) {
-  item_label <- tools::toTitleCase(item_label)
+  item_label <- cap_first_letter(item_label)
+  # Specify cli pluralization
   l <- length(unknown_resolved)
   cli::cli_abort(
     "{item_label}{cli::qty(l)}{?s} {.code {unknown_resolved}}
@@ -683,4 +693,9 @@ resolver_stop_unknown <- function(
     "Don't know how to select {item_label}s using {.obj_type_friendly {resolved}}.",
     call = call
   )
+}
+
+cap_first_letter <- function(x) {
+  substr(x, 1, 1) <- toupper(substr(x, 1, 1))
+  x
 }

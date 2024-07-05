@@ -1874,7 +1874,7 @@ cols_add <- function(
       dt_boxhead_get(data = gt(dplyr::as_tibble(as.data.frame(list(...)))))
 
     updated_boxh_df <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         dt_boxhead_get(data = .data),
         updated_boxh_df[
           !(updated_boxh_df$var %in% dt_boxhead_get(data = .data)[["var"]]),
@@ -2035,7 +2035,7 @@ cols_add <- function(
       )
 
     updated_boxh_df <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         boxh_df,
         boxh_df_new_cols
       )

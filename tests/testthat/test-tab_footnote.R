@@ -166,8 +166,8 @@ test_that("tab_footnote() works correctly", {
 
   # Apply a footnote to the column labels and stub cells
   tab <-
-    data %>%
     tab_footnote(
+      data,
       footnote = "Column labels and stub footnote.",
       locations = list(
         cells_column_labels(),
@@ -178,18 +178,17 @@ test_that("tab_footnote() works correctly", {
   # Expect that the internal `footnotes_df` data frame will have
   # its `locname` column entirely populated with `columns_columns`
   # and `stub`
-  dt_footnotes_get(data = tab) %>%
-    dplyr::pull(locname) %>%
-    unique() %>%
-    expect_equal(c("columns_columns", "stub"))
+  expect_setequal(
+    dt_footnotes_get(tab)$locname,
+    c("columns_columns", "stub")
+  )
 
   # Expect that the internal `footnotes_df` data frame will have
   # its `text` column entirely populated with the footnote text
-  dt_footnotes_get(data = tab) %>%
-    dplyr::pull(footnotes) %>%
-    unlist() %>%
-    unique() %>%
-    expect_equal("Column labels and stub footnote.")
+  expect_setequal(
+    unlist(dt_footnotes_get(tab)$footnotes),
+    "Column labels and stub footnote."
+  )
 
   # Apply a footnote to a single stub cell
   tab <-
