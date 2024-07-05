@@ -424,16 +424,19 @@ dt_summary_build <- function(data, context) {
     for (group in groups) {
 
       # vctrs::vec_slice is a fast replacement of dplyr::filter
+      # but handles is.na() a little bit less fast.
       group_summary_data_df <-
         vctrs::vec_slice(
           summary_dfs_data,
-          summary_dfs_data[[group_id_col_private]] == group
-        )
+          !is.na(summary_dfs_data[[group_id_col_private]]) &
+            summary_dfs_data[[group_id_col_private]] == group
+          )
 
       group_summary_display_df <-
         vctrs::vec_slice(
           summary_dfs_display,
-          summary_dfs_display[[group_id_col_private]] == group
+          !is.na(summary_dfs_display[[group_id_col_private]]) &
+            summary_dfs_display[[group_id_col_private]] == group
         )
 
       group_summary_display_df$`::side::` <- side
@@ -473,7 +476,7 @@ dt_summary_build <- function(data, context) {
         dplyr::across(
           dplyr::everything(),
           .fns = last_non_na
-        ),
+          ),
         .by = dplyr::all_of(rowname_col_private)
       )
 
