@@ -280,6 +280,22 @@ resolve_cols_i <- function(
       }
     }
 
+    # If we use the gt-specific select helper `row_group()` then we
+    # will retrieve the row_group var name and return the output in the
+    # same format as the return value for `tidyselect::eval_select()`
+    if (rlang::as_label(quo) == "row_group()") {
+
+      row_group_var <- dt_boxhead_get_vars_groups(data = data)
+
+      if (!is.null(row_group_var)) {
+        row_group_col <- 1
+        names(row_group_col) <- row_group_var
+        return(row_group_col)
+      } else {
+        return(NULL)
+      }
+    }
+
     # In most cases we would want to exclude the column that
     # represents the stub but that isn't always the case (e.g.,
     # when considering the stub for column sizing); the `excl_stub`
@@ -532,15 +548,31 @@ resolve_groups <- function(expr, vector) {
 
     # Provide deprecation warning
     cli::cli_warn(c(
-      "Since gt v0.9.0, the `groups = NULL` option has been deprecated.",
-      "*" = "If this was intended for generation of grand summary rows, instead
-  use the `grand_summary_rows()` function."
+      "Since gt v0.9.0, `groups = NULL` is deprecated.",
+      "i" = "If this was intended for generation of grand summary rows,
+  use `grand_summary_rows()` instead."
     ))
 
     return(":GRAND_SUMMARY:")
   }
 
+  # Handle groups = FALSE supplied to not do any summary rows.
+  if (isFALSE(resolved)) {
+    resolved <- NULL
+  }
+
   if (length(resolved) < 1) {
+    # Error if groups = everything() and no row groups. Return NULL otherwise.
+    input <- tryCatch(rlang::as_label(quo), error = NULL)
+    if (identical(input, "everything()")) {
+      # Abort to suggest grand_summary_rows() instead. (#1292)
+      cli::cli_abort(c(
+        "Since gt v0.9.0, `groups = everything()` is deprecated in {.fn summary_rows} if no row groups are present.",
+        "i" = "Use `grand_summary_rows()` instead or add row groups."
+        ),
+        call = NULL
+      )
+    }
     return(NULL)
   }
 
@@ -592,7 +624,12 @@ normalize_resolved <- function(
     } else if (length(resolved) == item_count) {
       # Do nothing
     } else {
-      resolver_stop_on_logical(item_label = item_label, call = call)
+      resolver_stop_on_logical(
+        item_label = item_label,
+        actual_length = length(resolved),
+        expected_length = item_count,
+        call = call
+      )
     }
 
   } else if (is.numeric(resolved)) {
@@ -620,12 +657,14 @@ normalize_resolved <- function(
 
 resolver_stop_on_logical <- function(
     item_label,
+    actual_length,
+    expected_length,
     call = rlang::caller_env()
 ) {
 
   cli::cli_abort(
-    "The number of logical values must either be `1` or the number
-    of {item_label}s.",
+    "If logical, {.arg {item_label}s} must have length 1 or {expected_length}, \\
+     not {actual_length}.",
     call = call
   )
 }
@@ -635,10 +674,12 @@ resolver_stop_on_numeric <- function(
     unknown_resolved,
     call = rlang::caller_env()
 ) {
-
+  item_label <- cap_first_letter(item_label)
+  # Specify cli pluralization
+  l <- length(unknown_resolved)
   cli::cli_abort(
-    "The following {item_label} indices do not exist in the data:
-    {paste0(unknown_resolved, collapse = ', ')}.",
+    "{item_label}{cli::qty(l)}{?s} {unknown_resolved} {cli::qty(l)}do{?es/} \\
+    not exist in the data.",
     call = call
   )
 }
@@ -648,7 +689,8 @@ resolver_stop_on_character <- function(
     unknown_resolved,
     call = rlang::caller_env()
 ) {
-  item_label <- tools::toTitleCase(item_label)
+  item_label <- cap_first_letter(item_label)
+  # Specify cli pluralization
   l <- length(unknown_resolved)
   cli::cli_abort(
     "{item_label}{cli::qty(l)}{?s} {.code {unknown_resolved}}
@@ -667,4 +709,9 @@ resolver_stop_unknown <- function(
     "Don't know how to select {item_label}s using {.obj_type_friendly {resolved}}.",
     call = call
   )
+}
+
+cap_first_letter <- function(x) {
+  substr(x, 1, 1) <- toupper(substr(x, 1, 1))
+  x
 }

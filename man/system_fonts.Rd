@@ -234,7 +234,7 @@ are used if the aforementioned fonts aren't available).
 
 \section{Function ID}{
 
-8-32
+8-33
 }
 
 \section{Function Introduced}{
@@ -260,6 +260,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
+\code{\link{row_group}()},
 \code{\link{stub}()},
 \code{\link{unit_conversion}()}
 }

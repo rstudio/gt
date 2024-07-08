@@ -4,7 +4,18 @@
 \alias{info_time_style}
 \title{View a table with info on time styles}
 \usage{
-info_time_style()
+info_time_style(locale = NULL)
+}
+\arguments{
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for displaying formatted
+time values according the locale's rules. Examples include \code{"en"} for
+English (United States) and \code{"fr"} for French (France). We can call
+\code{\link[=info_locales]{info_locales()}} for a useful reference for all of the locales that are
+supported.}
 }
 \value{
 An object of class \code{gt_tbl}.

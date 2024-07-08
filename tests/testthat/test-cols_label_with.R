@@ -82,8 +82,8 @@ test_that("cols_label_with() works correctly", {
 
   # Expect that `tbl_html_2` has the same column labels as `tbl_html_1`
   expect_equal(
-    tbl_html_1 %>% render_as_html(),
-    tbl_html_2 %>% render_as_html()
+    render_as_html(tbl_html_1),
+    render_as_html(tbl_html_2)
   )
 
   # Create the `tbl_html_3` object with `gt()` and label none
@@ -147,8 +147,8 @@ test_that("cols_label_with() works correctly", {
 
   # Expect that `tbl_html_5` has the same column labels as `tbl_html_4`
   expect_equal(
-    tbl_html_4 %>% render_as_html(),
-    tbl_html_5 %>% render_as_html()
+    render_as_html(tbl_html_4),
+    render_as_html(tbl_html_5)
   )
 
   #

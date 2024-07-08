@@ -3314,7 +3314,7 @@ fmt_fraction <- function(
 
         # Generate an vector of empty strings that will eventually contain
         # all of the fractional parts of the finalized numbers
-        fraction_x <- rep("", length(x))
+        fraction_x <- rep_len("", length(x))
 
         # Round all values of x to 3 digits with the R-H-U method of
         # rounding (for reproducibility purposes)
@@ -3621,7 +3621,7 @@ round_gt <- function(x, digits = 0) {
 #'   supplied as a 3-letter currency code (e.g., `"USD"` for U.S. Dollars,
 #'   `"EUR"` for the Euro currency). Use [info_currencies()] to get an
 #'   information table with all of the valid currency codes and examples of
-#'   each. Alternatively, we can provide a common currency name (e.g.,
+#'   each. Alternatively, we can provide a general currency type (e.g.,
 #'   `"dollar"`, `"pound"`, `"yen"`, etc.) to simplify the process. Use
 #'   [info_currencies()] with the `type == "symbol"` option to view an
 #'   information table with all of the supported currency symbol names along
@@ -13458,7 +13458,7 @@ fmt_passthrough <- function(
       html = function(x) {
 
         # Create `x_str` with same length as `x`
-        x_str <- rep(NA_character_, length(x))
+        x_str <- rep_len(NA_character_, length(x))
 
         # Handle formatting of pattern
         x_str <-
@@ -13476,7 +13476,7 @@ fmt_passthrough <- function(
       latex = function(x) {
 
         # Create `x_str` with same length as `x`
-        x_str <- rep(NA_character_, length(x))
+        x_str <- rep_len(NA_character_, length(x))
 
         # Handle formatting of pattern
         x_str <-
@@ -14048,7 +14048,7 @@ split_str_by_index <- function(target, index) {
 
   index <- sort(index)
   substr(
-    rep(target, length(index) + 1),
+    rep_len(target, length(index) + 1),
     start = c(1, index),
     stop = c(index - 1, nchar(target))
   )

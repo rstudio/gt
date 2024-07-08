@@ -687,7 +687,7 @@ as_latex <- function(data) {
   colwidth_df <- create_colwidth_df_l(data = data)
 
   # Create a LaTeX fragment for the start of the table
-  table_start <- create_table_start_l(data = data)
+  table_start <- create_table_start_l(data = data, colwidth_df = colwidth_df)
 
   # Create the heading component
   heading_component <- create_heading_component_l(data = data)
@@ -1361,7 +1361,7 @@ grid_layout_heights <- function(layout) {
   singles <- rows[is_single, ]
   spanner <- rows[!is_single, ]
 
-  heights <- rep(0, max(layout$bottom))
+  heights <- rep_len(0, max(layout$bottom))
   heights[singles$key$top] <- singles$height
   spanner <- spanner[order(spanner$key$top, spanner$key$bottom), ]
 
@@ -1432,7 +1432,7 @@ grid_layout_widths <- function(layout, data) {
   singles <- columns[is_single, ]
   spanner <- columns[!is_single, ]
 
-  widths <- rep(0, max(layout$right))
+  widths <- rep_len(0, max(layout$right))
   widths[singles$key$left] <- singles$width
 
   # Enlarge columns if fixed column widths have been set
@@ -1483,7 +1483,7 @@ grid_layout_widths <- function(layout, data) {
     # Set the total width in npc units
     total_width <- as.numeric(gsub("\\%$", "", total_width)) / 100
     change <- setdiff(seq_along(widths), fixed)
-    extra_width <- rep(0, length(widths))
+    extra_width <- rep_len(0, length(widths))
     extra_width[change] <- total_width / length(change)
     extra_width <- grid::unit(extra_width, "npc")
 
@@ -1759,7 +1759,7 @@ extract_summary <- function(data) {
                 group_id = group_id_col_private,
                 row_id = row_id_col_private,
                 rowname = rowname_col_private
-                ))
+              ))
             )
 
           flattened_rowname <- unname(unlist(y$rowname))

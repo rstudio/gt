@@ -210,6 +210,42 @@ test_that("Row groups can be successfully generated with `tab_row_group()", {
     c("", "Mazda", "Mercs")
   )
 
+  # Create a `tbl_html` object with `gt()`; this table contains a single
+  # row group that has a label with the `html()` helper
+  tbl_html <-
+    gtcars %>%
+    dplyr::select(model, year, hp, trq) %>%
+    dplyr::slice(1:8) %>%
+    gt(rowname_col = "model") %>%
+    tab_row_group(
+      label = html("<div style=\"font-weight: bold;\">numbered</div>"),
+      rows = matches("^[0-9]")
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that the inner HTML content for the row group
+  # has the expected text
+  expect_equal(get_row_group_text(tbl_html), c("numbered", ""))
+
+  # Create a `tbl_html` object with `gt()`; this table contains a single
+  # row group that has a label with the `md()` helper
+  tbl_html <-
+    gtcars %>%
+    dplyr::select(model, year, hp, trq) %>%
+    dplyr::slice(1:8) %>%
+    gt(rowname_col = "model") %>%
+    tab_row_group(
+      label = md("**cars** that are <em>numbered</em>"),
+      rows = matches("^[0-9]")
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that the inner HTML content for the row group
+  # has the expected text
+  expect_equal(get_row_group_text(tbl_html), c("cars that are numbered", ""))
+
   # Create a variation on the above table where `row_group_order()`
   # leaves out `NA` (it's put at the end)
   tbl_html <-

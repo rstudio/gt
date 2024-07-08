@@ -554,7 +554,8 @@ cols_width <- function(
       resolve_cols_c(
         expr = !!cols,
         data = .data,
-        excl_stub = FALSE
+        excl_stub = FALSE,
+        excl_group = FALSE
       )
 
     columns <- base::setdiff(columns, columns_used)
@@ -1873,7 +1874,7 @@ cols_add <- function(
       dt_boxhead_get(data = gt(dplyr::as_tibble(as.data.frame(list(...)))))
 
     updated_boxh_df <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         dt_boxhead_get(data = .data),
         updated_boxh_df[
           !(updated_boxh_df$var %in% dt_boxhead_get(data = .data)[["var"]]),
@@ -2034,7 +2035,7 @@ cols_add <- function(
       )
 
     updated_boxh_df <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         boxh_df,
         boxh_df_new_cols
       )
@@ -2519,7 +2520,7 @@ cols_add <- function(
 #'   ) |>
 #'   cols_label_with(
 #'     columns = -matches("plot"),
-#'     fn = function(x) gsub("\\D+", "", x)
+#'     fn = function(x) gsub("[^0-9]+", "", x)
 #'   ) |>
 #'   cols_align(align = "center", columns = matches("plot")) |>
 #'   cols_width(
@@ -2754,7 +2755,7 @@ cols_add <- function(
 #' sales for a selection of days. By converting the string-time 24-hour-clock
 #' time values to the number of seconds elapsed in a day, we get continuous
 #' values that can be incorporated into each box plot. And, by supplying a
-#' function to the `y_val_fmt_fn` argument within `nanoplot_options()`, we can
+#' function to the `y_val_fmt_fn` argument within [nanoplot_options()], we can
 #' transform the integer seconds values back to clock times for display on
 #' hover.
 #'

@@ -141,7 +141,7 @@
 #'   dplyr::filter(abundance != 1) |>
 #'   dplyr::filter(z >= 1 & z <= 8) |>
 #'   dplyr::mutate(element = paste0(element, ", **z = ", z, "**")) |>
-#'   dplyr::mutate(nuclide = gsub("\\d+$", "", nuclide)) |>
+#'   dplyr::mutate(nuclide = gsub("[0-9]+$", "", nuclide)) |>
 #'   dplyr::select(nuclide, element, atomic_mass, abundance, abundance_uncert) |>
 #'   gt(
 #'     rowname_col = "nuclide",
@@ -1028,18 +1028,18 @@ resolve_spanned_column_names <- function(
 #'   dplyr::rename_with(
 #'     .fn = function(x) {
 #'       x |>
-#'         gsub("(.*?)_(\\d{4})", "\\1.\\2", x = _) |>
-#'         gsub("pop_change", "Population Change", x = _)
+#'         sub("pop_change_", "Population Change.", x = _) |>
+#'         sub("_pct", ".pct", x = _)
 #'     }
 #'   ) |>
 #'   gt(rowname_col = "name") |>
-#'   tab_spanner_delim(delim = "_") |>
+#'   tab_spanner_delim(delim = ".") |>
 #'   fmt_number(decimals = 1, scale_by = 100) |>
 #'   cols_label_with(
 #'     fn = function(x) gsub("pct", "%", x)
 #'   ) |>
 #'   text_transform(
-#'     fn = function(x) gsub(".", " - ", x, fixed = TRUE),
+#'     fn = function(x) gsub("_", " - ", x, fixed = TRUE),
 #'     locations = cells_column_spanners()
 #'   ) |>
 #'   tab_style(
@@ -1707,6 +1707,13 @@ tab_row_group <- function(
     )
 
   stub_df <- dt_stub_df_get(data = data)
+
+  # If the label is marked as HTML or Markdown and there's no `id` set
+  # (assumed when `id` is equal to `label`), strip away HTML tags in the
+  # `id` value
+  if (id == label && (inherits(id, "html") || inherits(id, "from_markdown"))) {
+    id <- remove_html(as.character(id))
+  }
 
   # Place the `label` in the `groupname` column `stub_df`
   stub_df[resolved_rows_idx, "group_label"] <- list(list(label))
@@ -2859,7 +2866,7 @@ set_footnote.cells_source_notes <- function(
     footnote,
     placement
 ) {
-  cli::cli_abort("Footnotes cannot be applied to source notes.")
+  cli::cli_abort("Footnotes cannot be applied to source notes.", call = call("cells_source_notes"))
 }
 
 #' @export
@@ -2869,7 +2876,7 @@ set_footnote.cells_footnotes <- function(
     footnote,
     placement
 ) {
-  cli::cli_abort("Footnotes cannot be applied to other footnotes.")
+  cli::cli_abort("Footnotes cannot be applied to other footnotes.", call = call("cells_footnotes"))
 }
 
 #' Add a source note citation

@@ -137,7 +137,7 @@ test_that("cols_width() stores values correctly", {
       dplyr::mutate(column_width = unlist(column_width)),
     dplyr::tibble(
       var = c(paste0("col_", 1:4), "row", "group"),
-      column_width = c(paste0((1:4 * 100), "px"), "400px", "")
+      column_width = c(paste0((1:4 * 100), "px"), "400px", "400px")
     )
   )
 
@@ -168,7 +168,7 @@ test_that("cols_width() stores values correctly", {
       dplyr::mutate(column_width = unlist(column_width)),
     dplyr::tibble(
       var = c(paste0("col_", 1:4), "row", "group"),
-      column_width = c(rep("100px", 5), "")
+      column_width = rep("100px", 6)
     )
   )
 
@@ -183,7 +183,46 @@ test_that("cols_width() stores values correctly", {
       dplyr::mutate(column_width = unlist(column_width)),
     dplyr::tibble(
       var = c(paste0("col_", 1:4), "row", "group"),
-      column_width = c(rep("100px", 5), "")
+      column_width = c(rep("100px", 5), "50px")
+    )
+  )
+
+  expect_equal(
+    gt(
+      tbl_2,
+      rowname_col = "row",
+      groupname_col = "group",
+      row_group_as_column = TRUE
+    ) %>%
+      cols_width(
+        group ~ px(20),
+        everything() ~ px(100)
+      ) %>%
+      .$`_boxhead` %>%
+      dplyr::select(var, column_width) %>%
+      dplyr::mutate(column_width = unlist(column_width)),
+    dplyr::tibble(
+      var = c(paste0("col_", 1:4), "row", "group"),
+      column_width = c(rep("100px", 5), "20px")
+    )
+  )
+
+  expect_equal(
+    gt(
+      tbl_2,
+      groupname_col = "group",
+      row_group_as_column = TRUE
+    ) %>%
+      cols_width(
+        group ~ px(10),
+        row ~ px(30)
+      ) %>%
+      .$`_boxhead` %>%
+      dplyr::select(var, column_width) %>%
+      dplyr::mutate(column_width = unlist(column_width)),
+    dplyr::tibble(
+      var = c(paste0("col_", 1:4), "row", "group"),
+      column_width = c(rep("", 4), "30px", "10px")
     )
   )
 
@@ -204,8 +243,7 @@ test_that("cols_width() stores values correctly", {
       )
   )
 
-  # Expect an error if a column provided is not
-  # in the dataset
+  # Expect an error if a column provided is not in the dataset
   expect_error(
     gt(tbl) %>%
       cols_width(
@@ -902,9 +940,10 @@ test_that("cols_width() correctly specifies LaTeX table when column widths are s
     prefix <- '>\\{\\\\(raggedright|raggedleft|centering)\\\\arraybackslash\\}'
 
     sprintf(
-      '%sp\\{\\\\dimexpr %s%s-2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}',
+      '%sp\\{\\\\dimexpr %.2f%s -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}',
       prefix,
-      format(x, scientific = FALSE, trim = TRUE),
+      x,
+      #format(x, scientific = FALSE, trim = TRUE),
       unit
     )
 
@@ -930,8 +969,8 @@ test_that("cols_width() correctly specifies LaTeX table when column widths are s
         "\\\\begin\\{longtable\\}\\{",
         "(@\\{\\\\extracolsep\\{\\\\fill\\}\\})*",
         # '>\\{\\\\ragged[[:alpha:]]+\\\\arraybackslash'
-       sprintf(">\\{\\\\(raggedright|raggedleft|centering)\\\\arraybackslash\\}p\\{\\\\dimexpr 0\\.%d\\\\linewidth-2\\\\tabcolsep-1.5\\\\arrayrulewidth}",
-               c(5L, 3L, 2L, 1L)),
+       sprintf(">\\{\\\\(raggedright|raggedleft|centering)\\\\arraybackslash\\}p\\{\\\\dimexpr 0\\.%d\\\\linewidth -2\\\\tabcolsep-1.5\\\\arrayrulewidth}",
+               c(50L, 30L, 20L, 10L)),
         "\\}\\n"
       ),
       collapse = ""

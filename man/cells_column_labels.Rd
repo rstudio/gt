@@ -77,7 +77,7 @@ Add footnotes to the column labels with \code{\link[=tab_footnote]{tab_footnote(
 
 \section{Function ID}{
 
-8-14
+8-15
 }
 
 \section{Function Introduced}{

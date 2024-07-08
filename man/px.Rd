@@ -73,6 +73,7 @@ Other helper functions:
 \code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{random_id}()},
+\code{\link{row_group}()},
 \code{\link{stub}()},
 \code{\link{system_fonts}()},
 \code{\link{unit_conversion}()}

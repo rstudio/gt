@@ -26,18 +26,28 @@ html_fragment_within <- function(raw_html, ...) {
   grepl(paste0("\\Q", c(...), "\\E", "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)
 }
 
-
-# Helper to ensure all patterns are matched
-tidy_grepl <- function(x, pattern) {
-
-  vapply(
-    pattern,
-    FUN = function(pattern) {
-      grepl(pattern = pattern, x = x)
-    },
-    FUN.VALUE = logical(1L),
-    USE.NAMES = FALSE
-  )
+# shortcut for expect_match(render_as_html(object), regexp)
+expect_match_html <- function(object,
+                              regexp,
+                              perl = FALSE,
+                              fixed = FALSE,
+                              ...,
+                              all = TRUE,
+                              info = NULL,
+                              label = NULL) {
+  rendered <- render_as_html(object)
+  for (i in seq_along(regexp)) {
+    testthat::expect_match(
+      object = rendered,
+      regexp = regexp[i],
+      perl = perl,
+      fixed = fixed,
+      ...,
+      all = all,
+      info = info,
+      label = label
+    )
+  }
 }
 
 expect_merge_locale_sep <- function(locale = NULL, global_locale = NULL, sep = NULL, expected_sep) {

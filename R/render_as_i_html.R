@@ -218,10 +218,10 @@ render_as_ihtml <- function(data, id) {
 
   if (table_width == "auto") table_width <- NULL
 
-
   #
   # Determine which columns will undergo some formatting
   #
+
   formats <- dt_formats_get(data = data)
 
   # Get a list of vectors that include columns taking part
@@ -421,13 +421,13 @@ render_as_ihtml <- function(data, id) {
   if (has_footer_section) {
 
     if (!is.null(source_notes)) {
-      source_notes_component <- create_source_notes_component_h(data = data)
+      source_notes_component <- create_source_notes_component_ihtml(data = data)
     } else {
       source_notes_component <- NULL
     }
 
     if (!is.null(footnotes)) {
-      footnotes_component <- create_footnotes_component_h(data = data)
+      footnotes_component <- create_footnotes_component_ihtml(data = data)
     } else {
       footnotes_component <- NULL
     }
@@ -625,4 +625,186 @@ render_as_ihtml <- function(data, id) {
   #nocov end
 
   x
+}
+
+create_source_notes_component_ihtml <- function(data) {
+
+  source_notes <- dt_source_notes_get(data = data)
+
+  if (is.null(source_notes)) {
+    return("")
+  }
+
+  styles_tbl <- dt_styles_get(data = data)
+
+  # Get the style attrs for the source notes
+  if ("source_notes" %in% styles_tbl$locname) {
+
+    source_notes_style <- dplyr::filter(styles_tbl, locname == "source_notes")
+
+    source_notes_styles <-
+      if (nrow(source_notes_style) > 0) {
+        paste(source_notes_style$html_style, collapse = " ")
+      } else {
+        NULL
+      }
+
+  } else {
+    source_notes_styles <- NULL
+  }
+
+  # Get the source note multiline option
+  multiline <- dt_options_get_value(data = data, option = "source_notes_multiline")
+
+  # Get the source note separator option
+  separator <- dt_options_get_value(data = data, option = "source_notes_sep")
+
+  # Handle the multiline source notes case (each footnote takes up one line)
+  if (multiline) {
+    # Create the source notes component as a series of `<div>`s (one per
+    # source note) inside of a `<div>`
+    return(
+      htmltools::tags$div(
+        class = "gt_sourcenotes",
+        lapply(
+          source_notes,
+          function(x) {
+            htmltools::tags$div(
+              class = "gt_sourcenote",
+              style = source_notes_styles,
+              htmltools::HTML(x)
+            )
+          }
+        )
+      )
+    )
+  }
+
+  # Perform HTML escaping on the separator text and transform space
+  # characters to non-breaking spaces
+  separator <- gsub(" (?= )", "&nbsp;", separator, perl = TRUE)
+
+  # Create the source notes component as a set of nested `<div>`s
+  htmltools::tags$div(
+    class = "gt_sourcenotes",
+    style = source_notes_styles,
+    htmltools::tags$div(
+      class = "gt_sourcenote",
+      htmltools::tags$div(
+        style = htmltools::css(`padding-bottom` = "2px"),
+        htmltools::HTML(paste(source_notes, collapse = separator))
+      )
+    )
+  )
+}
+
+create_footnotes_component_ihtml <- function(data) {
+
+  footnotes_tbl <- dt_footnotes_get(data = data)
+
+  # If the `footnotes_resolved` object has no
+  # rows, then return an empty footnotes component
+  if (nrow(footnotes_tbl) == 0) {
+    return("")
+  }
+
+  styles_tbl <- dt_styles_get(data = data)
+
+  # Get the distinct set of `fs_id` & `footnotes` values in the `footnotes_tbl`
+  footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
+
+  # Get the style attrs for the footnotes
+  if ("footnotes" %in% styles_tbl$locname) {
+
+    footnotes_style <- styles_tbl[styles_tbl$locname == "footnotes", ]
+
+    footnotes_styles <-
+      if (nrow(footnotes_style) > 0) {
+        paste(footnotes_style$html_style, collapse = " ")
+      } else {
+        NULL
+      }
+
+  } else {
+    footnotes_styles <- NULL
+  }
+
+  # Get the footnote multiline option
+  multiline <- dt_options_get_value(data = data, option = "footnotes_multiline")
+
+  # Get the footnote separator option
+  separator <- dt_options_get_value(data = data, option = "footnotes_sep")
+
+  # Obtain vectors of footnote ID values (prerendered glyphs) and
+  # the associated text
+  footnote_ids <- footnotes_tbl[["fs_id"]]
+  footnote_text <- footnotes_tbl[["footnotes"]]
+
+  # Create a vector of HTML footnotes
+  footnotes <-
+    unlist(
+      mapply(
+        SIMPLIFY = FALSE,
+        USE.NAMES = FALSE,
+        footnote_ids,
+        footnote_text,
+        FUN = function(x, footnote_text) {
+          as.character(
+            htmltools::tagList(
+              htmltools::HTML(
+                paste0(
+                  footnote_mark_to_html(
+                    data = data,
+                    mark = x,
+                    location = "ftr"
+                  ),
+                  " ",
+                  process_text(footnote_text, context = "html")
+                ),
+                .noWS = c("after", "before")
+              )
+            )
+          )
+        }
+      )
+    )
+
+  # Handle the multiline footnotes case (each footnote takes up one line)
+  if (multiline) {
+
+    # Create the footnotes component as a series of `<div>`s (one per
+    # footnote) inside of a `<div>`
+    return(
+      htmltools::tags$div(
+        class = "gt_footnotes",
+        lapply(
+          footnotes,
+          function(x) {
+            htmltools::tags$div(
+              class = "gt_footnote",
+              style = footnotes_styles,
+              htmltools::HTML(x)
+            )
+          }
+        )
+      )
+    )
+  }
+
+  # Perform HTML escaping on the separator text and transform space
+  # characters to non-breaking spaces
+  separator <- gsub(" (?= )", "&nbsp;", separator, perl = TRUE)
+
+  # Create the footnotes component as a set of nested `<div>`s
+  htmltools::tags$div(
+    class = "gt_footnotes",
+    style = footnotes_styles,
+    htmltools::tags$div(
+      class = "gt_footnote",
+      htmltools::tags$div(
+        style = htmltools::css(`padding-bottom` = "2px"),
+        htmltools::HTML(paste(footnotes, collapse = separator))
+      )
+    )
+  )
 }

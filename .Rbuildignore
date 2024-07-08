@@ -113,7 +113,9 @@ tests/testthat/test-input_data_validation.R
 tests/testthat/test-l_table_parts.R
 tests/testthat/_snaps/l_table_parts.md
 
+tests/testthat/_snaps/location_cells.md
 tests/testthat/test-location_cells.R
+
 tests/testthat/test-opt_functions.R
 
 tests/testthat/test-removal_functions.R

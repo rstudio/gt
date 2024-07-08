@@ -1352,6 +1352,70 @@ stub <- function() {
   x
 }
 
+#' Select helper for targeting the row group column
+#'
+#' @description
+#'
+#' Should you need to target only the row group column for column-width
+#' declarations (i.e., when `row_group_as_column = TRUE` is set in the initial
+#' [gt()] call), the `row_group()` select helper can be used. This shorthand
+#' makes it so you don't have to use the name of the column that was selected
+#' as the row group column.
+#'
+#' @return A character vector of class `"row_group_column"`.
+#'
+#' @section Examples:
+#'
+#' Create a tibble that has a `row` column (values from `1` to `6`), a `group`
+#' column, and a `vals` column (containing the same values as in `row`).
+#'
+#' ```r
+#' tbl <-
+#'   dplyr::tibble(
+#'     row = 1:6,
+#'     group = c(rep("Group A", 3), rep("Group B", 3)),
+#'     vals = 1:6
+#'   )
+#' ```
+#'
+#' Create a **gt** table with a two-column stub (incorporating the `row` and
+#' `group` columns in that). We can set the widths of the two columns in the
+#' stub with the `row_group()` and [stub()] helpers on the LHS of the
+#' expressions passed to [cols_width()].
+#'
+#' ```r
+#' tbl |>
+#'   gt(
+#'     rowname_col = "row",
+#'     groupname_col = "group",
+#'     row_group_as_column = TRUE
+#'   ) |>
+#'   fmt_roman(columns = stub()) |>
+#'   cols_width(
+#'     row_group() ~ px(200),
+#'     stub() ~ px(100),
+#'     vals ~ px(50)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_row_group_1.png")`
+#' }}
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-11
+#'
+#' @section Function Introduced:
+#' **In Development**
+#'
+#' @export
+row_group <- function() {
+  x <- "::row_group::"
+  class(x) <- "row_group_column"
+  x
+}
+
 #' Location helper for targeting the table title and subtitle
 #'
 #' @description
@@ -1395,7 +1459,7 @@ stub <- function() {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-11
+#' 8-12
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1467,7 +1531,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-12
+#' 8-13
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1536,7 +1600,7 @@ cells_stubhead <- function() {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-13
+#' 8-14
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1618,7 +1682,7 @@ cells_column_spanners <- function(spanners = everything()) {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-14
+#' 8-15
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1697,7 +1761,7 @@ cells_column_labels <- function(columns = everything()) {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-15
+#' 8-16
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1796,7 +1860,7 @@ cells_group <- function(groups = everything()) {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-16
+#' 8-17
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1906,7 +1970,7 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-17
+#' 8-18
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2041,7 +2105,7 @@ cells_body <- function(
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-18
+#' 8-19
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2149,7 +2213,7 @@ cells_summary <- function(
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-19
+#' 8-20
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2266,7 +2330,7 @@ cells_grand_summary <- function(
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-20
+#' 8-21
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2361,7 +2425,7 @@ cells_stub_summary <- function(
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-21
+#' 8-22
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2438,7 +2502,7 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-22
+#' 8-23
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2494,7 +2558,7 @@ cells_footnotes <- function() {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-23
+#' 8-24
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2654,7 +2718,7 @@ cells_source_notes <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-24
+#' 8-25
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2857,7 +2921,7 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-25
+#' 8-26
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3003,7 +3067,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-26
+#' 8-27
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3135,7 +3199,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-27
+#' 8-28
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3177,7 +3241,7 @@ latex_special_chars <- c(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-28
+#' 8-29
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3250,7 +3314,7 @@ escape_latex <- function(text) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-29
+#' 8-30
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3354,7 +3418,7 @@ gt_latex_dependencies <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-30
+#' 8-31
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -3427,7 +3491,7 @@ google_font <- function(name) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-31
+#' 8-32
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -3667,7 +3731,7 @@ default_fonts <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-32
+#' 8-33
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
