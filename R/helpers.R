@@ -669,7 +669,7 @@ currency <- function(
 #' 8-7
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 #' @export
 unit_conversion <- function(from, to) {
@@ -1407,7 +1407,7 @@ stub <- function() {
 #' 8-11
 #'
 #' @section Function Introduced:
-#' **In Development**
+#' `v0.11.0`
 #'
 #' @export
 row_group <- function() {

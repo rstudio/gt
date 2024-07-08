@@ -38,7 +38,7 @@ Get a table of info on all the available keywords for unit conversions.
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.11.0}
 }
 
 \seealso{

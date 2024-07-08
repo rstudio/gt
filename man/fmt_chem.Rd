@@ -269,7 +269,7 @@ properly formatted to the convention of formatting nuclides.
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.11.0}
 }
 
 \seealso{

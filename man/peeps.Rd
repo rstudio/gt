@@ -78,7 +78,7 @@ DATA-8
 
 \section{Dataset Introduced}{
 
-\emph{In Development}
+\code{v0.11.0}
 }
 
 \seealso{

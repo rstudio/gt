@@ -544,7 +544,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "peeps"
 
@@ -598,7 +598,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "films"
 
@@ -719,7 +719,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "gibraltar"
 
@@ -965,7 +965,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "reactions"
 
@@ -1024,7 +1024,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "photolysis"
 
@@ -1085,7 +1085,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "nuclides"
 

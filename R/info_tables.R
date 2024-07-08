@@ -1136,7 +1136,7 @@ info_icons <- function() {
 #' 11-9
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 #' @export
 info_unit_conversions <- function() {

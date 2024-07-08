@@ -40,7 +40,7 @@ A \code{gtable} object.
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.11.0}
 }
 
 \seealso{

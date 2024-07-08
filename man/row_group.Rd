@@ -61,7 +61,7 @@ expressions passed to \code{\link[=cols_width]{cols_width()}}.
 
 \section{Function Introduced}{
 
-\strong{In Development}
+\code{v0.11.0}
 }
 
 \seealso{
