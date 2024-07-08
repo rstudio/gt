@@ -1182,7 +1182,7 @@ fmt_integer <- function(
 #'   gt(rowname_col = "cmpd_name") |>
 #'   tab_header(title = "Gas-phase reactions of selected mercaptan compounds") |>
 #'   tab_spanner(
-#'     label = md("Reaction Rate Constant (298 K),<br>{{cm^3 molecules^–1 s^–1}}"),
+#'     label = md("Reaction Rate Constant (298 K),<br>{{cm^3 molecules^-1 s^-1}}"),
 #'     columns = ends_with("k298")
 #'   ) |>
 #'   fmt_chem(columns = cmpd_formula) |>
@@ -13036,11 +13036,11 @@ fmt_icon <- function(
 #' text_1a <- "
 #' ### This is Markdown.
 #'
-#' Markdown’s syntax is comprised entirely of
+#' Markdown's syntax is comprised entirely of
 #' punctuation characters, which punctuation
 #' characters have been carefully chosen so as
 #' to look like what they mean... assuming
-#' you’ve ever used email.
+#' you've ever used email.
 #' "
 #'
 #' text_1b <- "

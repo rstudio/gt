@@ -287,7 +287,7 @@
 #' \itemize{
 #' \item `"brie_carre"`: The Brie Carre Pizza (Brie Carre Cheese, Prosciutto,
 #'  Caramelized Onions, Pears, Thyme, Garlic)
-#' \item `"calabrese"`: The Calabrese Pizza (‘Nduja Salami, Pancetta,
+#' \item `"calabrese"`: The Calabrese Pizza ('Nduja Salami, Pancetta,
 #' Tomatoes, Red Onions, Friggitello Peppers, Garlic)
 #' \item `"soppressata"`: The Soppressata Pizza (Soppressata Salami, Fontina
 #' Cheese, Mozzarella Cheese, Mushrooms, Garlic)
@@ -527,14 +527,6 @@
 #' centimeters (cm) and kilograms (kg), respectively.}
 #' }
 #'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `peeps`.
-#'
-#' ```{r}
-#' dplyr::glimpse(peeps)
-#' ```
-#'
 #' @family datasets
 #' @section Dataset ID and Badge:
 #' DATA-8
@@ -655,14 +647,6 @@
 #' of the newest stations in the Metro system do not have this data, thus they
 #' show `NA` values.}
 #' }
-#'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `metro`.
-#'
-#' ```{r}
-#' dplyr::glimpse(metro)
-#' ```
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:

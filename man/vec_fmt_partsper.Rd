@@ -206,7 +206,7 @@ output type).
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_partsper(num_vals)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "1.00‰" "0.10‰" "0.01‰" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "1.00\%." "0.10\%." "0.01\%." "NA"
 }\if{html}{\out{</div>}}
 
 We can change the output units to a different measure. If ppm units are
