@@ -80,7 +80,16 @@ test_that("Interactive tables won't fail when using different options", {
   tbl_gt_i_25 <-
     gt(mtcars_short, groupname_col = "vs") %>%
     opt_interactive()
-
+  # #1758 tab_stubhead() respected (shown on top of group)
+  tbl_gt_i_26 <-
+    gt(mtcars_short, groupname_col = "vs", rownames_to_stub = T) %>%
+    tab_stubhead("stub label on top of vs") %>%
+    opt_interactive()
+  # #1758 NA rows show correctly + stubhead shows on top of row
+  tbl_gt_i_27 <-
+    gt(exibble, rowname_col = "char") %>%
+    tab_stubhead("stub label on top of rowname") %>%
+    opt_interactive()
   capture_output(expect_no_error(tbl_gt_i_01))
   capture_output(expect_no_error(tbl_gt_i_02))
   capture_output(expect_no_error(tbl_gt_i_03))
@@ -106,4 +115,7 @@ test_that("Interactive tables won't fail when using different options", {
   capture_output(expect_no_error(tbl_gt_i_23))
   capture_output(expect_no_error(tbl_gt_i_24))
   capture_output(expect_no_error(tbl_gt_i_25))
+  capture_output(expect_no_error(tbl_gt_i_26))
+  capture_output(expect_no_error(tbl_gt_i_27))
+
 })

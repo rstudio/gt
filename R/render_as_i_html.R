@@ -58,34 +58,48 @@ render_as_ihtml <- function(data, id) {
   # Generate a `lang_defs` object to pass to the `language` argument
   lang_defs <- get_ihtml_translations(locale)
 
-  } else {
+  column_groups <- dt_boxhead_get_vars_groups(data = data)
+  # if dt_boxhead_get_vars_groups is fixed, this will no longer be necessary.
+  if (identical(column_groups, NA_character_)) {
+    column_groups <- NULL
   }
+  rownames_to_stub <- stub_rownames_has_column(data)
+  # value to use for rowname_col or groupname_col title
+  # Will use it for rowname_col only if groupname_col is undefined.
+  # Will use it only for the first groupname_col.
+  stub_label <- dt_stubhead_get(data)$label
+
+  if (is.null(stub_label)) {
+    # No label if stubhead label is undefined.
+    rowname_label <- ""
+    groupname_label <- ""
+  } else if (!is.null(column_groups)) {
+    rowname_label <- ""
+    groupname_label <- stub_label
+  } else {
+    rowname_label <- stub_label
+    groupname_label <- NULL
+  }
+
 
   # Obtain the underlying data table (including group rows)
   data_tbl0 <- dt_data_get(data = data)
 
-  #
   # Only preserve columns that are not hidden (group cols will be added later)
-  #
-
   data_tbl_vars <- dt_boxhead_get_vars_default(data = data)
   data_tbl <- data_tbl0[, data_tbl_vars, drop = FALSE]
 
   #nocov start
-
-  # Stop function if there are no visible columns
   if (ncol(data_tbl) < 1) {
-
+    # Stop function if there are no visible columns
     cli::cli_abort(c(
       "When displaying an interactive gt table, there must be at least one visible column.",
       "*" = "Check that the input data table has at least one column,",
       "*" = "Failing that, look at whether all columns have been inadvertently hidden."
     ))
   }
-
   #nocov end
 
-  rownames_to_stub <- stub_rownames_has_column(data)
   # use of special .rownames doesn't work.
   # Workaround https://github.com/glin/reactable/issues/378
   # rstudio/gt#1702
@@ -93,19 +107,28 @@ render_as_ihtml <- function(data, id) {
     rowname_col <- dt_boxhead_get_var_stub(data)
     if (length(rowname_col) == 1) {
       # avoid base R error when setting duplicate row names.
-      attr(data_tbl, "row.names") <-  as.character(data$`_data`[[rowname_col]])
+      row_names <-  as.character(data$`_data`[[rowname_col]])
+      # Convert to NA string to avoid wrong output.
+      # TODO figure out if there is a way to get the sub_missing value.
+      # With data$`_substitutions`
+      row_names <- dplyr::coalesce(row_names, "NA")
+      attr(data_tbl, "row.names") <- row_names
+      row_name_col_def <- list(reactable::colDef(
+          name = rowname_label
+          # TODO pass on other attributes of row names column if necessary.
+        ))
+      # Create colDef row name with special ".rownames" from reactable.
+      names(row_name_col_def) <- ".rownames"
+
     }
+  } else {
+    row_name_col_def <- NULL
   }
 
   # Obtain column label attributes
   column_names  <- dt_boxhead_get_vars_default(data = data)
   column_labels <- dt_boxhead_get_vars_labels_default(data = data)
   column_alignments <- dt_boxhead_get_vars_align_default(data = data)
-  column_groups <- dt_boxhead_get_vars_groups(data = data)
-  # if dt_boxhead_get_vars_groups is fixed, this will no longer be necessary.
-  if (identical(column_groups, NA_character_)) {
-    column_groups <- NULL
-  }
 
   # Obtain widths for each visible column label
   boxh <- dt_boxhead_get(data = data)
@@ -270,36 +293,46 @@ render_as_ihtml <- function(data, id) {
         return cellInfo.value
       }")
     for (i in seq_along(column_groups)) {
-      group_col_defs[[i]] <- reactable::colDef(
-        name = "",
-        grouped = grp_fn,
-        # FIXME Should groups be sticky? (or provide a way to do this)
-        sticky = NULL
+      if (i == 1) {
+        # Use the stubhead label for the first group
+        group_label <- groupname_label
+      } else {
+        # by default, don't name groupname_col for consistency with non-interactive
+        group_label <- ""
+      }
+
+      group_col_defs[[i]] <-
+        reactable::colDef(
+          name = stub_label,
+          # The total number of rows is wrong in colGroup, possibly due to the JS fn
+          grouped = grp_fn,
+          # FIXME Should groups be sticky? (or provide a way to do this)
+          sticky = NULL
       )
 
     }
     names(group_col_defs) <- column_groups
-    # Add group colDef to general col_def
-    col_defs <- c(col_defs, group_col_defs)
+
     groupname_col <- column_groups
     # for defaultExpanded = TRUE
     expand_groupname_col <- TRUE
-
     # modify data_tbl to include
     data_tbl <- dplyr::bind_cols(
       data_tbl,
       data_tbl0[ , groupname_col, drop = FALSE]
     )
 
-    # Set number of rows to FALSE, since it is inacurrate
-    # Otherwise, it just shows the number of groups
   }  else {
     groupname_col <- NULL
+    group_col_defs <- NULL
     expand_groupname_col <- FALSE
   }
   #
   # Generate custom styles for `defaultColDef`
   #
+
+  # Add group colDef and rowname colDef to general col_def
+  col_defs <- c(col_defs, group_col_defs, row_name_col_def)
 
   styles_tbl <- dt_styles_get(data = data)
   body_styles_tbl <- dplyr::filter(styles_tbl, locname %in% c("data", "stub"))
@@ -341,6 +374,7 @@ render_as_ihtml <- function(data, id) {
       collapse = ""
     )
 
+  # TODO if `sub_missing()` is enabled gloablly, just use `na = ` here!
   default_col_def <-
     reactable::colDef(
       style = reactable::JS(body_style_js_str),
