@@ -10,6 +10,8 @@
 
 * `opt_interactive()` now shows row names if `rownames_to_stub = TRUE` (@olivroy, #1702). 
 
+* `opt_ineractive()` now displays the stub header label created with `tab_stubhead()` (@olivroy, #1758).
+
 * `data_color()` throws a more informative error message if `rows` didn't resolve to anything (@olivroy, #1659).
 
 * PDF output now allows the font size of a table to be set using the table.font.size parameter in the tab_options function (#1472).  The font sizes of individual table cells (including those in the body, stubs, column headings, etc.) can be set using tab_style function. Several other options specified in tab_style are now reflected in PDF output.
