@@ -1,32 +1,44 @@
 # gt 0.11.0
 
-* `summary_rows()` now throws a more informative error message that you should use `grand_summary_rows()` if no row groups are detected (@olivroy, #1292).
- This change was introduced in [gt 0.9.0](https://posit.co/blog/big-changes-to-making-summary-rows-in-gt-0-9-0/)
-* gt now depends on R 3.6 (@olivroy, #1731).
+## New features
 
 * `info_time_style()` and `info_date_style()` gain a `locale` argument to preview datetime formatting in a given locale.
 
-* `opt_interactive()` gains `height` to help specify your widget's height (@olivroy, #1544).
+* Interactive tables now render the first level of column groups added by `tab_spanner()`. Thanks @obsaditelnost for your work on this! (#1618)
 
-* `opt_interactive()` now shows row names if `rownames_to_stub = TRUE` (@olivroy, #1702). 
-
-* `opt_ineractive()` now displays the stub header label created with `tab_stubhead()` (@olivroy, #1758).
+* The `opt_interactive()` function now has the `height` argument to help specify the height of an interactive table (@olivroy, #1544).
 
 * `data_color()` throws a more informative error message if `rows` didn't resolve to anything (@olivroy, #1659).
 
-* PDF output now allows the font size of a table to be set using the table.font.size parameter in the tab_options function (#1472).  The font sizes of individual table cells (including those in the body, stubs, column headings, etc.) can be set using tab_style function. Several other options specified in tab_style are now reflected in PDF output.
+## Improvements to the LaTeX output format
 
-* `data_color()` throws a more informative error if a calculation failed (@olivroy, #1373).
+* LaTeX table output now allows the font size of a table to be set using the `table.font.size` parameter in `tab_options()`. The font sizes of individual table cells (including those in the body, stubs, column headings, etc.) can be set using the `tab_style()` function. Several other options specified in `tab_style()` are now reflected in PDF output. (#1472)
 
-* `gtsave()` saves correctly to .rtf if using `cols_label()` and `summary_rows()` or `grand_summary_rows()` (@olivroy, #1233)
 
-* interactive tables are now rendering the first level of column groups, added by `tab_spanner()` (@obsaditelnost, #1618)
+## Minor improvements and bug fixes
 
-* `cols_hide()` no longer errors if no column was supplied. Error messages are also clearer when supplying a column that doesn't exist (@olivroy, #1631).
+* `data_color()` throws a more informative error if a calculation failed. (@olivroy, #1373)
 
-* `cols_units()`, `tab_footnote()` and `tab_style()` now give better error messages when `locations` is not correctly specified (@olivroy, #475, #1638 , #1640, #1733).
+* `data_color()` throws a more informative error message if `rows` didn't resolve to anything. (@olivroy, #1659)
 
-* `opt_interactive()` has better support for displaying group columns if present (`row_groups_as_column` has no effect on the output) (@olivroy, #1705).
+* `summary_rows()` now throws a more informative error message that you should use `grand_summary_rows()` if no row groups are detected. (@olivroy, #1292)
+
+* `opt_interactive()` now shows row names if `rownames_to_stub = TRUE`. (@olivroy, #1702) 
+
+* `opt_interactive()` has better support for displaying group columns if present (though `row_groups_as_column` has no effect on the output). (@olivroy, #1705)
+
+* `opt_interactive()` now displays the stub header label created with `tab_stubhead()` (@olivroy, #1758).
+
+* `gtsave()` saves correctly to RTF if using `cols_label()` in conjunction with `summary_rows()` or `grand_summary_rows()`. (@olivroy, #1233)
+
+* `cols_hide()` no longer errors if no column was supplied. Error messages are also clearer when supplying a column that doesn't exist. (@olivroy, #1631)
+
+* `cols_units()`, `tab_footnote()` and `tab_style()` now give better error messages when `locations` is not correctly specified (#475). (@olivroy, #1638, #1640, #1733)
+
+* **gt** now depends on R 3.6. (@olivroy, #1731).
+
+## Documentation enhancements
+
 
 # gt 0.10.1
 
