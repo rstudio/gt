@@ -681,7 +681,7 @@ dataset, we will create a simple table that displays a box plot of pizza
 sales for a selection of days. By converting the string-time 24-hour-clock
 time values to the number of seconds elapsed in a day, we get continuous
 values that can be incorporated into each box plot. And, by supplying a
-function to the \code{y_val_fmt_fn} argument within \code{nanoplot_options()}, we can
+function to the \code{y_val_fmt_fn} argument within \code{\link[=nanoplot_options]{nanoplot_options()}}, we can
 transform the integer seconds values back to clock times for display on
 hover.
 
