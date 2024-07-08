@@ -111,7 +111,7 @@ render_as_ihtml <- function(data, id) {
       # Convert to NA string to avoid wrong output.
       # TODO figure out if there is a way to get the sub_missing value.
       # With data$`_substitutions`
-      row_names <- dplyr::coalesce(row_names, "NA")
+      row_names <- dplyr::coalesce(row_names, "")
       attr(data_tbl, "row.names") <- row_names
       row_name_col_def <- list(reactable::colDef(
           name = rowname_label
