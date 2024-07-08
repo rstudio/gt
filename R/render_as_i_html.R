@@ -303,7 +303,7 @@ render_as_ihtml <- function(data, id) {
 
       group_col_defs[[i]] <-
         reactable::colDef(
-          name = stub_label,
+          name = group_label,
           # The total number of rows is wrong in colGroup, possibly due to the JS fn
           grouped = grp_fn,
           # FIXME Should groups be sticky? (or provide a way to do this)
