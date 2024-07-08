@@ -2755,7 +2755,7 @@ cols_add <- function(
 #' sales for a selection of days. By converting the string-time 24-hour-clock
 #' time values to the number of seconds elapsed in a day, we get continuous
 #' values that can be incorporated into each box plot. And, by supplying a
-#' function to the `y_val_fmt_fn` argument within `nanoplot_options()`, we can
+#' function to the `y_val_fmt_fn` argument within [nanoplot_options()], we can
 #' transform the integer seconds values back to clock times for display on
 #' hover.
 #'
