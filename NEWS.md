@@ -2,6 +2,10 @@
 
 ## New features
 
+* **gt** tables can now be rendered in the grid graphics system with the new `as_gtable()` function (#180, #961). Thank you @teunbrand for this valuable contribution! (#1563)
+
+* Math formulas (written in LaTeX) can now be rendered to HTML through `md()` and `fmt_markdown()`. The LaTeX formulas can be set between `$` or `$$` delimiters for inline and block rendering styles. While this requires the **katex** package to work (it's an optional dependency), the rendering of formulas is dependency-free in the output (#375, #616, #1163). (#1578)
+
 * `info_time_style()` and `info_date_style()` gain a `locale` argument to preview datetime formatting in a given locale.
 
 * Interactive tables now render the first level of column groups added by `tab_spanner()`. Thanks @obsaditelnost for your work on this! (#1618)
@@ -14,14 +18,17 @@
 
 * LaTeX table output now allows the font size of a table to be set using the `table.font.size` parameter in `tab_options()`. The font sizes of individual table cells (including those in the body, stubs, column headings, etc.) can be set using the `tab_style()` function. Several other options specified in `tab_style()` are now reflected in PDF output. (#1472)
 
-
 ## Minor improvements and bug fixes
 
 * `data_color()` throws a more informative error if a calculation failed. (@olivroy, #1373)
 
 * `data_color()` throws a more informative error message if `rows` didn't resolve to anything. (@olivroy, #1659)
 
+* `data_color()` now provides a more helpful error message when encountering infinite values. (#1585)
+
 * `summary_rows()` now throws a more informative error message that you should use `grand_summary_rows()` if no row groups are detected. (@olivroy, #1292)
+
+* To better represent missing values in nanoplots, the `"marker"` option has been added in `cols_nanoplot()` (#1567). (#1587)
 
 * `opt_interactive()` now shows row names if `rownames_to_stub = TRUE`. (@olivroy, #1702) 
 
@@ -39,6 +46,7 @@
 
 ## Documentation enhancements
 
+* Minor documentation fixups were performed. (#1555)
 
 # gt 0.10.1
 
@@ -58,12 +66,14 @@
 
 * Introduced a small performance improvement by no longer calling `utils::packageVersion()` internally (#1524). (#1525, thank you @slodge)
 
-* Code and test refactoring was performed to generally improve performance and code readability. (#1480, thanks @olivroy) 
+* Code and test refactoring was performed to generally improve performance and code readability. (#1480, thanks @olivroy)
+
 * The `gtsave()` function now returns the file path invisibly instead of `TRUE`. (#1478, thank you @olivroy)
 
 * Most functions now produce better error messages if not provided with a `gt_tbl` object. (#1504, c/o @olivroy)
 
 * The URL formatting through `fmt_url()` has been improved by preventing link text breaking across lines (#1509). (#1537) 
+
 * We now remove some unnecessary newlines in the HTML text produced by `as_raw_html()`, which caused an issue when integrating **gt** tables into **blastula** email messages (#1506). (#1520)
 
 * The `tab_spanner_delim()` now lets you use `delim` strings longer than a single character (#1469). (#1513)
