@@ -1161,12 +1161,13 @@ as_word_tbl_body <- function(
 #'   The `plot` option determines whether the `gtable` object should be rendered
 #'   on the graphics device.
 #'
-#' @param text_grob
+#' @param text_grob *Function for drawing text*
 #'
 #'   `function` // *default:* `grid::textGrob`
 #'
-#'   A `function` used to draw text. Defaults to `grid::textGrob()` but can be
-#'   swapped to `gridtext::richtext_grob()` to better render HTML content.
+#'   A `function` which will be used to draw text. Defaults to
+#'   `grid::textGrob()` but can be swapped to `gridtext::richtext_grob()` to
+#'   better render HTML content.
 #'
 #' @return A `gtable` object.
 #'
