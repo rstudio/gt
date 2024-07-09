@@ -568,7 +568,7 @@
 #' production. Here, 2-letter ISO 3166-1 country codes (set in uppercase) are
 #' used.}
 #' \item{run_time}{The run time of the film in hours and minutes. This is given
-#' as a string in the format '<x>h <y>m'.}
+#' as a string in the format `[x]h [y]m`.}
 #' \item{imdb_url}{The URL of the film's information page in the Internet Movie
 #' Database (IMDB).}
 #' }
