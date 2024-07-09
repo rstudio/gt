@@ -344,7 +344,7 @@ opportunity here to add in phone information for each person.
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.11.0}
 }
 
 \seealso{

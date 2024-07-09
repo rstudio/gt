@@ -392,7 +392,7 @@ vec_fmt_integer <- function(
 #' vec_fmt_scientific(num_vals)
 #' ```
 #' ```
-#' #> [1] "3.24 × 10^-4" "8.65" "1.36 × 10^6" "-5.90 × 10^4" "NA"
+#' #> [1] "3.24 x 10^-4" "8.65" "1.36 x 10^6" "-5.90 x 10^4" "NA"
 #' ```
 #'
 #' We can change the number of decimal places with the `decimals` option:
@@ -401,7 +401,7 @@ vec_fmt_integer <- function(
 #' vec_fmt_scientific(num_vals, decimals = 1)
 #' ```
 #' ```
-#' #> [1] "3.2 × 10^-4" "8.7" "1.4 × 10^6" "-5.9 × 10^4" "NA"
+#' #> [1] "3.2 x 10^-4" "8.7" "1.4 x 10^6" "-5.9 x 10^4" "NA"
 #' ```
 #'
 #' If we are formatting for a different locale, we could supply the locale ID
@@ -411,7 +411,7 @@ vec_fmt_integer <- function(
 #' vec_fmt_scientific(num_vals, locale = "es")
 #' ```
 #' ```
-#' #> [1] "3,24 × 10^-4" "8,65" "1,36 × 10^6" "-5,90 × 10^4" "NA"
+#' #> [1] "3,24 x 10^-4" "8,65" "1,36 x 10^6" "-5,90 x 10^4" "NA"
 #' ```
 #'
 #' Should you need to have positive and negative signs for the mantissa
@@ -421,7 +421,7 @@ vec_fmt_integer <- function(
 #' vec_fmt_scientific(num_vals, force_sign_m = TRUE)
 #' ```
 #' ```
-#' #> [1] "+3.24 × 10^-4" "+8.65" "+1.36 × 10^6" "-5.90 × 10^4" "NA"
+#' #> [1] "+3.24 x 10^-4" "+8.65" "+1.36 x 10^6" "-5.90 x 10^4" "NA"
 #' ```
 #'
 #' As a last example, one can wrap the values in a pattern with the `pattern`
@@ -431,7 +431,7 @@ vec_fmt_integer <- function(
 #' vec_fmt_scientific(num_vals, pattern = "[{x}]")
 #' ```
 #' ```
-#' #> [1] "[3.24 × 10^-4]" "[8.65]" "[1.36 × 10^6]" "[-5.90 × 10^4]" "NA"
+#' #> [1] "[3.24 x 10^-4]" "[8.65]" "[1.36 x 10^6]" "[-5.90 x 10^4]" "NA"
 #' ```
 #'
 #' @family vector formatting functions
@@ -549,7 +549,7 @@ vec_fmt_scientific <- function(
 #' vec_fmt_engineering(num_vals)
 #' ```
 #' ```
-#' #> [1] "324.00 × 10^-6" "8.65" "1.36 × 10^6" "-59.03 × 10^3" "NA"
+#' #> [1] "324.00 x 10^-6" "8.65" "1.36 x 10^6" "-59.03 x 10^3" "NA"
 #' ```
 #'
 #' We can change the number of decimal places with the `decimals` option:
@@ -558,7 +558,7 @@ vec_fmt_scientific <- function(
 #' vec_fmt_engineering(num_vals, decimals = 1)
 #' ```
 #' ```
-#' #> [1] "324.0 × 10^-6" "8.7" "1.4 × 10^6" "-59.0 × 10^3" "NA"
+#' #> [1] "324.0 x 10^-6" "8.7" "1.4 x 10^6" "-59.0 x 10^3" "NA"
 #' ```
 #'
 #' If we are formatting for a different locale, we could supply the locale ID
@@ -568,7 +568,7 @@ vec_fmt_scientific <- function(
 #' vec_fmt_engineering(num_vals, locale = "da")
 #' ```
 #' ```
-#' #> [1] "324,00 × 10^-6" "8,65" "1,36 × 10^6" "-59,03 × 10^3" "NA"
+#' #> [1] "324,00 x 10^-6" "8,65" "1,36 x 10^6" "-59,03 x 10^3" "NA"
 #' ```
 #'
 #' Should you need to have positive and negative signs for the mantissa
@@ -578,7 +578,7 @@ vec_fmt_scientific <- function(
 #' vec_fmt_engineering(num_vals, force_sign_m = TRUE)
 #' ```
 #' ```
-#' #> [1] "+324.00 × 10^-6" "+8.65" "+1.36 × 10^6" "-59.03 × 10^3" "NA"
+#' #> [1] "+324.00 x 10^-6" "+8.65" "+1.36 x 10^6" "-59.03 x 10^3" "NA"
 #' ```
 #'
 #' As a last example, one can wrap the values in a pattern with the `pattern`
@@ -588,7 +588,7 @@ vec_fmt_scientific <- function(
 #' vec_fmt_engineering(num_vals, pattern = "/{x}/")
 #' ```
 #' ```
-#' #> [1] "/324.00 × 10^-6/" "/8.65/" "/1.36 × 10^6/" "/-59.03 × 10^3/" "NA"
+#' #> [1] "/324.00 x 10^-6/" "/8.65/" "/1.36 x 10^6/" "/-59.03 x 10^3/" "NA"
 #' ```
 #'
 #' @family vector formatting functions
@@ -888,7 +888,7 @@ vec_fmt_percent <- function(
 #' vec_fmt_partsper(num_vals)
 #' ```
 #' ```
-#' #> [1] "1.00‰" "0.10‰" "0.01‰" "NA"
+#' #> [1] "1.00%." "0.10%." "0.01%." "NA"
 #' ```
 #'
 #' We can change the output units to a different measure. If ppm units are

@@ -4028,9 +4028,9 @@ cols_merge <- function(
 #' input a base value column (`col_val`) and either: (1) a single uncertainty
 #' column, or (2) two columns representing lower and upper uncertainty bounds.
 #' These columns will be essentially merged in a single column (that of
-#' `col_val`). What results is a column with values and associated uncertainties
-#' (e.g., `12.0 ± 0.1`), and any columns specified in `col_uncert` are hidden
-#' from appearing the output table.
+#' `col_val`). What results is a column with values and associated
+#' uncertainties, and any columns specified in `col_uncert` are hidden from
+#' appearing the output table.
 #'
 #' @inheritParams cols_align
 #'
@@ -4215,8 +4215,8 @@ cols_merge_uncert <- function(
 #' `cols_merge_range()` is a specialized variant of [cols_merge()]. It operates
 #' by taking a two columns that constitute a range of values (`col_begin` and
 #' `col_end`) and merges them into a single column. What results is a column
-#' containing both values separated by a long dash (e.g., `12.0 — 20.0`). The
-#' column specified in `col_end` is dropped from the output table.
+#' containing both values separated by an em dash. The column specified in
+#' `col_end` is dropped from the output table.
 #'
 #' @inheritParams cols_align
 #'

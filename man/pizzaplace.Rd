@@ -81,7 +81,7 @@ Supreme Pizzas:
 \itemize{
 \item \code{"brie_carre"}: The Brie Carre Pizza (Brie Carre Cheese, Prosciutto,
 Caramelized Onions, Pears, Thyme, Garlic)
-\item \code{"calabrese"}: The Calabrese Pizza (‘Nduja Salami, Pancetta,
+\item \code{"calabrese"}: The Calabrese Pizza ('Nduja Salami, Pancetta,
 Tomatoes, Red Onions, Friggitello Peppers, Garlic)
 \item \code{"soppressata"}: The Soppressata Pizza (Soppressata Salami, Fontina
 Cheese, Mozzarella Cheese, Mushrooms, Garlic)

@@ -42,31 +42,6 @@ were assigned randomly from a constrained number set. While these records do
 not relate to real people, efforts were made to make the data as realistic as
 possible.
 }
-\section{Examples}{
-
-
-Here is a glimpse at the data available in \code{peeps}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(peeps)
-#> Rows: 100
-#> Columns: 14
-#> $ name_given   <chr> "Ruth", "Peter", "Fanette", "Judyta", "Leonard", "Maymun"~
-#> $ name_family  <chr> "Conte", "Möller", "Gadbois", "Borkowska", "Jacobs", "Kho~
-#> $ address      <chr> "4299 Bobcat Drive", "3705 Hidden Pond Road", "4200 Swick~
-#> $ city         <chr> "Baileys Crossroads", "Red Boiling Springs", "New Orleans~
-#> $ state_prov   <chr> "MD", "TN", "LA", "NY", "CA", "OH", "IN", "MA", "CA", "TX~
-#> $ postcode     <chr> "22041", "37150", "70112", "14125", "90036", "45013", "46~
-#> $ country      <chr> "USA", "USA", "USA", "USA", "USA", "USA", "USA", "USA", "~
-#> $ email_addr   <chr> "rcconte@example.com", "pmoeller@example.com", "fan_gadbo~
-#> $ phone_number <chr> "240-783-7630", "615-699-3517", "985-205-2970", "585-948-~
-#> $ country_code <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 32, 32, 32, 32, 32, 32, 32,~
-#> $ gender       <chr> "female", "male", "female", "female", "male", "male", "fe~
-#> $ dob          <date> 1949-03-16, 1939-11-22, 1970-12-20, 1965-07-19, 1985-10-~
-#> $ height_cm    <int> 153, 175, 167, 156, 177, 172, 168, 165, 181, 187, 164, 15~
-#> $ weight_kg    <dbl> 76.4, 74.9, 61.6, 54.5, 113.2, 88.4, 63.5, 61.3, 99.7, 10~
-}\if{html}{\out{</div>}}
-}
-
 \section{Dataset ID and Badge}{
 
 DATA-8
@@ -78,7 +53,7 @@ DATA-8
 
 \section{Dataset Introduced}{
 
-\emph{In Development}
+\code{v0.11.0}
 }
 
 \seealso{

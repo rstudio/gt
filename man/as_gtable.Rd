@@ -21,10 +21,13 @@ This is the \strong{gt} table object that is commonly created through use of the
 The \code{plot} option determines whether the \code{gtable} object should be rendered
 on the graphics device.}
 
-\item{text_grob}{\code{function} // \emph{default:} \code{grid::textGrob}
+\item{text_grob}{\emph{Function for drawing text}
 
-A \code{function} used to draw text. Defaults to \code{grid::textGrob()} but can be
-swapped to \code{gridtext::richtext_grob()} to better render HTML content.}
+\code{function} // \emph{default:} \code{grid::textGrob}
+
+A \code{function} which will be used to draw text. Defaults to
+\code{grid::textGrob()} but can be swapped to \code{gridtext::richtext_grob()} to
+better render HTML content.}
 }
 \value{
 A \code{gtable} object.
@@ -40,7 +43,7 @@ A \code{gtable} object.
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.11.0}
 }
 
 \seealso{

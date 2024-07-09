@@ -287,7 +287,7 @@
 #' \itemize{
 #' \item `"brie_carre"`: The Brie Carre Pizza (Brie Carre Cheese, Prosciutto,
 #'  Caramelized Onions, Pears, Thyme, Garlic)
-#' \item `"calabrese"`: The Calabrese Pizza (‘Nduja Salami, Pancetta,
+#' \item `"calabrese"`: The Calabrese Pizza ('Nduja Salami, Pancetta,
 #' Tomatoes, Red Onions, Friggitello Peppers, Garlic)
 #' \item `"soppressata"`: The Soppressata Pizza (Soppressata Salami, Fontina
 #' Cheese, Mozzarella Cheese, Mushrooms, Garlic)
@@ -527,14 +527,6 @@
 #' centimeters (cm) and kilograms (kg), respectively.}
 #' }
 #'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `peeps`.
-#'
-#' ```{r}
-#' dplyr::glimpse(peeps)
-#' ```
-#'
 #' @family datasets
 #' @section Dataset ID and Badge:
 #' DATA-8
@@ -544,7 +536,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "peeps"
 
@@ -576,7 +568,7 @@
 #' production. Here, 2-letter ISO 3166-1 country codes (set in uppercase) are
 #' used.}
 #' \item{run_time}{The run time of the film in hours and minutes. This is given
-#' as a string in the format '<x>h <y>m'.}
+#' as a string in the format `[x]h [y]m`.}
 #' \item{imdb_url}{The URL of the film's information page in the Internet Movie
 #' Database (IMDB).}
 #' }
@@ -598,7 +590,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "films"
 
@@ -656,14 +648,6 @@
 #' show `NA` values.}
 #' }
 #'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `metro`.
-#'
-#' ```{r}
-#' dplyr::glimpse(metro)
-#' ```
-#'
 #' @family datasets
 #' @section Dataset ID and Badge:
 #' DATA-10
@@ -719,7 +703,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "gibraltar"
 
@@ -965,7 +949,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "reactions"
 
@@ -1024,7 +1008,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "photolysis"
 
@@ -1085,7 +1069,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "nuclides"
 

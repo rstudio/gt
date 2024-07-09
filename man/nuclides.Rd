@@ -96,7 +96,7 @@ DATA-16
 
 \section{Dataset Introduced}{
 
-\emph{In Development}
+\code{v0.11.0}
 }
 
 \seealso{

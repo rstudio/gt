@@ -26,7 +26,7 @@ test_that("sub_missing() works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% sub_missing(columns = "num_3"))
+  expect_error(sub_missing(tab, columns = "num_3"))
 
   expect_equal(
     (tab %>%

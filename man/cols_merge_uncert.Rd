@@ -82,9 +82,9 @@ An object of class \code{gt_tbl}.
 input a base value column (\code{col_val}) and either: (1) a single uncertainty
 column, or (2) two columns representing lower and upper uncertainty bounds.
 These columns will be essentially merged in a single column (that of
-\code{col_val}). What results is a column with values and associated uncertainties
-(e.g., \verb{12.0 ± 0.1}), and any columns specified in \code{col_uncert} are hidden
-from appearing the output table.
+\code{col_val}). What results is a column with values and associated
+uncertainties, and any columns specified in \code{col_uncert} are hidden from
+appearing the output table.
 }
 \section{Comparison with other column-merging functions}{
 

@@ -372,7 +372,7 @@ merged into the same cells as the icons via \code{\link[=cols_merge]{cols_merge(
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.11.0}
 }
 
 \seealso{

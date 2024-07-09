@@ -152,7 +152,7 @@ transformation while formatting the values as integers.
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.11.0}
 }
 
 \seealso{

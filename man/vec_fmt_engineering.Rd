@@ -166,7 +166,7 @@ the \code{output} argument (here, it is of the \code{"plain"} output type).
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_engineering(num_vals)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "324.00 × 10^-6" "8.65" "1.36 × 10^6" "-59.03 × 10^3" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "324.00 x 10^-6" "8.65" "1.36 x 10^6" "-59.03 x 10^3" "NA"
 }\if{html}{\out{</div>}}
 
 We can change the number of decimal places with the \code{decimals} option:
@@ -174,7 +174,7 @@ We can change the number of decimal places with the \code{decimals} option:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_engineering(num_vals, decimals = 1)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "324.0 × 10^-6" "8.7" "1.4 × 10^6" "-59.0 × 10^3" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "324.0 x 10^-6" "8.7" "1.4 x 10^6" "-59.0 x 10^3" "NA"
 }\if{html}{\out{</div>}}
 
 If we are formatting for a different locale, we could supply the locale ID
@@ -183,7 +183,7 @@ and \strong{gt} will handle any locale-specific formatting options:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_engineering(num_vals, locale = "da")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "324,00 × 10^-6" "8,65" "1,36 × 10^6" "-59,03 × 10^3" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "324,00 x 10^-6" "8,65" "1,36 x 10^6" "-59,03 x 10^3" "NA"
 }\if{html}{\out{</div>}}
 
 Should you need to have positive and negative signs for the mantissa
@@ -192,7 +192,7 @@ component of a given value, use \code{force_sign_m = TRUE}:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_engineering(num_vals, force_sign_m = TRUE)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "+324.00 × 10^-6" "+8.65" "+1.36 × 10^6" "-59.03 × 10^3" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "+324.00 x 10^-6" "+8.65" "+1.36 x 10^6" "-59.03 x 10^3" "NA"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
@@ -201,7 +201,7 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_engineering(num_vals, pattern = "/\{x\}/")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "/324.00 × 10^-6/" "/8.65/" "/1.36 × 10^6/" "/-59.03 × 10^3/" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "/324.00 x 10^-6/" "/8.65/" "/1.36 x 10^6/" "/-59.03 x 10^3/" "NA"
 }\if{html}{\out{</div>}}
 }
 

@@ -335,7 +335,7 @@ number of decimal places is fixed to \code{2}, which is fine for this table.
   gt(rowname_col = "cmpd_name") |>
   tab_header(title = "Gas-phase reactions of selected mercaptan compounds") |>
   tab_spanner(
-    label = md("Reaction Rate Constant (298 K),<br>\{\{cm^3 molecules^–1 s^–1\}\}"),
+    label = md("Reaction Rate Constant (298 K),<br>\{\{cm^3 molecules^-1 s^-1\}\}"),
     columns = ends_with("k298")
   ) |>
   fmt_chem(columns = cmpd_formula) |>

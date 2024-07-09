@@ -1842,7 +1842,7 @@ tab_row_group <- function(
 #'   dplyr::filter(!(is.na(OH_k298) & is.na(Cl_k298))) |>
 #'   gt(rowname_col = "cmpd_name") |>
 #'   tab_spanner(
-#'     label = "Rate constant at 298 K, in {{cm^3 molecules^–1 s^–1⁠}}",
+#'     label = "Rate constant at 298 K, in {{cm^3 molecules^-1 s^-1}}",
 #'     columns = ends_with("k298")
 #'   ) |>
 #'   tab_stubhead(label = "Nitrophenol Compound") |>

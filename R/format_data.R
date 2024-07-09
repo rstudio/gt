@@ -1182,7 +1182,7 @@ fmt_integer <- function(
 #'   gt(rowname_col = "cmpd_name") |>
 #'   tab_header(title = "Gas-phase reactions of selected mercaptan compounds") |>
 #'   tab_spanner(
-#'     label = md("Reaction Rate Constant (298 K),<br>{{cm^3 molecules^–1 s^–1}}"),
+#'     label = md("Reaction Rate Constant (298 K),<br>{{cm^3 molecules^-1 s^-1}}"),
 #'     columns = ends_with("k298")
 #'   ) |>
 #'   fmt_chem(columns = cmpd_formula) |>
@@ -8562,7 +8562,7 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' 3-18
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 #' @export
 fmt_tf <- function(
@@ -9286,7 +9286,7 @@ fmt_units <- function(
 #' 3-20
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 #' @export
 fmt_chem <- function(
@@ -10438,7 +10438,7 @@ add_anchor_attr <- function(
 #' 3-22
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 #' @export
 fmt_email <- function(
@@ -12186,7 +12186,7 @@ fmt_flag <- function(
 #' 3-25
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 #' @export
 fmt_country <- function(
@@ -13036,11 +13036,11 @@ fmt_icon <- function(
 #' text_1a <- "
 #' ### This is Markdown.
 #'
-#' Markdown’s syntax is comprised entirely of
+#' Markdown's syntax is comprised entirely of
 #' punctuation characters, which punctuation
 #' characters have been carefully chosen so as
 #' to look like what they mean... assuming
-#' you’ve ever used email.
+#' you've ever used email.
 #' "
 #'
 #' text_1b <- "
