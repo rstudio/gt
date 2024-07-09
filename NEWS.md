@@ -2,51 +2,119 @@
 
 ## New features
 
-* **gt** tables can now be rendered in the grid graphics system with the new `as_gtable()` function (#180, #961). Thank you @teunbrand for this valuable contribution! (#1563)
+* **gt** tables can now be rendered in the grid graphics system with the new `as_gtable()` function (#180, #420, #509, #961, #1652, #1701). Thank you @teunbrand for this valuable contribution! (#1563, #1648, #1655, #1727)
+
+* With the new `fmt_chem()` function, it's possible to format chemical formulas and chemical equations in the table body. (#1636)
+
+* We added `fmt_email()` we can transform email addresses in table cells into usable 'mailto:' links. This operates similarly to `fmt_url()` but removes some unneeded anchor tag attributes (#1616). (#1649)
+
+* The new `fmt_tf()` function lets you format logical values in a **gt** table. You could express these as a 'yes' or 'no', a 'true' or 'false', or, perhaps use pairings of complementary symbols that make sense in a table (#1650). (#1654)
+
+* The new `fmt_country()` was added to help with making country names consistent and localizable. The input text can either consist of 2- or 3-letter ISO 3166-1 country codes. (#1645, #1696)
 
 * Math formulas (written in LaTeX) can now be rendered to HTML through `md()` and `fmt_markdown()`. The LaTeX formulas can be set between `$` or `$$` delimiters for inline and block rendering styles. While this requires the **katex** package to work (it's an optional dependency), the rendering of formulas is dependency-free in the output (#375, #616, #1163). (#1578)
 
-* `info_time_style()` and `info_date_style()` gain a `locale` argument to preview datetime formatting in a given locale.
+* We added the `unit_conversion()` helper function to help you perform unit conversions. This function returns a conversion factor for transforming a value from one form of measurement units to a target form. This works wonderfully in the `scale_by` argument that is present in many number-based `fmt_*()` functions. (#1704, #1709, #1710, #1729)
 
-* Interactive tables now render the first level of column groups added by `tab_spanner()`. Thanks @obsaditelnost for your work on this! (#1618)
+* The `plot()` method was added for `gt_tbl` so that one can quickly create a reprex visual example (e.g., `exibble |> gt() |> plot()`). (#1742)
 
-* The `opt_interactive()` function now has the `height` argument to help specify the height of an interactive table (@olivroy, #1544).
+* `info_time_style()` and `info_date_style()` gain a `locale` argument to preview time and date formatting in a specific locale. (#1747)
 
-* `data_color()` throws a more informative error message if `rows` didn't resolve to anything (@olivroy, #1659).
+* `data_color()` throws a more informative error message if `rows` didn't resolve to anything (#1659). (@olivroy, #1660).
+
+* Several datasets were added to the package: `reactions`, `photolysis`, `peeps`, `nuclides`, `gibraltar`, and `films`. (#1619, #1641, #1664, #1668, #1686, #1695)
 
 ## Improvements to the LaTeX output format
 
-* LaTeX table output now allows the font size of a table to be set using the `table.font.size` parameter in `tab_options()`. The font sizes of individual table cells (including those in the body, stubs, column headings, etc.) can be set using the `tab_style()` function. Several other options specified in `tab_style()` are now reflected in PDF output. (#1472)
+* A host of improvements were made to LaTeX output such that styling made through `tab_options()` and `tab_style()` is now honored. The styling implemented now includes: (1) font size, underlining, italicizing, bolding, indenting text, coloring text, filling cell backgrounds, and modifying text case (i.e., uppercase, lowercase, sentence case) (#1472). (#1594, #1603, #1746, thanks so much @kbrevoort)
+
+* Text in spanner labels is now nicely wrapped in LaTeX output, where before there would be no wrapping at all (#1656). (#1716, #1746)
+
+* The `gt()` setting of `row_group_as_column == TRUE` is now implemented in LaTeX output. (#1716)
+
+* LaTeX output now understands and can convert from lengths expressed in pixels (an internal conversion to pt units is performed) (#1582). (#1595)
+
+* A fix was made to correct an error related to converting px units to pt units for LaTeX output. (#1591, thank you @AaronGullickson)
+
+## Improvements to interactive HTML tables via `opt_interactive()`
+
+* The performance of interactive table rendering through `opt_interactive()` has  been improved (#1289). (#1735)
+
+* `opt_interactive()` now shows row names if `rownames_to_stub = TRUE` (#1702). (@olivroy, #1706)
+
+* There's now better support for displaying group columns, if present, in interactive tables (#1705). (@olivroy, #1725, #1758, #1760)
+
+* Interactive tables can now display the stub header label created with `tab_stubhead()`. (@olivroy, #1758).
+
+* There is no longer an error when having a hidden column under a spanner label in an interactive HTML table (i.e., `opt_interactive()`) context. (#1629)
+
+* Interactive tables now render the first level of column groups added by `tab_spanner()` (#1618). Thanks @obsaditelnost for your work on this! (#1623)
+
+* The `opt_interactive()` function now has the `height` argument to help specify the height of an interactive table (#1544). (@olivroy, #1723).
+
+* When using `opt_interactive(use_pagination = FALSE)` the pagination controls are now entirely removed instead of merely being non-functional (#1542). (#1642)
+
+* When supplying a locale value to an interactive table, we now ensure that the supplied locale is normalized (so `"fr_CH"` will be internally corrected to `"fr-CH"`) (#1637). (#1643)
 
 ## Minor improvements and bug fixes
 
-* `data_color()` throws a more informative error if a calculation failed. (@olivroy, #1373)
+* The `fill_color` argument in `fmt_icon()` now allows the use of named vector/list to apply different colors to different icons (#1560). (#1647)
 
-* `data_color()` throws a more informative error message if `rows` didn't resolve to anything. (@olivroy, #1659)
-
-* `data_color()` now provides a more helpful error message when encountering infinite values. (#1585)
-
-* `summary_rows()` now throws a more informative error message that you should use `grand_summary_rows()` if no row groups are detected. (@olivroy, #1292)
+* `fmt_flag()` gains a `locale` argument so that SVG title text displays country names in any locale language. (#1645)
 
 * To better represent missing values in nanoplots, the `"marker"` option has been added in `cols_nanoplot()` (#1567). (#1587)
 
-* `opt_interactive()` now shows row names if `rownames_to_stub = TRUE`. (@olivroy, #1702) 
+* Many of the `info_*()` functions were upgraded with better functionality and a refreshed look. (#1720, #1748, #1754)
 
-* `opt_interactive()` has better support for displaying group columns if present (though `row_groups_as_column` has no effect on the output). (@olivroy, #1705)
+* The `metro` dataset has been updated with six new Line 11 stations that opened on 2024-06-13. (#1708)
 
-* `opt_interactive()` now displays the stub header label created with `tab_stubhead()` (@olivroy, #1758).
+* For HTML tables produced in Quarto, we now use the `data-qmd-base64` attribute along with base64 text when passing Markdown text to Quarto (which handles the Markdown conversion) (#1487, #1488). (#1688, #1690, #1734)
 
-* `gtsave()` saves correctly to RTF if using `cols_label()` in conjunction with `summary_rows()` or `grand_summary_rows()`. (@olivroy, #1233)
+* Scientific and engineering notation will no longer unexpectedly wrap lines in HTML for smaller column widths. (#1621)
 
-* `cols_hide()` no longer errors if no column was supplied. Error messages are also clearer when supplying a column that doesn't exist. (@olivroy, #1631)
+* Footnote marks in HTML table outputs no longer unexpectedly increase the text line height (#1556). (#1644)
+
+* We now ensure tables print correctly when called from inline code in `.qmd` or `.Rmd` documents (#1055). (#1689)
+
+* `data_color()` throws a more informative error if an internal calculation failed (e.g., presence of infinite values) (#1373). (@olivroy, #1585)
+
+* `data_color()` provides an informative error message if `rows` doesn't resolve to anything. (@olivroy, #1659)
+
+* `summary_rows()` now throws a more informative error message that you should use `grand_summary_rows()` if no row groups are detected (#1292). (@olivroy, #1752)
+
+* Boxplot-based nanoplots now correctly determine which data points are outliers. (#1756)
+
+* The issue where having a row group set as a column in the stub, corrupting the setting of column widths in HTML output tables, has been fixed (#1253, #1510). (#1744)
+
+* The rendering of footnotes and source notes received fixes to ensure that all requested notes are inserted and also that the typesetting options in `tab_options()` is implemented (#1505, #1615). (#1620, #1751)
+
+* Using a `fmt_*()` function while the stub is composed of Markdown or HTML no longer results in an error (#1600). (#1627)
+
+* The combination of using `cols_label()` + `summary_rows()` / `grand_summary_rows()` no longer causes an error for RTF output through `gtsave()` (#1233). (#1596)
+
+* We now ensure that `id` values are stripped of HTML tags when using `tab_row_group()`. Previously this condition would create corrupted row group labels (#1143). (#1750)
+
+* `cols_hide()` no longer errors if a column wasn't supplied. Error messages are also clearer when supplying a column that doesn't exist (#1631). (#1632)
 
 * `cols_units()`, `tab_footnote()` and `tab_style()` now give better error messages when `locations` is not correctly specified (#475). (@olivroy, #1638, #1640, #1733)
 
-* **gt** now depends on R 3.6. (@olivroy, #1731).
+* Error messages are now improved for `rm_spanners()`, `rm_footnotes()`, and `rm_source_notes()` (#1638). (#1661)
+
+* Error messages for the `vec_*()` functions are now standardized with `check_vector_valid()`. (#1662)
+
+* Running **testthat** tests no longer fails on Windows due to `gtsave()` path incompatibilities (#1626). (#1627)
+
+* Tests run on Windows are less noisy now (no more render related warnings). (#1634)
+
+* Much code refactoring, linting, and test improvements were performed by @olivroy, resulting in many performance gains. (#1666, #1683, #1694, #1699, #1715, #1718, #1728, #1730, #1731, #1732, #1733, #1753)
+
+* **gt** now depends on R 3.6. (#1599, #1731).
 
 ## Documentation enhancements
 
-* Minor documentation fixups were performed. (#1555)
+* Many small documentation fixes were performed. (#1555, #1598, #1633, #1658, #1663, #1676, #1685, #1700, #1703, #1717, #1719, #1721)
+
+* More examples were added to further demonstrate how various functions can be used. (#1646, #1667, #1677, #1698, #1724, #1737)
 
 # gt 0.10.1
 
@@ -66,11 +134,11 @@
 
 * Introduced a small performance improvement by no longer calling `utils::packageVersion()` internally (#1524). (#1525, thank you @slodge)
 
-* Code and test refactoring was performed to generally improve performance and code readability. (#1480, thanks @olivroy)
+* Code and test refactoring was performed to generally improve performance and code readability. (#1480)
 
-* The `gtsave()` function now returns the file path invisibly instead of `TRUE`. (#1478, thank you @olivroy)
+* The `gtsave()` function now returns the file path invisibly instead of `TRUE`. (#1478)
 
-* Most functions now produce better error messages if not provided with a `gt_tbl` object. (#1504, c/o @olivroy)
+* Most functions now produce better error messages if not provided with a `gt_tbl` object. (#1504, #1624)
 
 * The URL formatting through `fmt_url()` has been improved by preventing link text breaking across lines (#1509). (#1537) 
 
