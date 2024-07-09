@@ -45,7 +45,7 @@ formatting specific to the chosen locale
 
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.10.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.11.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -407,7 +407,7 @@ number of decimal places is fixed to <code>2</code>, which is fine for this tabl
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"cmpd_name"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Gas-phase reactions of selected mercaptan compounds"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_spanner.html">tab_spanner</a></span><span class="op">(</span></span>
-<span>    label <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"Reaction Rate Constant (298 K),&lt;br&gt;{{cm^3 molecules^–1 s^–1}}"</span><span class="op">)</span>,</span>
+<span>    label <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"Reaction Rate Constant (298 K),&lt;br&gt;{{cm^3 molecules^-1 s^-1}}"</span><span class="op">)</span>,</span>
 <span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"k298"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_chem.html">fmt_chem</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">cmpd_formula</span><span class="op">)</span> <span class="op">|&gt;</span></span>
