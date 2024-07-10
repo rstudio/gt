@@ -19,12 +19,11 @@ This is the \strong{gt} table object that is commonly created through use of the
 \verb{<column-targeting expression>} // \strong{required}
 
 The columns for which the moving operations should be applied. Can either
-be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
-or a select helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. The columns move as a group to the
-right-most side of the table. The order of the remaining columns will be
-preserved.}
+be a series of column names provided in \code{c()}, a vector of column indices,
+or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. The columns
+move as a group to the right-most side of the table. The order of the
+remaining columns will be preserved.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -38,18 +37,16 @@ preserved (same with the ordering of all other columns in the table).
 }
 \details{
 The columns supplied in \code{columns} must all exist in the table. If you need to
-place one or columns at the start of the column series, the
-\code{\link[=cols_move_to_start]{cols_move_to_start()}} function should be used. More control is offered with
-the \code{\link[=cols_move]{cols_move()}} function, where columns could be placed after a specific
-column.
+place one or columns at the start of the column series, \code{\link[=cols_move_to_start]{cols_move_to_start()}}
+should be used. More control is offered with \code{\link[=cols_move]{cols_move()}}, where columns
+could be placed after a specific column.
 }
 \section{Examples}{
 
 
 For this example, we'll use a portion of the \code{\link{countrypops}} dataset to
 create a simple \strong{gt} table. Let's move the \code{year} column, which is the
-middle column, to the end of the column series with the
-\code{cols_move_to_end()} function.
+middle column, to the end of the column series with \code{cols_move_to_end()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>

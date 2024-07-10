@@ -126,8 +126,8 @@ will display a sign.}
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
-function as a useful reference for all of the locales that are supported.}
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported.}
 
 \item{output}{\emph{Output format}
 
@@ -180,7 +180,7 @@ values. The rendering context will be autodetected unless specified in the
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3.24 × 10^-4" "8.65" "1.36 × 10^6" "-5.90 × 10^4" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3.24 x 10^-4" "8.65" "1.36 x 10^6" "-5.90 x 10^4" "NA"
 }\if{html}{\out{</div>}}
 
 We can change the number of decimal places with the \code{decimals} option:
@@ -188,7 +188,7 @@ We can change the number of decimal places with the \code{decimals} option:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, decimals = 1)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3.2 × 10^-4" "8.7" "1.4 × 10^6" "-5.9 × 10^4" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3.2 x 10^-4" "8.7" "1.4 x 10^6" "-5.9 x 10^4" "NA"
 }\if{html}{\out{</div>}}
 
 If we are formatting for a different locale, we could supply the locale ID
@@ -197,7 +197,7 @@ and \strong{gt} will handle any locale-specific formatting options:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, locale = "es")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3,24 × 10^-4" "8,65" "1,36 × 10^6" "-5,90 × 10^4" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3,24 x 10^-4" "8,65" "1,36 x 10^6" "-5,90 x 10^4" "NA"
 }\if{html}{\out{</div>}}
 
 Should you need to have positive and negative signs for the mantissa
@@ -206,7 +206,7 @@ component of a given value, use \code{force_sign_m = TRUE}:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, force_sign_m = TRUE)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "+3.24 × 10^-4" "+8.65" "+1.36 × 10^6" "-5.90 × 10^4" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "+3.24 x 10^-4" "+8.65" "+1.36 x 10^6" "-5.90 x 10^4" "NA"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
@@ -215,7 +215,7 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, pattern = "[\{x\}]")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "[3.24 × 10^-4]" "[8.65]" "[1.36 × 10^6]" "[-5.90 × 10^4]" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "[3.24 x 10^-4]" "[8.65]" "[1.36 x 10^6]" "[-5.90 x 10^4]" "NA"
 }\if{html}{\out{</div>}}
 }
 

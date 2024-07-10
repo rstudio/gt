@@ -1,13 +1,9 @@
-# Create a shortened version of `iris`
-iris_short <- iris[1:5, ]
-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
-test_that("The `tab_spanner_delim()` function works correctly", {
+test_that("tab_spanner_delim() works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -321,7 +317,7 @@ test_that("The `tab_spanner_delim()` function works correctly", {
   )
 })
 
-test_that("`tab_spanner_delim()` works with different `limit` values", {
+test_that("tab_spanner_delim() works with different `limit` values", {
 
   # Create a `tbl_html` object with `gt()`; split the column
   # names into spanner headings and column labels, ensure that
@@ -329,8 +325,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
   # with `limit = 1`
   tbl_html_first_1 <-
     towny %>%
-    dplyr::arrange(desc(population_2021)) %>%
-    dplyr::slice_head(n = 5) %>%
+    dplyr::slice_max(population_2021, n = 5) %>%
     dplyr::select(name, ends_with("pct")) %>%
     gt() %>%
     tab_spanner_delim(delim = "_", split = "first", limit = 1)
@@ -355,8 +350,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
   # have the expected delimiter
   expect_equal(
     towny %>%
-      dplyr::arrange(desc(population_2021)) %>%
-      dplyr::slice_head(n = 5) %>%
+      dplyr::slice_max(population_2021, n = 5) %>%
       dplyr::select(name, ends_with("pct")) %>%
       gt() %>%
       tab_spanner_delim(
@@ -366,8 +360,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
       ) %>%
       render_as_html(),
     towny %>%
-      dplyr::arrange(desc(population_2021)) %>%
-      dplyr::slice_head(n = 5) %>%
+      dplyr::slice_max(population_2021, n = 5) %>%
       dplyr::select(name, ends_with("pct")) %>%
       gt() %>%
       tab_spanner_delim(
@@ -382,8 +375,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
   # Use a `limit` value of `2`
   tbl_html_first_2 <-
     towny %>%
-    dplyr::arrange(desc(population_2021)) %>%
-    dplyr::slice_head(n = 5) %>%
+    dplyr::slice_max(population_2021, n = 5) %>%
     dplyr::select(name, ends_with("pct")) %>%
     gt() %>%
     tab_spanner_delim(delim = "_", split = "first", limit = 2)
@@ -408,8 +400,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
   # Use a `limit` value of `3`
   tbl_html_first_3 <-
     towny %>%
-    dplyr::arrange(desc(population_2021)) %>%
-    dplyr::slice_head(n = 5) %>%
+    dplyr::slice_max(population_2021, n = 5) %>%
     dplyr::select(name, ends_with("pct")) %>%
     gt() %>%
     tab_spanner_delim(delim = "_", split = "first", limit = 3)
@@ -440,8 +431,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
   # Use a `limit` value of `4`
   tbl_html_first_4 <-
     towny %>%
-    dplyr::arrange(desc(population_2021)) %>%
-    dplyr::slice_head(n = 5) %>%
+    dplyr::slice_max(population_2021, n = 5) %>%
     dplyr::select(name, ends_with("pct")) %>%
     gt() %>%
     tab_spanner_delim(delim = "_", split = "first", limit = 4)
@@ -479,8 +469,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
   # these column names (i.e., going beyond the max number of splits)
   expect_equal(
     towny %>%
-      dplyr::arrange(desc(population_2021)) %>%
-      dplyr::slice_head(n = 5) %>%
+      dplyr::slice_max(population_2021, n = 5) %>%
       dplyr::select(name, ends_with("pct")) %>%
       gt() %>%
       tab_spanner_delim(
@@ -490,8 +479,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
       ) %>%
       render_as_html(),
     towny %>%
-      dplyr::arrange(desc(population_2021)) %>%
-      dplyr::slice_head(n = 5) %>%
+      dplyr::slice_max(population_2021, n = 5) %>%
       dplyr::select(name, ends_with("pct")) %>%
       gt() %>%
       tab_spanner_delim(
@@ -507,8 +495,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
   # default `split` option (`"last"`) in conjunction with `limit = 1`
   tbl_html_last_1 <-
     towny %>%
-    dplyr::arrange(desc(population_2021)) %>%
-    dplyr::slice_head(n = 5) %>%
+    dplyr::slice_max(population_2021, n = 5) %>%
     dplyr::select(name, ends_with("pct")) %>%
     gt() %>%
     tab_spanner_delim(delim = "_", limit = 1)
@@ -534,8 +521,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
   # have the expected delimiter
   expect_equal(
     towny %>%
-      dplyr::arrange(desc(population_2021)) %>%
-      dplyr::slice_head(n = 5) %>%
+      dplyr::slice_max(population_2021, n = 5) %>%
       dplyr::select(name, ends_with("pct")) %>%
       gt() %>%
       tab_spanner_delim(
@@ -544,8 +530,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
       ) %>%
       render_as_html(),
     towny %>%
-      dplyr::arrange(desc(population_2021)) %>%
-      dplyr::slice_head(n = 5) %>%
+      dplyr::slice_max(population_2021, n = 5) %>%
       dplyr::select(name, ends_with("pct")) %>%
       gt() %>%
       tab_spanner_delim(
@@ -559,8 +544,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
   # Use a `limit` value of `2`
   tbl_html_last_2 <-
     towny %>%
-    dplyr::arrange(desc(population_2021)) %>%
-    dplyr::slice_head(n = 5) %>%
+    dplyr::slice_max(population_2021, n = 5) %>%
     dplyr::select(name, ends_with("pct")) %>%
     gt() %>%
     tab_spanner_delim(delim = "_", limit = 2)
@@ -591,8 +575,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
   # Use a `limit` value of `3`
   tbl_html_last_3 <-
     towny %>%
-    dplyr::arrange(desc(population_2021)) %>%
-    dplyr::slice_head(n = 5) %>%
+    dplyr::slice_max(population_2021, n = 5) %>%
     dplyr::select(name, ends_with("pct")) %>%
     gt() %>%
     tab_spanner_delim(delim = "_", limit = 3)
@@ -624,8 +607,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
   # Use a `limit` value of `4`
   tbl_html_last_4 <-
     towny %>%
-    dplyr::arrange(desc(population_2021)) %>%
-    dplyr::slice_head(n = 5) %>%
+    dplyr::slice_max(population_2021, n = 5) %>%
     dplyr::select(name, ends_with("pct")) %>%
     gt() %>%
     tab_spanner_delim(delim = "_", limit = 4)
@@ -663,8 +645,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
   # these column names (i.e., going beyond the max number of splits)
   expect_equal(
     towny %>%
-      dplyr::arrange(desc(population_2021)) %>%
-      dplyr::slice_head(n = 5) %>%
+      dplyr::slice_max(population_2021, n = 5) %>%
       dplyr::select(name, ends_with("pct")) %>%
       gt() %>%
       tab_spanner_delim(
@@ -673,8 +654,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
       ) %>%
       render_as_html(),
     towny %>%
-      dplyr::arrange(desc(population_2021)) %>%
-      dplyr::slice_head(n = 5) %>%
+      dplyr::slice_max(population_2021, n = 5) %>%
       dplyr::select(name, ends_with("pct")) %>%
       gt() %>%
       tab_spanner_delim(
@@ -685,7 +665,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
   )
 })
 
-test_that("`tab_spanner_delim()` works on higher-order spanning", {
+test_that("tab_spanner_delim() works on higher-order spanning", {
 
   tbl_1 <-
     dplyr::tibble(
@@ -1270,7 +1250,7 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
   )
 })
 
-test_that("`tab_spanner_delim()` works with complex splits", {
+test_that("tab_spanner_delim() works with complex splits", {
 
   # Create a gt table with two levels of spanners that repeat
   gt_tbl <-
@@ -1363,16 +1343,16 @@ test_that("`tab_spanner_delim()` works with complex splits", {
   )
 })
 
-test_that("`tab_spanner_delim()` won't overwrite any set column labels", {
+test_that("tab_spanner_delim() won't overwrite any set column labels", {
 
   tbl_1 <-
-    iris[1:5,] %>%
+    iris_short %>%
     gt() %>%
     cols_label(Sepal.Width = md("Sepal.*W*idth")) %>%
     tab_spanner_delim(".")
 
   tbl_2 <-
-    iris[1:5,] %>%
+    iris_short %>%
     gt() %>%
     tab_spanner_delim(".") %>%
     cols_label(Sepal.Width = md("Sepal.*W*idth"))
@@ -1383,13 +1363,13 @@ test_that("`tab_spanner_delim()` won't overwrite any set column labels", {
   )
 
   tbl_3 <-
-    iris[1:5,] %>%
+    iris_short %>%
     gt() %>%
     cols_label(Sepal.Width = html("<em>Sepal.Width</em>")) %>%
     tab_spanner_delim(".")
 
   tbl_4 <-
-    iris[1:5,] %>%
+    iris_short %>%
     gt() %>%
     tab_spanner_delim(".") %>%
     cols_label(Sepal.Width = html("<em>Sepal.Width</em>"))

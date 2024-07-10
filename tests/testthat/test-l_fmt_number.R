@@ -1,4 +1,4 @@
-test_that("The `fmt_number()` function works correctly in the LaTeX context", {
+test_that("fmt_number() works correctly in the LaTeX context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric

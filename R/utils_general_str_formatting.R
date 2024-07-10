@@ -242,7 +242,7 @@ swap_adjacent_text_groups <- function(
     function(x) {
 
       # Return `x` as is if both patterns aren't present
-      if (is_false(grepl(pattern_1, x)) || is_false(grepl(pattern_2, x))) {
+      if (!grepl(pattern_1, x) || !grepl(pattern_2, x)) {
         return(x)
       }
 
@@ -375,7 +375,7 @@ str_title_case <- function(x) {
 
   title_case_i <- function(y) {
 
-    s <- strsplit(y, " ")[[1]]
+    s <- strsplit(y, " ", fixed = TRUE)[[1]]
 
     paste(
       toupper(substring(s, 1, 1)),
@@ -622,5 +622,5 @@ rtl_modern_unicode_charset <-
     syriac_unicode_charset,
     thaana_unicode_charset,
     samaritan_unicode_charset,
-    mandaic_unicode_charset,sep = "|"
+    mandaic_unicode_charset, sep = "|"
   )

@@ -19,11 +19,10 @@ This is the \strong{gt} table object that is commonly created through use of the
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns for which decimal alignment should be applied. Can either be a
-series of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a
-select helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. By default this is set to \code{\link[=everything]{everything()}}
-which means that decimal alignment will be attempted on all columns.}
+series of column names provided in \code{c()}, a vector of column indices, or a
+select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). By default this is set to
+\code{\link[=everything]{everything()}} which means that the decimal alignment affects all columns.}
 
 \item{dec_mark}{\emph{Decimal mark}
 
@@ -40,10 +39,10 @@ is better to use and it will override any value here in \code{dec_mark}.}
 An optional locale identifier that can be used to obtain the type of
 decimal mark used in the numeric values to be aligned (according to the
 locale's formatting rules). Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
-function as a useful reference for all of the locales that are supported. A
-locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
-would be used automatically by any function with a \code{locale} argument) but a
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported. A locale ID can
+be also set in the initial \code{\link[=gt]{gt()}} function call (where it would be used
+automatically by any function with a \code{locale} argument) but a
 \code{locale} value provided here will override that global locale.}
 }
 \value{

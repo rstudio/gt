@@ -51,11 +51,11 @@
 #'   exists in the table. Two-sided formulas with column-resolving expressions
 #'   (e.g, `<expr> ~ <value vector>`) can also be used, where the left-hand side
 #'   corresponds to selections of columns. Column names should be enclosed in
-#'   [c()] and select helpers like [starts_with()], [ends_with()], [contains()],
-#'   [matches()], [one_of()], and [everything()] can be used in the LHS. The
-#'   length of the longest vector in `<value vector>` determines how many new
-#'   rows will be added. Single values in `<value vector>` will be repeated down
-#'   in cases where there are multiple rows to be added.
+#'   `c()` and select helpers like [starts_with()], [ends_with()], [contains()],
+#'   [matches()], and [everything()] can be used in the LHS. The length of the
+#'   longest vector in `<value vector>` determines how many new rows will be added.
+#'   Single values in `<value vector>` will be repeated down in cases where
+#'   there are multiple rows to be added.
 #'
 #' @param .list *Alternative to `...`*
 #'
@@ -205,16 +205,16 @@
 #' }}
 #'
 #' All missing values were substituted with an empty string (`""`), and that was
-#' done by using the [sub_missing()] function. We removed the top border of the
+#' done by using [sub_missing()]. We removed the top border of the
 #' new rows with a call to [tab_style()], targeting those rows where the row
 #' labels end with `"end"`. Finally, we get rid of the row labels with the use
-#' of the [text_case_when()] function, using a similar strategy of targeting the
+#' of [text_case_when()], using a similar strategy of targeting the
 #' name of the row label.
 #'
 #' Another application is starting from nothing (really just the definition of
 #' columns) and building up a table using several invocations of `rows_add()`.
 #' This might be useful in interactive or programmatic applications. Here's an
-#' example where two columns are defined with **dplyr**'s `tibble()` function
+#' example where two columns are defined with `dplyr::tibble()`
 #' (and no rows are present initially); with two calls of `rows_add()`, two
 #' separate rows are added.
 #'
@@ -341,7 +341,6 @@
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
-#' @import rlang
 #' @export
 rows_add <- function(
     .data,

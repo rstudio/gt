@@ -45,7 +45,7 @@ title, etc.).}
 An object of class \code{gt_tbl}.
 }
 \description{
-With the \code{tab_style()} function we can \link[=location-helper]{target specific cells}
+With \code{tab_style()} we can \link[=location-helper]{target specific cells}
 and apply styles to them. This is best done in conjunction with the helper
 functions \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and \code{\link[=cell_borders]{cell_borders()}}. Currently, this
 function is focused on the application of styles for HTML output only
@@ -67,13 +67,12 @@ bold text (the degree of choice is greater with variable fonts)
 \section{Using \code{from_column()} with \verb{cell_*()} styling functions}{
 
 
-The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
-\code{\link[=cell_fill]{cell_fill()}} and \code{\link[=cell_text]{cell_text()}}; this allows you to get parameter values from
-a specified column within the table. This means that body cells targeted for
-styling could be formatted a little bit differently, using options taken from
-a column. For \code{\link[=cell_fill]{cell_fill()}}, we can use \code{\link[=from_column]{from_column()}} for its \code{color}
-argument. The \code{\link[=cell_text]{cell_text()}} function allows the use of \code{\link[=from_column]{from_column()}} in the
-following arguments:
+\code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{\link[=cell_fill]{cell_fill()}} and
+\code{\link[=cell_text]{cell_text()}}; this allows you to get parameter values from a specified
+column within the table. This means that body cells targeted for styling
+could be formatted a little bit differently, using options taken from a
+column. For \code{\link[=cell_fill]{cell_fill()}}, we can use \code{\link[=from_column]{from_column()}} for its \code{color}
+argument. \code{\link[=cell_text]{cell_text()}} allows the use of \code{\link[=from_column]{from_column()}} in the following arguments:
 \itemize{
 \item \code{color}
 \item \code{size}
@@ -91,11 +90,10 @@ following arguments:
 Please note that for all of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
 call needs to reference a column that has data of the correct type (this is
 different for each argument). Additional columns for parameter values can be
-generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
-that contain parameter data can also be hidden from final display with
-\code{\link[=cols_hide]{cols_hide()}}.
+generated with \code{\link[=cols_add]{cols_add()}} (if not already present). Columns that contain
+parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
 
-Importantly, a call of \code{tab_style()} with any use of \code{\link[=from_column]{from_column()}} within
+Importantly, a \code{tab_style()} call with any use of \code{\link[=from_column]{from_column()}} within
 styling expressions must only use \code{\link[=cells_body]{cells_body()}} within \code{locations}. This is
 because we cannot map multiple options taken from a column onto other
 locations.
@@ -105,13 +103,13 @@ locations.
 
 
 Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
-(keeping only the \code{num} and \code{currency} columns). With the \code{\link[=tab_style]{tab_style()}}
-function (called twice), we'll selectively add style to the values formatted
-by \code{\link[=fmt_number]{fmt_number()}}. In the \code{style} argument of each \code{tab_style()} call, we
-can define multiple types of styling with the \code{\link[=cell_fill]{cell_fill()}} and \code{\link[=cell_text]{cell_text()}}
-helper functions (enclosed in a list). The cells to be targeted for styling
-require the use of helper functions like \code{\link[=cells_body]{cells_body()}}, which is used here
-with different columns and rows being targeted.
+(keeping only the \code{num} and \code{currency} columns). With \code{\link[=tab_style]{tab_style()}}
+(called twice), we'll selectively add style to the values formatted by
+\code{\link[=fmt_number]{fmt_number()}}. In the \code{style} argument of each \code{tab_style()} call, we can
+define multiple types of styling with \code{\link[=cell_fill]{cell_fill()}} and \code{\link[=cell_text]{cell_text()}}
+(enclosed in a list). The cells to be targeted for styling require the use of
+helpers like \code{\link[=cells_body]{cells_body()}}, which is used here with different columns and
+rows being targeted.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(num, currency) |>
@@ -173,8 +171,8 @@ columns.
 }}
 
 With another two-column table based on the \code{\link{exibble}} dataset, let's create
-a \strong{gt} table. First, we'll replace missing values with the \code{\link[=sub_missing]{sub_missing()}}
-function. Next, we'll add styling to the \code{char} column. This styling will be
+a \strong{gt} table. First, we'll replace missing values with \code{\link[=sub_missing]{sub_missing()}}.
+Next, we'll add styling to the \code{char} column. This styling will be
 HTML-specific and it will involve (all within a list): (1) a \code{\link[=cell_fill]{cell_fill()}}
 call (to set a \code{"lightcyan"} background), and (2) a string containing a CSS
 style declaration (\code{"font-variant: small-caps;"}).
@@ -206,12 +204,11 @@ text treatment.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::filter(csd_type == "city") |>
-  dplyr::arrange(desc(population_2021)) |>
   dplyr::select(
     name, land_area_km2, density_2016, density_2021,
     population_2016, population_2021
   ) |>
-  dplyr::slice_head(n = 5) |>
+  dplyr::slice_max(population_2021, n = 5) |>
   gt(rowname_col = "name") |>
   tab_header(
     title = md(paste("Largest Five", fontawesome::fa("city") , "in `towny`")),
@@ -291,13 +288,13 @@ text treatment.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_4.png" alt="This image of a table was generated from the fourth code example in the `tab_style()` help file." style="width:100\%;">
 }}
 
-The \code{\link[=from_column]{from_column()}} helper function can be used to get values from a column.
-We'll use it in the next example, which begins with a table having a color
-name column and a column with the associated hexadecimal color code. To show
-the color in a separate column, we first create one with \code{\link[=cols_add]{cols_add()}} (
-ensuring that missing values are replaced with \code{""} via \code{\link[=sub_missing]{sub_missing()}}).
-Then, \code{tab_style()} is used to style that column, calling \code{\link[=from_column]{from_column()}} in
-the \code{color} argument of the \code{\link[=cell_fill]{cell_fill()}} function.
+\code{\link[=from_column]{from_column()}} can be used to get values from a column. We'll use it in the
+next example, which begins with a table having a color name column and a
+column with the associated hexadecimal color code. To show the color in a
+separate column, we first create one with \code{\link[=cols_add]{cols_add()}} (ensuring that missing
+values are replaced with \code{""} via \code{\link[=sub_missing]{sub_missing()}}). Then, \code{tab_style()} is
+used to style that column, using \link[=from_column]{color = from_column()}
+within \code{\link[=cell_fill]{cell_fill()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   name = c(
@@ -329,21 +326,20 @@ the \code{color} argument of the \code{\link[=cell_fill]{cell_fill()}} function.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_5.png" alt="This image of a table was generated from the fifth code example in the `tab_style()` help file." style="width:100\%;">
 }}
 
-The \code{\link[=cell_text]{cell_text()}} function also allows the use of \code{\link[=from_column]{from_column()}} for many of
-its arguments. Let's take a small portion of data from \code{\link{sp500}} and add an
-up or down arrow based on the values in the \code{open} and \code{close} columns.
-Within \code{\link[=cols_add]{cols_add()}} we can create a new column (\code{dir}) with an expression to
-get either \code{"red"} or \code{"green"} text from a comparison of the \code{open} and
-\code{close} values. These values are transformed to up or down arrows with the
-\code{\link[=text_case_match]{text_case_match()}} function, using \strong{fontawesome} icons in the end.
-However, the text values are still present and can be used by \code{\link[=cell_text]{cell_text()}}
-within \code{tab_style()}. The \code{\link[=from_column]{from_column()}} helper function makes it possible
-to use the text in the cells of the \code{dir} column as \code{color} input values.
+\code{\link[=cell_text]{cell_text()}} also allows the use of \code{\link[=from_column]{from_column()}} for many ofits arguments.
+Let's take a small portion of data from \code{\link{sp500}} and add an up or down arrow
+based on the values in the \code{open} and \code{close} columns. Within \code{\link[=cols_add]{cols_add()}} we
+can create a new column (\code{dir}) with an expression to get either \code{"red"} or
+\code{"green"} text from a comparison of the \code{open} and \code{close} values. These
+values are transformed to up or down arrows with \code{\link[=text_case_match]{text_case_match()}}, using
+\strong{fontawesome} icons in the end. However, the text values are still present
+and can be used by \code{\link[=cell_text]{cell_text()}} within \code{tab_style()}. \code{\link[=from_column]{from_column()}} makes
+it possible to use the text in the cells of the \code{dir} column as \code{color} input
+values.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(date > "2015-01-01") |>
-  dplyr::arrange(date) |>
-  dplyr::slice_head(n = 5) |>
+  dplyr::slice_min(date, n = 5) |>
   dplyr::select(date, open, close) |>
   gt(rowname_col = "date") |>
   fmt_currency(columns = c(open, close)) |>

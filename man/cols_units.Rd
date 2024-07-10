@@ -22,12 +22,12 @@ Expressions for the assignment of column units for the table columns in
 \code{.data}. Two-sided formulas (e.g., \verb{<LHS> ~ <RHS>}) can be used, where the
 left-hand side corresponds to selections of columns and the right-hand side
 evaluates to single-length values for the units to apply. Column names
-should be enclosed in \code{\link[=c]{c()}}. Select helpers like \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}
-can be used in the LHS. Named arguments are also valid as input for simple
-mappings of column name to the \strong{gt} units syntax; they should be of the
-form \verb{<column name> = <units text>}. Subsequent expressions that operate on
-the columns assigned previously will result in overwriting column units
+should be enclosed in \code{c()}. Select helpers like \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, and \code{\link[=everything]{everything()}} can be used in
+the LHS. Named arguments are also valid as input for simple mappings of
+column name to the \strong{gt} units syntax; they should be of the form
+\verb{<column name> = <units text>}. Subsequent expressions that operate on the
+columns assigned previously will result in overwriting column units
 defintion values.}
 
 \item{.list}{\emph{Alternative to \code{...}}
@@ -76,7 +76,7 @@ best shown with examples:
 \itemize{
 \item \code{"m/s"} and \code{"m / s"} both render as \code{"m/s"}
 \item \code{"m s^-1"} will appear with the \code{"-1"} exponent intact
-\item \code{"m /s"} gives the the same result, as \code{"/<unit>"} is equivalent to
+\item \code{"m /s"} gives the same result, as \code{"/<unit>"} is equivalent to
 \code{"<unit>^-1"}
 \item \code{"E_h"} will render an \code{"E"} with the \code{"h"} subscript
 \item \code{"t_i^2.5"} provides a \code{t} with an \code{"i"} subscript and a \code{"2.5"} exponent
@@ -196,8 +196,7 @@ what the last four columns contain.
     name, land_area_km2,
     ends_with("2016"), ends_with("2021")
   ) |>
-  dplyr::arrange(desc(population_2021)) |>
-  dplyr::slice_head(n = 10) |>
+  dplyr::slice_max(population_2021, n = 10) |>
   gt(rowname_col = "name") |>
   tab_stubhead(label = "City") |>
   fmt_integer() |>

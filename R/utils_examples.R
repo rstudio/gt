@@ -39,10 +39,9 @@ get_topic_names <- function() {
   # Exclude any topics that have `.` or `-` characters within their names,
   # and, exclude the 'pipe' and 'reexports' topic
   topic_names[
-    !grepl("\\.", topic_names) &
-      !grepl("-", topic_names) &
-      !grepl("^pipe$", topic_names) &
-      !grepl("^reexports$", topic_names)
+    !grepl(".", topic_names, fixed = TRUE) &
+      !grepl("-", topic_names, fixed = TRUE) &
+      !topic_names %in% c("pipe", "reexports")
   ]
 }
 
@@ -113,6 +112,23 @@ get_example_text <- function(topic) {
     example_lines <- gsub("\n\n$", "", example_lines)
     example_lines <- gsub("\n\n\n", "\n\n", example_lines)
 
+    # Replace `\\\\\\\\` with `\\`
+    example_lines <- gsub("\\\\\\\\", "\\", example_lines, fixed = TRUE)
+
+    # Replacements in `text_replace()` example
+    if (topic %in% c("text_replace", "fmt_image")) {
+      example_lines <-
+        gsub("\\((.*?)\\)", "\\\\((.*?)\\\\)", example_lines, fixed = TRUE)
+      example_lines <-
+        gsub("<em>\\1</em>", "<em>\\\\1</em>", example_lines, fixed = TRUE)
+    }
+
+    # Replacements in `fmt_email()` example
+    if (topic == "fmt_email") {
+      example_lines <-
+        gsub("\\(0|\\)", "\\\\(0|\\\\)", example_lines, fixed = TRUE)
+    }
+
     examples_out <- c(examples_out, example_lines)
   }
 
@@ -177,31 +193,13 @@ write_gt_examples_qmd_files <- function(
 ) {
 
   if (is.null(topics)) {
+    gt_datasets_and_shiny_fns <-
+      c("countrypops", "sza", "gtcars", "sp500", "pizzaplace", "exibble",
+        "towny", "peeps", "films", "metro", "gibraltar", "constants",
+        "illness", "reactions", "photolysis", "nuclides", "rx_adsl",
+        "rx_addv", "render_gt", "gt_output", "fmt_markdown")
 
-    topics <-
-      base::setdiff(
-        get_topic_names(),
-        c(
-          "countrypops",
-          "sza",
-          "gtcars",
-          "sp500",
-          "pizzaplace",
-          "exibble",
-          "towny",
-          "peeps",
-          "metro",
-          "constants",
-          "illness",
-          "reactions",
-          "photolysis",
-          "nuclides",
-          "rx_adsl",
-          "rx_addv",
-          "render_gt",
-          "gt_output"
-        )
-      )
+    topics <- base::setdiff(get_topic_names(), gt_datasets_and_shiny_fns)
   }
 
   if (!dir.exists(paths = output_dir)) {
@@ -241,7 +239,7 @@ write_gt_examples_qmd_files <- function(
         family <- as.integer(unlist(strsplit(id_val, split = "-"))[[1]])
         number <- as.integer(unlist(strsplit(id_val, split = "-"))[[2]])
 
-      } else if (any(grepl("Dataset ID ", help_file_lines))) {
+      } else if (any(grepl("Dataset ID ", help_file_lines, fixed = TRUE))) {
 
         type <- "dataset"
         id_idx <- grep("\\section{Dataset ID and Badge}{", help_file_lines, fixed = TRUE) + 2

@@ -27,7 +27,6 @@
 #' @param table The table to filter down to one row.
 #' @param column The column from which the single value should be obtained.
 #' @param ... The arguments passed to `dplyr::filter()`.
-#' @import rlang
 #' @noRd
 filter_table_to_value <- function(
     table,
@@ -74,20 +73,22 @@ normalize_locale <- function(locale = NULL) {
 #' @param locale The user-supplied `locale` value, found in several `fmt_*()`
 #'   functions. This is expected as `NULL` if not supplied by the user.
 #' @noRd
-validate_locale <- function(locale) {
+validate_locale <- function(locale, call = rlang::caller_env()) {
 
   # Stop function if the `locale` provided
   # isn't a valid one
   if (
     !is.null(locale) &&
-    !(gsub("_", "-", locale) %in% locales[["locale"]]) &&
-    !(gsub("_", "-", locale) %in% default_locales[["default_locale"]])
+    !(gsub("_", "-", locale, fixed = TRUE) %in% locales[["locale"]]) &&
+    !(gsub("_", "-", locale, fixed = TRUE) %in% default_locales[["default_locale"]])
   ) {
 
     cli::cli_abort(c(
       "The supplied `locale` is not available in the list of supported locales.",
-      "*" = "Use {.help [{.fn info_locales}](gt::info_locales)} to see which locales can be used."
-    ))
+      "i" = "Use {.run [info_locales()](gt::info_locales())} to see which locales can be used."
+      ),
+      call = call
+    )
   }
 }
 
@@ -96,7 +97,7 @@ validate_locale <- function(locale) {
 #' @param currency The user-supplied `currency` value, found in the
 #'   `fmt_currency()` function.
 #' @noRd
-validate_currency <- function(currency) {
+validate_currency <- function(currency, call = rlang::caller_env()) {
 
   # If `currency` isn't a custom currency object
   # (`gt_currency`), then validate the supplied symbol
@@ -109,16 +110,18 @@ validate_currency <- function(currency) {
   # Stop function if the `currency` provided isn't a valid one
   if (
     !(
-      currency_char %in% currency_symbols$curr_symbol |
-      currency_char %in% currencies$curr_code |
+      currency_char %in% currency_symbols$curr_symbol ||
+      currency_char %in% currencies$curr_code ||
       currency_char %in% currencies$curr_number
     )
   ) {
     cli::cli_abort(c(
       "The supplied `currency` is not available in the list of supported currencies.",
-      "*" = "Use the {.help [{.fn info_currencies}](gt::info_currencies)} function to see which currencies can be used.",
-      "*" = "See {.help [{.fn fmt_currency}](gt::fmt_currency)} to better understand which input types are valid."
-    ))
+      "i" = "Use {.run [info_currencies()](gt::info_currencies())} to see which currencies can be used.",
+      "i" = "See {.help [{.fn fmt_currency}](gt::fmt_currency)} to better understand which input types are valid."
+      ),
+      call = call
+    )
   }
 }
 
@@ -180,9 +183,7 @@ get_locale_dec_mark <- function(locale = NULL, default) {
 get_locale_range_pattern <- function(locale = NULL) {
 
   # If `locale` is NULL then set the locale to 'en'
-  if (is.null(locale)) {
-    locale <- "en"
-  }
+  locale <- locale %||% "en"
 
   # Get the correct `range_pattern` value from the `gt:::locales` lookup table
   range_pattern <-
@@ -237,9 +238,7 @@ get_locale_idx_set <- function(locale = NULL) {
 get_locale_num_spellout <- function(locale = NULL) {
 
   # If `locale` is NULL then set locale as 'en'
-  if (is.null(locale)) {
-    locale <- "en"
-  }
+  locale <- locale %||% "en"
 
   # If `locale` contains `sr-Latn` then set locale as 'sr-Latn'
   if (grepl("sr-Latn", locale)) {
@@ -278,9 +277,7 @@ get_locale_num_spellout <- function(locale = NULL) {
 get_locale_no_table_data_text <- function(locale = NULL) {
 
   # If `locale` is NULL then use the 'en' locale
-  if (is.null(locale)) {
-    locale <- "en"
-  }
+  locale <- locale %||% "en"
 
   # Get the correct `no_table_data_text` value from the
   # `gt:::locales` lookup table
@@ -289,13 +286,13 @@ get_locale_no_table_data_text <- function(locale = NULL) {
 
 get_locale_segments <- function(locale) {
 
-  if (!grepl("-", locale)) {
+  if (!grepl("-", locale, fixed = TRUE)) {
     return(locale)
   }
 
   segments <- locale
 
-  while (grepl("-", locale)) {
+  while (grepl("-", locale, fixed = TRUE)) {
 
     locale <- gsub("-[^-]*$", "", locale)
     segments <- c(segments, locale)
@@ -318,12 +315,10 @@ get_locale_segments <- function(locale) {
 #' @noRd
 resolve_locale <- function(data, locale) {
 
-  if (is.null(locale)) {
-    locale <- dt_locale_get_value(data = data)
-  }
+  locale <- locale %||% dt_locale_get_value(data = data)
 
   # An 'undetermined' locale should map back to the `"en"` locale
-  if (!is.null(locale) && locale == "und") {
+  if (identical(locale, "und")) {
     locale <- "en"
   }
 
@@ -402,6 +397,11 @@ get_currency_decimals <- function(
 #' @param scale_by A numeric scalar.
 #' @noRd
 scale_x_values <- function(x, scale_by) {
+
+  # Should `scale_by` be a function, call that function directly on `x`
+  if (rlang::is_function(scale_by)) {
+    return(scale_by(x))
+  }
 
   len <- length(scale_by)
 
@@ -508,9 +508,9 @@ format_num_to_str <- function(
   # conform to the Indian numbering system
   if (system == "ind") {
 
-    is_inf <- grepl("Inf", x_str)
+    is_inf <- grepl("Inf", x_str, fixed = TRUE)
     x_str_numeric <- x_str[!is_inf]
-    has_decimal <- grepl("\\.", x_str_numeric)
+    has_decimal <- grepl(".", x_str_numeric, fixed = TRUE)
     is_negative <- grepl("^-", x_str_numeric)
 
     integer_parts <- sub("\\..*", "", x_str_numeric)
@@ -619,6 +619,7 @@ context_missing_text <- function(missing_text, context) {
     switch(
       context,
       html = ,
+      grid = ,
       latex = ,
       word =
         {
@@ -1013,7 +1014,7 @@ format_minus <- function(
   minus_mark <- context_minus_mark(context)
 
   # Handle replacement of the minus mark
-  tidy_gsub(x_str, "-", minus_mark, fixed = TRUE)
+  gsub("-", minus_mark, x_str, fixed = TRUE)
 }
 
 #' Transform currency values to accounting style
@@ -1052,7 +1053,7 @@ format_as_accounting <- function(
   # Selectively remove minus sign and paste between parentheses
   x_str[x_lt0] <-
     paste_between(
-      tidy_gsub(x_str[x_lt0], minus_mark, "", fixed = TRUE),
+      gsub(minus_mark, "", x_str[x_lt0], fixed = TRUE),
       x_2 = parens_marks
     )
 
@@ -1097,7 +1098,7 @@ prettify_scientific_notation <- function(
   minus_mark <- context_minus_mark(context)
 
   # Handle replacement of the minus mark in number and exponent parts
-  tidy_gsub(x, "-", minus_mark, fixed = TRUE)
+  gsub("-", minus_mark, x, fixed = TRUE)
 }
 
 #' Create the tibble with suffixes and scaling values

@@ -36,10 +36,10 @@ dt_row_groups_init <- function(data) {
 
   stub_df <- dt_stub_df_get(data = data)
 
-  if (any(!is.na(stub_df[["group_id"]]))) {
-    row_groups <- unique(stub_df[["group_id"]])
-  } else {
+  if (all(is.na(stub_df[["group_id"]]))) {
     row_groups <- character(0L)
+  } else {
+    row_groups <- unique(stub_df[["group_id"]])
   }
 
   dt_row_groups_set(data = data, row_groups = row_groups)

@@ -1,12 +1,6 @@
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
-}
-
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
 }
 
 test_that("A gt table object contains the correct components", {
@@ -136,9 +130,8 @@ test_that("A gt table can be made from a table with no rows", {
   expect_tab(tab = tab, df = data_e)
 
   # Expect that the `stub_df` data frame is empty
-  dt_stub_df_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(0)
+  n_rows <- nrow(dt_stub_df_get(data = tab))
+  expect_equal(n_rows, 0)
 
   # Create a `gt_tbl` object with `gt()` and a
   # grouped version of the `data_e` dataset
@@ -209,7 +202,7 @@ test_that("A gt table can use UTF-8 chars in any system locale", {
     # Expect that UTF-8 characters are retained in the
     # gt object after rendering
     expect_identical(
-      expected_vec %>% sort(),
+       sort(expected_vec),
       (df %>% gt() %>% render_formats_test("html")) %>%
         unlist() %>% unname() %>% sort()
     )
@@ -408,7 +401,7 @@ test_that("A gt table can be made with grouped data - two groups", {
     )
 })
 
-test_that("The `gt()` groupname_col arg will override any grouped data", {
+test_that("`groupname_col` in gt() will override any grouped data", {
 
   # Use `dplyr::group_by()` to add a group to an
   # incoming table; create the gt object and provide
@@ -519,21 +512,21 @@ test_that("The `gt()` groupname_col arg will override any grouped data", {
     )
 })
 
-test_that("The `gt()` `id` arg will only accept specific inputs", {
+test_that("gt() validates `id` correctly", {
 
   # Expect no errors with valid inputs to `id`
-  expect_no_error(exibble %>% gt())
-  expect_no_error(exibble %>% gt(id = NULL))
-  expect_no_error(exibble %>% gt(id = "sldfjlds"))
-  expect_no_error(exibble %>% gt(id = "23947294"))
+  expect_no_error(gt(exibble))
+  expect_no_error(gt(exibble, id = NULL))
+  expect_no_error(gt(exibble, id = "sldfjlds"))
+  expect_no_error(gt(exibble, id = "23947294"))
 
   # Expect errors when `id` isn't a length 1 character vector or is NA
-  expect_error(exibble %>% gt(id = 23))
-  expect_error(exibble %>% gt(id = c("one", "two")))
-  expect_error(exibble %>% gt(id = NA))
+  expect_error(gt(exibble, id = 23))
+  expect_error(gt(exibble, id = c("one", "two")))
+  expect_error(gt(exibble, id = NA))
 })
 
-test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub = TRUE`", {
+test_that("rowname_col in gt() will be overridden by `rownames_to_stub = TRUE`", {
 
   # Create a gt object where rownames will be used as
   # stub labels, and, provide a value for the `rowname_col`
@@ -545,33 +538,30 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
     build_data(context = "html")
 
   # Expect that no groups are available in the gt object
-  built_tbl$`_row_groups` %>% expect_equal(character(0L))
-
+  expect_equal(built_tbl$`_row_groups`, character(0L))
   # Expect no rows in `_groups_rows`
-  built_tbl$`_groups_rows` %>%
-    nrow() %>%
-    expect_equal(0)
+  expect_equal(nrow(built_tbl$`_groups_rows`), 0L)
 
-  built_tbl$`_boxhead` %>% .[, 1:2] %>%
-    expect_equal(
-      dplyr::tibble(
-        var = c("__GT_ROWNAME_PRIVATE__", colnames(mtcars)),
-        type = c("stub", rep("default", 11))
-      )
+  expect_equal(
+    built_tbl$`_boxhead`[, 1:2],
+    dplyr::tibble(
+      var = c("__GT_ROWNAME_PRIVATE__", colnames(mtcars)),
+      type = c("stub", rep("default", 11))
     )
+  )
 
-  built_tbl$`_stub_df` %>%
-    expect_equal(
-      dplyr::tibble(
-        rownum_i = 1:10,
-        row_id = rownames(mtcars)[1:10],
-        group_id = NA_character_,
-        group_label = list(NULL),
-        indent = NA_character_,
-        built_group_label = ""
-      ),
-      ignore_attr = TRUE
-    )
+  expect_equal(
+    built_tbl$`_stub_df`,
+    dplyr::tibble(
+      rownum_i = 1:10,
+      row_id = rownames(mtcars)[1:10],
+      group_id = NA_character_,
+      group_label = list(NULL),
+      indent = NA_character_,
+      built_group_label = ""
+    ),
+    ignore_attr = TRUE
+  )
 
   # Render the HTML table and read the HTML with the `xml2::read_html()` fn
   html_tbl <-
@@ -796,16 +786,17 @@ test_that("Escapable characters in rownames are handled correctly in each output
     "\\intbl {\\f0 {\\f0\\fs20 rtf}}\\cell",
     fixed = TRUE
   )
+  tib <- dplyr::as_tibble(tbl)
 
   # Using a tibble (removes row names) and setting `column_1` as the stub
   expect_match( # stub from `column_1`
-    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
+    gt(tib, rowname_col = "column_1") %>%
       as_rtf() %>% as.character(),
     "\\intbl {\\f0 {\\f0\\fs20 \\'7brtf\\'7d}}\\cell",
     fixed = TRUE
   )
   expect_match( # `column_2`
-    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
+    gt(tib, rowname_col = "column_1") %>%
       as_rtf() %>% as.character(),
     "\\intbl {\\f0 {\\f0\\fs20 rtf}}\\cell",
     fixed = TRUE

@@ -28,10 +28,9 @@ This is the \strong{gt} table object that is commonly created through use of the
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns for which the summaries should be calculated. Can either
-be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
-or a select helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+be a series of column names provided in \code{c()}, a vector of column indices,
+or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
 
 \item{fns}{\emph{Aggregation Expressions}
 
@@ -243,9 +242,9 @@ column and row names:
 \section{Extraction of summary rows}{
 
 
-Should we need to obtain the summary data for external purposes, the
-\code{\link[=extract_summary]{extract_summary()}} function can be used with a \code{gt_tbl} object where summary
-rows were added via \code{grand_summary_rows()} or \code{\link[=summary_rows]{summary_rows()}}.
+Should we need to obtain the summary data for external purposes,
+\code{\link[=extract_summary]{extract_summary()}} can be used with a \code{gt_tbl} object where summary rows
+were added via \code{grand_summary_rows()} or \code{\link[=summary_rows]{summary_rows()}}.
 }
 
 \section{Examples}{
@@ -253,7 +252,7 @@ rows were added via \code{grand_summary_rows()} or \code{\link[=summary_rows]{su
 
 Use a modified version of the \code{\link{sp500}} dataset to create a \strong{gt} table with
 row groups and row labels. Create the grand summary rows \code{min}, \code{max}, and
-\code{avg} for the table with the \code{grand_summary_rows()} function.
+\code{avg} for the table with \code{grand_summary_rows()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>

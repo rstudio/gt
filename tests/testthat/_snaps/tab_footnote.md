@@ -412,7 +412,7 @@
     Code
       .
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.4pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|l|r}\n\\toprule\n\\multicolumn{2}{l}{} & Pizzas Sold \\\\ \n\\midrule\\addlinespace[2.5pt]\npeppr\\_salami\\textsuperscript{\\textit{1}} & L & 696 \\\\ \n & M & 428 \\\\ \n & S & 322 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & 1,446 \\\\ \n\\midrule\\addlinespace[2.5pt]\nsoppressata & L & 405 \\\\ \n & M & 268 \\\\ \n & S & 288 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & 961 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}The Pepper-Salami.\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.4pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|l|r}\n\\toprule\n\\multicolumn{2}{c}{} & Pizzas Sold \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{4}{=}{peppr\\_salami\\textsuperscript{\\textit{1}}} & L & 696 \\\\ \n & M & 428 \\\\ \n & S & 322 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & 1,446 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{4}{=}{soppressata} & L & 405 \\\\ \n & M & 268 \\\\ \n & S & 288 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & 961 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}The Pepper-Salami.\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -551,4 +551,96 @@
       \row
       
       }
+
+# tab_footnote() produces helpful error messages (#475).
+
+    Code
+      tab_footnote(start_gt, footnote = "First data cell.", locations = cells_body(
+        columns = "valuer", rows = 1))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "First data cell.".
+      Caused by error in `cells_body()`:
+      ! Can't select columns that don't exist.
+      x Column `valuer` doesn't exist.
+    Code
+      tab_footnote(start_gt, footnote = "First data cell.", locations = cells_column_labels(
+        columns = "valuer"))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "First data cell.".
+      Caused by error in `cells_column_labels()`:
+      ! Can't select columns that don't exist.
+      x Column `valuer` doesn't exist.
+    Code
+      tab_footnote(start_gt, footnote = "First data cell.", locations = cells_column_spanners(
+        "valuer"))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "First data cell.".
+      Caused by error in `cells_column_spanners()`:
+      ! Spanner `valuer` does not exist in the data.
+    Code
+      tab_footnote(start_gt, footnote = "First data cell.", locations = cells_column_spanners(
+        3))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "First data cell.".
+      Caused by error in `cells_column_spanners()`:
+      ! Spanner 3 does not exist in the data.
+    Code
+      tab_footnote(start_gt, footnote = "Footnote error.", locations = cells_body(
+        columns = "value_1", rows = "Mazda RX7"))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Footnote error.".
+      Caused by error in `cells_body()`:
+      ! Row `Mazda RX7` does not exist in the data.
+
+# tab_footnote() errors well when it can't resolve location
+
+    Code
+      tab_footnote(data, footnote = "Summary cell footnote.", locations = cells_summary(
+        groups = "Mercs", columns = starts_with("x"), rows = 2))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Summary cell footnote.".
+      Caused by error in `cells_summary()`:
+      ! The location requested could not be resolved.
+      * Review the expression provided as `columns`.
+    Code
+      tab_footnote(data, footnote = "Summary cell footnote.", locations = cells_summary(
+        groups = "Mercs", columns = starts_with("m"), rows = starts_with("x")))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Summary cell footnote.".
+      Caused by error in `cells_summary()`:
+      ! The location requested could not be resolved.
+      * Review the expression provided as `rows`.
+    Code
+      tab_footnote(data, footnote = "Grand summary cell footnote.", locations = cells_grand_summary(
+        columns = starts_with("x"), rows = 2))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Grand summary cell footnote.".
+      Caused by error in `cells_grand_summary()`:
+      ! The location requested could not be resolved.
+      * Review the expression provided as `columns`.
+    Code
+      tab_footnote(data, footnote = "Grand summary cell footnote.", locations = cells_grand_summary(
+        columns = starts_with("m"), rows = starts_with("x")))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Grand summary cell footnote.".
+      Caused by error in `cells_grand_summary()`:
+      ! The location requested could not be resolved.
+      * Review the expression provided as `rows`.
+    Code
+      tab_footnote(data, footnote = "Grand summary cell footnote.", locations = cells_grand_summary(
+        columns = starts_with("m"), rows = 15))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Grand summary cell footnote.".
+      Caused by error in `cells_grand_summary()`:
+      ! Grand summary row 15 does not exist in the data.
 

@@ -39,8 +39,8 @@ column name provided to \code{rowname_col} will be ignored.}
 
 The column name in the input \code{data} table to use as group labels for
 generation of row groups. If the input \code{data} table has the \code{grouped_df}
-class (through use of the \code{\link[dplyr:group_by]{dplyr::group_by()}} function or associated
-\verb{group_by*()} functions) then any input here is ignored.}
+class (through use of \code{\link[dplyr:group_by]{dplyr::group_by()}} or associated \verb{group_by*()}
+functions) then any input here is ignored.}
 
 \item{process_md}{\emph{Process Markdown in \code{rowname_col} and \code{groupname_col}}
 
@@ -85,7 +85,7 @@ in each column of the input \code{data}. Internally, this calls
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 By default (with \code{NULL}) this will be a random, ten-letter ID as generated
-by using the \code{\link[=random_id]{random_id()}} function. A custom table ID can be used here by
+by using \code{\link[=random_id]{random_id()}}. A custom table ID can be used here by
 providing a character value.}
 
 \item{locale}{\emph{Locale identifier}
@@ -94,9 +94,8 @@ providing a character value.}
 
 An optional locale identifier that can be set as the default locale for all
 functions that take a \code{locale} argument. Examples include \code{"en"} for
-English (United States) and \code{"fr"} for French (France). We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported.}
+English (United States) and \code{"fr"} for French (France). We can call
+\code{\link[=info_locales]{info_locales()}} as a useful reference for all of the locales that are supported.}
 
 \item{row_group.sep}{\emph{Separator text for multiple row group labels}
 
@@ -126,7 +125,7 @@ contain unique labels (could be unique across the entire table or unique
 within the different row groups).
 
 Row groups can also be created by passing a \code{grouped_df} to \code{gt()} by using
-the \code{\link[dplyr:group_by]{dplyr::group_by()}} function on the table data. In this way, two or more
+\code{\link[dplyr:group_by]{dplyr::group_by()}} on the table data. In this way, two or more
 columns of categorical data can be used to make row groups. The
 \code{row_group.sep} argument allows for control in how the row group labels will
 appear in the display table.
@@ -180,13 +179,13 @@ upon creation of the table.
 }}
 
 If you'd rather perform the set up of row groups later (i.e., not in the
-\code{gt()} call), this is possible with use of the \code{\link[=tab_row_group]{tab_row_group()}} function
-(and \code{\link[=row_group_order]{row_group_order()}} can help with the arrangement of row groups).
+\code{gt()} call), this is possible with \code{\link[=tab_row_group]{tab_row_group()}} (and \code{\link[=row_group_order]{row_group_order()}}
+can help with the arrangement of row groups).
 
 One more thing to consider with row groups is their layout. By default, row
 group labels reside in separate rows the appear above the group. However,
-we can use the \code{row_group_as_column = TRUE} option to put the row group
-labels within a secondary column within the table stub.
+we can use \code{row_group_as_column = TRUE} to put the row group labels within a
+secondary column within the table stub.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt(
@@ -228,7 +227,7 @@ in a column. If you'd like to disable this form of auto-alignment, the
 }}
 
 What you'll get from that is center-alignment of all table body values and
-all column labels. Note that row labels in the the stub are still
+all column labels. Note that row labels in the stub are still
 left-aligned; and \code{auto_align} has no effect on alignment within the table
 stub.
 
@@ -265,13 +264,12 @@ using formatting functions:
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_7.png" alt="This image of a table was generated from the seventh code example in the `gt()` help file." style="width:100\%;">
 }}
 
-In this example, the \code{\link[=fmt_number]{fmt_number()}} and \code{\link[=fmt_date]{fmt_date()}} functions understand
-that the locale for this table is \code{"fr"} (French), so the appropriate
-formatting for that locale is apparent in the \code{num}, \code{currency}, and \code{date}
-columns. However in the \code{\link[=fmt_datetime]{fmt_datetime()}} call, we explicitly use the \code{"en"}
-(English) locale. This overrides the \code{"fr"} default set for this table and
-the end result is dates formatted with the English locale in the \code{datetime}
-column.
+In this example, \code{\link[=fmt_number]{fmt_number()}} and \code{\link[=fmt_date]{fmt_date()}} understand that the locale
+for this table is \code{"fr"} (French), so the appropriate formatting for that
+locale is apparent in the \code{num}, \code{currency}, and \code{date} columns. However in
+\code{\link[=fmt_datetime]{fmt_datetime()}}, we explicitly use the \code{"en"} (English) locale. This
+overrides the \code{"fr"} default set for this table and the end result is
+dates formatted with the English locale in the \code{datetime} column.
 }
 
 \section{Function ID}{

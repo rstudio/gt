@@ -29,7 +29,7 @@
 #' Markdown text can be used in certain places in a **gt** table, and this is
 #' wherever new text is defined (e.g., footnotes, source notes, the table title,
 #' etc.). Using Markdown is advantageous for styling text since it will be
-#' rendered correctly to the the output format of the **gt** table. There is
+#' rendered correctly to the output format of the **gt** table. There is
 #' also the [html()] helper that allows you use HTML exclusively (for tables
 #' expressly meant for HTML output) but `md()` allows for both; you get to use
 #' Markdown plus any HTML fragments at the same time.
@@ -46,8 +46,8 @@
 #' @section Examples:
 #'
 #' Use the [`exibble`] dataset to create a **gt** table. When adding a title
-#' through the [tab_header()] function, we'll use the `md()` helper to signify
-#' to **gt** that we're using Markdown formatting.
+#' through [tab_header()], we'll use the `md()` helper to signify to **gt** that
+#' we're using Markdown formatting.
 #'
 #' ```r
 #' exibble |>
@@ -105,8 +105,8 @@ md <- function(text) {
 #' @section Examples:
 #'
 #' Use the [`exibble`] dataset to create a **gt** table. When adding a title
-#' through the [tab_header()] function, we'll use the `html()` helper to signify
-#' to **gt** that we're using HTML formatting.
+#' through [tab_header()], we'll use the `html()` helper to signify to **gt**
+#' that we're using HTML formatting.
 #'
 #' ```r
 #' exibble |>
@@ -325,11 +325,11 @@ pct <- function(x) {
 #'
 #' @section Examples:
 #'
-#' The `from_column()` function can be used in a variety of formatting functions
-#' so that values for common options don't have to be static, they can change in
-#' every row (so long as you have a column of compatible option values). Here's
-#' an example where we have a table of repeating numeric values along with a
-#' column of currency codes. We can format the numbers to currencies with
+#' `from_column()` can be used in a variety of formatting functions so that
+#' values for common options don't have to be static, they can change in every
+#' row (so long as you have a column of compatible option values). Here's an
+#' example where we have a table of repeating numeric values along with a column
+#' of currency codes. We can format the numbers to currencies with
 #' [fmt_currency()] and use `from_column()` to reference the column of currency
 #' codes, giving us values that are each formatted as having a different
 #' currency.
@@ -358,10 +358,7 @@ pct <- function(x) {
 #'
 #' ```r
 #' gtcars |>
-#'   dplyr::select(mfr, ctry_origin) |>
-#'   dplyr::group_by(mfr, ctry_origin) |>
-#'   dplyr::count() |>
-#'   dplyr::ungroup() |>
+#'   dplyr::count(mfr, ctry_origin) |>
 #'   dplyr::arrange(ctry_origin) |>
 #'   gt(groupname_col = "ctry_origin") |>
 #'   tab_style(
@@ -527,6 +524,275 @@ currency <- function(
   currency_list
 }
 
+#' Get a conversion factor across two measurement units of a given class
+#'
+#' @description
+#'
+#' The `unit_conversion()` helper function gives us a conversion factor for
+#' transforming a value from one form of measurement units to a target form.
+#' For example if you have a length value that is expressed in miles you could
+#' transform that value to one in kilometers through multiplication of the value
+#' by the conversion factor (in this case `1.60934`).
+#'
+#' For `unit_conversion()` to understand the source and destination units, you
+#' need to provide a keyword value for the `from` and `to` arguments. To aid as
+#' a reference for this, call [info_unit_conversions()] to display an
+#' information table that contains all of the keywords for every conversion
+#' type.
+#'
+#' @param from *Units for the input value*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   The keyword representing the units for the value that requires unit
+#'   conversion. In the case where the value has units of miles, the necessary
+#'   input is `"length.mile"`.
+#'
+#' @param to *Desired units for the value*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   The keyword representing the target units for the value with units defined
+#'   in `from`. In the case where input value has units of miles and we would
+#'   rather want the value to be expressed as kilometers, the `to` value should
+#'   be `"length.kilometer"`.
+#'
+#' @return A single numerical value.
+#'
+#' @section Examples:
+#'
+#' Let's use a portion of the [`towny`] dataset and create a table showing
+#' population, density, and land area for 10 municipalities. The `land_area_km2`
+#' values are in units of square kilometers, however, we'd rather the values
+#' were in square miles. We can convert the numeric values while formatting the
+#' values with [`fmt_number()`] by using `unit_conversion()` in the `scale_by`
+#' argument since the return value of that is a conversion factor (which is
+#' applied to each value by multiplication). The same is done for converting the
+#' 'people per square kilometer' values in `density_2021` to 'people per square
+#' mile', however, the units to convert are in the denominator so the inverse
+#' of the conversion factor must be used.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::arrange(desc(density_2021)) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::select(name, population_2021, density_2021, land_area_km2) |>
+#'   gt(rowname_col = "name") |>
+#'   fmt_integer(columns = population_2021) |>
+#'   fmt_number(
+#'     columns = land_area_km2,
+#'     decimals = 1,
+#'     scale_by = unit_conversion(
+#'       from = "area.square-kilometer",
+#'       to = "area.square-mile"
+#'     )
+#'   ) |>
+#'   fmt_number(
+#'     columns = density_2021,
+#'     decimals = 1,
+#'     scale_by = 1 / unit_conversion(
+#'       from = "area.square-kilometer",
+#'       to = "area.square-mile"
+#'     )
+#'   ) |>
+#'   cols_label(
+#'     land_area_km2 = "Land Area,<br>sq. mi",
+#'     population_2021 = "Population",
+#'     density_2021 = "Density,<br>ppl / sq. mi",
+#'     .fn = md
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_unit_conversion_1.png")`
+#' }}
+#'
+#' With a small slice of the [`gibraltar`] dataset, let's display the
+#' temperature values in terms of degrees Celsius (present in the data) *and* as
+#' temperatures in degrees Fahrenheit (achievable via conversion). We can
+#' duplicate the `temp` column through [cols_add()] (naming the new column as
+#' `temp_f`) and when formatting through [fmt_integer()] we can call
+#' `unit_conversion()` within the `scale_by` argument to perform this
+#' transformation while formatting the values as integers.
+#'
+#' ```r
+#' gibraltar |>
+#'   dplyr::filter(
+#'     date == "2023-05-15",
+#'     time >= "06:00",
+#'     time <= "12:00"
+#'   ) |>
+#'   dplyr::select(time, temp) |>
+#'   gt() |>
+#'   tab_header(
+#'     title = "Air Temperature During Late Morning Hours at LXGB Stn.",
+#'     subtitle = "May 15, 2023"
+#'   ) |>
+#'   cols_add(temp_f = temp) |>
+#'   cols_move(columns = temp_f, after = temp) |>
+#'   tab_spanner(
+#'     label = "Temperature",
+#'     columns = starts_with("temp")
+#'   ) |>
+#'   fmt_number(
+#'     columns = temp,
+#'     decimals = 1
+#'   ) |>
+#'   fmt_integer(
+#'     columns = temp_f,
+#'     scale_by = unit_conversion(
+#'       from = "temperature.C",
+#'       to = "temperature.F"
+#'     )
+#'   ) |>
+#'   cols_label(
+#'     time = "Time",
+#'     temp = "{{degC}}",
+#'     temp_f = "{{degF}}"
+#'   ) |>
+#'   cols_width(
+#'     starts_with("temp") ~ px(80),
+#'     time ~ px(100)
+#'   ) |>
+#'   opt_horizontal_padding(scale = 3) |>
+#'   opt_vertical_padding(scale = 0.5) |>
+#'   opt_align_table_header(align = "left") |>
+#'   tab_options(heading.title.font.size = px(16))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_unit_conversion_2.png")`
+#' }}
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-7
+#'
+#' @section Function Introduced:
+#' `v0.11.0`
+#'
+#' @export
+unit_conversion <- function(from, to) {
+
+  force(from)
+  force(to)
+
+  if (from %in% temperature_keywords() && to %in% temperature_keywords()) {
+
+    from <- normalize_temp_keyword(from)
+    to <- normalize_temp_keyword(to)
+
+    return(temperature_conversions(from = from, to = to))
+  }
+
+  if (!(from %in% conversion_factors[["from"]])) {
+    cli::cli_abort("The unit supplied in {.arg from} is not known.")
+  }
+  if (!(to %in% conversion_factors[["to"]])) {
+    cli::cli_abort("The unit supplied in {.arg to} is not known.")
+  }
+
+  if (from == to) {
+    return(1.0)
+  }
+
+  row_conversion <-
+    dplyr::filter(conversion_factors, from == {{ from }}, to == {{ to }})
+
+  # In the case where units are valid and available in the internal dataset,
+  # they may be across categories; such pairings do not allow for a conversion
+  # to take place
+  if (nrow(row_conversion) < 1) {
+    cli::cli_abort("The conversion specified cannot be performed.")
+  }
+
+  row_conversion[["conv_factor"]]
+}
+
+temperature_keywords <- function() {
+  c(
+    "temperature.celsius",
+    "temp.celsius",
+    "celsius",
+    "temperature.C",
+    "temp.C",
+    "C",
+    "temperature.fahrenheit",
+    "temp.fahrenheit",
+    "fahrenheit",
+    "temperature.F",
+    "temp.F",
+    "F",
+    "temperature.kelvin",
+    "temp.kelvin",
+    "kelvin",
+    "temperature.K",
+    "temp.K",
+    "K",
+    "temperature.rankine",
+    "temp.rankine",
+    "rankine",
+    "temperature.R",
+    "temp.R",
+    "R"
+  )
+}
+
+normalize_temp_keyword <- function(keyword) {
+
+  switch(
+    keyword,
+    temperature.celsius =,
+    temp.celsius =,
+    celsius =,
+    temperature.C =,
+    temp.C =,
+    C = "C",
+    temperature.fahrenheit =,
+    temp.fahrenheit =,
+    fahrenheit =,
+    temperature.F =,
+    temp.F =,
+    `F` = "F",
+    temperature.kelvin =,
+    temp.kelvin =,
+    kelvin =,
+    temperature.K =,
+    temp.K =,
+    K = "K",
+    temperature.rankine =,
+    temp.rankine =,
+    rankine =,
+    temperature.R =,
+    temp.R =,
+    R = "R"
+  )
+}
+
+temperature_conversions <- function(from, to) {
+
+  from_to <- paste0(from, to)
+
+  switch(
+    from_to,
+    "CF" = function(x) (1.8 * x) + 32,
+    "CK" = function(x) x + 273.15,
+    "CR" = function(x) (1.8 * x) + 491.67,
+    "FC" = function(x) (x - 32) * 5/9,
+    "FK" = function(x) (x + 459.67) / 1.8,
+    "FR" = function(x) x + 459.67,
+    "KC" = function(x) x - 273.15,
+    "KF" = function(x) ((x - 273.15) * 1.8) + 32,
+    "KR" = function(x) x * 1.8,
+    "RC" = function(x) (x - 32 - 459.67) / 1.8,
+    "RF" = function(x) x - 459.67,
+    "RK" = function(x) x / 1.8,
+    "CC" = ,
+    "FF" = ,
+    "KK" = ,
+    "RR" = 1
+  )
+}
 
 #' Supply nanoplot options to `cols_nanoplot()`
 #'
@@ -781,7 +1047,7 @@ currency <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-7
+#' 8-8
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
@@ -987,7 +1253,7 @@ nanoplot_options <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-8
+#' 8-9
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1086,6 +1352,70 @@ stub <- function() {
   x
 }
 
+#' Select helper for targeting the row group column
+#'
+#' @description
+#'
+#' Should you need to target only the row group column for column-width
+#' declarations (i.e., when `row_group_as_column = TRUE` is set in the initial
+#' [gt()] call), the `row_group()` select helper can be used. This shorthand
+#' makes it so you don't have to use the name of the column that was selected
+#' as the row group column.
+#'
+#' @return A character vector of class `"row_group_column"`.
+#'
+#' @section Examples:
+#'
+#' Create a tibble that has a `row` column (values from `1` to `6`), a `group`
+#' column, and a `vals` column (containing the same values as in `row`).
+#'
+#' ```r
+#' tbl <-
+#'   dplyr::tibble(
+#'     row = 1:6,
+#'     group = c(rep("Group A", 3), rep("Group B", 3)),
+#'     vals = 1:6
+#'   )
+#' ```
+#'
+#' Create a **gt** table with a two-column stub (incorporating the `row` and
+#' `group` columns in that). We can set the widths of the two columns in the
+#' stub with the `row_group()` and [stub()] helpers on the LHS of the
+#' expressions passed to [cols_width()].
+#'
+#' ```r
+#' tbl |>
+#'   gt(
+#'     rowname_col = "row",
+#'     groupname_col = "group",
+#'     row_group_as_column = TRUE
+#'   ) |>
+#'   fmt_roman(columns = stub()) |>
+#'   cols_width(
+#'     row_group() ~ px(200),
+#'     stub() ~ px(100),
+#'     vals ~ px(50)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_row_group_1.png")`
+#' }}
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-11
+#'
+#' @section Function Introduced:
+#' `v0.11.0`
+#'
+#' @export
+row_group <- function() {
+  x <- "::row_group::"
+  class(x) <- "row_group_column"
+  x
+}
+
 #' Location helper for targeting the table title and subtitle
 #'
 #' @description
@@ -1129,12 +1459,11 @@ stub <- function() {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-11
+#' 8-12
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_title <- function(groups = c("title", "subtitle")) {
 
@@ -1202,7 +1531,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-12
+#' 8-13
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1223,21 +1552,21 @@ cells_stubhead <- function() {
 #'
 #' @description
 #'
-#' `cells_column_spanners()` is used to target the cells that
-#' contain the table column spanners. This is useful when applying a footnote
-#' with [tab_footnote()] or adding custom style with [tab_style()]. The function
-#' is expressly used in each of those functions' `locations` argument. The
-#' 'column_spanners' location is generated by one or more uses of the
-#' [tab_spanner()] function or the [tab_spanner_delim()] function.
+#' `cells_column_spanners()` is used to target the cells that contain the table
+#' column spanners. This is useful when applying a footnote with
+#' [tab_footnote()] or adding custom style with [tab_style()]. The function is
+#' expressly used in each of those functions' `locations` argument. The
+#' 'column_spanners' location is generated by one or more uses of
+#' [tab_spanner()] or [tab_spanner_delim()].
 #'
 #' @param spanners *Specification of spanner IDs*
 #'
 #'   `<spanner-targeting expression>` // *default:* `everything()`
 #'
 #'   The spanners to which targeting operations are constrained. Can either be a
-#'   series of spanner ID values provided in [c()] or a select helper function.
-#'   Examples of select helper functions include [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   series of spanner ID values provided in `c()` or a select helper function
+#'   (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]).
 #'
 #' @return A list object with the classes `cells_column_spanners` and
 #' `location_cells`.
@@ -1271,12 +1600,11 @@ cells_stubhead <- function() {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-13
+#' 8-14
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_column_spanners <- function(spanners = everything()) {
 
@@ -1354,12 +1682,11 @@ cells_column_spanners <- function(spanners = everything()) {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-14
+#' 8-15
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_column_labels <- function(columns = everything()) {
 
@@ -1384,18 +1711,16 @@ cells_column_labels <- function(columns = everything()) {
 #' [tab_style()]. The function is expressly used in each of those functions'
 #' `locations` argument. The 'row_groups' location can be generated by the
 #' specifying a `groupname_col` in [gt()], by introducing grouped data to [gt()]
-#' (by way of [dplyr::group_by()]), or, by specifying groups with the
-#' [tab_row_group()] function.
+#' (via [dplyr::group_by()]), or, by specifying groups with [tab_row_group()].
 #'
 #' @param groups *Specification of row group IDs*
 #'
 #'   `<row-group-targeting expression>` // *default:* `everything()`
 #'
 #'   The row groups to which targeting operations are constrained. Can either be
-#'   a series of row group ID values provided in [c()] or a select helper
-#'   function. Examples of select helper functions include [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()].
+#'   a series of row group ID values provided in `c()` or a select helper
+#'   function (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]).
 #'
 #' @return A list object with the classes `cells_row_groups` and
 #'   `location_cells`.
@@ -1409,10 +1734,9 @@ cells_column_labels <- function(columns = everything()) {
 #' @section Examples:
 #'
 #' Let's use a summarized version of the [`pizzaplace`] dataset to create a
-#' **gt** table with grouped data. Add a summary with the [summary_rows()]
-#' function and then add a footnote to the `"peppr_salami"` row group label with
-#' [tab_footnote()]; the targeting is done with `cells_row_groups()` in the
-#' `locations` argument.
+#' **gt** table with grouped data. Add a summary with [summary_rows()] and then
+#' add a footnote to the `"peppr_salami"` row group label with [tab_footnote()];
+#' the targeting is done with `cells_row_groups()` in the `locations` argument.
 #'
 #' ```r
 #' pizzaplace |>
@@ -1437,12 +1761,11 @@ cells_column_labels <- function(columns = everything()) {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-15
+#' 8-16
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_row_groups <- function(groups = everything()) {
 
@@ -1500,12 +1823,11 @@ cells_group <- function(groups = everything()) {
 #'
 #'   The rows to which targeting operations are constrained. The default
 #'   [everything()] results in all rows in `columns` being formatted.
-#'   Alternatively, we can supply a vector of row IDs within [c()], a vector of
-#'   row indices, or a select helper function. Examples of select helper
-#'   functions include [starts_with()], [ends_with()], [contains()],
-#'   [matches()], [one_of()], [num_range()], and [everything()]. We can also use
-#'   expressions to filter down to the rows we need (e.g., `[colname_1] > 100 &
-#'   [colname_2] < 50`).
+#'   Alternatively, we can supply a vector of row IDs within `c()`, a vector of
+#'   row indices, or a select helper function (e.g. [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [num_range()], and [everything()]).
+#'   We can also use expressions to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @return A list object with the classes `cells_stub` and `location_cells`.
 #'
@@ -1538,12 +1860,11 @@ cells_group <- function(groups = everything()) {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-16
+#' 8-17
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_stub <- function(rows = everything()) {
 
@@ -1575,10 +1896,9 @@ cells_stub <- function(rows = everything()) {
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which targeting operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
+#'   be a series of column names provided in `c()`, a vector of column indices,
+#'   or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]).
 #'
 #' @param rows *Rows to target*
 #'
@@ -1587,11 +1907,10 @@ cells_stub <- function(rows = everything()) {
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   supply a vector of row IDs within `c()`, a vector of row indices, or a
+#'   select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]). We can also use expressions to
+#'   filter down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @return A list object with the classes `cells_body` and `location_cells`.
 #'
@@ -1651,12 +1970,11 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-17
+#' 8-18
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_body <- function(
     columns = everything(),
@@ -1684,11 +2002,13 @@ cells_body <- function(
 #'
 #' @description
 #'
-#' `cells_summary()` is used to target the cells in a group summary
-#' and it is useful when applying a footnote with [tab_footnote()] or adding a
-#' custom style with [tab_style()]. The function is expressly used in each of
-#' those functions' `locations` argument. The 'summary' location is generated by
-#' the [summary_rows()] function.
+#' `cells_summary()` is used to target the cells in a group summary and it is
+#' useful when applying a footnote with [tab_footnote()] or adding a custom
+#' style with [tab_style()]. The function is expressly used in each of those
+#' functions' `locations` argument. The 'summary' location is generated by
+#' [summary_rows()].
+#'
+#' @inheritParams cells_body
 #'
 #' @param groups *Specification of row group IDs*
 #'
@@ -1696,12 +2016,9 @@ cells_body <- function(
 #'
 #'   The row groups to which targeting operations are constrained. This aids in
 #'   targeting the summary rows that reside in certain row groups. Can either be
-#'   a series of row group ID values provided in [c()] or a select helper
-#'   function. Examples of select helper functions include [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()].
-#'
-#' @inheritParams cells_body
+#'   a series of row group ID values provided in `c()` or a select helper
+#'   function (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()].
 #'
 #' @return A list object with the classes `cells_summary` and `location_cells`.
 #'
@@ -1788,12 +2105,11 @@ cells_body <- function(
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-18
+#' 8-19
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_summary <- function(
     groups = everything(),
@@ -1829,7 +2145,7 @@ cells_summary <- function(
 #' summary and it is useful when applying a footnote with [tab_footnote()] or
 #' adding custom styles with [tab_style()]. The function is expressly used in
 #' each of those functions' `locations` argument. The 'grand_summary' location
-#' is generated by the [grand_summary_rows()] function.
+#' is generated by [grand_summary_rows()].
 #'
 #' @inheritParams cells_summary
 #'
@@ -1862,7 +2178,7 @@ cells_summary <- function(
 #' @section Examples:
 #'
 #' Use a portion of the [`countrypops`] dataset to create a **gt** table. Add
-#' some styling to a grand summary cells with the [tab_style()] function and
+#' some styling to a grand summary cells with [tab_style()] and
 #' `cells_grand_summary()` in the `locations` argument.
 #'
 #' ```r
@@ -1897,12 +2213,11 @@ cells_summary <- function(
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-19
+#' 8-20
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cells_grand_summary <- function(
     columns = everything(),
@@ -1934,7 +2249,7 @@ cells_grand_summary <- function(
 #' summary and it is useful when applying a footnote with [tab_footnote()] or
 #' adding custom styles with [tab_style()]. The function is expressly used in
 #' each of those functions' `locations` argument. The 'stub_summary' location is
-#' generated by the [summary_rows()] function.
+#' generated by [summary_rows()].
 #'
 #' @inheritParams cells_row_groups
 #'
@@ -1945,11 +2260,11 @@ cells_grand_summary <- function(
 #'   In conjunction with `groups`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   supply a vector of row IDs within `c()`, a vector of row indices, or a
+#'   select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]). We can also use
+#'   expressions to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @return A list object with the classes `cells_stub_summary` and
 #'   `location_cells`.
@@ -2015,12 +2330,11 @@ cells_grand_summary <- function(
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-20
+#' 8-21
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
 #'
-#' @import rlang
 #' @export
 cells_stub_summary <- function(
     groups = everything(),
@@ -2052,8 +2366,7 @@ cells_stub_summary <- function(
 #' a grand summary and it is useful when applying a footnote with
 #' [tab_footnote()] or adding custom styles with [tab_style()]. The function is
 #' expressly used in each of those functions' `locations` argument. The
-#' 'stub_grand_summary' location is generated by the [grand_summary_rows()]
-#' function.
+#' 'stub_grand_summary' location is generated by [grand_summary_rows()].
 #'
 #' @param rows *Rows to target*
 #'
@@ -2061,11 +2374,11 @@ cells_stub_summary <- function(
 #'
 #'   We can specify which rows should be targeted. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   supply a vector of row IDs within `c()`, a vector of row indices, or a
+#'   select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()] and [everything()]). We can also use expressions
+#'   to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @return A list object with the classes `cells_stub_grand_summary` and
 #'   `location_cells`.
@@ -2083,8 +2396,8 @@ cells_stub_summary <- function(
 #' @section Examples:
 #'
 #' Use a portion of the [`countrypops`] dataset to create a **gt** table. Add
-#' some styling to a grand summary stub cell with the [tab_style()] function and
-#' using `cells_stub_grand_summary()` in the `locations` argument.
+#' some styling to a grand summary stub cell with [tab_style()] and using
+#' `cells_stub_grand_summary()` in the `locations` argument.
 #'
 #' ```r
 #' countrypops |>
@@ -2112,12 +2425,11 @@ cells_stub_summary <- function(
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-21
+#' 8-22
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
 #'
-#' @import rlang
 #' @export
 cells_stub_grand_summary <- function(rows = everything()) {
 
@@ -2140,10 +2452,10 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #' `cells_footnotes()` is used to target all footnotes in the
 #' footer section of the table. This is useful for adding custom styles to the
 #' footnotes with [tab_style()] (using the `locations` argument). The
-#' 'footnotes' location is generated by one or more uses of the [tab_footnote()]
-#' function. This location helper function cannot be used for the `locations`
-#' argument of [tab_footnote()] and doing so will result in a warning (with no
-#' change made to the table).
+#' 'footnotes' location is generated by one or more uses of [tab_footnote()].
+#' This location helper function cannot be used for the `locations` argument of
+#' `tab_footnote()` and doing so will result in a warning (with no change made
+#' to the table).
 #'
 #' @return A list object with the classes `cells_footnotes` and
 #'   `location_cells`.
@@ -2152,10 +2464,9 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #'
 #' Using a subset of the [`sza`] dataset, let's create a **gt** table. We'd like
 #' to color the `sza` column so that's done with the [data_color()] function. We
-#' can add a footnote through the [tab_footnote()] function and we can also
-#' style the footnotes section. The styling is done through the use of the
-#' [tab_style()] function and to target the footnotes we use `locations =
-#' cells_footnotes()`.
+#' can add a footnote with [tab_footnote()] and we can also style the
+#' footnotes section. The styling is done with [tab_style()] and
+#' `locations = cells_footnotes()`.
 #'
 #' ```r
 #' sza |>
@@ -2191,12 +2502,11 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-22
+#' 8-23
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
 #'
-#' @import rlang
 #' @export
 cells_footnotes <- function() {
 
@@ -2216,10 +2526,7 @@ cells_footnotes <- function() {
 #' `cells_source_notes()` is used to target all source notes in the
 #' footer section of the table. This is useful for adding custom styles to the
 #' source notes with [tab_style()] (using the `locations` argument). The
-#' 'source_notes' location is generated by the [tab_source_note()] function.
-#' This location helper function cannot be used for the `locations` argument of
-#' [tab_footnote()] and doing so will result in a warning (with no change made
-#' to the table).
+#' 'source_notes' location is generated by [tab_source_note()].
 #'
 #' @return A list object with the classes `cells_source_notes` and
 #'   `location_cells`.
@@ -2228,8 +2535,7 @@ cells_footnotes <- function() {
 #'
 #' Let's use a subset of the [`gtcars`] dataset to create a **gt** table. Add a
 #' source note (with [tab_source_note()]) and style the source notes section
-#' inside the [tab_style()] call by using the `cells_source_notes()` helper
-#' function for the targeting via the `locations` argument.
+#' inside [tab_style()] with `locations = cells_source_notes()`.
 #'
 #' ```r
 #' gtcars |>
@@ -2252,12 +2558,11 @@ cells_footnotes <- function() {
 #'
 #' @family location helper functions
 #' @section Function ID:
-#' 8-23
+#' 8-24
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
 #'
-#' @import rlang
 #' @export
 cells_source_notes <- function() {
 
@@ -2274,10 +2579,10 @@ cells_source_notes <- function() {
 #'
 #' @description
 #'
-#' This helper function is to be used with the [tab_style()] function, which
-#' itself allows for the setting of custom styles to one or more cells. We can
-#' also define several styles within a single call of `cell_text()` and
-#' [tab_style()] will reliably apply those styles to the targeted element.
+#' This helper function can be used with [tab_style()], which itself allows for
+#' the setting of custom styles to one or more cells. We can also define several
+#' styles within a single call of `cell_text()` and [tab_style()] will reliably
+#' apply those styles to the targeted element.
 #'
 #' @param color *Text color*
 #'
@@ -2381,10 +2686,10 @@ cells_source_notes <- function() {
 #' @section Examples:
 #'
 #' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
-#' (keeping only the `num` and `currency` columns). With the [tab_style()]
-#' function (called twice), we'll selectively add style to the values formatted
-#' by [fmt_number()]. We do this by using the `cell_text()` helper function in
-#' the `style` argument of [tab_style()].
+#' (keeping only the `num` and `currency` columns). With [tab_style()]
+#' (called twice), we'll selectively add style to the values formatted with
+#' [fmt_number()]. We do this by using `cell_text()` in the `style` argument of
+#' `tab_style()`.
 #'
 #' ```r
 #' exibble |>
@@ -2413,7 +2718,7 @@ cells_source_notes <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-24
+#' 8-25
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2558,10 +2863,9 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @description
 #'
-#' The `cell_fill()` helper function is to be used with the [tab_style()]
-#' function, which itself allows for the setting of custom styles to one or more
-#' cells. Specifically, the call to `cell_fill()` should be bound to the
-#' `styles` argument of [tab_style()].
+#' `cell_fill()` is to be used with [tab_style()], which itself allows for the
+#' setting of custom styles to one or more cells. Specifically, the call to
+#' `cell_fill()` should be bound to the `styles` argument of [tab_style()].
 #'
 #' @param color *Cell fill color*
 #'
@@ -2617,7 +2921,7 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-25
+#' 8-26
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2657,13 +2961,12 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @description
 #'
-#' The `cell_borders()` helper function is to be used with the [tab_style()]
-#' function, which itself allows for the setting of custom styles to one or more
-#' cells. Specifically, the call to `cell_borders()` should be bound to the
-#' `styles` argument of [tab_style()]. The `sides` argument is where we define
-#' which borders should be modified (e.g., `"left"`, `"right"`, etc.). With that
-#' selection, the `color`, `style`, and `weight` of the selected borders can
-#' then be modified.
+#' `cell_borders()` is to be used with [tab_style()], which itself allows for
+#' the setting of custom styles to one or more cells. Specifically, the call to
+#' `cell_borders()` should be bound to the `styles` argument of [tab_style()].
+#' The `sides` argument is where we define which borders should be modified
+#' (e.g., `"left"`, `"right"`, etc.). With that selection, the `color`, `style`,
+#' and `weight` of the selected borders can then be modified.
 #'
 #' @param sides *Border sides*
 #'
@@ -2764,7 +3067,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-26
+#' 8-27
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2882,9 +3185,8 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @description
 #'
-#' The `random_id()` helper function can be used to create a random,
-#' character-based ID value argument of variable length (the default is 10
-#' letters).
+#' `random_id()` can be used to create a random, character-based ID value
+#' argument of variable length (the default is 10 letters).
 #'
 #' @param n *Number of letters*
 #'
@@ -2897,7 +3199,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-27
+#' 8-28
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2925,9 +3227,9 @@ latex_special_chars <- c(
 #'
 #' @description
 #'
-#' Text may contain several characters with special meanings in LaTeX. The
-#' `escape_latex()` function will transform a character vector so that it is
-#' safe to use within LaTeX tables.
+#' Text may contain several characters with special meanings in LaTeX.
+#' `escape_latex()` will transform a character vector so that it is safe to use
+#' within LaTeX tables.
 #'
 #' @param text *LaTeX text*
 #'
@@ -2939,7 +3241,7 @@ latex_special_chars <- c(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-28
+#' 8-29
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2977,15 +3279,14 @@ escape_latex <- function(text) {
 #' When working with Rnw (Sweave) files or otherwise writing LaTeX code,
 #' including a **gt** table can be problematic if we don't have knowledge
 #' of the LaTeX dependencies. For the most part, these dependencies are the
-#' LaTeX packages that are required for rendering a **gt** table. The
-#' `gt_latex_dependencies()` function provides an object that can be
-#' used to provide the LaTeX in an Rnw file, allowing **gt** tables to work
-#' and not yield errors due to missing packages.
+#' LaTeX packages that are required for rendering a **gt** table.
+#' `gt_latex_dependencies()` provides an object that can be used to provide the
+#' LaTeX in an Rnw file, allowing **gt** tables to work and not yield errors
+#' due to missing packages.
 #'
 #' @details
-#' Here is an example Rnw document that shows how the
-#' `gt_latex_dependencies()` can be used in conjunction with a **gt**
-#' table:
+#' Here is an example Rnw document that shows how `gt_latex_dependencies()`
+#' can be used in conjunction with a **gt** table:
 #'
 #' \preformatted{
 #' \%!sweave=knitr
@@ -3013,7 +3314,7 @@ escape_latex <- function(text) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-29
+#' 8-30
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3039,11 +3340,11 @@ gt_latex_dependencies <- function() {
 #'
 #' @description
 #'
-#' The `google_font()` helper function can be used wherever a font name should
-#' be specified. There are two instances where this helper can be used: the
-#' `name` argument in [opt_table_font()] (for setting a table font) and in that
-#' of [cell_text()] (used with [tab_style()]). To get a helpful listing of fonts
-#' that work well in tables, use the [info_google_fonts()] function.
+#' `google_font()` can be used wherever a font name should be specified. There
+#' are two instances where this helper can be used: the `name` argument in
+#' [opt_table_font()] (for setting a table font) and in that of [cell_text()]
+#' (used with [tab_style()]). To get a helpful listing of fonts that work well
+#' in tables, call [info_google_fonts()].
 #'
 #' @param name *Google Font name*
 #'
@@ -3056,15 +3357,14 @@ gt_latex_dependencies <- function() {
 #' @section Examples:
 #'
 #' Use the [`exibble`] dataset to create a **gt** table of two columns and eight
-#' rows. We'll replace missing values with em dashes using the [sub_missing()]
-#' function. For text in the `time` column, we will use the font called `"IBM
-#' Plex Mono"` which is available in Google Fonts. This is defined in the
-#' `google_font()` function call, itself part of a vector that includes fonts
-#' returned by the [default_fonts()] function (those fonts will serve as
-#' fallbacks just in case the font supplied by Google Fonts is not accessible).
-#' In terms of placement, all of this is given to the `font` argument of the
-#' [cell_text()] helper function which is itself given to the `style` argument
-#' of [tab_style()].
+#' rows. We'll replace missing values with em dashes using [sub_missing()].
+#' For text in the `time` column, we will use the font called `"IBM Plex Mono"`
+#' which is available in Google Fonts. This is defined inside the
+#' `google_font()` call, itself part of a vector that includes fonts returned by
+#' [default_fonts()] (those fonts will serve as fallbacks just in case the font
+#' supplied by Google Fonts is not accessible). In terms of placement, all of
+#' this is given to the `font` argument of [cell_text()] which is itself given
+#' to the `style` argument of [tab_style()].
 #'
 #' ```r
 #' exibble |>
@@ -3118,7 +3418,7 @@ gt_latex_dependencies <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-30
+#' 8-31
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -3128,7 +3428,7 @@ google_font <- function(name) {
 
   import_stmt <-
     paste_between(
-      gsub(" ", "+", name),
+      gsub(" ", "+", name, fixed = TRUE),
       c(
         "@import url('https://fonts.googleapis.com/css2?family=",
         ":ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');"
@@ -3156,12 +3456,11 @@ google_font <- function(name) {
 #' prepending to this vector (i.e., this font stack should be placed after that
 #' to act as a set of fallbacks).
 #'
-#' This vector of fonts is useful when specifying `font` values in the
-#' [cell_text()] function (itself usable in the [tab_style()] and
-#' [tab_style_body()] functions). If using [opt_table_font()] (which also has a
-#' `font` argument) we probably don't need to specify this vector of fonts since
-#' that function prepends font names (this is handled by its `add` option, which
-#' is `TRUE` by default).
+#' This vector of fonts is useful when specifying `font` values inside
+#' [cell_text()] (itself usable in [tab_style()] or [tab_style_body()]). If
+#' using [opt_table_font()] (which also has a `font` argument), we probably
+#' don't need to specify this vector of fonts since that function prepends font
+#' names (this is handled by its `add` option, which is `TRUE` by default).
 #'
 #' @return A character vector of font names.
 #'
@@ -3170,10 +3469,9 @@ google_font <- function(name) {
 #' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
 #' (keeping only the `char` and `time` columns). Attempting to modify the fonts
 #' used for the `time` column is much safer if `default_fonts()` is appended to
-#' the end of the `font` listing in the `cell_text()` call. What will happen,
-#' since the `"Comic Sansa"` and `"Menloa"` fonts shouldn't exist, is that we'll
-#' get the first available font from vector of fonts that `default_fonts()`
-#' provides.
+#' the end of the `font` listing inside `cell_text()`. What will happen, since
+#' the `"Comic Sansa"` and `"Menloa"` fonts shouldn't exist, is that we'll get
+#  the first available font from vector of fonts that `default_fonts()` provides.
 #'
 #' ```r
 #' exibble |>
@@ -3193,7 +3491,7 @@ google_font <- function(name) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-31
+#' 8-32
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -3214,9 +3512,9 @@ default_fonts <- function() {
 #' keywords such as `"system-ui"`, `"old-style"`, and `"humanist"` (there are 15
 #' in total) representing a themed set of fonts. These sets comprise a font
 #' family that has been tested to work across a wide range of computer systems.
-#' This is useful when specifying `font` values in the [cell_text()] function
-#' (itself used in the [tab_style()] function). If using [opt_table_font()] we
-#' can invoke this function in its `stack` argument.
+#' This is useful when specifying `font` values in [cell_text()]
+#' (itself used inside [tab_style()]). If using [opt_table_font()], we can
+#' invoke this function in its `stack` argument.
 #'
 #' @param name *Name of font stack*
 #'
@@ -3405,9 +3703,9 @@ default_fonts <- function() {
 #' Use a subset of the [`sp500`] dataset to create a **gt** table with 10 rows.
 #' For the `date` column and the column labels, let's use a different font stack
 #' (the `"industrial"` one). The system fonts used in this particular stack are
-#' `"Bahnschrift"`, `"DIN Alternate"`, `"Franklin Gothic Medium"`, and `"Nimbus
-#' Sans Narrow"` (the generic `"sans-serif-condensed"` and `"sans-serif"` are
-#' used if the aforementioned fonts aren't available).
+#' `"Bahnschrift"`, `"DIN Alternate"`, `"Franklin Gothic Medium"`, and
+#' `"Nimbus Sans Narrow"` (the generic `"sans-serif-condensed"` and `"sans-serif"`
+#' are used if the aforementioned fonts aren't available).
 #'
 #' ```r
 #' sp500 |>
@@ -3433,7 +3731,7 @@ default_fonts <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-32
+#' 8-33
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)

@@ -2,12 +2,18 @@
 % Please edit documentation in R/print.R
 \name{print.gt_tbl}
 \alias{print.gt_tbl}
+\alias{print.gt_group}
+\alias{print.rtf_text}
 \title{Print a \strong{gt} table}
 \usage{
 \method{print}{gt_tbl}(x, ..., view = interactive())
+
+\method{print}{gt_group}(x, ..., view = interactive())
+
+\method{print}{rtf_text}(x, ...)
 }
 \arguments{
-\item{x}{An object of class \code{gt_tbl}.}
+\item{x}{Object to be printed.}
 
 \item{...}{Any additional parameters.}
 
@@ -15,5 +21,8 @@
 }
 \description{
 This facilitates printing of the HTML table to the R console.
+
+This facilitates printing of multiple HTML tables (in a \code{gt_group} object) to
+the R console.
 }
 \keyword{internal}

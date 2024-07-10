@@ -46,18 +46,6 @@ data <-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
-}
-
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
-
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
 }
 
 test_that("A gt table can store the correct style statements", {
@@ -412,8 +400,7 @@ test_that("tab_style() works with a single cell", {
   # Expect that the internal `styles_df` data frame will have
   # a single row
   dt_styles_get(data = tbl_html) %>%
-    nrow() %>%
-    expect_equal(1)
+    expect_1_row()
 
   # Apply a `yellow` background a single data cell; this time, use `c()`
   # to specify the `columns`

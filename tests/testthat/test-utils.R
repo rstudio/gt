@@ -1,11 +1,3 @@
-md_rtf <- function(md, rtf) {
-  expect_equal(markdown_to_rtf(md), unclass(rtf_raw(rtf)))
-}
-
-rtf_with <- function(open, text, close = paste0(open, "0")) {
-  paste0("\\", open, " ", text, "\\", close, " ")
-}
-
 test_that("Various `is_*()` utility functions work properly", {
 
   empty_tbl <- dplyr::tibble()
@@ -40,7 +32,7 @@ test_that("Various `is_*()` utility functions work properly", {
   expect_false(is_gt_tbl_or_group(gt(exibble) %>% as_raw_html()))
 
   # Expect that a completely empty table *and* a table with rows but no
-  # columns in a gt object yields TRUE via the `is_gt_tbl_empty()` function
+  # columns in a gt object yields TRUE via `is_gt_tbl_empty()`
   expect_true(is_gt_tbl_empty(gt(empty_tbl)))
   expect_true(is_gt_tbl_empty(gt(empty_df)))
   expect_false(is_gt_tbl_empty(gt(empty_w_cols_tbl)))
@@ -49,24 +41,13 @@ test_that("Various `is_*()` utility functions work properly", {
   expect_true(is_gt_tbl_empty(gt(empty_w_rows_df)))
 
   # Expect that a table with columns but no rows in a gt object yields
-  # TRUE via the `is_gt_tbl_empty_w_cols()` function
+  # TRUE via `is_gt_tbl_empty_w_cols()`
   expect_true(is_gt_tbl_empty_w_cols(gt(empty_w_cols_tbl)))
   expect_true(is_gt_tbl_empty_w_cols(gt(empty_w_cols_df)))
   expect_false(is_gt_tbl_empty_w_cols(gt(empty_tbl)))
   expect_false(is_gt_tbl_empty_w_cols(gt(empty_df)))
   expect_false(is_gt_tbl_empty_w_cols(gt(empty_w_rows_tbl)))
   expect_false(is_gt_tbl_empty_w_cols(gt(empty_w_rows_df)))
-
-  # Expect that a vector is non-empty with `is_nonempty_string()`
-  expect_true(is_nonempty_string("asdf"))
-  expect_true(is_nonempty_string(c("1", "2")))
-  expect_false(is_nonempty_string(c("", "")))
-  expect_false(is_nonempty_string(c("")))
-  expect_false(is_nonempty_string(""))
-  expect_false(is_nonempty_string(c()))
-  expect_false(is_nonempty_string(NULL))
-  expect_true(is_nonempty_string(c(1, 2)))
-  expect_true(is_nonempty_string(1))
 
   # Expect that `stop_if_not_gt_tbl()` yields an error for non-`gt_tbl` objects
   expect_no_error(stop_if_not_gt_tbl(gt(exibble)))
@@ -90,22 +71,32 @@ test_that("Various `is_*()` utility functions work properly", {
   expect_error(stop_if_not_gt_tbl_or_group(exibble))
   expect_error(stop_if_not_gt_tbl_or_group(gt(exibble) %>% as_raw_html()))
 
-  # Expect that the `is_html()` function returns TRUE only for objects with the
-  # `html` class
+  # Expect that `is_html()` returns TRUE only for objects with the `html` class
   expect_true(is_html(html("This is <span>HTML</span>")))
   expect_true(is_html(shiny::HTML("This is <span>HTML</span>")))
   expect_true(is_html(htmltools::HTML("This is <span>HTML</span>")))
   expect_false(is_html("This is <span>HTML</span>"))
 
-  # Expect that the `is_html()` function returns TRUE only for objects with the
-  # `rtf` class
+  # Expect that `is_html()` returns TRUE only for objects with the `rtf` class
   expect_true(is_rtf(rtf_raw("This is RTF text")))
   expect_false(is_rtf(shiny::HTML("This is RTF text")))
   expect_false(is_rtf(htmltools::HTML("This is RTF text")))
   expect_false(is_rtf("This is RTF text"))
 })
 
-test_that("The `get_date_format()` function works properly", {
+test_that("is_nonempty_chr() works for detecting that a vector is non-empty", {
+  expect_true(is_nonempty_chr("asdf"))
+  expect_true(is_nonempty_chr(c("1", "2")))
+  expect_false(is_nonempty_chr(c("", "")))
+  expect_false(is_nonempty_chr(c("")))
+  expect_false(is_nonempty_chr(""))
+  expect_false(is_nonempty_chr(c()))
+  expect_false(is_nonempty_chr(NULL))
+  expect_true(is_nonempty_chr(c(1, 2)))
+  expect_true(is_nonempty_chr(1))
+})
+
+test_that("get_date_format() works properly", {
 
   # Expect that integers (even in character form) work with `get_date_format()`
   # so long as the values are within range
@@ -149,7 +140,7 @@ test_that("The `get_date_format()` function works properly", {
   }
 })
 
-test_that("The `get_time_format()` function works properly", {
+test_that("get_time_format() works properly", {
 
   # Expect that integers (even in character form) work with `get_time_format()`
   # so long as the values are within range
@@ -198,7 +189,7 @@ test_that("The `get_time_format()` function works properly", {
   expect_s3_class(get_time_format(time_style = 25), "date_time_pattern")
 })
 
-test_that("The `check_string()` function works for date and time formats", {
+test_that("date_format and time_format are all single strings", {
 
   # Ensure that all format codes work with `check_format_code()`
   for (format_name in c(date_formats()[["format_name"]], time_formats()[["format_name"]])) {
@@ -206,14 +197,14 @@ test_that("The `check_string()` function works for date and time formats", {
   }
 })
 
-test_that("The `unescape_html()` function works properly", {
+test_that("unescape_html() works properly", {
 
   # Expect that 'unescaping' certain escaped HTML tags is possible with `unescape_html()`
   expect_equal(unescape_html("&lt;span&gt;Text&lt;/span&gt;"), "<span>Text</span>")
   expect_equal(unescape_html("&lt;span&gt;T&amp;T&lt;/span&gt;"), "<span>T&T</span>")
 })
 
-test_that("The `process_footnote_marks()` function works properly", {
+test_that("process_footnote_marks() works properly", {
 
   # With various types of `marks`, we expect correctly formatted marks
   expect_equal(
@@ -279,7 +270,7 @@ test_that("The `process_footnote_marks()` function works properly", {
   expect_error(process_footnote_marks(Inf, marks = "letters"))
 })
 
-test_that("The `resolve_border_side()` function works properly", {
+test_that("resolve_border_side() works properly", {
 
   expect_equal(resolve_border_side("l"), "left")
   expect_equal(resolve_border_side("left"), "left")
@@ -294,7 +285,7 @@ test_that("The `resolve_border_side()` function works properly", {
   expect_equal(resolve_border_side("all"), "all")
 })
 
-test_that("The `validate_length_one()` function works for vectors", {
+test_that("validate_length_one() works for vectors", {
 
   expect_no_error(validate_length_one("1", "vector"))
   expect_no_error(validate_length_one(1, "vector"))
@@ -304,7 +295,7 @@ test_that("The `validate_length_one()` function works for vectors", {
   expect_error(validate_length_one(list(), "vector"))
 })
 
-test_that("Tables with labeled columns work with certail utility functions", {
+test_that("Tables with labeled columns work with certain utility functions", {
 
   df_df <- data.frame(a = 1:3, b = 6:8, d = c(TRUE, FALSE, TRUE), e = 10:12)
   tbl_df <- dplyr::tibble(a = 1:3, b = 6:8, d = c(TRUE, FALSE, TRUE), e = 10:12)
@@ -340,7 +331,7 @@ test_that("Tables with labeled columns work with certail utility functions", {
   )
 })
 
-test_that("The `markdown_to_rtf()` function works", {
+test_that("markdown_to_rtf() works", {
 
   # list
   md_rtf(

@@ -129,8 +129,8 @@ The default is to use a space character for separation.}
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
-function as a useful reference for all of the locales that are supported.}
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported.}
 
 \item{output}{\emph{Output format}
 
@@ -146,10 +146,10 @@ A character vector.
 }
 \description{
 With numeric values in a vector, we can transform each into byte values with
-human readable units. The \code{vec_fmt_bytes()} function allows for the
-formatting of byte sizes to either of two common representations: (1) with
-decimal units (powers of 1000, examples being \code{"kB"} and \code{"MB"}), and (2)
-with binary units (powers of 1024, examples being \code{"KiB"} and \code{"MiB"}).
+human readable units. \code{vec_fmt_bytes()} allows for the formatting of byte
+sizes to either of two common representations: (1) with decimal units
+(powers of 1000, examples being \code{"kB"} and \code{"MB"}), and (2) with binary units
+(powers of 1024, examples being \code{"KiB"} and \code{"MiB"}).
 
 It is assumed the input numeric values represent the number of bytes and
 automatic truncation of values will occur. The numeric values will be scaled

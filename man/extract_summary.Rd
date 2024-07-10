@@ -19,9 +19,9 @@ A list of data frames containing summary data.
 }
 \description{
 Get a list of summary row data frames from a \code{gt_tbl} object where summary
-rows were added via the \code{\link[=summary_rows]{summary_rows()}} function. The output data frames
-contain the \code{group_id} and \code{rowname} columns, whereby \code{rowname} contains
-descriptive stub labels for the summary rows.
+rows were added via \code{\link[=summary_rows]{summary_rows()}}. The output data frames contain the
+\code{group_id} and \code{rowname} columns, whereby \code{rowname} contains descriptive stub
+labels for the summary rows.
 }
 \section{Examples}{
 

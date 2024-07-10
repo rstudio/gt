@@ -1,4 +1,4 @@
-test_that("The `fmt_index()` function works correctly", {
+test_that("fmt_index() works correctly", {
 
   # Create an input data frame two columns: one
   # character-based and one that is numeric
@@ -42,8 +42,8 @@ test_that("The `fmt_index()` function works correctly", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  char <- (tab %>% dt_data_get())[["char"]]
-  num <- (tab %>% dt_data_get())[["num"]]
+  char <- dt_data_get(tab)[["char"]]
+  num <- dt_data_get(tab)[["num"]]
 
   # Expect the extracted values to match those of the original dataset
   expect_equal(data_tbl$char, char)
@@ -51,7 +51,7 @@ test_that("The `fmt_index()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% fmt_index(columns = num_2))
+  expect_error(fmt_index(tab, columns = num_2))
 
   # Format the `num` column to uppercase letters
   expect_equal(

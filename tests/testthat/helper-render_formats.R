@@ -1,12 +1,5 @@
-# Testable version of the `render_formats()` function
-# FIXME works with warning on Windows
+# Testable version of `render_formats()`
 render_formats_test <- function(data,
                                 context) {
-  if (identical(.Platform$OS.type, "windows")) {
-    # file not-existing related warnings
-    # only delete on Windows
-    suppressWarnings(build_data(data, context = context)$`_body`)
-  } else {
-    build_data(data, context = context)$`_body`
-  }
+  build_data(data, context = context)$`_body`
 }

@@ -30,16 +30,12 @@
 #'
 #' With `render_gt()` we can create a reactive **gt** table that works
 #' wonderfully once assigned to an output slot (with [gt_output()]). This
-#' function is to be used within Shiny's `server()` component. We have some
-#' options for controlling the size of the container holding the **gt** table.
-#' The `width` and `height` arguments allow for sizing the container, and the
-#' `align` argument allows us to align the table within the container (some
-#' other fine-grained options for positioning are available in the
-#' [tab_options()] function).
-#'
-#' We need to ensure that we have the **shiny** package installed first. This
-#' is easily by using `install.packages("shiny")`. More information on creating
-#' Shiny apps can be found on the \href{https://shiny.posit.co}{Shiny website}.
+#' function is to be used within [Shiny](https://shiny.posit.co)'s `server()`
+#' component. We have some options for controlling the size of the container
+#' holding the **gt** table. The `width` and `height` arguments allow for sizing
+#' the container, and the `align` argument allows us to align the table within
+#' the container (some other fine-grained options for positioning are available
+#' in [tab_options()]).
 #'
 #' @param expr *Expression*
 #'
@@ -178,7 +174,7 @@ render_gt <- function(
           table.align = align
         )
 
-      html_tbl <- as.tags.gt_tbl(result)
+      html_tbl <- as.tags(result)
 
       dependencies <-
         lapply(
@@ -202,17 +198,13 @@ render_gt <- function(
 #' @description
 #'
 #' Using `gt_output()` we can render a reactive **gt** table, a process
-#' initiated by using the [render_gt()] function in the `server` component of a
-#' Shiny app. The `gt_output()` call is to be used in the Shiny `ui` component,
-#' the position and context wherein this call is made determines the where the
-#' **gt** table is rendered on the app page. It's important to note that the
-#' ID given during the [render_gt()] call is needed as the `outputId` in
+#' initiated by using [render_gt()] in the `server` component of a
+#' Shiny app. `gt_output()` is to be used in the [Shiny](https://shiny.posit.co)
+#' `ui` component, the position and context wherein this call is made determines
+#' the where the **gt** table is rendered on the app page. It's important to note
+#' that the ID given during [render_gt()] is needed as the `outputId` in
 #' `gt_output()` (e.g., **server**: `output$<id> <- render_gt(...)`; **ui**:
 #' `gt_output(outputId = "<id>"`).
-#'
-#' We need to ensure that we have the **shiny** package installed first. This
-#' is easily by using `install.packages("shiny")`. More information on creating
-#' Shiny apps can be found on the \href{https://shiny.posit.co}{Shiny website}.
 #'
 #' @param outputId *Shiny output ID*
 #'

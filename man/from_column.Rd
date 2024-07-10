@@ -82,11 +82,11 @@ and sections like these describe which arguments support the use of
 \section{Examples}{
 
 
-The \code{from_column()} function can be used in a variety of formatting functions
-so that values for common options don't have to be static, they can change in
-every row (so long as you have a column of compatible option values). Here's
-an example where we have a table of repeating numeric values along with a
-column of currency codes. We can format the numbers to currencies with
+\code{from_column()} can be used in a variety of formatting functions so that
+values for common options don't have to be static, they can change in every
+row (so long as you have a column of compatible option values). Here's an
+example where we have a table of repeating numeric values along with a column
+of currency codes. We can format the numbers to currencies with
 \code{\link[=fmt_currency]{fmt_currency()}} and use \code{from_column()} to reference the column of currency
 codes, giving us values that are each formatted as having a different
 currency.
@@ -113,10 +113,7 @@ conjunction with the \code{fn} argument of \code{from_column()}, which helps to 
 the values in \code{n} to get a useful range of font sizes.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
-  dplyr::select(mfr, ctry_origin) |>
-  dplyr::group_by(mfr, ctry_origin) |>
-  dplyr::count() |>
-  dplyr::ungroup() |>
+  dplyr::count(mfr, ctry_origin) |>
   dplyr::arrange(ctry_origin) |>
   gt(groupname_col = "ctry_origin") |>
   tab_style(
@@ -171,7 +168,9 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
+\code{\link{row_group}()},
 \code{\link{stub}()},
-\code{\link{system_fonts}()}
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
 \concept{helper functions}

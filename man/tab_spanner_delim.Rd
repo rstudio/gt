@@ -33,10 +33,9 @@ that are targeted via the \code{columns} argument).}
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to consider for the splitting, relabeling, and spanner setting
-operations. Can either be a series of column names provided in \code{\link[=c]{c()}}, a
-vector of column indices, or a select helper function. Examples of select
-helper functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+operations. Can either be a series of column names provided in \code{c()}, a
+vector of column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
 
 \item{split}{\emph{Splitting side}
 
@@ -72,18 +71,17 @@ Should the order of split names be reversed? By default, this is \code{FALSE}.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{tab_spanner_delim()} function can take specially-crafted column names
-and generate one or more spanners (and revise column labels at the same
-time). This is done by splitting the column name by the specified delimiter
-text (\code{delim}) and placing the fragments from top to bottom (i.e.,
-higher-level spanners to the column labels) or vice versa. Furthermore,
-neighboring text fragments on different spanner levels that have the same
-text will be coalesced together. For instance, having the three side-by-side
-column names \code{rating_1}, \code{rating_2}, and \code{rating_3} will (in the default case
-at least) result in a spanner with the label \code{"rating"} above columns with
-the labels \code{"1"}, \code{"2"}, and \code{"3"}. There are many options in
-\code{cols_spanner_delim()} to slice and dice delimited column names in different
-ways:
+\code{tab_spanner_delim()} can take specially-crafted column names and generate
+one or more spanners (and revise column labels at the same time). This is
+done by splitting the column name by the specified delimiter text (\code{delim})
+and placing the fragments from top to bottom (i.e., higher-level spanners to
+the column labels) or vice versa. Furthermore, neighboring text fragments on
+different spanner levels that have the same text will be coalesced together.
+For instance, having the three side-by-side column names \code{rating_1},
+\code{rating_2}, and \code{rating_3} will (in the default case at least) result in a
+spanner with the label \code{"rating"} above columns with the labels \code{"1"}, \code{"2"},
+and \code{"3"}. There are many options in \code{cols_spanner_delim()} to slice and dice
+delimited column names in different ways:
 \itemize{
 \item delimiter text: choose the delimiter text to use for the fragmentation of
 column names into spanners with the \code{delim} argument
@@ -142,13 +140,13 @@ the following arrangement:
 
 
 With a subset of the \code{\link{towny}} dataset, we can create a \strong{gt} table and then
-use the \code{tab_spanner_delim()} function to automatically generate column
-spanner labels. In this case we have some column names in the form
-\verb{population_<year>}. The underscore character is the delimiter that separates
-a common word \code{"population"} and a year value. In this default way of
-splitting, fragments to the right are lowest (really they become new column
-labels) and moving left we get spanners. Let's have a look at how
-\code{tab_spanner_delim()} handles these column names:
+use \code{tab_spanner_delim()} to automatically generate column spanner labels.
+In this case we have some column names in the form \verb{population_<year>}.
+The underscore character is the delimiter that separates a common word
+\code{"population"} and a year value. In this default way of splitting, fragments
+to the right are lowest (really they become new column labels) and moving
+left we get spanners. Let's have a look at how \code{tab_spanner_delim()} handles
+these column names:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny_subset_gt <-
   towny |>
@@ -202,24 +200,23 @@ two levels of spanners. We can further touch up the labels after that with
 \code{\link[=cols_label_with]{cols_label_with()}} and \code{\link[=text_transform]{text_transform()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
-  dplyr::arrange(desc(population_2021)) |>
-  dplyr::slice_head(n = 5) |>
+  dplyr::slice_max(population_2021, n = 5) |>
   dplyr::select(name, ends_with("pct")) |>
   dplyr::rename_with(
     .fn = function(x) \{
       x |>
-        gsub("(.*?)_(\\\\d\{4\})", "\\\\1.\\\\2", x = _) |>
-        gsub("pop_change", "Population Change", x = _)
+        sub("pop_change_", "Population Change.", x = _) |>
+        sub("_pct", ".pct", x = _)
     \}
   ) |>
   gt(rowname_col = "name") |>
-  tab_spanner_delim(delim = "_") |>
+  tab_spanner_delim(delim = ".") |>
   fmt_number(decimals = 1, scale_by = 100) |>
   cols_label_with(
     fn = function(x) gsub("pct", "\%", x)
   ) |>
   text_transform(
-    fn = function(x) gsub("\\\\.", " - ", x),
+    fn = function(x) gsub("_", " - ", x, fixed = TRUE),
     locations = cells_column_spanners()
   ) |>
   tab_style(
@@ -237,10 +234,9 @@ two levels of spanners. We can further touch up the labels after that with
 }}
 
 With a summarized, filtered, and pivoted version of the \code{\link{pizzaplace}}
-dataset, we can create another \strong{gt} table and then use the
-\code{tab_spanner_delim()} function with the same delimiter/separator that was
-used in the \strong{tidyr} \code{pivot_wider()} call. We can also process the generated
-column labels with \code{\link[=cols_label_with]{cols_label_with()}}.
+dataset, we can create another \strong{gt} table and then use \code{tab_spanner_delim()}
+with the delimiter/separator also used in \code{tidyr::pivot_wider()}. We can also
+process the generated column labels with \code{\link[=cols_label_with]{cols_label_with()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::select(name, date, type, price) |>

@@ -77,7 +77,7 @@ adjust_gt_tbl_empty <- function(data) {
 #'
 #' @param x A character vector.
 #' @noRd
-is_nonempty_string <- function(x) {
+is_nonempty_chr <- function(x) {
   length(x) > 0 && any(grepl("\\S", x))
 }
 
@@ -247,7 +247,7 @@ tf_formats_text <- function() {
   c("true-false", "yes-no", "up-down")
 }
 # workaround before r-lib/rlang#1618 is fixed (check_character() will refuse character(0))
-check_character2 <- function(x, ..., allow_0 = FALSE, allow_null = FALSE, arg = caller_arg(x), call = caller_env()) {
+check_chr_has_length <- function(x, ..., allow_0 = FALSE, allow_null = FALSE, arg = caller_arg(x), call = caller_env()) {
   if (!missing(x)) {
     if (allow_null && is_null(x)) {
       return(invisible(NULL))
@@ -290,6 +290,7 @@ get_date_format <- function(date_style) {
 
   # Stop function if a numeric `date_style` value is invalid
   if (is.numeric(date_style)) {
+    # TODO remove as.numeric() when r-lib/rlang#1702 is fixed
     check_number_whole(date_style, min = 1, max = as.numeric(nrow(date_format_tbl)), call = NULL)
   }
 
@@ -343,6 +344,7 @@ get_time_format <- function(time_style) {
     check_number_whole(
       time_style,
       min = 1,
+      # TODO remove as.numeric() when r-lib/rlang#1702 is fixed
       max = as.numeric(nrow(time_format_tbl)),
       allow_null = FALSE,
       call = NULL
@@ -555,7 +557,7 @@ get_alignment_at_body_cell <- function(
   # Get cell alignment set by `tab_style`
   styles_tbl <- dt_styles_get(data = data)
 
-  if (nrow(styles_tbl) < 1) {
+  if (nrow(styles_tbl) < 1L) {
     return(column_alignment)
   }
 
@@ -564,22 +566,23 @@ get_alignment_at_body_cell <- function(
   # set there (this has higher specificity)
   #
 
-  styles_filtered_tbl <-
-    dplyr::filter(
-      styles_tbl,
-      locname == "data" & colname == .env$colname & rownum == .env$rownum
-    )
+  cnd <-
+    styles_tbl$locname == "data" &
+    styles_tbl$colname == colname &
+    styles_tbl$rownum == rownum
 
-  if (nrow(styles_tbl) < 1L) {
+  styles_filtered_tbl <- styles_tbl[cnd, , drop = FALSE]
+
+  if (nrow(styles_filtered_tbl) < 1L) {
     return(column_alignment)
   }
 
   # Extract the list of styles from the table
   cell_styles_list <- styles_filtered_tbl$styles
 
-  if (length(cell_styles_list) < 1L) {
-    return(column_alignment)
-  }
+  # if (length(cell_styles_list) < 1L) {
+  #   return(column_alignment)
+  # }
 
   # Get the `align` property in `cell_styles_list` (element may not be present)
   cell_text_align <- cell_styles_list[[1L]]$cell_text$align
@@ -720,8 +723,21 @@ process_text <- function(text, context = "html") {
             }
           )
 
-        non_na_text <- tidy_gsub(non_na_text, "^", "<div data-qmd=\"")
-        non_na_text <- tidy_gsub(non_na_text, "$", "\">")
+        # Use base64 encoding to avoid issues with escaping internal double
+        # quotes; used in conjunction with the 'data-qmd-base64' attribute
+        # that is recognized by Quarto
+        non_na_text <-
+          vapply(
+            non_na_text,
+            FUN.VALUE = character(1L),
+            USE.NAMES = FALSE,
+            FUN = function(text) {
+              base64enc::base64encode(charToRaw(as.character(text)))
+            }
+          )
+
+        # Tweak start and end of non_na_text
+        non_na_text <- paste0("<div data-qmd-base64=\"", non_na_text, "\">")
 
         non_na_text <-
           paste0(
@@ -902,8 +918,8 @@ process_text <- function(text, context = "html") {
         }
       }
 
-      non_na_text <- tidy_gsub(non_na_text, "^", "<span class='gt_from_md'>")
-      non_na_text <- tidy_gsub(non_na_text, "$", "</span>")
+      # Tweak start and end of non_na_text
+      non_na_text <- paste0("<span class='gt_from_md'>", non_na_text, "</span>")
 
       text[!is.na(text)] <- non_na_text
       text <- as.character(text)
@@ -983,6 +999,9 @@ process_text <- function(text, context = "html") {
 
     return(text)
 
+  } else if (context == "grid") {
+    # Skip any formatting
+    return(as.character(text))
   } else {
 
     # Text processing in the default case
@@ -1015,9 +1034,9 @@ process_text <- function(text, context = "html") {
 #' @noRd
 unescape_html <- function(text) {
 
-  text <- tidy_gsub(text, "&lt;", "<")
-  text <- tidy_gsub(text, "&gt;", ">")
-  text <- tidy_gsub(text, "&amp;", "&")
+  text <- gsub("&lt;", "<", text, fixed = TRUE)
+  text <- gsub("&gt;", ">", text, fixed = TRUE)
+  text <- gsub("&amp;", "&", text, fixed = TRUE)
   text
 }
 
@@ -1044,8 +1063,8 @@ md_to_html <- function(x, md_engine) {
         }
       )
 
-    non_na_x <- tidy_gsub(non_na_x, "^", "<div class='gt_from_md'>")
-    non_na_x <- tidy_gsub(non_na_x, "$", "</div>")
+    # Tweak start and end of non_na_x
+    non_na_x <- paste0("<div class='gt_from_md'>", non_na_x, "</div>")
 
   } else {
 
@@ -1063,8 +1082,8 @@ md_to_html <- function(x, md_engine) {
         }
       )
 
-    non_na_x <- tidy_gsub(non_na_x, "^", "<div data-qmd=\"")
-    non_na_x <- tidy_gsub(non_na_x, "$", "\">")
+    # Tweak start and end of non_na_x
+    non_na_x <- paste0("<div data-qmd=\"", non_na_x, "\">")
 
     non_na_x <-
       paste0(
@@ -1116,9 +1135,9 @@ markdown_to_latex <- function(text, md_engine) {
           }
 
           if (names(md_engine_fn) == "commonmark") {
-            tidy_gsub(md_engine_fn[[1]](text = x), "\\n$", "")
+            gsub("\\n$", "", md_engine_fn[[1]](text = x))
           } else {
-            tidy_gsub(md_engine_fn[[1]](text = x, format = "latex"), "\\n$", "")
+            gsub("\\n$", "", md_engine_fn[[1]](text = x, format = "latex"))
           }
         }
       )
@@ -1126,72 +1145,68 @@ markdown_to_latex <- function(text, md_engine) {
   )
 }
 
-#' Transform Markdown text to ooxml
-#'
-#' @noRd
-#'
-#' @importFrom xml2 read_xml xml_name xml_children xml_type xml_contents
+# Transform Markdown text to ooxml
 markdown_to_xml <- function(text) {
+  res <- vapply(
+    as.character(text),
+    FUN.VALUE = character(1L),
+    USE.NAMES = FALSE,
+    FUN = commonmark::markdown_xml
+  )
+  vapply(
+    res,
+    FUN.VALUE = character(1L),
+    USE.NAMES = FALSE,
+    FUN = function(cmark) {
 
-    vapply(
-      as.character(text),
-      FUN.VALUE = character(1L),
-      USE.NAMES = FALSE,
-      FUN = commonmark::markdown_xml
-    ) %>%
-    vapply(
-      FUN.VALUE = character(1L),
-      USE.NAMES = FALSE,
-      FUN = function(cmark) {
+      x <- xml2::read_xml(cmark)
 
-        x <- xml2::read_xml(cmark)
-
-        if (!identical(xml2::xml_name(x), "document")) {
-          stop("Unexpected result from markdown parsing: `document` element not found")
-        }
-
-        children <- xml2::xml_children(x)
-
-        apply_rules <- function(x, ...) {
-
-          if (inherits(x, "xml_nodeset")) {
-
-            results <- lapply(x, apply_rules)
-            do.call("paste0", c(results, collapse = "\n"))
-
-          } else {
-
-            output <- if (xml2::xml_type(x) == "element") {
-
-              rule <- cmark_rules_xml[[xml2::xml_name(x)]]
-
-              if (is.null(rule)) {
-
-                rlang::warn(
-                  paste0("Unknown commonmark element encountered: ", xml2::xml_name(x)),
-                  .frequency = "once",
-                  .frequency_id = "gt_commonmark_unknown_element"
-                )
-
-                apply_rules(xml2::xml_children(x))
-
-              } else if (is.function(rule)) {
-
-                rule(x, apply_rules, ...)
-
-              }
-            }
-
-          paste0(output, collapse = "")
-         }
-        }
-
-        res <- lapply(children, apply_rules)
-        res <- vapply(res, FUN = as.character, FUN.VALUE = character(1L))
-        res <-  paste0(res, collapse = "")
-        paste0("<md_container>", res, "</md_container>")
+      if (!identical(xml2::xml_name(x), "document")) {
+        stop("Unexpected result from markdown parsing: `document` element not found")
       }
-    )
+
+      children <- xml2::xml_children(x)
+
+      apply_rules <- function(x, ...) {
+
+        if (inherits(x, "xml_nodeset")) {
+
+           results <- lapply(x, apply_rules)
+          do.call("paste0", c(results, collapse = "\n"))
+
+         } else {
+
+          output <- if (xml2::xml_type(x) == "element") {
+
+            rule <- cmark_rules_xml[[xml2::xml_name(x)]]
+
+            if (is.null(rule)) {
+
+              rlang::warn(
+                paste0("Unknown commonmark element encountered: ", xml2::xml_name(x)),
+                .frequency = "once",
+                .frequency_id = "gt_commonmark_unknown_element"
+              )
+
+              apply_rules(xml2::xml_children(x))
+
+            } else if (is.function(rule)) {
+
+              rule(x, apply_rules, ...)
+
+            }
+          }
+
+        paste0(output, collapse = "")
+        }
+      }
+
+      res <- lapply(children, apply_rules)
+      res <- vapply(res, FUN = as.character, FUN.VALUE = character(1L))
+      res <-  paste0(res, collapse = "")
+      paste0("<md_container>", res, "</md_container>")
+    }
+  )
 
 }
 
@@ -1746,7 +1761,7 @@ markdown_to_text <- function(text) {
 
           }
 
-          tidy_gsub(commonmark::markdown_text(x), "\\n$", "")
+          gsub("\\n$", "", commonmark::markdown_text(x))
         }
       )
     )
@@ -1772,7 +1787,8 @@ apply_pattern_fmt_x <- function(values, pattern) {
     values,
     FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
-    FUN = function(x) tidy_gsub(x = pattern, "{x}", x, fixed = TRUE)
+    # replace {x} by x in string pattern
+    FUN = function(x) gsub("{x}", replacement = x, x = pattern, fixed = TRUE)
   )
 }
 
@@ -1833,7 +1849,7 @@ non_na_index <- function(
 
 #' Get a tibble of scaling values and suffixes
 #'
-#' The `num_suffix()` function operates on a vector of numerical values and
+#' `num_suffix()` operates on a vector of numerical values and
 #' returns a tibble where each row represents a scaled value for `x` and the
 #' correct suffix to use during `x`'s character-based formatting.
 #' @noRd
@@ -1848,6 +1864,10 @@ num_suffix <- function(
   # provide a tibble that will ultimately not
   # scale value or apply any suffixes
   if (length(suffixes) == 0) {
+
+    if (rlang::is_function(scale_by)) {
+      scale_by <- 1L
+    }
 
     return(
       dplyr::tibble(
@@ -1911,7 +1931,7 @@ num_suffix <- function(
 
 #' Get a tibble of scaling values and suffixes for the Indian numbering system
 #'
-#' The `num_suffix()` function operates on a vector of numerical values and
+#' `num_suffix_ind()` operates on a vector of numerical values and
 #' returns a tibble where each row represents a scaled value for `x` and the
 #' correct suffix to use during `x`'s character-based formatting.
 #' @noRd
@@ -1925,6 +1945,10 @@ num_suffix_ind <- function(
   # provide a tibble that will ultimately not
   # scale value or apply any suffixes
   if (length(suffixes) == 0) {
+
+    if (rlang::is_function(scale_by)) {
+      scale_by <- 1L
+    }
 
     return(
       dplyr::tibble(
@@ -1978,8 +2002,8 @@ num_suffix_ind <- function(
   suffix_index[is.na(suffix_index)] <- 0
 
   # Add a leading space to all non-empty suffix labels
-  suffix_labels[suffix_labels != ""] <-
-    paste0(" ", suffix_labels[suffix_labels != ""])
+  suffix_labels[nzchar(suffix_labels)] <-
+    paste0(" ", suffix_labels[nzchar(suffix_labels)])
 
   # Create and return a tibble with `scale_by`
   # and `suffix` values
@@ -1987,17 +2011,6 @@ num_suffix_ind <- function(
     scale_by = 10^(-ifelse(suffix_index == 0, 0, (suffix_index * 2) + 1)),
     suffix = suffix_labels
   )
-}
-
-#' An `isFALSE`-based helper function
-#'
-#' The `is_false()` function is similar to the `isFALSE()` function that was
-#' introduced in R 3.5.0 except that this implementation works with earlier
-#' versions of R.
-#' @param x The single value to test for whether it is `FALSE`.
-#' @noRd
-is_false <- function(x) {
-  is.logical(x) && length(x) == 1L && !is.na(x) && !x
 }
 
 #' Normalize all suffixing input values
@@ -2146,61 +2159,6 @@ split_scientific_notn <- function(x_str) {
 
   list(num = num_part, exp = exp_part)
 }
-
-#nocov start
-
-#' Wrapper for `gsub()` where `x` is the first argument
-#'
-#' This function is wrapper for `gsub()` that uses default argument values and
-#' rearranges first three arguments for better pipelining
-#' @param x,pattern,replacement,fixed Select arguments from the `gsub()`
-#'   function.
-#' @noRd
-tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
-
-  if (!utf8_aware_sub) {
-
-    # See variable definition for utf8_aware_sub for more info
-    x <- enc2utf8(as.character(x))
-    replacement <- enc2utf8(as.character(replacement))
-
-    res <- gsub(pattern, replacement, x, fixed = fixed)
-    Encoding(res) <- "UTF-8"
-    res
-
-  } else {
-    gsub(pattern, replacement, x, fixed = fixed)
-  }
-}
-
-tidy_sub <- function(x, pattern, replacement, fixed = FALSE) {
-
-  if (!utf8_aware_sub) {
-    # See variable definition for utf8_aware_sub for more info
-    x <- enc2utf8(as.character(x))
-    replacement <- enc2utf8(as.character(replacement))
-
-    res <- sub(pattern, replacement, x, fixed = fixed)
-    Encoding(res) <- "UTF-8"
-    res
-  } else {
-    sub(pattern, replacement, x, fixed = fixed)
-  }
-}
-
-tidy_grepl <- function(x, pattern) {
-
-  vapply(
-    pattern,
-    FUN = function(pattern) {
-      grepl(pattern = pattern, x = x)
-    },
-    FUN.VALUE = logical(1),
-    USE.NAMES = FALSE
-  )
-}
-
-#nocov end
 
 #' Create a vector of marks to use for footnotes
 #'
@@ -2385,13 +2343,12 @@ validate_length_one <- function(x, name, call = rlang::caller_env()) {
   }
 }
 
-validate_table_id <- function(id, call = caller_env()) {
-
+validate_table_id <- function(id, call = rlang::caller_env()) {
   check_string(id, allow_na = FALSE, allow_null = TRUE, call = call)
 }
 
 validate_n_sigfig <- function(n_sigfig, call = rlang::caller_env()) {
-  check_number_whole(n_sigfig, allow_na = FALSE, min = 1, call  = call)
+  check_number_whole(n_sigfig, allow_na = FALSE, min = 1, call = call)
 }
 
 validate_css_lengths <- function(x) {

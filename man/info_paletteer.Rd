@@ -20,23 +20,21 @@ all of the discrete palettes from all of the color packages represented in
 An object of class \code{gt_tbl}.
 }
 \description{
-While the \code{\link[=data_color]{data_color()}} function allows us to flexibly color data cells in
-our \strong{gt} table, the harder part of this process is discovering and
-choosing color palettes that are suitable for the table output. We can make
-this process much easier in two ways: (1) by using the \strong{paletteer}
-package, which makes a wide range of palettes from various R packages readily
-available, and (2) calling the \code{info_paletteer()} function to give us an
-information table that serves as a quick reference for all of the discrete
-color palettes available in \strong{paletteer}.
+While \code{\link[=data_color]{data_color()}} allows us to flexibly color data cells in our \strong{gt}
+table, the harder part of this process is discovering and choosing color
+palettes that are suitable for the table output. We can make this process
+much easier in two ways: (1) by using the \strong{paletteer} package, which makes
+a wide range of palettes from various R packages readily available, and (2)
+calling \code{info_paletteer()} to give us an information table that serves as a
+quick reference for all of the discrete color palettes available in \strong{paletteer}.
 }
 \details{
 The palettes displayed are organized by package and by palette name. These
 values are required when obtaining a palette (as a vector of hexadecimal
-colors), from the the \code{paletteer::paletteer_d()} function. Once we are
-familiar with the names of the color palette packages (e.g.,
-\strong{RColorBrewer}, \strong{ggthemes}, \strong{wesanderson}), we can narrow down
-the content of this information table by supplying a vector of such package
-names to \code{color_pkgs}.
+colors), from \code{paletteer::paletteer_d()}. Once we are familiar with the names
+of the color palette packages (e.g., \strong{RColorBrewer}, \strong{ggthemes},
+\strong{wesanderson}), we can narrow down the content of this information table by
+supplying a vector of such package names to \code{color_pkgs}.
 
 Colors from the following color packages (all supported by \strong{paletteer})
 are shown by default with \code{info_paletteer()}:
@@ -97,6 +95,7 @@ Other information functions:
 \code{\link{info_google_fonts}()},
 \code{\link{info_icons}()},
 \code{\link{info_locales}()},
-\code{\link{info_time_style}()}
+\code{\link{info_time_style}()},
+\code{\link{info_unit_conversions}()}
 }
 \concept{information functions}

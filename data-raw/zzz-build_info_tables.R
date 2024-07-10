@@ -254,9 +254,10 @@ google_font_tbl_int <-
   dplyr::filter(name %in% recommended) %>%
   dplyr::left_join(styles_summary, by = "name") %>%
   dplyr::mutate(
-    category = gt:::str_title_case(tolower(category)) %>%
-      gt:::tidy_gsub("_", " ") %>%
-      gt:::tidy_gsub("serif", "Serif")
+    category = tolower(category),
+    category = gt:::str_title_case(category),
+    category = gsub("_", " ", category, fixed = TRUE),
+    category = gsub("serif", "Serif", category, fixed = TRUE)
   ) %>%
   dplyr::select(-license, -date_added, -designer) %>%
   dplyr::mutate(samp = paste0(LETTERS[1:13], letters[1:13], collapse = ""))
@@ -412,3 +413,109 @@ readr::write_rds(
 )
 
 rm(palettes_tbl_gt, color_pkgs, palettes_strips_df)
+
+#
+# Build table for `info_conversions()` -> `info_conversions.rds`
+#
+
+conversions_tbl <-
+  conversion_factors %>%
+  dplyr::select(type, from) %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(name = gsub(".*\\.", "", from)) %>%
+  dplyr::mutate(name = gsub("-", " ", name)) %>%
+  dplyr::mutate(name = gsub("therm us", "US therm", name)) %>%
+  dplyr::mutate(name = gsub("g force", "g-force", name)) %>%
+  dplyr::mutate(name = gsub("british ", "British ", name)) %>%
+  dplyr::mutate(name = gsub("imperial$", "(Imperial)", name)) %>%
+  dplyr::mutate(name = gsub("foodcalorie", "food calorie", name)) %>%
+  dplyr::mutate(name = gsub("foot pound", "foot-pound", name)) %>%
+  dplyr::mutate(name = gsub("pound force", "pound-force", name)) %>%
+  dplyr::mutate(name = gsub("std", "std.", name)) %>%
+  dplyr::select(type, name, from)
+
+conversions_tbl_gt <-
+  conversions_tbl %>%
+  gt(groupname_col = "type", id = "unit_conversion") %>%
+  rows_add(
+    type = "temperature", name = "degree Celsius", from = "temperature.celsius",
+  ) |>
+  rows_add(
+    type = "temperature", name = "degree Fahrenheit", from = "temperature.fahrenheit"
+  ) |>
+  rows_add(
+    type = "temperature", name = "kelvin", from = "temperature.kelvin"
+  ) |>
+  rows_add(
+    type = "temperature", name = "rankine", from = "temperature.rankine"
+  ) |>
+  cols_label(
+    name = "Unit",
+    from = "Keyword"
+  ) %>%
+  cols_width(
+    name ~ px(300),
+    from ~ px(300)
+  ) %>%
+  tab_style(
+    style = list(
+      cell_text(
+        font = system_fonts(name = "monospace-code"),
+        size = px(12)
+      ),
+      cell_borders(
+        sides = "l",
+        color = "lightblue",
+        weight = px(1.5))
+    ),
+    locations = cells_body(columns = from)
+  ) %>%
+  tab_style(
+    style = css(position = "sticky", top = "-1em", `z-index` = 10),
+    locations = cells_column_labels()
+  ) %>%
+  opt_all_caps() %>%
+  opt_stylize(style = 6) %>%
+  tab_style(
+    style = cell_text(size = px(24)),
+    locations = cells_title(groups = "title")
+  ) %>%
+  tab_style(
+    style = cell_text(size = px(18)),
+    locations = cells_title(groups = "subtitle")
+  ) %>%
+  tab_options(
+    table.border.top.style = "hidden",
+    column_labels.border.bottom.style = "hidden",
+    container.height = px(620)
+  ) %>%
+  tab_header(
+    title = md("Units that are compatible with `unit_conversion()`"),
+    subtitle = md("Use pairs of keyword values from a common group.<br><br>")
+  ) %>%
+  opt_align_table_header("left") %>%
+  opt_table_lines("none") %>%
+  opt_horizontal_padding(scale = 2) %>%
+  opt_css(
+    css = "
+    #unit_conversion .gt_group_heading {
+      padding-top: 18px;
+      padding-bottom: 4px;
+      padding-left: 10px;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }"
+  ) %>%
+  row_group_order(groups = c(
+    "acceleration", "angle", "area", "consumption", "digital",
+    "duration", "energy", "force", "length", "mass",
+    "pressure", "speed", "temperature", "torque", "volume"
+  ))
+
+readr::write_rds(
+  conversions_tbl_gt,
+  file = "inst/gt_tables/info_conversions.rds",
+  compress = "xz"
+)
+
+rm(conversions_tbl, conversions_tbl_gt)

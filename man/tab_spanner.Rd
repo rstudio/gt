@@ -27,8 +27,8 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{scalar<character>} // \strong{required}
 
-The text to use for the spanner label. We can optionally use the \code{\link[=md]{md()}} and
-\code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML elements
+The text to use for the spanner label. We can optionally use \code{\link[=md]{md()}} or
+\code{\link[=html]{html()}} to style the text as Markdown or to retain HTML elements
 in the text.}
 
 \item{columns}{\emph{Columns to target}
@@ -36,11 +36,10 @@ in the text.}
 \verb{<column-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
 
 The columns to serve as components of the spanner. Can either be a series
-of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select
-helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. This argument works in tandem with the
-\code{spanners} argument.}
+of column names provided in \code{c()}, a vector of column indices, or a select
+helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. This argument works in
+tandem with the \code{spanners} argument.}
 
 \item{spanners}{\emph{Spanners to target}
 
@@ -99,18 +98,17 @@ occur if some replacement is attempted.}
 An object of class \code{gt_tbl}.
 }
 \description{
-With the \code{tab_spanner()} function, you can insert a spanner in the column
-labels part of a \strong{gt} table. This part of the table contains, at a minimum,
-column labels and, optionally, an unlimited number of levels for spanners. A
-spanner will occupy space over any number of contiguous column labels and it
-will have an associated label and ID value. This function allows for mapping
-to be defined by column names, existing spanner ID values, or a mixture of
-both. The spanners are placed in the order of calling \code{tab_spanner()} so if a
-later call uses the same columns in its definition (or even a subset) as the
-first invocation, the second spanner will be overlaid atop the first. Options
-exist for forcibly inserting a spanner underneath other (with \code{level} as
-space permits) and with \code{replace}, which allows for full or partial spanner
-replacement.
+With \code{tab_spanner()}, you can insert a spanner in the column labels part of a
+\strong{gt} table. This part of the table contains, at a minimum, column labels
+and, optionally, an unlimited number of levels for spanners. A spanner will
+occupy space over any number of contiguous column labels and it will have an
+associated label and ID value. This function allows for mapping to be defined
+by column names, existing spanner ID values, or a mixture of both. The
+spanners are placed in the order of calling \code{tab_spanner()} so if a later call
+uses the same columns in its definition (or even a subset) as the first
+invocation, the second spanner will be overlaid atop the first. Options exist
+for forcibly inserting a spanner underneath other (with \code{level} as space
+permits) and with \code{replace}, which allows for full or partial spanner replacement.
 }
 \section{Targeting columns with the \code{columns} argument}{
 
@@ -253,8 +251,7 @@ third and final call of \code{tab_spanner()} doesn't further affect the ordering
 of columns.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
-  dplyr::arrange(desc(population_2021)) |>
-  dplyr::slice_head(n = 5) |>
+  dplyr::slice_max(population_2021, n = 5) |>
   dplyr::select(
     name, latitude, longitude,
     ends_with("2016"), ends_with("2021")
@@ -416,11 +413,10 @@ display of nicely-formatted units.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(
-    name, ends_with("2001"), ends_with("2006"), matches("2001_2006")
+    name, ends_with(c("2001", "2006")), matches("2001_2006")
   ) |>
   dplyr::filter(population_2001 > 100000) |>
-  dplyr::arrange(desc(pop_change_2001_2006_pct)) |>
-  dplyr::slice_head(n = 10) |>
+  dplyr::slice_max(pop_change_2001_2006_pct, n = 10) |>
   gt() |>
   fmt_integer() |>
   fmt_percent(columns = matches("change"), decimals = 1) |>

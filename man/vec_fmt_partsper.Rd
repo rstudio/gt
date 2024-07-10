@@ -141,8 +141,8 @@ the mark itself. This can be directly controlled by using either \code{TRUE} or
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
-function as a useful reference for all of the locales that are supported.}
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported.}
 
 \item{output}{\emph{Output format}
 
@@ -206,7 +206,7 @@ output type).
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_partsper(num_vals)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "1.00‰" "0.10‰" "0.01‰" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "1.00\%." "0.10\%." "0.01\%." "NA"
 }\if{html}{\out{</div>}}
 
 We can change the output units to a different measure. If ppm units are

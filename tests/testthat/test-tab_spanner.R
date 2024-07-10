@@ -1,18 +1,6 @@
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
-}
-
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
-
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
 }
 
 # returns the json-object of the reactable javascript-part
@@ -114,7 +102,7 @@ test_that("A gt table contains the expected spanner column labels", {
   )
 })
 
-test_that("`tab_spanner()` exclusively uses IDs for arranging spanners", {
+test_that("tab_spanner() exclusively uses IDs for arranging spanners", {
 
   tbl_html_1 <-
     dplyr::tibble(A_X = c(1), B_X = c(2), A_Y = c(3), B_Y = c(4)) %>%
@@ -198,7 +186,7 @@ test_that("`tab_spanner()` exclusively uses IDs for arranging spanners", {
     expect_equal(rep("background-color: #00FF00;", 2))
 })
 
-test_that("`tab_spanner()` doesn't adversely affect column alignment", {
+test_that("tab_spanner() doesn't adversely affect column alignment", {
 
   tbl_html <-
     gt(airquality) %>%
@@ -221,7 +209,7 @@ test_that("`tab_spanner()` doesn't adversely affect column alignment", {
     expect_equal(c("Ozone", "SolarRadiation", "Wind", "Temp", "Month", "Day"))
 })
 
-test_that("`tab_spanner()` works even when columns are forcibly moved", {
+test_that("tab_spanner() works even when columns are forcibly moved", {
 
   # Create a table with column spanners, moving the `carb` value
   # to the beginning of the column sequence (splitting the `group_d`
@@ -264,7 +252,7 @@ test_that("`tab_spanner()` works even when columns are forcibly moved", {
     )
 })
 
-test_that("The `dt_spanners_print_matrix()` util function works well", {
+test_that("dt_spanners_print_matrix() works correctly", {
 
   # Expect that a table with no spanners declared will generate
   # a spanner matrix that only has column names
@@ -348,7 +336,7 @@ test_that("The `dt_spanners_print_matrix()` util function works well", {
   )
 
   # With actual spanners, we must be sure to build the table with
-  # the `build_data()` function (here, using `"html"` as the `context`)
+  # `build_data()` (here, using `"html"` as the `context`)
 
   # Build a spanner matrix that has a spanner appearing immediately
   # over the `num`, `char`, and `fctr` columns
@@ -948,7 +936,7 @@ test_that("The `dt_spanners_print_matrix()` util function works well", {
   )
 })
 
-test_that("`tab_spanner()` is compatible with interactive tables", {
+test_that("tab_spanner() is compatible with interactive tables", {
   check_suggests()
   skip_if_not_installed("jsonlite")
   skip_if_not_installed("tibble")

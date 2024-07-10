@@ -64,8 +64,8 @@
 #' @section Examples:
 #'
 #' Use `exibble` to create a **gt** table with a number of table parts added.
-#' Then, use the `opt_stylize()` function to give the table some additional
-#' style (using the `"cyan"` color variation and style number `6`).
+#' Then, use `opt_stylize()` to give the table some additional style
+#' (using the `"cyan"` color variation and style number `6`).
 #'
 #' ```r
 #' exibble |>
@@ -220,6 +220,7 @@ get_colorized_params <- function(
 #' - `ihtml.page_size_default`
 #' - `ihtml.page_size_values`
 #' - `ihtml.pagination_type`
+#' - `ihtml.height`
 #'
 #' @inheritParams fmt_number
 #'
@@ -333,6 +334,10 @@ get_colorized_params <- function(
 #'   with a stepper for the page number. With `"simple"`, only the 'previous'
 #'   and 'next' buttons are displayed.
 #'
+#' @param height *Height of interactive HTML table*
+#'
+#'   Height of the table in pixels. Defaults to `"auto"` for automatic sizing.
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
@@ -413,7 +418,8 @@ opt_interactive <- function(
     use_page_size_select = FALSE,
     page_size_default = 10,
     page_size_values = c(10, 25, 50, 100),
-    pagination_type = c("numbers", "jump", "simple")
+    pagination_type = c("numbers", "jump", "simple"),
+    height = "auto"
 ) {
 
   # Perform input object validation
@@ -436,7 +442,8 @@ opt_interactive <- function(
     ihtml.use_page_size_select = use_page_size_select,
     ihtml.page_size_default = page_size_default,
     ihtml.page_size_values = page_size_values,
-    ihtml.pagination_type = pagination_type
+    ihtml.pagination_type = pagination_type,
+    ihtml.height = height
   )
 }
 
@@ -703,7 +710,7 @@ opt_footnote_spec <- function(
 #' Use the [`exibble`] dataset to create a **gt** table with a number of table
 #' parts added (using functions like [summary_rows()], [grand_summary_rows()],
 #' and more). Following that, we'll add row striping to every second row with
-#' the `opt_row_striping()` function.
+#' `opt_row_striping()`.
 #'
 #' ```r
 #' exibble |>
@@ -871,7 +878,7 @@ opt_align_table_header <- function(
 #' parts added (using functions like [summary_rows()], [grand_summary_rows()],
 #' and more). Following that, we'll lessen the amount of vertical padding across
 #' the entire table with `opt_vertical_padding()`. Using a `scale` value of
-#' `0.25` (down from the default of `1`) means the the vertical space will be
+#' `0.25` (down from the default of `1`) means the vertical space will be
 #' greatly reduced, resulting in a more compact table.
 #'
 #'
@@ -963,7 +970,7 @@ opt_vertical_padding <- function(
 #' parts added (using functions like [summary_rows()], [grand_summary_rows()],
 #' and more). Following that, we'll increase the amount of horizontal padding
 #' across the entire table with `opt_horizontal_padding()`. Using a `scale`
-#' value of `3` (up from the default of `1`) means the the horizontal space will
+#' value of `3` (up from the default of `1`) means the horizontal space will
 #' be greatly increased, resulting in a more spacious table.
 #'
 #' ```r
@@ -1022,31 +1029,25 @@ opt_horizontal_padding <- function(
 get_padding_option_value_list <- function(scale, type) {
 
   # Stop if `scale` is beyond an acceptable range
-  if (scale < 0 | scale > 3) {
-    cli::cli_abort(
-      "The value provided for `scale` ({scale}) must be between `0` and `3`."
-    )
-  }
+  check_number_decimal(scale, min = 0, max = 3)
 
   pattern <- if (type == "vertical") "_padding" else  "_padding_horizontal"
 
   # Get the padding parameters from `dt_options_tbl` that relate
   # to the `type` (either vertical or horizontal padding)
   padding_params <-
-    dplyr::pull(
-      dplyr::filter(dt_options_tbl, grepl(paste0(pattern, "$"), parameter)),
-      parameter
-    )
+    dplyr::filter(dt_options_tbl, grepl(paste0(pattern, "$"), parameter))
+  padding_params <- padding_params$parameter
 
   padding_options <- dplyr::filter(dt_options_tbl, parameter %in% padding_params)
-  padding_options <- dplyr::select(padding_options, parameter, value)
+  padding_options <- dplyr::select(padding_options, "parameter", "value")
   padding_options <-
     dplyr::mutate(
       padding_options,
       parameter = gsub(pattern, gsub("_", ".", pattern, fixed = TRUE), parameter, fixed = TRUE)
     )
   padding_options <- dplyr::mutate(padding_options, value = unlist(value))
-  padding_options <- dplyr::mutate(padding_options, px = as.numeric(gsub("px", "", value)))
+  padding_options <- dplyr::mutate(padding_options, px = as.numeric(gsub("px", "", value, fixed = TRUE)))
   padding_options <- dplyr::mutate(padding_options, px = px * scale)
 
   create_option_value_list(
@@ -1182,8 +1183,8 @@ opt_all_caps <- function(
 #'
 #' @description
 #'
-#' The `opt_table_lines()` function sets table lines in one of three possible
-#' ways: (1) all possible table lines drawn (`"all"`), (2) no table lines at all
+#' `opt_table_lines()` sets table lines in one of three possible ways:
+#' (1) all possible table lines drawn (`"all"`), (2) no table lines at all
 #' (`"none"`), and (3) resetting to the default line styles (`"default"`). This
 #' is great if you want to start off with lots of lines and subtract just a few
 #' of them with [tab_options()] or [tab_style()]. Or, use it to start with a
@@ -1390,8 +1391,8 @@ opt_table_outline <- function(
   # Get vector of `tab_options()` arg names for the table border styles
   options_vec <- get_tab_options_arg_vec(pattern = pattern)
 
-  if (is.null(width)) width <- NA_character_
-  if (is.null(color)) color <- NA_character_
+  width <- width %||% NA_character_
+  color <- color %||% NA_character_
 
   values_vec <-
     dplyr::case_when(
@@ -1412,8 +1413,8 @@ opt_table_outline <- function(
 #'
 #' @description
 #'
-#' The `opt_table_font()` function makes it possible to define fonts used for an
-#' entire **gt** table. Any font names supplied in `font` will (by default, with
+#' `opt_table_font()` makes it possible to define fonts used for an entire
+#' **gt** table. Any font names supplied in `font` will (by default, with
 #' `add = TRUE`) be placed before the names present in the existing font stack
 #' (i.e., they will take precedence). You can choose to base the font stack on
 #' those provided by [system_fonts()] by providing a valid keyword for a themed
@@ -1421,7 +1422,7 @@ opt_table_outline <- function(
 #'
 #' Take note that you could still have entirely different fonts in specific
 #' locations of the table. For that you would need to use [tab_style()] or
-#' [tab_style_body()] in conjunction with the [cell_text()] helper function.
+#' [tab_style_body()] in conjunction with [cell_text()].
 #'
 #' @inheritParams fmt_number
 #'
@@ -1473,9 +1474,9 @@ opt_table_outline <- function(
 #'
 #' We have the option to supply one or more font names for the `font` argument.
 #' They can be enclosed in `c()` or a `list()`. You can generate this list or
-#' vector with a combination of font names, and you can freely use the
-#' [google_font()], [default_fonts()], and [system_fonts()] functions to help
-#' compose your font family.
+#' vector with a combination of font names, and you can freely use
+#'  [google_font()], [default_fonts()], and [system_fonts()] to help compose
+#'  your font family.
 #'
 #' @section Possibilities for the `stack` argument:
 #'
@@ -1483,7 +1484,7 @@ opt_table_outline <- function(
 #' helper function. That function can be used to generate all or a segment of a
 #' vector supplied to the `font` argument. However, using the `stack` argument
 #' with one of the 15 keywords for the font stacks available in
-#' [system_fonts()], we could be sure that the typeface class will work across
+#' `system_fonts()`, we could be sure that the typeface class will work across
 #' multiple computer systems. Any of the following keywords can be used:
 #'
 #' - `"system-ui"`
@@ -1505,8 +1506,8 @@ opt_table_outline <- function(
 #' @section Examples:
 #'
 #' Use a subset of the [`sp500`] dataset to create a small **gt** table. We'll
-#' use the [fmt_currency()] function to display a dollar sign for the first row
-#' of monetary values. Then, set a larger font size for the table and use the
+#' use [fmt_currency()] to display a dollar sign for the first row of monetary
+#' values. Then, set a larger font size for the table and use the
 #' `"Merriweather"` font (from *Google Fonts*, via [google_font()]) with two
 #' system font fallbacks (`"Cochin"` and the generic `"serif"`).
 #'
@@ -1531,8 +1532,8 @@ opt_table_outline <- function(
 #' `r man_get_image_tag(file = "man_opt_table_font_1.png")`
 #' }}
 #'
-#' Use the [`sza`] dataset to create an eleven-row table, two-column table.
-#' Within `opt_table_font()`, use the `stack` argument to define the use of the
+#' With the [`sza`] dataset we'll create a two-column, eleven-row table. Within
+#' `opt_table_font()`, the `stack` argument will be supplied with the
 #' `"rounded-sans"` font stack. This sets up a family of fonts with rounded,
 #' curved letterforms that should be locally available in different computing
 #' environments.
@@ -1650,10 +1651,10 @@ opt_table_font <- function(
 #'
 #' @description
 #'
-#' The `opt_css()` function makes it possible to add CSS to a **gt** table. This
-#' CSS will be added after the compiled CSS that **gt** generates automatically
-#' when the object is transformed to an HTML output table. You can supply `css`
-#' as a vector of lines or as a single string.
+#' `opt_css()` makes it possible to add CSS to a **gt** table. This  CSS will be
+#' added after the compiled CSS that **gt** generates automatically when the
+#' object is transformed to an HTML output table. You can supply `css` as a
+#' vector of lines or as a single string.
 #'
 #' @inheritParams fmt_number
 #'
@@ -1687,7 +1688,7 @@ opt_table_font <- function(
 #' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
 #' (keeping only the `num` and `currency` columns). Through use of the
 #' `opt_css()` function, we can insert CSS rulesets as as string. We need to
-#' ensure that the the table ID is set explicitly (we've done so here with the
+#' ensure that the table ID is set explicitly (we've done so here with the
 #' ID value of `"one"`, setting it in the [gt()] function).
 #'
 #' ```r
@@ -1819,32 +1820,9 @@ create_default_option_value_list <- function(tab_options_args) {
   lapply(
     stats::setNames(, tab_options_args),
     FUN = function(x) {
-      dt_options_get_default_value(tidy_gsub(x, ".", "_", fixed = TRUE))
+      dt_options_get_default_value(gsub(".", "_", x, fixed = TRUE))
     }
   )
-}
-
-dt_options_get_default_value <- function(option) {
-
-  # Validate the provided `option` value
-  if (length(option) != 1) {
-    cli::cli_abort("A character vector of length one must be provided.")
-  }
-  if (!(option %in% dt_options_tbl$parameter)) {
-    cli::cli_abort("The `option` provided is invalid.")
-  }
-
-  dt_options_tbl$value[[which(dt_options_tbl$parameter == option)]]
-}
-
-# Get vector of argument names (excluding `data`) from `tab_options`
-#' @include tab_create_modify.R
-tab_options_arg_names <- base::setdiff(names(formals(tab_options)), "data")
-
-# Create vector of all args from `tab_options()` by
-# use of a regex pattern
-get_tab_options_arg_vec <- function(pattern) {
-  grep(pattern = pattern, tab_options_arg_names, value = TRUE)
 }
 
 # Validate any vector of `tab_options()` argument names

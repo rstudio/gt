@@ -18,10 +18,9 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
-Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
-column indices, or a select helper function. Examples of select helper
-functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+Can either be a series of column names provided in \code{c()}, a vector of
+column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}} and \code{\link[=everything]{everything()}}).}
 
 \item{rows}{\emph{Rows to target}
 
@@ -30,11 +29,10 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
 \code{columns} being formatted. Alternatively, we can supply a vector of row
-captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
-function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
-need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+captions within \code{c()}, a vector of row indices, or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{compat}{\emph{Formatting compatibility}
 
@@ -53,9 +51,8 @@ Either a single formatting function or a named list of functions.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{fmt()} function provides a way to execute custom formatting
-functionality with raw data values in a way that can consider all output
-contexts.
+\code{fmt()} provides a way to execute custom formatting functionality with raw
+data values in a way that can consider all output contexts.
 
 Along with the \code{columns} and \code{rows} arguments that provide some precision in
 targeting data cells, the \code{fns} argument allows you to define one or more

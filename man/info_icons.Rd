@@ -10,14 +10,15 @@ info_icons()
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{\link[=fmt_icon]{fmt_icon()}} function can be used to render \emph{Font Awesome} icons within
+\code{\link[=fmt_icon]{fmt_icon()}} can be used to render \emph{Font Awesome} icons within
 body cells that reference the icon names. Further to this, the text
 transformation functions (e.g., \code{\link[=text_case_match]{text_case_match()}}) allow for the insertion
 of these icons as replacement text (so long as you use the \code{fa()} function
 from the \strong{fontawesome} package). Because there is a very large number of
 icons available to use in \emph{Font Awesome}, \code{info_icons()} can be used to
 provide us with a table that lists all the icons along with their short and
-full names (either can be used with \code{\link[=fmt_icon]{fmt_icon()}}).
+full names (either can be used with \code{\link[=fmt_icon]{fmt_icon()}}). It also contains
+acceptable codes for \code{\link[=fmt_country]{fmt_country()}}
 }
 \section{Examples}{
 
@@ -50,6 +51,7 @@ Other information functions:
 \code{\link{info_google_fonts}()},
 \code{\link{info_locales}()},
 \code{\link{info_paletteer}()},
-\code{\link{info_time_style}()}
+\code{\link{info_time_style}()},
+\code{\link{info_unit_conversions}()}
 }
 \concept{information functions}

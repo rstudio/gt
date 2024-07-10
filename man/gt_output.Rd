@@ -18,17 +18,13 @@ An object of class \code{shiny.tag}.
 }
 \description{
 Using \code{gt_output()} we can render a reactive \strong{gt} table, a process
-initiated by using the \code{\link[=render_gt]{render_gt()}} function in the \code{server} component of a
-Shiny app. The \code{gt_output()} call is to be used in the Shiny \code{ui} component,
-the position and context wherein this call is made determines the where the
-\strong{gt} table is rendered on the app page. It's important to note that the
-ID given during the \code{\link[=render_gt]{render_gt()}} call is needed as the \code{outputId} in
+initiated by using \code{\link[=render_gt]{render_gt()}} in the \code{server} component of a
+Shiny app. \code{gt_output()} is to be used in the \href{https://shiny.posit.co}{Shiny}
+\code{ui} component, the position and context wherein this call is made determines
+the where the \strong{gt} table is rendered on the app page. It's important to note
+that the ID given during \code{\link[=render_gt]{render_gt()}} is needed as the \code{outputId} in
 \code{gt_output()} (e.g., \strong{server}: \verb{output$<id> <- render_gt(...)}; \strong{ui}:
 \verb{gt_output(outputId = "<id>"}).
-
-We need to ensure that we have the \strong{shiny} package installed first. This
-is easily by using \code{install.packages("shiny")}. More information on creating
-Shiny apps can be found on the \href{https://shiny.posit.co}{Shiny website}.
 }
 \section{Examples}{
 

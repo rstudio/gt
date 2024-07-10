@@ -98,7 +98,9 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
+\code{\link{row_group}()},
 \code{\link{stub}()},
-\code{\link{system_fonts}()}
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
 \concept{helper functions}

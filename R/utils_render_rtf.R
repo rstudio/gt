@@ -388,7 +388,7 @@ parse_length_str <- function(
   if (
     !allow_negative &&
     length(non_na_vals) > 0 &&
-    any(!is.na(non_na_vals)) &&
+    !all(is.na(non_na_vals)) &&
     is.numeric(non_na_vals) &&
     any(non_na_vals < 0)
   ) {
@@ -514,13 +514,13 @@ rtf_tbl_row <- function(
 
   cell_count <- length(x)
 
-  if (!is.null(widths)) {
-    widths_twips <- cumsum(widths)
-  } else {
+  if (is.null(widths)) {
     widths_twips <- cumsum(rep(page_body_width / cell_count, cell_count))
+  } else {
+    widths_twips <- cumsum(widths)
   }
 
-  if (is.null(height)) height <- 425
+  height <- height %||% 425
 
   # Set border values
   if (!is.null(borders)) {
@@ -641,7 +641,7 @@ rtf_tbl_cell <- function(
   v_align <- substr(rlang::arg_match(v_align), 1, 1)
 
   # Set default padding values if `padding = NULL`
-  if (is.null(padding)) padding <- c(25, 85, 25, 85)
+  padding <- padding %||% c(25, 85, 25, 85)
 
   # Set padding in units of twips, in the order left, top, bottom, right
   padding_units <-
@@ -798,10 +798,7 @@ footnote_mark_to_rtf <- function(
   }
 
   spec <- get_footnote_spec_by_location(data = data, location = location)
-
-  if (is.null(spec)) {
-    spec <- "^i"
-  }
+  spec <- spec %||% "^i"
 
   if (grepl("\\(|\\[", spec)) mark <- paste0("(", mark)
   if (grepl("\\)|\\]", spec)) mark <- paste0(mark, ")")
@@ -811,8 +808,8 @@ footnote_mark_to_rtf <- function(
       paste0(
       "{",
       if (grepl("\\^", spec)) "\\super " else NULL,
-      if (grepl("i", spec)) "\\i " else NULL,
-      if (grepl("b", spec)) "\\b " else NULL
+      if (grepl("i", spec, fixed = TRUE)) "\\i " else NULL,
+      if (grepl("b", spec, fixed = TRUE)) "\\b " else NULL
       )
     ),
     mark,
@@ -855,7 +852,7 @@ escape_rtf_unicode <- function(x) {
     x <- enc2utf8(x)
   }
 
-  chars <- unlist(strsplit(x, ""))
+  chars <- unlist(strsplit(x, "", fixed = TRUE))
   codepoints <- utf8ToInt(x)
   needs_escape <- codepoints > 127
   codepoints_subset <- codepoints[needs_escape]
@@ -1462,16 +1459,12 @@ create_body_component_rtf <- function(data) {
     )
 
   # Replace an NA group with an empty string
-  if (any(is.na(groups_rows_df$group_label))) {
+  if (anyNA(groups_rows_df$group_label)) {
 
-    groups_rows_df <-
-      dplyr::mutate(
-        groups_rows_df,
-        group_label = ifelse(is.na(group_label), "", group_label)
-      )
+    groups_rows_df$group_label[is.na(groups_rows_df$label)] <- ""
   }
 
-  row_groups_present <- nrow(groups_rows_df) > 0
+  row_groups_present <- nrow(groups_rows_df) > 0L
   row_group_rows <- groups_rows_df$row_start
   row_group_labels <- groups_rows_df$group_label
 
@@ -1569,10 +1562,8 @@ create_body_component_rtf <- function(data) {
           # stub case where summary rows follow
           if (x == 1) {
 
-            row_limits <-
-              groups_rows_df %>%
-              dplyr::filter(row_end == i) %>%
-              dplyr::select(group_id)
+            row_limits <- dplyr::filter(groups_rows_df, row_end == i)
+            row_limits <- row_limits[ , "group_id", drop = FALSE]
 
             if (nrow(row_limits) > 0) {
 
@@ -1643,8 +1634,7 @@ create_body_component_rtf <- function(data) {
         summary_df <-
           dplyr::select(
             list_of_summaries$summary_df_display_list[[group_id]],
-            dplyr::all_of(rowname_col_private),
-            dplyr::all_of(default_vars_names)
+            dplyr::all_of(c(rowname_col_private, default_vars_names)),
           )
 
         n_summary_rows <- seq_len(nrow(summary_df))
@@ -1722,8 +1712,7 @@ create_body_component_rtf <- function(data) {
     grand_summary_df <-
       dplyr::select(
         list_of_summaries$summary_df_display_list[[grand_summary_col]],
-        dplyr::all_of(rowname_col_private),
-        dplyr::all_of(default_vars_names)
+        dplyr::all_of(c(rowname_col_private, default_vars_names))
       )
 
     for (j in seq_len(nrow(grand_summary_df))) {
@@ -1951,7 +1940,7 @@ generate_notes_list <- function(
   if (nrow(footnotes_tbl) > 0) {
 
     footnotes_tbl <-
-      dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
+      dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
     footnote_text <- footnotes_tbl[["footnotes"]]
     footnote_mark <- footnotes_tbl[["fs_id"]]

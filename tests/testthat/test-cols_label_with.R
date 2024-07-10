@@ -17,21 +17,9 @@ tbl <-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
-
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
-}
-
-test_that("The function `cols_label_with()` works correctly", {
+test_that("cols_label_with() works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -94,8 +82,8 @@ test_that("The function `cols_label_with()` works correctly", {
 
   # Expect that `tbl_html_2` has the same column labels as `tbl_html_1`
   expect_equal(
-    tbl_html_1 %>% render_as_html(),
-    tbl_html_2 %>% render_as_html()
+    render_as_html(tbl_html_1),
+    render_as_html(tbl_html_2)
   )
 
   # Create the `tbl_html_3` object with `gt()` and label none
@@ -159,8 +147,8 @@ test_that("The function `cols_label_with()` works correctly", {
 
   # Expect that `tbl_html_5` has the same column labels as `tbl_html_4`
   expect_equal(
-    tbl_html_4 %>% render_as_html(),
-    tbl_html_5 %>% render_as_html()
+    render_as_html(tbl_html_4),
+    render_as_html(tbl_html_5)
   )
 
   #
@@ -170,8 +158,7 @@ test_that("The function `cols_label_with()` works correctly", {
 
   towny_gt_tbl <-
     towny %>%
-    dplyr::arrange(desc(population_2021)) %>%
-    dplyr::slice_head(n = 5) %>%
+    dplyr::slice_max(population_2021, n = 5) %>%
     dplyr::select(name, latitude, longitude, ends_with("2016"), ends_with("2021")) %>%
     gt() %>%
     tab_spanner(columns = starts_with("pop"), label = "Population") %>%

@@ -22,11 +22,12 @@ Expressions for the assignment of column labels for the table columns in
 \code{.data}. Two-sided formulas (e.g., \verb{<LHS> ~ <RHS>}) can be used, where the
 left-hand side corresponds to selections of columns and the right-hand side
 evaluates to single-length values for the label to apply. Column names
-should be enclosed in \code{\link[=c]{c()}}. Select helpers like \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}
-can be used in the LHS. Named arguments are also valid as input for simple
-mappings of column name to label text; they should be of the form \verb{<column name> = <label>}. Subsequent expressions that operate on the columns
-assigned previously will result in overwriting column label values.}
+should be enclosed in \code{c()}. Select helpers like \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, and \code{\link[=everything]{everything()}} can be used
+in the LHS. Named arguments are also valid as input for simple mappings of
+column name to label text; they should be of the form \verb{<column name> = <label>}.
+Subsequent expressions that operate on the columns assigned previously will
+result in overwriting column label values.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
@@ -60,9 +61,9 @@ columns from the input table data). When you create a \strong{gt} table object
 using \code{\link[=gt]{gt()}}, column names effectively become the column labels. While this
 serves as a good first approximation, column names as label defaults aren't
 often as appealing in a \strong{gt} table as the option for custom column labels.
-The \code{cols_label()} function provides the flexibility to relabel one or more
-columns and we even have the option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}} helper
-functions for rendering column labels from Markdown or using HTML.
+\code{cols_label()} provides the flexibility to relabel one or more columns and
+we even have the option to use \code{\link[=md]{md()}} or \code{\link[=html]{html()}} for rendering column labels
+from Markdown or using HTML.
 }
 \section{A note on column names and column labels}{
 
@@ -101,7 +102,7 @@ shown with a few examples:
 \itemize{
 \item \code{"m/s"} and \code{"m / s"} both render as \code{"m/s"}
 \item \code{"m s^-1"} will appear with the \code{"-1"} exponent intact
-\item \code{"m /s"} gives the the same result, as \code{"/<unit>"} is equivalent to
+\item \code{"m /s"} gives the same result, as \code{"/<unit>"} is equivalent to
 \code{"<unit>^-1"}
 \item \code{"E_h"} will render an \code{"E"} with the \code{"h"} subscript
 \item \code{"t_i^2.5"} provides a \code{t} with an \code{"i"} subscript and a \code{"2.5"} exponent
@@ -180,8 +181,7 @@ will be applied to each label defined in the \code{cols_label()} call).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
   dplyr::select(name, lines, passengers, connect_other) |>
-  dplyr::arrange(desc(passengers)) |>
-  dplyr::slice_head(n = 10) |>
+  dplyr::slice_max(passengers, n = 10) |>
   gt() |>
   cols_hide(columns = passengers) |>
   cols_label(
@@ -267,7 +267,7 @@ incorporates unit notation text (within \code{"{{"}/\code{"}}"}).
 The \code{\link{illness}} dataset has units within the \code{units} column. They're
 formatted in just the right way for \strong{gt} too. Let's do some text
 manipulation through \code{dplyr::mutate()} and some pivoting with
-\strong{tidyr}'s \code{pivot_longer()} and \code{pivot_wider()} in order to include the
+\code{tidyr::pivot_longer()} and \code{tidyr::pivot_wider()} in order to include the
 units as part of the column names in the reworked table. These column names
 are in a format where the units are included within \code{"{{"}/\code{"}}"}, so, we can
 use \code{cols_label()} with the \code{.process_units = TRUE} option to register the

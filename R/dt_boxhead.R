@@ -322,7 +322,12 @@ dt_boxhead_build <- function(data, context) {
           context = context
         )
 
-      if (column_pattern == "" && grepl(units, column_label, fixed = TRUE)) {
+      # rstudio/gt#1733
+      if (
+        !is.na(column_pattern) &&
+        column_pattern == "" &&
+        grepl(units, column_label, fixed = TRUE)
+        ) {
 
         # With `column_pattern` equal to `""`, we can surmise that this was
         # set automatically by `cols_label()`; the mechanism now is to replace

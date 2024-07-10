@@ -36,10 +36,9 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
-Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
-column indices, or a select helper function. Examples of select helper
-functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+Can either be a series of column names provided in \code{c()}, a vector of
+column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}} and \code{\link[=everything]{everything()}}).}
 
 \item{rows}{\emph{Rows to target}
 
@@ -48,11 +47,10 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
 \code{columns} being formatted. Alternatively, we can supply a vector of row
-captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
-function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
-need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+captions within \code{c()}, a vector of row indices, or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{to_units}{\emph{Output Quantity}
 
@@ -175,11 +173,11 @@ crore, and higher quantities.}
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
-function as a useful reference for all of the locales that are supported. A
-locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
-would be used automatically by any function with a \code{locale} argument) but a
-\code{locale} value provided here will override that global locale.}
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported. A locale ID can
+be also set in the initial \code{\link[=gt]{gt()}} function call (where it would be used
+automatically by any function with a \code{locale} argument) but a \code{locale}
+value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -220,10 +218,10 @@ formatting specific to the chosen locale
 \section{Compatibility of formatting function with data values}{
 
 
-The \code{fmt_partsper()} formatting function is compatible with body cells that
-are of the \code{"numeric"} or \code{"integer"} types. Any other types of body cells
-are ignored during formatting. This is to say that cells of incompatible data
-types may be targeted, but there will be no attempt to format them.
+\code{fmt_partsper()} is compatible with body cells that are of the \code{"numeric"} or
+\code{"integer"} types. Any other types of body cells are ignored during
+formatting. This is to say that cells of incompatible data types may be
+targeted, but there will be no attempt to format them.
 }
 
 \section{Targeting cells with \code{columns} and \code{rows}}{
@@ -270,10 +268,10 @@ more complex predicate expression.
 \section{Compatibility of arguments with the \code{from_column()} helper function}{
 
 
-The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
-\code{fmt_partsper()} to obtain varying parameter values from a specified column
-within the table. This means that each row could be formatted a little bit
-differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{fmt_partsper()} to
+obtain varying parameter values from a specified column within the table.
+This means that each row could be formatted a little bit differently. These
+arguments provide support for \code{\link[=from_column]{from_column()}}:
 \itemize{
 \item \code{to_units}
 \item \code{symbol}
@@ -294,11 +292,10 @@ differently. These arguments provide support for \code{\link[=from_column]{from_
 Please note that for all of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
 call needs to reference a column that has data of the correct type (this is
 different for each argument). Additional columns for parameter values can be
-generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
-that contain parameter data can also be hidden from final display with
-\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
-\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
-closed set.
+generated with \code{\link[=cols_add]{cols_add()}} (if not already present). Columns that contain
+parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+Finally, there is no limitation to how many arguments the \code{\link[=from_column]{from_column()}}
+helper is applied so long as the arguments belong to this closed set.
 }
 
 \section{Adapting output to a specific \code{locale}}{
@@ -314,8 +311,8 @@ preferred values.
 Note that a \code{locale} value provided here will override any global locale
 setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument (it is settable there as
 a value received by all other functions that have a \code{locale} argument). As a
-useful reference on which locales are supported, we can use the
-\code{\link[=info_locales]{info_locales()}} function to view an info table.
+useful reference on which locales are supported, we can call \code{\link[=info_locales]{info_locales()}}
+to view an info table.
 }
 
 \section{Examples}{

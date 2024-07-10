@@ -126,7 +126,7 @@ create_heading_component_g <- function(data) {
   subtitle_text <- paste0(heading$subtitle, footnote_subtitle_marks)
 
   title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
-  subtitle_classes <- tidy_sub(title_classes, "title", "subtitle")
+  subtitle_classes <- sub("title", "subtitle", title_classes, fixed = TRUE)
 
   if (!subtitle_defined) {
     title_classes <- c("gt_bottom_border", title_classes)
@@ -347,6 +347,10 @@ create_body_component_g <- function(data) {
     }
   }
 
+  if (identical(rows, list())) {
+    return(NULL)
+  }
+
   sizes <- vctrs::list_sizes(rows)
   row_num <- rep(cumsum(sizes > 0), sizes)
 
@@ -447,7 +451,7 @@ body_cells_g <- function(data) {
   }
 
   # Weave even/odd classes into matrix
-  cell_classes <- rep(list(odd_class, even_class), length.out = n_rows)
+  cell_classes <- rep_len(list(odd_class, even_class), n_rows)
   cell_classes <- inject(rbind(!!!cell_classes))
 
   # Set column alignment
@@ -595,8 +599,7 @@ summary_rows_g <- function(data, group_id, side_grand_summary = "bottom") {
   summary_df <-
     dplyr::select(
       summary_df,
-      dplyr::all_of(rowname_col_private),
-      dplyr::all_of(group_summary_vars)
+      dplyr::all_of(c(rowname_col_private, group_summary_vars)),
     )
 
   summary_row_type <- rep(summary_row_type, n_rows)
@@ -768,7 +771,7 @@ create_footnotes_component_g <- function(data) {
   styles_tbl <- dt_styles_get(data = data)
   n_cols_total <- get_effective_number_of_columns(data = data)
 
-  footnotes_tbl <- dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
+  footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
   style <- NA
   if ("footnotes" %in% styles_tbl$locname) {
@@ -902,17 +905,16 @@ render_grid_svg <- function(label, style, margin) {
   # and they cannot be displayed interactively in {grid} anyway.
   label <- gsub("<title(.*?)</title>", "", label)
 
-  svg_string <- regexpr("<svg(.*?)>.*</svg>", label) %>%
-    regmatches(x = label) %>%
-    gsub(pattern = "\n", replacement = "") %>%
-    trimws()
+  svg_string <- regexpr("<svg(.*?)>.*</svg>", label)
+  svg_string <- regmatches(label, svg_string)
+  svg_string <- gsub("\n", "", svg_string)
+  svg_string <- trimws(svg_string)
 
-  svg_style <- regexpr("style=\"(.*?)\"", svg_string) %>%
-    regmatches(x = svg_string) %>%
-    gsub(pattern = "^style=\"|\"$", replacement = "") %>%
-    strsplit(";") %>%
-    unlist() %>%
-    trimws()
+  svg_style <- regexpr("style=\"(.*?)\"", svg_string)
+  svg_style <- regmatches(svg_string, svg_style)
+  svg_style <- gsub("^style=\"|\"$", "", svg_style)
+  svg_style <- strsplit(svg_style, ";", fixed = TRUE)
+  svg_style <- trimws(unlist(svg_style))
 
   width <- height <- NULL
 
@@ -943,7 +945,7 @@ render_grid_svg <- function(label, style, margin) {
       viewbox <- c(0, 0, 0, 0)
       svg_tag <- regexpr("^<svg(.*?)>", svg_string) %>%
         regmatches(x = svg_string)
-      if (grepl("width", svg_tag) && grepl("height", svg_tag)) {
+      if (grepl("width", svg_tag, fixed = TRUE) && grepl("height", svg_tag, fixed = TRUE)) {
         # Try extract width from tag
         w <- regexpr("width=(.*?) ", svg_tag) %>%
           regmatches(x = svg_tag)
@@ -1382,4 +1384,9 @@ parse_css <- function(data) {
   is_table <- which(names(classes) == "gt_table")
   table <- Reduce(defaults, classes[is_table])
   c(classes[-is_table], list(gt_table = table))
+}
+
+#' @export
+plot.gt_tbl <- function(x, y, ...) {
+  plot(as_gtable(x))
 }

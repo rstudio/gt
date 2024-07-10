@@ -1,6 +1,3 @@
-# Create a shortened version of `mtcars`
-mtcars_short <- mtcars[1:5, ]
-
 # Create a table with rownames and four columns of values
 tbl <-
   dplyr::tribble(
@@ -16,7 +13,7 @@ tbl <-
     105.4,  729.8,  962.4,  336.4,
     924.2,  424.6,  740.8,  104.2)
 
-test_that("The `cols_merge()` function works correctly", {
+test_that("cols_merge() works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; merge two columns
   # with a `pattern`
@@ -93,7 +90,7 @@ test_that("The `cols_merge()` function works correctly", {
     )
 })
 
-test_that("The `cols_merge_uncert()` function works correctly", {
+test_that("cols_merge_uncert() works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; merge two columns
   # with `cols_merge_uncert()`
@@ -181,7 +178,7 @@ test_that("The `cols_merge_uncert()` function works correctly", {
   )
 })
 
-test_that("The `cols_merge_range()` function works correctly", {
+test_that("cols_merge_range() works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; merge two columns
   # with `cols_merge_range()`

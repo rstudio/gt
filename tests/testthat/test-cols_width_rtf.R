@@ -1,4 +1,4 @@
-test_that("The `cols_width()` function works in making RTF tables", {
+test_that("cols_width() works in making RTF tables", {
 
   # Test matrix for setting of column widths; broadly there are 21 cases with
   # different combinations of setting dimensions (or not) on table columns with

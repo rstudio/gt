@@ -26,7 +26,7 @@
 #'
 #' @description
 #'
-#' The `gt_group()` function creates a container for storage of multiple **gt**
+#' `gt_group()` creates a container for storage of multiple **gt**
 #' tables. This type of object allows for flexibility in printing multiple
 #' tables in different output formats. For example, if printing multiple tables
 #' in a paginated output environment (e.g., RTF, Word, etc.), each **gt** table
@@ -62,7 +62,6 @@
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 gt_group <- function(
     ...,
@@ -104,11 +103,11 @@ gt_group <- function(
 #'
 #' @description
 #'
-#' Should you have a `gt_group` object, created through use of the [gt_group()]
-#' function, you may have a need to extract a **gt** table from that container.
-#' The `grp_pull()` function makes this possible, returning a `gt_tbl` object.
-#' The only thing you need to provide is the index value for the **gt** table
-#' within the `gt_group` object.
+#' Should you have a `gt_group` object, created through use of [gt_group()],
+#' you may have a need to extract a **gt** table from that container.
+#' `grp_pull()` makes this possible, returning a `gt_tbl` object. The only thing
+#' you need to provide is the index value for the **gt** table within the
+#' `gt_group` object.
 #'
 #' @inheritParams grp_add
 #'
@@ -166,8 +165,8 @@ grp_pull <- function(
 #'   `obj:<gt_group>` // **required**
 #'
 #'   This is a `gt_group` container object. It is typically generated through
-#'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
-#'   or, made by splitting a **gt** table with [gt_split()].
+#'   use of [gt_group()] along with one or more `gt_tbl` objects, or, made by
+#'   splitting a **gt** table with [gt_split()].
 #'
 #' @inheritParams gt_group
 #'
@@ -197,7 +196,6 @@ grp_pull <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 grp_add <- function(
     .data,
@@ -338,7 +336,6 @@ grp_add <- function(
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
-#' @import rlang
 #' @export
 grp_clone <- function(
     data,
@@ -436,12 +433,11 @@ grp_clone <- function(
 #'
 #' @description
 #'
-#' The [gt_group()] function can be used to create a container for multiple
-#' **gt** tables. In some circumstances, you might want to replace a specific
-#' `gt_tbl` object (or multiple) with a different one. This can be done with the
-#' `grp_replace()` function. The important thing is that the number of **gt**
-#' tables provided must equal the number of indices for tables present in the
-#' `gt_group` object.
+#' [gt_group()] can be used to create a container for multiple **gt** tables.
+#' In some circumstances, you might want to replace a specific `gt_tbl` object
+#' (or multiple) with a different one. This can be done with `grp_replace()`.
+#' The important thing is that the number of **gt** tables provided must equal
+#' the number of indices for tables present in the `gt_group` object.
 #'
 #' @inheritParams grp_add
 #'
@@ -769,8 +765,8 @@ grp_options <- function(
   arg_vals <- set_super_options(arg_vals = arg_vals)
 
   new_df <-
-    dplyr::tibble(
-      parameter = tidy_gsub(names(arg_vals), ".", "_", fixed = TRUE),
+    vctrs::data_frame(
+      parameter = gsub(".", "_", names(arg_vals), fixed = TRUE),
       value = unname(arg_vals)
     )
   new_df <-
@@ -779,16 +775,13 @@ grp_options <- function(
       dplyr::select(opts_df, parameter, type),
       by = "parameter"
     )
-  new_df <-
-    dplyr::mutate(
-      new_df,
-      value = mapply(
-        preprocess_tab_option,
-        option = value, var_name = parameter, type = type,
-        SIMPLIFY = FALSE
-      )
+  new_df$value <-
+    mapply(
+      preprocess_tab_option,
+      option = new_df$value, var_name = new_df$parameter, type = new_df$type,
+      SIMPLIFY = FALSE
     )
-  new_df <- dplyr::select(new_df, -type)
+  new_df$type <- NULL
 
   # This rearranges the rows in the `opts_df` table, but this
   # shouldn't be a problem
@@ -916,8 +909,8 @@ generate_gt_tbl_info_list <- function(gt_tbl) {
         vapply(
           summary_list,
           FUN.VALUE = integer(1L),
-          FUN = function(x) nrow(x))
-      )
+          FUN = nrow
+      ))
 
     if (!is.null(summary_list[["::GRAND_SUMMARY"]])) {
       n_summary_rows_grand <- nrow(summary_list[["::GRAND_SUMMARY"]])

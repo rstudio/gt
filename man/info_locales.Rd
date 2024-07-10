@@ -28,19 +28,18 @@ is provided (based on the value of \code{11027}) to demonstrate the default
 formatting of each locale.
 }
 \details{
-There are 712 locales, which means that a very long display table is provided
-by default. To trim down the output table size, we can provide an initial
-letter corresponding to the base locale ID to \code{begins_with}. This will filter
-locales in the info table to just the set that begins with the supplied
-letter.
+There are 574 locales, which means that a very long display
+table is provided by default. To trim down the output table size, we can
+provide an initial letter corresponding to the base locale ID to
+\code{begins_with}. This will filter locales in the info table to just the set
+that begins with the supplied letter.
 }
 \section{Examples}{
 
 
-Get a table of info on all of the locales where the base locale ID begins
-with a \code{"v"}.
+Get a table of info on all of the locales supported by \strong{gt}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_locales(begins_with = "v")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_locales()
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
@@ -66,6 +65,7 @@ Other information functions:
 \code{\link{info_google_fonts}()},
 \code{\link{info_icons}()},
 \code{\link{info_paletteer}()},
-\code{\link{info_time_style}()}
+\code{\link{info_time_style}()},
+\code{\link{info_unit_conversions}()}
 }
 \concept{information functions}

@@ -53,19 +53,19 @@ footnote_mark_to_html <- function(
 
   is_sup <- grepl("\\^", spec)
 
-  if (grepl("\\.", spec)) mark <- paste0(mark, ".")
-  if (grepl("\\(", spec)) mark <- paste0("(", mark)
-  if (grepl("\\[", spec)) mark <- paste0("[", mark)
-  if (grepl("\\)", spec)) mark <- paste0(mark, ")")
-  if (grepl("\\]", spec)) mark <- paste0(mark, "]")
+  if (grepl(".", spec, fixed = TRUE)) mark <- paste0(mark, ".")
+  if (grepl("(", spec, fixed = TRUE)) mark <- paste0("(", mark)
+  if (grepl("[", spec, fixed = TRUE)) mark <- paste0("[", mark)
+  if (grepl(")", spec, fixed = TRUE)) mark <- paste0(mark, ")")
+  if (grepl("]", spec, fixed = TRUE)) mark <- paste0(mark, "]")
 
-  if (grepl("i", spec)) {
+  if (grepl("i", spec, fixed = TRUE)) {
     font_style <- "italic"
   } else {
     font_style <- "normal"
   }
 
-  if (grepl("b", spec)) {
+  if (grepl("b", spec, fixed = TRUE)) {
     font_weight <- "bold"
   } else {
     font_weight <- "normal"
@@ -185,11 +185,13 @@ styles_to_html <- function(styles) {
       styles,
       FUN.VALUE = character(1L), USE.NAMES = FALSE,
       FUN = function(x) {
+        # TODO Maybe these checks are to be reviewed?
+        # names(c(1, 2, 3)) = NULL names(c(1, 2, "x" = 3)) = "", "", "x"
         if (any(is.null(names(x)))) {
           style <- as.character(x)
         } else if (all(names(x) != "")) {
           x <- cell_style_to_html(x)
-          style <- tidy_gsub(paste0(names(x), ": ", x, ";", collapse = " "), ";;", ";")
+          style <- gsub(";;", ";", paste0(names(x), ": ", x, ";", collapse = " "))
         } else {
           style <- as.character(x)
         }
@@ -198,7 +200,7 @@ styles_to_html <- function(styles) {
     )
 
   styles_out <- paste(styles_out, collapse = " ")
-  styles_out <- tidy_gsub(styles_out, "\n", " ")
+  styles_out <- gsub("\n", " ", styles_out)
 
   styles_out
 }
@@ -268,12 +270,34 @@ get_table_defs <- function(data) {
       option = "table_width"
     )
 
-  widths <-
-    boxh %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>% # This ensures that the `stub` is first
-    .$column_width %>%
-    unlist()
+  # Determine whether the row group is placed in the stub
+  row_group_as_column <-
+    dt_options_get_value(
+      data = data,
+      option = "row_group_as_column"
+    )
+
+  types <- c("default", "stub", if (row_group_as_column) "row_group" else NULL)
+
+  widths <- boxh[boxh$type %in% types, , drop = FALSE]
+
+  # Ensure that the `widths` df rows are sorted such that the `"row_group"` row
+  # is first (only if it's located in the stub), then `"stub"`, and then
+  # everything else
+  if ("stub" %in% widths[["type"]]) {
+    stub_idx <- which(widths$type == "stub")
+    othr_idx <- base::setdiff(seq_len(nrow(widths)), stub_idx)
+    widths <- dplyr::slice(widths, stub_idx, othr_idx)
+  }
+
+  if ("row_group" %in% widths[["type"]] && row_group_as_column) {
+    row_group_idx <- which(widths$type == "row_group")
+    othr_idx <- base::setdiff(seq_len(nrow(widths)), row_group_idx)
+    widths <- dplyr::slice(widths, row_group_idx, othr_idx)
+  }
+
+  widths <- widths[seq_len(nrow(widths)), "column_width", drop = TRUE]
+  widths <- unlist(widths)
 
   # Stop function if all length dimensions (where provided)
   # don't conform to accepted CSS length definitions
@@ -282,12 +306,13 @@ get_table_defs <- function(data) {
   # If all of the widths are defined as px values for all columns,
   # then ensure that the width values are strictly respected as
   # absolute width values (even if a table width has already been set)
-  if (all(grepl("px", widths)) && table_width == "auto") {
-    table_width <- "0px"
-  }
+  if (table_width == "auto") {
 
-  if (all(grepl("%", widths)) && table_width == "auto") {
-    table_width <- "100%"
+    if (all(grepl("px", widths, fixed = TRUE))) {
+      table_width <- "0px"
+    } else if (all(grepl("%", widths, fixed = TRUE))) {
+      table_width <- "100%"
+    }
   }
 
   if (table_width != "auto") {
@@ -400,7 +425,7 @@ create_heading_component_h <- function(data) {
   # Get the style attrs for the title
   if ("title" %in% styles_tbl$locname) {
 
-    title_style_rows <- dplyr::filter(styles_tbl, locname == "title")
+    title_style_rows <- styles_tbl[styles_tbl$locname == "title", ]
 
     if (nrow(title_style_rows) > 0) {
       title_styles <- title_style_rows$html_style
@@ -433,7 +458,7 @@ create_heading_component_h <- function(data) {
 
   # Get the style attrs for the subtitle
   if (subtitle_defined && "subtitle" %in% styles_tbl$locname) {
-    subtitle_style_rows <- dplyr::filter(styles_tbl, locname == "subtitle")
+    subtitle_style_rows <- styles_tbl[styles_tbl$locname == "subtitle", ]
 
     if (nrow(subtitle_style_rows) > 0) {
       subtitle_styles <- subtitle_style_rows$html_style
@@ -447,7 +472,7 @@ create_heading_component_h <- function(data) {
 
   title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
 
-  subtitle_classes <- tidy_sub(title_classes, "title", "subtitle")
+  subtitle_classes <- sub("title", "subtitle", title_classes, fixed = TRUE)
 
   if (!subtitle_defined) {
     title_classes <- c(title_classes, "gt_bottom_border")
@@ -1683,12 +1708,12 @@ create_footnotes_component_h <- function(data) {
   n_cols_total <- get_effective_number_of_columns(data = data)
 
   # Get the distinct set of `fs_id` & `footnotes` values in the `footnotes_tbl`
-  footnotes_tbl <- dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
+  footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
   # Get the style attrs for the footnotes
   if ("footnotes" %in% styles_tbl$locname) {
 
-    footnotes_style <- dplyr::filter(styles_tbl, locname == "footnotes")
+    footnotes_style <- styles_tbl[styles_tbl$locname == "footnotes", ]
 
     footnotes_styles <-
       if (nrow(footnotes_style) > 0) {
@@ -1836,8 +1861,7 @@ summary_rows_for_group_h <- function(
   summary_df <-
     dplyr::select(
       list_of_summaries$summary_df_display_list[[group_id]],
-      dplyr::all_of(rowname_col_private),
-      dplyr::all_of(default_vars)
+      dplyr::all_of(c(rowname_col_private, default_vars))
     )
 
   # Get effective number of columns

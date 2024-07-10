@@ -36,8 +36,8 @@ rendered... to HTML.
 
 
 Use the \code{\link{exibble}} dataset to create a \strong{gt} table. When adding a title
-through the \code{\link[=tab_header]{tab_header()}} function, we'll use the \code{html()} helper to signify
-to \strong{gt} that we're using HTML formatting.
+through \code{\link[=tab_header]{tab_header()}}, we'll use the \code{html()} helper to signify to \strong{gt}
+that we're using HTML formatting.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(currency, char) |>
@@ -77,7 +77,9 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
+\code{\link{row_group}()},
 \code{\link{stub}()},
-\code{\link{system_fonts}()}
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
 \concept{helper functions}

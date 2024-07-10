@@ -1,4 +1,4 @@
-# The `cols_hide()` and `cols_hide()` do not error when no columns selected
+# cols_hide() and cols_unhide() do not error when no columns selected
 
     Code
       gt(exibble) %>% cols_hide(problem)

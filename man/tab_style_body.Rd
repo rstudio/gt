@@ -28,23 +28,21 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{<style expressions>} // \strong{required}
 
-The styles to use for the targeted cells. The \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}},
-and \code{\link[=cell_borders]{cell_borders()}} helper functions can be used here to more easily
-generate valid styles. If using more than one helper function to define
-styles, all calls must be enclosed in a \code{\link[=list]{list()}}. Custom CSS declarations
-can be used for HTML output by including a \code{\link[=css]{css()}}-based statement as a
-list item.}
+The styles to use for the targeted cells. \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}},
+and \code{\link[=cell_borders]{cell_borders()}} can be used here to more easily generate valid styles.
+If using more than one helper function to define styles, all calls must be
+enclosed in a \code{\link[=list]{list()}}. Custom CSS declarations can be used for HTML output
+by including a \code{\link[=css]{css()}}-based statement as a list item.}
 
 \item{columns}{\emph{Columns to target}
 
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to which the targeting operations are constrained.  Can either
-be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
-or a select helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. This argument works in tandem with the
-\code{spanners} argument.}
+be a series of column names provided in \code{c()}, a vector of column indices,
+or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). This argument
+works in tandem with the \code{spanners} argument.}
 
 \item{rows}{\emph{Rows to target}
 
@@ -53,11 +51,11 @@ or a select helper function. Examples of select helper functions include
 In conjunction with \code{columns}, we can specify which of their rows should
 form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
 results in all rows in \code{columns} being formatted. Alternatively, we can
-supply a vector of row IDs within \code{\link[=c]{c()}}, a vector of row indices, or a
-select helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
-down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+supply a vector of row IDs within \code{c()}, a vector of row indices, or a
+select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}},  \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use
+expressions to filter down to the rows we need
+(e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{values}{\emph{Values for targeting}
 
@@ -106,11 +104,11 @@ stub.}
 An object of class \code{gt_tbl}.
 }
 \description{
-With the \code{tab_style_body()} function we can target cells though value, regex,
-and custom matching rules and apply styles to them and their surrounding
-context (i.e., styling an entire row or column wherein the match is found).
-Just as with the general \code{\link[=tab_style]{tab_style()}} function, this function is focused on
-the application of styles for HTML output only (as such, other output formats
+With \code{tab_style_body()} we can target cells through value, regex, and
+custom matching rules and apply styles to them and their surrounding context
+(i.e., styling an entire row or column wherein the match is found). Just as
+with the general \code{\link[=tab_style]{tab_style()}} function, this function is focused on the
+application of styles for HTML output only (as such, other output formats
 will ignore all \code{tab_style()} calls).
 
 With the collection of \verb{cell_*()} helper functions available in \strong{gt}, we
@@ -299,7 +297,7 @@ be used on numeric values and we can make sure of this by using \code{columns = 
 }}
 
 Styling every \code{NA} value in a table is also easily accomplished with the \code{fn}
-argument by way of the \code{is.na()} function.
+argument by way of \code{is.na()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl |>
   tab_style_body(

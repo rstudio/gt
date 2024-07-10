@@ -34,10 +34,10 @@ reference:
       All **gt** tables begin with a call to `gt()`, where we would supply the
       input data table (data frame or tibble) and some basic options for
       creating a stub (`rowname_col`) and row groups (`groupname_col`). We
-      can also introduce a grouped tibble (via **dplyr**'s `group_by()`) for
-      more precise divisions of rows into row groups. The `gt_preview()`
-      function is great for getting a nicely-formatted preview of a data
-      table (defaulting to the first 5 rows and the last row).
+      can also introduce a grouped tibble (via `dplyr::group_by()`) for
+      more precise divisions of rows into row groups. `gt_preview()`
+      is great for getting a nicely-formatted preview of a data table
+      (defaulting to the first 5 rows and the last row).
     contents:
     - gt
     - gt_preview
@@ -185,13 +185,13 @@ reference:
     desc: >
       An assortment of helper functions is available in the **gt** package.
       The various `cells_*()` functions are used for targeting cells with the
-      `locations` argument in the `tab_footnote()`, `tab_style()`, and
-      `text_transform()` functions. The `cell_*()` functions are used
-      exclusively with `tab_style()`'s `style` argument. The `px()` &
-      `pct()` functions are useful there for specifying units in pixels or
-      percentages. The `md()` and `html()` helpers can used be during label
-      creation with the `tab_header()`, `tab_footnote()`, `tab_spanner()`,
-      `tab_stubhead_label()`, and `tab_source_note()` functions.
+      `locations` argument of `tab_footnote()`, `tab_style()`, and
+      `text_transform()`, `text_case_match()`, and `text_case_when()`.
+      The `cell_*()` functions are used exclusively with `tab_style()`'s `style`
+      argument. `px()` & `pct()` are useful there for specifying
+      units in pixels or percentages. The `md()` and `html()` helpers can used
+      be during label creation with `tab_header()`, `tab_footnote()`,
+      `tab_spanner()`, `tab_stubhead()`, and `tab_source_note()`.
     contents:
     - md
     - html
@@ -199,9 +199,11 @@ reference:
     - pct
     - from_column
     - currency
+    - unit_conversion
     - nanoplot_options
     - adjust_luminance
     - stub
+    - row_group
     - has_concept("location helper functions")
     - cell_text
     - cell_fill
@@ -268,6 +270,7 @@ reference:
     - info_google_fonts
     - info_flags
     - info_icons
+    - info_unit_conversions
 
   - title: Shiny
     desc: >
@@ -361,7 +364,9 @@ reference:
     - exibble
     - towny
     - peeps
+    - films
     - metro
+    - gibraltar
     - constants
     - illness
     - reactions

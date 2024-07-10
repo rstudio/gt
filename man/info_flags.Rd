@@ -10,10 +10,10 @@ info_flags()
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{\link[=fmt_flag]{fmt_flag()}} function can be used to render flag icons within
-body cells that have 2-letter country codes. There are a lot of countries,
-so, the \code{info_flags()} function can be helpful in showing all of the valid
-and supported country codes along with their flag icons.
+\code{\link[=fmt_flag]{fmt_flag()}} can be used to render flag icons within body cells that have
+2-letter country codes. There are a lot of countries, so, calling
+\code{info_flags()} can be helpful in showing all of the valid and supported
+country codes along with their flag icons.
 }
 \section{Examples}{
 
@@ -46,6 +46,7 @@ Other information functions:
 \code{\link{info_icons}()},
 \code{\link{info_locales}()},
 \code{\link{info_paletteer}()},
-\code{\link{info_time_style}()}
+\code{\link{info_time_style}()},
+\code{\link{info_unit_conversions}()}
 }
 \concept{information functions}

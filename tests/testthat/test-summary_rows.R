@@ -18,12 +18,7 @@ tbl <-
   ) %>%
   tab_options(latex.use.longtable = TRUE)
 
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
-}
-
-test_that("The `summary_rows()` function can make group-wise summaries", {
+test_that("summary_rows() can make group-wise summaries", {
 
   # Create a table with summary rows for the `W02` group;
   # the 3 summary rows for this group represent the mean, sum,
@@ -45,43 +40,36 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
 
   # Expect that the internal `summary` list object has a length
   # of `1` since there was only one call of `summary_rows()`
-  length(summary) %>% expect_equal(1)
+  expect_length(summary, 1)
 
   # For the single list component in `summary`, expect specific
   # names within it
-  summary[[1]] %>%
-    expect_named(
-      c(
-        "groups", "columns", "fns", "fmt", "side",
-        "missing_text", "formatter", "formatter_options"
-      )
+  expect_named(
+    summary[[1]],
+    c(
+      "groups", "columns", "fns", "fmt", "side",
+      "missing_text", "formatter", "formatter_options"
     )
+  )
 
   # Expect the `groups` provided in `summary[[1]]$groups`
-  summary[[1]]$groups %>% expect_equal("W02")
+  expect_equal(summary[[1]]$groups, "W02")
 
   # Expect the `columns` provided in `summary[[1]]$columns`
-  summary[[1]]$columns %>% expect_equal(c("open", "high", "low", "close"))
-
-  # Expect that `summary[[1]]$fns` is a `list` object
-  summary[[1]]$fns %>% expect_type("list")
+  expect_equal(summary[[1]]$columns , c("open", "high", "low", "close"))
+  expect_type(summary[[1]]$fns, "list")
 
   # Expect that the components of `summary[[1]]$fns` are lists
-  summary[[1]]$fns$average %>% expect_type("list")
-  summary[[1]]$fns$total %>% expect_type("list")
-  summary[[1]]$fns$`std dev` %>% expect_type("list")
+  expect_type(summary[[1]]$fns$average, "list")
+  expect_type(summary[[1]]$fns$total, "list")
+  expect_type(summary[[1]]$fns$`std dev`, "list")
 
-  # Expect that `summary[[1]]$missing_text` has a specific value
-  summary[[1]]$missing_text %>% expect_equal("---")
-
-  # Expect that `summary[[1]]$formatter` is NULL
-  expect_null(summary[[1]]$formatter)
-
-  # Expect that `summary[[1]]$formatter_options` is a list
+  # Expect that
+  expect_equal(summary[[1]]$missing_text, "---")
+  expect_equal(summary[[1]]$formatter, NULL)
+  # expect a zero-length list
   expect_type(summary[[1]]$formatter_options, "list")
-
-  # Expect that `summary[[1]]$formatter_options` is of length 0
-  summary[[1]]$formatter_options %>% expect_length(0)
+  expect_length(summary[[1]]$formatter_options, 0)
 
   # Create a table with summary rows for the `W02` group;
   # the 3 summary rows for this group represent the mean, sum,
@@ -647,6 +635,16 @@ test_that("Using `groups = FALSE` in `summary_rows()` returns data unchanged", {
       gsub("id=\"[a-z]*?\"", "", .)
   )
 })
+
+test_that("summary_rows() informs to use grand_summary_rows() if no groups are present (#1292).", {
+  expect_snapshot(error = TRUE,
+    mtcars_short %>%
+      dplyr::select(gear) %>%
+      gt::gt(rownames_to_stub = TRUE) %>%
+      gt::summary_rows(fns = "sum")
+  )
+})
+
 
 test_that("Using `groups = NULL` in `summary_rows()` is a deprecated option", {
 
@@ -1767,8 +1765,8 @@ test_that("Extracting a summary from a gt table is possible", {
 
   # Expect that each component of the list inherits
   # from `tbl_df`
-  expect_s3_class(gt_tbl_summary_groupwise$summary_df_data_list[[1]], "tbl_df")
-  expect_s3_class(gt_tbl_summary_groupwise$summary_df_data_list[[2]], "tbl_df")
+  expect_s3_class(gt_tbl_summary_groupwise$summary_df_data_list[[1]], "data.frame")
+  expect_s3_class(gt_tbl_summary_groupwise$summary_df_data_list[[2]], "data.frame")
 
   # Expect specific column names for each of the
   # tibbles in `gt_tbl_summary_groupwise`
@@ -2301,13 +2299,13 @@ test_that("Summary rows can use other columns' data", {
   gt_tbl %>% render_as_html() %>% expect_snapshot()
 })
 
-test_that("The `normalize_summary_fns()` function works with a variety of inputs", {
+test_that("normalize_summary_fns() works with a variety of inputs", {
 
   check_summary_fn_output <- function(fns, id, label, formula) {
 
     out <- normalize_summary_fns(fns = fns)
 
-    expect_equal(length(out), 1)
+    expect_length(out, 1)
     expect_type(out, "list")
 
     # Get id
@@ -2517,13 +2515,13 @@ test_that("The deprecated `formatter` arg and `...` still function properly", {
     expect_equal(c("2,035.2", "2,048.6", "2,016.9", "2,031.2"))
 })
 
-test_that("The `normalize_fmt_fns()` function works with a variety of inputs", {
+test_that("normalize_fmt_fns() works with a variety of inputs", {
 
   check_fmt_fns_output <- function(fmt, formula) {
 
     out <- normalize_fmt_fns(fmt = fmt)
 
-    expect_equal(length(out), 1)
+    expect_length(out, 1)
     expect_type(out, "list")
 
     # Get formula

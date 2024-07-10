@@ -31,11 +31,11 @@ name in \code{.data}. Name-value pairs, in the form of
 exists in the table. Two-sided formulas with column-resolving expressions
 (e.g, \verb{<expr> ~ <value vector>}) can also be used, where the left-hand side
 corresponds to selections of columns. Column names should be enclosed in
-\code{\link[=c]{c()}} and select helpers like \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}} can be used in the LHS. The
-length of the longest vector in \verb{<value vector>} determines how many new
-rows will be added. Single values in \verb{<value vector>} will be repeated down
-in cases where there are multiple rows to be added.}
+\code{c()} and select helpers like \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, and \code{\link[=everything]{everything()}} can be used in the LHS. The length of the
+longest vector in \verb{<value vector>} determines how many new rows will be added.
+Single values in \verb{<value vector>} will be repeated down in cases where
+there are multiple rows to be added.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
@@ -194,16 +194,16 @@ of each row group:
 }}
 
 All missing values were substituted with an empty string (\code{""}), and that was
-done by using the \code{\link[=sub_missing]{sub_missing()}} function. We removed the top border of the
+done by using \code{\link[=sub_missing]{sub_missing()}}. We removed the top border of the
 new rows with a call to \code{\link[=tab_style]{tab_style()}}, targeting those rows where the row
 labels end with \code{"end"}. Finally, we get rid of the row labels with the use
-of the \code{\link[=text_case_when]{text_case_when()}} function, using a similar strategy of targeting the
+of \code{\link[=text_case_when]{text_case_when()}}, using a similar strategy of targeting the
 name of the row label.
 
 Another application is starting from nothing (really just the definition of
 columns) and building up a table using several invocations of \code{rows_add()}.
 This might be useful in interactive or programmatic applications. Here's an
-example where two columns are defined with \strong{dplyr}'s \code{tibble()} function
+example where two columns are defined with \code{dplyr::tibble()}
 (and no rows are present initially); with two calls of \code{rows_add()}, two
 separate rows are added.
 

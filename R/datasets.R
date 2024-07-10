@@ -287,7 +287,7 @@
 #' \itemize{
 #' \item `"brie_carre"`: The Brie Carre Pizza (Brie Carre Cheese, Prosciutto,
 #'  Caramelized Onions, Pears, Thyme, Garlic)
-#' \item `"calabrese"`: The Calabrese Pizza (‘Nduja Salami, Pancetta,
+#' \item `"calabrese"`: The Calabrese Pizza ('Nduja Salami, Pancetta,
 #' Tomatoes, Red Onions, Friggitello Peppers, Garlic)
 #' \item `"soppressata"`: The Soppressata Pizza (Soppressata Salami, Fontina
 #' Cheese, Mozzarella Cheese, Mushrooms, Garlic)
@@ -331,10 +331,10 @@
 #' \describe{
 #' \item{id}{The ID for the order, which consists of one or more pizzas at a
 #' given `date` and `time`.}
-#' \item{date}{A character representation of the `order` date, expressed in the
-#' ISO 8601 date format ('YYYY-MM-DD').}
-#' \item{time}{A character representation of the `order` time, expressed as a
-#' 24-hour time the ISO 8601 extended time format ('hh:mm:ss').}
+#' \item{date}{A character representation of the order date, expressed in the
+#' ISO 8601 date format (`YYYY-MM-DD`).}
+#' \item{time}{A character representation of the order time, expressed as a
+#' 24-hour time the ISO 8601 extended time format (`HH:MM:SS`).}
 #' \item{name}{The short name for the pizza.}
 #' \item{size}{The size of the pizza, which can either be `"S"`, `"M"`, `"L"`,
 #' `"XL"` (rare!), or `"XXL"` (even rarer!); most pizzas are available in the
@@ -527,14 +527,6 @@
 #' centimeters (cm) and kilograms (kg), respectively.}
 #' }
 #'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `peeps`.
-#'
-#' ```{r}
-#' dplyr::glimpse(peeps)
-#' ```
-#'
 #' @family datasets
 #' @section Dataset ID and Badge:
 #' DATA-8
@@ -544,20 +536,74 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "peeps"
+
+
+#' Feature films in competition at the Cannes Film Festival
+#'
+#' @description
+#'
+#' Each entry in the `films` is a feature film that appeared in the official
+#' selection during a festival year (starting in 1946 and active to the present
+#' day). The `year` column refers to the year of the festival and this figure
+#' doesn't always coincide with the release year of the film. The film's title
+#' reflects the most common title of the film in English, where the
+#' `original_title` column provides the title of the film in its spoken language
+#' (transliterated to Roman script where necessary).
+#'
+#' @format A tibble with 1,851 rows and 8 variables:
+#' \describe{
+#' \item{year}{The year of the festival in which the film was in competition.}
+#' \item{title,original_title}{The `title` field provides the film title used
+#' for English-speaking audiences. The `original_title` field is populated when
+#' `title` differs greatly from the non-English original.}
+#' \item{director}{The director or set of co-directors for the film. Multiple
+#' directors are separated by a comma.}
+#' \item{languages}{The languages spoken in the film in the order of appearance.
+#' This consists of ISO 639 language codes (primarily as two-letter codes, but
+#' using three-letter codes where necessary).}
+#' \item{countries_of_origin}{The country or countries of origin for the
+#' production. Here, 2-letter ISO 3166-1 country codes (set in uppercase) are
+#' used.}
+#' \item{run_time}{The run time of the film in hours and minutes. This is given
+#' as a string in the format `[x]h [y]m`.}
+#' \item{imdb_url}{The URL of the film's information page in the Internet Movie
+#' Database (IMDB).}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `films`.
+#'
+#' ```{r}
+#' dplyr::glimpse(films)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-9
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_films.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' `v0.11.0`
+#'
+"films"
 
 #' The stations of the Paris Metro
 #'
 #' @description
 #'
-#' A dataset with information on all 308 Paris Metro stations as of February
-#' 2023. Each record represents a station, describing which Metro lines are
-#' serviced by the station, which other connections are available, and annual
-#' passenger volumes. Basic location information is provided for each station in
-#' terms where they reside on a municipal level, and, through latitude/longitude
-#' coordinates.
+#' A dataset with information on all 314 Paris Metro stations as of June 2024.
+#' Each record represents a station, describing which Metro lines are serviced
+#' by the station, which other connections are available, and annual passenger
+#' volumes. Basic location information is provided for each station in terms
+#' of where they reside on a municipal level, and, through latitude/longitude
+#' coordinate values.
 #'
 #' The system has 16 lines (numbered from 1 to 14, with two additional lines:
 #' 3bis and 7bis) and covers over 200 kilometers of track. The Metro runs on
@@ -573,7 +619,7 @@
 #' to the Transilien rail network, tramway stations, several major train
 #' stations (e.g., Gare du Nord, Gare de l'Est, etc.), and many bus lines.
 #'
-#' @format A tibble with 308 rows and 11 variables:
+#' @format A tibble with 314 rows and 11 variables:
 #' \describe{
 #' \item{name}{The name of the station.}
 #' \item{caption}{In some cases, a station will have a caption that might
@@ -602,17 +648,9 @@
 #' show `NA` values.}
 #' }
 #'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `metro`.
-#'
-#' ```{r}
-#' dplyr::glimpse(metro)
-#' ```
-#'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-9
+#' DATA-10
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_metro.png")`
@@ -622,6 +660,52 @@
 #' `v0.9.0` (Mar 31, 2023)
 #'
 "metro"
+
+#' Weather conditions in Gibraltar, May 2023
+#'
+#' @description
+#'
+#' The `gibraltar` dataset has meteorological data for the Gibraltar Airport
+#' Station from May 1 to May 31, 2023. Gibraltar is a British Overseas Territory
+#' and city located at the southern end of the Iberian Peninsula, on the Bay of
+#' Gibraltar. This weather station is located at the airport (GIB), where it's
+#' at an elevation of 5 meters above mean sea level (AMSL).
+#'
+#' @format A tibble with 1,431 rows and 10 variables:
+#' \describe{
+#' \item{date, time}{The date and time of the observation.}
+#' \item{temp, dew_point}{The air temperature and dew point values, both in
+#' degrees Celsius.}
+#' \item{humidity}{The relative humidity as a value between `0` and `1`}
+#' \item{wind_dir, wind_speed, wind_gust}{Observations related to wind. The wind
+#' direction is given as the typical 'blowing from' value, simplified to one of
+#' 16 compass directions. The wind speed is provided in units of meters per
+#' second. If there was a measurable wind gust, the maximum gust speed is
+#' recorded as m/s values (otherwise the value is `0`).}
+#' \item{pressure}{The atmospheric pressure in hectopascals (hPa).}
+#' \item{condition}{The weather condition.}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `gibraltar`.
+#'
+#' ```{r}
+#' dplyr::glimpse(gibraltar)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-11
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_gibraltar.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' `v0.11.0`
+#'
+"gibraltar"
 
 #' The fundamental physical constants
 #'
@@ -661,7 +745,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-10
+#' DATA-12
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_constants.png")`
@@ -754,7 +838,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-11
+#' DATA-13
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_illness.png")`
@@ -776,11 +860,11 @@
 #' amounts in the atmosphere, have been extensively studied by research groups
 #' since their persistence in the atmosphere requires specific attention. Many
 #' researchers have reported kinetic data on specific gas-phase reactions and
-#' these mainly involve oxidation reactions with OH, NO3 radicals, ozone, and
-#' chlorine (Cl) atoms.
+#' these mainly involve oxidation reactions with OH, nitrate radicals, ozone,
+#' and chlorine atoms.
 #'
 #' This compilation of rate constant (*k*) data as contains the values for rate
-#' constants at 298 K (in units of `cm^3 molecules^–1 s^–1`) as well as
+#' constants at 298 K (in units of `cm^3 molecules^-1 s^-1`) as well as
 #' parameters that allow for the calculation of rate constants at different
 #' temperatures (the temperature dependence parameters: `A`, `B`, and `n`).
 #' Uncertainty values/factors and temperature limits are also provided here
@@ -858,14 +942,14 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-12
+#' DATA-14
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_reactions.png")`
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "reactions"
 
@@ -917,14 +1001,14 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-13
+#' DATA-15
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_photolysis.png")`
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "photolysis"
 
@@ -978,14 +1062,14 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-14
+#' DATA-16
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_nuclides.png")`
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 "nuclides"
 
@@ -1048,7 +1132,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-15
+#' DATA-17
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
@@ -1121,7 +1205,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-16
+#' DATA-18
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_addv.png")`

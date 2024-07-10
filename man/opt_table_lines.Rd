@@ -25,8 +25,8 @@ The extent to which lines will be visible in the table. Options are
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{opt_table_lines()} function sets table lines in one of three possible
-ways: (1) all possible table lines drawn (\code{"all"}), (2) no table lines at all
+\code{opt_table_lines()} sets table lines in one of three possible ways:
+(1) all possible table lines drawn (\code{"all"}), (2) no table lines at all
 (\code{"none"}), and (3) resetting to the default line styles (\code{"default"}). This
 is great if you want to start off with lots of lines and subtract just a few
 of them with \code{\link[=tab_options]{tab_options()}} or \code{\link[=tab_style]{tab_style()}}. Or, use it to start with a

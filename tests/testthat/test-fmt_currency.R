@@ -1,4 +1,4 @@
-test_that("The `fmt_currency()` function works correctly", {
+test_that("fmt_currency() works correctly", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -22,10 +22,10 @@ test_that("The `fmt_currency()` function works correctly", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  char_1 <- (tab %>% dt_data_get())[["char_1"]]
-  char_2 <- (tab %>% dt_data_get())[["char_2"]]
-  num_1 <- (tab %>% dt_data_get())[["num_1"]]
-  num_2 <- (tab %>% dt_data_get())[["num_2"]]
+  char_1 <- dt_data_get(tab)[["char_1"]]
+  char_2 <- dt_data_get(tab)[["char_2"]]
+  num_1 <- dt_data_get(tab)[["num_1"]]
+  num_2 <- dt_data_get(tab)[["num_2"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -300,7 +300,7 @@ test_that("The `fmt_currency()` function works correctly", {
   )
 })
 
-test_that("The `fmt_currency()` function can scale/suffix larger numbers", {
+test_that("fmt_currency() can scale/suffix larger numbers", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -530,22 +530,14 @@ test_that("The `fmt_currency()` function can scale/suffix larger numbers", {
     "$999.99990")
 })
 
-test_that("The `currency()` helper function works correctly", {
+test_that("The currency() helper works correctly", {
 
   # Expect that the object produced by `currency()` is a
   # list with `gt_currency` class
-  expect_type(
-    currency(html = "&#8383;", latex = "BTC", default = "BTC"),
-    "list"
-  )
-
-  expect_s3_class(
-    currency(html = "&#8383;", latex = "BTC", default = "BTC"),
-    "gt_currency"
-  )
-
-  # Expect as many components as there are named arguments
-  expect_length(currency(html = "&#8383;", latex = "BTC", default = "BTC"), 3)
+  cur <- currency(html = "&#8383;", latex = "BTC", default = "BTC")
+  expect_type(cur, "list")
+  expect_s3_class(cur, "gt_currency")
+  expect_length(cur, 3)
   expect_length(currency(html = "&#8383;", default = "BTC"), 2)
   expect_length(currency(default = "BTC"), 1)
 
@@ -553,12 +545,14 @@ test_that("The `currency()` helper function works correctly", {
   # to the `default` context
   single_default_currency <- currency("BTC")
 
-  single_default_currency %>% expect_type("list")
-  single_default_currency %>% expect_s3_class("gt_currency")
-  single_default_currency %>% expect_length(1)
-  single_default_currency %>% expect_named("default")
-  single_default_currency[[1]] %>% expect_equal("BTC")
+  expect_type(single_default_currency, "list")
+  expect_s3_class(single_default_currency, "gt_currency")
+  expect_length(single_default_currency, 1)
+  expect_named(single_default_currency, "default")
+  expect_equal(single_default_currency[[1]], "BTC")
+})
 
+test_that("currency() errors" , {
   # Expect an error if nothing is provided
   expect_error(currency())
 
@@ -574,7 +568,9 @@ test_that("The `currency()` helper function works correctly", {
 
   # Expect an error if there are duplicate names
   expect_error(currency(html = "&#8383;", default = "BTC", default = "BT"))
+})
 
+test_that("fmt_currency() works with the currency() helper", {
   # Create an input data frame four columns: two
   # character-based and two that are numeric
   data_tbl <-
@@ -682,7 +678,7 @@ test_that("The `currency()` helper function works correctly", {
   )
 })
 
-test_that("The `fmt_currency()` fn can render in the Indian numbering system", {
+test_that("fmt_currency() can render in the Indian numbering system", {
 
   # These numbers will be used in tests of formatting
   # values to the Indian numbering system

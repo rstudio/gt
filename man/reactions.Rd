@@ -78,11 +78,11 @@ atmospheric environment. Organic pollutants, which are present in trace
 amounts in the atmosphere, have been extensively studied by research groups
 since their persistence in the atmosphere requires specific attention. Many
 researchers have reported kinetic data on specific gas-phase reactions and
-these mainly involve oxidation reactions with OH, NO3 radicals, ozone, and
-chlorine (Cl) atoms.
+these mainly involve oxidation reactions with OH, nitrate radicals, ozone,
+and chlorine atoms.
 
 This compilation of rate constant (\emph{k}) data as contains the values for rate
-constants at 298 K (in units of \verb{cm^3 molecules^–1 s^–1}) as well as
+constants at 298 K (in units of \verb{cm^3 molecules^-1 s^-1}) as well as
 parameters that allow for the calculation of rate constants at different
 temperatures (the temperature dependence parameters: \code{A}, \code{B}, and \code{n}).
 Uncertainty values/factors and temperature limits are also provided here
@@ -140,7 +140,7 @@ Here is a glimpse at the data available in \code{reactions}.
 
 \section{Dataset ID and Badge}{
 
-DATA-12
+DATA-14
 
 \if{html}{\out{
 <div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_reactions.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
@@ -149,7 +149,7 @@ DATA-12
 
 \section{Dataset Introduced}{
 
-\emph{In Development}
+\code{v0.11.0}
 }
 
 \seealso{
@@ -157,6 +157,8 @@ Other datasets:
 \code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{films}},
+\code{\link{gibraltar}},
 \code{\link{gtcars}},
 \code{\link{illness}},
 \code{\link{metro}},

@@ -44,13 +44,13 @@ dt_stub_df_init <- function(
 
   # Create the `stub_df` table
   stub_df <-
-    dplyr::tibble(
+    vctrs::data_frame(
       rownum_i = seq_len(nrow(data_tbl)),
-      row_id = rep(NA_character_, nrow(data_tbl)),
-      group_id = rep(NA_character_, nrow(data_tbl)),
+      row_id = rep_len(NA_character_, nrow(data_tbl)),
+      group_id = rep_len(NA_character_, nrow(data_tbl)),
       group_label = rep(list(NULL), nrow(data_tbl)),
-      indent = rep(NA_character_, nrow(data_tbl)),
-      built_group_label = rep(NA_character_, nrow(data_tbl))
+      indent = rep_len(NA_character_, nrow(data_tbl)),
+      built_group_label = rep_len(NA_character_, nrow(data_tbl))
     )
 
   # Handle case where table has no columns
@@ -97,7 +97,7 @@ dt_stub_df_init <- function(
       #
       # Ensure that the `row_group_ids` values are simplified to reduce
       # special characters; this requires use of the recoding so that the
-      # generated IDs map correctly to the the supplied labels
+      # generated IDs map correctly to the supplied labels
       #
 
       unique_row_group_labels <- unique(row_group_labels)
@@ -204,7 +204,8 @@ dt_stub_components <- function(data) {
     stub_components <- c(stub_components, "group_id")
   }
 
-  if (!all(is.na(stub_df[["row_id"]])) && !all(stub_df[["row_id"]] == "")) {
+  # check if some row_id are present and have non-empty chr
+  if (!all(is.na(stub_df[["row_id"]])) && any(nzchar(stub_df[["row_id"]]))) {
     stub_components <- c(stub_components, "row_id")
   }
 

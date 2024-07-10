@@ -17,24 +17,24 @@ The complete name of a font available in \emph{Google Fonts}.}
 An object of class \code{font_css}.
 }
 \description{
-The \code{google_font()} helper function can be used wherever a font name should
-be specified. There are two instances where this helper can be used: the
-\code{name} argument in \code{\link[=opt_table_font]{opt_table_font()}} (for setting a table font) and in that
-of \code{\link[=cell_text]{cell_text()}} (used with \code{\link[=tab_style]{tab_style()}}). To get a helpful listing of fonts
-that work well in tables, use the \code{\link[=info_google_fonts]{info_google_fonts()}} function.
+\code{google_font()} can be used wherever a font name should be specified. There
+are two instances where this helper can be used: the \code{name} argument in
+\code{\link[=opt_table_font]{opt_table_font()}} (for setting a table font) and in that of \code{\link[=cell_text]{cell_text()}}
+(used with \code{\link[=tab_style]{tab_style()}}). To get a helpful listing of fonts that work well
+in tables, call \code{\link[=info_google_fonts]{info_google_fonts()}}.
 }
 \section{Examples}{
 
 
 Use the \code{\link{exibble}} dataset to create a \strong{gt} table of two columns and eight
-rows. We'll replace missing values with em dashes using the \code{\link[=sub_missing]{sub_missing()}}
-function. For text in the \code{time} column, we will use the font called \code{"IBM Plex Mono"} which is available in Google Fonts. This is defined in the
-\code{google_font()} function call, itself part of a vector that includes fonts
-returned by the \code{\link[=default_fonts]{default_fonts()}} function (those fonts will serve as
-fallbacks just in case the font supplied by Google Fonts is not accessible).
-In terms of placement, all of this is given to the \code{font} argument of the
-\code{\link[=cell_text]{cell_text()}} helper function which is itself given to the \code{style} argument
-of \code{\link[=tab_style]{tab_style()}}.
+rows. We'll replace missing values with em dashes using \code{\link[=sub_missing]{sub_missing()}}.
+For text in the \code{time} column, we will use the font called \code{"IBM Plex Mono"}
+which is available in Google Fonts. This is defined inside the
+\code{google_font()} call, itself part of a vector that includes fonts returned by
+\code{\link[=default_fonts]{default_fonts()}} (those fonts will serve as fallbacks just in case the font
+supplied by Google Fonts is not accessible). In terms of placement, all of
+this is given to the \code{font} argument of \code{\link[=cell_text]{cell_text()}} which is itself given
+to the \code{style} argument of \code{\link[=tab_style]{tab_style()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(char, time) |>
@@ -87,7 +87,7 @@ two font fallbacks: \code{"Cochin"} and the catchall \code{"Serif"} group.
 
 \section{Function ID}{
 
-8-30
+8-31
 }
 
 \section{Function Introduced}{
@@ -112,7 +112,9 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
+\code{\link{row_group}()},
 \code{\link{stub}()},
-\code{\link{system_fonts}()}
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
 \concept{helper functions}

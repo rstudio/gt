@@ -68,7 +68,28 @@ test_that("Interactive tables won't fail when using different options", {
     tab_source_note(source_note = "Source Note.") %>%
     tab_footnote(footnote = "Footnote.") %>%
     opt_interactive()
-
+  # #1702
+  tbl_gt_i_23 <-
+    gt(exibble, rownames_to_stub = TRUE) %>%
+    opt_interactive()
+  tbl_gt_i_24 <-
+    gt(mtcars_short, rowname_col = "vs") %>%
+    opt_interactive()
+  # #1705
+  # FIXME the number of rows at the bottom is incorrect.
+  tbl_gt_i_25 <-
+    gt(mtcars_short, groupname_col = "vs") %>%
+    opt_interactive()
+  # #1758 tab_stubhead() respected (shown on top of group)
+  tbl_gt_i_26 <-
+    gt(mtcars_short, groupname_col = "vs", rownames_to_stub = T) %>%
+    tab_stubhead("stub label on top of vs") %>%
+    opt_interactive()
+  # #1758 NA rows show correctly + stubhead shows on top of row
+  tbl_gt_i_27 <-
+    gt(exibble, rowname_col = "char") %>%
+    tab_stubhead("stub label on top of rowname") %>%
+    opt_interactive()
   capture_output(expect_no_error(tbl_gt_i_01))
   capture_output(expect_no_error(tbl_gt_i_02))
   capture_output(expect_no_error(tbl_gt_i_03))
@@ -91,4 +112,10 @@ test_that("Interactive tables won't fail when using different options", {
   capture_output(expect_no_error(tbl_gt_i_20))
   capture_output(expect_no_error(tbl_gt_i_21))
   capture_output(expect_no_error(tbl_gt_i_22))
+  capture_output(expect_no_error(tbl_gt_i_23))
+  capture_output(expect_no_error(tbl_gt_i_24))
+  capture_output(expect_no_error(tbl_gt_i_25))
+  capture_output(expect_no_error(tbl_gt_i_26))
+  capture_output(expect_no_error(tbl_gt_i_27))
+
 })

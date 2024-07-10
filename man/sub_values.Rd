@@ -28,10 +28,9 @@ This is the \strong{gt} table object that is commonly created through use of the
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to which substitution operations are constrained. Can either
-be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
-or a select helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+be a series of column names provided in \code{c()}, a vector of column indices,
+or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
 
 \item{rows}{\emph{Rows to target}
 
@@ -40,11 +39,11 @@ or a select helper function. Examples of select helper functions include
 In conjunction with \code{columns}, we can specify which of their rows should
 form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
 results in all rows in \code{columns} being formatted. Alternatively, we can
-supply a vector of row IDs within \code{\link[=c]{c()}}, a vector of row indices, or a
-select helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
-down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+supply a vector of row IDs within \code{c()}, a vector of row indices, or a
+select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use
+expressions to filter down to the rows we need
+(e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{values}{\emph{Values to match on}
 
@@ -91,9 +90,9 @@ mind.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Should you need to replace specific cell values with custom text, the
-\code{sub_values()} function can be good choice. We can target cells for
-replacement though value, regex, and custom matching rules.
+Should you need to replace specific cell values with custom text,
+\code{sub_values()} can be good choice. We can target cells for replacement
+through value, regex, and custom matching rules.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 

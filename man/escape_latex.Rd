@@ -17,13 +17,13 @@ A character vector containing the text that is to be LaTeX-escaped.}
 A character vector.
 }
 \description{
-Text may contain several characters with special meanings in LaTeX. The
-\code{escape_latex()} function will transform a character vector so that it is
-safe to use within LaTeX tables.
+Text may contain several characters with special meanings in LaTeX.
+\code{escape_latex()} will transform a character vector so that it is safe to use
+within LaTeX tables.
 }
 \section{Function ID}{
 
-8-28
+8-29
 }
 
 \section{Function Introduced}{
@@ -48,7 +48,9 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
+\code{\link{row_group}()},
 \code{\link{stub}()},
-\code{\link{system_fonts}()}
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
 \concept{helper functions}

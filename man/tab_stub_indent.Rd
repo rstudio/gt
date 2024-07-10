@@ -19,11 +19,10 @@ This is the \strong{gt} table object that is commonly created through use of the
 \verb{<row-targeting expression>} // \strong{required}
 
 The rows to consider for the indentation change. We can supply a vector of
-row ID values within \code{\link[=c]{c()}}, a vector of row indices, or use select helpers
-here. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
-need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+row ID values within \code{c()}, a vector of row indices, or use select helpers
+here (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{indent}{\emph{Indentation directive}
 
@@ -41,7 +40,7 @@ An object of class \code{gt_tbl}.
 }
 \description{
 Indentation of row labels is an effective way for establishing structure in a
-table stub. The \code{tab_stub_indent()} function allows for fine control over
+table stub. \code{tab_stub_indent()} allows for fine control over
 row label indentation in the stub. We can use an explicit definition of an
 indentation level (with a number between \code{0} and \code{5}), or, employ an
 indentation directive using keywords (\code{"increase"}/\code{"decrease"}).
@@ -49,16 +48,15 @@ indentation directive using keywords (\code{"increase"}/\code{"decrease"}).
 \section{Compatibility of arguments with the \code{from_column()} helper function}{
 
 
-The \code{\link[=from_column]{from_column()}} helper function can be used with the \code{indent} argument
-of \code{tab_stub_indent()} to obtain varying parameter values from a specified
-column within the table. This means that each row label could be indented a
-little bit differently.
+\code{\link[=from_column]{from_column()}} can be used with the \code{indent} argument of \code{tab_stub_indent()}
+to obtain varying parameter values from a specified column within the table.
+This means that each row label could be indented a little bit differently.
 
 Please note that for this argument (\code{indent}), a \code{\link[=from_column]{from_column()}} call needs
 to reference a column that has data of the \code{numeric} or \code{integer} type.
-Additional columns for parameter values can be generated with the
-\code{\link[=cols_add]{cols_add()}} function (if not already present). Columns that contain
-parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+Additional columns for parameter values can be generated with \code{\link[=cols_add]{cols_add()}}
+(if not already present). Columns that contain parameter data can also be
+hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
 }
 
 \section{Examples}{
@@ -88,10 +86,9 @@ to the two row group labels in this table (\code{"inorganic reactions"} and
 }}
 
 Let's use a summarized version of the \code{\link{pizzaplace}} dataset to create a
-another \strong{gt} table with row groups and row labels. With the
-\code{\link[=summary_rows]{summary_rows()}} function, we'll generate summary rows at the top of each row
-group. Using \code{tab_stub_indent()} we can add indentation to the row labels in
-the stub.
+another \strong{gt} table with row groups and row labels. With \code{\link[=summary_rows]{summary_rows()}},
+we'll generate summary rows at the top of each row group. Using
+\code{tab_stub_indent()} we can add indentation to the row labels in the stub.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::group_by(type, size) |>
@@ -132,9 +129,9 @@ column. Here's an example of that using the \code{\link{constants}} dataset, whe
 variations of a row label are mutated to eliminate the common leading text
 (replacing it with \code{"..."}). At the same time, the indentation for those rows
 is set to \code{4} in the \code{indent} column (value is \code{0} otherwise). The
-\code{tab_stub_indent()} statement uses the \code{\link[=from_column]{from_column()}} helper function, which
-passes values from the \code{indent} column to the namesake argument. We hide the
-\code{indent} column from view by use of the \code{\link[=cols_hide]{cols_hide()}} function.
+\code{tab_stub_indent()} statement uses \code{\link[=from_column]{from_column()}}, which passes values from
+the \code{indent} column to the namesake argument. We hide the \code{indent} column
+from view by use of \code{\link[=cols_hide]{cols_hide()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{constants |>
   dplyr::select(name, value, uncert, units) |>

@@ -26,7 +26,7 @@
 #'
 #' @description
 #'
-#' The `gtsave()` function makes it easy to save a **gt** table to a file. The
+#' `gtsave()` makes it easy to save a **gt** table to a file. The
 #' function guesses the file type by the extension provided in the output
 #' filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file.
 #'
@@ -241,7 +241,7 @@ gt_save_html <- function(
 
     } else {
 
-      html <- htmltools::as.tags(data)
+      html <- as.tags(data)
     }
 
     return(htmltools::save_html(html, filename, ...))
@@ -289,7 +289,7 @@ gt_save_webshot <- function(
   tempfile_ <- tempfile(fileext = ".html")
 
   # Reverse slashes on Windows filesystems
-  tempfile_ <- tidy_gsub(tempfile_, "\\\\", "/")
+  tempfile_ <- normalizePath(tempfile_, "/", mustWork = FALSE)
 
   # Save gt table as HTML using the `gt_save_html()` function
   gt_save_html(
@@ -502,11 +502,11 @@ gtsave_file_ext <- function(filename) {
 #' @noRd
 gtsave_filename <- function(path, filename) {
 
-  if (is.null(path)) path <- "."
+  path <- path %||% "."
 
   # The use of `fs::path_abs()` works around
   # the saving code in `htmltools::save_html()`
-  # See htmltools Issue #165 for more details
+  # See rstudio/htmltools#165 for more details
   as.character(
     fs::path_expand(
       fs::path_abs(
@@ -543,13 +543,13 @@ gtsave_filename <- function(path, filename) {
 #'
 #' Use a subset of the [`gtcars`] dataset to create a **gt** table. Add a header
 #' with [tab_header()] and then export the table as HTML code with inlined CSS
-#' styles using the `as_raw_html()` function.
+#' styles using `as_raw_html()`.
 #'
 #' ```r
 #' tab_html <-
 #'   gtcars |>
 #'   dplyr::select(mfr, model, msrp) |>
-#'   dplyr::slice(1:5) |>
+#'   dplyr::slice_head(n = 5) |>
 #'   gt() |>
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
@@ -578,7 +578,7 @@ as_raw_html <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  html_table <- as.character(as.tags.gt_tbl(data))
+  html_table <- as.character(as.tags(data))
 
   if (inline_css) {
 
@@ -683,17 +683,20 @@ as_latex <- function(data) {
 
   # Composition of LaTeX ----------------------------------------------------
 
+  # Create a df containing width types for each column
+  colwidth_df <- create_colwidth_df_l(data = data)
+
   # Create a LaTeX fragment for the start of the table
-  table_start <- create_table_start_l(data = data)
+  table_start <- create_table_start_l(data = data, colwidth_df = colwidth_df)
 
   # Create the heading component
   heading_component <- create_heading_component_l(data = data)
 
   # Create the columns component
-  columns_component <- create_columns_component_l(data = data)
+  columns_component <- create_columns_component_l(data = data, colwidth_df = colwidth_df)
 
   # Create the body component
-  body_component <- create_body_component_l(data = data)
+  body_component <- create_body_component_l(data = data, colwidth_df = colwidth_df)
 
   # Create the footnotes component
   footer_component <- create_footer_component_l(data = data)
@@ -927,8 +930,8 @@ as_rtf <- function(
 #' @section Examples:
 #'
 #' Use a subset of the [`gtcars`] dataset to create a **gt** table. Add a header
-#' with [tab_header()] and then export the table as OOXML code for Word using the
-#' `as_word()` function.
+#' with [tab_header()] and then export the table as OOXML code for Word using
+#' `as_word()`
 #'
 #' ```r
 #' tab_rtf <-
@@ -1150,8 +1153,8 @@ as_word_tbl_body <- function(
 #'
 #' @description
 #'
-#' The `as_gtable()` function performs the transformation of a `gt_tbl` object
-#' to a `gtable` object.
+#' `as_gtable()` performs the transformation of a `gt_tbl` object to a
+#' [`gtable`][gtable::gtable()] object.
 #'
 #' @inheritParams gtsave
 #'
@@ -1162,12 +1165,13 @@ as_word_tbl_body <- function(
 #'   The `plot` option determines whether the `gtable` object should be rendered
 #'   on the graphics device.
 #'
-#' @param text_grob
+#' @param text_grob *Function for drawing text*
 #'
 #'   `function` // *default:* `grid::textGrob`
 #'
-#'   A `function` used to draw text. Defaults to `grid::textGrob()` but can be
-#'   swapped to `gridtext::richtext_grob()` to better render HTML content.
+#'   A `function` which will be used to draw text. Defaults to
+#'   `grid::textGrob()` but can be swapped to `gridtext::richtext_grob()` to
+#'   better render HTML content.
 #'
 #' @return A `gtable` object.
 #'
@@ -1176,12 +1180,12 @@ as_word_tbl_body <- function(
 #' 13-6
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.11.0`
 #'
 #' @export
 as_gtable <- function(data, plot = FALSE, text_grob = grid::textGrob) {
 
-  data <- build_data(data = data, context = "html")
+  data <- build_data(data = data, context = "grid")
   data <- add_css_styles(data = data)
 
   caption_component <- create_caption_component_g(data = data)
@@ -1362,7 +1366,7 @@ grid_layout_heights <- function(layout) {
   singles <- rows[is_single, ]
   spanner <- rows[!is_single, ]
 
-  heights <- rep(0, max(layout$bottom))
+  heights <- rep_len(0, max(layout$bottom))
   heights[singles$key$top] <- singles$height
   spanner <- spanner[order(spanner$key$top, spanner$key$bottom), ]
 
@@ -1433,7 +1437,7 @@ grid_layout_widths <- function(layout, data) {
   singles <- columns[is_single, ]
   spanner <- columns[!is_single, ]
 
-  widths <- rep(0, max(layout$right))
+  widths <- rep_len(0, max(layout$right))
   widths[singles$key$left] <- singles$width
 
   # Enlarge columns if fixed column widths have been set
@@ -1484,7 +1488,7 @@ grid_layout_widths <- function(layout, data) {
     # Set the total width in npc units
     total_width <- as.numeric(gsub("\\%$", "", total_width)) / 100
     change <- setdiff(seq_along(widths), fixed)
-    extra_width <- rep(0, length(widths))
+    extra_width <- rep_len(0, length(widths))
     extra_width[change] <- total_width / length(change)
     extra_width <- grid::unit(extra_width, "npc")
 
@@ -1505,10 +1509,10 @@ grid_layout_widths <- function(layout, data) {
 #' @description
 #'
 #' We can extract the body of a **gt** table, even at various stages of its
-#' rendering, from a `gt_tbl` object using the `extract_body()` function. By
-#' default, the data frame returned will have gone through all of the build
-#' stages but we can intercept the table body after a certain build stage.
-#' Here are the eight different build stages and some notes about each:
+#' rendering, from a `gt_tbl` object using `extract_body()`. By default, the
+#' data frame returned will have gone through all of the build stages but we
+#' can intercept the table body after a certain build stage. Here are the eight
+#' different build stages and some notes about each:
 #'
 #' 1. `"init"`: the body table is initialized here, entirely with `NA` values.
 #' It's important to note that all columns of the are of the `character` type in
@@ -1529,7 +1533,7 @@ grid_layout_widths <- function(layout, data) {
 #' values now become the string `"NA"`, so, there aren't any true missing values
 #' in this body table.
 #'
-#' 5. `"cols_merged"`: The result of column-merging operations (though
+#' 5. `"cols_merged"`: The result of column-merging operations (through
 #' [cols_merge()] and related functions) is materialized here. Columns that were
 #' asked to be hidden will be present here (i.e., hiding columns doesn't remove
 #' them from the body table).
@@ -1662,9 +1666,9 @@ extract_body <- function(
 #' @description
 #'
 #' Get a list of summary row data frames from a `gt_tbl` object where summary
-#' rows were added via the [summary_rows()] function. The output data frames
-#' contain the `group_id` and `rowname` columns, whereby `rowname` contains
-#' descriptive stub labels for the summary rows.
+#' rows were added via [summary_rows()]. The output data frames contain the
+#' `group_id` and `rowname` columns, whereby `rowname` contains descriptive stub
+#' labels for the summary rows.
 #'
 #' @inheritParams extract_cells
 #'
@@ -1724,7 +1728,6 @@ extract_body <- function(
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
-#'
 #' @export
 extract_summary <- function(data) {
 
@@ -1761,7 +1764,7 @@ extract_summary <- function(data) {
                 group_id = group_id_col_private,
                 row_id = row_id_col_private,
                 rowname = rowname_col_private
-                ))
+              ))
             )
 
           flattened_rowname <- unname(unlist(y$rowname))
@@ -1794,11 +1797,10 @@ extract_summary <- function(data) {
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for extraction. The default [everything()] results in all
 #'   rows in `columns` being formatted. Alternatively, we can supply a vector of
-#'   row IDs within [c()], a vector of row indices, or a select helper function.
-#'   Examples of select helper functions include [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
+#'   row IDs within `c()`, a vector of row indices, or a select helper function
+#'   (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]). We can also use expressions to filter
+#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @return A vector of cell data extracted from a **gt** table.
 #'

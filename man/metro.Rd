@@ -5,7 +5,7 @@
 \alias{metro}
 \title{The stations of the Paris Metro}
 \format{
-A tibble with 308 rows and 11 variables:
+A tibble with 314 rows and 11 variables:
 \describe{
 \item{name}{The name of the station.}
 \item{caption}{In some cases, a station will have a caption that might
@@ -38,12 +38,12 @@ show \code{NA} values.}
 metro
 }
 \description{
-A dataset with information on all 308 Paris Metro stations as of February
-2023. Each record represents a station, describing which Metro lines are
-serviced by the station, which other connections are available, and annual
-passenger volumes. Basic location information is provided for each station in
-terms where they reside on a municipal level, and, through latitude/longitude
-coordinates.
+A dataset with information on all 314 Paris Metro stations as of June 2024.
+Each record represents a station, describing which Metro lines are serviced
+by the station, which other connections are available, and annual passenger
+volumes. Basic location information is provided for each station in terms
+of where they reside on a municipal level, and, through latitude/longitude
+coordinate values.
 
 The system has 16 lines (numbered from 1 to 14, with two additional lines:
 3bis and 7bis) and covers over 200 kilometers of track. The Metro runs on
@@ -59,31 +59,9 @@ transfer between those two systems seamlessly. The Metro also has connections
 to the Transilien rail network, tramway stations, several major train
 stations (e.g., Gare du Nord, Gare de l'Est, etc.), and many bus lines.
 }
-\section{Examples}{
-
-
-Here is a glimpse at the data available in \code{metro}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(metro)
-#> Rows: 308
-#> Columns: 11
-#> $ name               <chr> "Argentine", "Bastille", "Bérault", "Champs-Élysées~
-#> $ caption            <chr> NA, NA, NA, "Grand Palais", NA, NA, NA, NA, NA, NA,~
-#> $ lines              <chr> "1", "1, 5, 8", "1", "1, 13", "1, 2, 6", "1", "1, 4~
-#> $ connect_rer        <chr> NA, NA, NA, NA, "A", NA, "A, B, D", NA, NA, NA, "A,~
-#> $ connect_tramway    <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
-#> $ connect_transilien <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, "R", NA, NA~
-#> $ connect_other      <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, "TGV, TGV L~
-#> $ passengers         <int> 2079212, 8069243, 2106827, 1909005, 4291663, 361773~
-#> $ latitude           <dbl> 48.87528, 48.85308, 48.84528, 48.86750, 48.87389, 4~
-#> $ longitude          <dbl> 2.290000, 2.369077, 2.428333, 2.313500, 2.295000, 2~
-#> $ location           <chr> "Paris 16th, Paris 17th", "Paris 4th, Paris 11th, P~
-}\if{html}{\out{</div>}}
-}
-
 \section{Dataset ID and Badge}{
 
-DATA-9
+DATA-10
 
 \if{html}{\out{
 <div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_metro.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
@@ -100,6 +78,8 @@ Other datasets:
 \code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{films}},
+\code{\link{gibraltar}},
 \code{\link{gtcars}},
 \code{\link{illness}},
 \code{\link{nuclides}},

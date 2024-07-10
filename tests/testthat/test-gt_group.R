@@ -1,4 +1,4 @@
-test_that("The `gt_group()` function can be used to contain gt tables", {
+test_that("gt_group() can be used to contain gt tables", {
 
   # Create two different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)
@@ -42,7 +42,7 @@ test_that("The `gt_group()` function can be used to contain gt tables", {
   expect_s3_class(gt_tbls_1[["gt_tbl_options"]], "tbl_df")
 })
 
-test_that("The `grp_pull()` function can be used to extract a table from a group", {
+test_that("grp_pull() can be used to extract a table from a group", {
 
   # Create two different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)
@@ -90,7 +90,7 @@ test_that("The `grp_pull()` function can be used to extract a table from a group
   expect_equal(gt_tbl_2[["_options"]][["value"]][[7]], "#FFFFFF")
 })
 
-test_that("The `grp_add()` function can be used to add a table to a group", {
+test_that("grp_add() can be used to add a table to a group", {
 
   # Create three different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)
@@ -226,7 +226,7 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 2.99))
 })
 
-test_that("The `grp_replace()` function can be used to add a table to a group", {
+test_that("grp_replace() can be used to add a table to a group", {
 
   # Create four different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)
@@ -317,7 +317,7 @@ test_that("The `grp_replace()` function can be used to add a table to a group", 
   expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_1, gt_tbl_1, .which = 1:3))
 })
 
-test_that("The `grp_rm()` function can be used to remove a table from a group", {
+test_that("grp_rm() can be used to remove a table from a group", {
 
   # Create three different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)
@@ -373,7 +373,7 @@ test_that("The `grp_rm()` function can be used to remove a table from a group", 
   expect_equal(gt_tbl_3, gt_tbl_1_pulled)
 })
 
-test_that("The `grp_options()` function can be used to set options for a group", {
+test_that("grp_options() can be used to set options for a group", {
 
   # Create two different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)

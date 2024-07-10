@@ -27,9 +27,9 @@
 #' @description
 #'
 #' Wherever there is missing data (i.e., `NA` values) customizable content may
-#' present better than the standard `NA` text that would otherwise appear. The
-#' `sub_missing()` function allows for this replacement through its
-#' `missing_text` argument (where an em dash serves as the default).
+#' present better than the standard `NA` text that would otherwise appear.
+#' `sub_missing()` allows for this replacement through its `missing_text`
+#' argument (where an em dash serves as the default).
 #'
 #' @inheritParams fmt_number
 #'
@@ -38,10 +38,9 @@
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which substitution operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
+#'   be a series of column names provided in `c()`, a vector of column indices,
+#'   or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]).
 #'
 #' @param rows *Rows to target*
 #'
@@ -50,19 +49,19 @@
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   supply a vector of row IDs within `c()`, a vector of row indices, or a
+#'   select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]. We can also use
+#'   expressions to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param missing_text *Replacement text for `NA` values*
 #'
 #'   `scalar<character>` // *default:* `"---"`
 #'
 #'   The text to be used in place of `NA` values in the rendered table. We can
-#'   optionally use the [md()] and [html()] functions to style the text as
-#'   Markdown or to retain HTML elements in the text.
+#'   optionally use [md()] or [html()] to style the text as Markdown or to
+#'   retain HTML elements in the text.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -136,7 +135,6 @@
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
 #'
-#' @import rlang
 #' @export
 sub_missing <- function(
     data,
@@ -201,7 +199,6 @@ sub_missing <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @keywords internal
 #' @export
 fmt_missing <- function(
@@ -212,9 +209,9 @@ fmt_missing <- function(
 ) {
 
   cli::cli_warn(c(
-    "Since gt v0.6.0 the `fmt_missing()` function is deprecated and will
+    "Since gt v0.6.0  {.fn fmt_missing} is deprecated and will
     soon be removed.",
-    "*" = "Use the `sub_missing()` function instead."
+    "i" = "Use {.fn sub_missing} instead."
   ),
   .frequency = "regularly",
   .frequency_id = "fmt_missing_fn_deprecation"
@@ -233,40 +230,17 @@ fmt_missing <- function(
 #' @description
 #'
 #' Wherever there is numerical data that are zero in value, replacement text may
-#' be better for explanatory purposes. The `sub_zero()` function allows for this
-#' replacement through its `zero_text` argument.
+#' be better for explanatory purposes. `sub_zero()` allows for this replacement
+#' through its `zero_text` argument.
 #'
-#' @inheritParams fmt_number
-#'
-#' @param columns *Columns to target*
-#'
-#'   `<column-targeting expression>` // *default:* `everything()`
-#'
-#'   The columns to which substitution operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#'
-#' @param rows *Rows to target*
-#'
-#'   `<row-targeting expression>` // *default:* `everything()`
-#'
-#'   In conjunction with `columns`, we can specify which of their rows should
-#'   form a constraint for targeting operations. The default [everything()]
-#'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#' @inheritParams sub_missing
 #'
 #' @param zero_text *Replacement text for zero values*
 #'
 #'   `scalar<character>` // *default:* `"nil"`
 #'
 #'   The text to be used in place of zero values in the rendered table. We can
-#'   optionally use the [md()] and [html()] functions to style the text as
+#'   optionally use [md()] or [html()] to style the text as
 #'   Markdown or to retain HTML elements in the text.
 #'
 #' @return An object of class `gt_tbl`.
@@ -341,7 +315,6 @@ fmt_missing <- function(
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
 #'
-#' @import rlang
 #' @export
 sub_zero <- function(
     data,
@@ -387,39 +360,15 @@ sub_zero <- function(
 #' @description
 #'
 #' Wherever there is numerical data that are very small in value, replacement
-#' text may be better for explanatory purposes. The `sub_small_vals()` function
-#' allows for this replacement through specification of a `threshold`, a
-#' `small_pattern`, and the sign of the values to be considered. The
-#' substitution will occur for those values found to be between `0` and the
-#' threshold value. This is possible for small positive and small negative
-#' values (this can be explicitly set by the `sign` option). Note that the
-#' interval does not include the `0` or the `threshold` value. Should you need
-#' to include zero values, use the [sub_zero()] function.
+#' text may be better for explanatory purposes. `sub_small_vals()` allows for
+#' this replacement through specification of a `threshold`, a `small_pattern`,
+#' and the sign of the values to be considered. The substitution will occur for
+#' those values found to be between `0` and the threshold value. This is
+#' possible for small positive and small negative values (this can be explicitly
+#' set by the `sign` option). Note that the interval does not include the `0` or
+#' the `threshold` value. Should you need to include zero values, use [sub_zero()].
 #'
-#' @inheritParams fmt_number
-#'
-#' @param columns *Columns to target*
-#'
-#'   `<column-targeting expression>` // *default:* `everything()`
-#'
-#'   The columns to which substitution operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#'
-#' @param rows *Rows to target*
-#'
-#'   `<row-targeting expression>` // *default:* `everything()`
-#'
-#'   In conjunction with `columns`, we can specify which of their rows should
-#'   form a constraint for targeting operations. The default [everything()]
-#'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#' @inheritParams sub_missing
 #'
 #' @param threshold *Threshold value*
 #'
@@ -551,7 +500,6 @@ sub_zero <- function(
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
 #'
-#' @import rlang
 #' @export
 sub_small_vals <- function(
     data,
@@ -667,35 +615,11 @@ sub_small_vals <- function(
 #' @description
 #'
 #' Wherever there are numerical data that are very large in value, replacement
-#' text may be better for explanatory purposes. The `sub_large_vals()` function
-#' allows for this replacement through specification of a `threshold`, a
-#' `large_pattern`, and the sign (positive or negative) of the values to be
-#' considered.
+#' text may be better for explanatory purposes. `sub_large_vals()` allows for
+#' this replacement through specification of a `threshold`, a `large_pattern`,
+#' and the sign (positive or negative) of the values to be considered.
 #'
-#' @inheritParams fmt_number
-#'
-#' @param columns *Columns to target*
-#'
-#'   `<column-targeting expression>` // *default:* `everything()`
-#'
-#'   The columns to which substitution operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#'
-#' @param rows *Rows to target*
-#'
-#'   `<row-targeting expression>` // *default:* `everything()`
-#'
-#'   In conjunction with `columns`, we can specify which of their rows should
-#'   form a constraint for targeting operations. The default [everything()]
-#'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#' @inheritParams sub_missing
 #'
 #' @param threshold *Threshold value*
 #'
@@ -828,7 +752,6 @@ sub_small_vals <- function(
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
 #'
-#' @import rlang
 #' @export
 sub_large_vals <- function(
     data,
@@ -954,34 +877,11 @@ check_sub_fn_sign <- function(sign, call = rlang::caller_env()) {
 #'
 #' @description
 #'
-#' Should you need to replace specific cell values with custom text, the
-#' `sub_values()` function can be good choice. We can target cells for
-#' replacement though value, regex, and custom matching rules.
+#' Should you need to replace specific cell values with custom text,
+#' `sub_values()` can be good choice. We can target cells for replacement
+#' through value, regex, and custom matching rules.
 #'
-#' @inheritParams fmt_number
-#'
-#' @param columns *Columns to target*
-#'
-#'   `<column-targeting expression>` // *default:* `everything()`
-#'
-#'   The columns to which substitution operations are constrained. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#'
-#' @param rows *Rows to target*
-#'
-#'   `<row-targeting expression>` // *default:* `everything()`
-#'
-#'   In conjunction with `columns`, we can specify which of their rows should
-#'   form a constraint for targeting operations. The default [everything()]
-#'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row IDs within [c()], a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#' @inheritParams sub_missing
 #'
 #' @param values *Values to match on*
 #'
@@ -1136,7 +1036,6 @@ check_sub_fn_sign <- function(sign, call = rlang::caller_env()) {
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
 #'
-#' @import rlang
 #' @export
 sub_values <- function(
     data,

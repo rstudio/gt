@@ -44,18 +44,17 @@ of the column series.}
 An object of class \code{gt_tbl}.
 }
 \description{
-We can add new columns to a table with the \code{cols_add()} function and it works
-quite a bit like the \strong{dplyr} \code{mutate()} function. The idea is that you
-supply name-value pairs where the name is the new column name and the value
-part describes the data that will go into the column. The latter can:
-(1) be a vector where the length of the number of rows in the data table,
-(2) be a single value (which will be repeated all the way down), or (3)
-involve other columns in the table (as they represent vectors of the correct
-length). The new columns are added to the end of the column series by default
-but can instead be added internally by using either the \code{.before} or \code{.after}
-arguments. If entirely empty (i.e., all \code{NA}) columns need to be added, you
-can use any of the \code{NA} types (e.g., \code{NA}, \code{NA_character_}, \code{NA_real_}, etc.)
-for such columns.
+We can add new columns to a table with \code{cols_add()} and it works quite a bit
+like \code{dplyr::mutate()} does. The idea is that you supply name-value pairs
+where the name is the new column name and the value part describes the data
+that will go into the column. The latter can: (1) be a vector where the
+length of the number of rows in the data table, (2) be a single value
+(which will be repeated all the way down), or (3) involve other columns in
+the table (as they represent vectors of the correct length). The new columns
+are added to the end of the column series by default but can instead be added
+internally by using either the \code{.before} or \code{.after} arguments. If entirely
+empty (i.e., all \code{NA}) columns need to be added, you can use any of the \code{NA}
+types (e.g., \code{NA}, \code{NA_character_}, \code{NA_real_}, etc.) for such columns.
 }
 \section{Targeting the column for insertion with \code{.before} or \code{.after}}{
 
@@ -129,8 +128,7 @@ labeling and adjustments to column widths with \code{\link[=cols_label]{cols_lab
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(name, population_2021, land_area_km2) |>
   dplyr::filter(population_2021 > 100000) |>
-  dplyr::arrange(desc(population_2021)) |>
-  dplyr::slice_head(n = 10) |>
+  dplyr::slice_max(population_2021, n = 10) |>
   gt() |>
   cols_add(
     land_area = land_area_km2 / 2.58998811,
