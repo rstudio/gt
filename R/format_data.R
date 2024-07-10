@@ -13850,6 +13850,66 @@ fmt_auto <- function(
   data
 }
 
+#' Format ggplot cells
+#'
+#' It's possible to include \pkg{ggplot2} plots within a list column of the
+#' input table data. The common pattern toward obtaining these plots is through
+#' mutation of a list column containing all the `data` required for a plot
+#' (e.g., `<data> %>% dplyr::group_by(<var>) %>% tidyr::nest(.key = plot) %>%
+#' dplyr::mutate(plot = purrr::map(plot, <ggplot code>))`). While \pkg{gt} will
+#' automatically format columns containing \pkg{ggplot2} plots, using the
+#' `fmt_ggplot()` function allows us to specify specific `rows` and set options
+#' for the plots' `height` and `aspect_ratio`.
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
+#'
+#' @inheritParams fmt_number
+#' @inheritParams ggplot_image
+#' @return an object of class `gt_tbl`.
+#' @export
+fmt_ggplot <- fmt_gg <- function(data,
+                                 columns,
+                                 rows = NULL,
+                                 height = 100,
+                                 aspect_ratio = 1.0) {
+
+  # Capture expression in `rows`
+  rows <- rlang::enquo(rows)
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions (as a function list) to `fmt()`
+  fmt(data = data,
+      columns = columns,
+      rows = !!rows,
+      fns = list(
+        html = function(x) {
+
+          map(
+            x,
+            ggplot_image,
+            height = height,
+            aspect_ratio = aspect_ratio
+          )
+
+        },
+        latex = function(x) {
+
+          stop("This formatter is not yet implemented for LaTeX output.",
+               call. = FALSE)
+        },
+        default = function(x) {
+
+          stop("This formatter is not yet implemented.",
+               call. = FALSE)
+        }
+      ))
+
+}
+
 #' Set a column format with a formatter function
 #'
 #' @description
