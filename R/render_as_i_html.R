@@ -187,6 +187,8 @@ render_as_ihtml <- function(data, id) {
   column_labels_border_bottom_style <- opt_val(data = data, option = "column_labels_border_bottom_style")
   column_labels_border_bottom_width <- opt_val(data = data, option = "column_labels_border_bottom_width")
   column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
+  # Part of #1307
+  borderless_borders <- opt_val(data = data, option = "table_body_hlines_style") == "none"
 
   emoji_symbol_fonts <-
     c(
@@ -588,7 +590,8 @@ render_as_ihtml <- function(data, id) {
       highlight = use_highlight,
       outlined = FALSE,
       bordered = FALSE,
-      borderless = FALSE,
+      # equivalent to opt_table_lines(extent = "none")
+      borderless = borderless_borders,
       striped = use_row_striping,
       compact = use_compact_mode,
       wrap = use_text_wrapping,
