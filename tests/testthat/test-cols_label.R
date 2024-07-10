@@ -37,11 +37,10 @@ test_that("cols_label() correctly", {
 
   # Expect that the values for the column labels are set
   # correctly in `col_labels`
-  tbl_html %>%
-    .$`_boxh` %>%
-    .$column_label %>%
-    unlist() %>%
-    expect_equal(c("col_a", "col_b", "col_c", "col_d"))
+  expect_equal(
+    unlist(tbl_html$`_boxhead`$column_label),
+    c("col_a", "col_b", "col_c", "col_d")
+  )
 
   # Expect that the column labels are set
   tbl_html %>%
@@ -58,18 +57,14 @@ test_that("cols_label() correctly", {
 
   # Expect the original column names for `tbl` as values for
   # the column keys and for the column labels
-  tbl_html %>%
-    .$`_boxh` %>%
-    .$var %>%
-    unlist() %>%
-    expect_equal(colnames(tbl))
-
-  tbl_html %>%
-    .$`_boxh` %>%
-    .$column_label %>%
-    unlist() %>%
-    expect_equal(colnames(tbl))
-
+  expect_equal(
+    unlist(tbl_html$`_boxhead`$column_label),
+    colnames(tbl)
+  )
+  expect_equal(
+    unlist(tbl_html$`_boxhead`$var),
+    colnames(tbl)
+  )
   # Expect that the column labels are set as the column names
   tbl_html %>%
     render_as_html() %>%
@@ -92,11 +87,10 @@ test_that("cols_label() correctly", {
 
   # Expect that the values for the column labels are set
   # correctly in `col_labels`
-  tbl_html %>%
-    .$`_boxh` %>%
-    .$column_label %>%
-    unlist() %>%
-    expect_equal(c("col_a", "col_b", "col_c", "col_d"))
+  expect_equal(
+    unlist(tbl_html$`_boxhead`$column_label),
+    c("col_a", "col_b", "col_c", "col_d")
+  )
 
   # Expect that the column labels are set
   tbl_html %>%
