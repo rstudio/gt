@@ -339,9 +339,14 @@ create_heading_component_l <- function(data) {
     subtitle_row <- ""
   }
 
-  paste_between(
-    paste0(title_row, subtitle_row),
-    x_2 = c("\\caption*{\n", "\n} \\\\ \n")
+  paste0(
+    paste_between(
+      paste0(title_row, subtitle_row),
+      x_2 = c("\\caption*{\n", "\n}")
+    ),
+    ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+           " \\\\ \n",
+           " \n")
   )
 }
 
