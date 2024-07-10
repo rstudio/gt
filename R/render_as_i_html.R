@@ -187,8 +187,17 @@ render_as_ihtml <- function(data, id) {
   column_labels_border_bottom_style <- opt_val(data = data, option = "column_labels_border_bottom_style")
   column_labels_border_bottom_width <- opt_val(data = data, option = "column_labels_border_bottom_width")
   column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
+  # Don't allow NA
+  column_labels_background_color = opt_val(data = data, option = "column_labels_background_color")
+  if (is.na(column_labels_background_color)) {
+    column_labels_background_color <- "transparent"
+  }
   # Part of #1307
   borderless_borders <- opt_val(data = data, option = "table_body_hlines_style") == "none"
+
+  column_labels_font_weight <- opt_val(data = data, option = "column_labels_font_weight")
+  row_group_font_weight = opt_val(data = data, "row_group_font_weight")
+  table_body_font_weight = opt_val(data = data, "table_font_weight")
 
   emoji_symbol_fonts <-
     c(
@@ -275,7 +284,6 @@ render_as_ihtml <- function(data, id) {
           align = column_alignments[x],
           # TODO support `summary_rows()` via `aggregate` #1359
           # TODO support `grand_summary_rows()` via `footer`. #1359
-          headerStyle = list(`font-weight` = "normal"),
           width = if (is.null(column_widths) || is.na(column_widths[x])) NULL else column_widths[x],
           html = TRUE
         )
@@ -492,10 +500,12 @@ render_as_ihtml <- function(data, id) {
             html = TRUE,
             align = NULL,
             headerVAlign = NULL,
+            # TODO #194
             sticky = NULL,
             headerClass = NULL,
             headerStyle = list(
               fontWeight = "normal",
+              backgroundColor = column_labels_background_color,
               borderBottomStyle = column_labels_border_bottom_style,
               borderBottomWidth = column_labels_border_bottom_width,
               borderBottomColor = column_labels_border_bottom_color,
@@ -529,20 +539,38 @@ render_as_ihtml <- function(data, id) {
         borderTopWidth = column_labels_border_top_width,
         borderTopColor = column_labels_border_top_color
       ),
+      # cells_column_labels()
       headerStyle = list(
+        fontWeight = column_labels_font_weight,
+        # causes issues
+        backgroundColor = column_labels_background_color,
         borderBottomStyle = column_labels_border_bottom_style,
         borderBottomWidth = column_labels_border_bottom_width,
         borderBottomColor = column_labels_border_bottom_color
       ),
       # individually defined for the margins left+right
-      groupHeaderStyle = NULL,
+      # cells_spanner_labels() styling
+      groupHeaderStyle =  list(
+        fontWeight = column_labels_font_weight,
+        # causes issues
+        backgroundColor = column_labels_background_color,
+        borderBottomStyle = column_labels_border_bottom_style,
+        borderBottomWidth = column_labels_border_bottom_width,
+        borderBottomColor = column_labels_border_bottom_color
+      ),
       tableBodyStyle = NULL,
-      rowGroupStyle = NULL,
+      # stub styling
+      rowGroupStyle = list(
+        fontWeight = row_group_font_weight
+      ),
       rowStyle = NULL,
       rowStripedStyle = NULL,
       rowHighlightStyle = NULL,
       rowSelectedStyle = NULL,
-      cellStyle = NULL,
+      # cells_body styling
+      cellStyle = list(
+        fontWeight = table_body_font_weight
+      ),
       footerStyle = NULL,
       inputStyle = NULL,
       filterInputStyle = NULL,
