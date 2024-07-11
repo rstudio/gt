@@ -182,15 +182,24 @@ render_as_ihtml <- function(data, id) {
   column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
   # Don't allow NA
   column_labels_background_color = opt_val(data = data, option = "column_labels_background_color")
+  # Apply stub font weight to
+  stub_font_weight <- opt_val(data = data, option = "stub_font_weight")
+
   if (is.na(column_labels_background_color)) {
+    # apply all column labels formatting to both heading + groupCol styling (nothing specific for spanners styling in gt?)
     column_labels_background_color <- "transparent"
   }
   # Part of #1307
   borderless_borders <- opt_val(data = data, option = "table_body_hlines_style") == "none"
 
   column_labels_font_weight <- opt_val(data = data, option = "column_labels_font_weight")
+  # Apply font weight to groupname_col title
   row_group_font_weight = opt_val(data = data, "row_group_font_weight")
   table_body_font_weight = opt_val(data = data, "table_font_weight")
+  # for row names + summary label
+  stub_font_weight <- opt_val(data = data, "stub_font_weight")
+  # #1693 table font size
+  table_font_size <- opt_val(data = data, "table_font_size")
 
   emoji_symbol_fonts <-
     c(
@@ -212,6 +221,9 @@ render_as_ihtml <- function(data, id) {
     # Create colDef row name with special ".rownames" from reactable.
     row_name_col_def <- list(reactable::colDef(
       name = rowname_label,
+      style = list(
+        fontWeight = stub_font_weight
+      )
       # TODO pass on other attributes of row names column if necessary.
     ))
     names(row_name_col_def) <- ".rownames"
@@ -536,7 +548,9 @@ render_as_ihtml <- function(data, id) {
       highlightColor = NULL,
       cellPadding = NULL,
       style = list(
-        fontFamily = font_family_str
+        `font-family` = font_family_str,
+        #1693
+        fontSize = table_font_size
       ),
       tableStyle = list(
         borderTopStyle = column_labels_border_top_style,

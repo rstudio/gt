@@ -6,8 +6,9 @@
 
 * Interactive tables now respect more styling options. 
 
-* `column_labels.background.color`, `row_group.background.color`, `row_group.font.weight`, `table_body.hlines.style`,
-  `table.font.weight`.
+  * `column_labels.background.color`, `row_group.background.color`, `row_group.font.weight`, `table_body.hlines.style`,
+     `table.font.weight`, `table.font.size`, `stub.font.weight` (#1693).
+
 
 # gt 0.11.0
 
