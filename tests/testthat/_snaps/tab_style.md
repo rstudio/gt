@@ -1,4 +1,4 @@
-# tab_style errors if problems occur
+# tab_style() errors if locations can't be resolved
 
     Code
       data %>% tab_style(style = list(cell_fill(color = "green"), cell_text(color = "white")),

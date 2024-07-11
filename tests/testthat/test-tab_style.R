@@ -43,15 +43,7 @@ data <-
       ~sum(., na.rm = TRUE))
   )
 
-# Function to skip tests if Suggested packages not available on system
-check_suggests <- function() {
-  skip_if_not_installed("rvest")
-}
-
 test_that("A gt table can store the correct style statements", {
-
-  # Check that specific suggested packages are available
-  check_suggests()
 
   # Apply a `lightgray` background color to the columns
   # and stub cells
@@ -64,21 +56,21 @@ test_that("A gt table can store the correct style statements", {
         cells_stub(rows = TRUE))
     )
 
+  styles_tbl <- dt_styles_get(data = tbl_html)
   # Expect that the internal `styles_df` data frame will have
   # its `locname` column entirely populated with `cells_column_labels`
   # and `stub`
-  dt_styles_get(data = tbl_html) %>%
-    dplyr::pull(locname) %>%
-    unique() %>%
-    expect_equal(c("columns_columns", "stub"))
+  expect_setequal(styles_tbl$locname, c("columns_columns", "stub"))
 
   # Expect that the internal `styles_df` data frame will have
   # its `cell_fill:color` property entirely populated with `lightgray`
-  dt_styles_get(data = tbl_html) %>%
-    .$styles %>%
-    vapply(function(x) x[1]$cell_fill$color, character(1L)) %>%
-    unique() %>%
-    expect_equal("#D3D3D3")
+  expect_setequal(
+    vapply(styles_tbl$styles, function(x) x[1]$cell_fill$color, character(1L)),
+    "#D3D3D3"
+  )
+})
+
+test_that("tab_style() works for styling a single cell.", {
 
   # Apply a `steelblue` background color with white text to a
   # single stub cell
@@ -91,27 +83,24 @@ test_that("A gt table can store the correct style statements", {
       ),
       locations = cells_stub(rows = "Merc 240D")
     )
+  styles_tbl <- dt_styles_get(data = tbl_html)
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  dt_styles_get(data = tbl_html) %>%
-    nrow() %>%
-    expect_equal(1)
+  expect_1_row(styles_tbl)
 
   # Expect certain values for inside the single `styles` list
-  dt_styles_get(data = tbl_html) %>%
-    .$styles %>%
-    .[[1]] %>%
-    .$cell_fill %>%
-    .$color %>%
-    expect_equal("#4682B4")
+  expect_equal(
+    styles_tbl$styles[[1]]$cell_fill$color,
+    "#4682B4"
+  )
+  expect_equal(
+    styles_tbl$styles[[1]]$cell_text$color,
+    "#FFFFFF"
+  )
+})
 
-  dt_styles_get(data = tbl_html) %>%
-    .$styles %>%
-    .[[1]] %>%
-    .$cell_text %>%
-    .$color %>%
-    expect_equal("#FFFFFF")
+test_that("A table subtitle can be left-aligned", {
 
   # Apply left-alignment to the table title
   tbl_html <-
@@ -121,17 +110,18 @@ test_that("A gt table can store the correct style statements", {
       locations = cells_title(groups = "title")
     )
 
+  styles_tbl <- dt_styles_get(data = tbl_html)
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  dt_styles_get(data = tbl_html) %>%
-    nrow() %>%
-    expect_equal(1)
+  expect_1_row(styles_tbl)
 
   # Expect a specific value inside the single `styles` list
-  result <- dt_styles_get(data = tbl_html)$styles[[1]]
+  result <- styles_tbl$styles[[1]]
   expect_equal(result$cell_text$align, "left")
+})
 
-  # Apply left-alignment to the table subtitle
+test_that("A table subtitle can be left-aligned", {
+
   tbl_html <-
     data %>%
     tab_style(
@@ -139,13 +129,16 @@ test_that("A gt table can store the correct style statements", {
       locations = cells_title(groups = "subtitle")
     )
 
+  styles_tbl <- dt_styles_get(data = tbl_html)
   # Expect certain values for inside the single `styles` list
-  dt_styles_get(data = tbl_html) %>%
-    expect_1_row()
+  expect_1_row(styles_tbl)
 
   # Expect a specific value inside the single `styles` list
-  result <- dt_styles_get(data = tbl_html)$styles[[1]]
+  result <- styles_tbl$styles[[1]]
   expect_equal(result$cell_text$align, "left")
+})
+
+test_that("A gt table can have a background in the summary.", {
 
   # Apply a green background with white text to a single cell in
   # a group summary section
@@ -161,14 +154,14 @@ test_that("A gt table can store the correct style statements", {
         columns = "hp", rows = 2)
     )
 
+  styles_tbl <- dt_styles_get(data = tbl_html)
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  dt_styles_get(data = tbl_html) %>%
-    nrow() %>%
-    expect_equal(1)
+  expect_1_row(styles_tbl)
+  expect_equal(styles_tbl$locname, "summary_cells")
 })
 
-test_that("tab_style errors if problems occur", {
+test_that("tab_style() errors if locations can't be resolved", {
   # Expect an error if columns couldn't be resolved
   expect_snapshot(
     error = TRUE,
@@ -293,8 +286,7 @@ test_that("tab style works with grand_summary", {
   # Expect that the internal `styles_df` data frame will have
   # a single row
   dt_styles_get(data = tbl_html) %>%
-    nrow() %>%
-    expect_equal(1)
+    expect_1_row()
 })
 
 test_that("tab_style() works with column spanners", {
@@ -411,29 +403,26 @@ test_that("tab_style() works with a single cell", {
       locations = cells_body(columns = c(disp, hp), rows = "Mazda RX4")
     )
 
+  styles_tbl <- dt_styles_get(data = tbl_html)
+
   # Expect that the internal `styles_df` data frame will have two rows
-  dt_styles_get(data = tbl_html) %>%
-    nrow() %>%
-    expect_equal(2)
+  expect_equal(
+    nrow(styles_tbl),
+    2
+  )
 
   # Expect certain values for each of the columns in the two rows
   # of the `styles_df` data frame
-  dt_styles_get(data = tbl_html) %>%
-    .[1, ] %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(c(
-      "data", NA_character_, "disp", "5", "1", NA_character_, "#FFFF00")
-    )
-
-  dt_styles_get(data = tbl_html) %>%
-    .[2, ] %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(c(
-      "data", NA_character_, "hp", "5", "1", NA_character_, "#FFFF00")
-    )
-
+  expect_equal(
+    unlist(styles_tbl[1, ]),
+    c("data", NA_character_, "disp", "5", "1", NA_character_, "#FFFF00"),
+    ignore_attr = "names"
+  )
+  expect_equal(
+    unlist(styles_tbl[2, ]),
+    c("data", NA_character_, "hp", "5", "1", NA_character_, "#FFFF00"),
+    ignore_attr = "names"
+  )
 
 })
 
