@@ -400,6 +400,26 @@ test_that("Row groups can be successfully generated with `tab_row_group()", {
   )
 })
 
+test_that("tab_row_group() errors when named rows are supplied (#1535)", {
+
+  # create a gt tbl with no rows
+  gt_tbl <- mtcars_short %>% gt()
+  # create a gt tbl with rows
+  gt_tbl_rows <- mtcars_short %>% gt(rownames_to_stub = TRUE)
+
+  expect_no_error(gt_tbl_rows %>% tab_row_group("Mazda", c("Mazda RX4", "Mazda RX4 Wag")))
+
+  # expect a special error if the gt
+  expect_snapshot(error = TRUE, {
+    gt_tbl %>% tab_row_group("Mazda", c("Mazda RX4", "Mazda RX4 Wag"))
+  })
+  # regular resolver error if wrong row
+  expect_error(
+    gt_tbl_rows %>% tab_row_group("Mazda", c("Mazda RX4", "Mazda not present")),
+    "Mazda not present"
+  )
+})
+
 test_that("A default row group name can be modified with `tab_options()`", {
 
   # Check that specific suggested packages are available
