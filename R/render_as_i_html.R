@@ -330,6 +330,9 @@ render_as_ihtml <- function(data, id) {
       group_col_defs[[i]] <-
         reactable::colDef(
           name = group_label,
+          style = list(
+            `font-weight` = row_group_font_weight
+          ),
           # The total number of rows is wrong in colGroup, possibly due to the JS fn
           grouped = grp_fn,
           # FIXME Should groups be sticky? (or provide a way to do this)
@@ -560,7 +563,6 @@ render_as_ihtml <- function(data, id) {
       # cells_column_labels()
       headerStyle = list(
         fontWeight = column_labels_font_weight,
-        # causes issues
         backgroundColor = column_labels_background_color,
         borderBottomStyle = column_labels_border_bottom_style,
         borderBottomWidth = column_labels_border_bottom_width,
@@ -570,17 +572,16 @@ render_as_ihtml <- function(data, id) {
       # cells_spanner_labels() styling
       groupHeaderStyle =  list(
         fontWeight = column_labels_font_weight,
-        # causes issues
         backgroundColor = column_labels_background_color,
         borderBottomStyle = column_labels_border_bottom_style,
         borderBottomWidth = column_labels_border_bottom_width,
         borderBottomColor = column_labels_border_bottom_color
       ),
       tableBodyStyle = NULL,
-      # stub styling
-      rowGroupStyle = list(
-        fontWeight = row_group_font_weight
-      ),
+      # stub styling?
+      # rowGroupStyle = list(
+      #   fontWeight = row_group_font_weight
+      # ),
       rowStyle = NULL,
       rowStripedStyle = NULL,
       rowHighlightStyle = NULL,
