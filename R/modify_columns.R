@@ -4003,7 +4003,7 @@ cols_merge <- function(
       data <-
         cols_hide(
           data = data,
-          columns = hide_columns_from_supplied
+          columns = dplyr::all_of(hide_columns_from_supplied)
         )
     }
   }
@@ -4201,7 +4201,7 @@ cols_merge_uncert <- function(
     data <-
       cols_hide(
         data = data,
-        columns = col_uncert
+        columns = dplyr::all_of(col_uncert)
       )
   }
 
@@ -4412,7 +4412,7 @@ cols_merge_range <- function(
     data <-
       cols_hide(
         data = data,
-        columns = col_end
+        columns = dplyr::all_of(col_end)
       )
   }
 
@@ -4638,7 +4638,7 @@ cols_merge_n_pct <- function(
     data <-
       cols_hide(
         data = data,
-        columns = col_pct
+        columns = dplyr::all_of(col_pct)
       )
   }
 
