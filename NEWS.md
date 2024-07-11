@@ -1,5 +1,7 @@
 # gt (development version)
 
+* `tab_row_group()` give a more precise error message when `rows` can't be resolved correctly (@olivroy, #1535).
+
 # gt 0.11.0
 
 ## New features
