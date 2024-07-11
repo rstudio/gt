@@ -437,13 +437,6 @@ test_that("tab_style() works with a single cell", {
 
 })
 
-test_that("tab_row_group warns when others_label is not empty", {
-  # Check that `tab_row_group(others_label = ...)` still works but
-  # issues a warning
-  expect_snapshot(a_gt <- data %>% tab_row_group(others_label = "Others1"))
-
-})
-
 test_that("Using fonts in `cell_text()` works", {
 
   # Prepare a small gt table for all tests

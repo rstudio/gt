@@ -82,16 +82,6 @@
       Caused by error in `cells_body()`:
       ! Row `Mazda RX7` does not exist in the data.
 
-# tab_row_group warns when others_label is not empty
-
-    Code
-      a_gt <- data %>% tab_row_group(others_label = "Others1")
-    Condition
-      Warning:
-      Since gt v0.3.0 the `others_label` argument has been deprecated.
-      * Use `tab_options(row_group.default_label = <label>)` to set this label.
-      This warning is displayed once every 8 hours.
-
 # Using fonts in `from_column()` works within `cell_*()` fns
 
     Code
