@@ -113,16 +113,9 @@ render_as_ihtml <- function(data, id) {
       # With data$`_substitutions`
       row_names <- dplyr::coalesce(row_names, " ")
       attr(data_tbl, "row.names") <- row_names
-      row_name_col_def <- list(reactable::colDef(
-          name = rowname_label
-          # TODO pass on other attributes of row names column if necessary.
-        ))
-      # Create colDef row name with special ".rownames" from reactable.
-      names(row_name_col_def) <- ".rownames"
-
+    } else {
+      rownames_to_stub <- FALSE
     }
-  } else {
-    row_name_col_def <- NULL
   }
 
   # Obtain column label attributes
@@ -214,6 +207,17 @@ render_as_ihtml <- function(data, id) {
     )
 
   if (table_width == "auto") table_width <- NULL
+
+  if (rownames_to_stub) {
+    # Create colDef row name with special ".rownames" from reactable.
+    row_name_col_def <- list(reactable::colDef(
+      name = rowname_label,
+      # TODO pass on other attributes of row names column if necessary.
+    ))
+    names(row_name_col_def) <- ".rownames"
+  } else {
+    row_name_col_def <- NULL
+  }
 
   #
   # Determine which columns will undergo some formatting
