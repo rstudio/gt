@@ -110,12 +110,12 @@
       rm_spanners(t_sp, "span2")
     Condition
       Error in `rm_spanners()`:
-      ! Spanner `span2` does not exist in the data.
+      ! Spanner "span2" does not exist in the data.
     Code
       rm_spanners(t_sp, c("span1", "span2", "span3"))
     Condition
       Error in `rm_spanners()`:
-      ! Spanners `span2` and `span3` do not exist in the data.
+      ! Spanners "span2" and "span3" do not exist in the data.
 
 # Table footnotes can be removed using `rm_footnotes()`
 
