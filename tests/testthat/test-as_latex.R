@@ -44,7 +44,7 @@ test_that("Table width correctly output in LaTeX using tabular*", {
   # Test specification of a table width in pixels
   gt_latex_width_2 <-
     gt(exibble) %>%
-    tab_options(table.width = '600px', latex.use.longtable = FALSE) %>%
+    tab_options(table.width = "600px", latex.use.longtable = FALSE) %>%
     as_latex()
 
   expect_match(gt_latex_width_2, "\\\\begin\\{tabular\\*\\}\\{450pt\\}\\{@\\{\\\\extracolsep\\{\\\\fill\\}\\}")
