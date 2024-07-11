@@ -160,70 +160,55 @@ test_that("A gt table can have a background in the summary.", {
   expect_1_row(styles_tbl)
   expect_equal(styles_tbl$locname, "summary_cells")
 })
-
 test_that("tab_style() errors if locations can't be resolved", {
-  # Expect an error if columns couldn't be resolved
-  expect_snapshot(
-    error = TRUE,
-    data %>%
-      tab_style(
-        style = list(
-          cell_fill(color = "green"),
-          cell_text(color = "white")
-        ),
-        locations = cells_summary(
-          groups = "Mercs",
-          columns = starts_with("x"),
-          rows = 2
-        )
+  expect_snapshot(error = TRUE, {
+    # Expect an error if columns couldn't be resolved
+    tab_style(
+      data,
+      style = list(
+        cell_fill(color = "green"),
+        cell_text(color = "white")
+      ),
+      locations = cells_summary(
+        groups = "Mercs",
+        columns = starts_with("x"),
+        rows = 2
       )
-  )
+    )
+    # Expect an error if rows couldn't be resolved
+    tab_style(
+      data,
+      style = list(
+        cell_fill(color = "green"),
+        cell_text(color = "white")
+      ),
+      locations = cells_summary(
+        groups = "Mercs",
+        columns = starts_with("m"),
+        rows = starts_with("x")
+      )
+    )
 
-  # Expect an error if rows couldn't be resolved
-  expect_snapshot(
-    error = TRUE,
-    data %>%
-      tab_style(
-        style = list(
-          cell_fill(color = "green"),
-          cell_text(color = "white")
-        ),
-        locations = cells_summary(
-          groups = "Mercs",
-          columns = starts_with("m"),
-          rows = starts_with("x")
-        )
-      )
-  )
+    # Expect an error if column spanner couldn't be resolved
+    tab_style(
+      data,
+      style = list(
+        cell_fill(color = "green"),
+        cell_text(color = "white")
+      ),
+      locations = cells_column_labels(`non existent`)
+    )
 
-  # Expect an error if column spanner couldn't be resolved
-  expect_snapshot(
-    error = TRUE,
-    data %>%
-      tab_style(
-        style = list(
-          cell_fill(color = "green"),
-          cell_text(color = "white")
-        ),
-        locations = cells_column_labels(
-          `non existent`
-        )
-      )
-  )
-  # Expect an error if column spanner couldn't be resolved
-  expect_snapshot(
-    error = TRUE,
-    data %>%
-      tab_style(
-        style = list(
-          cell_fill(color = "green"),
-          cell_text(color = "white")
-        ),
-        locations = cells_column_spanners(
-          2
-        )
-      )
-  )
+    # Expect an error if column spanner couldn't be resolved
+    tab_style(
+      data,
+      style = list(
+        cell_fill(color = "green"),
+        cell_text(color = "white")
+      ),
+      locations = cells_column_spanners(2)
+    )
+  })
 })
 
 test_that("tab style works with grand_summary", {
