@@ -1334,7 +1334,7 @@ derive_table_width_statement_l <- function(data) {
 
   # Bookends are not required if a table width is not specified
   # of if using floating table
-  if (table_width == 'auto' |
+  if (table_width == 'auto' ||
       !dt_options_get_value(data = data, option = "latex_use_longtable")) {
 
     statement <- ''
