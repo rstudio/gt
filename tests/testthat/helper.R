@@ -50,6 +50,31 @@ expect_match_html <- function(object,
   }
 }
 
+
+# shortcut for expect_match(render_as_html(object), regexp)
+expect_no_match_html <- function(object,
+                              regexp,
+                              perl = FALSE,
+                              fixed = FALSE,
+                              ...,
+                              all = TRUE,
+                              info = NULL,
+                              label = NULL) {
+  rendered <- render_as_html(object)
+  for (i in seq_along(regexp)) {
+    testthat::expect_no_match(
+      object = rendered,
+      regexp = regexp[i],
+      perl = perl,
+      fixed = fixed,
+      ...,
+      all = all,
+      info = info,
+      label = label
+    )
+  }
+}
+
 expect_merge_locale_sep <- function(locale = NULL, global_locale = NULL, sep = NULL, expected_sep) {
   tbl <- data.frame(
     col_1 = 1,
