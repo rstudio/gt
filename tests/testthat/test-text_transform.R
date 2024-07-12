@@ -436,3 +436,37 @@ test_that("text_transform() works on row group labels", {
     selection_text("[class='gt_group_heading']") %>%
     expect_equal(c("SUPER POWERFUL", "POWERFUL"))
 })
+
+
+# text_*() other functions -----------------------------------------------------
+
+test_that("text_case_when() + text_case_match() work", {
+  expect_no_error(
+    cw <- exibble %>%
+      gt() %>%
+      text_case_when(is.na(x) ~ "---")
+  )
+  # md is not really respected even if we use md("---")
+  expect_no_error(
+    cm <- exibble %>%
+      gt() %>%
+      text_case_match(NA ~ "---")
+  )
+  # they are not changing numeric NA
+  expect_equal(
+    render_as_html(cw),
+    render_as_html(cm)
+  )
+})
+
+test_that("text_replace() works", {
+  expect_no_error(
+    tr <- exibble %>%
+      gt() %>%
+      text_replace("NA", "---")
+  )
+  expect_match_html(
+    tr,
+    "---"
+  )
+})
