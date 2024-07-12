@@ -138,4 +138,13 @@ test_that("gtable widths are set appropriately", {
     as.numeric(test$widths)[1] * 3,
     as.numeric(test$widths)[4]
   )
+
+  test <- tbl %>%
+    cols_width(x ~ pct(20), y ~ px(200)) %>%
+    as_gtable(tbl, text_grob = dummy_text)
+
+  expect_equal(
+    as.character(test$widths),
+    c("0.5null", "0.2npc", "150.5625points", "0.5null")
+  )
 })
