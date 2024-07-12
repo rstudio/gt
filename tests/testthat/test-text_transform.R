@@ -318,6 +318,28 @@ test_that("text_transform() works on row labels in the stub", {
     )
 })
 
+test_that("text_case_match() works on the tab_spanner()", {
+  gt_tbl <- exibble %>% gt() %>% tab_spanner("the boring spanner", columns = c(num, date))
+  expect_snapshot(error = TRUE, {
+    gt_tbl %>%
+      text_case_match(
+        "boring " ~ "awesome ",
+        .replace = "partial",
+        .locations = cells_column_spanners(2)
+      )
+  })
+  expect_no_error(new_tb <- gt_tbl %>%
+    text_case_match(
+      "boring " ~ "awesome ",
+      .replace = "partial",
+      .locations = cells_column_spanners()
+    ))
+  expect_match_html(
+     new_tb,
+     "awesome spanner"
+  )
+})
+
 test_that("text_transform() works on row group labels", {
 
   # Create a gt table and modify the two different

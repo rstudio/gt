@@ -606,7 +606,12 @@ text_transform_impl <- function(data, fn, locations, call = rlang::caller_env())
   # For all of the resolved locations, store the transforms
   # for later execution
   for (loc in locations) {
-    data <- dt_transforms_add(data = data, loc = loc, fn = fn)
+    withCallingHandlers(
+      # Personalize call if text_case_match() or other.
+      data <- dt_transforms_add(data = data, loc = loc, fn = fn),
+      error = function(e) {
+        cli::cli_abort("Failed to resolve location.", parent = e, call = call)
+      })
   }
 
   data

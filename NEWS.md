@@ -1,5 +1,7 @@
 # gt (development version)
 
+* Improved error messages for the `text_transform()` functions if `locations` couldn't be resolved (@olivroy, #1774).
+
 # gt 0.11.0
 
 ## New features
