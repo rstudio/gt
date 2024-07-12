@@ -579,7 +579,7 @@
       Error in `tab_footnote()`:
       ! Can't add footnote "First data cell.".
       Caused by error in `cells_column_spanners()`:
-      ! Spanner `valuer` does not exist in the data.
+      ! Spanner "valuer" does not exist in the data.
     Code
       tab_footnote(start_gt, footnote = "First data cell.", locations = cells_column_spanners(
         3))
@@ -595,7 +595,7 @@
       Error in `tab_footnote()`:
       ! Can't add footnote "Footnote error.".
       Caused by error in `cells_body()`:
-      ! Row `Mazda RX7` does not exist in the data.
+      ! Row "Mazda RX7" does not exist in the data.
 
 # tab_footnote() errors well when it can't resolve location
 

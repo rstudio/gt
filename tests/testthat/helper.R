@@ -50,6 +50,31 @@ expect_match_html <- function(object,
   }
 }
 
+
+# shortcut for expect_match(render_as_html(object), regexp)
+expect_no_match_html <- function(object,
+                              regexp,
+                              perl = FALSE,
+                              fixed = FALSE,
+                              ...,
+                              all = TRUE,
+                              info = NULL,
+                              label = NULL) {
+  rendered <- render_as_html(object)
+  for (i in seq_along(regexp)) {
+    testthat::expect_no_match(
+      object = rendered,
+      regexp = regexp[i],
+      perl = perl,
+      fixed = fixed,
+      ...,
+      all = all,
+      info = info,
+      label = label
+    )
+  }
+}
+
 expect_merge_locale_sep <- function(locale = NULL, global_locale = NULL, sep = NULL, expected_sep) {
   tbl <- data.frame(
     col_1 = 1,
@@ -61,6 +86,15 @@ expect_merge_locale_sep <- function(locale = NULL, global_locale = NULL, sep = N
   merged_gt <- cols_merge_range(gt_tbl, col_begin = "col_1", col_end = "col_2", locale = locale, sep = sep)
   actual_merge_sep <- dt_col_merge_get(merged_gt)[[1]]$sep
   expect_equal(actual_merge_sep, expected_sep, label = paste0("locale = ", locale))
+}
+
+# Gets the text from a row group label
+get_row_group_text <- function(tbl_html) {
+  gsub(
+    "\n\\s+",
+    "",
+    selection_text(tbl_html, "[class='gt_group_heading_row']")
+  )
 }
 
 # Create a shortened version of `mtcars`

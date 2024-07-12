@@ -3,13 +3,6 @@ check_suggests <- function() {
   skip_if_not_installed("rvest")
 }
 
-# Gets the text from a row group label
-get_row_group_text <- function(tbl_html) {
-  tbl_html %>%
-    selection_text("[class='gt_group_heading_row']") %>%
-    gsub("\n\\s+", "", .)
-}
-
 test_that("A gt table contains the expected heading components", {
 
   # Check that specific suggested packages are available
@@ -160,9 +153,7 @@ test_that("A gt table contains the expected source note", {
     ))
 })
 
-test_that("Row groups can be successfully generated with `tab_row_group()", {
-
-  local_options("rlib_warning_verbosity" = "verbose")
+test_that("tab_row_group() can generate row groups.", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -270,7 +261,11 @@ test_that("Row groups can be successfully generated with `tab_row_group()", {
     c("Mazda", "Mercs", "")
   )
 
-  tbl_html <-
+})
+
+test_that("tab_row_group() gives the correct output", {
+
+  tbl_rows <-
     exibble %>%
     gt() %>%
     tab_row_group(
@@ -294,28 +289,27 @@ test_that("Row groups can be successfully generated with `tab_row_group()", {
     tab_footnote(
       footnote = "a footnote",
       locations = cells_row_groups("group_a")
-    ) %>%
-    render_as_html()
+    )
 
   # Expect to see the styled and unstyled variations of the `"void"`
   # row group labels
-  expect_match(
-    tbl_html,
-    regexp = "<span class='gt_from_md'><strong><em>void</em></strong></span><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span>",
-    fixed = TRUE
-  )
-  expect_match(
-    tbl_html,
-    regexp = "<th colspan=\"9\" class=\"gt_group_heading\" scope=\"colgroup\" id=\"void\">void</th>",
+  expect_match_html(
+    tbl_rows,
+    regexp = c(
+      "<span class='gt_from_md'><strong><em>void</em></strong></span><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span>",
+      "<th colspan=\"9\" class=\"gt_group_heading\" scope=\"colgroup\" id=\"void\">void</th>"
+    ),
     fixed = TRUE
   )
 
   # Expect that the inner HTML content for the two row groups
   # is in the prescribed order
+  tbl_html_text <- xml2::read_html(render_as_html(tbl_rows))
   expect_equal(
-    get_row_group_text(tbl_html %>% xml2::read_html()),
+    get_row_group_text(tbl_html_text),
     c("void1", "void")
   )
+
 
   # When specifying a row group that captures no rows, expect that
   # the rendered table is essentially unaffected by this function call
@@ -326,31 +320,13 @@ test_that("Row groups can be successfully generated with `tab_row_group()", {
     gt(exibble, rowname_col = "row") %>%
       render_as_html()
   )
+})
 
-  # Expect an error if not providing a `label` for `tab_row_group()`
-  # but there is a specification of rows
-  expect_error(
-    exibble %>%
-      gt() %>%
-      tab_row_group(
-        rows = group == "grp_a"
-      )
-  )
-
-  # Expect a warning if using the `others_label` argument
-  expect_warning(
-    gt(exibble, rowname_col = "row") %>%
-      tab_row_group(others_label = "foo")
-  )
-
-  # Expect a warning if using the `group` argument
-  expect_warning(
-    gt(exibble, rowname_col = "row") %>%
-      tab_row_group(group = "group", rows = 1:3)
-  )
+test_that("tab_row_group() warns for deprecated args, but respects output.", {
+  local_options("rlib_warning_verbosity" = "verbose")
 
   # Expect a warning if using both the `label` and `group` argument
-  expect_warning(
+  expect_snapshot(
     gt_tbl <-
       gt(exibble, rowname_col = "row") %>%
       tab_row_group(
@@ -372,13 +348,14 @@ test_that("Row groups can be successfully generated with `tab_row_group()", {
 
   # Expect that `tab_options(row_group.default_label = <label>)`
   # is called internally if using the deprecated `others_label` argument
-  gt_tbl <-
-    suppressWarnings(
+  expect_snapshot(
+    gt_tbl <-
+    (
       gt(exibble, rowname_col = "row") %>%
         tab_row_group(label = "one", rows = 1:3) %>%
         tab_row_group(others_label = "foo")
     )
-
+  )
   expect_equal(
     dt_options_get_value(gt_tbl, "row_group_default_label"),
     "foo"
@@ -400,7 +377,41 @@ test_that("Row groups can be successfully generated with `tab_row_group()", {
   )
 })
 
+test_that("tab_row_group() errors with bad input", {
+  # Expect an error if not providing a `label` for `tab_row_group()`
+  # but there is a specification of rows
+  expect_error(
+    exibble %>%
+      gt() %>%
+      tab_row_group(
+        rows = group == "grp_a"
+      ),
+    "label"
+  )
+})
+
+test_that("tab_row_group() errors when named rows are supplied (#1535)", {
+
+  # create a gt tbl with no rows
+  gt_tbl <- mtcars_short %>% gt()
+  # create a gt tbl with rows
+  gt_tbl_rows <- mtcars_short %>% gt(rownames_to_stub = TRUE)
+
+  expect_no_error(gt_tbl_rows %>% tab_row_group("Mazda", c("Mazda RX4", "Mazda RX4 Wag")))
+
+  # expect a special error if the gt
+  expect_snapshot(error = TRUE, {
+    gt_tbl %>% tab_row_group("Mazda", c("Mazda RX4", "Mazda RX4 Wag"))
+  })
+  # regular resolver error if wrong row
+  expect_error(
+    gt_tbl_rows %>% tab_row_group("Mazda", c("Mazda RX4", "Mazda not present")),
+    "Mazda not present"
+  )
+})
+
 test_that("A default row group name can be modified with `tab_options()`", {
+  local_options("rlib_warning_verbosity" = "verbose")
 
   # Check that specific suggested packages are available
   check_suggests()

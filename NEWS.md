@@ -1,7 +1,11 @@
 # gt (development version)
 
-* Improved error messages for the `text_transform()` functions if `locations` couldn't be resolved (@olivroy, #1774).
+* Improved error messages for the `text_transform()` function if `locations` couldn't be resolved. (@olivroy, #1774)
 
+* `tab_row_group()` gives a more precise error message when `rows` can't be resolved correctly (#1535). (@olivroy, #1770)
+
+* Fixed an issue where `md("")` would fail in Quarto. (@olivroy, #1769)
+ 
 # gt 0.11.0
 
 ## New features
