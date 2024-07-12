@@ -108,7 +108,7 @@ text_replace <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  text_transform(
+  text_transform_impl(
     data = data,
     locations = locations,
     fn = function(x) {
@@ -217,7 +217,7 @@ text_case_when <- function(
   # TODO: check that the modernized version of the `case_when()`
   # function is available in the user's version of dplyr
 
-  text_transform(
+  text_transform_impl(
     data = .data,
     locations = .locations,
     fn = function(x) {
@@ -383,10 +383,9 @@ text_case_match <- function(
   # TODO: perform some basic checking of `...` and stop function
   # should issues arise
 
-  # TODO: check that the `case_match()` function is available in
-  # the user's version of dplyr
+  # We rely on dplyr 1.1 (where case_match() was introduced)
 
-  text_transform(
+  text_transform_impl(
     data = .data,
     locations = .locations,
     fn = function(x) {
@@ -603,6 +602,17 @@ text_transform <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+  rlang::check_required(fn)
+
+  text_transform_impl(
+    data,
+    fn,
+    locations
+  )
+}
+
+# Helper function to create text_*()
+text_transform_impl <- function(data, fn, locations, call = rlang::caller_env()) {
 
   # Resolve into a list of locations
   locations <- as_locations(locations = locations)
