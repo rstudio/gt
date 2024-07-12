@@ -1,5 +1,7 @@
 # gt (development version)
 
+* Fixed an issue where `md("")` would fail in Quarto (@olivroy, #1769).
+
 # gt 0.11.0
 
 ## New features

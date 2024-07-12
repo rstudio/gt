@@ -710,12 +710,12 @@ process_text <- function(text, context = "html") {
       # Markdown text handling for Quarto
       #
       if (in_quarto) {
-
-        non_na_text <- text[!is.na(text)]
+        # exclude "" and NA #1769
+        non_na_text <- text[nzchar(text, keepNA = FALSE)]
 
         non_na_text_processed <-
           vapply(
-            as.character(text[!is.na(text)]),
+            non_na_text,
             FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(text) {
@@ -732,6 +732,7 @@ process_text <- function(text, context = "html") {
             FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(text) {
+              # charToRaw("") returns character(0)
               base64enc::base64encode(charToRaw(as.character(text)))
             }
           )
@@ -745,7 +746,7 @@ process_text <- function(text, context = "html") {
             non_na_text_processed, "</div></div>"
           )
 
-        text[!is.na(text)] <- non_na_text
+        text[nzchar(text, keepNA = FALSE)] <- non_na_text
 
         return(text)
       }
