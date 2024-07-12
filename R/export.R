@@ -1414,7 +1414,7 @@ grid_align_gtable <- function(gtable, data) {
 
   } else {
 
-    right <- grid::unit(grid::unit(parse_px_to_pt(left), "pt"))
+    right <- grid::unit(parse_px_to_pt(left), "pt")
   }
 
   gtable <- gtable::gtable_add_cols(gtable, left,  pos = 0)
@@ -1438,13 +1438,20 @@ grid_layout_widths <- function(layout, data) {
 
   # Enlarge columns if fixed column widths have been set
   column_width <- unlist(dt_boxhead_get(data)$column_width)
-  fixed <- integer(0L)
+  fixed    <- integer(0)
+  relative <- rep(NA_real_, length(widths))
 
   if (any(nzchar(column_width)) && length(column_width) == length(widths)) {
-
-    fixed <- which(nzchar(column_width))
-    widths[fixed] <- pmax(parse_px_to_pt(column_width[fixed]), widths[fixed])
+    fixed <- which(endsWith(column_width, "px"))
+    if (length(fixed) > 0) {
+      widths[fixed] <- pmax(parse_px_to_pt(column_width[fixed]), widths[fixed])
+    }
+    pct <- which(endsWith(column_width, "%"))
+    if (length(pct) > 0) {
+      relative[pct] <- as.numeric(gsub("\\%$", "", column_width[pct])) / 100
+    }
   }
+  pct <- which(!is.na(relative))
 
   spanner <- spanner[order(spanner$key$left, spanner$key$right), ]
 
@@ -1475,8 +1482,11 @@ grid_layout_widths <- function(layout, data) {
 
     change <- setdiff(seq_along(widths), fixed)
     widths[change] <- widths[change] + extra_width / (length(widths[change]))
-
-    return(grid::unit(widths, .grid_unit))
+    widths <- grid::unit(widths, .grid_unit)
+    if (length(pct) > 0) {
+      widths[pct] <- grid::unit(relative[pct], "npc")
+    }
+    return(widths)
   }
 
   if (grepl("\\%$", total_width)) {
@@ -1494,10 +1504,15 @@ grid_layout_widths <- function(layout, data) {
 
     # Take pairwise max between minimal size and relative size
     widths <- grid::unit.pmax(grid::unit(widths, .grid_unit), extra_width)
+    if (length(pct) > 0) {
+      widths[pct] <- grid::unit(relative[pct], "npc")
+    }
     return(widths)
   }
-
-  grid::unit(widths, .grid_unit)
+  grid::unit(
+    ifelse(is.na(relative), widths, relative),
+    ifelse(is.na(relative), .grid_unit, "npc")
+  )
 }
 
 #' Extract the table body from a **gt** object

@@ -5,6 +5,8 @@
 * `tab_row_group()` gives a more precise error message when `rows` can't be resolved correctly (#1535). (@olivroy, #1770)
 
 * Fixed an issue where `md("")` would fail in Quarto. (@olivroy, #1769)
+
+* Fixed a bug in using `pct()` column widths with `as_gtable()` (@teunbrand, #1771)
  
 # gt 0.11.0
 

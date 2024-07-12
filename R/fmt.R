@@ -22,6 +22,192 @@
 #------------------------------------------------------------------------------#
 
 
+#' Set a column format with a formatter function
+#'
+#' @description
+#'
+#' `fmt()` provides a way to execute custom formatting functionality with raw
+#' data values in a way that can consider all output contexts.
+#'
+#' Along with the `columns` and `rows` arguments that provide some precision in
+#' targeting data cells, the `fns` argument allows you to define one or more
+#' functions for manipulating the raw data.
+#'
+#' If providing a single function to `fns`, the recommended format is in the
+#' form: `fns = function(x) ...`. This single function will format the targeted
+#' data cells the same way regardless of the output format (e.g., HTML, LaTeX,
+#' RTF).
+#'
+#' If you require formatting of `x` that depends on the output format, a list of
+#' functions can be provided for the `html`, `latex`, `rtf`, and `default`
+#' contexts. This can be in the form of `fns = list(html = function(x) ...,
+#' latex = function(x) ..., default = function(x) ...)`. In this
+#' multiple-function case, we recommended including the `default` function as a
+#' fallback if all contexts aren't provided.
+#'
+#' @inheritParams fmt_number
+#'
+#' @param compat *Formatting compatibility*
+#'
+#'   `vector<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional vector that provides the compatible classes for the formatting.
+#'   By default this is `NULL`.
+#'
+#' @param fns *Formatting functions*
+#'
+#'   `function|list of functions` // **required**
+#'
+#'   Either a single formatting function or a named list of functions.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Examples:
+#'
+#' Use the [`exibble`] dataset to create a **gt** table. Using the `fmt()`
+#' function, we'll format the numeric values in the `num` column with a function
+#' supplied to the `fns` argument. This supplied function will take values in
+#' the column (`x`), multiply them by 1000, and exclose them in single quotes.
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(-row, -group) |>
+#'   gt() |>
+#'   fmt(
+#'     columns = num,
+#'     fns = function(x) {
+#'       paste0("'", x * 1000, "'")
+#'     }
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_1.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-30
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
+#' @export
+fmt <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    compat = NULL,
+    fns
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  #
+  # Resolution of columns and rows as character vectors
+  #
+
+  resolved_columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data,
+      excl_stub = FALSE
+    )
+
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = {{ rows }},
+      data = data
+    )
+
+  # If a single function is supplied to `fns` then
+  # repackage that into a list as the `default` function
+  if (is.function(fns)) {
+    fns <- list(default = fns)
+  }
+
+  # Create the `formatter_list`, which is a bundle of
+  # formatting functions for specific columns and rows
+  formatter_list <-
+    list(
+      func = fns,
+      cols = resolved_columns,
+      rows = resolved_rows_idx,
+      compat = compat
+    )
+
+  dt_formats_add(
+    data = data,
+    formats = formatter_list
+  )
+}
+
+# Utils formatters -------------------
+
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2024 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Filter an internal table to a single row with filtering expressions
 #'
 #' @param table The table to filter down to one row.
@@ -86,8 +272,8 @@ validate_locale <- function(locale, call = rlang::caller_env()) {
     cli::cli_abort(c(
       "The supplied `locale` is not available in the list of supported locales.",
       "i" = "Use {.run [info_locales()](gt::info_locales())} to see which locales can be used."
-      ),
-      call = call
+    ),
+    call = call
     )
   }
 }
@@ -119,8 +305,8 @@ validate_currency <- function(currency, call = rlang::caller_env()) {
       "The supplied `currency` is not available in the list of supported currencies.",
       "i" = "Use {.run [info_currencies()](gt::info_currencies())} to see which currencies can be used.",
       "i" = "See {.help [{.fn fmt_currency}](gt::fmt_currency)} to better understand which input types are valid."
-      ),
-      call = call
+    ),
+    call = call
     )
   }
 }
@@ -576,6 +762,51 @@ format_num_to_str_c <- function(
   )
 }
 
+#' Insert separator marks to an integer to conform to Indian numbering system
+#'
+#' @param integer The integer portion of a numeric value. Should be supplied as
+#'   a length-1 character vector. The element should only contain numeral
+#'   characters.
+#'
+#' @noRd
+insert_seps_ind <- function(integer) {
+
+  # The `fmt_fraction()` formatter can sometimes generate
+  # empty strings; if seen here, just return them unchanged
+  if (integer == "") {
+    return(integer)
+  }
+
+  # Ensure that integer-based strings only contain numbers
+  if (!grepl("^[0-9]+?$", integer)) {
+    cli::cli_abort(
+      "The `integer` string must only contain numbers."
+    )
+  }
+
+  # Return integer unchanged if there are no commas to insert
+  if (nchar(integer) < 4) return(integer)
+
+  # Generate an 'insertion sequence' (where to place the separators)
+  insertion_seq <- cumsum(c(3, rep(2, floor((nchar(integer) - 4) / 2)))) + 1
+  insertion_seq <- (nchar(integer) - insertion_seq) + 2
+
+  split_strings <- split_str_by_index(target = integer, index = insertion_seq)
+
+  paste(split_strings, collapse = ",")
+}
+
+split_str_by_index <- function(target, index) {
+
+  index <- sort(index)
+  substr(
+    rep_len(target, length(index) + 1),
+    start = c(1, index),
+    stop = c(index - 1, nchar(target))
+  )
+}
+
+
 #' Surround formatted values with `$`s for LaTeX
 #'
 #' @param x Numeric values in `character` form.
@@ -907,10 +1138,10 @@ context_symbol_str <- function(context, symbol) {
       latex = {
         if (!inherits(symbol, "AsIs")) {
           #paste_between(
-            markdown_to_latex(
-              get_currency_str(currency = symbol, fallback_to_code = TRUE),
-              md_engine = "commonmark"
-            )#,
+          markdown_to_latex(
+            get_currency_str(currency = symbol, fallback_to_code = TRUE),
+            md_engine = "commonmark"
+          )#,
           #  c("\\text{", "}")
           #)
         } else {
@@ -1258,7 +1489,7 @@ generate_param_tbl <- function(
     data,
     arg_vals,
     resolved_rows_idx
-  ) {
+) {
 
   data_df <- dt_data_get(data = data)
 
