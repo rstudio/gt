@@ -32,13 +32,6 @@
 #' remaining two values to supply are for the regex pattern (`pattern`) and the
 #' replacement for all matched text (`replacement`).
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
-#'
 #' @param pattern *Regex pattern to match with*
 #'
 #'   `scalar<character>` // **required**
@@ -129,13 +122,6 @@ text_replace <- function(
 #' be a predicate statement that evaluates to a logical vector of length one
 #' (i.e., either `TRUE` or `FALSE`). To refer to the values undergoing
 #' transformation, you need to use the `x` variable.
-#'
-#' @param .data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
 #'
 #' @param ... *Matching expressions*
 #'
