@@ -88,6 +88,15 @@ expect_merge_locale_sep <- function(locale = NULL, global_locale = NULL, sep = N
   expect_equal(actual_merge_sep, expected_sep, label = paste0("locale = ", locale))
 }
 
+# Gets the text from a row group label
+get_row_group_text <- function(tbl_html) {
+  gsub(
+    "\n\\s+",
+    "",
+    selection_text(tbl_html, "[class='gt_group_heading_row']")
+  )
+}
+
 # Create a shortened version of `mtcars`
 mtcars_short <- datasets::mtcars[1:5, ]
 

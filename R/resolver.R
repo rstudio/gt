@@ -644,7 +644,23 @@ normalize_resolved <- function(
 
     unknown_resolved <- setdiff(resolved, item_names)
     if (length(unknown_resolved) != 0) {
-      resolver_stop_on_character(item_label = item_label, unknown_resolved = unknown_resolved, call = call)
+      if (all(is.na(item_names)) && item_label == "row")  {
+        # Send a more informative message when the gt table has no rows
+        # rows need to be initialized with `rownames_to_stub = TRUE` or with `rowname_col = <column>`
+        # Issue #1535 (Override the resolver default error message.)
+
+        cli::cli_abort(c(
+          "Can't find named rows in the table",
+          "i" = "In {.help [gt()](gt::gt)}, use {.code rownames_to_stub = TRUE} or specify {.arg rowname_col} to initialize row names in the table."
+        ), call = call)
+      }
+
+      # Potentially use arg_match() when rlang issue is solved?
+      resolver_stop_on_character(
+        item_label = item_label,
+        unknown_resolved = unknown_resolved,
+        call = call
+      )
     }
     resolved <- item_names %in% resolved
 
@@ -693,7 +709,7 @@ resolver_stop_on_character <- function(
   # Specify cli pluralization
   l <- length(unknown_resolved)
   cli::cli_abort(
-    "{item_label}{cli::qty(l)}{?s} {.code {unknown_resolved}}
+    "{item_label}{cli::qty(l)}{?s} {.str {unknown_resolved}}
     do{?es/} not exist in the data.",
     call = call
   )
