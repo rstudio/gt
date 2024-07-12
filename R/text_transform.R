@@ -101,6 +101,10 @@ text_replace <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # Validate input
+  check_string(pattern, allow_empty = FALSE, allow_na = TRUE)
+  check_string(replacement, allow_empty = TRUE, allow_na = FALSE)
+
   text_transform_impl(
     data = data,
     locations = locations,
