@@ -84,6 +84,9 @@ tests/testthat/test-fmt_scientific.R
 tests/testthat/test-fmt_spelled_num.R
 tests/testthat/test-fmt_url.R
 
+tests/testthat/test-format_vec.R
+tests/testthat/_snaps/format_vec.md
+
 tests/testthat/test-footer.R
 tests/testthat/_snaps/footer.md
 
@@ -172,11 +175,7 @@ tests/testthat/test-text_transform.R
 tests/testthat/_snaps/text_transform.md
 
 tests/testthat/test-util_functions.R
-tests/testthat/test-utils_formatters.R
 tests/testthat/test-utils_plots.R
 tests/testthat/test-utils_render_html.R
 tests/testthat/test-utils_units.R
 tests/testthat/test-utils.R
-
-tests/testthat/test-vec_fmt.R
-tests/testthat/_snaps/vec_fmt.md
