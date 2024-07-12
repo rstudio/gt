@@ -32,9 +32,6 @@ tests/testthat/test-cols_label_with.R
 tests/testthat/test-cols_merge.R
 tests/testthat/_snaps/cols_merge.md
 
-tests/testthat/test-cols_width_rtf.R
-tests/testthat/_snaps/cols_width_rtf.md
-
 tests/testthat/test-cols_width.R
 tests/testthat/_snaps/cols_width.md
 
@@ -110,6 +107,9 @@ tests/testthat/_snaps/image.md
 tests/testthat/test-info_tables.R
 tests/testthat/test-input_data_validation.R
 
+tests/testthat/test-l_summary_rows.R
+tests/testthat/_snaps/l_summary_rows.md
+
 tests/testthat/test-l_table_parts.R
 tests/testthat/_snaps/l_table_parts.md
 
@@ -124,19 +124,17 @@ tests/testthat/_snaps/removal_functions.md
 tests/testthat/test-rows_add.R
 tests/testthat/_snaps/rows_add.md
 
-tests/testthat/test-rtf_column_widths.R
+tests/testthat/test-rtf_cols_width.R
+tests/testthat/_snaps/rtf_cols_width.md
 
 tests/testthat/test-rtf_page_options.R
 tests/testthat/_snaps/rtf_page_options.md
 
+tests/testthat/test-rtf_summary_rows.R
+tests/testthat/_snaps/rtf_summary_rows.md
+
 tests/testthat/test-stub.R
 tests/testthat/test-substitution.R
-
-tests/testthat/test-summary_rows_latex.R
-tests/testthat/_snaps/summary_rows_latex.md
-
-tests/testthat/test-summary_rows_rtf.R
-tests/testthat/_snaps/summary_rows_rtf.md
 
 tests/testthat/test-summary_rows.R
 tests/testthat/_snaps/summary_rows.md
