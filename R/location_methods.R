@@ -286,16 +286,19 @@ resolve_location.resolved <- function(loc, data) {
 #' @export
 resolve_location.cells_body <- function(loc, data) {
 
+  call <- call("cells_body")
   loc$colnames <-
     resolve_cols_c(
       expr = !!loc[["columns"]],
-      data = data
+      data = data,
+      call = call
     )
 
   loc$rows <-
     resolve_rows_i(
       expr = !!loc[["rows"]],
-      data = data
+      data = data,
+      call = call
     )
 
   class(loc) <- c("resolved", class(loc))
@@ -305,12 +308,14 @@ resolve_location.cells_body <- function(loc, data) {
 #' @export
 resolve_location.cells_column_labels <- function(loc, data) {
 
+  call <- call("cells_column_labels")
   if (!is.null(loc$columns)) {
 
     loc$colnames <-
       resolve_cols_c(
         expr = !!loc[["columns"]],
-        data = data
+        data = data,
+        call = call
       )
   }
 
@@ -326,7 +331,8 @@ resolve_location.cells_column_labels <- function(loc, data) {
 #' @export
 resolve_location.cells_column_spanners <- function(loc, data) {
 
-  resolved <- resolve_cells_column_spanners(data = data, object = loc)
+  call <- call("cells_column_spanners")
+  resolved <- resolve_cells_column_spanners(data = data, object = loc, call = call)
 
   loc$spanners <- resolved$spanners
 
@@ -338,7 +344,8 @@ resolve_location.cells_column_spanners <- function(loc, data) {
 #' @export
 resolve_location.cells_stub <- function(loc, data) {
 
-  resolved <- resolve_cells_stub(data = data, object = loc)
+  call <- call("cells_stub")
+  resolved <- resolve_cells_stub(data = data, object = loc, call = call)
 
   loc$rows <- resolved$rows
 
@@ -350,7 +357,8 @@ resolve_location.cells_stub <- function(loc, data) {
 #' @export
 resolve_location.cells_row_groups <- function(loc, data) {
 
-  resolved <- resolve_cells_row_groups(data = data, object = loc)
+  call <- call("cells_row_groups")
+  resolved <- resolve_cells_row_groups(data = data, object = loc, call = call)
 
   loc$groups <- resolved$groups
 

@@ -318,6 +318,28 @@ test_that("text_transform() works on row labels in the stub", {
     )
 })
 
+test_that("text_case_match() works on the tab_spanner()", {
+  gt_tbl <- exibble %>% gt() %>% tab_spanner("the boring spanner", columns = c(num, date))
+  expect_snapshot(error = TRUE, {
+    gt_tbl %>%
+      text_case_match(
+        "boring " ~ "awesome ",
+        .replace = "partial",
+        .locations = cells_column_spanners(2)
+      )
+  })
+  expect_no_error(new_tb <- gt_tbl %>%
+    text_case_match(
+      "boring " ~ "awesome ",
+      .replace = "partial",
+      .locations = cells_column_spanners()
+    ))
+  expect_match_html(
+     new_tb,
+     "awesome spanner"
+  )
+})
+
 test_that("text_transform() works on row group labels", {
 
   # Create a gt table and modify the two different
@@ -413,4 +435,38 @@ test_that("text_transform() works on row group labels", {
     xml2::read_html() %>%
     selection_text("[class='gt_group_heading']") %>%
     expect_equal(c("SUPER POWERFUL", "POWERFUL"))
+})
+
+
+# text_*() other functions -----------------------------------------------------
+
+test_that("text_case_when() + text_case_match() work", {
+  expect_no_error(
+    cw <- exibble %>%
+      gt() %>%
+      text_case_when(is.na(x) ~ "---")
+  )
+  # md is not really respected even if we use md("---")
+  expect_no_error(
+    cm <- exibble %>%
+      gt() %>%
+      text_case_match(NA ~ "---")
+  )
+  # they are not changing numeric NA
+  expect_equal(
+    render_as_html(cw),
+    render_as_html(cm)
+  )
+})
+
+test_that("text_replace() works", {
+  expect_no_error(
+    tr <- exibble %>%
+      gt() %>%
+      text_replace("NA", "---")
+  )
+  expect_match_html(
+    tr,
+    "---"
+  )
 })
