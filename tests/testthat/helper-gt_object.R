@@ -49,7 +49,7 @@ expect_tab <- function(tab, df) {
   # Expect certain named attributes
   expect_gt_attr_names(object = tab)
 
-  # Expect that the attribute obejcts are of certain classes
+  # Validate attributes classes
   expect_s3_class(dt_boxhead_get(data = tab), "data.frame")
   expect_type(dt_stub_df_get(data = tab), "list")
   expect_type(dt_row_groups_get(data = tab), "character")
@@ -65,47 +65,20 @@ expect_tab <- function(tab, df) {
   expect_s3_class(dt_options_get(data = tab), "data.frame")
   expect_type(dt_transforms_get(data = tab), "list")
 
-  (dt_boxhead_get(data = tab) %>%
-    dim())[2] %>%
-    expect_equal(8)
-
-  dt_stub_df_get(data = tab) %>%
-    dim() %>%
-    expect_equal(c(nrow(df), 6))
-
-  dt_heading_get(data = tab) %>%
-    expect_length(3)
-
-  dt_spanners_get(data = tab) %>%
-    dim() %>%
-    expect_equal(c(0, 8))
-
-  dt_stubhead_get(data = tab) %>%
-    expect_length(1)
-
-  dt_footnotes_get(data = tab) %>%
-    dim() %>%
-    expect_equal(c(0, 8))
-
-  dt_source_notes_get(data = tab) %>%
-    expect_length(0)
-
-  dt_formats_get(data = tab) %>%
-    expect_length(0)
-
-  dt_substitutions_get(data = tab) %>%
-    expect_length(0)
-
-  dt_styles_get(data = tab) %>%
-    dim() %>%
-    expect_equal(c(0, 7))
-
-  dt_options_get(data = tab) %>%
-    dim() %>%
-    expect_equal(c(191, 5))
-
-  dt_transforms_get(data = tab) %>%
-    expect_length(0)
+  # Validate attributes dimensions
+  expect_equal(ncol(dt_boxhead_get(data = tab)), 8)
+  expect_equal(dim(dt_stub_df_get(data = tab)), c(nrow(df), 6))
+  expect_length(dt_heading_get(data = tab), 3)
+  expect_equal(dim(dt_spanners_get(data = tab)), c(0, 8))
+  expect_length(dt_stubhead_get(data = tab), 1)
+  expect_equal(dim(dt_footnotes_get(data = tab)), c(0, 8))
+  expect_length(dt_source_notes_get(data = tab), 0)
+  expect_length(dt_formats_get(data = tab), 0)
+  expect_length(dt_substitutions_get(data = tab), 0)
+  expect_equal(dim(dt_styles_get(data = tab)), c(0, 7))
+  # If adding a new option to tab_options(), update here
+  expect_equal(dim(dt_options_get(data = tab)), c(191, 5))
+  expect_length(dt_transforms_get(data = tab), 0)
 
   # Expect that extracted df has the same column
   # names as the original dataset (or a difference of 1)
@@ -135,10 +108,7 @@ expect_attr_equal <- function(data, attr_val, y) {
 
   obj <- dt__get(data = data, key = attr_val)
 
-  obj %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(y)
+  expect_equal(unlist(obj), y, ignore_attr = "names")
 }
 
 gt_attr_names <- function() {
