@@ -780,7 +780,7 @@ rtf_font <- function(
 # to rtf_text
 rtf_raw <- function(...) {
   text <- paste0(..., collapse = "")
-  class(text) <- "rtf_text"
+  class(text) <- c("rtf_text", "character")
   text
 }
 
@@ -2034,3 +2034,25 @@ get_page_body_width <- function(data) {
 
   page_width_val - page_margin_left_val - page_margin_right_val
 }
+
+#865
+#' @exportS3Method vctrs::vec_cast
+vec_cast.character.rtf_text <- function(x, to, ...) {
+  as.character(x)
+}
+
+#' @exportS3Method vctrs::vec_cast
+vec_cast.rtf_text.character <- function(x, to, ...) {
+  as_rtf_string(x)
+}
+
+#' @exportS3Method vctrs::vec_ptype2
+vec_ptype2.rtf_text.character <- function(x, y, ...) {
+  x
+}
+
+#' @exportS3Method vctrs::vec_ptype2
+vec_ptype2.character.rtf_text <- function(x, y, ...) {
+  y
+}
+NULL
