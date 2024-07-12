@@ -1414,7 +1414,7 @@ grid_align_gtable <- function(gtable, data) {
 
   } else {
 
-    right <- grid::unit(grid::unit(parse_px_to_pt(left), "pt"))
+    right <- grid::unit(parse_px_to_pt(left), "pt")
   }
 
   gtable <- gtable::gtable_add_cols(gtable, left,  pos = 0)
