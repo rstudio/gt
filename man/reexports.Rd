@@ -12,6 +12,7 @@
 \alias{everything}
 \alias{num_range}
 \alias{css}
+\alias{\%>\%}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -22,6 +23,8 @@ below to see their documentation.
   \item{dplyr}{\code{\link[dplyr]{vars}}}
 
   \item{htmltools}{\code{\link[htmltools]{css}}}
+
+  \item{magrittr}{\code{\link[magrittr:pipe]{\%>\%}}}
 
   \item{tidyselect}{\code{\link[tidyselect:starts_with]{contains}}, \code{\link[tidyselect:starts_with]{ends_with}}, \code{\link[tidyselect]{everything}}, \code{\link[tidyselect:starts_with]{matches}}, \code{\link[tidyselect:starts_with]{num_range}}, \code{\link[tidyselect]{one_of}}, \code{\link[tidyselect]{starts_with}}}
 }}

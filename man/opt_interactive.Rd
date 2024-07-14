@@ -239,6 +239,17 @@ dataset to create an interactive \strong{gt} table. Using \code{\link[=tab_style
 \code{v0.9.0} (Mar 31, 2023)
 }
 
+\examples{
+\donttest{
+ # opt_interactive() translates text in `opt_interactive()`
+ exibble \%>\%
+  gt(locale = "es-AR") \%>\%
+  fmt_number(num) \%>\%
+  opt_interactive(use_search = TRUE, use_page_size_select = TRUE)
+}
+
+
+}
 \seealso{
 Other table option functions: 
 \code{\link{opt_align_table_header}()},

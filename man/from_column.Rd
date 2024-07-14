@@ -152,6 +152,8 @@ the values in \code{n} to get a useful range of font sizes.
 }
 
 \seealso{
+\href{https://posit.co/blog/new-features-in-gt-0-10-0/}{Blog Post}
+
 Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},

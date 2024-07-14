@@ -43,8 +43,7 @@ Sometimes you may want to see just a small portion of your input data. We can
 use \code{gt_preview()} in place of \code{\link[=gt]{gt()}} to get the first x rows of data and the
 last y rows of data (which can be set by the \code{top_n} and \code{bottom_n}
 arguments). It's not advised to use additional \strong{gt} functions to further
-modify the output of \code{gt_preview()}. Furthermore, you cannot pass a \strong{gt}
-object to \code{gt_preview()}.
+modify the output of \code{gt_preview()}.
 }
 \details{
 By default, the output table will include row numbers in a stub (including a
@@ -55,7 +54,7 @@ deactivated by setting \code{incl_rownums} to \code{FALSE}.
 
 
 With three columns from the \code{\link{gtcars}} dataset, let's create a \strong{gt} table
-preview with the \code{gt_preview()} function. You'll get only the first five rows
+preview with \code{gt_preview()}. You'll get only the first five rows
 and the last row.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
