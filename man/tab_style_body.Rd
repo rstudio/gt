@@ -137,7 +137,7 @@ in \code{c()} (with bare column names or names in quotes) we can use
 \strong{tidyselect}-style expressions. This can be as basic as supplying a select
 helper like \code{starts_with()}, or, providing a more complex incantation like
 
-\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+\code{where(~ is.numeric(.x) & max(.x, na.rm = TRUE) > 1E6)}
 
 which targets numeric columns that have a maximum value greater than
 1,000,000 (excluding any \code{NA}s from consideration).

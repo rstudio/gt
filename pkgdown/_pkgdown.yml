@@ -181,6 +181,15 @@ reference:
     - rm_source_notes
     - rm_caption
 
+  - title: FAQ
+    desc: >
+      Many gt functions share parameters that behave more or less the same way.
+      These topics explain the design principles of some of them.
+    contents:
+    - rows-columns
+    - locale
+    - location-helper
+    - fmts
   - title: Helper functions
     desc: >
       An assortment of helper functions is available in the **gt** package.
