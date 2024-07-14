@@ -1,5 +1,5 @@
 test_that("The different removal functions work correctly", {
-
+  # TODO Move this test
   # Generate a table that will be used to check the effect of removals
   gt_tbl <-
     exibble %>%

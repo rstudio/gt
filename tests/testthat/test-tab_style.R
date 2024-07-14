@@ -1,3 +1,8 @@
+# Function to skip tests if Suggested packages not available on system
+check_suggests <- function() {
+  skip_if_not_installed("rvest")
+}
+
 # Create a table from `mtcars` that has all the different components
 data <-
   gt(mtcars, rownames_to_stub = TRUE) %>%
@@ -100,7 +105,7 @@ test_that("tab_style() works for styling a single cell.", {
   )
 })
 
-test_that("A table subtitle can be left-aligned", {
+test_that("A table title can be left-aligned", {
 
   # Apply left-alignment to the table title
   tbl_html <-
@@ -457,81 +462,78 @@ test_that("Using fonts in `cell_text()` works", {
     gt()
 
   # Expect no difference in output when using styles within a list or without
-  expect_equal(
-    gtcars_tbl %>%
-      tab_style(
-        style =
+  tab1 <- gtcars_tbl %>%
+    tab_style(
+      style =
+        cell_text(
+          weight = "bold",
+          font = c("Helvetica", "Times New Roman"),
+          color = "red"
+        ),
+      locations = cells_body(columns = hp, rows = 1:2)
+    )
+  tab2 <- gtcars_tbl %>%
+    tab_style(
+      style =
+        list(
           cell_text(
             weight = "bold",
             font = c("Helvetica", "Times New Roman"),
             color = "red"
-          ),
-        locations = cells_body(columns = hp, rows = 1:2)
-      ) %>%
-      as_raw_html() %>%
-      gsub("id=\"[a-z]*?\"", "", .),
-    gtcars_tbl %>%
-      tab_style(
-        style =
-          list(
-            cell_text(
-              weight = "bold",
-              font = c("Helvetica", "Times New Roman"),
-              color = "red"
-            )
-          ),
-        locations = cells_body(columns = hp, rows = 1:2)
-      ) %>%
-      as_raw_html() %>%
-      gsub("id=\"[a-z]*?\"", "", .)
+          )
+        ),
+      locations = cells_body(columns = hp, rows = 1:2)
+    )
+  expect_equal(
+    gsub("id=\"[a-z]*?\"", "", as_raw_html(tab1)),
+    gsub("id=\"[a-z]*?\"", "", as_raw_html(tab2))
   )
 
   # Don't expect any errors when styling with different fonts
   expect_no_error(
-    gtcars_tbl %>%
       tab_style(
+        gtcars_tbl,
         style = list(cell_text(font = c("Helvetica", "serif")), "font-size: 14px;"),
         locations = cells_body(columns = hp)
       )
   )
   expect_no_error(
-    gtcars_tbl %>%
       tab_style(
+        gtcars_tbl,
         style = list("font-size: 14px;", cell_text(font = c("Helvetica", "serif"))),
         locations = cells_body(columns = hp)
       )
   )
   expect_no_error(
-    gtcars_tbl %>%
       tab_style(
+        gtcars_tbl,
         style = list(cell_text(font = c("Helvetica", "serif")), cell_borders()),
         locations = cells_body(columns = hp)
       )
   )
   expect_no_error(
-    gtcars_tbl %>%
-      tab_style(
-        style = list(cell_borders(), cell_text(font = c("Helvetica", "serif"))),
-        locations = cells_body(columns = hp)
-      )
+    tab_style(
+      gtcars_tbl,
+      style = list(cell_borders(), cell_text(font = c("Helvetica", "serif"))),
+      locations = cells_body(columns = hp)
+    ))
+  expect_no_error(
+    tab_style(
+      gtcars_tbl,
+      style = list(
+        cell_borders(sides = "b", color = "blue", weight = px(3)),
+        cell_text(size = px(18), font = c("Helvetica", "serif"), weight = "bold"),
+        cell_fill(color = "red", alpha = 0.5)
+        ),
+      locations = cells_body(columns = hp)
+    )
   )
   expect_no_error(
-    gtcars_tbl %>%
-      tab_style(
-        style = list(
-          cell_borders(sides = "b", color = "blue", weight = px(3)),
-          cell_text(size = px(18), font = c("Helvetica", "serif"), weight = "bold"),
-          cell_fill(color = "red", alpha = 0.5)
-          ),
-        locations = cells_body(columns = hp)
-      )
-  )
-  expect_no_error(
-    gtcars_tbl %>%
-      tab_style(
-        style = cell_text(font = c("Times New Roman", "serif")),
-        locations = cells_body(columns = hp)
-      )
+    tab_style(
+      gtcars_tbl,
+      style = cell_text(font = c("Times New Roman", "serif")),
+      locations = cells_body(columns = hp)
+    )
   )
 })
 
@@ -585,6 +587,236 @@ test_that("Hiding columns that have styles does not result in errors/warnings", 
   )
 })
 
+
+test_that("A gt table contains custom styles at the correct locations", {
+
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  # Create a `tbl_html` object with `gt()`
+  tbl_html <-
+    mtcars %>%
+    gt(rownames_to_stub = TRUE) %>%
+    cols_move_to_start(columns = c("gear", "carb")) %>%
+    tab_stubhead(label = "cars") %>%
+    cols_hide(columns = "mpg") %>%
+    cols_hide(columns = "vs") %>%
+    tab_row_group(
+      label = "Mercs",
+      rows = contains("Merc")
+    ) %>%
+    tab_row_group(
+      label = "Mazdas",
+      rows = contains("Mazda")
+    ) %>%
+    tab_spanner(
+      label = "gear_carb_cyl",
+      id = "gcc",
+      columns = c(gear, carb, cyl)
+    ) %>%
+    row_group_order(groups = c("Mazdas", "Mercs")) %>%
+    cols_merge_range(
+      col_begin = "disp",
+      col_end = "drat"
+    ) %>%
+    tab_header(
+      title = "Title",
+      subtitle = "Subtitle"
+    ) %>%
+    tab_source_note(source_note = "this is a source note") %>%
+    cols_label(cyl = md("*cyls*")) %>%
+    summary_rows(
+      groups = c("Mazdas", "Mercs"),
+      columns = c(hp, wt, qsec),
+      fns = list(
+        ~mean(., na.rm = TRUE),
+        ~sum(., na.rm = TRUE)
+      ),
+      fmt = list(~ fmt_number(.))
+    ) %>%
+    grand_summary_rows(
+      columns = c(hp, wt, qsec),
+      fns = list(
+        ~mean(., na.rm = TRUE),
+        ~sum(., na.rm = TRUE)
+      ),
+      fmt = list(~ fmt_number(.))
+    ) %>%
+    tab_style(
+      style = cell_fill(color = "lightgray"),
+      locations = list(
+        cells_column_labels(),
+        cells_stub(rows = TRUE))
+    ) %>%
+    tab_style(
+      style = list(
+        cell_fill(color = "steelblue"),
+        cell_text(color = "white")
+      ),
+      locations = cells_stub(rows = "Merc 240D")
+    ) %>%
+    tab_style(
+      style = cell_text(align = "left"),
+      locations = cells_title(groups = "title")
+    ) %>%
+    tab_style(
+      style = cell_text(align = "left"),
+      locations = cells_title(groups = "subtitle")
+    ) %>%
+    tab_style(
+      style = list(
+        cell_fill(color = "green"),
+        cell_text(color = "white")
+      ),
+      locations = cells_summary(
+        groups = "Mercs", columns = "hp", rows = 2)
+    ) %>%
+    tab_style(
+      style = list(
+        cell_fill(color = "purple"),
+        cell_text(color = "white")
+      ),
+      locations = cells_grand_summary(columns = "hp", rows = 2)
+    ) %>%
+    tab_style(
+      style = cell_fill(color = "lightgreen"),
+      locations = cells_column_spanners(spanners = "gcc")
+    ) %>%
+    tab_style(
+      style = cell_fill(color = "turquoise"),
+      locations = cells_column_labels(columns = gear)
+    ) %>%
+    tab_style(
+      style = cell_fill(color = "pink"),
+      locations = cells_column_labels(columns = hp)
+    ) %>%
+    tab_style(
+      style = list(
+        cell_fill(color = "lightgray"),
+        cell_text(style = "italic")
+      ),
+      locations = cells_body(columns = "hp", rows = "Datsun 710")
+    ) %>%
+    tab_style(
+      style = cell_fill(color = "yellow"),
+      locations = cells_body(columns = "disp", rows = "Mazda RX4")
+    ) %>%
+    tab_style(
+      style = list(
+        cell_fill(color = "red"),
+        cell_text(color = "white")
+      ),
+      locations = cells_row_groups(groups = "Mazdas")
+    ) %>%
+    tab_style(
+      style = list(
+        cell_fill(color = "blue"),
+        cell_text(color = "white")
+      ),
+      locations = cells_stubhead()
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # FIXME: commented failing tests where rvest 1.0.4 no longer allows
+  # these tests to work w/o error
+
+  # Expect that the stubhead label is styled
+  # nodes <-
+  #   tbl_html %>%
+  #   rvest::html_nodes("[style='background-color: #0000FF; color: #FFFFFF;']") %>%
+  #   rvest::html_text("[class='gt_col_heading gt_columns_bottom_border gt_left]") %>%
+  #   expect_equal("cars")
+
+  # Expect that the data cell (`Mazda RX4`/`disp`) -> (1, 4) is styled
+  # tbl_html %>%
+  #   rvest::html_nodes("[style='background-color: #FFFF00;']") %>%
+  #   rvest::html_text("[class='gt_row gt_right']") %>%
+  #   expect_equal("160.0–3.90")
+
+  # Expect that the data cell (`Datsun 710`/`hp`) -> (1, 4) is styled
+  # tbl_html %>%
+  #   rvest::html_nodes("[style='background-color: #D3D3D3; font-style: italic;']") %>%
+  #   rvest::html_text("[class='gt_row gt_right']") %>%
+  #   expect_equal("93")
+
+  # Expect that the summary cell (`Mercs`::`sum`/`hp`) is styled
+  # tbl_html %>%
+  #   rvest::html_nodes("[style='background-color: #00FF00; color: #FFFFFF;']") %>%
+  #   rvest::html_text("[class='gt_row gt_right gt_summary_row']") %>%
+  #   expect_equal("943.00")
+
+  # Expect that the grand summary cell (`sum`/`hp`) is styled
+  # tbl_html %>%
+  #   rvest::html_nodes("[style='background-color: #A020F0; color: #FFFFFF;']") %>%
+  #   rvest::html_text("[class='gt_row gt_grand_summary_row']") %>%
+  #   expect_equal("4,694.00")
+
+  # Expect that some column labels (e.g., `disp`, `wt`, etc.) are
+  # styled with a light gray background
+  (tbl_html %>%
+      rvest::html_nodes("[style='background-color: #D3D3D3;']") %>%
+      rvest::html_text())[1:5] %>%
+    expect_equal(c("disp", "wt", "qsec", "am", "carb"))
+
+  # Expect that most stub cells are styled with a light gray background
+  (tbl_html %>%
+      rvest::html_nodes("[style='background-color: #D3D3D3;']") %>%
+      rvest::html_text())[1:6] %>%
+    expect_equal(c("disp", "wt", "qsec", "am", "carb", "cyls"))
+
+  # Expect that most stub cells are styled with a light gray background
+  tbl_html %>%
+    rvest::html_nodes("[class='gt_row gt_left gt_stub'][style='background-color: #D3D3D3;']") %>%
+    rvest::html_text() %>%
+    expect_length(31)
+
+  # Expect that the `hp` column label's cell has a pink background
+  tbl_html %>%
+    rvest::html_nodes("[style='background-color: #FFC0CB;']") %>%
+    rvest::html_text() %>%
+    expect_equal("hp")
+
+  # Expect that the `gear` column label's cell has a turquoise background
+  tbl_html %>%
+    rvest::html_nodes("[style='background-color: #40E0D0;']") %>%
+    rvest::html_text() %>%
+    expect_equal("gear")
+
+  # Expect that the row caption `Merc 240D` has a cell background that
+  # is ultimately steelblue, and, the font the white
+  tbl_html %>%
+    rvest::html_nodes("[style='background-color: #4682B4; color: #FFFFFF;']") %>%
+    rvest::html_text() %>%
+    expect_equal("Merc 240D")
+
+  # Expect that the `gear_carb_cyl` column spanner's
+  # cell has a lightgreen background
+  tbl_html %>%
+    rvest::html_nodes("[style='background-color: #90EE90;']") %>%
+    rvest::html_text() %>%
+    expect_match("gear_carb_cyl")
+
+  # Expect that the `Mazdas` row group label
+  # cell has a red background and white text
+  tbl_html %>%
+    rvest::html_nodes("[style='background-color: #FF0000; color: #FFFFFF;']") %>%
+    rvest::html_text() %>%
+    expect_equal("Mazdas")
+
+  # Expect that the table title is formatted to the left
+  tbl_html %>%
+    rvest::html_nodes("[class='gt_heading gt_title gt_font_normal'][style='text-align: left;']") %>%
+    rvest::html_text() %>%
+    expect_equal("Title")
+
+  # Expect that the table subtitle is formatted to the left
+  tbl_html %>%
+    rvest::html_nodes("[class='gt_heading gt_subtitle gt_font_normal gt_bottom_border'][style='text-align: left;']") %>%
+    rvest::html_text() %>%
+    expect_equal("Subtitle")
+})
+
 test_that("Using fonts in `from_column()` works within `cell_*()` fns", {
 
   # Generate table with column of spelled-out numbers (`num`) and
@@ -635,4 +867,214 @@ test_that("Using fonts in `from_column()` works within `cell_*()` fns", {
 
   # Perform snapshot test
   gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+})
+
+
+# tab_style_body() -------------------------------------------------------------
+
+test_that("tab_style_body() works correctly", {
+
+  # Generate a table that will be used in checks of body styling
+  gt_tbl <-
+    sp500 %>%
+    dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") %>%
+    dplyr::arrange(date) %>%
+    dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) %>%
+    dplyr::select(-adj_close, -volume) %>%
+    gt(
+      rowname_col = "date",
+      groupname_col = "week"
+    )
+
+  #
+  # Target literal body cell values with the `values` argument
+  #
+
+  gt_tbl_2 <-
+    gt_tbl %>%
+    tab_style_body(
+      style = cell_fill(color = "orange"),
+      values = c(2046.13, 2028.26, 2018.40, 1988.12, 2030.25)
+    )
+  expect_true(gt_tbl %>% render_as_html() != gt_tbl_2 %>% render_as_html())
+  gt_tbl_2 %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_3 <-
+    gt_tbl %>%
+    tab_style_body(
+      style = list(
+        cell_text(font = google_font("Inter"), color = "white"),
+        cell_fill(color = "red"),
+        cell_borders(
+          sides = c("left", "right"),
+          color = "steelblue",
+          weight = px(4)
+        )
+      ),
+      values = c(2046.13, 2028.26, 2018.40, 1988.12, 2030.25)
+    )
+  expect_true(gt_tbl %>% render_as_html() != gt_tbl_3 %>% render_as_html())
+  gt_tbl_3 %>% render_as_html() %>% expect_snapshot()
+
+  #
+  # Target rows and columns
+  #
+
+  gt_tbl_4 <-
+    gt_tbl %>%
+    tab_style_body(
+      style = cell_fill(color = "orange"),
+      values = c(1988.12, 2030.25),
+      targets = "row"
+    )
+  expect_true(gt_tbl %>% render_as_html() != gt_tbl_4 %>% render_as_html())
+  gt_tbl_4 %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_5 <-
+    gt_tbl %>%
+    tab_style_body(
+      style = cell_fill(color = "orange"),
+      values = c(1988.12, 2030.25),
+      targets = "column"
+    )
+  expect_true(gt_tbl %>% render_as_html() != gt_tbl_5 %>% render_as_html())
+  gt_tbl_5 %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_6 <-
+    gt_tbl %>%
+    tab_style_body(
+      style = cell_fill(color = "orange"),
+      values = c(1988.12, 2030.25),
+      targets = "column"
+    ) %>%
+    tab_style_body(
+      style = cell_fill(color = "lightblue"),
+      values = c(1988.12, 2030.25),
+      targets = "row"
+    )
+  expect_true(gt_tbl %>% render_as_html() != gt_tbl_6 %>% render_as_html())
+  gt_tbl_6 %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_7 <-
+    gt_tbl %>%
+    tab_style_body(
+      style = cell_fill(color = "lightblue"),
+      values = c(1988.12, 2030.25),
+      targets = "row"
+    ) %>%
+    tab_style_body(
+      style = cell_fill(color = "orange"),
+      values = c(1988.12, 2030.25),
+      targets = "column"
+    )
+  expect_true(gt_tbl %>% render_as_html() != gt_tbl_7 %>% render_as_html())
+  gt_tbl_7 %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_8 <-
+    gt_tbl %>%
+    tab_style_body(
+      style = cell_fill(color = "yellow"),
+      values = c(1988.12, 2030.25),
+      targets = "cell"
+    )
+  expect_true(gt_tbl %>% render_as_html() != gt_tbl_8 %>% render_as_html())
+  gt_tbl_8 %>% render_as_html() %>% expect_snapshot()
+
+  #
+  # Use the `extents` argument to project styling to other locations
+  #
+
+  gt_tbl_9 <-
+    gt_tbl %>%
+    tab_style_body(
+      style = cell_fill(color = "yellow"),
+      values = c(1988.12, 2030.25),
+      targets = "row",
+      extents = "stub"
+    )
+  expect_true(gt_tbl %>% render_as_html() != gt_tbl_9 %>% render_as_html())
+  gt_tbl_9 %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_10 <-
+    gt_tbl %>%
+    tab_style_body(
+      style = cell_fill(color = "yellow"),
+      values = c(1988.12, 2030.25),
+      targets = "row",
+      extents = c("body", "stub")
+    )
+  expect_true(gt_tbl %>% render_as_html() != gt_tbl_10 %>% render_as_html())
+  gt_tbl_10 %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_11 <-
+    gt_tbl %>%
+    tab_style_body(
+      style = cell_fill(color = "yellow"),
+      values = c(1988.12, 2030.25),
+      targets = "row",
+      extents = "body"
+    )
+  expect_true(gt_tbl %>% render_as_html() != gt_tbl_11 %>% render_as_html())
+  gt_tbl_11 %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_12 <-
+    gt_tbl %>%
+    tab_style_body(
+      style = cell_fill(color = "yellow"),
+      values = c(1988.12, 2030.25),
+      targets = "column",
+      extents = c("body", "stub")
+    )
+  expect_true(gt_tbl %>% render_as_html() != gt_tbl_12 %>% render_as_html())
+  gt_tbl_12 %>% render_as_html() %>% expect_snapshot()
+
+  # Generate an alternate table that will be used in checks of body styling
+  gt_tbl_alt <-
+    exibble %>%
+    gt(rowname_col = "row", groupname_col = "group")
+
+  #
+  # Use the `pattern` argument to target body cells through a regex pattern
+  #
+
+  gt_tbl_13 <-
+    gt_tbl_alt %>%
+    tab_style_body(
+      style = cell_fill(color = "yellow"),
+      pattern = "ne|na"
+    )
+  expect_true(gt_tbl_alt %>% render_as_html() != gt_tbl_13 %>% render_as_html())
+  gt_tbl_13 %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_14 <-
+    gt_tbl_alt %>%
+    tab_style_body(
+      style = cell_fill(color = "lightgreen"),
+      pattern = "2015-01-15"
+    )
+  expect_true(gt_tbl_alt %>% render_as_html() != gt_tbl_14 %>% render_as_html())
+  gt_tbl_14 %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_15 <-
+    gt_tbl_alt %>%
+    tab_style_body(
+      style = cell_fill(color = "lightgreen"),
+      pattern = "a$"
+    )
+  expect_true(gt_tbl_alt %>% render_as_html() != gt_tbl_15 %>% render_as_html())
+  gt_tbl_15 %>% render_as_html() %>% expect_snapshot()
+
+  #
+  # Use the `fn` argument to target body cells through a function
+  #
+
+  gt_tbl_16 <-
+    gt_tbl_alt %>%
+    tab_style_body(
+      columns = where(is.numeric),
+      style = cell_fill(color = "#FF8AF3"),
+      fn = function(x) x >= 0 && x < 50
+    )
+  expect_true(gt_tbl_alt %>% render_as_html() != gt_tbl_16 %>% render_as_html())
+  gt_tbl_16 %>% render_as_html() %>% expect_snapshot()
 })

@@ -82,7 +82,7 @@
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"a\">a</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_right gt_stub\">1</th>\n<td headers=\"stub_1_1 a\" class=\"gt_row gt_right\">6</td></tr>\n    <tr><th id=\"stub_1_2\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2</th>\n<td headers=\"stub_1_2 a\" class=\"gt_row gt_right\">7–two</td></tr>\n    <tr><th id=\"stub_1_3\" scope=\"row\" class=\"gt_row gt_right gt_stub\">3</th>\n<td headers=\"stub_1_3 a\" class=\"gt_row gt_right\">8</td></tr>\n    <tr><th id=\"stub_1_4\" scope=\"row\" class=\"gt_row gt_right gt_stub\">4</th>\n<td headers=\"stub_1_4 a\" class=\"gt_row gt_right\">9–four</td></tr>\n    <tr><th id=\"stub_1_5\" scope=\"row\" class=\"gt_row gt_right gt_stub\">5</th>\n<td headers=\"stub_1_5 a\" class=\"gt_row gt_right\">10</td></tr>\n  </tbody>\n  \n  \n</table>"
 
-# cols_merge_n_pct() works correctly
+# cols_merge_n_pct() produces the correct output.
 
     Code
       .

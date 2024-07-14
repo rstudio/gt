@@ -269,6 +269,7 @@ test_that("text_transform() works in column labels", {
       fn = toupper
     )
 
+  # THIS IS THE GOLDEN TEST
   # Expect column labels to be transformed correctly
   tbl_html %>%
     render_as_html() %>%

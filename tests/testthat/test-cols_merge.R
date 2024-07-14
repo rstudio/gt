@@ -300,6 +300,8 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
   )
 })
 
+# cols_merge_uncert() ----------------------------------------------------------
+
 test_that("cols_merge_uncert() works correctly", {
 
   # Check that specific suggested packages are available
@@ -508,6 +510,8 @@ test_that("cols_merge_uncert() works nicely with different error bounds", {
   gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
 })
 
+# cols_merge_range() -----------------------------------------------------------
+
 test_that("cols_merge_range() works correctly", {
 
   # Create a `tbl_html` object with `gt()`; merge two columns
@@ -528,7 +532,7 @@ test_that("cols_merge_range() works correctly", {
   expect_equal(merged_range$sep, "\U2013")
 })
 
-test_that("cols_merge_range works 2", {
+test_that("cols_merge_range() works when merging two columns", {
 
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with `cols_merge_range()`
@@ -593,7 +597,7 @@ test_that("cols_merge_range() respects locale for separators", {
   expect_merge_locale_sep(global_locale = "ja", locale = "ko", sep = "q", expected_sep = "q")
 })
 
-test_that("cols_merge_range() works", {
+test_that("cols_merge_range() merges two columns and use I() to preserve the sep", {
   # Create a `tbl_html` object with `gt()`; merge two
   # columns with `cols_merge_range()` but use the `I()`
   # function to keep the `--` separator text as is
@@ -644,7 +648,10 @@ test_that("cols_merge_range() works", {
   expect_equal(merged_res$sep, I("---"))
 })
 
-test_that("cols_merge_range() works well", {
+test_that("cols_merge_range() achieves the same input when using different methods", {
+
+  check_suggests()
+
   # Create two gt table objects; the first will be based
   # on `tbl` while the second will use a different column name
   # in `tbl` (`sep`) that collides with a pattern element name
@@ -666,9 +673,11 @@ test_that("cols_merge_range() works well", {
     )
 
   # Expect that the HTML produced from the two tables is the same
-  expect_identical(
-    gsub("id=\"[a-z]*?\"", "", as_raw_html(tbl_html_1)),
-    gsub("id=\"[a-z]*?\"", "", as_raw_html(tbl_html_2))
+  expect_equal_gt(
+    tbl_html_1,
+    tbl_html_2,
+    f = as_raw_html,
+    ignore_id = TRUE
   )
 
   # Create another variant that renames `col_2` as `1`, which
@@ -684,9 +693,11 @@ test_that("cols_merge_range() works well", {
 
   # Expect that the HTML produced from `tbl_html_2` and
   # `tbl_html_3` is the same
-  expect_identical(
-    gsub("id=\"[a-z]*?\"", "", as_raw_html(tbl_html_2)),
-    gsub("id=\"[a-z]*?\"", "", as_raw_html(tbl_html_3))
+  expect_equal_gt(
+    tbl_html_2,
+    tbl_html_3,
+    f = as_raw_html,
+    ignore_id = TRUE
   )
 })
 
@@ -699,10 +710,11 @@ test_that("cols_merge_range() produces the correct output", {
   #
 
   tbl <-
-    dplyr::tibble(
+    data.frame(
       row = 1:5,
       a = 6:10,
-      b = c("one", "two", "three", "four", "five")
+      b = c("one", "two", "three", "four", "five"),
+      stringsAsFactors = FALSE
     )
 
   # Merge the stub column with column `a` (has integers)
@@ -754,6 +766,7 @@ test_that("cols_merge_range() produces the correct output", {
   # Perform snapshot test
   gt_tbl_5 %>% render_as_html() %>% expect_snapshot()
 })
+# cols_merge_n_pct() -----------------------------------------------------------
 
 test_that("cols_merge_n_pct() works correctly", {
 
@@ -808,6 +821,9 @@ test_that("cols_merge_n_pct() works correctly", {
       "0.0%"
     )
   )
+})
+
+test_that("cols_merge_n_pct() produces the correct output.", {
 
   #
   # Expect that the column set as the row group can participate
@@ -819,6 +835,20 @@ test_that("cols_merge_n_pct() works correctly", {
       row = 1:5,
       a = 6:10 / 100,
       b = LETTERS[1:5]
+    )
+  tbl_n_pct <-
+    dplyr::tribble(
+      ~a, ~b,
+      1,  0.0714,
+      5,  0.3571,
+      0,  0.0,
+      2,  0.1429,
+      NA, NA,
+      6,  0.4286,
+      5, NA,
+      NA, 1000,
+      0, NA,
+      NA, 0
     )
 
   # Merge the stub column with column `a` (formatted as percentage values)

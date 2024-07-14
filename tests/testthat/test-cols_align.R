@@ -121,16 +121,18 @@ test_that("cols_align() works correctly", {
     expect_equal(c("Date", "Open", "High", "Low", "Close", "Volume"))
 })
 
-test_that("The stub gets its alignment set properly with `cols_align()`", {
+test_that("cols_align() sets the problem alignment in the stub.", {
 
   # Check that specific suggested packages are available
   check_suggests()
 
   # Create a new tibble for testing
   tbl <-
-    dplyr::tibble(
+    data.frame(
       stub = c("*one*", "**two**", "three"),
-      vals = 3:1
+      vals = 3:1,
+      stringsAsFactors = FALSE
+
     )
 
   # Create a `tbl_html` object with `gt()`; don't align any columns

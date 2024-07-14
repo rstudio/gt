@@ -1,9 +1,3 @@
-# Create a data frame based on the internal `sp500.csv`
-sp500 <-
-  read.csv(
-    system.file("extdata", "sp500.csv", package = "gt"),
-    stringsAsFactors = FALSE)
-
 test_that("cols_align() works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; the `mpg`,
@@ -52,8 +46,13 @@ test_that("cols_align() works correctly", {
 
   # Create a `tbl_latex` object with the `sp500` data
   # frame and `auto`-align all columns
+  sp500 <-
+    read.csv(
+      system.file("extdata", "sp500.csv", package = "gt"),
+      stringsAsFactors = FALSE)
   tbl_latex <-
-    gt(sp500) %>%
+    sp500 %>%
+    gt() %>%
     cols_align(align = "auto") %>%
     as_latex() %>% as.character()
 

@@ -1,85 +1,61 @@
-test_that("A gt table contains the expected heading components", {
+# tab_spanner_delim() LaTeX ----------------------------------------------------
+test_that("tab_spanner_delim() works correctly", {
 
-  # Create a `tbl_latex` object with `gt()`; this table contains a title
+  # Create a `tbl_latex` object with `gt()`; split the column
+  # names into spanner headings and column labels
   tbl_latex <-
-    gt(mtcars_short) %>%
-    tab_header(title = "test title")
-
-  # Expect a characteristic pattern
-  expect_match(
-     as_latex(tbl_latex) %>% as.character(),
-    "\\caption*{\n{\\large test title}\n} \\\\ \n\\toprule",
-    fixed = TRUE
-  )
-
-  # Create a `tbl_latex` object with `gt()`; this table
-  # contains a title and a subtitle
-  tbl_latex <-
-    gt(mtcars_short) %>%
-    tab_header(title = "test title", subtitle = "test subtitle")
+    gt(iris_short) %>%
+    tab_spanner_delim(delim = ".")
 
   # Expect a characteristic pattern
   expect_match(
     as_latex(tbl_latex) %>% as.character(),
     paste0(
-      ".*.large test title",
-      ".*.small test subtitle",
-      ".*"
+      ".*multicolumn\\{2\\}\\{c\\}\\{Sepal\\}.*multicolumn\\{2\\}\\{c\\}\\{Petal\\}",
+      ".*cmidrule\\(lr\\)\\{1-2\\}.*cmidrule\\(lr\\)\\{3-4\\}",
+      ".*Length & Width & Length & Width & Species.*"
     )
   )
 
-  # Perform a snapshot test where a LaTeX table
-  # contains only a title
-  mtcars_short %>%
-    gt() %>%
-    tab_header(title = "test title") %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
-
-  # Perform a snapshot test where a LaTeX table
-  # contains a title and a subtitle
-  mtcars_short %>%
-    gt() %>%
-    tab_header(title = "test title", subtitle = "test subtitle") %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
-
-  # Expect that providing a subtitle value with an empty
-  # string won't produce a subtitle line
-  mtcars_short %>%
-    gt() %>%
-    tab_header(title = "test title", subtitle = "") %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
-
-  # Expect that providing a subtitle value with a series
-  # a space characters also won't produce a subtitle line
-  mtcars_short %>%
-    gt() %>%
-    tab_header(title = "test title", subtitle = "   ") %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
-})
-
-test_that("A gt table contains the expected stubhead label", {
-
-  # Create a `tbl_latex` object with `gt()`; this table
-  # contains a stub and a stubhead caption
+  # Create a `tbl_latex` object with `gt()`; split the column
+  # names into spanner headings and column labels but constrain
+  # the splitting only to the `Sepal.Length` and `Sepal.Width` columns
   tbl_latex <-
-    gt(mtcars_short, rownames_to_stub = TRUE) %>%
-    tab_stubhead(label = "the mtcars")
+    gt(iris_short) %>%
+    tab_spanner_delim(
+      delim = ".",
+      columns = c("Sepal.Length", "Sepal.Width")
+    )
 
   # Expect a characteristic pattern
   expect_match(
     as_latex(tbl_latex) %>% as.character(),
     paste0(
-      ".*the mtcars & mpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb",
-      ".*"
-      )
+      ".*multicolumn\\{2\\}\\{c\\}\\{Sepal\\} &  &  &  .*",
+      ".cmidrule\\(lr\\)\\{1-2\\}.*",
+      "Length & Width & Petal.Length & Petal.Width & Species.*"
+    )
+  )
+
+  # Create a `tbl_latex` object with `gt()`; split the column
+  # names into spanner headings and column labels but constrain
+  # the splitting only to the `Sepal.Length` and `Sepal.Width`
+  # columns using `c()`
+  tbl_latex <-
+    gt(iris_short) %>%
+    tab_spanner_delim(
+      delim = ".",
+      columns = c(Sepal.Length, Sepal.Width)
+    )
+
+  # Expect a characteristic pattern
+  expect_match(
+    as_latex(tbl_latex) %>% as.character(),
+    paste0(
+      ".*multicolumn\\{2\\}\\{c\\}\\{Sepal\\} &  &  &  .*",
+      ".cmidrule\\(lr\\)\\{1-2\\}.*",
+      "Length & Width & Petal.Length & Petal.Width & Species.*"
+    )
   )
 })
 
@@ -195,81 +171,6 @@ test_that("A gt table contains the expected column spanner labels", {
     )
 
   # Expect that the spanners will be correctly produced
-  tbl_latex %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
-})
-
-test_that("A gt table contains the expected source note", {
-
-  # Create a `tbl_latex` object with `gt()`; this table
-  # contains a source note
-  tbl_latex <-
-    gt(mtcars_short) %>%
-    tab_source_note(
-      source_note = md("*Henderson and Velleman* (1981).")
-    )
-
-  # Expect that the source note will be correctly produced
-  tbl_latex %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
-
-  # Add another source note to the `gt_tbl` object
-  # Create a `tbl_latex` object with `gt()`; this table
-  # contains two source notes
-  tbl_latex <-
-    gt(mtcars_short) %>%
-    tab_source_note(
-      source_note = md("*Henderson and Velleman* (1981).")
-    ) %>%
-    tab_source_note(
-      source_note = "This was in Motor Trend magazine, hence the `mt`."
-    )
-
-  # Expect that both source notes will be correctly produced
-  tbl_latex %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
-})
-
-test_that("A gt table contains the correct placement of row groups", {
-
-  # Create a `tbl_latex` object with `gt()`; this table
-  # contains a row groups in a specified order
-  tbl_latex <-
-    mtcars %>%
-    gt(rownames_to_stub = TRUE) %>%
-    tab_row_group(
-      label = "Mazda",
-      rows = c("Mazda RX4", "Mazda RX4 Wag")
-    )
-
-  # Expect that the row groups will be correctly produced
-  tbl_latex %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
-
-  # Create a `tbl_latex` object with `gt()`; this table
-  # contains a three row groups and the use of `row_group_order()`
-  # will specify a particular ordering
-  tbl_latex <-
-    gt(mtcars, rownames_to_stub = TRUE) %>%
-    tab_row_group(
-      label = "Mercs",
-      rows = contains("Merc")
-    ) %>%
-    tab_row_group(
-      label = "Mazda",
-      rows = c("Mazda RX4", "Mazda RX4 Wag")
-    ) %>%
-    row_group_order(groups = c(NA, "Mazda", "Mercs"))
-
-  # Expect that the row groups will be correctly produced
   tbl_latex %>%
     as_latex() %>%
     as.character() %>%

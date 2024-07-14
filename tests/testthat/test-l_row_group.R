@@ -32,3 +32,43 @@ test_that("row_group_order() works correctly", {
     )
   )
 })
+
+test_that("A gt table contains the correct placement of row groups", {
+
+  # Create a `tbl_latex` object with `gt()`; this table
+  # contains a row groups in a specified order
+  tbl_latex <-
+    mtcars %>%
+    gt(rownames_to_stub = TRUE) %>%
+    tab_row_group(
+      label = "Mazda",
+      rows = c("Mazda RX4", "Mazda RX4 Wag")
+    )
+
+  # Expect that the row groups will be correctly produced
+  tbl_latex %>%
+    as_latex() %>%
+    as.character() %>%
+    expect_snapshot()
+
+  # Create a `tbl_latex` object with `gt()`; this table
+  # contains a three row groups and the use of `row_group_order()`
+  # will specify a particular ordering
+  tbl_latex <-
+    gt(mtcars, rownames_to_stub = TRUE) %>%
+    tab_row_group(
+      label = "Mercs",
+      rows = contains("Merc")
+    ) %>%
+    tab_row_group(
+      label = "Mazda",
+      rows = c("Mazda RX4", "Mazda RX4 Wag")
+    ) %>%
+    row_group_order(groups = c(NA, "Mazda", "Mercs"))
+
+  # Expect that the row groups will be correctly produced
+  tbl_latex %>%
+    as_latex() %>%
+    as.character() %>%
+    expect_snapshot()
+})

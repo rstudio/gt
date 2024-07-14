@@ -1,6 +1,4 @@
-generate_html_units <- function(input) {
-  input %>% define_units() %>% render_units(context = "html")
-}
+# units helper tests -----------------------------------------------------------
 
 test_that("Units are rendered properly in HTML", {
 

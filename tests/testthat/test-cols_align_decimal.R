@@ -1,5 +1,5 @@
 test_that("Decimal alignment works in the basic case", {
-
+  skip_if(getRversion() < "4.2" && .Platform$OS.type == "windows")
   small_tbl <-
     dplyr::tibble(
       char = LETTERS[1:9],

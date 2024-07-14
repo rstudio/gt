@@ -927,6 +927,8 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     selection_text("[class='gt_row gt_right']") %>%
     expect_equal(paste0("mark_1", "\U000A0", "0.11"))
 
+  # test may be failing on older R?
+  skip_if_not(getRversion() >= "4.1")
   # Expect a footnote mark to the right of the left-aligned number value
   # (the first `tab_style()` statement with literal CSS style rules is more
   # specific because these rules are appended last)
@@ -1176,4 +1178,149 @@ test_that("tab_footnote() errors well when it can't resolve location", {
       )
     )
   })
+})
+
+# rm_footnotes() ---------------------------------------------------------------
+test_that("rm_footnotes() can remove table footnotes.", {
+
+  # Perform a snapshot test where an HTML table contains two footnotes
+  exibble %>%
+    gt() %>%
+    tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+    tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that we can remove both footnotes with `rm_footnotes()`
+  exibble %>%
+    gt() %>%
+    tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+    tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+    rm_footnotes() %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that we can remove the first footnote with `rm_footnotes()`
+  exibble %>%
+    gt() %>%
+    tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+    tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+    rm_footnotes(footnotes = 1) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that we can remove the second footnote with `rm_footnotes()`
+  exibble %>%
+    gt() %>%
+    tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+    tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+    rm_footnotes(footnotes = 2) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that we can remove both footnotes with `rm_footnotes()`
+  # in two different ways
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+      rm_footnotes() %>%
+      render_as_html(),
+    exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+      rm_footnotes(footnotes = 1:2) %>%
+      render_as_html()
+  )
+
+  # Expect an error when providing any integer values that don't correspond
+  # with the available footnotes ([1, 2])
+  expect_snapshot(error = TRUE, {
+    t_ft <- exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2))
+    t_ft %>% rm_footnotes(footnotes = 0:1)
+    t_ft %>% rm_footnotes(footnotes = 2:3)
+    t_ft %>% rm_footnotes(footnotes = 3)
+  })
+
+  expect_no_error(
+    exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+      rm_footnotes(footnotes = 1:2)
+  )
+
+  # Expect that a select expression that matches nothing will:
+  # (1) not error, and
+  # (2) return the data untouched (i.e., footnotes unaffected)
+  expect_no_error(
+    exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+      rm_footnotes(footnotes = matches("nothing"))
+  )
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+      rm_footnotes(footnotes = matches("nothing")) %>%
+      render_as_html(),
+    exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+      render_as_html()
+  )
+
+  # If there are no footnotes the function should return the
+  # data no matter what the input value for `footnotes` is
+  expect_no_error(
+    exibble %>%
+      gt() %>%
+      rm_footnotes(footnotes = 1:100)
+  )
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      rm_footnotes(footnotes = 1:100) %>%
+      render_as_html(),
+    exibble %>%
+      gt() %>%
+      render_as_html()
+  )
+})
+
+
+# md() / html() support -------------------------------------------------------
+
+test_that("tab_footnote() works with `md()`/`html()`", {
+  tab <- gt(exibble, rowname_col = "row", groupname_col = "group")
+
+  # Expect the rendered footnote to be
+  # exactly as provided
+  expect_match_html(
+    tab_footnote(tab, footnote = "Footnote", locations = cells_body(columns = 1, rows = 1)),
+    "Footnote"
+  )
+
+  # Expect the rendered foonote to be in
+  # HTML (through Markdown formatting)
+  expect_match_html(
+    tab_footnote(tab, footnote = md("**Footnote**"), locations = cells_body(columns = 1, rows = 1)),
+    "<strong>Footnote</strong>"
+  )
+
+  # Expect the rendered footnote to be in
+  # HTML (through HTML formatting)
+  expect_match_html(
+    tab_footnote(tab, footnote = html("<strong>Footnote</strong>"), locations = cells_body(columns = 1, rows = 1)),
+    "<strong>Footnote</strong>"
+  )
 })

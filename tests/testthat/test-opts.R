@@ -46,6 +46,7 @@ test_that("opt_row_striping() sets the correct options", {
     expect_false()
 })
 
+
 test_that("opt_align_table_header() sets the correct options", {
 
   exibble %>%

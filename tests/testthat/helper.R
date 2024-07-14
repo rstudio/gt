@@ -21,6 +21,29 @@ selection_text <- function(html, selection) {
   rvest::html_text(rvest::html_nodes(html, selection))
 }
 
+expect_selection_text_from_gt <- function(gt_tbl, selection, expected, ...) {
+  html <- xml2::read_html(render_as_html(gt_tbl))
+  expect_equal(
+    selection_text(html, selection),
+    expected,
+    ...
+  )
+}
+
+expect_equal_gt <- function(gt_tbl1, gt_tbl2, f = render_as_html, ignore_id = FALSE, ...) {
+  gt_tbl1 <- f(gt_tbl1)
+  gt_tbl2 <- f(gt_tbl2)
+  if (ignore_id) {
+    gt_tbl1 <- gsub("id=\"[a-z]*?\"", "", gt_tbl1)
+    gt_tbl2 <- gsub("id=\"[a-z]*?\"", "", gt_tbl2)
+  }
+  expect_equal(
+    gt_tbl1,
+    gt_tbl2
+  )
+}
+
+
 # Helper function to compare a contiguous set of HTML fragments with raw html
 html_fragment_within <- function(raw_html, ...) {
   grepl(paste0("\\Q", c(...), "\\E", "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)
@@ -97,8 +120,139 @@ get_row_group_text <- function(tbl_html) {
   )
 }
 
+generate_html_units <- function(input) {
+  render_units(
+    define_units(input),
+    context = "html"
+  )
+}
+
 # Create a shortened version of `mtcars`
 mtcars_short <- datasets::mtcars[1:5, ]
 
 # Create a shortened version of `iris`
 iris_short <- datasets::iris[1:5, ]
+
+exibble_test <- function(
+    row_group_as_column = FALSE,
+    use_row_groups = FALSE,
+    use_row_labels = FALSE,
+    add_group_summaries = FALSE,
+    add_grand_summary = FALSE,
+    add_styles = FALSE,
+    add_footnotes = FALSE
+) {
+
+  if (add_group_summaries) use_row_groups <- TRUE
+
+  tbl <-
+    exibble %>%
+    gt(
+      rowname_col = if (use_row_labels) "row" else NULL,
+      groupname_col = if (use_row_groups) "group" else NULL,
+      row_group_as_column = row_group_as_column
+    ) %>%
+    tab_header(
+      title = md("Data listing from **exibble**"),
+      subtitle = md("`exibble` is an R dataset")
+    ) %>%
+    tab_stubhead("S.L.") %>%
+    tab_spanner(label = "timing", columns = c(date, time, datetime)) %>%
+    tab_source_note("Source note #1") %>%
+    tab_source_note("Source note #2")
+
+  if (add_group_summaries) {
+
+    tbl <-
+      tbl %>%
+      summary_rows(
+        groups = everything(),
+        columns = c(num, currency),
+        fns = list(
+          min = ~min(., na.rm = TRUE),
+          max = ~max(., na.rm = TRUE),
+          avg = ~mean(., na.rm = TRUE)
+        ),
+        fmt = list(~ fmt_number(., use_seps = FALSE))
+      )
+  }
+
+  if (add_grand_summary) {
+
+    tbl <-
+      tbl %>%
+      grand_summary_rows(
+        columns = c(num, currency),
+        fns = list(
+          min = ~min(., na.rm = TRUE),
+          max = ~max(., na.rm = TRUE),
+          avg = ~mean(., na.rm = TRUE)
+        ),
+        fmt = list(~ fmt_number(., use_seps = FALSE))
+      )
+  }
+
+  if (add_styles) {
+
+    tbl <-
+      tbl %>%
+      tab_style(style = cell_fill("lightblue"), cells_title("title")) %>%
+      tab_style(style = cell_fill("aqua"), cells_title("subtitle")) %>%
+      tab_style(style = cell_fill("aquamarine"), cells_column_labels()) %>%
+      tab_style(style = cell_fill("gainsboro"), cells_stubhead()) %>%
+      tab_style(style = cell_fill("gray85"), cells_body(columns = num)) %>%
+      tab_style(style = cell_fill("gray80"), cells_body(columns = char)) %>%
+      tab_style(style = cell_fill("gray75"), cells_body(columns = fctr)) %>%
+      tab_style(style = cell_fill("gray70"), cells_body(columns = date)) %>%
+      tab_style(style = cell_fill("gray65"), cells_body(columns = time)) %>%
+      tab_style(style = cell_fill("gray60"), cells_body(columns = datetime)) %>%
+      tab_style(style = cell_fill("gray55"), cells_body(columns = currency)) %>%
+      tab_style(style = cell_fill("peachpuff"), cells_stub()) %>%
+      tab_style(style = cell_fill("wheat"), cells_source_notes()) %>%
+      tab_style(style = cell_fill("yellow"), cells_column_spanners(spanners = "timing"))
+
+    if (!use_row_labels) {
+      tbl <- tab_style(tbl, style = cell_fill("gray50"), cells_body(columns = row))
+    }
+
+    if (use_row_groups) {
+      tbl <- tab_style(tbl, style = cell_fill("lightcyan"), cells_row_groups())
+    } else {
+      tbl <- tab_style(tbl, style = cell_fill("gray45"), cells_body(columns = group))
+    }
+
+    if (add_group_summaries) {
+      tbl <-
+        tbl %>%
+        tab_style(
+          style = cell_fill("darkseagreen"),
+          locations = list(
+            cells_summary(columns = "num"),
+            cells_summary(columns = "currency")
+          )
+        ) %>%
+        tab_style(
+          style = cell_fill("orange"),
+          locations = cells_stub_summary()
+        )
+    }
+
+    if (add_grand_summary) {
+      tbl <-
+        tbl %>%
+        tab_style(
+          style = cell_fill(),
+          locations = list(
+            cells_grand_summary(columns = "num"),
+            cells_grand_summary(columns = "currency")
+          )
+        ) %>%
+        tab_style(
+          style = cell_fill("red"),
+          locations = cells_stub_grand_summary()
+        )
+    }
+  }
+
+  tbl
+}

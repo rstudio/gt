@@ -18,16 +18,16 @@ tests/gt-examples
 tests/performance-monitoring
 tests/testthat/test-as_raw_html.R
 
+tests/testthat/_snaps/as_i_html.md
+tests/testthat/test-as_i_html.R
+
 tests/testthat/test-as_word.R
 tests/testthat/_snaps/as_word.md
-
-tests/testthat/test-color_handling.R
 
 tests/testthat/test-cols_align_decimal.R
 tests/testthat/_snaps/cols_align_decimal.md
 
 tests/testthat/test-cols_label.R
-tests/testthat/test-cols_label_with.R
 
 tests/testthat/test-cols_merge.R
 tests/testthat/_snaps/cols_merge.md
@@ -38,10 +38,8 @@ tests/testthat/_snaps/cols_width.md
 tests/testthat/test-data_color.R
 tests/testthat/_snaps/data_color.md
 
-tests/testthat/test-empty_tbl.R
 tests/testthat/test-escaping.R
-tests/testthat/test-extract_body.R
-tests/testthat/test-extract_cells.R
+tests/testthat/test-extract.R
 
 tests/testthat/test-fmt_auto.R
 tests/testthat/_snaps/fmt_auto.md
@@ -84,6 +82,9 @@ tests/testthat/test-fmt_scientific.R
 tests/testthat/test-fmt_spelled_num.R
 tests/testthat/test-fmt_url.R
 
+tests/testthat/test-format_vec.R
+tests/testthat/_snaps/format_vec.md
+
 tests/testthat/test-footer.R
 tests/testthat/_snaps/footer.md
 
@@ -97,9 +98,7 @@ tests/testthat/test-gt_split.R
 tests/testthat/test-gtsave.R
 tests/testthat/_snaps/gtsave.md
 
-tests/testthat/test-h_md_html.R
 tests/testthat/test-helper_functions.R
-tests/testthat/test-i_html.R
 
 tests/testthat/test-image.R
 tests/testthat/_snaps/image.md
@@ -110,13 +109,13 @@ tests/testthat/test-input_data_validation.R
 tests/testthat/test-l_summary_rows.R
 tests/testthat/_snaps/l_summary_rows.md
 
-tests/testthat/test-l_table_parts.R
-tests/testthat/_snaps/l_table_parts.md
+tests/testthat/test-l_stubhead.R
+tests/testthat/_snaps/l_stubhead.md
 
 tests/testthat/_snaps/location_cells.md
 tests/testthat/test-location_cells.R
 
-tests/testthat/test-opt_functions.R
+tests/testthat/test-opts.R
 
 tests/testthat/test-removal_functions.R
 tests/testthat/_snaps/removal_functions.md
@@ -139,22 +138,16 @@ tests/testthat/test-substitution.R
 tests/testthat/test-summary_rows.R
 tests/testthat/_snaps/summary_rows.md
 
-tests/testthat/test-tab_footnote.R
-tests/testthat/_snaps/tab_footnote.md
+tests/testthat/test-footnote.R
+tests/testthat/_snaps/footnote.md
 
 tests/testthat/test-tab_info.R
 
 tests/testthat/test-tab_options.R
 tests/testthat/_snaps/tab_options.md
 
-tests/testthat/test-tab_remove.R
-tests/testthat/_snaps/tab_remove.md
-
-tests/testthat/test-tab_spanner_delim.R
-tests/testthat/_snaps/tab_spanner_delim.md
-
-tests/testthat/test-tab_spanner.R
-tests/testthat/_snaps/tab_spanner.md
+tests/testthat/test-spanner.R
+tests/testthat/_snaps/spanner.md
 
 tests/testthat/test-tab_stub_indent.R
 tests/testthat/_snaps/tab_stub_indent.md
@@ -162,21 +155,13 @@ tests/testthat/_snaps/tab_stub_indent.md
 tests/testthat/test-tab_style.R
 tests/testthat/_snaps/tab_style.md
 
-tests/testthat/test-tab_style_body.R
-tests/testthat/_snaps/tab_style_body.md
-
-tests/testthat/test-table_parts.R
-tests/testthat/_snaps/table_parts.md
-
 tests/testthat/test-text_transform.R
 tests/testthat/_snaps/text_transform.md
 
-tests/testthat/test-util_functions.R
-tests/testthat/test-utils_formatters.R
-tests/testthat/test-utils_plots.R
-tests/testthat/test-utils_render_html.R
-tests/testthat/test-utils_units.R
-tests/testthat/test-utils.R
+tests/testthat/_snaps/units.md
+tests/testthat/test-units.R
 
-tests/testthat/test-vec_fmt.R
-tests/testthat/_snaps/vec_fmt.md
+tests/testthat/test-util_functions.R
+tests/testthat/test-utils_render_html.R
+tests/testthat/test-utils.R
+tests/testthat/test-utils_color.R

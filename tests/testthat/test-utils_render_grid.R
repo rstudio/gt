@@ -536,7 +536,7 @@ test_that("Classes and styles are parsed correctly", {
 
 # Feature tests -----------------------------------------------------------
 
-test_that("as_gtable renders svg entries", {
+test_that("as_gtable() renders svg entries", {
 
   df <- data.frame(
     x = 1,

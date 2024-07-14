@@ -358,40 +358,6 @@ test_that("remove_html() works correctly", {
     expect_equal(remove_html(html_text_1))
 })
 
-test_that("as_locations() works correctly", {
-
-  # Define `locations` as a `cells_body` object
-  locations <-
-    cells_body(
-      columns = hp,
-      rows = c("Datsun 710", "Valiant")
-    )
-
-  # Expect certain structural features for a `locations` object
-  locations %>% expect_length(2)
-  locations[[1]] %>% expect_length(2)
-  locations[[1]] %>% expect_s3_class(c("quosure", "formula"))
-  locations[[2]] %>% expect_s3_class(c("quosure", "formula"))
-
-  # Upgrade `locations` to a list of locations
-  locations_list <- as_locations(locations)
-
-  # Expect certain structural features for this `locations_list` object
-  locations_list %>% expect_length(1)
-  locations_list[[1]] %>% expect_length(2)
-  locations_list[[1]] %>% expect_s3_class(c("cells_body", "location_cells"))
-
-  # Define locations as a named vector
-  locations <-
-    c(
-      columns = "hp",
-      rows = c("Datsun 710", "Valiant"))
-
-  # Expect an error with `locations` object structured in this way
-  expect_error(
-    as_locations(locations))
-})
-
 test_that("process_footnote_marks() works correctly", {
 
   process_footnote_marks(
