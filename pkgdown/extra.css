@@ -1,0 +1,79 @@
+body {
+  font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+}
+
+code {
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+}
+
+h1, .h1 {
+  font-size: 3rem;
+  line-height: 1em;
+}
+
+h2, .h2 {
+  font-size: 2rem;
+  line-height: 1em;
+}
+
+h3, .h3 {
+  font-size: 1.75rem;
+}
+
+h4, .h4 {
+  font-size: 1.25rem;
+}
+
+dt {
+  color: rgb(38, 38, 38);
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-underline-offset: 4px;
+  font-family: monospace;
+  border-top-style: dotted;
+  border-top-width: 1px;
+  border-top-color: gray;
+  margin-bottom: 5px;
+  padding-top: 5px;
+}
+
+img {
+  border-radius: 6px;
+}
+
+.roles {
+    color: rgb(3, 153, 3) !important;
+}
+
+.me-auto {
+    color: blue !important;
+    animation: color-change 5s infinite !important;
+}
+
+@keyframes color-change {
+  0% { color: #9370DB; }
+  50% { color: #00BFFF; }
+  100% { color: #9370DB; }
+}
+
+.active .nav-link {
+  color: #F85714 !important;
+}
+
+.text-muted {
+  color: rgb(0, 141, 158) !important
+}
+
+dd > p:nth-child(1) > em {
+  color: #4169E1 !important;
+  margin-bottom: 4px !important
+}
+
+dd > p:nth-child(1) {
+  margin-bottom: -5px !important;
+  margin-left: -3px !important;
+}
+
+dd > p:nth-child(2) {
+  margin-left: -6px !important;
+}

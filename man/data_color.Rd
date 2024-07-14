@@ -28,32 +28,71 @@ data_color(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns, rows}{The columns and rows to which cell data color operations
-are constrained.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{direction}{Should the color computations be performed column-wise or
-row-wise? By default this is set with the \code{"column"} keyword and colors
-will be applied down columns. The alternative option with the \code{"row"}
-keyword ensures that the color mapping works across rows.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{target_columns}{For indirect column coloring treatments, we can supply
-the columns that will receive the styling. The necessary precondition is
-that we must use \code{direction = "column"}. If \code{columns} resolves to a single
-column then we may use one or more columns in \code{target_columns}. If on the
-other hand \code{columns} resolves to multiple columns, then \code{target_columns}
-must resolve to the same multiple.}
+\item{columns}{\emph{Columns to target}
 
-\item{method}{A method for computing color based on the data within body
-cells. Can be \code{"auto"} (the default), \code{"numeric"}, \code{"bin"}, \code{"quantile"},
-or \code{"factor"}. The \code{"auto"} method will automatically choose the
-\code{"numeric"} method for numerical input data or the \code{"factor"} method for
-any non-numeric inputs.}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
-\item{palette}{A vector of color names, a color class that can be cast to a
-vector of color names, the name of an \strong{RColorBrewer} palette, the name of
-a \strong{viridis} palette, or a discrete palette accessible from the
+The columns to which cell data color operations are constrained. Can either
+be a series of column names provided in \code{c()}, a vector of column indices,
+or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+form a constraint for cell data color operations. The default
+\code{\link[=everything]{everything()}} results in all rows in \code{columns} being formatted.
+Alternatively, we can supply a vector of row IDs within \code{c()}, a vector of
+row indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).
+We can also use expressions to filter down to the rows we need
+(e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{direction}{\emph{Color computation direction}
+
+\verb{singl-kw:[column|row]} // \emph{default:} \code{"column"}
+
+Should the color computations be performed column-wise or row-wise? By
+default this is set with the \code{"column"} keyword and colors will be applied
+down columns. The alternative option with the \code{"row"} keyword ensures that
+the color mapping works across rows.}
+
+\item{target_columns}{\emph{Indirect columns to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{NULL} \code{optional}
+
+For indirect column coloring treatments, we can supply the columns that
+will receive the styling. The necessary precondition is that we must use
+\code{direction = "column"}. If \code{columns} resolves to a single column then we
+may use one or more columns in \code{target_columns}. If on the other hand
+\code{columns} resolves to multiple columns, then \code{target_columns} must resolve
+to the same multiple.}
+
+\item{method}{\emph{Color computation method}
+
+\verb{singl-kw:[auto|numeric|bin|quantile|factor]} // \emph{default:} \code{"auto"}
+
+A method for computing color based on the data within body cells. Can be
+\code{"auto"} (the default), \code{"numeric"}, \code{"bin"}, \code{"quantile"}, or \code{"factor"}.
+The \code{"auto"} method will automatically choose the \code{"numeric"} method for
+numerical input data or the \code{"factor"} method for any non-numeric inputs.}
+
+\item{palette}{\emph{Color palette}
+
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+A vector of color names, a color class that can be cast to a vector of
+color names, the name of an \strong{RColorBrewer} palette, the name of a
+\strong{viridis} palette, or a discrete palette accessible from the
 \strong{paletteer} package using the \verb{<package>::<palette>} syntax (e.g.,
 \code{"wesanderson::IsleofDogs1"}). If providing a vector of colors as a
 palette, each color value provided must either be a color name (Only R/X11
@@ -61,63 +100,113 @@ color names or CSS 3.0 color names) or a hexadecimal string in the form of
 \code{"#RRGGBB"} or \code{"#RRGGBBAA"}. If nothing is provided here, the default R
 color palette is used (i.e., the colors from \code{palette()}).}
 
-\item{domain}{The possible values that can be mapped. For the \code{"numeric"} and
-\code{"bin"} methods, this can be a numeric range specified with a length of two
-vector. Representative numeric data is needed for the \code{"quantile"} method
-and categorical data must be used for the \code{"factor"} method. If \code{NULL} (the
+\item{domain}{\emph{Value domain}
+
+\verb{vector<numeric|integer|character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The possible values that can be mapped. For the \code{"numeric"} and \code{"bin"}
+methods, this can be a numeric range specified with a length of two vector.
+Representative numeric data is needed for the \code{"quantile"} method and
+categorical data must be used for the \code{"factor"} method. If \code{NULL} (the
 default value), the values in each column or row (depending on \code{direction})
 value will represent the domain.}
 
-\item{bins}{For \code{method = "bin"} this can either be a numeric vector of two
-or more unique cut points, or, a single numeric value (greater than or
-equal to \code{2}) giving the number of intervals into which the domain values
-are to be cut. By default, this is \code{8}.}
+\item{bins}{\emph{Specification of bin number}
 
-\item{quantiles}{For \code{method = "quantile"} this is the number of equal-size
-quantiles to use. By default, this is set to \code{4}.}
+\verb{scalar<numeric|integer>} // \emph{default:} \code{8}
 
-\item{levels}{For \code{method = "factor"} this allows for an alternate way of
-specifying levels. If anything is provided here then any value supplied to
-\code{domain} will be ignored. This should be a character vector of unique
-values.}
+For \code{method = "bin"} this can either be a numeric vector of two or more
+unique cut points, or, a single numeric value (greater than or equal to
+\code{2}) giving the number of intervals into which the domain values are to be
+cut. By default, this is \code{8}.}
 
-\item{ordered}{For \code{method = "factor"}, setting this to \code{TRUE} means that the
-vector supplied to \code{domain} will be treated as being in the correct order
-if that vector needs to be coerced to a factor. By default, this is
-\code{FALSE}.}
+\item{quantiles}{\emph{Specification of quantile number}
 
-\item{na_color}{The color to use for missing values. By default (with
-\code{na_color = NULL}) gray, \code{"#808080"}, will be used.}
+\verb{scalar<numeric|integer>} // \emph{default:} \code{4}
 
-\item{alpha}{An optional, fixed alpha transparency value that will be applied
-to all of the \code{colors} provided (regardless of whether a color palette was
-directly supplied or generated through a color mapping function).}
+For \code{method = "quantile"} this is the number of equal-size quantiles to
+use. By default, this is set to \code{4}.}
 
-\item{reverse}{Should the colors computed operate in reverse order?
-If \code{TRUE} then colors that normally change from red to blue will change in
-the opposite direction. By default, this is \code{FALSE}.}
+\item{levels}{\emph{Specification of factor levels}
 
-\item{fn}{A color-mapping function. The function should be able to take a
-vector of data values as input and return an equal-length vector of color
-values. The \verb{col_*()} functions provided in the \strong{scales} package (i.e.,
-\code{\link[scales:col_numeric]{scales::col_numeric()}}, \code{\link[scales:col_numeric]{scales::col_bin()}}, and \code{\link[scales:col_numeric]{scales::col_factor()}})
-can be invoked here with options, as those functions themselves return a
-color-mapping function.}
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-\item{apply_to}{Which style element should the colors be applied to? Options
-include the cell background (the default, given as \code{"fill"}) or the cell
-text (\code{"text"}).}
+For \code{method = "factor"} this allows for an alternate way of specifying
+levels. If anything is provided here then any value supplied to \code{domain}
+will be ignored. This should be a character vector of unique values.}
 
-\item{autocolor_text}{An option to let \strong{gt} modify the coloring of text
-within cells undergoing background coloring. This will result in better
-text-to-background color contrast. By default, this is set to \code{TRUE}.}
+\item{ordered}{\emph{Use an ordered factor}
 
-\item{contrast_algo}{The color contrast algorithm to use when
-\code{autocolor_text = TRUE}. By default this is \code{"apca"} (Accessible Perceptual
-Contrast Algorithm) and the alternative to this is \code{"wcag"} (Web Content
-Accessibility Guidelines).}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
-\item{colors}{Deprecated. Use the \code{fn} argument instead to provide a
+For \code{method = "factor"}, setting this to \code{TRUE} means that the vector
+supplied to \code{domain} will be treated as being in the correct order if that
+vector needs to be coerced to a factor. By default, this is \code{FALSE}.}
+
+\item{na_color}{\emph{Default color for \code{NA} values}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The color to use for missing values. By default (with \code{na_color = NULL}),
+the color gray (\code{"#808080"}) will be used. This option has no effect if
+providing a color-mapping function to \code{fn}.}
+
+\item{alpha}{\emph{Transparency value}
+
+\verb{scalar<numeric|integer>(0>=val>=1)} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional, fixed alpha transparency value that will be applied to all
+color palette values (regardless of whether a color palette was directly
+supplied in \code{palette} or generated through a color mapping function via
+\code{fn}).}
+
+\item{reverse}{\emph{Reverse order of computed colors}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should the colors computed operate in the reverse order? If \code{TRUE} then
+colors that normally change from red to blue will change in the opposite
+direction.}
+
+\item{fn}{\emph{Color-mapping function}
+
+\code{function} // \emph{default:} \code{NULL} (\code{optional})
+
+A color-mapping function. The function should be able to take a vector of
+data values as input and return an equal-length vector of color values. The
+\verb{scales::col_*()} functions (i.e.,\code{\link[scales:col_numeric]{scales::col_numeric()}},
+\code{\link[scales:col_numeric]{scales::col_bin()}}, and \code{\link[scales:col_numeric]{scales::col_factor()}}) can be invoked here with
+options, as those functions themselves return a color-mapping function.}
+
+\item{apply_to}{\emph{How to apply color}
+
+\verb{singl-kw:[fill|text]} // \emph{default:} \code{"fill"}
+
+Which style element should the colors be applied to? Options include the
+cell background (the default, given as \code{"fill"}) or the cell text
+(\code{"text"}).}
+
+\item{autocolor_text}{\emph{Automatically recolor text}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to let \strong{gt} modify the coloring of text within cells undergoing
+background coloring. This will result in better text-to-background color
+contrast. By default, this is set to \code{TRUE}.}
+
+\item{contrast_algo}{\emph{Color contrast algorithm choice}
+
+\verb{singl-kw:[apca|wcag]} // \emph{default:} \code{"apca"}
+
+The color contrast algorithm to use when \code{autocolor_text = TRUE}. By
+default this is \code{"apca"} (Accessible Perceptual Contrast Algorithm) and the
+alternative to this is \code{"wcag"} (Web Content Accessibility Guidelines).}
+
+\item{colors}{\emph{\link{Deprecated} Color mapping function}
+
+\code{function} // \emph{default:} \code{NULL} (\code{optional})
+
+This argument is deprecated. Use the \code{fn} argument instead to provide a
 \strong{scales}-based color-mapping function. If providing a palette, use the
 \code{palette} argument.}
 }
@@ -125,8 +214,8 @@ Accessibility Guidelines).}
 An object of class \code{gt_tbl}.
 }
 \description{
-It's possible to add color to data cells according to their values with the
-\code{data_color()} function. There is a multitude of ways to perform data cell
+It's possible to add color to data cells according to their values with
+\code{data_color()} There is a multitude of ways to perform data cell
 colorizing here:
 \itemize{
 \item targeting: we can constrain which columns and rows should receive the
@@ -140,9 +229,8 @@ quantiles) and the function will generate colors accordingly; the \code{method}
 argument controls this through keywords and other arguments act as inputs to
 specific methods
 \item coloring function: a custom function can be supplied to the \code{fn} argument
-for finer control over color evaluation with data; the color mapping
-\verb{col_*()} functions in the \strong{scales} package can be used here or any
-function you might want to define
+for finer control over color evaluation with data; the \verb{scales::col_*()}
+color mapping functions can be used here or any function you might want to define
 \item color palettes: with \code{palette} we could supply a vector of colors, a
 \strong{virdis} or \strong{RColorBrewer} palette name, or, a palette from the
 \strong{paletteer} package
@@ -160,7 +248,7 @@ automatically recolor the foreground text to provide the best contrast (can
 be deactivated with \code{autocolor_text = FALSE})
 }
 
-The \code{data_color()} function won't fail with the default options used, but
+\code{data_color()} won't fail with the default options used, but
 that won't typically provide you the type of colorization you really need.
 You can however safely iterate through a collection of different options
 without running into too many errors.
@@ -206,7 +294,7 @@ more complex predicate expression.
 \section{Color computation methods}{
 
 
-The \code{data_color()} function offers four distinct methods for computing color
+\code{data_color()} offers four distinct methods for computing color
 based on cell data values. They are set by the \code{method} argument and the
 options go by the keywords \code{"numeric"}, \code{"bin"}, \code{"quantile"}, and
 \code{"factor"}. There are other arguments in \code{data_color()} that variously
@@ -216,8 +304,8 @@ and which options are available.
 \subsection{\code{"numeric"}}{
 
 The \code{"numeric"} method provides a simple linear mapping from continuous
-numeric data to an interpolated \code{palette}. Internally, this uses the
-\code{\link[scales:col_numeric]{scales::col_numeric()}} function. This method is suited for numeric data cell
+numeric data to an interpolated \code{palette}. Internally, this uses
+\code{\link[scales:col_numeric]{scales::col_numeric()}}. This method is suited for numeric data cell
 values and can make use of a supplied \code{domain} value, in the form of a
 two-element numeric vector describing the range of values, if provided.
 }
@@ -225,30 +313,30 @@ two-element numeric vector describing the range of values, if provided.
 \subsection{\code{"bin"}}{
 
 The \code{"bin"} method provides a mapping of continuous numeric data to
-value-based bins. Internally, this uses the \code{\link[scales:col_numeric]{scales::col_bin()}} function
-which itself uses \code{\link[base:cut]{base::cut()}}. As with the \code{"numeric"} method, \code{"bin"} is
-meant for numeric data cell values. The use of a \code{domain} value is supported
-with this method. The \code{bins} argument in \code{data_color()} is specific to this
-method, offering the ability to: (1) specify the number of bins, or (2)
-provide a vector of cut points.
+value-based bins. Internally, this uses \code{\link[scales:col_numeric]{scales::col_bin()}} which itself
+uses \code{\link[base:cut]{base::cut()}}. As with the \code{"numeric"} method, \code{"bin"} is meant for
+numeric data cell values. The use of a \code{domain} value is supported with this
+method. The \code{bins} argument in \code{data_color()} is specific to this method,
+offering the ability to: (1) specify the number of bins, or (2) provide a
+vector of cut points.
 }
 
 \subsection{\code{"quantile"}}{
 
 The \code{"quantile"} method provides a mapping of continuous numeric data to
-quantiles. Internally, this uses the \code{\link[scales:col_numeric]{scales::col_quantile()}} function which
-itself uses \code{\link[stats:quantile]{stats::quantile()}}. Input data cell values should be numeric, as
-with the \code{"numeric"} and \code{"bin"} methods. A numeric \code{domain} value is
-supported with this method. The \code{quantiles} argument in \code{data_color()}
-controls the number of equal-size quantiles to use.
+quantiles. Internally, this uses \code{\link[scales:col_numeric]{scales::col_quantile()}} which itself uses
+\code{\link[stats:quantile]{stats::quantile()}}. Input data cell values should be numeric, as with the
+\code{"numeric"} and \code{"bin"} methods. A numeric \code{domain} value is supported with
+this method. The \code{quantiles} argument in \code{data_color()} controls the number
+of equal-size quantiles to use.
 }
 
 \subsection{\code{"factor"}}{
 
 The \code{"factor"} method provides a mapping of factors to colors. With discrete
 palettes, color interpolation is used when the number of factors does not
-match the number of colors in the palette. Internally, this uses the
-\code{\link[scales:col_numeric]{scales::col_factor()}} function. Input data cell values can be of any type
+match the number of colors in the palette. Internally, this uses
+\code{\link[scales:col_numeric]{scales::col_factor()}}. Input data cell values can be of any type
 (i.e., factor, character, numeric values, and more are supported). The
 optional input to \code{domain} should take the form of categorical data. The
 \code{levels} and \code{ordered} arguments in \code{data_color()} support this method.
@@ -339,7 +427,7 @@ Accessibility Guidelines}).
 \section{Examples}{
 
 
-The \code{data_color()} function can be used without any supplied arguments to
+\code{data_color()} can be used without any supplied arguments to
 colorize a \strong{gt} table. Let's do this with the \code{\link{exibble}} dataset:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
@@ -355,8 +443,8 @@ What's happened is that \code{data_color()} applies background colors to all cel
 of every column with the default palette in R (accessed through \code{palette()}).
 The default method for applying color is \code{"auto"}, where numeric values will
 use the \code{"numeric"} method and character or factor values will use the
-\code{"factor"} method. The text color will be undergo modification automatically
-to maximize contrast (since \code{autocolor_text} is \code{TRUE} by default).
+\code{"factor"} method. The text color undergoes an automatic modification that
+maximizes contrast (since \code{autocolor_text} is \code{TRUE} by default).
 
 You can use any of the available \code{method} keywords and \strong{gt} will only apply
 color to the compatible values. Let's use the \code{"numeric"} method and supply
@@ -407,15 +495,16 @@ to the \code{population} column with the \code{"numeric"} method, use a domain b
 2.5 and 3.4 million, and specify \code{palette = "viridis"}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(country_name == "Mongolia") |>
+  dplyr::filter(country_name == "Bangladesh") |>
   dplyr::select(-contains("code")) |>
-  tail(10) |>
+  dplyr::slice_tail(n = 10) |>
   gt() |>
   data_color(
     columns = population,
     method = "numeric",
     palette = "viridis",
-    domain = c(2.5E6, 3.4E6)
+    domain = c(150E6, 170E6),
+    reverse = TRUE
   )
 }\if{html}{\out{</div>}}
 
@@ -426,19 +515,20 @@ to the \code{population} column with the \code{"numeric"} method, use a domain b
 We can alternatively use the \code{fn} argument for supplying the \strong{scales}-based
 function \code{\link[scales:col_numeric]{scales::col_numeric()}}. That function call will itself return a
 function (which is what the \code{fn} argument actually requires) that takes a
-vector of numeric values and returns color values. Here is the more complex
+vector of numeric values and returns color values. Here is an alternate
 version of the code that returns the same table as in the previous example.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(country_name == "Mongolia") |>
+  dplyr::filter(country_name == "Bangladesh") |>
   dplyr::select(-contains("code")) |>
-  tail(10) |>
+  dplyr::slice_tail(n = 10) |>
   gt() |>
   data_color(
     columns = population,
     fn = scales::col_numeric(
       palette = "viridis",
-      domain = c(2.5E6, 3.4E6)
+      domain = c(150E6, 170E6),
+      reverse = TRUE
     )
   )
 }\if{html}{\out{</div>}}
@@ -448,11 +538,11 @@ version of the code that returns the same table as in the previous example.
 }}
 
 Using your own function in \code{fn} can be very useful if you want to make use of
-specialized arguments in the \strong{scales} \verb{col_*()} functions. You could even
+specialized arguments in the \verb{scales::col_*()} functions. You could even
 supply your own specialized function for performing complex colorizing
 treatments!
 
-The \code{data_color()} function has a way to apply colorization indirectly to
+\code{data_color()} has a way to apply colorization indirectly to
 other columns. That is, you can apply colors to a column different from the
 one used to generate those specific colors. The trick is to use the
 \code{target_columns} argument. Let's do this with a more complete
@@ -526,7 +616,7 @@ in the table. This time, the \code{palette} used is \code{"inferno"} (also from 
 
 Now, it's time to use \code{\link{pizzaplace}} to create a \strong{gt} table. The color
 palette to be used is the \code{"ggsci::red_material"} one (it's in the \strong{ggsci}
-R package but also obtainable from the the \strong{paletteer} package).
+R package but also obtainable from the \strong{paletteer} package).
 Colorization will be applied to the to the \code{sold} and \code{income} columns. We
 don't have to specify those in \code{columns} because those are the only columns
 in the table. Also, the \code{domain} is not set here. We'll use the bounds of the
@@ -601,7 +691,7 @@ gray cells for the missing values (we also removed the \code{"NA"} text with
 
 \section{Function ID}{
 
-3-30
+3-36
 }
 
 \section{Function Introduced}{
@@ -611,16 +701,21 @@ gray cells for the missing values (we also removed the \code{"NA"} text with
 
 \seealso{
 Other data formatting functions: 
+\code{\link{fmt}()},
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_icon}()},
 \code{\link{fmt_image}()},
 \code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
@@ -632,9 +727,10 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
-\code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},

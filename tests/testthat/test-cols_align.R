@@ -1,6 +1,3 @@
-# Create a shorter version of `mtcars`
-mtcars_short <- mtcars[1:5, ]
-
 # Create a data frame based on the internal `sp500.csv`
 sp500 <-
   read.csv(
@@ -11,10 +8,9 @@ sp500 <-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
-test_that("The `cols_align()` function works correctly", {
+test_that("cols_align() works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()

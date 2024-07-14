@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -33,42 +33,82 @@
 #' `fmt`.
 #'
 #' @inheritParams fmt_number
-#' @param groups The groups to consider for generation of group-wise summary
-#'   rows. By default this is set to `everything()`, which means that all
-#'   available groups will obtain summary rows. Providing the ID values (in
-#'   quotes) of row groups in `c()` will generate summary rows for those
-#'   specified groups.
-#' @param columns The columns for which the summaries should be calculated. By
-#'   default, this is every column that has data cells (given by
-#'   `everything()`).
-#' @param fns Functions used for aggregations. This can include base functions
-#'   like `mean`, `min`, `max`, `median`, `sd`, or `sum` or any other
-#'   user-defined aggregation function. Multiple functions, each of which would
-#'   generate a different row, are to be supplied within a `list()`. We can
-#'   specify the functions by use of function names in quotes (e.g., `"sum"`),
-#'   as bare functions (e.g., `sum`), or in formula form (e.g.,
-#'   `minimum ~ min(.)`) where the LHS could be used to supply the summary row
-#'   label and id values. More information on this can be found in the
+#'
+#' @param groups *Specification of row group IDs*
+#'
+#'   `<row-group-targeting expression>` // *default:* `everything()`
+#'
+#'   The row groups to which targeting operations are constrained. Can either be
+#'   a series of row group ID values provided in `c()` or a select helper
+#'   function (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]). By default this is set to [everything()],
+#'   which means that all available groups will obtain summary rows.
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // *default:* `everything()`
+#'
+#'   The columns for which the summaries should be calculated. Can either
+#'   be a series of column names provided in `c()`, a vector of column indices,
+#'   or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]).
+#'
+#' @param fns *Aggregation Expressions*
+#'
+#'   `<expression|list of expressions>`
+#'
+#'   Functions used for aggregations. This can include base functions like
+#'   `mean`, `min`, `max`, `median`, `sd`, or `sum` or any other user-defined
+#'   aggregation function. Multiple functions, each of which would generate a
+#'   different row, are to be supplied within a `list()`. We can specify the
+#'   functions by use of function names in quotes (e.g., `"sum"`), as bare
+#'   functions (e.g., `sum`), or in formula form (e.g., `minimum ~ min(.)`)
+#'   where the LHS could be used to supply the summary row label and ID values.
+#'   More information on this can be found in the
 #'   *Aggregation expressions for `fns`* section.
-#' @param fmt Formatting expressions in formula form. The RHS of `~` should
-#'   contain a formatting call (e.g.,
-#'   `~ fmt_number(., decimals = 3, use_seps = FALSE`). Optionally, the LHS
-#'   could contain a group-targeting expression (e.g.,
+#'
+#' @param fmt *Formatting expressions*
+#'
+#'   `<expression|list of expressions>`
+#'
+#'   Formatting expressions in formula form. The RHS of `~` should contain a
+#'   formatting call (e.g., `~ fmt_number(., decimals = 3, use_seps = FALSE`).
+#'   Optionally, the LHS could contain a group-targeting expression (e.g.,
 #'   `"group_a" ~ fmt_number(.)`). More information on this can be found in the
 #'   *Formatting expressions for `fmt`* section.
-#' @param side Should the summary rows be placed at the `"bottom"` (the default)
-#'   or the `"top"` of the row group?
-#' @param missing_text The text to be used in place of `NA` values in summary
-#'   cells with no data outputs.
-#' @param formatter Deprecated, please use `fmt` instead. This was previously
-#'   used as a way to input a formatting function name, which could be any of
-#'   the `fmt_*()` functions available in the package (e.g., [fmt_number()],
-#'   [fmt_percent()], etc.), or a custom function using [fmt()]. The options of
-#'   a formatter can be accessed through `...`.
-#' @param ... Deprecated (along with `formatter`) but otherwise used for
-#'   argument values for a formatting function supplied in `formatter`. For
-#'   example, if using `formatter = fmt_number`, options such as `decimals = 1`,
-#'   `use_seps = FALSE`, and the like can be used here.
+#'
+#' @param side *Side used for placement of summary rows*
+#'
+#'   `singl-kw:[bottom|top]` // *default:* `"bottom"`
+#'
+#'   Should the summary rows be placed at the `"bottom"` (the default) or the
+#'   `"top"` of the row group?
+#'
+#' @param missing_text *Replacement text for `NA` values*
+#'
+#'   `scalar<character>` // *default:* `"---"`
+#'
+#'   The text to be used in place of `NA` values in summary cells with no data
+#'   outputs.
+#'
+#' @param formatter *[Deprecated] Formatting function*
+#'
+#'   `<expression>`
+#'
+#'   Deprecated, please use `fmt` instead. This was previously used as a way to
+#'   input a formatting function name, which could be any of the `fmt_*()`
+#'   functions available in the package (e.g., [fmt_number()], [fmt_percent()],
+#'   etc.), or a custom function using [fmt()]. The options of a formatter can
+#'   be accessed through `...`.
+#'
+#' @param ... *[Deprecated] Formatting arguments*
+#'
+#'   `<Named arguments>`
+#'
+#'   Deprecated (along with `formatter`) but otherwise used for argument values
+#'   for a formatting function supplied in `formatter`. For example, if using
+#'   `formatter = fmt_number`, options such as `decimals = 1`, `use_seps =
+#'   FALSE`, and the like can be used here.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -230,15 +270,16 @@
 #'
 #' @section Extraction of summary rows:
 #'
-#' Should we need to obtain the summary data for external purposes, the
-#' [extract_summary()] function can be used with a `gt_tbl` object where summary
-#' rows were added via `summary_rows()` or [grand_summary_rows()].
+#' Should we need to obtain the summary data for external purposes,
+#' [extract_summary()] can be used with a `gt_tbl` object where summary rows
+#' were added via `summary_rows()` or [grand_summary_rows()].
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table with row groups. Create the summary
-#' rows labeled `min`, `max`, and `avg` by row group (where each each row group
-#' is a week number) with the `summary_rows()` function.
+#' Use a modified version of [`sp500`] dataset to create a **gt** table with row
+#' groups and row labels. Create the summary rows labeled `min`, `max`, and
+#' `avg` by row group (where each each row group is a week number) with
+#' `summary_rows()`.
 #'
 #' ```r
 #' sp500 |>
@@ -352,18 +393,6 @@ summary_rows <- function(
   # Pull a character vector of available groups from `groups_rows_tbl`
   available_groups <- dplyr::pull(groups_rows_tbl, group_id)
 
-  # Return data unchanged if there are no groups and this summary is not
-  # a grand summary
-  if (length(available_groups) < 1) {
-    if (!(
-      is.character(groups) &&
-      length(groups) == 1 &&
-      groups == ":GRAND_SUMMARY:"
-    )) {
-      return(data)
-    }
-  }
-
   # Resolve the group names
   groups <-
     resolve_groups(
@@ -371,9 +400,14 @@ summary_rows <- function(
       vector = available_groups
     )
 
+  # Return data unchanged if there are no groups and this summary is not
+  # a grand summary
   # Return data unchanged if no groups were resolved
-  if (is.null(groups)) {
-    return(data)
+  return_unchanged <- is.null(groups) ||
+    (length(available_groups) < 1 && !identical(groups, ":GRAND_SUMMARY:"))
+
+  if (return_unchanged) {
+      return(data)
   }
 
   # Resolve the column names
@@ -409,9 +443,10 @@ summary_rows <- function(
         !!rowname_col_private := rep("", nrow(data$`_data`))
       )
     data$`_data` <-
-      dplyr::select(
+      dplyr::relocate(
         data$`_data`,
-        dplyr::everything(), dplyr::all_of(rowname_col_private)
+        dplyr::all_of(rowname_col_private),
+        .after = dplyr::last_col()
       )
 
     # Get the `stub_df` object from `data`
@@ -439,7 +474,7 @@ summary_rows <- function(
     fmt_args <-
       vapply(
         seq_along(formatter_options),
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           paste0(names(formatter_options[x]), " = ", formatter_options[x])
@@ -504,8 +539,13 @@ summary_rows <- function(
 #' cells by use of formatting expressions in `fmt`.
 #'
 #' @inheritParams summary_rows
-#' @param side Should the grand summary rows be placed at the `"bottom"` (the
-#'   default) or the `"top"` of the table?
+#'
+#' @param side *Side used for placement of grand summary rows*
+#'
+#'   `singl-kw:[bottom|top]` // *default:* `"bottom"`
+#'
+#'   Should the grand summary rows be placed at the `"bottom"` (the default) or
+#'   the `"top"` of the table?
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -640,15 +680,15 @@ summary_rows <- function(
 #'
 #' @section Extraction of summary rows:
 #'
-#' Should we need to obtain the summary data for external purposes, the
-#' [extract_summary()] function can be used with a `gt_tbl` object where summary
-#' rows were added via `grand_summary_rows()` or [summary_rows()].
+#' Should we need to obtain the summary data for external purposes,
+#' [extract_summary()] can be used with a `gt_tbl` object where summary rows
+#' were added via `grand_summary_rows()` or [summary_rows()].
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table with row groups. Create the grand
-#' summary rows `min`, `max`, and `avg` for the table with the
-#' `grand_summary_rows()` function.
+#' Use a modified version of the [`sp500`] dataset to create a **gt** table with
+#' row groups and row labels. Create the grand summary rows `min`, `max`, and
+#' `avg` for the table with `grand_summary_rows()`.
 #'
 #' ```r
 #' sp500 |>
@@ -686,7 +726,7 @@ summary_rows <- function(
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_code_2 %in% c("BE", "NU", "LU")) |>
+#'   dplyr::filter(country_code_2 %in% c("BE", "NL", "LU")) |>
 #'   dplyr::filter(year %% 10 == 0) |>
 #'   dplyr::select(country_name, year, population) |>
 #'   tidyr::pivot_wider(names_from = year, values_from = population) |>
@@ -817,13 +857,8 @@ normalize_summary_fns <- function(fns) {
         fn <- stats::as.formula(paste0("~", value, "(.)"))
       }
 
-      if (is.null(id)) {
-        id <- value
-      }
-
-      if (is.null(label)) {
-        label <- value
-      }
+      id    <- id    %||% value
+      label <- label %||% value
 
     } else if (rlang::is_formula(value)) {
 

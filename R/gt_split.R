@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -32,15 +32,31 @@
 #' smaller tables across multiple pages (in RTF and Word outputs, primarily via
 #' [gtsave()]), or, with breaks between them when the output context is HTML.
 #'
-#' @param data A **gt** table object (`gt_tbl`) that is created using the [gt()]
-#'   function.
-#' @param row_every_n A directive to split at every *n* number of rows. This
-#'   argument expects a single numerical value.
-#' @param row_slice_i An argument for splitting at specific row indices. Here,
-#'   we expect either a vector of index values or a function that evaluates to a
-#'   numeric vector.
-#' @param col_slice_at Any columns where vertical splitting across should occur.
-#'   The splits occur to the right of the resolved column names.
+#' @inheritParams fmt_number
+#'
+#' @param row_every_n *Split at every n rows*
+#'
+#'   `scalar<numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   A directive to split at every *n* number of rows. This argument expects a
+#'   single numerical value.
+#'
+#' @param row_slice_i *Row-slicing indices*
+#'
+#'   `vector<numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   An argument for splitting at specific row indices. Here, we expect either a
+#'   vector of index values or a function that evaluates to a numeric vector.
+#'
+#' @param col_slice_at *Column-slicing locations*
+#'
+#'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
+#'
+#'   Any columns where vertical splitting across should occur. The splits occur
+#'   to the right of the resolved column names. Can either be a series of column
+#'   names provided in `c()`, a vector of column indices, or a select helper
+#'   function (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]).
 #'
 #' @return An object of class `gt_group`.
 #'
@@ -120,14 +136,14 @@ gt_split <- function(
   # Get row count for table (data rows)
   n_rows_data <- nrow(gt_tbl_built[["_stub_df"]])
 
-  row_slice_vec <- rep(1L, n_rows_data)
+  row_slice_vec <- rep.int(1L, n_rows_data)
 
-  row_every_n_idx <- c()
+  row_every_n_idx <- NULL
   if (!is.null(row_every_n)) {
     row_every_n_idx <- seq_len(n_rows_data)[seq(0, n_rows_data, row_every_n)]
   }
 
-  row_slice_i_idx <- c()
+  row_slice_i_idx <- NULL
   if (!is.null(row_slice_i)) {
     row_slice_i_idx <- row_slice_i
   }
@@ -168,7 +184,7 @@ gt_split <- function(
       visible_col_vars <- dt_boxhead_get_vars_default(data = data)
 
       # Stop function if any of the columns to split at aren't visible columns
-      if (any(!(col_slice_at %in% visible_col_vars))) {
+      if (!all(col_slice_at %in% visible_col_vars)) {
         cli::cli_abort(
           "All values provided in `col_slice_at` must correspond to visible columns."
         )
@@ -177,7 +193,7 @@ gt_split <- function(
       # Obtain all of the column indices for vertical splitting
       col_idx <- which(visible_col_vars %in% col_slice_at)
 
-      col_slice_vec <- rep(1L, length(visible_col_vars))
+      col_slice_vec <- rep.int(1L, length(visible_col_vars))
 
       group_j <- 0L
 
@@ -192,7 +208,7 @@ gt_split <- function(
 
       col_range_list <-
         split(
-          seq_len(length(visible_col_vars)),
+          seq_along(visible_col_vars),
           col_slice_vec
         )
 

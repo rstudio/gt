@@ -1,4 +1,4 @@
-test_that("The `sub_missing()` function works correctly", {
+test_that("sub_missing() works correctly", {
 
   # Create an input table with two columns, both numeric
   data_tbl <-
@@ -16,8 +16,8 @@ test_that("The `sub_missing()` function works correctly", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  num_1 <- (tab %>% dt_data_get())[["num_1"]]
-  num_2 <- (tab %>% dt_data_get())[["num_2"]]
+  num_1 <- dt_data_get(tab)[["num_1"]]
+  num_2 <- dt_data_get(tab)[["num_2"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -26,7 +26,7 @@ test_that("The `sub_missing()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% sub_missing(columns = "num_3"))
+  expect_error(sub_missing(tab, columns = "num_3"))
 
   expect_equal(
     (tab %>%
@@ -131,8 +131,13 @@ test_that("The `sub_missing()` function works correctly", {
        sub_missing(columns = "num_1", missing_text = md("**a** *b*")) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "<strong>a</strong> <em>b</em>", "74", "<strong>a</strong> <em>b</em>",
-      "93", "<strong>a</strong> <em>b</em>", "76", "<strong>a</strong> <em>b</em>"
+      "<span class='gt_from_md'><strong>a</strong> <em>b</em></span>",
+      "74",
+      "<span class='gt_from_md'><strong>a</strong> <em>b</em></span>",
+      "93",
+      "<span class='gt_from_md'><strong>a</strong> <em>b</em></span>",
+      "76",
+      "<span class='gt_from_md'><strong>a</strong> <em>b</em></span>"
     )
   )
 
@@ -219,7 +224,7 @@ test_that("The `sub_missing()` function works correctly", {
        ) %>%
        sub_missing(columns = everything()) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("—", "$74.000$", "—", "$93.000$", "—", "$76.000$", "—")
+    c("—", "74.000", "—", "93.000", "—", "76.000", "—")
   )
 
   expect_equal(
@@ -254,7 +259,7 @@ test_that("The `sub_missing()` function works correctly", {
          decimals = 3
        ) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("—", "$74.000$", "—", "$93.000$", "—", "$76.000$", "—")
+    c("—", "74.000", "—", "93.000", "—", "76.000", "—")
   )
 
   expect_equal(
@@ -269,7 +274,7 @@ test_that("The `sub_missing()` function works correctly", {
   )
 })
 
-test_that("The `sub_zero()` function works correctly", {
+test_that("sub_zero() works correctly", {
 
   # Create an input data frame with two columns: one numeric, one character
   data_tbl <-
@@ -318,7 +323,11 @@ test_that("The `sub_zero()` function works correctly", {
     (tab %>%
        sub_zero(columns = "num_1", zero_text = md("*nil*")) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("NA", "74.0000", "NA", "<em>nil</em>", "NA", "0.0001", "NA")
+    c(
+      "NA", "74.0000", "NA",
+      "<span class='gt_from_md'><em>nil</em></span>",
+      "NA", "0.0001", "NA"
+    )
   )
 
   expect_equal(
@@ -368,7 +377,7 @@ test_that("The `sub_zero()` function works correctly", {
   )
 })
 
-test_that("The `sub_small_vals()` function works correctly", {
+test_that("sub_small_vals() works correctly", {
 
   # Create an input table with three columns
   data_tbl <-
@@ -420,7 +429,7 @@ test_that("The `sub_small_vals()` function works correctly", {
        fmt_number(columns = num_1) %>%
        sub_small_vals(columns = "num_1") %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("$0.00$", "$74.00$", "NA", "$0.00$", "$5,000,000,000,000.00$", "<0.01", "$84.34$")
+    c("0.00", "74.00", "NA", "0.00", "5,000,000,000,000.00", "<0.01", "84.34")
   )
 
   expect_equal(
@@ -444,7 +453,7 @@ test_that("The `sub_small_vals()` function works correctly", {
        fmt_number(columns = num_1) %>%
        sub_small_vals(columns = "num_1", threshold = 100) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("$0.00$", "<100", "NA", "$0.00$", "$5,000,000,000,000.00$", "<100", "<100")
+    c("0.00", "<100", "NA", "0.00", "5,000,000,000,000.00", "<100", "<100")
   )
 
   expect_equal(
@@ -461,8 +470,8 @@ test_that("The `sub_small_vals()` function works correctly", {
        sub_small_vals(columns = "num_1", sign = "-") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "&lt;<em>abs</em>(-0.01)", "74.00", "NA", "0.00",
-      "5,000,000,000,000.00", "0.00", "84.34"
+      "<span class='gt_from_md'>&lt;<em>abs</em>(-0.01)</span>",
+      "74.00", "NA", "0.00", "5,000,000,000,000.00", "0.00", "84.34"
     )
   )
 
@@ -472,8 +481,8 @@ test_that("The `sub_small_vals()` function works correctly", {
        sub_small_vals(columns = "num_1", sign = "-") %>%
        render_formats_test(context = "latex"))[["num_1"]],
     c(
-      "\\textless{}\\emph{abs}(-0.01)", "$74.00$", "NA", "$0.00$",
-      "$5,000,000,000,000.00$", "$0.00$", "$84.34$"
+      "\\textless{}\\emph{abs}(-0.01)", "74.00", "NA", "0.00",
+      "5,000,000,000,000.00", "0.00", "84.34"
     )
   )
 
@@ -501,7 +510,7 @@ test_that("The `sub_small_vals()` function works correctly", {
        fmt_number(columns = num_1) %>%
        sub_small_vals(columns = "num_1", small_pattern = "smol", sign = "-") %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("smol", "$74.00$", "NA", "$0.00$", "$5,000,000,000,000.00$", "$0.00$", "$84.34$")
+    c("smol", "74.00", "NA", "0.00", "5,000,000,000,000.00", "0.00", "84.34")
   )
 
   expect_equal(
@@ -529,8 +538,8 @@ test_that("The `sub_small_vals()` function works correctly", {
        sub_small_vals(columns = "num_1", small_pattern = "{{{x}}}", sign = "-") %>%
        render_formats_test(context = "latex"))[["num_1"]],
     c(
-      "\\{\\{0.01\\}\\}", "$74.00$", "NA", "$0.00$", "$5,000,000,000,000.00$",
-      "$0.00$", "$84.34$"
+      "\\{\\{0.01\\}\\}", "74.00", "NA", "0.00", "5,000,000,000,000.00",
+      "0.00", "84.34"
     )
   )
 
@@ -573,7 +582,7 @@ test_that("The `sub_small_vals()` function works correctly", {
   expect_error(tab %>% sub_small_vals(columns = "num_1", sign = "?"))
 })
 
-test_that("The `sub_large_vals()` function works correctly", {
+test_that("sub_large_vals() works correctly", {
 
   # Create an input table with three columns
   data_tbl <-
@@ -612,7 +621,7 @@ test_that("The `sub_large_vals()` function works correctly", {
        fmt_number(columns = num_1) %>%
        sub_large_vals(columns = "num_1") %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("$0.00$", "$74.00$", "NA", "$0.00$", "$\\geq$1e+12", "$0.00$", "$84.34$")
+    c("0.00", "74.00", "NA", "0.00", "$\\geq$1e+12", "0.00", "84.34")
   )
 
   expect_equal(
@@ -636,7 +645,7 @@ test_that("The `sub_large_vals()` function works correctly", {
        fmt_number(columns = num_1) %>%
        sub_large_vals(columns = "num_1", threshold = 100) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("$0.00$", "$74.00$", "NA", "$0.00$", "$\\geq$100", "$0.00$", "$84.34$")
+    c("0.00", "74.00", "NA", "0.00", "$\\geq$100", "0.00", "84.34")
   )
 
   expect_equal(
@@ -760,7 +769,7 @@ test_that("The `sub_large_vals()` function works correctly", {
   expect_error(tab %>% sub_large_vals(columns = "num_1", sign = "?"))
 })
 
-test_that("The `sub_values()` function works correctly", {
+test_that("sub_values() works correctly", {
 
   # Create an input table with three columns
   data_tbl <-
@@ -1206,7 +1215,7 @@ test_that("The `sub_values()` function works correctly", {
   expect_error(gt(data_tbl) %>% sub_values(values = "A", replacement = TRUE))
 
   # Expect an error if the `replacement` isn't of the right length
-  expect_error(gt(data_tbl) %>% sub_values(values = "A", replacement = character(0)))
+  expect_error(gt(data_tbl) %>% sub_values(values = "A", replacement = character(0L)))
   expect_error(gt(data_tbl) %>% sub_values(values = "A", replacement = c("A", "B")))
 
   # Expect an error if the `fn` is not a function

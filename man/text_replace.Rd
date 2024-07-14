@@ -7,39 +7,60 @@
 text_replace(data, pattern, replacement, locations = cells_body())
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{pattern}{A regex pattern used to target text fragments in the cells
-resolved in locations.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{replacement}{The replacement text for any matched text fragments.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{locations}{The cell or set of cells to be associated with the text
-transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
-\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_row_groups]{cells_row_groups()}} helper functions can be
-used here. We can enclose several of these calls within a \code{list()} if we
+\item{pattern}{\emph{Regex pattern to match with}
+
+\verb{scalar<character>} // \strong{required}
+
+A regex pattern used to target text fragments in the cells resolved in
+locations.}
+
+\item{replacement}{\emph{Replacement text}
+
+\verb{scalar<character>} // \strong{required}
+
+The replacement text for any matched text fragments.}
+
+\item{locations}{\emph{Locations to target}
+
+\code{\link[=location-helper]{<locations expressions>}} // \emph{default:} \code{cells_body()}
+
+The cell or set of cells to be associated with the text transformation.
+Only \code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}},
+\code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_stub]{cells_stub()}}, and \code{\link[=cells_body]{cells_body()}} can
+be used here. We can enclose several of these calls within a \code{list()} if we
 wish to make the transformation happen at different locations.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{text_replace()} function provides a specialized interface for replacing
-text fragments in table cells with literal text. You need to ensure that
-you're targeting the appropriate cells with the \code{locations} argument. Once
-that is done, the remaining two values to supply are for the regex pattern
-(\code{pattern}) and the replacement for all matched text (\code{replacement}).
+\code{text_replace()} provides a specialized interface for replacing text fragments
+in table cells with literal text. You need to ensure that you're targeting
+the appropriate cells with the \code{locations} argument. Once that is done, the
+remaining two values to supply are for the regex pattern (\code{pattern}) and the
+replacement for all matched text (\code{replacement}).
 }
 \section{Examples}{
 
 
-Use \code{\link{metro}} to create a \strong{gt} table. Merge the \code{name} and \code{caption}
-columns together but only if \code{caption} doesn't have an \code{NA} value (the
-special \code{pattern} syntax of \code{"{1}<< ({2})>>"} takes care of this). This
-merged content is now part of the \code{name} column. We'd like to modify this
-further wherever there is text in parentheses: (1) make that text italicized,
-and (2) introduce a line break before the text in parentheses. We can do this
-with the \code{text_replace()} function.
+Use the \code{\link{metro}} dataset to create a \strong{gt} table. With \code{\link[=cols_merge]{cols_merge()}},
+we'll merge the \code{name} and \code{caption} columns together but only if \code{caption}
+doesn't have an \code{NA} value (the special \code{pattern} syntax of \code{"{1}<<({2})>>"}
+takes care of this). This merged content is now part of the \code{name} column.
+We'd like to modify this further wherever there is text in parentheses:
+(1) make that text italicized, and (2) introduce a line break before the text
+in parentheses. We can do this with \code{text_replace()}. The \code{pattern} value of
+\code{"\\\\((.*?)\\\\)"} will match on text between parentheses, and the inner
+\code{"(.*?)"} is a capture group. The \code{replacement} value of \code{"<br>(<em>\\\\1</em>)"}
+puts the capture group text \code{"\\\\1"} within \verb{<em>} tags, wraps literal
+parentheses around it, and prepends a line break tag.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
   dplyr::select(name, caption, lines) |>

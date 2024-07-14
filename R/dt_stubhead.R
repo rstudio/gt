@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -58,5 +58,5 @@ dt_stubhead_has_label <- function(data) {
 
   stubhead <- dt_stubhead_get(data = data)
 
-  length(stubhead$label) > 0 && !is.null(stubhead$label)
+  length(stubhead$label) > 0L && !is.null(stubhead$label)
 }

@@ -7,10 +7,19 @@
 opt_row_striping(data, row_striping = TRUE)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{row_striping}{A logical value to indicate whether row striping should
-be added or removed.}
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{row_striping}{\emph{Use alternating row stripes}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+A logical value to indicate whether row striping should be added or
+removed.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -24,9 +33,10 @@ body. This function serves as a convenient shortcut for
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
-Next, we add row striping to every second row with the \code{opt_row_striping()}
-function.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table with a number of table
+parts added (using functions like \code{\link[=summary_rows]{summary_rows()}}, \code{\link[=grand_summary_rows]{grand_summary_rows()}},
+and more). Following that, we'll add row striping to every second row with
+\code{opt_row_striping()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt(rowname_col = "row", groupname_col = "group") |>

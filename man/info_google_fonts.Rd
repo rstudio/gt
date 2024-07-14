@@ -48,8 +48,11 @@ Get a table of info on some of the recommended \emph{Google Fonts} for tables.
 Other information functions: 
 \code{\link{info_currencies}()},
 \code{\link{info_date_style}()},
+\code{\link{info_flags}()},
+\code{\link{info_icons}()},
 \code{\link{info_locales}()},
 \code{\link{info_paletteer}()},
-\code{\link{info_time_style}()}
+\code{\link{info_time_style}()},
+\code{\link{info_unit_conversions}()}
 }
 \concept{information functions}

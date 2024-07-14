@@ -10,36 +10,72 @@ fmt_flag(
   rows = everything(),
   height = "1em",
   sep = " ",
-  use_title = TRUE
+  use_title = TRUE,
+  locale = NULL
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{height}{The absolute height of the flag icon in the table cell. By
-default, this is set to \code{"1em"}.}
+\item{columns}{\emph{Columns to target}
 
-\item{sep}{In the output of flag icons within a body cell, \code{sep} provides the
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{c()}, a vector of
+column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}} and \code{\link[=everything]{everything()}}).}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{c()}, a vector of row indices, or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{height}{\emph{Height of flag}
+
+\verb{scalar<character>} // \emph{default:} \code{"1em"}
+
+The absolute height of the flag icon in the table cell. By default, this is
+set to \code{"1em"}.}
+
+\item{sep}{\emph{Separator between flags}
+
+\verb{scalar<character>} // \emph{default:} \code{" "}
+
+In the output of flag icons within a body cell, \code{sep} provides the
 separator between each icon. By default, this is a single space character
 (\code{" "}).}
 
-\item{use_title}{An option to display a tooltip for the country name when
-hovering over the flag icon. By default this is \code{TRUE}.}
+\item{use_title}{\emph{Display country name on hover}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to display a tooltip for the country name (in the language
+according to the \code{locale} value, set either here or in \code{\link[=gt]{gt()}}) when
+hovering over the flag icon.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported. A locale ID can
+be also set in the initial \code{\link[=gt]{gt()}} function call (where it would be used
+automatically by any function with a \code{locale} argument) but a \code{locale}
+value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -51,21 +87,22 @@ specialized types of graphics within a table. One such group of graphics
 involves iconography representing different countries, and the \code{fmt_flag()}
 function helps with inserting a flag icon (or multiple) in body cells. To
 make this work seamlessly, the input cells need to contain some reference to
-a country, and this is in the form of a 2-letter ISO 3166-1 country code
-(e.g., Egypt has the \code{"EG"} country code). This function will parse the
+a country, and this can be in the form of a 2- or 3-letter ISO 3166-1 country
+code (e.g., Egypt has the \code{"EG"} country code). This function will parse the
 targeted body cells for those codes (and the \link{countrypops} dataset contains
-all of them) and insert the appropriate flag graphics. Multiple flags can be
-included per cell by separating country codes with commas (e.g., \code{"GB,TT"}).
-The \code{sep} argument allows for a common separator to be applied between flag
-icons.
+all of them) and insert the appropriate flag graphics.
+
+Multiple flags can be included per cell by separating country codes with
+commas (e.g., \code{"GB,TT"}). The \code{sep} argument allows for a common separator
+to be applied between flag icons.
 }
 \section{Compatibility of formatting function with data values}{
 
 
-The \code{fmt_flag()} formatting function is compatible with body cells that are
-of the \code{"character"} or \code{"factor"} types. Any other types of body cells are
-ignored during formatting. This is to say that cells of incompatible data
-types may be targeted, but there will be no attempt to format them.
+\code{fmt_flag()} is compatible with body cells that are of the \code{"character"} or
+\code{"factor"} types. Any other types of body cells are ignored during
+formatting. This is to say that cells of incompatible data types may be
+targeted, but there will be no attempt to format them.
 }
 
 \section{Targeting cells with \code{columns} and \code{rows}}{
@@ -109,27 +146,87 @@ formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
 }
 
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+\code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{fmt_flag()} to obtain
+varying parameter values from a specified column within the table. This means
+that each row could be formatted a little bit differently. These arguments
+provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{height}
+\item \code{sep}
+\item \code{use_title}
+\item \code{locale}
+}
+
+Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with \code{\link[=cols_add]{cols_add()}} (if not already present). Columns that contain
+parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+Finally, there is no limitation to how many arguments the \code{\link[=from_column]{from_column()}}
+helper is applied so long as the arguments belong to this closed set.
+}
+
+\section{Supported regions}{
+
+
+The following 242 regions (most of which comprise countries) are supported
+with names across 574 locales: \code{"AD"}, \code{"AE"}, \code{"AF"}, \code{"AG"}, \code{"AI"},
+\code{"AL"}, \code{"AM"}, \code{"AO"}, \code{"AR"}, \code{"AS"}, \code{"AT"}, \code{"AU"}, \code{"AW"}, \code{"AX"},
+\code{"AZ"}, \code{"BA"}, \code{"BB"}, \code{"BD"}, \code{"BE"}, \code{"BF"}, \code{"BG"}, \code{"BH"}, \code{"BI"},
+\code{"BJ"}, \code{"BL"}, \code{"BM"}, \code{"BN"}, \code{"BO"}, \code{"BR"}, \code{"BS"}, \code{"BT"}, \code{"BW"},
+\code{"BY"}, \code{"BZ"}, \code{"CA"}, \code{"CC"}, \code{"CD"}, \code{"CF"}, \code{"CG"}, \code{"CH"}, \code{"CI"},
+\code{"CK"}, \code{"CL"}, \code{"CM"}, \code{"CN"}, \code{"CO"}, \code{"CR"}, \code{"CU"}, \code{"CV"}, \code{"CW"},
+\code{"CY"}, \code{"CZ"}, \code{"DE"}, \code{"DJ"}, \code{"DK"}, \code{"DM"}, \code{"DO"}, \code{"DZ"}, \code{"EC"},
+\code{"EE"}, \code{"EG"}, \code{"EH"}, \code{"ER"}, \code{"ES"}, \code{"ET"}, \code{"EU"}, \code{"FI"}, \code{"FJ"},
+\code{"FK"}, \code{"FM"}, \code{"FO"}, \code{"FR"}, \code{"GA"}, \code{"GB"}, \code{"GD"}, \code{"GE"}, \code{"GF"},
+\code{"GG"}, \code{"GH"}, \code{"GI"}, \code{"GL"}, \code{"GM"}, \code{"GN"}, \code{"GP"}, \code{"GQ"}, \code{"GR"},
+\code{"GS"}, \code{"GT"}, \code{"GU"}, \code{"GW"}, \code{"GY"}, \code{"HK"}, \code{"HN"}, \code{"HR"}, \code{"HT"},
+\code{"HU"}, \code{"ID"}, \code{"IE"}, \code{"IL"}, \code{"IM"}, \code{"IN"}, \code{"IO"}, \code{"IQ"}, \code{"IR"},
+\code{"IS"}, \code{"IT"}, \code{"JE"}, \code{"JM"}, \code{"JO"}, \code{"JP"}, \code{"KE"}, \code{"KG"}, \code{"KH"},
+\code{"KI"}, \code{"KM"}, \code{"KN"}, \code{"KP"}, \code{"KR"}, \code{"KW"}, \code{"KY"}, \code{"KZ"}, \code{"LA"},
+\code{"LB"}, \code{"LC"}, \code{"LI"}, \code{"LK"}, \code{"LR"}, \code{"LS"}, \code{"LT"}, \code{"LU"}, \code{"LV"},
+\code{"LY"}, \code{"MA"}, \code{"MC"}, \code{"MD"}, \code{"ME"}, \code{"MF"}, \code{"MG"}, \code{"MH"}, \code{"MK"},
+\code{"ML"}, \code{"MM"}, \code{"MN"}, \code{"MO"}, \code{"MP"}, \code{"MQ"}, \code{"MR"}, \code{"MS"}, \code{"MT"},
+\code{"MU"}, \code{"MV"}, \code{"MW"}, \code{"MX"}, \code{"MY"}, \code{"MZ"}, \code{"NA"}, \code{"NC"}, \code{"NE"},
+\code{"NF"}, \code{"NG"}, \code{"NI"}, \code{"NL"}, \code{"NO"}, \code{"NP"}, \code{"NR"}, \code{"NU"}, \code{"NZ"},
+\code{"OM"}, \code{"PA"}, \code{"PE"}, \code{"PF"}, \code{"PG"}, \code{"PH"}, \code{"PK"}, \code{"PL"}, \code{"PM"},
+\code{"PN"}, \code{"PR"}, \code{"PS"}, \code{"PT"}, \code{"PW"}, \code{"PY"}, \code{"QA"}, \code{"RE"}, \code{"RO"},
+\code{"RS"}, \code{"RU"}, \code{"RW"}, \code{"SA"}, \code{"SB"}, \code{"SC"}, \code{"SD"}, \code{"SE"}, \code{"SG"},
+\code{"SI"}, \code{"SK"}, \code{"SL"}, \code{"SM"}, \code{"SN"}, \code{"SO"}, \code{"SR"}, \code{"SS"}, \code{"ST"},
+\code{"SV"}, \code{"SX"}, \code{"SY"}, \code{"SZ"}, \code{"TC"}, \code{"TD"}, \code{"TF"}, \code{"TG"}, \code{"TH"},
+\code{"TJ"}, \code{"TK"}, \code{"TL"}, \code{"TM"}, \code{"TN"}, \code{"TO"}, \code{"TR"}, \code{"TT"}, \code{"TV"},
+\code{"TW"}, \code{"TZ"}, \code{"UA"}, \code{"UG"}, \code{"US"}, \code{"UY"}, \code{"UZ"}, \code{"VA"}, \code{"VC"},
+\code{"VE"}, \code{"VG"}, \code{"VI"}, \code{"VN"}, \code{"VU"}, \code{"WF"}, \code{"WS"}, \code{"YE"}, \code{"YT"},
+\code{"ZA"}, \code{"ZM"}, and \code{"ZW"}.
+
+You can view the entire set of supported flag icons as an informative table
+by calling \code{\link[=info_flags]{info_flags()}}.
+}
+
 \section{Examples}{
 
 
 Use the \code{\link{countrypops}} dataset to create a \strong{gt} table. We will only
 include a few columns and rows from that table. The \code{country_code_2} column
 has 2-letter country codes in the format required for \code{fmt_flag()} and using
-that function transforms the codes in circular flag icons.
+that function transforms the codes to circular flag icons.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(year == 2021) |>
   dplyr::filter(grepl("^S", country_name)) |>
   dplyr::arrange(country_name) |>
-  dplyr::select(-country_code_3, -year) |>
+  dplyr::select(-country_name, -year) |>
   dplyr::slice_head(n = 10) |>
   gt() |>
-  cols_move_to_start(columns = country_code_2) |>
   fmt_integer() |>
   fmt_flag(columns = country_code_2) |>
+  fmt_country(columns = country_code_3) |>
   cols_label(
     country_code_2 = "",
-    country_name = "Country",
+    country_code_3 = "Country",
     population = "Population (2021)"
   )
 }\if{html}{\out{</div>}}
@@ -139,7 +236,7 @@ that function transforms the codes in circular flag icons.
 }}
 
 Using \code{\link{countrypops}} we can generate a table that provides populations
-every five years for the Benelux countries (\code{"BE"}, \code{"NU"}, and \code{"LU"}).
+every five years for the Benelux countries (\code{"BE"}, \code{"NL"}, and \code{"LU"}).
 This requires some manipulation with \strong{dplyr} and \strong{tidyr} before
 introducing the table to \strong{gt}. With \code{fmt_flag()} we can obtain flag icons
 in the \code{country_code_2} column. After that, we can merge the flag icons into
@@ -147,7 +244,7 @@ the stub column, generating row labels that have a combination of icon and
 text.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(country_code_2 \%in\% c("BE", "NU", "LU")) |>
+  dplyr::filter(country_code_2 \%in\% c("BE", "NL", "LU")) |>
   dplyr::filter(year \%\% 10 == 0) |>
   dplyr::select(country_name, country_code_2, year, population) |>
   tidyr::pivot_wider(names_from = year, values_from = population) |>
@@ -167,10 +264,10 @@ text.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_flag_2.png" alt="This image of a table was generated from the second code example in the `fmt_flag()` help file." style="width:100\%;">
 }}
 
-The \code{fmt_flag()} function works well even when there are multiple country
-codes within the same cell. It can operate on comma-separated codes without
-issue. When rendered to HTML, hovering over each of the flag icons results in
-tooltip text showing the name of the country.
+\code{fmt_flag()} works well even when there are multiple country codes within the
+same cell. It can operate on comma-separated codes without issue. When
+rendered to HTML, hovering over each of the flag icons results in tooltip
+text showing the name of the country.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(year == 2021, population < 100000) |>
@@ -206,7 +303,7 @@ tooltip text showing the name of the country.
 
 \section{Function ID}{
 
-3-20
+3-24
 }
 
 \section{Function Introduced}{
@@ -217,15 +314,20 @@ tooltip text showing the name of the country.
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt}()},
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_icon}()},
 \code{\link{fmt_image}()},
 \code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
@@ -237,9 +339,10 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
-\code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},

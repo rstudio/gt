@@ -1,6 +1,6 @@
 library(ggplot2)
 
-test_that("The `test_image()` function works correctly", {
+test_that("test_image() works correctly", {
 
   # Expect that the `test_image()` function returns paths for
   # either a PNG or SVG test image
@@ -8,32 +8,28 @@ test_that("The `test_image()` function works correctly", {
   test_image(type = "svg") %>% expect_match(".*/test_image.svg")
 })
 
-test_that("The `get_mime_type()` function works correctly", {
+test_that("get_mime_type() works correctly", {
 
-  # Expect that the `get_mime_type()` function returns
+  # Expect that `get_mime_type()` returns
   # a mime-type string for svg and jpg files
   get_mime_type(file = "file.svg") %>% expect_equal("image/svg+xml")
   get_mime_type(file = "file.jpg") %>% expect_equal("image/jpeg")
 })
 
-test_that("The `get_image_uri()` function works correctly", {
+test_that("get_image_uri() works correctly", {
 
   # Expect that the beginning of the PNG-based image URI has the
   # correct MIME and encoding types
-  expect_true(
-    grepl(
-      "^data:image/png;base64,",
-      get_image_uri(file = system_file("./graphics/test_image.png"))
-    )
+  expect_match(
+    get_image_uri(file = system_file("./graphics/test_image.png")),
+    "^data:image/png;base64,"
   )
 
   # Expect that the beginning of the SVG-based image URI has the
   # correct MIME and encoding types
-  expect_true(
-    grepl(
-      "data:image/svg\\+xml;base64",
-      get_image_uri(file = system_file("./graphics/test_image.svg"))
-    )
+  expect_match(
+    get_image_uri(file = system_file("./graphics/test_image.svg")),
+    "data:image/svg\\+xml;base64"
   )
 
   # Expect that the image URI for the included test image (in PNG form)
@@ -41,7 +37,7 @@ test_that("The `get_image_uri()` function works correctly", {
   expect_snapshot(get_image_uri(file = test_image(type = "png")))
 })
 
-test_that("The `local_image()` function works correctly", {
+test_that("local_image() works correctly", {
 
   # Expect that the image tags generated for the included test image
   # are correctly formed
@@ -52,7 +48,7 @@ test_that("The `local_image()` function works correctly", {
   expect_snapshot(local_image(filename = rep(test_image(type = "png"), 2)))
 })
 
-test_that("The `web_image()` function works correctly", {
+test_that("web_image() works correctly", {
 
   # Expect that the image tag is correctly formed
   expect_equal(
@@ -60,7 +56,7 @@ test_that("The `web_image()` function works correctly", {
     "<img src=\"example.png\" style=\"height:30px;\">"
   )
 
-  # Expect that the `web_image()` function returns an image tag
+  # Expect that `web_image()` returns an image tag
   expect_equal(
     web_image(url = "example.com/img.png", height = px(200)),
     "<img src=\"example.com/img.png\" style=\"height:200px;\">"
@@ -88,7 +84,7 @@ test_that("The `web_image()` function works correctly", {
   )
 })
 
-test_that("The `ggplot_image()` function works correctly", {
+test_that("ggplot_image() works correctly", {
 
   skip_on_ci()
 
@@ -101,8 +97,7 @@ test_that("The `ggplot_image()` function works correctly", {
     geom_point(color = "blue") +
     theme(legend.position = "none")
 
-  # Expect that the image tag generated for the ggplot is correctly formed
-  expect_snapshot(ggplot_image(plot_object = gg))
+
 
   # Expect that a single plot object can be contained in a list
   expect_equal(
@@ -112,7 +107,10 @@ test_that("The `ggplot_image()` function works correctly", {
 
   # Expect that `ggplot_image()` can return multiple image tags
   img_tags <- ggplot_image(plot_object = list(gg, gg))
-  expect_equal(length(img_tags), 2)
+  expect_length(img_tags, 2)
   expect_equal(img_tags[1], img_tags[2])
   expect_type(img_tags, "character")
+  skip_on_os("windows") # FIXME Snapshot is different on Windows
+  # Expect that the image tag generated for the ggplot is correctly formed
+  expect_snapshot(ggplot_image(plot_object = gg))
 })

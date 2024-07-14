@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -42,72 +42,32 @@
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @param x A numeric vector.
-#' @param decimals An option to specify the exact number of decimal places to
-#'   use. The default number of decimal places is `2`.
-#' @param n_sigfig A option to format numbers to *n* significant figures. By
-#'   default, this is `NULL` and thus number values will be formatted according
-#'   to the number of decimal places set via `decimals`. If opting to format
-#'   according to the rules of significant figures, `n_sigfig` must be a number
-#'   greater than or equal to `1`. Any values passed to the `decimals` and
-#'   `drop_trailing_zeros` arguments will be ignored.
-#' @param drop_trailing_zeros A logical value that allows for removal of
-#'   trailing zeros (those redundant zeros after the decimal mark).
-#' @param drop_trailing_dec_mark A logical value that determines whether decimal
-#'   marks should always appear even if there are no decimal digits to display
-#'   after formatting (e.g, `23` becomes `23.`). The default for this is `TRUE`,
-#'   which means that trailing decimal marks are not shown.
-#' @param use_seps An option to use digit group separators. The type of digit
-#'   group separator is set by `sep_mark` and overridden if a locale ID is
-#'   provided to `locale`. This setting is `TRUE` by default.
-#' @param accounting An option to use accounting style for values. With `FALSE`
-#'   (the default), negative values will be shown with a minus sign. Using
-#'   `accounting = TRUE` will put negative values in parentheses.
-#' @param scale_by A value to scale the input. The default is `1.0`. All numeric
-#'   values will be multiplied by this value first before undergoing formatting.
-#'   This value will be ignored if using any of the `suffixing` options (i.e.,
-#'   where `suffixing` is not set to `FALSE`).
-#' @param suffixing An option to scale and apply suffixes to larger numbers
-#'   (e.g., `1924000` can be transformed to `1.92M`). This option can accept a
-#'   logical value, where `FALSE` (the default) will not perform this
-#'   transformation and `TRUE` will apply thousands (`K`), millions (`M`),
-#'   billions (`B`), and trillions (`T`) suffixes after automatic value scaling.
-#'   We can also specify which symbols to use for each of the value ranges by
-#'   using a character vector of the preferred symbols to replace the defaults
-#'   (e.g., `c("k", "Ml", "Bn", "Tr")`).
+#' @param x *The input vector*
 #'
-#'   Including `NA` values in the vector will ensure that the particular range
-#'   will either not be included in the transformation (e.g, `c(NA, "M", "B",
-#'   "T")` won't modify numbers in the thousands range) or the range will
-#'   inherit a previous suffix (e.g., with `c("K", "M", NA, "T")`, all numbers
-#'   in the range of millions and billions will be in terms of millions).
+#'   `vector(numeric|integer)` // **required**
 #'
-#'   Any use of `suffixing` (where it is not set expressly as `FALSE`) means
-#'   that any value provided to `scale_by` will be ignored.
-#' @param pattern A formatting pattern that allows for decoration of the
-#'   formatted value. The value itself is represented by `{x}` and all other
-#'   characters are taken to be string literals.
-#' @param sep_mark The mark to use as a separator between groups of digits
-#'   (e.g., using `sep_mark = ","` with `1000` would result in a formatted value
-#'   of `1,000`).
-#' @param dec_mark The character to use as a decimal mark (e.g., using
-#'   `dec_mark = ","` with `0.152` would result in a formatted value of
-#'   `0,152`).
-#' @param force_sign Should the positive sign be shown for positive values
-#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
-#'   for this option. The default is `FALSE`, where only negative numbers will
-#'   display a minus sign. This option is disregarded when using accounting
-#'   notation with `accounting = TRUE`.
-#' @param locale An optional locale identifier that can be used for formatting
-#'   the value according the locale's rules. Examples include `"en"` for English
-#'   (United States) and `"fr"` for French (France). The use of a locale ID will
-#'   override any locale-specific values provided. We can use the
-#'   [info_locales()] function as a useful reference for all of the locales that
-#'   are supported.
-#' @param output The output style of the resulting character vector. This can
-#'   either be `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`,
-#'   or `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the
-#'   `"auto"` option will choose the correct `output` value
+#'   This is the input vector that will undergo transformation to a character
+#'   vector of the same length. Values within the vector will be formatted.
+#'
+#' @inheritParams fmt_number
+#'
+#' @param output *Output format*
+#'
+#'   `singl-kw:[auto|plain|html|latex|rtf|word]` // *default:* `"auto"`
+#'
+#'   The output style of the resulting character vector. This can either be
+#'   `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`, or
+#'   `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the `"auto"`
+#'   option will choose the correct `output` value
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -212,21 +172,14 @@ vec_fmt_number <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Stop function if `x` is not a vector or is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
+
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
-  }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_number()` function can only be used with numeric vectors."
-    )
   }
 
   render_as_vector(
@@ -270,24 +223,18 @@ vec_fmt_number <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
+#' @inheritParams fmt_integer
+#'
 #' @inheritParams vec_fmt_number
-#' @param suffixing An option to scale and apply suffixes to larger numbers
-#'   (e.g., `1924000` can be transformed to `2M`). This option can accept a
-#'   logical value, where `FALSE` (the default) will not perform this
-#'   transformation and `TRUE` will apply thousands (`K`), millions (`M`),
-#'   billions (`B`), and trillions (`T`) suffixes after automatic value scaling.
-#'   We can also specify which symbols to use for each of the value ranges by
-#'   using a character vector of the preferred symbols to replace the defaults
-#'   (e.g., `c("k", "Ml", "Bn", "Tr")`).
 #'
-#'   Including `NA` values in the vector will ensure that the particular range
-#'   will either not be included in the transformation (e.g, `c(NA, "M", "B",
-#'   "T")` won't modify numbers in the thousands range) or the range will
-#'   inherit a previous suffix (e.g., with `c("K", "M", NA, "T")`, all numbers
-#'   in the range of millions and billions will be in terms of millions).
+#' @param locale *Locale identifier*
 #'
-#'   Any use of `suffixing` (where it is not set expressly as `FALSE`) means
-#'   that any value provided to `scale_by` will be ignored.
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -367,11 +314,7 @@ vec_fmt_integer <- function(
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_integer()` function can only be used with numeric vectors."
-    )
-  }
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
   vec_fmt_number(
     x,
@@ -417,20 +360,18 @@ vec_fmt_integer <- function(
 #' - locale-based formatting: providing a locale ID will result in
 #' formatting specific to the chosen locale
 #'
+#' @inheritParams fmt_scientific
+#'
 #' @inheritParams vec_fmt_number
-#' @param scale_by A value to scale the input. The default is `1.0`. All numeric
-#'   values will be multiplied by this value first before undergoing formatting.
-#' @param exp_style Style of formatting to use for the scientific notation
-#'   formatting. By default this is `"x10n"` but other options include using
-#'   a single letter (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to
-#'   signal a minimum digit width of one, or `"low-ten"` for using a stylized
-#'   `"10"` marker.
-#' @param force_sign_m,force_sign_n Should the plus sign be shown for positive
-#'   values of the mantissa (first component) or the exponent? This would
-#'   effectively show a sign for all values except zero on either of those
-#'   numeric components of the notation. If so, use `TRUE` for either one of
-#'   these options. The default for both is `FALSE`, where only negative numbers
-#'   will display a sign.
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -451,7 +392,7 @@ vec_fmt_integer <- function(
 #' vec_fmt_scientific(num_vals)
 #' ```
 #' ```
-#' #> [1] "3.24 × 10^-4" "8.65" "1.36 × 10^6" "-5.90 × 10^4" "NA"
+#' #> [1] "3.24 x 10^-4" "8.65" "1.36 x 10^6" "-5.90 x 10^4" "NA"
 #' ```
 #'
 #' We can change the number of decimal places with the `decimals` option:
@@ -460,7 +401,7 @@ vec_fmt_integer <- function(
 #' vec_fmt_scientific(num_vals, decimals = 1)
 #' ```
 #' ```
-#' #> [1] "3.2 × 10^-4" "8.7" "1.4 × 10^6" "-5.9 × 10^4" "NA"
+#' #> [1] "3.2 x 10^-4" "8.7" "1.4 x 10^6" "-5.9 x 10^4" "NA"
 #' ```
 #'
 #' If we are formatting for a different locale, we could supply the locale ID
@@ -470,17 +411,17 @@ vec_fmt_integer <- function(
 #' vec_fmt_scientific(num_vals, locale = "es")
 #' ```
 #' ```
-#' #> [1] "3,24 × 10^-4" "8,65" "1,36 × 10^6" "-5,90 × 10^4" "NA"
+#' #> [1] "3,24 x 10^-4" "8,65" "1,36 x 10^6" "-5,90 x 10^4" "NA"
 #' ```
 #'
-#' Should you need to have positive and negative signs on each of the output
-#' values, use `force_sign = TRUE`:
+#' Should you need to have positive and negative signs for the mantissa
+#' component of a given value, use `force_sign_m = TRUE`:
 #'
 #' ```r
-#' vec_fmt_scientific(num_vals, force_sign = TRUE)
+#' vec_fmt_scientific(num_vals, force_sign_m = TRUE)
 #' ```
 #' ```
-#' #> [1] "+3.24 × 10^-4" "+8.65" "+1.36 × 10^6" "-5.90 × 10^4" "NA"
+#' #> [1] "+3.24 x 10^-4" "+8.65" "+1.36 x 10^6" "-5.90 x 10^4" "NA"
 #' ```
 #'
 #' As a last example, one can wrap the values in a pattern with the `pattern`
@@ -490,7 +431,7 @@ vec_fmt_integer <- function(
 #' vec_fmt_scientific(num_vals, pattern = "[{x}]")
 #' ```
 #' ```
-#' #> [1] "[3.24 × 10^-4]" "[8.65]" "[1.36 × 10^6]" "[-5.90 × 10^4]" "NA"
+#' #> [1] "[3.24 x 10^-4]" "[8.65]" "[1.36 x 10^6]" "[-5.90 x 10^4]" "NA"
 #' ```
 #'
 #' @family vector formatting functions
@@ -507,7 +448,9 @@ vec_fmt_integer <- function(
 vec_fmt_scientific <- function(
     x,
     decimals = 2,
+    n_sigfig = NULL,
     drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
     scale_by = 1.0,
     exp_style = "x10n",
     pattern = "{x}",
@@ -519,21 +462,14 @@ vec_fmt_scientific <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
+
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
-  }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_scientific()` function can only be used with numeric vectors."
-    )
   }
 
   render_as_vector(
@@ -542,7 +478,9 @@ vec_fmt_scientific <- function(
       columns = "x",
       rows = everything(),
       decimals = decimals,
+      n_sigfig = n_sigfig,
       drop_trailing_zeros = drop_trailing_zeros,
+      drop_trailing_dec_mark = drop_trailing_dec_mark,
       scale_by = scale_by,
       exp_style = exp_style,
       pattern = pattern,
@@ -579,20 +517,18 @@ vec_fmt_scientific <- function(
 #' - locale-based formatting: providing a locale ID will result in
 #' formatting specific to the chosen locale
 #'
+#' @inheritParams fmt_engineering
+#'
 #' @inheritParams vec_fmt_number
-#' @param scale_by A value to scale the input. The default is `1.0`. All numeric
-#'   values will be multiplied by this value first before undergoing formatting.
-#' @param exp_style Style of formatting to use for the engineering notation
-#'   formatting. By default this is `"x10n"` but other options include using
-#'   a single letter (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to
-#'   signal a minimum digit width of one, or `"low-ten"` for using a stylized
-#'   `"10"` marker.
-#' @param force_sign_m,force_sign_n Should the plus sign be shown for positive
-#'   values of the mantissa (first component) or the exponent? This would
-#'   effectively show a sign for all values except zero on either of those
-#'   numeric components of the notation. If so, use `TRUE` for either one of
-#'   these options. The default for both is `FALSE`, where only negative numbers
-#'   will display a sign.
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -613,7 +549,7 @@ vec_fmt_scientific <- function(
 #' vec_fmt_engineering(num_vals)
 #' ```
 #' ```
-#' #> [1] "324.00 × 10^-6" "8.65" "1.36 × 10^6" "-59.03 × 10^3" "NA"
+#' #> [1] "324.00 x 10^-6" "8.65" "1.36 x 10^6" "-59.03 x 10^3" "NA"
 #' ```
 #'
 #' We can change the number of decimal places with the `decimals` option:
@@ -622,7 +558,7 @@ vec_fmt_scientific <- function(
 #' vec_fmt_engineering(num_vals, decimals = 1)
 #' ```
 #' ```
-#' #> [1] "324.0 × 10^-6" "8.7" "1.4 × 10^6" "-59.0 × 10^3" "NA"
+#' #> [1] "324.0 x 10^-6" "8.7" "1.4 x 10^6" "-59.0 x 10^3" "NA"
 #' ```
 #'
 #' If we are formatting for a different locale, we could supply the locale ID
@@ -632,17 +568,17 @@ vec_fmt_scientific <- function(
 #' vec_fmt_engineering(num_vals, locale = "da")
 #' ```
 #' ```
-#' #> [1] "324,00 × 10^-6" "8,65" "1,36 × 10^6" "-59,03 × 10^3" "NA"
+#' #> [1] "324,00 x 10^-6" "8,65" "1,36 x 10^6" "-59,03 x 10^3" "NA"
 #' ```
 #'
-#' Should you need to have positive and negative signs on each of the output
-#' values, use `force_sign = TRUE`:
+#' Should you need to have positive and negative signs for the mantissa
+#' component of a given value, use `force_sign_m = TRUE`:
 #'
 #' ```r
-#' vec_fmt_engineering(num_vals, force_sign = TRUE)
+#' vec_fmt_engineering(num_vals, force_sign_m = TRUE)
 #' ```
 #' ```
-#' #> [1] "+324.00 × 10^-6" "+8.65" "+1.36 × 10^6" "-59.03 × 10^3" "NA"
+#' #> [1] "+324.00 x 10^-6" "+8.65" "+1.36 x 10^6" "-59.03 x 10^3" "NA"
 #' ```
 #'
 #' As a last example, one can wrap the values in a pattern with the `pattern`
@@ -652,7 +588,7 @@ vec_fmt_scientific <- function(
 #' vec_fmt_engineering(num_vals, pattern = "/{x}/")
 #' ```
 #' ```
-#' #> [1] "/324.00 × 10^-6/" "/8.65/" "/1.36 × 10^6/" "/-59.03 × 10^3/" "NA"
+#' #> [1] "/324.00 x 10^-6/" "/8.65/" "/1.36 x 10^6/" "/-59.03 x 10^3/" "NA"
 #' ```
 #'
 #' @family vector formatting functions
@@ -670,6 +606,7 @@ vec_fmt_engineering <- function(
     x,
     decimals = 2,
     drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
     scale_by = 1.0,
     exp_style = "x10n",
     pattern = "{x}",
@@ -681,21 +618,14 @@ vec_fmt_engineering <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
+
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
-  }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_engineering()` function can only be used with numeric vectors."
-    )
   }
 
   render_as_vector(
@@ -705,6 +635,7 @@ vec_fmt_engineering <- function(
       rows = everything(),
       decimals = decimals,
       drop_trailing_zeros = drop_trailing_zeros,
+      drop_trailing_dec_mark = drop_trailing_dec_mark,
       scale_by = scale_by,
       exp_style = exp_style,
       pattern = pattern,
@@ -741,15 +672,18 @@ vec_fmt_engineering <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
+#' @inheritParams fmt_percent
+#'
 #' @inheritParams vec_fmt_number
-#' @param scale_values Should the values be scaled through multiplication by
-#'   100? By default this is `TRUE` since the expectation is that normally
-#'   values are proportions. Setting to `FALSE` signifies that the values are
-#'   already scaled and require only the percent sign when formatted.
-#' @param incl_space An option for whether to include a space between the value
-#'   and the percent sign. The default is to not introduce a space character.
-#' @param placement The placement of the percent sign. This can be either be
-#'   `right` (the default) or `left`.
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -854,21 +788,14 @@ vec_fmt_percent <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
+
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
-  }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_percent()` function can only be used with numeric vectors."
-    )
   }
 
   render_as_vector(
@@ -928,23 +855,18 @@ vec_fmt_percent <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
+#' @inheritParams fmt_partsper
+#'
 #' @inheritParams vec_fmt_number
-#' @param to_units A keyword that signifies the desired output quantity. This
-#'   can be any from the following set: `"per-mille"`, `"per-myriad"`, `"pcm"`,
-#'   `"ppm"`, `"ppb"`, `"ppt"`, or `"ppq"`.
-#' @param symbol The symbol/units to use for the quantity. By default, this is
-#'   set to `"auto"` and **gt** will choose the appropriate symbol based on the
-#'   `to_units` keyword and the output context. However, this can be changed by
-#'   supplying a string (e.g, using `symbol = "ppbV"` when `to_units = "ppb"`).
-#' @param scale_values Should the values be scaled through multiplication
-#'   according to the keyword set in `to_units`? By default this is `TRUE` since
-#'   the expectation is that normally values are proportions. Setting to `FALSE`
-#'   signifies that the values are already scaled and require only the
-#'   appropriate symbol/units when formatted.
-#' @param incl_space An option for whether to include a space between the value
-#'   and the symbol/units. The default is `"auto"` which provides spacing
-#'   dependent on the mark itself. This can be directly controlled by using
-#'   either `TRUE` or `FALSE`.
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -966,7 +888,7 @@ vec_fmt_percent <- function(
 #' vec_fmt_partsper(num_vals)
 #' ```
 #' ```
-#' #> [1] "1.00‰" "0.10‰" "0.01‰" "NA"
+#' #> [1] "1.00%." "0.10%." "0.01%." "NA"
 #' ```
 #'
 #' We can change the output units to a different measure. If ppm units are
@@ -1044,24 +966,17 @@ vec_fmt_partsper <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
+
+  # Ensure that `to_units` is matched correctly to one option
+  to_units <- rlang::arg_match(to_units)
+
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
-  }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Ensure that `to_units` is matched correctly to one option
-  to_units <- rlang::arg_match(to_units)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_partsper()` function can only be used with numeric vectors."
-    )
   }
 
   render_as_vector(
@@ -1110,22 +1025,18 @@ vec_fmt_partsper <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
+#' @inheritParams fmt_fraction
+#'
 #' @inheritParams vec_fmt_number
-#' @param accuracy The type of fractions to generate. This can either be one of
-#'   the keywords `"low"`, `"med"`, or `"high"` (to generate fractions with
-#'   denominators of up to 1, 2, or 3 digits, respectively) or an integer value
-#'   greater than zero to obtain fractions with a fixed denominator (`2` yields
-#'   halves, `3` is for thirds, `4` is quarters, etc.). For the latter option,
-#'   using `simplify = TRUE` will simplify fractions where possible (e.g., `2/4`
-#'   will be simplified as `1/2`). By default, the `"low"` option is used.
-#' @param simplify If choosing to provide a numeric value for `accuracy`, the
-#'   option to simplify the fraction (where possible) can be taken with `TRUE`
-#'   (the default). With `FALSE`, denominators in fractions will be fixed to the
-#'   value provided in `accuracy`.
-#' @param layout For HTML output, the `"inline"` layout is the default. This
-#'   layout places the numerals of the fraction on the baseline and uses a
-#'   standard slash character. The `"diagonal"` layout will generate fractions
-#'   that are typeset with raised/lowered numerals and a virgule.
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -1193,24 +1104,17 @@ vec_fmt_fraction <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
+
+  # Ensure that `layout` is matched correctly to one option
+  layout <- rlang::arg_match(layout)
+
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
-  }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Ensure that `layout` is matched correctly to one option
-  layout <- rlang::arg_match(layout)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_fraction()` function can only be used with numeric vectors."
-    )
   }
 
   render_as_vector(
@@ -1258,14 +1162,22 @@ vec_fmt_fraction <- function(
 #' be autoscaled and decorated with the appropriate suffixes
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' currency values
-#' - locale-based formatting: providing a locale ID will result in
-#' currency formatting specific to the chosen locale
+#' - locale-based formatting: providing a locale ID will result in currency
+#' formatting specific to the chosen locale; it will also retrieve the locale's
+#' currency if none is explicitly given
 #'
-#' We can use the [info_currencies()] function for a useful reference on all of
-#' the possible inputs to the `currency` argument.
+#' We can call [info_currencies()] for a useful reference on all of the possible
+#' inputs to the `currency` argument.
+#'
+#' @inheritParams fmt_currency
 #'
 #' @inheritParams vec_fmt_number
-#' @param currency The currency to use for the numeric value. This input can be
+#'
+#' @param currency *Currency to use*
+#'
+#'   `scalar<character>|obj:<gt_currency>` // *default:* `NULL` (`optional`)
+#'
+#'   The currency to use for the numeric value. This input can be
 #'   supplied as a 3-letter currency code (e.g., `"USD"` for U.S. Dollars,
 #'   `"EUR"` for the Euro currency). Use [info_currencies()] to get an
 #'   information table with all of the valid currency codes and examples of
@@ -1282,14 +1194,14 @@ vec_fmt_fraction <- function(
 #'   the letter "f" in all other output contexts). Please note that `decimals`
 #'   will default to `2` when using the [currency()] helper function.
 #'
-#'   If nothing is provided to `currency` then `"USD"` (U.S. dollars) will be
-#'   used.
-#' @param use_subunits An option for whether the subunits portion of a currency
-#'   value should be displayed. By default, this is `TRUE`.
-#' @param placement The placement of the currency symbol. This can be either be
-#'   `left` (the default) or `right`.
-#' @param incl_space An option for whether to include a space between the value
-#'   and the currency symbol. The default is to not introduce a space character.
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -1328,7 +1240,7 @@ vec_fmt_fraction <- function(
 #' and let **gt** handle all locale-specific formatting options:
 #'
 #' ```r
-#' vec_fmt_currency(num_vals, currency = "EUR", locale = "fr")
+#' vec_fmt_currency(num_vals, locale = "fr")
 #' ```
 #' ```
 #' #> [1] "EUR5,20" "EUR8,65" "EUR0,00" "-EUR5,30" "NA"
@@ -1367,7 +1279,7 @@ vec_fmt_fraction <- function(
 #' @export
 vec_fmt_currency <- function(
     x,
-    currency = "USD",
+    currency = NULL,
     use_subunits = TRUE,
     decimals = NULL,
     drop_trailing_dec_mark = TRUE,
@@ -1385,21 +1297,14 @@ vec_fmt_currency <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
+
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
-  }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_currency()` function can only be used with numeric vectors."
-    )
   }
 
   render_as_vector(
@@ -1434,9 +1339,9 @@ vec_fmt_currency <- function(
 #' With numeric values in a vector, we can transform those to Roman numerals,
 #' rounding values as necessary.
 #'
+#' @inheritParams fmt_roman
+#'
 #' @inheritParams vec_fmt_number
-#' @param case Should Roman numerals should be rendered as uppercase (`"upper"`)
-#'   or lowercase (`"lower"`) letters? By default, this is set to `"upper"`.
 #'
 #' @return A character vector.
 #'
@@ -1495,7 +1400,6 @@ vec_fmt_currency <- function(
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_roman()].
 #'
-#' @import rlang
 #' @export
 vec_fmt_roman <- function(
     x,
@@ -1504,24 +1408,15 @@ vec_fmt_roman <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
+
+  # Ensure that `case` and `output` are matched correctly to one option
+  case <- rlang::arg_match(case)
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
-  }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Ensure that `case` is matched correctly to one option
-  case <- rlang::arg_match(case)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_roman()` function can only be used with numeric vectors."
-    )
   }
 
   render_as_vector(
@@ -1545,15 +1440,18 @@ vec_fmt_roman <- function(
 #' locale and they are intended for ordering (often leaving out characters with
 #' diacritical marks).
 #'
+#' @inheritParams fmt_index
+#'
 #' @inheritParams vec_fmt_number
-#' @param case Should resulting index characters be rendered as uppercase
-#'   (`"upper"`) or lowercase (`"lower"`) letters? By default, this is set to
-#'   `"upper"`.
-#' @param index_algo The indexing algorithm for handling the recycling of the
-#'   index character set. By default, the `"repeat"` option is used where
-#'   characters are doubled, tripled, and so on, when moving past the character
-#'   set limit. The alternative is the `"excel"` option, where Excel-based
-#'   column naming is adapted and used here (e.g., `[..., Y, Z, AA, AB, ...]`).
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for
+#'   a useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -1621,7 +1519,6 @@ vec_fmt_roman <- function(
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_index()].
 #'
-#' @import rlang
 #' @export
 vec_fmt_index <- function(
     x,
@@ -1632,25 +1529,16 @@ vec_fmt_index <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
+
+  # Ensure that `case`, `index_algo` and `output` are matched correctly to one option
+  case <- rlang::arg_match(case)
+  index_algo <- rlang::arg_match(index_algo)
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
-  }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Ensure that `case` and `index_algo` are matched correctly to one option
-  case <- rlang::arg_match(case)
-  index_algo <- rlang::arg_match(index_algo)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_index()` function can only be used with numeric vectors."
-    )
   }
 
   render_as_vector(
@@ -1680,7 +1568,42 @@ vec_fmt_index <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
+#'
 #' @return A character vector.
+#'
+#' @section Supported locales:
+#'
+#' The following 80 locales are supported in the `locale` argument of
+#' `vec_fmt_spelled_num()`: `"af"` (Afrikaans), `"ak"` (Akan), `"am"` (Amharic),
+#' `"ar"` (Arabic), `"az"` (Azerbaijani), `"be"` (Belarusian), `"bg"`
+#' (Bulgarian), `"bs"` (Bosnian), `"ca"` (Catalan), `"ccp"` (Chakma), `"chr"`
+#' (Cherokee), `"cs"` (Czech), `"cy"` (Welsh), `"da"` (Danish), `"de"` (German),
+#' `"de-CH"` (German (Switzerland)), `"ee"` (Ewe), `"el"` (Greek), `"en"`
+#' (English), `"eo"` (Esperanto), `"es"` (Spanish), `"et"` (Estonian), `"fa"`
+#' (Persian), `"ff"` (Fulah), `"fi"` (Finnish), `"fil"` (Filipino), `"fo"`
+#' (Faroese), `"fr"` (French), `"fr-BE"` (French (Belgium)), `"fr-CH"` (French
+#' (Switzerland)), `"ga"` (Irish), `"he"` (Hebrew), `"hi"` (Hindi), `"hr"`
+#' (Croatian), `"hu"` (Hungarian), `"hy"` (Armenian), `"id"` (Indonesian),
+#' `"is"` (Icelandic), `"it"` (Italian), `"ja"` (Japanese), `"ka"` (Georgian),
+#' `"kk"` (Kazakh), `"kl"` (Kalaallisut), `"km"` (Khmer), `"ko"` (Korean),
+#' `"ky"` (Kyrgyz), `"lb"` (Luxembourgish), `"lo"` (Lao), `"lrc"` (Northern
+#' Luri), `"lt"` (Lithuanian), `"lv"` (Latvian), `"mk"` (Macedonian), `"ms"`
+#' (Malay), `"mt"` (Maltese), `"my"` (Burmese), `"ne"` (Nepali), `"nl"` (Dutch),
+#' `"nn"` (Norwegian Nynorsk), `"no"` (Norwegian), `"pl"` (Polish), `"pt"`
+#' (Portuguese), `"qu"` (Quechua), `"ro"` (Romanian), `"ru"` (Russian), `"se"`
+#' (Northern Sami), `"sk"` (Slovak), `"sl"` (Slovenian), `"sq"` (Albanian),
+#' `"sr"` (Serbian), `"sr-Latn"` (Serbian (Latin)), `"su"` (Sundanese), `"sv"`
+#' (Swedish), `"sw"` (Swahili), `"ta"` (Tamil), `"th"` (Thai), `"tr"` (Turkish),
+#' `"uk"` (Ukrainian), `"vi"` (Vietnamese), `"yue"` (Cantonese), and `"zh"`
+#' (Chinese).
 #'
 #' @section Examples:
 #'
@@ -1736,7 +1659,6 @@ vec_fmt_index <- function(
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_spelled_num()].
 #'
-#' @import rlang
 #' @export
 vec_fmt_spelled_num <- function(
     x,
@@ -1745,21 +1667,14 @@ vec_fmt_spelled_num <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
+
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
-  }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_spelled_num()` function can only be used with numeric vectors."
-    )
   }
 
   render_as_vector(
@@ -1779,10 +1694,10 @@ vec_fmt_spelled_num <- function(
 #' @description
 #'
 #' With numeric values in a vector, we can transform each into byte values with
-#' human readable units. The `vec_fmt_bytes()` function allows for the
-#' formatting of byte sizes to either of two common representations: (1) with
-#' decimal units (powers of 1000, examples being `"kB"` and `"MB"`), and (2)
-#' with binary units (powers of 1024, examples being `"KiB"` and `"MiB"`).
+#' human readable units. `vec_fmt_bytes()` allows for the formatting of byte
+#' sizes to either of two common representations: (1) with decimal units
+#' (powers of 1000, examples being `"kB"` and `"MB"`), and (2) with binary units
+#' (powers of 1024, examples being `"KiB"` and `"MiB"`).
 #'
 #' It is assumed the input numeric values represent the number of bytes and
 #' automatic truncation of values will occur. The numeric values will be scaled
@@ -1799,16 +1714,18 @@ vec_fmt_spelled_num <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
+#' @inheritParams fmt_bytes
+#'
 #' @inheritParams vec_fmt_number
-#' @param standard The way to express large byte sizes.
-#' @param decimals An option to specify the exact number of decimal places to
-#'   use. The default number of decimal places is `1`.
-#' @param incl_space An option for whether to include a space between the value
-#'   and the units. The default of `TRUE` uses a space character for separation.
-#' @param force_sign Should the positive sign be shown for positive numbers
-#'   (effectively showing a sign for all numbers except zero)? If so, use `TRUE`
-#'   for this option. The default is `FALSE`, where only negative numbers will
-#'   display a minus sign.
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -1899,24 +1816,15 @@ vec_fmt_bytes <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
+
+  # Ensure that `standard` and `output` are matched correctly to one option
+  standard <- rlang::arg_match(standard)
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
-  }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Ensure that `standard` is matched correctly to one option
-  standard <- rlang::arg_match(standard)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_bytes()` function can only be used with numeric vectors."
-    )
   }
 
   render_as_vector(
@@ -1950,10 +1858,18 @@ vec_fmt_bytes <- function(
 #' `character` (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or
 #' `YYYY-MM-DD`).
 #'
+#' @inheritParams fmt_date
+#'
 #' @inheritParams vec_fmt_number
-#' @param date_style The date style to use. By default this is `"iso"` which
-#'   corresponds to ISO 8601 date formatting. The other date styles can be
-#'   viewed using [info_date_style()].
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -2013,8 +1929,8 @@ vec_fmt_bytes <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' We can use the [info_date_style()] function within the console to view a
-#' similar table of date styles with example output.
+#' We can call [info_date_style()] in the console to view a similar table
+#' of date styles with example output.
 #'
 #' @section Examples:
 #'
@@ -2092,21 +2008,14 @@ vec_fmt_date <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("Date", "POSIXt", "character"))
+
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
-  }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("Date", "POSIXt", "character"))) {
-    cli::cli_abort(
-      "The `vec_fmt_date()` function can only be used with Date, POSIXt, or character vectors."
-    )
   }
 
   render_as_vector(
@@ -2131,10 +2040,18 @@ vec_fmt_date <- function(
 #' ISO 8601 forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which
 #' always results in the formatting of `00:00:00`).
 #'
+#' @inheritParams fmt_time
+#'
 #' @inheritParams vec_fmt_number
-#' @param time_style The time style to use. By default this is `"iso"` which
-#'   corresponds to how times are formatted within ISO 8601 datetime values. The
-#'   other time styles can be viewed using [info_time_style()].
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -2179,8 +2096,8 @@ vec_fmt_date <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use the [info_time_style()] function within the console to view a
-#' similar table of time styles with example output.
+#' We can call [info_time_style()] in the console to view a similar table of
+#' time styles with example output.
 #'
 #' @section Examples:
 #'
@@ -2262,21 +2179,14 @@ vec_fmt_time <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("Date", "POSIXt", "character"))
+
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
-  }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("Date", "POSIXt", "character"))) {
-    cli::cli_abort(
-      "The `vec_fmt_time()` function can only be used with Date, POSIXt, or character vectors."
-    )
   }
 
   render_as_vector(
@@ -2302,21 +2212,18 @@ vec_fmt_time <- function(
 #' of `POSIXct` (i.e., datetimes), the `Date` type, or `character` (must be in
 #' the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
 #'
+#' @inheritParams fmt_datetime
+#'
 #' @inheritParams vec_fmt_number
-#' @inheritParams vec_fmt_date
-#' @inheritParams vec_fmt_time
-#' @param sep The separator string to use between the date and time components.
-#'   By default, this is a single space character (`" "`). Only used when not
-#'   specifying a `format` code.
-#' @param format An optional format code used for generating custom dates/times.
-#'   If used then the arguments governing preset styles (`date_style` and
-#'   `time_style`) will be ignored in favor of formatting via the `format`
-#'   string.
-#' @param tz The time zone for printing dates/times (i.e., the output). The
-#'   default of `NULL` will preserve the time zone of the input data in the
-#'   output. If providing a time zone, it must be one that is recognized by the
-#'   user's operating system (a vector of all valid `tz` values can be produced
-#'   with [OlsonNames()]).
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -2376,8 +2283,8 @@ vec_fmt_time <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' We can use the [info_date_style()] function within the console to view a
-#' similar table of date styles with example output.
+#' We can call [info_date_style()] in the console to view a similar table of
+#' date styles with example output.
 #'
 #' @section Formatting with the `time_style` argument:
 #'
@@ -2391,7 +2298,7 @@ vec_fmt_time <- function(
 #' The following table provides a listing of all time styles and their output
 #' values (corresponding to an input time of `14:35:00`). It is noted which of
 #' these represent 12- or 24-hour time. Some of the flexible formats (those
-#' that begin with `"E"`) include the the day of the week. Keep this in mind
+#' that begin with `"E"`) include the day of the week. Keep this in mind
 #' when pairing such `time_style` values with a `date_style` so as to avoid
 #' redundant or repeating information.
 #'
@@ -2423,8 +2330,8 @@ vec_fmt_time <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use the [info_time_style()] function within the console to view a
-#' similar table of time styles with example output.
+#' We can call [info_time_style()] in the console to view a similar table of
+#' time styles with example output.
 #'
 #' @section Formatting with a *CLDR* datetime pattern:
 #'
@@ -3092,21 +2999,14 @@ vec_fmt_datetime <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("Date", "POSIXct", "character"))
+
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
-  }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("Date", "POSIXct", "character"))) {
-    cli::cli_abort(
-      "The `vec_fmt_datetime()` function can only be used with Date, POSIXct, or character vectors."
-    )
   }
 
   render_as_vector(
@@ -3156,46 +3056,18 @@ vec_fmt_datetime <- function(
 #' Any other specialized combinations will result in the default set being used,
 #' which is `c("days", "hours", "minutes", "seconds")`
 #'
+#' @inheritParams fmt_duration
+#'
 #' @inheritParams vec_fmt_number
-#' @param input_units If one or more selected columns contains numeric values, a
-#'   keyword must be provided for `input_units` for **gt** to determine how
-#'   those values are to be interpreted in terms of duration. The accepted units
-#'   are: `"seconds"`, `"minutes"`, `"hours"`, `"days"`, and `"weeks"`.
-#' @param output_units Controls the output time units. The default, `NULL`,
-#'   means that **gt** will automatically choose time units based on the input
-#'   duration value. To control which time units are to be considered for output
-#'   (before trimming with `trim_zero_units`) we can specify a vector of one or
-#'   more of the following keywords: `"weeks"`, `"days"`, `"hours"`,
-#'   `"minutes"`, or `"seconds"`.
-#' @param duration_style A choice of four formatting styles for the output
-#'   duration values. With `"narrow"` (the default style), duration values will
-#'   be formatted with single letter time-part units (e.g., 1.35 days will be
-#'   styled as `"1d 8h 24m`). With `"wide"`, this example value will be expanded
-#'   to `"1 day 8 hours 24 minutes"` after formatting. The `"colon-sep"` style
-#'   will put days, hours, minutes, and seconds in the `"([D]/)[HH]:[MM]:[SS]"`
-#'   format. The `"iso"` style will produce a value that conforms to the ISO
-#'   8601 rules for duration values (e.g., 1.35 days will become `"P1DT8H24M"`).
-#' @param trim_zero_units Provides methods to remove output time units that have
-#'   zero values. By default this is `TRUE` and duration values that might
-#'   otherwise be formatted as `"0w 1d 0h 4m 19s"` with
-#'   `trim_zero_units = FALSE` are instead displayed as `"1d 4m 19s"`. Aside
-#'   from using `TRUE`/`FALSE` we could provide a vector of keywords for more
-#'   precise control. These keywords are: (1) `"leading"`, to omit all leading
-#'   zero-value time units (e.g., `"0w 1d"` -> `"1d"`), (2) `"trailing"`, to
-#'   omit all trailing zero-value time units (e.g., `"3d 5h 0s"` -> `"3d 5h"`),
-#'   and `"internal"`, which removes all internal zero-value time units (e.g.,
-#'   `"5d 0h 33m"` -> `"5d 33m"`).
-#' @param max_output_units If `output_units` is `NULL`, where the output time
-#'   units are unspecified and left to **gt** to handle, a numeric value
-#'   provided for `max_output_units` will be taken as the maximum number of time
-#'   units to display in all output time duration values. By default, this is
-#'   `NULL` and all possible time units will be displayed. This option has no
-#'   effect when `duration_style = "colon-sep"` (only `output_units` can be used
-#'   to customize that type of duration output).
-#' @param force_sign Should the positive sign be shown for positive values
-#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
-#'   for this option. The default is `FALSE`, where only negative value will
-#'   display a minus sign.
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -3245,7 +3117,7 @@ vec_fmt_datetime <- function(
 #' vec_fmt_duration(num_vals, input_units = "days")
 #' ```
 #' ```
-#' #> [1] "3d 5h 38m 23s" "5h 31m 12s" "7m 12s" "NA"
+#' #> [1] "3d 5h 38m 24s" "5h 31m 12s" "7m 12s" "NA"
 #' ```
 #'
 #' We can define a set of output time units that we want to see.
@@ -3272,7 +3144,7 @@ vec_fmt_datetime <- function(
 #' )
 #' ```
 #' ```
-#' #> [1] "3 days 5 hours 38 minutes 23 seconds"
+#' #> [1] "3 days 5 hours 38 minutes 24 seconds"
 #' #> [2] "5 hours 31 minutes 12 seconds"
 #' #> [3] "7 minutes 12 seconds"
 #' #> [4] "NA"
@@ -3291,7 +3163,7 @@ vec_fmt_datetime <- function(
 #' )
 #' ```
 #' ```
-#' #> [1] "3 dagen 5 uur 38 minuten 23 seconden"
+#' #> [1] "3 dagen 5 uur 38 minuten 24 seconden"
 #' #> [2] "5 uur 31 minuten 12 seconden"
 #' #> [3] "7 minuten 12 seconden"
 #' #> [4] "NA"
@@ -3323,24 +3195,15 @@ vec_fmt_duration <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer", "difftime"))
+
+  # Ensure that `duration_style` and `ouput` are matched correctly to one option
+  duration_style <- rlang::arg_match(duration_style)
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
-  }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Ensure that `duration_style` is matched correctly to one option
-  duration_style <- rlang::arg_match(duration_style)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer", "difftime"))) {
-    cli::cli_abort(
-      "The `vec_fmt_duration()` function can only be used with numeric, integer, or difftime vectors."
-    )
   }
 
   render_as_vector(
@@ -3370,11 +3233,9 @@ vec_fmt_duration <- function(
 #' Any Markdown-formatted text in the input vector will be transformed to the
 #' appropriate output type.
 #'
+#' @inheritParams fmt_markdown
+#'
 #' @inheritParams vec_fmt_number
-#' @param md_engine The engine preference for Markdown rendering. By default,
-#'   this is set to `"markdown"` where **gt** will use the **markdown** package
-#'   for Markdown conversion to HTML and LaTeX. The other option is
-#'   `"commonmark"` and with that the **commonmark** package will be used.
 #'
 #' @return A character vector.
 #'
@@ -3428,16 +3289,16 @@ vec_fmt_markdown <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Check that `x` is a vector with rlang::is_vector
+  check_vector_valid(x)
+
   # Ensure that arguments are matched
-  output <- rlang::arg_match(output)
   md_engine <- rlang::arg_match(md_engine)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
   }
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
 
   vec_fmt_out <-
     render_as_vector(
@@ -3451,8 +3312,8 @@ vec_fmt_markdown <- function(
     )
 
   if (output == "html") {
-    vec_fmt_out <- gsub("^<div class='gt_from_md'>(.*)", "\\1", vec_fmt_out)
-    vec_fmt_out <- gsub("(.*)\n</div>", "\\1", vec_fmt_out)
+    vec_fmt_out <- gsub("^<span class='gt_from_md'>(.*)", "\\1", vec_fmt_out)
+    vec_fmt_out <- gsub("(.*)\n</span>", "\\1", vec_fmt_out)
   }
 
   vec_fmt_out
@@ -3462,14 +3323,50 @@ gt_one_col <- function(x) {
   gt(dplyr::tibble(x = x), auto_align = FALSE, process_md = FALSE)
 }
 
-stop_if_not_vector <- function(x) {
-  if (!rlang::is_vector(x)) {
-    cli::cli_abort("The object provided as `x` should be a vector.")
+# Similar as `stop_if_not_vector()` if `valid_classes` is not supplied.
+check_vector_valid <- function(x, valid_classes = NULL, call = rlang::caller_env()) {
+  is_vec <- rlang::is_vector(x)
+
+  if (!is_vec || !(is.null(valid_classes) || inherits(x, valid_classes))) {
+    cli::cli_abort(
+      "{.arg x} must be {.or {valid_classes}} vectors, not {.obj_type_friendly {x}}.",
+      call = call
+    )
   }
+
+  invisible()
 }
 
-vector_class_is_valid <- function(x, valid_classes) {
-  inherits(x, valid_classes)
+# In the case where strict mode is being used (options("gt.strict_column_fmt" = TRUE),
+# stop the function if any of the resolved columns have data that is incompatible
+# with the formatter
+check_columns_valid_if_strict <- function(data,
+                                          columns,
+                                          valid_classes,
+                                          extra_msg = NULL,
+                                          call = rlang::caller_env()) {
+  # Don't check if strict mode is not enabled
+  # strict mode is opt-in, not the default
+  if (!isTRUE(getOption("gt.strict_column_fmt", FALSE))) {
+    return()
+  }
+
+  all_valid <- column_classes_are_valid(
+    data = data,
+    columns = {{ columns }},
+    valid_classes = valid_classes,
+    call = call
+  )
+  if (all_valid) {
+    return()
+  }
+
+  if (!all_valid) {
+    cli::cli_abort(c(
+      "{.arg columns} must be {.or {valid_classes}} data.",
+      extra_msg
+    ), call = call)
+  }
 }
 
 render_as_vector <- function(data, output) {
@@ -3486,14 +3383,7 @@ determine_output_format <- function() {
 
   # Check whether knitr is in the package library and stop function
   # only if it is not present
-  if (!requireNamespace("knitr", quietly = TRUE)) {
-
-    cli::cli_abort(c(
-      "Automatically detecting the output context with `output = \"auto\"`
-      requires the `knitr` package.",
-      "*" = "It can be installed with `install.packages(\"knitr\")`."
-    ))
-  }
+  rlang::check_installed("knitr", "to automatically detect the output context with `output = \"auto\".")
 
   if (knitr_is_rtf_output()) {
     return("rtf")
@@ -3501,7 +3391,6 @@ determine_output_format <- function() {
     return("latex")
   } else if (knitr_is_word_output()) {
     return("word")
-  } else {
-    return("html")
   }
+  "html"
 }

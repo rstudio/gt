@@ -7,7 +7,12 @@
 tab_info(data)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -31,10 +36,11 @@ retrieval of the necessary values.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Use the \code{\link[=tab_spanner]{tab_spanner()}} function to
-group two columns together under a spanner column with the ID and label
-\code{"performance"}. Finally, use the \code{tab_info()} function to get a table that
-summarizes the ID values and their label text for all parts of the table.
+Let's use a portion of the \code{\link{gtcars}} dataset to create a \strong{gt} table. We'll
+use \code{\link[=tab_spanner]{tab_spanner()}} to group two columns together under a spanner column with
+the ID and label \code{"performance"}. Finally, we can use\code{tab_info()} in a
+separate, interactive statement so that we can inspect a table that
+summarizes the ID values any associated label text for all parts of the table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
   gtcars |>
@@ -72,11 +78,11 @@ Other part creation/modification functions:
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
-\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
-\code{\link{tab_style_body}()},
-\code{\link{tab_style}()}
+\code{\link{tab_style}()},
+\code{\link{tab_style_body}()}
 }
 \concept{part creation/modification functions}

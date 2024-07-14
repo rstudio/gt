@@ -1,6 +1,3 @@
-# Create a shortened version of `mtcars`
-mtcars_short <- mtcars[1:5, ]
-
 # Create a table with four columns of values
 tbl <-
   dplyr::tribble(
@@ -31,10 +28,9 @@ tbl_na <-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
-test_that("The function `cols_merge()` works correctly", {
+test_that("cols_merge() works correctly", {
 
   local_options("rlib_warning_verbosity" = "verbose")
 
@@ -52,15 +48,12 @@ test_that("The function `cols_merge()` works correctly", {
       pattern = "{1} ({2})"
     )
 
+  merged_res <- dt_col_merge_get(data = tbl_html)[[1]]
+
   # Expect that merging statements are stored in `col_merge`
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
-    expect_equal("{1} ({2})")
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
-    expect_equal(c("drat", "wt"))
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge")
+  expect_equal(merged_res$pattern, "{1} ({2})")
+  expect_equal(merged_res$vars, c("drat", "wt"))
+  expect_equal(merged_res$type, "merge")
 
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with a `pattern` and use `c()`
@@ -73,15 +66,12 @@ test_that("The function `cols_merge()` works correctly", {
       pattern = "{1} ({2})"
     )
 
+  merged_res <- dt_col_merge_get(data = tbl_html)[[1]]
+
   # Expect that merging statements are stored in `col_merge`
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
-    expect_equal("{1} ({2})")
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
-    expect_equal(c("drat", "wt"))
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge")
+  expect_equal(merged_res$pattern, "{1} ({2})")
+  expect_equal(merged_res$vars, c("drat", "wt"))
+  expect_equal(merged_res$type, "merge")
 
   # Create a `tbl_html` object with `gt()`; merge two columns, twice,
   # with two different `pattern`s; use `c()`
@@ -100,23 +90,19 @@ test_that("The function `cols_merge()` works correctly", {
     )
 
   # Expect that merging statements are stored in `col_merge`
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
-    expect_equal("{1} ({2})")
+  merged_res1 <- dt_col_merge_get(data = tbl_html)[[1]]
 
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
-    expect_equal(c("drat", "wt"))
+  # Expect that merging statements are stored in `col_merge`
+  expect_equal(merged_res1$pattern, "{1} ({2})")
+  expect_equal(merged_res1$vars, c("drat", "wt"))
+  expect_equal(merged_res1$type, "merge")
 
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge")
+  merged_res2 <- dt_col_merge_get(data = tbl_html)[[2]]
 
-  dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$pattern %>%
-    expect_equal("{1}-{2}")
-
-  dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$vars %>%
-    expect_equal(c("gear", "carb"))
-
-  dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$type %>%
-    expect_equal("merge")
+  # Expect that merging statements are stored in `col_merge`
+  expect_equal(merged_res2$pattern, "{1}-{2}")
+  expect_equal(merged_res2$vars, c("gear", "carb"))
+  expect_equal(merged_res2$type, "merge")
 
   # Expect a warning if additional, out of scope columns, are
   # included in `hide_columns`
@@ -206,7 +192,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, c), pattern = "{1}{2}<<{3}>>")
 
   expect_equal(
-    (tbl_gt_1 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_1, "html")[["a"]],
     c("111", "2NA2", "33", "4NA")
   )
 
@@ -216,7 +202,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     sub_missing(missing_text = "X")
 
   expect_equal(
-    (tbl_gt_2 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_2, "html")[["a"]],
     c("111", "2X2", "33X", "4XX")
   )
 
@@ -225,7 +211,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, c), pattern = "{1}<<{2}<<{3}>>>>")
 
   expect_equal(
-    (tbl_gt_3 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_3, "html")[["a"]],
     c("111", "2", "33", "4")
   )
 
@@ -234,7 +220,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, c), pattern = "{1}<<{2}-{3}>>")
 
   expect_equal(
-    (tbl_gt_4 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_4, "html")[["a"]],
     c("11-1", "2", "3", "4")
   )
 
@@ -243,7 +229,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, c), pattern = "<<{1}-{2}-{3}>>")
 
   expect_equal(
-    (tbl_gt_5 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_5, "html")[["a"]],
     c("1-1-1", "", "", "")
   )
 
@@ -252,7 +238,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, c), pattern = "<<{1}<<{2}<<{3}>>>>>>")
 
   expect_equal(
-    (tbl_gt_6 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_6, "html")[["a"]],
     c("111", "2", "33", "4")
   )
 
@@ -261,7 +247,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, c), pattern = "<<<<<<X>>>>>>")
 
   expect_equal(
-    (tbl_gt_7 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_7, "html")[["a"]],
     rep("X", 4)
   )
 
@@ -270,7 +256,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, d), pattern = "{1}{2}<<{3}>>")
 
   expect_equal(
-    (tbl_gt_9 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_9, "html")[["a"]],
     c("111", "2NA2", "33", "4NA")
   )
 
@@ -280,7 +266,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, d), pattern = "{1}{2}<<{3}>>")
 
   expect_equal(
-    (tbl_gt_10 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_10, "html")[["a"]],
     c("111", "2X2", "33X", "4XX")
   )
 
@@ -289,7 +275,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     cols_merge(columns = c(a, b, e), pattern = "{1}{2}<<{3}>>")
 
   expect_equal(
-    (tbl_gt_11 %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_gt_11, "html")[["a"]],
     c("11TRUE", "2NAFALSE", "33", "4NA")
   )
 
@@ -314,7 +300,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
   )
 })
 
-test_that("The `cols_merge_uncert()` function works correctly", {
+test_that("cols_merge_uncert() works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -329,21 +315,16 @@ test_that("The `cols_merge_uncert()` function works correctly", {
       col_uncert = "col_2"
     )
 
+  merged_res <- dt_col_merge_get(data = tbl_html)[[1]]
+
   # Expect that merging statements are stored in `col_merge`
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
-    expect_equal("{1}{sep}{2}")
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
-    expect_equal(c("col_1", "col_2"))
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_uncert")
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal(" +/- ")
+  expect_equal(merged_res$pattern, "{1}{sep}{2}")
+  expect_equal(merged_res$vars, c("col_1", "col_2"))
+  expect_equal(merged_res$type, "merge_uncert")
+  expect_equal(merged_res$sep, " +/- ")
 
   # Create a `tbl_html` object with `gt()`; merge two columns
-  # with `cols_merge_uncert()` and use `c()`
+  # with `cols_merge_uncert()` and tidyselect
   tbl_html <-
     tbl %>%
     gt() %>%
@@ -353,17 +334,13 @@ test_that("The `cols_merge_uncert()` function works correctly", {
     )
 
   # Expect that merging statements are stored in `col_merge`
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
-    expect_equal("{1}{sep}{2}")
+  merged_res <- dt_col_merge_get(data = tbl_html)[[1]]
 
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
-    expect_equal(c("col_1", "col_2"))
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_uncert")
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal(" +/- ")
+  # Expect that merging statements are stored in `col_merge`
+  expect_equal(merged_res$pattern, "{1}{sep}{2}")
+  expect_equal(merged_res$vars, c("col_1", "col_2"))
+  expect_equal(merged_res$type, "merge_uncert")
+  expect_equal(merged_res$sep, " +/- ")
 
   # Create a `tbl_html` object with `gt()`; merge two columns, twice,
   # with `cols_merge_uncert()`
@@ -380,29 +357,22 @@ test_that("The `cols_merge_uncert()` function works correctly", {
     )
 
   # Expect that merging statements are stored in `col_merge`
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
-    expect_equal("{1}{sep}{2}")
+  merged_res <- dt_col_merge_get(data = tbl_html)[[1]]
 
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
-    expect_equal(c("col_1", "col_2"))
+  # Expect that merging statements are stored in `col_merge`
+  expect_equal(merged_res$pattern, "{1}{sep}{2}")
+  expect_equal(merged_res$vars, c("col_1", "col_2"))
+  expect_equal(merged_res$type, "merge_uncert")
+  expect_equal(merged_res$sep, " +/- ")
 
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_uncert")
+  # Expect that merging statements are stored in `col_merge`
+  merged_res <- dt_col_merge_get(data = tbl_html)[[2]]
 
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal(" +/- ")
-
-  dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$pattern %>%
-    expect_equal("{1}{sep}{2}")
-
-  dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$vars %>%
-    expect_equal(c("col_3", "col_4"))
-
-  dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$type %>%
-    expect_equal("merge_uncert")
-
-  dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$sep %>%
-    expect_equal(" +/- ")
+  # Expect that merging statements are stored in `col_merge`
+  expect_equal(merged_res$pattern, "{1}{sep}{2}")
+  expect_equal(merged_res$vars, c("col_3", "col_4"))
+  expect_equal(merged_res$type, "merge_uncert")
+  expect_equal(merged_res$sep, " +/- ")
 
   # Create a `tbl_html` object with `gt()`; merge two
   # columns with `cols_merge_uncert()` but use the `I()`
@@ -416,28 +386,24 @@ test_that("The `cols_merge_uncert()` function works correctly", {
       sep = I(" +/- ")
     )
 
-  # Expect that merging statements are stored in `col_merge`\
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
-    expect_equal("{1}{sep}{2}")
+  # Expect that merging statements are stored in `col_merge`
+  merged_res <- dt_col_merge_get(data = tbl_html)[[1]]
 
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
-    expect_equal(c("col_1", "col_2"))
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_uncert")
-
-  # Get the separator object
-  sep <- dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep
+  # Expect that merging statements are stored in `col_merge`
+  expect_equal(merged_res$pattern, "{1}{sep}{2}")
+  expect_equal(merged_res$vars, c("col_1", "col_2"))
+  expect_equal(merged_res$type, "merge_uncert")
 
   # Expect that `sep` has the `AsIs` class
-  expect_s3_class(sep, "AsIs")
-  expect_equal(as.character(sep), " +/- ")
-  expect_equal(sep, I(" +/- "))
+  expect_s3_class(merged_res$sep, "AsIs")
+  expect_equal(as.character(merged_res$sep), " +/- ")
+  expect_equal(merged_res$sep, I(" +/- "))
 
-  #
+})
+
+test_that("cols_merge_uncert() works with row groups", {
   # Expect that the column set as the row group can participate
   # in column merging through `cols_merge_uncert()`
-  #
 
   tbl <-
     dplyr::tibble(
@@ -469,7 +435,7 @@ test_that("The `cols_merge_uncert()` function works correctly", {
   gt_tbl_2 %>% render_as_html() %>% expect_snapshot()
 })
 
-test_that("The `cols_merge_uncert()` fn works nicely with different error bounds", {
+test_that("cols_merge_uncert() works nicely with different error bounds", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -542,10 +508,7 @@ test_that("The `cols_merge_uncert()` fn works nicely with different error bounds
   gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
 })
 
-test_that("The `cols_merge_range()` function works correctly", {
-
-  # Check that specific suggested packages are available
-  check_suggests()
+test_that("cols_merge_range() works correctly", {
 
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with `cols_merge_range()`
@@ -557,18 +520,15 @@ test_that("The `cols_merge_range()` function works correctly", {
       col_end = "col_2"
     )
 
-  # Expect that merging statements are stored in `col_merge`\
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
-    expect_equal("{1}{sep}{2}")
+  merged_range <- dt_col_merge_get(tbl_html)[[1]]
+  # Expect that merging statements are stored in `col_merge`
+  expect_equal(merged_range$pattern, "{1}{sep}{2}")
+  expect_equal(merged_range$vars, c("col_1", "col_2"))
+  expect_equal(merged_range$type, "merge_range")
+  expect_equal(merged_range$sep, "\U2013")
+})
 
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
-    expect_equal(c("col_1", "col_2"))
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_range")
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal("--")
+test_that("cols_merge_range works 2", {
 
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with `cols_merge_range()`
@@ -580,58 +540,60 @@ test_that("The `cols_merge_range()` function works correctly", {
       col_end = col_2
     )
 
-  # Expect that merging statements are stored in `col_merge`\
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
-    expect_equal("{1}{sep}{2}")
+  merged_range <- dt_col_merge_get(data = tbl_html)[[1]]
+  # Expect that merging statements are stored in `col_merge`
+  expect_equal(merged_range$pattern, "{1}{sep}{2}")
+  expect_equal(merged_range$vars, c("col_1", "col_2"))
+  expect_equal(merged_range$type, "merge_range")
+  expect_equal(merged_range$sep, "\U2013")
+})
 
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
-    expect_equal(c("col_1", "col_2"))
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_range")
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal("--")
-
+test_that("cols_merge_range() works with 2 statements", {
   # Create a `tbl_html` object with `gt()`; merge two columns, twice,
   # with `cols_merge_range()`
   tbl_html <-
     tbl %>%
     gt() %>%
-    cols_merge_range(
-      col_begin = col_1,
-      col_end = col_2
-    ) %>%
-    cols_merge_range(
-      col_begin = col_3,
-      col_end = col_4
-    )
+    cols_merge_range(col_begin = col_1, col_end = col_2) %>%
+    cols_merge_range(col_begin = col_3, col_end = col_4)
 
-  # Expect that merging statements are stored in `col_merge`\
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
-    expect_equal("{1}{sep}{2}")
+  merged_range1 <- dt_col_merge_get(data = tbl_html)[[1]]
+  # Expect that merging statements are stored in `col_merge`
+  expect_equal(merged_range1$pattern, "{1}{sep}{2}")
+  expect_equal(merged_range1$vars, c("col_1", "col_2"))
+  expect_equal(merged_range1$type, "merge_range")
+  expect_equal(merged_range1$sep, "\U2013")
 
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
-    expect_equal(c("col_1", "col_2"))
+  merged_range2 <- dt_col_merge_get(data = tbl_html)[[2]]
+  expect_equal(merged_range2$pattern, "{1}{sep}{2}")
+  expect_equal(merged_range2$vars, c("col_3", "col_4"))
+  expect_equal(merged_range2$type, "merge_range")
+  expect_equal(merged_range2$sep, "\U2013")
+})
 
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_range")
+test_that("cols_merge_range() respects locale for separators", {
+  # only locale set in cols_merge
+  expect_merge_locale_sep(locale = "en", expected_sep = "\U2013")
+  expect_merge_locale_sep(locale = "es", expected_sep = "-")
+  expect_merge_locale_sep(locale = "nl", expected_sep = "-")
+  expect_merge_locale_sep(locale = "zh", expected_sep = "-")
+  expect_merge_locale_sep(locale = "ja", expected_sep = "\UFF5E")
+  expect_merge_locale_sep(locale = "ko", expected_sep = "~")
+  expect_merge_locale_sep(locale = "to", expected_sep = "\U2014")
+  expect_merge_locale_sep(locale = "bg", expected_sep = " \U2013 ")
+  expect_merge_locale_sep(locale = "bs", expected_sep =  " \U2013 ")
+  expect_merge_locale_sep(locale = "pt", expected_sep =  "\U2013")
+  expect_merge_locale_sep(locale = "pt-PT", expected_sep = " - ")
 
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal("--")
+  # Expect that different `locale` priorities and `sep` overrides work correctly
+  expect_merge_locale_sep(global_locale = "pt-PT", expected_sep = " - ")
+  expect_merge_locale_sep(global_locale = "ja", expected_sep = "\UFF5E")
+  expect_merge_locale_sep(global_locale = "ja", locale = "ja", expected_sep = "\UFF5E")
+  expect_merge_locale_sep(global_locale = "ja", locale = "en", expected_sep = "\U2013")
+  expect_merge_locale_sep(global_locale = "ja", locale = "ko", sep = "q", expected_sep = "q")
+})
 
-  dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$pattern %>%
-    expect_equal("{1}{sep}{2}")
-
-  dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$vars %>%
-    expect_equal(c("col_3", "col_4"))
-
-  dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$type %>%
-    expect_equal("merge_range")
-
-  dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$sep %>%
-    expect_equal("--")
-
+test_that("cols_merge_range() works", {
   # Create a `tbl_html` object with `gt()`; merge two
   # columns with `cols_merge_range()` but use the `I()`
   # function to keep the `--` separator text as is
@@ -644,23 +606,17 @@ test_that("The `cols_merge_range()` function works correctly", {
       sep = I("--")
     )
 
-  # Expect that merging statements are stored in `col_merge`\
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
-    expect_equal("{1}{sep}{2}")
+  merged_res <- dt_col_merge_get(data = tbl_html)[[1]]
 
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
-    expect_equal(c("col_1", "col_2"))
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_range")
-
-  # Get the separator object
-  sep <- dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep
+  # Expect that merging statements are stored in `col_merge`
+  expect_equal(merged_res$pattern, "{1}{sep}{2}")
+  expect_equal(merged_res$vars, c("col_1", "col_2"))
+  expect_equal(merged_res$type, "merge_range")
 
   # Expect that `sep` has the `AsIs` class
-  expect_s3_class(sep, "AsIs")
-  expect_equal(as.character(sep), "--")
-  expect_equal(sep, I("--"))
+  expect_s3_class(merged_res$sep, "AsIs")
+  expect_equal(as.character(merged_res$sep), "--")
+  expect_equal(merged_res$sep, I("--"))
 
   # Create a `tbl_html` object with `gt()`; merge two
   # columns with `cols_merge_range()` but use the `I()`
@@ -674,24 +630,21 @@ test_that("The `cols_merge_range()` function works correctly", {
       sep = I("---")
     )
 
-  # Expect that merging statements are stored in `col_merge`\
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
-    expect_equal("{1}{sep}{2}")
+  # Expect that merging statements are stored in `col_merge`
+  merged_res <- dt_col_merge_get(data = tbl_html)[[1]]
 
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
-    expect_equal(c("col_1", "col_2"))
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_range")
-
-  # Get the separator object
-  sep <- dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep
+  # Expect that merging statements are stored in `col_merge`
+  expect_equal(merged_res$pattern, "{1}{sep}{2}")
+  expect_equal(merged_res$vars, c("col_1", "col_2"))
+  expect_equal(merged_res$type, "merge_range")
 
   # Expect that `sep` has the `AsIs` class
-  expect_s3_class(sep, "AsIs")
-  expect_equal(as.character(sep), "---")
-  expect_equal(sep, I("---"))
+  expect_s3_class(merged_res$sep, "AsIs")
+  expect_equal(as.character(merged_res$sep), "---")
+  expect_equal(merged_res$sep, I("---"))
+})
 
+test_that("cols_merge_range() works well", {
   # Create two gt table objects; the first will be based
   # on `tbl` while the second will use a different column name
   # in `tbl` (`sep`) that collides with a pattern element name
@@ -714,8 +667,8 @@ test_that("The `cols_merge_range()` function works correctly", {
 
   # Expect that the HTML produced from the two tables is the same
   expect_identical(
-    tbl_html_1 %>% as_raw_html() %>% gsub("id=\"[a-z]*?\"", "", .),
-    tbl_html_2 %>% as_raw_html() %>% gsub("id=\"[a-z]*?\"", "", .)
+    gsub("id=\"[a-z]*?\"", "", as_raw_html(tbl_html_1)),
+    gsub("id=\"[a-z]*?\"", "", as_raw_html(tbl_html_2))
   )
 
   # Create another variant that renames `col_2` as `1`, which
@@ -732,10 +685,14 @@ test_that("The `cols_merge_range()` function works correctly", {
   # Expect that the HTML produced from `tbl_html_2` and
   # `tbl_html_3` is the same
   expect_identical(
-    tbl_html_2 %>% as_raw_html() %>% gsub("id=\"[a-z]*?\"", "", .),
-    tbl_html_3 %>% as_raw_html() %>% gsub("id=\"[a-z]*?\"", "", .)
+    gsub("id=\"[a-z]*?\"", "", as_raw_html(tbl_html_2)),
+    gsub("id=\"[a-z]*?\"", "", as_raw_html(tbl_html_3))
   )
+})
 
+test_that("cols_merge_range() produces the correct output", {
+
+  check_suggests()
   #
   # Expect that the column set as the row group can participate
   # in column merging through `col_merge_range()`
@@ -798,7 +755,7 @@ test_that("The `cols_merge_range()` function works correctly", {
   gt_tbl_5 %>% render_as_html() %>% expect_snapshot()
 })
 
-test_that("The `cols_merge_n_pct()` function works correctly", {
+test_that("cols_merge_n_pct() works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -826,21 +783,17 @@ test_that("The `cols_merge_n_pct()` function works correctly", {
     cols_merge_n_pct(col_n = a, col_pct = b) %>%
     fmt_percent(columns = b, decimals = 1)
 
-  # # Expect that merging statements are stored in `col_merge`
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
-    expect_equal("{1}{sep}{2}")
+  # Expect that merging statements are stored in `col_merge`
+  merged_res <- dt_col_merge_get(data = tbl_html)[[1]]
 
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
-    expect_equal(c("a", "b"))
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_n_pct")
-
-  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal("")
+  # Expect that merging statements are stored in `col_merge`
+  expect_equal(merged_res$pattern, "{1}{sep}{2}")
+  expect_equal(merged_res$vars, c("a", "b"))
+  expect_equal(merged_res$type, "merge_n_pct")
+  expect_equal(merged_res$sep, "")
 
   expect_equal(
-    (tbl_html %>% render_formats_test("html"))[["a"]],
+    render_formats_test(tbl_html, "html")[["a"]],
     c(
       "1 (7.1%)", "5 (35.7%)", "0", "2 (14.3%)",
       "NA", "6 (42.9%)", "5", "NA", "0", "NA"
@@ -848,7 +801,7 @@ test_that("The `cols_merge_n_pct()` function works correctly", {
   )
 
   expect_equal(
-    (tbl_html %>% render_formats_test("html"))[["b"]],
+    render_formats_test(tbl_html, "html")[["b"]],
     c(
       "7.1%", "35.7%", "0.0%", "14.3%",
       "NA", "42.9%", "NA", "100,000.0%", "NA",

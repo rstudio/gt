@@ -7,16 +7,32 @@
 opt_stylize(data, style = 1, color = "blue", add_row_striping = TRUE)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{style}{Six numbered styles are available. Simply provide a number from
-\code{1} (the default) to \code{6} to choose a distinct look.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{color}{There are six color variations: \code{"blue"} (the default),
-\code{"cyan"}, \code{"pink"}, \code{"green"}, \code{"red"}, and \code{"gray"}.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{add_row_striping}{An option to enable row striping in the table body
-for the style chosen. By default, this is \code{TRUE}.}
+\item{style}{\emph{Table style}
+
+\verb{scalar<numeric|integer>(1>=val>=6)} // \emph{default:} \code{1}
+
+Six numbered styles are available. Simply provide a number from \code{1} (the
+default) to \code{6} to choose a distinct look.}
+
+\item{color}{\emph{Color variation}
+
+\verb{scalar<character>} // \emph{default:} \code{"blue"}
+
+There are six color variations: \code{"blue"}, \code{"cyan"}, \code{"pink"}, \code{"green"},
+\code{"red"}, and \code{"gray"}.}
+
+\item{add_row_striping}{\emph{Allow row striping}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to enable row striping in the table body for the \code{style} chosen.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -37,8 +53,8 @@ from.
 
 
 Use \code{exibble} to create a \strong{gt} table with a number of table parts added.
-Then, use the \code{opt_stylize()} function to give the table some additional
-style (using the \code{"cyan"} color variation and style number \code{6}).
+Then, use \code{opt_stylize()} to give the table some additional style
+(using the \code{"cyan"} color variation and style number \code{6}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt(rowname_col = "row", groupname_col = "group") |>

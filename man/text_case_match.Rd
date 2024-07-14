@@ -13,39 +13,58 @@ text_case_match(
 )
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{\emph{The gt table data object}
 
-\item{...}{A sequence of two-sided formulas matching this general
-construction: \verb{<old_text> ~ <new_text>}. The left hand side (LHS)
-determines which values to match on and it can be any length (allowing for
-\code{new_text} to replace different values of \code{old_text}). The right hand side
-(RHS) provides the replacement text (it must resolve to a single value of
-the \code{character} class).}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{.default}{The replacement text to use when cell values aren't matched
-by any of the LHS inputs. If \code{NULL}, the default, no replacement text will
-be used.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{.replace}{A choice in how the matching is to be done. The default
-\code{"all"} means that the \code{old_text} (on the LHS of formulas given in \code{...})
-must match the cell text \emph{completely}. With that option, the replacement
-will completely replace that matched text. With \code{"partial"}, the match will
-occur in all substrings of \code{old_text}. In this way, the replacements will
-act on those matched substrings.}
+\item{...}{\emph{Matching expressions}
 
-\item{.locations}{The cell or set of cells to be associated with the text
-transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
-\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_row_groups]{cells_row_groups()}} helper functions can be
-used here. We can enclose several of these calls within a \code{list()} if we
+\verb{<multiple expressions>} // \strong{required}
+
+A sequence of two-sided formulas matching this general construction:
+\verb{<old_text> ~ <new_text>}. The left hand side (LHS) determines which values
+to match on and it can be any length (allowing for \code{new_text} to replace
+different values of \code{old_text}). The right hand side (RHS) provides the
+replacement text (it must resolve to a single value of the \code{character}
+class).}
+
+\item{.default}{\emph{Default replacement text}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The replacement text to use when cell values aren't matched by any of the
+LHS inputs. If \code{NULL}, the default, no replacement text will be used.}
+
+\item{.replace}{\emph{Method for text replacement}
+
+\verb{singl-kw:[all|partial]} // \emph{default:} \code{"all"}
+
+A choice in how the matching is to be done. The default \code{"all"} means that
+the \code{old_text} (on the LHS of formulas given in \code{...}) must match the cell
+text \emph{completely}. With that option, the replacement will completely
+replace that matched text. With \code{"partial"}, the match will occur in all
+substrings of \code{old_text}. In this way, the replacements will act on those
+matched substrings.}
+
+\item{.locations}{\emph{Locations to target}
+
+\code{\link[=location-helper]{<locations expressions>}} // \emph{default:} \code{cells_body()}
+
+The cell or set of cells to be associated with the text transformation.
+Only \code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}},
+\code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_stub]{cells_stub()}}, and \code{\link[=cells_body]{cells_body()}} can
+be used here. We can enclose several of these calls within a \code{list()} if we
 wish to make the transformation happen at different locations.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{text_case_match()} function provides a useful interface for a approach
-to replacing table cells that behaves much like a switch statement. The
-targeting of cells for transformation happens with the \code{.locations} argument.
+\code{text_case_match()} provides a useful interface for a approach to replacing
+table cells that behaves much like a switch statement. The targeting of cell for transformation happens with the \code{.locations} argument.
 Once overall targeting is handled, you need to supply a sequence of two-sided
 formulas matching of the general form: \verb{<vector_old_text> ~ <new_text>}. In
 the left hand side (LHS) there should be a character vector containing
@@ -59,11 +78,15 @@ strategy with the alternate option.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. In the \code{char} column, transform the
-\code{NA} value to \code{"elderberry"}. Over in the \code{fctr} column, perform some
-sophisticated matches on spelled-out numbers and replace with descriptive
-text. Here, we use a \code{.default} to replace text for any of those non-matched
-cases.
+Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
+(keeping only the \code{char} and \code{fctr} columns). In the \code{char} column, we'll
+transform the \code{NA} value to \code{"elderberry"} using the \code{text_case_match()}
+function. Over in the \code{fctr} column, some more sophisticated matches will be
+performed using \code{text_case_match()}. That column has spelled out numbers and
+we can produce these on the LHS with help from \code{\link[=vec_fmt_spelled_num]{vec_fmt_spelled_num()}}.
+The replacements will contain descriptive text. In this last call of
+\code{text_case_match()}, we use a \code{.default} to replace text for any of those
+non-matched cases.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(char, fctr) |>
@@ -84,18 +107,16 @@ cases.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_case_match_1.png" alt="This image of a table was generated from the first code example in the `text_case_match()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{towny}} to create a \strong{gt} table. Transform the text in the
-\code{csd_type} column using two-sided formulas supplied to \code{text_case_match()}.
-We can replace matches on the LHS with Fontawesome icons furnished by the
-\strong{fontawesome} R package.
+Next, let's use a transformed version of the \code{\link{towny}} dataset to create a
+\strong{gt} table. Transform the text in the \code{csd_type} column using two-sided
+formulas supplied to \code{text_case_match()}. We can replace matches on the LHS
+with Fontawesome icons furnished by the \strong{fontawesome} R package.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(name, csd_type, population_2021) |>
   dplyr::filter(csd_type \%in\% c("city", "town")) |>
-  dplyr::group_by(csd_type) |>
-  dplyr::arrange(desc(population_2021)) |>
-  dplyr::slice_head(n = 5) |>
-  dplyr::ungroup() |>
+  dplyr::slice_max(population_2021, n = 5, by = csd_type) |>
+  dplyr::arrange(csd_type) |>
   gt() |>
   fmt_integer() |>
   text_case_match(

@@ -13,27 +13,48 @@ vec_fmt_time(
 )
 }
 \arguments{
-\item{x}{A numeric vector.}
+\item{x}{\emph{The input vector}
 
-\item{time_style}{The time style to use. By default this is \code{"iso"} which
-corresponds to how times are formatted within ISO 8601 datetime values. The
-other time styles can be viewed using \code{\link[=info_time_style]{info_time_style()}}.}
+\code{vector(numeric|integer)} // \strong{required}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+This is the input vector that will undergo transformation to a character
+vector of the same length. Values within the vector will be formatted.}
 
-\item{locale}{An optional locale identifier that can be used for formatting
-the value according the locale's rules. Examples include \code{"en"} for English
-(United States) and \code{"fr"} for French (France). The use of a locale ID will
-override any locale-specific values provided. We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported.}
+\item{time_style}{\emph{Predefined style for times}
 
-\item{output}{The output style of the resulting character vector. This can
-either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
-or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
-\code{"auto"} option will choose the correct \code{output} value}
+\verb{scalar<character>|scalar<numeric|integer>(1<=val<=25)} // \emph{default:} \code{"iso"}
+
+The time style to use. By default this is the short name \code{"iso"} which
+corresponds to how times are formatted within ISO 8601 datetime values.
+There are 25 time styles in total and their short names can be viewed using
+\code{\link[=info_time_style]{info_time_style()}}.}
+
+\item{pattern}{\emph{Specification of the formatting pattern}
+
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
+
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported.}
+
+\item{output}{\emph{Output format}
+
+\verb{singl-kw:[auto|plain|html|latex|rtf|word]} // \emph{default:} \code{"auto"}
+
+The output style of the resulting character vector. This can either be
+\code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or
+\code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the \code{"auto"}
+option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
@@ -86,8 +107,8 @@ these represent 12- or 24-hour time.\tabular{llll}{
 }
 
 
-We can use the \code{\link[=info_time_style]{info_time_style()}} function within the console to view a
-similar table of time styles with example output.
+We can call \code{\link[=info_time_style]{info_time_style()}} in the console to view a similar table of
+time styles with example output.
 }
 
 \section{Examples}{
@@ -165,8 +186,8 @@ The variant function intended for formatting \strong{gt} table data:
 Other vector formatting functions: 
 \code{\link{vec_fmt_bytes}()},
 \code{\link{vec_fmt_currency}()},
-\code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},

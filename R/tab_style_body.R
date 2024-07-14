@@ -2,11 +2,11 @@
 #'
 #' @description
 #'
-#' With the `tab_style_body()` function we can target cells though value, regex,
-#' and custom matching rules and apply styles to them and their surrounding
-#' context (i.e., styling an entire row or column wherein the match is found).
-#' Just as with the general [tab_style()] function, this function is focused on
-#' the application of styles for HTML output only (as such, other output formats
+#' With `tab_style_body()` we can target cells through value, regex, and
+#' custom matching rules and apply styles to them and their surrounding context
+#' (i.e., styling an entire row or column wherein the match is found). Just as
+#' with the general [tab_style()] function, this function is focused on the
+#' application of styles for HTML output only (as such, other output formats
 #' will ignore all `tab_style()` calls).
 #'
 #' With the collection of `cell_*()` helper functions available in **gt**, we
@@ -24,46 +24,82 @@
 #' - the cell borders ([cell_borders()])
 #'
 #' @inheritParams fmt_number
-#' @param style The styles to use for the targeted cells. The [cell_text()],
-#'   [cell_fill()], and [cell_borders()] helper functions can be used here to
-#'   more easily generate valid styles. If using more than one helper function
-#'   to define styles, all calls must be enclosed in a [list()]. Custom CSS
-#'   declarations can be used for HTML output by including a [css()]-based
-#'   statement as a list item.
-#' @param columns Optional columns for constraining the targeting process.
-#'   Providing [everything()] (the default) results in cells in all `columns`
-#'   being targeting (this can be limited by `rows` however). Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   helper function focused on selections. The select helper functions are:
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#' @param rows Optional rows for constraining the targeting process. Providing
-#'   [everything()] (the default) results in all rows in `columns` being
-#'   targeted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
-#' @param values The specific value or values that should be targeted for
-#'   styling. If `pattern` is also supplied then `values` will be ignored.
-#' @param pattern A regex pattern that can target solely those values in
-#'   `character`-based columns. If `values` is also supplied, `pattern` will
-#'   take precedence.
-#' @param fn A supplied function that operates on each cell of each column
-#'   specified through `columns` and `rows`. The function should be fashioned
-#'   such that a single logical value is returned. If either of `values` or
-#'   `pattern` is also supplied, `fn` will take precedence.
-#' @param targets A vector of styling target keywords to contain or expand the
-#'   target of each cell. By default, this is a vector just containing `"cell"`.
-#'   However, the keywords `"row"` and `"column"` may be used separately or in
-#'   combination to style the target cells' associated rows or columns.
-#' @param extents A vector of locations to project styling. By default, this is
-#'   a vector just containing `"body"`, whereby styled rows or columns
-#'   (facilitated via inclusion of the `"row"` and `"column"` keywords in
-#'   `targets`) will not permeate into the stub. The additional keyword `"stub"`
-#'   may be used alone or in conjunction with `"body"` to project or expand the
-#'   styling into the stub.
+#'
+#' @param style *Style declarations*
+#'
+#'   `<style expressions>` // **required**
+#'
+#'   The styles to use for the targeted cells. [cell_text()], [cell_fill()],
+#'   and [cell_borders()] can be used here to more easily generate valid styles.
+#'   If using more than one helper function to define styles, all calls must be
+#'   enclosed in a [list()]. Custom CSS declarations can be used for HTML output
+#'   by including a [css()]-based statement as a list item.
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // *default:* `everything()`
+#'
+#'   The columns to which the targeting operations are constrained.  Can either
+#'   be a series of column names provided in `c()`, a vector of column indices,
+#'   or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]). This argument
+#'   works in tandem with the `spanners` argument.
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` // *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   form a constraint for targeting operations. The default [everything()]
+#'   results in all rows in `columns` being formatted. Alternatively, we can
+#'   supply a vector of row IDs within `c()`, a vector of row indices, or a
+#'   select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()],  [num_range()], and [everything()]). We can also use
+#'   expressions to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param values *Values for targeting*
+#'
+#'   `vector<character|numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   The specific value or values that should be targeted for styling. If
+#'   `pattern` is also supplied then `values` will be ignored.
+#'
+#' @param pattern *Regex pattern for targeting*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   A regex pattern that can target solely those values in `character`-based
+#'   columns. If `values` is also supplied, `pattern` will take precedence.
+#'
+#' @param fn *Function to return logical values*
+#'
+#'   `<function>` // *default:* `NULL` (`optional`)
+#'
+#'   A supplied function that operates on each cell of each column specified
+#'   through `columns` and `rows`. The function should be fashioned such that a
+#'   single logical value is returned. If either of `values` or `pattern` is
+#'   also supplied, `fn` will take precedence.
+#'
+#' @param targets *Styling targets*
+#'
+#'   `vector<character>` // *default:* `"cell"`
+#'
+#'   A vector of styling target keywords to contain or expand the target of each
+#'   cell. By default, this is a vector just containing `"cell"`. However, the
+#'   keywords `"row"` and `"column"` may be used separately or in combination to
+#'   style the target cells' associated rows or columns.
+#'
+#' @param extents *Styling extents*
+#'
+#'   `vector<character>` // *default:* `"body"`
+#'
+#'   A vector of locations to project styling. By default, this is a vector just
+#'   containing `"body"`, whereby styled rows or columns (facilitated via
+#'   inclusion of the `"row"` and `"column"` keywords in `targets`) will not
+#'   permeate into the stub. The additional keyword `"stub"` may be used alone
+#'   or in conjunction with `"body"` to project or expand the styling into the
+#'   stub.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -242,6 +278,22 @@
 #' `r man_get_image_tag(file = "man_tab_style_body_6.png")`
 #' }}
 #'
+#' Styling every `NA` value in a table is also easily accomplished with the `fn`
+#' argument by way of `is.na()`.
+#'
+#' ```r
+#' gt_tbl |>
+#'   tab_style_body(
+#'     style = cell_text(color = "red3"),
+#'     fn = function(x) is.na(x)
+#'   ) |>
+#'   sub_missing(missing_text = "Not Available")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_body_7.png")`
+#' }}
+#'
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-11
@@ -281,14 +333,14 @@ tab_style_body <- function(
 
   if (is.null(values) && is.null(pattern) && is.null(fn)) {
     cli::cli_abort(
-      "One of `values`, `pattern`, or `fn` needs to be supplied to `sub_value()`."
+      "One of `values`, `pattern`, or `fn` must be supplied to {.fn sub_values}."
     )
   }
 
   # Validate that the `fn` object is a function
   if (!is.null(fn) && !rlang::is_function(fn)) {
     cli::cli_abort(
-      "A function must be provided to the `fn` argument."
+     "{.arg fn} must be a function."
     )
   }
 

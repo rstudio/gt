@@ -7,7 +7,12 @@
 rm_caption(data)
 }
 \arguments{
-\item{data}{A table object of class \code{gt_tbl}.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -25,8 +30,9 @@ there is no table caption set in the input \code{gt_tbl} object.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with the
-\code{\link[=tab_header]{tab_header()}} function, and, add a caption as well with \code{\link[=tab_caption]{tab_caption()}}.
+Use a portion of the \code{\link{gtcars}} dataset to create a \strong{gt} table. We'll add a
+header part with \code{\link[=tab_header]{tab_header()}}, and, a caption will also be added via
+\code{\link[=tab_caption]{tab_caption()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
   gtcars |>
@@ -46,8 +52,8 @@ gt_tbl
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_caption_1.png" alt="This image of a table was generated from the first code example in the `rm_caption()` help file." style="width:100\%;">
 }}
 
-If you decide that you don't want the caption in the \code{gt_tbl} object,
-it can be removed with the \code{rm_caption()} function.
+If you decide that you don't want the caption in the \code{gt_tbl} object, it can
+be removed with \code{rm_caption()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{rm_caption(data = gt_tbl)
 }\if{html}{\out{</div>}}

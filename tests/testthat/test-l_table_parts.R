@@ -1,6 +1,3 @@
-# Create a shorter version of `mtcars`
-mtcars_short <- mtcars[1:5, ]
-
 test_that("A gt table contains the expected heading components", {
 
   # Create a `tbl_latex` object with `gt()`; this table contains a title
@@ -9,12 +6,11 @@ test_that("A gt table contains the expected heading components", {
     tab_header(title = "test title")
 
   # Expect a characteristic pattern
-  grepl(
+  expect_match(
+     as_latex(tbl_latex) %>% as.character(),
     "\\caption*{\n{\\large test title}\n} \\\\ \n\\toprule",
-    tbl_latex %>% as_latex() %>% as.character(),
     fixed = TRUE
-  ) %>%
-    expect_true()
+  )
 
   # Create a `tbl_latex` object with `gt()`; this table
   # contains a title and a subtitle
@@ -23,15 +19,14 @@ test_that("A gt table contains the expected heading components", {
     tab_header(title = "test title", subtitle = "test subtitle")
 
   # Expect a characteristic pattern
-  grepl(
+  expect_match(
+    as_latex(tbl_latex) %>% as.character(),
     paste0(
       ".*.large test title",
       ".*.small test subtitle",
       ".*"
-    ),
-    tbl_latex %>% as_latex() %>% as.character()
-  ) %>%
-    expect_true()
+    )
+  )
 
   # Perform a snapshot test where a LaTeX table
   # contains only a title
@@ -79,13 +74,13 @@ test_that("A gt table contains the expected stubhead label", {
     tab_stubhead(label = "the mtcars")
 
   # Expect a characteristic pattern
-  grepl(
+  expect_match(
+    as_latex(tbl_latex) %>% as.character(),
     paste0(
-      ".*multicolumn\\{1\\}\\{l\\}\\{the mtcars\\} & mpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb",
-      ".*"),
-    tbl_latex %>% as_latex() %>% as.character()
-  ) %>%
-    expect_true()
+      ".*the mtcars & mpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb",
+      ".*"
+      )
+  )
 })
 
 test_that("A gt table contains the expected column spanner labels", {

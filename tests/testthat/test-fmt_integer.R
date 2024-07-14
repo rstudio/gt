@@ -1,4 +1,4 @@
-test_that("The `fmt_integer()` function works correctly in the HTML context", {
+test_that("fmt_integer() works correctly in the HTML context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -21,10 +21,10 @@ test_that("The `fmt_integer()` function works correctly in the HTML context", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  char_1 <- (tab %>% dt_data_get())[["char_1"]]
-  char_2 <- (tab %>% dt_data_get())[["char_2"]]
-  num_1 <- (tab %>% dt_data_get())[["num_1"]]
-  num_2 <- (tab %>% dt_data_get())[["num_2"]]
+  char_1 <- dt_data_get(tab)[["char_1"]]
+  char_2 <- dt_data_get(tab)[["char_2"]]
+  num_1 <- dt_data_get(tab)[["num_1"]]
+  num_2 <- dt_data_get(tab)[["num_2"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -186,31 +186,26 @@ test_that("The `fmt_integer()` function works correctly in the HTML context", {
   na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) %>% gt()
 
   # Expect a returned object of class `gt_tbl` with various uses of `fmt_integer()`
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>% fmt_integer(columns = a) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_integer(columns = a, rows = 1:5) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_integer(columns = a, scale_by = 100) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_integer(columns = a, suffixing = TRUE) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_integer(columns = a, pattern = "a{x}b") %>%
       as_raw_html()
@@ -225,7 +220,7 @@ test_that("The `fmt_integer()` function works correctly in the HTML context", {
   )
 })
 
-test_that("The `fmt_integer()` function can scale/suffix larger numbers", {
+test_that("fmt_integer() function can scale/suffix larger numbers", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -326,8 +321,7 @@ test_that("Rownames and groupnames aren't included in `columns = TRUE`", {
 
   # This doesn't fail; it won't apply numeric formatting to the
   # "chardata" column but the formatter will skip over it
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     mtcars1 %>%
       gt() %>%
       fmt_integer(columns = everything())
@@ -336,22 +330,20 @@ test_that("Rownames and groupnames aren't included in `columns = TRUE`", {
   # These succeed because the "chardata" col no longer counts as a
   # resolvable column if it's a rowname_col or groupname_col, yet, it's
   # still visible as a column in the `rows` expression
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     mtcars1 %>%
       gt(rowname_col = "chardata") %>%
       fmt_integer(columns = everything(), rows = chardata == "Mazda RX4")
   )
 
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     mtcars1 %>%
       gt(groupname_col = "chardata") %>%
       fmt_integer(columns = everything(), rows = chardata == "Mazda RX4")
   )
 })
 
-test_that("The `fmt_integer()` fn can render in the Indian numbering system", {
+test_that("fmt_integer() can render in the Indian numbering system", {
 
   # These numbers will be used in tests of formatting
   # values to the Indian numbering system
@@ -496,14 +488,17 @@ test_that("The `fmt_integer()` fn can render in the Indian numbering system", {
       "0", "NA", " Inf Cr", "(Inf Cr)"
     )
   )
-  expect_warning(
-    expect_equal(
-      (tab %>%
-         fmt_integer(columns = num, suffixing = TRUE, system = "ind") %>%
-         render_formats_test(context = "html"))[["num"]],
-      (tab %>%
-         fmt_integer(columns = num, suffixing = TRUE, scale_by = 200, system = "ind") %>%
-         render_formats_test(context = "html"))[["num"]]
-    )
+  expect_no_warning(
+    compared_tab <- tab %>%
+      fmt_integer(columns = num, suffixing = TRUE, system = "ind")
+  )
+  # scale_by warning
+  expect_snapshot(
+    expected_tab <- tab %>%
+      fmt_integer(columns = num, suffixing = TRUE, scale_by = 200, system = "ind")
+  )
+  expect_equal(
+    render_formats_test(compared_tab, context = "html")[["num"]],
+    render_formats_test(expected_tab, context = "html")[["num"]]
   )
 })

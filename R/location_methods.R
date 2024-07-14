@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -34,10 +34,10 @@ as_locations <- function(locations) {
   if (!inherits(locations, "location_cells")) {
 
     if (!is.list(locations) &&
-        any(!vapply(locations, inherits, logical(1), "location_cells"))) {
+        !all(vapply(locations, inherits, logical(1L), "location_cells"))) {
 
       cli::cli_abort(
-        "The `locations` object should be a list of `cells_*()` objects."
+        "{.arg locations} should be a list of {.topic [`cells_*()`](location-helper)} calls."
       )
     }
   } else {
@@ -55,6 +55,7 @@ add_summary_location_row <- function(
     df_type = "styles_df"
 ) {
 
+  call <- call(class(loc)[[1]])
   stub_df <- dt_stub_df_get(data = data)
   row_groups <- unique(stub_df$group_id)
 
@@ -73,7 +74,8 @@ add_summary_location_row <- function(
     resolve_vector_i(
       expr = !!loc$groups,
       vector = row_groups,
-      item_label = "row group"
+      item_label = "row group",
+      call = call
     )
 
   groups <- row_groups[resolved_row_groups_idx]
@@ -106,14 +108,17 @@ add_summary_location_row <- function(
       columns <-
         resolve_cols_c(
           expr = !!loc$columns,
-          data = data
+          data = data,
+          call = call
         )
 
-      if (length(columns) == 0) {
+      if (length(columns) == 0L) {
         cli::cli_abort(c(
           "The location requested could not be resolved.",
           "*" = "Review the expression provided as `columns`."
-        ))
+          ),
+          call = call
+      )
       }
     } else {
       columns <- NA_character_
@@ -123,14 +128,17 @@ add_summary_location_row <- function(
       resolve_vector_i(
         expr = !!loc$rows,
         vector = id_vals,
-        item_label = "summary row"
+        item_label = "summary row",
+        call = call
       )
 
-    if (length(rows) == 0) {
+    if (length(rows) == 0L) {
       cli::cli_abort(c(
         "The location requested could not be resolved.",
         "*" = "Review the expression provided as `rows`."
-      ))
+        ),
+        call = call
+      )
     }
 
     if (df_type == "footnotes_df") {
@@ -172,7 +180,7 @@ add_grand_summary_location_row <- function(
     placement = NULL,
     df_type = "styles_df"
 ) {
-
+  call <- call(class(loc)[[1L]])
   summary_data <- dt_summary_get(data = data)
 
   id_vals <-
@@ -198,14 +206,17 @@ add_grand_summary_location_row <- function(
     columns <-
       resolve_cols_c(
         expr = !!loc$columns,
-        data = data
+        data = data,
+        call = call
       )
 
     if (length(columns) == 0) {
       cli::cli_abort(c(
         "The location requested could not be resolved.",
         "*" = "Review the expression provided as `columns`."
-      ))
+        ),
+        call = call
+      )
     }
   } else {
     columns <- NA_character_
@@ -215,14 +226,17 @@ add_grand_summary_location_row <- function(
     resolve_vector_i(
       expr = !!loc$rows,
       vector = id_vals,
-      item_label = "grand summary row"
+      item_label = "grand summary row",
+      call = call
     )
 
   if (length(rows) == 0) {
     cli::cli_abort(c(
       "The location requested could not be resolved.",
       "*" = "Review the expression provided as `rows`."
-    ))
+       ),
+      call = call
+     )
   }
 
   if (df_type == "footnotes_df") {
@@ -263,37 +277,45 @@ resolve_location <- function(loc, data) {
   UseMethod("resolve_location")
 }
 
+#' @export
 resolve_location.resolved <- function(loc, data) {
   # The object is already resolved
   loc
 }
 
+#' @export
 resolve_location.cells_body <- function(loc, data) {
 
+  call <- call("cells_body")
   loc$colnames <-
     resolve_cols_c(
       expr = !!loc[["columns"]],
-      data = data
+      data = data,
+      call = call
     )
 
   loc$rows <-
     resolve_rows_i(
       expr = !!loc[["rows"]],
-      data = data
+      data = data,
+      call = call
     )
 
   class(loc) <- c("resolved", class(loc))
   loc
 }
 
+#' @export
 resolve_location.cells_column_labels <- function(loc, data) {
 
+  call <- call("cells_column_labels")
   if (!is.null(loc$columns)) {
 
     loc$colnames <-
       resolve_cols_c(
         expr = !!loc[["columns"]],
-        data = data
+        data = data,
+        call = call
       )
   }
 
@@ -306,9 +328,24 @@ resolve_location.cells_column_labels <- function(loc, data) {
   loc
 }
 
+#' @export
+resolve_location.cells_column_spanners <- function(loc, data) {
+
+  call <- call("cells_column_spanners")
+  resolved <- resolve_cells_column_spanners(data = data, object = loc, call = call)
+
+  loc$spanners <- resolved$spanners
+
+  class(loc) <- c("resolved", class(loc))
+
+  loc
+}
+
+#' @export
 resolve_location.cells_stub <- function(loc, data) {
 
-  resolved <- resolve_cells_stub(data = data, object = loc)
+  call <- call("cells_stub")
+  resolved <- resolve_cells_stub(data = data, object = loc, call = call)
 
   loc$rows <- resolved$rows
 
@@ -317,9 +354,11 @@ resolve_location.cells_stub <- function(loc, data) {
   loc
 }
 
+#' @export
 resolve_location.cells_row_groups <- function(loc, data) {
 
-  resolved <- resolve_cells_row_groups(data = data, object = loc)
+  call <- call("cells_row_groups")
+  resolved <- resolve_cells_row_groups(data = data, object = loc, call = call)
 
   loc$groups <- resolved$groups
 
@@ -334,6 +373,7 @@ to_output_location <- function(loc, data) {
   UseMethod("to_output_location")
 }
 
+#' @export
 to_output_location.default <- function(loc, data) {
 
   loc <- resolve_location(loc = loc, data = data)
@@ -342,11 +382,13 @@ to_output_location.default <- function(loc, data) {
   loc
 }
 
+#' @export
 to_output_location.output_relative <- function(loc, data) {
   # The object is already output-relative
   loc
 }
 
+#' @export
 to_output_location.cells_body <- function(loc, data) {
 
   stub_df <- dt_stub_df_get(data = data)
@@ -365,6 +407,7 @@ to_output_location.cells_body <- function(loc, data) {
   loc
 }
 
+#' @export
 to_output_location.cells_stub <- function(loc, data) {
 
   stub_df <- dt_stub_df_get(data = data)

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -45,44 +45,85 @@ render_as_ihtml <- function(data, id) {
   footnotes <- dt_footnotes_get(data = data)
 
   # Determine if the rendered table should have a footer section
-  has_footer_section <- !is.null(source_notes) || nrow(footnotes) > 1
+  has_footer_section <- !is.null(source_notes) || nrow(footnotes) >= 1
 
   # Determine if the rendered table should have a header section
   has_header_section <- dt_heading_has_title(data = data)
 
-  # Obtain the language from the `locale`, if provided
-  locale <- dt_locale_get_value(data = data)
+  # Determine if there are tab spanners
+  has_tab_spanners <- dt_spanners_exists(data = data)
 
-  # TODO: generate a language options object to pass to `language` option
-  if (is.null(locale)) {
-    lang <- "en"
+  # Obtain the language from the `locale`, if provided
+  locale <- normalize_locale(dt_locale_get_value(data = data))
+  # Generate a `lang_defs` object to pass to the `language` argument
+  lang_defs <- get_ihtml_translations(locale)
+
+  column_groups <- dt_boxhead_get_vars_groups(data = data)
+  # if dt_boxhead_get_vars_groups is fixed, this will no longer be necessary.
+  if (identical(column_groups, NA_character_)) {
+    column_groups <- NULL
+  }
+  rownames_to_stub <- stub_rownames_has_column(data)
+  # value to use for rowname_col or groupname_col title
+  # Will use it for rowname_col only if groupname_col is undefined.
+  # Will use it only for the first groupname_col.
+  stub_label <- dt_stubhead_get(data)$label
+
+  if (is.null(stub_label)) {
+    # No label if stubhead label is undefined.
+    rowname_label <- ""
+    groupname_label <- ""
+  } else if (!is.null(column_groups)) {
+    rowname_label <- ""
+    groupname_label <- stub_label
   } else {
-    lang <- gsub("(.)?_.*", "\\1", locale)
+    rowname_label <- stub_label
+    groupname_label <- NULL
   }
 
-  # Obtain the underlying data table
-  data_tbl <- dt_data_get(data = data)
 
-  #
-  # Only preserve columns that are not hidden
-  #
+  # Obtain the underlying data table (including group rows)
+  data_tbl0 <- dt_data_get(data = data)
 
+  # Only preserve columns that are not hidden (group cols will be added later)
   data_tbl_vars <- dt_boxhead_get_vars_default(data = data)
-  data_tbl <- data_tbl[, data_tbl_vars, drop = FALSE]
+  data_tbl <- data_tbl0[, data_tbl_vars, drop = FALSE]
 
   #nocov start
-
-  # Stop function if there are no visible columns
   if (ncol(data_tbl) < 1) {
-
+    # Stop function if there are no visible columns
     cli::cli_abort(c(
       "When displaying an interactive gt table, there must be at least one visible column.",
       "*" = "Check that the input data table has at least one column,",
       "*" = "Failing that, look at whether all columns have been inadvertently hidden."
     ))
   }
-
   #nocov end
+
+  # use of special .rownames doesn't work.
+  # Workaround https://github.com/glin/reactable/issues/378
+  # rstudio/gt#1702
+  if (rownames_to_stub) {
+    rowname_col <- dt_boxhead_get_var_stub(data)
+    if (length(rowname_col) == 1) {
+      # avoid base R error when setting duplicate row names.
+      row_names <-  as.character(data$`_data`[[rowname_col]])
+      # Convert to NA string to avoid wrong output.
+      # TODO figure out if there is a way to get the sub_missing value.
+      # With data$`_substitutions`
+      row_names <- dplyr::coalesce(row_names, " ")
+      attr(data_tbl, "row.names") <- row_names
+      row_name_col_def <- list(reactable::colDef(
+          name = rowname_label
+          # TODO pass on other attributes of row names column if necessary.
+        ))
+      # Create colDef row name with special ".rownames" from reactable.
+      names(row_name_col_def) <- ".rownames"
+
+    }
+  } else {
+    row_name_col_def <- NULL
+  }
 
   # Obtain column label attributes
   column_names  <- dt_boxhead_get_vars_default(data = data)
@@ -91,8 +132,9 @@ render_as_ihtml <- function(data, id) {
 
   # Obtain widths for each visible column label
   boxh <- dt_boxhead_get(data = data)
-  column_widths <- dplyr::filter(boxh, type %in% c("default", "stub"))
-  column_widths <- dplyr::pull(dplyr::arrange(column_widths, dplyr::desc(type)), column_width)
+  column_widths <- boxh[boxh$type %in% c("default", "stub"), , drop = FALSE]
+  # ensure that stub is first
+  column_widths <- column_widths[order(column_widths$type, decreasing = TRUE), "column_width", drop = TRUE]
   column_widths <- unlist(column_widths)
 
   # Transform any column widths to integer values
@@ -101,7 +143,7 @@ render_as_ihtml <- function(data, id) {
     column_widths <-
       vapply(
         column_widths,
-        FUN.VALUE = integer(1),
+        FUN.VALUE = integer(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           if (grepl("px", x)) {
@@ -116,6 +158,7 @@ render_as_ihtml <- function(data, id) {
 
   # Get options settable in `tab_options()`
   opt_val <- dt_options_get_value
+  height <- opt_val(data = data, option = "ihtml_height")
   use_pagination <- opt_val(data = data, option = "ihtml_use_pagination")
   use_pagination_info <- opt_val(data = data, option = "ihtml_use_pagination_info")
   use_search <- opt_val(data = data, option = "ihtml_use_search")
@@ -161,22 +204,75 @@ render_as_ihtml <- function(data, id) {
 
   if (table_width == "auto") table_width <- NULL
 
+  #
+  # Determine which columns will undergo some formatting
+  #
+
+  formats <- dt_formats_get(data = data)
+
+  # Get a list of vectors that include columns taking part
+  # in some formatting operation
+  formatted_columns <-
+    lapply(
+      formats,
+      FUN = function(x) {
+
+        columns <- x$cols
+        rows <- x$rows
+        compat <- x$compat
+
+        compat_columns <- c()
+
+        for (col in columns) {
+
+          if (
+            col %in% colnames(data_tbl) &&
+            is_compatible_formatter(
+              table = data_tbl,
+              column = col,
+              rows = rows,
+              compat = compat
+            )
+          ) {
+            compat_columns <- c(compat_columns, col)
+          }
+
+        }
+        compat_columns
+      }
+    )
+
+  # Flatten this list of vectors to a single vector of unique column names
+  formatted_columns <- unique(flatten_list(formatted_columns))
+
   # Create a list of column definitions
   col_defs <-
     lapply(
       seq_along(column_names),
       FUN = function(x) {
 
-        formatted_cells <-
-          extract_cells(
-            data = data,
-            columns = column_names[x]
-          )
+        # Only perform extraction of formatted cells if there is an
+        # indication that formatting will be performed on a column`
+        if (column_names[x] %in% formatted_columns) {
+
+          formatted_cells <-
+            extract_cells(
+              data = data,
+              columns = column_names[x],
+              output = "html"
+            )
+
+          cell_fn <- function(value, index) formatted_cells[index]
+        } else {
+          cell_fn <- NULL
+        }
 
         reactable::colDef(
-          cell = function(value, index) formatted_cells[index],
+          cell = cell_fn,
           name = column_labels[x],
           align = column_alignments[x],
+          # TODO support `summary_rows()` via `aggregate` #1359
+          # TODO support `grand_summary_rows()` via `footer`. #1359
           headerStyle = list(`font-weight` = "normal"),
           width = if (is.null(column_widths) || is.na(column_widths[x])) NULL else column_widths[x],
           html = TRUE
@@ -185,9 +281,58 @@ render_as_ihtml <- function(data, id) {
     )
   names(col_defs) <- column_names
 
+  # Customize groupname_col and add to data_tbl
+  if (!is.null(column_groups)) {
+    # FIXME how should row_groups_as_column behave?
+    # FIXME find a way to remove borders to act like it is the value for the group
+    # should it just be a normal row at the left?
+    group_col_defs <- list()
+    # Hack from glin/reactable#94 to hide the number of observations
+    grp_fn <- reactable::JS("
+      function(cellInfo) {
+        return cellInfo.value
+      }")
+    for (i in seq_along(column_groups)) {
+      if (i == 1) {
+        # Use the stubhead label for the first group
+        group_label <- groupname_label
+      } else {
+        # by default, don't name groupname_col for consistency with non-interactive
+        group_label <- ""
+      }
+
+      group_col_defs[[i]] <-
+        reactable::colDef(
+          name = group_label,
+          # The total number of rows is wrong in colGroup, possibly due to the JS fn
+          grouped = grp_fn,
+          # FIXME Should groups be sticky? (or provide a way to do this)
+          sticky = NULL
+      )
+
+    }
+    names(group_col_defs) <- column_groups
+
+    groupname_col <- column_groups
+    # for defaultExpanded = TRUE
+    expand_groupname_col <- TRUE
+    # modify data_tbl to include
+    data_tbl <- dplyr::bind_cols(
+      data_tbl,
+      data_tbl0[ , groupname_col, drop = FALSE]
+    )
+
+  }  else {
+    groupname_col <- NULL
+    group_col_defs <- NULL
+    expand_groupname_col <- FALSE
+  }
   #
   # Generate custom styles for `defaultColDef`
   #
+
+  # Add group colDef and rowname colDef to general col_def
+  col_defs <- c(col_defs, group_col_defs, row_name_col_def)
 
   styles_tbl <- dt_styles_get(data = data)
   body_styles_tbl <- dplyr::filter(styles_tbl, locname %in% c("data", "stub"))
@@ -198,7 +343,7 @@ render_as_ihtml <- function(data, id) {
   # `rownum` in `body_styles_tbl`
   body_style_rules <-
     vapply(
-      seq_len(nrow(body_styles_tbl)), FUN.VALUE = character(1), USE.NAMES = FALSE,
+      seq_len(nrow(body_styles_tbl)), FUN.VALUE = character(1L), USE.NAMES = FALSE,
       FUN = function(x) {
 
         colname <- body_styles_tbl[x, ][["colname"]]
@@ -229,9 +374,12 @@ render_as_ihtml <- function(data, id) {
       collapse = ""
     )
 
+  # TODO if `sub_missing()` is enabled gloablly, just use `na = ` here!
   default_col_def <-
     reactable::colDef(
-      style = reactable::JS(body_style_js_str)
+      style = reactable::JS(body_style_js_str),
+      minWidth = 125,
+      width = NULL
     )
 
   # Generate the table header if there are any heading components
@@ -270,13 +418,13 @@ render_as_ihtml <- function(data, id) {
   if (has_footer_section) {
 
     if (!is.null(source_notes)) {
-      source_notes_component <- create_source_notes_component_h(data = data)
+      source_notes_component <- create_source_notes_component_ihtml(data = data)
     } else {
       source_notes_component <- NULL
     }
 
     if (!is.null(footnotes)) {
-      footnotes_component <- create_footnotes_component_h(data = data)
+      footnotes_component <- create_footnotes_component_ihtml(data = data)
     } else {
       footnotes_component <- NULL
     }
@@ -304,6 +452,63 @@ render_as_ihtml <- function(data, id) {
     footer_component <- NULL
   }
 
+  # Generate the column groups, if there are any tab_spanners
+  colgroups_def <- NULL
+
+  if (has_tab_spanners) {
+
+    hidden_columns <- dt_boxhead_get_var_by_type(data = data, type = "hidden")
+    col_groups <- dplyr::filter(dt_spanners_get(data = data), spanner_level == 1)
+
+    for (i in seq_len(nrow(col_groups))) {
+
+      columns_group_i <- unlist(col_groups[i, ][["vars"]])
+
+      columns_group_i_diff <- base::setdiff(columns_group_i, hidden_columns)
+
+      col_groups[i, ][["vars"]][[1]] <- columns_group_i_diff
+    }
+
+    if (max(dt_spanners_get(data = data)$spanner_level) > 1) {
+      first_colgroups <- base::paste0(col_groups$built, collapse = "|")
+
+      cli::cli_warn(c(
+        "When displaying an interactive gt table, there must not be more than 1 level of column groups (tab_spanners)",
+        "*" = "Currently there are {max(dt_spanners_get(data = data)$spanner_level)} levels of tab spanners.",
+        "i" = "Only the first level will be used for the interactive table, that is: [{first_colgroups}]"
+      ))
+    }
+
+    colgroups_def <-
+      apply(
+        col_groups, 1,
+        FUN = function(x) {
+          reactable::colGroup(
+            name = x$spanner_label,
+            columns = x$vars,
+            header = x$built,
+            html = TRUE,
+            align = NULL,
+            headerVAlign = NULL,
+            sticky = NULL,
+            headerClass = NULL,
+            headerStyle = list(
+              fontWeight = "normal",
+              borderBottomStyle = column_labels_border_bottom_style,
+              borderBottomWidth = column_labels_border_bottom_width,
+              borderBottomColor = column_labels_border_bottom_color,
+              borderLeftStyle =  column_labels_border_bottom_style,
+              borderLeftWidth =  "4px",
+              borderLeftColor =  "transparent",
+              borderRightStyle = column_labels_border_bottom_style,
+              borderRightWidth = "4px",
+              borderRightColor = "transparent"
+            )
+          )
+        }
+      )
+  }
+
   # Generate the default theme for the table
   tbl_theme <-
     reactable::reactableTheme(
@@ -317,16 +522,17 @@ render_as_ihtml <- function(data, id) {
       style = list(
         fontFamily = font_family_str
       ),
-      tableStyle = NULL,
-      headerStyle = list(
+      tableStyle = list(
         borderTopStyle = column_labels_border_top_style,
         borderTopWidth = column_labels_border_top_width,
-        borderTopColor = column_labels_border_top_color,
+        borderTopColor = column_labels_border_top_color
+      ),
+      headerStyle = list(
         borderBottomStyle = column_labels_border_bottom_style,
         borderBottomWidth = column_labels_border_bottom_width,
         borderBottomColor = column_labels_border_bottom_color
-
       ),
+      # individually defined for the margins left+right
       groupHeaderStyle = NULL,
       tableBodyStyle = NULL,
       rowGroupStyle = NULL,
@@ -352,9 +558,9 @@ render_as_ihtml <- function(data, id) {
     reactable::reactable(
       data = data_tbl,
       columns = col_defs,
-      columnGroups = NULL,
-      rownames = NULL,
-      groupBy = NULL,
+      columnGroups = colgroups_def,
+      rownames = rownames_to_stub,
+      groupBy = groupname_col,
       sortable = use_sorting,
       resizable = use_resizers,
       filterable = use_filters,
@@ -369,12 +575,12 @@ render_as_ihtml <- function(data, id) {
       showPageSizeOptions = use_page_size_select,
       pageSizeOptions = page_size_values,
       paginationType = pagination_type,
-      showPagination = TRUE,
+      showPagination = use_pagination,
       showPageInfo = use_pagination_info,
       minRows = 1,
       paginateSubRows = FALSE,
       details = NULL,
-      defaultExpanded = FALSE,
+      defaultExpanded = expand_groupname_col,
       selection = NULL,
       selectionId = NULL,
       defaultSelected = NULL,
@@ -387,16 +593,16 @@ render_as_ihtml <- function(data, id) {
       compact = use_compact_mode,
       wrap = use_text_wrapping,
       showSortIcon = TRUE,
-      showSortable = TRUE,
+      showSortable = FALSE,
       class = NULL,
       style = NULL,
       rowClass = NULL,
       rowStyle = NULL,
       fullWidth = TRUE,
       width = table_width,
-      height = "auto",
+      height = height,
       theme = tbl_theme,
-      language = NULL,
+      language = lang_defs,
       elementId = id,
       static = FALSE
     )
@@ -416,4 +622,230 @@ render_as_ihtml <- function(data, id) {
   #nocov end
 
   x
+}
+
+create_source_notes_component_ihtml <- function(data) {
+
+  source_notes <- dt_source_notes_get(data = data)
+
+  if (is.null(source_notes)) {
+    return("")
+  }
+
+  styles_tbl <- dt_styles_get(data = data)
+
+  # Get the style attrs for the source notes
+  if ("source_notes" %in% styles_tbl$locname) {
+
+    source_notes_style <- dplyr::filter(styles_tbl, locname == "source_notes")
+
+    source_notes_styles <-
+      if (nrow(source_notes_style) > 0) {
+        paste(source_notes_style$html_style, collapse = " ")
+      } else {
+        NULL
+      }
+
+  } else {
+    source_notes_styles <- NULL
+  }
+
+  # Get the source note multiline option
+  multiline <- dt_options_get_value(data = data, option = "source_notes_multiline")
+
+  # Get the source note separator option
+  separator <- dt_options_get_value(data = data, option = "source_notes_sep")
+
+  # Handle the multiline source notes case (each footnote takes up one line)
+  if (multiline) {
+    # Create the source notes component as a series of `<div>`s (one per
+    # source note) inside of a `<div>`
+    return(
+      htmltools::tags$div(
+        class = "gt_sourcenotes",
+        lapply(
+          source_notes,
+          function(x) {
+            htmltools::tags$div(
+              class = "gt_sourcenote",
+              style = source_notes_styles,
+              htmltools::HTML(x)
+            )
+          }
+        )
+      )
+    )
+  }
+
+  # Perform HTML escaping on the separator text and transform space
+  # characters to non-breaking spaces
+  separator <- gsub(" (?= )", "&nbsp;", separator, perl = TRUE)
+
+  # Create the source notes component as a set of nested `<div>`s
+  htmltools::tags$div(
+    class = "gt_sourcenotes",
+    style = source_notes_styles,
+    htmltools::tags$div(
+      class = "gt_sourcenote",
+      htmltools::tags$div(
+        style = htmltools::css(`padding-bottom` = "2px"),
+        htmltools::HTML(paste(source_notes, collapse = separator))
+      )
+    )
+  )
+}
+
+create_footnotes_component_ihtml <- function(data) {
+
+  footnotes_tbl <- dt_footnotes_get(data = data)
+
+  # If the `footnotes_resolved` object has no
+  # rows, then return an empty footnotes component
+  if (nrow(footnotes_tbl) == 0) {
+    return("")
+  }
+
+  styles_tbl <- dt_styles_get(data = data)
+
+  # Get the distinct set of `fs_id` & `footnotes` values in the `footnotes_tbl`
+  footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
+
+  # Get the style attrs for the footnotes
+  if ("footnotes" %in% styles_tbl$locname) {
+
+    footnotes_style <- styles_tbl[styles_tbl$locname == "footnotes", ]
+
+    footnotes_styles <-
+      if (nrow(footnotes_style) > 0) {
+        paste(footnotes_style$html_style, collapse = " ")
+      } else {
+        NULL
+      }
+
+  } else {
+    footnotes_styles <- NULL
+  }
+
+  # Get the footnote multiline option
+  multiline <- dt_options_get_value(data = data, option = "footnotes_multiline")
+
+  # Get the footnote separator option
+  separator <- dt_options_get_value(data = data, option = "footnotes_sep")
+
+  # Obtain vectors of footnote ID values (prerendered glyphs) and
+  # the associated text
+  footnote_ids <- footnotes_tbl[["fs_id"]]
+  footnote_text <- footnotes_tbl[["footnotes"]]
+
+  # Create a vector of HTML footnotes
+  footnotes <-
+    unlist(
+      mapply(
+        SIMPLIFY = FALSE,
+        USE.NAMES = FALSE,
+        footnote_ids,
+        footnote_text,
+        FUN = function(x, footnote_text) {
+          as.character(
+            htmltools::tagList(
+              htmltools::HTML(
+                paste0(
+                  footnote_mark_to_html(
+                    data = data,
+                    mark = x,
+                    location = "ftr"
+                  ),
+                  " ",
+                  process_text(footnote_text, context = "html")
+                ),
+                .noWS = c("after", "before")
+              )
+            )
+          )
+        }
+      )
+    )
+
+  # Handle the multiline footnotes case (each footnote takes up one line)
+  if (multiline) {
+
+    # Create the footnotes component as a series of `<div>`s (one per
+    # footnote) inside of a `<div>`
+    return(
+      htmltools::tags$div(
+        class = "gt_footnotes",
+        lapply(
+          footnotes,
+          function(x) {
+            htmltools::tags$div(
+              class = "gt_footnote",
+              style = footnotes_styles,
+              htmltools::HTML(x)
+            )
+          }
+        )
+      )
+    )
+  }
+
+  # Perform HTML escaping on the separator text and transform space
+  # characters to non-breaking spaces
+  separator <- gsub(" (?= )", "&nbsp;", separator, perl = TRUE)
+
+  # Create the footnotes component as a set of nested `<div>`s
+  htmltools::tags$div(
+    class = "gt_footnotes",
+    style = footnotes_styles,
+    htmltools::tags$div(
+      class = "gt_footnote",
+      htmltools::tags$div(
+        style = htmltools::css(`padding-bottom` = "2px"),
+        htmltools::HTML(paste(footnotes, collapse = separator))
+      )
+    )
+  )
+}
+
+get_ihtml_translations <- function(locale) {
+  if (is.null(locale) || locale == "en") {
+
+    lang_defs <- reactable::reactableLang()
+
+  } else {
+
+    locale_data <- locales[locales$locale == locale, ][1, ]
+
+    if (is.na(locale_data[["no_table_data_text"]])) {
+
+      lang_defs <- reactable::reactableLang()
+
+    } else {
+
+      lang_defs <-
+        reactable::reactableLang(
+          sortLabel = locale_data[["sort_label_text"]],
+          filterPlaceholder = "",
+          filterLabel = locale_data[["filter_label_text"]],
+          searchPlaceholder = locale_data[["search_placeholder_text"]],
+          searchLabel = locale_data[["search_placeholder_text"]],
+          noData = locale_data[["no_table_data_text"]],
+          pageNext = locale_data[["page_next_text"]],
+          pagePrevious = locale_data[["page_previous_text"]],
+          pageNumbers = locale_data[["page_numbers_text"]],
+          pageInfo = gsub("\\\\u2013", "\u2013", locale_data[["page_info_text"]]),
+          pageSizeOptions = locale_data[["page_size_options_text"]],
+          pageNextLabel = locale_data[["page_next_label_text"]],
+          pagePreviousLabel = locale_data[["page_previous_label_text"]],
+          pageNumberLabel = locale_data[["page_number_label_text"]],
+          pageJumpLabel = locale_data[["page_jump_label_text"]],
+          pageSizeOptionsLabel = locale_data[["page_size_options_label_text"]],
+          groupExpandLabel = "Toggle group",
+          detailsExpandLabel = "Toggle details",
+          selectAllRowsLabel = "Select all rows",
+          selectAllSubRowsLabel = "Select all rows in group",
+          selectRowLabel = "Select row"
+        )
+    }
+  }
+  lang_defs
 }

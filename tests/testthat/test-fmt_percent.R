@@ -1,4 +1,4 @@
-test_that("The `fmt_percent()` function works correctly in the HTML context", {
+test_that("fmt_percent() works correctly in the HTML context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -326,7 +326,7 @@ test_that("The `fmt_percent()` function works correctly in the HTML context", {
   )
 })
 
-test_that("The `fmt_percent()` fn can render in the Indian numbering system", {
+test_that("fmt_percent() can render in the Indian numbering system", {
 
   # These numbers will be used in tests of formatting
   # values to the Indian numbering system
@@ -411,4 +411,35 @@ test_that("The `fmt_percent()` fn can render in the Indian numbering system", {
       paste0("\U02212", "Inf%")
     )
   )
+})
+
+test_that("fmt_percent() works correctly with stubs", {
+  tbl <- dplyr::tibble(
+    raw = c("[shiny](https://shiny.posit.co/)", "<a href='https://gt.rstudio.com/'>gt</a>"),
+    markdown = lapply(c("[shiny](https://shiny.posit.co/)", "[gt](https://gt.rstudio.com/)"), md),
+    html = lapply(c("<a href='https://shiny.posit.co/'>shiny</a>", "<a href='https://gt.rstudio.com/'>gt</a>"), html),
+    str_col = c("shiny", "gt"),
+    pct_col = c(0.75, 0.25)
+  )
+
+  # nothing special (raw)
+  # stub as html
+  # stub as markdown
+
+  for (test_case in c("raw", "markdown", "html")) {
+    tab <- tbl %>%
+      gt(rowname_col = test_case) %>%
+      fmt_percent(columns = pct_col, decimals = 2, dec_mark = ".") %>%
+      render_formats_test(context = "html")
+
+    expect_equal(tab[["pct_col"]], c("75.00%", "25.00%"))
+
+    # with row filter
+    tab <- tbl %>%
+      gt(rowname_col = test_case) %>%
+      fmt_percent(columns = pct_col, decimals = 2, dec_mark = ".", rows = contains("gt")) %>%
+      render_formats_test(context = "html")
+
+    expect_equal(tab[["pct_col"]], c("0.75", "25.00%"))
+  }
 })

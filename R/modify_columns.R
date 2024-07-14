@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -32,15 +32,31 @@
 #' allow **gt** to automatically choose the alignment of each column based on
 #' the data type (with the `auto` option).
 #'
-#' @param data A table object that is created using the [gt()] function.
-#' @param align The alignment type. This can be any of `"center"`, `"left"`, or
-#'   `"right"` for center-, left-, or right-alignment. Alternatively, the
-#'   `"auto"` option (the default), will automatically align values in columns
-#'   according to the data type (see the Details section for specifics on which
-#'   alignments are applied).
-#' @param columns The columns for which the alignment should be applied. By
-#'   default this is set to `everything()` which means that the chosen alignment
-#'   affects all columns.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` // **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param align *Alignment type*
+#'
+#'   `singl-kw:[auto|left|center|right]` // *default:* `"auto"`
+#'
+#'   This can be any of `"center"`, `"left"`, or `"right"` for center-, left-,
+#'   or right-alignment. Alternatively, the `"auto"` option (the default), will
+#'   automatically align values in columns according to the data type (see the
+#'   Details section for specifics on which alignments are applied).
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // *default:* `everything()`
+#'
+#'   The columns for which the alignment should be applied. Can either be a
+#'   series of column names provided in `c()`, a vector of column indices, or a
+#'   select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]). By default this is set to
+#'   [everything()] which means that the chosen alignment affects all columns.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -54,15 +70,16 @@
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. Align the `population` column
-#' data to the left.
+#' Let's use [`countrypops`] to create a small **gt** table. We can change the
+#' alignment of the `population` column with `cols_align()`. In this example,
+#' the label and body cells of `population` will be aligned to the left.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
-#'   gt() |>
+#'   dplyr::filter(country_name == "San Marino") |>
+#'   dplyr::slice_tail(n = 5) |>
+#'   gt(rowname_col = "year", groupname_col = "country_name") |>
 #'   cols_align(
 #'     align = "left",
 #'     columns = population
@@ -183,21 +200,38 @@ determine_which_character_number <- function(
 #' number of columns (the function will skip over columns that don't require
 #' this type of alignment).
 #'
-#' @param data A table object that is created using the [gt()] function.
-#' @param columns The columns for which the alignment should be applied. By
-#'   default this is set to `everything()` which means that the chosen alignment
-#'   affects all columns.
-#' @param dec_mark The character used as a decimal mark in the numeric values to
-#'   be aligned. If a locale value was used when formatting the numeric values
-#'   then `locale` is better to use and it will override any value here in
-#'   `dec_mark`.
-#' @param locale An optional locale ID that can be used to obtain the type of
-#'   decimal mark used in the numeric values to be aligned. Examples include
-#'   `"en"` for English (United States) and `"fr"` for French (France). The use
-#'   of a valid locale ID will override any value provided in `dec_mark`. We can
-#'   use the [info_locales()] function as a useful reference for all of the
-#'   locales that are supported. Any `locale` value provided here will override
-#'   any global locale setting performed in [gt()]'s own `locale` argument.
+#' @inheritParams cols_align
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // *default:* `everything()`
+#'
+#'   The columns for which decimal alignment should be applied. Can either be a
+#'   series of column names provided in `c()`, a vector of column indices, or a
+#'   select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]). By default this is set to
+#'   [everything()] which means that the decimal alignment affects all columns.
+#'
+#' @param dec_mark *Decimal mark*
+#'
+#'   `scalar<character>` // *default:* `"."`
+#'
+#'   The character used as a decimal mark in the numeric values to be aligned.
+#'   If a locale value was used when formatting the numeric values then `locale`
+#'   is better to use and it will override any value here in `dec_mark`.
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used to obtain the type of
+#'   decimal mark used in the numeric values to be aligned (according to the
+#'   locale's formatting rules). Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported. A locale ID can
+#'   be also set in the initial [gt()] function call (where it would be used
+#'   automatically by any function with a `locale` argument) but a
+#'   `locale` value provided here will override that global locale.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -237,7 +271,6 @@ determine_which_character_number <- function(
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
 #'
-#' @import rlang
 #' @export
 cols_align_decimal <- function(
     data,
@@ -401,21 +434,30 @@ align_to_char <- function(x, align_at = ".") {
 #' left-hand side defines the target columns and the right-hand side is a single
 #' dimension.
 #'
-#' @param .data A table object that is created using the [gt()] function.
-#' @param ... Expressions for the assignment of column widths for the table
-#'   columns in `.data`. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) can be used,
-#'   where the left-hand side corresponds to selections of columns and the
-#'   right-hand side evaluates to single-length character values in the form
-#'   `{##}px` (i.e., pixel dimensions); the [px()] helper function is best used
-#'   for this purpose. Column names should be enclosed in [c()]. The
-#'   column-based select helpers [starts_with()], [ends_with()], [contains()],
-#'   [matches()], [one_of()], and [everything()] can be used in the LHS.
-#'   Subsequent expressions that operate on the columns assigned previously will
-#'   result in overwriting column width values (both in the same `cols_width()`
-#'   call and across separate calls). All other columns can be assigned a
-#'   default width value by using `everything()` on the left-hand
-#'   side.
-#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @inheritParams fmt_number
+#'
+#' @param ... *Column width assignments*
+#'
+#'   `<multiple expressions>` // **required** (or, use `.list`)
+#'
+#'   Expressions for the assignment of column widths for the table columns in
+#'   `.data`. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) can be used, where the
+#'   left-hand side corresponds to selections of columns and the right-hand side
+#'   evaluates to single-length character values in the form `{##}px` (i.e.,
+#'   pixel dimensions); the [px()] helper function is best used for this
+#'   purpose. Column names should be enclosed in `c()`. The column-based select
+#'   helpers [starts_with()], [ends_with()], [contains()], [matches()], and
+#'   [everything()] can be used in the LHS. Subsequent expressions that operate
+#'   on the columns assigned previously will result in overwriting column width
+#'   values (both in the same `cols_width()` call and across separate calls).
+#'   All other columns can be assigned a default width value by using
+#'   `everything()` on the left-hand side.
+#'
+#' @param .list *Alternative to `...`*
+#'
+#'   `<list of multiple expressions>` // **required** (or, use `...`)
+#'
+#'   Allows for the use of a list as an input alternative to `...`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -431,10 +473,10 @@ align_to_char <- function(x, align_at = ".") {
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. We can specify the widths of
-#' columns with `cols_width()`. This is done with named arguments in `...`,
-#' specifying the exact widths for table columns (using `everything()` at the
-#' end will capture all remaining columns).
+#' Use select columns from the [`exibble`] dataset to create a **gt** table. We
+#' can specify the widths of columns with `cols_width()`. This is done with
+#' named arguments in `...`, specifying the exact widths for table columns
+#' (using `everything()` at the end will capture all remaining columns).
 #'
 #' ```r
 #' exibble |>
@@ -488,7 +530,7 @@ cols_width <- function(
       vapply(
         widths_list,
         FUN = function(width) rlang::is_formula(width),
-        FUN.VALUE = logical(1)
+        FUN.VALUE = logical(1L)
       )
     )
 
@@ -512,7 +554,8 @@ cols_width <- function(
       resolve_cols_c(
         expr = !!cols,
         data = .data,
-        excl_stub = FALSE
+        excl_stub = FALSE,
+        excl_group = FALSE
       )
 
     columns <- base::setdiff(columns, columns_used)
@@ -565,26 +608,50 @@ cols_width <- function(
 #' columns from the input table data). When you create a **gt** table object
 #' using [gt()], column names effectively become the column labels. While this
 #' serves as a good first approximation, column names as label defaults aren't
-#' often appealing as the alternative for custom column labels in a **gt**
-#' output table. The `cols_label()` function provides the flexibility to relabel
-#' one or more columns and we even have the option to use the [md()] or [html()]
-#' helper functions for rendering column labels from Markdown or using HTML.
+#' often as appealing in a **gt** table as the option for custom column labels.
+#' `cols_label()` provides the flexibility to relabel one or more columns and
+#' we even have the option to use [md()] or [html()] for rendering column labels
+#' from Markdown or using HTML.
 #'
-#' @param .data A table object that is created using the [gt()] function.
-#' @param ... Expressions for the assignment of column labels for the table
-#'   columns in `.data`. Two-sided formulas (e.g., `<LHS> ~ <RHS>`) can be used,
-#'   where the left-hand side corresponds to selections of columns and the
-#'   right-hand side evaluates to single-length values for the label to apply.
-#'   Column names should be enclosed in [c()]. Select helpers like
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
-#'   [everything()] can be used in the LHS. Named arguments are also valid as
-#'   input for simple mappings of column name to label text; they should be of
-#'   the form `<column name> = <label>`. Subsequent expressions that operate on
-#'   the columns assigned previously will result in overwriting column width
-#'   values.
-#' @param .list Allows for the use of a list as an input alternative to `...`.
-#' @param .fn An option to specify a function that will be applied to all of the
-#'   provided label values.
+#' @inheritParams cols_width
+#'
+#' @param ... *Column label assignments*
+#'
+#'   `<multiple expressions>` // **required** (or, use `.list`)
+#'
+#'   Expressions for the assignment of column labels for the table columns in
+#'   `.data`. Two-sided formulas (e.g., `<LHS> ~ <RHS>`) can be used, where the
+#'   left-hand side corresponds to selections of columns and the right-hand side
+#'   evaluates to single-length values for the label to apply. Column names
+#'   should be enclosed in `c()`. Select helpers like [starts_with()],
+#'   [ends_with()], [contains()], [matches()], and [everything()] can be used
+#'   in the LHS. Named arguments are also valid as input for simple mappings of
+#'   column name to label text; they should be of the form `<column name> = <label>`.
+#'   Subsequent expressions that operate on the columns assigned previously will
+#'   result in overwriting column label values.
+#'
+#' @param .list *Alternative to `...`*
+#'
+#'   `<list of multiple expressions>` // **required** (or, use `...`)
+#'
+#'   Allows for the use of a list as an input alternative to `...`.
+#'
+#' @param .fn *Function to apply*
+#'
+#'   `function` // *default:* `NULL` (`optional`)
+#'
+#'   An option to specify a function that will be applied to all of the provided
+#'   label values.
+#'
+#' @param .process_units *Option to process any available units throughout*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   Should your column text contain text that is already in **gt**'s units
+#'   notation (and, importantly, is surrounded by `"{{"`/`"}}"`), using `TRUE`
+#'   here reprocesses all column such that the units are properly registered for
+#'   each of the column labels. This ignores any column label assignments in
+#'   `...` or `.list`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -595,23 +662,66 @@ cols_width <- function(
 #' a tibble or data frame must be unique whereas column labels in **gt** have
 #' no requirement for uniqueness (which is useful for labeling columns as, say,
 #' measurement units that may be repeated several times---usually under
-#' different spanner column labels). Thus, we can still easily distinguish
+#' different spanner labels). Thus, we can still easily distinguish
 #' between columns in other **gt** function calls (e.g., in all of the
-#' `fmt*()` functions) even though we may lose distinguishability in column
-#' labels once they have been relabeled.
+#' `fmt*()` functions) even though we may lose distinguishability between column
+#' labels once they have undergone relabeling.
+#'
+#' @section Incorporating units with **gt**'s units notation:
+#'
+#' Measurement units are often seen as part of column labels and indeed it can
+#' be much more straightforward to include them here rather than using other
+#' devices to make readers aware of units for specific columns. The **gt**
+#' package offers the function [cols_units()] to apply units to various columns
+#' with an interface that's similar to that of this function. However, it is
+#' also possible to define units here along with the column label, obviating the
+#' need for pattern syntax that joins the two text components. To do this, we
+#' have to surround the portion of text in the label that corresponds to the
+#' units definition with `"{{"`/`"}}"`.
+#'
+#' Now that we know how to mark text for units definition, we know need to know
+#' how to write proper units with the notation. Such notation uses a succinct
+#' method of writing units and it should feel somewhat familiar though it is
+#' particular to the task at hand. Each unit is treated as a separate entity
+#' (parentheses and other symbols included) and the addition of subscript text
+#' and exponents is flexible and relatively easy to formulate. This is all best
+#' shown with a few examples:
+#'
+#' - `"m/s"` and `"m / s"` both render as `"m/s"`
+#' - `"m s^-1"` will appear with the `"-1"` exponent intact
+#' - `"m /s"` gives the same result, as `"/<unit>"` is equivalent to
+#'   `"<unit>^-1"`
+#' - `"E_h"` will render an `"E"` with the `"h"` subscript
+#' - `"t_i^2.5"` provides a `t` with an `"i"` subscript and a `"2.5"` exponent
+#' - `"m[_0^2]"` will use overstriking to set both scripts vertically
+#' - `"g/L %C6H12O6%"` uses a chemical formula (enclosed in a pair of `"%"`
+#'   characters) as a unit partial, and the formula will render correctly with
+#'   subscripted numbers
+#' - Common units that are difficult to write using ASCII text may be implicitly
+#'   converted to the correct characters (e.g., the `"u"` in `"ug"`, `"um"`,
+#'   `"uL"`, and `"umol"` will be converted to the Greek *mu* symbol; `"degC"`
+#'   and `"degF"` will render a degree sign before the temperature unit)
+#' - We can transform shorthand symbol/unit names enclosed in `":"` (e.g.,
+#'   `":angstrom:"`, `":ohm:"`, etc.) into proper symbols
+#' - Greek letters can added by enclosing the letter name in `":"`; you can
+#'   use lowercase letters (e.g., `":beta:"`, `":sigma:"`, etc.) and uppercase
+#'   letters too (e.g., `":Alpha:"`, `":Zeta:"`, etc.)
+#' - The components of a unit (unit name, subscript, and exponent) can be
+#'   fully or partially italicized/emboldened by surrounding text with `"*"` or
+#'   `"**"`
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. Relabel all the table's columns
-#' with the `cols_label()` function to improve its presentation. In this simple
-#' case we are supplying the name of the column on the left-hand side, and the
-#' label text on the right-hand side.
+#' Let's use a portion of the [`countrypops`] dataset to create a **gt** table.
+#' We can relabel all the table's columns with the `cols_label()` function to
+#' improve its presentation. In this simple case we are supplying the name of
+#' the column on the left-hand side, and the label text on the right-hand side.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Uganda") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_label(
 #'     country_name = "Name",
@@ -624,16 +734,16 @@ cols_width <- function(
 #' `r man_get_image_tag(file = "man_cols_label_1.png")`
 #' }}
 #'
-#' Using [`countrypops`] again to create a **gt** table, we label columns just
-#' as before but this time make the column labels bold through Markdown
-#' formatting (with the [md()] helper function). It's possible here to use
-#' either a `=` or a `~` between the column name and the label text.
+#' Using the [`countrypops`] dataset again, we label columns similarly to before
+#' but this time making the column labels be bold through Markdown formatting
+#' (with the [md()] helper function). It's possible here to use either a `=` or
+#' a `~` between the column name and the label text.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Uganda") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_label(
 #'     country_name = md("**Name**"),
@@ -646,19 +756,19 @@ cols_width <- function(
 #' `r man_get_image_tag(file = "man_cols_label_2.png")`
 #' }}
 #'
-#' With the [`metro`] dataset, let's create a small **gt** table with three
-#' columns. We'd like to provide column labels that have line breaks. For that,
-#' we can use `<br>` to indicate where the line breaks should be. We also need
-#' to use the [md()] helper function to signal to **gt** that this
-#' text should be interpreted as Markdown. Instead of calling [md()] on each of
-#' labels as before, we can more conveniently use the `.fn` argument and provide
-#' the bare function there (it will be applied to each label).
+#' With a select portion of the [`metro`] dataset, let's create a small **gt**
+#' table with three columns. Within `cols_label()` we'd like to provide column
+#' labels that contain line breaks. For that, we can use `<br>` to indicate
+#' where the line breaks should be. We also need to use the [md()] helper
+#' function to signal to **gt** that this text should be interpreted as
+#' Markdown. Instead of calling [md()] on each of labels as before, we can more
+#' conveniently use the `.fn` argument and provide the bare function there (it
+#' will be applied to each label defined in the `cols_label()` call).
 #'
 #' ```r
 #' metro |>
 #'   dplyr::select(name, lines, passengers, connect_other) |>
-#'   dplyr::arrange(desc(passengers)) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(passengers, n = 10) |>
 #'   gt() |>
 #'   cols_hide(columns = passengers) |>
 #'   cols_label(
@@ -673,16 +783,16 @@ cols_width <- function(
 #' `r man_get_image_tag(file = "man_cols_label_3.png")`
 #' }}
 #'
-#' Using [`towny`], we can create an interesting **gt** table. First, only
-#' certain columns are selected from the dataset, some filtering of rows is
-#' done, rows are sorted, and then only the first 10 rows are kept. When
-#' introduced to [gt()], we apply some spanner column labels through two calls
-#' of [tab_spanner()] all the table's columns. Below those spanners, we want to
+#' Using a subset of the [`towny`] dataset, we can create an interesting **gt**
+#' table. First, only certain columns are selected from the dataset, some
+#' filtering of rows is done, rows are sorted, and then only the first 10 rows
+#' are kept. After the data is introduced to [gt()], we then apply some spanner
+#' labels using two calls of [tab_spanner()]. Below those spanners, we want to
 #' label the columns by the years of interest. Using `cols_label()` and select
 #' expressions on the left side of the formulas, we can easily relabel multiple
-#' columns with common label text. Note that we cannot use an `=` sign in any
-#' of the expressions within `cols_label()`; because the left-hand side is not
-#' a single column name, we must use formula syntax (i.e., with the `~`).
+#' columns with common label text. Note that we cannot use an `=` sign in any of
+#' the expressions within `cols_label()`; because the left-hand side is not a
+#' single column name, we must use formula syntax (i.e., with the `~`).
 #'
 #' ```r
 #' towny |>
@@ -709,6 +819,83 @@ cols_width <- function(
 #' `r man_get_image_tag(file = "man_cols_label_4.png")`
 #' }}
 #'
+#' Here's another table that uses the [`towny`] dataset. The big difference
+#' compared to the previous *gt* table is that `cols_label()` as used here
+#' incorporates unit notation text (within `"{{"`/`"}}"`).
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(
+#'     name, population_2021, density_2021, land_area_km2, latitude, longitude
+#'   ) |>
+#'   dplyr::filter(population_2021 > 100000) |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   fmt_integer(columns = population_2021) |>
+#'   fmt_number(
+#'     columns = c(density_2021, land_area_km2),
+#'     decimals = 1
+#'   ) |>
+#'   fmt_number(columns = latitude, decimals = 2) |>
+#'   fmt_number(columns = longitude, decimals = 2, scale_by = -1) |>
+#'   cols_label(
+#'     starts_with("population") ~ "Population",
+#'     starts_with("density") ~ "Density, {{*persons* km^-2}}",
+#'     land_area_km2 ~ "Area, {{km^2}}",
+#'     latitude ~ "Latitude, {{:degrees:N}}",
+#'     longitude ~ "Longitude, {{:degrees:W}}"
+#'   ) |>
+#'   cols_width(everything() ~ px(120))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_label_5.png")`
+#' }}
+#'
+#' The [`illness`] dataset has units within the `units` column. They're
+#' formatted in just the right way for **gt** too. Let's do some text
+#' manipulation through `dplyr::mutate()` and some pivoting with
+#' `tidyr::pivot_longer()` and `tidyr::pivot_wider()` in order to include the
+#' units as part of the column names in the reworked table. These column names
+#' are in a format where the units are included within `"{{"`/`"}}"`, so, we can
+#' use `cols_label()` with the `.process_units = TRUE` option to register the
+#' measurement units. In addition to this, because there is a `<br>` included
+#' (for a line break), we should use the `.fn` option and provide the [md()]
+#' helper function (as a bare function name). This ensures that any line breaks
+#' will materialize.
+#'
+#' ```r
+#' illness |>
+#'   dplyr::mutate(test = paste0(test, ",<br>{{", units, "}}")) |>
+#'   dplyr::slice_head(n = 8) |>
+#'   dplyr::select(-c(starts_with("norm"), units)) |>
+#'   tidyr::pivot_longer(
+#'     cols = starts_with("day"),
+#'     names_to = "day",
+#'     names_prefix = "day_",
+#'     values_to = "value"
+#'   ) |>
+#'   tidyr::pivot_wider(
+#'     names_from = test,
+#'     values_from = value
+#'   ) |>
+#'   gt(rowname_col = "day") |>
+#'   tab_stubhead(label = "Day") |>
+#'   cols_label(
+#'     .fn = md,
+#'     .process_units = TRUE
+#'   ) |>
+#'   cols_width(
+#'     stub() ~ px(50),
+#'     everything() ~ px(120)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_label_6.png")`
+#' }}
+#'
 #' @family column modification functions
 #' @section Function ID:
 #' 5-4
@@ -716,20 +903,37 @@ cols_width <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cols_label <- function(
     .data,
     ...,
     .list = list2(...),
-    .fn = NULL
+    .fn = NULL,
+    .process_units = NULL
 ) {
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = .data)
 
-  # Collect a list of column labels
-  labels_list <- .list
+  if (!is.null(.process_units) && .process_units) {
+
+    # Obtain all extant labels as a list
+    vars_default <- dt_boxhead_get_vars_default(data = .data)
+    vars_labels_default <- dt_boxhead_get_vars_labels_default(data = .data)
+
+    labels_list <- as.list(vars_labels_default)
+    names(labels_list) <- vars_default
+
+  } else if (!is.null(.process_units) && !.process_units) {
+
+    # Collect a list of column labels
+    labels_list <- .list
+
+  } else {
+
+    # Collect a list of column labels
+    labels_list <- .list
+  }
 
   column_vars <- dt_boxhead_get_vars(data = .data)
 
@@ -760,8 +964,8 @@ cols_label <- function(
 
       if (!(columns %in% column_vars)) {
         cli::cli_abort(c(
-          "The column name supplied to `cols_label()` (`{columns}`) is not valid.",
-          "*" = "Include column names or a tidyselect statement on the LHS."
+          "Can't find column{?s} {.var {columns}} in the data.",
+          "i" = "The LHS should include column names or a tidyselect statement."
         ))
       }
 
@@ -802,8 +1006,34 @@ cols_label <- function(
 
     for (j in seq_along(columns)) {
 
-      # For each of the resolved columns, insert the new label
-      # into the boxhead
+      # For each of the resolved columns, process the label text and
+      # insert the new label and any discovered units in the boxhead
+
+      # Determine is there is any text pertaining to units; if there is,
+      # then (1) extract that text, (2) add it to the `column_units` entry,
+      # and (3) set a `column_pattern` override value of `""` (because the
+      # use of units here is already part of the column label string, so no
+      # pattern needed)
+
+      if (grepl("\\{\\{.*?\\}\\}", new_label)) {
+
+        column_units <- gsub("^.*?(\\{\\{.*?\\}\\}).*?$", "\\1", new_label)
+
+        .data <-
+          dt_boxhead_edit_column_units(
+            data = .data,
+            var = columns[j],
+            column_units = column_units
+          )
+
+        .data <-
+          dt_boxhead_edit_column_pattern(
+            data = .data,
+            var = columns[j],
+            column_pattern = ""
+          )
+      }
+
       .data <-
         dt_boxhead_edit_column_label(
           data = .data,
@@ -833,13 +1063,24 @@ cols_label <- function(
 #' function (e.g., `function(x) tools::toTitleCase(x)`).
 #'
 #' @inheritParams fmt_number
-#' @param columns The column names to which the function or function call in
-#'   `fn` should be applied. By default this is set as `everything()` which
-#'   select every column in the table.
-#' @param fn The function or function call to be applied to the column labels.
-#'   This can take the form of a bare function (e.g., `tools::toTitleCase`), a
-#'   function call as a RHS formula (e.g., `~ tools::toTitleCase(.)`), or an
-#'   anonymous function as in `function(x) tools::toTitleCase(x)`.
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // *default:* `everything()`
+#'
+#'   The columns for which the column-labeling operations should be applied. Can
+#'   either be a series of column names provided in `c()`, a vector of column
+#'   indices, or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]).
+#'
+#' @param fn *Function to apply*
+#'
+#'   `function|formula` // **required**
+#'
+#'   The function or function call to be applied to the column labels. This can
+#'   take the form of a bare function (e.g., `tools::toTitleCase`), a function
+#'   call as a RHS formula (e.g., `~ tools::toTitleCase(.)`), or an anonymous
+#'   function as in `function(x) tools::toTitleCase(x)`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -847,21 +1088,21 @@ cols_label <- function(
 #'
 #' It's important to note that while columns can be freely relabeled, we
 #' continue to refer to columns by their original column names. Column names in
-#' a tibble or data frame must be unique whereas column labels in **gt** have
-#' no requirement for uniqueness (which is useful for labeling columns as, say,
+#' a tibble or data frame must be unique whereas column labels in **gt** have no
+#' requirement for uniqueness (which is useful for labeling columns as, say,
 #' measurement units that may be repeated several times---usually under
-#' different spanner column labels). Thus, we can still easily distinguish
-#' between columns in other **gt** function calls (e.g., in all of the
-#' `fmt*()` functions) even though we may lose distinguishability in column
-#' labels once they have been relabeled.
+#' different spanner labels). Thus, we can still easily distinguish between
+#' columns in other **gt** function calls (e.g., in all of the `fmt*()`
+#' functions) even though we may lose distinguishability in column labels once
+#' they have been relabeled.
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table. We want all the column labels to be
-#' entirely capitalized versions of the default labels but, instead of using
-#' [cols_label()] and rewriting each label manually in capital letters we can
-#' use `cols_label_with()` and instruct it to apply the `toupper()` function to
-#' all column labels.
+#' Use a subset of the [`sp500`] dataset to create a **gt** table. We want all
+#' the column labels to be entirely capitalized versions of the default labels
+#' but, instead of using [cols_label()] and rewriting each label manually in
+#' capital letters we can use `cols_label_with()` and instruct it to apply the
+#' `toupper()` function to all column labels.
 #'
 #' ```r
 #' sp500 |>
@@ -878,13 +1119,13 @@ cols_label <- function(
 #' `r man_get_image_tag(file = "man_cols_label_with_1.png")`
 #' }}
 #'
-#' Use [`countrypops`] to create a **gt** table. To improve the presentation of
-#' the table, we are again going to change the default column labels via
-#' function calls supplied within `cols_label_with()`. We can, if we prefer,
-#' apply multiple types of column label changes in sequence with multiple calls
-#' of `cols_label_with()`. Here, we use the `make_clean_names()` functions from
-#' the **janitor** package and follow up with the removal of a numeral with
-#' `gsub()`.
+#' Use the [`countrypops`] dataset to create a **gt** table. To improve the
+#' presentation of the table, we are again going to change the default column
+#' labels via function calls supplied within `cols_label_with()`. We can, if we
+#' prefer, apply multiple types of column label changes in sequence with
+#' multiple calls of `cols_label_with()`. Here, we use the `make_clean_names()`
+#' functions from the **janitor** package and follow up with the removal of a
+#' numeral with `gsub()`.
 #'
 #' ```r
 #' countrypops |>
@@ -947,7 +1188,9 @@ cols_label <- function(
 #' @section Function ID:
 #' 5-5
 #'
-#' @import rlang
+#' @section Function Introduced:
+#' `v0.9.0` (March 31, 2023)
+#'
 #' @export
 cols_label_with <- function(
     data,
@@ -976,13 +1219,15 @@ cols_label_with <- function(
   boxh_df <- dt_boxhead_get(data = data)
   boxh_df <- boxh_df[boxh_df[["var"]] %in% resolved_columns, ]
 
-  # Obtain a list of current labels for the resolved columns
+  # Obtain a list of current labels for the resolved columns and ensure
+  # that the var names are included as names for each of the list components
   old_label_list <- boxh_df[["column_label"]]
+  names(old_label_list) <- boxh_df[["var"]]
 
   # Apply the function call to each element of `old_label_list`
   new_label_list <- lapply(old_label_list, FUN = fn)
 
-  if (!all(vapply(new_label_list, FUN.VALUE = logical(1), FUN = is_character))) {
+  if (!all(vapply(new_label_list, FUN.VALUE = logical(1L), FUN = is_character))) {
     cli::cli_abort("{.arg fn} must return a character vector.")
   }
 
@@ -1006,12 +1251,1894 @@ cols_label_with <- function(
     data <-
       dt_boxhead_edit_column_label(
         data = data,
-        var = resolved_columns[i],
+        var = names(new_label_list)[i],
         column_label = new_label_list[[i]]
       )
   }
 
   data
+}
+
+#' Define units for one or more columns
+#'
+#' @description
+#'
+#' Column labels can sometimes contain measurement units, and these might range
+#' from easy to define and typeset (e.g., `"m/s"`) to very difficult. Such
+#' difficulty can arise from the need to include subscripts or superscripts,
+#' non-ASCII symbols, etc. The `cols_units()` function tries to make this task
+#' easier by letting you apply text pertaining to units to various columns. This
+#' takes advantage of **gt**'s specialized units notation (e.g.,
+#' `"J Hz^-1 mol^-1"` can be used to generate units for the
+#' *molar Planck constant*). The notation here provides several conveniences for
+#' defining units, letting you produce the correct formatting no matter what the
+#' table output format might be (i.e., HTML, LaTeX, RTF, etc.). Details
+#' pertaining to the units notation can be found in the section entitled
+#' *How to use **gt**'s units notation*.
+#'
+#' @inheritParams fmt_number
+#'
+#' @param ... *Column units definitions*
+#'
+#'   `<multiple expressions>` // **required** (or, use `.list`)
+#'
+#'   Expressions for the assignment of column units for the table columns in
+#'   `.data`. Two-sided formulas (e.g., `<LHS> ~ <RHS>`) can be used, where the
+#'   left-hand side corresponds to selections of columns and the right-hand side
+#'   evaluates to single-length values for the units to apply. Column names
+#'   should be enclosed in `c()`. Select helpers like [starts_with()],
+#'   [ends_with()], [contains()], [matches()], and [everything()] can be used in
+#'   the LHS. Named arguments are also valid as input for simple mappings of
+#'   column name to the **gt** units syntax; they should be of the form
+#'   `<column name> = <units text>`. Subsequent expressions that operate on the
+#'   columns assigned previously will result in overwriting column units
+#'   defintion values.
+#'
+#' @param .list *Alternative to `...`*
+#'
+#'   `<list of multiple expressions>` // **required** (or, use `...`)
+#'
+#'   Allows for the use of a list as an input alternative to `...`.
+#'
+#' @param .units_pattern *Pattern to combine column labels and units*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional pattern to be used for combining column labels with the defined
+#'   units. The default pattern is `"{1}, {2}"`, where `"{1}"` refers to the
+#'   column label text and `"{2}"` is the text related to the associated units.
+#'   This default can be modified through the `column_labels.units_pattern`
+#'   option found in [tab_options()]. Setting a value here will provide an
+#'   override to the `column_labels.units_pattern` default (only for the
+#'   resolved columns in the invocation of `cols_units()`).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section How to use **gt**'s units notation:
+#'
+#' The units notation involves a shorthand of writing units that feels familiar
+#' and is fine-tuned for the task at hand. Each unit is treated as a separate
+#' entity (parentheses and other symbols included) and the addition of subscript
+#' text and exponents is flexible and relatively easy to formulate. This is all
+#' best shown with examples:
+#'
+#' - `"m/s"` and `"m / s"` both render as `"m/s"`
+#' - `"m s^-1"` will appear with the `"-1"` exponent intact
+#' - `"m /s"` gives the same result, as `"/<unit>"` is equivalent to
+#'   `"<unit>^-1"`
+#' - `"E_h"` will render an `"E"` with the `"h"` subscript
+#' - `"t_i^2.5"` provides a `t` with an `"i"` subscript and a `"2.5"` exponent
+#' - `"m[_0^2]"` will use overstriking to set both scripts vertically
+#' - `"g/L %C6H12O6%"` uses a chemical formula (enclosed in a pair of `"%"`
+#'   characters) as a unit partial, and the formula will render correctly with
+#'   subscripted numbers
+#' - Common units that are difficult to write using ASCII text may be implicitly
+#'   converted to the correct characters (e.g., the `"u"` in `"ug"`, `"um"`,
+#'   `"uL"`, and `"umol"` will be converted to the Greek *mu* symbol; `"degC"`
+#'   and `"degF"` will render a degree sign before the temperature unit)
+#' - We can transform shorthand symbol/unit names enclosed in `":"` (e.g.,
+#'   `":angstrom:"`, `":ohm:"`, etc.) into proper symbols
+#' - Greek letters can added by enclosing the letter name in `":"`; you can
+#'   use lowercase letters (e.g., `":beta:"`, `":sigma:"`, etc.) and uppercase
+#'   letters too (e.g., `":Alpha:"`, `":Zeta:"`, etc.)
+#' - The components of a unit (unit name, subscript, and exponent) can be
+#'   fully or partially italicized/emboldened by surrounding text with `"*"` or
+#'   `"**"`
+#'
+#' @section Examples:
+#'
+#' Let's analyze some [`pizzaplace`] data with **dplyr** and then make a **gt**
+#' table. Here we are separately defining new column labels with [cols_label()]
+#' and then defining the units (to combine to those labels) through
+#' `cols_units()`. The default pattern for combination is `"{1}, {2}"` which
+#' is acceptable here.
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::mutate(month = lubridate::month(date, label = TRUE, abbr = TRUE)) |>
+#'   dplyr::group_by(month) |>
+#'   dplyr::summarize(
+#'     n_sold = dplyr::n(),
+#'     rev = sum(price)
+#'   ) |>
+#'   dplyr::mutate(chg = (rev - dplyr::lag(rev)) / dplyr::lag(rev)) |>
+#'   dplyr::mutate(month = as.character(month)) |>
+#'   gt(rowname_col = "month") |>
+#'   fmt_integer(columns = n_sold) |>
+#'   fmt_currency(columns = rev, use_subunits = FALSE) |>
+#'   fmt_percent(columns = chg) |>
+#'   sub_missing() |>
+#'   cols_label(
+#'     n_sold = "Number of Pizzas Sold",
+#'     rev = "Revenue Generated",
+#'     chg = "Monthly Changes in Revenue"
+#'   ) |>
+#'   cols_units(
+#'     n_sold = "units month^-1",
+#'     rev = "USD month^-1",
+#'     chg = "% change *m*/*m*"
+#'   ) |>
+#'   cols_width(
+#'     stub() ~ px(40),
+#'     everything() ~ px(200)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_units_1.png")`
+#' }}
+#'
+#' The [`sza`] dataset has a wealth of information and here we'll generate
+#' a smaller table that contains the average solar zenith angles at noon for
+#' different months and at different northern latitudes. The column labels are
+#' numbers representing the latitudes and it's convenient to apply units
+#' of 'degrees north' to each of them with `cols_units()`. The extra thing we
+#' wanted to do here was to ensure that the units are placed directly after
+#' the column labels, and we do that with `.units_pattern = "{1}{2}"`. This
+#' append the units (`"{2}"`) right to the column label (`"{1}"`).
+#'
+#' ```r
+#' sza |>
+#'   dplyr::filter(tst == "1200") |>
+#'   dplyr::select(-tst) |>
+#'   dplyr::arrange(desc(latitude)) |>
+#'   tidyr::pivot_wider(
+#'     names_from = latitude,
+#'     values_from = sza
+#'   ) |>
+#'   gt(rowname_col = "month") |>
+#'   cols_units(
+#'     everything() ~ ":degree:N",
+#'     .units_pattern = "{1}{2}"
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Solar Zenith Angle",
+#'     columns = everything()
+#'   ) |>
+#'   text_transform(
+#'     fn = toupper,
+#'     locations = cells_stub()
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(align = "right"),
+#'     locations = cells_stub()
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_units_2.png")`
+#' }}
+#'
+#' Taking a portion of the [`towny`] dataset, let's use spanners to describe
+#' what's in the columns and use only measurement units for the column labels.
+#' The columns labels that have to do with population and density information
+#' will be replaced with units defined in `cols_units()`. We'll use a
+#' `.units_pattern` value of `"{2}"`, which means that only the units will
+#' be present (the `"{1}"`, representing the column label text, is omitted).
+#' Spanners added through several invocations of [tab_spanner()] will declare
+#' what the last four columns contain.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(
+#'     name, land_area_km2,
+#'     ends_with("2016"), ends_with("2021")
+#'   ) |>
+#'   dplyr::slice_max(population_2021, n = 10) |>
+#'   gt(rowname_col = "name") |>
+#'   tab_stubhead(label = "City") |>
+#'   fmt_integer() |>
+#'   cols_label(
+#'     land_area_km2 ~ "Area, {{km^2}}",
+#'     starts_with("population") ~ "",
+#'     starts_with("density") ~ ""
+#'   ) |>
+#'   cols_units(
+#'     starts_with("population") ~ "*ppl*",
+#'     starts_with("density") ~ "*ppl* km^-2",
+#'     .units_pattern = "{2}"
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Population",
+#'     columns = starts_with("population"),
+#'     gather = FALSE
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Density",
+#'     columns = starts_with("density"),
+#'     gather = FALSE
+#'   ) |>
+#'   tab_spanner(
+#'     label = "2016",
+#'     columns = ends_with("2016"),
+#'     gather = FALSE
+#'   ) |>
+#'   tab_spanner(
+#'     label = "2021",
+#'     columns = ends_with("2021"),
+#'     gather = FALSE
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(align = "center"),
+#'     locations = cells_column_labels(
+#'       c(starts_with("population"), starts_with("density"))
+#'     )
+#'   ) |>
+#'   cols_width(everything() ~ px(120)) |>
+#'   opt_horizontal_padding(scale = 3)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_units_3.png")`
+#' }}
+#'
+#' @family column modification functions
+#' @section Function ID:
+#' 5-6
+#'
+#' @section Function Introduced:
+#' `v0.10.0` (October 7, 2023)
+#'
+#' @export
+cols_units <- function(
+    .data,
+    ...,
+    .list = list2(...),
+    .units_pattern = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = .data)
+
+  # Collect a list of column units
+  units_list <- .list
+
+  column_vars <- dt_boxhead_get_vars(data = .data)
+
+  # If nothing is provided, return `data` unchanged
+  if (length(units_list) == 0) {
+    return(.data)
+  }
+
+  for (i in seq_along(units_list)) {
+
+    units_i <- units_list[i]
+
+    # When input is provided as a list in `.list`, we obtain named vectors;
+    # upgrade this to a list to match the input collected from `...`
+    if (rlang::is_named(units_i) && rlang::is_scalar_vector(units_i)) {
+      units_i <- as.list(units_i)
+    }
+
+    if (
+      is.list(units_i) &&
+      rlang::is_named(units_i) &&
+      rlang::is_scalar_vector(units_i[[1]])
+    ) {
+
+      # Get column and value
+      columns <- names(units_i)
+      new_units <- units_i[[1]]
+
+      if (!(columns %in% column_vars)) {
+        cli::cli_abort(c(
+          "Can't find column{?s} {.var {columns}} in the data.",
+          "i" = "The LHS should include column names or a tidyselect statement."
+        ))
+      }
+
+    } else if (
+      is.list(units_i) &&
+      rlang::is_formula(units_i[[1]])
+    ) {
+
+      units_i <- units_i[[1]]
+
+      cols <- rlang::f_lhs(units_i)
+
+      if (is.null(cols)) {
+        cli::cli_abort(c(
+          "A formula supplied to `cols_units()` must be two-sided.",
+          "i" = "The LHS should include column names or a tidyselect statement."
+        ))
+      }
+
+      # The default use of `resolve_cols_c()` won't work here if there
+      # is a table stub column (because we need to be able to set the
+      # stub column width and, by default, `resolve_cols_c()` excludes
+      # the stub); to prevent this exclusion, we set `excl_stub` to FALSE
+      columns <-
+        resolve_cols_c(
+          expr = !!cols,
+          data = .data
+        )
+
+      new_units <- rlang::eval_tidy(rlang::f_rhs(units_i))
+    }
+
+    # basic check on units value.
+    withCallingHandlers(
+      check_string(new_units, call = NULL, arg = "unit"),
+      error = function(e) {
+        cli::cli_abort(
+          "Incorrect unit for column{?s} {.var {columns}}.",
+          parent = e
+        )
+      })
+
+    for (j in seq_along(columns)) {
+
+      # For each of the resolved columns, add the units text to the boxhead
+      .data <-
+        dt_boxhead_edit_column_units(
+          data = .data,
+          var = columns[j],
+          column_units = new_units
+        )
+
+      if (!is.null(.units_pattern) && !is.na(.units_pattern)) {
+
+        .data <-
+          dt_boxhead_edit_column_pattern(
+            data = .data,
+            var = columns[j],
+            column_pattern = .units_pattern
+          )
+      }
+    }
+  }
+
+  .data
+}
+
+#' Add one or more columns to a **gt** table
+#'
+#' @description
+#'
+#' We can add new columns to a table with `cols_add()` and it works quite a bit
+#' like `dplyr::mutate()` does. The idea is that you supply name-value pairs
+#' where the name is the new column name and the value part describes the data
+#' that will go into the column. The latter can: (1) be a vector where the
+#' length of the number of rows in the data table, (2) be a single value
+#' (which will be repeated all the way down), or (3) involve other columns in
+#' the table (as they represent vectors of the correct length). The new columns
+#' are added to the end of the column series by default but can instead be added
+#' internally by using either the `.before` or `.after` arguments. If entirely
+#' empty (i.e., all `NA`) columns need to be added, you can use any of the `NA`
+#' types (e.g., `NA`, `NA_character_`, `NA_real_`, etc.) for such columns.
+#'
+#' @inheritParams fmt_number
+#'
+#' @param ... *Cell data assignments*
+#'
+#'   `<multiple expressions>` // (or, use `.list`)
+#'
+#'   Expressions for the assignment of cell values to the new columns.
+#'   Name-value pairs, in the form of `<column> = <value vector>` will work, so
+#'   long as any `<column>` value does not already exist in the table. The
+#'   `<value vector>` may be an expression that uses one or more column names in
+#'   the table to generate a vector of values. Single values in `<value vector>`
+#'   will be repeated down the new column. A vector where the length is exactly
+#'   the number of rows in the table can also be used.
+#'
+#' @param .before,.after *Column used as anchor*
+#'
+#'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
+#'
+#'   A single column-resolving expression or column index can be given to either
+#'   `.before` or `.after`. The column specifies where the new columns should be
+#'   positioned among the existing columns in the input data table. While select
+#'   helper functions such as [starts_with()] and [ends_with()] can be used for
+#'   column targeting, it's recommended that a single column name or index be
+#'   used. This is to ensure that exactly one column is provided to either of
+#'   these arguments (otherwise, the function will be stopped). If nothing is
+#'   provided for either argument then any new column will be placed at the end
+#'   of the column series.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting the column for insertion with `.before` or `.after`:
+#'
+#' The targeting of a column for insertion is done through the `.before` or
+#' `.after` arguments (only one of these options should be be used). While
+#' **tidyselect**-style expressions or indices can used to target a column, it's
+#' advised that a single column name be used. This is to avoid the possibility
+#' of inadvertently resolving multiple columns (since the requirement is for a
+#' single column).
+#'
+#' @section Examples:
+#'
+#' Let's take a subset of the [`exibble`] dataset and make a simple **gt** table
+#' with it (using the `row` column for labels in the stub). We'll add a single
+#' column to the right of all the existing columns and call it `country`. This
+#' new column needs eight values and these will be supplied when using
+#' `cols_add()`.
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(num, char, datetime, currency, group) |>
+#'   gt(rowname_col = "row") |>
+#'   cols_add(
+#'     country = c("TL", "PY", "GL", "PA", "MO", "EE", "CO", "AU")
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_add_1.png")`
+#' }}
+#'
+#' We can add multiple columns with a single use of `cols_add()`. The columns
+#' generated can be formatted and otherwise manipulated just as any column could
+#' be in a **gt** table. The following example extends the first one by adding
+#' more columns and immediately using them in various function calls like
+#' [fmt_flag()] and [fmt_units()].
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(num, char, datetime, currency, group) |>
+#'   gt(rowname_col = "row") |>
+#'   cols_add(
+#'     country = c("TL", "PY", "GL", "PA", "MO", "EE", "CO", "AU"),
+#'     empty = NA_character_,
+#'     units = c(
+#'       "k m s^-2", "N m^-2", "degC", "m^2 kg s^-2",
+#'       "m^2 kg s^-3", "/s", "A s", "m^2 kg s^-3 A^-1"
+#'     ),
+#'     big_num = num ^ 3
+#'   ) |>
+#'   fmt_flag(columns = country) |>
+#'   sub_missing(columns = empty, missing_text = "") |>
+#'   fmt_units(columns = units) |>
+#'   fmt_scientific(columns = big_num)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_add_2.png")`
+#' }}
+#'
+#' In this table generated from a portion of the [`towny`] dataset, we add two
+#' new columns (`land_area` and `density`) through a single use of `cols_add()`.
+#' The new `land_area` column is a conversion of land area from square
+#' kilometers to square miles and the `density` column is calculated by through
+#' division of `population_2021` by that new `land_area` column. We hide the
+#' now unneeded `land_area_km2` with [cols_hide()] and also perform some column
+#' labeling and adjustments to column widths with [cols_label()] and
+#' [cols_width()].
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, population_2021, land_area_km2) |>
+#'   dplyr::filter(population_2021 > 100000) |>
+#'   dplyr::slice_max(population_2021, n = 10) |>
+#'   gt() |>
+#'   cols_add(
+#'     land_area = land_area_km2 / 2.58998811,
+#'     density = population_2021 / land_area
+#'   ) |>
+#'   fmt_integer() |>
+#'   cols_hide(columns = land_area_km2) |>
+#'   cols_label(
+#'     population_2021 = "Population",
+#'     density = "Density, {{*persons* / sq mi}}",
+#'     land_area ~ "Area, {{mi^2}}"
+#'   ) |>
+#'   cols_width(everything() ~ px(120))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_add_3.png")`
+#' }}
+#'
+#' It's possible to start with an empty table (i.e., no columns and no rows) and
+#' add one or more columns to that. You can, for example, use `dplyr::tibble()`
+#' or `data.frame()` to create a completely empty table. The first `cols_add()`
+#' call for an empty table can have columns of arbitrary length but subsequent
+#' uses of `cols_add()` must adhere to the rule of new columns being the same
+#' length as existing.
+#'
+#' ```r
+#' dplyr::tibble() |>
+#'   gt() |>
+#'   cols_add(
+#'     num = 1:5,
+#'     chr = vec_fmt_spelled_num(1:5)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_add_4.png")`
+#' }}
+#'
+#' Tables can contain no rows, yet have columns. In the following example, we'll
+#' create a zero-row table with three columns (`num`, `chr`, and `ext`) and
+#' perform the same `cols_add()`-based addition of two columns of data. This is
+#' another case where the function allows for arbitrary-length columns (since
+#' always adding zero-length columns is impractical). Furthermore, here we can
+#' reference columns that already exist (`num` and `chr`) and add values to
+#' them.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   num = numeric(0),
+#'   chr = character(0),
+#'   ext = character(0)
+#' ) |>
+#'   gt() |>
+#'   cols_add(
+#'     num = 1:5,
+#'     chr = vec_fmt_spelled_num(1:5)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_add_5.png")`
+#' }}
+#'
+#' We should note that the `ext` column did not receive any values from
+#' `cols_add()` but the table was expanded to having five rows nonetheless. So,
+#' each cell of `ext` was by necessity filled with an `NA` value.
+#'
+#' @family column modification functions
+#' @section Function ID:
+#' 5-7
+#'
+#' @section Function Introduced:
+#' `v0.10.0` (October 7, 2023)
+#'
+#' @export
+cols_add <- function(
+    .data,
+    ...,
+    .before = NULL,
+    .after = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = .data)
+
+  # Get the table's boxhead
+  boxh_df <- dt_boxhead_get(data = .data)
+
+  # Get the internal dataset and a vector of its column names
+  data_tbl <- dt_data_get(data = .data)
+  data_tbl_columns <- colnames(data_tbl)
+
+  #
+  # Special case where data table has no columns (and perhaps no rows); here,
+  # we allow for one or more columns to be added with an arbitrary number of
+  # rows, however, the number of rows should be consistent across the supplied
+  # columns
+  #
+
+  if (nrow(data_tbl) < 1 && ncol(data_tbl) < 1) {
+
+    # Generate boxhead rows that correspond to the new columns
+    updated_boxh_df <-
+      dt_boxhead_get(data = gt(dplyr::as_tibble(as.data.frame(list(...)))))
+
+    # Modify the internal boxhead data frame
+    .data <- dt_boxhead_set(data = .data, boxh = updated_boxh_df)
+
+    # Manually add rows to the empty data table (if there are indeed some rows)
+    if (nrow(dplyr::as_tibble(as.data.frame(list(...)))) > 0) {
+
+      .data <-
+        dt_data_add_rows(
+          data = .data,
+          row_data_list = list(...),
+          before = NULL,
+          after = NULL
+        )
+    }
+
+    # Update the internal data table object
+    .data <-
+      dt_data_set(
+        data = .data,
+        data_tbl = dplyr::as_tibble(as.data.frame(list(...)))
+      )
+
+    return(.data)
+  }
+
+  #
+  # Special case where data table has some columns (but no rows); here, we allow
+  # for one or more columns to be added with an arbitrary number of rows,
+  # however, the number of rows should be consistent across the supplied columns
+  #
+
+  if (nrow(data_tbl) < 1 && ncol(data_tbl) > 0) {
+
+    # Generate boxhead rows that correspond to the new columns
+    updated_boxh_df <-
+      dt_boxhead_get(data = gt(dplyr::as_tibble(as.data.frame(list(...)))))
+
+    updated_boxh_df <-
+      vctrs::vec_rbind(
+        dt_boxhead_get(data = .data),
+        updated_boxh_df[
+          !(updated_boxh_df$var %in% dt_boxhead_get(data = .data)[["var"]]),
+        ]
+      )
+
+    # Modify the internal boxhead data frame
+    .data <- dt_boxhead_set(data = .data, boxh = updated_boxh_df)
+
+    # Determine whether the supplied set of values is zero length
+    row_data_list_empty <-
+      all(
+        vapply(
+          seq_along(list(...)),
+          FUN.VALUE = logical(1),
+          USE.NAMES = FALSE,
+          FUN = function(x) {
+            length(list(...)[[x]]) < 1
+          }
+        )
+      )
+
+    if (row_data_list_empty) {
+
+      # Bind the zero-row tables together
+      updated_data_tbl <-
+        dplyr::bind_cols(
+          dt_data_get(data = .data),
+          dplyr::as_tibble(as.data.frame(list(...)))
+        )
+
+      # Update the internal data table object
+      .data <-
+        dt_data_set(
+          data = .data,
+          data_tbl = updated_data_tbl
+        )
+
+      return(.data)
+    }
+
+    # Manually add rows to the empty data table (if there are indeed some rows)
+    if (nrow(dplyr::as_tibble(as.data.frame(list(...)))) > 0) {
+
+      .data <-
+        dt_data_add_rows(
+          data = .data,
+          row_data_list = list(...),
+          before = NULL,
+          after = NULL
+        )
+    }
+
+    return(.data)
+  }
+
+  # Mutate the internal data table and get a vector of its column names
+  data_tbl_mutated <- dplyr::mutate(data_tbl, ...)
+  data_tbl_mutated_columns <- colnames(data_tbl_mutated)
+
+  #
+  # If the number of columns in the mutated table is not at least one
+  # larger than the non-mutated table then return the data unchanged
+  #
+
+  column_count_diff <-
+    length(data_tbl_mutated_columns) - length(data_tbl_columns)
+
+  if (column_count_diff < 1) {
+    return(.data)
+  }
+
+  # Determine which columns are new in the mutated table
+  columns_new <- base::setdiff(data_tbl_mutated_columns, data_tbl_columns)
+
+  # Generate a table that has only the new columns
+  data_tbl_new_cols <-
+    dplyr::select(data_tbl_mutated, dplyr::all_of(columns_new))
+
+  # Generate boxhead rows that correspond to the new columns
+  boxh_df_new_cols <- dt_boxhead_get(data = gt(data_tbl_new_cols))
+
+  #
+  # Resolve any `.before` or `.after` column and stop function upon
+  # observing any inconsistencies
+  #
+
+  resolved_column_before <-
+    resolve_cols_c(
+      expr = {{ .before }},
+      data = .data,
+      null_means = "nothing"
+    )
+
+  if (length(resolved_column_before) < 1) {
+    resolved_column_before <- NULL
+  }
+
+  if (
+    !is.null(resolved_column_before) &&
+    length(resolved_column_before) != 1
+  ) {
+
+    if (length(resolved_column_before) < 1) {
+      cli::cli_abort("The expression used for `.before` did not resolve a column.")
+    }
+
+    if (length(resolved_column_before) > 1) {
+      cli::cli_abort("The expression used for `.before` resolved multiple columns.")
+    }
+  }
+
+  resolved_column_after <-
+    resolve_cols_c(
+      expr = {{ .after }},
+      data = .data,
+      null_means = "nothing"
+    )
+
+  if (length(resolved_column_after) < 1) {
+    resolved_column_after <- NULL
+  }
+
+  if (
+    !is.null(resolved_column_after) &&
+    length(resolved_column_after) != 1
+  ) {
+
+    if (length(resolved_column_after) < 1) {
+      cli::cli_abort("The expression used for `.after` did not resolve a column.")
+    }
+
+    if (length(resolved_column_after) > 1) {
+      cli::cli_abort("The expression used for `.after` resolved multiple columns.")
+    }
+  }
+
+  # Stop function if expressions are given to both `.before` and `.after`
+  if (!is.null(resolved_column_before) && !is.null(resolved_column_after)) {
+    cli::cli_abort("Expressions cannot be given to both `.before` and `.after`.")
+  }
+
+  #
+  # Prepend, insert, or append the new data columns (`data_tbl_new_cols`)
+  # to those existing in `data_tbl`
+  #
+
+  # Get the first and last column names from `data_tbl`
+  first_colname <- colnames(data_tbl)[1]
+  last_colname <- colnames(data_tbl)[ncol(data_tbl)]
+
+  if (is.null(resolved_column_before) && is.null(resolved_column_after)) {
+
+    updated_data_tbl <-
+      dplyr::bind_cols(
+        data_tbl,
+        data_tbl_new_cols
+      )
+
+    updated_boxh_df <-
+      vctrs::vec_rbind(
+        boxh_df,
+        boxh_df_new_cols
+      )
+
+  } else if (!is.null(resolved_column_before) && is.null(resolved_column_after)) {
+
+    before_colnum <- which(colnames(data_tbl) == resolved_column_before)
+
+    updated_data_tbl <-
+      dplyr::bind_cols(
+        dplyr::select(data_tbl, 1:(before_colnum - 1)),
+        data_tbl_new_cols,
+        dplyr::select(data_tbl, before_colnum:ncol(data_tbl))
+      )
+
+    before_colnum <- which(boxh_df[["var"]] == resolved_column_before)
+
+    updated_boxh_df <-
+      dplyr::bind_rows(
+        boxh_df[(1:before_colnum) - 1, ],
+        boxh_df_new_cols,
+        boxh_df[before_colnum:nrow(boxh_df), ]
+      )
+
+  } else if (is.null(resolved_column_before) && !is.null(resolved_column_after)) {
+
+    if (resolved_column_after == nrow(data_tbl)) {
+
+      updated_data_tbl <-
+        dplyr::bind_cols(
+          data_tbl,
+          data_tbl_new_cols
+        )
+
+      updated_boxh_df <-
+        dplyr::bind_rows(
+          boxh_df,
+          boxh_df_new_cols
+        )
+
+    } else {
+
+      after_colnum <- which(colnames(data_tbl) == resolved_column_after)
+
+      updated_data_tbl <-
+        dplyr::bind_cols(
+          dplyr::select(data_tbl, 1:after_colnum),
+          data_tbl_new_cols,
+          dplyr::select(data_tbl, (after_colnum + 1):ncol(data_tbl))
+        )
+
+      after_colnum <- which(boxh_df[["var"]] == resolved_column_after)
+
+      updated_boxh_df <-
+        dplyr::bind_rows(
+          boxh_df[1:after_colnum, ],
+          boxh_df_new_cols,
+          boxh_df[(after_colnum + 1):nrow(boxh_df), ]
+        )
+    }
+  }
+
+  # Modify the internal datasets
+  .data <- dt_data_set(data = .data, data_tbl = updated_data_tbl)
+  .data <- dt_boxhead_set(data = .data, boxh = updated_boxh_df)
+
+  .data
+}
+
+#' Add a new column of nanoplots, taking input data from selected columns
+#'
+#' @description
+#'
+#' Nanoplots are tiny plots you can use in your **gt** table. They are simple by
+#' design, mainly because there isn't a lot of space to work with. With that
+#' simplicity, however, you do get a set of very succinct data visualizations
+#' that adapt nicely to the amount of data you feed into them. With
+#' `cols_nanoplot()` you take data from one or more columns as the basic inputs
+#' for the nanoplots and generate a new column containing the plots. The
+#' nanoplots are robust against missing values, and multiple strategies are
+#' available for handling missingness.
+#'
+#' Nanoplots try to show individual data with reasonably good visibility.
+#' Interactivity is included as a basic feature so one can hover over the data
+#' points and vertical guides will display the value ascribed to each data
+#' point. Because **gt** knows all about numeric formatting, values will be
+#' compactly formatted so as to not take up valuable real estate. If you need to
+#' create a nanoplot based on monetary values, that can be handled by providing
+#' the currency code to the [nanoplot_options()] helper (then hook that up to
+#' the `options` argument).  A guide on the left-hand side of the plot area will
+#' appear on hover and display the minimal and maximal *y* values.
+#'
+#' There are three types of nanoplots available: `"line"`, `"bar"`, `"boxplot"`.
+#' A line plot shows individual data points and has smooth connecting lines
+#' between them to allow for easier scanning of values. You can opt for
+#' straight-line connections between data points, or, no connections at all
+#' (it's up to you). You can even eschew the data points and just have a simple
+#' line. Regardless of how you mix and match difference plot layers, the plot
+#' area focuses on the domain of the data points with the goal of showing you
+#' the overall trend of the data. The data you feed into a line plot can consist
+#' of a single vector of values (resulting in equally-spaced *y* values), or,
+#' you can supply two vectors representative of *x* and *y*.
+#'
+#' A bar plot is built a little bit differently. The focus is on evenly-spaced
+#' bars (requiring a single vector of values) that project from a zero line,
+#' clearly showing the difference between positive and negative values. By
+#' default, any type of nanoplot will have basic interactivity. One can hover
+#' over the data points and vertical guides will display values ascribed to
+#' each. A guide on the left-hand side of the plot area will display the minimal
+#' and maximal *y* values on hover.
+#'
+#' Every box plot will take the collection of values for a row and construct the
+#' plot horizontally. This is essentially a standard box-and-whisker diagram
+#' where outliers are automatically displayed outside the left and right fences.
+#'
+#' While basic customization options are present in the `cols_nanoplot()`, many
+#' more opportunities for customizing nanoplots on a more granular level are
+#' possible with the [nanoplot_options()] helper function. That function should
+#' be invoked at the `options` argument of `cols_nanoplot()`. Through that
+#' helper, layers of the nanoplots can be selectively removed and the aesthetics
+#' of the remaining plot components can be modified.
+#'
+#' @inheritParams cols_align
+#'
+#' @param columns *Columns from which to get data for the dependent variable*
+#'
+#'   `<column-targeting expression>` // **required**
+#'
+#'   The columns which contain the numeric data to be plotted as nanoplots. Can
+#'   either be a series of column names provided in `c()`, a vector of column
+#'   indices, or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]). Data
+#'   collected from the columns will be concatenated together in the order of
+#'   resolution.
+#'
+#' @param rows *Rows that should contain nanoplots*
+#'
+#'   `<row-targeting expression>` // *default:* `everything()`
+#'
+#'   With `rows` we can specify which rows should contain nanoplots in the new
+#'   column. The default [everything()] results in all rows in `columns` being
+#'   formatted. Alternatively, we can supply a vector of row IDs within `c()`, a
+#'   vector of row indices, or a select helper function (e.g. [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [num_range()], and [everything()]).
+#'   We can also use expressions to filter down to the rows we need(e.g.,
+#'   `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param plot_type *The type of nanoplot to display*
+#'
+#'   `singl-kw:[line|bar|boxplot]` // *default:* `"line"`
+#'
+#'   Nanoplots can either take the form of a line plot (using `"line"`), a bar
+#'   plot (with `"bar"`), or a box plot (`"boxplot"`). A line plot, by default,
+#'   contains layers for a data line, data points, and a data area. Each of
+#'   these can be deactivated by using [nanoplot_options()]. With a bar plot,
+#'   the always visible layer is that of the data bars. Furthermore, a line plot
+#'   can optionally take in *x* values through the `columns_x_vals` argument
+#'   whereas bar plots and box plots both ignore any data representing the
+#'   independent variable.
+#'
+#' @param plot_height *The height of the nanoplots*
+#'
+#'   `scalar<character>` // *default:* `"2em"`
+#'
+#'   The height of the nanoplots. The default here is a sensible value of
+#'   `"2em"`. By way of comparison, this is a far greater height than the
+#'   default for icons through [fmt_icon()] (`"1em"`) and is the same height as
+#'   images inserted via [fmt_image()] (also having a `"2em"` height default).
+#'
+#' @param missing_vals *Treatment of missing values*
+#'
+#'   `singl-kw:[gap|marker|zero|remove]` // *default:* `"gap"`
+#'
+#'   If missing values are encountered within the input data, there are three
+#'   strategies available for their handling: (1) `"gap"` will show data gaps
+#'   at the sites of missing data, where data lines will have discontinuities
+#'   and bar plots will have missing bars; (2) `"marker"` will behave like
+#'   `"gap"` but show prominent visual marks at the missing data locations; (3)
+#'   `"zero"` will replace `NA` values with zero values; and (4) `"remove"` will
+#'   remove any incoming `NA` values.
+#'
+#' @param autoscale *Automatically set x- and y-axis scale limits based on data*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   Using `autoscale = TRUE` will ensure that the bounds of all nanoplots
+#'   produced are based on the limits of data combined from all input rows. This
+#'   will result in a shared scale across all of the nanoplots (for *y*- and
+#'   *x*-axis data), which is useful in those cases where the nanoplot data
+#'   should be compared across rows.
+#'
+#' @param autohide *Automatically hide the `columns`/`columns_x_vals` column(s)*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   An option to automatically hide any columns specified in `columns` and also
+#'   `columns_x_vals` (if used). Any columns with their state changed to
+#'   'hidden' will behave the same as before, they just won't be displayed in
+#'   the finalized table. Should you want to have these 'input' columns be
+#'   viewable, set `autohide = FALSE`.
+#'
+#' @param columns_x_vals *Columns containing values for the optional x variable*
+#'
+#'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
+#'
+#'   We can optionally obtain data for the independent variable (i.e., the
+#'   *x*-axis data) if specifying columns in `columns_x_vals`. This is only for
+#'   the `"line"` type of plot (set via the `plot_type` argument). We can supply
+#'   either be a series of column names provided in `c()`, a vector of column
+#'   indices, or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]). Data
+#'   collected from the columns will be concatenated together in the order of
+#'   resolution.
+#'
+#' @param reference_line *Add a reference line*
+#'
+#'   `scalar<numeric|integer|character>` // *default:* `NULL` (`optional`)
+#'
+#'   A reference line requires a single input to define the line. It could be a
+#'   static numeric value, applied to all nanoplots generated. Or, the input can
+#'   be one of the following for generating the line from the underlying data:
+#'   (1) `"mean"`, (2) `"median"`, (3) `"min"`, (4) `"max"`, (5) `"q1"`, (6)
+#'   `"q3"`, (7) `"first"`, or (8) `"last"`.
+#'
+#' @param reference_area *Add a reference area*
+#'
+#'   `vector<numeric|integer|character>|list` // *default:* `NULL` (`optional`)
+#'
+#'   A reference area requires two inputs to define bottom and top boundaries
+#'   for a rectangular area. The types of values supplied are the same as those
+#'   expected for `reference_line`, which is either a static numeric value or
+#'   one of the following keywords for the generation of the value: (1)
+#'   `"mean"`, (2) `"median"`, (3) `"min"`, (4) `"max"`, (5) `"q1"`, (6) `"q3"`,
+#'   (7) `"first"`, or (8) `"last"`. Input can either be a vector or list with
+#'   two elements.
+#'
+#' @param expand_x,expand_y *Expand plot scale in the x and y directions*
+#'
+#'   `vector<numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   Should you need to have plots expand in the *x* or *y* direction, provide
+#'   one or more values to `expand_x` or `expand_y`. Any values provided that
+#'   are outside of the range of data provided to the plot should result in a
+#'   scale expansion.
+#'
+#' @param new_col_name *Column name for the new column containing the plots*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   A single column name in quotation marks. Values will be extracted from this
+#'   column and provided to compatible arguments. If not provided the new column
+#'   name will be `"nanoplots"`.
+#'
+#' @param new_col_label *Column label for the new column containing the plots*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   A single column label. If not supplied then the column label will inherit
+#'   from `new_col_name` (if nothing provided to that argument, the label will
+#'   be `"nanoplots"`).
+#'
+#' @param before,after *Column used as anchor*
+#'
+#'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
+#'
+#'   A single column-resolving expression or column index can be given to either
+#'   `before` or `after`. The column specifies where the new column containing
+#'   the nanoplots should be positioned among the existing columns in the input
+#'   data table. While select helper functions such as [starts_with()] and
+#'   [ends_with()] can be used for column targeting, it's recommended that a
+#'   single column name or index be used. This is to ensure that exactly one
+#'   column is provided to either of these arguments (otherwise, the function
+#'   will be stopped). If nothing is provided for either argument then the new
+#'   column will be placed at the end of the column series.
+#'
+#' @param options *Set options for the nanoplots*
+#'
+#'   `obj:<nanoplot_options` // *default:* `NULL` (`optional`)
+#'
+#'   By using the [nanoplot_options()] helper function here, you can alter the
+#'   layout and styling of the nanoplots in the new column.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values to insert into the nanoplots is done through `columns`
+#' and additionally by `rows` (if nothing is provided for `rows` then entire
+#' columns are selected). Aside from declaring column names in `c()` (with bare
+#' column names or names in quotes) we can use also
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector.
+#'
+#' @section How to supply data for nanoplots:
+#'
+#' The input data for nanoplots naturally needs to be numeric and there are two
+#' major ways to formulate that data: (1) from single values across many
+#' columns, and (2) using text-based value streams. It's pretty easy to
+#' rationalize the first, and we may already have wide data in the input data
+#' frame anyway (take a look at the [`illness`] and [`towny`] datasets for
+#' examples of this). There's one data value per column so the key thing here is
+#' to reference the columns in the correct order. With a select helper, good
+#' column naming, and the columns being in the intended order, this is a snap.
+#'
+#' The second option is to use text-based value streams. Sometimes you simply
+#' don't want or don't need multiple columns and so a single column with all of
+#' the data might be more practical. To make this work, you'd need to have a set
+#' of numerical values separated by some sort of delimiter (could be a comma, a
+#' space, a semicolon, you get the idea). Here's an example with three numbers,
+#' written three ways: `"3.6 -2.44 1.98"`, `"3.6, -2.44, 1.98"`, and
+#' `"3.6;-2.44;1.98"`. You can include `NA` values, not a problem, and here's an
+#' example of that: `"6.232 NA 3.7 0.93"`. Another form of value stream involves
+#' using datetimes in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS`. These will
+#' be internally converted to numeric values (seconds elapsed since
+#' `"1970-01-01 00:00:00"`). An example of a datetime-based value stream is:
+#' `"2012-06-12 08:24:13, 2012-06-12 10:37:08, 2012-06-12 14:03:24"`.
+#'
+#' Value streams can be pretty big if you want them to be, and you don't have to
+#' deal with containing individual values across multiple columns. For the case
+#' where you need to provide two sets of values (*x* and *y*, for line plots
+#' with `columns` and `columns_x_vals`), have two equivalently sized value
+#' streams in two columns. Value streams can also be concatenated together by
+#' referencing columns having their own separate value streams.
+#'
+#' @section Reference line and reference area:
+#'
+#' Neither a horizontal *reference line* nor a *reference area* is present in
+#' the default view but these can be added by providing valid input values in
+#' the `reference_line` and `reference_area` arguments. A reference line can
+#' be either be a static numeric value (supply any number to `reference_line`),
+#' or it can be a keyword that computes the reference line *y* value using the
+#' data values for each nanoplot. The following keywords can be used:
+#'
+#' 1. `"mean"`: The mean of the data values
+#' 2. `"median"`: Median of data values
+#' 3. `"min"`: Minimum value in set of data values
+#' 4. `"max"`: The maximum value
+#' 5. `"q1"`: The first, or lower, quartile of the data values
+#' 6. `"q3"`: The third quartile, otherwise known as the upper quartile
+#' 7. `"first"`: The first data value
+#' 8. `"last"`: The last data value
+#'
+#' The *reference area* accepts two inputs, and this can be two of the above
+#' keywords, a keyword and a static numeric value, or two numeric values.
+#'
+#' @section Examples:
+#'
+#' Let's make some nanoplots with the [`illness`] dataset. The columns beginning
+#' with 'day' all contain ordered measurement values, comprising seven
+#' individual daily results. Using `cols_nanoplot()` we create a new column to
+#' hold the nanoplots (with `new_col_name = "nanoplots"`), referencing the
+#' columns containing the data (with `columns = starts_with("day")`). It's also
+#' possible to define a column label here using the `new_col_label` argument.
+#'
+#' ```r
+#' illness |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt(rowname_col = "test") |>
+#'   tab_header("Partial summary of daily tests performed on YF patient") |>
+#'   tab_stubhead(label = md("**Test**")) |>
+#'   cols_hide(columns = starts_with("norm")) |>
+#'   fmt_units(columns = units) |>
+#'   cols_nanoplot(
+#'     columns = starts_with("day"),
+#'     new_col_name = "nanoplots",
+#'     new_col_label = md("*Progression*")
+#'   ) |>
+#'   cols_align(align = "center", columns = nanoplots) |>
+#'   cols_merge(columns = c(test, units), pattern = "{1} ({2})") |>
+#'   tab_footnote(
+#'     footnote = "Measurements from Day 3 through to Day 8.",
+#'     locations = cells_column_labels(columns = nanoplots)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_nanoplot_1.png")`
+#' }}
+#'
+#' The previous table showed us some line-based nanoplots. We can also make very
+#' small bar plots with `cols_nanoplot()`. Let's take the [`pizzaplace`] dataset
+#' and make a small summary table showing daily pizza sales by type (there are
+#' four types). This will be limited to the first ten days of pizza sales in
+#' 2015, so, there will be ten rows in total. We can use `plot_type = "bar"` to
+#' make bar plots from the daily sales counts in the `chicken`, `classic`,
+#' `supreme`, and `veggie` columns. Because we know there will always be four
+#' bars (one for each type of pizza) we can be a little creative and apply
+#' colors to each of the bars through use of the `data_bar_fill_color` argument
+#' in [nanoplot_options()].
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::select(type, date) |>
+#'   dplyr::group_by(date, type) |>
+#'   dplyr::summarize(sold = dplyr::n(), .groups = "drop") |>
+#'   tidyr::pivot_wider(names_from = type, values_from = sold) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt(rowname_col = "date") |>
+#'   tab_header(
+#'     title = md("First Ten Days of Pizza Sales in 2015")
+#'   ) |>
+#'   cols_nanoplot(
+#'     columns = c(chicken, classic, supreme, veggie),
+#'     plot_type = "bar",
+#'     autohide = FALSE,
+#'     new_col_name = "pizzas_sold",
+#'     new_col_label = "Sales by Type",
+#'     options = nanoplot_options(
+#'       show_data_line = FALSE,
+#'       show_data_area = FALSE,
+#'       data_bar_stroke_color = "transparent",
+#'       data_bar_fill_color = c("brown", "gold", "purple", "green")
+#'     )
+#'   ) |>
+#'   cols_width(pizzas_sold ~ px(150)) |>
+#'   cols_align(columns = -date, align = "center") |>
+#'   fmt_date(columns = date, date_style = "yMMMEd") |>
+#'   opt_all_caps()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_nanoplot_2.png")`
+#' }}
+#'
+#' Now we'll make another table that contains two columns of nanoplots. Starting
+#' from the [`towny`] dataset, we first reduce it down to a subset of columns
+#' and rows. All of the columns related to either population or density will be
+#' used as input data for the two nanoplots. Both nanoplots will use a reference
+#' line that is generated from the median of the input data. And by naming the
+#' new nanoplot-laden columns in a similar manner as the input data columns, we
+#' can take advantage of select helpers (e.g., when using [tab_spanner()]). Many
+#' of the input data columns are now redundant because of the plots, so we'll
+#' elect to hide most of those with [cols_hide()].
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, starts_with("population"), starts_with("density")) |>
+#'   dplyr::filter(population_2021 > 200000) |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   gt() |>
+#'   fmt_integer(columns = starts_with("population")) |>
+#'   fmt_number(columns = starts_with("density"), decimals = 1) |>
+#'   cols_nanoplot(
+#'     columns = starts_with("population"),
+#'     reference_line = "median",
+#'     autohide = FALSE,
+#'     new_col_name = "population_plot",
+#'     new_col_label = md("*Change*")
+#'   ) |>
+#'   cols_nanoplot(
+#'     columns = starts_with("density"),
+#'     plot_type = "bar",
+#'     autohide = FALSE,
+#'     new_col_name = "density_plot",
+#'     new_col_label = md("*Change*")
+#'   ) |>
+#'   cols_hide(columns = matches("2001|2006|2011|2016")) |>
+#'   tab_spanner(
+#'     label = "Population",
+#'     columns = starts_with("population")
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Density ({{*persons* km^-2}})",
+#'     columns = starts_with("density")
+#'   ) |>
+#'   cols_label_with(
+#'     columns = -matches("plot"),
+#'     fn = function(x) gsub("[^0-9]+", "", x)
+#'   ) |>
+#'   cols_align(align = "center", columns = matches("plot")) |>
+#'   cols_width(
+#'     name ~ px(140),
+#'     everything() ~ px(100)
+#'   ) |>
+#'   opt_horizontal_padding(scale = 2)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_nanoplot_3.png")`
+#' }}
+#'
+#' The [`sza`] dataset can, with just some use of **dplyr** and **tidyr**, give
+#' us a wide table full of nanoplottable values. We'll transform the solar
+#' zenith angles to solar altitude angles and create a column of nanoplots using
+#' the newly calculated values. There are a few `NA` values during periods where
+#' the sun hasn't risen (usually before 06:30 in the winter months) and those
+#' values will be replaced with `0` using `missing_vals = "zero"`. We'll also
+#' elect to create bar plots using the `plot_type = "bar"` option. The height of
+#' the plots will be bumped up to `"2.5em"` from the default of `"2em"`.
+#' Finally, we will use [nanoplot_options()] to modify the coloring of the data
+#' bars.
+#'
+#' ```r
+#' sza |>
+#'   dplyr::filter(latitude == 20 & tst <= "1200") |>
+#'   dplyr::select(-latitude) |>
+#'   dplyr::filter(!is.na(sza)) |>
+#'   dplyr::mutate(saa = 90 - sza) |>
+#'   dplyr::select(-sza) |>
+#'   tidyr::pivot_wider(
+#'     names_from = tst,
+#'     values_from = saa,
+#'     names_sort = TRUE
+#'   ) |>
+#'   gt(rowname_col = "month") |>
+#'   tab_header(
+#'     title = "Solar Altitude Angles",
+#'     subtitle = "Average values every half hour from 05:30 to 12:00"
+#'   ) |>
+#'   cols_nanoplot(
+#'     columns = matches("0"),
+#'     plot_type = "bar",
+#'     missing_vals = "zero",
+#'     new_col_name = "saa",
+#'     plot_height = "2.5em",
+#'     options = nanoplot_options(
+#'       data_bar_stroke_color = "GoldenRod",
+#'       data_bar_fill_color = "DarkOrange"
+#'     )
+#'   ) |>
+#'   tab_options(
+#'     table.width = px(400),
+#'     column_labels.hidden = TRUE
+#'   ) |>
+#'   cols_align(
+#'     align = "center",
+#'     columns = everything()
+#'   ) |>
+#'   tab_source_note(
+#'     source_note = "The solar altitude angle is the complement to
+#'     the solar zenith angle. TMYK."
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_nanoplot_4.png")`
+#' }}
+#'
+#' You can use number and time streams as data for nanoplots. Let's demonstrate
+#' how we can make use of them with some creative transformation of the
+#' [`pizzaplace`] dataset. A value stream is really a string with delimited
+#' numeric values, like this: `"7.24,84.2,14"`. A value stream can also contain
+#' dates and/or datetimes, and here's an example of that:
+#' `"2020-06-02 13:05:13,2020-06-02 14:24:05,2020-06-02 18:51:37"`. Having data
+#' in this form can often be more convenient since different nanoplots might
+#' have varying amounts of data (and holding different amounts of data in a
+#' fixed number of columns is cumbersome). There are `date` and `time` columns
+#' in this dataset and we'll use that to get *x* values denoting high-resolution
+#' time instants: the second of the day that a pizza was sold (this is true
+#' pizza analytics). We also have the sell price for a pizza, and that'll serve
+#' as the *y* values. The pizzas belong to four different groups (in the `type`
+#' column) and we'll group by that and create value streams with
+#' `paste(..., collapse = ",")` inside  the `dplyr::summarize()` call. With two value
+#' streams in each row (having the same number of values) we can now make a
+#' **gt** table with nanoplots.
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::filter(date == "2015-01-01") |>
+#'   dplyr::mutate(date_time = paste(date, time)) |>
+#'   dplyr::select(type, date_time, price) |>
+#'   dplyr::group_by(type) |>
+#'   dplyr::summarize(
+#'     date_time = paste(date_time, collapse = ","),
+#'     sold = paste(price, collapse = ",")
+#'   ) |>
+#'   gt(rowname_col = "type") |>
+#'   tab_header(
+#'     title = md("Pizzas sold on **January 1, 2015**"),
+#'     subtitle = "Between the opening hours of 11:30 to 22:30"
+#'   ) |>
+#'   cols_nanoplot(
+#'     columns = sold,
+#'     columns_x_vals = date_time,
+#'     expand_x = c("2015-01-01 11:30", "2015-01-01 22:30"),
+#'     reference_line = "median",
+#'     new_col_name = "pizzas_sold",
+#'     new_col_label = "Pizzas Sold",
+#'     options = nanoplot_options(
+#'       show_data_line = FALSE,
+#'       show_data_area = FALSE,
+#'       currency = "USD"
+#'     )
+#'   ) |>
+#'   cols_width(pizzas_sold ~ px(200)) |>
+#'   cols_align(columns = pizzas_sold, align = "center") |>
+#'   opt_all_caps()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_nanoplot_5.png")`
+#' }}
+#'
+#' Notice that the columns containing the value streams are hid due to the
+#' default argument `autohide = TRUE` because, while useful, they don't need to
+#' be displayed to anybody viewing a table. Since we have a lot of data points
+#' and a connecting line is not as valuable here, we also set
+#' `show_data_line = FALSE` in [nanoplot_options()]. It's more interesting to
+#' see the clusters of the differently priced pizzas over the entire day.
+#' Specifying a `currency` in [nanoplot_options()] is a nice touch since the *y*
+#' values are sale prices in U.S. Dollars (hovering over data points gives
+#' correctly formatted values). Finally, having a reference line based on the
+#' median gives pretty useful information. Seems like customers preferred
+#' getting the `"chicken"`-type pizzas in large size!
+#'
+#' Using the [`gibraltar`] dataset, let's make a series of nanoplots across the
+#' meteorological parameters of temperature, humidity, and wind speed. We'll
+#' want to customize the appearance of the plots across three columns and we
+#' can make this somewhat simpler by assigning a common set of options through
+#' [nanoplot_options()]. In this table we want to make comparisons across
+#' nanoplots in a particular column easier, so, we'll set `autoscale = TRUE` so
+#' that there is a common y-axis scale for each of the parameters (based on the
+#' extents of the data).
+#'
+#' ```r
+#' nanoplot_options_list <-
+#'   nanoplot_options(
+#'     data_point_radius = px(4),
+#'     data_point_stroke_width = px(2),
+#'     data_point_stroke_color = "black",
+#'     data_point_fill_color = "white",
+#'     data_line_stroke_width = px(4),
+#'     data_line_stroke_color = "gray",
+#'     show_data_line = TRUE,
+#'     show_data_points = TRUE,
+#'     show_data_area = FALSE,
+#'   )
+#'
+#' gibraltar |>
+#'   dplyr::filter(date <= "2023-05-14") |>
+#'   dplyr::mutate(time = as.numeric(hms::as_hms(paste0(time, ":00")))) |>
+#'   dplyr::mutate(humidity = humidity * 100) |>
+#'   dplyr::select(date, time, temp, humidity, wind_speed) |>
+#'   dplyr::group_by(date) |>
+#'   dplyr::summarize(
+#'     time = paste(time, collapse = ","),
+#'     temp = paste(temp, collapse = ","),
+#'     humidity = paste(humidity, collapse = ","),
+#'     wind_speed = paste(wind_speed, collapse = ","),
+#'   ) |>
+#'   dplyr::mutate(is_satsun = lubridate::wday(date) %in% c(1, 7)) |>
+#'   gt(rowname_col = "date") |>
+#'   tab_header(
+#'     title = "Meteorological Summary of Gibraltar Station",
+#'     subtitle = "Data taken from May 1-14, 2023."
+#'   ) |>
+#'   fmt_date(columns = stub(), date_style = "wd_m_day_year") |>
+#'   cols_nanoplot(
+#'     columns = temp,
+#'     columns_x_vals = time,
+#'     expand_x = c(0, 86400),
+#'     autoscale = TRUE,
+#'     new_col_name = "temperature_nano",
+#'     new_col_label = "Temperature",
+#'     options = nanoplot_options_list
+#'   ) |>
+#'   cols_nanoplot(
+#'     columns = humidity,
+#'     columns_x_vals = time,
+#'     expand_x = c(0, 86400),
+#'     autoscale = TRUE,
+#'     new_col_name = "humidity_nano",
+#'     new_col_label = "Humidity",
+#'     options = nanoplot_options_list
+#'   ) |>
+#'   cols_nanoplot(
+#'     columns = wind_speed,
+#'     columns_x_vals = time,
+#'     expand_x = c(0, 86400),
+#'     autoscale = TRUE,
+#'     new_col_name = "wind_speed_nano",
+#'     new_col_label = "Wind Speed",
+#'     options = nanoplot_options_list
+#'   ) |>
+#'   cols_units(
+#'     temperature_nano = ":degree:C",
+#'     humidity_nano = "% (RH)",
+#'     wind_speed_nano = "m s^-1"
+#'   ) |>
+#'   cols_hide(columns = is_satsun) |>
+#'   tab_style_body(
+#'     style = cell_fill(color = "#E5FEFE"),
+#'     values = TRUE,
+#'     targets = "row",
+#'     extents = c("body", "stub")
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(align = "center"),
+#'     locations = cells_column_labels()
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_nanoplot_6.png")`
+#' }}
+#'
+#' Box plots can be generated, and we just need to use `plot_type = "boxplot"`
+#' to make that type of nanoplot. Using a small portion of the [`pizzaplace`]
+#' dataset, we will create a simple table that displays a box plot of pizza
+#' sales for a selection of days. By converting the string-time 24-hour-clock
+#' time values to the number of seconds elapsed in a day, we get continuous
+#' values that can be incorporated into each box plot. And, by supplying a
+#' function to the `y_val_fmt_fn` argument within [nanoplot_options()], we can
+#' transform the integer seconds values back to clock times for display on
+#' hover.
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::filter(date <= "2015-01-14") |>
+#'   dplyr::mutate(time = as.numeric(hms::as_hms(time))) |>
+#'   dplyr::summarize(time = paste(time, collapse = ","), .by = date) |>
+#'   dplyr::mutate(is_weekend = lubridate::wday(date) %in% 6:7) |>
+#'   gt() |>
+#'   tab_header(title = "Pizza Sales in Early January 2015") |>
+#'   fmt_date(columns = date, date_style = 2) |>
+#'   cols_nanoplot(
+#'     columns = time,
+#'     plot_type = "boxplot",
+#'     options = nanoplot_options(y_val_fmt_fn = function(x) hms::as_hms(x))
+#'   ) |>
+#'   cols_hide(columns = is_weekend) |>
+#'   cols_width(everything() ~ px(250)) |>
+#'   cols_align(align = "center", columns = nanoplots) |>
+#'   cols_align(align = "left", columns = date) |>
+#'   tab_style(
+#'     style = cell_borders(
+#'       sides = "left", color = "gray"),
+#'     locations = cells_body(columns = nanoplots)
+#'   ) |>
+#'   tab_style_body(
+#'     style = cell_fill(color = "#E5FEFE"),
+#'     values = TRUE,
+#'     targets = "row"
+#'   ) |>
+#'   tab_options(column_labels.hidden = TRUE)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_nanoplot_7.png")`
+#' }}
+#'
+#' @family column modification functions
+#' @section Function ID:
+#' 5-8
+#'
+#' @section Function Introduced:
+#' `v0.10.0` (October 7, 2023)
+#'
+#' @export
+cols_nanoplot <- function(
+    data,
+    columns,
+    rows = everything(),
+    plot_type = c("line", "bar", "boxplot"),
+    plot_height = "2em",
+    missing_vals = c("gap", "marker", "zero", "remove"),
+    autoscale = FALSE,
+    autohide = TRUE,
+    columns_x_vals = NULL,
+    reference_line = NULL,
+    reference_area = NULL,
+    expand_x = NULL,
+    expand_y = NULL,
+    new_col_name = NULL,
+    new_col_label = NULL,
+    before = NULL,
+    after = NULL,
+    options = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Ensure that arguments are matched
+  missing_vals <- rlang::arg_match(missing_vals)
+  plot_type <- rlang::arg_match(plot_type)
+
+  #
+  # Resolution of columns and rows as character vectors
+  #
+
+  resolved_columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data,
+      excl_stub = FALSE
+    )
+
+  resolved_columns_x <-
+    resolve_cols_c(
+      expr = {{ columns_x_vals }},
+      data = data,
+      excl_stub = FALSE,
+      null_means = "nothing"
+    )
+
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = {{ rows }},
+      data = data
+    )
+
+  # Get the internal data table
+  data_tbl <- dt_data_get(data = data)
+
+  data_vals_plot_y <-
+    generate_data_vals_list(
+      data_tbl = data_tbl,
+      resolved_columns = resolved_columns,
+      resolved_rows_idx = resolved_rows_idx
+    )
+
+  if (length(resolved_columns_x) > 0) {
+
+    data_vals_plot_x <-
+      generate_data_vals_list(
+        data_tbl = data_tbl,
+        resolved_columns = resolved_columns_x,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+  } else {
+    data_vals_plot_x <- NULL
+  }
+
+  plot_height <- plot_height %||% "2em"
+  # use nanoplots_options() by default for options_plots if options not set.
+  options_plots <- options %||% nanoplot_options()
+
+  # Get all `y` vals into a vector
+  all_y_vals <- unlist(data_vals_plot_y)
+
+  # Get all `y` vals from single-valued components of `data_vals_plot_y`
+  # into a vector
+  all_single_y_vals <- c()
+  for (i in seq_along(data_vals_plot_y)) {
+    if (length(data_vals_plot_y[[i]]) == 1 && !is.na(data_vals_plot_y[[i]])) {
+      all_single_y_vals <- c(all_single_y_vals, data_vals_plot_y[[i]])
+    }
+  }
+
+  # Automatically apply `expand_x` and `expand_y` values as necessary if
+  # `autoscale` has been set to TRUE
+  if (autoscale) {
+
+    min_y_vals <- min(all_y_vals, na.rm = TRUE)
+    max_y_vals <- max(all_y_vals, na.rm = TRUE)
+    expand_y <- c(min_y_vals, max_y_vals)
+
+    if (!is.null(data_vals_plot_x)) {
+
+      all_x_vals <- unlist(data_vals_plot_x)
+      min_x_vals <- min(all_x_vals, na.rm = TRUE)
+      max_x_vals <- max(all_x_vals, na.rm = TRUE)
+      expand_x <- c(min_x_vals, max_x_vals)
+    }
+  }
+
+  # Initialize vector that will contain the nanoplots
+  nanoplots <- c()
+
+  for (i in seq_along(data_vals_plot_y)) {
+
+    data_vals_plot_y_i <- data_vals_plot_y[i][[1]]
+
+    if (!is.null(data_vals_plot_x)) {
+      data_vals_plot_x_i <- data_vals_plot_x[i][[1]]
+    } else {
+      data_vals_plot_x_i <- NULL
+    }
+
+    data_plot_i <-
+      generate_nanoplot(
+        y_vals = data_vals_plot_y_i,
+        y_ref_line = reference_line,
+        y_ref_area = reference_area,
+        x_vals = data_vals_plot_x_i,
+        expand_x = expand_x,
+        expand_y = expand_y,
+        missing_vals = missing_vals,
+        all_y_vals = all_y_vals,
+        all_single_y_vals = all_single_y_vals,
+        plot_type = plot_type,
+        line_type = options_plots$data_line_type,
+        currency = options_plots$currency,
+        y_val_fmt_fn = options_plots$y_val_fmt_fn,
+        y_axis_fmt_fn = options_plots$y_axis_fmt_fn,
+        y_ref_line_fmt_fn = options_plots$y_ref_line_fmt_fn,
+        data_point_radius = options_plots$data_point_radius,
+        data_point_stroke_color = options_plots$data_point_stroke_color,
+        data_point_stroke_width = options_plots$data_point_stroke_width,
+        data_point_fill_color = options_plots$data_point_fill_color,
+        data_line_stroke_color = options_plots$data_line_stroke_color,
+        data_line_stroke_width = options_plots$data_line_stroke_width,
+        data_area_fill_color = options_plots$data_area_fill_color,
+        data_bar_stroke_color = options_plots$data_bar_stroke_color,
+        data_bar_stroke_width = options_plots$data_bar_stroke_width,
+        data_bar_fill_color = options_plots$data_bar_fill_color,
+        data_bar_negative_stroke_color = options_plots$data_bar_negative_stroke_color,
+        data_bar_negative_stroke_width = options_plots$data_bar_negative_stroke_width,
+        data_bar_negative_fill_color = options_plots$data_bar_negative_fill_color,
+        reference_line_color = options_plots$reference_line_color,
+        reference_area_fill_color = options_plots$reference_area_fill_color,
+        vertical_guide_stroke_color = options_plots$vertical_guide_stroke_color,
+        vertical_guide_stroke_width = options_plots$vertical_guide_stroke_width,
+        show_data_points = options_plots$show_data_points,
+        show_data_line = options_plots$show_data_line,
+        show_data_area = options_plots$show_data_area,
+        show_ref_line = options_plots$show_reference_line,
+        show_ref_area = options_plots$show_reference_area,
+        show_vertical_guides = options_plots$show_vertical_guides,
+        show_y_axis_guide = options_plots$show_y_axis_guide,
+        interactive_data_values = options_plots$interactive_data_values,
+        svg_height = plot_height
+      )
+
+    nanoplots <- c(nanoplots, data_plot_i)
+  }
+
+  data <-
+    cols_add(
+      .data = data,
+      nanoplots,
+      .before = before,
+      .after = after
+    )
+
+  if (!is.null(new_col_name)) {
+
+    # TODO: Ensure that the new column name is validated for use
+
+    validated_new_col_name <- as.character(new_col_name)
+
+    colnames(data$`_data`) <-
+      sub(
+        "nanoplots",
+        validated_new_col_name,
+        colnames(data$`_data`),
+        fixed = TRUE
+      )
+
+    data$`_boxhead`[["var"]] <-
+      sub(
+        "nanoplots",
+        validated_new_col_name,
+        data$`_boxhead`[["var"]],
+        fixed = TRUE
+      )
+
+    data <-
+      fmt_passthrough(
+        data = data,
+        columns = validated_new_col_name,
+        escape = FALSE
+      )
+
+  } else {
+
+    validated_new_col_name <- "nanoplots"
+
+    data <-
+      fmt_passthrough(
+        data = data,
+        columns = "nanoplots",
+        escape = FALSE
+      )
+  }
+
+  # The label ascribed to the new column needs to be modified in two cases:
+  # (1) If `new_column_name` provided and `new_col_label = NULL`, the label
+  #     should be that provided in `new_column_name`
+  # (2) If `new_col_label` is provided, change the label of that new column
+  #     to the value stored in that argument
+
+  if (!is.null(new_col_name) && is.null(new_col_label)) {
+
+    data <-
+      dt_boxhead_edit_column_label(
+        data = data,
+        var = validated_new_col_name,
+        column_label = validated_new_col_name
+      )
+  }
+
+  if (!is.null(new_col_label)) {
+
+    data <-
+      dt_boxhead_edit_column_label(
+        data = data,
+        var = validated_new_col_name,
+        column_label = new_col_label
+      )
+  }
+
+  data <-
+    tab_style(
+      data,
+      style = paste0(
+        "padding-top:0; ",
+        "padding-bottom:0; ",
+        "vertical-align: middle; ",
+        "overflow-x: visible;"
+      ),
+      locations = cells_body(columns = validated_new_col_name)
+    )
+
+  if (isTRUE(autohide)) {
+
+    data <-
+      cols_hide(
+        data = data,
+        columns = resolved_columns
+      )
+
+    if (length(resolved_columns_x) > 0) {
+
+      data <-
+        cols_hide(
+          data = data,
+          columns = resolved_columns_x
+        )
+    }
+  }
+
+  data
+}
+
+generate_data_vals_list <- function(
+    data_tbl,
+    resolved_columns,
+    resolved_rows_idx
+) {
+
+  data_vals_plot <- list()
+
+  for (i in seq_len(nrow(data_tbl))) {
+
+    if (!(i %in% resolved_rows_idx)) {
+
+      data_vals_plot <- c(data_vals_plot, list(NA_character_))
+
+    } else {
+
+      data_vals_i <- dplyr::select(data_tbl, dplyr::all_of(resolved_columns))
+
+      data_vals_i <- as.vector(data_vals_i[i, ])
+
+      data_vals_j <- c()
+
+      for (j in seq_along(data_vals_i)) {
+
+        if (
+          !is.na(data_vals_i[j][[1]]) &&
+          is.character(data_vals_i[j][[1]])
+        ) {
+
+          #
+          # Detect value stream type and convert accordingly
+          #
+
+          if (
+            grepl("\\d{1,4}-\\d{2}-\\d{2}", data_vals_i[j][[1]])
+          ) {
+
+            data_vals_j <-
+              c(data_vals_j, process_time_stream(data_vals_i[j][[1]]))
+
+          } else {
+
+            data_vals_j <-
+              c(data_vals_j, process_number_stream(data_vals_i[j][[1]]))
+          }
+
+
+        } else {
+          data_vals_j <- c(data_vals_j, unname(unlist(data_vals_i[j][[1]])))
+        }
+      }
+
+      data_vals_i <- list(data_vals_j)
+
+      data_vals_plot <- c(data_vals_plot, data_vals_i)
+    }
+  }
+
+  data_vals_plot
 }
 
 #' Move one or more columns
@@ -1028,10 +3155,27 @@ cols_label_with <- function(
 #' in the table.
 #'
 #' @inheritParams cols_align
-#' @param columns The column names to move to as a group to a different
-#'   position. The order of the remaining columns will be preserved.
-#' @param after A column name used to anchor the insertion of the moved columns.
-#'   All of the moved columns will be placed to the right of this column.
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // **required**
+#'
+#'   The columns for which the moving operations should be applied. Can either
+#'   be a series of column names provided in `c()`, a vector of column indices,
+#'   or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]. The columns
+#'   move as a group to a different position. The order of the remaining columns
+#'   will be preserved.
+#'
+#' @param after *Column used as anchor*
+#'
+#'   `<column-targeting expression>` // **required**
+#'
+#'   The column used to anchor the insertion of the moved columns. All of the
+#'   moved columns will be placed to the right of this column. While select
+#'   helper functions such as [starts_with()] and [ends_with()] can be used for
+#'   column targeting, it's recommended that a single column name be used. This
+#'   is to ensure that exactly one column is provided here.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1039,26 +3183,28 @@ cols_label_with <- function(
 #'
 #' The columns supplied in `columns` must all exist in the table and none of
 #' them can be in the `after` argument. The `after` column must also exist and
-#' only one column should be provided here. If you need to place one or columns
-#' at the beginning of the column series, the [cols_move_to_start()] function
-#' should be used. Similarly, if those columns to move should be placed at the
-#' end of the column series then use [cols_move_to_end()].
+#' only one column should be provided here. If you need to place one or more
+#' columns at the beginning of the column series, the [cols_move_to_start()]
+#' function should be used. Similarly, if those columns to move should be placed
+#' at the end of the column series then use [cols_move_to_end()].
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. With the remaining columns,
-#' position `population` after `country_name` with the `cols_move()` function.
+#' Use the [`countrypops`] dataset to create a **gt** table. We'll choose to
+#' position the `population` column after the `country_name` column by using the
+#' `cols_move()` function.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Japan") |>
+#'   dplyr::slice_tail(n = 10) |>
 #'   gt() |>
 #'   cols_move(
 #'     columns = population,
 #'     after = country_name
-#'   )
+#'   ) |>
+#'   fmt_integer(columns = population)
 #' ```
 #'
 #' \if{html}{\out{
@@ -1067,12 +3213,11 @@ cols_label_with <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-6
+#' 5-9
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cols_move <- function(
     data,
@@ -1082,6 +3227,11 @@ cols_move <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  # if no `columns` are provided, return data unaltered
+  if (rlang::quo_is_missing(rlang::enquo(columns))) {
+    return(data)
+  }
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
@@ -1151,31 +3301,38 @@ cols_move <- function(
 #' table).
 #'
 #' @inheritParams cols_align
-#' @param columns The column names to move to the left-most side of the table.
-#'   The order in which columns are provided will be preserved (as is the case
-#'   with the remaining columns).
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // **required**
+#'
+#'   The columns for which the moving operations should be applied. Can either
+#'   be a series of column names provided in `c()`, a vector of column indices,
+#'   or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]). The columns
+#'   move as a group to the left-most side of the table. The order of the
+#'   remaining columns will be preserved.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @details
 #'
 #' The columns supplied in `columns` must all exist in the table. If you need to
-#' place one or columns at the end of the column series, the
-#' [cols_move_to_end()] function should be used. More control is offered with
-#' the [cols_move()] function, where columns could be placed after a specific
-#' column.
+#' place one or columns at the end of the column series, [cols_move_to_end()]
+#' should be used. More control is offered with [cols_move()], where columns
+#' could be placed after a specific column.
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. With the remaining columns,
-#' move the `year` column to the start of the column series with
-#' `cols_move_to_start()`.
+#' For this example, we'll use a portion of the [`countrypops`] dataset to
+#' create a simple **gt** table. Let's move the `year` column, which is the
+#' middle column, to the start of the column series with `cols_move_to_start()`.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Fiji") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_move_to_start(columns = year)
 #' ```
@@ -1184,15 +3341,15 @@ cols_move <- function(
 #' `r man_get_image_tag(file = "man_cols_move_to_start_1.png")`
 #' }}
 #'
-#'
-#' Use [`countrypops`] to create a **gt** table. With the remaining columns,
-#' move `year` and `population` to the start.
+#' We can also move multiple columns at a time. With the same
+#' [`countrypops`]-based table, let's move both the `year` and `population`
+#' columns to the start of the column series.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Fiji") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_move_to_start(columns = c(year, population))
 #' ```
@@ -1203,12 +3360,11 @@ cols_move <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-7
+#' 5-10
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cols_move_to_start <- function(
     data,
@@ -1217,6 +3373,11 @@ cols_move_to_start <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  # if no `columns` are provided, return data unaltered
+  if (rlang::quo_is_missing(rlang::enquo(columns))) {
+    return(data)
+  }
 
   vars <- dt_boxhead_get_vars(data = data)
 
@@ -1261,31 +3422,38 @@ cols_move_to_start <- function(
 #' preserved (same with the ordering of all other columns in the table).
 #'
 #' @inheritParams cols_align
-#' @param columns The column names to move to the right-most side of the table.
-#'   The order in which columns are provided will be preserved (as is the case
-#'   with the remaining columns).
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // **required**
+#'
+#'   The columns for which the moving operations should be applied. Can either
+#'   be a series of column names provided in `c()`, a vector of column indices,
+#'   or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]. The columns
+#'   move as a group to the right-most side of the table. The order of the
+#'   remaining columns will be preserved.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @details
 #'
 #' The columns supplied in `columns` must all exist in the table. If you need to
-#' place one or columns at the start of the column series, the
-#' [cols_move_to_start()] function should be used. More control is offered with
-#' the [cols_move()] function, where columns could be placed after a specific
-#' column.
+#' place one or columns at the start of the column series, [cols_move_to_start()]
+#' should be used. More control is offered with [cols_move()], where columns
+#' could be placed after a specific column.
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. With the remaining columns,
-#' move the `year` column to the end of the column series with the
-#' `cols_move_to_end()` function.
+#' For this example, we'll use a portion of the [`countrypops`] dataset to
+#' create a simple **gt** table. Let's move the `year` column, which is the
+#' middle column, to the end of the column series with `cols_move_to_end()`.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Benin") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_move_to_end(columns = year)
 #' ```
@@ -1294,14 +3462,15 @@ cols_move_to_start <- function(
 #' `r man_get_image_tag(file = "man_cols_move_to_end_1.png")`
 #' }}
 #'
-#' Use [`countrypops`] to create a **gt** table. With the remaining columns,
-#' move `year` and `country_name` to the end of the column series.
+#' We can also move multiple columns at a time. With the same
+#' [`countrypops`]-based table, let's move both the `year` and `country_name`
+#' columns to the end of the column series.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Benin") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_move_to_end(columns = c(year, country_name))
 #' ```
@@ -1312,12 +3481,11 @@ cols_move_to_start <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-8
+#' 5-11
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cols_move_to_end <- function(
     data,
@@ -1326,6 +3494,11 @@ cols_move_to_end <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  # if no `columns` are provided, return data unaltered
+  if (rlang::quo_is_missing(rlang::enquo(columns))) {
+    return(data)
+  }
 
   vars <- dt_boxhead_get_vars(data = data)
 
@@ -1363,40 +3536,49 @@ cols_move_to_end <- function(
 #'
 #' @description
 #'
-#' The `cols_hide()` function allows us to hide one or more columns from
+#' `cols_hide()` allows us to hide one or more columns from
 #' appearing in the final output table. While it's possible and often desirable
-#' to omit columns from the input table data before introduction to the [gt()]
-#' function, there can be cases where the data in certain columns is useful (as
-#' a column reference during formatting of other columns) but the final display
-#' of those columns is not necessary.
+#' to omit columns from the input table data before introduction to [gt()],
+#' there can be cases where the data in certain columns is useful (as a column
+#' reference during formatting of other columns) but the final display of those
+#' columns is not necessary.
 #'
 #' @inheritParams cols_align
-#' @param columns The column names to hide from the output display table. Values
-#'   provided that do not correspond to column names will be disregarded.
 #'
-#' @return An object of class `gt_tbl`.
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // **required**
+#'
+#'   The columns to hide in the output display table. Can either be a series of
+#'   column names provided in `c()`, a vector of column indices, or a select
+#'   helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]).
+#'
+#' @return An object of class `gt_tbl`. `data` will be unaltered if `columns` is
+#'   not supplied.
 #'
 #' @details
 #'
 #' The hiding of columns is internally a rendering directive, so, all columns
 #' that are 'hidden' are still accessible and useful in any expression provided
-#' to a `rows` argument. Furthermore, the `cols_hide()` function (as with many
-#' **gt** functions) can be placed anywhere in a pipeline of **gt** function
-#' calls (acting as a promise to hide columns when the timing is right). However
+#' to a `rows` argument. Furthermore, `cols_hide()` (as with many **gt**
+#' functions) can be placed anywhere in a pipeline of **gt** function calls
+#' (acting as a promise to hide columns when the timing is right). However,
 #' there's perhaps greater readability when placing this call closer to the end
-#' of such a pipeline. The `cols_hide()` function quietly changes the visible
-#' state of a column (much like the [cols_unhide()] function) and doesn't yield
-#' warnings or messages when changing the state of already-invisible columns.
+#' of such a pipeline. `cols_hide()` quietly changes the visible state of a
+#' column (much like [cols_unhide()]) and doesn't yield warnings or messages
+#' when changing the state of already-invisible columns.
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. Hide the `country_code_2` and
-#' `country_code_3` columns with `cols_hide()`.
+#' Let's use a small portion of the [`countrypops`] dataset to create a **gt**
+#' table. We can hide the `country_code_2` and `country_code_3` columns with the
+#' `cols_hide()` function.
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Egypt") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_hide(columns = c(country_code_2, country_code_3))
 #' ```
@@ -1405,22 +3587,23 @@ cols_move_to_end <- function(
 #' `r man_get_image_tag(file = "man_cols_hide_1.png")`
 #' }}
 #'
-#' Use [`countrypops`] to create a **gt** table. Use the `population` column to
-#' provide the conditional placement of footnotes, then hide that column and one
-#' other. Note that the order of the `cols_hide()` and [tab_footnote()]
-#' statements has no effect.
+#' Using another [`countrypops`]-based **gt** table, we can use the `population`
+#' column to provide the conditional placement of footnotes. Then, we'll hide
+#' that column along with the `country_code_3` column. Note that the order of
+#' `cols_hide()` and [tab_footnote()] has no effect on the final display of the
+#' table.
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Pakistan") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_hide(columns = c(country_code_3, population)) |>
 #'   tab_footnote(
-#'     footnote = "Population above 3,200,000.",
+#'     footnote = "Population above 220,000,000.",
 #'     locations = cells_body(
 #'       columns = year,
-#'       rows = population > 3200000
+#'       rows = population > 220E6
 #'     )
 #'   )
 #' ```
@@ -1431,14 +3614,13 @@ cols_move_to_end <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-9
+#' 5-12
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @seealso [cols_unhide()] to perform the inverse operation.
 #'
-#' @import rlang
 #' @export
 cols_hide <- function(
     data,
@@ -1447,6 +3629,11 @@ cols_hide <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  # if no `columns` are provided, return data unaltered
+  if (rlang::quo_is_missing(rlang::enquo(columns))) {
+    return(data)
+  }
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
@@ -1457,11 +3644,6 @@ cols_hide <- function(
     )
 
   vars <- dt_boxhead_get_vars(data = data)
-
-  # Stop function if no `columns` are provided
-  if (length(columns) == 0) {
-    cli::cli_abort("Columns must be provided.")
-  }
 
   # Stop function if any of the `columns` don't exist in `vars`
   if (!all(columns %in% vars)) {
@@ -1479,15 +3661,21 @@ cols_hide <- function(
 #'
 #' @description
 #'
-#' The `cols_unhide()` function allows us to take one or more hidden columns
-#' (usually made so via the [cols_hide()] function) and make them visible
-#' in the final output table. This may be important in cases where the user
-#' obtains a `gt_tbl` object with hidden columns and there is motivation to
-#' reveal one or more of those.
+#' `cols_unhide()` allows us to take one or more hidden columns (usually done
+#' via [cols_hide()]) and make them visible in the final output table. This may
+#' be important in cases where the user obtains a `gt_tbl` object with hidden
+#' columns and there is motivation to reveal one or more of those.
 #'
 #' @inheritParams cols_align
-#' @param columns The column names to unhide from the output display table.
-#'   Values provided that do not correspond to column names will be disregarded.
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // *default:* `everything()`
+#'
+#'   The columns to unhide in the output display table. Can either be a series
+#'   of column names provided in `c()`, a vector of column indices, or a select
+#'   helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1502,14 +3690,15 @@ cols_hide <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. Hide the `country_code_2` and
-#' `country_code_3` columns with [cols_hide()].
+#' Let's use a small portion of the [`countrypops`] dataset to create a **gt**
+#' table. We'll hide the `country_code_2` and `country_code_3` columns with
+#' [cols_hide()].
 #'
 #' ```r
 #' tab_1 <-
 #'   countrypops |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Singapore") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_hide(columns = c(country_code_2, country_code_3))
 #'
@@ -1522,7 +3711,7 @@ cols_hide <- function(
 #'
 #' If the `tab_1` object is provided without the code or source data to
 #' regenerate it, and, the user wants to reveal otherwise hidden columns then
-#' the `cols_unhide()` function becomes useful.
+#' `cols_unhide()` becomes useful.
 #'
 #' ```r
 #' tab_1 |> cols_unhide(columns = country_code_2)
@@ -1534,14 +3723,13 @@ cols_hide <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-10
+#' 5-13
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
 #'
 #' @seealso [cols_hide()] to perform the inverse operation.
 #'
-#' @import rlang
 #' @export
 cols_unhide <- function(
     data,
@@ -1560,9 +3748,9 @@ cols_unhide <- function(
 
   vars <- dt_boxhead_get_vars(data = data)
 
-  # Stop function if no `columns` are provided
+  # if no `columns` are provided, return data unaltered
   if (length(columns) == 0) {
-    cli::cli_abort("Columns must be provided.")
+    return(data)
   }
 
   # Stop function if any of the `columns` don't exist in `vars`
@@ -1582,38 +3770,63 @@ cols_unhide <- function(
 #' @description
 #'
 #' This function takes input from two or more columns and allows the contents to
-#' be merged them into a single column, using a pattern that specifies the
+#' be merged into a single column by using a pattern that specifies the
 #' arrangement. We can specify which columns to merge together in the `columns`
-#' argument. The string-combining pattern is given in the `pattern` argument.
-#' The first column in the `columns` series operates as the target column (i.e.,
-#' will undergo mutation) whereas all following `columns` will be untouched.
-#' There is the option to hide the non-target columns (i.e., second and
-#' subsequent columns given in `columns`). The formatting of values in different
-#' columns will be preserved upon merging.
+#' argument. The string-combining pattern is to be provided in the `pattern`
+#' argument. The first column in the `columns` series operates as the target
+#' column (i.e., the column that will undergo mutation) whereas all following
+#' `columns` will be untouched. There is the option to hide the non-target
+#' columns (i.e., second and subsequent columns given in `columns`). The
+#' formatting of values in different columns will be preserved upon merging.
 #'
 #' @inheritParams cols_align
-#' @param columns The columns that will participate in the merging process. The
-#'   first column name provided will be the target column (i.e., undergo
-#'   mutation) and the other columns will serve to provide input.
-#' @param hide_columns Any column names provided here will have their state
-#'   changed to `hidden` (via internal use of [cols_hide()] if they aren't
-#'   already hidden. This is convenient if the shared purpose of these specified
-#'   columns is only to provide string input to the target column. To suppress
-#'   any hiding of columns, `FALSE` can be used here.
-#' @param rows Rows that will participate in the merging process. Providing
-#'   [everything()] (the default) results in all rows in `columns` undergoing
-#'   merging. Alternatively, we can supply a vector of row identifiers within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use a standalone predicate expression to filter down to the
-#'   rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
-#' @param pattern A formatting pattern that specifies the arrangement of the
-#'   `column` values and any string literals. The pattern uses numbers (within
-#'   `{ }`) that correspond to the indices of columns provided in `columns`. If
-#'   two columns are provided in `columns` and we would like to combine the cell
-#'   data onto the first column, `"{1} {2}"` could be used. If a pattern isn't
-#'   provided then a space-separated pattern that includes all `columns` will be
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // **required**
+#'
+#'   The columns for which the merging operations should be applied. The first
+#'   column resolved will be the target column (i.e., undergo mutation) and the
+#'   other columns will serve to provide input. Can either be a series of column
+#'   names provided in `c()`, a vector of column indices, or a select helper
+#'   function (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]). A vector is recommended because in that
+#'   case we are absolutely certain about the order of columns, and, that order
+#'   information is needed for this and other arguments.
+#'
+#' @param hide_columns *Subset of `columns` to hide*
+#'
+#'   `<column-targeting expression>|FALSE` // *default:* `columns[-1]`
+#'
+#'   Any column names provided here will have their state changed to `hidden`
+#'   (via internal use of [cols_hide()]) if they aren't already hidden. This is
+#'   convenient if the shared purpose of these specified columns is only to
+#'   provide string input to the target column. To suppress any hiding of
+#'   columns, `FALSE` can be used here.
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` // *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   participate in the merging process. The default [everything()] results in
+#'   all rows in `columns` being formatted. Alternatively, we can supply a
+#'   vector of row IDs within `c()`, a vector of row indices, or a select
+#'   helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]). We can also use
+#'   expressions to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param pattern *Formatting pattern*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   A formatting pattern that specifies the arrangement of the `columns` values
+#'   and any string literals. The pattern uses numbers (within `{ }`) that
+#'   correspond to the indices of columns provided in `columns`. If two columns
+#'   are provided in `columns` and we would like to combine the cell data onto
+#'   the first column, `"{1} {2}"` could be used. If a pattern isn't provided
+#'   then a space-separated pattern that includes all `columns` will be
 #'   generated automatically. Further details are provided in the *How the
 #'   `pattern` works* section.
 #'
@@ -1661,10 +3874,10 @@ cols_unhide <- function(
 #'
 #' @section Examples:
 #'
-#' Use a portion of [`sp500`] to create a **gt** table. Use the `cols_merge()`
-#' function to merge the `open` & `close` columns together, and, the `low` &
-#' `high` columns (putting an em dash between both). Relabel the columns with
-#' [cols_label()].
+#' Use a subset of the [`sp500`] dataset to create a **gt** table. Use the
+#' `cols_merge()` function to merge the `open` & `close` columns together, and,
+#' the `low` & `high` columns (putting an em dash between both). Relabel the
+#' columns with [cols_label()].
 #'
 #' ```r
 #' sp500 |>
@@ -1722,12 +3935,11 @@ cols_unhide <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-11
+#' 5-14
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cols_merge <- function(
     data,
@@ -1748,9 +3960,7 @@ cols_merge <- function(
       excl_stub = FALSE
     )
 
-  if (is.null(pattern)) {
-    pattern <- paste0("{", seq_along(columns), "}", collapse = " ")
-  }
+  pattern <- pattern %||% paste0("{", seq_along(columns), "}", collapse = " ")
 
   # Resolve the rows supplied in the `rows` argument
   resolved_rows_idx <-
@@ -1793,7 +4003,7 @@ cols_merge <- function(
       data <-
         cols_hide(
           data = data,
-          columns = hide_columns_from_supplied
+          columns = dplyr::all_of(hide_columns_from_supplied)
         )
     }
   }
@@ -1814,42 +4024,68 @@ cols_merge <- function(
 #'
 #' @description
 #'
-#' The `cols_merge_uncert()` function is a specialized variant of the
-#' [cols_merge()] function. It takes as input a base value column (`col_val`)
-#' and either: (1) a single uncertainty column, or (2) two columns representing
-#' lower and upper uncertainty bounds. These columns will be essentially merged
-#' in a single column (that of `col_val`). What results is a column with values
-#' and associated uncertainties (e.g., `12.0 ± 0.1`), and any columns specified
-#' in `col_uncert` are hidden from appearing the output table.
+#' `cols_merge_uncert()` is a specialized variant of [cols_merge()]. It takes as
+#' input a base value column (`col_val`) and either: (1) a single uncertainty
+#' column, or (2) two columns representing lower and upper uncertainty bounds.
+#' These columns will be essentially merged in a single column (that of
+#' `col_val`). What results is a column with values and associated
+#' uncertainties, and any columns specified in `col_uncert` are hidden from
+#' appearing the output table.
 #'
 #' @inheritParams cols_align
-#' @param col_val A single column name that contains the base values. This is
-#'   the column where values will be mutated.
-#' @param col_uncert Either one or two column names that contain the uncertainty
-#'   values. The most common case involves supplying a single column with
-#'   uncertainties; these values will be combined with those in `col_val`. Less
-#'   commonly, lower and upper uncertainty bounds may be different. For that
-#'   case two columns (representing lower and upper uncertainty values away from
-#'   `col_val`, respectively) should be provided. Since we often don't want the
-#'   uncertainty value columns in the output table, we can automatically hide
-#'   any `col_uncert` columns through the `autohide` option.
-#' @param rows Rows that will participate in the merging process. Providing
-#'   [everything()] (the default) results in all rows in `columns` undergoing
-#'   merging. Alternatively, we can supply a vector of row identifiers within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use a standalone predicate expression to filter down to the
-#'   rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
-#' @param sep The separator text that contains the uncertainty mark for a single
+#'
+#' @param col_val *Column to target for base values*
+#'
+#'   `<column-targeting expression>` // **required**
+#'
+#'   The column that contains values for the start of the range. While select
+#'   helper functions such as [starts_with()] and [ends_with()] can be used for
+#'   column targeting, it's recommended that a single column name be used. This
+#'   is to ensure that exactly one column is provided here.
+#'
+#' @param col_uncert *Column or columns to target for uncertainty values*
+#'
+#'   `<column-targeting expression>` // **required**
+#'
+#'   The most common case involves supplying a single column with uncertainties;
+#'   these values will be combined with those in `col_val`. Less commonly, the
+#'   lower and upper uncertainty bounds may be different. For that case, two
+#'   columns representing the lower and upper uncertainty values away from
+#'   `col_val`, respectively, should be provided. While select helper functions
+#'   such as [starts_with()] and [ends_with()] can be used for column targeting,
+#'   it's recommended that one or two column names be explicitly provided in a
+#'   vector.
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` // *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   participate in the merging process. The default [everything()] results in
+#'   all rows in `columns` being formatted. Alternatively, we can supply a
+#'   vector of row IDs within `c()`, a vector of row indices, or a select
+#'   helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()],  [num_range()], and [everything()]). We can also use
+#'   expressions to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param sep *Separator text for uncertainties*
+#'
+#'   `scalar<character>` // *default:* `" +/- "`
+#'
+#'   The separator text that contains the uncertainty mark for a single
 #'   uncertainty value. The default value of `" +/- "` indicates that an
 #'   appropriate plus/minus mark will be used depending on the output context.
 #'   Should you want this special symbol to be taken literally, it can be
 #'   supplied within the [I()] function.
-#' @param autohide An option to automatically hide any columns specified in
-#'   `col_uncert`. Any columns with their state changed to 'hidden' will behave
-#'   the same as before, they just won't be displayed in the finalized table.
-#'   By default, this is set to `TRUE`.
+#'
+#' @param autohide *Automatic hiding of the `col_uncert` column(s)*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   An option to automatically hide any columns specified in `col_uncert`. Any
+#'   columns with their state changed to 'hidden' will behave the same as
+#'   before, they just won't be displayed in the finalized table.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1868,7 +4104,7 @@ cols_merge <- function(
 #' merged column (e.g., `NA` + `NA` = `NA`)
 #'
 #' Any resulting `NA` values in the `col_val` column following the merge
-#' operation can be easily formatted using the [sub_missing()] function.
+#' operation can be easily formatted using [sub_missing()].
 #'
 #' This function is part of a set of four column-merging functions. The other
 #' three are the general [cols_merge()] function and the specialized
@@ -1878,13 +4114,17 @@ cols_merge <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table, keeping only the `currency` and
-#' `num` columns. Merge columns into one with a base value and uncertainty
-#' (after formatting the `num` column) using the `cols_merge_uncert()` function.
+#' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
+#' (keeping only the `num` and `currency` columns). We'll format the `num`
+#' column with the [fmt_number()] function. Next we merge the `currency` and
+#' `num` columns into the `currency` column; this will contain a base value and
+#' an uncertainty and it's all done using the `cols_merge_uncert()` function.
+#' After the merging process, the column label for the `currency` column is
+#' updated with [cols_label()] to better describe the content.
 #'
 #' ```r
 #' exibble |>
-#'   dplyr::select(currency, num) |>
+#'   dplyr::select(num, currency) |>
 #'   dplyr::slice(1:7) |>
 #'   gt() |>
 #'   fmt_number(
@@ -1905,12 +4145,11 @@ cols_merge <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-12
+#' 5-15
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cols_merge_uncert <- function(
     data,
@@ -1928,8 +4167,7 @@ cols_merge_uncert <- function(
     cols_merge_resolver(
       data = data,
       col_begin = {{ col_val }},
-      col_end = {{ col_uncert }},
-      sep = sep
+      col_end = {{ col_uncert }}
     )
 
   # Resolve the rows supplied in the `rows` argument
@@ -1963,7 +4201,7 @@ cols_merge_uncert <- function(
     data <-
       cols_hide(
         data = data,
-        columns = col_uncert
+        columns = dplyr::all_of(col_uncert)
       )
   }
 
@@ -1974,32 +4212,76 @@ cols_merge_uncert <- function(
 #'
 #' @description
 #'
-#' The `cols_merge_range()` function is a specialized variant of the
-#' [cols_merge()] function. It operates by taking a two columns that constitute
-#' a range of values (`col_begin` and `col_end`) and merges them into a single
-#' column. What results is a column containing both values separated by a long
-#' dash (e.g., `12.0 — 20.0`). The column specified in `col_end` is dropped from
-#' the output table.
+#' `cols_merge_range()` is a specialized variant of [cols_merge()]. It operates
+#' by taking a two columns that constitute a range of values (`col_begin` and
+#' `col_end`) and merges them into a single column. What results is a column
+#' containing both values separated by an em dash. The column specified in
+#' `col_end` is dropped from the output table.
 #'
 #' @inheritParams cols_align
-#' @param col_begin A column that contains values for the start of the range.
-#' @param col_end A column that contains values for the end of the range.
-#' @param rows Rows that will participate in the merging process. Providing
-#'   [everything()] (the default) results in all rows in `columns` undergoing
-#'   merging. Alternatively, we can supply a vector of row identifiers within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use a standalone predicate expression to filter down to the
-#'   rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
-#' @param sep The separator text that indicates the values are ranged. The
-#'   default value of `"--"` indicates that an en dash will be used for the
-#'   range separator. Using `"---"` will be taken to mean that an em dash should
-#'   be used. Should you want these special symbols to be taken literally, they
-#'   can be supplied within the base [I()] function.
-#' @param autohide An option to automatically hide the column specified as
+#'
+#' @param col_begin *Column to target for beginning of range*
+#'
+#'   `<column-targeting expression>` // **required**
+#'
+#'   The column that contains values for the start of the range. While select
+#'   helper functions such as [starts_with()] and [ends_with()] can be used for
+#'   column targeting, it's recommended that a single column name be used. This
+#'   is to ensure that exactly one column is provided here.
+#'
+#' @param col_end *Column to target for end of range*
+#'
+#'   `<column-targeting expression>` // **required**
+#'
+#'   The column that contains values for the end of the range. While select
+#'   helper functions such as [starts_with()] and [ends_with()] can be used for
+#'   column targeting, it's recommended that a single column name be used. This
+#'   is to ensure that exactly one column is provided here.
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` // *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   participate in the merging process. The default [everything()] results in
+#'   all rows in `columns` being formatted. Alternatively, we can supply a
+#'   vector of row IDs within `c()`, a vector of row indices, or a select
+#'   helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]). We can also use
+#'   expressions to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param autohide *Automatic hiding of the `col_end` column*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   An option to automatically hide the column specified as
 #'   `col_end`. Any columns with their state changed to hidden will behave
 #'   the same as before, they just won't be displayed in the finalized table.
+#'
+#' @param sep *Separator text for ranges*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The separator text that indicates the values are ranged. If a `sep` value
+#'   is not provided then the range separator specific to the `locale` provided
+#'   will be used (if a locale isn't specified then an en dash will be used).
+#'   You can specify the use of an en dash with `"--"`; a triple-hyphen sequence
+#'   (`"---"`) will be transformed to an em dash. Should you want hyphens to be
+#'   taken literally, the `sep` value can be supplied within the base [I()]
+#'   function.
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for applying a `sep` pattern
+#'   specific to a locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] as a
+#'   useful reference for all of the locales that are supported. A locale ID can
+#'   be also set in the initial [gt()] function call (where it would be used
+#'   automatically by any function with a `locale` argument) but a `locale`
+#'   value provided here will override that global locale.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2018,9 +4300,9 @@ cols_merge_uncert <- function(
 #' the merged column
 #'
 #' Any resulting `NA` values in the `col_begin` column following the merge
-#' operation can be easily formatted using the [sub_missing()] function.
-#' Separate calls of [sub_missing()] can be used for the `col_begin` and
-#' `col_end` columns for finer control of the replacement values.
+#' operation can be easily formatted using [sub_missing()]. Separate calls of
+#' [sub_missing()] can be used for the `col_begin` and `col_end` columns for
+#' finer control of the replacement values.
 #'
 #' This function is part of a set of four column-merging functions. The other
 #' three are the general [cols_merge()] function and the specialized
@@ -2030,10 +4312,12 @@ cols_merge_uncert <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table, keeping only the `model`, `mpg_c`,
-#' and `mpg_h` columns. Merge the `"mpg*"` columns together as a single range
-#' column (which is labeled as MPG, in italics) using the `cols_merge_range()`
-#' function.
+#' Let's use a subset of the [`gtcars`] dataset to create a **gt** table,
+#' keeping only the `model`, `mpg_c`, and `mpg_h` columns. Merge the `"mpg*"`
+#' columns together as a single range column (which is labeled as MPG, in
+#' italics) using the `cols_merge_range()` function. After the merging process,
+#' the column label for the `mpg_c` column is updated with [cols_label()] to
+#' better describe the content.
 #'
 #' ```r
 #' gtcars |>
@@ -2053,20 +4337,20 @@ cols_merge_uncert <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-13
+#' 5-16
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @export
 cols_merge_range <- function(
     data,
     col_begin,
     col_end,
     rows = everything(),
-    sep = "--",
-    autohide = TRUE
+    autohide = TRUE,
+    sep = NULL,
+    locale = NULL
 ) {
 
   # Perform input object validation
@@ -2076,8 +4360,7 @@ cols_merge_range <- function(
     cols_merge_resolver(
       data = data,
       col_begin = {{ col_begin }},
-      col_end = {{ col_end }},
-      sep = sep
+      col_end = {{ col_end }}
     )
 
   # Resolve the rows supplied in the `rows` argument
@@ -2086,6 +4369,23 @@ cols_merge_range <- function(
       expr = {{ rows }},
       data = data
     )
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # Use locale-based marks if a `sep` value is not provided
+  if (is.null(sep)) {
+
+    # Get the range pattern for the locale (if not specified then 'en' is used)
+    range_pattern <- get_locale_range_pattern(locale = locale)
+
+    # Remove the placeholders from `range_pattern` since `cols_merge_range()`
+    # only requires the internal separator text for `sep`
+    sep <- gsub("\\{1\\}|\\{2\\}", "", range_pattern)
+  }
 
   # Create an entry and add it to the `_col_merge` attribute
   data <-
@@ -2112,14 +4412,18 @@ cols_merge_range <- function(
     data <-
       cols_hide(
         data = data,
-        columns = col_end
+        columns = dplyr::all_of(col_end)
       )
   }
 
   data
 }
 
-cols_merge_resolver <- function(data, col_begin, col_end, sep) {
+cols_merge_resolver <- function(
+    data,
+    col_begin,
+    col_end
+) {
 
   # Get the columns supplied in `col_begin` as a character vector
   col_begin <-
@@ -2149,29 +4453,55 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @description
 #'
-#' The `cols_merge_n_pct()` function is a specialized variant of the
-#' [cols_merge()] function. It operates by taking two columns that constitute
-#' both a count (`col_n`) and a fraction of the total population (`col_pct`) and
-#' merges them into a single column. What results is a column containing both
-#' counts and their associated percentages (e.g., `12 (23.2%)`). The column
-#' specified in `col_pct` is dropped from the output table.
+#' `cols_merge_n_pct()` is a specialized variant of [cols_merge()],
+#' It operates by taking two columns that constitute both a count (`col_n`) and
+#' a fraction of the total population (`col_pct`) and merges them into a single
+#' column. What results is a column containing both counts and their associated
+#' percentages (e.g., `12 (23.2%)`). The column specified in `col_pct` is
+#' dropped from the output table.
 #'
 #' @inheritParams cols_align
-#' @param col_n A column that contains values for the count component.
-#' @param col_pct A column that contains values for the percentage component.
-#'   This column should be formatted such that percentages are displayed (e.g.,
-#'   with `fmt_percent()`).
-#' @param rows Rows that will participate in the merging process. Providing
-#'   [everything()] (the default) results in all rows in `columns` undergoing
-#'   merging. Alternatively, we can supply a vector of row identifiers within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use a standalone predicate expression to filter down to the
-#'   rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
-#' @param autohide An option to automatically hide the column specified as
-#'   `col_pct`. Any columns with their state changed to hidden will behave
-#'   the same as before, they just won't be displayed in the finalized table.
+#'
+#' @param col_n *Column to target for counts*
+#'
+#'   `<column-targeting expression>` // **required**
+#'
+#'   The column that contains values for the count component. While select
+#'   helper functions such as [starts_with()] and [ends_with()] can be used for
+#'   column targeting, it's recommended that a single column name be used. This
+#'   is to ensure that exactly one column is provided here.
+#'
+#' @param col_pct *Column to target for percentages*
+#'
+#'   `<column-targeting expression>` // **required**
+#'
+#'   The column that contains values for the percentage component. While select
+#'   helper functions such as [starts_with()] and [ends_with()] can be used for
+#'   column targeting, it's recommended that a single column name be used. This
+#'   is to ensure that exactly one column is provided here. This column should
+#'   be formatted such that percentages are displayed (e.g., with
+#'   `fmt_percent()`).
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` // *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   participate in the merging process. The default [everything()] results in
+#'   all rows in `columns` being formatted. Alternatively, we can supply a
+#'   vector of row IDs within `c()`, a vector of row indices, or a select
+#'   helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]). We can also use
+#'   expressions to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param autohide *Automatic hiding of the `col_pct` column*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   An option to automatically hide the column specified as `col_pct`. Any
+#'   columns with their state changed to hidden will behave the same as before,
+#'   they just won't be displayed in the finalized table.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2191,7 +4521,7 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #' `"0"` (i.e., no percentage will be shown)
 #'
 #' Any resulting `NA` values in the `col_n` column following the merge
-#' operation can be easily formatted using the [sub_missing()] function.
+#' operation can be easily formatted using [sub_missing()].
 #' Separate calls of [sub_missing()] can be used for the `col_n` and
 #' `col_pct` columns for finer control of the replacement values. It is the
 #' responsibility of the user to ensure that values are correct in both the
@@ -2207,10 +4537,11 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @section Examples:
 #'
-#' Use [`pizzaplace`] to create a **gt** table that displays the counts and
-#' percentages of the top 3 pizzas sold by pizza category in 2015. The
-#' `cols_merge_n_pct()` function is used to merge the `n` and `frac` columns
-#' (and the `frac` column is formatted using [fmt_percent()]).
+#' Using a summarized version of the [`pizzaplace`] dataset, let's create a
+#' **gt** table that displays the counts and percentages of the top 3 pizzas
+#' sold by pizza category in 2015. The `cols_merge_n_pct()` function is used to
+#' merge the `n` and `frac` columns (and the `frac` column is formatted using
+#' [fmt_percent()]).
 #'
 #' ```r
 #' pizzaplace |>
@@ -2252,12 +4583,11 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-14
+#' 5-17
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
 #'
-#' @import rlang
 #' @export
 cols_merge_n_pct <- function(
     data,
@@ -2274,8 +4604,7 @@ cols_merge_n_pct <- function(
     cols_merge_resolver(
       data = data,
       col_begin = {{ col_n }},
-      col_end = {{ col_pct }},
-      sep = ""
+      col_end = {{ col_pct }}
     )
 
   # Resolve the rows supplied in the `rows` argument
@@ -2309,7 +4638,7 @@ cols_merge_n_pct <- function(
     data <-
       cols_hide(
         data = data,
-        columns = col_pct
+        columns = dplyr::all_of(col_pct)
       )
   }
 

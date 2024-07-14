@@ -7,10 +7,19 @@
 opt_horizontal_padding(data, scale = 1)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{scale}{A scale factor by which the horizontal padding will be adjusted.
-Must be a number between \code{0} and \code{3}.}
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{scale}{\emph{Scale factor}
+
+\verb{scalar<numeric|integer>(0>=val>=3)} // \emph{default:} \code{1}
+
+A scale factor by which the horizontal padding will be adjusted. Must be a
+number between \code{0} and \code{3}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -34,9 +43,12 @@ the following eight options in \code{\link[=tab_options]{tab_options()}}:
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
-Expand the horizontal padding across the entire table with
-\code{opt_horizontal_padding()}.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table with a number of table
+parts added (using functions like \code{\link[=summary_rows]{summary_rows()}}, \code{\link[=grand_summary_rows]{grand_summary_rows()}},
+and more). Following that, we'll increase the amount of horizontal padding
+across the entire table with \code{opt_horizontal_padding()}. Using a \code{scale}
+value of \code{3} (up from the default of \code{1}) means the horizontal space will
+be greatly increased, resulting in a more spacious table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt(rowname_col = "row", groupname_col = "group") |>

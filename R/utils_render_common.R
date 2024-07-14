@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -35,8 +35,8 @@ validate_contexts <- function(contexts) {
 
     cli::cli_abort(c(
       "All output contexts must be in the set of supported contexts.",
-      "*" = "Supported: {paste0(all_contexts, collapse = ', ')}",
-      "*" = "Invalid: {paste0(invalid_contexts, collapse = ', ')}"
+      "*" = "Supported: {all_contexts}",
+      "*" = "Invalid: {invalid_contexts}"
     ))
   }
 }
@@ -218,7 +218,7 @@ migrate_unformatted_to_output <- function(data, context) {
                 )
             }
 
-            x <- tidy_gsub(x, "\\s+$", "")
+            x <- trimws(x, "right", " ")
             x <- process_text(x, context = context)
             x <- paste(x, collapse = ", ")
             x
@@ -285,9 +285,10 @@ get_row_reorder_df <- function(groups, stub_df) {
     indices <- seq_len(nrow(stub_df))
 
     return(
-      dplyr::tibble(
+      data.frame(
         rownum_start = indices,
-        rownum_final = indices
+        rownum_final = indices,
+        stringsAsFactors = FALSE
       )
     )
   }
@@ -297,9 +298,10 @@ get_row_reorder_df <- function(groups, stub_df) {
   indices <- unlist(indices)
   indices <- order(indices)
 
-  dplyr::tibble(
+  data.frame(
     rownum_start = seq_along(indices),
-    rownum_final = indices
+    rownum_final = indices,
+    stringsAsFactors = FALSE
   )
 }
 
@@ -341,7 +343,7 @@ reorder_styles <- function(data) {
   for (i in seq_len(sz)) {
     if (
       !is.na(styles_tbl$rownum[i]) &&
-      !grepl("summary_cells", styles_tbl$locname[i])
+      !grepl("summary_cells", styles_tbl$locname[i], fixed = TRUE)
     ) {
       tmp_mask[i] <- TRUE
       tmp_rownum[i] <- which(rownum_final == styles_tbl$rownum[i])
@@ -424,9 +426,10 @@ perform_col_merge <- function(data, context) {
 
     type <- col_merge[[i]]$type
 
-    if (!(type %in% c("merge", "merge_range", "merge_uncert", "merge_n_pct"))) {
-      cli::cli_abort("Unknown `type` supplied.")
-    }
+    type <- rlang::arg_match0(
+      type,
+      c("merge", "merge_range", "merge_uncert", "merge_n_pct")
+    )
 
     if (type == "merge") {
 
@@ -475,7 +478,7 @@ perform_col_merge <- function(data, context) {
         glued_cols <-
           vapply(
             glued_cols,
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = resolve_secondary_pattern
           )
@@ -623,6 +626,12 @@ perform_col_merge <- function(data, context) {
       pattern <- col_merge[[i]][["pattern"]]
       sep <- col_merge[[i]][["sep"]]
 
+      # Replace any fullwidth tilde characters (the range separator in
+      # the 'ja' locale) with standard `~` in the LaTeX rendering context
+      if (grepl("\UFF5E", sep) && context == "latex") {
+        sep <- gsub("\UFF5E", "~", sep)
+      }
+
       # Transform the separator text depending on specific
       # inputs and the `context`
       sep <- context_dash_mark(sep, context = context)
@@ -638,12 +647,18 @@ perform_col_merge <- function(data, context) {
         rows_to_format <- base::intersect(which(!(na_1_rows | na_2_rows)), rows)
       }
 
+      body_1_vals <- body[[mutated_column]][rows_to_format]
+      body_1_vals[body_1_vals == "<br />"] <- ""
+
+      body_2_vals <- body[[second_column]][rows_to_format]
+      body_2_vals[body_2_vals == "<br />"] <- ""
+
       body[rows_to_format, mutated_column] <-
         as.character(
           glue_gt(
             list(
-              "1" = body[[mutated_column]][rows_to_format],
-              "2" = body[[second_column]][rows_to_format],
+              "1" = body_1_vals,
+              "2" = body_2_vals,
               "sep" = sep
             ),
             pattern
@@ -708,7 +723,7 @@ stub_rownames_has_column <- function(data) {
 stub_group_names_has_column <- function(data) {
 
   # If there aren't any row groups then the result is always FALSE
-  if (nrow(dt_groups_rows_get(data = data)) < 1) {
+  if (nrow(dt_groups_rows_get(data = data)) < 1L) {
     return(FALSE)
   }
 
@@ -791,21 +806,19 @@ get_body_component_cell_matrix <- function(data) {
 
   if ("group_label" %in% stub_layout) {
 
-    groups_rows_df <-
-      dt_groups_rows_get(data = data) %>%
-      dplyr::select(group_id, group_label, row_start)
+    groups_rows_df <- dt_groups_rows_get(data = data)
+    groups_rows_df <- groups_rows_df[, c("group_id", "group_label", "row_start"), drop = FALSE]
 
-    group_label_matrix <-
-      dt_stub_df_get(data = data) %>%
-      dplyr::select(-row_id, -group_label) %>%
-      dplyr::inner_join(groups_rows_df, by = "group_id") %>%
-      dplyr::mutate(
-        row = dplyr::row_number(),
-        built = dplyr::if_else(row_start != row, "", built_group_label)
-      ) %>%
-      dplyr::select(built) %>%
-      as.matrix() %>%
-      unname()
+    stub_df <- dt_stub_df_get(data = data)
+    stub_df$row_id <- NULL
+    stub_df$group_label <- NULL
+    stub_df <- dplyr::inner_join(stub_df, groups_rows_df, by = "group_id")
+    stub_df$row <- seq_len(nrow(stub_df))
+    stub_df$built <- ""
+    cnd <- stub_df$row_start == stub_df$row
+    # Use built_group_label for row = row start
+    stub_df$built[cnd] <- stub_df$built_group_label[cnd]
+    group_label_matrix <- as.matrix(stub_df$built)
 
     body_matrix <- cbind(group_label_matrix, body_matrix)
   }

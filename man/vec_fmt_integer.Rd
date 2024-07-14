@@ -18,63 +18,114 @@ vec_fmt_integer(
 )
 }
 \arguments{
-\item{x}{A numeric vector.}
+\item{x}{\emph{The input vector}
 
-\item{use_seps}{An option to use digit group separators. The type of digit
-group separator is set by \code{sep_mark} and overridden if a locale ID is
-provided to \code{locale}. This setting is \code{TRUE} by default.}
+\code{vector(numeric|integer)} // \strong{required}
 
-\item{accounting}{An option to use accounting style for values. With \code{FALSE}
-(the default), negative values will be shown with a minus sign. Using
-\code{accounting = TRUE} will put negative values in parentheses.}
+This is the input vector that will undergo transformation to a character
+vector of the same length. Values within the vector will be formatted.}
 
-\item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
-values will be multiplied by this value first before undergoing formatting.
-This value will be ignored if using any of the \code{suffixing} options (i.e.,
-where \code{suffixing} is not set to \code{FALSE}).}
+\item{use_seps}{\emph{Use digit group separators}
 
-\item{suffixing}{An option to scale and apply suffixes to larger numbers
-(e.g., \code{1924000} can be transformed to \verb{2M}). This option can accept a
-logical value, where \code{FALSE} (the default) will not perform this
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to use digit group separators. The type of digit group separator
+is set by \code{sep_mark} and overridden if a locale ID is provided to \code{locale}.
+This setting is \code{TRUE} by default.}
+
+\item{accounting}{\emph{Use accounting style}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+An option to use accounting style for values. Normally, negative values
+will be shown with a minus sign but using accounting style will instead put
+any negative values in parentheses.}
+
+\item{scale_by}{\emph{Scale values by a fixed multiplier}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{1}
+
+All numeric values will be multiplied by the \code{scale_by} value before
+undergoing formatting. Since the \code{default} value is \code{1}, no values will be
+changed unless a different multiplier value is supplied. This value will be
+ignored if using any of the \code{suffixing} options (i.e., where \code{suffixing} is
+not set to \code{FALSE}).}
+
+\item{suffixing}{\emph{Specification for large-number suffixing}
+
+\verb{scalar<logical>|vector<character>} // \emph{default:} \code{FALSE}
+
+The \code{suffixing} option allows us to scale and apply suffixes to larger
+numbers (e.g., \code{1924000} can be transformed to \verb{2M}). This option can
+accept a logical value, where \code{FALSE} (the default) will not perform this
 transformation and \code{TRUE} will apply thousands (\code{K}), millions (\code{M}),
 billions (\code{B}), and trillions (\code{T}) suffixes after automatic value scaling.
-We can also specify which symbols to use for each of the value ranges by
-using a character vector of the preferred symbols to replace the defaults
-(e.g., \code{c("k", "Ml", "Bn", "Tr")}).
+
+We can alternatively provide a character vector that serves as a
+specification for which symbols are to used for each of the value ranges.
+These preferred symbols will replace the defaults (e.g.,
+\code{c("k", "Ml", "Bn", "Tr")} replaces \code{"K"}, \code{"M"}, \code{"B"}, and \code{"T"}).
 
 Including \code{NA} values in the vector will ensure that the particular range
-will either not be included in the transformation (e.g, \code{c(NA, "M", "B", "T")} won't modify numbers in the thousands range) or the range will
-inherit a previous suffix (e.g., with \code{c("K", "M", NA, "T")}, all numbers
-in the range of millions and billions will be in terms of millions).
+will either not be included in the transformation (e.g.,
+\code{c(NA, "M", "B", "T")} won't modify numbers at all in the thousands range)
+or the range will inherit a previous suffix (e.g., with
+\code{c("K", "M", NA, "T")}, all numbers in the range of millions and billions
+will be in terms of millions).
 
 Any use of \code{suffixing} (where it is not set expressly as \code{FALSE}) means
-that any value provided to \code{scale_by} will be ignored.}
+that any value provided to \code{scale_by} will be ignored.
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+If using \code{system = "ind"} then the default suffix set provided by
+\code{suffixing = TRUE} will be the equivalent of \code{c(NA, "L", "Cr")}. This
+doesn't apply suffixes to the thousands range, but does express values in
+\emph{lakhs} and \emph{crores}.}
 
-\item{sep_mark}{The mark to use as a separator between groups of digits
-(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \verb{1,000}).}
+\item{pattern}{\emph{Specification of the formatting pattern}
 
-\item{force_sign}{Should the positive sign be shown for positive values
-(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
-for this option. The default is \code{FALSE}, where only negative numbers will
-display a minus sign. This option is disregarded when using accounting
-notation with \code{accounting = TRUE}.}
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
 
-\item{locale}{An optional locale identifier that can be used for formatting
-the value according the locale's rules. Examples include \code{"en"} for English
-(United States) and \code{"fr"} for French (France). The use of a locale ID will
-override any locale-specific values provided. We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported.}
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
 
-\item{output}{The output style of the resulting character vector. This can
-either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
-or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
-\code{"auto"} option will choose the correct \code{output} value}
+\item{sep_mark}{\emph{Separator mark for digit grouping}
+
+\verb{scalar<character>} // \emph{default:} \code{","}
+
+The string to use as a separator between groups of digits. For example,
+using \code{sep_mark = ","} with a value of \code{1000} would result in a formatted
+value of \code{"1,000"}. This argument is ignored if a \code{locale} is supplied
+(i.e., is not \code{NULL}).}
+
+\item{force_sign}{\emph{Forcing the display of a positive sign}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should the positive sign be shown for positive values (effectively showing
+a sign for all values except zero)? If so, use \code{TRUE} for this option. The
+default is \code{FALSE}, where only negative numbers will display a minus sign.
+This option is disregarded when using accounting notation with
+\code{accounting = TRUE}.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported.}
+
+\item{output}{\emph{Output format}
+
+\verb{singl-kw:[auto|plain|html|latex|rtf|word]} // \emph{default:} \code{"auto"}
+
+The output style of the resulting character vector. This can either be
+\code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or
+\code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the \code{"auto"}
+option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
@@ -160,8 +211,8 @@ The variant function intended for formatting \strong{gt} table data:
 Other vector formatting functions: 
 \code{\link{vec_fmt_bytes}()},
 \code{\link{vec_fmt_currency}()},
-\code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},

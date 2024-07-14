@@ -7,19 +7,31 @@
 gt_group(..., .list = list2(...), .use_grp_opts = FALSE)
 }
 \arguments{
-\item{...}{One or more \strong{gt} table (\code{gt_tbl}) objects, typically generated
-via the \code{\link[=gt]{gt()}} function.}
+\item{...}{\emph{One or more gt table data objects}
 
-\item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
+\verb{obj:<gt_tbl>} // (\code{optional})
 
-\item{.use_grp_opts}{Should options specified in the \code{gt_group} object be
-applied to all contained \strong{gt} tables? By default this is \code{FALSE}.}
+One or more \strong{gt} table (\code{gt_tbl}) objects, typically generated via the
+\code{\link[=gt]{gt()}} function.}
+
+\item{.list}{\emph{Alternative to \code{...}}
+
+\verb{<list of multiple expressions>} // (or, use \code{...})
+
+Allows for the use of a list as an input alternative to \code{...}.}
+
+\item{.use_grp_opts}{\emph{Apply options to all contained tables?}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should options specified in the \code{gt_group} object be applied to all
+contained \strong{gt} tables? By default this is \code{FALSE}.}
 }
 \value{
 An object of class \code{gt_group}.
 }
 \description{
-The \code{gt_group()} function creates a container for storage of multiple \strong{gt}
+\code{gt_group()} creates a container for storage of multiple \strong{gt}
 tables. This type of object allows for flexibility in printing multiple
 tables in different output formats. For example, if printing multiple tables
 in a paginated output environment (e.g., RTF, Word, etc.), each \strong{gt} table

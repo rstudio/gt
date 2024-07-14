@@ -7,8 +7,12 @@
 system_fonts(name)
 }
 \arguments{
-\item{name}{A keyword from the set of \code{"system-ui"}, \code{"transitional"},
-\code{"old-style"}, \code{"humanist"}, \code{"geometric-humanist"},
+\item{name}{\emph{Name of font stack}
+
+\verb{scalar<character>} // \strong{required}
+
+The name of a font stack. Must be drawn from the set of \code{"system-ui"},
+\code{"transitional"}, \code{"old-style"}, \code{"humanist"}, \code{"geometric-humanist"},
 \code{"classical-humanist"}, \code{"neo-grotesque"}, \code{"monospace-slab-serif"},
 \code{"monospace-code"}, \code{"industrial"}, \code{"rounded-sans"}, \code{"slab-serif"},
 \code{"antique"}, \code{"didone"}, and \code{"handwritten"}.}
@@ -17,13 +21,13 @@ system_fonts(name)
 A character vector of font names.
 }
 \description{
-A font stack can be obtained from \code{system_fonts()} using one or various
+A font stack can be obtained from \code{system_fonts()} using one of various
 keywords such as \code{"system-ui"}, \code{"old-style"}, and \code{"humanist"} (there are 15
-in total). These sets comprise a themed font family that has been tested to
-work across a wide range of computer systems. This is useful when specifying
-\code{font} values in the \code{\link[=cell_text]{cell_text()}} function (itself used in the \code{\link[=tab_style]{tab_style()}}
-function). If using \code{\link[=opt_table_font]{opt_table_font()}} we can invoke this function in its
-\code{stack} argument.
+in total) representing a themed set of fonts. These sets comprise a font
+family that has been tested to work across a wide range of computer systems.
+This is useful when specifying \code{font} values in \code{\link[=cell_text]{cell_text()}}
+(itself used inside \code{\link[=tab_style]{tab_style()}}). If using \code{\link[=opt_table_font]{opt_table_font()}}, we can
+invoke this function in its \code{stack} argument.
 }
 \section{The font stacks and the individual fonts used by platform}{
 
@@ -74,7 +78,7 @@ more readable and easier to read than other sans serif typefaces.
 
 \subsection{Geometric Humanist (\code{"geometric-humanist"})}{
 
-\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: Avenir, 'Avenir Next LT Pro', Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
 }\if{html}{\out{</div>}}
 
 Clean, geometric forms and consistent stroke widths are characteristics of
@@ -108,7 +112,7 @@ well-known examples of a Neo-grotesque typeface.
 
 \subsection{Monospace Slab Serif (\code{"monospace-slab-serif"})}{
 
-\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: 'Nimbus Mono PS', 'Courier New', 'Cutive Mono', monospace;
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: 'Nimbus Mono PS', 'Courier New', monospace;
 }\if{html}{\out{</div>}}
 
 Monospace slab serif typefaces are distinguished by their fixed-width
@@ -142,7 +146,7 @@ straight lines.
 
 \subsection{Rounded Sans (\code{"rounded-sans"})}{
 
-\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif;
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT', 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif;
 }\if{html}{\out{</div>}}
 
 The rounded, curved letterforms that define rounded typefaces give them a
@@ -199,12 +203,12 @@ stack tends to use a more casual and commonplace style.
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table with 10 rows. For the \code{date} column
-and the column labels, let's use a different font stack (the \code{"industrial"}
-one). The system fonts used in this particular stack are \code{"Bahnschrift"},
-\code{"DIN Alternate"}, \code{"Franklin Gothic Medium"}, and \code{"Nimbus Sans Narrow"}
-(the generic \code{"sans-serif-condensed"} and \code{"sans-serif"} are used if the
-aforementioned fonts aren't available).
+Use a subset of the \code{\link{sp500}} dataset to create a \strong{gt} table with 10 rows.
+For the \code{date} column and the column labels, let's use a different font stack
+(the \code{"industrial"} one). The system fonts used in this particular stack are
+\code{"Bahnschrift"}, \code{"DIN Alternate"}, \code{"Franklin Gothic Medium"}, and
+\code{"Nimbus Sans Narrow"} (the generic \code{"sans-serif-condensed"} and \code{"sans-serif"}
+are used if the aforementioned fonts aren't available).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::slice(1:10) |>
@@ -230,7 +234,7 @@ aforementioned fonts aren't available).
 
 \section{Function ID}{
 
-8-29
+8-33
 }
 
 \section{Function Introduced}{
@@ -244,29 +248,20 @@ Other helper functions:
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_body}()},
-\code{\link{cells_column_labels}()},
-\code{\link{cells_column_spanners}()},
-\code{\link{cells_footnotes}()},
-\code{\link{cells_grand_summary}()},
-\code{\link{cells_row_groups}()},
-\code{\link{cells_source_notes}()},
-\code{\link{cells_stub_grand_summary}()},
-\code{\link{cells_stub_summary}()},
-\code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
-\code{\link{cells_summary}()},
-\code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{row_group}()},
+\code{\link{stub}()},
+\code{\link{unit_conversion}()}
 }
 \concept{helper functions}

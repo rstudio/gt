@@ -1,4 +1,4 @@
-test_that("The `fmt_scientific()` function works correctly", {
+test_that("fmt_scientific() works correctly", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -22,10 +22,10 @@ test_that("The `fmt_scientific()` function works correctly", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  char_1 <- (tab %>% dt_data_get())[["char_1"]]
-  char_2 <- (tab %>% dt_data_get())[["char_2"]]
-  num_1 <-  (tab %>% dt_data_get())[["num_1"]]
-  num_2 <-  (tab %>% dt_data_get())[["num_2"]]
+  char_1 <- dt_data_get(tab)[["char_1"]]
+  char_2 <- dt_data_get(tab)[["char_2"]]
+  num_1 <-  dt_data_get(tab)[["num_1"]]
+  num_2 <-  dt_data_get(tab)[["num_2"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -55,12 +55,12 @@ test_that("The `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num_1", decimals = 2) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      paste0("1.84 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("2.76 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("9.37 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
-      paste0("6.43 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("1.84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("2.76&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("9.37&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("6.43&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
       "2.23", "0.00",
-      paste0("\U02212", "2.32 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>")
+      paste0("\U02212", "2.32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>")
     )
   )
 
@@ -72,12 +72,12 @@ test_that("The `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num_2", decimals = 2) %>%
        render_formats_test("html"))[["num_2"]],
     c(
-      paste0("3.40 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>"),
-      paste0("7.40 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>"),
-      paste0("2.30 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>"),
-      paste0("9.30 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>"),
-      paste0("3.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>"),
-      paste0("1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "2</sup>"),
+      paste0("3.40&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>"),
+      paste0("7.40&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>"),
+      paste0("2.30&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>"),
+      paste0("9.30&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>"),
+      paste0("3.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>"),
+      paste0("1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "2</sup>"),
       "NA"
     )
   )
@@ -107,12 +107,12 @@ test_that("The `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num_1", decimals = 5) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      paste0("1.83623 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("2.76339 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("9.37290 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
-      paste0("6.43000 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("1.83623&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("2.76339&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("9.37290&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("6.43000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
       "2.23200", "0.00000",
-      paste0("\U02212", "2.32400 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>")
+      paste0("\U02212", "2.32400&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>")
     )
   )
 
@@ -133,6 +133,62 @@ test_that("The `fmt_scientific()` function works correctly", {
     )
   )
 
+  # Format the `num` column to exactly 4 decimal places
+  expect_equal(
+    (tab %>%
+       fmt_scientific(columns = "num_1", decimals = 4, exp_style = "E") %>%
+       render_formats_test("default"))[["num_1"]],
+    c(
+      "1.8362E03", "2.7634E03", "9.3729E02", "6.4300E02",
+      "2.2320E00", "0.0000E00", "-2.3240E01"
+    )
+  )
+
+  # Format the `num` column to exactly 6 significant figures
+  expect_equal(
+    (tab %>%
+       fmt_scientific(columns = "num_1", n_sigfig = 6, exp_style = "E") %>%
+       render_formats_test("default"))[["num_1"]],
+    c(
+      "1.83623E03", "2.76339E03", "9.37290E02", "6.43000E02", "2.23200E00",
+      "0.00000E00", "-2.32400E01"
+    )
+  )
+
+  # Verify that setting `drop_trailing_zeros` to TRUE has no effect when
+  # using significant figures
+  expect_equal(
+    (tab %>%
+       fmt_scientific(
+         columns = "num_1",
+         n_sigfig = 6,
+         drop_trailing_zeros = TRUE,
+         exp_style = "E"
+       ) %>%
+       render_formats_test("default"))[["num_1"]],
+    c(
+      "1.83623E03", "2.76339E03", "9.37290E02", "6.43000E02", "2.23200E00",
+      "0.00000E00", "-2.32400E01"
+    )
+  )
+
+  # Should `n_sigfig` be set to `NA` then significant figures cannot be
+  # used and any value for `decimals` is no longer ignored
+  expect_equal(
+    (tab %>%
+       fmt_scientific(
+         columns = "num_1",
+         decimals = 8,
+         n_sigfig = NA,
+         exp_style = "E"
+       ) %>%
+       render_formats_test("default"))[["num_1"]],
+    c(
+      "1.83623000E03", "2.76339000E03", "9.37290000E02", "6.43000000E02",
+      "2.23200000E00", "0.00000000E00", "-2.32400000E01"
+    )
+  )
+
   # Format the `num_1` column to 2 decimal places, use a period for the
   # digit grouping separators and a comma for the decimal mark, use
   # all other defaults; extract `output_df` in the HTML context and
@@ -142,12 +198,12 @@ test_that("The `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num_1", decimals = 2, sep_mark = ".", dec_mark = ",") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      paste0("1,84 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("2,76 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("9,37 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
-      paste0("6,43 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("1,84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("2,76&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("9,37&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("6,43&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
       "2,23", "0,00",
-      paste0("\U02212", "2,32 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>")
+      paste0("\U02212", "2,32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>")
     )
   )
 
@@ -178,11 +234,11 @@ test_that("The `fmt_scientific()` function works correctly", {
        render_formats_test("html"))[["num_1"]],
     c(
       "1.8362", "2.7634",
-      paste0("9.3729 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "1</sup>"),
-      paste0("6.4300 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "1</sup>"),
-      paste0("2.2320 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("9.3729&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "1</sup>"),
+      paste0("6.4300&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "1</sup>"),
+      paste0("2.2320&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
       "0.0000",
-      paste0("\U02212", "2.3240 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "2</sup>")
+      paste0("\U02212", "2.3240&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "2</sup>")
     )
   )
 
@@ -231,13 +287,13 @@ test_that("The `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num", force_sign_m = TRUE) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "−3.49 \U000D7 10<sup style='font-size: 65%;'>13</sup>",
-      "−3.45 \U000D7 10<sup style='font-size: 65%;'>3</sup>",
-      "−2.34 \U000D7 10<sup style='font-size: 65%;'>−4</sup>",
+      "−3.49&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "−3.45&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>3</sup>",
+      "−2.34&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>−4</sup>",
       "0.00",
-      "+7.53 \U000D7 10<sup style='font-size: 65%;'>−5</sup>",
-      "+8.28 \U000D7 10<sup style='font-size: 65%;'>4</sup>",
-      "+7.16 \U000D7 10<sup style='font-size: 65%;'>14</sup>"
+      "+7.53&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>−5</sup>",
+      "+8.28&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>4</sup>",
+      "+7.16&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>14</sup>"
     )
   )
 
@@ -260,13 +316,13 @@ test_that("The `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num", force_sign_n = TRUE) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "−3.49 \U000D7 10<sup style='font-size: 65%;'>+13</sup>",
-      "−3.45 \U000D7 10<sup style='font-size: 65%;'>+3</sup>",
-      "−2.34 \U000D7 10<sup style='font-size: 65%;'>−4</sup>",
+      "−3.49&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+13</sup>",
+      "−3.45&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+3</sup>",
+      "−2.34&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>−4</sup>",
       "0.00",
-      "7.53 \U000D7 10<sup style='font-size: 65%;'>−5</sup>",
-      "8.28 \U000D7 10<sup style='font-size: 65%;'>+4</sup>",
-      "7.16 \U000D7 10<sup style='font-size: 65%;'>+14</sup>"
+      "7.53&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>−5</sup>",
+      "8.28&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+4</sup>",
+      "7.16&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+14</sup>"
     )
   )
 
@@ -289,13 +345,13 @@ test_that("The `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num", force_sign_m = TRUE, force_sign_n = TRUE) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "−3.49 \U000D7 10<sup style='font-size: 65%;'>+13</sup>",
-      "−3.45 \U000D7 10<sup style='font-size: 65%;'>+3</sup>",
-      "−2.34 \U000D7 10<sup style='font-size: 65%;'>−4</sup>",
+      "−3.49&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+13</sup>",
+      "−3.45&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+3</sup>",
+      "−2.34&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>−4</sup>",
       "0.00",
-      "+7.53 \U000D7 10<sup style='font-size: 65%;'>−5</sup>",
-      "+8.28 \U000D7 10<sup style='font-size: 65%;'>+4</sup>",
-      "+7.16 \U000D7 10<sup style='font-size: 65%;'>+14</sup>"
+      "+7.53&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>−5</sup>",
+      "+8.28&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+4</sup>",
+      "+7.16&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+14</sup>"
     )
   )
 
@@ -434,12 +490,12 @@ test_that("The `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num_1", decimals = 2, pattern = "a {x} b") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      paste0("a 1.84 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup> b"),
-      paste0("a 2.76 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup> b"),
-      paste0("a 9.37 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup> b"),
-      paste0("a 6.43 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup> b"),
+      paste0("a 1.84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup> b"),
+      paste0("a 2.76&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup> b"),
+      paste0("a 9.37&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup> b"),
+      paste0("a 6.43&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup> b"),
       "a 2.23 b", "a 0.00 b",
-      paste0("a ", "\U02212", "2.32 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup> b")
+      paste0("a ", "\U02212", "2.32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup> b")
     )
   )
 
@@ -467,12 +523,12 @@ test_that("The `fmt_scientific()` function works correctly", {
          columns = num_1, decimals = 3, force_sign_m = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      paste0("+1.836 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("+2.763 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("+9.373 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
-      paste0("+6.430 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("+1.836&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("+2.763&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("+9.373&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("+6.430&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
       "+2.232", "0.000",
-      paste0("\U02212", "2.324 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>")
+      paste0("\U02212", "2.324&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>")
     )
   )
 
@@ -484,12 +540,12 @@ test_that("The `fmt_scientific()` function works correctly", {
          columns = num_1, pattern = "*{x}*", force_sign_m = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      paste0("*+1.84 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>*"),
-      paste0("*+2.76 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>*"),
-      paste0("*+9.37 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>*"),
-      paste0("*+6.43 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>*"),
+      paste0("*+1.84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>*"),
+      paste0("*+2.76&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>*"),
+      paste0("*+9.37&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>*"),
+      paste0("*+6.43&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>*"),
       "*+2.23*", "*0.00*",
-      paste0("*", "\U02212", "2.32 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>*")
+      paste0("*", "\U02212", "2.32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>*")
     )
   )
 
@@ -501,12 +557,12 @@ test_that("The `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num_1", decimals = 2, locale = "en_US") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      paste0("1.84 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("2.76 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("9.37 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
-      paste0("6.43 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("1.84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("2.76&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("9.37&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("6.43&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
       "2.23", "0.00",
-      paste0("\U02212", "2.32 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>")
+      paste0("\U02212", "2.32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>")
     )
   )
 
@@ -518,12 +574,12 @@ test_that("The `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num_1", decimals = 2, locale = "da_DK") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      paste0("1,84 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("2,76 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("9,37 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
-      paste0("6,43 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("1,84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("2,76&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("9,37&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("6,43&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
       "2,23", "0,00",
-      paste0("\U02212", "2,32 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>")
+      paste0("\U02212", "2,32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>")
     )
   )
 
@@ -535,12 +591,12 @@ test_that("The `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num_1", decimals = 2, locale = "de_AT") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      paste0("1,84 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("2,76 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("9,37 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
-      paste0("6,43 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("1,84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("2,76&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("9,37&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("6,43&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
       "2,23", "0,00",
-      paste0("\U02212", "2,32 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>")
+      paste0("\U02212", "2,32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>")
     )
   )
 
@@ -552,12 +608,12 @@ test_that("The `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num_1", decimals = 2, locale = "et_EE") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      paste0("1,84 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("2,76 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("9,37 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
-      paste0("6,43 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("1,84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("2,76&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("9,37&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("6,43&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
       "2,23", "0,00",
-      paste0("\U02212", "2,32 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>")
+      paste0("\U02212", "2,32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>")
     )
   )
 
@@ -569,17 +625,17 @@ test_that("The `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num_1", decimals = 2, locale = "gl_ES") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      paste0("1,84 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("2,76 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-      paste0("9,37 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
-      paste0("6,43 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("1,84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("2,76&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("9,37&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("6,43&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>2</sup>"),
       "2,23", "0,00",
-      paste0("\U02212", "2,32 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>")
+      paste0("\U02212", "2,32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>")
     )
   )
 })
 
-test_that("The `fmt_scientific()` fn can handle extremely large and small values", {
+test_that("fmt_scientific() can handle extremely large and small values", {
 
   # Create an input data frame with very
   # large and very small numbers (both
@@ -625,16 +681,16 @@ test_that("The `fmt_scientific()` fn can handle extremely large and small values
        fmt_scientific(columns = "num", decimals = 5) %>%
        render_formats_test("html"))[["num"]],
     c(
-      paste0("\U02212", "1.50000 ", "\U000D7", " 10<sup style='font-size: 65%;'>200</sup>"),
-      paste0("\U02212", "1.50000 ", "\U000D7", " 10<sup style='font-size: 65%;'>100</sup>"),
+      paste0("\U02212", "1.50000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>200</sup>"),
+      paste0("\U02212", "1.50000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>100</sup>"),
       paste0("\U02212", "2.50000"),
-      paste0("\U02212", "3.50000 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "100</sup>"),
-      paste0("\U02212", "3.50000 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "200</sup>"),
-      paste0("1.50000 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "200</sup>"),
-      paste0("1.50000 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "100</sup>"),
+      paste0("\U02212", "3.50000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "100</sup>"),
+      paste0("\U02212", "3.50000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "200</sup>"),
+      paste0("1.50000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "200</sup>"),
+      paste0("1.50000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "100</sup>"),
       "2.50000",
-      paste0("3.50000 ", "\U000D7", " 10<sup style='font-size: 65%;'>100</sup>"),
-      paste0("3.50000 ", "\U000D7", " 10<sup style='font-size: 65%;'>200</sup>")
+      paste0("3.50000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>100</sup>"),
+      paste0("3.50000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>200</sup>")
     )
   )
 })

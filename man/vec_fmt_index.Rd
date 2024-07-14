@@ -14,33 +14,56 @@ vec_fmt_index(
 )
 }
 \arguments{
-\item{x}{A numeric vector.}
+\item{x}{\emph{The input vector}
 
-\item{case}{Should resulting index characters be rendered as uppercase
-(\code{"upper"}) or lowercase (\code{"lower"}) letters? By default, this is set to
-\code{"upper"}.}
+\code{vector(numeric|integer)} // \strong{required}
 
-\item{index_algo}{The indexing algorithm for handling the recycling of the
-index character set. By default, the \code{"repeat"} option is used where
-characters are doubled, tripled, and so on, when moving past the character
-set limit. The alternative is the \code{"excel"} option, where Excel-based
-column naming is adapted and used here (e.g., \verb{[..., Y, Z, AA, AB, ...]}).}
+This is the input vector that will undergo transformation to a character
+vector of the same length. Values within the vector will be formatted.}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+\item{case}{\emph{Use uppercase or lowercase letters}
 
-\item{locale}{An optional locale identifier that can be used for formatting
-the value according the locale's rules. Examples include \code{"en"} for English
-(United States) and \code{"fr"} for French (France). The use of a locale ID will
-override any locale-specific values provided. We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported.}
+\verb{singl-kw:[upper|lower]} // \emph{default:} \code{"upper"}
 
-\item{output}{The output style of the resulting character vector. This can
-either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
-or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
-\code{"auto"} option will choose the correct \code{output} value}
+Should the resulting index characters be rendered as uppercase (\code{"upper"})
+or lowercase (\code{"lower"}) letters? By default, this is set to \code{"upper"}.}
+
+\item{index_algo}{\emph{Indexing algorithm}
+
+\verb{singl-kw:[repeat|excel]} // \emph{default:} \code{"repeat"}
+
+The indexing algorithm handles the recycling of the index character set. By
+default, the \code{"repeat"} option is used where characters are doubled,
+tripled, and so on, when moving past the character set limit. The
+alternative is the \code{"excel"} option, where Excel-based column naming is
+adapted and used here (e.g., \verb{[..., Y, Z, AA, AB, ...]}).}
+
+\item{pattern}{\emph{Specification of the formatting pattern}
+
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
+
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for
+a useful reference for all of the locales that are supported.}
+
+\item{output}{\emph{Output format}
+
+\verb{singl-kw:[auto|plain|html|latex|rtf|word]} // \emph{default:} \code{"auto"}
+
+The output style of the resulting character vector. This can either be
+\code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or
+\code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the \code{"auto"}
+option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
@@ -117,8 +140,8 @@ The variant function intended for formatting \strong{gt} table data:
 Other vector formatting functions: 
 \code{\link{vec_fmt_bytes}()},
 \code{\link{vec_fmt_currency}()},
-\code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},

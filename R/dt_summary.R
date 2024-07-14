@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -116,8 +116,8 @@ dt_summary_build <- function(data, context) {
 
         cli::cli_abort(c(
           "There are no row groups in the gt object.",
-          "*" = "Use `grand_summary_rows()` to create a grand summary, or",
-          "*" = "Define row groups using `gt(groupname_col = ...)` or `tab_row_group()`."
+          "*" = "Use {.fn grand_summary_rows} to create a grand summary, or",
+          "*" = "Define row groups using `gt(groupname_col = ...)` or {.fn tab_row_group}."
         ))
       }
     }
@@ -149,19 +149,16 @@ dt_summary_build <- function(data, context) {
       # Get the names of row groups available in the gt object
       groups_available <- unique(stub_df$group_id)
 
-      if (any(!(groups %in% groups_available))) {
+      if (!all(groups %in% groups_available)) {
 
         not_present_groups <-
-          paste0(
-            base::setdiff(groups, groups_available),
-            collapse = ", "
-          )
+          base::setdiff(groups, groups_available)
 
         # Stop function if one or more `groups`
         # are not present in the gt table
         cli::cli_abort(c(
           "All `groups` should be available in the gt object.",
-          "*" = "The following groups are not present: {not_present_groups}."
+          "*" = "The following groups are absent: {not_present_groups}."
         ))
       }
     }
@@ -181,8 +178,7 @@ dt_summary_build <- function(data, context) {
     if (identical(groups, grand_summary_col)) {
 
       select_data_tbl <-
-        dplyr::mutate(data_tbl, !!group_id_col_private := .env$grand_summary_col) %>%
-        dplyr::relocate(.env$group_id_col_private, .before = 1)
+        dplyr::mutate(data_tbl, !!group_id_col_private := .env$grand_summary_col, .before = 0)
 
     } else {
 
@@ -220,9 +216,9 @@ dt_summary_build <- function(data, context) {
 
               # Filter to only the groups targeted in the group-wise case
               select_data_tbl <-
-                dplyr::filter(
+                vctrs::vec_slice(
                   select_data_tbl,
-                  .data[[group_id_col_private]] %in% groups
+                  select_data_tbl[[group_id_col_private]] %in% groups
                 )
             }
 
@@ -233,6 +229,8 @@ dt_summary_build <- function(data, context) {
                 .data[[group_id_col_private]]
               )
 
+            # TODO find a way to switch to across()
+            # https://github.com/tidyverse/dplyr/issues/6707
             select_data_tbl <-
               dplyr::ungroup(
                 dplyr::summarize_at(
@@ -242,14 +240,8 @@ dt_summary_build <- function(data, context) {
                 )
               )
 
-            select_data_tbl <-
-              dplyr::mutate_all(
-                select_data_tbl,
-                .funs = function(x) {
-                  x[is.nan(x)] <- NA
-                  x
-                }
-              )
+            # Replace NaN by NA
+            select_data_tbl[is.na(select_data_tbl)] <- NA
 
             select_data_tbl <-
               dplyr::mutate(
@@ -259,12 +251,13 @@ dt_summary_build <- function(data, context) {
               )
 
             select_data_tbl <-
-              dplyr::select(
+              dplyr::relocate(
                 select_data_tbl,
-                dplyr::all_of(group_id_col_private),
-                dplyr::all_of(row_id_col_private),
-                dplyr::all_of(rowname_col_private),
-                dplyr::everything()
+                dplyr::all_of(c(
+                  group_id_col_private,
+                  row_id_col_private,
+                  rowname_col_private
+                ))
               )
 
             select_data_tbl
@@ -281,10 +274,12 @@ dt_summary_build <- function(data, context) {
     summary_dfs_data <-
       dplyr::select(
         summary_dfs_data,
-        dplyr::all_of(group_id_col_private),
-        dplyr::all_of(row_id_col_private),
-        dplyr::all_of(rowname_col_private),
-        dplyr::all_of(colnames(body))
+        dplyr::all_of(c(
+          group_id_col_private,
+          row_id_col_private,
+          rowname_col_private,
+          colnames(body)
+        ))
       )
 
     #
@@ -298,14 +293,9 @@ dt_summary_build <- function(data, context) {
         locale = resolve_locale(data = data, locale = NULL)
       )
 
-    summary_dfs_display_gt[["_data"]] <-
-      dplyr::mutate_all(
-        summary_dfs_display_gt[["_data"]],
-        .funs = function(x) {
-          x[is.nan(x)] <- NA
-          x
-        }
-      )
+    # Replace NaN with NA
+    summary_dfs_display_gt[["_data"]][is.na(summary_dfs_display_gt[["_data"]])] <-
+      NA
 
     summary_dfs_display_gt[["_stub_df"]] <-
       dplyr::mutate(
@@ -322,7 +312,7 @@ dt_summary_build <- function(data, context) {
       # Determine if we are actually formatting a grand summary section;
       # in that case we'd want to ignore any supplied group directive
       group_is_grand_summary <-
-        length(groups) == 1 && groups == "::GRAND_SUMMARY"
+        identical(groups, "::GRAND_SUMMARY")
 
       if (!is.null(format_lhs) && !group_is_grand_summary) {
 
@@ -349,7 +339,7 @@ dt_summary_build <- function(data, context) {
             # formatted to the group
 
             fmt_expr_lines <- deparse(rlang::f_rhs(fmt_exprs[[k]]))
-            fmt_expr_lines <- gsub("^\\s+", "", fmt_expr_lines)
+            fmt_expr_lines <- trimws(fmt_expr_lines, "left", " ")
             format_fn_grp <- paste(fmt_expr_lines, collapse = "")
 
             fmt_expr_names <- names(rlang::f_rhs(fmt_exprs[[k]]))
@@ -417,20 +407,9 @@ dt_summary_build <- function(data, context) {
     summary_dfs_display[["::group_id::"]] <- summary_dfs_data[["::group_id::"]]
     summary_dfs_display[["::row_id::"]] <- summary_dfs_data[["::row_id::"]]
 
-    summary_dfs_display <-
-      dplyr::mutate_all(
-        summary_dfs_display,
-        .funs = function(x) {
-          x[x == "NA"] <- NA
-          x
-        }
-      )
+    summary_dfs_display[summary_dfs_display == "NA"] <- NA
 
-    summary_dfs_display <-
-      dplyr::mutate(
-        summary_dfs_display,
-        `::rowname::` = NA_character_
-      )
+    summary_dfs_display$`::rowname::` <- NA_character_
 
     labels_processed <- unlist(lapply(labels, FUN = process_text, context = context))
 
@@ -439,23 +418,28 @@ dt_summary_build <- function(data, context) {
         unname(labels_processed[names(labels_processed) == summary_dfs_display[i, ][["::row_id::"]]])
     }
 
-    summary_dfs_display <-
-      dplyr::mutate_at(
-        summary_dfs_display,
-        .vars = columns_excl,
-        .funs = function(x) {NA_character_}
-      )
+    # set columns that we exclude as NA
+    summary_dfs_display[, columns_excl] <- NA_character_
 
     for (group in groups) {
 
+      # vctrs::vec_slice is a fast replacement of dplyr::filter
+      # but handles is.na() a little bit less fast.
       group_summary_data_df <-
-        dplyr::filter(summary_dfs_data, .data[[group_id_col_private]] == .env$group)
+        vctrs::vec_slice(
+          summary_dfs_data,
+          !is.na(summary_dfs_data[[group_id_col_private]]) &
+            summary_dfs_data[[group_id_col_private]] == group
+          )
 
       group_summary_display_df <-
-        dplyr::filter(summary_dfs_display, .data[[group_id_col_private]] == .env$group)
+        vctrs::vec_slice(
+          summary_dfs_display,
+          !is.na(summary_dfs_display[[group_id_col_private]]) &
+            summary_dfs_display[[group_id_col_private]] == group
+        )
 
-      group_summary_display_df <-
-        dplyr::mutate(group_summary_display_df, `::side::` = side)
+      group_summary_display_df$`::side::` <- side
 
       summary_df_data_list <-
         c(
@@ -483,11 +467,18 @@ dt_summary_build <- function(data, context) {
     arrangement <-
       unique(summary_df_display_list[[i]][, rowname_col_private, drop = TRUE])
 
+    # remove ::group_id:: from data
+    summary_df_display_list[[i]][[group_id_col_private]] <- NULL
+    # find location of last_no_na for each row name
     summary_df_display_list[[i]] <-
-      summary_df_display_list[[i]] %>%
-      dplyr::select(-.env$group_id_col_private) %>%
-      dplyr::group_by(.data[[rowname_col_private]]) %>%
-      dplyr::summarize_all(last_non_na)
+      dplyr::summarise(
+        .data = summary_df_display_list[[i]],
+        dplyr::across(
+          dplyr::everything(),
+          .fns = last_non_na
+          ),
+        .by = dplyr::all_of(rowname_col_private)
+      )
 
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]][

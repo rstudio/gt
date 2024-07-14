@@ -27,7 +27,7 @@ get_all_preset_colors_at_index <- function(index) {
 
   preset_colors %>%
     vapply(
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) x[[index]]
     )

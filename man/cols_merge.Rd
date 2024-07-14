@@ -13,33 +13,59 @@ cols_merge(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns that will participate in the merging process. The
-first column name provided will be the target column (i.e., undergo
-mutation) and the other columns will serve to provide input.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{hide_columns}{Any column names provided here will have their state
-changed to \code{hidden} (via internal use of \code{\link[=cols_hide]{cols_hide()}} if they aren't
-already hidden. This is convenient if the shared purpose of these specified
-columns is only to provide string input to the target column. To suppress
-any hiding of columns, \code{FALSE} can be used here.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{rows}{Rows that will participate in the merging process. Providing
-\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} undergoing
-merging. Alternatively, we can supply a vector of row identifiers within
-\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
-The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
-\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
-We can also use a standalone predicate expression to filter down to the
-rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{columns}{\emph{Columns to target}
 
-\item{pattern}{A formatting pattern that specifies the arrangement of the
-\code{column} values and any string literals. The pattern uses numbers (within
-\code{{ }}) that correspond to the indices of columns provided in \code{columns}. If
-two columns are provided in \code{columns} and we would like to combine the cell
-data onto the first column, \code{"{1} {2}"} could be used. If a pattern isn't
-provided then a space-separated pattern that includes all \code{columns} will be
+\verb{<column-targeting expression>} // \strong{required}
+
+The columns for which the merging operations should be applied. The first
+column resolved will be the target column (i.e., undergo mutation) and the
+other columns will serve to provide input. Can either be a series of column
+names provided in \code{c()}, a vector of column indices, or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). A vector is recommended because in that
+case we are absolutely certain about the order of columns, and, that order
+information is needed for this and other arguments.}
+
+\item{hide_columns}{\emph{Subset of \code{columns} to hide}
+
+\verb{<column-targeting expression>|FALSE} // \emph{default:} \code{columns[-1]}
+
+Any column names provided here will have their state changed to \code{hidden}
+(via internal use of \code{\link[=cols_hide]{cols_hide()}}) if they aren't already hidden. This is
+convenient if the shared purpose of these specified columns is only to
+provide string input to the target column. To suppress any hiding of
+columns, \code{FALSE} can be used here.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+participate in the merging process. The default \code{\link[=everything]{everything()}} results in
+all rows in \code{columns} being formatted. Alternatively, we can supply a
+vector of row IDs within \code{c()}, a vector of row indices, or a select
+helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use
+expressions to filter down to the rows we need
+(e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{pattern}{\emph{Formatting pattern}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+A formatting pattern that specifies the arrangement of the \code{columns} values
+and any string literals. The pattern uses numbers (within \code{{ }}) that
+correspond to the indices of columns provided in \code{columns}. If two columns
+are provided in \code{columns} and we would like to combine the cell data onto
+the first column, \code{"{1} {2}"} could be used. If a pattern isn't provided
+then a space-separated pattern that includes all \code{columns} will be
 generated automatically. Further details are provided in the \emph{How the
 \code{pattern} works} section.}
 }
@@ -48,14 +74,14 @@ An object of class \code{gt_tbl}.
 }
 \description{
 This function takes input from two or more columns and allows the contents to
-be merged them into a single column, using a pattern that specifies the
+be merged into a single column by using a pattern that specifies the
 arrangement. We can specify which columns to merge together in the \code{columns}
-argument. The string-combining pattern is given in the \code{pattern} argument.
-The first column in the \code{columns} series operates as the target column (i.e.,
-will undergo mutation) whereas all following \code{columns} will be untouched.
-There is the option to hide the non-target columns (i.e., second and
-subsequent columns given in \code{columns}). The formatting of values in different
-columns will be preserved upon merging.
+argument. The string-combining pattern is to be provided in the \code{pattern}
+argument. The first column in the \code{columns} series operates as the target
+column (i.e., the column that will undergo mutation) whereas all following
+\code{columns} will be untouched. There is the option to hide the non-target
+columns (i.e., second and subsequent columns given in \code{columns}). The
+formatting of values in different columns will be preserved upon merging.
 }
 \section{How the \code{pattern} works}{
 
@@ -105,10 +131,10 @@ output table through the \code{autohide} option.
 \section{Examples}{
 
 
-Use a portion of \code{\link{sp500}} to create a \strong{gt} table. Use the \code{cols_merge()}
-function to merge the \code{open} & \code{close} columns together, and, the \code{low} &
-\code{high} columns (putting an em dash between both). Relabel the columns with
-\code{\link[=cols_label]{cols_label()}}.
+Use a subset of the \code{\link{sp500}} dataset to create a \strong{gt} table. Use the
+\code{cols_merge()} function to merge the \code{open} & \code{close} columns together, and,
+the \code{low} & \code{high} columns (putting an em dash between both). Relabel the
+columns with \code{\link[=cols_label]{cols_label()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::slice(50:55) |>
@@ -165,7 +191,7 @@ drop parts of the output text whenever missing values are encountered.
 
 \section{Function ID}{
 
-5-11
+5-14
 }
 
 \section{Function Introduced}{
@@ -175,18 +201,21 @@ drop parts of the output text whenever missing values are encountered.
 
 \seealso{
 Other column modification functions: 
-\code{\link{cols_align_decimal}()},
+\code{\link{cols_add}()},
 \code{\link{cols_align}()},
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_hide}()},
-\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},
+\code{\link{cols_move}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
-\code{\link{cols_move}()},
+\code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

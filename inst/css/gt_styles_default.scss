@@ -430,4 +430,14 @@
   .gt_indent_5 {
     text-indent: $stub_indent_length * 5;
   }
+
+  .katex-display {
+    display: inline-flex !important;
+    margin-bottom: 0.75em !important;
+  }
+
+  div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+    height: 0px !important;
+  }
+
 }

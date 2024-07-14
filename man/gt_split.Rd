@@ -7,18 +7,36 @@
 gt_split(data, row_every_n = NULL, row_slice_i = NULL, col_slice_at = NULL)
 }
 \arguments{
-\item{data}{A \strong{gt} table object (\code{gt_tbl}) that is created using the \code{\link[=gt]{gt()}}
-function.}
+\item{data}{\emph{The gt table data object}
 
-\item{row_every_n}{A directive to split at every \emph{n} number of rows. This
-argument expects a single numerical value.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{row_slice_i}{An argument for splitting at specific row indices. Here,
-we expect either a vector of index values or a function that evaluates to a
-numeric vector.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{col_slice_at}{Any columns where vertical splitting across should occur.
-The splits occur to the right of the resolved column names.}
+\item{row_every_n}{\emph{Split at every n rows}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+A directive to split at every \emph{n} number of rows. This argument expects a
+single numerical value.}
+
+\item{row_slice_i}{\emph{Row-slicing indices}
+
+\verb{vector<numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+An argument for splitting at specific row indices. Here, we expect either a
+vector of index values or a function that evaluates to a numeric vector.}
+
+\item{col_slice_at}{\emph{Column-slicing locations}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
+
+Any columns where vertical splitting across should occur. The splits occur
+to the right of the resolved column names. Can either be a series of column
+names provided in \code{c()}, a vector of column indices, or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
 }
 \value{
 An object of class \code{gt_group}.

@@ -1,15 +1,15 @@
-test_that("The `resolve_cols_i()` and `resolve_cols_c()` fns both work", {
+test_that("resolve_cols_i() and resolve_cols_c() work", {
 
   all_cols <- setNames(seq_along(names(exibble)), names(exibble))
-  no_cols <- setNames(integer(0), character(0))
+  no_cols <- setNames(integer(0L), character(0L))
 
   expect_resolve_cols <- function(expr, expected, data = exibble, wrap = identity, ...) {
-    wrap(expect_identical(resolve_cols_i({{expr}}, data, ...), expected))
-    wrap(expect_identical(resolve_cols_c({{expr}}, data, ...), names(expected)))
+    wrap(expect_identical(resolve_cols_i({{ expr }}, data, ...), expected))
+    wrap(expect_identical(resolve_cols_c({{ expr }}, data, ...), names(expected)))
   }
   expect_resolve_errors <- function(expr, regexp = NULL, data = exibble, ...) {
-    expect_error(resolve_cols_i({{expr}}, data, ...), regexp = regexp)
-    expect_error(resolve_cols_c({{expr}}, data, ...), regexp = regexp)
+    expect_error(resolve_cols_i({{ expr }}, data, ...), regexp = regexp)
+    expect_error(resolve_cols_c({{ expr }}, data, ...), regexp = regexp)
   }
 
   expect_resolve_cols(1, c(num = 1L))
@@ -33,7 +33,7 @@ test_that("The `resolve_cols_i()` and `resolve_cols_c()` fns both work", {
   expect_resolve_cols(100L, no_cols, strict = FALSE)
 })
 
-test_that("The `resolve_rows_l()` and `resolve_rows_i()` fns both work", {
+test_that("resolve_rows_l() and resolve_rows_i() both work", {
 
   mtcars_gt <- gt(mtcars, rownames_to_stub = TRUE)
   iris_gt <- gt(iris, rownames_to_stub = TRUE)
@@ -50,12 +50,12 @@ test_that("The `resolve_rows_l()` and `resolve_rows_i()` fns both work", {
 
   expect_identical(resolve_rows_l(1, mtcars), c(TRUE, rep_len(FALSE, nrow(mtcars) - 1)))
   expect_identical(resolve_rows_l("Mazda RX4", mtcars), c(TRUE, rep_len(FALSE, nrow(mtcars) - 1)))
-  expect_warning(expect_identical(resolve_rows_l(NULL, mtcars), rep_len(TRUE, nrow(mtcars))))
+  expect_warning(expect_identical(resolve_rows_l(NULL, mtcars, null_means = "everything"), rep_len(TRUE, nrow(mtcars))))
   expect_identical(resolve_rows_l(everything(), mtcars), rep_len(TRUE, nrow(mtcars)))
 
   expect_identical(resolve_rows_l(1, mtcars_gt), c(TRUE, rep_len(FALSE, nrow(mtcars) - 1)))
   expect_identical(resolve_rows_l("Mazda RX4", mtcars_gt), c(TRUE, rep_len(FALSE, nrow(mtcars) - 1)))
-  expect_warning(expect_identical(resolve_rows_l(NULL, mtcars_gt), rep_len(TRUE, nrow(mtcars))))
+  expect_warning(expect_identical(resolve_rows_l(NULL, mtcars_gt, null_means = "everything"), rep_len(TRUE, nrow(mtcars))))
   expect_identical(resolve_rows_l(everything(), mtcars_gt), rep_len(TRUE, nrow(mtcars)))
 
   # Select helpers
@@ -82,8 +82,8 @@ test_that("The `resolve_rows_l()` and `resolve_rows_i()` fns both work", {
   expect_identical(resolve_rows_l(c("row_1", "row_1", "row_2", "row_1"), exibble_gt_1), c(TRUE, TRUE, rep(FALSE, 6)))
   expect_identical(resolve_rows_l("", exibble_gt_1), c(rep_len(FALSE, length(row_names_1) - 1), TRUE))
   expect_identical(resolve_rows_l(FALSE, exibble_gt_1), c(rep_len(FALSE, length(row_names_1))))
-  expect_identical(resolve_rows_l(character(0), exibble_gt_1), c(rep_len(FALSE, length(row_names_1))))
-  expect_warning(expect_identical(resolve_rows_l(NULL, exibble_gt_1), rep_len(TRUE, length(row_names_1))))
+  expect_identical(resolve_rows_l(character(0L), exibble_gt_1), c(rep_len(FALSE, length(row_names_1))))
+  expect_warning(expect_identical(resolve_rows_l(NULL, exibble_gt_1, null_means = "everything"), rep_len(TRUE, length(row_names_1))))
   expect_identical(resolve_rows_l(everything(), exibble_gt_1), rep_len(TRUE, length(row_names_1)))
 
   expect_identical(resolve_rows_l(TRUE, exibble_gt_1), rep_len(TRUE, length(row_names_1)))
@@ -97,7 +97,7 @@ test_that("The `resolve_rows_l()` and `resolve_rows_i()` fns both work", {
 
   expect_identical(resolve_rows_l(1, exibble_gt_2), c(TRUE, rep_len(FALSE, length(row_names_2) - 1)))
   expect_identical(resolve_rows_l("apricot", exibble_gt_2), c(TRUE, rep(FALSE, length(row_names_2) - 1)))
-  expect_warning(expect_identical(resolve_rows_l(NULL, exibble_gt_2), rep_len(TRUE, length(row_names_2))))
+  expect_warning(expect_identical(resolve_rows_l(NULL, exibble_gt_2, null_means = "everything"), rep_len(TRUE, length(row_names_2))))
   expect_identical(resolve_rows_l(everything(), exibble_gt_2), rep_len(TRUE, length(row_names_2)))
 
   #
@@ -137,8 +137,8 @@ test_that("The `resolve_rows_l()` and `resolve_rows_i()` fns both work", {
   expect_identical(resolve_rows_i("row_1", exibble_gt_1), 1L)
   expect_identical(resolve_rows_i(c("row_1", "row_1", "row_2", "row_1"), exibble_gt_1), 1:2)
   expect_identical(resolve_rows_i("", exibble_gt_1), 8L)
-  expect_identical(resolve_rows_i(FALSE, exibble_gt_1), integer(0))
-  expect_identical(resolve_rows_i(character(0), exibble_gt_1), integer(0))
+  expect_identical(resolve_rows_i(FALSE, exibble_gt_1), integer(0L))
+  expect_identical(resolve_rows_i(character(0L), exibble_gt_1), integer(0L))
   expect_warning(expect_identical(resolve_rows_i(NULL, exibble_gt_1), 1:8))
   expect_identical(resolve_rows_i(everything(), exibble_gt_1), 1:8)
   expect_identical(resolve_rows_i(TRUE, exibble_gt_1), 1:8)
@@ -158,11 +158,11 @@ test_that("The `resolve_rows_l()` and `resolve_rows_i()` fns both work", {
   expect_identical(resolve_rows_i(is.na(char), exibble_gt_1), 5L)
   expect_identical(resolve_rows_i(num > 4, exibble_gt_1), c(3:5, 7:8))
   expect_identical(resolve_rows_i(fctr == "six", exibble_gt_1), 6L)
-  expect_identical(resolve_rows_i(currency == 20, exibble_gt_1), integer(0))
+  expect_identical(resolve_rows_i(currency == 20, exibble_gt_1), integer(0L))
 })
 
 
-test_that("The `resolve_vector_l()` and `resolve_vector_i()` fns both work", {
+test_that("resolve_vector_l() and resolve_vector_i() both work", {
 
   vector_x <- c(colnames(exibble), NA_character_, "", colnames(exibble)[1:2])
 

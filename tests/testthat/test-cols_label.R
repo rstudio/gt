@@ -17,21 +17,9 @@ tbl <-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
-
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
-}
-
-test_that("The function `cols_label()` works correctly", {
+test_that("cols_label() correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -124,8 +112,7 @@ test_that("The function `cols_label()` works correctly", {
   expect_error(gt(tbl) %>% cols_label(col_a = "col_1"))
 
   # Expect no partial matching issues with column names and arguments
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     dplyr::tribble(
       ~a , ~d,
       1, 4,
@@ -137,8 +124,7 @@ test_that("The function `cols_label()` works correctly", {
         d = "label d"
       )
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     dplyr::tribble(
       ~a , ~dat,
       1, 4,

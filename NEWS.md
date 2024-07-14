@@ -1,5 +1,281 @@
 # gt (development version)
 
+* Improved error messages for the `text_transform()` function if `locations` couldn't be resolved. (@olivroy, #1774)
+
+* `tab_row_group()` gives a more precise error message when `rows` can't be resolved correctly (#1535). (@olivroy, #1770)
+
+* Fixed an issue where `md("")` would fail in Quarto. (@olivroy, #1769)
+
+* Fixed a bug in using `pct()` column widths with `as_gtable()` (@teunbrand, #1771)
+ 
+# gt 0.11.0
+
+## New features
+
+* **gt** tables can now be rendered in the grid graphics system with the new `as_gtable()` function (#180, #420, #509, #961, #1652, #1701). Thank you @teunbrand for this valuable contribution! (#1563, #1648, #1655, #1727)
+
+* With the new `fmt_chem()` function, it's possible to format chemical formulas and chemical equations in the table body. (#1636)
+
+* We added `fmt_email()` we can transform email addresses in table cells into usable 'mailto:' links. This operates similarly to `fmt_url()` but removes some unneeded anchor tag attributes (#1616). (#1649)
+
+* The new `fmt_tf()` function lets you format logical values in a **gt** table. You could express these as a 'yes' or 'no', a 'true' or 'false', or, perhaps use pairings of complementary symbols that make sense in a table (#1650). (#1654)
+
+* The new `fmt_country()` was added to help with making country names consistent and localizable. The input text can either consist of 2- or 3-letter ISO 3166-1 country codes. (#1645, #1696)
+
+* Math formulas (written in LaTeX) can now be rendered to HTML through `md()` and `fmt_markdown()`. The LaTeX formulas can be set between `$` or `$$` delimiters for inline and block rendering styles. While this requires the **katex** package to work (it's an optional dependency), the rendering of formulas is dependency-free in the output (#375, #616, #1163). (#1578)
+
+* We added the `unit_conversion()` helper function to help you perform unit conversions. This function returns a conversion factor for transforming a value from one form of measurement units to a target form. This works wonderfully in the `scale_by` argument that is present in many number-based `fmt_*()` functions. (#1704, #1709, #1710, #1729)
+
+* The `plot()` method was added for `gt_tbl` so that one can quickly create a reprex visual example (e.g., `exibble |> gt() |> plot()`). (#1742)
+
+* `info_time_style()` and `info_date_style()` gain a `locale` argument to preview time and date formatting in a specific locale. (#1747)
+
+* `data_color()` throws a more informative error message if `rows` didn't resolve to anything (#1659). (@olivroy, #1660).
+
+* Several datasets were added to the package: `reactions`, `photolysis`, `peeps`, `nuclides`, `gibraltar`, and `films`. (#1619, #1641, #1664, #1668, #1686, #1695)
+
+## Improvements to the LaTeX output format
+
+* A host of improvements were made to LaTeX output such that styling made through `tab_options()` and `tab_style()` is now honored. The styling implemented now includes: (1) font size, underlining, italicizing, bolding, indenting text, coloring text, filling cell backgrounds, and modifying text case (i.e., uppercase, lowercase, sentence case) (#1472). (#1594, #1603, #1746, thanks so much @kbrevoort)
+
+* Text in spanner labels is now nicely wrapped in LaTeX output, where before there would be no wrapping at all (#1656). (#1716, #1746)
+
+* The `gt()` setting of `row_group_as_column == TRUE` is now implemented in LaTeX output. (#1716)
+
+* LaTeX output now understands and can convert from lengths expressed in pixels (an internal conversion to pt units is performed) (#1582). (#1595)
+
+* A fix was made to correct an error related to converting px units to pt units for LaTeX output. (#1591, thank you @AaronGullickson)
+
+## Improvements to interactive HTML tables via `opt_interactive()`
+
+* The performance of interactive table rendering through `opt_interactive()` has  been improved (#1289). (#1735)
+
+* `opt_interactive()` now shows row names if `rownames_to_stub = TRUE` (#1702). (@olivroy, #1706)
+
+* There's now better support for displaying group columns, if present, in interactive tables (#1705). (@olivroy, #1725, #1758, #1760)
+
+* Interactive tables can now display the stub header label created with `tab_stubhead()`. (@olivroy, #1758).
+
+* There is no longer an error when having a hidden column under a spanner label in an interactive HTML table (i.e., `opt_interactive()`) context. (#1629)
+
+* Interactive tables now render the first level of column groups added by `tab_spanner()` (#1618). Thanks @obsaditelnost for your work on this! (#1623)
+
+* The `opt_interactive()` function now has the `height` argument to help specify the height of an interactive table (#1544). (@olivroy, #1723).
+
+* When using `opt_interactive(use_pagination = FALSE)` the pagination controls are now entirely removed instead of merely being non-functional (#1542). (#1642)
+
+* When supplying a locale value to an interactive table, we now ensure that the supplied locale is normalized (so `"fr_CH"` will be internally corrected to `"fr-CH"`) (#1637). (#1643)
+
+## Minor improvements and bug fixes
+
+* The `fill_color` argument in `fmt_icon()` now allows the use of named vector/list to apply different colors to different icons (#1560). (#1647)
+
+* `fmt_flag()` gains a `locale` argument so that SVG title text displays country names in any locale language. (#1645)
+
+* To better represent missing values in nanoplots, the `"marker"` option has been added in `cols_nanoplot()` (#1567). (#1587)
+
+* Many of the `info_*()` functions were upgraded with better functionality and a refreshed look. (#1720, #1748, #1754)
+
+* The `metro` dataset has been updated with six new Line 11 stations that opened on 2024-06-13. (#1708)
+
+* For HTML tables produced in Quarto, we now use the `data-qmd-base64` attribute along with base64 text when passing Markdown text to Quarto (which handles the Markdown conversion) (#1487, #1488). (#1688, #1690, #1734)
+
+* Scientific and engineering notation will no longer unexpectedly wrap lines in HTML for smaller column widths. (#1621)
+
+* Footnote marks in HTML table outputs no longer unexpectedly increase the text line height (#1556). (#1644)
+
+* We now ensure tables print correctly when called from inline code in `.qmd` or `.Rmd` documents (#1055). (#1689)
+
+* `data_color()` throws a more informative error if an internal calculation failed (e.g., presence of infinite values) (#1373). (@olivroy, #1585)
+
+* `data_color()` provides an informative error message if `rows` doesn't resolve to anything. (@olivroy, #1659)
+
+* `summary_rows()` now throws a more informative error message that you should use `grand_summary_rows()` if no row groups are detected (#1292). (@olivroy, #1752)
+
+* Boxplot-based nanoplots now correctly determine which data points are outliers. (#1756)
+
+* The issue where having a row group set as a column in the stub, corrupting the setting of column widths in HTML output tables, has been fixed (#1253, #1510). (#1744)
+
+* The rendering of footnotes and source notes received fixes to ensure that all requested notes are inserted and also that the typesetting options in `tab_options()` is implemented (#1505, #1615). (#1620, #1751)
+
+* Using a `fmt_*()` function while the stub is composed of Markdown or HTML no longer results in an error (#1600). (#1627)
+
+* The combination of using `cols_label()` + `summary_rows()` / `grand_summary_rows()` no longer causes an error for RTF output through `gtsave()` (#1233). (#1596)
+
+* We now ensure that `id` values are stripped of HTML tags when using `tab_row_group()`. Previously this condition would create corrupted row group labels (#1143). (#1750)
+
+* `cols_hide()` no longer errors if a column wasn't supplied. Error messages are also clearer when supplying a column that doesn't exist (#1631). (#1632)
+
+* `cols_units()`, `tab_footnote()` and `tab_style()` now give better error messages when `locations` is not correctly specified (#475). (@olivroy, #1638, #1640, #1733)
+
+* Error messages are now improved for `rm_spanners()`, `rm_footnotes()`, and `rm_source_notes()` (#1638). (#1661)
+
+* Error messages for the `vec_*()` functions are now standardized with `check_vector_valid()`. (#1662)
+
+* Running **testthat** tests no longer fails on Windows due to `gtsave()` path incompatibilities (#1626). (#1627)
+
+* Tests run on Windows are less noisy now (no more render related warnings). (#1634)
+
+* Much code refactoring, linting, and test improvements were performed by @olivroy, resulting in many performance gains. (#1666, #1683, #1694, #1699, #1715, #1718, #1728, #1730, #1731, #1732, #1733, #1753)
+
+* **gt** now depends on R 3.6. (#1599, #1731).
+
+## Documentation enhancements
+
+* Many small documentation fixes were performed. (#1555, #1598, #1633, #1658, #1663, #1676, #1685, #1700, #1703, #1717, #1719, #1721)
+
+* More examples were added to further demonstrate how various functions can be used. (#1646, #1667, #1677, #1698, #1724, #1737)
+
+# gt 0.10.1
+
+## Improvements to nanoplots
+
+* Box plots can now be generated via `cols_nanoplot()` by using `plot_type = "boxplot"`. These plots are laid out horizontally and will, by default, share the same plot axis across rows. (#1527)
+
+* We can now have single line bar plots generated through `cols_nanoplot()`. If the plot_type is set to `"bar"` and single values are found, then horizontal bars will be generated and will be comparable across rows. (#1514, #1515, #1519)
+
+* The `autohide` argument was added to the `cols_nanoplot()` function so that columns containing input data for nanoplots could be conveniently hidden from final presentation. (#1533)
+
+* Added option (the `data_area_fill_color` arg in `nanoplot_options()`) to change fill color of nanoplot data area for line-type plots (#1521). (#1534)
+
+## Minor improvements and bug fixes
+
+* The performance of rendering bigger tables as HTML has been improved and is now up to three times faster than before. (#1470, thanks @mgirlich)
+
+* Introduced a small performance improvement by no longer calling `utils::packageVersion()` internally (#1524). (#1525, thank you @slodge)
+
+* Code and test refactoring was performed to generally improve performance and code readability. (#1480)
+
+* The `gtsave()` function now returns the file path invisibly instead of `TRUE`. (#1478)
+
+* Most functions now produce better error messages if not provided with a `gt_tbl` object. (#1504, #1624)
+
+* The URL formatting through `fmt_url()` has been improved by preventing link text breaking across lines (#1509). (#1537) 
+
+* We now remove some unnecessary newlines in the HTML text produced by `as_raw_html()`, which caused an issue when integrating **gt** tables into **blastula** email messages (#1506). (#1520)
+
+* The `tab_spanner_delim()` now lets you use `delim` strings longer than a single character (#1469). (#1513)
+
+* Fix for footnotes in LaTeX tables where no footnote marks are to be added; this previously showed `"NA"` as the mark in the footer area but this is no longer displayed (#1416). (#1512, thanks @kbrevoort)
+
+* LaTeX tables can now have their overall width specified (#119, #329). (#1495, thank you @kbrevoort)
+
+* Fix issue where a `cols_width()` specification involving percentage values fails for LaTeX tables (#1465). (#1495, thanks again @kbrevoort!)
+
+* Several documentation fixes were made to address inconsistencies and improve clarity. (#1491)
+
+# gt 0.10.0
+
+## Nanoplots
+
+* We can now add in little plots called *nanoplots* to a **gt** table (#299, #515). (#1431, #1439, #1445, #1453, #1458, #1459, #1461, #1462)
+
+* The function `cols_nanoplot()` adds a new column that contains the plots. The data can be obtained from one or more columns in the table. A helper function called `nanoplot_options()` allows for altering the composition and styling of the nanoplots in the new column.
+
+* There are two basic types of nanoplots available: `"line"` and `"bar"`. A line plot shows individual data points and has smooth connecting lines between them to allow for easier scanning of values. You can opt for straight-line connections between data points, or, no connections at all (it's up to you). The data you feed into a line plot can consist of a single vector of values (resulting in equally-spaced *y* values), or, you can supply two vectors representative of *x* and *y*.
+
+* A bar plot is built a little bit differently. The focus is on evenly-spaced bars (requiring a single vector of values) that project from a zero line, clearly showing the difference between positive and negative values. 
+
+* By default, any type of nanoplot will have basic interactivity. One can hover over the data points and vertical guides will display values ascribed to each. A guide on the left-hand side of the plot area will display the minimal and maximal *y* values on hover.
+
+## Other great new features
+
+* Brand new rows can be added to a **gt** table with the new `rows_add()` function. The user can supply the new row data through name value pairs. You have control over where they are placed by way of the `.before` and `.after` arguments (new rows are added to the bottom of the table by default). You can also add empty (i.e., all `NA`) rows with the `.n_empty` option (#698). (#1323)
+
+* To complement `rows_add()`, the `cols_add()` function was added. New columns can indeed be added to a **gt** table with this function, which has an interface close to that of `dplyr::mutate()`. (#1367)
+
+* You can now use an empty table as the starting point for a **gt** table. This can be used in conjunction with `cols_add()` and `rows_add()` to build a table piece-by-piece in specific workflows/settings. What constitutes empty tables can be any of: `0 x 0` tables, `0 x n` tables (no rows, some columns), or `n x 0` tables (some rows, no columns; treated the same as `0 x 0` tables). (#1376)
+
+* There is now a way to better express measurement units and we do this in **gt** with something called units notation. With an intuitive and easy-to-learn syntax, **gt** will ensure that any measurement units are formatted correctly no matter what the output type is. We can format units in the table body with `fmt_units()`, we can attach units to column labels with `cols_units()`, and we can integrate units notation in the already-available `cols_label()` and `tab_spanner()` functions (#417, #533). (#1357, #1426, #1446)
+
+* A very useful new helper function, `from_column()`, has been added so you can fetch values (for compatible arguments) from a column in the input table. For example, if you are using `fmt_scientific()` and the number of significant figures should vary across the values to be formatted, a column containing those values for the `n_sigfig` argument can be referenced by `from_column()`. (#1392, #1393, #1395, #1396, #1399, #1403)
+
+* With the new `fmt_icon()` function we are able to add icons from the Font Awesome icon library. It works in a way that's similar to `fmt_flag()`, in that identifiers in the formatted cells are transformed in-place to SVG-based icons. (#1413)
+
+* The `info_icons()` and `info_flags()` functions have been added to help people know about the valid codes for flags and for icons (when using `fmt_icon()` and `fmt_flag()`). (#1421)
+
+* We added the `extract_body()` function, which lets you pull out a data frame associated with the body cells. Importantly, this extraction can happen at different stages of the table build (e.g., `"init"`, `"text_transformed"`, etc.), allowing a user to have access to a table of formatted body cells for different applications (such as verification of formatting, debugging new formatting functions, etc.) (#1441). (#1449)
+
+* Interactive HTML tables (usually generated through use of `opt_interactive()`) can now use localized labels/controls. So when using any of the 574 supported locales in **gt**, an interactive table will be fully translated to the language of the locale (#1308). (#1389)
+
+* The `illness` and `constants` datasets were added. Both datasets have a `units` column and this is useful for making examples with the `fmt_units()` function. (#1357)
+
+## Improvements to the Word output format
+
+* Processing to Word output now escapes HTML in more places (#1378). (#1303)
+
+* The Word output format now uses the `side` argument present in `summary_rows()` and `grand_summary_rows()` to place the new summary rows either the top or bottom of the row group (with `summary_rows()`) or table as a whole (with `grand_summary_rows()`). (#1325)
+
+* Tables rendered as Word output can now handle the specific case where a table with summary rows doesn't have row names. (#1325)
+
+* Summary rows in Word output tables can now be placed at the top or bottom of a group (or at the top or bottom of the table). (#1402)
+
+* Word output tables can now contain images. This entails compatibility with the `fmt_image()` function, and, images (local and remote) can be inserted through Markdown (#1272). (#1273)
+
+## Documentation enhancements
+
+* The **gt** website has been updated with a slightly different look; section names have been updated for consistency (#1419). (#1287, #1340, #1341, #1444)
+
+* We've improved the formatting of arguments in the documentation so that they all have short titles and descriptions regarding expected inputs and default values. This looks great both in the internal R help pages and in the **pkgdown**-generated website (#1290). (#1338)
+
+* Several small documentation updates were made, with an emphasis on improving examples (#1304, #1349, #1369). (#1293, #1316, #1324, #1329, #1330, #1331, #1334, #1381, #1383, #1395, #1404, #1442, #1454)
+
+## Minor improvements and bug fixes
+
+* The `tab_spanner_delim()` function was given a `limit` argument so that splitting from a particular side can stop early and precisely. (#1328)
+
+* The `width` argument was added to `fmt_image()`. With this change you can variously set the width, the height, or both.
+
+* Significant figures support has been added to the `fmt_scientific()` and `vec_fmt_scientific()` functions; there is a new `n_sigfig` argument in both. (#1411)
+
+* The `cols_merge_range()` function now has a `locale` argument. Range patterns across locales are different (can involve the use of a single hyphen, en dash, em dash, tilde, etc.) and so it does make sense to follow the convention of a locale if provided (#158). (#1423)
+
+* The `fmt_url()` function now has a few more options for adding anchor tag attributes (`"target"`, `"rel"`, `"referrerpolicy"`, and `"hreflang"`). Thanks @elipousson for the work on this! (#1428). (#1452)
+
+* We now have rudimentary support for defining column widths for LaTeX output tables (with `cols_width()`). This accepts length values in 'px' which and automatic conversion to 'pt' values is performed to maximize compatibility with different LaTeX flavors (#634, #851, #1417). (#1371, #1450)
+
+* It's now possible to use background fill colors and perform text coloring and emboldened/italicized text within the body cells of LaTeX tables. This is commonly performed through the use of `tab_style()` and `data_color()` (#84, #869). (#1352)
+
+* The `gtsave()` function now works with `gt_group` objects (usually generated through `gt_split()` or `gt_group()`) (#1354). (#1365)
+
+* All `gt_group` objects can now be printed using R Markdown or Quarto (#1286). (#1332)  
+
+* When using `fmt_currency()` with a locale value set, **gt** will now use that to automatically select the locale's default currency. While some countries can have multiple currencies, we opt for the most-widely used currency (users could alternatively specify the currency code and `info_currencies()` contains all supported currencies used in the package) (#1346). (#1347)
+
+* The `columns` argument in `cols_hide()` and `cols_unhide()` can now accept `NULL` (i.e., no columns resolved). These functions will no longer error in such a case (#1342). (#1343)
+
+* The `countrypops` dataset was updated with recent (as of August 2023) World Bank data that revises population estimates and brings the final year up to 2022. All examples, tests, and articles using the dataset were also updated. (#1410)
+
+* A few refinements were made to some of the system font stacks defined in `system_fonts()`. (#1447)
+
+* The Databricks notebook environment is now detected by **gt**, so tables will now be automatically displayed without having to call extra printing functions. (#1427)
+
+* Display issues with scientific and engineering notation formatting (lack of dropping trailing zeros, as promised with the `drop_trailing_zeros` argument) were fixed. Part of the fix involves adding the `drop_trailing_dec_mark` argument to the four functions `fmt_scientific()`, `fmt_engineering()`, `vec_fmt_scientific()` and `vec_fmt_engineering()`. (#1380)
+
+* Fixed an incorrect country code reference for the Netherlands that would cause an incorrect flag to appear when using `fmt_flag()`. (#1319)
+
+* Many new flags were added to `fmt_flag()` (#1333, #1335). (#1336)
+
+* In some cases, there was incorrect rounding of duration values when using `fmt_duration()`. This is now fixed, thanks to @rcannood (#1374). (#1375)
+
+* Fixed an issue with `cols_label_with()` where column names wouldn't be relabeled if the resolved columns were only a subset of the total columns available. (#1326)
+
+* Fixed a LaTeX bug where some characters following a `\midrule` would corrupt the table (#145, #391, #1107, #1182). (#1390)
+
+* Provided a rendering fallback for HTML tables rendered in Quarto where the combination of `fmt_markdown()` and `tab_options(quarto.disable_processing = TRUE)` would incorrectly result in empty cells. (#1455)
+
+* A issue associated with a lack of HTML formatting within interactive tables has been fixed (#1299, #1370, #1384, #1443). (#1388)
+
+* Many user-facing error messages have been enhanced using the latest features from the **cli** package. (#1337, thanks @olivroy!)
+
+* Unit tests can now be successfully run on Linux flavors that don't have the `locale` utility (#1214). (#1350, thanks @bastistician!)
+
+* If ever the 'undetermined' (`"und"`) locale is used, it is automatically mapped to the `"en"` locale. (#1394)
+
+* Many unit tests were added for much increased test coverage and many more were modified to increase the speed of running the test suite. (#1291, #1294, #1298, #1350, #1412)
+
+* Added utility functions to extract all examples for regularly building a Quarto website (to do integration testing). (#1344)
+
 # gt 0.9.0
 
 ## New features
@@ -139,7 +415,7 @@
 
 * The `docx` output format is now better detected in R Markdown and Quarto (#1040). (#1084, thanks @cderv!)
 
-* Replaced all `match.arg()` calls with **rlang*'s `match_arg()` for better error output (#672). (#1099, thanks @mojister!)
+* Replaced all `match.arg()` calls with `rlang::arg_match()` for better error output (#672). (#1099, thanks @mojister!)
 
 * Project website improvements; we now have a doublet of sites: (1) https://gt.rstudio.com and (2) https://gt.rstudio.com/dev (#1074, thanks @ddsjoberg!)
 

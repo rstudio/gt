@@ -7,7 +7,12 @@
 rm_header(data)
 }
 \arguments{
-\item{data}{A table object of class \code{gt_tbl}.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -15,7 +20,7 @@ An object of class \code{gt_tbl}.
 \description{
 We can remove the table header from a \strong{gt} table quite easily with
 \code{rm_header()}. The table header is an optional table part (positioned above
-the column labels) that can be added through the \code{\link[=tab_header]{tab_header()}}.
+the column labels) that can be added through \code{\link[=tab_header]{tab_header()}}.
 
 This function for removal is useful if you have received a \strong{gt} table
 (perhaps through an API that returns \strong{gt} objects) but would prefer that
@@ -25,9 +30,9 @@ no header part in the input \code{gt_tbl} object.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with the
-\code{\link[=tab_header]{tab_header()}} function; with that, we get a title and a subtitle for the
-table.
+Let's use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. A
+header part can be added with \code{\link[=tab_header]{tab_header()}}; with that, we get
+a title and a subtitle for the table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
   gtcars |>
@@ -47,7 +52,7 @@ gt_tbl
 }}
 
 If you decide that you don't want the header in the \code{gt_tbl} object, it can
-be removed with the \code{rm_header()} function.
+be removed with \code{rm_header()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{rm_header(data = gt_tbl)
 }\if{html}{\out{</div>}}

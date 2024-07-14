@@ -7,15 +7,28 @@
 ggplot_image(plot_object, height = 100, aspect_ratio = 1)
 }
 \arguments{
-\item{plot_object}{A ggplot plot object.}
+\item{plot_object}{\emph{A ggplot plot object}
 
-\item{height}{The absolute height (px) of the image in the table cell.}
+\verb{obj:<ggplot>} // \strong{required}
 
-\item{aspect_ratio}{The plot's final aspect ratio. Where the height of the
-plot is fixed using the \code{height} argument, the \code{aspect_ratio}
-will either compress (\code{aspect_ratio} < \code{1.0}) or expand
-(\code{aspect_ratio} > \code{1.0}) the plot horizontally. The default value
-of \code{1.0} will neither compress nor expand the plot.}
+A \code{ggplot} plot object.}
+
+\item{height}{\emph{Height of image}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{100}
+
+The absolute height of the output image in the table cell (in \code{"px"}
+units). By default, this is set to \code{"100px"}.}
+
+\item{aspect_ratio}{\emph{The final aspect ratio of plot}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{1.0}
+
+This is the plot's final aspect ratio. Where the height of the plot is
+fixed using the \code{height} argument, the \code{aspect_ratio} will either compress
+(\code{aspect_ratio} < \code{1.0}) or expand (\code{aspect_ratio} > \code{1.0}) the plot
+horizontally. The default value of \code{1.0} will neither compress nor expand
+the plot.}
 }
 \value{
 A character object with an HTML fragment that can be placed inside of
@@ -26,12 +39,12 @@ We can add a \strong{ggplot2} plot inside of a table with the help of the
 \code{ggplot_image()} function. The function provides a convenient way to generate
 an HTML fragment with a \code{ggplot} object. Because this function is currently
 HTML-based, it is only useful for HTML table output. To use this function
-inside of data cells, it is recommended that the \code{\link[=text_transform]{text_transform()}} function
-is used. With that function, we can specify which data cells to target and
-then include a call to \code{ggplot_image()} within the required user-defined
-function (for the \code{fn} argument). If we want to include a plot in other
-places (e.g., in the header, within footnote text, etc.) we need to use
-\code{ggplot_image()} within the \code{\link[=html]{html()}} helper function.
+inside of data cells, it is recommended that \code{\link[=text_transform]{text_transform()}} is used.
+With that function, we can specify which data cells to target and then
+include a call to \code{ggplot_image()} within the required user-defined function
+(for the \code{fn} argument). If we want to include a plot in other places (e.g.,
+in the header, within footnote text, etc.) we need to use \code{ggplot_image()}
+within the \code{\link[=html]{html()}} helper function.
 
 By itself, the function creates an HTML image tag with an image URI embedded
 within (a 100 dpi PNG). We can easily experiment with any \code{ggplot2} plot

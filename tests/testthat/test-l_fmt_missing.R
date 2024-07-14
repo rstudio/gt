@@ -1,4 +1,4 @@
-test_that("The `sub_missing()` function works correctly", {
+test_that("sub_missing() works correctly", {
 
   # Create an input data frame with two columns, both numeric
   data_tbl <-
@@ -61,7 +61,7 @@ test_that("The `sub_missing()` function works correctly", {
        ) %>%
        sub_missing(columns = everything()) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("—", "$74.000$", "—", "$93.000$", "—", "$76.000$", "—")
+    c("—", "74.000", "—", "93.000", "—", "76.000", "—")
   )
 
   # Reverse the ordering: use `sub_missing()` first
@@ -74,6 +74,6 @@ test_that("The `sub_missing()` function works correctly", {
          decimals = 3
        ) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("—", "$74.000$", "—", "$93.000$", "—", "$76.000$", "—")
+    c("—", "74.000", "—", "93.000", "—", "76.000", "—")
   )
 })

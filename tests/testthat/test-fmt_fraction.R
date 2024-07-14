@@ -1,4 +1,4 @@
-test_that("The `fmt_fraction()` function works correctly", {
+test_that("fmt_fraction() works correctly", {
 
   # Create an input data frame two columns: one
   # character-based and one that is numeric
@@ -39,8 +39,8 @@ test_that("The `fmt_fraction()` function works correctly", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  char <- (tab %>% dt_data_get())[["char"]]
-  num <- (tab %>% dt_data_get())[["num"]]
+  char <- dt_data_get(tab)[["char"]]
+  num <- dt_data_get(tab)[["num"]]
 
   # Expect the extracted values to match those of the original dataset
   expect_equal(data_tbl$char, char)
@@ -56,7 +56,7 @@ test_that("The `fmt_fraction()` function works correctly", {
   # Expect an error when using an invalid accuracy value
   expect_error(tab %>% fmt_fraction(columns = num, accuracy = "invalid"))
   expect_error(tab %>% fmt_fraction(columns = num, accuracy = 0))
-  expect_error(regexp = NA, tab %>% fmt_fraction(columns = num, accuracy = 1))
+  expect_no_error(tab %>% fmt_fraction(columns = num, accuracy = 1))
   expect_error(tab %>% fmt_fraction(columns = num, accuracy = FALSE))
 
   # Format the `num` column to fractions with the 'low' accuracy
@@ -409,17 +409,14 @@ test_that("The `fmt_fraction()` function works correctly", {
 
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_fraction()`
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>% fmt_fraction(columns = a) %>% as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_fraction(columns = a, rows = 1:5) %>% as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_fraction(columns = a, pattern = "a{x}b") %>% as_raw_html()
   )
@@ -433,7 +430,7 @@ test_that("The `fmt_fraction()` function works correctly", {
   )
 })
 
-test_that("The `fmt_fraction()` function produces reproducible results for HTML output", {
+test_that("fmt_fraction() produces reproducible results for HTML output", {
 
   # Define values
   range_0_1 <- c(0.0001, 0.001, 0.01, 0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9, 0.99, 0.999, 0.9999)
@@ -534,7 +531,7 @@ test_that("The `fmt_fraction()` function produces reproducible results for HTML 
   fraction_tbl_simplified %>% as_rtf() %>% expect_snapshot()
 })
 
-test_that("The `fmt_fraction()` fn can render values in the Indian numbering system", {
+test_that("fmt_fraction() can render values in the Indian numbering system", {
 
   # These numbers will be used in tests of formatting
   # values to the Indian numbering system
@@ -578,13 +575,13 @@ test_that("The `fmt_fraction()` fn can render values in the Indian numbering sys
        fmt_fraction(columns = num, layout = "diagonal", system = "ind") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
-      "$50,00,000$", "$1,000$", "$10$", "$12,345$", "$1,234\\, {{}^{1}\\!/_{2}}$",
-      "$123\\, {{}^{4}\\!/_{9}}$", "$1\\, {{}^{2}\\!/_{9}}$", "${{}^{1}\\!/_{8}}$",
-      "$25,83,063\\, {{}^{2}\\!/_{9}}$", "$1,53,56,74,223\\, {{}^{1}\\!/_{3}}$",
-      "$6,42,56,48,25,73,36,228$", "$-50,00,00,000$", "$-1,000$", "$-10$",
-      "$-12,345$", "$-1,234\\, {{}^{1}\\!/_{2}}$", "$-123\\, {{}^{4}\\!/_{9}}$",
-      "$-1\\, {{}^{2}\\!/_{9}}$", "$-{{}^{1}\\!/_{8}}$", "$0$", "$0$",
-      "NA", "$Inf$", "$-Inf$"
+      "50,00,000", "1,000", "10", "12,345", "1,234\\textsuperscript{1}\\!/\\textsubscript{2}",
+      "123\\textsuperscript{4}\\!/\\textsubscript{9}", "1\\textsuperscript{2}\\!/\\textsubscript{9}", "\\textsuperscript{1}\\!/\\textsubscript{8}",
+      "25,83,063\\textsuperscript{2}\\!/\\textsubscript{9}", "1,53,56,74,223\\textsuperscript{1}\\!/\\textsubscript{3}",
+      "6,42,56,48,25,73,36,228", "-50,00,00,000", "-1,000", "-10",
+      "-12,345", "-1,234\\textsuperscript{1}\\!/\\textsubscript{2}", "-123\\textsuperscript{4}\\!/\\textsubscript{9}",
+      "-1\\textsuperscript{2}\\!/\\textsubscript{9}", "-\\textsuperscript{1}\\!/\\textsubscript{8}", "0", "0",
+      "NA", "Inf", "-Inf"
     )
   )
 })

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -68,7 +68,7 @@ dt_options_tbl <-
     "table_margin_left",                  TRUE,  "table",            "px",      "auto",
     "table_margin_right",                 TRUE,  "table",            "px",      "auto",
     "table_background_color",             TRUE,  "table",            "value",   "#FFFFFF",
-    "table_additional_css",              FALSE,  "table",            "values",  character(0),
+    "table_additional_css",              FALSE,  "table",            "values",  character(0L),
     "table_font_names",                  FALSE,  "table",            "values",  default_fonts_vec,
     "table_font_size",                    TRUE,  "table",            "px",      "16px",
     "table_font_weight",                  TRUE,  "table",            "value",   "normal",
@@ -122,6 +122,7 @@ dt_options_tbl <-
     "column_labels_border_lr_width",      TRUE,  "column_labels",    "px",      "1px",
     "column_labels_border_lr_color",      TRUE,  "column_labels",    "value",   "#D3D3D3",
     "column_labels_hidden",              FALSE,  "column_labels",    "logical", FALSE,
+    "column_labels_units_pattern",       FALSE,  "column_labels",    "value",   "{1}, {2}",
     "row_group_background_color",         TRUE,  "row_group",        "value",   NA_character_,
     "row_group_font_size",                TRUE,  "row_group",        "px",      "100%",
     "row_group_font_weight",              TRUE,  "row_group",        "value",   "initial",
@@ -223,6 +224,7 @@ dt_options_tbl <-
     "container_overflow_x",              FALSE,  "container",        "overflow","auto",
     "container_overflow_y",              FALSE,  "container",        "overflow","auto",
     "ihtml_active",                      FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_height",                      FALSE,  "interactive",      "px",      "auto",
     "ihtml_use_pagination",              FALSE,  "interactive",      "logical", TRUE,
     "ihtml_use_pagination_info",         FALSE,  "interactive",      "logical", TRUE,
     "ihtml_use_sorting",                 FALSE,  "interactive",      "logical", TRUE,

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -27,9 +27,8 @@
 #' @param data A table object that is created using the `gt()` function.
 #' @param object The list object created by the `cells_body()` function.
 #'
-#' @import rlang
 #' @noRd
-resolve_cells_body <- function(data, object) {
+resolve_cells_body <- function(data, object, call = rlang::caller_env()) {
 
   #
   # Resolution of columns and rows as integer vectors
@@ -40,14 +39,16 @@ resolve_cells_body <- function(data, object) {
   resolved_columns_idx <-
     resolve_cols_i(
       expr = !!object$columns,
-      data = data
+      data = data,
+      call = call
     )
 
   # Resolve rows as index values
   resolved_rows_idx <-
     resolve_rows_i(
       expr = !!object$rows,
-      data = data
+      data = data,
+      call = call
     )
 
   # Get all possible combinations with `expand.grid()`
@@ -56,9 +57,10 @@ resolve_cells_body <- function(data, object) {
       resolved_columns_idx,
       resolved_rows_idx,
       stringsAsFactors = FALSE
-    ) %>%
-    dplyr::arrange(Var1) %>%
-    dplyr::distinct()
+    )
+  expansion <- dplyr::distinct(expansion)
+  # TODO consider sort_by when depending on 4.4?
+  epansion <- expansion[order(expansion$Var1), , drop = FALSE]
 
   # Create a list object
   cells_resolved <-
@@ -80,7 +82,8 @@ resolve_cells_body <- function(data, object) {
 #' @param object The list object created by the `cells_stub()` function.
 #' @noRd
 resolve_cells_stub <- function(data,
-                               object) {
+                               object,
+                               call = rlang::caller_env()) {
 
   #
   # Resolution of rows as integer vectors
@@ -89,7 +92,8 @@ resolve_cells_stub <- function(data,
   resolved_rows_idx <-
     resolve_rows_i(
       expr = !!object$rows,
-      data = data
+      data = data,
+      call = call
     )
 
   # Create a list object
@@ -108,8 +112,11 @@ resolve_cells_stub <- function(data,
 #' @param object The list object created by the `cells_column_labels()`
 #'   function.
 #' @noRd
-resolve_cells_column_labels <- function(data,
-                                        object) {
+resolve_cells_column_labels <- function(
+    data,
+    object,
+    call = rlang::caller_env()
+) {
 
   #
   # Resolution of columns as integer vectors
@@ -118,7 +125,8 @@ resolve_cells_column_labels <- function(data,
   resolved_columns <-
     resolve_cols_i(
       expr = !!object$columns,
-      data = data
+      data = data,
+      call = call
     )
 
   # Create a list object
@@ -137,7 +145,11 @@ resolve_cells_column_labels <- function(data,
 #' @param object The list object created by the `cells_column_labels()`
 #'   function.
 #' @noRd
-resolve_cells_column_spanners <- function(data, object) {
+resolve_cells_column_spanners <- function(
+    data,
+    object,
+    call = rlang::caller_env()
+) {
 
   spanners <- dt_spanners_get(data = data)
 
@@ -154,7 +166,8 @@ resolve_cells_column_spanners <- function(data, object) {
     resolve_vector_i(
       expr = !!object$spanners,
       vector = spanner_ids,
-      item_label = "spanner"
+      item_label = "spanner",
+      call = call
     )
 
   resolved_spanners <- spanner_ids[resolved_spanners_idx]
@@ -175,7 +188,7 @@ resolve_cells_column_spanners <- function(data, object) {
 #' @param object The list object created by the `cells_row_groups()`
 #'   function.
 #' @noRd
-resolve_cells_row_groups <- function(data, object) {
+resolve_cells_row_groups <- function(data, object, call = rlang::caller_env()) {
 
   row_groups <- dt_row_groups_get(data = data)
 
@@ -183,7 +196,8 @@ resolve_cells_row_groups <- function(data, object) {
     resolve_vector_i(
       expr = !!object$groups,
       vector = row_groups,
-      item_label = "group"
+      item_label = "group",
+      call = call
     )
 
   resolved_row_groups <- row_groups[resolved_row_groups_idx]
@@ -206,18 +220,22 @@ resolve_cols_c <- function(
     data,
     strict = TRUE,
     excl_stub = TRUE,
-    null_means = c("everything", "nothing")
+    excl_group = TRUE,
+    null_means = c("everything", "nothing"),
+    call = rlang::caller_env()
 ) {
 
   null_means <- rlang::arg_match(null_means)
 
   names(
     resolve_cols_i(
-      expr = {{expr}},
+      expr = {{ expr }},
       data = data,
       strict = strict,
       excl_stub = excl_stub,
-      null_means = null_means
+      excl_group = excl_group,
+      null_means = null_means,
+      call = call
     )
   )
 }
@@ -236,10 +254,12 @@ resolve_cols_i <- function(
     data,
     strict = TRUE,
     excl_stub = TRUE,
-    null_means = c("everything", "nothing")
+    excl_group = TRUE,
+    null_means = c("everything", "nothing"),
+    call = rlang::caller_env()
 ) {
   quo <- rlang::enquo(expr)
-  cols_excl <- c()
+  cols_excl <- NULL # c()
   null_means <- rlang::arg_match(null_means)
 
   if (is_gt_tbl(data = data)) {
@@ -260,6 +280,22 @@ resolve_cols_i <- function(
       }
     }
 
+    # If we use the gt-specific select helper `row_group()` then we
+    # will retrieve the row_group var name and return the output in the
+    # same format as the return value for `tidyselect::eval_select()`
+    if (rlang::as_label(quo) == "row_group()") {
+
+      row_group_var <- dt_boxhead_get_vars_groups(data = data)
+
+      if (!is.null(row_group_var)) {
+        row_group_col <- 1
+        names(row_group_col) <- row_group_var
+        return(row_group_col)
+      } else {
+        return(NULL)
+      }
+    }
+
     # In most cases we would want to exclude the column that
     # represents the stub but that isn't always the case (e.g.,
     # when considering the stub for column sizing); the `excl_stub`
@@ -273,11 +309,18 @@ resolve_cols_i <- function(
         NULL
       }
 
-    # The columns that represent the group rows are always
-    # excluded (i.e., included in the `col_excl` vector)
-    group_rows_vars <- dt_boxhead_get_vars_groups(data = data)
+    # The columns that represent the group rows are usually
+    # always excluded but in certain cases (i.e., `rows_add()`)
+    # we may want to include this column
+    group_var <-
+      if (excl_group) {
+        dt_boxhead_get_vars_groups(data = data)[1]
+      } else {
+        NULL
+      }
 
-    cols_excl <- c(stub_var, group_rows_vars)
+
+    cols_excl <- c(stub_var, group_var)
 
     data <- dt_data_get(data = data)
   }
@@ -299,7 +342,8 @@ resolve_cols_i <- function(
       tidyselect::eval_select(
         expr = quo,
         data = data,
-        strict = strict
+        strict = strict,
+        error_call = call # user-facing error message
       )
     )
 
@@ -342,6 +386,7 @@ translate_legacy_resolver_expr <- function(quo, null_means) {
       rlang::quo_set_expr(quo = quo, expr = quote(everything()))
 
     } else {
+
       rlang::quo_set_expr(quo = quo, expr = quote(NULL))
     }
 
@@ -363,10 +408,17 @@ translate_legacy_resolver_expr <- function(quo, null_means) {
   }
 }
 
-resolve_rows_l <- function(expr, data) {
+resolve_rows_l <- function(
+    expr,
+    data,
+    null_means,
+    call = rlang::caller_env()
+) {
 
   if (is_gt_tbl(data = data)) {
-    row_names <- dt_stub_df_get(data = data)$row_id
+    # unlist because dt_stub_df_get might return a list instead of a vector
+    # (when helper functions such as md/html were used)
+    row_names <- unlist(dt_stub_df_get(data = data)$row_id)
     data <- dt_data_get(data = data)
   } else {
     row_names <- row.names(data)
@@ -384,34 +436,62 @@ resolve_rows_l <- function(expr, data) {
 
   if (is.null(resolved)) {
 
-    cli::cli_warn(c(
-      "Since gt v0.3.0, the use of `NULL` for `rows` has been deprecated.",
-      "*" = "Please use `TRUE` instead."
-    ))
+    if (null_means == "everything") {
 
-    # Modify the NULL value of `resolved` to `TRUE` (which is
-    # fully supported for selecting all rows)
-    resolved <- TRUE
+      cli::cli_warn(c(
+        "Since gt v0.3.0, the use of `NULL` for `rows` has been deprecated.",
+        "*" = "Please use `TRUE` instead."
+      ))
+
+      # Modify the NULL value of `resolved` to `TRUE` (which is
+      # fully supported for selecting all rows)
+      resolved <- TRUE
+
+    } else {
+      return(NULL)
+    }
   }
 
   resolved <-
     normalize_resolved(
       resolved = resolved,
       item_names = row_names,
-      item_label = "row"
+      item_label = "row",
+      call = call
     )
 
   resolved
 }
 
-resolve_rows_i <- function(expr, data) {
-  which(resolve_rows_l(expr = {{ expr }}, data = data))
+resolve_rows_i <- function(
+    expr,
+    data,
+    null_means = c("everything", "nothing"),
+    call = rlang::caller_env()
+) {
+
+  null_means <- rlang::arg_match(null_means)
+
+  resolved_rows <-
+    resolve_rows_l(
+      expr = {{ expr }},
+      data = data,
+      null_means = null_means,
+      call = call
+    )
+
+  if (!is.null(resolved_rows)) {
+    return(which(resolved_rows))
+  } else {
+    return(NULL)
+  }
 }
 
 resolve_vector_l <- function(
     expr,
     vector,
-    item_label = "item"
+    item_label = "item",
+    call = rlang::caller_env()
   ) {
 
   quo <- rlang::enquo(expr)
@@ -426,14 +506,28 @@ resolve_vector_l <- function(
     normalize_resolved(
       resolved = resolved,
       item_names = vector,
-      item_label = item_label
+      item_label = item_label,
+      call = call
     )
 
   resolved
 }
 
-resolve_vector_i <- function(expr, vector, item_label = "item") {
-  which(resolve_vector_l(expr = {{ expr }}, vector = vector, item_label = item_label))
+resolve_vector_i <- function(
+    expr,
+    vector,
+    item_label = "item",
+    call = rlang::caller_env()
+) {
+
+  which(
+    resolve_vector_l(
+      expr = {{ expr }},
+      vector = vector,
+      item_label = item_label,
+      call = call
+    )
+  )
 }
 
 resolve_groups <- function(expr, vector) {
@@ -454,15 +548,31 @@ resolve_groups <- function(expr, vector) {
 
     # Provide deprecation warning
     cli::cli_warn(c(
-      "Since gt v0.9.0, the `groups = NULL` option has been deprecated.",
-      "*" = "If this was intended for generation of grand summary rows, instead
-  use the `grand_summary_rows()` function."
+      "Since gt v0.9.0, `groups = NULL` is deprecated.",
+      "i" = "If this was intended for generation of grand summary rows,
+  use `grand_summary_rows()` instead."
     ))
 
     return(":GRAND_SUMMARY:")
   }
 
+  # Handle groups = FALSE supplied to not do any summary rows.
+  if (isFALSE(resolved)) {
+    resolved <- NULL
+  }
+
   if (length(resolved) < 1) {
+    # Error if groups = everything() and no row groups. Return NULL otherwise.
+    input <- tryCatch(rlang::as_label(quo), error = NULL)
+    if (identical(input, "everything()")) {
+      # Abort to suggest grand_summary_rows() instead. (#1292)
+      cli::cli_abort(c(
+        "Since gt v0.9.0, `groups = everything()` is deprecated in {.fn summary_rows} if no row groups are present.",
+        "i" = "Use `grand_summary_rows()` instead or add row groups."
+        ),
+        call = NULL
+      )
+    }
     return(NULL)
   }
 
@@ -487,7 +597,8 @@ resolve_groups <- function(expr, vector) {
 normalize_resolved <- function(
     resolved,
     item_names,
-    item_label
+    item_label,
+    call = rlang::caller_env()
 ) {
 
   item_count <- length(item_names)
@@ -513,14 +624,19 @@ normalize_resolved <- function(
     } else if (length(resolved) == item_count) {
       # Do nothing
     } else {
-      resolver_stop_on_logical(item_label = item_label)
+      resolver_stop_on_logical(
+        item_label = item_label,
+        actual_length = length(resolved),
+        expected_length = item_count,
+        call = call
+      )
     }
 
   } else if (is.numeric(resolved)) {
 
     unknown_resolved <- setdiff(resolved, item_sequence)
     if (length(unknown_resolved) != 0) {
-      resolver_stop_on_numeric(item_label = item_label, unknown_resolved = unknown_resolved)
+      resolver_stop_on_numeric(item_label = item_label, unknown_resolved = unknown_resolved, call = call)
     }
     resolved <- item_sequence %in% resolved
 
@@ -528,45 +644,90 @@ normalize_resolved <- function(
 
     unknown_resolved <- setdiff(resolved, item_names)
     if (length(unknown_resolved) != 0) {
-      resolver_stop_on_character(item_label = item_label, unknown_resolved = unknown_resolved)
+      if (all(is.na(item_names)) && item_label == "row")  {
+        # Send a more informative message when the gt table has no rows
+        # rows need to be initialized with `rownames_to_stub = TRUE` or with `rowname_col = <column>`
+        # Issue #1535 (Override the resolver default error message.)
+
+        cli::cli_abort(c(
+          "Can't find named rows in the table",
+          "i" = "In {.help [gt()](gt::gt)}, use {.code rownames_to_stub = TRUE} or specify {.arg rowname_col} to initialize row names in the table."
+        ), call = call)
+      }
+
+      # Potentially use arg_match() when rlang issue is solved?
+      resolver_stop_on_character(
+        item_label = item_label,
+        unknown_resolved = unknown_resolved,
+        call = call
+      )
     }
     resolved <- item_names %in% resolved
 
   } else {
-    resolver_stop_unknown(item_label = item_label, resolved = resolved)
+    resolver_stop_unknown(item_label = item_label, resolved = resolved, call = call)
   }
 
   resolved
 }
 
-resolver_stop_on_logical <- function(item_label) {
+resolver_stop_on_logical <- function(
+    item_label,
+    actual_length,
+    expected_length,
+    call = rlang::caller_env()
+) {
 
   cli::cli_abort(
-    "The number of logical values must either be `1` or the number
-    of {item_label}s."
+    "If logical, {.arg {item_label}s} must have length 1 or {expected_length}, \\
+     not {actual_length}.",
+    call = call
   )
 }
 
-resolver_stop_on_numeric <- function(item_label, unknown_resolved) {
-
+resolver_stop_on_numeric <- function(
+    item_label,
+    unknown_resolved,
+    call = rlang::caller_env()
+) {
+  item_label <- cap_first_letter(item_label)
+  # Specify cli pluralization
+  l <- length(unknown_resolved)
   cli::cli_abort(
-    "The following {item_label} indices do not exist in the data:
-    {paste0(unknown_resolved, collapse = ', ')}."
+    "{item_label}{cli::qty(l)}{?s} {unknown_resolved} {cli::qty(l)}do{?es/} \\
+    not exist in the data.",
+    call = call
   )
 }
 
-resolver_stop_on_character <- function(item_label, unknown_resolved) {
-
+resolver_stop_on_character <- function(
+    item_label,
+    unknown_resolved,
+    call = rlang::caller_env()
+) {
+  item_label <- cap_first_letter(item_label)
+  # Specify cli pluralization
+  l <- length(unknown_resolved)
   cli::cli_abort(
-    "The following {item_label}(s) do not exist in the data:
-    {paste0(unknown_resolved, collapse = ', ')}."
+    "{item_label}{cli::qty(l)}{?s} {.str {unknown_resolved}}
+    do{?es/} not exist in the data.",
+    call = call
   )
 }
 
-resolver_stop_unknown <- function(item_label, resolved) {
+resolver_stop_unknown <- function(
+    item_label,
+    resolved,
+    call = rlang::caller_env()
+) {
 
   cli::cli_abort(
-    "Don't know how to select {item_label}s using an object of class
-    {class(resolved)[1]}."
+    "Don't know how to select {item_label}s using {.obj_type_friendly {resolved}}.",
+    call = call
   )
+}
+
+cap_first_letter <- function(x) {
+  substr(x, 1, 1) <- toupper(substr(x, 1, 1))
+  x
 }

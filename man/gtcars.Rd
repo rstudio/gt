@@ -89,10 +89,18 @@ DATA-3
 
 \seealso{
 Other datasets: 
+\code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{films}},
+\code{\link{gibraltar}},
+\code{\link{illness}},
 \code{\link{metro}},
+\code{\link{nuclides}},
+\code{\link{peeps}},
+\code{\link{photolysis}},
 \code{\link{pizzaplace}},
+\code{\link{reactions}},
 \code{\link{rx_addv}},
 \code{\link{rx_adsl}},
 \code{\link{sp500}},

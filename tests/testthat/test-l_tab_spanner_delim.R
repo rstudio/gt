@@ -1,7 +1,4 @@
-# Create a shortened version of `iris`
-iris_short <- iris[1:5, ]
-
-test_that("The `tab_spanner_delim()` function works correctly", {
+test_that("tab_spanner_delim() works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; split the column
   # names into spanner headings and column labels
@@ -10,15 +7,14 @@ test_that("The `tab_spanner_delim()` function works correctly", {
     tab_spanner_delim(delim = ".")
 
   # Expect a characteristic pattern
-  grepl(
+  expect_match(
+    as_latex(tbl_latex) %>% as.character(),
     paste0(
       ".*multicolumn\\{2\\}\\{c\\}\\{Sepal\\}.*multicolumn\\{2\\}\\{c\\}\\{Petal\\}",
       ".*cmidrule\\(lr\\)\\{1-2\\}.*cmidrule\\(lr\\)\\{3-4\\}",
       ".*Length & Width & Length & Width & Species.*"
-      ),
-    tbl_latex %>% as_latex() %>% as.character()
-  ) %>%
-    expect_true()
+      )
+  )
 
   # Create a `tbl_latex` object with `gt()`; split the column
   # names into spanner headings and column labels but constrain
@@ -31,14 +27,14 @@ test_that("The `tab_spanner_delim()` function works correctly", {
     )
 
   # Expect a characteristic pattern
-  grepl(
+  expect_match(
+    as_latex(tbl_latex) %>% as.character(),
     paste0(
       ".*multicolumn\\{2\\}\\{c\\}\\{Sepal\\} &  &  &  .*",
       ".cmidrule\\(lr\\)\\{1-2\\}.*",
-      "Length & Width & Petal.Length & Petal.Width & Species.*"),
-    tbl_latex %>% as_latex() %>% as.character()
-  ) %>%
-    expect_true()
+      "Length & Width & Petal.Length & Petal.Width & Species.*"
+    )
+  )
 
   # Create a `tbl_latex` object with `gt()`; split the column
   # names into spanner headings and column labels but constrain
@@ -52,12 +48,12 @@ test_that("The `tab_spanner_delim()` function works correctly", {
     )
 
   # Expect a characteristic pattern
-  grepl(
+  expect_match(
+    as_latex(tbl_latex) %>% as.character(),
     paste0(
       ".*multicolumn\\{2\\}\\{c\\}\\{Sepal\\} &  &  &  .*",
       ".cmidrule\\(lr\\)\\{1-2\\}.*",
-      "Length & Width & Petal.Length & Petal.Width & Species.*"),
-    tbl_latex %>% as_latex() %>% as.character()
-  ) %>%
-    expect_true()
+      "Length & Width & Petal.Length & Petal.Width & Species.*"
+    )
+  )
 })

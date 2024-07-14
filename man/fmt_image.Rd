@@ -8,7 +8,8 @@ fmt_image(
   data,
   columns = everything(),
   rows = everything(),
-  height = "2em",
+  height = NULL,
+  width = NULL,
   sep = " ",
   path = NULL,
   file_pattern = "{x}",
@@ -16,45 +17,79 @@ fmt_image(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{height}{The absolute height of the image in the table cell. By default,
-this is set to \code{"1em"}.}
+\item{columns}{\emph{Columns to target}
 
-\item{sep}{In the output of images within a body cell, \code{sep} provides the
-separator between each image.}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
-\item{path}{An optional path to local image files (this is combined with all
+Can either be a series of column names provided in \code{c()}, a vector of
+column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}} and \code{\link[=everything]{everything()}}).}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{c()}, a vector of row indices, or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{height, width}{\emph{Height and width of images}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The absolute height of the image in the table cell. If you set the \code{width}
+and \code{height} remains \code{NULL} (or vice versa), the width-to-height ratio will
+be preserved when \strong{gt} calculates the length of the missing dimension. If
+\code{width} and \code{height} are both \code{NULL}, \code{height} is set as \code{"2em"} and
+\code{width} will be calculated.}
+
+\item{sep}{\emph{Separator between images}
+
+\verb{scalar<character>} // \emph{default:} \code{" "}
+
+In the output of images within a body cell, \code{sep} provides the separator
+between each image.}
+
+\item{path}{\emph{Path to image files}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional path to local image files (this is combined with all
 filenames).}
 
-\item{file_pattern}{The pattern to use for mapping input values in the body
-cells to the names of the graphics files.}
+\item{file_pattern}{\emph{File pattern specification}
 
-\item{encode}{The option to always use Base64 encoding for image paths that
-are determined to be local. By default, this is \code{TRUE}.}
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
+
+The pattern to use for mapping input values in the body cells to the names
+of the graphics files. The string supplied should use \code{"{x}"} in the
+pattern to map filename fragments to input strings.}
+
+\item{encode}{\emph{Use Base64 encoding}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+The option to always use Base64 encoding for image paths that are
+determined to be local. By default, this is \code{TRUE}.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-To more easily insert graphics into body cells, we can use the \code{fmt_image()}
-function. This allows for one or more images to be placed in the targeted
-cells. The cells need to contain some reference to an image file, either: (1)
+To more easily insert graphics into body cells, we can use \code{fmt_image()}.
+This allows for one or more images to be placed in the targeted cells.
+The cells need to contain some reference to an image file, either: (1)
 complete http/https or local paths to the files; (2) the file names, where a
 common path can be provided via \code{path}; or (3) a fragment of the file name,
 where the \code{file_pattern} helps to compose the entire file name and \code{path}
@@ -93,30 +128,56 @@ in the final output).
 Once the columns are targeted, we may also target the \code{rows} within those
 columns. This can be done in a variety of ways. If a stub is present, then we
 potentially have row identifiers. Those can be used much like column names in
-the \code{columns}-targeting scenario. We can use simpler \strong{tidyselect}-style
-expressions (the select helpers should work well here) and we can use quoted
-row identifiers in \code{c()}. It's also possible to use row indices (e.g.,
-\code{c(3, 5, 6)}) though these index values must correspond to the row numbers of
-the input data (the indices won't necessarily match those of rearranged rows
-if row groups are present). One more type of expression is possible, an
-expression that takes column values (can involve any of the available columns
-in the table) and returns a logical vector. This is nice if you want to base
-formatting on values in the column or another column, or, you'd like to use a
-more complex predicate expression.
+the \code{columns}-targeting scenario. We can use simpler
+\strong{tidyselect}-style expressions (the select helpers should work well here)
+and we can use quoted row identifiers in \code{c()}. It's also possible to use row
+indices (e.g., \code{c(3, 5, 6)}) though these index values must correspond to the
+row numbers of the input data (the indices won't necessarily match those of
+rearranged rows if row groups are present). One more type of expression is
+possible, an expression that takes column values (can involve any of the
+available columns in the table) and returns a logical vector. This is nice if
+you want to base formatting on values in the column or another column, or,
+you'd like to use a more complex predicate expression.
+}
+
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+\code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{fmt_image()} to obtain
+varying parameter values from a specified column within the table. This means
+that each row could be formatted a little bit differently. These arguments
+provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{height}
+\item \code{width}
+\item \code{sep}
+\item \code{path}
+\item \code{file_pattern}
+\item \code{encode}
+}
+
+Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with \code{\link[=cols_add]{cols_add()}} (if not already present). Columns that contain
+parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+Finally, there is no limitation to how many arguments the \code{\link[=from_column]{from_column()}}
+helper is applied so long as the arguments belong to this closed set.
 }
 
 \section{Examples}{
 
 
-Use the \code{\link{metro}} dataset to create a \strong{gt} table. We will only include a
-few columns and rows from that table. The \code{lines} and \code{connect_rer} columns
-have comma-separated listings of numbers/letters (corresponding to lines
-served at each station). We have a directory SVG graphics for all of these
-lines in the package (the path for the image directory can be accessed via
+Using a small portion of \code{\link{metro}} dataset, let's create a \strong{gt} table. We
+will only include a few columns and rows from that table. The \code{lines} and
+\code{connect_rer} columns have comma-separated listings of numbers/letters
+(corresponding to lines served at each station). We have a directory of SVG
+graphics for all of these lines within the package (the path for the
+directory containing the images can be accessed via
 \code{system.file("metro_svg", package = "gt")}), and the filenames roughly
-correspond to the data in those two columns. The \code{fmt_image()} function can
-be used with these inputs since the \code{path} and \code{file_pattern} arguments allow
-us to compose complete and valid file locations. What you get from this are
+correspond to the data in those two columns. \code{fmt_image()} can be used with
+these inputs since the \code{path} and \code{file_pattern} arguments allow us to
+compose complete and valid file locations. What you get from all of this are
 sequences of images in the table cells, taken from the referenced graphics
 files on disk.
 
@@ -170,7 +231,7 @@ files on disk.
 
 \section{Function ID}{
 
-3-19
+3-23
 }
 
 \section{Function Introduced}{
@@ -181,16 +242,21 @@ files on disk.
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt}()},
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_icon}()},
 \code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
@@ -201,9 +267,10 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
-\code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},

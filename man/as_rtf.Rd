@@ -14,20 +14,39 @@ as_rtf(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{gt()} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{incl_open, incl_close}{Options that govern whether the opening or
-closing \code{"{"} and \code{"}"} should be included. By default, both options are
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{incl_open, incl_close}{\emph{Include opening/closing braces}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+Options that govern whether the opening or closing \code{"{"} and \code{"}"} should
+be included. By default, both options are \code{TRUE}.}
+
+\item{incl_header}{\emph{Include RTF header}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+Should the RTF header be included in the output? By default, this is
 \code{TRUE}.}
 
-\item{incl_header}{Should the RTF header be included in the output? By
-default, this is \code{TRUE}.}
+\item{incl_page_info}{\emph{Include RTF page information}
 
-\item{incl_page_info}{Should the RTF output include directives for the
-document pages? This is \code{TRUE} by default.}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
-\item{incl_body}{An option to include the body of RTF document. By
-default, this is \code{TRUE}.}
+Should the RTF output include directives for the document pages? This is
+\code{TRUE} by default.}
+
+\item{incl_body}{\emph{Include RTF body}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to include the body of RTF document. By default, this is \code{TRUE}.}
 }
 \description{
 Get the RTF content from a \code{gt_tbl} object as as a single-element character
@@ -37,8 +56,9 @@ file that can be opened by RTF readers.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as RTF
-code.
+Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a header
+with \code{\link[=tab_header]{tab_header()}} and then export the table as RTF code using the
+\code{as_rtf()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_rtf <-
   gtcars |>
@@ -65,9 +85,11 @@ code.
 
 \seealso{
 Other table export functions: 
+\code{\link{as_gtable}()},
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
 \code{\link{as_word}()},
+\code{\link{extract_body}()},
 \code{\link{extract_cells}()},
 \code{\link{extract_summary}()},
 \code{\link{gtsave}()}

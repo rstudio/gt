@@ -15,7 +15,7 @@ datetimes.}
 \item{currency}{A numeric column that is useful for testing currency-based
 formatting.}
 \item{row}{A character column in the format \code{row_X} which can be useful for
-testing with row captions in a table stub.}
+testing with row labels in a table stub.}
 \item{group}{A character column with four \code{grp_a} values and four \code{grp_b}
 values which can be useful for testing tables that contain row groups.}
 }
@@ -70,10 +70,18 @@ DATA-6
 
 \seealso{
 Other datasets: 
+\code{\link{constants}},
 \code{\link{countrypops}},
+\code{\link{films}},
+\code{\link{gibraltar}},
 \code{\link{gtcars}},
+\code{\link{illness}},
 \code{\link{metro}},
+\code{\link{nuclides}},
+\code{\link{peeps}},
+\code{\link{photolysis}},
 \code{\link{pizzaplace}},
+\code{\link{reactions}},
 \code{\link{rx_addv}},
 \code{\link{rx_adsl}},
 \code{\link{sp500}},

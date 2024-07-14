@@ -17,46 +17,83 @@ vec_fmt_datetime(
 )
 }
 \arguments{
-\item{x}{A numeric vector.}
+\item{x}{\emph{The input vector}
 
-\item{date_style}{The date style to use. By default this is \code{"iso"} which
-corresponds to ISO 8601 date formatting. The other date styles can be
-viewed using \code{\link[=info_date_style]{info_date_style()}}.}
+\code{vector(numeric|integer)} // \strong{required}
 
-\item{time_style}{The time style to use. By default this is \code{"iso"} which
-corresponds to how times are formatted within ISO 8601 datetime values. The
-other time styles can be viewed using \code{\link[=info_time_style]{info_time_style()}}.}
+This is the input vector that will undergo transformation to a character
+vector of the same length. Values within the vector will be formatted.}
 
-\item{sep}{The separator string to use between the date and time components.
-By default, this is a single space character (\code{" "}). Only used when not
+\item{date_style}{\emph{Predefined style for dates}
+
+\verb{scalar<character>|scalar<numeric|integer>(1<=val<=41)} // \emph{default:} \code{"iso"}
+
+The date style to use. By default this is the short name \code{"iso"} which
+corresponds to ISO 8601 date formatting. There are 41 date styles in total
+and their short names can be viewed using \code{\link[=info_date_style]{info_date_style()}}.}
+
+\item{time_style}{\emph{Predefined style for times}
+
+\verb{scalar<character>|scalar<numeric|integer>(1<=val<=25)} // \emph{default:} \code{"iso"}
+
+The time style to use. By default this is the short name \code{"iso"} which
+corresponds to how times are formatted within ISO 8601 datetime values.
+There are 25 time styles in total and their short names can be viewed using
+\code{\link[=info_time_style]{info_time_style()}}.}
+
+\item{sep}{\emph{Separator between date and time components}
+
+\verb{scalar<character>} // \emph{default:} \code{" "}
+
+The separator string to use between the date and time components. By
+default, this is a single space character (\code{" "}). Only used when not
 specifying a \code{format} code.}
 
-\item{format}{An optional format code used for generating custom dates/times.
-If used then the arguments governing preset styles (\code{date_style} and
+\item{format}{\emph{Date/time formatting string}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional formatting string used for generating custom dates/times. If
+used then the arguments governing preset styles (\code{date_style} and
 \code{time_style}) will be ignored in favor of formatting via the \code{format}
 string.}
 
-\item{tz}{The time zone for printing dates/times (i.e., the output). The
+\item{tz}{\emph{Time zone}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The time zone for printing dates/times (i.e., the output). The
 default of \code{NULL} will preserve the time zone of the input data in the
 output. If providing a time zone, it must be one that is recognized by the
 user's operating system (a vector of all valid \code{tz} values can be produced
 with \code{\link[=OlsonNames]{OlsonNames()}}).}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+\item{pattern}{\emph{Specification of the formatting pattern}
 
-\item{locale}{An optional locale identifier that can be used for formatting
-the value according the locale's rules. Examples include \code{"en"} for English
-(United States) and \code{"fr"} for French (France). The use of a locale ID will
-override any locale-specific values provided. We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported.}
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
 
-\item{output}{The output style of the resulting character vector. This can
-either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
-or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
-\code{"auto"} option will choose the correct \code{output} value}
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported.}
+
+\item{output}{\emph{Output format}
+
+\verb{singl-kw:[auto|plain|html|latex|rtf|word]} // \emph{default:} \code{"auto"}
+
+The output style of the resulting character vector. This can either be
+\code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or
+\code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the \code{"auto"}
+option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
@@ -125,8 +162,8 @@ values (corresponding to an input date of \code{2000-02-29}).\tabular{llll}{
 }
 
 
-We can use the \code{\link[=info_date_style]{info_date_style()}} function within the console to view a
-similar table of date styles with example output.
+We can call \code{\link[=info_date_style]{info_date_style()}} in the console to view a similar table of
+date styles with example output.
 }
 
 \section{Formatting with the \code{time_style} argument}{
@@ -142,7 +179,7 @@ better option for locales other than \code{"en"} (the default locale).
 The following table provides a listing of all time styles and their output
 values (corresponding to an input time of \code{14:35:00}). It is noted which of
 these represent 12- or 24-hour time. Some of the flexible formats (those
-that begin with \code{"E"}) include the the day of the week. Keep this in mind
+that begin with \code{"E"}) include the day of the week. Keep this in mind
 when pairing such \code{time_style} values with a \code{date_style} so as to avoid
 redundant or repeating information.\tabular{llll}{
     \tab Time Style \tab Output \tab Notes \cr
@@ -174,8 +211,8 @@ redundant or repeating information.\tabular{llll}{
 }
 
 
-We can use the \code{\link[=info_time_style]{info_time_style()}} function within the console to view a
-similar table of time styles with example output.
+We can call \code{\link[=info_time_style]{info_time_style()}} in the console to view a similar table of
+time styles with example output.
 }
 
 \section{Formatting with a \emph{CLDR} datetime pattern}{

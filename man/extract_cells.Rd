@@ -12,27 +12,41 @@ extract_cells(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns containing the cells to extract. Can either be a
-series of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a
-helper function focused on selections. The select helper functions are:
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{rows}{Optional rows to limit the extraction of cells. Providing
-\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} being
-formatted. Alternatively, we can supply a vector of row captions within
-\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
-The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
-\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
-We can also use expressions to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{output}{The output style of the resulting character vector. This can
-either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
-or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
-\code{"auto"} option will choose the correct \code{output} value}
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{c()}, a vector of
+column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}} and \code{\link[=everything]{everything()}}).}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+form a constraint for extraction. The default \code{\link[=everything]{everything()}} results in all
+rows in \code{columns} being formatted. Alternatively, we can supply a vector of
+row IDs within \code{c()}, a vector of row indices, or a select helper function
+(e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{output}{\emph{Output format}
+
+\verb{singl-kw:[auto|plain|html|latex|rtf|word]} // \emph{default:} \code{"auto"}
+
+The output style of the resulting character vector. This can either be
+\code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or
+\code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the \code{"auto"}
+option will choose the correct \code{output} value}
 }
 \value{
 A vector of cell data extracted from a \strong{gt} table.
@@ -82,7 +96,7 @@ extraction.
 
 \section{Function ID}{
 
-13-7
+13-9
 }
 
 \section{Function Introduced}{
@@ -92,10 +106,12 @@ extraction.
 
 \seealso{
 Other table export functions: 
+\code{\link{as_gtable}()},
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
 \code{\link{as_word}()},
+\code{\link{extract_body}()},
 \code{\link{extract_summary}()},
 \code{\link{gtsave}()}
 }

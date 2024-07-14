@@ -15,43 +15,70 @@ fmt_index(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{case}{Should resulting index characters be rendered as uppercase
-(\code{"upper"}) or lowercase (\code{"lower"}) letters? By default, this is set to
-\code{"upper"}.}
+\item{columns}{\emph{Columns to target}
 
-\item{index_algo}{The indexing algorithm for handling the recycling of the
-index character set. By default, the \code{"repeat"} option is used where
-characters are doubled, tripled, and so on, when moving past the character
-set limit. The alternative is the \code{"excel"} option, where Excel-based
-column naming is adapted and used here (e.g., \verb{[..., Y, Z, AA, AB, ...]}).}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+Can either be a series of column names provided in \code{c()}, a vector of
+column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}} and \code{\link[=everything]{everything()}}).}
 
-\item{locale}{An optional locale identifier that can be used for formatting
-the value according the locale's rules. Examples include \code{"en"} for English
-(United States) and \code{"fr"} for French (France). The use of a locale ID will
-override any locale-specific values provided. We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported.}
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{c()}, a vector of row indices, or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{case}{\emph{Use uppercase or lowercase letters}
+
+\verb{singl-kw:[upper|lower]} // \emph{default:} \code{"upper"}
+
+Should the resulting index characters be rendered as uppercase (\code{"upper"})
+or lowercase (\code{"lower"}) letters? By default, this is set to \code{"upper"}.}
+
+\item{index_algo}{\emph{Indexing algorithm}
+
+\verb{singl-kw:[repeat|excel]} // \emph{default:} \code{"repeat"}
+
+The indexing algorithm handles the recycling of the index character set. By
+default, the \code{"repeat"} option is used where characters are doubled,
+tripled, and so on, when moving past the character set limit. The
+alternative is the \code{"excel"} option, where Excel-based column naming is
+adapted and used here (e.g., \verb{[..., Y, Z, AA, AB, ...]}).}
+
+\item{pattern}{\emph{Specification of the formatting pattern}
+
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
+
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported. A locale ID can
+be also set in the initial \code{\link[=gt]{gt()}} function call (where it would be used
+automatically by any function with a \code{locale} argument) but a \code{locale}
+value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -65,10 +92,10 @@ diacritical marks).
 \section{Compatibility of formatting function with data values}{
 
 
-The \code{fmt_index()} formatting function is compatible with body cells that are
-of the \code{"numeric"} or \code{"integer"} types. Any other types of body cells are
-ignored during formatting. This is to say that cells of incompatible data
-types may be targeted, but there will be no attempt to format them.
+\code{fmt_index()} is compatible with body cells that are of the \code{"numeric"} or
+\code{"integer"} types. Any other types of body cells are ignored during
+formatting. This is to say that cells of incompatible data types may be
+targeted, but there will be no attempt to format them.
 }
 
 \section{Targeting cells with \code{columns} and \code{rows}}{
@@ -112,15 +139,38 @@ formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
 }
 
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+\code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{fmt_index()} to obtain
+varying parameter values from a specified column within the table. This means
+that each row could be formatted a little bit differently. These arguments
+provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{case}
+\item \code{index_algo}
+\item \code{pattern}
+\item \code{locale}
+}
+
+Please note that for all of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with \code{\link[=cols_add]{cols_add()}} (if not already present). Columns that contain
+parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+Finally, there is no limitation to how many arguments the \code{\link[=from_column]{from_column()}}
+helper is applied so long as the arguments belong to this closed set.
+}
+
 \section{Examples}{
 
 
-Use the \code{\link{towny}} dataset to create a \strong{gt} table. After some summarizing
-and filtering, the \code{fmt_index()} function is used to transform incremental
-integer values into capitalized letters (in the \code{ranking} column). That
-formatted column of \code{"A"} to \code{"E"} values is merged with the \code{census_div}
-column to create an indexed listing of census subdivisions, here ordered by
-increasing total municipal population.
+Using a summarized version of the \code{\link{towny}} dataset, let's create a \strong{gt}
+table. Here, \code{fmt_index()} is used to transform incremental
+integer values into capitalized letters (in the \code{ranking} column). With
+\code{\link[=cols_merge]{cols_merge()}} that formatted column of \code{"A"} to \code{"E"} values is merged with
+the \code{census_div} column to create an indexed listing of census subdivisions,
+here ordered by increasing total municipal population.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(name, csd_type, census_div, population_2021) |>
@@ -129,10 +179,8 @@ increasing total municipal population.
     population = sum(population_2021),
     .groups = "drop_last"
   ) |>
-  dplyr::arrange(population) |>
-  dplyr::slice_head(n = 5) |>
-  dplyr::mutate(ranking = dplyr::row_number()) |>
-  dplyr::select(ranking, dplyr::everything()) |>
+  dplyr::slice_min(population, n = 5) |>
+  dplyr::mutate(ranking = dplyr::row_number(), .before = 0) |>
   gt() |>
   fmt_integer() |>
   fmt_index(columns = ranking, pattern = "\{x\}.") |>
@@ -166,16 +214,21 @@ The vector-formatting version of this function: \code{\link[=vec_fmt_index]{vec_
 
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt}()},
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_icon}()},
 \code{\link{fmt_image}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
@@ -186,9 +239,10 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
-\code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},

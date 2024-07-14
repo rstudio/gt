@@ -12,27 +12,41 @@ fmt_markdown(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{md_engine}{The engine preference for Markdown rendering. By default,
-this is set to \code{"markdown"} where \strong{gt} will use the \strong{markdown} package
-for Markdown conversion to HTML and LaTeX. The other option is
-\code{"commonmark"} and with that the \strong{commonmark} package will be used.}
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{c()}, a vector of
+column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}} and \code{\link[=everything]{everything()}}).}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{c()}, a vector of row indices, or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{md_engine}{\emph{Choice of Markdown engine}
+
+\verb{singl-kw:[markdown|commonmark]} // \emph{default:} \code{"markdown"}
+
+The engine preference for Markdown rendering. By default, this is set to
+\code{"markdown"} where \strong{gt} will use the \strong{markdown} package for Markdown
+conversion to HTML and LaTeX. The other option is \code{"commonmark"} and with
+that the \strong{commonmark} package will be used.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -82,6 +96,20 @@ formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
 }
 
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+\code{\link[=from_column]{from_column()}} can be used with the \code{md_engine} argument of \code{fmt_markdown()}
+to obtain varying parameter values from a specified column within the table.
+This means that each row could be formatted a little bit differently.
+
+Please note that for this argument (\code{md_engine}), a \code{\link[=from_column]{from_column()}} call
+needs to reference a column that has data of the \code{character} type. Additional
+columns for parameter values can be generated with \code{\link[=cols_add]{cols_add()}} (if not
+already present). Columns that contain parameter data can also be hidden from
+final display with \code{\link[=cols_hide]{cols_hide()}}.
+}
+
 \section{Examples}{
 
 
@@ -90,11 +118,11 @@ Create a few Markdown-based text snippets.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{text_1a <- "
 ### This is Markdown.
 
-Markdown’s syntax is comprised entirely of
+Markdown's syntax is comprised entirely of
 punctuation characters, which punctuation
 characters have been carefully chosen so as
 to look like what they mean... assuming
-you’ve ever used email.
+you've ever used email.
 "
 
 text_1b <- "
@@ -118,8 +146,8 @@ There's a quick reference [here](https://commonmark.org/help/).
 "
 }\if{html}{\out{</div>}}
 
-Arrange the text snippets as a tibble using the \code{dplyr::tribble()} function.
-then, create a \strong{gt} table and format all columns with \code{fmt_markdown()}.
+Arrange the text snippets as a tibble using \code{dplyr::tribble()}, then, create
+a \strong{gt} table and format all columns with \code{fmt_markdown()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tribble(
   ~Markdown, ~md,
@@ -134,11 +162,88 @@ then, create a \strong{gt} table and format all columns with \code{fmt_markdown(
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_markdown_1.png" alt="This image of a table was generated from the first code example in the `fmt_markdown()` help file." style="width:100\%;">
 }}
+
+\code{fmt_markdown()} can also handle LaTeX math formulas enclosed in
+\code{"$..$"} (inline math) and also \code{"$$..$$"} (display math). The following
+table has body cells that contain mathematical formulas in display mode
+(i.e., the formulas are surrounded by \code{"$$"}). Further to this, math can be
+used within \code{\link[=md]{md()}} wherever there is the possibility to insert text into the
+table (e.g., with \code{\link[=cols_label]{cols_label()}}, \code{\link[=tab_header]{tab_header()}}, etc.).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  idx = 1:5,
+  l_time_domain =
+    c(
+      "$$1$$",
+      "$$\{\{\\\\bf\{e\}\}^\{a\\\\,t\}\}$$",
+      "$$\{t^n\},\\\\,\\\\,\\\\,\\\\,\\\\,n = 1,2,3, \\\\ldots$$",
+      "$$\{t^p\}, p > -1$$",
+      "$$\\\\sqrt t$$"
+    ),
+  l_laplace_s_domain =
+    c(
+      "$$\\\\frac\{1\}\{s\}$$",
+      "$$\\\\frac\{1\}\{\{s - a\}\}$$",
+      "$$\\\\frac\{\{n!\}\}\{\{\{s^\{n + 1\}\}\}\}$$",
+      "$$\\\\frac\{\{\\\\Gamma \\\\left( \{p + 1\} \\\\right)\}\}\{\{\{s^\{p + 1\}\}\}\}$$",
+      "$$\\\\frac\{\{\\\\sqrt \\\\pi \}\}\{\{2\{s^\{\\\\frac\{3\}\{2\}\}\}\}\}$$"
+    )
+) |>
+  gt(rowname_col = "idx") |>
+  fmt_markdown() |>
+  cols_label(
+    l_time_domain = md(
+      "Time Domain<br/>$\\\\small\{f\\\\left( t \\\\right) =
+      \{\\\\mathcal\{L\}^\{\\\\,\\\\, - 1\}\}\\\\left\\\\\{ \{F\\\\left( s \\\\right)\} \\\\right\\\\\}\}$"
+    ),
+    l_laplace_s_domain = md(
+      "$s$ Domain<br/>$\\\\small\{F\\\\left( s \\\\right) =
+      \\\\mathcal\{L\}\\\\left\\\\\{ \{f\\\\left( t \\\\right)\} \\\\right\\\\\}\}$"
+    )
+  ) |>
+  tab_header(
+    title = md(
+      "A (Small) Table of Laplace Transforms &mdash; $\\\\small\{\{\\\\mathcal\{L\}\}\}$"
+    ),
+    subtitle = md(
+      "Five commonly used Laplace transforms and formulas.<br/><br/>"
+    )
+  ) |>
+  cols_align(align = "center") |>
+  opt_align_table_header(align = "left") |>
+  cols_width(
+    idx ~ px(50),
+    l_time_domain ~ px(300),
+    l_laplace_s_domain ~ px(600)
+  ) |>
+  opt_stylize(
+    style = 2,
+    color = "gray",
+    add_row_striping = FALSE
+  ) |>
+  opt_table_outline(style = "invisible") |>
+  tab_style(
+    style = cell_fill(color = "gray95"),
+    locations = cells_body(columns = l_time_domain)
+  ) |>
+  tab_options(
+    heading.title.font.size = px(32),
+    heading.subtitle.font.size = px(18),
+    heading.padding = px(0),
+    footnotes.multiline = FALSE,
+    column_labels.border.lr.style = "solid",
+    column_labels.border.lr.width = px(1)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_markdown_2.png" alt="This image of a table was generated from the second code example in the `fmt_markdown()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
 
-3-21
+3-27
 }
 
 \section{Function Introduced}{
@@ -152,16 +257,21 @@ The vector-formatting version of this function:
 
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt}()},
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_icon}()},
 \code{\link{fmt_image}()},
 \code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
@@ -172,9 +282,10 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
-\code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},

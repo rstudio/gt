@@ -12,19 +12,32 @@ authors:
   JooYoung Seo:
     href: "https://jooyoungseo.github.io/"
 
+news:
+  releases:
+  - text: "Version 0.10.0"
+    href: https://posit.co/blog/new-features-in-gt-0-10-0/
+  - text: "Version 0.9.0"
+    href: https://posit.co/blog/?search=gt%2520%25200.9.0
+  - text: "Version 0.8.0"
+    href: https://posit.co/blog/new-features-upgrades-in-gt-0-8-0/
+  - text: "Version 0.7.0"
+    href: https://posit.co/blog/all-new-things-in-gt-0-7-0/
+  - text: "Version 0.6.0"
+    href: https://posit.co/blog/changes-for-the-better-in-gt-0-6-0/
+
 development:
-  mode: devel
+  mode: release
 
 reference:
-  - title: Creating a table
+  - title: Table creation
     desc: >
       All **gt** tables begin with a call to `gt()`, where we would supply the
       input data table (data frame or tibble) and some basic options for
       creating a stub (`rowname_col`) and row groups (`groupname_col`). We
-      can also introduce a grouped tibble (via **dplyr**'s `group_by()`) for
-      more precise divisions of rows into row groups. The `gt_preview()`
-      function is great for getting a nicely-formatted preview of a data
-      table (defaulting to the first 5 rows and the last row).
+      can also introduce a grouped tibble (via `dplyr::group_by()`) for
+      more precise divisions of rows into row groups. `gt_preview()`
+      is great for getting a nicely-formatted preview of a data table
+      (defaulting to the first 5 rows and the last row).
     contents:
     - gt
     - gt_preview
@@ -53,7 +66,7 @@ reference:
     - tab_options
     - tab_info
 
-  - title: Formatting data
+  - title: Formatting column data
     desc: >
       Columns of data can be formatted with the `fmt_*()` functions. We can
       specify the rows of these columns quite precisely with the `rows`
@@ -81,10 +94,16 @@ reference:
     - fmt_datetime
     - fmt_duration
     - fmt_bins
+    - fmt_tf
     - fmt_markdown
+    - fmt_units
+    - fmt_chem
     - fmt_url
+    - fmt_email
     - fmt_image
     - fmt_flag
+    - fmt_country
+    - fmt_icon
     - fmt_passthrough
     - fmt_auto
     - fmt
@@ -95,7 +114,7 @@ reference:
     - sub_values
     - data_color
 
-  - title: Text transformation functions
+  - title: Text transformation
     desc: >
       The `text_*()` functions take cell data that are solidified into
       strings and allow for flexible transformations of those string values.
@@ -123,6 +142,9 @@ reference:
     - cols_width
     - cols_label
     - cols_label_with
+    - cols_units
+    - cols_add
+    - cols_nanoplot
     - cols_move
     - cols_move_to_start
     - cols_move_to_end
@@ -144,6 +166,7 @@ reference:
     - summary_rows
     - grand_summary_rows
     - row_group_order
+    - rows_add
 
   - title: Removing parts of a table
     desc: >
@@ -162,37 +185,29 @@ reference:
     desc: >
       An assortment of helper functions is available in the **gt** package.
       The various `cells_*()` functions are used for targeting cells with the
-      `locations` argument in the `tab_footnote()`, `tab_style()`, and
-      `text_transform()` functions. The `cell_*()` functions are used
-      exclusively with `tab_style()`'s `style` argument. The `px()` &
-      `pct()` functions are useful there for specifying units in pixels or
-      percentages. The `md()` and `html()` helpers can used be during label
-      creation with the `tab_header()`, `tab_footnote()`, `tab_spanner()`,
-      `tab_stubhead_label()`, and `tab_source_note()` functions.
+      `locations` argument of `tab_footnote()`, `tab_style()`, and
+      `text_transform()`, `text_case_match()`, and `text_case_when()`.
+      The `cell_*()` functions are used exclusively with `tab_style()`'s `style`
+      argument. `px()` & `pct()` are useful there for specifying
+      units in pixels or percentages. The `md()` and `html()` helpers can used
+      be during label creation with `tab_header()`, `tab_footnote()`,
+      `tab_spanner()`, `tab_stubhead()`, and `tab_source_note()`.
     contents:
     - md
     - html
     - px
     - pct
-    - stub
-    - cells_title
-    - cells_stubhead
-    - cells_column_spanners
-    - cells_column_labels
-    - cells_row_groups
-    - cells_stub
-    - cells_body
-    - cells_summary
-    - cells_grand_summary
-    - cells_stub_summary
-    - cells_stub_grand_summary
-    - cells_footnotes
-    - cells_source_notes
+    - from_column
     - currency
+    - unit_conversion
+    - nanoplot_options
+    - adjust_luminance
+    - stub
+    - row_group
+    - has_concept("location helper functions")
     - cell_text
     - cell_fill
     - cell_borders
-    - adjust_luminance
     - random_id
     - escape_latex
     - gt_latex_dependencies
@@ -200,7 +215,7 @@ reference:
     - default_fonts
     - system_fonts
 
-  - title: Image addition functions
+  - title: Image addition utilities
     desc: >
       We can add images into a **gt** table with the help of the `*_image()`
       functions. Two common ways to do this: (1) use `text_transform()` to
@@ -213,7 +228,7 @@ reference:
     - ggplot_image
     - test_image
 
-  - title: Table option functions
+  - title: Table options
     desc: >
       With the `opt_*()` functions, we have an easy way to set commonly-used
       table options without having to use `tab_options()` directly. Like, we can
@@ -236,7 +251,7 @@ reference:
     - opt_table_font
     - opt_css
 
-  - title: Information functions
+  - title: Informational tables for reference
     desc: >
       These `info_*()` functions present us with **gt** tables containing
       useful information. So far, we can get reference information on
@@ -253,8 +268,11 @@ reference:
     - info_locales
     - info_paletteer
     - info_google_fonts
+    - info_flags
+    - info_icons
+    - info_unit_conversions
 
-  - title: Shiny functions
+  - title: Shiny
     desc: >
       Shiny is great for building interactive web apps with R. There's
       really nothing quite like it. The **gt** package includes two
@@ -269,22 +287,26 @@ reference:
     desc: >
       There may come a day when you need to export a **gt** table to some
       specific format. A great function for that is `gtsave()`, which allows
-      us to save as an HTML file or an image file. Some other functions give us
-      table code as a character vector (e.g., `as_raw_html()`). Did you use the
-      `summary_rows()` function and wish you had that summary data in a tibble?
-      You can get it out with `extract_summary()`. Want to extract
-      already-formatted cells from the table into a vector? Do it with
-      `extract_cells()`!
+      us to save the table as a standalone HTML, LaTeX, RTF, .docx, or even an
+      image file. Some other functions give us table code as a character vector
+      (e.g., `as_raw_html()` and more). Did you use the `summary_rows()`
+      function and wish you had that summary data in a tibble? You can get it
+      out with `extract_summary()`. Want to extract already-formatted cells
+      from the table into a vector? Do it with `extract_cells()`! It's even
+      possible to extract the body of a table as a data frame during various
+      'build' stages (do this with `extract_body()`).
     contents:
     - gtsave
     - as_raw_html
     - as_latex
     - as_rtf
     - as_word
+    - as_gtable
+    - extract_body
     - extract_summary
     - extract_cells
 
-  - title: Table group functions
+  - title: Working with table groups
     desc: >
       Sometimes you want to deal with a multitude of **gt** tables, all at once.
       There are some advantages to having a group of tables bundled together in
@@ -303,7 +325,7 @@ reference:
     - grp_rm
     - grp_options
 
-  - title: Vector formatting functions
+  - title: Vector formatting
     desc: >
       Why should columns have all the formatting fun? If you have vectors in
       need of formatting, we have a set of `vec_fmt_*()` functions that have
@@ -329,10 +351,10 @@ reference:
 
   - title: Built in datasets
     desc: >
-      The **gt** package is equipped with ten datasets that come in all shapes
-      and sizes. Use them to experiment with the package! Many examples in the
-      internal help documents use these datasets to quickly demonstrate the
-      awesome features of **gt**.
+      The **gt** package is equipped with twelve datasets that come in all
+      shapes and sizes. Use them to experiment with the package! Many examples
+      in the internal help documents use these datasets to quickly demonstrate
+      the awesome features of **gt**.
     contents:
     - countrypops
     - sza
@@ -341,14 +363,17 @@ reference:
     - pizzaplace
     - exibble
     - towny
+    - peeps
+    - films
     - metro
+    - gibraltar
+    - constants
+    - illness
+    - reactions
+    - photolysis
+    - nuclides
     - rx_adsl
     - rx_addv
 
-navbar:
-  structure:
-    left: [intro, articles, reference, news]
-  components:
-    intro:
-      text: Intro
-      href: articles/intro-creating-gt-tables.html
+redirects:
+  - ["articles/intro-creating-gt-tables.html", "articles/gt.html"]

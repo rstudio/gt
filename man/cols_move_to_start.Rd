@@ -7,11 +7,23 @@
 cols_move_to_start(data, columns)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The column names to move to the left-most side of the table.
-The order in which columns are provided will be preserved (as is the case
-with the remaining columns).}
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \strong{required}
+
+The columns for which the moving operations should be applied. Can either
+be a series of column names provided in \code{c()}, a vector of column indices,
+or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). The columns
+move as a group to the left-most side of the table. The order of the
+remaining columns will be preserved.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -26,22 +38,21 @@ table).
 }
 \details{
 The columns supplied in \code{columns} must all exist in the table. If you need to
-place one or columns at the end of the column series, the
-\code{\link[=cols_move_to_end]{cols_move_to_end()}} function should be used. More control is offered with
-the \code{\link[=cols_move]{cols_move()}} function, where columns could be placed after a specific
-column.
+place one or columns at the end of the column series, \code{\link[=cols_move_to_end]{cols_move_to_end()}}
+should be used. More control is offered with \code{\link[=cols_move]{cols_move()}}, where columns
+could be placed after a specific column.
 }
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
-move the \code{year} column to the start of the column series with
-\code{cols_move_to_start()}.
+For this example, we'll use a portion of the \code{\link{countrypops}} dataset to
+create a simple \strong{gt} table. Let's move the \code{year} column, which is the
+middle column, to the start of the column series with \code{cols_move_to_start()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
+  dplyr::filter(country_name == "Fiji") |>
+  dplyr::slice_tail(n = 5) |>
   gt() |>
   cols_move_to_start(columns = year)
 }\if{html}{\out{</div>}}
@@ -50,13 +61,14 @@ move the \code{year} column to the start of the column series with
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_to_start_1.png" alt="This image of a table was generated from the first code example in the `cols_move_to_start()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
-move \code{year} and \code{population} to the start.
+We can also move multiple columns at a time. With the same
+\code{\link{countrypops}}-based table, let's move both the \code{year} and \code{population}
+columns to the start of the column series.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
+  dplyr::filter(country_name == "Fiji") |>
+  dplyr::slice_tail(n = 5) |>
   gt() |>
   cols_move_to_start(columns = c(year, population))
 }\if{html}{\out{</div>}}
@@ -68,7 +80,7 @@ move \code{year} and \code{population} to the start.
 
 \section{Function ID}{
 
-5-7
+5-10
 }
 
 \section{Function Introduced}{
@@ -78,18 +90,21 @@ move \code{year} and \code{population} to the start.
 
 \seealso{
 Other column modification functions: 
-\code{\link{cols_align_decimal}()},
+\code{\link{cols_add}()},
 \code{\link{cols_align}()},
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_hide}()},
-\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
+\code{\link{cols_label_with}()},
+\code{\link{cols_merge}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},
-\code{\link{cols_merge}()},
-\code{\link{cols_move_to_end}()},
 \code{\link{cols_move}()},
+\code{\link{cols_move_to_end}()},
+\code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

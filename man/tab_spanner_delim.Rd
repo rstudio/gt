@@ -2,70 +2,277 @@
 % Please edit documentation in R/tab_create_modify.R
 \name{tab_spanner_delim}
 \alias{tab_spanner_delim}
-\title{Create column labels and spanners via delimited names}
+\title{Create column labels and spanners via delimited column names}
 \usage{
 tab_spanner_delim(
   data,
   delim,
   columns = everything(),
-  split = c("last", "first")
+  split = c("last", "first"),
+  limit = NULL,
+  reverse = FALSE
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{delim}{The delimiter to use to split an input column name. The
-delimiter supplied will be autoescaped for the internal splitting
-procedure. The first component of the split will become the spanner column
-label (and its ID value, used for styling or for the addition of footnotes
-in those locations) and the second component will be the column label.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{columns}{An optional vector of column names that this operation should
-be limited to. The default is to consider all columns in the table.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{split}{Should the delimiter splitting occur from the \code{"last"} instance
-of the \code{delim} character or from the \code{"first"}? By default, column name
-splitting begins at the last instance of the delimiter.}
+\item{delim}{\emph{Delimiter for splitting}
+
+\verb{scalar<character>} // \strong{required}
+
+The delimiter text to use to split one of more column names (i.e., those
+that are targeted via the \code{columns} argument).}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+The columns to consider for the splitting, relabeling, and spanner setting
+operations. Can either be a series of column names provided in \code{c()}, a
+vector of column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
+
+\item{split}{\emph{Splitting side}
+
+\verb{singl-kw:[last|first]} // \emph{default:} \code{"last"}
+
+Should the delimiter splitting occur from the \code{"last"} instance of the
+\code{delim} character or from the \code{"first"}? The default here uses the \code{"last"}
+keyword, and splitting begins at the last instance of the delimiter in the
+column name. This option only has some consequence when there is a \code{limit}
+value applied that is lesser than the number of delimiter characters for a
+given column name (i.e., number of splits is not the maximum possible
+number).}
+
+\item{limit}{\emph{Limit for splitting}
+
+\verb{scalar<numeric|integer|character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional limit to place on the splitting procedure. The default \code{NULL}
+means that a column name will be split as many times are there are
+delimiter characters. In other words, the default means there is no limit.
+If an integer value is given to \code{limit} then splitting will cease at the
+iteration given by \code{limit}. This works in tandem with \code{split} since we can
+adjust the number of splits from either the right side (\code{split = "last"})
+or left side (\code{split = "first"}) of the column name.}
+
+\item{reverse}{\emph{Reverse vector of split names}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should the order of split names be reversed? By default, this is \code{FALSE}.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-This function will split selected delimited column names such that the first
-components (LHS) are promoted to being spanner column labels, and the
-secondary components (RHS) will become the column labels. Please note that
-reference to individual columns must continue to be the column names from the
-input table data (which are unique by necessity).
+\code{tab_spanner_delim()} can take specially-crafted column names and generate
+one or more spanners (and revise column labels at the same time). This is
+done by splitting the column name by the specified delimiter text (\code{delim})
+and placing the fragments from top to bottom (i.e., higher-level spanners to
+the column labels) or vice versa. Furthermore, neighboring text fragments on
+different spanner levels that have the same text will be coalesced together.
+For instance, having the three side-by-side column names \code{rating_1},
+\code{rating_2}, and \code{rating_3} will (in the default case at least) result in a
+spanner with the label \code{"rating"} above columns with the labels \code{"1"}, \code{"2"},
+and \code{"3"}. There are many options in \code{cols_spanner_delim()} to slice and dice
+delimited column names in different ways:
+\itemize{
+\item delimiter text: choose the delimiter text to use for the fragmentation of
+column names into spanners with the \code{delim} argument
+\item direction and amount of splitting: we can choose to split \emph{n} times
+according to a \code{limit} argument, and, we get to specify from which side of
+the column name the splitting should commence
+\item reversal of fragments: we can reverse the order the fragments we get from
+the splitting procedure with the \code{reverse} argument
+\item column constraints: it's possible to constrain which columns in a \strong{gt}
+table should participate in spanner creation using vectors or
+\strong{tidyselect}-style expressions
 }
-\details{
-If we look to the column names in the \code{iris} dataset as an example of how
-\code{tab_spanner_delim()} might be useful, we find the names \code{Sepal.Length},
-\code{Sepal.Width}, \code{Petal.Length}, \code{Petal.Width}. From this naming system, it's
-easy to see that the \code{Sepal} and \code{Petal} can group together the repeated
-common \code{Length} and \code{Width} values. In your own datasets, we can avoid a
-lengthy relabeling with \code{\link[=cols_label]{cols_label()}} if column names can be fashioned
-beforehand to contain both the spanner column label and the column label. An
-additional advantage is that the column names in the input table data remain
-unique even though there may eventually be repeated column labels in the
-rendered output table).
 }
+\section{Details on column splitting}{
+
+
+If we take a hypothetical table that includes the column names
+\code{province.NL_ZH.pop}, \code{province.NL_ZH.gdp}, \code{province.NL_NH.pop}, and
+\code{province.NL_NH.gdp}, we can see that we have a naming system that has a
+well-defined structure. We start with the more general to the left
+(\code{"province"}) and move to the more specific on the right (\code{"pop"}). If the
+columns are in the table in this exact order, then things are in an ideal
+state as the eventual spanner labels will form from this neighboring.
+When using \code{tab_spanner_delim()} here with \code{delim} set as \code{"."} we get the
+following text fragments:
+\itemize{
+\item \code{province.NL_ZH.pop} -> \code{"province"}, \code{"NL_ZH"}, \code{"pop"}
+\item \code{province.NL_ZH.gdp} -> \code{"province"}, \code{"NL_ZH"}, \code{"gdp"}
+\item \code{province.NL_NH.pop} -> \code{"province"}, \code{"NL_NH"}, \code{"pop"}
+\item \code{province.NL_NH.gdp} -> \code{"province"}, \code{"NL_NH"}, \code{"gdp"}
+}
+
+This gives us the following arrangement of column labels and spanner labels:
+
+\if{html}{\out{<div class="sourceCode default">}}\preformatted{--------- `"province"` ---------- <- level 2 spanner
+---`"NL_ZH"`--- | ---`"NL_NH"`--- <- level 1 spanners
+`"pop"`|`"gdp"` | `"pop"`|`"gdp"` <- column labels
+---------------------------------
+}\if{html}{\out{</div>}}
+
+There might be situations where the same delimiter is used throughout but
+only the last instance requires a splitting. With a pair of column names like
+\code{north_holland_pop} and \code{north_holland_area} you would only want \code{"pop"} and
+\code{"area"} to be column labels underneath a single spanner (\code{"north_holland"}).
+To achieve this, the \code{split} and \code{limit} arguments are used and the values
+for each need to be \code{split = "last"} and \code{limit = 1}. This will give us
+the following arrangement:
+
+\if{html}{\out{<div class="sourceCode default">}}\preformatted{--`"north_holland"`-- <- level 1 spanner
+ `"pop"`  |  `"area"` <- column labels
+---------------------
+}\if{html}{\out{</div>}}
+}
+
 \section{Examples}{
 
 
-Use \code{iris} to create a \strong{gt} table and use the \code{tab_spanner_delim()}
-function to automatically generate column spanner labels. This splits any
-columns that are dot-separated between column spanner labels (first part) and
-column labels (second part).
+With a subset of the \code{\link{towny}} dataset, we can create a \strong{gt} table and then
+use \code{tab_spanner_delim()} to automatically generate column spanner labels.
+In this case we have some column names in the form \verb{population_<year>}.
+The underscore character is the delimiter that separates a common word
+\code{"population"} and a year value. In this default way of splitting, fragments
+to the right are lowest (really they become new column labels) and moving
+left we get spanners. Let's have a look at how \code{tab_spanner_delim()} handles
+these column names:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris |>
-  dplyr::group_by(Species) |>
-  dplyr::slice(1:4) |>
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny_subset_gt <-
+  towny |>
+  dplyr::select(name, starts_with("population")) |>
+  dplyr::filter(grepl("^F", name)) |>
   gt() |>
-  tab_spanner_delim(delim = ".")
+  tab_spanner_delim(delim = "_") |>
+  fmt_integer()
+
+towny_subset_gt
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_1.png" alt="This image of a table was generated from the first code example in the `tab_spanner_delim()` help file." style="width:100\%;">
+}}
+
+The spanner created through this use of \code{tab_spanner_delim()} is
+automatically given an ID value by \strong{gt}. Because it's hard to know what the
+ID value is, we can use \code{\link[=tab_info]{tab_info()}} to inspect the table's indices and ID
+values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny_subset_gt |> tab_info()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_2.png" alt="This image of a table was generated from the second code example in the `tab_spanner_delim()` help file." style="width:100\%;">
+}}
+
+From this informational table, we see that the ID for the spanner is
+\code{"spanner-population_1996"}. Also, the columns are still accessible by the
+original column names (\code{tab_spanner_delim()} did change their labels though).
+Let's use \code{\link[=tab_style]{tab_style()}} along with \code{\link[=cells_column_spanners]{cells_column_spanners()}} to add some
+styling to the spanner label of the \code{towny_subset_gt} table.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny_subset_gt |>
+  tab_style(
+    style = cell_text(weight = "bold", transform = "capitalize"),
+    locations = cells_column_spanners(spanners = "spanner-population_1996")
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_3.png" alt="This image of a table was generated from the third code example in the `tab_spanner_delim()` help file." style="width:100\%;">
+}}
+
+We can plan ahead a bit and refashion the column names with \strong{dplyr} before
+introducing the table to \code{\link[=gt]{gt()}} and \code{tab_spanner_delim()}. Here the column
+labels have underscore delimiters where splitting is not wanted (so a period
+or space character is used instead). The usage of \code{tab_spanner_delim()} gives
+two levels of spanners. We can further touch up the labels after that with
+\code{\link[=cols_label_with]{cols_label_with()}} and \code{\link[=text_transform]{text_transform()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::slice_max(population_2021, n = 5) |>
+  dplyr::select(name, ends_with("pct")) |>
+  dplyr::rename_with(
+    .fn = function(x) \{
+      x |>
+        sub("pop_change_", "Population Change.", x = _) |>
+        sub("_pct", ".pct", x = _)
+    \}
+  ) |>
+  gt(rowname_col = "name") |>
+  tab_spanner_delim(delim = ".") |>
+  fmt_number(decimals = 1, scale_by = 100) |>
+  cols_label_with(
+    fn = function(x) gsub("pct", "\%", x)
+  ) |>
+  text_transform(
+    fn = function(x) gsub("_", " - ", x, fixed = TRUE),
+    locations = cells_column_spanners()
+  ) |>
+  tab_style(
+    style = cell_text(align = "center"),
+    locations = cells_column_labels()
+  ) |>
+  tab_style(
+    style = "padding-right: 36px;",
+    locations = cells_body()
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_4.png" alt="This image of a table was generated from the fourth code example in the `tab_spanner_delim()` help file." style="width:100\%;">
+}}
+
+With a summarized, filtered, and pivoted version of the \code{\link{pizzaplace}}
+dataset, we can create another \strong{gt} table and then use \code{tab_spanner_delim()}
+with the delimiter/separator also used in \code{tidyr::pivot_wider()}. We can also
+process the generated column labels with \code{\link[=cols_label_with]{cols_label_with()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::select(name, date, type, price) |>
+  dplyr::group_by(name, date, type) |>
+  dplyr::summarize(
+    revenue = sum(price),
+    sold = dplyr::n(),
+    .groups = "drop"
+  ) |>
+  dplyr::filter(date \%in\% c("2015-01-01", "2015-01-02", "2015-01-03")) |>
+  dplyr::filter(type \%in\% c("classic", "veggie")) |>
+  tidyr::pivot_wider(
+    names_from = date,
+    names_sep = ".",
+    values_from = c(revenue, sold),
+    values_fn = sum,
+    names_sort = TRUE
+  ) |>
+  gt(rowname_col = "name", groupname_col = "type") |>
+  tab_spanner_delim(delim = ".") |>
+  sub_missing(missing_text = "") |>
+  fmt_currency(columns = starts_with("revenue")) |>
+  data_color(
+    columns = starts_with("revenue"),
+    method = "numeric",
+    palette = c("white", "lightgreen")
+  ) |>
+  cols_label_with(
+    fn = function(x) \{
+      paste0(x, " (", vec_fmt_datetime(x, format = "E"), ")")
+    \}
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_5.png" alt="This image of a table was generated from the fifth code example in the `tab_spanner_delim()` help file." style="width:100\%;">
 }}
 }
 
@@ -80,6 +287,9 @@ column labels (second part).
 }
 
 \seealso{
+\code{\link[=tab_spanner]{tab_spanner()}} to manually create spanners with more control over
+spanner labels.
+
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},
@@ -91,7 +301,7 @@ Other part creation/modification functions:
 \code{\link{tab_spanner}()},
 \code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
-\code{\link{tab_style_body}()},
-\code{\link{tab_style}()}
+\code{\link{tab_style}()},
+\code{\link{tab_style_body}()}
 }
 \concept{part creation/modification functions}

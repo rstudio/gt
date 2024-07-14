@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -110,8 +110,8 @@ prepare_table_head <- function(
   } else {
     table_head <-
       htmltools::tags$thead(
-        heading_component,
-        columns_component
+        if (!is.list(heading_component) && heading_component == "") NULL else heading_component,
+        if (!is.list(columns_component) && columns_component == "") NULL else columns_component
       )
   }
   table_head

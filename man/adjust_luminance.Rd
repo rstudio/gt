@@ -7,13 +7,22 @@
 adjust_luminance(colors, steps)
 }
 \arguments{
-\item{colors}{A vector of colors that will undergo an adjustment in
-luminance. Each color value provided must either be a color name (in the
-set of colors provided by \code{grDevices::colors()}) or a hexadecimal string in
-the form of "#RRGGBB" or "#RRGGBBAA".}
+\item{colors}{\emph{Color vector}
 
-\item{steps}{A positive or negative factor by which the luminance will be
-adjusted. Must be a number between \code{-2.0} and \code{2.0}.}
+\verb{vector<character>} // \strong{required}
+
+This is the vector of colors that will undergo an adjustment in luminance.
+Each color value provided must either be a color name (in the set of colors
+provided by \code{grDevices::colors()}) or a hexadecimal string in the form of
+"#RRGGBB" or "#RRGGBBAA".}
+
+\item{steps}{\emph{Adjustment level}
+
+\verb{scalar<numeric|integer>(-2>=val>=2)} // \strong{required}
+
+A positive or negative factor by which the luminance of colors in the
+\code{colors} vector will be adjusted. Must be a number between \code{-2.0} and
+\code{2.0}.}
 }
 \value{
 A vector of color values.
@@ -82,7 +91,7 @@ of increasingly darker palettes (with \code{\link[=data_color]{data_color()}}).
 
 \section{Function ID}{
 
-8-23
+8-9
 }
 
 \section{Function Introduced}{
@@ -95,30 +104,21 @@ Other helper functions:
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_body}()},
-\code{\link{cells_column_labels}()},
-\code{\link{cells_column_spanners}()},
-\code{\link{cells_footnotes}()},
-\code{\link{cells_grand_summary}()},
-\code{\link{cells_row_groups}()},
-\code{\link{cells_source_notes}()},
-\code{\link{cells_stub_grand_summary}()},
-\code{\link{cells_stub_summary}()},
-\code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
-\code{\link{cells_summary}()},
-\code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
+\code{\link{row_group}()},
 \code{\link{stub}()},
-\code{\link{system_fonts}()}
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
 \concept{helper functions}

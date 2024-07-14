@@ -46,7 +46,7 @@ column here with the \code{stub()} select helper.
 
 \section{Function ID}{
 
-8-5
+8-10
 }
 
 \section{Function Introduced}{
@@ -60,29 +60,20 @@ Other helper functions:
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_body}()},
-\code{\link{cells_column_labels}()},
-\code{\link{cells_column_spanners}()},
-\code{\link{cells_footnotes}()},
-\code{\link{cells_grand_summary}()},
-\code{\link{cells_row_groups}()},
-\code{\link{cells_source_notes}()},
-\code{\link{cells_stub_grand_summary}()},
-\code{\link{cells_stub_summary}()},
-\code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
-\code{\link{cells_summary}()},
-\code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{system_fonts}()}
+\code{\link{row_group}()},
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
 \concept{helper functions}

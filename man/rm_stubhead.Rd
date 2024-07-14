@@ -7,7 +7,12 @@
 rm_stubhead(data)
 }
 \arguments{
-\item{data}{A table object of class \code{gt_tbl}.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -15,7 +20,7 @@ An object of class \code{gt_tbl}.
 \description{
 We can easily remove the stubhead label from a \strong{gt} table with
 \code{rm_stubhead()}. The stubhead location only exists if there is a table stub
-and the text in that cell is added through the \code{\link[=tab_stubhead]{tab_stubhead()}} function.
+and the text in that cell is added with \code{\link[=tab_stubhead]{tab_stubhead()}}.
 
 This function for removal is useful if you have received a \strong{gt} table
 (perhaps through an API that returns \strong{gt} objects) but would prefer that
@@ -25,9 +30,9 @@ use even if there is no stubhead label in the input \code{gt_tbl} object.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. With \code{\link[=tab_stubhead]{tab_stubhead()}}, it's possible
-to add a stubhead label. This appears in the top-left and can be used to
-describe what is in the stub.
+Using the \code{\link{gtcars}} dataset, we'll create a \strong{gt} table. With
+\code{\link[=tab_stubhead]{tab_stubhead()}}, it's possible to add a stubhead label. This appears in the
+top-left and can be used to describe what is in the stub.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
   gtcars |>
@@ -44,7 +49,7 @@ gt_tbl
 }}
 
 If you decide that you don't want the stubhead label in the \code{gt_tbl} object,
-it can be removed with the \code{rm_stubhead()} function.
+it can be removed with \code{rm_stubhead()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{rm_stubhead(data = gt_tbl)
 }\if{html}{\out{</div>}}

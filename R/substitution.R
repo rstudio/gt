@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -27,28 +27,41 @@
 #' @description
 #'
 #' Wherever there is missing data (i.e., `NA` values) customizable content may
-#' present better than the standard `NA` text that would otherwise appear. The
-#' `sub_missing()` function allows for this replacement through its
-#' `missing_text` argument (where an em dash serves as the default).
+#' present better than the standard `NA` text that would otherwise appear.
+#' `sub_missing()` allows for this replacement through its `missing_text`
+#' argument (where an em dash serves as the default).
 #'
 #' @inheritParams fmt_number
-#' @param columns Optional columns for constraining the targeting process.
-#'   Providing [everything()] (the default) results in cells in all `columns`
-#'   being targeting (this can be limited by `rows` however). Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   helper function focused on selections. The select helper functions are:
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#' @param rows Optional rows for constraining the targeting process. Providing
-#'   [everything()] (the default) results in all rows in `columns` being
-#'   targeted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
-#' @param missing_text The text to be used in place of `NA` values in the
-#'   rendered table.
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // *default:* `everything()`
+#'
+#'   The columns to which substitution operations are constrained. Can either
+#'   be a series of column names provided in `c()`, a vector of column indices,
+#'   or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]).
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` // *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   form a constraint for targeting operations. The default [everything()]
+#'   results in all rows in `columns` being formatted. Alternatively, we can
+#'   supply a vector of row IDs within `c()`, a vector of row indices, or a
+#'   select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]. We can also use
+#'   expressions to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param missing_text *Replacement text for `NA` values*
+#'
+#'   `scalar<character>` // *default:* `"---"`
+#'
+#'   The text to be used in place of `NA` values in the rendered table. We can
+#'   optionally use [md()] or [html()] to style the text as Markdown or to
+#'   retain HTML elements in the text.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -92,8 +105,10 @@
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. The `NA` values in different
-#' columns will be given replacement text with two calls of `sub_missing()`.
+#' Use select columns from the [`exibble`] dataset to create a **gt** table. The
+#' `NA` values in different columns (here, we are using column indices in
+#' `columns`) will be given two variations of replacement text with two separate
+#' calls of `sub_missing()`.
 #'
 #' ```r
 #' exibble |>
@@ -115,12 +130,11 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-25
+#' 3-31
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
 #'
-#' @import rlang
 #' @export
 sub_missing <- function(
     data,
@@ -185,7 +199,6 @@ sub_missing <- function(
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
-#' @import rlang
 #' @keywords internal
 #' @export
 fmt_missing <- function(
@@ -196,9 +209,9 @@ fmt_missing <- function(
 ) {
 
   cli::cli_warn(c(
-    "Since gt v0.6.0 the `fmt_missing()` function is deprecated and will
+    "Since gt v0.6.0  {.fn fmt_missing} is deprecated and will
     soon be removed.",
-    "*" = "Use the `sub_missing()` function instead."
+    "i" = "Use {.fn sub_missing} instead."
   ),
   .frequency = "regularly",
   .frequency_id = "fmt_missing_fn_deprecation"
@@ -217,27 +230,18 @@ fmt_missing <- function(
 #' @description
 #'
 #' Wherever there is numerical data that are zero in value, replacement text may
-#' be better for explanatory purposes. The `sub_zero()` function allows for this
-#' replacement through its `zero_text` argument.
+#' be better for explanatory purposes. `sub_zero()` allows for this replacement
+#' through its `zero_text` argument.
 #'
-#' @inheritParams fmt_number
-#' @param columns Optional columns for constraining the targeting process.
-#'   Providing [everything()] (the default) results in cells in all `columns`
-#'   being targeting (this can be limited by `rows` however). Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   helper function focused on selections. The select helper functions are:
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#' @param rows Optional rows for constraining the targeting process. Providing
-#'   [everything()] (the default) results in all rows in `columns` being
-#'   targeted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
-#' @param zero_text The text to be used in place of zero values in the rendered
-#'   table.
+#' @inheritParams sub_missing
+#'
+#' @param zero_text *Replacement text for zero values*
+#'
+#'   `scalar<character>` // *default:* `"nil"`
+#'
+#'   The text to be used in place of zero values in the rendered table. We can
+#'   optionally use [md()] or [html()] to style the text as
+#'   Markdown or to retain HTML elements in the text.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -306,12 +310,11 @@ fmt_missing <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-26
+#' 3-32
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
 #'
-#' @import rlang
 #' @export
 sub_zero <- function(
     data,
@@ -357,38 +360,37 @@ sub_zero <- function(
 #' @description
 #'
 #' Wherever there is numerical data that are very small in value, replacement
-#' text may be better for explanatory purposes. The `sub_small_vals()` function
-#' allows for this replacement through specification of a `threshold`, a
-#' `small_pattern`, and the sign of the values to be considered. The
-#' substitution will occur for those values found to be between `0` and the
-#' threshold value. This is possible for small positive and small negative
-#' values (this can be explicitly set by the `sign` option). Note that the
-#' interval does not include the `0` or the `threshold` value. Should you need
-#' to include zero values, use the [sub_zero()] function.
+#' text may be better for explanatory purposes. `sub_small_vals()` allows for
+#' this replacement through specification of a `threshold`, a `small_pattern`,
+#' and the sign of the values to be considered. The substitution will occur for
+#' those values found to be between `0` and the threshold value. This is
+#' possible for small positive and small negative values (this can be explicitly
+#' set by the `sign` option). Note that the interval does not include the `0` or
+#' the `threshold` value. Should you need to include zero values, use [sub_zero()].
 #'
-#' @inheritParams fmt_number
-#' @param columns Optional columns for constraining the targeting process.
-#'   Providing [everything()] (the default) results in cells in all `columns`
-#'   being targeting (this can be limited by `rows` however). Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   helper function focused on selections. The select helper functions are:
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#' @param rows Optional rows for constraining the targeting process. Providing
-#'   [everything()] (the default) results in all rows in `columns` being
-#'   targeted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
-#' @param threshold The threshold value with which values should be considered
-#'   small enough for replacement.
-#' @param small_pattern The pattern text to be used in place of the suitably
-#'   small values in the rendered table.
-#' @param sign The sign of the numbers to be considered in the replacement. By
-#'   default, we only consider positive values (`"+"`). The other option (`"-"`)
-#'   can be used to consider only negative values.
+#' @inheritParams sub_missing
+#'
+#' @param threshold *Threshold value*
+#'
+#'   `scalar<numeric|integer>` // *default:* `0.01`
+#'
+#'   The threshold value with which values should be considered small enough for
+#'   replacement.
+#'
+#' @param small_pattern *Pattern specification for small values*
+#'
+#'   `scalar<character>` // *default:* `if (sign == "+") "<{x}" else md("<*abs*(-{x})")`
+#'
+#'   The pattern text to be used in place of the suitably small values in the
+#'   rendered table.
+#'
+#' @param sign *Consider positive or negative values?*
+#'
+#'   `scalar<character>` // *default:* `"+"`
+#'
+#'   The sign of the numbers to be considered in the replacement. By default, we
+#'   only consider positive values (`"+"`). The other option (`"-"`) can be used
+#'   to consider only negative values.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -493,12 +495,11 @@ sub_zero <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-27
+#' 3-33
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
 #'
-#' @import rlang
 #' @export
 sub_small_vals <- function(
     data,
@@ -523,7 +524,8 @@ sub_small_vals <- function(
     op_fn_zero_away <- `<`
   }
 
-  # Get the absolute value of the supplied `threshold`
+  # Ensure threshold is a single number and get its absolute value
+  check_number_decimal(threshold)
   threshold <- abs(threshold)
 
   sub_replace_small_vals <- function(
@@ -613,34 +615,33 @@ sub_small_vals <- function(
 #' @description
 #'
 #' Wherever there are numerical data that are very large in value, replacement
-#' text may be better for explanatory purposes. The `sub_large_vals()` function
-#' allows for this replacement through specification of a `threshold`, a
-#' `large_pattern`, and the sign (positive or negative) of the values to be
-#' considered.
+#' text may be better for explanatory purposes. `sub_large_vals()` allows for
+#' this replacement through specification of a `threshold`, a `large_pattern`,
+#' and the sign (positive or negative) of the values to be considered.
 #'
-#' @inheritParams fmt_number
-#' @param columns Optional columns for constraining the targeting process.
-#'   Providing [everything()] (the default) results in cells in all `columns`
-#'   being targeting (this can be limited by `rows` however). Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   helper function focused on selections. The select helper functions are:
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#' @param rows Optional rows for constraining the targeting process. Providing
-#'   [everything()] (the default) results in all rows in `columns` being
-#'   targeted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
-#' @param threshold The threshold value with which values should be considered
-#'   large enough for replacement.
-#' @param large_pattern The pattern text to be used in place of the suitably
-#'   large values in the rendered table.
-#' @param sign The sign of the numbers to be considered in the replacement. By
-#'   default, we only consider positive values (`"+"`). The other option (`"-"`)
-#'   can be used to consider only negative values.
+#' @inheritParams sub_missing
+#'
+#' @param threshold *Threshold value*
+#'
+#'   `scalar<numeric|integer>` // *default:* `1E12`
+#'
+#'   The threshold value with which values should be considered large enough for
+#'   replacement.
+#'
+#' @param large_pattern *Pattern specification for large values*
+#'
+#'   `scalar<character>` // *default:* `">={x}"`
+#'
+#'   The pattern text to be used in place of the suitably large values in the
+#'   rendered table.
+#'
+#' @param sign *Consider positive or negative values?*
+#'
+#'   `scalar<character>` // *default:* `"+"`
+#'
+#'   The sign of the numbers to be considered in the replacement. By default, we
+#'   only consider positive values (`"+"`). The other option (`"-"`) can be used
+#'   to consider only negative values.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -746,12 +747,11 @@ sub_small_vals <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-28
+#' 3-34
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
 #'
-#' @import rlang
 #' @export
 sub_large_vals <- function(
     data,
@@ -774,7 +774,8 @@ sub_large_vals <- function(
     op_fn <- `<=`
   }
 
-  # Get the absolute value of the supplied `threshold`
+  # Ensure threshold is a single number and get its absolute value
+  check_number_decimal(threshold)
   threshold <- abs(threshold)
 
   sub_replace_large_vals <- function(
@@ -859,14 +860,16 @@ sub_large_vals <- function(
   )
 }
 
-check_sub_fn_sign <- function(sign) {
+check_sub_fn_sign <- function(sign, call = rlang::caller_env()) {
 
   if (!(sign %in% c("+", "-"))) {
     cli::cli_abort(c(
       "The `sign` option should either be \"+\" or \"-\".",
       "*" = "With \"+\", we consider only positive large values.",
       "*" = "Using \"-\" means that the focus is on negative values."
-    ))
+      ),
+      call = call
+    )
   }
 }
 
@@ -874,45 +877,52 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @description
 #'
-#' Should you need to replace specific cell values with custom text, the
-#' `sub_values()` function can be good choice. We can target cells for
-#' replacement though value, regex, and custom matching rules.
+#' Should you need to replace specific cell values with custom text,
+#' `sub_values()` can be good choice. We can target cells for replacement
+#' through value, regex, and custom matching rules.
 #'
-#' @inheritParams fmt_number
-#' @param columns Optional columns for constraining the targeting process.
-#'   Providing [everything()] (the default) results in cells in all `columns`
-#'   being targeting (this can be limited by `rows` however). Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   helper function focused on selections. The select helper functions are:
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#' @param rows Optional rows for constraining the targeting process. Providing
-#'   [everything()] (the default) results in all rows in `columns` being
-#'   targeted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
-#' @param values The specific value or values that should be replaced with a
-#'   `replacement` value. If `pattern` is also supplied then `values` will be
-#'   ignored.
-#' @param pattern A regex pattern that can target solely those values in
-#'   `character`-based columns. If `values` is also supplied, `pattern` will
-#'   take precedence.
-#' @param fn A supplied function that operates on `x` (the data in a column) and
-#'   should return a logical vector that matches the length of `x` (i.e., number
-#'   of rows in the input table). If either of `values` or `pattern` is also
+#' @inheritParams sub_missing
+#'
+#' @param values *Values to match on*
+#'
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   The specific value or values that should be replaced with a `replacement`
+#'   value. If `pattern` is also supplied then `values` will be ignored.
+#'
+#' @param pattern *Regex pattern to match with*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   A regex pattern that can target solely those values in `character`-based
+#'   columns. If `values` is also supplied, `pattern` will take precedence.
+#'
+#' @param fn *Function to return logical values*
+#'
+#'   `<function>` // *default:* `NULL` (`optional`)
+#'
+#'   A supplied function that operates on `x` (the data in a column) and should
+#'   return a logical vector that matches the length of `x` (i.e., number of
+#'   rows in the input table). If either of `values` or `pattern` is also
 #'   supplied, `fn` will take precedence.
-#' @param replacement The replacement value for any cell values matched by
-#'   either `values` or `pattern`. Must be a character or numeric vector of
-#'   length 1.
-#' @param escape An option to escape replacement text according to the final
-#'   output format of the table. For example, if a LaTeX table is to be
-#'   generated then LaTeX escaping would be performed on the replacements during
-#'   rendering. By default this is set to `TRUE` but setting to `FALSE` would be
-#'   useful in the case where replacement text is crafted for a specific output
-#'   format in mind.
+#'
+#' @param replacement *Replacement value for matches*
+#'
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   The replacement value for any cell values matched by either `values` or
+#'   `pattern`. Must be a character or numeric vector of length 1.
+#'
+#' @param escape *Text escaping*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   An option to escape replacement text according to the final output format
+#'   of the table. For example, if a LaTeX table is to be generated then LaTeX
+#'   escaping would be performed on the replacements during rendering. By
+#'   default this is set to `TRUE` but setting to `FALSE` would be useful in the
+#'   case where replacement text is crafted for a specific output format in
+#'   mind.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1021,12 +1031,11 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-29
+#' 3-35
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
 #'
-#' @import rlang
 #' @export
 sub_values <- function(
     data,
@@ -1044,7 +1053,7 @@ sub_values <- function(
 
   if (is.null(values) && is.null(pattern) && is.null(fn)) {
     cli::cli_abort(
-      "One of `values`, `pattern`, or `fn` needs to be supplied to `sub_value()`."
+      "One of `values`, `pattern`, or `fn` must be supplied to {.fn sub_value}."
     )
   }
 
@@ -1055,22 +1064,13 @@ sub_values <- function(
     )
   }
 
-  if (is.null(replacement)) {
-    cli::cli_abort(
-      "A `replacement` needs to be provided for any `values` or `pattern`."
-    )
-  }
-
-  if (!is.numeric(replacement) && !is.character(replacement)) {
-    cli::cli_abort(
-      "The `replacement` must be a numeric, integer, or character vector."
-    )
-  }
-
-  if (length(replacement) != 1) {
-    cli::cli_abort(
-      "The length of the `replacement` vector must 1."
-    )
+  if (is.numeric(replacement)) {
+    check_number_decimal(replacement)
+  } else if (is.character(replacement)) {
+    check_string(replacement)
+  } else {
+    cli::cli_abort("{.arg replacement} must be a number, or a string,
+                   not {.obj_type_friendly {replacement}}.")
   }
 
   sub_replace_value <- function(
@@ -1189,7 +1189,8 @@ subst <- function(
     data,
     columns = everything(),
     rows = everything(),
-    fns
+    fns,
+    call = rlang::caller_env()
 ) {
 
   # Perform input object validation
@@ -1203,13 +1204,15 @@ subst <- function(
     resolve_cols_c(
       expr = {{ columns }},
       data = data,
-      excl_stub = FALSE
+      excl_stub = FALSE,
+      call = call
     )
 
   resolved_rows_idx <-
     resolve_rows_i(
       expr = {{ rows }},
-      data = data
+      data = data,
+      call = call
     )
 
   # If a single function is supplied to `fns` then

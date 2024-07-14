@@ -7,25 +7,33 @@
 web_image(url, height = 30)
 }
 \arguments{
-\item{url}{A url that resolves to an image file.}
+\item{url}{\emph{An image URL}
 
-\item{height}{The absolute height (px) of the image in the table cell.}
+\verb{scalar<character>} // \strong{required}
+
+A url that resolves to an image file.}
+
+\item{height}{\emph{Height of image}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{30}
+
+The absolute height of the image in the table cell (in \code{"px"} units). By
+default, this is set to \code{"30px"}.}
 }
 \value{
 A character object with an HTML fragment that can be placed inside of
 a cell.
 }
 \description{
-We can flexibly add a web image inside of a table with \code{web_image()}
-function. The function provides a convenient way to generate an HTML fragment
-with an image URL. Because this function is currently HTML-based, it is only
-useful for HTML table output. To use this function inside of data cells, it
-is recommended that the \code{\link[=text_transform]{text_transform()}} function is used. With that
-function, we can specify which data cells to target and then include a
-\code{web_image()} call within the required user-defined function (for the \code{fn}
-argument). If we want to include an image in other places (e.g., in the
-header, within footnote text, etc.) we need to use \code{web_image()} within the
-\code{\link[=html]{html()}} helper function.
+We can flexibly add a web image inside of a table with \code{web_image()}.
+The function provides a convenient way to generate an HTML fragment with an
+image URL. Because this function is currently HTML-based, it is only useful
+for HTML table output. To use this function inside of data cells, it is
+recommended to use \code{\link[=text_transform]{text_transform()}}. With that function, we can specify
+which data cells to target and then include a \code{web_image()} call within the
+required user-defined function (for the \code{fn} argument). If we want to include
+an image in other places (e.g., in the header, within footnote text, etc.)
+we need to wrap \code{web_image()} inside \code{\link[=html]{html()}}.
 
 By itself, the function creates an HTML image tag, so, the call
 \code{web_image("http://example.com/image.png")} evaluates to:
@@ -44,8 +52,8 @@ Get the PNG-based logo for the R Project from an image URL.
 }\if{html}{\out{</div>}}
 
 Create a tibble that contains heights of an image in pixels (one column as a
-string, the other as numerical values), then, create a \strong{gt} table. Use the
-\code{\link[=text_transform]{text_transform()}} function to insert the R logo PNG image with the various
+string, the other as numerical values), then, create a \strong{gt} table. Use
+\code{\link[=text_transform]{text_transform()}} to insert the R logo PNG image with the various
 sizes.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
@@ -74,9 +82,9 @@ Get the SVG-based logo for the R Project from an image URL.
 }\if{html}{\out{</div>}}
 
 Create a tibble that contains heights of an image in pixels (one column as a
-string, the other as numerical values), then, create a \strong{gt} table. Use the
-\code{\link[=tab_header]{tab_header()}} function to insert the \strong{R} logo SVG image once in the title
-and five times in the subtitle.
+string, the other as numerical values), then, create a \strong{gt} table. Use
+\code{\link[=tab_header]{tab_header()}} to insert the \strong{R} logo SVG image once in the title and five
+times in the subtitle.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   pixels = px(seq(10, 35, 5)),

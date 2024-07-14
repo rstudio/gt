@@ -7,23 +7,29 @@
 extract_summary(data)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 }
 \value{
 A list of data frames containing summary data.
 }
 \description{
 Get a list of summary row data frames from a \code{gt_tbl} object where summary
-rows were added via the \code{\link[=summary_rows]{summary_rows()}} function. The output data frames
-contain the \code{group_id} and \code{rowname} columns, whereby \code{rowname} contains
-descriptive stub labels for the summary rows.
+rows were added via \code{\link[=summary_rows]{summary_rows()}}. The output data frames contain the
+\code{group_id} and \code{rowname} columns, whereby \code{rowname} contains descriptive stub
+labels for the summary rows.
 }
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create summary rows
-labeled as \code{min}, \code{max}, and \code{avg} for every row group with \code{\link[=summary_rows]{summary_rows()}}.
-Then, extract the summary rows as a list object.
+Use a modified version of \code{\link{sp500}} the dataset to create a \strong{gt} table with
+row groups and row labels. Create summary rows labeled as \code{min}, \code{max}, and
+\code{avg} for every row group with \code{\link[=summary_rows]{summary_rows()}}. Then, extract the summary
+rows as a list object.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{summary_extracted <-
   sp500 |>
@@ -98,7 +104,7 @@ Use the summary list to make a new \strong{gt} table. The key thing is to use
 
 \section{Function ID}{
 
-13-6
+13-8
 }
 
 \section{Function Introduced}{
@@ -108,10 +114,12 @@ Use the summary list to make a new \strong{gt} table. The key thing is to use
 
 \seealso{
 Other table export functions: 
+\code{\link{as_gtable}()},
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
 \code{\link{as_word}()},
+\code{\link{extract_body}()},
 \code{\link{extract_cells}()},
 \code{\link{gtsave}()}
 }

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -26,27 +26,31 @@
 #'
 #' @description
 #'
-#' We can modify the display order of any row groups in a **gt** object with the
-#' `row_group_order()` function. The `groups` argument takes a vector of row
-#' group ID values. After this function is invoked, the row groups will adhere
-#' to this revised ordering. It isn't necessary to provide all row ID values in
-#' `groups`, rather, what is provided will assume the specified ordering at the
-#' top of the table and the remaining row groups will follow in their original
-#' ordering.
+#' We can modify the display order of any row groups in a **gt** object with
+#' `row_group_order()`. The `groups` argument takes a vector of row group ID values.
+#' After this function is invoked, the row groups will adhere to this revised
+#' ordering. It isn't necessary to provide all row ID values in `groups`, rather,
+#' what is provided will assume the specified ordering at the top of the table
+#' and the remaining row groups will follow in their original ordering.
 #'
 #' @inheritParams cols_align
-#' @param groups A character vector of row group ID values corresponding to the
-#'   revised ordering. While this vector must contain valid group ID values, it
-#'   is not required to have all of the row group IDs within it; any omitted
-#'   values will be added to the end while preserving the original ordering.
+#'
+#' @param groups *Specification of row group IDs*
+#'
+#'   `vector<character>` // **required**
+#'
+#'   A character vector of row group ID values corresponding to the revised
+#'   ordering. While this vector must contain valid group ID values, it is not
+#'   required to have all of the row group IDs within it; any omitted values
+#'   will be added to the end while preserving the original ordering.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a stub and with row groups.
-#' Modify the order of the row groups with `row_group_order()`, specifying the
-#' new ordering in `groups`.
+#' Let's use [`exibble`] to create a **gt** table with a stub and with row
+#' groups. We can modify the order of the row groups with `row_group_order()`,
+#' specifying the new ordering in `groups`.
 #'
 #' ```r
 #' exibble |>
@@ -89,7 +93,7 @@ row_group_order <- function(
   arrange_groups <- dt_row_groups_get(data = data)
 
   # Stop function if any value in `groups` doesn't match a group name
-  if (any(!groups %in% arrange_groups)) {
+  if (!all(groups %in% arrange_groups)) {
 
     cli::cli_abort(c(
       "All values given as `groups` must correspond to `group_id` values.",

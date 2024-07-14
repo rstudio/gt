@@ -1,4 +1,4 @@
-test_that("The `fmt_number()` function works correctly in the HTML context", {
+test_that("fmt_number() works correctly in the HTML context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -22,10 +22,10 @@ test_that("The `fmt_number()` function works correctly in the HTML context", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  char_1 <- (tab %>% dt_data_get())[["char_1"]]
-  char_2 <- (tab %>% dt_data_get())[["char_2"]]
-  num_1 <- (tab %>% dt_data_get())[["num_1"]]
-  num_2 <- (tab %>% dt_data_get())[["num_2"]]
+  char_1 <- dt_data_get(tab)[["char_1"]]
+  char_2 <- dt_data_get(tab)[["char_2"]]
+  num_1 <- dt_data_get(tab)[["num_1"]]
+  num_2 <- dt_data_get(tab)[["num_2"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -270,31 +270,26 @@ test_that("The `fmt_number()` function works correctly in the HTML context", {
   na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) %>% gt()
 
   # Expect a returned object of class `gt_tbl` with various uses of `fmt_number()`
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>% fmt_number(columns = a) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_number(columns = a, rows = 1:5) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_number(columns = a, scale_by = 100) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_number(columns = a, suffixing = TRUE) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_number(columns = a, pattern = "a{x}b") %>%
       as_raw_html()
@@ -309,7 +304,7 @@ test_that("The `fmt_number()` function works correctly in the HTML context", {
   )
 })
 
-test_that("The `fmt_number()` function can scale/suffix larger numbers", {
+test_that("fmt_number() can scale/suffix larger numbers", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -531,7 +526,7 @@ test_that("The `fmt_number()` function can scale/suffix larger numbers", {
   )
 })
 
-test_that("The `fmt_number()` function format to specified significant figures", {
+test_that("fmt_number() formats to specified significant figures", {
 
   # These numbers will be used in tests of formatting
   # correctly to n significant figures
@@ -666,11 +661,12 @@ test_that("The `fmt_number()` function format to specified significant figures",
   # Expect an error if the length of `n_sigfig` is not 1
   expect_error(fmt_number(tab, columns = num, n_sigfig = c(1, 2)))
 
-  # Expect an error if `n_sigfig` is NA
-  expect_error(tab %>% fmt_number(columns = num, n_sigfig = NA))
-  expect_error(tab %>% fmt_number(columns = num, n_sigfig = NA_integer_))
-  expect_error(tab %>% fmt_number(columns = num, n_sigfig = NA_real_))
-  expect_error(tab %>% fmt_number(columns = num, n_sigfig = NA_integer_))
+  # Don't expect an error if `n_sigfig` is NA (if `n_sigfig` has NA) then
+  # `decimals` is used
+  expect_no_error(tab %>% fmt_number(columns = num, n_sigfig = NA))
+  expect_no_error(tab %>% fmt_number(columns = num, n_sigfig = NA_integer_))
+  expect_no_error(tab %>% fmt_number(columns = num, n_sigfig = NA_real_))
+  expect_no_error(tab %>% fmt_number(columns = num, n_sigfig = NA_integer_))
 
   # Expect an error if `n_sigfig` is not numeric
   expect_error(tab %>% fmt_number(columns = num, n_sigfig = "3"))
@@ -678,16 +674,15 @@ test_that("The `fmt_number()` function format to specified significant figures",
   expect_error(tab %>% fmt_number(columns = num, n_sigfig = factor(3)))
 
   # Don't expect errors when using integers or doubles
-  expect_error(regexp = NA, tab %>% fmt_number(columns = num, n_sigfig = 2L))
-  expect_error(regexp = NA, tab %>% fmt_number(columns = num, n_sigfig = 2))
+  expect_no_error(tab %>% fmt_number(columns = num, n_sigfig = 2L))
+  expect_no_error(tab %>% fmt_number(columns = num, n_sigfig = 2))
 
   # Expect an error if `n_sigfig` is less than 1
   expect_error(tab %>% fmt_number(columns = num, n_sigfig = 0L))
   expect_error(tab %>% fmt_number(columns = num, n_sigfig = -1L))
 })
 
-
-test_that("The `drop_trailing_dec_mark` option works in select `fmt_*()` functions", {
+test_that("`drop_trailing_dec_mark` works in select `fmt_*()` functions", {
 
   # These numbers will be used in tests with `drop_trailing_dec_mark = FALSE`
   numbers <- c(0.001, 0.01, 0.1, 0, 1, 1.1, 1.12, 50000, -1.5, -5, -500.1)
@@ -842,7 +837,7 @@ test_that("The `drop_trailing_dec_mark` option works in select `fmt_*()` functio
   )
 })
 
-test_that("The `fmt_number()` fn with `suffixing = TRUE` works with small numbers", {
+test_that("fmt_number() with `suffixing = TRUE` works with small numbers", {
 
   # Create an input data frame with a single column
   data_tbl <-
@@ -882,8 +877,7 @@ test_that("Rownames and groupnames aren't included in `columns = TRUE`", {
 
   # This doesn't fail; it won't apply numeric formatting to the
   # "chardata" column but the formatter will skip over it
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     mtcars1 %>%
       gt() %>%
       fmt_number(columns = everything())
@@ -892,22 +886,20 @@ test_that("Rownames and groupnames aren't included in `columns = TRUE`", {
   # These succeed because the "chardata" col no longer counts as a
   # resolvable column if it's a rowname_col or groupname_col, yet, it's
   # still visible as a column in the `rows` expression
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     mtcars1 %>%
       gt(rowname_col = "chardata") %>%
       fmt_number(columns = everything(), rows = chardata == "Mazda RX4")
   )
 
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     mtcars1 %>%
       gt(groupname_col = "chardata") %>%
       fmt_number(columns = everything(), rows = chardata == "Mazda RX4")
   )
 })
 
-test_that("The `fmt_number()` fn can render values in the Indian numbering system", {
+test_that("fmt_number() can render values in the Indian numbering system", {
 
   # These numbers will be used in tests of formatting
   # values to the Indian numbering system
@@ -1085,14 +1077,18 @@ test_that("The `fmt_number()` fn can render values in the Indian numbering syste
       "(Inf Cr)"
     )
   )
-  expect_warning(
-    expect_equal(
-      (tab %>%
-         fmt_number(columns = num, suffixing = TRUE, system = "ind") %>%
-         render_formats_test(context = "html"))[["num"]],
-      (tab %>%
-         fmt_number(columns = num, suffixing = TRUE, scale_by = 200, system = "ind") %>%
-         render_formats_test(context = "html"))[["num"]]
-    )
+
+  expect_no_warning(
+    compared_tab <- tab %>%
+      fmt_number(columns = num, suffixing = TRUE, system = "ind")
+  )
+  # scale_by warning
+  expect_snapshot(
+    expected_tab <- tab %>%
+      fmt_number(columns = num, suffixing = TRUE, scale_by = 200, system = "ind")
+  )
+  expect_equal(
+    render_formats_test(compared_tab, context = "html")[["num"]],
+    render_formats_test(expected_tab, context = "html")[["num"]]
   )
 })

@@ -1,4 +1,4 @@
-test_that("The `gt_group()` function can be used to contain gt tables", {
+test_that("gt_group() can be used to contain gt tables", {
 
   # Create two different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)
@@ -31,8 +31,8 @@ test_that("The `gt_group()` function can be used to contain gt tables", {
   expect_false(gt_tbls_5[["use_grp_opts"]])
 
   # Expect specific components inside of a 'gt_group' object
-  expect_equal(
-    names(gt_tbls_1),
+  expect_named(
+    gt_tbls_1,
     c("gt_tbls", "gt_tbl_options", "use_grp_opts")
   )
 
@@ -42,7 +42,7 @@ test_that("The `gt_group()` function can be used to contain gt tables", {
   expect_s3_class(gt_tbls_1[["gt_tbl_options"]], "tbl_df")
 })
 
-test_that("The `grp_pull()` function can be used to extract a table from a group", {
+test_that("grp_pull() can be used to extract a table from a group", {
 
   # Create two different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)
@@ -90,7 +90,7 @@ test_that("The `grp_pull()` function can be used to extract a table from a group
   expect_equal(gt_tbl_2[["_options"]][["value"]][[7]], "#FFFFFF")
 })
 
-test_that("The `grp_add()` function can be used to add a table to a group", {
+test_that("grp_add() can be used to add a table to a group", {
 
   # Create three different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)
@@ -106,7 +106,7 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
 
   # Expect that adding nothing via `grp_add()` doesn't error but also
   # it doesn't change the `gt_tbls_1` object
-  expect_error(regexp = NA, gt_tbls_1 %>% grp_add())
+  expect_no_error(gt_tbls_1 %>% grp_add())
   expect_equal(gt_tbls_1, gt_tbls_1 %>% grp_add())
 
   # Add a table to the empty table group; expect that the table group
@@ -122,7 +122,7 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
   gt_tbl_1_pulled <- grp_pull(gt_tbls_1, which = 1)
   expect_equal(gt_tbl_1, gt_tbl_1_pulled)
   expect_equal(nrow(gt_tbls_1[["gt_tbls"]]), 1)
-  expect_true(inherits(gt_tbls_1[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl"))
+  expect_s3_class(gt_tbls_1[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl")
 
   # Add a second table to the table group; expect that the table group now
   # contains two gt tables
@@ -131,8 +131,8 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
     grp_add(gt_tbl_2)
 
   expect_equal(nrow(gt_tbls_2[["gt_tbls"]]), 2)
-  expect_true(inherits(gt_tbls_2[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl"))
-  expect_true(inherits(gt_tbls_2[["gt_tbls"]][["gt_tbl"]][[2]], "gt_tbl"))
+  expect_s3_class(gt_tbls_2[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl")
+  expect_s3_class(gt_tbls_2[["gt_tbls"]][["gt_tbl"]][[2]], "gt_tbl")
 
   # Pull both tables (first is based on `exibble`, the second on `gtcars`)
   # from the group object and expect that second table added was added to the
@@ -151,9 +151,9 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
     grp_add(gt_tbl_3, .before = 1)
 
   expect_equal(nrow(gt_tbls_3[["gt_tbls"]]), 3)
-  expect_true(inherits(gt_tbls_3[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl"))
-  expect_true(inherits(gt_tbls_3[["gt_tbls"]][["gt_tbl"]][[2]], "gt_tbl"))
-  expect_true(inherits(gt_tbls_3[["gt_tbls"]][["gt_tbl"]][[3]], "gt_tbl"))
+  expect_s3_class(gt_tbls_3[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl")
+  expect_s3_class(gt_tbls_3[["gt_tbls"]][["gt_tbl"]][[2]], "gt_tbl")
+  expect_s3_class(gt_tbls_3[["gt_tbls"]][["gt_tbl"]][[3]], "gt_tbl")
 
   # Pull all three tables, this is the expected ordering:
   # 1. based on `towny` (`gt_tbl_3`)
@@ -177,10 +177,10 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
     grp_add(gt_tbl_4, .after = 1)
 
   expect_equal(nrow(gt_tbls_4[["gt_tbls"]]), 4)
-  expect_true(inherits(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl"))
-  expect_true(inherits(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[2]], "gt_tbl"))
-  expect_true(inherits(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[3]], "gt_tbl"))
-  expect_true(inherits(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[4]], "gt_tbl"))
+  expect_s3_class(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl")
+  expect_s3_class(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[2]], "gt_tbl")
+  expect_s3_class(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[3]], "gt_tbl")
+  expect_s3_class(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[4]], "gt_tbl")
 
   # Pull all four tables, this is the expected ordering:
   # 1. based on `towny` (`gt_tbl_3`)
@@ -207,16 +207,16 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
   # Expect the `grp_add()` to stop if either the `.before`
   # or `.after` values are not valid indices
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 0))
-  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 1))
-  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2))
-  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 3))
+  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 1))
+  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2))
+  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 3))
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 4))
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = -1))
 
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 0))
-  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 1))
-  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 2))
-  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 3))
+  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 1))
+  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 2))
+  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 3))
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 4))
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = -1))
 
@@ -226,7 +226,7 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 2.99))
 })
 
-test_that("The `grp_replace()` function can be used to add a table to a group", {
+test_that("grp_replace() can be used to add a table to a group", {
 
   # Create four different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)
@@ -317,7 +317,7 @@ test_that("The `grp_replace()` function can be used to add a table to a group", 
   expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_1, gt_tbl_1, .which = 1:3))
 })
 
-test_that("The `grp_rm()` function can be used to remove a table from a group", {
+test_that("grp_rm() can be used to remove a table from a group", {
 
   # Create three different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)
@@ -373,7 +373,7 @@ test_that("The `grp_rm()` function can be used to remove a table from a group", 
   expect_equal(gt_tbl_3, gt_tbl_1_pulled)
 })
 
-test_that("The `grp_options()` function can be used to set options for a group", {
+test_that("grp_options() can be used to set options for a group", {
 
   # Create two different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)
@@ -396,28 +396,26 @@ test_that("The `grp_options()` function can be used to set options for a group",
   gt_tbl_2_alt <- gt_tbls_2 %>% grp_pull(which = 2)
 
   # Expect the default text and background colors for the input gt tables
-  expect_true(
-    gt_tbl_1 %>%
-      as_raw_html() %>%
-      grepl("<table .* color: #333333;.*?bgcolor=\"#FFFFFF\">", .)
+  expect_match(
+    as_raw_html(gt_tbl_1),
+    "<table .* color: #333333;.*?bgcolor=\"#FFFFFF\">"
   )
-  expect_true(
-    gt_tbl_2 %>%
-      as_raw_html() %>%
-      grepl("<table .* color: #333333;.*?bgcolor=\"#FFFFFF\">", .)
+
+  expect_match(
+    as_raw_html(gt_tbl_2),
+    "<table .* color: #333333;.*?bgcolor=\"#FFFFFF\">"
   )
 
   # Expect the changed text and background colors for the input gt tables
   # that were pulled from the group that had group options applied (and
   # activated via `.use_grp_opts = TRUE`)
-  expect_true(
-    gt_tbl_1_alt %>%
-      as_raw_html() %>%
-      grepl("<table .* color: #1A1A1A;.*?bgcolor=\"#F2F2F2\">", .)
+  expect_match(
+    as_raw_html(gt_tbl_1_alt),
+    "<table .* color: #1A1A1A;.*?bgcolor=\"#F2F2F2\">"
   )
-  expect_true(
-    gt_tbl_2_alt %>%
-      as_raw_html() %>%
-      grepl("<table .* color: #1A1A1A;.*?bgcolor=\"#F2F2F2\">", .)
+
+  expect_match(
+    as_raw_html(gt_tbl_2_alt),
+    "<table .* color: #1A1A1A;.*?bgcolor=\"#F2F2F2\">"
   )
 })

@@ -7,36 +7,57 @@
 cell_borders(sides = "all", color = "#000000", style = "solid", weight = px(1))
 }
 \arguments{
-\item{sides}{The border sides to be modified. Options include \code{"left"},
-\code{"right"}, \code{"top"}, and \code{"bottom"}. For all borders surrounding the
-selected cells, we can use the \code{"all"} option.}
+\item{sides}{\emph{Border sides}
 
-\item{color, style, weight}{The border color, style, and weight. The \code{color}
-can be defined with a color name or with a hexadecimal color code. The
-default \code{color} value is \code{"#000000"} (black). The \code{style} can be one of
-either \code{"solid"} (the default), \code{"dashed"}, \code{"dotted"}, \code{"hidden"}, or
-\code{"double"}. The \code{weight} of the border lines is to be given in pixel values
-(the \code{\link[=px]{px()}} helper function is useful for this. The default value for
-\code{weight} is \code{"1px"}. Borders for any defined \code{sides} can be removed by
+\verb{vector<character>} // \emph{default:} \code{"all"}
+
+The border sides to be modified. Options include \code{"left"}, \code{"right"},
+\code{"top"}, and \code{"bottom"}. For all borders surrounding the selected cells, we
+can use the \code{"all"} option.}
+
+\item{color}{\emph{Border color}
+
+\verb{scalar<character>|NULL} // \emph{default:} \code{"#000000"}
+
+The border \code{color} can be defined with a color name or with a hexadecimal
+color code. The default \code{color} value is \code{"#000000"} (black). Borders for
+any defined \code{sides} can be removed by supplying \code{NULL} here.}
+
+\item{style}{\emph{Border line style}
+
+\verb{scalar<character>|NULL} // \emph{default:} \code{"solid"}
+
+The border \code{style} can be one of either \code{"solid"} (the default),
+\code{"dashed"}, \code{"dotted"}, \code{"hidden"}, or \code{"double"}. Borders for any defined
+\code{sides} can be removed by supplying \code{NULL} here.}
+
+\item{weight}{\emph{Border weight}
+
+\verb{scalar<character>|NULL} // \emph{default:} \code{px(1)}
+
+The default value for \code{weight} is \code{"1px"} and higher values will become
+more visually prominent. Borders for any defined \code{sides} can be removed by
 supplying \code{NULL} to any of \code{color}, \code{style}, or \code{weight}.}
 }
 \value{
 A list object of class \code{cell_styles}.
 }
 \description{
-The \code{cell_borders()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
-function, which itself allows for the setting of custom styles to one or more
-cells. Specifically, the call to \code{cell_borders()} should be bound to the
-\code{styles} argument of \code{\link[=tab_style]{tab_style()}}. The \code{selection} argument is where we
-define which borders should be modified (e.g., \code{"left"}, \code{"right"}, etc.).
-With that selection, the \code{color}, \code{style}, and \code{weight} of the selected
-borders can then be modified.
+\code{cell_borders()} is to be used with \code{\link[=tab_style]{tab_style()}}, which itself allows for
+the setting of custom styles to one or more cells. Specifically, the call to
+\code{cell_borders()} should be bound to the \code{styles} argument of \code{\link[=tab_style]{tab_style()}}.
+The \code{sides} argument is where we define which borders should be modified
+(e.g., \code{"left"}, \code{"right"}, etc.). With that selection, the \code{color}, \code{style},
+and \code{weight} of the selected borders can then be modified.
 }
 \section{Examples}{
 
 
-Add horizontal border lines for all table body rows in \code{\link{exibble}} using
-\code{\link[=tab_style]{tab_style()}} and \code{cell_borders()}.
+We can add horizontal border lines for all table body rows in a \strong{gt} table
+based on the \code{\link{exibble}} dataset. For this, we need to use \code{\link[=tab_style]{tab_style()}}
+(targeting all cells in the table body with \code{\link[=cells_body]{cells_body()}}) in conjunction
+with \code{cell_borders()} in the \code{style} argument. Both top and bottom borders
+will be added as \code{"solid"} and \code{"red"} lines with a line width of 1.5 px.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt() |>
@@ -47,10 +68,7 @@ Add horizontal border lines for all table body rows in \code{\link{exibble}} usi
       weight = px(1.5),
       style = "solid"
     ),
-    locations = cells_body(
-      columns = everything(),
-      rows = everything()
-    )
+    locations = cells_body()
   )
 }\if{html}{\out{</div>}}
 
@@ -58,9 +76,9 @@ Add horizontal border lines for all table body rows in \code{\link{exibble}} usi
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_borders_1.png" alt="This image of a table was generated from the first code example in the `cell_borders()` help file." style="width:100\%;">
 }}
 
-Incorporate different horizontal and vertical borders at several locations.
-This uses multiple \code{cell_borders()} and \code{\link[=cells_body]{cells_body()}} calls within
-\code{list()}s.
+It's possible to incorporate different horizontal and vertical (\code{"left"} and
+\code{"right"}) borders at several different locations. This uses multiple
+\code{cell_borders()} and \code{\link[=cells_body]{cells_body()}} calls within their own respective lists.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt() |>
@@ -97,7 +115,7 @@ This uses multiple \code{cell_borders()} and \code{\link[=cells_body]{cells_body
 
 \section{Function ID}{
 
-8-22
+8-27
 }
 
 \section{Function Introduced}{
@@ -110,30 +128,21 @@ Other helper functions:
 \code{\link{adjust_luminance}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_body}()},
-\code{\link{cells_column_labels}()},
-\code{\link{cells_column_spanners}()},
-\code{\link{cells_footnotes}()},
-\code{\link{cells_grand_summary}()},
-\code{\link{cells_row_groups}()},
-\code{\link{cells_source_notes}()},
-\code{\link{cells_stub_grand_summary}()},
-\code{\link{cells_stub_summary}()},
-\code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
-\code{\link{cells_summary}()},
-\code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
+\code{\link{row_group}()},
 \code{\link{stub}()},
-\code{\link{system_fonts}()}
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
 \concept{helper functions}

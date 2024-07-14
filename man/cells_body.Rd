@@ -7,64 +7,38 @@
 cells_body(columns = everything(), rows = everything())
 }
 \arguments{
-\item{columns}{The names of the columns that are to be targeted.}
+\item{columns}{\emph{Columns to target}
 
-\item{rows}{The names of the rows that are to be targeted.}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+The columns to which targeting operations are constrained. Can either
+be a series of column names provided in \code{c()}, a vector of column indices,
+or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
+results in all rows in \code{columns} being formatted. Alternatively, we can
+supply a vector of row IDs within \code{c()}, a vector of row indices, or a
+select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to
+filter down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 }
 \value{
 A list object with the classes \code{cells_body} and \code{location_cells}.
 }
 \description{
-The \code{cells_body()} function is used to target the data cells in the table
+\code{cells_body()} is used to target the data cells in the table
 body. The function can be used to apply a footnote with \code{\link[=tab_footnote]{tab_footnote()}}, to
 add custom styling with \code{\link[=tab_style]{tab_style()}}, or the transform the targeted cells
 with \code{\link[=text_transform]{text_transform()}}. The function is expressly used in each of those
 functions' \code{locations} argument. The 'body' location is present by default in
 every \strong{gt} table.
 }
-\section{Overview of location helper functions}{
-
-
-Location helper functions can be used to target cells with virtually any
-function that has a \code{locations} argument. Here is a listing of all of the
-location helper functions, with locations corresponding roughly from top to
-bottom of a table:
-\itemize{
-\item \code{\link[=cells_title]{cells_title()}}: targets the table title or the table subtitle depending on
-the value given to the \code{groups} argument (\code{"title"} or \code{"subtitle"}).
-\item \code{\link[=cells_stubhead]{cells_stubhead()}}: targets the stubhead location, a cell of which is only
-available when there is a stub; a label in that location can be created by
-using the \code{\link[=tab_stubhead]{tab_stubhead()}} function.
-\item \code{\link[=cells_column_spanners]{cells_column_spanners()}}: targets the spanner column labels with the
-\code{spanners} argument; spanner column labels appear above the column labels.
-\item \code{\link[=cells_column_labels]{cells_column_labels()}}: targets the column labels with its \code{columns}
-argument.
-\item \code{\link[=cells_row_groups]{cells_row_groups()}}: targets the row group labels in any available row
-groups using the \code{groups} argument.
-\item \code{\link[=cells_stub]{cells_stub()}}: targets row labels in the table stub using the \code{rows}
-argument.
-\item \code{\link[=cells_body]{cells_body()}}: targets data cells in the table body using intersections of
-\code{columns} and \code{rows}.
-\item \code{\link[=cells_summary]{cells_summary()}}: targets summary cells in the table body using the
-\code{groups} argument and intersections of \code{columns} and \code{rows}.
-\item \code{\link[=cells_grand_summary]{cells_grand_summary()}}: targets cells of the table's grand summary using
-intersections of \code{columns} and \code{rows}
-\item \code{\link[=cells_stub_summary]{cells_stub_summary()}}: targets summary row labels in the table stub using
-the \code{groups} and \code{rows} arguments.
-\item \code{\link[=cells_stub_grand_summary]{cells_stub_grand_summary()}}: targets grand summary row labels in the table
-stub using the \code{rows} argument.
-\item \code{\link[=cells_footnotes]{cells_footnotes()}}: targets all footnotes in the table footer (cannot be
-used with \code{\link[=tab_footnote]{tab_footnote()}}).
-\item \code{\link[=cells_source_notes]{cells_source_notes()}}: targets all source notes in the table footer
-(cannot be used with \code{\link[=tab_footnote]{tab_footnote()}}).
-}
-
-When using any of the location helper functions with an appropriate function
-that has a \code{locations} argument (e.g., \code{\link[=tab_style]{tab_style()}}), multiple locations
-can be targeted by enclosing several \verb{cells_*()} helper functions in a
-\code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
-}
-
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
 
@@ -97,9 +71,10 @@ in the table) and returns a logical vector.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a footnote that targets a single
-data cell with \code{\link[=tab_footnote]{tab_footnote()}}, using \code{cells_body()} in \code{locations}
-(\code{rows = hp == max(hp)} will target a single row in the \code{hp} column).
+Let's use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a
+footnote (with \code{\link[=tab_footnote]{tab_footnote()}}) that targets a single data cell via the use
+of \code{cells_body()} in \code{locations} (\code{rows = hp == max(hp)} will target a single
+row in the \code{hp} column).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::filter(ctry_origin == "United Kingdom") |>
@@ -110,7 +85,8 @@ data cell with \code{\link[=tab_footnote]{tab_footnote()}}, using \code{cells_bo
     locations = cells_body(
       columns = hp,
       rows = hp == max(hp)
-    )
+    ),
+    placement = "right"
   ) |>
   opt_footnote_marks(marks = c("*", "+"))
 }\if{html}{\out{</div>}}
@@ -122,7 +98,7 @@ data cell with \code{\link[=tab_footnote]{tab_footnote()}}, using \code{cells_bo
 
 \section{Function ID}{
 
-8-12
+8-18
 }
 
 \section{Function Introduced}{
@@ -131,34 +107,19 @@ data cell with \code{\link[=tab_footnote]{tab_footnote()}}, using \code{cells_bo
 }
 
 \seealso{
-Other helper functions: 
-\code{\link{adjust_luminance}()},
-\code{\link{cell_borders}()},
-\code{\link{cell_fill}()},
-\code{\link{cell_text}()},
+Other location helper functions: 
 \code{\link{cells_column_labels}()},
 \code{\link{cells_column_spanners}()},
 \code{\link{cells_footnotes}()},
 \code{\link{cells_grand_summary}()},
 \code{\link{cells_row_groups}()},
 \code{\link{cells_source_notes}()},
+\code{\link{cells_stub}()},
 \code{\link{cells_stub_grand_summary}()},
 \code{\link{cells_stub_summary}()},
 \code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
-\code{\link{currency}()},
-\code{\link{default_fonts}()},
-\code{\link{escape_latex}()},
-\code{\link{google_font}()},
-\code{\link{gt_latex_dependencies}()},
-\code{\link{html}()},
-\code{\link{md}()},
-\code{\link{pct}()},
-\code{\link{px}()},
-\code{\link{random_id}()},
-\code{\link{stub}()},
-\code{\link{system_fonts}()}
+\code{\link{location-helper}}
 }
-\concept{helper functions}
+\concept{location helper functions}

@@ -45,50 +45,50 @@ all_files <- fs::dir_ls(work_dir, glob = "*.pb")
 # Initialize tibbles
 google_font_tbl <-
   dplyr::tibble(
-    name = character(0),
-    designer = character(0),
-    license = character(0),
-    category = character(0),
-    date_added = character(0)
+    name = character(0L),
+    designer = character(0L),
+    license = character(0L),
+    category = character(0L),
+    date_added = character(0L)
   )
 google_styles_tbl <-
   dplyr::tibble(
-    name = character(0),
-    style = character(0),
-    weight = character(0),
-    filename = character(0),
-    post_script_name = character(0),
-    full_name = character(0),
-    copyright = character(0)
+    name = character(0L),
+    style = character(0L),
+    weight = character(0L),
+    filename = character(0L),
+    post_script_name = character(0L),
+    full_name = character(0L),
+    copyright = character(0L)
   )
 google_axes_tbl <-
   dplyr::tibble(
-    name = character(0),
-    tag = character(0),
-    min_value = character(0),
-    max_value = character(0)
+    name = character(0L),
+    tag = character(0L),
+    min_value = character(0L),
+    max_value = character(0L)
   )
 
 # For every font file, read the `.pb` metadata file and extract
 # font metrics and other items of information
 for (file in all_files) {
 
-  pb <- gt:::tidy_gsub(readr::read_file(file), "#.*?\n", "\n")
+  pb <- gsub("#.*?\n", "\n", readr::read_file(file))
 
   font_variants <-
     unlist(stringr::str_extract_all(pb, pattern = "fonts \\{(\\n|.)*?\\}")) %>%
-    gt:::tidy_gsub("(fonts \\{\n  |\\}$|\"|$)", "") %>%
-    gt:::tidy_gsub("\n  ", "\n") %>%
-    gt:::tidy_gsub("\n$", "") %>%
+    stringr::str_remove_all("(fonts \\{\n  |\\}$|\"|$)") %>%
+    stringr::str_replace_all("\n  ", "\n") %>%
+    trimws("right", "\n") %>%
     stringr::str_split("\n")
 
   font_info <-
     stringr::str_replace_all(pb, pattern = "fonts \\{(\\n|.)*?\\}", "") %>%
-    gt:::tidy_gsub("axes \\{.*", "") %>%
-    gt:::tidy_gsub("subsets:.*", "") %>%
-    gt:::tidy_gsub("\n{2,}", "\n") %>%
-    gt:::tidy_gsub("\n$", "") %>%
-    gt:::tidy_gsub("\"", "") %>%
+    stringr::str_remove_all("axes \\{.*") %>%
+    stringr::str_remove_all("subsets:.*") %>%
+    stringr::str_replace_all("\n{2,}", "\n") %>%
+    trimws("right", "\n") %>%
+    stringr::str_remove_all("\"") %>%
     stringr::str_split("\n") %>%
     unlist()
 
@@ -108,13 +108,13 @@ for (file in all_files) {
       )
   }
 
-  if (str_detect(pb, "axes \\{")) {
+  if (grepl("axes {", pb, fixed = TRUE)) {
 
     axes <-
       unlist(stringr::str_extract_all(pb, pattern = "axes(\\n|.)*?\\}")) %>%
-      gt:::tidy_gsub("(axes \\{\n  |\\}$|\"|$)", "") %>%
-      gt:::tidy_gsub("\n  ", "\n") %>%
-      gt:::tidy_gsub("\n$", "") %>%
+      stringr::str_remove_all("(axes \\{\n  |\\}$|\"|$)") %>%
+      stringr::str_replace_all("\n  ", "\n") %>%
+      trimws("right", "\n") %>%
       stringr::str_split("\n")
 
     for (i in seq_len(length(axes))) {
@@ -122,8 +122,7 @@ for (file in all_files) {
         dplyr::bind_rows(
           google_axes_tbl,
           dplyr::as_tibble(read.dcf(textConnection(axes[[i]]))) %>%
-            dplyr::mutate(name = font_name) %>%
-            dplyr::select(name, dplyr::everything())
+            dplyr::mutate(name = font_name, .before = 0)
         )
     }
   }

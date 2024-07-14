@@ -7,37 +7,64 @@
 cols_merge_n_pct(data, col_n, col_pct, rows = everything(), autohide = TRUE)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{col_n}{A column that contains values for the count component.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{col_pct}{A column that contains values for the percentage component.
-This column should be formatted such that percentages are displayed (e.g.,
-with \code{fmt_percent()}).}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{rows}{Rows that will participate in the merging process. Providing
-\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} undergoing
-merging. Alternatively, we can supply a vector of row identifiers within
-\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
-The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
-\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
-We can also use a standalone predicate expression to filter down to the
-rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{col_n}{\emph{Column to target for counts}
 
-\item{autohide}{An option to automatically hide the column specified as
-\code{col_pct}. Any columns with their state changed to hidden will behave
-the same as before, they just won't be displayed in the finalized table.}
+\verb{<column-targeting expression>} // \strong{required}
+
+The column that contains values for the count component. While select
+helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
+column targeting, it's recommended that a single column name be used. This
+is to ensure that exactly one column is provided here.}
+
+\item{col_pct}{\emph{Column to target for percentages}
+
+\verb{<column-targeting expression>} // \strong{required}
+
+The column that contains values for the percentage component. While select
+helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
+column targeting, it's recommended that a single column name be used. This
+is to ensure that exactly one column is provided here. This column should
+be formatted such that percentages are displayed (e.g., with
+\code{fmt_percent()}).}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+participate in the merging process. The default \code{\link[=everything]{everything()}} results in
+all rows in \code{columns} being formatted. Alternatively, we can supply a
+vector of row IDs within \code{c()}, a vector of row indices, or a select
+helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use
+expressions to filter down to the rows we need
+(e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{autohide}{\emph{Automatic hiding of the \code{col_pct} column}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to automatically hide the column specified as \code{col_pct}. Any
+columns with their state changed to hidden will behave the same as before,
+they just won't be displayed in the finalized table.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{cols_merge_n_pct()} function is a specialized variant of the
-\code{\link[=cols_merge]{cols_merge()}} function. It operates by taking two columns that constitute
-both a count (\code{col_n}) and a fraction of the total population (\code{col_pct}) and
-merges them into a single column. What results is a column containing both
-counts and their associated percentages (e.g., \verb{12 (23.2\%)}). The column
-specified in \code{col_pct} is dropped from the output table.
+\code{cols_merge_n_pct()} is a specialized variant of \code{\link[=cols_merge]{cols_merge()}},
+It operates by taking two columns that constitute both a count (\code{col_n}) and
+a fraction of the total population (\code{col_pct}) and merges them into a single
+column. What results is a column containing both counts and their associated
+percentages (e.g., \verb{12 (23.2\%)}). The column specified in \code{col_pct} is
+dropped from the output table.
 }
 \section{Comparison with other column-merging functions}{
 
@@ -57,7 +84,7 @@ missing values for the merged column (e.g., \code{NA} + \code{NA} = \code{NA})
 }
 
 Any resulting \code{NA} values in the \code{col_n} column following the merge
-operation can be easily formatted using the \code{\link[=sub_missing]{sub_missing()}} function.
+operation can be easily formatted using \code{\link[=sub_missing]{sub_missing()}}.
 Separate calls of \code{\link[=sub_missing]{sub_missing()}} can be used for the \code{col_n} and
 \code{col_pct} columns for finer control of the replacement values. It is the
 responsibility of the user to ensure that values are correct in both the
@@ -75,10 +102,11 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 \section{Examples}{
 
 
-Use \code{\link{pizzaplace}} to create a \strong{gt} table that displays the counts and
-percentages of the top 3 pizzas sold by pizza category in 2015. The
-\code{cols_merge_n_pct()} function is used to merge the \code{n} and \code{frac} columns
-(and the \code{frac} column is formatted using \code{\link[=fmt_percent]{fmt_percent()}}).
+Using a summarized version of the \code{\link{pizzaplace}} dataset, let's create a
+\strong{gt} table that displays the counts and percentages of the top 3 pizzas
+sold by pizza category in 2015. The \code{cols_merge_n_pct()} function is used to
+merge the \code{n} and \code{frac} columns (and the \code{frac} column is formatted using
+\code{\link[=fmt_percent]{fmt_percent()}}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::group_by(name, type, price) |>
@@ -120,7 +148,7 @@ percentages of the top 3 pizzas sold by pizza category in 2015. The
 
 \section{Function ID}{
 
-5-14
+5-17
 }
 
 \section{Function Introduced}{
@@ -130,18 +158,21 @@ percentages of the top 3 pizzas sold by pizza category in 2015. The
 
 \seealso{
 Other column modification functions: 
-\code{\link{cols_align_decimal}()},
+\code{\link{cols_add}()},
 \code{\link{cols_align}()},
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_hide}()},
-\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
+\code{\link{cols_label_with}()},
+\code{\link{cols_merge}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},
-\code{\link{cols_merge}()},
+\code{\link{cols_move}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
-\code{\link{cols_move}()},
+\code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

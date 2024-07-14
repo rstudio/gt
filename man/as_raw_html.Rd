@@ -7,12 +7,21 @@
 as_raw_html(data, inline_css = TRUE)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{inline_css}{An option to supply styles to table elements as inlined CSS
-styles. This is useful when including the table HTML as part of an HTML
-email message body, since inlined styles are largely supported in email
-clients over using CSS in a \verb{<style>} block.}
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{inline_css}{\emph{Use inline CSS}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to supply styles to table elements as inlined CSS styles. This is
+useful when including the table HTML as part of an HTML email message body,
+since inlined styles are largely supported in email clients over using CSS
+in a \verb{<style>} block.}
 }
 \description{
 Get the HTML content from a \code{gt_tbl} object as a single-element character
@@ -25,13 +34,14 @@ emailing context.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as HTML
-code with inlined CSS styles.
+Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a header
+with \code{\link[=tab_header]{tab_header()}} and then export the table as HTML code with inlined CSS
+styles using \code{as_raw_html()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_html <-
   gtcars |>
   dplyr::select(mfr, model, msrp) |>
-  dplyr::slice(1:5) |>
+  dplyr::slice_head(n = 5) |>
   gt() |>
   tab_header(
     title = md("Data listing from **gtcars**"),
@@ -57,9 +67,11 @@ document but rather an HTML fragment.
 
 \seealso{
 Other table export functions: 
+\code{\link{as_gtable}()},
 \code{\link{as_latex}()},
 \code{\link{as_rtf}()},
 \code{\link{as_word}()},
+\code{\link{extract_body}()},
 \code{\link{extract_cells}()},
 \code{\link{extract_summary}()},
 \code{\link{gtsave}()}

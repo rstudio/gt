@@ -9,46 +9,91 @@ cols_merge_range(
   col_begin,
   col_end,
   rows = everything(),
-  sep = "--",
-  autohide = TRUE
+  autohide = TRUE,
+  sep = NULL,
+  locale = NULL
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{col_begin}{A column that contains values for the start of the range.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{col_end}{A column that contains values for the end of the range.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{rows}{Rows that will participate in the merging process. Providing
-\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} undergoing
-merging. Alternatively, we can supply a vector of row identifiers within
-\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
-The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
-\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
-We can also use a standalone predicate expression to filter down to the
-rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{col_begin}{\emph{Column to target for beginning of range}
 
-\item{sep}{The separator text that indicates the values are ranged. The
-default value of \code{"--"} indicates that an en dash will be used for the
-range separator. Using \code{"---"} will be taken to mean that an em dash should
-be used. Should you want these special symbols to be taken literally, they
-can be supplied within the base \code{\link[=I]{I()}} function.}
+\verb{<column-targeting expression>} // \strong{required}
 
-\item{autohide}{An option to automatically hide the column specified as
+The column that contains values for the start of the range. While select
+helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
+column targeting, it's recommended that a single column name be used. This
+is to ensure that exactly one column is provided here.}
+
+\item{col_end}{\emph{Column to target for end of range}
+
+\verb{<column-targeting expression>} // \strong{required}
+
+The column that contains values for the end of the range. While select
+helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
+column targeting, it's recommended that a single column name be used. This
+is to ensure that exactly one column is provided here.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+participate in the merging process. The default \code{\link[=everything]{everything()}} results in
+all rows in \code{columns} being formatted. Alternatively, we can supply a
+vector of row IDs within \code{c()}, a vector of row indices, or a select
+helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use
+expressions to filter down to the rows we need
+(e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{autohide}{\emph{Automatic hiding of the \code{col_end} column}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to automatically hide the column specified as
 \code{col_end}. Any columns with their state changed to hidden will behave
 the same as before, they just won't be displayed in the finalized table.}
+
+\item{sep}{\emph{Separator text for ranges}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The separator text that indicates the values are ranged. If a \code{sep} value
+is not provided then the range separator specific to the \code{locale} provided
+will be used (if a locale isn't specified then an en dash will be used).
+You can specify the use of an en dash with \code{"--"}; a triple-hyphen sequence
+(\code{"---"}) will be transformed to an em dash. Should you want hyphens to be
+taken literally, the \code{sep} value can be supplied within the base \code{\link[=I]{I()}}
+function.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for applying a \code{sep} pattern
+specific to a locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} as a
+useful reference for all of the locales that are supported. A locale ID can
+be also set in the initial \code{\link[=gt]{gt()}} function call (where it would be used
+automatically by any function with a \code{locale} argument) but a \code{locale}
+value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{cols_merge_range()} function is a specialized variant of the
-\code{\link[=cols_merge]{cols_merge()}} function. It operates by taking a two columns that constitute
-a range of values (\code{col_begin} and \code{col_end}) and merges them into a single
-column. What results is a column containing both values separated by a long
-dash (e.g., \verb{12.0 — 20.0}). The column specified in \code{col_end} is dropped from
-the output table.
+\code{cols_merge_range()} is a specialized variant of \code{\link[=cols_merge]{cols_merge()}}. It operates
+by taking a two columns that constitute a range of values (\code{col_begin} and
+\code{col_end}) and merges them into a single column. What results is a column
+containing both values separated by an em dash. The column specified in
+\code{col_end} is dropped from the output table.
 }
 \section{Comparison with other column-merging functions}{
 
@@ -66,9 +111,9 @@ the merged column
 }
 
 Any resulting \code{NA} values in the \code{col_begin} column following the merge
-operation can be easily formatted using the \code{\link[=sub_missing]{sub_missing()}} function.
-Separate calls of \code{\link[=sub_missing]{sub_missing()}} can be used for the \code{col_begin} and
-\code{col_end} columns for finer control of the replacement values.
+operation can be easily formatted using \code{\link[=sub_missing]{sub_missing()}}. Separate calls of
+\code{\link[=sub_missing]{sub_missing()}} can be used for the \code{col_begin} and \code{col_end} columns for
+finer control of the replacement values.
 
 This function is part of a set of four column-merging functions. The other
 three are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
@@ -80,10 +125,12 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table, keeping only the \code{model}, \code{mpg_c},
-and \code{mpg_h} columns. Merge the \code{"mpg*"} columns together as a single range
-column (which is labeled as MPG, in italics) using the \code{cols_merge_range()}
-function.
+Let's use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table,
+keeping only the \code{model}, \code{mpg_c}, and \code{mpg_h} columns. Merge the \code{"mpg*"}
+columns together as a single range column (which is labeled as MPG, in
+italics) using the \code{cols_merge_range()} function. After the merging process,
+the column label for the \code{mpg_c} column is updated with \code{\link[=cols_label]{cols_label()}} to
+better describe the content.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(model, starts_with("mpg")) |>
@@ -103,7 +150,7 @@ function.
 
 \section{Function ID}{
 
-5-13
+5-16
 }
 
 \section{Function Introduced}{
@@ -113,18 +160,21 @@ function.
 
 \seealso{
 Other column modification functions: 
-\code{\link{cols_align_decimal}()},
+\code{\link{cols_add}()},
 \code{\link{cols_align}()},
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_hide}()},
-\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
+\code{\link{cols_label_with}()},
+\code{\link{cols_merge}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_uncert}()},
-\code{\link{cols_merge}()},
+\code{\link{cols_move}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
-\code{\link{cols_move}()},
+\code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

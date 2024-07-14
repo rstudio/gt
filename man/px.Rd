@@ -7,9 +7,13 @@
 px(x)
 }
 \arguments{
-\item{x}{the numeric value to format as a string (e.g., \code{"12px"}) for
-some \code{\link[=tab_options]{tab_options()}} arguments that can take values as units of
-pixels (e.g., \code{table.font.size}).}
+\item{x}{\emph{Numeric length in pixels}
+
+\verb{scalar<numeric|integer>} // \strong{required}
+
+The numeric value to format as a string (e.g., \code{"12px"}) for some
+\code{\link[=tab_options]{tab_options()}} arguments that can take values as units of pixels (e.g.,
+\code{table.font.size}).}
 }
 \value{
 A character vector with a single value in pixel units.
@@ -24,8 +28,10 @@ function \code{\link[=pct]{pct()}}.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Use the \code{px()} helper to define the
-font size for the column labels.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Inside of the
+\code{\link[=cell_text]{cell_text()}} call (which is itself inside of \code{\link[=tab_style]{tab_style()}}), we'll use the
+\code{px()} helper function to define the font size for the column labels in units
+of pixels.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt() |>
@@ -56,29 +62,20 @@ Other helper functions:
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_body}()},
-\code{\link{cells_column_labels}()},
-\code{\link{cells_column_spanners}()},
-\code{\link{cells_footnotes}()},
-\code{\link{cells_grand_summary}()},
-\code{\link{cells_row_groups}()},
-\code{\link{cells_source_notes}()},
-\code{\link{cells_stub_grand_summary}()},
-\code{\link{cells_stub_summary}()},
-\code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
-\code{\link{cells_summary}()},
-\code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{random_id}()},
+\code{\link{row_group}()},
 \code{\link{stub}()},
-\code{\link{system_fonts}()}
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
 \concept{helper functions}

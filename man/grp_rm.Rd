@@ -7,10 +7,19 @@
 grp_rm(data, which)
 }
 \arguments{
-\item{data}{A \code{gt_group} container object, typically generated through use of
-the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects.}
+\item{data}{\emph{The gt table group object}
 
-\item{which}{An index value denoting which \code{gt_tbl} table should be removed
+\verb{obj:<gt_group>} // \strong{required}
+
+This is a \code{gt_group} container object. It is typically generated through
+use of \code{\link[=gt_group]{gt_group()}} along with one or more \code{gt_tbl} objects, or, made by
+splitting a \strong{gt} table with \code{\link[=gt_split]{gt_split()}}.}
+
+\item{which}{\emph{The table to remove from the group}
+
+\verb{scalar<numeric|integer>} // \strong{required}
+
+A single index value denoting which \code{gt_tbl} table should be removed
 from the \code{gt_group} object.}
 }
 \value{

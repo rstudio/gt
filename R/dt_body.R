@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -29,7 +29,7 @@ dt_body_get <- function(data) {
   ret <- dt__get(data, .dt_body_key)
 
   if (is.null(ret)) {
-    cli::cli_abort("Must call `dt_body_build_init()` first.")
+    cli::cli_abort("Must call {.fn dt_body_build_init} first.")
   }
 
   ret

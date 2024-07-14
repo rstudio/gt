@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -149,6 +149,15 @@ xml_tblGrid <- function(..., app = "word") {
   htmltools::tag(
     `_tag_name` = xml_tag_type("tblGrid", app),
     varArgs = list(htmltools::HTML(paste0(...)))
+  )
+}
+
+# Table grid
+xml_gridcol <- function(width = NULL, app = "word") {
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("gridCol", app),
+    varArgs = list(`w:w` = width, `w:type` = type)
   )
 }
 
@@ -288,7 +297,7 @@ xml_border <- function(
       bottom = "bottom"
     )
 
-  color <- toupper(gsub("#", "", color))
+  color <- toupper(gsub("#", "", color, fixed = TRUE))
 
   htmltools::tag(
     `_tag_name` = xml_tag_type(dir, app),
@@ -353,8 +362,8 @@ xml_pStyle <- function(
 }
 
 # paragraph border
+xml_pBdr <- function(..., app = "word") {
 
-xml_pBdr <- function(..., app = "word"){
   htmltools::tag(
     `_tag_name` = xml_tag_type("pBdr", app),
     varArgs = list(
@@ -363,7 +372,8 @@ xml_pBdr <- function(..., app = "word"){
   )
 }
 
-xml_numPr <- function(..., app = "word"){
+xml_numPr <- function(..., app = "word") {
+
   htmltools::tag(
     `_tag_name` = xml_tag_type("numPr", app),
     varArgs = list(
@@ -372,7 +382,7 @@ xml_numPr <- function(..., app = "word"){
   )
 }
 
-xml_ilvl <- function(..., val, app = "word"){
+xml_ilvl <- function(..., val, app = "word") {
 
   stopifnot(is.numeric(val))
 
@@ -385,10 +395,9 @@ xml_ilvl <- function(..., val, app = "word"){
   )
 }
 
-xml_numId <- function(..., val, app = "word"){
+xml_numId <- function(..., val, app = "word") {
 
-  stopifnot(is.numeric(val))
-  stopifnot(val > 0)
+  stopifnot(is.numeric(val), val > 0)
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("numId", app),
@@ -440,14 +449,14 @@ xml_spacing <- function(
 }
 
 # hyperlink
+xml_hyperlink <- function(..., url, app = "word") {
 
-xml_hyperlink <- function(..., url, app = "word"){
   htmltools::tag(
     `_tag_name` = xml_tag_type("hyperlink", app),
     varArgs = list(
       `r:id` = url,
       htmltools::HTML(paste0(...))
-      )
+    )
   )
 }
 
@@ -635,7 +644,7 @@ xml_fldChar <- function(
 ) {
 
   fldCharType <- rlang::arg_match(fldCharType)
-  stopifnot(is_bool(dirty))
+  check_bool(dirty)
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("fldChar", app),
@@ -663,7 +672,7 @@ xml_instrText <- function(
 }
 
 # Declares the noProof property
-xml_noProof <- function(app = "word"){
+xml_noProof <- function(app = "word") {
   htmltools::tag(
     `_tag_name` = xml_tag_type("noProof", app),
     varArgs = list()
@@ -737,10 +746,7 @@ footnote_mark_to_xml <- function(
   }
 
   spec <- get_footnote_spec_by_location(data = data, location = location)
-
-  if (is.null(spec)) {
-    spec <- "^i"
-  }
+  spec <- spec %||% "^i"
 
   if (grepl("\\(|\\[", spec)) mark <- paste0("(", mark)
   if (grepl("\\)|\\]", spec)) mark <- paste0(mark, ")")
@@ -751,25 +757,390 @@ footnote_mark_to_xml <- function(
         xml_baseline_adj(
           v_align = if (grepl("\\^", spec)) "superscript" else "baseline"
         ),
-        if (grepl("i", spec)) xml_i(active = TRUE) else NULL,
-        if (grepl("b", spec)) xml_b(active = TRUE) else NULL
+        if (grepl("i", spec, fixed = TRUE)) xml_i(active = TRUE) else NULL,
+        if (grepl("b", spec, fixed = TRUE)) xml_b(active = TRUE) else NULL
       ),
       xml_t(mark)
     )
   )
 }
 
-# Mark the given text as being XML, meaning, it should not be escaped if passed
-# to xml_text
-xml_raw <- function(...) {
-  text <- paste0(..., collapse = "")
-  class(text) <- "xml_text"
-  text
+# Images in ooxml ----
+
+#' Image ooxml container
+#'
+#' To be inserted as part of a run
+#'
+#' @noRd
+xml_image <- function(src, height = 1, width = 1, units = "in", alt_text = "") {
+
+  xml_drawing(
+    xml_wp_inline(
+      xml_wp_extent(
+        cx = width,
+        cy = height,
+        units = units
+      ),
+      # xml_wp_docPr(id = "", description = alt_text),
+      xml_wp_docPr(id = "", description = ""),
+
+      xml_wp_effectExtent(),
+      xml_wp_cNvGraphicFramePr(
+        xml_a_graphic_frame_locks()
+      ),
+      xml_a_graphic(
+        xml_a_graphicData(
+          xml_pic_pic(
+            xml_pic_nvPicPr(
+              xml_pic_cNvPr(id = ""),
+              xml_pic_cNvPicPr(
+                xml_a_pic_locks(noChangeAspect = TRUE, noChangeArrowheads = TRUE)
+              )
+            ),
+            xml_pic_blipFill(
+              xml_a_blip(
+                src = src
+              ),
+              xml_a_srcRect(),
+              xml_a_stretch_rect()
+            ),
+            xml_pic_spPr(
+              bwMode = "auto",
+              xml_a_xfrm(height = height, width = width, offx = 0, offy = 0),
+              xml_a_prstGeom_rect(),
+              xml_a_noFill(),
+              xml_a_ln(
+                xml_a_noFill()
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+
 }
+
+xml_drawing <- function(..., app = "word") {
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("drawing", app),
+    varArgs = list(
+      `xmlns:r` = "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+      ...
+      )
+  )
+
+}
+
+## Defines the image as being "inline" with text (in run)
+xml_wp_inline <- function(..., distT = 0, distB = 0, distL = 0, distR = 0) {
+
+  htmltools::tag(
+    `_tag_name` = "wp:inline",
+    varArgs = list(
+      ...,
+      distT = distT,
+      distB = distB,
+      distL = distL,
+      distR = distR
+    )
+  )
+}
+
+## Define height and width of graphic object
+xml_wp_extent <- function(cx, cy, units = "in") {
+
+  htmltools::tag(
+    `_tag_name` = "wp:extent",
+    varArgs = list(
+      cx = convert_to_emu(cx, units = units),
+      cy = convert_to_emu(cy, units = units)
+    )
+  )
+}
+
+convert_to_emu <- function(x, units = "in") {
+
+  ## a px is
+  emu_conversion <- c(
+    "in" = 914400, # https://startbigthinksmall.wordpress.com/2010/01/04/points-inches-and-emus-measuring-units-in-office-open-xml/
+    "cm" = 360000,
+    "px" = 9525 # https://stackoverflow.com/questions/66541210/convert-google-slides-emu-units-to-pixels-api
+    )[[units]]
+
+  x * emu_conversion
+}
+
+xml_wp_effectExtent <- function(l = 0, r = 0, t = 0, b = 0) {
+
+  htmltools::tag(
+    `_tag_name` = "wp:effectExtent",
+    varArgs = list(
+      l = l,
+      r = r,
+      t = t,
+      b = b
+    )
+  )
+
+}
+
+# Place ot define DrawingML properties
+xml_wp_docPr <- function(id = "", name = "", description = "") {
+
+  htmltools::tag(
+    `_tag_name` = "wp:docPr",
+    varArgs = list(
+      id = id,
+      name = name,
+      descr = description
+    )
+  )
+}
+
+## describe locking properties. Not usually used except to define that the
+## aspect ratio shouldn't change
+xml_wp_cNvGraphicFramePr <- function(...) {
+  htmltools::tag(
+    `_tag_name` = "wp:cNvGraphicFramePr",
+    varArgs = list(
+      ...
+    )
+  )
+}
+
+xml_a_graphic_frame_locks <- function(noChangeAspect = TRUE, noCrop = FALSE, noRot = FALSE, noSelect = FALSE) {
+
+  locks <- c(noChangeAspect = noChangeAspect, noCrop = noCrop, noRot = noRot, noSelect = noSelect)
+  locks <- locks[locks] # only keep TRUE
+
+  locks_list <- lapply(locks, as.numeric)
+
+  htmltools::tag(
+    `_tag_name` = "a:graphicFrameLocks",
+    varArgs = as.list(c(
+      `xmlns:a` = "http://schemas.openxmlformats.org/drawingml/2006/main",
+      locks_list
+    ))
+  )
+
+}
+
+## graphic object
+xml_a_graphic <- function(...) {
+  htmltools::tag(
+    `_tag_name` = "a:graphic",
+    varArgs = list(
+      `xmlns:a` = "http://schemas.openxmlformats.org/drawingml/2006/main",
+      ...
+    )
+  )
+}
+
+## graphic object data
+xml_a_graphicData <- function(...) {
+  htmltools::tag(
+    `_tag_name` = "a:graphicData",
+    varArgs = list(
+      `uri` = "http://schemas.openxmlformats.org/drawingml/2006/picture",
+      ...
+    )
+  )
+}
+
+## picture object
+xml_pic_pic <- function(...) {
+  htmltools::tag(
+    `_tag_name` = "pic:pic",
+    varArgs = list(
+      `xmlns:pic` = "http://schemas.openxmlformats.org/drawingml/2006/picture",
+      ...
+    )
+  )
+
+}
+
+## Picture non-visual properties (locking, name, id, title, hidden/not)
+xml_pic_nvPicPr <- function(...) {
+  htmltools::tag(
+    `_tag_name` = "pic:nvPicPr",
+    varArgs = list(
+      ...
+    )
+  )
+
+}
+
+xml_pic_cNvPr <- function(id = "", name = "") {
+  htmltools::tag(
+    `_tag_name` = "pic:cNvPr",
+    varArgs = list(
+      `id` = id,
+      `name` = name
+    )
+  )
+}
+
+xml_pic_cNvPicPr <- function(...) {
+  htmltools::tag(
+    `_tag_name` = "pic:cNvPicPr",
+    varArgs = list(
+      ...
+    )
+  )
+}
+
+xml_a_pic_locks <- function(noChangeAspect = TRUE, noChangeArrowheads = TRUE, noCrop = FALSE, noMove = FALSE, noResize = FALSE, noRot = FALSE, noSelect = FALSE) {
+
+  locks <-
+    c(
+      "noChangeAspect" = noChangeAspect,
+      "noChangeArrowheads" = noChangeArrowheads,
+      "noCrop" = noCrop,
+      "noMove" = noMove,
+      "noResize" = noResize,
+      "noRot" = noRot,
+      "noSelect" = noSelect
+    )
+  locks <- locks[locks == TRUE]
+
+  locks_list <- lapply(locks, as.numeric)
+
+  htmltools::tag(
+    `_tag_name` = "a:picLocks",
+    varArgs = as.list(c(
+      locks_list
+    ))
+  )
+
+}
+
+## Define the picture fill that the picture has and contains element of blip
+xml_pic_blipFill <- function(...) {
+  htmltools::tag(
+    `_tag_name` = "pic:blipFill",
+    varArgs = list(
+      ...
+    )
+  )
+}
+
+### reference the actual picture in relationship
+xml_a_blip <- function(src, cstate = "print") {
+
+  htmltools::tag(
+    `_tag_name` = "a:blip",
+    varArgs = list(
+      `r:embed` = src,
+      `cstate` = cstate
+    )
+  )
+}
+
+### reference how to display image - stretch to fit
+xml_a_stretch_rect <- function() {
+  htmltools::tag(
+    `_tag_name` = "a:stretch",
+    varArgs = list(
+      htmltools::tag(
+        `_tag_name` = "a:fillRect", varArgs = list()
+      )
+    )
+  )
+}
+
+## cropping
+
+xml_a_srcRect <- function(left = NA, right = NA, top = NA, bottom = NA) {
+
+  crop <-
+    c(
+      "l" = left,
+      "r" = right,
+      "t" = top,
+      "b" = bottom
+    )
+  crop <- crop[!is.na(crop)]
+
+  htmltools::tag(
+    `_tag_name` = "a:srcRect",
+    varArgs = as.list(crop)
+  )
+}
+
+## Contains Visual shape properties of picture
+xml_pic_spPr <- function(..., bwMode = "auto") {
+  htmltools::tag(
+    `_tag_name` = "pic:spPr",
+    varArgs = list(
+      bwMode = bwMode,
+      ...
+    )
+  )
+}
+
+xml_a_xfrm <- function(height, width, offx, offy) {
+
+  htmltools::tag(
+    `_tag_name` = "a:xfrm",
+    varArgs = list(
+      htmltools::tag(
+        `_tag_name` = "a:off",
+        varArgs = list(
+          x = offx,
+          y = offy
+        )
+      ),
+      htmltools::tag(
+        `_tag_name` = "a:ext",
+        varArgs = list(
+          cx = convert_to_emu(width)/72, ## EMU to pixels?
+          cy = convert_to_emu(height)/72
+        )
+      )
+    )
+  )
+}
+
+xml_a_prstGeom_rect <- function() {
+
+  htmltools::tag(
+    `_tag_name` = "a:prstGeom",
+    varArgs = list(
+      `prst` = "rect",
+      htmltools::tag(
+        `_tag_name` = "a:avLst",
+        varArgs = list()
+      )
+    )
+  )
+
+}
+
+xml_a_noFill <- function() {
+  htmltools::tag(
+    `_tag_name` = "a:noFill",
+    varArgs = list()
+  )
+}
+
+xml_a_ln <- function(...) {
+  htmltools::tag(
+    `_tag_name` = "a:ln",
+    varArgs = list(...)
+  )
+}
+
+
+# Major Table Components ----
+
 
 # TODO: make table widths work for XML
 # Get the attributes for the table tag
-create_table_props_component_xml <- function(data, align = "center") {
+create_table_props_component_xml <- function(data, align = c("center", "start", "end", "right", "left")) {
+
+  align <- match.arg(align)
 
   boxh <- dt_boxhead_get(data = data)
 
@@ -799,31 +1170,9 @@ create_table_props_component_xml <- function(data, align = "center") {
       option = "table_width"
     )
 
-  widths <-
-    boxh %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>% # This ensures that the `stub` is first
-    .$column_width %>%
-    unlist()
-
-  # Stop function if all length dimensions (where provided)
-  # don't conform to accepted CSS length definitions
-  validate_css_lengths(widths)
-
-  # If all of the widths are defined as px values for all columns,
-  # then ensure that the width values are strictly respected as
-  # absolute width values (even if a table width has already been set)
-  if (all(grepl("px", widths)) && table_width == "auto") {
-    table_width <- "0px"
-  }
-
-  if (all(grepl("%", widths)) && table_width == "auto") {
-    table_width <- "100%"
-  }
-
-  if (table_width != "auto") {
-    table_style <- paste(table_style, paste0("width: ", table_width), sep = "; ")
-  }
+  widths <- boxh[boxh$type %in% c("default", "stub"), , drop = FALSE]
+  # returns vector of column widths where `stub` is first
+  widths <- dplyr::arrange(widths, dplyr::desc(type))$column_width
 
   table_properties <-
     xml_tblPr(
@@ -833,12 +1182,21 @@ create_table_props_component_xml <- function(data, align = "center") {
         xml_width("left", width = 60),
         xml_width("right", width = 60)
       ),
-      xml_tblW(),
+      xml_tblW(type = "auto", w = 0),
       xml_tblLook(),
-      xml_jc(val = align)
+      xml_jc(val = c(center = "center", start = "start", end = "end", end = "right", start = "left")[[align]])
     )
 
+  # table_cols <- xml_tblGrid(
+  #   lapply(widths,xml_gridcol) %>%
+  #     vapply(as.character, as.character(0L))
+  # )
+
+  # htmltools::tagList(c(table_properties, table_cols))
+
   htmltools::tagList(table_properties)
+
+
 }
 
 #' Create the caption component of a table (OOXML)
@@ -864,12 +1222,11 @@ create_table_caption_component_xml <- function(
   styles_tbl <- dt_styles_get(data = data)
   subtitle_defined <- dt_heading_has_subtitle(data = data)
 
-  header_title_style <- styles_tbl %>%
-    dplyr::filter(
-      locname == "title"
-    ) %>%
-    dplyr::pull("styles") %>%
-    .[1] %>% .[[1]]
+  header_title_style <- styles_tbl[
+    styles_tbl$locname == "title",
+    "styles",
+    drop = TRUE
+  ][1][[1]]
 
   # Get table options
   table_font_color <- dt_options_get_value(data, option = "table_font_color")
@@ -889,18 +1246,16 @@ create_table_caption_component_xml <- function(
       footnote_mark_to_xml(
         data = data,
         mark = footnote_title_marks$fs_id_c
-      ) %>%
-      as_xml_node() %>%
-      .[[1]]
+      )
+    footnote_title_marks <- as_xml_node(footnote_title_marks)[[1L]]
 
-    title_caption_string %>%
-      xml_add_child(
-        footnote_title_marks
+    xml_add_child(
+      title_caption_string,
+      footnote_title_marks
       )
   }
 
-  title_caption_string <- as.character(title_caption_string) %>%
-    paste0("<md_container>",.,"</md_container>")
+  title_caption_string <- paste0("<md_container>", as.character(title_caption_string), "</md_container>")
 
   title_caption_xml <-
     process_cell_content(
@@ -912,35 +1267,26 @@ create_table_caption_component_xml <- function(
       color = header_title_style[["cell_text"]][["color"]] %||% table_font_color,
       align = header_title_style[["cell_text"]][["align"]] %||% align,
       keep_with_next = keep_with_next
-    ) %>%
-    as_xml_node()
+    )
+  title_caption_xml <- as_xml_node(title_caption_xml)
 
   autonum_node_xml <-
     xml_table_autonum(
       font = xml_r_font(header_title_style[["cell_text"]][["font"]] %||% "Calibri"),
       size = xml_sz(val = header_title_style[["cell_text"]][["size"]] %||% 24)
-    ) %>%
-    as_xml_node()
+    )
+  autonum_node_xml <- as_xml_node(autonum_node_xml)
 
   for (autonum_node in rev(autonum_node_xml)) {
-
-    title_caption_xml %>%
-      xml_add_child(
-        autonum_node,
-        .where = 1
-      )
+    xml_add_child(title_caption_xml, autonum_node, .where = 1)
   }
 
   title_caption <- as.character(title_caption_xml)
 
   if (subtitle_defined) {
 
-    header_subtitle_style <- styles_tbl %>%
-      dplyr::filter(
-        locname == "subtitle"
-      ) %>%
-      dplyr::pull("styles") %>%
-      .[1] %>% .[[1]]
+    header_subtitle_style <-
+      styles_tbl[styles_tbl$locname == "subtitle", ]$styles[1][[1]]
 
     subtitle_caption_string <- parse_to_xml(heading$subtitle)
 
@@ -956,14 +1302,13 @@ create_table_caption_component_xml <- function(
       footnote_subtitle_marks <-
         footnote_mark_to_xml(
           data = data,
-          mark = footnote_subtitle_marks$fs_id_c) %>%
-        as_xml_node() %>%
-        .[[1]]
+          mark = footnote_subtitle_marks$fs_id_c)
+      footnote_subtitle_marks <- as_xml_node(footnote_subtitle_marks)[[1]]
 
-      subtitle_caption_string %>%
-        xml_add_child(
-          footnote_subtitle_marks
-        )
+      xml_add_child(
+        subtitle_caption_string,
+        footnote_subtitle_marks
+      )
     }
 
     subtitle_caption_string <-
@@ -1016,12 +1361,8 @@ create_heading_component_xml <- function(
   stub_components <- dt_stub_components(data = data)
   subtitle_defined <- dt_heading_has_subtitle(data = data)
 
-  header_title_style <- styles_tbl %>%
-    dplyr::filter(
-      locname == "title"
-    ) %>%
-    dplyr::pull("styles") %>%
-    .[1] %>% .[[1]]
+  header_title_style <-
+    styles_tbl[styles_tbl$locname == "title", ]$styles[1][[1]]
 
   # Obtain the number of visible columns in the built table
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
@@ -1057,14 +1398,13 @@ create_heading_component_xml <- function(
       footnote_mark_to_xml(
         data = data,
         mark = footnote_title_marks$fs_id_c
-      ) %>%
-      as_xml_node() %>%
-      .[[1]]
-
-    title_caption %>%
-      xml_add_child(
-        footnote_title_marks
       )
+    footnote_title_marks <- as_xml_node(footnote_title_marks)[[1L]]
+
+    xml_add_child(
+      title_caption,
+      footnote_title_marks
+    )
 
   }
 
@@ -1088,28 +1428,28 @@ create_heading_component_xml <- function(
         footnote_mark_to_xml(
           data = data,
           mark = footnote_subtitle_marks$fs_id_c
-        ) %>%
-        as_xml_node() %>%
-        .[[1]]
-
-      subtitle_caption_string %>%
-        xml_add_child(
-          footnote_subtitle_marks
         )
+      footnote_subtitle_marks <- as_xml_node(footnote_subtitle_marks)[[1L]]
+
+      xml_add_child(
+        subtitle_caption_string,
+        footnote_subtitle_marks
+      )
     }
 
     header_subtitle_style <-
-      styles_tbl %>%
-      dplyr::filter(
-        locname == "subtitle"
-      ) %>%
-      dplyr::pull("styles") %>%
-      .[1] %>% .[[1]]
+      styles_tbl[styles_tbl$locname == "subtitle", ]$styles[1][[1]]
 
     subtitle_caption_string <-
-      as.character(subtitle_caption_string) %>%
-      paste0("<md_container>",.,"</md_container>") %>%
+      paste0(
+        "<md_container>",
+        as.character(subtitle_caption_string),
+        "</md_container>"
+        )
+
+    subtitle_caption_string <-
       process_cell_content(
+        subtitle_caption_string,
         size = header_subtitle_style[["cell_text"]][["size"]] %||% 16,
         color = header_subtitle_style[["cell_text"]][["color"]] %||% table_font_color,
         align = header_subtitle_style[["cell_text"]][["align"]] %||% "center",
@@ -1222,7 +1562,7 @@ create_columns_component_xml <- function(
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   # label or nothing
-  if (isTRUE(stub_available) && length(stubh$label) > 0) {
+  if (isTRUE(stub_available) && length(stubh$label) > 0L) {
 
     headings_labels <- prepend_vec(headings_labels, stubh$label)
     headings_vars <- prepend_vec(headings_vars, "::stub")
@@ -1247,10 +1587,8 @@ create_columns_component_xml <- function(
     if (spanner_row_count < 1) {
 
       cell_style <-
-        styles_tbl %>%
-        dplyr::filter(locname %in% c("stubhead")) %>%
-        dplyr::pull("styles") %>%
-        .[1] %>% .[[1]]
+        styles_tbl[styles_tbl$locname %in% "stubhead", "styles", drop = TRUE]
+      cell_style <- cell_style[1][[1]]
 
       table_cell_vals[[length(table_cell_vals) + 1]] <-
         xml_table_cell(
@@ -1291,15 +1629,13 @@ create_columns_component_xml <- function(
   for (i in seq_len(length(headings_vars) - stub_available)) {
 
     cell_style <-
-      styles_tbl %>%
       dplyr::filter(
+        styles_tbl,
         locname %in% c("columns_columns"),
         rownum == -1,
         colnum == i
-      ) %>%
-      dplyr::pull("styles") %>%
-      .[1] %>%
-      .[[1]]
+      )
+    cell_style <- cell_style$styles[1][[1]]
 
     table_cell_vals[[length(table_cell_vals) + 1]] <-
       xml_table_cell(
@@ -1316,14 +1652,14 @@ create_columns_component_xml <- function(
         border = list(
           top = if (!spanners_present) { cell_border(size = 16, color = column_labels_border_top_color) },
           bottom = cell_border(size = 16, color = column_labels_border_bottom_color),
-          left = if (i == 1) { cell_border(color = column_labels_vlines_color) },
+          left = if (i == 1L) { cell_border(color = column_labels_vlines_color) },
           right = if (i == length(headings_vars) - stub_available) { cell_border(color = column_labels_vlines_color) }
         ),
         keep_with_next = keep_with_next
       )
   }
 
-  table_col_headings_list[[1]] <-
+  table_col_headings_list[[1L]] <-
     xml_tr(
       xml_trPr(
         if (!split) { xml_cantSplit() },
@@ -1332,7 +1668,7 @@ create_columns_component_xml <- function(
       paste(
         vapply(
           table_cell_vals,
-          FUN.VALUE = character(1),
+          FUN.VALUE = character(1L),
           FUN = paste
         ),
         collapse = ""
@@ -1368,10 +1704,8 @@ create_columns_component_xml <- function(
         if (span_row_idx == 1) {
 
           cell_style <-
-            styles_tbl %>%
-            dplyr::filter(locname %in% c("stubhead")) %>%
-            dplyr::pull("styles") %>%
-            .[1] %>% .[[1]]
+            styles_tbl[styles_tbl$locname %in% "stubhead", "styles", drop = TRUE]
+          cell_style <- cell_style[1][[1]]
 
           spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
             xml_table_cell(
@@ -1395,7 +1729,7 @@ create_columns_component_xml <- function(
               keep_with_next = TRUE
             )
 
-        }else{
+        } else {
 
           spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
             xml_table_cell(
@@ -1433,7 +1767,7 @@ create_columns_component_xml <- function(
           spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
             xml_table_cell(
               border = list(
-                left = if (i == 1) { cell_border(color = column_labels_vlines_color) },
+                left = if (i == 1L) { cell_border(color = column_labels_vlines_color) },
                 right = if (i == length(spanner_row_values)) { cell_border(color = column_labels_vlines_color) },
                 top = if (span_row_idx == 1) { cell_border(size = 16, color = column_labels_border_top_color) }
               ),
@@ -1445,13 +1779,13 @@ create_columns_component_xml <- function(
           # (merge cells horizontally and align text to bottom)
           if (colspans[i] > 0) {
 
-            cell_style <- styles_tbl %>%
+            cell_style <-
               dplyr::filter(
+                styles_tbl,
                 locname %in% c("columns_groups"),
                 grpname %in% spanner_row_ids[i]
-              ) %>%
-              dplyr::pull("styles") %>%
-              .[1] %>% .[[1]]
+              )
+            cell_style <- cell_style$styles[1][[1]]
 
             ## check if there are any open cells above to determine
             spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
@@ -1490,7 +1824,7 @@ create_columns_component_xml <- function(
           paste(
             vapply(
               spanner_cell_vals,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               FUN = paste
             ),
             collapse = ""
@@ -1502,10 +1836,7 @@ create_columns_component_xml <- function(
   do.call(htmltools::tagList, rev(table_col_headings_list))
 }
 
-#' Create the table body component (OOXML)
-#'
-#' @importFrom rlang `%||%`
-#' @noRd
+# Create the table body component (OOXML)
 create_body_component_xml <- function(
     data,
     split = FALSE,
@@ -1542,7 +1873,7 @@ create_body_component_xml <- function(
 
   # Determine whether the stub is available through analysis
   # of the `stub_components`
-  stub_available <- dt_stub_components_has_rowname(stub_components)
+  stub_available <- dt_stub_components_has_rowname(stub_components) || summaries_present
 
   # Obtain all of the visible (`"default"`), non-stub
   # column names for the table
@@ -1556,7 +1887,7 @@ create_body_component_xml <- function(
 
     n_cols <- n_data_cols + 1
 
-    alignment<- c("left", alignment)
+    alignment <- c("left", alignment)
 
     stub_var <- dt_boxhead_get_var_stub(data = data)
     all_stub_vals <- as.matrix(body[, stub_var])
@@ -1580,15 +1911,17 @@ create_body_component_xml <- function(
 
   # Get the sequence of column numbers in the table body (these
   # are the visible columns in the table exclusive of the stub)
-  column_series <- seq(n_cols)
+  column_series <- seq_len(n_cols)
 
-  # Replace an NA group with an empty string
-  if (any(is.na(groups_rows_df$group_label))) {
-
-    groups_rows_df <-
-      groups_rows_df %>%
-      dplyr::mutate(group_label = ifelse(is.na(group_label), "", group_label)) %>%
-      dplyr::mutate(group_label = gsub("^NA", "\u2014", group_label))
+  if (anyNA(groups_rows_df$group_label)) {
+    # Replace an NA group with an empty string
+    groups_rows_df$group_label[is.na(groups_rows_df$group_label)] <- ""
+    # Change NA at beginning into unicode?
+    group_rows_df$group_label <-
+      gsub(
+        "^NA", "\u2014",
+        group_rows_df$group_label
+    )
   }
 
   body_rows <-
@@ -1597,6 +1930,7 @@ create_body_component_xml <- function(
       function(i) {
 
         body_section <- list()
+
 
         #
         # Create a group heading row
@@ -1610,14 +1944,12 @@ create_body_component_xml <- function(
             ][[1]]
 
           cell_style <-
-            styles_tbl %>%
             dplyr::filter(
+              styles_tbl,
               locname == "row_groups",
               rownum == (i - 0.1)
-            ) %>%
-            dplyr::pull("styles") %>%
-            .[1] %>% .[[1]]
-
+            )
+          cell_style <- cell_style$styles[1][[1]]
 
           group_heading_row <-
             xml_tr(
@@ -1659,24 +1991,24 @@ create_body_component_xml <- function(
 
         row_cells <- list()
         row_idx <- i
+        row_vec <- output_df_row_as_vec(i)
 
-        for (y in seq_along(output_df_row_as_vec(i))) {
+        for (y in seq_along(row_vec)) {
 
           style_col_idx <- ifelse(stub_available, y - 1, y)
 
           cell_style <-
-            styles_tbl %>%
             dplyr::filter(
+              styles_tbl,
               locname %in% c("data","stub"),
               rownum == i,
               colnum == style_col_idx
-            ) %>%
-            dplyr::pull("styles") %>%
-            .[1] %>% .[[1]]
+            )
+          cell_style <- cell_style$styles[1][[1]]
 
           row_cells[[length(row_cells) + 1]] <-
             xml_table_cell(
-              content = output_df_row_as_vec(i)[y],
+              content = row_vec[y],
               font = cell_style[["cell_text"]][["font"]],
               size = cell_style[["cell_text"]][["size"]],
               color = cell_style[["cell_text"]][["color"]],
@@ -1705,49 +2037,63 @@ create_body_component_xml <- function(
             paste(
               vapply(
                 row_cells,
-                FUN.VALUE = character(1),
+                FUN.VALUE = character(1L),
                 FUN = paste
               ), collapse = ""
             )
           )
 
-        body_section <- append(body_section, list(body_row))
+
 
         #
-        # Add groupwise summary rows
+        # Add groupwise summary rows.
         #
 
-        if (summaries_present && i %in% groups_rows_df$row_end) {
+        if (summaries_present && nrow(groups_rows_df) > 0) {
 
-          group_id <-
-            groups_rows_df[
-              stats::na.omit(groups_rows_df$row_end == i),
-              "group_id", drop = TRUE
-            ]
+          group_info <- groups_rows_df[
+            i >= groups_rows_df$row_start & i <= groups_rows_df$row_end, ]
 
-          summary_styles <-
-            styles_tbl %>%
-            dplyr::filter(
-              locname %in% c("summary_cells"),
-              grpname %in% group_id
-            ) %>%
-            dplyr::mutate(rownum = ceiling(rownum * 100 - i * 100))
+          group_summary_row_side <- unique(group_info[, "summary_row_side"])[[1]]
 
-          summary_section <-
-            summary_rows_xml(
-              list_of_summaries = list_of_summaries,
-              boxh = boxh,
-              group_id = group_id,
-              locname = "summary_cells",
-              col_alignment = col_alignment,
-              table_body_hlines_color = table_body_hlines_color,
-              table_body_vlines_color = table_body_vlines_color,
-              styles = summary_styles,
-              split = split,
-              keep_with_next = keep_with_next
-            )
+          group_row_add_row_loc <- group_info[,ifelse(group_summary_row_side == "top", "row_start","row_end")][[1]]
 
-          body_section <- append(body_section, summary_section)
+          if (i == group_row_add_row_loc) {
+
+            summary_styles <-
+              styles_tbl %>%
+              dplyr::filter(
+                locname %in% c("summary_cells"),
+                grpname %in% group_info[["group_id"]]
+              ) %>%
+              dplyr::mutate(rownum = ceiling(rownum * 100 - i * 100))
+
+            summary_section <-
+              summary_rows_xml(
+                list_of_summaries = list_of_summaries,
+                boxh = boxh,
+                group_id = group_info[["group_id"]],
+                locname = "summary_cells",
+                col_alignment = col_alignment,
+                table_body_hlines_color = table_body_hlines_color,
+                table_body_vlines_color = table_body_vlines_color,
+                styles = summary_styles,
+                split = split,
+                keep_with_next = keep_with_next
+              )
+
+            if (group_summary_row_side == "top") {
+              body_section <- append(body_section, summary_section)
+              body_section <- append(body_section, list(body_row))
+            } else {
+              body_section <- append(body_section, list(body_row))
+              body_section <- append(body_section, summary_section)
+            }
+          } else {
+            body_section <- append(body_section, list(body_row))
+          }
+        } else {
+            body_section <- append(body_section, list(body_row))
         }
 
         body_section
@@ -1783,7 +2129,13 @@ create_body_component_xml <- function(
         keep_with_next = keep_with_next
       )
 
-    body_rows <- c(body_rows, grand_summary_section)
+    grand_summary_loc <- unique(list_of_summaries$summary_df_display_list[[grand_summary_col]][["::side::"]])
+
+    if (grand_summary_loc == "top") {
+      body_rows <- c(grand_summary_section, body_rows)
+    } else {
+      body_rows <- c(body_rows, grand_summary_section)
+    }
   }
 
   htmltools::tagList(body_rows)
@@ -1806,10 +2158,9 @@ create_source_notes_component_xml <- function(
 
   stub_components <- dt_stub_components(data = data)
 
-  cell_style <- dt_styles_get(data = data) %>%
-    dplyr::filter(locname == "source_notes") %>%
-    dplyr::pull("styles") %>%
-    .[1] %>% .[[1]]
+  cell_style <- dt_styles_get(data = data)
+  cell_style <- cell_style[cell_style$locname == "source_notes", "styles", drop = TRUE]
+  cell_style <- cell_style[1][[1]]
 
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
@@ -1829,8 +2180,11 @@ create_source_notes_component_xml <- function(
 
         source_note_xml <- parse_to_xml(x)
 
-        source_note_content <- as.character(source_note_xml) %>%
-          paste0("<md_container>", ., "</md_container>")
+        source_note_content <- paste0(
+            "<md_container>",
+            as.character(source_note_xml),
+            "</md_container>"
+          )
 
         as.character(
           xml_tr(
@@ -1873,19 +2227,15 @@ create_footnotes_component_xml <- function(
 
   # If the `footnotes_resolved` object has no
   # rows, then return an empty footnotes component
-  if (nrow(footnotes_tbl) == 0) {
+  if (nrow(footnotes_tbl) == 0L) {
     return("")
   }
 
   stub_components <- dt_stub_components(data = data)
 
-  cell_style <- dt_styles_get(data = data) %>%
-    dplyr::filter(
-      locname == "footnotes"
-    ) %>%
-    dplyr::pull("styles") %>%
-    .[1] %>%
-    .[[1]]
+  cell_style <- dt_styles_get(data = data)
+  cell_style <- cell_style[cell_style$locname == "footnotes", "styles", drop = TRUE]
+  cell_style <- cell_style[1][[1]]
 
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
@@ -1900,8 +2250,7 @@ create_footnotes_component_xml <- function(
 
   footnotes_tbl <-
     footnotes_tbl %>%
-    dplyr::select(fs_id, footnotes) %>%
-    dplyr::distinct()
+    dplyr::distinct(fs_id, footnotes)
 
   # Get the footnote separator option
   separator <- dt_options_get_value(data = data, option = "footnotes_sep")
@@ -1995,8 +2344,7 @@ summary_rows_xml <- function(
     summary_df <-
       dplyr::select(
         list_of_summaries$summary_df_display_list[[group_id]],
-        dplyr::all_of(rowname_col_private),
-        dplyr::all_of(default_vars)
+        dplyr::all_of(c(rowname_col_private, default_vars))
       )
 
     summary_df_row <- function(j) {
@@ -2009,13 +2357,13 @@ summary_rows_xml <- function(
 
       for (y in seq_along(summary_df_row(j))) {
 
-        cell_style <- styles %>%
+        cell_style <-
           dplyr::filter(
+            styles,
             rownum == j,
             colnum == y - 1
-          ) %>%
-          dplyr::pull("styles") %>%
-          .[1] %>% .[[1]]
+          )
+        cell_style <- cell_style$styles[1L][[1L]]
 
         summary_row_cells[[length(summary_row_cells) + 1]] <-
           xml_table_cell(
@@ -2051,7 +2399,7 @@ summary_rows_xml <- function(
           paste(
             vapply(
               summary_row_cells,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               FUN = paste
             ), collapse = ""
           )
@@ -2063,6 +2411,8 @@ summary_rows_xml <- function(
 
   summary_row_lines
 }
+
+# Constructing Table Cells ----
 
 cell_border <- function(
     color = "#D3D3D3",
@@ -2119,10 +2469,9 @@ stretch_to_xml_stretch <- function(x) {
   )[x]
 }
 
-v_align_to_xml_v_align <- function(x){
-  x <-
-    rlang::arg_match(x,
-                     values = c("middle", "top", "bottom"))
+v_align_to_xml_v_align <- function(x) {
+
+  x <- rlang::arg_match(x, values = c("middle", "top", "bottom"))
 
   c(
     "middle" = "center",
@@ -2131,7 +2480,7 @@ v_align_to_xml_v_align <- function(x){
   )[x]
 }
 
-row_span_to_xml_v_merge <- function(x){
+row_span_to_xml_v_merge <- function(x) {
 
   x <- rlang::arg_match(x, values = c("start", "continue"))
 
@@ -2141,37 +2490,33 @@ row_span_to_xml_v_merge <- function(x){
   )[x]
 }
 
-white_space_to_t_xml_space <- function(x = NULL){
-  ## default behavior we want
+white_space_to_t_xml_space <- function(x = NULL) {
+
+  # Default behavior we want
   spacing <- "default"
-  if(isTRUE(x %in% c( "pre", "pre-wrap", "pre-line","break-spaces"))){
+
+  if (isTRUE(x %in% c( "pre", "pre-wrap", "pre-line","break-spaces"))) {
     spacing <- "preserve"
   }
+
   spacing
 }
 
-white_space_in_text <- function(x, whitespace = NULL){
+white_space_in_text <- function(x, whitespace = NULL) {
 
   ##options for white space: normal, nowrap, pre, pre-wrap, pre-line, break-spaces
   ## normal drops all newlines and collapse spaces
   ## general behavior based on: https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
 
   ## collapse white spaces unless preserving it
-  if(!isTRUE(whitespace %in% c( "pre", "pre-wrap", "break-spaces"))){
-    x <- gsub("\\s+|\\t+"," ",x)
+  if (!isTRUE(whitespace %in% c( "pre", "pre-wrap", "break-spaces"))) {
+    x <- gsub("\\s+|\\t+", " ", x)
   }
 
   x
-
 }
 
-
-#' define ooxml table cells
-#'
-#' paragrah
-#'
-#' @importFrom rlang `%||%`
-#' @noRd
+# Define OOXML table cells
 xml_table_cell <- function(
     content = NULL,
     size = NULL,
@@ -2234,7 +2579,9 @@ xml_table_cell <- function(
   )
 }
 
-process_cell_content <- function(x, ...){
+# Table Cell content management/Processing ----
+
+process_cell_content <- function(x, ...) {
 
   x %>%
     parse_to_xml() %>%
@@ -2247,32 +2594,48 @@ process_cell_content <- function(x, ...){
     paste0(collapse = "")
 }
 
+process_cell_content_ooxml_t <- function(
+    x,
+    ...,
+    whitespace = NULL
+) {
 
-#' @importFrom xml2 xml_find_all xml_text xml_attr `xml_attr<-` `xml_text<-`
-process_cell_content_ooxml_t <- function(x, ..., whitespace = NULL) {
-  text_tag <- x %>% xml_find_all("//w:t")
+  text_tag <- xml_find_all(x, "//w:t")
+
   for (txt in text_tag) {
+
     text_tag_content <- xml_text(txt)
     text_tag_attr <- xml_attr(txt, "space")
-    ## if its already set to preserve, respect preservation
+
+    # If it's already set to preserve, respect preservation
+
     if (!text_tag_attr == "preserve") {
       xml_text(txt) <- white_space_in_text(x = text_tag_content, whitespace = whitespace)
       xml_attr(txt, attr = "xml:space") <- white_space_to_t_xml_space(whitespace)
     }
   }
+
   x
 }
 
-#' @importFrom xml2 xml_find_all xml_find_first xml_children xml_add_sibling xml_remove xml_ns xml_name
-process_cell_content_ooxml_r<- function(x,..., font = NULL, size = NULL, color = NULL, style = NULL, weight = NULL){
+process_cell_content_ooxml_r <- function(
+    x,
+    ...,
+    font = NULL,
+    size = NULL,
+    color = NULL,
+    style = NULL,
+    weight = NULL
+) {
 
-  ## cell level styles
-  cell_styles <- list(
+  # Cell level styles
+  cell_styles <-
+    list(
       as_xml_node(
         xml_r_font(
           ascii_font = font ,
           ansi_font = font
-          )
+        )
       ),
       as_xml_node(xml_sz(val = size %||% 20)),
       if (!is.null(color)) {
@@ -2291,31 +2654,52 @@ process_cell_content_ooxml_r<- function(x,..., font = NULL, size = NULL, color =
   cell_styles_types <- sapply(cell_styles,xml_name)
 
   ## pull run styles from x
-  run_tags <- x %>% xml_find_all("//w:r")
+  run_tags <- xml_find_all(x, "//w:r")
 
-  for(run in run_tags){
+  for (run in run_tags) {
 
-      run_style <- run %>% xml_find_first(".//w:rPr")
+      run_image <- xml_find_first(run, ".//w:drawing")
+      run_style <- xml_find_first(run, ".//w:rPr")
 
-      run_style_children <- run_style %>% xml_children()
-      run_style_children_types <- sapply(run_style_children,xml_name, ns = xml_ns(x))
+      if (length(run_image) > 0L) {
 
-      ## which styles are new. Add those. Respect ones that already exist and do not update
-      new_cell_styles <- which(!cell_styles_types %in% run_style_children_types)
-
-      for(cell_style_idx in new_cell_styles){
-        xml_add_child(
-          run_style,
-          cell_styles[[cell_style_idx]][[1]]
+        if (length(xml_find_first(run, ".//w:noProof")) == 0L) {
+          xml_add_child(
+            run_style,
+            as_xml_node(xml_noProof())[[1L]]
           )
+        }
+
+      } else {
+
+        run_style_children <- xml_children(run_style)
+        run_style_children_types <- sapply(run_style_children,xml_name, ns = xml_ns(x))
+
+        ## which styles are new. Add those. Respect ones that already exist and do not update
+        new_cell_styles <- which(!cell_styles_types %in% run_style_children_types)
+
+        for (cell_style_idx in new_cell_styles) {
+          xml_add_child(
+            run_style,
+            cell_styles[[cell_style_idx]][[1L]]
+          )
+        }
       }
   }
 
   x
 }
 
-#' @importFrom xml2 xml_find_all xml_find_first xml_children xml_add_sibling xml_add_child xml_remove xml_ns xml_name
-process_cell_content_ooxml_p <- function(x, ..., align = NULL, col_span = NULL, stretch = NULL, keep_with_next = TRUE, whitespace = NULL, paragraph_style = NULL){
+process_cell_content_ooxml_p <- function(
+    x,
+    ...,
+    align = NULL,
+    col_span = NULL,
+    stretch = NULL,
+    keep_with_next = TRUE,
+    whitespace = NULL,
+    paragraph_style = NULL
+) {
 
   ## cell level styles
   cell_styles <- list(
@@ -2333,7 +2717,7 @@ process_cell_content_ooxml_p <- function(x, ..., align = NULL, col_span = NULL, 
     if (!is.null(align)) {
       as_xml_node(xml_jc(val = align))
     },
-    if(!is.null(paragraph_style)){
+    if (!is.null(paragraph_style)) {
       as_xml_node(xml_pStyle(val = paragraph_style))
     }
   )
@@ -2343,89 +2727,87 @@ process_cell_content_ooxml_p <- function(x, ..., align = NULL, col_span = NULL, 
   cell_styles_types <- sapply(cell_styles,xml_name)
 
   ## pull run styles from x
-  paragraph_tags <- x %>% xml_find_all("//w:p")
+  paragraph_tags <- xml_find_all(x, "//w:p")
 
-  if(length(paragraph_tags) == 0){
+  if (length(paragraph_tags) == 0L) {
 
-    x <- xml_p(xml_pPr()) %>%
+    x <-
+      xml_p(xml_pPr()) %>%
       as_xml_node() %>%
       xml_add_child(x)
 
-    paragraph_tags <- x %>% xml_find_all("//w:p")
-
+    paragraph_tags <- xml_find_all(x, "//w:p")
   }
 
-  for(paragraph in paragraph_tags){
+  for (paragraph in paragraph_tags) {
 
-    paragraph_style <- paragraph %>% xml_find_all(".//w:pPr")
+    paragraph_image <- xml_find_first(paragraph, ".//w:drawing")
 
-    paragraph_style_children <- paragraph_style %>% xml_children()
+    if (length(paragraph_image) > 0L) {
+      next
+    }
+
+    paragraph_style <- xml_find_all(paragraph, ".//w:pPr")
+
+    paragraph_style_children <- xml_children(paragraph_style)
     paragraph_style_children_types <- sapply(paragraph_style_children,xml_name, xml_ns(x))
 
     ## which styles are new?
     new_cell_styles <- which(!cell_styles_types %in% paragraph_style_children_types)
 
-    for(cell_style_idx in new_cell_styles){
+    for (cell_style_idx in new_cell_styles) {
         xml_add_child(
           paragraph_style,
-          cell_styles[[cell_style_idx]][[1]]
+          cell_styles[[cell_style_idx]][[1L]]
         )
     }
-
   }
 
-
   x
-
 }
 
-#' @importFrom xml2 xml_find_all xml_find_first xml_children xml_child xml_add_sibling xml_remove xml_ns xml_name
-process_white_space_br_in_xml <- function(x, ..., whitespace = NULL){
+process_white_space_br_in_xml <- function(x, ..., whitespace = NULL) {
 
-  ##options for white space: normal, nowrap, pre, pre-wrap, pre-line, break-spaces
+  ## Options for white space: normal, nowrap, pre, pre-wrap, pre-line, break-spaces
   ## normal drops all newlines and collapse spaces
   ## general behavior based on: https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
 
-  ## remove newlines (br) unless preserving it
-  if(!isTRUE(whitespace %in% c( "pre", "pre-wrap", "pre-line","break-spaces"))){
+  ## Remove newlines (br) unless preserving it
+  if (!isTRUE(whitespace %in% c("pre", "pre-wrap", "pre-line", "break-spaces"))) {
 
-    paragraphs <- x %>% xml_find_all("//w:p")
+    paragraphs <- xml_find_all(x, "//w:p")
 
-    for(p in paragraphs){
+    for (p in paragraphs) {
 
-      paragraph_children <- p %>% xml_children()
+      paragraph_children <- xml_children(p)
 
       break_tags_locs <- which(xml_name(paragraph_children, ns = xml_ns(x)) == "w:br")
       run_tags_locs <-  which(xml_name(paragraph_children, ns = xml_ns(x)) == "w:r")
 
-      if(length(break_tags_locs) > 0){
+      if (length(break_tags_locs) > 0L) {
 
 
-        for(break_tag_loc in break_tags_locs){
+        for (break_tag_loc in break_tags_locs) {
 
           break_tag <- paragraph_children[[break_tag_loc]]
 
           ## if the br is between two runs, replace with space
-          if(any(run_tags_locs > break_tag_loc) & any(run_tags_locs < break_tag_loc )){
+          if (any(run_tags_locs > break_tag_loc) & any(run_tags_locs < break_tag_loc)) {
 
-
-            replacement_br <- xml_r(xml_rPr(), xml_t(" ", xml_space = "preserve")) %>%
-              as_xml_node(create_ns = TRUE) %>%
-              process_cell_content_ooxml_t(...) %>%
-              process_cell_content_ooxml_r(...) %>%
-              .[[1]]
+            replacement_br <-
+              xml_r(xml_rPr(), xml_t(" ", xml_space = "preserve"))
+            replacement_br <- as_xml_node(replacement_br, create_ns = TRUE)
+            replacement_br <-  process_cell_content_ooxml_t(replacement_br, ...)
+            replacement_br <- process_cell_content_ooxml_r(replacement_br, ...)[[1]]
 
             xml_add_sibling(
               break_tag,
               replacement_br,
               .where = "after"
             )
-
           }
 
-
           xml_remove(break_tag)
-
         }
       }
     }
@@ -2434,138 +2816,143 @@ process_white_space_br_in_xml <- function(x, ..., whitespace = NULL){
   x
 }
 
-#' @importFrom xml2 xml_find_all xml_children xml_child xml_add_sibling xml_remove xml_ns xml_name
+process_drop_empty_styling_nodes <- function(x) {
 
-process_drop_empty_styling_nodes <- function(x){
+  paragraph_styles <- xml_find_all(x, ".//w:pPr")
 
-  paragraph_styles <- x %>% xml_find_all(".//w:pPr")
+  for (p_style in paragraph_styles) {
+    style_children <- xml_children(p_style)
 
-  for(p_style in paragraph_styles){
-    style_children <- p_style %>% xml_children()
-
-    if(length(style_children) == 0){
+    if (length(style_children) == 0L) {
       xml_remove(p_style)
     }
   }
 
-  run_styles <- x %>% xml_find_all(".//w:rPr")
+  run_styles <- xml_find_all(x, ".//w:rPr")
 
-  for(r_style in run_styles){
-    style_children <- r_style %>% xml_children()
+  for (r_style in run_styles) {
+    style_children <- xml_children(r_style)
 
-    if(length(style_children) == 0){
+    if (length(style_children) == 0L) {
       xml_remove(r_style)
     }
   }
 
   x
-
 }
 
-add_text_style <- function(x, style){
-  UseMethod("add_text_style",x)
+add_text_style <- function(x, style) {
+  UseMethod("add_text_style", x)
 }
 
-add_text_style.character <- function(x, style){
-  x <- x %>% as_xml_node(create_ns = TRUE)
-  style_to_add <- style %>% as_xml_node()
-  run_style_tag <- x %>% xml_find_all("./w:rPr")
+#' @export
+add_text_style.character <- function(x, style) {
+
+  x <- as_xml_node(x, create_ns = TRUE)
+  style_to_add <- as_xml_node(style)
+  run_style_tag <- xml_find_all(x, "./w:rPr")
+
   xml_add_child(
     run_style_tag,
     style_to_add
   )
+
   as.character(x)
 }
 
-add_text_style.shiny.tag <- function(x, style){
-  x <- x %>% as.character()
+#' @export
+add_text_style.shiny.tag <- function(x, style) {
+
+  x <- as.character(x)
+
   add_text_style.character(x, style = style)
 }
 
-## character to xml conversion
+# character to xml conversion ----
 
 ## if wrapped in xml, convert to html
-#' @importFrom xml2 read_xml xml_children
-parse_to_xml <- function(x,...){
+parse_to_xml <- function(x, ...) {
+
   ##check if wrapped in ooxml
   ## get what it starts with and assign
 
-  if(is.null(x)){
-    x <- xml_p(
-      xml_pPr(
-        xml_spacing(before = 0, after = 60)
-      ),
-      xml_r(
-        xml_rPr(),
-        xml_t()
+  if (is.null(x)) {
+    x <-
+      xml_p(
+        xml_pPr(
+          xml_spacing(before = 0, after = 60)
+        ),
+        xml_r(
+          xml_rPr(),
+          xml_t()
+        )
       )
-    )
 
-    x <- x %>%
-      as.character() %>%
-      paste0("<md_container>", ., "</md_container>")
+    x <-
+      paste0("<md_container>", as.character(x), "</md_container>")
   }
 
-  if(length(x) > 1){
-    if(all(grepl("^<md_container>.*</md_container>$", x))){
-      x <- gsub("^<md_container>(.*)</md_container>$", "\\1",x) %>%
+  if (length(x) > 1) {
+
+    if (all(grepl("^<md_container>.*</md_container>$", x))) {
+
+      x <-
+        gsub("^<md_container>(.*)</md_container>$", "\\1", x) %>%
         paste0(collapse = "") %>%
         paste0("<md_container>",.,"</md_container>")
-    }else{
-      x <- x %>% paste0(collapse = "")
+
+    } else {
+      x <- paste0(x, collapse = "")
     }
   }
 
-  if(!grepl("^<md_container>.*</md_container>$", x)){
+  if (!grepl("^<md_container>.*</md_container>$", x)) {
 
-    x <- xml_p(
-      xml_pPr(
-        xml_spacing(before = 0, after = 60)
-      ),
-      xml_r(
-        xml_rPr(),
-        xml_t(x)
+    x <-
+      xml_p(
+        xml_pPr(
+          xml_spacing(before = 0, after = 60)
+        ),
+        xml_r(
+          xml_rPr(),
+          xml_t(enc2utf8(htmltools::htmlEscape(x)))
+        )
       )
-    )
-    x <- x %>%
-      as.character() %>%
-      paste0("<md_container>", ., "</md_container>")
+
+    x <-
+      paste0("<md_container>", as.character(x), "</md_container>")
   }
 
-  parsed_xml_contents <- x %>%
-    ## add namespace for later processing
-    add_ns() %>%
-    xml2::read_xml() %>%
+  ## add namespace for later processing
+  parsed_xml_contents <-
+    add_ns(x) %>%
+    read_xml() %>%
     suppressWarnings()
 
   parsed_xml_contents %>%
     xml_children()
 }
 
-#' @importFrom xml2 as_xml_document xml_children
-as_xml_node <- function(x, create_ns = FALSE){
+as_xml_node <- function(x, create_ns = FALSE) {
+
   x <- paste(
     "<node_container>",
     as.character(x),
     "</node_container>"
   )
 
-  if(create_ns){
+  if (create_ns) {
     x <- add_ns(x)
   }
 
-  x %>%
-    as_xml_document() %>%
+    as_xml_document(x) %>%
     xml_children() %>%
     suppressWarnings()
 }
 
-add_ns <- function(x){
+add_ns <- function(x) {
 
-  x <- x %>%
-    as_xml_node() %>%
-    suppressWarnings()
-
+  x <- suppressWarnings(read_xml(x))
 
   xml2::xml_set_attrs(
     x,
@@ -2580,82 +2967,133 @@ add_ns <- function(x){
   as.character(x)
 }
 
-
-paste_footnote_xml <- function(text, footmark_xml, position = "right"){
+paste_footnote_xml <- function(
+    text,
+    footmark_xml,
+    position = "right"
+) {
 
   text_xml <- parse_to_xml(text)
 
   position <- match.arg(position, c("left","right"))
 
-  footmark_xml <- footmark_xml %>%
-      as_xml_node() %>%
-      .[[1]]
+  footmark_xml <-
+    as_xml_node(footmark_xml)[[1L]]
 
-  if(position == "right"){
-    text_xml %>%
-      xml_add_child(
-        footmark_xml
-        )
-  }else{
-    text_xml %>%
-      xml_add_child(
-        footmark_xml,
-        .where = 1
-      )
+  if (position == "right") {
+    xml_add_child(text_xml, footmark_xml)
+  } else {
+    xml_add_child(text_xml, footmark_xml, .where = 1)
   }
 
-  as.character(text_xml) %>%
-    paste0("<md_container>",.,"</md_container>")
+  paste0("<md_container>", as.character(text_xml), "</md_container>")
 }
 
+paste_footnote_latex <- function(
+    text,
+    footmark_latex,
+    position = "right"
+) {
+
+  # This encodes the footnote marke and position into the text which
+  # will allow it to be separated when formatting by calls to tab_style
+  paste0(text, "%%%", position, ":", footmark_latex)
+
+}
+
+# Post-Processing word documents as needed -----
+
 ## if hyperlinks are in gt, postprocessing will be necessary
-needs_gt_as_word_post_processing <- function(x){
-  grepl("<w:hyperlink", x)
+needs_gt_as_word_post_processing <- function(x) {
+  any(grepl("<w:hyperlink", x, fixed = TRUE)) |
+    any(grepl("<a:blip", x, fixed = TRUE))
 }
 
 ## apply postprocessing
 ## at this point, only url relationship rId updating, but can expand to more in the future
-gt_as_word_post_processing <- function(path){
+gt_as_word_post_processing <- function(path) {
 
-  ## unzip doc
+  # Unzip doc
   tmp_word_dir <- tempfile(pattern = "word_dir")
   utils::unzip(zipfile = path, exdir = tmp_word_dir)
 
-  ## load docx
-  content_doc_path <- file.path(tmp_word_dir,"word/document.xml")
+  # Load docx
+  content_doc_path <- file.path(tmp_word_dir, "word/document.xml")
   docx <- read_xml(content_doc_path)
 
-  ## load rels
-  rels_doc_path <- file.path(tmp_word_dir,"word/_rels/document.xml.rels")
+  ## load word/_rels
+  rels_doc_path <- file.path(tmp_word_dir, "word/_rels/document.xml.rels")
   rels <- read_xml(rels_doc_path)
 
-  ## update hyperlinks
-  update_hyperlink_node_id(docx, rels)
+  ## load content_types
+  content_type_doc_path <- file.path(tmp_word_dir, "[Content_Types].xml")
+  content_types <- create_xml_contents()
 
+  ## update hyperlinks & blips
+  update_hyperlink_node_id(docx, rels)
+  update_blip_node_id(docx, rels, content_types, tmp_word_dir)
+
+  ## update all ids
+  update_ref_id(docx)
+
+  ## Update settings
+  settings_doc_path <- file.path(tmp_word_dir, "word/settings.xml")
+  doc_settings <- create_doc_settings()
+
+  ## end section
+  ensure_sect_end(docx)
 
   ## write updates
+  xml2::write_xml(doc_settings, settings_doc_path)
   xml2::write_xml(rels, rels_doc_path)
+  xml2::write_xml(content_types, content_type_doc_path)
   xml2::write_xml(docx, content_doc_path)
 
-  ## unzip contents
-  wd <- getwd()
-  zip_temp_word_doc(path, tmp_word_dir, wd)
+  # Unzip contents
+  zip_temp_word_doc(path, tmp_word_dir)
 }
 
+create_doc_settings <- function() {
 
-update_hyperlink_node_id <- function(docx, rels){
+  settings_xml <- as_xml_document("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>
+    <w:settings xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" xmlns:w16cex=\"http://schemas.microsoft.com/office/word/2018/wordml/cex\" xmlns:w16cid=\"http://schemas.microsoft.com/office/word/2016/wordml/cid\" xmlns:w16=\"http://schemas.microsoft.com/office/word/2018/wordml\" xmlns:w16sdtdh=\"http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash\" xmlns:w16se=\"http://schemas.microsoft.com/office/word/2015/wordml/symex\" xmlns:sl=\"http://schemas.openxmlformats.org/schemaLibrary/2006/main\" mc:Ignorable=\"w14 w15 w16se w16cid w16 w16cex w16sdtdh\">
+    </w:settings>
+    ")
+
+  settings_to_add <- list(
+    zoom = "<w:zoom w:percent=\"130\"/>",
+    defaultTabStop = "<w:defaultTabStop w:val=\"720\"/>",
+    hyphenationZone = "<w:hyphenationZone w:val=\"360\"/>",
+    decimalSymbol = "<w:decimalSymbol w:val=\".\"/>",
+    listSeparator = "<w:listSeparator w:val=\",\"/>",
+    compat = "<w:compat><w:compatSetting w:name=\"compatibilityMode\" w:uri=\"http://schemas.microsoft.com/office/word\" w:val=\"15\"/></w:compat>"
+  )
+
+  for (new_setting in names(settings_to_add)) {
+
+    xml_add_child(
+      settings_xml,
+      as_xml_node(settings_to_add[[new_setting]])[[1]]
+    )
+  }
+
+  settings_xml
+}
+
+update_hyperlink_node_id <- function(docx, rels) {
 
   rels_relationships <- rels %>% xml_children()
   rels_ids <- rels_relationships %>% xml_attr("Id")
-  max_id <- max(as.numeric(gsub("rId","",rels_ids)))
+  max_id <- max(as.numeric(gsub("rId", "", rels_ids, fixed = TRUE)))
 
-  ## get all hyperlink nodes
+  # Get all hyperlink nodes
   hyperlink_nodes <- docx %>% xml_find_all("//w:hyperlink[@r:id]")
 
-  ## identify nodes needing updating
-  hyperlink_nodes <- hyperlink_nodes[!grepl("^rId\\d+$", xml_attr(hyperlink_nodes, "id"))]
+  # Identify nodes needing updating
+  hyperlink_nodes <-
+    hyperlink_nodes[!grepl("^rId\\d+$", xml_attr(hyperlink_nodes, "id"))]
 
-  for(hl_node in hyperlink_nodes){
+  for (hl_node in hyperlink_nodes) {
 
     max_id <- max_id + 1
     url <- xml_attr(hl_node, "id")
@@ -2668,36 +3106,269 @@ update_hyperlink_node_id <- function(docx, rels){
 
     xml_attr(hl_node, "r:id") <- new_id
   }
+}
 
+update_blip_node_id <- function(docx, rels, content_types, tmp_word_dir) {
+
+  ## get relationships
+  rels_relationships <- rels %>% xml_children()
+  rels_ids <- rels_relationships %>% xml_attr("Id")
+  max_id <- max(as.numeric(gsub("rId", "", rels_ids, fixed = TRUE)))
+
+  ## get all blip nodes (binary li)
+  blip_nodes <-
+    docx %>% xml_find_all(
+      "//a:blip[@r:embed]",
+      ns = c(
+        a = "http://schemas.openxmlformats.org/drawingml/2006/main",
+        r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+        )
+    )
+
+  ## identify nodes needing updating
+  blip_nodes <- blip_nodes[!grepl("^rId\\d+$", xml_attr(blip_nodes, "r:embed", ns = c(r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships")))]
+
+  if (length(blip_nodes) > 0) {
+
+    tmp_word_dir_media <- file.path(tmp_word_dir, "word", "media")
+
+    if (!dir.exists(tmp_word_dir_media)) {
+      dir.create(tmp_word_dir_media, showWarnings = FALSE)
+    }
+
+    for (blip_node_idx in seq_along(blip_nodes)) {
+
+      blip_node <- blip_nodes[[blip_node_idx]]
+
+      max_id <- max_id + 1
+      src <- xml_attr(blip_node, "r:embed", ns = c(r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"))
+      src_rel <- file.path("media", basename_clean(src))
+
+      new_id <- paste0("rId", max_id)
+
+      #copy to media folder
+      copy_to_media(src, tmp_word_dir_media)
+
+      # add relationship
+      xml2::xml_add_child(
+        rels,
+        xml_relationship(id = new_id, target = src_rel, type = "image", target_mode = NA)
+      )
+
+      # xml2::xml_add_child(
+      #   content_types,
+      #   xml_content_type_override(PartName = file.path("/word",src_rel), ContentType = file.path("image", tools::file_ext(src_rel)))
+      # )
+
+      xml_attr(blip_node, "r:embed", ns = c(r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships")) <- new_id
+
+    }
+  }
+}
+
+update_ref_id <- function(docx) {
+
+  all_uid <- xml_find_all(docx, "//*[@id]")
+  int_id <- 1
+
+  for (z in seq_along(all_uid)) {
+    if (!grepl("[^0-9]", xml_attr(all_uid[[z]], "id"))) {
+      xml_attr(all_uid[[z]], "id") <- int_id
+      int_id <- int_id + 1
+    }
+  }
+
+  int_id
+}
+
+ensure_sect_end <- function(docx) {
+
+  body <- xml_child(docx)
+  last_body_node <- xml_child(body, search = xml2::xml_length(body))
+  new_last_node <-
+    paste0(
+      "<w:sectPr",
+      " xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"",
+      " xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\"",
+      " xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"",
+      " xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\">",
+      "<w:type w:val=\"continuous\"/></w:sectPr>"
+    ) %>%
+    as_xml_document()
+
+  if (xml_name(last_body_node) != "sectPr") {
+
+    xml_add_child(body, new_last_node)
+
+  } else {
+
+    xml2::xml_replace(
+      last_body_node,
+      new_last_node
+    )
+  }
+}
+
+copy_to_media <- function(path, media_dir) {
+
+  if (grepl("https?://", path)) {
+
+    utils::download.file(
+      url = path,
+      destfile = file.path(media_dir, basename_clean(path))
+    )
+
+  } else {
+
+    file.copy(
+      from = path,
+      to = file.path(media_dir, basename_clean(path))
+    )
+  }
+}
+
+basename_clean <- function(x) {
+  gsub("\\s+|_", "", basename(x))
 }
 
 ## conveniently zip up word doc temp folder
-zip_temp_word_doc <- function(path, temp_dir, cur_dir = getwd()){
+zip_temp_word_doc <- function(path, temp_dir) {
+
+  cur_dir <- getwd()
+
   setwd(temp_dir)
-  on.exit(setwd(cur_dir))
-  utils::zip(zipfile = path, files = list.files(path = ".", recursive = TRUE, all.files = FALSE),flags = "-r9X -q")
+  tryCatch({
+    utils::zip(
+      zipfile = path,
+      files = list.files(path = ".", recursive = TRUE, all.files = TRUE, include.dirs = FALSE),
+      flags = "-r9X -q"
+    )
+  }, finally = {
+    setwd(cur_dir)
+  })
 }
 
-xml_relationship <- function(id,  target, type = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink", target_mode = "External"){
+xml_relationship <- function(id, target, type = c("hyperlink", "image"), target_mode = "External") {
+
+  type <- paste0("http://schemas.openxmlformats.org/officeDocument/2006/relationships/", match.arg(type))
+
+  varArgs <- list(
+    `Id` = id,
+    `Type` = type,
+    `Target` = target,
+    `TargetMode` = target_mode)
+
+  varArgs <- varArgs[!sapply(varArgs, is.na)]
 
   htmltools::tag(
     `_tag_name` = "Relationship",
-    varArgs = list(
-      `Id` = id,
-      `Type` = type,
-      `Target` = target,
-      `TargetMode` = target_mode)
+    varArgs = varArgs
   ) %>%
     as.character() %>%
     read_xml()
-
 }
 
+create_xml_contents <- function() {
 
+  content_types <- as_xml_document("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>
+  <Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\"></Types>")
 
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "rels", ContentType = "application/vnd.openxmlformats-package.relationships+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "xml", ContentType = "application/xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "tiff", ContentType = "image/tiff"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "wmf", ContentType = "image/x-wmf"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "jpg", ContentType = "application/octet-stream"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "emf", ContentType = "image/x-emf"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "bmp", ContentType = "image/bmp"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "png", ContentType = "image/png"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "svg", ContentType = "image/svg+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "gif", ContentType = "image/gif"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "jpeg", ContentType = "image/jpeg"))
 
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/document.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/numbering.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/styles.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/settings.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/webSettings.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.webSettings+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/fontTable.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/theme/theme1.xml", ContentType = "application/vnd.openxmlformats-officedocument.theme+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/docProps/core.xml", ContentType = "application/vnd.openxmlformats-package.core-properties+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/docProps/app.xml", ContentType = "application/vnd.openxmlformats-officedocument.extended-properties+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/docProps/custom.xml", ContentType = "application/vnd.openxmlformats-officedocument.custom-properties+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/comments.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/footnotes.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml"))
 
+  content_types
+}
 
+xml_content_type_ext <- function(Extension, ContentType) {
 
+  htmltools::tag(
+    `_tag_name` = "Default",
+    varArgs = list(
+      Extension = Extension,
+      ContentType = ContentType
+    )
+  ) %>%
+    as.character() %>%
+    read_xml()
+}
 
+xml_content_type_override <- function(PartName, ContentType) {
 
+  htmltools::tag(
+    `_tag_name` = "Override",
+    varArgs = list(
+      PartName = PartName,
+      ContentType = ContentType
+    )
+  ) %>%
+    as.character() %>%
+    read_xml()
+}

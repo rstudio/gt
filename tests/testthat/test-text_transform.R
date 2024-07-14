@@ -1,24 +1,9 @@
-# Create a shorter version of `mtcars`
-mtcars_short <- mtcars[1:5, ]
-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
-
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
-}
-
-test_that("The `text_transform()` function works correctly", {
+test_that("text_transform() works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -140,29 +125,17 @@ test_that("The `text_transform()` function works correctly", {
   transforms <- dt_transforms_get(data = tbl_html)
 
   # Expect two components to be held within `transforms`
-  transforms %>%
-    length() %>%
-    expect_equal(2)
+  transforms %>% expect_length(2)
 
   # Expect that each component of `transforms` has the names
   # `resolved` and `fn`
-  transforms[[1]] %>%
-    names() %>%
-    expect_equal(c("resolved", "fn"))
-
-  transforms[[2]] %>%
-    names() %>%
-    expect_equal(c("resolved", "fn"))
+  transforms[[1]] %>% expect_named(c("resolved", "fn"))
+  transforms[[2]] %>% expect_named(c("resolved", "fn"))
 
   # Expect that `resolved` subcomponent of `transforms` has the names
   # `columns` and `rows`
-  transforms[[1]]$resolved %>%
-    names() %>%
-    expect_equal(c("columns", "rows", "colnames"))
-
-  transforms[[2]]$resolved %>%
-    names() %>%
-    expect_equal(c("columns", "rows", "colnames"))
+  transforms[[1]]$resolved %>% expect_named(c("columns", "rows", "colnames"))
+  transforms[[2]]$resolved %>% expect_named(c("columns", "rows", "colnames"))
 
   # Expect that `resolved` subcomponent of `transforms` has the class
   # names and `resolved`, `cells_body`, `location_cells`
@@ -173,8 +146,8 @@ test_that("The `text_transform()` function works correctly", {
     expect_s3_class(c("resolved", "cells_body", "location_cells"))
 
   # Expect that `fn` subcomponent of `transforms` is a function
-  expect_equal(class(transforms[[1]]$fn), "function")
-  expect_equal(class(transforms[[2]]$fn), "function")
+  expect_true(is.function(transforms[[1]]$fn))
+  expect_true(is.function(transforms[[2]]$fn))
 
   # Define a function that converts vector of `x` to numeric
   # and rounds values to a specific multiple
@@ -201,7 +174,7 @@ test_that("The `text_transform()` function works correctly", {
     expect_match(".*\\.(00|25|50|75)$")
 })
 
-test_that("`text_transform()` works in the body even when rows/columns are reordered", {
+test_that("text_transform() works in the body even when rows/columns are reordered", {
 
   # Use `tab_row_group()` to create new row groups (this reorders
   # the data table) and use `text_transform()` in two separate calls
@@ -235,7 +208,7 @@ test_that("`text_transform()` works in the body even when rows/columns are reord
     selection_text("tr td:nth-child(2)") %>%
     expect_equal(c("22.8!", "21.4", "18.7", "21", "21"))
 
-  # Reorder the groups with the `row_group_order()` function
+  # Reorder the groups with `row_group_order()`
   tbl_html <-
     tbl_html %>%
     row_group_order(groups = c("Mazda", "DatsunHornet"))
@@ -273,10 +246,10 @@ test_that("`text_transform()` works in the body even when rows/columns are reord
     expect_equal(c("21", "21", "22.8!", "21.4", "18.7"))
 })
 
-test_that("`text_transform()` works in column labels", {
+test_that("text_transform() works in column labels", {
 
-  # Create a gt table and modify two different column names
-  # with the `text_transform()` function
+  # Create a gt table and modify
+  # two different column names with `text_transform()`
   tbl_html <-
     mtcars_short %>%
     gt(rownames_to_stub = TRUE) %>%
@@ -309,10 +282,10 @@ test_that("`text_transform()` works in column labels", {
     )
 })
 
-test_that("`text_transform()` works on row labels in the stub", {
+test_that("text_transform() works on row labels in the stub", {
 
-  # Create a gt table and modify two different column names
-  # with the `text_transform()` function
+  # Create a gt table and modify
+  # two different column names with `text_transform()`
   tbl_html <-
     mtcars_short %>%
     gt(rownames_to_stub = TRUE) %>%
@@ -345,10 +318,32 @@ test_that("`text_transform()` works on row labels in the stub", {
     )
 })
 
-test_that("`text_transform()` works on row group labels", {
+test_that("text_case_match() works on the tab_spanner()", {
+  gt_tbl <- exibble %>% gt() %>% tab_spanner("the boring spanner", columns = c(num, date))
+  expect_snapshot(error = TRUE, {
+    gt_tbl %>%
+      text_case_match(
+        "boring " ~ "awesome ",
+        .replace = "partial",
+        .locations = cells_column_spanners(2)
+      )
+  })
+  expect_no_error(new_tb <- gt_tbl %>%
+    text_case_match(
+      "boring " ~ "awesome ",
+      .replace = "partial",
+      .locations = cells_column_spanners()
+    ))
+  expect_match_html(
+     new_tb,
+     "awesome spanner"
+  )
+})
 
-  # Create a gt table and modify the two different row group labels
-  # with the `text_transform()` function
+test_that("text_transform() works on row group labels", {
+
+  # Create a gt table and modify the two different
+  # row group labels with `text_transform()`
   tbl_html <-
     exibble %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
@@ -365,8 +360,8 @@ test_that("`text_transform()` works on row group labels", {
     expect_equal(c("GRP_A", "GRP_B"))
 
 
-  # Create a gt table and modify the first row group label
-  # with the `text_transform()` function
+  # Create a gt table and modify the
+  # first row group label with `text_transform()`
   tbl_html <-
     exibble %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
@@ -396,8 +391,7 @@ test_that("`text_transform()` works on row group labels", {
       rows = hp > 600
     )
 
-  # Modify the first row group label with
-  # the `text_transform()` function
+  # Modify the first row group label with `text_transform()`
   tbl_html <-
     tbl_gt %>%
     text_transform(
@@ -412,7 +406,7 @@ test_that("`text_transform()` works on row group labels", {
     selection_text("[class='gt_group_heading']") %>%
     expect_equal(c("super powerful", "POWERFUL"))
 
-  # Modify all group labels with the `text_transform()` function
+  # Modify all group labels with `text_transform()`
   tbl_html <-
     tbl_gt %>%
     text_transform(
@@ -425,9 +419,9 @@ test_that("`text_transform()` works on row group labels", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_group_heading']") %>%
-    expect_equal(character(0))
+    expect_equal(character(0L))
 
-  # Modify all group labels with the `text_transform()` function
+  # Modify all group labels with `text_transform()`
   tbl_html <-
     tbl_gt %>%
     text_transform(
@@ -441,4 +435,38 @@ test_that("`text_transform()` works on row group labels", {
     xml2::read_html() %>%
     selection_text("[class='gt_group_heading']") %>%
     expect_equal(c("SUPER POWERFUL", "POWERFUL"))
+})
+
+
+# text_*() other functions -----------------------------------------------------
+
+test_that("text_case_when() + text_case_match() work", {
+  expect_no_error(
+    cw <- exibble %>%
+      gt() %>%
+      text_case_when(is.na(x) ~ "---")
+  )
+  # md is not really respected even if we use md("---")
+  expect_no_error(
+    cm <- exibble %>%
+      gt() %>%
+      text_case_match(NA ~ "---")
+  )
+  # they are not changing numeric NA
+  expect_equal(
+    render_as_html(cw),
+    render_as_html(cm)
+  )
+})
+
+test_that("text_replace() works", {
+  expect_no_error(
+    tr <- exibble %>%
+      gt() %>%
+      text_replace("NA", "---")
+  )
+  expect_match_html(
+    tr,
+    "---"
+  )
 })

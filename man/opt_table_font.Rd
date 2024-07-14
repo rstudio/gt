@@ -14,37 +14,61 @@ opt_table_font(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{font}{One or more font names available as system or web fonts. These
-can be combined with a \code{c()} or a \code{list()}. To choose fonts from the
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{font}{\emph{Default table fonts}
+
+\verb{vector<character>|list|obj:<font_css>} // \emph{default:} \code{NULL} (\code{optional})
+
+One or more font names available as system or web fonts. These can be
+combined with a \code{c()} or a \code{list()}. To choose fonts from the
 \emph{Google Fonts} service, we can call the \code{\link[=google_font]{google_font()}} helper function.}
 
-\item{stack}{A keyword that represents the name of a font stack (obtained via
-internally via the \code{\link[=system_fonts]{system_fonts()}} helper function). If provided, this new
-stack will replace any defined fonts and any \code{font} values will be
-prepended.}
+\item{stack}{\emph{Name of font stack}
 
-\item{weight}{Option to set the weight of the font. Can be a text-based
-keyword such as \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a
-numeric value between \code{1} and \code{1000}, inclusive. Please note that typefaces
-have varying support for the numeric mapping of weight.}
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-\item{style}{An option to modify the text style. Can be one of either
-\code{"normal"}, \code{"italic"}, or \code{"oblique"}.}
+A name that is representative of a font stack (obtained via internally via
+the \code{\link[=system_fonts]{system_fonts()}} helper function). If provided, this new stack will
+replace any defined fonts and any \code{font} values will be prepended.}
 
-\item{add}{Should this font be added to the beginning of any already-defined
-fonts for the table? By default, this is \code{TRUE} and is recommended since
-those fonts already present can serve as fallbacks when everything
-specified in \code{font} is not available. If a \code{stack} is provided, then \code{add}
-will automatically set to \code{FALSE}.}
+\item{weight}{\emph{Text weight}
+
+\verb{scalar<character|numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+Option to set the weight of the font. Can be a text-based keyword such as
+\code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a numeric value between
+\code{1} and \code{1000}, inclusive. Please note that typefaces have varying support
+for the numeric mapping of weight.}
+
+\item{style}{\emph{Text style}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An option to modify the text style. Can be one of either \code{"normal"},
+\code{"italic"}, or \code{"oblique"}.}
+
+\item{add}{\emph{Add to existing fonts}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+Should fonts be added to the beginning of any already-defined fonts for the
+table? By default, this is \code{TRUE} and is recommended since those fonts
+already present can serve as fallbacks when everything specified in \code{font}
+is not available. If a \code{stack} is provided, then \code{add} will automatically
+set to \code{FALSE}.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{opt_table_font()} function makes it possible to define fonts used for an
-entire \strong{gt} table. Any font names supplied in \code{font} will (by default, with
+\code{opt_table_font()} makes it possible to define fonts used for an entire
+\strong{gt} table. Any font names supplied in \code{font} will (by default, with
 \code{add = TRUE}) be placed before the names present in the existing font stack
 (i.e., they will take precedence). You can choose to base the font stack on
 those provided by \code{\link[=system_fonts]{system_fonts()}} by providing a valid keyword for a themed
@@ -52,16 +76,16 @@ set and optionally prepending \code{font} values to that.
 
 Take note that you could still have entirely different fonts in specific
 locations of the table. For that you would need to use \code{\link[=tab_style]{tab_style()}} or
-\code{\link[=tab_style_body]{tab_style_body()}} in conjunction with the \code{\link[=cell_text]{cell_text()}} helper function.
+\code{\link[=tab_style_body]{tab_style_body()}} in conjunction with \code{\link[=cell_text]{cell_text()}}.
 }
 \section{Possibilities for the \code{font} argument}{
 
 
 We have the option to supply one or more font names for the \code{font} argument.
 They can be enclosed in \code{c()} or a \code{list()}. You can generate this list or
-vector with a combination of font names, and you can freely use the
-\code{\link[=google_font]{google_font()}}, \code{\link[=default_fonts]{default_fonts()}}, and \code{\link[=system_fonts]{system_fonts()}} functions to help
-compose your font family.
+vector with a combination of font names, and you can freely use
+\code{\link[=google_font]{google_font()}}, \code{\link[=default_fonts]{default_fonts()}}, and \code{\link[=system_fonts]{system_fonts()}} to help compose
+your font family.
 }
 
 \section{Possibilities for the \code{stack} argument}{
@@ -71,7 +95,7 @@ There are several themed font stacks available via the \code{\link[=system_fonts
 helper function. That function can be used to generate all or a segment of a
 vector supplied to the \code{font} argument. However, using the \code{stack} argument
 with one of the 15 keywords for the font stacks available in
-\code{\link[=system_fonts]{system_fonts()}}, we could be sure that the typeface class will work across
+\code{system_fonts()}, we could be sure that the typeface class will work across
 multiple computer systems. Any of the following keywords can be used:
 \itemize{
 \item \code{"system-ui"}
@@ -95,11 +119,11 @@ multiple computer systems. Any of the following keywords can be used:
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a small \strong{gt} table, using \code{\link[=fmt_currency]{fmt_currency()}} to
-provide a dollar sign for the first row of monetary values. Then, set a
-larger font size for the table and use the \code{"Merriweather"} font (from
-\emph{Google Fonts}, via \code{\link[=google_font]{google_font()}}) with two system font fallbacks
-(\code{"Cochin"} and the generic \code{"serif"}).
+Use a subset of the \code{\link{sp500}} dataset to create a small \strong{gt} table. We'll
+use \code{\link[=fmt_currency]{fmt_currency()}} to display a dollar sign for the first row of monetary
+values. Then, set a larger font size for the table and use the
+\code{"Merriweather"} font (from \emph{Google Fonts}, via \code{\link[=google_font]{google_font()}}) with two
+system font fallbacks (\code{"Cochin"} and the generic \code{"serif"}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::slice(1:10) |>
@@ -121,9 +145,11 @@ larger font size for the table and use the \code{"Merriweather"} font (from
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_font_1.png" alt="This image of a table was generated from the first code example in the `opt_table_font()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{sza}} to create an eleven-row table. Within \code{opt_table_font()}, set up
-a preferred list of sans-serif fonts that are commonly available in macOS
-(using part of the \code{\link[=default_fonts]{default_fonts()}} vector as a fallback).
+With the \code{\link{sza}} dataset we'll create a two-column, eleven-row table. Within
+\code{opt_table_font()}, the \code{stack} argument will be supplied with the
+\code{"rounded-sans"} font stack. This sets up a family of fonts with rounded,
+curved letterforms that should be locally available in different computing
+environments.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(
