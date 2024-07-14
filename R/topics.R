@@ -105,9 +105,9 @@ NULL
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
-#' @examplesIf getRversion() >= "4.1.0"
+#' @examples
 #' gt_tbl <- gt(exibble)
-#' gt_tbl |>
+#' gt_tbl %>%
 #'   fmt_time(
 #'     columns = contains("time") & !starts_with("date"),
 #'      rows = num > 100 & group == "grp_b"
@@ -115,7 +115,7 @@ NULL
 #'
 #' # Styling numeric columns based on range
 #'
-#' gt_tbl |> tab_style(
+#' gt_tbl %>% tab_style(
 #'   style = cell_text(weight = "bold"),
 #'   locations = cells_body(
 #'   columns =  where(is.factor)
@@ -125,7 +125,7 @@ NULL
 #' # Naming rows
 #'
 #' gt_tbl_rows <- gt(exibble, rowname_col = "row")
-#' gt_tbl_rows |>
+#' gt_tbl_rows %>%
 #'   fmt_datetime(
 #'     columns = datetime,
 #'     rows = c("row_1", "row_8")
@@ -141,7 +141,7 @@ NULL
 #' Let's use the [exibble] data for this.
 #'
 #' @name fmts
-#' @examplesIf getRversion() >= "4.1.0"
+#' @examples
 #' gt_tbl <- gt(exibble)
 #'
 #' #
@@ -151,13 +151,13 @@ NULL
 #' # By default, they apply styling to all compatible columns.
 #'
 #' # Will style all numeric columns
-#' gt_tbl |> fmt_number()
+#' gt_tbl %>% fmt_number()
 #'
 #' # will style the time column
-#' gt_tbl |> fmt_time(columns = time)
+#' gt_tbl %>% fmt_time(columns = time)
 #'
 #' # Will style nothing since is only compatible with logical values
-#' gt_tbl |> fmt_tf()
+#' gt_tbl %>% fmt_tf()
 #'
 #' #
 #' # Their order has importance as the last styling will have priority.
@@ -165,7 +165,7 @@ NULL
 #'
 #' # Will style all numeric columns as integer
 #' # fmt_number() will have no effect
-#' gt_tbl |> fmt_number() |> fmt_integer()
+#' gt_tbl %>% fmt_number() %>% fmt_integer()
 #'
 #' #
 #' # Therefore, to apply different styling, it is important to specify columns or rows.
@@ -173,7 +173,7 @@ NULL
 #'
 #' # Will style all numeric columns as number and as currency the currency column.
 #' # fmt_number() will have no effect
-#' gt_tbl |> fmt_number() |> fmt_integer(currency)
+#' gt_tbl %>% fmt_number() %>% fmt_integer(currency)
 NULL
 
 # locale -----------------------------------------------------------------------
@@ -209,25 +209,25 @@ NULL
 #' `locale` has very low precedence usually. As soon as you override some parameteres,
 #' `sep_mark`, `dec_mark`, `incl_space`, they will be override `locale`.
 #'
-#' @examplesIf getRversion() >= "4.1.0"
+#' @examples
 #' # The Spanish locale uses `.` as thousands sep (English uses ,), and
 #' # uses , as the decimal mark
 #'
 #' # Using the locale in gt() will format automatically all output in subsequent
 #' # fmt_*() calls.
-#' exibble |>
-#'   gt(locale = "es-AR") |>
+#' exibble %>%
+#'   gt(locale = "es-AR") %>%
 #'   fmt_number()
 #'
 #' # Only format currency as mexican peso
 #'
-#' exibble |>
-#'   gt(locale = "fr") |>
+#' exibble %>%
+#'   gt(locale = "fr") %>%
 #'   fmt_currency(currency, locale = "es-MX")
 #'
 #' # will use sep_mark provided
-#' exibble |>
-#'   gt(locale = "fr") |>
+#' exibble %>%
+#'   gt(locale = "fr") %>%
 #'   fmt_currency(currency, sep_mark = "", locale = "es-MX")
 #' # Use your imagination, and mix and match.
 #'

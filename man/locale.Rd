@@ -36,28 +36,27 @@ Will only affect the output of one specific function (or override global setting
 }
 
 \examples{
-\dontshow{if (getRversion() >= "4.1.0") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # The Spanish locale uses `.` as thousands sep (English uses ,), and
 # uses , as the decimal mark
 
 # Using the locale in gt() will format automatically all output in subsequent
 # fmt_*() calls.
-exibble |>
-  gt(locale = "es-AR") |>
+exibble \%>\%
+  gt(locale = "es-AR") \%>\%
   fmt_number()
 
 # Only format currency as mexican peso
 
-exibble |>
-  gt(locale = "fr") |>
+exibble \%>\%
+  gt(locale = "fr") \%>\%
   fmt_currency(currency, locale = "es-MX")
 
 # will use sep_mark provided
-exibble |>
-  gt(locale = "fr") |>
+exibble \%>\%
+  gt(locale = "fr") \%>\%
   fmt_currency(currency, sep_mark = "", locale = "es-MX")
 # Use your imagination, and mix and match.
-\dontshow{\}) # examplesIf}
+
 }
 \seealso{
 \code{\link[=info_locales]{info_locales()}}, \code{\link[=info_flags]{info_flags()}}

@@ -46,9 +46,8 @@ formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
 }
 \examples{
-\dontshow{if (getRversion() >= "4.1.0") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 gt_tbl <- gt(exibble)
-gt_tbl |>
+gt_tbl \%>\%
   fmt_time(
     columns = contains("time") & !starts_with("date"),
      rows = num > 100 & group == "grp_b"
@@ -56,7 +55,7 @@ gt_tbl |>
 
 # Styling numeric columns based on range
 
-gt_tbl |> tab_style(
+gt_tbl \%>\% tab_style(
   style = cell_text(weight = "bold"),
   locations = cells_body(
   columns =  where(is.factor)
@@ -66,10 +65,9 @@ gt_tbl |> tab_style(
 # Naming rows
 
 gt_tbl_rows <- gt(exibble, rowname_col = "row")
-gt_tbl_rows |>
+gt_tbl_rows \%>\%
   fmt_datetime(
     columns = datetime,
     rows = c("row_1", "row_8")
   )
-\dontshow{\}) # examplesIf}
 }
