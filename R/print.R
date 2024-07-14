@@ -22,6 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
+
 #' Print a **gt** table
 #'
 #' This facilitates printing of the HTML table to the R console.

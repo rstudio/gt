@@ -21,6 +21,301 @@
 #
 #------------------------------------------------------------------------------#
 
+#' Get a conversion factor across two measurement units of a given class
+#'
+#' @description
+#'
+#' The `unit_conversion()` helper function gives us a conversion factor for
+#' transforming a value from one form of measurement units to a target form.
+#' For example if you have a length value that is expressed in miles you could
+#' transform that value to one in kilometers through multiplication of the value
+#' by the conversion factor (in this case `1.60934`).
+#'
+#' For `unit_conversion()` to understand the source and destination units, you
+#' need to provide a keyword value for the `from` and `to` arguments. To aid as
+#' a reference for this, call [info_unit_conversions()] to display an
+#' information table that contains all of the keywords for every conversion
+#' type.
+#'
+#' @param from *Units for the input value*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   The keyword representing the units for the value that requires unit
+#'   conversion. In the case where the value has units of miles, the necessary
+#'   input is `"length.mile"`.
+#'
+#' @param to *Desired units for the value*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   The keyword representing the target units for the value with units defined
+#'   in `from`. In the case where input value has units of miles and we would
+#'   rather want the value to be expressed as kilometers, the `to` value should
+#'   be `"length.kilometer"`.
+#'
+#' @return A single numerical value.
+#'
+#' @section Examples:
+#'
+#' Let's use a portion of the [`towny`] dataset and create a table showing
+#' population, density, and land area for 10 municipalities. The `land_area_km2`
+#' values are in units of square kilometers, however, we'd rather the values
+#' were in square miles. We can convert the numeric values while formatting the
+#' values with [`fmt_number()`] by using `unit_conversion()` in the `scale_by`
+#' argument since the return value of that is a conversion factor (which is
+#' applied to each value by multiplication). The same is done for converting the
+#' 'people per square kilometer' values in `density_2021` to 'people per square
+#' mile', however, the units to convert are in the denominator so the inverse
+#' of the conversion factor must be used.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::arrange(desc(density_2021)) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::select(name, population_2021, density_2021, land_area_km2) |>
+#'   gt(rowname_col = "name") |>
+#'   fmt_integer(columns = population_2021) |>
+#'   fmt_number(
+#'     columns = land_area_km2,
+#'     decimals = 1,
+#'     scale_by = unit_conversion(
+#'       from = "area.square-kilometer",
+#'       to = "area.square-mile"
+#'     )
+#'   ) |>
+#'   fmt_number(
+#'     columns = density_2021,
+#'     decimals = 1,
+#'     scale_by = 1 / unit_conversion(
+#'       from = "area.square-kilometer",
+#'       to = "area.square-mile"
+#'     )
+#'   ) |>
+#'   cols_label(
+#'     land_area_km2 = "Land Area,<br>sq. mi",
+#'     population_2021 = "Population",
+#'     density_2021 = "Density,<br>ppl / sq. mi",
+#'     .fn = md
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_unit_conversion_1.png")`
+#' }}
+#'
+#' With a small slice of the [`gibraltar`] dataset, let's display the
+#' temperature values in terms of degrees Celsius (present in the data) *and* as
+#' temperatures in degrees Fahrenheit (achievable via conversion). We can
+#' duplicate the `temp` column through [cols_add()] (naming the new column as
+#' `temp_f`) and when formatting through [fmt_integer()] we can call
+#' `unit_conversion()` within the `scale_by` argument to perform this
+#' transformation while formatting the values as integers.
+#'
+#' ```r
+#' gibraltar |>
+#'   dplyr::filter(
+#'     date == "2023-05-15",
+#'     time >= "06:00",
+#'     time <= "12:00"
+#'   ) |>
+#'   dplyr::select(time, temp) |>
+#'   gt() |>
+#'   tab_header(
+#'     title = "Air Temperature During Late Morning Hours at LXGB Stn.",
+#'     subtitle = "May 15, 2023"
+#'   ) |>
+#'   cols_add(temp_f = temp) |>
+#'   cols_move(columns = temp_f, after = temp) |>
+#'   tab_spanner(
+#'     label = "Temperature",
+#'     columns = starts_with("temp")
+#'   ) |>
+#'   fmt_number(
+#'     columns = temp,
+#'     decimals = 1
+#'   ) |>
+#'   fmt_integer(
+#'     columns = temp_f,
+#'     scale_by = unit_conversion(
+#'       from = "temperature.C",
+#'       to = "temperature.F"
+#'     )
+#'   ) |>
+#'   cols_label(
+#'     time = "Time",
+#'     temp = "{{degC}}",
+#'     temp_f = "{{degF}}"
+#'   ) |>
+#'   cols_width(
+#'     starts_with("temp") ~ px(80),
+#'     time ~ px(100)
+#'   ) |>
+#'   opt_horizontal_padding(scale = 3) |>
+#'   opt_vertical_padding(scale = 0.5) |>
+#'   opt_align_table_header(align = "left") |>
+#'   tab_options(heading.title.font.size = px(16))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_unit_conversion_2.png")`
+#' }}
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-7
+#'
+#' @section Function Introduced:
+#' `v0.11.0`
+#'
+#' @export
+unit_conversion <- function(from, to) {
+
+  force(from)
+  force(to)
+
+  if (from %in% temperature_keywords() && to %in% temperature_keywords()) {
+
+    from <- normalize_temp_keyword(from)
+    to <- normalize_temp_keyword(to)
+
+    return(temperature_conversions(from = from, to = to))
+  }
+
+  if (!(from %in% conversion_factors[["from"]])) {
+    cli::cli_abort("The unit supplied in {.arg from} is not known.")
+  }
+  if (!(to %in% conversion_factors[["to"]])) {
+    cli::cli_abort("The unit supplied in {.arg to} is not known.")
+  }
+
+  if (from == to) {
+    return(1.0)
+  }
+
+  row_conversion <-
+    dplyr::filter(conversion_factors, from == {{ from }}, to == {{ to }})
+
+  # In the case where units are valid and available in the internal dataset,
+  # they may be across categories; such pairings do not allow for a conversion
+  # to take place
+  if (nrow(row_conversion) < 1) {
+    cli::cli_abort("The conversion specified cannot be performed.")
+  }
+
+  row_conversion[["conv_factor"]]
+}
+
+# Units helpers ----------------------------------------------------------------
+
+temperature_keywords <- function() {
+  c(
+    "temperature.celsius",
+    "temp.celsius",
+    "celsius",
+    "temperature.C",
+    "temp.C",
+    "C",
+    "temperature.fahrenheit",
+    "temp.fahrenheit",
+    "fahrenheit",
+    "temperature.F",
+    "temp.F",
+    "F",
+    "temperature.kelvin",
+    "temp.kelvin",
+    "kelvin",
+    "temperature.K",
+    "temp.K",
+    "K",
+    "temperature.rankine",
+    "temp.rankine",
+    "rankine",
+    "temperature.R",
+    "temp.R",
+    "R"
+  )
+}
+
+normalize_temp_keyword <- function(keyword) {
+
+  switch(
+    keyword,
+    temperature.celsius =,
+    temp.celsius =,
+    celsius =,
+    temperature.C =,
+    temp.C =,
+    C = "C",
+    temperature.fahrenheit =,
+    temp.fahrenheit =,
+    fahrenheit =,
+    temperature.F =,
+    temp.F =,
+    `F` = "F",
+    temperature.kelvin =,
+    temp.kelvin =,
+    kelvin =,
+    temperature.K =,
+    temp.K =,
+    K = "K",
+    temperature.rankine =,
+    temp.rankine =,
+    rankine =,
+    temperature.R =,
+    temp.R =,
+    R = "R"
+  )
+}
+
+temperature_conversions <- function(from, to) {
+
+  from_to <- paste0(from, to)
+
+  switch(
+    from_to,
+    "CF" = function(x) (1.8 * x) + 32,
+    "CK" = function(x) x + 273.15,
+    "CR" = function(x) (1.8 * x) + 491.67,
+    "FC" = function(x) (x - 32) * 5/9,
+    "FK" = function(x) (x + 459.67) / 1.8,
+    "FR" = function(x) x + 459.67,
+    "KC" = function(x) x - 273.15,
+    "KF" = function(x) ((x - 273.15) * 1.8) + 32,
+    "KR" = function(x) x * 1.8,
+    "RC" = function(x) (x - 32 - 459.67) / 1.8,
+    "RF" = function(x) x - 459.67,
+    "RK" = function(x) x / 1.8,
+    "CC" = ,
+    "FF" = ,
+    "KK" = ,
+    "RR" = 1
+  )
+}
+
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2024 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
 
 # Create a `units_definition` object
 define_units <- function(units_notation, is_chemical_formula = FALSE) {

@@ -403,6 +403,16 @@ get_colorized_params <- function(
 #' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
+#' @examples
+#' \donttest{
+#'  # opt_interactive() translates text in `opt_interactive()`
+#'  exibble %>%
+#'   gt(locale = "es-AR") %>%
+#'   fmt_number(num) %>%
+#'   opt_interactive(use_search = TRUE, use_page_size_select = TRUE)
+#' }
+#'
+#'
 opt_interactive <- function(
     data,
     active = TRUE,
@@ -762,6 +772,8 @@ opt_row_striping <- function(
   )
 }
 
+
+# opt_align_table_header() -----------------------------------------------------
 #' Option to align the table header
 #'
 #' @description

@@ -787,6 +787,7 @@ grand_summary_rows <- function(
   )
 }
 
+# Summary rows helpers --------------------------------------------------------
 # Normalize `fns` input in `summary_rows` and `grand_summary_rows`
 #
 # Returns a normalized list of summary functions

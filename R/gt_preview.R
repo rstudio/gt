@@ -30,8 +30,7 @@
 #' use `gt_preview()` in place of [gt()] to get the first x rows of data and the
 #' last y rows of data (which can be set by the `top_n` and `bottom_n`
 #' arguments). It's not advised to use additional **gt** functions to further
-#' modify the output of `gt_preview()`. Furthermore, you cannot pass a **gt**
-#' object to `gt_preview()`.
+#' modify the output of `gt_preview()`.
 #'
 #' @inheritParams gt
 #'
@@ -68,7 +67,7 @@
 #' @section Examples:
 #'
 #' With three columns from the [`gtcars`] dataset, let's create a **gt** table
-#' preview with the `gt_preview()` function. You'll get only the first five rows
+#' preview with `gt_preview()`. You'll get only the first five rows
 #' and the last row.
 #'
 #' ```r

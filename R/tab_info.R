@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2024 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Understand what's been set inside of a **gt** table object
 #'
 #' @description
@@ -12,7 +36,7 @@
 #'
 #' Because it's so essential to know these ID values for targeting purposes
 #' (when styling with [tab_style()], adding footnote marks with
-#' [tab_footnote()], etc.), the `tab_info()` function can help with all of this.
+#' [tab_footnote()], etc.), `tab_info()` can help with all of this.
 #' It summarizes (by location) all of the table's ID values and their associated
 #' labels. The product is an informational **gt** table, designed for easy
 #' retrieval of the necessary values.

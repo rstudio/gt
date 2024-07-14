@@ -68,4 +68,10 @@ as.data.frame.gt_tbl <- function(x, ...) {
   ret
 }
 
+#' @export
+plot.gt_tbl <- function(x, y, ...) {
+  plot(as_gtable(x))
+}
+
+
 #nocov end

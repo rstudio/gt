@@ -88,7 +88,7 @@ is_nonempty_chr <- function(x) {
 #' @noRd
 # Use rlang::caller_env() to inform user of the precise location of failure.
 stop_if_not_gt_tbl <- function(data, call = rlang::caller_env()) {
-  if (!is_gt_tbl(data = data)) {
+  if (!inherits(data, "gt_tbl")) {
     cli::cli_abort(
       "`data` must be a `gt_tbl` object, not {.obj_type_friendly {data}}.",
       call = call
@@ -116,7 +116,7 @@ stop_if_not_gt_group <- function(data, call = rlang::caller_env()) {
 #'
 #' @noRd
 stop_if_not_gt_tbl_or_group <- function(data, call = rlang::caller_env()) {
-  if (!is_gt_tbl(data = data) && !is_gt_group(data = data)) {
+  if (!inherits(data, c("gt_tbl", "gt_group"))) {
     cli::cli_abort(
       "`data` must either be a `gt_tbl` or a `gt_group`, not {.obj_type_friendly {data}}.",
       call = call
@@ -2285,41 +2285,6 @@ validate_style_in <- function(
         error_call = call
       )
     }
-  }
-}
-
-check_spanner_id_unique <- function(data, spanner_id, call = rlang::caller_env()) {
-
-  existing_column_ids <- dt_boxhead_get_vars(data = data)
-  existing_spanner_ids <- dt_spanners_get_ids(data = data)
-
-  all_existing_ids <- c(existing_column_ids, existing_spanner_ids)
-
-  if (spanner_id %in% all_existing_ids) {
-
-    cli::cli_abort(c(
-      "The spanner {.arg id} provided ({.val {spanner_id}}) is not unique.",
-      "*" = "The `id` must be unique across existing spanner and column IDs.",
-      "*" = "Provide a unique ID value for this spanner."
-    ),
-    call = call)
-  }
-}
-
-check_row_group_id_unique <- function(data, row_group_id, call = rlang::caller_env()) {
-
-  stub_df <- dt_stub_df_get(data = data)
-
-  existing_ids <- stub_df$group_id
-
-  if (row_group_id %in% existing_ids) {
-
-    cli::cli_abort(c(
-      "The row group {.arg id} provided ({.val {row_group_id}}) is not unique.",
-      "*" = "Provide a unique ID value for this row group"
-      ),
-      call = call
-    )
   }
 }
 

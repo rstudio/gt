@@ -57,3 +57,7 @@ tidyselect::num_range
 #' @importFrom htmltools css
 #' @export
 htmltools::css
+
+#' @importFrom magrittr %>%
+#' @export
+magrittr::`%>%`

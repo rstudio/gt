@@ -21,6 +21,131 @@
 #
 #------------------------------------------------------------------------------#
 
+latex_special_chars <- c(
+  "\\" = "\\textbackslash{}",
+  "~" = "\\textasciitilde{}",
+  "^" = "\\textasciicircum{}",
+  "&" = "\\&",
+  "%" = "\\%",
+  "$" = "\\$",
+  "#" = "\\#",
+  "_" = "\\_",
+  "{" = "\\{",
+  "}" = "\\}"
+)
+
+#' Perform LaTeX escaping
+#'
+#' @description
+#'
+#' Text may contain several characters with special meanings in LaTeX.
+#' `escape_latex()` will transform a character vector so that it is safe to use
+#' within LaTeX tables.
+#'
+#' @param text *LaTeX text*
+#'
+#'   `vector<character>` // **required**
+#'
+#'   A character vector containing the text that is to be LaTeX-escaped.
+#'
+#' @return A character vector.
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-29
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
+#' @export
+escape_latex <- function(text) {
+
+  if (length(text) < 1) return(text)
+
+  # If all text elements are `NA_character_` then return `text` unchanged
+  if (all(is.na(text))) {
+    return(text)
+  }
+
+  # Determine the elements of `text` that are `NA_character_`
+  na_text <- is.na(text)
+
+  m <- gregexpr("[\\\\&%$#_{}~^]", text[!na_text], perl = TRUE)
+
+  special_chars <- regmatches(text[!na_text], m)
+
+  escaped_chars <-
+    lapply(special_chars, function(x) {
+      latex_special_chars[x]
+    })
+
+  regmatches(text[!na_text], m) <- escaped_chars
+  text
+}
+
+#' Get the LaTeX dependencies required for a **gt** table
+#'
+#' @description
+#'
+#' When working with Rnw (Sweave) files or otherwise writing LaTeX code,
+#' including a **gt** table can be problematic if we don't have knowledge
+#' of the LaTeX dependencies. For the most part, these dependencies are the
+#' LaTeX packages that are required for rendering a **gt** table.
+#' `gt_latex_dependencies()` provides an object that can be used to provide the
+#' LaTeX in an Rnw file, allowing **gt** tables to work and not yield errors
+#' due to missing packages.
+#'
+#' @details
+#' Here is an example Rnw document that shows how `gt_latex_dependencies()`
+#' can be used in conjunction with a **gt** table:
+#'
+#' \preformatted{
+#' \%!sweave=knitr
+#'
+#' \documentclass{article}
+#'
+#' <<echo=FALSE>>=
+#' library(gt)
+#'  @
+#'
+#' <<results='asis', echo=FALSE>>=
+#' gt_latex_dependencies()
+#'  @
+#'
+#' \begin{document}
+#'
+#' <<results='asis', echo=FALSE>>=
+#' gt(exibble)
+#'  @
+#'
+#' \end{document}
+#' }
+#'
+#' @return An object of class `knit_asis`.
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-30
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
+#' @export
+gt_latex_dependencies <- function() {
+
+  check_installed("knitr", "for getting the LaTeX dependency headers.")
+
+  knitr::asis_output(
+    paste(
+      "",
+      "% gt packages",
+      paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
+      "",
+      sep = "\n"
+    )
+  )
+
+}
 
 # Create a simple LaTeX group by surrounding a statement with curly braces
 latex_group <- function(...) {

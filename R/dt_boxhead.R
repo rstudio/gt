@@ -107,6 +107,7 @@ dt_boxhead_edit <- function(data, var, ...) {
   dt_boxhead_set(data = data, boxh = dt_boxhead)
 }
 
+# cols_add() helper ------------------------------------------------------------
 dt_boxhead_add_var <- function(
     data,
     var,

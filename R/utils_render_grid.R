@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2024 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 # Layout ------------------------------------------------------------------
 
 # For grid, the `create_*_component_g` functions are used to get a long-format
@@ -1385,9 +1409,4 @@ parse_css <- function(data) {
   is_table <- which(names(classes) == "gt_table")
   table <- Reduce(defaults, classes[is_table])
   c(classes[-is_table], list(gt_table = table))
-}
-
-#' @export
-plot.gt_tbl <- function(x, y, ...) {
-  plot(as_gtable(x))
 }
