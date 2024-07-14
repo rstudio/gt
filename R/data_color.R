@@ -844,7 +844,7 @@ data_color <- function(
     # scales:::toPaletteFunc(), which does not have methods for classed color
     # vectors (such as those in the paletteer package). Casting is done here so
     # classed color vectors from packages other than paletteer can also be used
-    # with `palette`.
+    # with `palette` (#1155). 
     palette <- as.character(palette)
   }
 

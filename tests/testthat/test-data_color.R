@@ -358,6 +358,9 @@ test_that("The correct color values are obtained when defining a palette", {
     gsub("(.*: |;$)", "", .) %>%
     expect_in(c("#000000", "#FFFFFF"))
 
+})
+
+test_that("data_color() works with classed colors (#1155)", {
   # Create a `rgba_hex_colors_mixed_classed` object by using `data_color` with
   # classed color values written with mixed #RRGGBB, #RRGGBBAA, and named forms
   rgba_hex_colors_mixed_classed <- structure(
@@ -381,8 +384,7 @@ test_that("The correct color values are obtained when defining a palette", {
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
     unique() %>%
-    length() %>%
-    expect_equal(12)
+    expect_length(12)
 
   # Expect color values to be of either the #RRGGBB or the
   # 'rgba()' CSS value form
@@ -427,7 +429,9 @@ test_that("The correct color values are obtained when defining a palette", {
   ) %>%
     all() %>%
     expect_true()
+})
 
+test_that("Palettes work with data_color()", {
   # Create a `tbl_html_4` object by using `data_color` with the #RRGGBB
   # colors on the month column (which is of the `character` class);
   # this time, set `alpha` equal to 1
