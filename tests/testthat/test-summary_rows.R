@@ -16,7 +16,7 @@ tbl <-
     rowname_col = "date",
     groupname_col = "week"
   ) %>%
-  tab_options(latex.use.longtable = TRUE)
+  tab_options(latex.use_longtable = TRUE)
 
 test_that("summary_rows() can make group-wise summaries", {
 
@@ -2004,7 +2004,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
       ),
       fmt = list( ~ fmt_number(.))
     ) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `summary_tbl_1`
   summary_tbl_1 %>% render_as_html() %>% expect_snapshot()
@@ -2027,7 +2027,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
       ),
       fmt = list( ~ fmt_number(.))
     ) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `summary_tbl_2`
   summary_tbl_2 %>% render_as_html() %>% expect_snapshot()
@@ -2060,7 +2060,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
       ),
       fmt = list( ~ fmt_number(.))
     ) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `summary_tbl_3`
   summary_tbl_3 %>% render_as_html() %>% expect_snapshot()
@@ -2082,7 +2082,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
       ),
       fmt = list( ~ fmt_number(.))
     ) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `summary_tbl_4`
   summary_tbl_4 %>% render_as_html() %>% expect_snapshot()
@@ -2112,7 +2112,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
       ),
       fmt = list( ~ fmt_number(.))
     ) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `summary_tbl_5`
   summary_tbl_5 %>% render_as_html() %>% expect_snapshot()
@@ -2142,7 +2142,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
       ),
       fmt = list( ~ fmt_number(.))
     ) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `summary_tbl_6`
   summary_tbl_6 %>% render_as_html() %>% expect_snapshot()
@@ -2182,7 +2182,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
         groups = "1960s"
       )
     ) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `summary_tbl_7`
   summary_tbl_7 %>% render_as_html() %>% expect_snapshot()

@@ -100,5 +100,5 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
     hp = md("*HP*"),
     qsec = "QMT, seconds"
   ) %>%
-  tab_options(latex.use.longtable = TRUE)
+  tab_options(latex.use_longtable = TRUE)
 ```

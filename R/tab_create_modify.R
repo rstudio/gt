@@ -4409,7 +4409,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   deactivated with `quarto.disable_processing = TRUE` (this option is `FALSE`
 #'   by default).
 #'
-#' @param latex.use.longtable
+#' @param latex.use_longtable
 #'
 #'   *Use longtable latex environment*
 #'
@@ -4745,7 +4745,7 @@ tab_options <- function(
     page.footer.height = NULL,
     quarto.use_bootstrap = NULL,
     quarto.disable_processing = NULL,
-    latex.use.longtable = NULL,
+    latex.use_longtable = NULL,
     latex.tbl.pos = NULL
 ) {
 

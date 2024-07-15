@@ -192,7 +192,7 @@ tab_options(
   page.footer.height = NULL,
   quarto.use_bootstrap = NULL,
   quarto.disable_processing = NULL,
-  latex.use.longtable = NULL,
+  latex.use_longtable = NULL,
   latex.tbl.pos = NULL
 )
 }
@@ -644,7 +644,7 @@ table. Quarto performs other alterations as well but they can all be
 deactivated with \code{quarto.disable_processing = TRUE} (this option is \code{FALSE}
 by default).}
 
-\item{latex.use.longtable}{\emph{Use longtable latex environment}
+\item{latex.use_longtable}{\emph{Use longtable latex environment}
 
 By default, tables produced using latex code will be embedded in the
 \code{table} floating environment. Setting this parameter to \code{TRUE} will instead

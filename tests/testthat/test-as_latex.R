@@ -2,7 +2,7 @@ test_that("Table width correctly output in LaTeX using longtable", {
 
   gt_latex_width_1 <-
     gt(exibble) %>%
-    tab_options(table.width = pct(90), latex.use.longtable = TRUE) %>%
+    tab_options(table.width = pct(90), latex.use_longtable = TRUE) %>%
     as_latex()
 
   start_pt <- regexpr("begin\\{longtable", gt_latex_width_1)
@@ -23,7 +23,7 @@ test_that("Table width correctly output in LaTeX using longtable", {
   # Test specification of a table width in pixels
   gt_latex_width_2 <-
     gt(exibble) %>%
-    tab_options(table.width = "600px", latex.use.longtable = TRUE) %>%
+    tab_options(table.width = "600px", latex.use_longtable = TRUE) %>%
     as_latex()
 
   expect_match(gt_latex_width_2, "\\\\setlength\\\\LTleft\\{\\\\dimexpr\\(0.5\\\\linewidth - 225pt\\)\\}")
@@ -36,7 +36,7 @@ test_that("Table width correctly output in LaTeX using tabular*", {
 
   gt_latex_width_1 <-
     gt(exibble) %>%
-    tab_options(table.width = pct(90), latex.use.longtable = FALSE) %>%
+    tab_options(table.width = pct(90), latex.use_longtable = FALSE) %>%
     as_latex()
 
   expect_match(gt_latex_width_1, "\\\\begin\\{tabular\\*\\}\\{0.9\\\\linewidth\\}\\{@\\{\\\\extracolsep\\{\\\\fill\\}\\}")
@@ -44,7 +44,7 @@ test_that("Table width correctly output in LaTeX using tabular*", {
   # Test specification of a table width in pixels
   gt_latex_width_2 <-
     gt(exibble) %>%
-    tab_options(table.width = "600px", latex.use.longtable = FALSE) %>%
+    tab_options(table.width = "600px", latex.use_longtable = FALSE) %>%
     as_latex()
 
   expect_match(gt_latex_width_2, "\\\\begin\\{tabular\\*\\}\\{450pt\\}\\{@\\{\\\\extracolsep\\{\\\\fill\\}\\}")
@@ -55,7 +55,7 @@ test_that("Table position is correctly applied in LaTeX if used*", {
 
   gt_latex_width_1 <-
     gt(exibble) %>%
-    tab_options(table.width = pct(90), latex.use.longtable = FALSE,
+    tab_options(table.width = pct(90), latex.use_longtable = FALSE,
                 latex.tbl.pos = "!tb") %>%
     as_latex()
 
@@ -144,7 +144,7 @@ test_that("Table styles correctly applied for longtable", {
               locations = cells_stub_grand_summary()) %>%
     tab_style(style = cell_fill(color = "#AAAAAA"),
               locations = cells_grand_summary()) %>%
-    tab_options(latex.use.longtable = TRUE) %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     expect_snapshot()
 
@@ -232,7 +232,7 @@ test_that("Table styles correctly applied for tabular*", {
               locations = cells_stub_grand_summary()) %>%
     tab_style(style = cell_fill(color = "#AAAAAA"),
               locations = cells_grand_summary()) %>%
-    tab_options(latex.use.longtable = FALSE) %>%
+    tab_options(latex.use_longtable = FALSE) %>%
     as_latex() %>%
     expect_snapshot()
 

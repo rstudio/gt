@@ -6,7 +6,7 @@ test_that("A gt table can contain indentation in the stub", {
     exibble %>%
     gt(rowname_col = "row") %>%
     tab_stub_indent(rows = c(1, 2, 3), indent = "increase") %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_1`
   tbl_1 %>% render_as_html() %>% expect_snapshot()
@@ -19,7 +19,7 @@ test_that("A gt table can contain indentation in the stub", {
     gt(rowname_col = "row") %>%
     tab_stub_indent(rows = c(1, 2, 3), indent = "increase") %>%
     tab_stub_indent(rows = c(1, 2, 3), indent = "increase") %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Perform the equivalent operation a previously, this time using
   # an explicit setting of the level (2)
@@ -27,7 +27,7 @@ test_that("A gt table can contain indentation in the stub", {
     exibble %>%
     gt(rowname_col = "row") %>%
     tab_stub_indent(rows = c(1, 2, 3), indent = 2) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Expect that `tbl_2` and `tbl_3` are the same
   expect_equal(
@@ -46,7 +46,7 @@ test_that("A gt table can contain indentation in the stub", {
     gt(rowname_col = "row") %>%
     tab_stub_indent(rows = c(1, 2, 3), indent = "increase") %>%
     tab_stub_indent(rows = c(1, 2, 3), indent = "decrease") %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   expect_equal(
     tbl_4 %>% render_as_html(),
@@ -59,7 +59,7 @@ test_that("A gt table can contain indentation in the stub", {
     exibble %>%
     gt(rowname_col = "row") %>%
     tab_stub_indent(rows = matches("3|4|5"), indent = 2) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_5`
   tbl_5 %>% render_as_html() %>% expect_snapshot()
@@ -79,7 +79,7 @@ test_that("Indentation values can be obtained from a table column", {
       rows = everything(),
       indent = from_column(column = "rank")
     ) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_6`
   tbl_6 %>% render_as_html() %>% expect_snapshot()
@@ -96,7 +96,7 @@ test_that("Indentation values can be obtained from a table column", {
       rows = everything(),
       indent = from_column(column = "rank")
     ) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_7`
   tbl_7 %>% render_as_html() %>% expect_snapshot()
@@ -113,7 +113,7 @@ test_that("Indentation values can be obtained from a table column", {
       rows = everything(),
       indent = from_column(column = "rank", na_value = 3)
     ) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_8`
   tbl_8 %>% render_as_html() %>% expect_snapshot()
@@ -134,7 +134,7 @@ test_that("Indentation values can be obtained from a table column", {
         fn = function(x) x + 1
       )
     ) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_9`
   tbl_9 %>% render_as_html() %>% expect_snapshot()
@@ -151,7 +151,7 @@ test_that("Indentation values can be obtained from a table column", {
       rows = matches("a"),
       indent = from_column(column = "rank", na_value = 3)
     ) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_10`
   tbl_10 %>% render_as_html() %>% expect_snapshot()
@@ -168,7 +168,7 @@ test_that("Indentation values can be obtained from a table column", {
       rows = everything(),
       indent = from_column(column = "rank")
     ) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_11`
   tbl_11 %>% render_as_html() %>% expect_snapshot()

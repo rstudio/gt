@@ -483,7 +483,7 @@ test_that("fmt_fraction() produces reproducible results for HTML output", {
     fmt_fraction(columns = hundredths, accuracy = 100, simplify = FALSE, layout = "diagonal") %>%
     cols_width(everything() ~ px(100)) %>%
     opt_all_caps() %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Generate table with the `layout = "inline"` option
   fraction_tbl_inline <-
@@ -499,7 +499,7 @@ test_that("fmt_fraction() produces reproducible results for HTML output", {
     fmt_fraction(columns = hundredths, accuracy = 100, layout = "inline", simplify = FALSE) %>%
     cols_width(everything() ~ px(100)) %>%
     opt_all_caps() %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Generate table with inline fractions that are simplified when specifying a
   # denominator value for `accuracy`
@@ -516,7 +516,7 @@ test_that("fmt_fraction() produces reproducible results for HTML output", {
     fmt_fraction(columns = hundredths, accuracy = 100) %>%
     cols_width(everything() ~ px(100)) %>%
     opt_all_caps() %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Perform snapshot tests for HTML outputs
   fraction_tbl_diagonal %>% render_as_html() %>% expect_snapshot()

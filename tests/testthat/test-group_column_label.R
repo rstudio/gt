@@ -17,7 +17,7 @@ exibble_test <- function(
       groupname_col = if (use_row_groups) "group" else NULL
     ) %>%
     tab_options(row_group.as_column = row_group_column,
-                latex.use.longtable = TRUE) %>%
+                latex.use_longtable = TRUE) %>%
     tab_header(
       title = md("Data listing from **exibble**"),
       subtitle = md("`exibble` is an R dataset")

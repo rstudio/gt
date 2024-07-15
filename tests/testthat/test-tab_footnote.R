@@ -781,7 +781,7 @@ test_that("Footnotes with no location are rendered correctly", {
   gt_footnotes_1 <-
     gt_tbl %>%
     tab_footnote(footnote = "A footnote.") %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_1`
   gt_footnotes_1 %>% render_as_html() %>% expect_snapshot()
@@ -793,14 +793,14 @@ test_that("Footnotes with no location are rendered correctly", {
     tab_footnote(footnote = "A footnote.") %>%
     tab_footnote(footnote = "A second footnote.") %>%
     tab_footnote(footnote = "location note", locations = cells_body(1, 1)) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   gt_footnotes_3 <-
     gt_tbl %>%
     tab_footnote(footnote = "location note", locations = cells_body(1, 1)) %>%
     tab_footnote(footnote = "A footnote.") %>%
     tab_footnote(footnote = "A second footnote.") %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Expect that `gt_footnotes_2` and `gt_footnotes_3` should be rendered the
   # same across the supported formats
@@ -819,7 +819,7 @@ test_that("Footnotes with no location are rendered correctly", {
     gt_tbl %>%
     tab_footnote(footnote = "A footnote.") %>%
     tab_footnote(footnote = "A footnote.") %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_4`
   gt_footnotes_4 %>% render_as_html() %>% expect_snapshot()
@@ -830,7 +830,7 @@ test_that("Footnotes with no location are rendered correctly", {
     gt_tbl %>%
     tab_footnote(footnote = "A footnote.") %>%
     tab_footnote(footnote = "A footnote.", locations = cells_body(1, 1)) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_5`
   gt_footnotes_5 %>% render_as_html() %>% expect_snapshot()
@@ -843,7 +843,7 @@ test_that("Footnotes with no location are rendered correctly", {
     tab_footnote(footnote = "A second footnote.") %>%
     tab_footnote(footnote = "location note", locations = cells_body(1, 1)) %>%
     tab_options(footnotes.multiline = FALSE) %>%
-    tab_options(latex.use.longtable = TRUE)
+    tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_6`
   gt_footnotes_6 %>% render_as_html() %>% expect_snapshot()
@@ -1070,7 +1070,7 @@ test_that("Footnotes work with group labels in 2-column stub arrangements", {
       fmt = list(~ fmt_number(., decimals = 0, use_seps = TRUE))
     ) %>%
     tab_options(row_group.as_column = TRUE,
-                latex.use.longtable = TRUE) %>%
+                latex.use_longtable = TRUE) %>%
     tab_footnote(
       footnote = "The Pepper-Salami.",
       locations = cells_row_groups(groups = "peppr_salami")
