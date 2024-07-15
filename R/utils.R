@@ -1001,7 +1001,15 @@ process_text <- function(text, context = "html") {
     return(text)
 
   } else if (context == "grid") {
-    # Skip any formatting
+    # Skip any formatting (unless wrapped in from_md)
+    if (inherits(text, "from_markdown")) {
+      text <- unescape_html(text)
+      return(markdown_to_text(text))
+    }
+    if (is_html(text)) {
+      text <- unescape_html(text)
+      return(markdown_to_text(text))
+    }
     return(as.character(text))
   } else {
 
@@ -1765,7 +1773,7 @@ markdown_to_text <- function(text) {
 
           }
 
-          gsub("\\n$", "", commonmark::markdown_text(x))
+          sub("\n$", "", commonmark::markdown_text(x))
         }
       )
     )
