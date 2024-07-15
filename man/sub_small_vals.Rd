@@ -39,7 +39,7 @@ form a constraint for targeting operations. The default \code{\link[=everything]
 results in all rows in \code{columns} being formatted. Alternatively, we can
 supply a vector of row IDs within \code{c()}, a vector of row indices, or a
 select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use
 expressions to filter down to the rows we need
 (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 

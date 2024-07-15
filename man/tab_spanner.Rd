@@ -38,7 +38,7 @@ in the text.}
 The columns to serve as components of the spanner. Can either be a series
 of column names provided in \code{c()}, a vector of column indices, or a select
 helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. This argument works in
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). This argument works in
 tandem with the \code{spanners} argument.}
 
 \item{spanners}{\emph{Spanners to target}

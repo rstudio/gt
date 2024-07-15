@@ -60,7 +60,7 @@
 #'
 #' @param rows *Rows to target*
 #'
-#'   [`<column-targeting expression>`][`rows-columns`] // *default:* `everything()`
+#'   [`<row-targeting expression>`][`rows-columns`] // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   undergo formatting. The default [everything()] results in all rows in
