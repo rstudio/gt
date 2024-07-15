@@ -482,6 +482,16 @@ sub_small_vals <- function(
           context = "latex"
         )
       },
+      grid = function(x) {
+
+        sub_replace_small_vals(
+          x,
+          threshold = threshold,
+          sign = sign,
+          small_pattern = small_pattern,
+          context = "grid"
+        )
+      },
       default = function(x) {
 
         sub_replace_small_vals(
@@ -692,6 +702,16 @@ sub_large_vals <- function(
           sign = sign,
           large_pattern = large_pattern,
           context = "latex"
+        )
+      },
+      grid = function(x) {
+
+        sub_replace_large_vals(
+          x,
+          threshold = threshold,
+          sign = sign,
+          large_pattern = large_pattern,
+          context = "grid"
         )
       },
       default = function(x) {

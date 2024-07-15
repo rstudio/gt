@@ -860,6 +860,7 @@ context_plusminus_mark <- function(plusminus_mark, context) {
     context,
     html = ,
     latex = ,
+    grid = ,
     word =
       {
         if (!is_asis && plusminus_mark == " +/- ") {
@@ -921,6 +922,7 @@ context_lte_mark <- function(context) {
 
   switch(
     context,
+    grid =,
     html = "\U02264",
     latex = "$\\leq$",
     "<="
@@ -935,6 +937,7 @@ context_gte_mark <- function(context) {
 
   switch(
     context,
+    grid =,
     html = "\U02265",
     latex = "$\\geq$",
     ">="
