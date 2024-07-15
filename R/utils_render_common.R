@@ -415,12 +415,14 @@ resolve_secondary_pattern <- function(x) {
 perform_col_merge <- function(data, context) {
 
   col_merge <- dt_col_merge_get(data = data)
-  body <- dt_body_get(data = data)
-  data_tbl <- dt_data_get(data = data)
 
   if (length(col_merge) == 0) {
     return(data)
   }
+
+  mutated_cols <- dt_col_merge_get_vars(data = data)
+  body <- dt_body_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
   for (i in seq_along(col_merge)) {
 
@@ -437,7 +439,7 @@ perform_col_merge <- function(data, context) {
       # The `cols_merge()` formatting case
       #
 
-      mutated_column <- col_merge[[i]]$vars[1]
+      mutated_column <- mutated_cols[[i]]
 
       columns <- col_merge[[i]][["vars"]]
       rows <- col_merge[[i]][["rows"]]
@@ -496,7 +498,7 @@ perform_col_merge <- function(data, context) {
       # The `cols_merge_n_pct()` formatting case
       #
 
-      mutated_column <- col_merge[[i]][["vars"]][1]
+      mutated_column <- mutated_cols[[i]]
       second_column <- col_merge[[i]][["vars"]][2]
       rows <- col_merge[[i]][["rows"]]
 
@@ -536,7 +538,7 @@ perform_col_merge <- function(data, context) {
       # were provided as input columns
       #
 
-      mutated_column <- col_merge[[i]][["vars"]][1]
+      mutated_column <- mutated_cols[[i]]
       lu_column <- col_merge[[i]][["vars"]][2]
       uu_column <- col_merge[[i]][["vars"]][3]
       rows <- col_merge[[i]][["rows"]]
@@ -619,7 +621,7 @@ perform_col_merge <- function(data, context) {
       # uncertainties) formatting cases
       #
 
-      mutated_column <- col_merge[[i]][["vars"]][1]
+      mutated_column <- mutated_cols[[i]]
       second_column <- col_merge[[i]][["vars"]][2]
       rows <- col_merge[[i]][["rows"]]
 
