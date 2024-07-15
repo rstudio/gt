@@ -21,7 +21,7 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+\code{\link[=rows-columns]{<column-targeting expression>}} // \emph{default:} \code{everything()}
 
 The columns to which substitution operations are constrained. Can either
 be a series of column names provided in \code{c()}, a vector of column indices,
@@ -30,14 +30,14 @@ or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \co
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+\code{\link[=rows-columns]{<row-targeting expression>}} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
 results in all rows in \code{columns} being formatted. Alternatively, we can
 supply a vector of row IDs within \code{c()}, a vector of row indices, or a
 select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use
 expressions to filter down to the rows we need
 (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
@@ -58,45 +58,6 @@ present better than the standard \code{NA} text that would otherwise appear.
 \code{sub_missing()} allows for this replacement through its \code{missing_text}
 argument (where an em dash serves as the default).
 }
-\section{Targeting cells with \code{columns} and \code{rows}}{
-
-
-Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). The
-\code{columns} argument allows us to target a subset of cells contained in the
-resolved columns. We say resolved because aside from declaring column names
-in \code{c()} (with bare column names or names in quotes) we can use
-\strong{tidyselect}-style expressions. This can be as basic as supplying a select
-helper like \code{starts_with()}, or, providing a more complex incantation like
-
-\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
-
-which targets numeric columns that have a maximum value greater than
-1,000,000 (excluding any \code{NA}s from consideration).
-
-By default all columns and rows are selected (with the \code{everything()}
-defaults). Cell values that are incompatible with a given substitution
-function will be skipped over. So it's safe to select all columns with a
-particular substitution function (only those values that can be substituted
-will be), but, you may not want that. One strategy is to work on the bulk of
-cell values with one substitution function and then constrain the columns for
-later passes with other types of substitution (the last operation done to a
-cell is what you get in the final output).
-
-Once the columns are targeted, we may also target the \code{rows} within those
-columns. This can be done in a variety of ways. If a stub is present, then we
-potentially have row identifiers. Those can be used much like column names in
-the \code{columns}-targeting scenario. We can use simpler \strong{tidyselect}-style
-expressions (the select helpers should work well here) and we can use quoted
-row identifiers in \code{c()}. It's also possible to use row indices (e.g., \code{c(3, 5, 6)}) though these index values must correspond to the row numbers of the
-input data (the indices won't necessarily match those of rearranged rows if
-row groups are present). One more type of expression is possible, an
-expression that takes column values (can involve any of the available columns
-in the table) and returns a logical vector. This is nice if you want to base
-the substitution on values in the column or another column, or, you'd like to
-use a more complex predicate expression.
-}
-
 \section{Examples}{
 
 

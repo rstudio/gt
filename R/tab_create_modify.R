@@ -244,7 +244,7 @@ tab_header <- function(
 #'   The columns to serve as components of the spanner. Can either be a series
 #'   of column names provided in `c()`, a vector of column indices, or a select
 #'   helper function (e.g. [starts_with()], [ends_with()], [contains()],
-#'   [matches()], [num_range()], and [everything()]. This argument works in
+#'   [matches()], [num_range()], and [everything()]). This argument works in
 #'   tandem with the `spanners` argument.
 #'
 #' @param spanners *Spanners to target*
@@ -310,7 +310,7 @@ tab_header <- function(
 #' as basic as supplying a select helper like `starts_with()`, or, providing a
 #' more complex incantation like
 #'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#' `where(~ is.numeric(.x) & max(.x, na.rm = TRUE) > 1E6)`
 #'
 #' which targets numeric columns that have a maximum value greater than
 #' 1,000,000 (excluding any `NA`s from consideration).
@@ -1455,7 +1455,7 @@ str_split_across <- function(
 #'   The rows to be made components of the row group. We can supply a vector of
 #'   row ID values within `c()`, a vector of row indices, or use select helpers
 #'   (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
+#'   [num_range()], and [everything()]). We can also use expressions to filter
 #'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param id *Row group ID*

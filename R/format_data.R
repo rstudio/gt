@@ -87,45 +87,6 @@
 #' formatting. This is to say that cells of incompatible data types may be
 #' targeted, but there will be no attempt to format them.
 #'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
-#'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
 #' [from_column()] can be used with certain arguments of `fmt_scientific()` to
@@ -669,45 +630,6 @@ fmt_scientific <- function(
 #' `"numeric"` or `"integer"` types. Any other types of body cells are ignored
 #' during formatting. This is to say that cells of incompatible data types may
 #' be targeted, but there will be no attempt to format them.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
@@ -1358,45 +1280,6 @@ fmt_symbol <- function(
 #' formatting. This is to say that cells of incompatible data types may be
 #' targeted, but there will be no attempt to format them.
 #'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
-#'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
 #' [from_column()] can be used with certain arguments of `fmt_percent()` to
@@ -1699,45 +1582,6 @@ fmt_percent <- function(
 #' `"integer"` types. Any other types of body cells are ignored during
 #' formatting. This is to say that cells of incompatible data types may be
 #' targeted, but there will be no attempt to format them.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
@@ -2065,45 +1909,6 @@ fmt_partsper <- function(
 #' `"integer"` types. Any other types of body cells are ignored during
 #' formatting. This is to say that cells of incompatible data types may be
 #' targeted, but there will be no attempt to format them.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
@@ -2742,45 +2547,6 @@ round_gt <- function(x, digits = 0) {
 #' formatting. This is to say that cells of incompatible data types may be
 #' targeted, but there will be no attempt to format them.
 #'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
-#'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
 #' [from_column()] can be used with certain arguments of `fmt_currency()` to
@@ -3162,45 +2928,6 @@ fmt_currency <- function(
 #' formatting. This is to say that cells of incompatible data types may be
 #' targeted, but there will be no attempt to format them.
 #'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
-#'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
 #' [from_column()] can be used with certain arguments of `fmt_roman()` to obtain
@@ -3424,45 +3151,6 @@ fmt_roman <- function(
 #' `"integer"` types. Any other types of body cells are ignored during
 #' formatting. This is to say that cells of incompatible data types may be
 #' targeted, but there will be no attempt to format them.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
@@ -3741,45 +3429,6 @@ get_letters_from_div <- function(x, set) {
 #' or `"integer"` types. Any other types of body cells are ignored during
 #' formatting. This is to say that cells of incompatible data types may be
 #' targeted, but there will be no attempt to format them.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
@@ -4140,45 +3789,6 @@ fmt_spelled_num <- function(
 #' formatting. This is to say that cells of incompatible data types may be
 #' targeted, but there will be no attempt to format them.
 #'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
-#'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
 #' [from_column()] can be used with certain arguments of `fmt_bytes()` to obtain
@@ -4475,45 +4085,6 @@ fmt_bytes <- function(
 #' `"POSIXt"` or `"character"` types. Any other types of body cells are ignored
 #' during formatting. This is to say that cells of incompatible data types may
 #' be targeted, but there will be no attempt to format them.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
@@ -4832,45 +4403,6 @@ fmt_date <- function(
 #' `"POSIXt"` or `"character"` types. Any other types of body cells are ignored
 #' during formatting. This is to say that cells of incompatible data types may
 #' be targeted, but there will be no attempt to format them.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
@@ -5204,45 +4736,6 @@ fmt_time <- function(
 #' `"POSIXct"` or `"character"` types. Any other types of body cells are ignored
 #' during formatting. This is to say that cells of incompatible data types may
 #' be targeted, but there will be no attempt to format them.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
@@ -6329,60 +5822,6 @@ fmt_datetime <- function(
 #' during formatting. This is to say that cells of incompatible data types may
 #' be targeted, but there will be no attempt to format them.
 #'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
-#'
-#' @section Adapting output to a specific `locale`:
-#'
-#' This formatting function can adapt outputs according to a provided `locale`
-#' value. Examples include `"en"` for English (United States) and `"fr"` for
-#' French (France). The use of a valid locale ID here means separator and
-#' decimal marks will be correct for the given locale. Should any value be
-#' provided in `sep_mark`, it will be overridden by the locale's preferred
-#' values.
-#'
-#' Note that a `locale` value provided here will override any global locale
-#' setting performed in [gt()]'s own `locale` argument (it is settable there as
-#' a value received by all other functions that have a `locale` argument). As a
-#' useful reference on which locales are supported, we can call [info_locales()]
-#' to view an info table.
-#'
 #' @section Examples:
 #'
 #' Use part of the `sp500` table to create a **gt** table. Create a
@@ -7012,45 +6451,6 @@ extract_duration_pattern <- function(
 #' This is to say that cells of incompatible data types may be targeted, but
 #' there will be no attempt to format them.
 #'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
-#'
 #' @section Formatting expressions for `fmt`:
 #'
 #' We can supply a one-sided (RHS only) expression to `fmt`, and, several can be
@@ -7331,45 +6731,6 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' (the analogue for `FALSE`). Any other numerical values will be disregarded
 #' and left as is. Because of these restrictions, it is recommended that only
 #' logical values undergo formatting.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
@@ -7912,45 +7273,6 @@ make_span_with_color <- function(text, color = NULL) {
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
-#'
 #' @section How to use **gt**'s units notation:
 #'
 #' The units notation involves a shorthand of writing units that feels familiar
@@ -8116,45 +7438,6 @@ fmt_units <- function(
 #' @inheritParams fmt_number
 #'
 #' @return An object of class `gt_tbl`.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
 #'
 #' @section How to use **gt**'s chemistry notation:
 #'
@@ -8509,45 +7792,6 @@ format_units_by_context <- function(
 #' `"factor"` types. Any other types of body cells are ignored during formatting.
 #' This is to say that cells of incompatible data types may be targeted, but
 #' there will be no attempt to format them.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
@@ -9273,45 +8517,6 @@ add_anchor_attr <- function(
 #' This is to say that cells of incompatible data types may be targeted, but
 #' there will be no attempt to format them.
 #'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
-#'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
 #' [from_column()] can be used with certain arguments of `fmt_email()` to obtain
@@ -9947,45 +9152,6 @@ generate_email_links <- function(email_address, anchor_attr, label_str) {
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler
-#' **tidyselect**-style expressions (the select helpers should work well here)
-#' and we can use quoted row identifiers in `c()`. It's also possible to use row
-#' indices (e.g., `c(3, 5, 6)`) though these index values must correspond to the
-#' row numbers of the input data (the indices won't necessarily match those of
-#' rearranged rows if row groups are present). One more type of expression is
-#' possible, an expression that takes column values (can involve any of the
-#' available columns in the table) and returns a logical vector. This is nice if
-#' you want to base formatting on values in the column or another column, or,
-#' you'd like to use a more complex predicate expression.
-#'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
 #' [from_column()] can be used with certain arguments of `fmt_image()` to obtain
@@ -10518,45 +9684,6 @@ get_image_hw_ratio <- function(filepath) {
 #' formatting. This is to say that cells of incompatible data types may be
 #' targeted, but there will be no attempt to format them.
 #'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
-#'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
 #' [from_column()] can be used with certain arguments of `fmt_flag()` to obtain
@@ -10965,45 +10092,6 @@ fmt_flag <- function(
 #' `"character"` or `"factor"` types. Any other types of body cells are ignored
 #' during formatting. This is to say that cells of incompatible data types may
 #' be targeted, but there will be no attempt to format them.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
@@ -11523,45 +10611,6 @@ fmt_country <- function(
 #' during formatting. This is to say that cells of incompatible data types may
 #' be targeted, but there will be no attempt to format them.
 #'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
-#'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
 #' [from_column()] can be used with certain arguments of `fmt_icon()` to obtain
@@ -12024,45 +11073,6 @@ fmt_icon <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
-#'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
 #' [from_column()] can be used with the `md_engine` argument of `fmt_markdown()`
@@ -12341,45 +11351,6 @@ fmt_markdown <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
-#'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
 #' [from_column()] can be used with certain arguments of `fmt_passthrough()` to
@@ -12607,45 +11578,6 @@ fmt_passthrough <- function(
 #'   values only).
 #'
 #' @return An object of class `gt_tbl`.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
 #'
 #' @section Examples:
 #'

@@ -111,7 +111,7 @@ render_as_ihtml <- function(data, id) {
       # Convert to NA string to avoid wrong output.
       # TODO figure out if there is a way to get the sub_missing value.
       # With data$`_substitutions`
-      row_names <- dplyr::coalesce(row_names, " ")
+      row_names <- dplyr::coalesce(row_names, "NA")
       attr(data_tbl, "row.names") <- row_names
       row_name_col_def <- list(reactable::colDef(
           name = rowname_label
@@ -245,6 +245,19 @@ render_as_ihtml <- function(data, id) {
   # Flatten this list of vectors to a single vector of unique column names
   formatted_columns <- unique(flatten_list(formatted_columns))
 
+  # Format col_merge cols #1785
+  col_merge_cols <- dt_col_merge_get_vars(data)
+  formatted_columns <- c(formatted_columns, col_merge_cols)
+
+  # format substitutions #1759
+  substitution <- dt_substitutions_get(data)
+  if (length(substitution) > 0) {
+    sub_cols <- substitution[[1]]$cols
+    formatted_columns <- c(formatted_columns, sub_cols)
+  }
+
+  # take unique values
+  formatted_columns <- unique(formatted_columns)
   # Create a list of column definitions
   col_defs <-
     lapply(
@@ -253,6 +266,7 @@ render_as_ihtml <- function(data, id) {
 
         # Only perform extraction of formatted cells if there is an
         # indication that formatting will be performed on a column`
+        # or if it is the result of column merge.
         if (column_names[x] %in% formatted_columns) {
 
           formatted_cells <-
@@ -271,6 +285,8 @@ render_as_ihtml <- function(data, id) {
           cell = cell_fn,
           name = column_labels[x],
           align = column_alignments[x],
+          # Has no effect with sub_missing
+          na = "NA",
           # TODO support `summary_rows()` via `aggregate` #1359
           # TODO support `grand_summary_rows()` via `footer`. #1359
           headerStyle = list(`font-weight` = "normal"),
@@ -379,6 +395,8 @@ render_as_ihtml <- function(data, id) {
     reactable::colDef(
       style = reactable::JS(body_style_js_str),
       minWidth = 125,
+      # Has no effect with sub_missing()
+      na = "NA",
       width = NULL
     )
 

@@ -90,6 +90,21 @@ test_that("Interactive tables won't fail when using different options", {
     gt(exibble, rowname_col = "char") %>%
     tab_stubhead("stub label on top of rowname") %>%
     opt_interactive()
+  # #1785 cols_merge works
+  tbl_gt_i_28 <- sp500 %>%
+    dplyr::slice(50:55) %>%
+    dplyr::select(-volume, -adj_close) %>%
+    gt() %>%
+    cols_merge(columns = c(open, close), pattern = "{1}&mdash;{2}") %>%
+    cols_merge(columns = c(low, high), pattern = "{1}&mdash;{2}") %>%
+    cols_label(open = "open/close", low = "low/high") %>%
+    opt_interactive()
+  # #1759 sub_ works
+  tbl_gt_i_29 <- exibble %>%
+    gt() %>%
+    sub_missing(rows = 1:7) %>%
+    opt_interactive()
+
   capture_output(expect_no_error(tbl_gt_i_01))
   capture_output(expect_no_error(tbl_gt_i_02))
   capture_output(expect_no_error(tbl_gt_i_03))
@@ -117,5 +132,7 @@ test_that("Interactive tables won't fail when using different options", {
   capture_output(expect_no_error(tbl_gt_i_25))
   capture_output(expect_no_error(tbl_gt_i_26))
   capture_output(expect_no_error(tbl_gt_i_27))
+  capture_output(expect_no_error(tbl_gt_i_28))
+  capture_output(expect_no_error(tbl_gt_i_29))
 
 })
