@@ -244,7 +244,8 @@ render_as_ihtml <- function(data, id) {
 
   # Flatten this list of vectors to a single vector of unique column names
   formatted_columns <- unique(flatten_list(formatted_columns))
-
+  col_merge_cols <- dt_col_merge_get_vars(data)
+  formatted_columns <- c(formatted_columns, col_merge_cols)
   # Create a list of column definitions
   col_defs <-
     lapply(
@@ -253,6 +254,7 @@ render_as_ihtml <- function(data, id) {
 
         # Only perform extraction of formatted cells if there is an
         # indication that formatting will be performed on a column`
+        # or if it is the result of column merge.
         if (column_names[x] %in% formatted_columns) {
 
           formatted_cells <-
