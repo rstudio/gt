@@ -860,6 +860,7 @@ context_plusminus_mark <- function(plusminus_mark, context) {
     context,
     html = ,
     latex = ,
+    grid = ,
     word =
       {
         if (!is_asis && plusminus_mark == " +/- ") {
@@ -921,6 +922,7 @@ context_lte_mark <- function(context) {
 
   switch(
     context,
+    grid =,
     html = "\U02264",
     latex = "$\\leq$",
     "<="
@@ -935,6 +937,7 @@ context_gte_mark <- function(context) {
 
   switch(
     context,
+    grid =,
     html = "\U02265",
     latex = "$\\geq$",
     ">="
@@ -962,7 +965,6 @@ context_percent_mark <- function(context) {
 
   switch(
     context,
-    html = "%",
     latex = "\\%",
     "%"
   )
@@ -1095,7 +1097,13 @@ context_symbol_str <- function(context, symbol) {
   symbol <-
     switch(
       context,
-      html = get_currency_str(currency = symbol),
+      grid = {
+        # Translate html to text. The currency symbol is an html value.
+        symbol <- markdown::mark(get_currency_str(currency = symbol, fallback_to_code = FALSE), format = "text")
+        # Remove trailing linebreak
+        symbol <- sub("\n$", "", symbol)
+      },
+      html = get_currency_str(currency = symbol, fallback_to_code = FALSE),
       latex = {
         if (!inherits(symbol, "AsIs")) {
           #paste_between(

@@ -11312,6 +11312,18 @@ fmt_markdown <- function(
       word = function(x) {
         markdown_to_xml(x)
       },
+      grid = function(x) {
+        x <- unescape_html(x)
+        sub(
+          "\n$", "",
+          vapply(
+            x,
+            FUN.VALUE = character(1L),
+            USE.NAMES = FALSE,
+            commonmark::markdown_text
+          )
+        )
+      },
       default = function(x) {
         sub(
           "\n$", "",
@@ -11487,6 +11499,23 @@ fmt_passthrough <- function(
 
         if (escape) {
           x_str <- process_text(text = x_str, context = "html")
+        }
+
+        x_str
+      },
+      grid = function(x) {
+        # Create `x_str` with same length as `x`
+        x_str <- rep_len(NA_character_, length(x))
+
+        # Handle formatting of pattern
+        x_str <-
+          apply_pattern_fmt_x(
+            pattern,
+            values = x
+          )
+
+        if (escape) {
+          x_str <- process_text(text = x_str, context = "grid")
         }
 
         x_str

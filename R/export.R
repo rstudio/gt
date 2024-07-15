@@ -1418,7 +1418,7 @@ grid_align_gtable <- function(gtable, data) {
 
   } else if (grepl("\\%$", left)) {
 
-    left <- as.numeric(gsub("\\%$", "", left)) / 100
+    left <- as.numeric(sub("\\%$", "", left)) / 100
     left <- grid::unit(left * 0.5, "null")
 
   } else {
@@ -1432,7 +1432,7 @@ grid_align_gtable <- function(gtable, data) {
 
   } else if (grepl("\\%$", right)) {
 
-    right <- as.numeric(gsub("\\%$", "", right)) / 100
+    right <- as.numeric(sub("\\%$", "", right)) / 100
     right <- grid::unit(right * 0.5, "null")
 
   } else {
@@ -1471,7 +1471,7 @@ grid_layout_widths <- function(layout, data) {
     }
     pct <- which(endsWith(column_width, "%"))
     if (length(pct) > 0) {
-      relative[pct] <- as.numeric(gsub("\\%$", "", column_width[pct])) / 100
+      relative[pct] <- as.numeric(sub("\\%$", "", column_width[pct])) / 100
     }
   }
   pct <- which(!is.na(relative))
@@ -1515,7 +1515,7 @@ grid_layout_widths <- function(layout, data) {
   if (grepl("\\%$", total_width)) {
 
     # Set the total width in npc units
-    total_width <- as.numeric(gsub("\\%$", "", total_width)) / 100
+    total_width <- as.numeric(sub("\\%$", "", total_width)) / 100
     change <- setdiff(seq_along(widths), fixed)
     extra_width <- rep_len(0, length(widths))
     extra_width[change] <- total_width / length(change)
@@ -1622,7 +1622,7 @@ grid_layout_widths <- function(layout, data) {
 extract_body <- function(
     data,
     build_stage = NULL,
-    output = c("html", "latex", "rtf", "word")
+    output = c("html", "latex", "rtf", "word", "grid")
 ) {
 
   # Perform input object validation
@@ -1891,7 +1891,7 @@ extract_cells <- function(
     data,
     columns,
     rows = everything(),
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "grid")
 ) {
 
   # Perform input object validation
