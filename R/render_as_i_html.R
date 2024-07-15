@@ -111,7 +111,7 @@ render_as_ihtml <- function(data, id) {
       # Convert to NA string to avoid wrong output.
       # TODO figure out if there is a way to get the sub_missing value.
       # With data$`_substitutions`
-      row_names <- dplyr::coalesce(row_names, " ")
+      row_names <- dplyr::coalesce(row_names, "NA")
       attr(data_tbl, "row.names") <- row_names
       row_name_col_def <- list(reactable::colDef(
           name = rowname_label
@@ -285,6 +285,7 @@ render_as_ihtml <- function(data, id) {
           cell = cell_fn,
           name = column_labels[x],
           align = column_alignments[x],
+          na = "NA",
           # TODO support `summary_rows()` via `aggregate` #1359
           # TODO support `grand_summary_rows()` via `footer`. #1359
           headerStyle = list(`font-weight` = "normal"),
@@ -318,6 +319,7 @@ render_as_ihtml <- function(data, id) {
       group_col_defs[[i]] <-
         reactable::colDef(
           name = group_label,
+          na = "NA",
           # The total number of rows is wrong in colGroup, possibly due to the JS fn
           grouped = grp_fn,
           # FIXME Should groups be sticky? (or provide a way to do this)
@@ -393,6 +395,7 @@ render_as_ihtml <- function(data, id) {
     reactable::colDef(
       style = reactable::JS(body_style_js_str),
       minWidth = 125,
+      na = "NA",
       width = NULL
     )
 
