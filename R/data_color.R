@@ -754,7 +754,7 @@ data_color <- function(
       rlang::check_installed(
         "paletteer",
         reason = "to use palettes with the <package>::<palette> syntax."
-        )
+      )
 
       # Parse the `palette` string and extract the two different
       # components: the package that the palette comes from and the
@@ -808,7 +808,7 @@ data_color <- function(
     # scales:::toPaletteFunc(), which does not have methods for classed color
     # vectors (such as those in the paletteer package). Casting is done here so
     # classed color vectors from packages other than paletteer can also be used
-    # with `palette` (#1155). 
+    # with `palette` (#1155).
     palette <- as.character(palette)
   }
 

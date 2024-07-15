@@ -182,16 +182,13 @@ get_colorized_params <- function(
     color
 ) {
 
-  style_filter <- style
-  color_filter <- color
-
-  as.list(
-    dplyr::filter(
+  res <-
+    vctrs::vec_slice(
       styles_colors_params,
-      style == style_filter,
-      color == color_filter
+      styles_colors_params$style == style &
+        styles_colors_params$color == color
     )
-  )
+  as.list(res)
 }
 
 #' Option to put interactive elements in an HTML table
@@ -1036,19 +1033,24 @@ get_padding_option_value_list <- function(scale, type) {
   # Get the padding parameters from `dt_options_tbl` that relate
   # to the `type` (either vertical or horizontal padding)
   padding_params <-
-    dplyr::filter(dt_options_tbl, grepl(paste0(pattern, "$"), parameter))
-  padding_params <- padding_params$parameter
+    vctrs::vec_slice(
+      dt_options_tbl$parameter,
+      endsWith(dt_options_tbl$parameter, pattern)
+    )
 
-  padding_options <- dplyr::filter(dt_options_tbl, parameter %in% padding_params)
-  padding_options <- dplyr::select(padding_options, "parameter", "value")
+  padding_options <-
+    vctrs::vec_slice(
+      dt_options_tbl[, c("parameter", "value")],
+      dt_options_tbl$parameter %in% padding_params
+    )
   padding_options <-
     dplyr::mutate(
       padding_options,
-      parameter = gsub(pattern, gsub("_", ".", pattern, fixed = TRUE), parameter, fixed = TRUE)
+      parameter = gsub(pattern, gsub("_", ".", pattern, fixed = TRUE), parameter, fixed = TRUE),
+      value = unlist(value),
+      px = as.numeric(gsub("px", "", value, fixed = TRUE)),
+      px = px * scale
     )
-  padding_options <- dplyr::mutate(padding_options, value = unlist(value))
-  padding_options <- dplyr::mutate(padding_options, px = as.numeric(gsub("px", "", value, fixed = TRUE)))
-  padding_options <- dplyr::mutate(padding_options, px = px * scale)
 
   create_option_value_list(
     padding_options$parameter,

@@ -655,11 +655,15 @@ create_source_notes_component_ihtml <- function(data) {
   # Get the style attrs for the source notes
   if ("source_notes" %in% styles_tbl$locname) {
 
-    source_notes_style <- dplyr::filter(styles_tbl, locname == "source_notes")
+    source_notes_style <-
+      vctrs::vec_slice(
+        styles_tbl$html_style,
+        !is.na(styles_tbl$locname) & styles_tbl$locname == "source_notes"
+      )
 
     source_notes_styles <-
-      if (nrow(source_notes_style) > 0) {
-        paste(source_notes_style$html_style, collapse = " ")
+      if (length(source_notes_style) > 0) {
+        paste(source_notes_style, collapse = " ")
       } else {
         NULL
       }
