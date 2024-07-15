@@ -90,8 +90,9 @@ numerical input data or the \code{"factor"} method for any non-numeric inputs.}
 
 \verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-A vector of color names, the name of an \strong{RColorBrewer} palette, the name
-of a \strong{viridis} palette, or a discrete palette accessible from the
+A vector of color names, a color class that can be cast to a vector of
+color names, the name of an \strong{RColorBrewer} palette, the name of a
+\strong{viridis} palette, or a discrete palette accessible from the
 \strong{paletteer} package using the \verb{<package>::<palette>} syntax (e.g.,
 \code{"wesanderson::IsleofDogs1"}). If providing a vector of colors as a
 palette, each color value provided must either be a color name (Only R/X11
