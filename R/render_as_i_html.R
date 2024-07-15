@@ -244,8 +244,20 @@ render_as_ihtml <- function(data, id) {
 
   # Flatten this list of vectors to a single vector of unique column names
   formatted_columns <- unique(flatten_list(formatted_columns))
+
+  # Format col_merge cols #1785
   col_merge_cols <- dt_col_merge_get_vars(data)
   formatted_columns <- c(formatted_columns, col_merge_cols)
+
+  # format substitutions #1759
+  substitution <- dt_substitutions_get(data)
+  if (length(substitution) > 0) {
+    sub_cols <- substitution[[1]]$cols
+    formatted_columns <- c(formatted_columns, sub_cols)
+  }
+
+  # take unique values
+  formatted_columns <- unique(formatted_columns)
   # Create a list of column definitions
   col_defs <-
     lapply(

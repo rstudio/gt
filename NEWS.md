@@ -10,6 +10,8 @@
 
 * `opt_interactive()` now works when columns are merged with `cols_merge()` (@olivroy, #1785). 
 
+* `opt_interactive()` now works when columns are substituted with `sub_*()` (@olivroy, #1759). 
+
 # gt 0.11.0
 
 ## New features
