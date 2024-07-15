@@ -394,7 +394,7 @@ align_to_char <- function(x, align_at = ".") {
           paste0(paste(rep("\U02007", n_char_extracted), collapse = ""), "$"),
           "",
           x_piece_rhs[i]
-      )
+        )
     }
   }
 
