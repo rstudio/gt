@@ -32,13 +32,6 @@
 #' remaining two values to supply are for the regex pattern (`pattern`) and the
 #' replacement for all matched text (`replacement`).
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
-#'
 #' @param pattern *Regex pattern to match with*
 #'
 #'   `scalar<character>` // **required**
@@ -108,7 +101,11 @@ text_replace <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  text_transform(
+  # Validate input
+  check_string(pattern, allow_empty = FALSE, allow_na = TRUE)
+  check_string(replacement, allow_empty = TRUE, allow_na = FALSE)
+
+  text_transform_impl(
     data = data,
     locations = locations,
     fn = function(x) {
@@ -129,13 +126,6 @@ text_replace <- function(
 #' be a predicate statement that evaluates to a logical vector of length one
 #' (i.e., either `TRUE` or `FALSE`). To refer to the values undergoing
 #' transformation, you need to use the `x` variable.
-#'
-#' @param .data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
 #'
 #' @param ... *Matching expressions*
 #'
@@ -217,7 +207,7 @@ text_case_when <- function(
   # TODO: check that the modernized version of the `case_when()`
   # function is available in the user's version of dplyr
 
-  text_transform(
+  text_transform_impl(
     data = .data,
     locations = .locations,
     fn = function(x) {
@@ -383,10 +373,9 @@ text_case_match <- function(
   # TODO: perform some basic checking of `...` and stop function
   # should issues arise
 
-  # TODO: check that the `case_match()` function is available in
-  # the user's version of dplyr
+  # We rely on dplyr 1.1 (where case_match() was introduced)
 
-  text_transform(
+  text_transform_impl(
     data = .data,
     locations = .locations,
     fn = function(x) {
@@ -603,6 +592,17 @@ text_transform <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+  rlang::check_required(fn)
+
+  text_transform_impl(
+    data,
+    fn,
+    locations
+  )
+}
+
+# Helper function to create text_*()
+text_transform_impl <- function(data, fn, locations, call = rlang::caller_env()) {
 
   # Resolve into a list of locations
   locations <- as_locations(locations = locations)
@@ -610,7 +610,12 @@ text_transform <- function(
   # For all of the resolved locations, store the transforms
   # for later execution
   for (loc in locations) {
-    data <- dt_transforms_add(data = data, loc = loc, fn = fn)
+    withCallingHandlers(
+      # Personalize call if text_case_match() or other.
+      data <- dt_transforms_add(data = data, loc = loc, fn = fn),
+      error = function(e) {
+        cli::cli_abort("Failed to resolve location.", parent = e, call = call)
+      })
   }
 
   data

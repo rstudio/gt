@@ -1078,7 +1078,7 @@ cli::test_that_cli("multiple levels of `tab_spanner()` are not compatible with i
   }
 )
 
-test_that("multiple levels of `tab_spanner()` are not compatible with interactive tables and only use 1st level", {
+test_that("tab_spanner() can't render multiple spanners in interactive tables and only use 1st level", {
   check_suggests()
   skip_if_not_installed("jsonlite")
 
