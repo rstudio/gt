@@ -1643,7 +1643,7 @@ cells_column_spanners <- function(spanners = everything()) {
 #' as basic as supplying a select helper like `starts_with()`, or, providing a
 #' more complex incantation like
 #'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#' `where(~ is.numeric(.x) & max(.x, na.rm = TRUE) > 1E6)`
 #'
 #' which targets numeric columns that have a maximum value greater than
 #' 1,000,000 (excluding any `NA`s from consideration).
@@ -1924,7 +1924,7 @@ cells_stub <- function(rows = everything()) {
 #' **tidyselect**-style expressions. This can be as basic as supplying a select
 #' helper like `starts_with()`, or, providing a more complex incantation like
 #'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#' `where(~ is.numeric(.x) & max(.x, na.rm = TRUE) > 1E6)`
 #'
 #' which targets numeric columns that have a maximum value greater than
 #' 1,000,000 (excluding any `NA`s from consideration).
@@ -2037,7 +2037,7 @@ cells_body <- function(
 #' supplying a select helper like `starts_with()`, or, providing a more complex
 #' incantation like
 #'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#' `where(~ is.numeric(.x) & max(.x, na.rm = TRUE) > 1E6)`
 #'
 #' which targets numeric columns that have a maximum value greater than
 #' 1,000,000 (excluding any `NA`s from consideration).
@@ -2162,7 +2162,7 @@ cells_summary <- function(
 #' as supplying a select helper like `starts_with()`, or, providing a more
 #' complex incantation like
 #'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#' `where(~ is.numeric(.x) & max(.x, na.rm = TRUE) > 1E6)`
 #'
 #' which targets numeric columns that have a maximum value greater than
 #' 1,000,000 (excluding any `NA`s from consideration).
