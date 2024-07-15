@@ -7,7 +7,9 @@
 * Fixed an issue where `md("")` would fail in Quarto. (@olivroy, #1769)
 
 * Fixed a bug in using `pct()` column widths with `as_gtable()` (@teunbrand, #1771)
- 
+
+* `opt_interactive()` now works when columns are merged with `cols_merge()` (@olivroy, #1785). 
+
 # gt 0.11.0
 
 ## New features
