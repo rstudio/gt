@@ -44,7 +44,7 @@ column indices, or a select helper function (e.g. \code{\link[=starts_with]{star
 
 \item{rows}{\emph{Rows to target}
 
-\code{\link[=rows-columns]{<column-targeting expression>}} // \emph{default:} \code{everything()}
+\code{\link[=rows-columns]{<row-targeting expression>}} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
