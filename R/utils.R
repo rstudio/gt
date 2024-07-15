@@ -1038,6 +1038,9 @@ unescape_html <- function(text) {
   text <- gsub("&lt;", "<", text, fixed = TRUE)
   text <- gsub("&gt;", ">", text, fixed = TRUE)
   text <- gsub("&amp;", "&", text, fixed = TRUE)
+  text <- gsub("&mdash;", "---", text, fixed = TRUE)
+  # universal linebreak
+  text <- gsub("<br>", "\n", text, fixed = TRUE)
   text
 }
 
