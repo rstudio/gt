@@ -148,3 +148,32 @@ test_that("gtable widths are set appropriately", {
     c("0.5null", "0.2npc", "150.5625points", "0.5null")
   )
 })
+
+test_that("gtable works for cols_merge_n_cert()", {
+  tbl_cols_merge <- exibble %>%
+    dplyr::select(num, currency) %>%
+    dplyr::slice(1:7) %>%
+    gt() %>%
+    fmt_number(
+      columns = num,
+      decimals = 3,
+      use_seps = FALSE
+    ) %>%
+    cols_merge_uncert(
+      col_val = currency,
+      col_uncert = num
+    ) %>%
+    cols_label(currency = "value + uncert.")
+
+  expect_no_error(as_gtable(tbl_cols_merge))
+})
+
+test_that("gtable outputs works well for currencies", {
+  tbl <- exibble %>%
+    dplyr::select(currency) %>%
+    gt() %>%
+    fmt_currency(currency = "GBP")
+  expect_no_error(
+    as_gtable(tbl)
+  )
+})
