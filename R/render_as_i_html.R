@@ -285,6 +285,7 @@ render_as_ihtml <- function(data, id) {
           cell = cell_fn,
           name = column_labels[x],
           align = column_alignments[x],
+          # Has no effect with sub_missing
           na = "NA",
           # TODO support `summary_rows()` via `aggregate` #1359
           # TODO support `grand_summary_rows()` via `footer`. #1359
@@ -319,7 +320,6 @@ render_as_ihtml <- function(data, id) {
       group_col_defs[[i]] <-
         reactable::colDef(
           name = group_label,
-          na = "NA",
           # The total number of rows is wrong in colGroup, possibly due to the JS fn
           grouped = grp_fn,
           # FIXME Should groups be sticky? (or provide a way to do this)
@@ -395,6 +395,7 @@ render_as_ihtml <- function(data, id) {
     reactable::colDef(
       style = reactable::JS(body_style_js_str),
       minWidth = 125,
+      # Has no effect with sub_missing()
       na = "NA",
       width = NULL
     )
