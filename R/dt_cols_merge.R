@@ -32,10 +32,6 @@ dt_col_merge_set <- function(data, col_merge) {
   dt__set(data, .dt_col_merge_key, col_merge)
 }
 
-dt_col_merge_init <- function(data) {
-  dt_col_merge_set(data = data, col_merge = list())
-}
-
 dt_col_merge_add <- function(data, col_merge) {
   added <- append(dt_col_merge_get(data = data), list(col_merge))
   dt_col_merge_set(data = data, col_merge = added)
