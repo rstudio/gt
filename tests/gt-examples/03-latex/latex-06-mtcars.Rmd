@@ -99,5 +99,6 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
   cols_label(
     hp = md("*HP*"),
     qsec = "QMT, seconds"
-  )
+  ) %>%
+  tab_options(latex.use_longtable = TRUE)
 ```

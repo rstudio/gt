@@ -252,4 +252,6 @@ dt_options_tbl <-
     "page_footer_height",                FALSE,  "page",             "value",   "0.5in",
     "quarto_disable_processing",         FALSE,  "quarto",           "logical", FALSE,
     "quarto_use_bootstrap",              FALSE,  "quarto",           "logical", FALSE,
+    "latex_use_longtable",               FALSE,  "latex",            "logical", FALSE,
+    "latex_tbl_pos",                     FALSE,  "latex",            "value",   "!t",
   )[-1, ]

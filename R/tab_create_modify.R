@@ -4409,6 +4409,24 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   deactivated with `quarto.disable_processing = TRUE` (this option is `FALSE`
 #'   by default).
 #'
+#' @param latex.use_longtable
+#'
+#'   *Use longtable latex environment*
+#'
+#'   By default, tables produced using latex code will be embedded in the
+#'   `table` floating environment. Setting this parameter to `TRUE` will instead
+#'   use the `longtable` environment which will not float and may span multiple
+#'   pages.
+#'
+#' @param latex.tbl.pos
+#'
+#'   *Specify latex floating position*
+#'
+#'   The latex position indicator for a floating environment (e.g. "!t", "H"). It
+#'   should be specified without square brackets. Quarto users should instead
+#'   set the floating position within the code chunk argument `tbl-pos`. Table
+#'   will only float if longtable environment is set to `FALSE`.
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
@@ -4726,7 +4744,9 @@ tab_options <- function(
     page.header.height = NULL,
     page.footer.height = NULL,
     quarto.use_bootstrap = NULL,
-    quarto.disable_processing = NULL
+    quarto.disable_processing = NULL,
+    latex.use_longtable = NULL,
+    latex.tbl.pos = NULL
 ) {
 
   # Perform input object validation

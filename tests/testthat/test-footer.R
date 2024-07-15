@@ -15,7 +15,8 @@ test_that("The footer section formatting and options work well across all output
       footnotes.multiline = TRUE, # default
       footnotes.sep = "  ",
       source_notes.multiline = TRUE, # default
-      source_notes.sep = "  "
+      source_notes.sep = "  ",
+      latex.use_longtable = TRUE
     )
 
   # Take snapshots of `exibble_multiline`
@@ -30,7 +31,8 @@ test_that("The footer section formatting and options work well across all output
       footnotes.multiline = FALSE,
       footnotes.sep = "  ",
       source_notes.multiline = FALSE,
-      source_notes.sep = "  "
+      source_notes.sep = "  ",
+      latex.use_longtable = TRUE
     )
 
   # Take snapshots of `exibble_oneline`
@@ -58,7 +60,8 @@ test_that("The footer section formatting and options work well across all output
       footnotes.multiline = FALSE,
       footnotes.sep = " \\textit{|} ",
       source_notes.multiline = FALSE,
-      source_notes.sep = " \\textit{|} "
+      source_notes.sep = " \\textit{|} ",
+      latex.use_longtable = TRUE
     )
 
   # Take snapshot of `exibble_sep_latex`

@@ -75,5 +75,6 @@ gt(
   tab_footnote(
     footnote = md("The `subtitle` can likewise get a footnote."),
     locations = cells_title(groups = "subtitle")
-  )
+  ) %>%
+  tab_options(latex.use_longtable = TRUE)
 ```

@@ -702,7 +702,7 @@ as_latex <- function(data) {
   footer_component <- create_footer_component_l(data = data)
 
   # Create a LaTeX fragment for the ending tabular statement
-  table_end <- create_table_end_l()
+  table_end <- create_table_end_l(data = data)
 
   # If the `rmarkdown` package is available, use the
   # `latex_dependency()` function to load latex packages
@@ -718,25 +718,48 @@ as_latex <- function(data) {
   # Allow user to set a font-size
   fontsize_statement <- create_fontsize_statement_l(data = data)
 
+  # create wrapping environment
+  wrap_start_statement <- create_wrap_start_l(data = data)
+  wrap_end_statement <- create_wrap_end_l(data = data)
+
 
   # Compose the LaTeX table
-  knitr::asis_output(
-    paste0(
-      "\\begingroup\n",
-      table_width_statement,
-      fontsize_statement,
-      table_start,
-      heading_component,
-      columns_component,
-      body_component,
-      table_end,
-      footer_component,
-      "\\endgroup\n",
-      collapse = ""
-    ),
-    meta = latex_packages
-  )
-}
+  if (dt_options_get_value(data = data, option = "latex_use_longtable")) {
+    knitr::asis_output(
+      paste0(
+        wrap_start_statement,
+        table_width_statement,
+        fontsize_statement,
+        table_start,
+        heading_component,
+        columns_component,
+        body_component,
+        table_end,
+        footer_component,
+        wrap_end_statement,
+        collapse = ""
+      ),
+      meta = latex_packages
+    )
+  } else {
+    knitr::asis_output(
+      paste0(
+        wrap_start_statement,
+        heading_component,
+        table_width_statement,
+        fontsize_statement,
+        table_start,
+        columns_component,
+        body_component,
+        table_end,
+        footer_component,
+        wrap_end_statement,
+        collapse = ""
+      ),
+      meta = latex_packages
+    )
+  }
+  }
 
 #' Output a **gt** object as RTF
 #'

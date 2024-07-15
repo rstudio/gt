@@ -1,5 +1,7 @@
 # gt (development version)
 
+* PDF output now defaults to a full-width floating environment using `tabular*` (@AronGullickson, #1588). Float position can be controlled by the `latex.tbl.pos` argument in `tab_options`. Quarto users can alternatively use the `tbl-pos` argument to control positioning. To use a `longtable` environment instead, use `tab_option(latex.use_longtable = TRUE)`.
+
 * Improved error messages for the `text_transform()` function if `locations` couldn't be resolved. (@olivroy, #1774)
 
 * `tab_row_group()` gives a more precise error message when `rows` can't be resolved correctly (#1535). (@olivroy, #1770)
