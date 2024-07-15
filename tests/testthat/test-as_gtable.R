@@ -148,3 +148,13 @@ test_that("gtable widths are set appropriately", {
     c("0.5null", "0.2npc", "150.5625points", "0.5null")
   )
 })
+
+test_that("gtable outputs works well for currencies", {
+  tbl <- exibble %>%
+    dplyr::select(currency) %>%
+    gt() %>%
+    fmt_currency(currency = "GBP")
+  expect_no_error(
+    as_gtable(tbl)
+  )
+})

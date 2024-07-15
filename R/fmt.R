@@ -1095,7 +1095,13 @@ context_symbol_str <- function(context, symbol) {
   symbol <-
     switch(
       context,
-      html = get_currency_str(currency = symbol),
+      grid = {
+        # Translate html to text. The currency symbol is an html value.
+        symbol <- markdown::mark(get_currency_str(currency = symbol, fallback_to_code = FALSE), format = "text")
+        # Remove trailing linebreak
+        symbol <- sub("\n$", "", symbol)
+      },
+      html = get_currency_str(currency = symbol, fallback_to_code = FALSE),
       latex = {
         if (!inherits(symbol, "AsIs")) {
           #paste_between(
