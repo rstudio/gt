@@ -23,7 +23,7 @@
 
 
 # Define the contexts
-all_contexts <- c("html", "latex", "rtf", "word", "default")
+all_contexts <- c("html", "grid", "latex", "rtf", "word", "default")
 
 missing_val_token <- "::missing_val::"
 

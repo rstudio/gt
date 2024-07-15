@@ -965,7 +965,6 @@ context_percent_mark <- function(context) {
 
   switch(
     context,
-    html = "%",
     latex = "\\%",
     "%"
   )

@@ -7,7 +7,7 @@
 extract_body(
   data,
   build_stage = NULL,
-  output = c("html", "latex", "rtf", "word")
+  output = c("html", "latex", "rtf", "word", "grid")
 )
 }
 \arguments{

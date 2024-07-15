@@ -1599,7 +1599,7 @@ grid_layout_widths <- function(layout, data) {
 extract_body <- function(
     data,
     build_stage = NULL,
-    output = c("html", "latex", "rtf", "word")
+    output = c("html", "latex", "rtf", "word", "grid")
 ) {
 
   # Perform input object validation
@@ -1868,7 +1868,7 @@ extract_cells <- function(
     data,
     columns,
     rows = everything(),
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "grid")
 ) {
 
   # Perform input object validation

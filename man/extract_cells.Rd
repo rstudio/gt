@@ -8,7 +8,7 @@ extract_cells(
   data,
   columns,
   rows = everything(),
-  output = c("auto", "plain", "html", "latex", "rtf", "word")
+  output = c("auto", "plain", "html", "latex", "rtf", "word", "grid")
 )
 }
 \arguments{
