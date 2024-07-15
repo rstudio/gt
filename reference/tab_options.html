@@ -246,7 +246,9 @@ components, the subcomponents, and the element that can adjusted.</p>
 <span>  page.header.height <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  page.footer.height <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  quarto.use_bootstrap <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  quarto.disable_processing <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  quarto.disable_processing <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  latex.use_longtable <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  latex.tbl.pos <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -766,6 +768,22 @@ add Bootstrap classes to the table, allowing those styles to permeate the
 table. Quarto performs other alterations as well but they can all be
 deactivated with <code>quarto.disable_processing = TRUE</code> (this option is <code>FALSE</code>
 by default).</p></dd>
+
+
+<dt id="arg-latex-use-longtable">latex.use_longtable<a class="anchor" aria-label="anchor" href="#arg-latex-use-longtable"></a></dt>
+<dd><p><em>Use longtable latex environment</em></p>
+<p>By default, tables produced using latex code will be embedded in the
+<code>table</code> floating environment. Setting this parameter to <code>TRUE</code> will instead
+use the <code>longtable</code> environment which will not float and may span multiple
+pages.</p></dd>
+
+
+<dt id="arg-latex-tbl-pos">latex.tbl.pos<a class="anchor" aria-label="anchor" href="#arg-latex-tbl-pos"></a></dt>
+<dd><p><em>Specify latex floating position</em></p>
+<p>The latex position indicator for a floating environment (e.g. "!t", "H"). It
+should be specified without square brackets. Quarto users should instead
+set the floating position within the code chunk argument <code>tbl-pos</code>. Table
+will only float if longtable environment is set to <code>FALSE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
