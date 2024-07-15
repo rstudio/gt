@@ -21,7 +21,7 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+\code{\link[=rows-columns]{<column-targeting expression>}} // \emph{default:} \code{everything()}
 
 Can either be a series of column names provided in \code{c()}, a vector of
 column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
@@ -29,7 +29,7 @@ column indices, or a select helper function (e.g. \code{\link[=starts_with]{star
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+\code{\link[=rows-columns]{<column-targeting expression>}} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
