@@ -388,7 +388,7 @@ columns are selected). Aside from declaring column names in <code><a href="https
 column names or names in quotes) we can use also
 <strong>tidyselect</strong>-style expressions. This can be as basic as supplying a select
 helper like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, or, providing a more complex incantation like</p>
-<p><code>where(~ is.numeric(.x) &amp;&amp; max(.x, na.rm = TRUE) &gt; 1E6)</code></p>
+<p><code>where(~ is.numeric(.x) &amp; max(.x, na.rm = TRUE) &gt; 1E6)</code></p>
 <p>which targets numeric columns that have a maximum value greater than
 1,000,000 (excluding any <code>NA</code>s from consideration).</p>
 <p>Once the columns are targeted, we may also target the <code>rows</code> within those

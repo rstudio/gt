@@ -173,7 +173,7 @@ through the <code>columns</code> argument. We can declare column names in <code>
 bare column names or names in quotes) or we can use
 <strong>tidyselect</strong>-style expressions. This can be as basic as supplying a select
 helper like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, or, providing a more complex incantation like</p>
-<p><code>where(~ is.numeric(.x) &amp;&amp; max(.x, na.rm = TRUE) &gt; 1E6)</code></p>
+<p><code>where(~ is.numeric(.x) &amp; max(.x, na.rm = TRUE) &gt; 1E6)</code></p>
 <p>which targets numeric columns that have a maximum value greater than
 1,000,000 (excluding any <code>NA</code>s from consideration).</p>
 <p>By default all columns are selected (with the <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> default). This
