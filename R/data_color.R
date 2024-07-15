@@ -121,8 +121,9 @@
 #'
 #'   `vector<character>` // *default:* `NULL` (`optional`)
 #'
-#'   A vector of color names, the name of an **RColorBrewer** palette, the name
-#'   of a **viridis** palette, or a discrete palette accessible from the
+#'   A vector of color names, a color class that can be cast to a vector of
+#'   color names, the name of an **RColorBrewer** palette, the name of a
+#'   **viridis** palette, or a discrete palette accessible from the
 #'   **paletteer** package using the `<package>::<palette>` syntax (e.g.,
 #'   `"wesanderson::IsleofDogs1"`). If providing a vector of colors as a
 #'   palette, each color value provided must either be a color name (Only R/X11
@@ -799,9 +800,16 @@ data_color <- function(
 
       # Getting to this stage means the palette exists in the user's
       # installation of paletteer; extract the palette with the
-      # `paletteer::paletteer_d()` and coerce to a character vector
-      palette <- as.character(paletteer::paletteer_d(palette = palette))
+      # `paletteer::paletteer_d()`
+      palette <- paletteer::paletteer_d(palette = palette)
     }
+
+    # Cast the palette to a character vector for compatibility with
+    # scales:::toPaletteFunc(), which does not have methods for classed color
+    # vectors (such as those in the paletteer package). Casting is done here so
+    # classed color vectors from packages other than paletteer can also be used
+    # with `palette` (#1155). 
+    palette <- as.character(palette)
   }
 
   # Get the internal data table
