@@ -85,8 +85,8 @@ dt_spanners_add <- function(
       "x" = "Can't create the {.val {spanner_id}} spanner.",
       "!" = "Column{?s} {.code {error_vars}} belong{?s/} to an existing spanner.",
       "i" = "Specify {.arg columns} appropriately by using other variable names."
-      ),
-      call = call
+    ),
+    call = call
     )
   }
 
