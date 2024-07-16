@@ -3,5 +3,9 @@
 *.css
 !visual_tests.R
 !*.qmd
+*.html
+*.R
+*.log
+*_files
 
 /.quarto/

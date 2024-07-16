@@ -73,6 +73,7 @@ Suggests:
     webshot2 (>= 0.1.0),
     withr
 Config/Needs/coverage: officer
+Config/Needs/website: quarto
 ByteCompile: true
 Config/testthat/edition: 3
 Config/testthat/parallel: true
