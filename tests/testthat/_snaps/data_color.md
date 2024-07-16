@@ -250,7 +250,7 @@
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2013\">2013</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2014\">2014</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2015\">2015</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2016\">2016</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2017\">2017</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2018\">2018</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2019\">2019</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2020\">2020</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2021\">2021</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2022\">2022</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">Mongolia</th>\n<td headers=\"stub_1_1 2013\" class=\"gt_row gt_right\">2845153</td>\n<td headers=\"stub_1_1 2014\" class=\"gt_row gt_right\">2902823</td>\n<td headers=\"stub_1_1 2015\" class=\"gt_row gt_right\">2964749</td>\n<td headers=\"stub_1_1 2016\" class=\"gt_row gt_right\">3029555</td>\n<td headers=\"stub_1_1 2017\" class=\"gt_row gt_right\">3096030</td>\n<td headers=\"stub_1_1 2018\" class=\"gt_row gt_right\">3163991</td>\n<td headers=\"stub_1_1 2019\" class=\"gt_row gt_right\">3232430</td>\n<td headers=\"stub_1_1 2020\" class=\"gt_row gt_right\" style=\"background-color: #183212; color: #FFFFFF;\">3294335</td>\n<td headers=\"stub_1_1 2021\" class=\"gt_row gt_right\" style=\"background-color: #1D4515; color: #FFFFFF;\">3347782</td>\n<td headers=\"stub_1_1 2022\" class=\"gt_row gt_right\" style=\"background-color: #205A17; color: #FFFFFF;\">3398366</td></tr>\n  </tbody>\n  \n  \n</table>"
 
-# data_color errors gracefully when infinite values (#1373)
+# data_color() errors gracefully with scales error (#1373)
 
     Code
       data_color(gt_inf)
@@ -259,4 +259,45 @@
       ! Failed to compute colors for column `y`.
       Caused by error in `scales::col_numeric()`:
       ! Wasn't able to determine range of `domain`
+
+# data_color() resolves rows and columns like fmt_number() (#1665).
+
+    Code
+      fmt_number(gt_simple, rows = "Datsun 710", decimals = 6)
+    Condition
+      Error in `fmt()`:
+      ! Can't find named rows in the table
+      i In gt() (`?gt::gt()`), use `rownames_to_stub = TRUE` or specify `rowname_col` to initialize row names in the table.
+    Code
+      data_color(gt_simple, rows = "Datsun 710")
+    Condition
+      Error in `data_color()`:
+      ! Can't find named rows in the table
+      i In gt() (`?gt::gt()`), use `rownames_to_stub = TRUE` or specify `rowname_col` to initialize row names in the table.
+
+---
+
+    Code
+      fmt_number(gt_rows, rows = "Datsun 711", decimals = 6)
+    Condition
+      Error in `fmt()`:
+      ! Row "Datsun 711" does not exist in the data.
+    Code
+      data_color(gt_rows, rows = "Datsun 711")
+    Condition
+      Error in `data_color()`:
+      ! Row "Datsun 711" does not exist in the data.
+
+---
+
+    Code
+      fmt_number(gt_rows, rows = 33, decimals = 6)
+    Condition
+      Error in `fmt()`:
+      ! Row 33 does not exist in the data.
+    Code
+      data_color(gt_rows, rows = 33)
+    Condition
+      Error in `data_color()`:
+      ! Row 33 does not exist in the data.
 

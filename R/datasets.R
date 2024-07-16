@@ -536,7 +536,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 "peeps"
 
@@ -590,7 +590,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 "films"
 
@@ -703,7 +703,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 "gibraltar"
 
@@ -949,7 +949,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 "reactions"
 
@@ -1008,7 +1008,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 "photolysis"
 
@@ -1069,7 +1069,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 "nuclides"
 

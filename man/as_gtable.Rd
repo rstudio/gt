@@ -43,7 +43,7 @@ A \code{gtable} object.
 
 \section{Function Introduced}{
 
-\code{v0.11.0}
+\code{v0.11.0} (July 9, 2024)
 }
 
 \seealso{

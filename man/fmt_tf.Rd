@@ -407,7 +407,7 @@ pointed toward values in the \code{code} column by using \code{\link[=from_colum
 
 \section{Function Introduced}{
 
-\code{v0.11.0}
+\code{v0.11.0} (July 9, 2024)
 }
 
 \seealso{

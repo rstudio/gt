@@ -6970,7 +6970,7 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' 3-18
 #'
 #' @section Function Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 #' @export
 fmt_tf <- function(
@@ -7616,7 +7616,7 @@ fmt_units <- function(
 #' 3-20
 #'
 #' @section Function Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 #' @export
 fmt_chem <- function(
@@ -8690,7 +8690,7 @@ add_anchor_attr <- function(
 #' 3-22
 #'
 #' @section Function Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 #' @export
 fmt_email <- function(
@@ -10321,7 +10321,7 @@ fmt_flag <- function(
 #' 3-25
 #'
 #' @section Function Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 #' @export
 fmt_country <- function(
