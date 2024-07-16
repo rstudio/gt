@@ -14,6 +14,8 @@
 
 * `opt_interactive()` now works when columns are substituted with `sub_*()` (@olivroy, #1759). 
 
+* `data_color()` no longer errors when a tidyselect selection is empty (like `fmt_*()` functions) (@olivroy, #1665).
+
 # gt 0.11.0
 
 ## New features
