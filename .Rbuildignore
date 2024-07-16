@@ -119,7 +119,7 @@ tests/testthat/_snaps/l_table_parts.md
 tests/testthat/_snaps/location_cells.md
 tests/testthat/test-location_cells.R
 
-tests/testthat/test-opt_functions.R
+tests/testthat/test-opts.R
 
 tests/testthat/test-removal_functions.R
 tests/testthat/_snaps/removal_functions.md
