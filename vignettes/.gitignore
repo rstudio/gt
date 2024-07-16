@@ -1,3 +1,7 @@
 *.html
 *.R
 *.css
+!visual_tests.R
+!*.qmd
+
+/.quarto/

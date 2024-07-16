@@ -7,6 +7,7 @@ home:
 
 template:
   bootstrap: 5
+  assets: pkgdown/assets
 
 authors:
   JooYoung Seo:

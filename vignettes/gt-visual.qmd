@@ -1,0 +1,90 @@
+---
+title: "code"
+format: html
+editor: source
+code-link: true
+toc: true
+html-table-processing: none
+---
+
+```{r}
+#| label: setup
+#| output: false
+#| include: false
+
+if (isTRUE(as.logical(Sys.getenv("CI", "false"))) || identical(Sys.getenv("IN_PKGDOWN"), "true")
+) {
+  library(gt)
+} else {
+  # allow easier testing with the render button.
+  devtools::load_all(".")
+}
+# All tables are generated in vignettes/visual_tests.R
+# When updating this file, update also pkgdown/assets/gt-latex.qmd
+knitr::read_chunk("visual_tests.R")
+```
+
+```{r}
+#| eval: false
+library(gt)
+```
+
+You can find [visual tests for LaTeX](https://gt.rstudio.com/gt-latex.pdf)
+
+## Background color {#sec-background-color}
+
+```{r}
+#| label: background-color
+```
+
+::: panel-tabset
+### html
+
+```{r}
+#| echo: false
+tab
+```
+
+### interactive
+
+```{r}
+#| echo: false
+opt_interactive(tab)
+```
+
+### plot
+
+```{r}
+#| echo: false  
+plot(tab)
+```
+:::
+
+## Complete output {#sec-complete-output}
+
+```{r}
+#| label: complete-output
+```
+
+::: panel-tabset
+### html
+
+```{r}
+#| echo: false
+tab
+```
+
+### interactive
+
+```{r}
+#| echo: false
+opt_interactive(tab)
+```
+
+### plot
+
+```{r}
+#| echo: false  
+plot(tab)
+```
+:::
