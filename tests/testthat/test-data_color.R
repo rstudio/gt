@@ -2136,75 +2136,45 @@ test_that("data_color() errors gracefully with scales error (#1373)", {
 
 test_that("data_color() resolves rows and columns like fmt_number() (#1665).", {
 
+  gt_simple <- gt(mtcars_short)
+  gt_rows <- gt(mtcars_short, rownames_to_stub = TRUE)
   # We want fmt_number() and data_color() to work consistently
   expect_no_error({
-    # expect nothing happens
-    mtcars %>%
-      gt() %>%
-      fmt_number(rows = cyl == 5, decimals = 6)
-    mtcars %>%
-      gt() %>%
-      data_color(rows = cyl == 5)
+    # expect nothing happens (output tested elsewhere)
+    fmt_number(gt_simple, rows = cyl == 5, decimals = 6)
+    data_color(gt_simple, rows = cyl == 5)
   })
-  # Expect nice nudge when referring to rows by names (without row names)
+  # Expect nice nudge when referring to rows by names (without row names) #1770
   expect_snapshot(error = TRUE, {
-    mtcars %>%
-      gt() %>%
-      fmt_number(rows = "Valiant", decimals = 6)
-    mtcars %>%
-      gt() %>%
-      data_color(rows = "Valiant")
+    fmt_number(gt_simple, rows = "Datsun 710", decimals = 6)
+    data_color(gt_simple, rows = "Datsun 710")
   })
 
   # expect styling and formatting at the correct place (The actual tests for output are in above)
   expect_no_error({
-    mtcars %>%
-      gt(rownames_to_stub = TRUE) %>%
-      fmt_number(rows = "Valiant", decimals = 6)
-    mtcars %>%
-      gt(rownames_to_stub = TRUE) %>%
-      data_color(rows = "Valiant")
+    fmt_number(gt_rows, rows = "Datsun 710", decimals = 6)
+    data_color(gt_rows, rows = "Datsun 710")
   })
 
   # expect error for non-existing row (by name)
   expect_snapshot(error = TRUE, {
-    mtcars %>%
-      gt(rownames_to_stub = TRUE) %>%
-      fmt_number(rows = "Valiants", decimals = 6)
-    mtcars %>%
-      gt(rownames_to_stub = TRUE) %>%
-      data_color(rows = "Valiants")
+    fmt_number(gt_rows, rows = "Datsun 711", decimals = 6)
+    data_color(gt_rows, rows = "Datsun 711")
   })
 
   # expect error for non-existing row (by position)
   expect_snapshot(error = TRUE, {
-    mtcars %>%
-      gt(rownames_to_stub = TRUE) %>%
-      fmt_number(rows = 33, decimals = 6)
-    mtcars %>%
-      gt(rownames_to_stub = TRUE) %>%
-      data_color(rows = 33)
+    fmt_number(gt_rows, rows = 33, decimals = 6)
+    data_color(gt_rows, rows = 33)
   })
 
-  # expect no error for non-existing row (by tidyselect) #1665
+  # expect no error for non-existing row or (by tidyselect) #1665
+  # early return for data_color
   expect_no_error({
-    mtcars %>%
-      gt(rownames_to_stub = TRUE) %>%
-      fmt_number(rows = contains("Valiants"), decimals = 6)
-    # should return data unaltered at this point?
-    mtcars %>%
-      gt(rownames_to_stub = TRUE) %>%
-      data_color(rows = contains("Valiants"))
+    fmt_number(gt_rows, rows = contains("Datsun 711"), decimals = 6)
+    data_color(gt_rows, rows = contains("Datsun 711"))
+    fmt_number(gt_simple, columns = contains("Datsun 711"), decimals = 6)
+    data_color(gt_simple, columns = contains("Datsun 711"))
   })
 
-  # Expect no error for tidyselect unresolved empty columns
-  expect_no_error({
-    mtcars %>%
-      gt() %>%
-      fmt_number(columns = contains("Valiants"), decimals = 6)
-    # should return data unaltered at this point?
-    mtcars %>%
-      gt() %>%
-      data_color(columns = contains("Valiants"))
-  })
 })
