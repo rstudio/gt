@@ -1090,7 +1090,7 @@ test_that("Columns can indirectly apply coloring to other columns", {
   tbl_gt_4 %>% render_as_html() %>% expect_snapshot()
 })
 
-test_that("Certain errors can be expected (and some things don't error)", {
+test_that("data_color() validates its input related to color", {
 
   # Expect an error when using an invalid color name in `palette`
   expect_error(
@@ -1190,14 +1190,6 @@ test_that("Certain errors can be expected (and some things don't error)", {
       data_color(
         columns = c(num, currency),
         target_columns = c(row, group),
-      )
-  )
-  # Expect an error if rows resolve to an empty selection.
-  expect_error(
-    exibble %>%
-      gt() %>%
-      data_color(
-        rows = num == 1000 # not contained in data.
       )
   )
 })
@@ -1970,7 +1962,7 @@ test_that("The various color utility functions work correctly", {
   expect_error(adjust_luminance(colors = c_hex, steps = +2.1))
 })
 
-test_that("The `cell_fill()` function accepts colors of various types", {
+test_that("tab_style() + cell_fill() accepts colors of various types", {
 
   # Create a `tbl_html` object by using `tab_style` with
   # the `cell_fill()` helper function and a color name
@@ -2128,7 +2120,7 @@ test_that("The `cell_fill()` function accepts colors of various types", {
     expect_equal("80")
 })
 
-test_that("data_color errors gracefully when infinite values (#1373)", {
+test_that("data_color() errors gracefully with scales error (#1373)", {
 
   d <- data.frame(
     x = c(4, 1, 2, 3),
@@ -2140,4 +2132,79 @@ test_that("data_color errors gracefully when infinite values (#1373)", {
     error = TRUE,
     data_color(gt_inf)
   )
+})
+
+test_that("data_color() resolves rows and columns like fmt_number() (#1665).", {
+
+  # We want fmt_number() and data_color() to work consistently
+  expect_no_error({
+    # expect nothing happens
+    mtcars %>%
+      gt() %>%
+      fmt_number(rows = cyl == 5, decimals = 6)
+    mtcars %>%
+      gt() %>%
+      data_color(rows = cyl == 5)
+  })
+  # Expect nice nudge when referring to rows by names (without row names)
+  expect_snapshot(error = TRUE, {
+    mtcars %>%
+      gt() %>%
+      fmt_number(rows = "Valiant", decimals = 6)
+    mtcars %>%
+      gt() %>%
+      data_color(rows = "Valiant")
+  })
+
+  # expect styling and formatting at the correct place (The actual tests for output are in above)
+  expect_no_error({
+    mtcars %>%
+      gt(rownames_to_stub = TRUE) %>%
+      fmt_number(rows = "Valiant", decimals = 6)
+    mtcars %>%
+      gt(rownames_to_stub = TRUE) %>%
+      data_color(rows = "Valiant")
+  })
+
+  # expect error for non-existing row (by name)
+  expect_snapshot(error = TRUE, {
+    mtcars %>%
+      gt(rownames_to_stub = TRUE) %>%
+      fmt_number(rows = "Valiants", decimals = 6)
+    mtcars %>%
+      gt(rownames_to_stub = TRUE) %>%
+      data_color(rows = "Valiants")
+  })
+
+  # expect error for non-existing row (by position)
+  expect_snapshot(error = TRUE, {
+    mtcars %>%
+      gt(rownames_to_stub = TRUE) %>%
+      fmt_number(rows = 33, decimals = 6)
+    mtcars %>%
+      gt(rownames_to_stub = TRUE) %>%
+      data_color(rows = 33)
+  })
+
+  # expect no error for non-existing row (by tidyselect) #1665
+  expect_no_error({
+    mtcars %>%
+      gt(rownames_to_stub = TRUE) %>%
+      fmt_number(rows = contains("Valiants"), decimals = 6)
+    # should return data unaltered at this point?
+    mtcars %>%
+      gt(rownames_to_stub = TRUE) %>%
+      data_color(rows = contains("Valiants"))
+  })
+
+  # Expect no error for tidyselect unresolved empty columns
+  expect_no_error({
+    mtcars %>%
+      gt() %>%
+      fmt_number(columns = contains("Valiants"), decimals = 6)
+    # should return data unaltered at this point?
+    mtcars %>%
+      gt() %>%
+      data_color(columns = contains("Valiants"))
+  })
 })

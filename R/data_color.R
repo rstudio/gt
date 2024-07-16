@@ -861,8 +861,12 @@ data_color <- function(
 
   # Resolution of `rows` as row indices in the table
   resolved_rows <- resolve_rows_i(expr = {{ rows }}, data = data)
+
+  # If resolved rows from tidyselect is NULL, then we return early
+  # to avoid scales issues later.
   if (length(resolved_rows) == 0) {
-    cli::cli_abort("{.arg rows} resulted in an empty selection.")
+    #1665
+    return(data)
   }
   # Generate a table to accumulate all of the styles to be applied to the
   # body cells; in the end, this (along with all previously set styles) will
