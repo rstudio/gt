@@ -3,6 +3,7 @@ header_latex <- c(
   "    colorlinks: true ", "    geometry:", "      - top=10mm",
   "      - left=10mm", "      - bottom=10mm", "    hyperrefoptions:",
   "      - linktoc=all", "toc: false", "tbl-cap-location: bottom", "lot: true",
+  "keep-tex: true",
   "html-table-processing: none", "---", "",
   "<!--- This file is generated from sourcing scripts/visual-tests-latex.R You can add more tests to vignettes/gt-visual.qmd"
 )

@@ -147,7 +147,7 @@ plot(tab)
 ## Math rendering {#sec-math-rendering}
 
 ```{r}
-#| label: complete-output
+#| label: math-rendering
 tab <- data.frame(
   idx = 1:37,
   l_time_domain = 
