@@ -331,7 +331,7 @@ merged into the same cells as the icons via \code{\link[=cols_merge]{cols_merge(
 
 \section{Function Introduced}{
 
-\code{v0.11.0}
+\code{v0.11.0} (July 9, 2024)
 }
 
 \seealso{
