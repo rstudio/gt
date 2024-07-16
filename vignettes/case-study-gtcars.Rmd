@@ -18,7 +18,7 @@ library(dplyr)
 library(tibble)
 ```
 
-<p align="center"><img src="../reference/figures/gtcars.svg" width=50%></p>
+<p align="center"><img src="man/figures/gtcars.svg" width=50%></p>
 
 Let's make a display table using the `gtcars` dataset. We all know `mtcars`... what is `gtcars`? It's basically a modernized `mtcars` for the **gt** age. It's part of the **gt** package, and here is a preview of the tibble using `dplyr::glimpse()`:
 
@@ -341,7 +341,7 @@ best_gas_mileage_city <-
   pull(car)
 
 # Use dplyr functions to get the car with the highest horsepower
-# this will be used to target the correct cell for a footnote
+# this will be used to target the correct celgl for a footnote
 highest_horsepower <- 
   gtcars |> 
   arrange(desc(hp)) |>
