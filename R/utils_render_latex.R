@@ -1672,7 +1672,7 @@ create_colwidth_df_l <- function(data) {
     }
   }
 
-  if (length(stub_layout) > length(c('stub', 'row_group') %in% width_df$type)) {
+  if (length(stub_layout) > sum(c('stub', 'row_group') %in% width_df$type)) {
     if ('stub' %in% width_df$type) {
       stub_row_group <-
         dplyr::mutate(
