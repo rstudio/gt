@@ -66,11 +66,7 @@ The **gt** package makes it relatively easy to add parts so that the resulting *
 
 This is the way the main parts of a table (and their subparts) fit together:
 
-<<<<<<< HEAD
-<p align="center"><img src="man/figures/gt_parts_of_a_table.svg" width=100%></p>
-=======
 <p align="center"><img src="../man/figures/gt_parts_of_a_table.svg" width=100%></p>
->>>>>>> e56c3f411994fd7910f1ff428b0d74fc758ce8fe
 
 The parts (roughly from top to bottom) are:
 
