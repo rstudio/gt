@@ -111,10 +111,10 @@ can do just that:
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_1.png" alt="This image of a table was generated from the first code example in the `sub_large_vals()` help file." style="width:100\%;">
 }}
 
-Large negative values can also be handled but they are handled specially
-by the \code{sign} parameter. Setting that to \code{"-"} will format only the large
-values that are negative. Notice that with the default \code{large_pattern}
-value of \code{">={x}"} the \code{">="} is automatically changed to \code{"<="}.
+Large negative values can also be handled but they are handled specially by
+the \code{sign} parameter. Setting that to \code{"-"} will format only the large values
+that are negative. Notice that with the default \code{large_pattern} value of
+\code{">={x}"} the \code{">="} is automatically changed to \code{"<="}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
   dplyr::mutate(num = -num) |>

@@ -34,8 +34,9 @@ that are targeted via the \code{columns} argument).}
 
 The columns to consider for the splitting, relabeling, and spanner setting
 operations. Can either be a series of column names provided in \code{c()}, a
-vector of column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
+vector of column indices, or a select helper function (e.g.,
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}},
+and \code{\link[=everything]{everything()}}).}
 
 \item{split}{\emph{Splitting side}
 
@@ -234,9 +235,10 @@ two levels of spanners. We can further touch up the labels after that with
 }}
 
 With a summarized, filtered, and pivoted version of the \code{\link{pizzaplace}}
-dataset, we can create another \strong{gt} table and then use \code{tab_spanner_delim()}
-with the delimiter/separator also used in \code{tidyr::pivot_wider()}. We can also
-process the generated column labels with \code{\link[=cols_label_with]{cols_label_with()}}.
+dataset, we can create another \strong{gt} table and then use
+\code{tab_spanner_delim()} with the delimiter/separator also used in
+\code{tidyr::pivot_wider()}. We can also process the generated column labels with
+\code{\link[=cols_label_with]{cols_label_with()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::select(name, date, type, price) |>

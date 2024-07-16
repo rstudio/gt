@@ -36,14 +36,14 @@ An object of class \code{gt_tbl}.
 }
 \description{
 Text transforming in \strong{gt} is the act of modifying formatted strings in
-targeted cells. \code{text_transform()} provides the most flexibility
-of all the \verb{text_*()} functions in their family of functions. With it, you
-target the cells to undergo modification in the \code{locations} argument while
-also supplying a function to the \code{fn} argument. The function given to \code{fn}
-should ideally at the very least take \code{x} as an input (it stands for the
-character vector that is essentially the targeted cells) and return a
-character vector of the same length as the input. Using the construction
-\code{function(x) { .. }} for the function is recommended.
+targeted cells. \code{text_transform()} provides the most flexibility of all the
+\verb{text_*()} functions in their family of functions. With it, you target the
+cells to undergo modification in the \code{locations} argument while also
+supplying a function to the \code{fn} argument. The function given to \code{fn} should
+ideally at the very least take \code{x} as an input (it stands for the character
+vector that is essentially the targeted cells) and return a character vector
+of the same length as the input. Using the construction \code{function(x) { .. }}
+for the function is recommended.
 }
 \section{Examples}{
 

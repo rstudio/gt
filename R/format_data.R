@@ -22,6 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
+# fmt_scientific() -------------------------------------------------------------
 #' Format values to scientific notation
 #'
 #' @description
@@ -568,6 +569,7 @@ fmt_scientific <- function(
   )
 }
 
+# fmt_engineering() ------------------------------------------------------------
 #' Format values to engineering notation
 #'
 #' @description
@@ -1220,6 +1222,7 @@ fmt_symbol <- function(
   )
 }
 
+# fmt_percent() ----------------------------------------------------------------
 #' Format values as a percentage
 #'
 #' @description
@@ -1502,6 +1505,7 @@ fmt_percent <- function(
   )
 }
 
+# fmt_partsper() ---------------------------------------------------------------
 #' Format values as parts-per quantities
 #'
 #' @description
@@ -1846,6 +1850,7 @@ fmt_partsper <- function(
   )
 }
 
+# fmt_fraction() ---------------------------------------------------------------
 #' Format values as mixed fractions
 #'
 #' @description
@@ -2427,6 +2432,7 @@ round_gt <- function(x, digits = 0) {
   z * x_sign
 }
 
+# fmt_currency() ---------------------------------------------------------------
 #' Format values as currencies
 #'
 #' @description
@@ -2903,6 +2909,7 @@ fmt_currency <- function(
   )
 }
 
+# fmt_roman() ------------------------------------------------------------------
 #' Format values as Roman numerals
 #'
 #' @description
@@ -3115,6 +3122,7 @@ fmt_roman <- function(
   )
 }
 
+# fmt_index() ------------------------------------------------------------------
 #' Format values to indexed characters
 #'
 #' @description
@@ -3407,17 +3415,19 @@ get_letters_from_div <- function(x, set) {
   paste(set[result], collapse = "")
 }
 
+# fmt_spelled_num() ------------------------------------------------------------
 #' Format values to spelled-out numbers
 #'
 #' @description
 #'
 #' With numeric values in a **gt** table we can transform those to numbers that
 #' are spelled out with `fmt_spelled_num()`. Any values from `0` to `100` can be
-#' spelled out so, for example, the value `23` will be formatted as `"twenty-three"`.
-#' Providing a locale ID will result in the number spelled out in the locale's
-#' language rules. For example, should a Swedish locale (`"sv"`) be provided,
-#' the value `23` will yield `"tjugotre"`. In addition to this, we can
-#' optionally use the `pattern` argument for decoration of the formatted values.
+#' spelled out so, for example, the value `23` will be formatted as
+#' `"twenty-three"`. Providing a locale ID will result in the number spelled out
+#' in the locale's language rules. For example, should a Swedish locale (`"sv"`)
+#' be provided, the value `23` will yield `"tjugotre"`. In addition to this, we
+#' can optionally use the `pattern` argument for decoration of the formatted
+#' values.
 #'
 #' @inheritParams fmt_number
 #'
@@ -3720,6 +3730,7 @@ fmt_spelled_num <- function(
   )
 }
 
+# fmt_bytes() ------------------------------------------------------------------
 #' Format values as bytes
 #'
 #' @description
@@ -4058,6 +4069,7 @@ fmt_bytes <- function(
   )
 }
 
+# fmt_date() -------------------------------------------------------------------
 #' Format values as dates
 #'
 #' @description
@@ -4375,6 +4387,7 @@ fmt_date <- function(
   )
 }
 
+# fmt_time() -------------------------------------------------------------------
 #' Format values as times
 #'
 #' @description
@@ -4685,6 +4698,7 @@ fmt_time <- function(
   )
 }
 
+# fmt_datetime() ---------------------------------------------------------------
 #' Format values as datetimes
 #'
 #' @description
@@ -5713,6 +5727,7 @@ fmt_datetime <- function(
   )
 }
 
+# fmt_duration() ---------------------------------------------------------------
 #' Format numeric or duration values as styled time duration strings
 #'
 #' @description
@@ -6408,6 +6423,7 @@ extract_duration_pattern <- function(
   pattern
 }
 
+# fmt_bins() -------------------------------------------------------------------
 #' Format column data containing bin/interval information
 #'
 #' @description
@@ -6633,7 +6649,7 @@ format_bins_by_context <- function(x, sep, fmt, context) {
   x_str
 }
 
-
+# fmt_tf() ---------------------------------------------------------------------
 #' Format `TRUE` and `FALSE` values
 #'
 #' @description
@@ -7255,6 +7271,7 @@ make_span_with_color <- function(text, color = NULL) {
   paste0("<span style=\"color:", color, ";\">", text, "</span>")
 }
 
+# fmt_units() ------------------------------------------------------------------
 #' Format measurement units
 #'
 #' @description
@@ -7421,7 +7438,7 @@ fmt_units <- function(
   )
 }
 
-
+# fmt_chem() -------------------------------------------------------------------
 #' Format chemical formulas
 #'
 #' @description
@@ -7712,6 +7729,7 @@ format_units_by_context <- function(
   x_str
 }
 
+# fmt_url() --------------------------------------------------------------------
 #' Format URLs to generate links
 #'
 #' @description
@@ -8434,6 +8452,7 @@ add_anchor_attr <- function(
   paste0(init, " ", nm, "=\"", arg, "\"")
 }
 
+# fmt_email() ------------------------------------------------------------------
 #' Format email addresses to generate 'mailto:' links
 #'
 #' @description
@@ -8441,10 +8460,10 @@ add_anchor_attr <- function(
 #' Should cells contain email addresses, `fmt_email()` can be used to make email
 #' addresses work well with email clients on the user system. This should be
 #' expressly used on columns that contain *only* email addresses (i.e., no email
-#' addresses as part of a larger block of text). Should you have such a column of
-#' data, there are options for how the email addresses should be styled. They can
-#' be of the conventional style (with underlines and text coloring that sets it
-#' apart from other text), or, they can appear to be button-like (with a
+#' addresses as part of a larger block of text). Should you have such a column
+#' of data, there are options for how the email addresses should be styled. They
+#' can be of the conventional style (with underlines and text coloring that sets
+#' it apart from other text), or, they can appear to be button-like (with a
 #' surrounding box that can be filled with a color of your choosing).
 #'
 #' Email addresses in data cells are trusted as email addresses. We can also
@@ -8513,9 +8532,9 @@ add_anchor_attr <- function(
 #' @section Compatibility of formatting function with data values:
 #'
 #' `fmt_email()` is compatible with body cells that are of the `"character"` or
-#' `"factor"` types. Any other types of body cells are ignored during formatting.
-#' This is to say that cells of incompatible data types may be targeted, but
-#' there will be no attempt to format them.
+#' `"factor"` types. Any other types of body cells are ignored during
+#' formatting. This is to say that cells of incompatible data types may be
+#' targeted, but there will be no attempt to format them.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
@@ -9093,6 +9112,7 @@ generate_email_links <- function(email_address, anchor_attr, label_str) {
   )
 }
 
+# fmt_image() ------------------------------------------------------------------
 #' Format image paths to generate images in cells
 #'
 #' @description
@@ -9595,7 +9615,8 @@ convert_to_px <- function(x) {
     rlang::abort(
       paste0(
         "invalid units provided - `", units,
-        "`. Must be one of of type ", paste0("`", names(px_conversion), "`", collapse = "")
+        "`. Must be one of of type ",
+        paste0("`", names(px_conversion), "`", collapse = "")
       )
     )
   }
@@ -9631,6 +9652,7 @@ get_image_hw_ratio <- function(filepath) {
   ratio
 }
 
+# fmt_flag() -------------------------------------------------------------------
 #' Generate flag icons for countries from their country codes
 #'
 #' @description
@@ -10054,6 +10076,7 @@ fmt_flag <- function(
   )
 }
 
+# fmt_country() ----------------------------------------------------------------
 #' Generate country names from their corresponding country codes
 #'
 #' @description
@@ -10496,6 +10519,7 @@ fmt_country <- function(
   )
 }
 
+# fmt_icon() -------------------------------------------------------------------
 #' Use icons within a table's body cells
 #'
 #' @description
@@ -11053,6 +11077,7 @@ fmt_icon <- function(
   )
 }
 
+# fmt_markdown() ---------------------------------------------------------------
 #' Format Markdown text
 #'
 #' @description
@@ -11339,6 +11364,7 @@ fmt_markdown <- function(
   )
 }
 
+# fmt_passthrough() ------------------------------------------------------------
 #' Format by simply passing data through
 #'
 #' @description
@@ -11574,6 +11600,7 @@ fmt_passthrough <- function(
   )
 }
 
+# fmt_auto() -------------------------------------------------------------------
 #' Automatically format column data according to their values
 #'
 #' @description

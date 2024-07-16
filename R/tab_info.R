@@ -1,3 +1,28 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2024 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
+# tab_info() -------------------------------------------------------------------
 #' Understand what's been set inside of a **gt** table object
 #'
 #' @description
@@ -12,8 +37,8 @@
 #'
 #' Because it's so essential to know these ID values for targeting purposes
 #' (when styling with [tab_style()], adding footnote marks with
-#' [tab_footnote()], etc.), `tab_info()` can help with all of this.
-#' It summarizes (by location) all of the table's ID values and their associated
+#' [tab_footnote()], etc.), `tab_info()` can help with all of this. It
+#' summarizes (by location) all of the table's ID values and their associated
 #' labels. The product is an informational **gt** table, designed for easy
 #' retrieval of the necessary values.
 #'
@@ -27,7 +52,8 @@
 #' use [tab_spanner()] to group two columns together under a spanner column with
 #' the ID and label `"performance"`. Finally, we can use`tab_info()` in a
 #' separate, interactive statement so that we can inspect a table that
-#' summarizes the ID values any associated label text for all parts of the table.
+#' summarizes the ID values any associated label text for all parts of the
+#' table.
 #'
 #' ```r
 #' gt_tbl <-

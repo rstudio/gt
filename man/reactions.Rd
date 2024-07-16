@@ -88,56 +88,6 @@ temperatures (the temperature dependence parameters: \code{A}, \code{B}, and \co
 Uncertainty values/factors and temperature limits are also provided here
 where information is available.
 }
-\section{Examples}{
-
-
-Here is a glimpse at the data available in \code{reactions}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(reactions)
-#> Rows: 1,683
-#> Columns: 39
-#> $ cmpd_name     <chr> "methane", "formaldehyde", "methanol", "fluoromethane", ~
-#> $ cmpd_mwt      <dbl> 16.04, 30.03, 32.04, 34.03, 46.03, 48.02, 48.04, 50.49, ~
-#> $ cmpd_formula  <chr> "CH4", "CH2O", "CH4O", "CH3F", "CH2O2", "CHOF", "CH4O2",~
-#> $ cmpd_type     <chr> "normal alkane", "aldehyde", "alcohol or glycol", "haloa~
-#> $ cmpd_smiles   <chr> "C", "C=O", "CO", "CF", "OC=O", "FC=O", "COO", "CCl", "F~
-#> $ cmpd_inchi    <chr> "InChI=1S/CH4/h1H4", "InChI=1S/CH2O/c1-2/h1H2", "InChI=1~
-#> $ cmpd_inchikey <chr> "VNWKTOKETHGBQD-UHFFFAOYSA-N", "WSFSSNUMVMOOMR-UHFFFAOYS~
-#> $ OH_k298       <dbl> 6.36e-15, 8.50e-12, 8.78e-13, 1.97e-14, 4.50e-13, NA, 1.~
-#> $ OH_uncert     <dbl> 0.10, 0.20, 0.10, 0.10, NA, NA, NA, 0.20, 0.10, 0.21, 0.~
-#> $ OH_u_fac      <dbl> NA, NA, NA, NA, 1.4, NA, 2.0, NA, NA, NA, NA, NA, NA, NA~
-#> $ OH_A          <dbl> 3.62e-13, 5.40e-12, 2.32e-13, 1.99e-13, 4.50e-13, NA, 5.~
-#> $ OH_B          <dbl> 1200.3487, -135.0000, -402.0000, 685.4204, NA, NA, -190.~
-#> $ OH_n          <dbl> 2.179936, NA, 2.720000, 2.040182, NA, NA, NA, NA, 1.8600~
-#> $ OH_t_low      <dbl> 200, 200, 210, 240, 290, NA, 220, 220, 220, 298, 298, NA~
-#> $ OH_t_high     <dbl> 2025, 300, 1344, 1800, 450, NA, 430, 330, 1800, 671, 393~
-#> $ O3_k298       <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
-#> $ O3_uncert     <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
-#> $ O3_u_fac      <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
-#> $ O3_A          <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
-#> $ O3_B          <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
-#> $ O3_n          <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
-#> $ O3_t_low      <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
-#> $ O3_t_high     <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
-#> $ NO3_k298      <dbl> NA, 5.5e-16, 1.3e-16, NA, NA, NA, NA, NA, NA, NA, NA, NA~
-#> $ NO3_uncert    <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
-#> $ NO3_u_fac     <dbl> NA, 1.6, 3.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
-#> $ NO3_A         <dbl> NA, NA, 9.4e-13, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
-#> $ NO3_B         <dbl> NA, NA, 2650, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
-#> $ NO3_n         <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
-#> $ NO3_t_low     <dbl> NA, NA, 250, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
-#> $ NO3_t_high    <dbl> NA, NA, 370, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
-#> $ Cl_k298       <dbl> 1.00e-13, 7.20e-11, 5.10e-11, 3.60e-13, 1.90e-13, 1.90e-~
-#> $ Cl_uncert     <dbl> 0.15, 0.15, 0.20, NA, NA, 0.11, NA, 0.10, 0.15, NA, 0.14~
-#> $ Cl_u_fac      <dbl> NA, NA, NA, 1.4, 1.4, NA, 3.0, NA, NA, NA, NA, NA, 2.0, ~
-#> $ Cl_A          <dbl> 6.60e-12, 8.10e-11, 5.10e-11, 4.90e-12, NA, NA, NA, 4.32~
-#> $ Cl_B          <dbl> 1240.0, 34.0, 0.0, 781.0, NA, NA, NA, 646.4, 1591.0, NA,~
-#> $ Cl_n          <dbl> NA, NA, NA, NA, NA, NA, NA, 1.3057, NA, NA, NA, NA, NA, ~
-#> $ Cl_t_low      <dbl> 200, 200, 225, 200, NA, NA, NA, 222, 250, NA, NA, 220, 2~
-#> $ Cl_t_high     <dbl> 300, 500, 950, 300, NA, NA, NA, 843, 300, NA, NA, 330, 3~
-}\if{html}{\out{</div>}}
-}
-
 \section{Dataset ID and Badge}{
 
 DATA-14

@@ -21,10 +21,10 @@ Using \code{gt_output()} we can render a reactive \strong{gt} table, a process
 initiated by using \code{\link[=render_gt]{render_gt()}} in the \code{server} component of a
 Shiny app. \code{gt_output()} is to be used in the \href{https://shiny.posit.co}{Shiny}
 \code{ui} component, the position and context wherein this call is made determines
-the where the \strong{gt} table is rendered on the app page. It's important to note
-that the ID given during \code{\link[=render_gt]{render_gt()}} is needed as the \code{outputId} in
+the where the \strong{gt} table is rendered on the app page. It's important to
+note that the ID given during \code{\link[=render_gt]{render_gt()}} is needed as the \code{outputId} in
 \code{gt_output()} (e.g., \strong{server}: \verb{output$<id> <- render_gt(...)}; \strong{ui}:
-\verb{gt_output(outputId = "<id>"}).
+\code{gt_output(outputId = "<id>")}).
 }
 \section{Examples}{
 

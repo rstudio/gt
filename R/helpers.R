@@ -22,6 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
+# md() -------------------------------------------------------------------------
 #' Interpret input text as Markdown-formatted text
 #'
 #' @description
@@ -75,6 +76,7 @@ md <- function(text) {
   text
 }
 
+# html() -----------------------------------------------------------------------
 #' Interpret input text as HTML-formatted text
 #'
 #' @description
@@ -136,6 +138,7 @@ html <- function(text, ...) {
   htmltools::HTML(text, ...)
 }
 
+# px() -------------------------------------------------------------------------
 #' Helper for providing a numeric value as pixels value
 #'
 #' @description
@@ -193,6 +196,7 @@ px <- function(x) {
   paste0(x, "px")
 }
 
+# pct() ------------------------------------------------------------------------
 #' Helper for providing a numeric value as percentage
 #'
 #' @description
@@ -252,6 +256,7 @@ pct <- function(x) {
   paste0(x, "%")
 }
 
+# from_column() ----------------------------------------------------------------
 #' Reference a column of values for certain parameters
 #'
 #' @description
@@ -412,6 +417,7 @@ from_column <- function(
   column_list
 }
 
+# currency() -------------------------------------------------------------------
 #' Supply a custom currency symbol to `fmt_currency()`
 #'
 #' @description
@@ -496,7 +502,9 @@ currency <- function(
 
   # Stop function if the currency list contains no values
   if (length(currency_list) == 0) {
-    cli::cli_abort("The `currency()` function must be provided with currency symbols.")
+    cli::cli_abort(
+      "The `currency()` function must be provided with currency symbols."
+    )
   }
 
   # If only a single string is provided, upgrade the `currency_list`
@@ -524,6 +532,7 @@ currency <- function(
   currency_list
 }
 
+# unit_conversion() ------------------------------------------------------------
 #' Get a conversion factor across two measurement units of a given class
 #'
 #' @description
@@ -794,6 +803,7 @@ temperature_conversions <- function(from, to) {
   )
 }
 
+# adjust_luminance() -----------------------------------------------------------
 #' Adjust the luminance for a palette of colors
 #'
 #' @description
@@ -981,6 +991,7 @@ stub <- function() {
   x
 }
 
+# row_group() ------------------------------------------------------------------
 #' Select helper for targeting the row group column
 #'
 #' @description
@@ -1045,6 +1056,7 @@ row_group <- function() {
   x
 }
 
+# cells_title() ----------------------------------------------------------------
 #' Location helper for targeting the table title and subtitle
 #'
 #' @description
@@ -1121,6 +1133,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
   cells
 }
 
+# cells_stubhead() -------------------------------------------------------------
 #' Location helper for targeting the table stubhead cell
 #'
 #' @description
@@ -1177,6 +1190,7 @@ cells_stubhead <- function() {
   cells
 }
 
+# cells_column_spanners() ------------------------------------------------------
 #' Location helper for targeting the column spanners
 #'
 #' @description
@@ -1249,6 +1263,7 @@ cells_column_spanners <- function(spanners = everything()) {
   cells
 }
 
+# cells_column_labels() --------------------------------------------------------
 #' Location helper for targeting the column labels
 #'
 #' @description
@@ -1331,6 +1346,7 @@ cells_column_labels <- function(columns = everything()) {
   cells
 }
 
+# cells_row_groups() -----------------------------------------------------------
 #' Location helper for targeting row groups
 #'
 #' @description
@@ -1432,6 +1448,7 @@ cells_group <- function(groups = everything()) {
   cells_row_groups(groups = {{groups}})
 }
 
+# cells_stub() -----------------------------------------------------------------
 #' Location helper for targeting cells in the table stub
 #'
 #' @description
@@ -1454,9 +1471,9 @@ cells_group <- function(groups = everything()) {
 #'   [everything()] results in all rows in `columns` being formatted.
 #'   Alternatively, we can supply a vector of row IDs within `c()`, a vector of
 #'   row indices, or a select helper function (e.g. [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [num_range()], and [everything()]).
-#'   We can also use expressions to filter down to the rows we need
-#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   [ends_with()], [contains()], [matches()], [num_range()], and
+#'   [everything()]). We can also use expressions to filter down to the rows we
+#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @return A list object with the classes `cells_stub` and `location_cells`.
 #'
@@ -1509,6 +1526,7 @@ cells_stub <- function(rows = everything()) {
   cells
 }
 
+# cells_body() -----------------------------------------------------------------
 #' Location helper for targeting data cells in the table body
 #'
 #' @description
@@ -1628,6 +1646,7 @@ cells_body <- function(
   cells
 }
 
+# cells_summary() --------------------------------------------------------------
 #' Location helper for targeting group summary cells
 #'
 #' @description
@@ -1767,6 +1786,7 @@ cells_summary <- function(
   cells
 }
 
+# cells_grand_summary() --------------------------------------------------------
 #' Location helper for targeting cells in a grand summary
 #'
 #' @description
@@ -1871,6 +1891,7 @@ cells_grand_summary <- function(
   cells
 }
 
+# cells_stub_summary() ---------------------------------------------------------
 #' Location helper for targeting the stub cells in a summary
 #'
 #' @description
@@ -1988,6 +2009,7 @@ cells_stub_summary <- function(
   cells
 }
 
+# cells_stub_grand_summary() ---------------------------------------------------
 #' Location helper for targeting the stub cells in a grand summary
 #'
 #' @description
@@ -2075,6 +2097,7 @@ cells_stub_grand_summary <- function(rows = everything()) {
   cells
 }
 
+# cells_footnotes() ------------------------------------------------------------
 #' Location helper for targeting the footnotes
 #'
 #' @description
@@ -2149,6 +2172,7 @@ cells_footnotes <- function() {
   cells
 }
 
+# cells_source_notes() ---------------------------------------------------------
 #' Location helper for targeting the source notes
 #'
 #' @description
@@ -2205,6 +2229,7 @@ cells_source_notes <- function() {
   cells
 }
 
+# cell_text() ------------------------------------------------------------------
 #' Helper for defining custom text styles for table cells
 #'
 #' @description
@@ -2489,6 +2514,7 @@ cell_style_to_html.cell_text <- function(style) {
   css
 }
 
+# cell_fill() ------------------------------------------------------------------
 #' Helper for defining custom fills for table cells
 #'
 #' @description
@@ -2563,10 +2589,17 @@ cell_fill <- function(
 ) {
 
   if (!inherits(color, "gt_column")) {
+
     validate_length_one(color, "color")
 
-    # normally, alpha should be between 0 and 1, but to avoid breaking changes, let's be permissive for now.
-    check_number_decimal(alpha, allow_null = TRUE, allow_infinite = TRUE, allow_na = TRUE)
+    # Normally, `alpha` should be between `0` and `1`, but to avoid breaking
+    # changes, let's be permissive for now.
+    check_number_decimal(
+      alpha,
+      allow_null = TRUE,
+      allow_infinite = TRUE,
+      allow_na = TRUE
+    )
 
     # Transform the `color` value, if present, so that X11 color names
     # can be used in all output contexts
@@ -2587,6 +2620,7 @@ cell_style_to_html.cell_fill <- function(style) {
   css
 }
 
+# cell_borders() ---------------------------------------------------------------
 #' Helper for defining custom borders for table cells
 #'
 #' @description
@@ -2811,6 +2845,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
   style_obj
 }
 
+# random_id() ------------------------------------------------------------------
 #' Helper for creating a random `id` for a **gt** table
 #'
 #' @description
@@ -2853,6 +2888,7 @@ latex_special_chars <- c(
   "}" = "\\}"
 )
 
+# escape_latex() ---------------------------------------------------------------
 #' Perform LaTeX escaping
 #'
 #' @description
@@ -2902,6 +2938,7 @@ escape_latex <- function(text) {
   text
 }
 
+# gt_latex_dependencies() ------------------------------------------------------
 #' Get the LaTeX dependencies required for a **gt** table
 #'
 #' @description
@@ -2963,9 +3000,9 @@ gt_latex_dependencies <- function() {
       sep = "\n"
     )
   )
-
 }
 
+# google_font() ----------------------------------------------------------------
 #' Helper function for specifying a font from the *Google Fonts* service
 #'
 #' @description
@@ -3075,6 +3112,7 @@ google_font <- function(name) {
   font_list
 }
 
+# default_fonts() --------------------------------------------------------------
 #' Provide a vector of sensible system fonts for use with **gt** tables
 #'
 #' @description
@@ -3134,6 +3172,7 @@ default_fonts <- function() {
   )
 }
 
+# system_fonts() ---------------------------------------------------------------
 #' Get a themed font stack that works well across systems
 #'
 #' @description

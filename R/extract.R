@@ -1,4 +1,28 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2024 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
 
+
+# extract_body() ---------------------------------------------------------------
 #' Extract the table body from a **gt** object
 #'
 #' @description
@@ -156,6 +180,7 @@ extract_body <- function(
   data[["_body"]]
 }
 
+# extract_summary() ------------------------------------------------------------
 #' Extract a summary list from a **gt** object
 #'
 #' @description
@@ -235,8 +260,9 @@ extract_summary <- function(data) {
 
     cli::cli_abort(c(
       "There is no summary list to extract.",
-      "*" = "Use the `{.help [summary_rows](gt::summary_rows)}()` / `{.help [grand_summary_rows](gt::grand_summary_rows)}()` functions
-      to generate summaries."
+      "*" = "Use the `{.help [summary_rows](gt::summary_rows)}()` / 
+      `{.help [grand_summary_rows](gt::grand_summary_rows)}()` functions to
+      generate summaries."
     ))
   }
 
@@ -274,6 +300,7 @@ extract_summary <- function(data) {
   as.list(summary_tbl)
 }
 
+# extract_cells() --------------------------------------------------------------
 #' Extract a vector of formatted cells from a **gt** object
 #'
 #' @description

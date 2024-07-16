@@ -26,7 +26,8 @@ palettes that are suitable for the table output. We can make this process
 much easier in two ways: (1) by using the \strong{paletteer} package, which makes
 a wide range of palettes from various R packages readily available, and (2)
 calling \code{info_paletteer()} to give us an information table that serves as a
-quick reference for all of the discrete color palettes available in \strong{paletteer}.
+quick reference for all of the discrete color palettes available in
+\strong{paletteer}.
 }
 \details{
 The palettes displayed are organized by package and by palette name. These

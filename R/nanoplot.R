@@ -1,4 +1,28 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2024 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
 
+
+# cols_nanoplot() --------------------------------------------------------------
 #' Add a new column of nanoplots, taking input data from selected columns
 #'
 #' @description
@@ -73,9 +97,9 @@
 #'   column. The default [everything()] results in all rows in `columns` being
 #'   formatted. Alternatively, we can supply a vector of row IDs within `c()`, a
 #'   vector of row indices, or a select helper function (e.g. [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [num_range()], and [everything()]).
-#'   We can also use expressions to filter down to the rows we need(e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
+#'   [ends_with()], [contains()], [matches()], [num_range()], and
+#'   [everything()]). We can also use expressions to filter down to the rows we
+#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param plot_type *The type of nanoplot to display*
 #'
@@ -499,9 +523,9 @@
 #' pizza analytics). We also have the sell price for a pizza, and that'll serve
 #' as the *y* values. The pizzas belong to four different groups (in the `type`
 #' column) and we'll group by that and create value streams with
-#' `paste(..., collapse = ",")` inside  the `dplyr::summarize()` call. With two value
-#' streams in each row (having the same number of values) we can now make a
-#' **gt** table with nanoplots.
+#' `paste(..., collapse = ",")` inside  the `dplyr::summarize()` call. With two
+#' value streams in each row (having the same number of values) we can now make
+#' a **gt** table with nanoplots.
 #'
 #' ```r
 #' pizzaplace |>
@@ -974,7 +998,7 @@ cols_nanoplot <- function(
   data
 }
 
-
+# nanoplot_options() -----------------------------------------------------------
 #' Supply nanoplot options to `cols_nanoplot()`
 #'
 #' @description
@@ -1107,8 +1131,8 @@ cols_nanoplot <- function(
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
-#'   The reference line will have a color of `"#75A8B0"` if it is set to appear.
-#'   This color can be changed by providing a single color value to
+#'   The reference line will have a color of `"#75A8B0"` if it is set to
+#'   appear. This color can be changed by providing a single color value to
 #'   `reference_line_color`.
 #'
 #' @param reference_area_fill_color *Fill color for the reference area*

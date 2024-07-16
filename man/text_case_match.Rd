@@ -64,12 +64,13 @@ An object of class \code{gt_tbl}.
 }
 \description{
 \code{text_case_match()} provides a useful interface for a approach to replacing
-table cells that behaves much like a switch statement. The targeting of cell for transformation happens with the \code{.locations} argument.
-Once overall targeting is handled, you need to supply a sequence of two-sided
-formulas matching of the general form: \verb{<vector_old_text> ~ <new_text>}. In
-the left hand side (LHS) there should be a character vector containing
-strings to match on. The right hand side (RHS) should contain a single string
-(or something coercible to a length one character vector). There's also the
+table cells that behaves much like a switch statement. The targeting of cell
+for transformation happens with the \code{.locations} argument. Once overall
+targeting is handled, you need to supply a sequence of two-sided formulas
+matching of the general form: \verb{<vector_old_text> ~ <new_text>}. In the left
+hand side (LHS) there should be a character vector containing strings to
+match on. The right hand side (RHS) should contain a single string (or
+something coercible to a length one character vector). There's also the
 \code{.replace} argument that changes the matching and replacing behavior. By
 default, \code{text_case_match()} will try to match on entire strings and replace
 those strings. This can be changed to a partial matching and replacement

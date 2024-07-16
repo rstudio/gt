@@ -105,10 +105,10 @@ An object of class \code{gt_tbl}.
 Should cells contain email addresses, \code{fmt_email()} can be used to make email
 addresses work well with email clients on the user system. This should be
 expressly used on columns that contain \emph{only} email addresses (i.e., no email
-addresses as part of a larger block of text). Should you have such a column of
-data, there are options for how the email addresses should be styled. They can
-be of the conventional style (with underlines and text coloring that sets it
-apart from other text), or, they can appear to be button-like (with a
+addresses as part of a larger block of text). Should you have such a column
+of data, there are options for how the email addresses should be styled. They
+can be of the conventional style (with underlines and text coloring that sets
+it apart from other text), or, they can appear to be button-like (with a
 surrounding box that can be filled with a color of your choosing).
 
 Email addresses in data cells are trusted as email addresses. We can also
@@ -121,9 +121,9 @@ call within \code{display_name}.
 
 
 \code{fmt_email()} is compatible with body cells that are of the \code{"character"} or
-\code{"factor"} types. Any other types of body cells are ignored during formatting.
-This is to say that cells of incompatible data types may be targeted, but
-there will be no attempt to format them.
+\code{"factor"} types. Any other types of body cells are ignored during
+formatting. This is to say that cells of incompatible data types may be
+targeted, but there will be no attempt to format them.
 }
 
 \section{Compatibility of arguments with the \code{from_column()} helper function}{

@@ -22,6 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
+# tab_header() -----------------------------------------------------------------
 #' Add a table header
 #'
 #' @description
@@ -211,6 +212,7 @@ tab_header <- function(
   )
 }
 
+# tab_spanner() ----------------------------------------------------------------
 #' Add a spanner label
 #'
 #' @description
@@ -225,7 +227,8 @@ tab_header <- function(
 #' uses the same columns in its definition (or even a subset) as the first
 #' invocation, the second spanner will be overlaid atop the first. Options exist
 #' for forcibly inserting a spanner underneath other (with `level` as space
-#' permits) and with `replace`, which allows for full or partial spanner replacement.
+#' permits) and with `replace`, which allows for full or partial spanner
+#' replacement.
 #'
 #' @inheritParams fmt_number
 #'
@@ -839,6 +842,7 @@ resolve_spanned_column_names <- function(
   unique(column_names)
 }
 
+# tab_spanner_delim() ----------------------------------------------------------
 #' Create column labels and spanners via delimited column names
 #'
 #' @description
@@ -881,8 +885,9 @@ resolve_spanned_column_names <- function(
 #'
 #'   The columns to consider for the splitting, relabeling, and spanner setting
 #'   operations. Can either be a series of column names provided in `c()`, a
-#'   vector of column indices, or a select helper function (e.g. [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [num_range()], and [everything()]).
+#'   vector of column indices, or a select helper function (e.g.,
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [num_range()],
+#'   and [everything()]).
 #'
 #' @param split *Splitting side*
 #'
@@ -1057,9 +1062,10 @@ resolve_spanned_column_names <- function(
 #' }}
 #'
 #' With a summarized, filtered, and pivoted version of the [`pizzaplace`]
-#' dataset, we can create another **gt** table and then use `tab_spanner_delim()`
-#' with the delimiter/separator also used in `tidyr::pivot_wider()`. We can also
-#' process the generated column labels with [cols_label_with()].
+#' dataset, we can create another **gt** table and then use
+#' `tab_spanner_delim()` with the delimiter/separator also used in
+#' `tidyr::pivot_wider()`. We can also process the generated column labels with
+#' [cols_label_with()].
 #'
 #' ```r
 #' pizzaplace |>
@@ -1261,8 +1267,15 @@ tab_spanner_delim <- function(
 
             # Increment number to spanner ID values on subsequent duplications
             idx_str <- gsub("^spanner:([0-9]+)-.*", "\\1", spanner_id)
+            
             idx_int <- as.integer(idx_str)
-            spanner_id <- gsub("^(spanner:)[0-9]+(-.*)", paste0("\\1", idx_int + 1, "\\2"), spanner_id)
+
+            spanner_id <- 
+              gsub(
+                "^(spanner:)[0-9]+(-.*)",
+                paste0("\\1", idx_int + 1, "\\2"),
+                spanner_id
+              )
           }
         }
 
@@ -1422,7 +1435,7 @@ str_split_across <- function(
   x_split
 }
 
-
+# tab_row_group() --------------------------------------------------------------
 #' Add a row group to a **gt** table
 #'
 #' @description
@@ -1446,7 +1459,8 @@ str_split_across <- function(
 #'   `scalar<character>` // **required**
 #'
 #'   The text to use for the row group label. We can optionally use [md()] or
-#'   [html()] to style the text as Markdown or to retain HTML elements in the text.
+#'   [html()] to style the text as Markdown or to retain HTML elements in the
+#'   text.
 #'
 #' @param rows *Rows to target*
 #'
@@ -1741,6 +1755,7 @@ tab_row_group <- function(
   )
 }
 
+# tab_stubhead() ---------------------------------------------------------------
 #' Add label text to the stubhead
 #'
 #' @description
@@ -1760,7 +1775,8 @@ tab_row_group <- function(
 #'   `scalar<character>` // **required**
 #'
 #'   The text to be used as the stubhead label. We can optionally use [md()] or
-#'   [html()] to style the text as Markdown or to retain HTML elements in the text.
+#'   [html()] to style the text as Markdown or to retain HTML elements in the
+#'   text.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1879,15 +1895,16 @@ tab_stubhead <- function(
   dt_stubhead_label(data = data, label = label)
 }
 
+# tab_stub_indent() ------------------------------------------------------------
 #' Control indentation of row labels in the stub
 #'
 #' @description
 #'
 #' Indentation of row labels is an effective way for establishing structure in a
-#' table stub. `tab_stub_indent()` allows for fine control over
-#' row label indentation in the stub. We can use an explicit definition of an
-#' indentation level (with a number between `0` and `5`), or, employ an
-#' indentation directive using keywords (`"increase"`/`"decrease"`).
+#' table stub. `tab_stub_indent()` allows for fine control over row label
+#' indentation in the stub. We can use an explicit definition of an indentation
+#' level (with a number between `0` and `5`), or, employ an indentation
+#' directive using keywords (`"increase"`/`"decrease"`).
 #'
 #' @inheritParams fmt_number
 #'
@@ -2180,6 +2197,7 @@ tab_stub_indent <- function(
   dt_stub_df_set(data = data, stub_df = stub_df)
 }
 
+# tab_source_note() ------------------------------------------------------------
 #' Add a source note citation
 #'
 #' @description
@@ -2243,6 +2261,7 @@ tab_source_note <- function(
   )
 }
 
+# tab_caption() ----------------------------------------------------------------
 #' Add a table caption
 #'
 #' @description
@@ -2251,7 +2270,7 @@ tab_source_note <- function(
 #' within an R Markdown, Quarto, or **bookdown** context. The addition of
 #' captions makes tables cross-referencing across the containing document. The
 #' caption location (i.e., top, bottom, margin) is handled at the document level
-#' in each of these system.
+#' in each of these systems.
 #'
 #' @inheritParams fmt_number
 #'

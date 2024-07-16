@@ -1,4 +1,27 @@
-# cols_label() --------------------------------------------------------------------
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2024 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+# cols_label() -----------------------------------------------------------------
 #' Relabel one or more columns
 #'
 #' @description
@@ -25,9 +48,9 @@
 #'   should be enclosed in `c()`. Select helpers like [starts_with()],
 #'   [ends_with()], [contains()], [matches()], and [everything()] can be used
 #'   in the LHS. Named arguments are also valid as input for simple mappings of
-#'   column name to label text; they should be of the form `<column name> = <label>`.
-#'   Subsequent expressions that operate on the columns assigned previously will
-#'   result in overwriting column label values.
+#'   column name to label text; they should be of the form
+#'   `<column name> = <label>`. Subsequent expressions that operate on the
+#'   columns assigned previously will result in overwriting column label values.
 #'
 #' @param .list *Alternative to `...`*
 #'
@@ -445,7 +468,7 @@ cols_label <- function(
   .data
 }
 
-# cols_label_with() --------------------------------------------------------------
+# cols_label_with() ------------------------------------------------------------
 #' Relabel columns with a function
 #'
 #' @description

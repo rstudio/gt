@@ -34,26 +34,6 @@ character-based dates/times in the familiar ISO 8601 format. The \code{row} and
 \code{grp_b}) for experimenting with the \code{\link[=gt]{gt()}} function's \code{rowname_col} and
 \code{groupname_col} arguments.
 }
-\section{Examples}{
-
-
-Here is the entirety of the \code{exibble} table.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble
-#> # A tibble: 8 x 9
-#>           num char       fctr  date       time  datetime    currency row   group
-#>         <dbl> <chr>      <fct> <chr>      <chr> <chr>          <dbl> <chr> <chr>
-#> 1       0.111 apricot    one   2015-01-15 13:35 2018-01-01~    50.0  row_1 grp_a
-#> 2       2.22  banana     two   2015-02-15 14:40 2018-02-02~    18.0  row_2 grp_a
-#> 3      33.3   coconut    three 2015-03-15 15:45 2018-03-03~     1.39 row_3 grp_a
-#> 4     444.    durian     four  2015-04-15 16:50 2018-04-04~ 65100    row_4 grp_a
-#> 5    5550     <NA>       five  2015-05-15 17:55 2018-05-05~  1326.   row_5 grp_b
-#> 6      NA     fig        six   2015-06-15 <NA>  2018-06-06~    13.3  row_6 grp_b
-#> 7  777000     grapefruit seven <NA>       19:10 2018-07-07~    NA    row_7 grp_b
-#> 8 8880000     honeydew   eight 2015-08-15 20:20 <NA>            0.44 row_8 grp_b
-}\if{html}{\out{</div>}}
-}
-
 \section{Dataset ID and Badge}{
 
 DATA-6

@@ -1,4 +1,28 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2024 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
 
+
+# tab_options() ----------------------------------------------------------------
 #' Modify the table output options
 #'
 #' @description
@@ -505,10 +529,10 @@
 #'
 #'   *Specify latex floating position*
 #'
-#'   The latex position indicator for a floating environment (e.g. "!t", "H"). It
-#'   should be specified without square brackets. Quarto users should instead
-#'   set the floating position within the code chunk argument `tbl-pos`. Table
-#'   will only float if longtable environment is set to `FALSE`.
+#'   The latex position indicator for a floating environment (e.g., `"!t"`,
+#'   `"H"`). It should be specified without square brackets. Quarto users should
+#'   instead set the floating position within the code chunk argument `tbl-pos`.
+#'   The output table will only float if `latex.use_longtable = FALSE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -931,8 +955,14 @@ get_tab_options_arg_vec <- function(pattern) {
   grep(pattern = pattern, tab_options_arg_names, value = TRUE)
 }
 
-# call is set to caller_env(2) to skip the mapply() call in tab_options() and grp_options()
-preprocess_tab_option <- function(option, var_name, type, call = rlang::caller_env(2)) {
+# `call` is set to `caller_env(2)` to skip the `mapply()` call in
+# `tab_options()` and in `grp_options()`
+preprocess_tab_option <- function(
+    option,
+    var_name,
+    type,
+    call = rlang::caller_env(2)
+) {
 
   # Perform pre-processing on the option depending on `type`
   option <-
@@ -1006,7 +1036,6 @@ set_super_options <- function(arg_vals) {
 
   arg_vals
 }
-
 
 normalize_font_input <- function(font_input, call = rlang::caller_env()) {
 
@@ -1092,5 +1121,3 @@ tab_options_multi <- function(data, options) {
 
   do.call(tab_options, c(list(data = data), options))
 }
-
-

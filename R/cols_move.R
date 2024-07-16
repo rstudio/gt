@@ -1,5 +1,28 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2024 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
 
-# cols_move() --------------------------------------------------------
+
+# cols_move() ------------------------------------------------------------------
 #' Move one or more columns
 #'
 #' @description
@@ -148,7 +171,7 @@ cols_move <- function(
   )
 }
 
-# cols_move_to_start() ------------------------------------------------------------
+# cols_move_to_start() ---------------------------------------------------------
 #' Move one or more columns to the start
 #'
 #' @description
@@ -271,7 +294,7 @@ cols_move_to_start <- function(
   )
 }
 
-# cols_move_to_end() ---------------------------
+# cols_move_to_end() -----------------------------------------------------------
 #' Move one or more columns to the end
 #'
 #' @description

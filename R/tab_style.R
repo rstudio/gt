@@ -1,4 +1,28 @@
-# tab_style() ------------------------------------
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2024 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
+# tab_style() ------------------------------------------------------------------
 #' Add custom styles to one or more cells
 #'
 #' @description
@@ -6,9 +30,9 @@
 #' With `tab_style()` we can [target specific cells][location-helper]
 #' and apply styles to them. This is best done in conjunction with the helper
 #' functions [cell_text()], [cell_fill()], and [cell_borders()]. Currently, this
-#' function is focused on the application of styles for HTML output only
-#' (as such, other output formats will ignore all `tab_style()` calls).
-#' Using the aforementioned helper functions, here are some of the styles we can apply:
+#' function is focused on the application of styles for HTML output only (as
+#' such, other output formats will ignore all `tab_style()` calls). Using the
+#' aforementioned helper functions, here are some of the styles we can apply:
 #'
 #' - the background color of the cell ([cell_fill()]: `color`)
 #' - the cell's text color, font, and size ([cell_text()]: `color`, `font`,
