@@ -44,12 +44,12 @@ is_gt_group <- function(data) {
 #' [gt_group()] functions.
 #' @noRd
 is_gt_tbl_or_group <- function(data) {
-  inherits(data, "gt_tbl") || inherits(data, "gt_group")
+  inherits(data, c("gt_tbl", "gt_group"))
 }
 
 is_gt_tbl_empty <- function(data) {
   data_tbl <- dt_data_get(data = data)
-  ncol(data_tbl) == 0 && nrow(data_tbl) == 0
+  identical(dim(data_tbl), c(0L, 0L))
 }
 
 is_gt_tbl_empty_w_cols <- function(data) {
@@ -116,7 +116,7 @@ stop_if_not_gt_group <- function(data, call = rlang::caller_env()) {
 #'
 #' @noRd
 stop_if_not_gt_tbl_or_group <- function(data, call = rlang::caller_env()) {
-  if (!is_gt_tbl(data = data) && !is_gt_group(data = data)) {
+  if (!is_gt_tbl_or_group(data)) {
     cli::cli_abort(
       "`data` must either be a `gt_tbl` or a `gt_group`, not {.obj_type_friendly {data}}.",
       call = call
@@ -471,36 +471,48 @@ get_currency_str <- function(
     fallback_to_code = FALSE
 ) {
 
-  # Create bindings for specific variables
-  curr_symbol <- symbol <- curr_code <- curr_number <- NULL
-
   if (currency[1] %in% currency_symbols$curr_symbol) {
 
-    return(dplyr::filter(currency_symbols, curr_symbol == currency)$symbol)
+    currency_symbol <-
+      vctrs::vec_slice(
+        currency_symbols$symbol,
+        currency_symbols$curr_symbol == currency
+      )
 
   } else if (currency[1] %in% currencies$curr_code) {
 
-    currency_symbol <- dplyr::filter(currencies, curr_code == currency)$symbol
+    found_currency <-
+      vctrs::vec_slice(
+        currencies,
+        currencies$curr_code == currency
+      )
 
-    if (fallback_to_code && grepl("&#", currency_symbol)) {
-      currency_symbol <- dplyr::filter(currencies, curr_code == currency)$curr_code
+    if (fallback_to_code && grepl("&#", found_currency$symbol)) {
+      currency_symbol <- found_currency$curr_code
+    } else {
+      currency_symbol <- found_currency$symbol
     }
-
-    return(currency_symbol)
 
   } else if (currency[1] %in% currencies$curr_number) {
 
-    currency_symbol <- dplyr::filter(currencies, curr_number == currency)$symbol
+    found_currency <-
+      vctrs::vec_slice(
+        currencies,
+        # currencies$curr_number has NA value for IMP.
+        !is.na(currencies$curr_number) & currencies$curr_number == currency
+      )
 
-    if (fallback_to_code && grepl("&#", currency_symbol)) {
-      currency_symbol <- dplyr::filter(currencies, curr_number == currency)$curr_code
+    if (fallback_to_code && grepl("&#", found_currency$symbol)) {
+      currency_symbol <- found_currency$curr_code
+    } else {
+      currency_symbol <- found_currency$symbol
     }
 
-    return(currency_symbol)
-
   } else {
-    return(currency)
+    currency_symbol <- currency
   }
+
+  currency_symbol
 }
 
 resolve_footnote_placement <- function(
@@ -624,16 +636,23 @@ get_alignment_at_body_cell <- function(
 #' @noRd
 get_currency_exponent <- function(currency) {
 
-  # Create bindings for specific variables
-  curr_code <- curr_number <- NULL
-
   if (currency[1] %in% currencies$curr_code) {
 
-    exponent <- dplyr::filter(currencies, curr_code == currency)$exponent
+    exponent <-
+      vctrs::vec_slice(
+        currencies$exponent,
+        # curr_code has no NAs
+        currencies$curr_code == currency
+      )
 
   } else if (currency[1] %in% currencies$curr_number) {
 
-    exponent <- dplyr::filter(currencies, curr_number == currency)$exponent
+    # curr_number has some NAs
+    exponent <-
+      vctrs::vec_slice(
+        currencies$exponent,
+        !is.na(currencies$curr_number) & currencies$curr_number == currency
+      )
   }
 
   if (is.na(exponent)) {
@@ -710,12 +729,12 @@ process_text <- function(text, context = "html") {
       # Markdown text handling for Quarto
       #
       if (in_quarto) {
-
-        non_na_text <- text[!is.na(text)]
+        # exclude "" and NA #1769
+        non_na_text <- text[nzchar(text, keepNA = FALSE)]
 
         non_na_text_processed <-
           vapply(
-            as.character(text[!is.na(text)]),
+            non_na_text,
             FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(text) {
@@ -732,6 +751,7 @@ process_text <- function(text, context = "html") {
             FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(text) {
+              # charToRaw("") returns character(0)
               base64enc::base64encode(charToRaw(as.character(text)))
             }
           )
@@ -745,7 +765,7 @@ process_text <- function(text, context = "html") {
             non_na_text_processed, "</div></div>"
           )
 
-        text[!is.na(text)] <- non_na_text
+        text[nzchar(text, keepNA = FALSE)] <- non_na_text
 
         return(text)
       }
@@ -1000,7 +1020,15 @@ process_text <- function(text, context = "html") {
     return(text)
 
   } else if (context == "grid") {
-    # Skip any formatting
+    # Skip any formatting (unless wrapped in from_md)
+    if (inherits(text, "from_markdown")) {
+      text <- unescape_html(text)
+      return(markdown_to_text(text))
+    }
+    if (is_html(text)) {
+      text <- unescape_html(text)
+      return(markdown_to_text(text))
+    }
     return(as.character(text))
   } else {
 
@@ -1037,6 +1065,9 @@ unescape_html <- function(text) {
   text <- gsub("&lt;", "<", text, fixed = TRUE)
   text <- gsub("&gt;", ">", text, fixed = TRUE)
   text <- gsub("&amp;", "&", text, fixed = TRUE)
+  text <- gsub("&mdash;", "---", text, fixed = TRUE)
+  # universal linebreak
+  text <- gsub("<br>", "\n", text, fixed = TRUE)
   text
 }
 
@@ -1761,7 +1792,7 @@ markdown_to_text <- function(text) {
 
           }
 
-          gsub("\\n$", "", commonmark::markdown_text(x))
+          sub("\n$", "", commonmark::markdown_text(x))
         }
       )
     )

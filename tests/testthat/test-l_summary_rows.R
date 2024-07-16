@@ -8,7 +8,7 @@ tbl <-
     198.5,   65.1,  127.4,  219.3,  "five", "first_five",
     132.1,  118.1,   91.2,  874.3,   "six",   "2nd_five",
     349.7,  307.1,  566.7,  542.9, "seven",   "2nd_five",
-     63.7,  504.3,  152.0,  724.5, "eight",   "2nd_five",
+    63.7,  504.3,  152.0,  724.5, "eight",   "2nd_five",
     105.4,  729.8,  962.4,  336.4,  "nine",   "2nd_five",
     924.2,  424.6,  740.8,  104.2,   "ten",   "2nd_five"
   )
@@ -25,6 +25,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
@@ -35,6 +36,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
@@ -45,6 +47,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
@@ -55,6 +58,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
@@ -70,6 +74,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
@@ -81,6 +86,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
@@ -92,6 +98,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
@@ -103,6 +110,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
@@ -114,6 +122,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
@@ -125,6 +134,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
@@ -173,6 +183,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       ),
       fmt = list(~ fmt_number(.))
     ) %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
@@ -217,6 +228,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       ),
       fmt = list(~ fmt_number(.))
     ) %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()

@@ -8,7 +8,7 @@ test_that("A gt table contains the expected heading components", {
   # Expect a characteristic pattern
   expect_match(
      as_latex(tbl_latex) %>% as.character(),
-    "\\caption*{\n{\\large test title}\n} \\\\ \n\\toprule",
+    "\\caption*{\n{\\large test title}\n} \n\\fontsize",
     fixed = TRUE
   )
 
@@ -33,6 +33,7 @@ test_that("A gt table contains the expected heading components", {
   mtcars_short %>%
     gt() %>%
     tab_header(title = "test title") %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
@@ -42,6 +43,7 @@ test_that("A gt table contains the expected heading components", {
   mtcars_short %>%
     gt() %>%
     tab_header(title = "test title", subtitle = "test subtitle") %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
@@ -51,6 +53,7 @@ test_that("A gt table contains the expected heading components", {
   mtcars_short %>%
     gt() %>%
     tab_header(title = "test title", subtitle = "") %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
@@ -60,6 +63,7 @@ test_that("A gt table contains the expected heading components", {
   mtcars_short %>%
     gt() %>%
     tab_header(title = "test title", subtitle = "   ") %>%
+    tab_options(latex.use_longtable = TRUE) %>%
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
@@ -71,7 +75,8 @@ test_that("A gt table contains the expected stubhead label", {
   # contains a stub and a stubhead caption
   tbl_latex <-
     gt(mtcars_short, rownames_to_stub = TRUE) %>%
-    tab_stubhead(label = "the mtcars")
+    tab_stubhead(label = "the mtcars") %>%
+    tab_options(latex.use_longtable = TRUE)
 
   # Expect a characteristic pattern
   expect_match(
@@ -93,7 +98,8 @@ test_that("A gt table contains the expected column spanner labels", {
     tab_spanner(
       label = "perimeter",
       columns = c("peri", "shape")
-    )
+    ) %>%
+    tab_options(latex.use_longtable = TRUE)
 
   # Expect that the spanner will be correctly produced
   tbl_latex %>%
@@ -110,7 +116,8 @@ test_that("A gt table contains the expected column spanner labels", {
     tab_spanner(
       label = "perimeter",
       columns = c(peri, shape)
-    )
+    ) %>%
+    tab_options(latex.use_longtable = TRUE)
 
   # Expect that the spanner will be correctly produced
   tbl_latex %>%
@@ -124,7 +131,8 @@ test_that("A gt table contains the expected column spanner labels", {
       tab_spanner(
         label = "perimeter",
         columns = c(peris, shapes)
-      )
+      ) %>%
+      tab_options(latex.use_longtable = TRUE)
   )
 
   # Create a `tbl_latex` object where the first column doesn't have a
@@ -145,7 +153,8 @@ test_that("A gt table contains the expected column spanner labels", {
       label = "v_4_5",
       columns = c("v_4", "v_5")
     ) %>%
-    cols_move_to_start(columns = "v_3")
+    cols_move_to_start(columns = "v_3") %>%
+    tab_options(latex.use_longtable = TRUE)
 
   # Expect that the spanners will be correctly produced
   tbl_latex %>%
@@ -161,7 +170,8 @@ test_that("A gt table contains the expected column spanner labels", {
     gt(dplyr::tibble(A_X = c(1), B_X = c(2), A_Y = c(3), B_Y = c(4))) %>%
     tab_spanner(label = "A", id = "y", columns = starts_with("A"), gather = FALSE) %>%
     tab_spanner(label = "A", id = "z", columns = starts_with("B"), gather = FALSE) %>%
-    tab_footnote(footnote = "note", locations = cells_column_spanners("y"))
+    tab_footnote(footnote = "note", locations = cells_column_spanners("y"))  %>%
+    tab_options(latex.use_longtable = TRUE)
 
   # Expect that the spanners will be correctly produced
   tbl_latex %>%
@@ -176,7 +186,8 @@ test_that("A gt table contains the expected column spanner labels", {
     gt(dplyr::tibble(A_X = c(1), B_X = c(2), A_Y = c(3), B_Y = c(4))) %>%
     tab_spanner(label = "A", id = "y", columns = starts_with("A"), gather = TRUE) %>%
     tab_spanner(label = "A", id = "z", columns = starts_with("B")) %>%
-    tab_footnote(footnote = "note", locations = cells_column_spanners("y"))
+    tab_footnote(footnote = "note", locations = cells_column_spanners("y")) %>%
+    tab_options(latex.use_longtable = TRUE)
 
   # Expect that the spanners will be correctly produced
   tbl_latex %>%
@@ -192,7 +203,8 @@ test_that("A gt table contains the expected column spanner labels", {
     tab_spanner_delim(
       delim = ".",
       columns = c("Sepal.Length", "Sepal.Width")
-    )
+    ) %>%
+    tab_options(latex.use_longtable = TRUE)
 
   # Expect that the spanners will be correctly produced
   tbl_latex %>%
@@ -209,7 +221,8 @@ test_that("A gt table contains the expected source note", {
     gt(mtcars_short) %>%
     tab_source_note(
       source_note = md("*Henderson and Velleman* (1981).")
-    )
+    ) %>%
+    tab_options(latex.use_longtable = TRUE)
 
   # Expect that the source note will be correctly produced
   tbl_latex %>%
@@ -227,7 +240,8 @@ test_that("A gt table contains the expected source note", {
     ) %>%
     tab_source_note(
       source_note = "This was in Motor Trend magazine, hence the `mt`."
-    )
+    ) %>%
+    tab_options(latex.use_longtable = TRUE)
 
   # Expect that both source notes will be correctly produced
   tbl_latex %>%
@@ -246,7 +260,8 @@ test_that("A gt table contains the correct placement of row groups", {
     tab_row_group(
       label = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag")
-    )
+    ) %>%
+    tab_options(latex.use_longtable = TRUE)
 
   # Expect that the row groups will be correctly produced
   tbl_latex %>%
@@ -267,7 +282,8 @@ test_that("A gt table contains the correct placement of row groups", {
       label = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag")
     ) %>%
-    row_group_order(groups = c(NA, "Mazda", "Mercs"))
+    row_group_order(groups = c(NA, "Mazda", "Mercs")) %>%
+    tab_options(latex.use_longtable = TRUE)
 
   # Expect that the row groups will be correctly produced
   tbl_latex %>%

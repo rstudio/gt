@@ -38,7 +38,7 @@ in the text.}
 The columns to serve as components of the spanner. Can either be a series
 of column names provided in \code{c()}, a vector of column indices, or a select
 helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. This argument works in
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). This argument works in
 tandem with the \code{spanners} argument.}
 
 \item{spanners}{\emph{Spanners to target}
@@ -119,7 +119,7 @@ names in quotes) or we can use \strong{tidyselect}-style expressions. This can b
 as basic as supplying a select helper like \code{starts_with()}, or, providing a
 more complex incantation like
 
-\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+\code{where(~ is.numeric(.x) & max(.x, na.rm = TRUE) > 1E6)}
 
 which targets numeric columns that have a maximum value greater than
 1,000,000 (excluding any \code{NA}s from consideration).

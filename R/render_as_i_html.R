@@ -111,7 +111,7 @@ render_as_ihtml <- function(data, id) {
       # Convert to NA string to avoid wrong output.
       # TODO figure out if there is a way to get the sub_missing value.
       # With data$`_substitutions`
-      row_names <- dplyr::coalesce(row_names, " ")
+      row_names <- dplyr::coalesce(row_names, "NA")
       attr(data_tbl, "row.names") <- row_names
     } else {
       rownames_to_stub <- FALSE
@@ -272,6 +272,19 @@ render_as_ihtml <- function(data, id) {
   # Flatten this list of vectors to a single vector of unique column names
   formatted_columns <- unique(flatten_list(formatted_columns))
 
+  # Format col_merge cols #1785
+  col_merge_cols <- dt_col_merge_get_vars(data)
+  formatted_columns <- c(formatted_columns, col_merge_cols)
+
+  # format substitutions #1759
+  substitution <- dt_substitutions_get(data)
+  if (length(substitution) > 0) {
+    sub_cols <- substitution[[1]]$cols
+    formatted_columns <- c(formatted_columns, sub_cols)
+  }
+
+  # take unique values
+  formatted_columns <- unique(formatted_columns)
   # Create a list of column definitions
   col_defs <-
     lapply(
@@ -280,6 +293,7 @@ render_as_ihtml <- function(data, id) {
 
         # Only perform extraction of formatted cells if there is an
         # indication that formatting will be performed on a column`
+        # or if it is the result of column merge.
         if (column_names[x] %in% formatted_columns) {
 
           formatted_cells <-
@@ -298,6 +312,8 @@ render_as_ihtml <- function(data, id) {
           cell = cell_fn,
           name = column_labels[x],
           align = column_alignments[x],
+          # Has no effect with sub_missing
+          na = "NA",
           # TODO support `summary_rows()` via `aggregate` #1359
           # TODO support `grand_summary_rows()` via `footer`. #1359
           width = if (is.null(column_widths) || is.na(column_widths[x])) NULL else column_widths[x],
@@ -408,6 +424,8 @@ render_as_ihtml <- function(data, id) {
     reactable::colDef(
       style = reactable::JS(body_style_js_str),
       minWidth = 125,
+      # Has no effect with sub_missing()
+      na = "NA",
       width = NULL
     )
 
@@ -687,11 +705,15 @@ create_source_notes_component_ihtml <- function(data) {
   # Get the style attrs for the source notes
   if ("source_notes" %in% styles_tbl$locname) {
 
-    source_notes_style <- dplyr::filter(styles_tbl, locname == "source_notes")
+    source_notes_style <-
+      vctrs::vec_slice(
+        styles_tbl$html_style,
+        !is.na(styles_tbl$locname) & styles_tbl$locname == "source_notes"
+      )
 
     source_notes_styles <-
-      if (nrow(source_notes_style) > 0) {
-        paste(source_notes_style$html_style, collapse = " ")
+      if (length(source_notes_style) > 0) {
+        paste(source_notes_style, collapse = " ")
       } else {
         NULL
       }

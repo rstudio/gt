@@ -414,10 +414,10 @@ test_that("fmt_percent() can render in the Indian numbering system", {
 })
 
 test_that("fmt_percent() works correctly with stubs", {
-  tbl <- tibble::tibble(
+  tbl <- dplyr::tibble(
     raw = c("[shiny](https://shiny.posit.co/)", "<a href='https://gt.rstudio.com/'>gt</a>"),
-    markdown = purrr::map(c("[shiny](https://shiny.posit.co/)", "[gt](https://gt.rstudio.com/)"), gt::md),
-    html = purrr::map(c("<a href='https://shiny.posit.co/'>shiny</a>", "<a href='https://gt.rstudio.com/'>gt</a>"), gt::html),
+    markdown = lapply(c("[shiny](https://shiny.posit.co/)", "[gt](https://gt.rstudio.com/)"), md),
+    html = lapply(c("<a href='https://shiny.posit.co/'>shiny</a>", "<a href='https://gt.rstudio.com/'>gt</a>"), html),
     str_col = c("shiny", "gt"),
     pct_col = c(0.75, 0.25)
   )

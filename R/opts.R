@@ -182,16 +182,13 @@ get_colorized_params <- function(
     color
 ) {
 
-  style_filter <- style
-  color_filter <- color
-
-  as.list(
-    dplyr::filter(
+  res <-
+    vctrs::vec_slice(
       styles_colors_params,
-      style == style_filter,
-      color == color_filter
+      styles_colors_params$style == style &
+        styles_colors_params$color == color
     )
-  )
+  as.list(res)
 }
 
 #' Option to put interactive elements in an HTML table
@@ -1036,19 +1033,24 @@ get_padding_option_value_list <- function(scale, type) {
   # Get the padding parameters from `dt_options_tbl` that relate
   # to the `type` (either vertical or horizontal padding)
   padding_params <-
-    dplyr::filter(dt_options_tbl, grepl(paste0(pattern, "$"), parameter))
-  padding_params <- padding_params$parameter
+    vctrs::vec_slice(
+      dt_options_tbl$parameter,
+      endsWith(dt_options_tbl$parameter, pattern)
+    )
 
-  padding_options <- dplyr::filter(dt_options_tbl, parameter %in% padding_params)
-  padding_options <- dplyr::select(padding_options, "parameter", "value")
+  padding_options <-
+    vctrs::vec_slice(
+      dt_options_tbl[, c("parameter", "value")],
+      dt_options_tbl$parameter %in% padding_params
+    )
   padding_options <-
     dplyr::mutate(
       padding_options,
-      parameter = gsub(pattern, gsub("_", ".", pattern, fixed = TRUE), parameter, fixed = TRUE)
+      parameter = gsub(pattern, gsub("_", ".", pattern, fixed = TRUE), parameter, fixed = TRUE),
+      value = unlist(value),
+      px = as.numeric(gsub("px", "", value, fixed = TRUE)),
+      px = px * scale
     )
-  padding_options <- dplyr::mutate(padding_options, value = unlist(value))
-  padding_options <- dplyr::mutate(padding_options, px = as.numeric(gsub("px", "", value, fixed = TRUE)))
-  padding_options <- dplyr::mutate(padding_options, px = px * scale)
 
   create_option_value_list(
     padding_options$parameter,
@@ -1757,89 +1759,4 @@ opt_css <- function(
     data = data,
     table.additional_css = additional_css
   )
-}
-
-normalize_font_input <- function(font_input, call = rlang::caller_env()) {
-
-  if (!inherits(font_input, c("character", "list", "font_css"))) {
-    cli::cli_abort(
-      "{.arg font} must be a list or a character vector, not {.obj_type_friendly {font_input}}.",
-      call = call
-    )
-  }
-
-  if (inherits(font_input, "character")) {
-    font_input <- list(font_input)
-  }
-
-  # Unlist a list of lists; this normalizes the value for `font_input`
-  # in the cases where multiple fonts were provided in `c()` and `list()`
-  if (any(vapply(font_input, is.list, FUN.VALUE = logical(1)))) {
-    font_input <- unlist(font_input, recursive = FALSE)
-  }
-
-  if (is.null(names(font_input))) {
-    font_names <- unlist(font_input)
-    import_stmts <- ""
-  } else {
-    font_names <- unique(unname(unlist(font_input[names(font_input) %in% c("name", "")])))
-    import_stmts <- unique(unname(unlist(font_input[names(font_input) %in% "import_stmt"])))
-  }
-
-  font_list <-
-    list(
-      name = font_names,
-      import_stmt = import_stmts
-    )
-
-  class(font_list) <- "font_css"
-  font_list
-}
-
-# Create an option-value list with a vector of arg names from the
-# `tab_options()` function and either one value or n-length values
-# corresponding to those options
-create_option_value_list <- function(tab_options_args, values) {
-
-  # Validate the length of the `values` vector
-  if (length(values) == 1) {
-
-    values <- rep_len(values, length(tab_options_args))
-
-  } else if (length(values) != length(tab_options_args)) {
-
-    cli::cli_abort(
-      "The length of the `values` vector must be `1` or the length of
-      `tab_options_args`."
-    )
-  }
-
-  as.list(stats::setNames(object = values, tab_options_args))
-}
-
-create_default_option_value_list <- function(tab_options_args) {
-
-  lapply(
-    stats::setNames(, tab_options_args),
-    FUN = function(x) {
-      dt_options_get_default_value(gsub(".", "_", x, fixed = TRUE))
-    }
-  )
-}
-
-# Validate any vector of `tab_options()` argument names
-validate_tab_options_args <- function(tab_options_args) {
-
-  if (!all(tab_options_args %in% tab_options_arg_names)) {
-    cli::cli_abort("All `tab_options_args` must be valid names.")
-  }
-}
-
-# Do multiple calls of `tab_options()` with an option-value list (`options`)
-tab_options_multi <- function(data, options) {
-
-  # Validate the names of the `options`
-  validate_tab_options_args(names(options))
-
-  do.call(tab_options, c(list(data = data), options))
 }

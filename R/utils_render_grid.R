@@ -994,6 +994,7 @@ render_grid_svg <- function(label, style, margin) {
   raster <- try_fetch(
     {
       svg_string %>%
+        # charToRaw("") return character(0)
         charToRaw() %>%
         rsvg::rsvg_nativeraster(width = w) %>%
         grid::rasterGrob(

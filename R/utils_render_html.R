@@ -825,9 +825,12 @@ create_columns_component_h <- function(data) {
 
     remaining_headings_labels <- dt_boxhead_get(data = data)
     remaining_headings_labels <-
-      dplyr::filter(remaining_headings_labels, var %in% remaining_headings)
+      vctrs::vec_slice(
+        remaining_headings_labels$column_label,
+        remaining_headings_labels$var %in% remaining_headings
+      )
     remaining_headings_labels <-
-      unlist(dplyr::pull(remaining_headings_labels, column_label))
+      unlist(remaining_headings_labels)
 
     col_alignment <- col_alignment[-1][!(headings_vars %in% solo_headings)]
 
@@ -1624,11 +1627,15 @@ create_source_notes_component_h <- function(data) {
   # Get the style attrs for the source notes
   if ("source_notes" %in% styles_tbl$locname) {
 
-    source_notes_style <- dplyr::filter(styles_tbl, locname == "source_notes")
+    source_notes_style <-
+      vctrs::vec_slice(
+        styles_tbl$html_style,
+        !is.na(styles_tbl$locname) & styles_tbl$locname == "source_notes"
+        )
 
     source_notes_styles <-
-      if (nrow(source_notes_style) > 0) {
-        paste(source_notes_style$html_style, collapse = " ")
+      if (length(source_notes_style) > 0) {
+        paste(source_notes_style, collapse = " ")
       } else {
         NULL
       }

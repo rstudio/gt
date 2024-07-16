@@ -1,7 +1,7 @@
-# tab_style errors if problems occur
+# tab_style() errors if locations can't be resolved
 
     Code
-      data %>% tab_style(style = list(cell_fill(color = "green"), cell_text(color = "white")),
+      tab_style(data, style = list(cell_fill(color = "green"), cell_text(color = "white")),
       locations = cells_summary(groups = "Mercs", columns = starts_with("x"), rows = 2))
     Condition
       Error in `tab_style()`:
@@ -9,11 +9,8 @@
       Caused by error in `cells_summary()`:
       ! The location requested could not be resolved.
       * Review the expression provided as `columns`.
-
----
-
     Code
-      data %>% tab_style(style = list(cell_fill(color = "green"), cell_text(color = "white")),
+      tab_style(data, style = list(cell_fill(color = "green"), cell_text(color = "white")),
       locations = cells_summary(groups = "Mercs", columns = starts_with("m"), rows = starts_with(
         "x")))
     Condition
@@ -22,11 +19,8 @@
       Caused by error in `cells_summary()`:
       ! The location requested could not be resolved.
       * Review the expression provided as `rows`.
-
----
-
     Code
-      data %>% tab_style(style = list(cell_fill(color = "green"), cell_text(color = "white")),
+      tab_style(data, style = list(cell_fill(color = "green"), cell_text(color = "white")),
       locations = cells_column_labels(`non existent`))
     Condition
       Error in `tab_style()`:
@@ -34,11 +28,8 @@
       Caused by error in `cells_column_labels()`:
       ! Can't select columns that don't exist.
       x Column `non existent` doesn't exist.
-
----
-
     Code
-      data %>% tab_style(style = list(cell_fill(color = "green"), cell_text(color = "white")),
+      tab_style(data, style = list(cell_fill(color = "green"), cell_text(color = "white")),
       locations = cells_column_spanners(2))
     Condition
       Error in `tab_style()`:
@@ -80,17 +71,7 @@
       Error in `tab_style()`:
       ! Failed to style the body of the table.
       Caused by error in `cells_body()`:
-      ! Row `Mazda RX7` does not exist in the data.
-
-# tab_row_group warns when others_label is not empty
-
-    Code
-      a_gt <- data %>% tab_row_group(others_label = "Others1")
-    Condition
-      Warning:
-      Since gt v0.3.0 the `others_label` argument has been deprecated.
-      * Use `tab_options(row_group.default_label = <label>)` to set this label.
-      This warning is displayed once every 8 hours.
+      ! Row "Mazda RX7" does not exist in the data.
 
 # Using fonts in `from_column()` works within `cell_*()` fns
 

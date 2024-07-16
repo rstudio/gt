@@ -1,5 +1,9 @@
 # gt (development version)
 
+## New features
+
+* PDF output now defaults to a full-width floating environment using `tabular*` (@AronGullickson, #1588). Float position can be controlled by the `latex.tbl.pos` argument in `tab_options`. Quarto users can alternatively use the `tbl-pos` argument to control positioning. To use a `longtable` environment instead, use `tab_option(latex.use_longtable = TRUE)`.
+
 ## Interactive table support
 
 * Interactive tables will show no border if `opt_table_lines(extent = "none")` is specified (#1307).
@@ -9,6 +13,19 @@
   * `column_labels.background.color`, `row_group.background.color`, `row_group.font.weight`, `table_body.hlines.style`,
      `table.font.weight`, `table.font.size`, `stub.font.weight` (#1693).
 
+* `opt_interactive()` now works when columns are merged with `cols_merge()` (@olivroy, #1785). 
+
+* `opt_interactive()` now works when columns are substituted with `sub_*()` (@olivroy, #1759). 
+
+## Bug fixes
+
+* Improved error messages for the `text_transform()` function if `locations` couldn't be resolved. (@olivroy, #1774)
+
+* `tab_row_group()` gives a more precise error message when `rows` can't be resolved correctly (#1535). (@olivroy, #1770)
+
+* Fixed an issue where `md("")` would fail in Quarto. (@olivroy, #1769)
+
+* Fixed a bug in using `pct()` column widths with `as_gtable()` (@teunbrand, #1771)
 
 # gt 0.11.0
 

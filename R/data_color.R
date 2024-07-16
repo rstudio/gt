@@ -68,7 +68,7 @@
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` // *default:* `everything()`
+#'   [`<column-targeting expression>`][rows-columns] // *default:* `everything()`
 #'
 #'   The columns to which cell data color operations are constrained. Can either
 #'   be a series of column names provided in `c()`, a vector of column indices,
@@ -77,7 +77,7 @@
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` // *default:* `everything()`
+#'   [`<row-targeting expression>`][rows-columns] // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for cell data color operations. The default
@@ -121,8 +121,9 @@
 #'
 #'   `vector<character>` // *default:* `NULL` (`optional`)
 #'
-#'   A vector of color names, the name of an **RColorBrewer** palette, the name
-#'   of a **viridis** palette, or a discrete palette accessible from the
+#'   A vector of color names, a color class that can be cast to a vector of
+#'   color names, the name of an **RColorBrewer** palette, the name of a
+#'   **viridis** palette, or a discrete palette accessible from the
 #'   **paletteer** package using the `<package>::<palette>` syntax (e.g.,
 #'   `"wesanderson::IsleofDogs1"`). If providing a vector of colors as a
 #'   palette, each color value provided must either be a color name (Only R/X11
@@ -241,42 +242,6 @@
 #'   `palette` argument.
 #'
 #' @return An object of class `gt_tbl`.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value greater than
-#' 1,000,000 (excluding any `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given coloring
-#' function/method will be skipped over. One strategy is to color the bulk of
-#' cell values with one formatting function and then constrain the columns for
-#' later passes (the last coloring done to a cell is what you get in the final
-#' output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
 #'
 #' @section Color computation methods:
 #'
@@ -789,7 +754,7 @@ data_color <- function(
       rlang::check_installed(
         "paletteer",
         reason = "to use palettes with the <package>::<palette> syntax."
-        )
+      )
 
       # Parse the `palette` string and extract the two different
       # components: the package that the palette comes from and the
@@ -835,9 +800,16 @@ data_color <- function(
 
       # Getting to this stage means the palette exists in the user's
       # installation of paletteer; extract the palette with the
-      # `paletteer::paletteer_d()` and coerce to a character vector
-      palette <- as.character(paletteer::paletteer_d(palette = palette))
+      # `paletteer::paletteer_d()`
+      palette <- paletteer::paletteer_d(palette = palette)
     }
+
+    # Cast the palette to a character vector for compatibility with
+    # scales:::toPaletteFunc(), which does not have methods for classed color
+    # vectors (such as those in the paletteer package). Casting is done here so
+    # classed color vectors from packages other than paletteer can also be used
+    # with `palette` (#1155).
+    palette <- as.character(palette)
   }
 
   # Get the internal data table

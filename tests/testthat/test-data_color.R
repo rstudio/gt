@@ -523,6 +523,77 @@ test_that("The correct color values are obtained when defining a palette", {
     )
 })
 
+test_that("data_color() works with classed colors (#1155)", {
+  # Create a `rgba_hex_colors_mixed_classed` object by using `data_color` with
+  # classed color values written with mixed #RRGGBB, #RRGGBBAA, and named forms
+  rgba_hex_colors_mixed_classed <- structure(
+    c("red", "#FFA50060", "#00FF00", "#0000BB90"),
+    class = "test_colour_class"
+  )
+
+  tbl_html_hex_colors_mixed_classed <-
+    test_tbl %>%
+    gt() %>%
+    data_color(
+      columns = min_sza,
+      palette = rgba_hex_colors_mixed_classed,
+      autocolor_text = TRUE
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect 12 unique color values to have been generated and used
+  tbl_html_hex_colors_mixed_classed %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    unique() %>%
+    expect_length(12)
+
+  # Expect color values to be of either the #RRGGBB or the
+  # 'rgba()' CSS value form
+  tbl_html_hex_colors_mixed_classed %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    expect_match("(?:^#[0-9A-F]{6}$|^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$)")
+
+  # Expect all color values to be identical to those from
+  # the previous table
+  expect_identical(
+    tbl_html_hex_colors_mixed_classed %>%
+      selection_value("style") %>%
+      gsub("(background-color: |; color: .*)", "", .),
+    tbl_html_hex_colors_mixed_classed %>%
+      selection_value("style") %>%
+      gsub("(background-color: |; color: .*)", "", .)
+  )
+
+  # Expect the alpha values to have interpolation, yielding
+  # several different values between 0 and 1
+  (
+    tbl_html_hex_colors_mixed_classed %>%
+      selection_value("style") %>%
+      gsub("(background-color: |; color: .*)", "", .)
+  ) %>%
+    sort() %>%
+    .[3:length(.)] %>%
+    rgba_to_hex() %>%
+    substring(8, 9) %>%
+    unique() %>%
+    length() %>%
+    expect_gt(6)
+
+  # Expect that the text colors vary between #000000 and #FFFFFF
+  # since the `autocolor_text` option is TRUE (the default case)
+  (
+    (tbl_html_hex_colors_mixed_classed %>%
+       selection_value("style") %>%
+       gsub("(.*: |;$)", "", .)) %in%
+      c("#000000", "#FFFFFF")
+  ) %>%
+    all() %>%
+    expect_true()
+})
+
 test_that("Color palettes can be obtained from the paletteer package", {
 
   skip_if_not_installed("paletteer")

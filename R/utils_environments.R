@@ -22,10 +22,6 @@
 #------------------------------------------------------------------------------#
 
 
-check_quarto <- function() {
-  Sys.getenv("QUARTO_BIN_PATH") != ""
-}
-
 check_dbnb <- function() {
   Sys.getenv("DATABRICKS_RUNTIME_VERSION") != ""
 }
