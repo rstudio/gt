@@ -584,8 +584,9 @@ create_body_component_l <- function(data, colwidth_df) {
         n_rows_in_group <- n_rows_in_group + dim(list_of_summaries$summary_df_data_list[[i]])[1L]
       }
       row_splits_body[[groups_rows_df$row_start[i]]][1] <-
-        sprintf("\\multirow{%d}{=}{%s}",
+        sprintf("\\multirow{%d}{%s}{%s}",
                 n_rows_in_group,
+                if (colwidth_df$unspec[1L] == 1L) "*" else "=",
                 groups_rows_df$group_label[i])
         #groups_rows_df$group_label[i]
     }
