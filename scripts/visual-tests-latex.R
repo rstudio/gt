@@ -1,11 +1,12 @@
 header_latex <- c(
-  "---", 'title: "LaTeX Quarto test"', "editor: source", "format:", "  pdf:",
+  "---", 'title: "LaTeX Quarto test"',  "date: today",
+  "editor: source", "format:", "  pdf:",
   "    colorlinks: true ", "    geometry:", "      - top=10mm",
   "      - left=10mm", "      - bottom=10mm", "    hyperrefoptions:",
   "      - linktoc=all", "toc: false", "tbl-cap-location: bottom", "lot: true",
   "keep-tex: true",
   "html-table-processing: none", "---", "",
-  "<!--- This file is generated from sourcing scripts/visual-tests-latex.R You can add more tests to vignettes/gt-visual.qmd"
+  "<!--- This file is generated from sourcing scripts/visual-tests-latex.R You can add more tests to vignettes/gt-visual.qmd -->"
 )
 
 strip_knitr_empty <- function(lines) {
@@ -106,10 +107,20 @@ for (i in seq_along(list_lines)) {
   }
 }
 
+# Using output similar to knitr::spin
 final_lines <- unlist(list_lines)
-c(header_latex,
+c(paste0("#' ", header_latex),
+  "## --------",
+  # Comment / uncomment here to compare between released version and current.
+ # "library(gt)",
+  "devtools::load_all(\".\")",
+ "packageVersion('gt')",
+  "",
+  "#'",
+  "#' {{< pagebreak >}}",
+  "#'",
   final_lines
 ) |>
-  writeLines("pkgdown/assets/gt-latex.qmd")
-quarto::quarto_render("pkgdown/assets/gt-latex.qmd")
-unlink("pkgdown/assets/gt-latex.qmd")
+  writeLines("pkgdown/assets/gt-latex.R")
+quarto::quarto_render("pkgdown/assets/gt-latex.R")
+unlink("pkgdown/assets/gt-latex.R")

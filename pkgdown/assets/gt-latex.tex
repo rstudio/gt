@@ -67,6 +67,46 @@
 \fi
 \makeatother
 
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
@@ -93,6 +133,13 @@
 \def\fps@figure{htbp}
 \makeatother
 
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{anyfontsize}
+\usepackage{multirow}
 \KOMAoption{captions}{tablesignature}
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
@@ -155,144 +202,166 @@
 
 \title{LaTeX Quarto test}
 \author{}
-\date{}
+\date{2024-07-16}
 
 \begin{document}
 \maketitle
 
 \listoftables
 
-\textless!--- This file is generated from sourcing
-scripts/visual-tests-latex.R You can add more tests to
-vignettes/gt-visual.qmd \#\#
--------------------------------------------------------------------------------------------------------------------
-\#\textbar{} label: background-color tab \textless- exibble
-\textbar\textgreater{} gt() \textbar\textgreater{} tab\_options(
-column\_labels.background.color = ``gray'' ) \textbar\textgreater{}
-tab\_spanner(c(num, char), label = ``A spanner'') \textbar\textgreater{}
-tab\_header(title = ``background color'')
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{load\_all}\NormalTok{(}\StringTok{"."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\subsection{-------------------------------------------------------------------------------------------------------------------}\label{section}
+\begin{verbatim}
+i Loading gt
+\end{verbatim}
 
-\#\textbar{} label: tbl-background-color \#\textbar{} tbl-cap:
-``background color'' \#\textbar{} echo: false tab
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{packageVersion}\NormalTok{(}\StringTok{\textquotesingle{}gt\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\subsection{-------------------------------------------------------------------------------------------------------------------}\label{section-1}
+\begin{verbatim}
+[1] '0.11.0.9000'
+\end{verbatim}
 
-\#\textbar{} label: complete-output tab \textless- pizzaplace
-\%\textgreater\% dplyr::filter(type \%in\% c(``classic'', ``veggie''))
-\%\textgreater\% dplyr::group\_by(type, size) \%\textgreater\%
-dplyr::summarize( sold = dplyr::n(), income = sum(price), .groups =
-``drop'' ) \%\textgreater\% gt(rowname\_col = ``size'', groupname\_col =
-``type'') \%\textgreater\% tab\_header(title = ``Complete output'')
-\%\textgreater\% fmt\_integer(columns = sold) \%\textgreater\%
-fmt\_currency(columns = income) \%\textgreater\% summary\_rows( fns =
-list(label = ``All Sizes'', fn = ``sum''), side = c(``top''), fmt =
-list( \textasciitilde{} fmt\_integer(., columns = sold),
-\textasciitilde{} fmt\_currency(., columns = income) ) )
-\%\textgreater\% tab\_options( summary\_row.background.color =
-``gray95'', row\_group.as\_column = TRUE ) \%\textgreater\%
-tab\_stub\_indent( rows = everything(), indent = 2 ) \%\textgreater\%
-grand\_summary\_rows( columns = c(``sold'', ``income''), fns = list(Sum
-\textasciitilde{} sum(.)), fmt = \textasciitilde{} fmt\_number(.) )
-\%\textgreater\% tab\_caption(``Here be caption text'') \%\textgreater\%
-tab\_spanner( label = ``Spanner'', columns = c(``sold'', ``income'') )
-\%\textgreater\% tab\_stubhead(``Stubhead label'') \%\textgreater\%
-tab\_source\_note(``Source: the pizzaria'') \%\textgreater\%
-tab\_footnote(``Pineapples not included'')
+\newpage{}
 
-\subsection{-------------------------------------------------------------------------------------------------------------------}\label{section-2}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tab }\OtherTok{\textless{}{-}}\NormalTok{ exibble }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{gt}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{tab\_options}\NormalTok{(}
+    \AttributeTok{column\_labels.background.color =} \StringTok{"gray"}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{tab\_spanner}\NormalTok{(}\FunctionTok{c}\NormalTok{(num, char), }\AttributeTok{label =} \StringTok{"A spanner"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{tab\_header}\NormalTok{(}\AttributeTok{title =} \StringTok{"background color"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\#\textbar{} label: tbl-complete-output \#\textbar{} tbl-cap: ``Complete
-output'' \#\textbar{} echo: false tab
+\begin{table}
 
-\subsection{-------------------------------------------------------------------------------------------------------------------}\label{section-3}
+\centering{
 
-\#\textbar{} label: math-rendering tab \textless- data.frame( idx =
-1:37, l\_time\_domain = c( ``\(1\)'', ``\({{\\bf{e}}^{a\\,t}}\)'',
-``\({t^n},\\,\\,\\,\\,\\,n = 1,2,3, \\ldots\)'', ``\({t^p}, p > -1\)'',
-``\(\\sqrt t\)'',
-``\({t^{n - \\frac{1}{2}}},\\,\\,\\,\\,\\,n = 1,2,3, \\ldots\)'',
-``\(\\sin \\left( {at} \\right)\)'',
-``\(\\cos \\left( {at} \\right)\)'',
-``\(t\\sin \\left( {at} \\right)\)'',
-``\(t\\cos \\left( {at} \\right)\)'',
-``\(\\sin \\left( {at} \\right) - at\\cos \\left( {at} \\right)\)'',
-``\(\\sin \\left( {at} \\right) + at\\cos \\left( {at} \\right)\)'',
-``\(\\cos \\left( {at} \\right) - at\\sin \\left( {at} \\right)\)'',
-``\(\\cos \\left( {at} \\right) + at\\sin \\left( {at} \\right)\)'',
-``\(\\sin \\left( {at + b} \\right)\)'',
-``\(\\cos \\left( {at + b} \\right)\)'',
-``\(\\sinh \\left( {at} \\right)\)'',
-``\(\\cosh \\left( {at} \\right)\)'',
-``\({{\\bf{e}}^{at}}\\sin \\left( {bt} \\right)\)'',
-``\({{\\bf{e}}^{at}}\\cos \\left( {bt} \\right)\)'',
-``\({{\\bf{e}}^{at}}\\sinh \\left( {bt} \\right)\)'',
-``\({{\\bf{e}}^{at}}\\cosh \\left( {bt} \\right)\)'',
-``\({t^n}{{\\bf{e}}^{at}},\\,\\,\\,\\,\\,n = 1,2,3, \\ldots\)'',
-``\(f\\left( {ct} \\right)\)'',
-``\({u_c}\\left( t \\right) = u\\left( {t - c} \\right)\)'',
-``\(\\delta \\left( {t - c} \\right)\)'',
-``\({u_c}\\left( t \\right)f\\left( {t - c} \\right)\)'',
-``\({u_c}\\left( t \\right)g\\left( t \\right)\)'',
-``\({{\\bf{e}}^{ct}}f\\left( t \\right)\)'',
-``\({t^n}f\\left( t \\right),\\,\\,\\,\\,\\,n = 1,2,3, \\ldots\)'',
-``\(\\displaystyle \\frac{1}{t}f\\left( t \\right)\)'',
-``\(\\displaystyle \\int_{{\\,0}}^{{\\,t}}{{\\,f\\left( v \\right)\\,dv}}\)'',
-``\(\\displaystyle \\int_{{\\,0}}^{{\\,t}}{{f\\left( {t - \\tau } \\right)g\\left( \\tau  \\right)\\,d\\tau }}\)'',
-``\(f\\left( {t + T} \\right) = f\\left( t \\right)\)'',
-``\(f'\\left( t \\right)\)'', ``\(f''\\left( t \\right)\)'',
-``\({f^{\\left( n \\right)}}\\left( t \\right)\)'' ),
-l\_laplace\_s\_domain = c( ``\[\\frac{1}{s}\]'',
-``\[\\frac{1}{{s - a}}\]'', ``\[\\frac{{n!}}{{{s^{n + 1}}}}\]'',
-``\[\\frac{{\\Gamma \\left( {p + 1} \\right)}}{{{s^{p + 1}}}}\]'',
-``\[\\frac{{\\sqrt \\pi }}{{2{s^{\\frac{3}{2}}}}}\]'',
-``\[\\frac{{1 \\cdot 3 \\cdot 5 \\cdots \\left( {2n - 1} \\right)\\sqrt \\pi }}{{{2^n}{s^{n + \\frac{1}{2}}}}}\]'',
-``\[\\frac{a}{{{s^2} + {a^2}}}\]'', ``\[\\frac{s}{{{s^2} + {a^2}}}\]'',
-``\[\\frac{{2as}}{{{{\\left( {{s^2} + {a^2}} \\right)}^2}}}\]'',
-``\[\\frac{{{s^2} - {a^2}}}{{{{\\left( {{s^2} + {a^2}} \\right)}^2}}}\]'',
-``\[\\frac{{2{a^3}}}{{{{\\left( {{s^2} + {a^2}} \\right)}^2}}}\]'',
-``\[\\frac{{2a{s^2}}}{{{{\\left( {{s^2} + {a^2}} \\right)}^2}}}\]'',
-``\[\\frac{{s\\left( {{s^2} - {a^2}} \\right)}}{{{{\\left( {{s^2} + {a^2}} \\right)}^2}}}\]'',
-``\[\\frac{{s\\left( {{s^2} + 3{a^2}} \\right)}}{{{{\\left( {{s^2} + {a^2}} \\right)}^2}}}\]'',
-``\[\\frac{{s\\sin \\left( b \\right) + a\\cos \\left( b \\right)}}{{{s^2} + {a^2}}}\]'',
-``\[\\frac{{s\\cos \\left( b \\right) - a\\sin \\left( b \\right)}}{{{s^2} + {a^2}}}\]'',
-``\[\\frac{a}{{{s^2} - {a^2}}}\]'', ``\[\\frac{s}{{{s^2} - {a^2}}}\]'',
-``\[\\frac{b}{{{{\\left( {s - a} \\right)}^2} + {b^2}}}\]'',
-``\[\\frac{{s - a}}{{{{\\left( {s - a} \\right)}^2} + {b^2}}}\]'',
-``\[\\frac{b}{{{{\\left( {s - a} \\right)}^2} - {b^2}}}\]'',
-``\[\\frac{{s - a}}{{{{\\left( {s - a} \\right)}^2} - {b^2}}}\]'',
-``\[\\frac{{n!}}{{{{\\left( {s - a} \\right)}^{n + 1}}}}\]'',
-``\[\\frac{1}{c}F\\left( {\\frac{s}{c}} \\right)\]'',
-``\[\\frac{{{{\\bf{e}}^{ - cs}}}}{s}\]'', ``\({{\\bf{e}}^{ - cs}}\)'',
-``\({{\\bf{e}}^{ - cs}}F\\left( s \\right)\)'',
-``\({{\\bf{e}}^{ - cs}}{\\mathcal{L}}\\left\\{ {g\\left( {t + c} \\right)} \\right\\}\)'',
-``\(F\\left( {s - c} \\right)\)'',
-``\({\\left( { - 1} \\right)^n}{F^{\\left( n \\right)}}\\left( s \\right)\)'',
-``\(\\int_{{\\,s}}^{{\\,\\infty }}{{F\\left( u \\right)\\,du}}\)'',
-``\(\\displaystyle \\frac{{F\\left( s \\right)}}{s}\)'',
-``\(F\\left( s \\right)G\\left( s \\right)\)'',
-``\(\\displaystyle \\frac{{\\displaystyle \\int_{{\\,0}}^{{\\,T}}{{{{\\bf{e}}^{ - st}}f\\left( t \\right)\\,dt}}}}{{1 - {{\\bf{e}}^{ - sT}}}}\)'',
-``\(sF\\left( s \\right) - f\\left( 0 \\right)\)'',
-``\({s^2}F\\left( s \\right) - sf\\left( 0 \\right) - f'\\left( 0 \\right)\)'',
-``\({s^n}F\\left( s \\right) - {s^{n - 1}}f\\left( 0 \\right) - {s^{n - 2}}f'\\left( 0 \\right) \\cdots - s{f^{\\left( {n - 2} \\right)}}\\left( 0 \\right) - {f^{\\left( {n - 1} \\right)}}\\left( 0 \\right)\)''
-) ) \textbar\textgreater{} gt() \textbar\textgreater{} fmt\_markdown()
-\textbar\textgreater{} cols\_label( idx = ``\,``, l\_time\_domain =
-md(''\(f\\left( t \\right) = {\\mathcal{L}^{\\,\\, - 1}}\\left\\{ {F\\left( s \\right)} \\right\\}\)``),
-l\_laplace\_s\_domain =
-md(''\(F\\left( s \\right) = \\mathcal{L}\\left\\{ {f\\left( t \\right)} \\right\\}\)``)
-) \textbar\textgreater{} tab\_header(title =''Math Rendering'')
-\textbar\textgreater{} tab\_source\_note( source\_note = md(``The
-hyperbolic functions:
-\(\\cosh \\left( t \\right) = \\frac{{{{\\bf{e}}^t} + {{\\bf{e}}^{ - t}}}}{2}\)
-,
-\(\\sinh \\left( t \\right) = \\frac{{{{\\bf{e}}^t} - {{\\bf{e}}^{ - t}}}}{2}\)'')
-) \textbar\textgreater{} cols\_align(align = ``center'')
+\caption*{
+{\large background color}
+} 
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}rlcrrrrll}
+\toprule
+\multicolumn{2}{c}{A spanner} &  &  &  &  &  &  &  \\ 
+\cmidrule(lr){1-2}
+num & char & fctr & date & time & datetime & currency & row & group \\ 
+\midrule\addlinespace[2.5pt]
+1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\_1 & grp\_a \\ 
+2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\_2 & grp\_a \\ 
+3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\_3 & grp\_a \\ 
+4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\_4 & grp\_a \\ 
+5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\_5 & grp\_b \\ 
+NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\_6 & grp\_b \\ 
+7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\_7 & grp\_b \\ 
+8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\_8 & grp\_b \\ 
+\bottomrule
+\end{tabular*}
 
-\subsection{-------------------------------------------------------------------------------------------------------------------}\label{section-4}
+}
 
-\#\textbar{} label: tbl-math-rendering \#\textbar{} tbl-cap: ``Math
-Rendering'' \#\textbar{} echo: false tab
+\caption{\label{tbl-background-color}background color}
+
+\end{table}%
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tab }\OtherTok{\textless{}{-}}\NormalTok{ pizzaplace }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(type }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"classic"}\NormalTok{, }\StringTok{"veggie"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(type, size) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarize}\NormalTok{(}
+    \AttributeTok{sold =}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{income =} \FunctionTok{sum}\NormalTok{(price),}
+    \AttributeTok{.groups =} \StringTok{"drop"}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gt}\NormalTok{(}\AttributeTok{rowname\_col =} \StringTok{"size"}\NormalTok{, }\AttributeTok{groupname\_col =} \StringTok{"type"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_header}\NormalTok{(}\AttributeTok{title =} \StringTok{"Complete output"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{fmt\_integer}\NormalTok{(}\AttributeTok{columns =}\NormalTok{ sold) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{fmt\_currency}\NormalTok{(}\AttributeTok{columns =}\NormalTok{ income) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summary\_rows}\NormalTok{(}
+    \AttributeTok{fns =} \FunctionTok{list}\NormalTok{(}\AttributeTok{label =} \StringTok{"All Sizes"}\NormalTok{, }\AttributeTok{fn =} \StringTok{"sum"}\NormalTok{),}
+    \AttributeTok{side =} \FunctionTok{c}\NormalTok{(}\StringTok{"top"}\NormalTok{),}
+    \AttributeTok{fmt =} \FunctionTok{list}\NormalTok{(}
+      \SpecialCharTok{\textasciitilde{}} \FunctionTok{fmt\_integer}\NormalTok{(., }\AttributeTok{columns =}\NormalTok{ sold),}
+      \SpecialCharTok{\textasciitilde{}} \FunctionTok{fmt\_currency}\NormalTok{(., }\AttributeTok{columns =}\NormalTok{ income)}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_options}\NormalTok{(}
+    \AttributeTok{summary\_row.background.color =} \StringTok{"gray95"}\NormalTok{,}
+    \AttributeTok{row\_group.as\_column =} \ConstantTok{TRUE}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_stub\_indent}\NormalTok{(}
+    \AttributeTok{rows =} \FunctionTok{everything}\NormalTok{(),}
+    \AttributeTok{indent =} \DecValTok{2}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{grand\_summary\_rows}\NormalTok{(}
+    \AttributeTok{columns =} \FunctionTok{c}\NormalTok{(}\StringTok{"sold"}\NormalTok{, }\StringTok{"income"}\NormalTok{),}
+    \AttributeTok{fns =} \FunctionTok{list}\NormalTok{(Sum }\SpecialCharTok{\textasciitilde{}} \FunctionTok{sum}\NormalTok{(.)),}
+    \AttributeTok{fmt =} \SpecialCharTok{\textasciitilde{}} \FunctionTok{fmt\_number}\NormalTok{(.)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_caption}\NormalTok{(}\StringTok{"Here be caption text"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_spanner}\NormalTok{(}
+    \AttributeTok{label =} \StringTok{"Spanner"}\NormalTok{,}
+    \AttributeTok{columns =} \FunctionTok{c}\NormalTok{(}\StringTok{"sold"}\NormalTok{, }\StringTok{"income"}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_stubhead}\NormalTok{(}\StringTok{"Stubhead label"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_source\_note}\NormalTok{(}\StringTok{"Source: the pizzaria"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_footnote}\NormalTok{(}\StringTok{"Pineapples not included"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\centering{
+
+\caption*{
+{\large Complete output}
+} 
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l|l|rr}
+\toprule
+\multicolumn{2}{l}{} & \multicolumn{2}{c}{Spanner} \\ 
+\cmidrule(lr){3-4}
+\multicolumn{2}{c}{Stubhead label} & sold & income \\ 
+\midrule\addlinespace[2.5pt]
+\multirow{6}{=}{classic} & \multicolumn{1}{l|}{All Sizes} & 14,888 & \$220,053.10 \\ 
+\cmidrule(l{-0.05em}r){2-4}
+ & \hspace*{7.5pt} L & 4,057 & \$74,518.50 \\ 
+ & \hspace*{7.5pt} M & 4,112 & \$60,581.75 \\ 
+ & \hspace*{7.5pt} S & 6,139 & \$69,870.25 \\ 
+ & \hspace*{7.5pt} XL & 552 & \$14,076.00 \\ 
+ & \hspace*{7.5pt} XXL & 28 & \$1,006.60 \\ 
+\midrule\addlinespace[2.5pt]
+\multirow{4}{=}{veggie} & \multicolumn{1}{l|}{All Sizes} & 11,649 & \$193,690.45 \\ 
+\cmidrule(l{-0.05em}r){2-4}
+ & \hspace*{7.5pt} L & 5,403 & \$104,202.70 \\ 
+ & \hspace*{7.5pt} M & 3,583 & \$57,101.00 \\ 
+ & \hspace*{7.5pt} S & 2,663 & \$32,386.75 \\ 
+\midrule 
+\midrule 
+\multicolumn{1}{l|}{} & \multicolumn{1}{l|}{Sum} & 26,537.00 & 413,743.55 \\ 
+\bottomrule
+\end{tabular*}
+\begin{minipage}{\linewidth}
+Pineapples not included\\
+Source: the pizzaria\\
+\end{minipage}
+
+}
+
+\caption{\label{tbl-complete-output}Complete output}
+
+\end{table}%
 
 
 

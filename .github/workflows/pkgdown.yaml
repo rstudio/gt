@@ -43,9 +43,6 @@ jobs:
           extra-packages: any::pkgdown, local::.
           needs: website
 
-      - name: Build LaTeX document
-        run: quarto render pkgdown/assets/gt-latex.qmd
-
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
