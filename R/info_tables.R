@@ -1136,7 +1136,7 @@ info_icons <- function() {
 #' 11-9
 #'
 #' @section Function Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 #' @export
 info_unit_conversions <- function() {
