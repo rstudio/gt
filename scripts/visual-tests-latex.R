@@ -1,15 +1,33 @@
+# This script can be run for alternative visual tests for LaTeX output.
+
+
+# generate the yaml front matter for the pdf / LaTeX Quarto test
 header_latex <- c(
-  "---", 'title: "LaTeX Quarto test"',  "date: today",
-  "editor: source", "format:", "  pdf:",
-  "    colorlinks: true ", "    geometry:", "      - top=10mm",
-  "      - left=10mm", "      - bottom=10mm", "    hyperrefoptions:",
-  "      - linktoc=all", "toc: false", "tbl-cap-location: bottom", "lot: true",
+  "---",
+  'title: "LaTeX Quarto test"',
+  "date: today",
+  "editor: source",
+  "format:",
+  "  pdf:",
+  "    colorlinks: true ",
+  "    geometry:",
+  "      - top=10mm",
+  "      - left=10mm",
+  "      - bottom=10mm",
+  "    hyperrefoptions:",
+  "      - linktoc=all",
+  "toc: false",
+  "tbl-cap-location: bottom",
+  "lot: true",
   "keep-tex: true",
-  "html-table-processing: none", "---", "",
+  "html-table-processing: none",
+  "---",
+  "",
   "<!--- This file is generated from sourcing scripts/visual-tests-latex.R You can add more tests to vignettes/gt-visual.qmd -->"
 )
 
-strip_knitr_empty <- function(lines) {
+# Removes empty chunks.
+.strip_knitr_empty <- function(lines) {
   chunk_start_location <- grep("## ----", lines, fixed = TRUE)
   empty_locations <- !nzchar(lines)
 
@@ -29,7 +47,8 @@ strip_knitr_empty <- function(lines) {
   lines
 }
 
-get_example_metadata <- function(lines) {
+# Get table name and chunk label.
+.get_example_metadata <- function(lines) {
   # Ensure consistent formatting
   chunk_labels <- stringr::str_subset(lines, "#\\| label\\:")
   n_chunks <- length(chunk_labels)
@@ -41,7 +60,7 @@ get_example_metadata <- function(lines) {
     cli::cli_abort(c(
       "The structure is not respected. We have {n_chunks} examples, but {length(table_titles)}.",
       "Each table should be labelled with #| label: and have a tab_header(title = \"\") title"
-      ))
+    ))
   }
 
   chunk_labels <- gsub(".+\\:\\s?(.+)", "\\1", chunk_labels)
@@ -51,10 +70,9 @@ get_example_metadata <- function(lines) {
     label = chunk_labels,
     title = table_titles
   )
-
 }
 
-get_replacement_lines <- function(metadata) {
+.get_replacement_lines <- function(metadata) {
   length.out <- unique(lengths(metadata))
   if (length(length.out) != 1) {
     cli::cli_abort("issue")
@@ -63,7 +81,7 @@ get_replacement_lines <- function(metadata) {
   for (i in seq_along(new_lines)) {
     new_lines[[i]] <- c(
       paste0("#| label: tbl-", metadata$label[[i]]),
-      paste0("#| tbl-cap: \"" , metadata$title[[i]], "\""),
+      paste0("#| tbl-cap: \"", metadata$title[[i]], "\""),
       "#| echo: false",
       "tab"
     )
@@ -71,10 +89,16 @@ get_replacement_lines <- function(metadata) {
   new_lines
 }
 
-lines_html <- function() {
-
+#
+# create lines needed for LaTeX file
+# Basically, takes the qmd file in vignettes/gt-visual.qmd
+# and outputs the lines to be able to render pkgdown/assets/gt-latex.R
+# in order to get pkgdown/assets/gt-latex.pdf
+#
+.tex_lines_for_visual_examples <- function() {
   tmp <- withr::local_tempfile()
   # create output file
+  # we will be able to render this later with knitr::spin!
   knitr::purl("vignettes/gt-visual.qmd", output = tmp, quiet = TRUE)
 
   lines <- readLines(tmp, encoding = "UTF-8", warn = FALSE)
@@ -83,38 +107,57 @@ lines_html <- function() {
     lines,
     "#\\| echo\\: false|opt_interactive|plot\\(tab\\)",
     negate = TRUE
-
   )
   # find the first test (then assume to keep 3 extra lines)
   first_test_identifier <- grep("tab <- ", lines, fixed = TRUE)[1] - 3L
   lines <- lines[-seq_len(first_test_identifier)]
 
   # remove empty chunks
-  lines <- strip_knitr_empty(lines)
-  lines
-}
+  lines <- .strip_knitr_empty(lines)
 
-lines_stripped <-lines_html()
+  # Get the list of chunk labels
 
-replacement_lines <- get_example_metadata(lines_stripped) |> get_replacement_lines()
+  metadata <- .get_example_metadata(lines)
+  # store the new chunk code for each table for LaTeX.
+  replacement_lines <- .get_replacement_lines(metadata)
 
-list_lines <- as.list(lines_stripped)
-n_replacements <- 1
-for (i in seq_along(list_lines)) {
-  if (list_lines[[i]] == "tab") {
-    list_lines[[i]] <- replacement_lines[[n_replacements]]
-    n_replacements <- n_replacements + 1
+  # make the lines a list
+  list_lines <- as.list(lines)
+
+  # prepare for empty chunks replacements with the new latex chunk code
+  # contained in replacement_lines
+
+  # counter for looping in replacement lines
+  n_replacements <- 1
+  for (i in seq_along(list_lines)) {
+    if (list_lines[[i]] == "tab") {
+      # When it is time to replace "tab", by c("label: tbl-{chunk-label}", tbl-cap: "tab_header"))
+      list_lines[[i]] <- replacement_lines[[n_replacements]]
+      # increment n_replacement
+      n_replacements <- n_replacements + 1
+    }
   }
+
+  # make sure the number of replacements done is okay.
+  n_replacements - 1 == length(replacement_lines)
+
+  # put back output as character vector.
+  lines <- unlist(list_lines)
 }
+
+# get the knitr::spin LaTeX lines needed from gt-visual.qmd.
+final_lines <- .tex_lines_for_visual_examples()
 
 # Using output similar to knitr::spin
-final_lines <- unlist(list_lines)
-c(paste0("#' ", header_latex),
+# https://bookdown.org/yihui/rmarkdown-cookbook/spin.html
+c(
+  # roxygen comments in .R knitr files indicate text
+  paste0("#' ", header_latex),
   "## --------",
   # Comment / uncomment here to compare between released version and current.
- # "library(gt)",
+  # "library(gt)",
   "devtools::load_all(\".\")",
- "packageVersion('gt')",
+  "packageVersion('gt')",
   "",
   "#'",
   "#' {{< pagebreak >}}",
@@ -122,5 +165,11 @@ c(paste0("#' ", header_latex),
   final_lines
 ) |>
   writeLines("pkgdown/assets/gt-latex.R")
+# Since Quarto 1.5, quarto can render a script
 quarto::quarto_render("pkgdown/assets/gt-latex.R")
 unlink("pkgdown/assets/gt-latex.R")
+
+# preview the document before comitting
+# fs::file_show("pkgdown/assets/gt-latex.pdf)
+# Could even create visual tests for typst tables.
+
