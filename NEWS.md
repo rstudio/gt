@@ -36,8 +36,6 @@
 
 * `info_time_style()` and `info_date_style()` gain a `locale` argument to preview time and date formatting in a specific locale. (#1747)
 
-* `data_color()` throws a more informative error message if `rows` didn't resolve to anything (#1659). (@olivroy, #1660).
-
 * Several datasets were added to the package: `reactions`, `photolysis`, `peeps`, `nuclides`, `gibraltar`, and `films`. (#1619, #1641, #1664, #1668, #1686, #1695)
 
 ## Improvements to the LaTeX output format
@@ -95,6 +93,8 @@
 * `data_color()` throws a more informative error if an internal calculation failed (e.g., presence of infinite values) (#1373). (@olivroy, #1585)
 
 * `data_color()` provides an informative error message if `rows` doesn't resolve to anything. (@olivroy, #1659)
+
+* `data_color()` provides an error message if `rows` doesn't resolve to anything (#1659). (@olivroy, #1660).
 
 * `summary_rows()` now throws a more informative error message that you should use `grand_summary_rows()` if no row groups are detected (#1292). (@olivroy, #1752)
 
