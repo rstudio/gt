@@ -704,7 +704,7 @@ as_word_tbl_body <- function(
 #' 13-6
 #'
 #' @section Function Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 #' @export
 as_gtable <- function(data, plot = FALSE, text_grob = grid::textGrob) {
