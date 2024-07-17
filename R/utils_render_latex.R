@@ -269,6 +269,48 @@ create_table_start_l <- function(data, colwidth_df) {
   )
 }
 
+#' Create the caption component of a table
+#'
+#' The table caption component contains the caption; if
+#' there are no caption components defined this function will return an empty
+#' string.
+#'
+#' @noRd
+create_caption_component_l <- function(data) {
+
+  # Create the table caption if available
+  table_caption <- dt_options_get_value(data = data, option = "table_caption")
+
+  if (!all(is.na(table_caption))) {
+
+    table_caption <- process_text(table_caption, context = "latex")
+
+    if (isTRUE(getOption("knitr.in.progress"))) {
+
+      table_caption <- kable_caption(label = NULL, table_caption, "latex")
+      ifelse(check_quarto(),
+             "",
+             paste0("\\caption",
+                    latex_group(table_caption),
+                    ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+                           " \\\\ \n",
+                           " \n")
+             )
+      )
+    } else {
+      paste0("\\caption",
+             latex_group(table_caption),
+             ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+                    " \\\\ \n",
+                    " \n")
+      )
+    }
+
+  } else {
+    NULL
+  }
+}
+
 #' Create the heading component of a table
 #'
 #' The table heading component contains the title and possibly a subtitle; if
