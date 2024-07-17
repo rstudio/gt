@@ -67,11 +67,12 @@ An object of class \code{gt_tbl}.
 \description{
 With numeric values in a \strong{gt} table we can transform those to numbers that
 are spelled out with \code{fmt_spelled_num()}. Any values from \code{0} to \code{100} can be
-spelled out so, for example, the value \code{23} will be formatted as \code{"twenty-three"}.
-Providing a locale ID will result in the number spelled out in the locale's
-language rules. For example, should a Swedish locale (\code{"sv"}) be provided,
-the value \code{23} will yield \code{"tjugotre"}. In addition to this, we can
-optionally use the \code{pattern} argument for decoration of the formatted values.
+spelled out so, for example, the value \code{23} will be formatted as
+\code{"twenty-three"}. Providing a locale ID will result in the number spelled out
+in the locale's language rules. For example, should a Swedish locale (\code{"sv"})
+be provided, the value \code{23} will yield \code{"tjugotre"}. In addition to this, we
+can optionally use the \code{pattern} argument for decoration of the formatted
+values.
 }
 \section{Compatibility of formatting function with data values}{
 

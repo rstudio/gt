@@ -39,9 +39,9 @@ All other options passed to the appropriate internal saving function.}
 The file name (invisibly) if the export process is successful.
 }
 \description{
-\code{gtsave()} makes it easy to save a \strong{gt} table to a file. The
-function guesses the file type by the extension provided in the output
-filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file.
+\code{gtsave()} makes it easy to save a \strong{gt} table to a file. The function
+guesses the file type by the extension provided in the output filename,
+producing either an HTML, PDF, PNG, LaTeX, RTF, or Word (.docx) file.
 }
 \details{
 Output filenames with either the \code{.html} or \code{.htm} extensions will produce an

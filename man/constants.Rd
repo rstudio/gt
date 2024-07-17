@@ -33,23 +33,6 @@ updated values became available on May 20, 2019. They are published at
 \emph{National Institute of Standards and Technology} (NIST), Gaithersburg,
 Maryland, USA.
 }
-\section{Examples}{
-
-
-Here is a glimpse at the data available in \code{constants}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(constants)
-#> Rows: 354
-#> Columns: 6
-#> $ name      <chr> "alpha particle-electron mass ratio", "alpha particle mass",~
-#> $ value     <dbl> 7.294300e+03, 6.644657e-27, 5.971920e-10, 3.727379e+03, 4.00~
-#> $ uncert    <dbl> 2.4e-07, 2.0e-36, 1.8e-19, 1.1e-06, 6.3e-11, 1.2e-12, 2.2e-1~
-#> $ sf_value  <dbl> 12, 11, 11, 11, 13, 11, 12, 13, 9, 12, 12, 11, 11, 11, 12, 1~
-#> $ sf_uncert <dbl> 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, ~
-#> $ units     <chr> NA, "kg", "J", "MeV", "u", "kg mol^-1", NA, NA, "m", "kg", "~
-}\if{html}{\out{</div>}}
-}
-
 \section{Dataset ID and Badge}{
 
 DATA-12

@@ -28,8 +28,8 @@ object.
 
 Because it's so essential to know these ID values for targeting purposes
 (when styling with \code{\link[=tab_style]{tab_style()}}, adding footnote marks with
-\code{\link[=tab_footnote]{tab_footnote()}}, etc.), \code{tab_info()} can help with all of this.
-It summarizes (by location) all of the table's ID values and their associated
+\code{\link[=tab_footnote]{tab_footnote()}}, etc.), \code{tab_info()} can help with all of this. It
+summarizes (by location) all of the table's ID values and their associated
 labels. The product is an informational \strong{gt} table, designed for easy
 retrieval of the necessary values.
 }
@@ -40,7 +40,8 @@ Let's use a portion of the \code{\link{gtcars}} dataset to create a \strong{gt} 
 use \code{\link[=tab_spanner]{tab_spanner()}} to group two columns together under a spanner column with
 the ID and label \code{"performance"}. Finally, we can use\code{tab_info()} in a
 separate, interactive statement so that we can inspect a table that
-summarizes the ID values any associated label text for all parts of the table.
+summarizes the ID values any associated label text for all parts of the
+table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
   gtcars |>

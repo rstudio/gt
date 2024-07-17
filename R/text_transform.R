@@ -22,15 +22,16 @@
 #------------------------------------------------------------------------------#
 
 
+# text_replace() ---------------------------------------------------------------
 #' Perform highly targeted text replacement with a regex pattern
 #'
 #' @description
 #'
-#' `text_replace()` provides a specialized interface for replacing text fragments
-#' in table cells with literal text. You need to ensure that you're targeting
-#' the appropriate cells with the `locations` argument. Once that is done, the
-#' remaining two values to supply are for the regex pattern (`pattern`) and the
-#' replacement for all matched text (`replacement`).
+#' `text_replace()` provides a specialized interface for replacing text
+#' fragments in table cells with literal text. You need to ensure that you're
+#' targeting the appropriate cells with the `locations` argument. Once that is
+#' done, the remaining two values to supply are the regex pattern (`pattern`)
+#' and the replacement for all matched text (`replacement`).
 #'
 #' @param pattern *Regex pattern to match with*
 #'
@@ -59,9 +60,9 @@
 #' (1) make that text italicized, and (2) introduce a line break before the text
 #' in parentheses. We can do this with `text_replace()`. The `pattern` value of
 #' `"\\((.*?)\\)"` will match on text between parentheses, and the inner
-#' `"(.*?)"` is a capture group. The `replacement` value of `"<br>(<em>\\1</em>)"`
-#' puts the capture group text `"\\1"` within `<em>` tags, wraps literal
-#' parentheses around it, and prepends a line break tag.
+#' `"(.*?)"` is a capture group. The `replacement` value of
+#' `"<br>(<em>\\1</em>)"` puts the capture group text `"\\1"` within `<em>`
+#' tags, wraps literal parentheses around it, and prepends a line break tag.
 #'
 #' ```r
 #' metro |>
@@ -114,6 +115,7 @@ text_replace <- function(
   )
 }
 
+# text_case_when() -------------------------------------------------------------
 #' Perform whole text replacements using a 'case-when'-expression approach
 #'
 #' @description
@@ -241,17 +243,19 @@ text_case_when <- function(
   )
 }
 
+# text_case_match() ------------------------------------------------------------
 #' Perform whole or partial text replacements with a 'switch'-like approach
 #'
 #' @description
 #'
 #' `text_case_match()` provides a useful interface for a approach to replacing
-#' table cells that behaves much like a switch statement. The targeting of cell for transformation happens with the `.locations` argument.
-#' Once overall targeting is handled, you need to supply a sequence of two-sided
-#' formulas matching of the general form: `<vector_old_text> ~ <new_text>`. In
-#' the left hand side (LHS) there should be a character vector containing
-#' strings to match on. The right hand side (RHS) should contain a single string
-#' (or something coercible to a length one character vector). There's also the
+#' table cells that behaves much like a switch statement. The targeting of cell
+#' for transformation happens with the `.locations` argument. Once overall
+#' targeting is handled, you need to supply a sequence of two-sided formulas
+#' matching of the general form: `<vector_old_text> ~ <new_text>`. In the left
+#' hand side (LHS) there should be a character vector containing strings to
+#' match on. The right hand side (RHS) should contain a single string (or
+#' something coercible to a length one character vector). There's also the
 #' `.replace` argument that changes the matching and replacing behavior. By
 #' default, `text_case_match()` will try to match on entire strings and replace
 #' those strings. This can be changed to a partial matching and replacement
@@ -373,7 +377,7 @@ text_case_match <- function(
   # TODO: perform some basic checking of `...` and stop function
   # should issues arise
 
-  # We rely on dplyr 1.1 (where case_match() was introduced)
+  # We rely on dplyr 1.1 (where `case_match()` was introduced)
 
   text_transform_impl(
     data = .data,
@@ -433,19 +437,20 @@ text_case_match <- function(
   )
 }
 
+# text_transform() -------------------------------------------------------------
 #' Perform text transformations with a custom function
 #'
 #' @description
 #'
 #' Text transforming in **gt** is the act of modifying formatted strings in
-#' targeted cells. `text_transform()` provides the most flexibility
-#' of all the `text_*()` functions in their family of functions. With it, you
-#' target the cells to undergo modification in the `locations` argument while
-#' also supplying a function to the `fn` argument. The function given to `fn`
-#' should ideally at the very least take `x` as an input (it stands for the
-#' character vector that is essentially the targeted cells) and return a
-#' character vector of the same length as the input. Using the construction
-#' `function(x) { .. }` for the function is recommended.
+#' targeted cells. `text_transform()` provides the most flexibility of all the
+#' `text_*()` functions in their family of functions. With it, you target the
+#' cells to undergo modification in the `locations` argument while also
+#' supplying a function to the `fn` argument. The function given to `fn` should
+#' ideally at the very least take `x` as an input (it stands for the character
+#' vector that is essentially the targeted cells) and return a character vector
+#' of the same length as the input. Using the construction `function(x) { .. }`
+#' for the function is recommended.
 #'
 #' @inheritParams fmt_number
 #'

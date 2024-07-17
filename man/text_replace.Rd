@@ -41,11 +41,11 @@ wish to make the transformation happen at different locations.}
 An object of class \code{gt_tbl}.
 }
 \description{
-\code{text_replace()} provides a specialized interface for replacing text fragments
-in table cells with literal text. You need to ensure that you're targeting
-the appropriate cells with the \code{locations} argument. Once that is done, the
-remaining two values to supply are for the regex pattern (\code{pattern}) and the
-replacement for all matched text (\code{replacement}).
+\code{text_replace()} provides a specialized interface for replacing text
+fragments in table cells with literal text. You need to ensure that you're
+targeting the appropriate cells with the \code{locations} argument. Once that is
+done, the remaining two values to supply are the regex pattern (\code{pattern})
+and the replacement for all matched text (\code{replacement}).
 }
 \section{Examples}{
 
@@ -58,9 +58,9 @@ We'd like to modify this further wherever there is text in parentheses:
 (1) make that text italicized, and (2) introduce a line break before the text
 in parentheses. We can do this with \code{text_replace()}. The \code{pattern} value of
 \code{"\\\\((.*?)\\\\)"} will match on text between parentheses, and the inner
-\code{"(.*?)"} is a capture group. The \code{replacement} value of \code{"<br>(<em>\\\\1</em>)"}
-puts the capture group text \code{"\\\\1"} within \verb{<em>} tags, wraps literal
-parentheses around it, and prepends a line break tag.
+\code{"(.*?)"} is a capture group. The \code{replacement} value of
+\code{"<br>(<em>\\\\1</em>)"} puts the capture group text \code{"\\\\1"} within \verb{<em>}
+tags, wraps literal parentheses around it, and prepends a line break tag.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
   dplyr::select(name, caption, lines) |>

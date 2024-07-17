@@ -52,9 +52,9 @@ With \code{rows} we can specify which rows should contain nanoplots in the new
 column. The default \code{\link[=everything]{everything()}} results in all rows in \code{columns} being
 formatted. Alternatively, we can supply a vector of row IDs within \code{c()}, a
 vector of row indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).
-We can also use expressions to filter down to the rows we need(e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}). We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{plot_type}{\emph{The type of nanoplot to display}
 
@@ -533,9 +533,9 @@ time instants: the second of the day that a pizza was sold (this is true
 pizza analytics). We also have the sell price for a pizza, and that'll serve
 as the \emph{y} values. The pizzas belong to four different groups (in the \code{type}
 column) and we'll group by that and create value streams with
-\code{paste(..., collapse = ",")} inside  the \code{dplyr::summarize()} call. With two value
-streams in each row (having the same number of values) we can now make a
-\strong{gt} table with nanoplots.
+\code{paste(..., collapse = ",")} inside  the \code{dplyr::summarize()} call. With two
+value streams in each row (having the same number of values) we can now make
+a \strong{gt} table with nanoplots.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::filter(date == "2015-01-01") |>

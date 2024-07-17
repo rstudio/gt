@@ -40,10 +40,10 @@ An object of class \code{gt_tbl}.
 }
 \description{
 Indentation of row labels is an effective way for establishing structure in a
-table stub. \code{tab_stub_indent()} allows for fine control over
-row label indentation in the stub. We can use an explicit definition of an
-indentation level (with a number between \code{0} and \code{5}), or, employ an
-indentation directive using keywords (\code{"increase"}/\code{"decrease"}).
+table stub. \code{tab_stub_indent()} allows for fine control over row label
+indentation in the stub. We can use an explicit definition of an indentation
+level (with a number between \code{0} and \code{5}), or, employ an indentation
+directive using keywords (\code{"increase"}/\code{"decrease"}).
 }
 \section{Compatibility of arguments with the \code{from_column()} helper function}{
 

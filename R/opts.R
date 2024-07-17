@@ -22,6 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
+# opt_stylize() ----------------------------------------------------------------
 #' Stylize your table with a colorful look
 #'
 #' @description
@@ -191,6 +192,7 @@ get_colorized_params <- function(
   as.list(res)
 }
 
+# opt_interactive() ------------------------------------------------------------
 #' Option to put interactive elements in an HTML table
 #'
 #' @description
@@ -444,6 +446,7 @@ opt_interactive <- function(
   )
 }
 
+# opt_footnote_marks() ---------------------------------------------------------
 #' Option to modify the set of footnote marks
 #'
 #' @description
@@ -566,6 +569,7 @@ opt_footnote_marks <- function(
   tab_options(data = data, footnotes.marks = marks)
 }
 
+# opt_footnote_spec() ----------------------------------------------------------
 #' Option to specify the formatting of footnote marks
 #'
 #' @description
@@ -682,6 +686,7 @@ opt_footnote_spec <- function(
   data
 }
 
+# opt_row_striping() -----------------------------------------------------------
 #' Option to add or remove row striping
 #'
 #' @description
@@ -759,6 +764,7 @@ opt_row_striping <- function(
   )
 }
 
+# opt_align_table_header() -----------------------------------------------------
 #' Option to align the table header
 #'
 #' @description
@@ -840,6 +846,7 @@ opt_align_table_header <- function(
   )
 }
 
+# opt_vertical_padding() -------------------------------------------------------
 #' Option to expand or contract vertical padding
 #'
 #' @description
@@ -932,6 +939,7 @@ opt_vertical_padding <- function(
   )
 }
 
+# opt_horizontal_padding() -----------------------------------------------------
 #' Option to expand or contract horizontal padding
 #'
 #' @description
@@ -1058,6 +1066,7 @@ get_padding_option_value_list <- function(scale, type) {
   )
 }
 
+# opt_all_caps() ---------------------------------------------------------------
 #' Option to use all caps in select table locations
 #'
 #' @description
@@ -1181,6 +1190,7 @@ opt_all_caps <- function(
   )
 }
 
+# opt_table_lines() ------------------------------------------------------------
 #' Option to set table lines to different extents
 #'
 #' @description
@@ -1275,6 +1285,7 @@ opt_table_lines <- function(
   )
 }
 
+# opt_table_outline() ----------------------------------------------------------
 #' Option to wrap an outline around the entire table
 #'
 #' @description
@@ -1411,6 +1422,7 @@ opt_table_outline <- function(
   )
 }
 
+# opt_table_font() -------------------------------------------------------------
 #' Options to define font choices for the entire table
 #'
 #' @description
@@ -1649,6 +1661,7 @@ opt_table_font <- function(
   data
 }
 
+# opt_css() --------------------------------------------------------------------
 #' Option to add custom CSS for the table
 #'
 #' @description

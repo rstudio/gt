@@ -1,3 +1,28 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2024 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
+# tab_footnote() ---------------------------------------------------------------
 #' Add a table footnote
 #'
 #' @description
@@ -14,17 +39,17 @@
 #' letters
 #' 2. multiple footnotes can be applied to the same content (and marks are
 #' always presented in an ordered fashion)
-#' 2. footnote text in the footer is never exactly repeated, **gt** reuses
+#' 3. footnote text in the footer is never exactly repeated, **gt** reuses
 #' footnote marks where needed throughout the table
-#' 3. footnote marks are ordered across the table in a consistent manner (left
+#' 4. footnote marks are ordered across the table in a consistent manner (left
 #' to right, top to bottom)
 #'
 #' Each call of `tab_footnote()` will either add a different footnote to the
 #' footer or reuse existing footnote text therein. One or more cells outside of
-#' the footer are targeted using the [`cells_*()`][location-helper] helper functions
-#' (e.g., [cells_body()], [cells_column_labels()], etc.). You can choose to *not*
-#' attach a footnote mark by simply not specifying anything in the `locations`
-#' argument.
+#' the footer are targeted using the [`cells_*()`][location-helper] helper
+#' functions (e.g., [cells_body()], [cells_column_labels()], etc.). You can
+#' choose to *not* attach a footnote mark by simply not specifying anything in
+#' the `locations` argument.
 #'
 #' By default, **gt** will choose which side of the text to place the footnote
 #' mark via the `placement = "auto"` option. You are, however, always free to
@@ -472,7 +497,12 @@ set_footnote.cells_column_labels <- function(
     placement
 ) {
 
-  resolved <- resolve_cells_column_labels(data = data, object = loc, call = call("cells_column_labels"))
+  resolved <- 
+    resolve_cells_column_labels(
+      data = data,
+      object = loc,
+      call = call("cells_column_labels")
+    )
 
   cols <- resolved$columns
 
@@ -501,7 +531,12 @@ set_footnote.cells_column_spanners <- function(
     placement
 ) {
 
-  resolved <- resolve_cells_column_spanners(data = data, object = loc, call = call("cells_column_spanners"))
+  resolved <-
+    resolve_cells_column_spanners(
+      data = data,
+      object = loc,
+      call = call("cells_column_spanners")
+    )
 
   groups <- resolved$spanners
 
@@ -563,7 +598,12 @@ set_footnote.cells_body <- function(
     placement
 ) {
 
-  resolved <- resolve_cells_body(data = data, object = loc, call = call("cells_body"))
+  resolved <- 
+    resolve_cells_body(
+      data = data,
+      object = loc,
+      call = call("cells_body")
+    )
 
   rows <- resolved$rows
 
@@ -685,7 +725,11 @@ set_footnote.cells_source_notes <- function(
     footnote,
     placement
 ) {
-  cli::cli_abort("Footnotes cannot be applied to source notes.", call = call("cells_source_notes"))
+
+  cli::cli_abort(
+    "Footnotes cannot be applied to source notes.",
+    call = call("cells_source_notes")
+  )
 }
 
 #' @export
@@ -695,5 +739,9 @@ set_footnote.cells_footnotes <- function(
     footnote,
     placement
 ) {
-  cli::cli_abort("Footnotes cannot be applied to other footnotes.", call = call("cells_footnotes"))
+
+  cli::cli_abort(
+    "Footnotes cannot be applied to other footnotes.",
+    call = call("cells_footnotes")
+  )
 }

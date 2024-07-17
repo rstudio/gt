@@ -1,5 +1,28 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2024 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
 
-# cols_merge() -----------------------------------------------------------
+
+# cols_merge() -----------------------------------------------------------------
 #' Merge data from two or more columns to a single column
 #'
 #' @description
@@ -255,7 +278,7 @@ cols_merge <- function(
   )
 }
 
-# cols_merge-uncert() -----------------------------------------------------------
+# cols_merge_uncert() ----------------------------------------------------------
 #' Merge columns to a value-with-uncertainty column
 #'
 #' @description
@@ -884,4 +907,3 @@ cols_merge_resolver <- function(
     pattern = "{1}{sep}{2}"
   )
 }
-
