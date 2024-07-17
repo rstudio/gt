@@ -1,0 +1,145 @@
+---
+title: "gt visual tests"
+format: html
+editor: source
+description: >
+  Visual tests between grid, interactive, LaTeX, and html output.
+code-link: true
+toc: true
+html-table-processing: none
+code-fold: true
+---
+
+
+```{r}
+#| label: setup
+#| output: false
+#| include: false
+
+# You can use this to add more tests.
+# Run source("scripts/visual-tests-latex.R") to update the LaTeX tests as needed.
+# Locally, you can use render to get the tabset view.
+if (isTRUE(as.logical(Sys.getenv("CI", "false"))) || identical(Sys.getenv("IN_PKGDOWN"), "true")
+) {
+  library(gt)
+} else {
+  # allow easier testing with the render button.
+  devtools::load_all(".")
+}
+# All tables are generated in vignettes/visual_tests.R
+# When updating this file, update also pkgdown/assets/gt-latex.qmd
+```
+
+```{r}
+#| eval: false
+library(gt)
+```
+
+You can find [visual tests for LaTeX](https://gt.rstudio.com/gt-latex.pdf)
+
+## Background color {#sec-background-color}
+
+```{r}
+#| label: background-color
+tab <- exibble |>
+  gt() |>
+  tab_options(
+    column_labels.background.color = "gray"
+  ) |>
+  tab_spanner(c(num, char), label = "A spanner") |>
+  tab_header(title = "background color")
+
+```
+
+::: panel-tabset
+### html
+
+```{r}
+#| echo: false
+tab
+```
+
+### interactive
+
+```{r}
+#| echo: false
+opt_interactive(tab)
+```
+
+### plot
+
+```{r}
+#| echo: false  
+plot(tab)
+```
+:::
+
+## Complete output {#sec-complete-output}
+
+```{r}
+#| label: complete-output
+tab <- pizzaplace %>%
+  dplyr::filter(type %in% c("classic", "veggie")) %>%
+  dplyr::group_by(type, size) %>%
+  dplyr::summarize(
+    sold = dplyr::n(),
+    income = sum(price),
+    .groups = "drop"
+  ) %>%
+  gt(rowname_col = "size", groupname_col = "type") %>%
+  tab_header(title = "Complete output") %>%
+  fmt_integer(columns = sold) %>%
+  fmt_currency(columns = income) %>%
+  summary_rows(
+    fns = list(label = "All Sizes", fn = "sum"),
+    side = c("top"),
+    fmt = list(
+      ~ fmt_integer(., columns = sold),
+      ~ fmt_currency(., columns = income)
+    )
+  ) %>%
+  tab_options(
+    summary_row.background.color = "gray95",
+    row_group.as_column = TRUE
+  ) %>%
+  tab_stub_indent(
+    rows = everything(),
+    indent = 2
+  ) %>%
+  grand_summary_rows(
+    columns = c("sold", "income"),
+    fns = list(Sum ~ sum(.)),
+    fmt = ~ fmt_number(.)
+  ) %>%
+  tab_caption("Here be caption text") %>%
+  tab_spanner(
+    label = "Spanner",
+    columns = c("sold", "income")
+  ) %>%
+  tab_stubhead("Stubhead label") %>%
+  tab_source_note("Source: the pizzaria") %>%
+  tab_footnote("Pineapples not included")
+```
+
+::: panel-tabset
+### html
+
+```{r}
+#| echo: false
+tab
+```
+
+### interactive
+
+```{r}
+#| echo: false
+opt_interactive(tab)
+```
+
+### plot
+
+```{r}
+#| echo: false  
+plot(tab)
+```
+:::

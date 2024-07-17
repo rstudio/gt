@@ -13,6 +13,8 @@
 ^LICENSE\.md$
 ^CITATION\.cff$
 vignettes
+^vignettes/\.quarto$
+pkgdown/assets/gt-latex.qmd
 man/figures/
 tests/gt-examples
 tests/performance-monitoring

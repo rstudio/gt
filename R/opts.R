@@ -1272,6 +1272,8 @@ opt_table_lines <- function(
 
   # Get vector of `tab_options()` arg names for all table line styles
   options_vec <- get_tab_options_arg_vec(pattern = "\\.style$")
+  # Remove font.style from affected options
+  options_vec <- grep("font", options_vec, value = TRUE, invert = TRUE)
 
   if (values_vec %in% c("solid", "none")) {
     option_value_list <- create_option_value_list(options_vec, values_vec)

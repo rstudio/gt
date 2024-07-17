@@ -7,6 +7,7 @@ home:
 
 template:
   bootstrap: 5
+  assets: pkgdown/assets
 
 authors:
   JooYoung Seo:
@@ -383,6 +384,26 @@ reference:
     - nuclides
     - rx_adsl
     - rx_addv
+
+
+articles:
+- title: Get started
+  navbar: ~
+  contents:
+  - creating-summary-lines
+- title: Case studies
+  navbar: Case studies
+  contents:
+  - case-study-gtcars
+  - case-study-clinical-tables
+
+- title: Datasets
+  contents:
+  - gt-datasets
+- title: Visual tests
+  contents:
+  - gt-interactive
+  - gt-visual
 
 redirects:
   - ["articles/intro-creating-gt-tables.html", "articles/gt.html"]

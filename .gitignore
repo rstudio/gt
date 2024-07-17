@@ -46,3 +46,4 @@ docs
 *.qmd
 /*.docx
 tests/testthat/Rplots.pdf
+!pkgdown/assets/*.pdf

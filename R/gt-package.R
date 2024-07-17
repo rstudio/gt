@@ -32,3 +32,11 @@
 #'   xml_children xml_child xml_add_child xml_add_sibling xml_ns xml_remove
 ## usethis namespace: end
 NULL
+
+release_bullets <- function() {
+  c(
+    "Check that [visual tests](https://gt.rstudio.com/articles/gt-visual.html) are conclusive",
+    "Add more visual tests of new features in `vignettes/gt-visual.qmd``",
+    "Run `source('scripts/visual-tests-latex.R')` and verify that [LaTeX output](https://gt.rstudio.com/gt-latex.pdf) looks good."
+  )
+}
