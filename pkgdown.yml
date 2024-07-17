@@ -6,8 +6,10 @@ articles:
   case-study-gtcars: case-study-gtcars.html
   creating-summary-lines: creating-summary-lines.html
   gt-datasets: gt-datasets.html
+  gt-interactive: gt-interactive.html
+  gt-visual: gt-visual.html
   gt: gt.html
-last_built: 2024-07-17T14:31Z
+last_built: 2024-07-17T18:33Z
 urls:
   reference: https://gt.rstudio.com/reference
   article: https://gt.rstudio.com/articles

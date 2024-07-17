@@ -19,10 +19,13 @@
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/creating-summary-lines.html">Creating Summary Lines</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Case studies</h6></li>
     <li><a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a></li>
-    <li><a class="dropdown-item" href="../articles/creating-summary-lines.html">Creating Summary Lines</a></li>
-    <li><a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a></li>
+    <li><a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
@@ -51,15 +54,30 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="gt-development-version">gt (development version)<a class="anchor" aria-label="anchor" href="#gt-development-version"></a></h2>
-<ul><li><p>PDF output now defaults to a full-width floating environment using <code>tabular*</code> (<a href="https://github.com/AronGullickson" class="external-link">@AronGullickson</a>, <a href="https://github.com/rstudio/gt/issues/1588" class="external-link">#1588</a>). Float position can be controlled by the <code>latex.tbl.pos</code> argument in <code>tab_options</code>. Quarto users can alternatively use the <code>tbl-pos</code> argument to control positioning. To use a <code>longtable</code> environment instead, use <code>tab_option(latex.use_longtable = TRUE)</code>.</p></li>
-<li><p>Improved error messages for the <code><a href="../reference/text_transform.html">text_transform()</a></code> function if <code>locations</code> couldn’t be resolved. (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1774" class="external-link">#1774</a>)</p></li>
+<div class="section level3">
+<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<ul><li>PDF output now defaults to a full-width floating environment using <code>tabular*</code> (<a href="https://github.com/AronGullickson" class="external-link">@AronGullickson</a>, <a href="https://github.com/rstudio/gt/issues/1588" class="external-link">#1588</a>). Float position can be controlled by the <code>latex.tbl.pos</code> argument in <code>tab_options</code>. Quarto users can alternatively use the <code>tbl-pos</code> argument to control positioning. To use a <code>longtable</code> environment instead, use <code>tab_option(latex.use_longtable = TRUE)</code>.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="interactive-table-support-development-version">Interactive table support<a class="anchor" aria-label="anchor" href="#interactive-table-support-development-version"></a></h3>
+<ul><li><p>Interactive tables will show no border if <code>opt_table_lines(extent = "none")</code> is specified (<a href="https://github.com/rstudio/gt/issues/1307" class="external-link">#1307</a>).</p></li>
+<li>
+<p>Interactive tables now respect more styling options.</p>
+<ul><li>
+<code>column_labels.background.color</code>, <code>row_group.background.color</code>, <code>row_group.font.weight</code>, <code>table_body.hlines.style</code>, <code>table.font.weight</code>, <code>table.font.size</code>, <code>stub.font.weight</code> (<a href="https://github.com/rstudio/gt/issues/1693" class="external-link">#1693</a>).</li>
+</ul></li>
+<li><p><code><a href="../reference/opt_interactive.html">opt_interactive()</a></code> now works when columns are merged with <code><a href="../reference/cols_merge.html">cols_merge()</a></code> (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1785" class="external-link">#1785</a>).</p></li>
+<li><p><code><a href="../reference/opt_interactive.html">opt_interactive()</a></code> now works when columns are substituted with <code>sub_*()</code> (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1759" class="external-link">#1759</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<ul><li><p>Improved error messages for the <code><a href="../reference/text_transform.html">text_transform()</a></code> function if <code>locations</code> couldn’t be resolved. (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1774" class="external-link">#1774</a>)</p></li>
 <li><p><code><a href="../reference/tab_row_group.html">tab_row_group()</a></code> gives a more precise error message when <code>rows</code> can’t be resolved correctly (<a href="https://github.com/rstudio/gt/issues/1535" class="external-link">#1535</a>). (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1770" class="external-link">#1770</a>)</p></li>
 <li><p>Fixed an issue where <code>md("")</code> would fail in Quarto. (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1769" class="external-link">#1769</a>)</p></li>
 <li><p>Fixed a bug in using <code><a href="../reference/pct.html">pct()</a></code> column widths with <code><a href="../reference/as_gtable.html">as_gtable()</a></code> (<a href="https://github.com/teunbrand" class="external-link">@teunbrand</a>, <a href="https://github.com/rstudio/gt/issues/1771" class="external-link">#1771</a>)</p></li>
-<li><p><code><a href="../reference/opt_interactive.html">opt_interactive()</a></code> now works when columns are merged with <code><a href="../reference/cols_merge.html">cols_merge()</a></code> (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1785" class="external-link">#1785</a>).</p></li>
-<li><p><code><a href="../reference/opt_interactive.html">opt_interactive()</a></code> now works when columns are substituted with <code>sub_*()</code> (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1759" class="external-link">#1759</a>).</p></li>
 <li><p><code><a href="../reference/data_color.html">data_color()</a></code> no longer errors when a tidyselect selection is empty (like <code>fmt_*()</code> functions) (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1665" class="external-link">#1665</a>).</p></li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.11.0" id="gt-0110">gt 0.11.0<a class="anchor" aria-label="anchor" href="#gt-0110"></a></h2><p class="text-muted">CRAN release: 2024-07-09</p>
 <div class="section level3">
