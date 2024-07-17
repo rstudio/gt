@@ -22,6 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
+# as_raw_html() ----------------------------------------------------------------
 #' Get the HTML content of a **gt** table
 #'
 #' @description
@@ -112,6 +113,7 @@ as_raw_html <- function(
   htmltools::HTML(html_table)
 }
 
+# as_latex() -------------------------------------------------------------------
 #' Output a **gt** object as LaTeX
 #'
 #' @description
@@ -266,6 +268,7 @@ as_latex <- function(data) {
   }
   }
 
+# as_rtf() ---------------------------------------------------------------------
 #' Output a **gt** object as RTF
 #'
 #' @description
@@ -408,6 +411,7 @@ as_rtf <- function(
   rtf_table
 }
 
+# as_word() --------------------------------------------------------------------
 #' Output a **gt** object as Word
 #'
 #' @description
@@ -545,13 +549,15 @@ as_word <- function(
   gt_xml
 }
 
-#' Generate ooxml for the table caption
+#' Generate OOXML for the table caption
 #'
-#' @param data A processed table object that is created using the `build_data()` function.
+#' @param data A processed table object that is created using the `build_data()`
+#' function.
 #' @param align left (default), center or right.
-#' @param split TRUE or FALSE (default) indicating whether activate Word option 'Allow row to break across pages'.
-#' @param keep_with_next  TRUE (default) or FALSE indicating whether a table should use Word option 'keep rows
-#' together' is activated when TRUE
+#' @param split TRUE or FALSE (default) indicating whether activate Word option
+#' 'Allow row to break across pages'.
+#' @param keep_with_next  TRUE (default) or FALSE indicating whether a table
+#' should use Word option 'keep rows together' is activated when TRUE.
 #'
 #' @noRd
 as_word_tbl_header_caption <- function(
@@ -577,7 +583,7 @@ as_word_tbl_header_caption <- function(
   caption_xml
 }
 
-#' Generate ooxml for the table body
+#' Generate OOXML for the table body
 #'
 #' @param data A processed table object that is created using the `build_data()`
 #'   function.
@@ -672,7 +678,7 @@ as_word_tbl_body <- function(
   as.character(word_tbl)
 }
 
-
+# as_gtable() ------------------------------------------------------------------
 #' Transform a **gt** table to a `gtable` object
 #'
 #' @description

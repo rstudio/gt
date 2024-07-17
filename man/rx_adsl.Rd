@@ -54,31 +54,6 @@ trial dataset following the CDISC format, it might not strictly comply
 with CDISC ADaM rules. The intent is to showcase the workflow for clinical
 table creation rather than creating a fully CDISC-compliant ADaM dataset.
 }
-\section{Examples}{
-
-
-Here is a glimpse at the data available in \code{rx_adsl}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(rx_adsl)
-#> Rows: 182
-#> Columns: 14
-#> $ STUDYID  <chr> "GT01", "GT01", "GT01", "GT01", "GT01", "GT01", "GT01", "GT01~
-#> $ STUDYIDN <chr> "4001", "4001", "4001", "4001", "4001", "4001", "4001", "4001~
-#> $ USUBJID  <chr> "GT1000", "GT1001", "GT1002", "GT1003", "GT1004", "GT1005", "~
-#> $ TRTA     <fct> NA, Placebo, Placebo, Placebo, Placebo, Placebo, Placebo, Pla~
-#> $ TRTAN    <dbl> 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1~
-#> $ ITTFL    <chr> "N", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "~
-#> $ RANDFL   <chr> "N", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "~
-#> $ SCRFREAS <chr> "WITHDRAWAL BY SUBJECT", "", "", "", "", "", "", "", "", "", ~
-#> $ AGE      <int> 37, 41, 39, 38, 45, 35, 42, 35, 42, 38, 48, 36, 46, 34, 44, 4~
-#> $ AAGEGR1  <fct> <40, >=40, <40, <40, >=40, <40, >=40, <40, >=40, <40, >=40, <~
-#> $ SEX      <fct> Male, Male, Female, Male, Male, Female, Female, Male, Male, F~
-#> $ ETHNIC   <fct> Hispanic or Latino, Not Hispanic or Latino, Not Hispanic or L~
-#> $ BLBMI    <dbl> 33.76723, 33.35073, 30.45862, 22.85986, 23.89713, 29.09856, 2~
-#> $ EVNTFL   <chr> "", "Y", "Y", "N", "Y", "Y", "N", "N", "N", "N", "N", "N", "Y~
-}\if{html}{\out{</div>}}
-}
-
 \section{Dataset ID and Badge}{
 
 DATA-17

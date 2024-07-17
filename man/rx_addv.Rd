@@ -57,37 +57,6 @@ trial dataset following the CDISC format, it might not strictly comply
 with CDISC ADaM rules. The intent is to showcase the workflow for clinical
 table creation rather than creating a fully CDISC-compliant ADaM dataset.
 }
-\section{Examples}{
-
-
-Here is a glimpse at the data available in \code{rx_addv}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(rx_addv)
-#> Rows: 291
-#> Columns: 20
-#> $ STUDYID  <chr> "GT01", "GT01", "GT01", "GT01", "GT01", "GT01", "GT01", "GT01~
-#> $ STUDYIDN <chr> "4001", "4001", "4001", "4001", "4001", "4001", "4001", "4001~
-#> $ USUBJID  <chr> "GT1001", "GT1002", "GT1002", "GT1003", "GT1003", "GT1003", "~
-#> $ TRTA     <fct> Placebo, Placebo, Placebo, Placebo, Placebo, Placebo, Placebo~
-#> $ TRTAN    <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1~
-#> $ ITTFL    <chr> "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "~
-#> $ AGE      <int> 41, 39, 39, 38, 38, 38, 45, 45, 35, 35, 35, 35, 35, 42, 35, 3~
-#> $ AAGEGR1  <fct> >=40, <40, <40, <40, <40, <40, >=40, >=40, <40, <40, <40, <40~
-#> $ SEX      <fct> Male, Female, Female, Male, Male, Male, Male, Male, Female, F~
-#> $ ETHNIC   <fct> Not Hispanic or Latino, Not Hispanic or Latino, Not Hispanic ~
-#> $ BLBMI    <dbl> 33.35073, 30.45862, 30.45862, 22.85986, 22.85986, 22.85986, 2~
-#> $ DVTERM   <chr> "", "", "Lab values not taken at month 3", "", "\{gt\} Question~
-#> $ PARAMCD  <fct> PDANYM, PDANYM, PDEV02, PDANYM, PDEV01, PDEV02, PDANYM, PDEV0~
-#> $ PARAM    <fct> At least one major Protocol Deviation, At least one major Pro~
-#> $ PARCAT1  <chr> "OVERALL", "OVERALL", "PROTOCOL DEVIATION", "OVERALL", "PROTO~
-#> $ DVCAT    <chr> "", "", "Major", "", "Major", "Major", "", "Major", "", "", "~
-#> $ ACAT1    <chr> "", "", "Study Procedures Criteria Deviations", "", "Study Pr~
-#> $ AVAL     <dbl> 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1~
-#> $ CRIT1    <chr> "COVID-19 Related", "COVID-19 Related", "COVID-19 Related", "~
-#> $ CRIT1FL  <chr> "N", "N", "N", "N", "N", "N", "N", "N", "N", "Y", "N", "N", "~
-}\if{html}{\out{</div>}}
-}
-
 \section{Dataset ID and Badge}{
 
 DATA-18

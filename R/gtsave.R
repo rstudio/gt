@@ -1,10 +1,35 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2024 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
+# gt_save() --------------------------------------------------------------------
 #' Save a **gt** table as a file
 #'
 #' @description
 #'
-#' `gtsave()` makes it easy to save a **gt** table to a file. The
-#' function guesses the file type by the extension provided in the output
-#' filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file.
+#' `gtsave()` makes it easy to save a **gt** table to a file. The function
+#' guesses the file type by the extension provided in the output filename,
+#' producing either an HTML, PDF, PNG, LaTeX, RTF, or Word (.docx) file.
 #'
 #' @details
 #'
@@ -230,7 +255,9 @@ gt_save_html <- function(
 
     for (i in seq_tbls) {
 
-      html_tbl_i <- as_raw_html(grp_pull(data, which = i), inline_css = inline_css)
+      html_tbl_i <-
+        as_raw_html(grp_pull(data, which = i), inline_css = inline_css)
+      
       html_tbls <- htmltools::tagList(html_tbls, html_tbl_i)
     }
 
@@ -386,7 +413,8 @@ gt_save_rtf <- function(
 
   # Remove the comments specific to knitr since this will be a standalone
   # document not dependent on the knitr package
-  rtf_lines <- gsub("!!!!!RAW-KNITR-CONTENT|RAW-KNITR-CONTENT!!!!!", "", rtf_lines)
+  rtf_lines <-
+    gsub("!!!!!RAW-KNITR-CONTENT|RAW-KNITR-CONTENT!!!!!", "", rtf_lines)
 
   writeLines(rtf_lines, con = filename)
 }

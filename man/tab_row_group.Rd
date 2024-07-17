@@ -19,7 +19,8 @@ This is the \strong{gt} table object that is commonly created through use of the
 \verb{scalar<character>} // \strong{required}
 
 The text to use for the row group label. We can optionally use \code{\link[=md]{md()}} or
-\code{\link[=html]{html()}} to style the text as Markdown or to retain HTML elements in the text.}
+\code{\link[=html]{html()}} to style the text as Markdown or to retain HTML elements in the
+text.}
 
 \item{rows}{\emph{Rows to target}
 

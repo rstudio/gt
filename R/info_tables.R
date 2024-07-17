@@ -22,6 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
+# info_date_style() ------------------------------------------------------------
 #' View a table with info on date styles
 #'
 #' @description
@@ -40,7 +41,7 @@
 #'   English (United States) and `"fr"` for French (France). We can call
 #'   [info_locales()] for a useful reference for all of the locales that are
 #'   supported.
-
+#' 
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
@@ -204,6 +205,7 @@ info_date_style <- function(locale = NULL) {
   gt_tbl
 }
 
+# info_time_style() ------------------------------------------------------------
 #' View a table with info on time styles
 #'
 #' @description
@@ -401,6 +403,7 @@ info_time_style <- function(locale = NULL) {
   gt_tbl
 }
 
+# info_currencies() ------------------------------------------------------------
 #' View a table with info on supported currencies
 #'
 #' @description
@@ -677,6 +680,7 @@ info_currencies <- function(
   gt_tbl
 }
 
+# info_locales() ------------------------------------------------------------
 #' View a table with info on supported locales
 #'
 #' @description
@@ -845,6 +849,7 @@ info_locales <- function(begins_with = NULL) {
     )
 }
 
+# info_paletteer() -------------------------------------------------------------
 #' View a table with info on color palettes
 #'
 #' @description
@@ -855,7 +860,8 @@ info_locales <- function(begins_with = NULL) {
 #' much easier in two ways: (1) by using the **paletteer** package, which makes
 #' a wide range of palettes from various R packages readily available, and (2)
 #' calling `info_paletteer()` to give us an information table that serves as a
-#' quick reference for all of the discrete color palettes available in **paletteer**.
+#' quick reference for all of the discrete color palettes available in
+#' **paletteer**.
 #'
 #' @details
 #'
@@ -989,6 +995,7 @@ info_paletteer <- function(color_pkgs = NULL) {
     )
 }
 
+# info_google_fonts() ----------------------------------------------------------
 #' View a table on recommended Google Fonts
 #'
 #' @description
@@ -1030,6 +1037,7 @@ info_google_fonts <- function() {
   readRDS(system_file("gt_tables/info_google_fonts.rds"))
 }
 
+# info_flags() -----------------------------------------------------------------
 #' View a table with all available flags for `fmt_flag()`
 #'
 #' @description
@@ -1065,6 +1073,7 @@ info_flags <- function() {
   readRDS(system_file("gt_tables/info_flags.rds"))
 }
 
+# info_icons() -----------------------------------------------------------------
 #' View a table with all available Font Awesome icons for `fmt_icon()`
 #'
 #' @description
@@ -1105,6 +1114,7 @@ info_icons <- function() {
   readRDS(system_file("gt_tables/info_icons.rds"))
 }
 
+# info_unit_conversions() ------------------------------------------------------
 #' View a table with all units that can be converted by `unit_conversion()`
 #'
 #' @description

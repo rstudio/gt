@@ -47,32 +47,6 @@ these cars, comfort is emphasized over all-out performance. Nevertheless, the
 driving experience should also mean motoring at speed, doing so in style and
 safety.
 }
-\section{Examples}{
-
-
-Here is a glimpse at the data available in \code{gtcars}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(gtcars)
-#> Rows: 47
-#> Columns: 15
-#> $ mfr         <chr> "Ford", "Ferrari", "Ferrari", "Ferrari", "Ferrari", "Ferra~
-#> $ model       <chr> "GT", "458 Speciale", "458 Spider", "458 Italia", "488 GTB~
-#> $ year        <dbl> 2017, 2015, 2015, 2014, 2016, 2015, 2017, 2015, 2015, 2015~
-#> $ trim        <chr> "Base Coupe", "Base Coupe", "Base", "Base Coupe", "Base Co~
-#> $ bdy_style   <chr> "coupe", "coupe", "convertible", "coupe", "coupe", "conver~
-#> $ hp          <dbl> 647, 597, 562, 562, 661, 553, 680, 652, 731, 949, 573, 545~
-#> $ hp_rpm      <dbl> 6250, 9000, 9000, 9000, 8000, 7500, 8250, 8000, 8250, 9000~
-#> $ trq         <dbl> 550, 398, 398, 398, 561, 557, 514, 504, 509, 664, 476, 436~
-#> $ trq_rpm     <dbl> 5900, 6000, 6000, 6000, 3000, 4750, 5750, 6000, 6000, 6750~
-#> $ mpg_c       <dbl> 11, 13, 13, 13, 15, 16, 12, 11, 11, 12, 21, 16, 11, 16, 12~
-#> $ mpg_h       <dbl> 18, 17, 17, 17, 22, 23, 17, 16, 16, 16, 22, 22, 18, 20, 20~
-#> $ drivetrain  <chr> "rwd", "rwd", "rwd", "rwd", "rwd", "rwd", "awd", "awd", "r~
-#> $ trsmn       <chr> "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a"~
-#> $ ctry_origin <chr> "United States", "Italy", "Italy", "Italy", "Italy", "Ital~
-#> $ msrp        <dbl> 447000, 291744, 263553, 233509, 245400, 198973, 298000, 29~
-}\if{html}{\out{</div>}}
-}
-
 \section{Dataset ID and Badge}{
 
 DATA-3

@@ -48,9 +48,9 @@ An object of class \code{gt_tbl}.
 With \code{tab_style()} we can \link[=location-helper]{target specific cells}
 and apply styles to them. This is best done in conjunction with the helper
 functions \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and \code{\link[=cell_borders]{cell_borders()}}. Currently, this
-function is focused on the application of styles for HTML output only
-(as such, other output formats will ignore all \code{tab_style()} calls).
-Using the aforementioned helper functions, here are some of the styles we can apply:
+function is focused on the application of styles for HTML output only (as
+such, other output formats will ignore all \code{tab_style()} calls). Using the
+aforementioned helper functions, here are some of the styles we can apply:
 \itemize{
 \item the background color of the cell (\code{\link[=cell_fill]{cell_fill()}}: \code{color})
 \item the cell's text color, font, and size (\code{\link[=cell_text]{cell_text()}}: \code{color}, \code{font},
