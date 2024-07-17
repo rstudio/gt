@@ -152,8 +152,9 @@ that are targeted via the <code>columns</code> argument).</p></dd>
 <p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>The columns to consider for the splitting, relabeling, and spanner setting
 operations. Can either be a series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a
-vector of column indices, or a select helper function (e.g. <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>).</p></dd>
+vector of column indices, or a select helper function (e.g.,
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>,
+and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>).</p></dd>
 
 
 <dt id="arg-split">split<a class="anchor" aria-label="anchor" href="#arg-split"></a></dt>
@@ -299,9 +300,10 @@ two levels of spanners. We can further touch up the labels after that with
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_4.png" alt="This image of a table was generated from the fourth code example in the `tab_spanner_delim()` help file." style="width:100%;"></p>
 <p>With a summarized, filtered, and pivoted version of the <code><a href="pizzaplace.html">pizzaplace</a></code>
-dataset, we can create another <strong>gt</strong> table and then use <code>tab_spanner_delim()</code>
-with the delimiter/separator also used in <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">tidyr::pivot_wider()</a></code>. We can also
-process the generated column labels with <code><a href="cols_label_with.html">cols_label_with()</a></code>.</p>
+dataset, we can create another <strong>gt</strong> table and then use
+<code>tab_spanner_delim()</code> with the delimiter/separator also used in
+<code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">tidyr::pivot_wider()</a></code>. We can also process the generated column labels with
+<code><a href="cols_label_with.html">cols_label_with()</a></code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">pizzaplace</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">date</span>, <span class="va">type</span>, <span class="va">price</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">date</span>, <span class="va">type</span><span class="op">)</span> <span class="op">|&gt;</span></span>

@@ -218,55 +218,6 @@ of K) for which the <code>Cl_a</code>, <code>Cl_b</code>, and <code>Cl_n</code> 
 
 </dl></div>
     <div class="section level2">
-    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
-
-
-
-<p>Here is a glimpse at the data available in <code>reactions</code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">reactions</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 1,683</span></span>
-<span><span class="co">#&gt; Columns: 39</span></span>
-<span><span class="co">#&gt; $ cmpd_name     &lt;chr&gt; "methane", "formaldehyde", "methanol", "fluoromethane", ~</span></span>
-<span><span class="co">#&gt; $ cmpd_mwt      &lt;dbl&gt; 16.04, 30.03, 32.04, 34.03, 46.03, 48.02, 48.04, 50.49, ~</span></span>
-<span><span class="co">#&gt; $ cmpd_formula  &lt;chr&gt; "CH4", "CH2O", "CH4O", "CH3F", "CH2O2", "CHOF", "CH4O2",~</span></span>
-<span><span class="co">#&gt; $ cmpd_type     &lt;chr&gt; "normal alkane", "aldehyde", "alcohol or glycol", "haloa~</span></span>
-<span><span class="co">#&gt; $ cmpd_smiles   &lt;chr&gt; "C", "C=O", "CO", "CF", "OC=O", "FC=O", "COO", "CCl", "F~</span></span>
-<span><span class="co">#&gt; $ cmpd_inchi    &lt;chr&gt; "InChI=1S/CH4/h1H4", "InChI=1S/CH2O/c1-2/h1H2", "InChI=1~</span></span>
-<span><span class="co">#&gt; $ cmpd_inchikey &lt;chr&gt; "VNWKTOKETHGBQD-UHFFFAOYSA-N", "WSFSSNUMVMOOMR-UHFFFAOYS~</span></span>
-<span><span class="co">#&gt; $ OH_k298       &lt;dbl&gt; 6.36e-15, 8.50e-12, 8.78e-13, 1.97e-14, 4.50e-13, NA, 1.~</span></span>
-<span><span class="co">#&gt; $ OH_uncert     &lt;dbl&gt; 0.10, 0.20, 0.10, 0.10, NA, NA, NA, 0.20, 0.10, 0.21, 0.~</span></span>
-<span><span class="co">#&gt; $ OH_u_fac      &lt;dbl&gt; NA, NA, NA, NA, 1.4, NA, 2.0, NA, NA, NA, NA, NA, NA, NA~</span></span>
-<span><span class="co">#&gt; $ OH_A          &lt;dbl&gt; 3.62e-13, 5.40e-12, 2.32e-13, 1.99e-13, 4.50e-13, NA, 5.~</span></span>
-<span><span class="co">#&gt; $ OH_B          &lt;dbl&gt; 1200.3487, -135.0000, -402.0000, 685.4204, NA, NA, -190.~</span></span>
-<span><span class="co">#&gt; $ OH_n          &lt;dbl&gt; 2.179936, NA, 2.720000, 2.040182, NA, NA, NA, NA, 1.8600~</span></span>
-<span><span class="co">#&gt; $ OH_t_low      &lt;dbl&gt; 200, 200, 210, 240, 290, NA, 220, 220, 220, 298, 298, NA~</span></span>
-<span><span class="co">#&gt; $ OH_t_high     &lt;dbl&gt; 2025, 300, 1344, 1800, 450, NA, 430, 330, 1800, 671, 393~</span></span>
-<span><span class="co">#&gt; $ O3_k298       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~</span></span>
-<span><span class="co">#&gt; $ O3_uncert     &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~</span></span>
-<span><span class="co">#&gt; $ O3_u_fac      &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~</span></span>
-<span><span class="co">#&gt; $ O3_A          &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~</span></span>
-<span><span class="co">#&gt; $ O3_B          &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~</span></span>
-<span><span class="co">#&gt; $ O3_n          &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~</span></span>
-<span><span class="co">#&gt; $ O3_t_low      &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~</span></span>
-<span><span class="co">#&gt; $ O3_t_high     &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~</span></span>
-<span><span class="co">#&gt; $ NO3_k298      &lt;dbl&gt; NA, 5.5e-16, 1.3e-16, NA, NA, NA, NA, NA, NA, NA, NA, NA~</span></span>
-<span><span class="co">#&gt; $ NO3_uncert    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~</span></span>
-<span><span class="co">#&gt; $ NO3_u_fac     &lt;dbl&gt; NA, 1.6, 3.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~</span></span>
-<span><span class="co">#&gt; $ NO3_A         &lt;dbl&gt; NA, NA, 9.4e-13, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~</span></span>
-<span><span class="co">#&gt; $ NO3_B         &lt;dbl&gt; NA, NA, 2650, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~</span></span>
-<span><span class="co">#&gt; $ NO3_n         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~</span></span>
-<span><span class="co">#&gt; $ NO3_t_low     &lt;dbl&gt; NA, NA, 250, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~</span></span>
-<span><span class="co">#&gt; $ NO3_t_high    &lt;dbl&gt; NA, NA, 370, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~</span></span>
-<span><span class="co">#&gt; $ Cl_k298       &lt;dbl&gt; 1.00e-13, 7.20e-11, 5.10e-11, 3.60e-13, 1.90e-13, 1.90e-~</span></span>
-<span><span class="co">#&gt; $ Cl_uncert     &lt;dbl&gt; 0.15, 0.15, 0.20, NA, NA, 0.11, NA, 0.10, 0.15, NA, 0.14~</span></span>
-<span><span class="co">#&gt; $ Cl_u_fac      &lt;dbl&gt; NA, NA, NA, 1.4, 1.4, NA, 3.0, NA, NA, NA, NA, NA, 2.0, ~</span></span>
-<span><span class="co">#&gt; $ Cl_A          &lt;dbl&gt; 6.60e-12, 8.10e-11, 5.10e-11, 4.90e-12, NA, NA, NA, 4.32~</span></span>
-<span><span class="co">#&gt; $ Cl_B          &lt;dbl&gt; 1240.0, 34.0, 0.0, 781.0, NA, NA, NA, 646.4, 1591.0, NA,~</span></span>
-<span><span class="co">#&gt; $ Cl_n          &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, 1.3057, NA, NA, NA, NA, NA, ~</span></span>
-<span><span class="co">#&gt; $ Cl_t_low      &lt;dbl&gt; 200, 200, 225, 200, NA, NA, NA, 222, 250, NA, NA, 220, 2~</span></span>
-<span><span class="co">#&gt; $ Cl_t_high     &lt;dbl&gt; 300, 500, 950, 300, NA, NA, NA, 843, 300, NA, NA, 330, 3~</span></span></code></pre><p></p></div>
-    </div>
-    <div class="section level2">
     <h2 id="dataset-id-and-badge">Dataset ID and Badge<a class="anchor" aria-label="anchor" href="#dataset-id-and-badge"></a></h2>
 
 

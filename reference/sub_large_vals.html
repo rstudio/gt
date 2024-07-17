@@ -164,10 +164,10 @@ can do just that:</p>
 <span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/sub_large_vals.html">sub_large_vals</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_1.png" alt="This image of a table was generated from the first code example in the `sub_large_vals()` help file." style="width:100%;"></p>
-<p>Large negative values can also be handled but they are handled specially
-by the <code>sign</code> parameter. Setting that to <code>"-"</code> will format only the large
-values that are negative. Notice that with the default <code>large_pattern</code>
-value of <code>"&gt;={x}"</code> the <code>"&gt;="</code> is automatically changed to <code>"&lt;="</code>.</p>
+<p>Large negative values can also be handled but they are handled specially by
+the <code>sign</code> parameter. Setting that to <code>"-"</code> will format only the large values
+that are negative. Notice that with the default <code>large_pattern</code> value of
+<code>"&gt;={x}"</code> the <code>"&gt;="</code> is automatically changed to <code>"&lt;="</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>num <span class="op">=</span> <span class="op">-</span><span class="va">num</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>

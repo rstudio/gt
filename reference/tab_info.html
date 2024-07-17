@@ -8,8 +8,8 @@ are unless one were to carefully examine to correct component of the gt_tbl
 object.
 Because it's so essential to know these ID values for targeting purposes
 (when styling with tab_style(), adding footnote marks with
-tab_footnote(), etc.), tab_info() can help with all of this.
-It summarizes (by location) all of the table's ID values and their associated
+tab_footnote(), etc.), tab_info() can help with all of this. It
+summarizes (by location) all of the table's ID values and their associated
 labels. The product is an informational gt table, designed for easy
 retrieval of the necessary values."><meta property="og:description" content="It can become increasingly difficult to recall the ID values associated with
 different labels in a gt table. Further to this, there are also
@@ -20,8 +20,8 @@ are unless one were to carefully examine to correct component of the gt_tbl
 object.
 Because it's so essential to know these ID values for targeting purposes
 (when styling with tab_style(), adding footnote marks with
-tab_footnote(), etc.), tab_info() can help with all of this.
-It summarizes (by location) all of the table's ID values and their associated
+tab_footnote(), etc.), tab_info() can help with all of this. It
+summarizes (by location) all of the table's ID values and their associated
 labels. The product is an informational gt table, designed for easy
 retrieval of the necessary values."><meta property="og:image" content="https://gt.rstudio.com/logo.svg"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -84,8 +84,8 @@ are unless one were to carefully examine to correct component of the <code>gt_tb
 object.</p>
 <p>Because it's so essential to know these ID values for targeting purposes
 (when styling with <code><a href="tab_style.html">tab_style()</a></code>, adding footnote marks with
-<code><a href="tab_footnote.html">tab_footnote()</a></code>, etc.), <code>tab_info()</code> can help with all of this.
-It summarizes (by location) all of the table's ID values and their associated
+<code><a href="tab_footnote.html">tab_footnote()</a></code>, etc.), <code>tab_info()</code> can help with all of this. It
+summarizes (by location) all of the table's ID values and their associated
 labels. The product is an informational <strong>gt</strong> table, designed for easy
 retrieval of the necessary values.</p>
     </div>
@@ -119,7 +119,8 @@ retrieval of the necessary values.</p>
 use <code><a href="tab_spanner.html">tab_spanner()</a></code> to group two columns together under a spanner column with
 the ID and label <code>"performance"</code>. Finally, we can use<code>tab_info()</code> in a
 separate, interactive statement so that we can inspect a table that
-summarizes the ID values any associated label text for all parts of the table.</p>
+summarizes the ID values any associated label text for all parts of the
+table.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">year</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"hp"</span><span class="op">)</span>, <span class="va">msrp</span><span class="op">)</span> <span class="op">|&gt;</span></span>
