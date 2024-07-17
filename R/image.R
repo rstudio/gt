@@ -244,6 +244,7 @@ local_image <- function(
   paste0("<img src=\"", uri, "\" style=\"height:", height, ";\">")
 }
 
+
 #' Helper function for adding a ggplot
 #'
 #' @description
@@ -293,6 +294,11 @@ local_image <- function(
 #'   (`aspect_ratio` < `1.0`) or expand (`aspect_ratio` > `1.0`) the plot
 #'   horizontally. The default value of `1.0` will neither compress nor expand
 #'   the plot.
+#'
+#' @param absolute_height this will be the absolute height of the image file to be saved on the disk, by default is 5. Changing this will affect the final filesize, so if there are many plots it is recommended to set this lower.
+#'    Note that changing this parameter works the same way as when using ggsave(), i.e. font size and such will be affected.
+#'
+#' @param dpi this modifies the resolution / quality of the saved image. In case we want to change only the resolution but keep the (absolute) image size.
 #'
 #' @return A character object with an HTML fragment that can be placed inside of
 #'   a cell.
@@ -348,7 +354,9 @@ local_image <- function(
 ggplot_image <- function(
     plot_object,
     height = 100,
-    aspect_ratio = 1.0
+    aspect_ratio = 1.0 ,
+    absolute_height = 5 ,
+    dpi = 100
 ) {
 
   rlang::check_installed("ggplot2", "to use `ggplot_image()`.")
@@ -376,9 +384,9 @@ ggplot_image <- function(
         filename = filename,
         plot = plot_object[[x]],
         device = "png",
-        dpi = 100,
-        width = 5 * aspect_ratio,
-        height = 5
+        dpi = dpi,
+        width = absolute_height * aspect_ratio,
+        height = absolute_height
       )
 
       on.exit(file.remove(filename))
