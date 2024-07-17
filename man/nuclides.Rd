@@ -45,46 +45,6 @@ here on natural abundances, atomic mass, spin, half-life, and more. The
 typical users for such a dataset include researchers in fields such as
 nuclear physics, radiochemistry, and nuclear medicine.
 }
-\section{Examples}{
-
-
-Here is a glimpse at the data available in \code{nuclides}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(nuclides)
-#> Rows: 3,383
-#> Columns: 29
-#> $ nuclide                    <chr> "^\{1\}_\{1\}H0", "^\{2\}_\{1\}H1", "^\{3\}_\{1\}H2", "~
-#> $ z                          <int> 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2~
-#> $ n                          <int> 0, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 7, 8~
-#> $ element                    <chr> "H", "H", "H", "H", "H", "H", "H", "He", "H~
-#> $ radius                     <dbl> 0.8783, 2.1421, 1.7591, NA, NA, NA, NA, 1.9~
-#> $ radius_uncert              <dbl> 0.0086, 0.0088, 0.0363, NA, NA, NA, NA, 0.0~
-#> $ abundance                  <dbl> 0.999855, 0.000145, NA, NA, NA, NA, NA, 0.0~
-#> $ abundance_uncert           <dbl> 0.000078, 0.000078, NA, NA, NA, NA, NA, 0.0~
-#> $ is_stable                  <lgl> TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FAL~
-#> $ half_life                  <dbl> NA, NA, 3.887813e+08, NA, 8.608259e-23, 2.9~
-#> $ half_life_uncert           <dbl> NA, NA, 6.311385e+05, NA, 6.496799e-24, 8.3~
-#> $ isospin                    <chr> NA, NA, NA, "1", NA, NA, NA, NA, "0", "1/2"~
-#> $ decay_1                    <chr> NA, NA, "B-", "N", "2N", NA, NA, NA, NA, "N~
-#> $ decay_1_pct                <dbl> NA, NA, 1, 1, 1, NA, NA, NA, NA, NA, 1, NA,~
-#> $ decay_1_pct_uncert         <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
-#> $ decay_2                    <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
-#> $ decay_2_pct                <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
-#> $ decay_2_pct_uncert         <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
-#> $ decay_3                    <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
-#> $ decay_3_pct                <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
-#> $ decay_3_pct_uncert         <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
-#> $ magnetic_dipole            <dbl> 2.7928474, 0.8574382, 2.9789625, NA, NA, NA~
-#> $ magnetic_dipole_uncert     <dbl> 9.0e-09, 5.0e-09, 1.4e-08, NA, NA, NA, NA, ~
-#> $ electric_quadrupole        <dbl> NA, 0.0028578, NA, NA, NA, NA, NA, NA, NA, ~
-#> $ electric_quadrupole_uncert <dbl> NA, 3e-07, NA, NA, NA, NA, NA, NA, NA, NA, ~
-#> $ atomic_mass                <dbl> 1007825, 2014102, 3016049, 4026432, 5035311~
-#> $ atomic_mass_uncert         <dbl> 0.000014, 0.000015, 0.000080, 107.354000, 9~
-#> $ mass_excess                <dbl> 7288.971, 13135.723, 14949.811, 24621.129, ~
-#> $ mass_excess_uncert         <dbl> 0.000013, 0.000015, 0.000080, 100.000000, 8~
-}\if{html}{\out{</div>}}
-}
-
 \section{Dataset ID and Badge}{
 
 DATA-16
@@ -96,7 +56,7 @@ DATA-16
 
 \section{Dataset Introduced}{
 
-\code{v0.11.0}
+\code{v0.11.0} (July 9, 2024)
 }
 
 \seealso{

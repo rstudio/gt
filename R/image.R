@@ -22,6 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
+# web_image() ------------------------------------------------------------------
 #' Helper function for adding an image from the web
 #'
 #' @description
@@ -153,6 +154,7 @@ web_image <- function(
   paste0("<img src=\"", url, "\" style=\"height:", height, ";\">")
 }
 
+# local_image() ----------------------------------------------------------------
 #' Helper function for adding a local image
 #'
 #' @description
@@ -244,6 +246,7 @@ local_image <- function(
   paste0("<img src=\"", uri, "\" style=\"height:", height, ";\">")
 }
 
+# ggplot_image() ---------------------------------------------------------------
 #' Helper function for adding a ggplot
 #'
 #' @description
@@ -388,6 +391,7 @@ ggplot_image <- function(
   )
 }
 
+# test_image() -----------------------------------------------------------------
 #' Generate a path to a test image
 #'
 #' @description

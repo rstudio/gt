@@ -22,6 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
+# opt_stylize() ----------------------------------------------------------------
 #' Stylize your table with a colorful look
 #'
 #' @description
@@ -191,6 +192,7 @@ get_colorized_params <- function(
   as.list(res)
 }
 
+# opt_interactive() ------------------------------------------------------------
 #' Option to put interactive elements in an HTML table
 #'
 #' @description
@@ -444,6 +446,7 @@ opt_interactive <- function(
   )
 }
 
+# opt_footnote_marks() ---------------------------------------------------------
 #' Option to modify the set of footnote marks
 #'
 #' @description
@@ -566,6 +569,7 @@ opt_footnote_marks <- function(
   tab_options(data = data, footnotes.marks = marks)
 }
 
+# opt_footnote_spec() ----------------------------------------------------------
 #' Option to specify the formatting of footnote marks
 #'
 #' @description
@@ -682,6 +686,7 @@ opt_footnote_spec <- function(
   data
 }
 
+# opt_row_striping() -----------------------------------------------------------
 #' Option to add or remove row striping
 #'
 #' @description
@@ -759,6 +764,7 @@ opt_row_striping <- function(
   )
 }
 
+# opt_align_table_header() -----------------------------------------------------
 #' Option to align the table header
 #'
 #' @description
@@ -840,6 +846,7 @@ opt_align_table_header <- function(
   )
 }
 
+# opt_vertical_padding() -------------------------------------------------------
 #' Option to expand or contract vertical padding
 #'
 #' @description
@@ -932,6 +939,7 @@ opt_vertical_padding <- function(
   )
 }
 
+# opt_horizontal_padding() -----------------------------------------------------
 #' Option to expand or contract horizontal padding
 #'
 #' @description
@@ -1058,6 +1066,7 @@ get_padding_option_value_list <- function(scale, type) {
   )
 }
 
+# opt_all_caps() ---------------------------------------------------------------
 #' Option to use all caps in select table locations
 #'
 #' @description
@@ -1181,6 +1190,7 @@ opt_all_caps <- function(
   )
 }
 
+# opt_table_lines() ------------------------------------------------------------
 #' Option to set table lines to different extents
 #'
 #' @description
@@ -1275,6 +1285,7 @@ opt_table_lines <- function(
   )
 }
 
+# opt_table_outline() ----------------------------------------------------------
 #' Option to wrap an outline around the entire table
 #'
 #' @description
@@ -1411,6 +1422,7 @@ opt_table_outline <- function(
   )
 }
 
+# opt_table_font() -------------------------------------------------------------
 #' Options to define font choices for the entire table
 #'
 #' @description
@@ -1649,6 +1661,7 @@ opt_table_font <- function(
   data
 }
 
+# opt_css() --------------------------------------------------------------------
 #' Option to add custom CSS for the table
 #'
 #' @description
@@ -1757,89 +1770,4 @@ opt_css <- function(
     data = data,
     table.additional_css = additional_css
   )
-}
-
-normalize_font_input <- function(font_input, call = rlang::caller_env()) {
-
-  if (!inherits(font_input, c("character", "list", "font_css"))) {
-    cli::cli_abort(
-      "{.arg font} must be a list or a character vector, not {.obj_type_friendly {font_input}}.",
-      call = call
-    )
-  }
-
-  if (inherits(font_input, "character")) {
-    font_input <- list(font_input)
-  }
-
-  # Unlist a list of lists; this normalizes the value for `font_input`
-  # in the cases where multiple fonts were provided in `c()` and `list()`
-  if (any(vapply(font_input, is.list, FUN.VALUE = logical(1)))) {
-    font_input <- unlist(font_input, recursive = FALSE)
-  }
-
-  if (is.null(names(font_input))) {
-    font_names <- unlist(font_input)
-    import_stmts <- ""
-  } else {
-    font_names <- unique(unname(unlist(font_input[names(font_input) %in% c("name", "")])))
-    import_stmts <- unique(unname(unlist(font_input[names(font_input) %in% "import_stmt"])))
-  }
-
-  font_list <-
-    list(
-      name = font_names,
-      import_stmt = import_stmts
-    )
-
-  class(font_list) <- "font_css"
-  font_list
-}
-
-# Create an option-value list with a vector of arg names from the
-# `tab_options()` function and either one value or n-length values
-# corresponding to those options
-create_option_value_list <- function(tab_options_args, values) {
-
-  # Validate the length of the `values` vector
-  if (length(values) == 1) {
-
-    values <- rep_len(values, length(tab_options_args))
-
-  } else if (length(values) != length(tab_options_args)) {
-
-    cli::cli_abort(
-      "The length of the `values` vector must be `1` or the length of
-      `tab_options_args`."
-    )
-  }
-
-  as.list(stats::setNames(object = values, tab_options_args))
-}
-
-create_default_option_value_list <- function(tab_options_args) {
-
-  lapply(
-    stats::setNames(, tab_options_args),
-    FUN = function(x) {
-      dt_options_get_default_value(gsub(".", "_", x, fixed = TRUE))
-    }
-  )
-}
-
-# Validate any vector of `tab_options()` argument names
-validate_tab_options_args <- function(tab_options_args) {
-
-  if (!all(tab_options_args %in% tab_options_arg_names)) {
-    cli::cli_abort("All `tab_options_args` must be valid names.")
-  }
-}
-
-# Do multiple calls of `tab_options()` with an option-value list (`options`)
-tab_options_multi <- function(data, options) {
-
-  # Validate the names of the `options`
-  validate_tab_options_args(names(options))
-
-  do.call(tab_options, c(list(data = data), options))
 }

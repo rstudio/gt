@@ -24,6 +24,7 @@
 
 #nocov start
 
+# render_gt() ------------------------------------------------------------------
 #' A **gt** display table render function for use in Shiny
 #'
 #' @description
@@ -193,6 +194,7 @@ render_gt <- function(
   )
 }
 
+# gt_output() ------------------------------------------------------------------
 #' Create a **gt** display table output element for Shiny
 #'
 #' @description
@@ -201,10 +203,10 @@ render_gt <- function(
 #' initiated by using [render_gt()] in the `server` component of a
 #' Shiny app. `gt_output()` is to be used in the [Shiny](https://shiny.posit.co)
 #' `ui` component, the position and context wherein this call is made determines
-#' the where the **gt** table is rendered on the app page. It's important to note
-#' that the ID given during [render_gt()] is needed as the `outputId` in
+#' the where the **gt** table is rendered on the app page. It's important to
+#' note that the ID given during [render_gt()] is needed as the `outputId` in
 #' `gt_output()` (e.g., **server**: `output$<id> <- render_gt(...)`; **ui**:
-#' `gt_output(outputId = "<id>"`).
+#' `gt_output(outputId = "<id>")`).
 #'
 #' @param outputId *Shiny output ID*
 #'
@@ -263,6 +265,6 @@ gt_output <- function(outputId) {
   rlang::check_installed("shiny", "to use `gt_output()`.")
 
   shiny::htmlOutput(outputId)
-
 }
+
 #nocov end

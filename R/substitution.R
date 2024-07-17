@@ -22,6 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
+# sub_missing() ----------------------------------------------------------------
 #' Substitute missing values in the table body
 #'
 #' @description
@@ -187,6 +188,7 @@ fmt_missing <- function(
   )
 }
 
+# sub_zero() -------------------------------------------------------------------
 #' Substitute zero values in the table body
 #'
 #' @description
@@ -279,6 +281,7 @@ sub_zero <- function(
   )
 }
 
+# sub_small_vals() -------------------------------------------------------------
 #' Substitute small values in the table body
 #'
 #' @description
@@ -290,7 +293,8 @@ sub_zero <- function(
 #' those values found to be between `0` and the threshold value. This is
 #' possible for small positive and small negative values (this can be explicitly
 #' set by the `sign` option). Note that the interval does not include the `0` or
-#' the `threshold` value. Should you need to include zero values, use [sub_zero()].
+#' the `threshold` value. Should you need to include zero values, use
+#' [sub_zero()].
 #'
 #' @inheritParams sub_missing
 #'
@@ -506,6 +510,7 @@ sub_small_vals <- function(
   )
 }
 
+# sub_large_vals() -------------------------------------------------------------
 #' Substitute large values in the table body
 #'
 #' @description
@@ -567,10 +572,10 @@ sub_small_vals <- function(
 #' `r man_get_image_tag(file = "man_sub_large_vals_1.png")`
 #' }}
 #'
-#' Large negative values can also be handled but they are handled specially
-#' by the `sign` parameter. Setting that to `"-"` will format only the large
-#' values that are negative. Notice that with the default `large_pattern`
-#' value of `">={x}"` the `">="` is automatically changed to `"<="`.
+#' Large negative values can also be handled but they are handled specially by
+#' the `sign` parameter. Setting that to `"-"` will format only the large values
+#' that are negative. Notice that with the default `large_pattern` value of
+#' `">={x}"` the `">="` is automatically changed to `"<="`.
 #'
 #' ```r
 #' tbl |>
@@ -741,6 +746,7 @@ check_sub_fn_sign <- function(sign, call = rlang::caller_env()) {
   }
 }
 
+# sub_values() -----------------------------------------------------------------
 #' Substitute targeted values in the table body
 #'
 #' @description

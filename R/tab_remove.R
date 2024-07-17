@@ -1,3 +1,28 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2024 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
+# rm_header() ------------------------------------------------------------------
 #' Remove the table header
 #'
 #' @description
@@ -72,6 +97,7 @@ rm_header <- function(data) {
   dt_heading_init(data = data)
 }
 
+# rm_stubhead() ----------------------------------------------------------------
 #' Remove the stubhead label
 #'
 #' @description
@@ -138,6 +164,7 @@ rm_stubhead <- function(data) {
   dt_stubhead_init(data = data)
 }
 
+# rm_spanners() ----------------------------------------------------------------
 #' Remove column spanner labels
 #'
 #' @description
@@ -347,6 +374,7 @@ rm_spanners <- function(
   data
 }
 
+# rm_footnotes() ---------------------------------------------------------------
 #' Remove table footnotes
 #'
 #' @description
@@ -515,6 +543,7 @@ rm_footnotes <- function(
   data
 }
 
+# rm_source_notes() ------------------------------------------------------------
 #' Remove table source notes
 #'
 #' @description
@@ -662,6 +691,7 @@ rm_source_notes <- function(
   data
 }
 
+# rm_caption() -----------------------------------------------------------------
 #' Remove the table caption
 #'
 #' @description

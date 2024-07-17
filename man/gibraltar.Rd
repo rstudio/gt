@@ -30,27 +30,6 @@ and city located at the southern end of the Iberian Peninsula, on the Bay of
 Gibraltar. This weather station is located at the airport (GIB), where it's
 at an elevation of 5 meters above mean sea level (AMSL).
 }
-\section{Examples}{
-
-
-Here is a glimpse at the data available in \code{gibraltar}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(gibraltar)
-#> Rows: 1,431
-#> Columns: 10
-#> $ date       <date> 2023-05-01, 2023-05-01, 2023-05-01, 2023-05-01, 2023-05-01~
-#> $ time       <chr> "00:20", "00:50", "01:20", "01:50", "02:20", "02:50", "03:2~
-#> $ temp       <dbl> 18.9, 18.9, 17.8, 18.9, 18.9, 17.8, 17.8, 17.8, 18.9, 18.9,~
-#> $ dew_point  <dbl> 12.8, 13.9, 13.9, 13.9, 12.8, 12.8, 12.8, 12.8, 12.2, 12.2,~
-#> $ humidity   <dbl> 0.68, 0.73, 0.77, 0.73, 0.68, 0.73, 0.73, 0.73, 0.64, 0.64,~
-#> $ wind_dir   <chr> "W", "WSW", "W", "W", "WSW", "WSW", "W", "SW", "SW", "WSW",~
-#> $ wind_speed <dbl> 6.7, 7.2, 6.7, 6.7, 6.7, 6.7, 7.2, 6.3, 4.0, 3.1, 3.6, 2.2,~
-#> $ wind_gust  <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-#> $ pressure   <dbl> 1015.2, 1015.2, 1014.6, 1014.6, 1014.6, 1014.6, 1014.6, 101~
-#> $ condition  <chr> "Fair", "Fair", "Fair", "Fair", "Fair", "Fair", "Fair", "Fa~
-}\if{html}{\out{</div>}}
-}
-
 \section{Dataset ID and Badge}{
 
 DATA-11
@@ -62,7 +41,7 @@ DATA-11
 
 \section{Dataset Introduced}{
 
-\code{v0.11.0}
+\code{v0.11.0} (July 9, 2024)
 }
 
 \seealso{

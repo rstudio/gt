@@ -22,6 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
+# vec_fmt_number() -------------------------------------------------------------
 #' Format a vector as numeric values
 #'
 #' @description
@@ -205,6 +206,7 @@ vec_fmt_number <- function(
   )
 }
 
+# vec_fmt_integer() ------------------------------------------------------------
 #' Format a vector as integer values
 #'
 #' @description
@@ -335,6 +337,7 @@ vec_fmt_integer <- function(
   )
 }
 
+# vec_fmt_scientific() ---------------------------------------------------------
 #' Format a vector as values in scientific notation
 #'
 #' @description
@@ -494,6 +497,7 @@ vec_fmt_scientific <- function(
   )
 }
 
+# vec_fmt_engineering() --------------------------------------------------------
 #' Format a vector as values in engineering notation
 #'
 #' @description
@@ -649,6 +653,7 @@ vec_fmt_engineering <- function(
   )
 }
 
+# vec_fmt_percent() ------------------------------------------------------------
 #' Format a vector as percentage values
 #'
 #' @description
@@ -821,6 +826,7 @@ vec_fmt_percent <- function(
   )
 }
 
+# vec_fmt_partsper() -----------------------------------------------------------
 #' Format a vector as parts-per quantities
 #'
 #' @description
@@ -1002,6 +1008,7 @@ vec_fmt_partsper <- function(
   )
 }
 
+# vec_fmt_fraction() -----------------------------------------------------------
 #' Format a vector as mixed fractions
 #'
 #' @description
@@ -1134,6 +1141,7 @@ vec_fmt_fraction <- function(
   )
 }
 
+# vec_fmt_currency() -----------------------------------------------------------
 #' Format a vector as currency values
 #'
 #' @description
@@ -1332,6 +1340,7 @@ vec_fmt_currency <- function(
   )
 }
 
+# vec_fmt_roman() --------------------------------------------------------------
 #' Format a vector as Roman numerals
 #'
 #' @description
@@ -1431,6 +1440,7 @@ vec_fmt_roman <- function(
   )
 }
 
+# vec_fmt_index() --------------------------------------------------------------
 #' Format a vector as indexed characters
 #'
 #' @description
@@ -1555,6 +1565,7 @@ vec_fmt_index <- function(
   )
 }
 
+# vec_fmt_spelled_num() --------------------------------------------------------
 #' Format a vector as spelled-out numbers
 #'
 #' @description
@@ -1689,6 +1700,7 @@ vec_fmt_spelled_num <- function(
   )
 }
 
+# vec_fmt_bytes() --------------------------------------------------------------
 #' Format a vector as values in terms of bytes
 #'
 #' @description
@@ -1849,6 +1861,7 @@ vec_fmt_bytes <- function(
   )
 }
 
+# vec_fmt_date() ---------------------------------------------------------------
 #' Format a vector as date values
 #'
 #' @description
@@ -2031,6 +2044,7 @@ vec_fmt_date <- function(
   )
 }
 
+# vec_fmt_time() ---------------------------------------------------------------
 #' Format a vector as time values
 #'
 #' @description
@@ -2202,6 +2216,7 @@ vec_fmt_time <- function(
   )
 }
 
+# vec_fmt_datetime() -----------------------------------------------------------
 #' Format a vector as datetime values
 #'
 #' @description
@@ -3026,6 +3041,7 @@ vec_fmt_datetime <- function(
   )
 }
 
+# vec_fmt_duration() -----------------------------------------------------------
 #' Format a vector of numeric or duration values as styled time duration strings
 #'
 #' @description
@@ -3226,6 +3242,7 @@ vec_fmt_duration <- function(
   )
 }
 
+# vec_fmt_markdown() -----------------------------------------------------------
 #' Format a vector containing Markdown text
 #'
 #' @description
@@ -3337,14 +3354,17 @@ check_vector_valid <- function(x, valid_classes = NULL, call = rlang::caller_env
   invisible()
 }
 
-# In the case where strict mode is being used (options("gt.strict_column_fmt" = TRUE),
-# stop the function if any of the resolved columns have data that is incompatible
-# with the formatter
-check_columns_valid_if_strict <- function(data,
-                                          columns,
-                                          valid_classes,
-                                          extra_msg = NULL,
-                                          call = rlang::caller_env()) {
+# In the case where strict mode is being used
+# (options("gt.strict_column_fmt" = TRUE)), stop the function if any of the
+# resolved columns have data that is incompatible with the formatter
+check_columns_valid_if_strict <- function(
+    data,
+    columns,
+    valid_classes,
+    extra_msg = NULL,
+    call = rlang::caller_env()
+) {
+  
   # Don't check if strict mode is not enabled
   # strict mode is opt-in, not the default
   if (!isTRUE(getOption("gt.strict_column_fmt", FALSE))) {

@@ -22,6 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
+# gt_group() -------------------------------------------------------------------
 #' Create a `gt_group` container for holding multiple **gt** table objects
 #'
 #' @description
@@ -99,6 +100,7 @@ gt_group <- function(
   gt_group
 }
 
+# grp_pull() -------------------------------------------------------------------
 #' Pull out a **gt** table from a `gt_group` container object
 #'
 #' @description
@@ -149,6 +151,7 @@ grp_pull <- function(
   gt_tbl
 }
 
+# grp_add() --------------------------------------------------------------------
 #' Add one or more **gt** tables to a `gt_group` container object
 #'
 #' @description
@@ -299,6 +302,7 @@ grp_add <- function(
   gt_group
 }
 
+# grp_clone() ------------------------------------------------------------------
 #' Clone one or more **gt** tables in a `gt_group` container object
 #'
 #' @description
@@ -429,6 +433,7 @@ grp_clone <- function(
   data
 }
 
+# grp_replace() ----------------------------------------------------------------
 #' Replace one or more **gt** tables in a `gt_group` container object
 #'
 #' @description
@@ -501,6 +506,7 @@ grp_replace <- function(
   gt_group
 }
 
+# grp_rm() ---------------------------------------------------------------------
 #' Remove one or more **gt** tables from a `gt_group` container object
 #'
 #' @description
@@ -539,6 +545,7 @@ grp_rm <- function(
   remove_gt_tbl_from_gt_group(data = data, which = which)
 }
 
+# grp_options() ----------------------------------------------------------------
 #' Modify table options for all tables within a `gt_group` object
 #'
 #' @description

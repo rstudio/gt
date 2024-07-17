@@ -19,7 +19,8 @@ This is the \strong{gt} table object that is commonly created through use of the
 \verb{scalar<character>} // \strong{required}
 
 The text to be used as the stubhead label. We can optionally use \code{\link[=md]{md()}} or
-\code{\link[=html]{html()}} to style the text as Markdown or to retain HTML elements in the text.}
+\code{\link[=html]{html()}} to style the text as Markdown or to retain HTML elements in the
+text.}
 }
 \value{
 An object of class \code{gt_tbl}.

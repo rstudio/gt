@@ -22,6 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
+# summary_rows() ---------------------------------------------------------------
 #' Add group-wise summary rows using aggregation functions
 #'
 #' @description
@@ -41,8 +42,9 @@
 #'   The row groups to which targeting operations are constrained. Can either be
 #'   a series of row group ID values provided in `c()` or a select helper
 #'   function (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
-#'   [num_range()], and [everything()]). By default this is set to [everything()],
-#'   which means that all available groups will obtain summary rows.
+#'   [num_range()], and [everything()]). By default this is set to
+#'   [everything()], which means that all available groups will obtain summary
+#'   rows.
 #'
 #' @param columns *Columns to target*
 #'
@@ -527,6 +529,7 @@ summary_rows <- function(
   )
 }
 
+# grand_summary_rows() ---------------------------------------------------------
 #' Add grand summary rows using aggregation functions
 #'
 #' @description
@@ -804,7 +807,13 @@ normalize_summary_fns <- function(fns) {
   summary_fns <- list()
 
   if (rlang::is_formula(fns)) {
-    fns <- list(rlang::new_formula(lhs = rlang::f_lhs(fns), rhs = rlang::f_rhs(fns)))
+    fns <- 
+      list(
+        rlang::new_formula(
+          lhs = rlang::f_lhs(fns),
+          rhs = rlang::f_rhs(fns)
+        )
+      )
   }
 
   # Upgrade `fns` to a list if it's a vector
@@ -1024,7 +1033,13 @@ normalize_fmt_fns <- function(fmt) {
   }
 
   if (rlang::is_formula(fmt)) {
-    fmt <- list(rlang::new_formula(lhs = rlang::f_lhs(fmt), rhs = rlang::f_rhs(fmt)))
+    fmt <- 
+      list(
+        rlang::new_formula(
+          lhs = rlang::f_lhs(fmt),
+          rhs = rlang::f_rhs(fmt)
+        )
+      )
   }
 
   fmt

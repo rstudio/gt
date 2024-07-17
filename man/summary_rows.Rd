@@ -31,8 +31,9 @@ This is the \strong{gt} table object that is commonly created through use of the
 The row groups to which targeting operations are constrained. Can either be
 a series of row group ID values provided in \code{c()} or a select helper
 function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). By default this is set to \code{\link[=everything]{everything()}},
-which means that all available groups will obtain summary rows.}
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). By default this is set to
+\code{\link[=everything]{everything()}}, which means that all available groups will obtain summary
+rows.}
 
 \item{columns}{\emph{Columns to target}
 

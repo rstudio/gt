@@ -29,7 +29,7 @@ Add a caption to a \strong{gt} table, which is handled specially for a table
 within an R Markdown, Quarto, or \strong{bookdown} context. The addition of
 captions makes tables cross-referencing across the containing document. The
 caption location (i.e., top, bottom, margin) is handled at the document level
-in each of these system.
+in each of these systems.
 }
 \section{Examples}{
 

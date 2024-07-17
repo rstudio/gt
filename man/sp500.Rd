@@ -23,24 +23,6 @@ beginning of 1950 to the end of 2015. The index includes 500 leading
 companies and captures about 80 percent coverage of available market
 capitalization.
 }
-\section{Examples}{
-
-
-Here is a glimpse at the data available in \code{sp500}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(sp500)
-#> Rows: 16,607
-#> Columns: 7
-#> $ date      <date> 2015-12-31, 2015-12-30, 2015-12-29, 2015-12-28, 2015-12-24,~
-#> $ open      <dbl> 2060.59, 2077.34, 2060.54, 2057.77, 2063.52, 2042.20, 2023.1~
-#> $ high      <dbl> 2062.54, 2077.34, 2081.56, 2057.77, 2067.36, 2064.73, 2042.7~
-#> $ low       <dbl> 2043.62, 2061.97, 2060.54, 2044.20, 2058.73, 2042.20, 2020.4~
-#> $ close     <dbl> 2043.94, 2063.36, 2078.36, 2056.50, 2060.99, 2064.29, 2038.9~
-#> $ volume    <dbl> 2655330000, 2367430000, 2542000000, 2492510000, 1411860000, ~
-#> $ adj_close <dbl> 2043.94, 2063.36, 2078.36, 2056.50, 2060.99, 2064.29, 2038.9~
-}\if{html}{\out{</div>}}
-}
-
 \section{Dataset ID and Badge}{
 
 DATA-4

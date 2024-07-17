@@ -58,42 +58,6 @@ boundaries. Additionally, there are computed columns containing population
 density values for each census year and population change values from
 adjacent census years.
 }
-\section{Examples}{
-
-
-Here is a glimpse at the data available in \code{towny}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(towny)
-#> Rows: 414
-#> Columns: 25
-#> $ name                     <chr> "Addington Highlands", "Adelaide Metcalfe", "~
-#> $ website                  <chr> "https://addingtonhighlands.ca", "https://ade~
-#> $ status                   <chr> "lower-tier", "lower-tier", "lower-tier", "lo~
-#> $ csd_type                 <chr> "township", "township", "township", "township~
-#> $ census_div               <chr> "Lennox and Addington", "Middlesex", "Simcoe"~
-#> $ latitude                 <dbl> 45.00000, 42.95000, 44.13333, 45.52917, 43.85~
-#> $ longitude                <dbl> -77.25000, -81.70000, -79.93333, -76.89694, -~
-#> $ land_area_km2            <dbl> 1293.99, 331.11, 371.53, 519.59, 66.64, 116.6~
-#> $ population_1996          <int> 2429, 3128, 9359, 2837, 64430, 1027, 8315, 16~
-#> $ population_2001          <int> 2402, 3149, 10082, 2824, 73753, 956, 8593, 18~
-#> $ population_2006          <int> 2512, 3135, 10695, 2716, 90167, 958, 8654, 19~
-#> $ population_2011          <int> 2517, 3028, 10603, 2844, 109600, 864, 9196, 2~
-#> $ population_2016          <int> 2318, 2990, 10975, 2935, 119677, 969, 9680, 2~
-#> $ population_2021          <int> 2534, 3011, 10989, 2995, 126666, 954, 9949, 2~
-#> $ density_1996             <dbl> 1.88, 9.45, 25.19, 5.46, 966.84, 8.81, 21.22,~
-#> $ density_2001             <dbl> 1.86, 9.51, 27.14, 5.44, 1106.74, 8.20, 21.93~
-#> $ density_2006             <dbl> 1.94, 9.47, 28.79, 5.23, 1353.05, 8.22, 22.09~
-#> $ density_2011             <dbl> 1.95, 9.14, 28.54, 5.47, 1644.66, 7.41, 23.47~
-#> $ density_2016             <dbl> 1.79, 9.03, 29.54, 5.65, 1795.87, 8.31, 24.71~
-#> $ density_2021             <dbl> 1.96, 9.09, 29.58, 5.76, 1900.75, 8.18, 25.39~
-#> $ pop_change_1996_2001_pct <dbl> -0.0111, 0.0067, 0.0773, -0.0046, 0.1447, -0.~
-#> $ pop_change_2001_2006_pct <dbl> 0.0458, -0.0044, 0.0608, -0.0382, 0.2226, 0.0~
-#> $ pop_change_2006_2011_pct <dbl> 0.0020, -0.0341, -0.0086, 0.0471, 0.2155, -0.~
-#> $ pop_change_2011_2016_pct <dbl> -0.0791, -0.0125, 0.0351, 0.0320, 0.0919, 0.1~
-#> $ pop_change_2016_2021_pct <dbl> 0.0932, 0.0070, 0.0013, 0.0204, 0.0584, -0.01~
-}\if{html}{\out{</div>}}
-}
-
 \section{Dataset ID and Badge}{
 
 DATA-7

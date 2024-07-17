@@ -44,14 +44,6 @@
 #'
 #' @source <https://data.worldbank.org/indicator/SP.POP.TOTL>
 #'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `countrypops`.
-#'
-#' ```{r}
-#' dplyr::glimpse(countrypops)
-#' ```
-#'
 #' @family datasets
 #' @section Dataset ID and Badge:
 #' DATA-1
@@ -103,14 +95,6 @@
 #' @source Calculated Actinic Fluxes (290 - 700 nm) for Air Pollution
 #' Photochemistry Applications (Peterson, 1976), available at:
 #' <https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=9100JA26.txt>.
-#'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `sza`.
-#'
-#' ```{r}
-#' dplyr::glimpse(sza)
-#' ```
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
@@ -168,14 +152,6 @@
 #' \item{msrp}{Manufacturer's suggested retail price in U.S. dollars (USD).}
 #' }
 #'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `gtcars`.
-#'
-#' ```{r}
-#' dplyr::glimpse(gtcars)
-#' ```
-#'
 #' @family datasets
 #' @section Dataset ID and Badge:
 #' DATA-3
@@ -206,14 +182,6 @@
 #' \item{volume}{The number of trades for the given `date`.}
 #' \item{adj_close}{The close price adjusted for both dividends and splits.}
 #' }
-#'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `sp500`.
-#'
-#' ```{r}
-#' dplyr::glimpse(sp500)
-#' ```
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
@@ -345,14 +313,6 @@
 #' USD).}
 #' }
 #'
-#' @section Examples:
-#'
-#' Here is a glimpse at the pizza data available in `pizzaplace`.
-#'
-#' ```{r}
-#' dplyr::glimpse(pizzaplace)
-#' ```
-#'
 #' @family datasets
 #' @section Dataset ID and Badge:
 #' DATA-5
@@ -394,14 +354,6 @@
 #' \item{group}{A character column with four `grp_a` values and four `grp_b`
 #' values which can be useful for testing tables that contain row groups.}
 #' }
-#'
-#' @section Examples:
-#'
-#' Here is the entirety of the `exibble` table.
-#'
-#' ```{r}
-#' exibble
-#' ```
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
@@ -469,14 +421,6 @@
 #' 2021.}
 #' }
 #'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `towny`.
-#'
-#' ```{r}
-#' dplyr::glimpse(towny)
-#' ```
-#'
 #' @family datasets
 #' @section Dataset ID and Badge:
 #' DATA-7
@@ -536,7 +480,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 "peeps"
 
@@ -573,14 +517,6 @@
 #' Database (IMDB).}
 #' }
 #'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `films`.
-#'
-#' ```{r}
-#' dplyr::glimpse(films)
-#' ```
-#'
 #' @family datasets
 #' @section Dataset ID and Badge:
 #' DATA-9
@@ -590,7 +526,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 "films"
 
@@ -686,14 +622,6 @@
 #' \item{condition}{The weather condition.}
 #' }
 #'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `gibraltar`.
-#'
-#' ```{r}
-#' dplyr::glimpse(gibraltar)
-#' ```
-#'
 #' @family datasets
 #' @section Dataset ID and Badge:
 #' DATA-11
@@ -703,7 +631,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 "gibraltar"
 
@@ -734,14 +662,6 @@
 #' the value and any uncertainty value.}
 #' \item{units}{The units associated with the constant.}
 #' }
-#'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `constants`.
-#'
-#' ```{r}
-#' dplyr::glimpse(constants)
-#' ```
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
@@ -827,14 +747,6 @@
 #' \item{norm_l,norm_u}{Lower and upper bounds for the normal range associated
 #' with the test.}
 #' }
-#'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `illness`.
-#'
-#' ```{r}
-#' dplyr::glimpse(illness)
-#' ```
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
@@ -932,14 +844,6 @@
 #' of K) for which the `Cl_a`, `Cl_b`, and `Cl_n` parameters are valid.}
 #' }
 #'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `reactions`.
-#'
-#' ```{r}
-#' dplyr::glimpse(reactions)
-#' ```
-#'
 #' @family datasets
 #' @section Dataset ID and Badge:
 #' DATA-14
@@ -949,7 +853,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 "reactions"
 
@@ -991,14 +895,6 @@
 #' and they are in units of `cm^2 molecule^-1`.}
 #' }
 #'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `photolysis`.
-#'
-#' ```{r}
-#' dplyr::glimpse(photolysis)
-#' ```
-#'
 #' @family datasets
 #' @section Dataset ID and Badge:
 #' DATA-15
@@ -1008,7 +904,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 "photolysis"
 
@@ -1052,14 +948,6 @@
 #' uncertainty. In units of keV.}
 #' }
 #'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `nuclides`.
-#'
-#' ```{r}
-#' dplyr::glimpse(nuclides)
-#' ```
-#'
 #' @family datasets
 #' @section Dataset ID and Badge:
 #' DATA-16
@@ -1069,7 +957,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' `v0.11.0`
+#' `v0.11.0` (July 9, 2024)
 #'
 "nuclides"
 
@@ -1121,14 +1009,6 @@
 #' specific event during the course of the study or not. Can be either `"Y"` (if
 #' if the subject had the event) or `"N"`.}
 #' }
-#'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `rx_adsl`.
-#'
-#' ```{r}
-#' dplyr::glimpse(rx_adsl)
-#' ```
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
@@ -1194,14 +1074,6 @@
 #' \item{CRIT1, CRIT1FL}{Analysis Criterion 1 and analysis criterion 1 flag,
 #' indicating whether PD is related to COVID-19 or not.}
 #' }
-#'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `rx_addv`.
-#'
-#' ```{r}
-#' dplyr::glimpse(rx_addv)
-#' ```
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:

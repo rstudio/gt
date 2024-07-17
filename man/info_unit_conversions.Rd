@@ -38,7 +38,7 @@ Get a table of info on all the available keywords for unit conversions.
 
 \section{Function Introduced}{
 
-\code{v0.11.0}
+\code{v0.11.0} (July 9, 2024)
 }
 
 \seealso{

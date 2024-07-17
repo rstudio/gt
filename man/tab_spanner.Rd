@@ -108,7 +108,8 @@ spanners are placed in the order of calling \code{tab_spanner()} so if a later c
 uses the same columns in its definition (or even a subset) as the first
 invocation, the second spanner will be overlaid atop the first. Options exist
 for forcibly inserting a spanner underneath other (with \code{level} as space
-permits) and with \code{replace}, which allows for full or partial spanner replacement.
+permits) and with \code{replace}, which allows for full or partial spanner
+replacement.
 }
 \section{Targeting columns with the \code{columns} argument}{
 
