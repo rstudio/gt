@@ -1,5 +1,7 @@
 # gt (development version)
 
+* Creating a caption with `tab_caption()` will now be preserved in Latex output with `as_latex()`. Cross-referencing a table using the internal cross-referencing system of **bookdown** is now enabled for PDF and HTML outputs (for HTML, set `options("htmltools.preserve.raw" = FALSE)`). Quarto users should use the `tbl-cap` and `label` cell options.
+
 * PDF output now defaults to a full-width floating environment using `tabular*` (@AronGullickson, #1588). Float position can be controlled by the `latex.tbl.pos` argument in `tab_options`. Quarto users can alternatively use the `tbl-pos` argument to control positioning. To use a `longtable` environment instead, use `tab_option(latex.use_longtable = TRUE)`.
 
 * Improved error messages for the `text_transform()` function if `locations` couldn't be resolved. (@olivroy, #1774)
