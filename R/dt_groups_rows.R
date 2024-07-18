@@ -56,6 +56,7 @@ dt_groups_rows_build <- function(data, context) {
     table_body <- dt_data_get(data = data)
     stub_df[["rowname"]] <- as.character(table_body[[stub_var]])
   }
+  # what happens if dt_stub_df doesn't exist?
 
   l <- length(ordering)
   groups_rows <-
@@ -107,6 +108,11 @@ dt_groups_rows_build <- function(data, context) {
 
     groups_rows[is.na(groups_rows[, "group_id"]), "group_label"] <-
       others_group
+    if (!is.null(stub_df$group_label)) {
+     # stub_df$group_label[is.null(stub_df$group_label[[1]])] <- others_group
+      #data <- dt_stub_df_set(data, stub_df)
+
+    }
 
   } else {
 
@@ -134,5 +140,6 @@ dt_groups_rows_build <- function(data, context) {
     }
   }
 
+  # print(groups_rows)
   dt_groups_rows_set(data = data, groups_rows = groups_rows)
 }

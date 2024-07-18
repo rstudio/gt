@@ -78,6 +78,10 @@ dt_stub_df_init <- function(
   #
   # Handle column of data specified as the `groupname_col`
   #
+  if (identical(groupname_col, "__GT_GROUPNAME_PRIVATE__")) {
+    data_tbl$`__GT_GROUPNAME_PRIVATE__` <- NA_character_
+  }
+
   if (
     !is.null(groupname_col) &&
     length(groupname_col) > 0L &&
