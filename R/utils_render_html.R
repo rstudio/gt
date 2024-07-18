@@ -1444,7 +1444,8 @@ create_body_component_h <- function(data) {
     # needs to be repeated to match the size of the other fields
     group_ids <- vctrs::vec_rep_each(group_ids, times = ns)
     body_rows_data_flat$current_group_id <- group_ids
-
+    ## here we have to make sur the lengths can be recycled to each others.
+    # vctrs::vec_recycle_common()
     body_rows_uncollapsed <- vctrs::vec_chop(
       do.call(render_row_data, body_rows_data_flat),
       sizes = ns
