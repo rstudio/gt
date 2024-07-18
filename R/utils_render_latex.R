@@ -405,23 +405,17 @@ create_columns_component_l <- function(data, colwidth_df) {
 
     if (length(stub_layout) > 1L) {
       # If stub_layout == 1L, multicolumn is not needed and stub_label is already defined
-      stub_df <- dplyr::filter(colwidth_df, type == 'stub')
-      stub_width <-
-        if (stub_df$pt > 0) {
-          sprintf("%.2fpt", stub_df$pt)
-        } else if (stub_df$lw > 0) {
-          sprintf("%.2f\\linewidth", stub_df$lw)
-        } else {
-          ""
-        }
-
-      if (stub_width == "") {
+      stub_df <- dplyr::filter(colwidth_df, type %in% c('stub', 'row_group'))
+      if (any(stub_df$unspec == 1L)) {
         width_txt <- "c"
       } else {
         width_txt <-
           sprintf(
-            ">{\\centering\\arraybackslash}m{\\dimexpr %s -2\\tabcolsep-1.5\\arrayrulewidth}",
-            stub_width
+            ">{\\centering\\arraybackslash}m{%s}",
+            create_singlecolumn_width_text_l(
+              pt = sum(stub_df$pt),
+              lw = sum(stub_df$lw)
+            )
           )
       }
 
