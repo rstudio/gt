@@ -27,6 +27,10 @@
 
 * Fixed a bug in using `pct()` column widths with `as_gtable()` (@teunbrand, #1771)
 
+* Fixed a bug where `gt(row_group_as_column = TRUE)` would create the wrong layout with `as_gtable()` when all groups are unique (@olivroy, #1803).
+
+* grid output has been improved. Namely, showing currency symbols now works (@olivroy, #1788). 
+
 * `data_color()` no longer errors when a tidyselect selection is empty (like `fmt_*()` functions) (@olivroy, #1665).
 
 # gt 0.11.0

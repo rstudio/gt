@@ -177,3 +177,21 @@ test_that("gtable outputs works well for currencies", {
     as_gtable(tbl)
   )
 })
+
+test_that("gtable output works when row groups are unique (#1802).", {
+  # using groupname_col = "row" to ensure uniqueness
+  tbl <- exibble %>%
+    gt(groupname_col = "row")
+  expect_no_error(test <- as_gtable(tbl))
+  expect_equal(
+    test$layout$name[8],
+    "column_label_8"
+  )
+  tbl <- exibble %>%
+    gt(groupname_col = "row", row_group_as_column = TRUE)
+  expect_no_error(test <- as_gtable(tbl))
+  expect_equal(
+    test$layout$name[8],
+    "column_label_8"
+  )
+})
