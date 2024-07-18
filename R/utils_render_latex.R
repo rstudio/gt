@@ -405,7 +405,7 @@ create_columns_component_l <- function(data, colwidth_df) {
 
     if (length(stub_layout) > 1L) {
       # If stub_layout == 1L, multicolumn is not needed and stub_label is already defined
-      stub_df <- dplyr::filter(colwidth_df, type %in% c('stub', 'row_group'))
+      stub_df <- dplyr::filter(colwidth_df, type %in% c("stub", "row_group"))
       if (any(stub_df$unspec == 1L)) {
         width_txt <- "c"
       } else {
