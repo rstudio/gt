@@ -29,6 +29,10 @@
 
 * `data_color()` no longer errors when a tidyselect selection is empty (like `fmt_*()` functions) (@olivroy, #1665).
 
+* Fixed a bugs that caused an error in Latex when `row_group_as_column = TRUE`, the row groups were specified using the `tab_row_group`, and the user specified a width for the row name columns (@kbrevoort, #1804).
+
+* Improve the centering of the stubhead label in Latex when  `row_group_as_column = TRUE` and the width of the row name column is specified (@kbrevoort, #1804).
+
 # gt 0.11.0
 
 ## New features
