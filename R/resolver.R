@@ -267,7 +267,7 @@ resolve_cols_i <- function(
     # If we use the gt-specific select helper `stub()` then we
     # will retrieve the stub var name and return the output in the
     # same format as the return value for `tidyselect::eval_select()`
-    if (rlang::as_label(quo) == "stub()") {
+    if (rlang::as_label(quo) %in% c("stub()", "gt::stub()")) {
 
       stub_var <- dt_boxhead_get_var_stub(data = data)
 
@@ -283,7 +283,7 @@ resolve_cols_i <- function(
     # If we use the gt-specific select helper `row_group()` then we
     # will retrieve the row_group var name and return the output in the
     # same format as the return value for `tidyselect::eval_select()`
-    if (rlang::as_label(quo) == "row_group()") {
+    if (rlang::as_label(quo) %in% c("row_group()", "gt::row_group()")) {
 
       row_group_var <- dt_boxhead_get_vars_groups(data = data)
 
