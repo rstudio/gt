@@ -33,6 +33,8 @@
 
 * `data_color()` no longer errors when a tidyselect selection is empty (like `fmt_*()` functions) (@olivroy, #1665).
 
+* `gt(row_group_as_column = TRUE)` now works if multiple groups are supplied (@olivroy, #1552).
+
 # gt 0.11.0
 
 ## New features

@@ -253,8 +253,9 @@ dt_boxhead_get_alignments_in_stub <- function(data) {
           data = data,
           var = grp_vars
         )
-    }
 
+    if (length(grp_vars) > 1) {
+      grp_alignment <- grp_alignment[1]
     }
     alignments <- c(alignments, grp_alignment)
   }
@@ -286,6 +287,13 @@ dt_boxhead_get_vars_align_default <- function(data) {
 
 dt_boxhead_get_alignment_by_var <- function(data, var) {
   boxhead <- dt_boxhead_get(data = data)
+  if (length(var) > 1L) {
+    # return multiple alignments in case of multiple variables
+    # requested. #1552
+    return(
+      boxhead$column_align[boxhead$var %in% var]
+    )
+  }
   boxhead$column_align[boxhead$var == var]
 }
 
