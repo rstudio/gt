@@ -542,7 +542,7 @@ body_cells_g <- function(data) {
   )
 
   if (has_two_col_stub) {
-    # Set stub row group
+    # Set stub row group(s)
     group_cell <- which(cell_rows %in% groups$row_start & cell_cols == 1)
     group <- match(cell_rows[group_cell], groups$row_start)
     extra_rows <- (groups$row_end - groups$row_start + 1)[group]
@@ -562,8 +562,13 @@ body_cells_g <- function(data) {
 
     # Delete empty cells
     delete <- which(!(cell_rows %in% groups$row_start) & cell_cols == 1)
-    layout <- vctrs::vec_slice(layout, -delete)
-    cell_rows <- vctrs::vec_slice(cell_rows, -delete)
+
+    if (rlang::has_length(delete)) {
+      # don't attempt delete doesn't have length
+      # will likely occur in the case of all groups of length 1 #1803
+      layout <- vctrs::vec_slice(layout, -delete)
+      cell_rows <- vctrs::vec_slice(cell_rows, -delete)
+    }
   }
 
   # Split by row

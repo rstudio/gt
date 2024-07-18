@@ -362,10 +362,10 @@ reference:
 
   - title: Built in datasets
     desc: >
-      The **gt** package is equipped with twelve datasets that come in all
-      shapes and sizes. Use them to experiment with the package! Many examples
-      in the internal help documents use these datasets to quickly demonstrate
-      the awesome features of **gt**.
+      The **gt** package is equipped with 18 datasets that come in all shapes
+      and sizes. Use them to experiment with the package! Many examples in the
+      documentation use these datasets to demonstrate the awesome features of
+      **gt**.
     contents:
     - countrypops
     - sza
