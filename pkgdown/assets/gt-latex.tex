@@ -44,28 +44,14 @@
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % Make \paragraph and \subparagraph free-standing
-\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}{
-    \@ifstar
-      \xxxParagraphStar
-      \xxxParagraphNoStar
-  }
-  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
-  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}{
-    \@ifstar
-      \xxxSubParagraphStar
-      \xxxSubParagraphNoStar
-  }
-  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
-  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
-\makeatother
 
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -85,7 +71,7 @@
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
 \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
@@ -95,7 +81,7 @@
 \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
 \newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
 \newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
 \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
@@ -182,7 +168,6 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
-
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -199,16 +184,14 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
-
 \title{LaTeX Quarto test}
 \author{}
-\date{2024-07-16}
+\date{2024-07-18}
 
 \begin{document}
 \maketitle
 
 \listoftables
-
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{load\_all}\NormalTok{(}\StringTok{"."}\NormalTok{)}
@@ -334,7 +317,7 @@ NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\_6 & grp\_b \
 \cmidrule(lr){3-4}
 \multicolumn{2}{c}{Stubhead label} & sold & income \\ 
 \midrule\addlinespace[2.5pt]
-\multirow{6}{=}{classic} & \multicolumn{1}{l|}{All Sizes} & 14,888 & \$220,053.10 \\ 
+\multirow{6}{*}{classic} & \multicolumn{1}{l|}{All Sizes} & 14,888 & \$220,053.10 \\ 
 \cmidrule(l{-0.05em}r){2-4}
  & \hspace*{7.5pt} L & 4,057 & \$74,518.50 \\ 
  & \hspace*{7.5pt} M & 4,112 & \$60,581.75 \\ 
@@ -342,7 +325,7 @@ NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\_6 & grp\_b \
  & \hspace*{7.5pt} XL & 552 & \$14,076.00 \\ 
  & \hspace*{7.5pt} XXL & 28 & \$1,006.60 \\ 
 \midrule\addlinespace[2.5pt]
-\multirow{4}{=}{veggie} & \multicolumn{1}{l|}{All Sizes} & 11,649 & \$193,690.45 \\ 
+\multirow{4}{*}{veggie} & \multicolumn{1}{l|}{All Sizes} & 11,649 & \$193,690.45 \\ 
 \cmidrule(l{-0.05em}r){2-4}
  & \hspace*{7.5pt} L & 5,403 & \$104,202.70 \\ 
  & \hspace*{7.5pt} M & 3,583 & \$57,101.00 \\ 
@@ -362,7 +345,6 @@ Source: the pizzaria\\
 \caption{\label{tbl-complete-output}Complete output}
 
 \end{table}%
-
 
 
 
