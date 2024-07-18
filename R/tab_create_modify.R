@@ -1710,9 +1710,6 @@ tab_row_group <- function(
   # Capture the `rows` expression
   row_expr <- rlang::enquo(rows)
 
-  # Get the `stub_df` data frame from `data`
-  stub_df <- dt_stub_df_get(data = data)
-
   # Resolve the row numbers using `resolve_vars()`
   resolved_rows_idx <-
     resolve_rows_i(
@@ -1720,6 +1717,7 @@ tab_row_group <- function(
       data = data
     )
 
+  # Get the `stub_df` data frame from `data`
   stub_df <- dt_stub_df_get(data = data)
 
   # If the label is marked as HTML or Markdown and there's no `id` set

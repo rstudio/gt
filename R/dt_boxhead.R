@@ -243,21 +243,30 @@ dt_boxhead_get_vars_groups <- function(data) {
 dt_boxhead_get_alignments_in_stub <- function(data) {
 
   stub_layout <- get_stub_layout(data = data)
+  alignments <- NULL
 
-  c(
-    if ("group_label" %in% stub_layout) {
-      dt_boxhead_get_alignment_by_var(
-        data = data,
-        dt_boxhead_get_vars_groups(data = data)
-      )
-    },
-    if ("rowname" %in% stub_layout) {
-      dt_boxhead_get_alignment_by_var(
-        data = data,
-        dt_boxhead_get_var_stub(data = data)
-      )
+  if ("group_label" %in% stub_layout) {
+    grp_vars <- dt_boxhead_get_vars_groups(data = data)
+    # non-initialized grp_vars
+      grp_alignment <-
+        dt_boxhead_get_alignment_by_var(
+          data = data,
+          var = grp_vars
+        )
     }
-  )
+
+    }
+    alignments <- c(alignments, grp_alignment)
+  }
+
+  if ("rowname" %in% stub_layout) {
+    row_alignment <- dt_boxhead_get_alignment_by_var(
+      data = data,
+      dt_boxhead_get_var_stub(data = data)
+    )
+    alignments <- c(alignments, row_alignment)
+  }
+  alignments
 }
 
 dt_boxhead_get_var_by_type <- function(data, type) {
