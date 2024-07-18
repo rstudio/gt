@@ -156,8 +156,9 @@ c(
   "## --------",
   # Comment / uncomment here to compare between released version and current.
   # "library(gt)",
-  "devtools::load_all(\".\")",
+  "pkgload::load_all(\".\")",
   "packageVersion('gt')",
+  "quarto::quarto_version()",
   "",
   "#'",
   "#' {{< pagebreak >}}",
