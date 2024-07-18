@@ -35,6 +35,8 @@
 
 * `gt(row_group_as_column = TRUE)` now works if multiple groups are supplied (@olivroy, #1552).
 
+* `tab_row_group()` now works if `row_group_as_column = TRUE` (@olivroy, #1552).
+
 # gt 0.11.0
 
 ## New features
