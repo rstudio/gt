@@ -557,18 +557,18 @@ apply_footnotes_to_output <- function(data, context = "html") {
 
       boxhead_var_stub <- dt_boxhead_get_var_stub(data = data)
 
-      footnotes_tbl_data[
-        which(is.na(footnotes_tbl_data$colname)), "colname"
-      ] <- boxhead_var_stub
+      footnotes_tbl_data$colname[is.na(footnotes_tbl_data$colname)] <-
+        boxhead_var_stub
     }
 
     footnotes_data_marks <-
-      footnotes_tbl_data %>%
       dplyr::mutate(
+        footnotes_tbl_data,
         fs_id_coalesced = paste(fs_id, collapse = ","),
         .by = c("rownum", "colnum")
-      ) %>%
-      dplyr::distinct(colname, rownum, locname, placement, fs_id_coalesced)
+      )
+    footnotes_data_marks <-
+      dplyr::distinct(footnotes_data_marks, colname, rownum, locname, placement, fs_id_coalesced)
 
     for (i in seq_len(nrow(footnotes_data_marks))) {
 
@@ -653,11 +653,13 @@ set_footnote_marks_row_groups <- function(data, context = "html") {
   if (nrow(footnotes_row_groups_tbl) > 0) {
 
     footnotes_row_groups_marks <-
-      footnotes_row_groups_tbl %>%
-      dplyr::group_by(grpname) %>%
-      dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
-      dplyr::ungroup() %>%
-      dplyr::distinct(grpname, fs_id_coalesced)
+      dplyr::mutate(
+        footnotes_row_groups_tbl,
+        fs_id_coalesced = paste(fs_id, collapse = ","),
+        .by = "grpname"
+      )
+    # will only remain
+    footnotes_row_groups_marks <- dplyr::distinct(footnotes_row_groups_marks, fs_id_coalesced, grpname)
 
     for (i in seq_len(nrow(footnotes_row_groups_marks))) {
 
@@ -732,7 +734,10 @@ apply_footnotes_to_summary <- function(data, context = "html") {
   if ("grand_summary_cells" %in% footnotes_tbl$locname) {
 
     footnotes_tbl_data <-
-      footnotes_tbl[footnotes_tbl$locname == "grand_summary_cells", ]
+      vctrs::vec_slice(
+        footnotes_tbl,
+        footnotes_tbl$locname == "grand_summary_cells"
+      )
 
     footnotes_data_marks <-
       dplyr::mutate(
