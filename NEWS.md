@@ -6,7 +6,7 @@
 
 ## Interactive table support
 
-* Interactive tables will show no border if `opt_table_lines(extent = "none")` is specified (#1307).
+* Interactive tables respect`opt_table_lines(extent = "none")` and `opt_table_lines(extent = "all")` is specified (#1307).
 
 * Interactive tables now respect more styling options. 
 

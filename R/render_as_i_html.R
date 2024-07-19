@@ -189,8 +189,10 @@ render_as_ihtml <- function(data, id) {
     # apply all column labels formatting to both heading + groupCol styling (nothing specific for spanners styling in gt?)
     column_labels_background_color <- "transparent"
   }
-  # Part of #1307
-  borderless_borders <- opt_val(data = data, option = "table_body_hlines_style") == "none"
+  horizontal_borders <- opt_val(data = data, option = "table_body_hlines_style")
+  veritcal_borders <- opt_val(data = data, option = "table_body_vlines_style")
+  borderless_borders <- horizontal_borders == "none" && veritcal_borders == "none"
+  all_borders <- horizontal_borders != "none" && veritcal_borders != "none"
 
   column_labels_font_weight <- opt_val(data = data, option = "column_labels_font_weight")
   # Apply font weight to groupname_col title
@@ -654,7 +656,8 @@ render_as_ihtml <- function(data, id) {
       onClick = NULL,
       highlight = use_highlight,
       outlined = FALSE,
-      bordered = FALSE,
+      # equivalent to opt_table_lines(extent = "all")
+      bordered = all_borders,
       # equivalent to opt_table_lines(extent = "none")
       borderless = borderless_borders,
       striped = use_row_striping,
