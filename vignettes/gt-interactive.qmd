@@ -10,6 +10,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+# generate the same table ID
+set.seed(112)
 ```
 
 gt provides an option to make interactive html tables via the [reactable](https://glin.github.io/reactable/index.html) package.
@@ -35,11 +37,14 @@ gt_tbl |>
   opt_interactive()
 ```
 
+## Examples
+
+![](images/clipboard-2210070624.png)
+
 # Current limitations
 
-* Some features like `tab_style()` may not be fully supported. 
+-   Some features like `tab_style()` may not be fully supported.
 
-* `summary_rows()` and `grand_summary_rows()` have yet to be implemented.
+-   `summary_rows()` and `grand_summary_rows()` have yet to be implemented.
 
-* Your interactive table may be visually different from your non-interactive table.
-
+-   Your interactive table may be visually different from your non-interactive table.
