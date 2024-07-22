@@ -207,6 +207,8 @@ test_that("opt_table_lines() sets the correct options", {
   tbl %>% dt_options_get_value("footnotes_border_bottom_style") %>% expect_equal("none")
   tbl %>% dt_options_get_value("source_notes_border_bottom_style") %>% expect_equal("none")
   tbl %>% dt_options_get_value("table_border_bottom_style") %>% expect_equal("none")
+  # doesn't set font.style
+  expect_false(dt_options_get_value(tbl, "table_font_style") == "none")
 
   tbl <- exibble %>% gt() %>% opt_table_lines() %>% opt_table_lines(extent = "default")
 

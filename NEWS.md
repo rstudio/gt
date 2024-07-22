@@ -1,8 +1,25 @@
 # gt (development version)
 
+## New features
+
 * Creating a caption with `tab_caption()` will now be preserved in Latex output with `as_latex()`. Cross-referencing a table using the internal cross-referencing system of **bookdown** is now enabled for PDF and HTML outputs (for HTML, set `options("htmltools.preserve.raw" = FALSE)`). Quarto users should use the `tbl-cap` and `label` cell options.
 
 * PDF output now defaults to a full-width floating environment using `tabular*` (@AronGullickson, #1588). Float position can be controlled by the `latex.tbl.pos` argument in `tab_options`. Quarto users can alternatively use the `tbl-pos` argument to control positioning. To use a `longtable` environment instead, use `tab_option(latex.use_longtable = TRUE)`.
+
+## Interactive table support
+
+* Interactive tables will show no border if `opt_table_lines(extent = "none")` is specified (#1307).
+
+* Interactive tables now respect more styling options. 
+
+  * `column_labels.background.color`, `row_group.background.color`, `row_group.font.weight`, `table_body.hlines.style`,
+     `table.font.weight`, `table.font.size`, `stub.font.weight` (#1693).
+
+* `opt_interactive()` now works when columns are merged with `cols_merge()` (@olivroy, #1785). 
+
+* `opt_interactive()` now works when columns are substituted with `sub_*()` (@olivroy, #1759). 
+
+## Bug fixes
 
 * Improved error messages for the `text_transform()` function if `locations` couldn't be resolved. (@olivroy, #1774)
 
@@ -12,11 +29,15 @@
 
 * Fixed a bug in using `pct()` column widths with `as_gtable()` (@teunbrand, #1771)
 
-* `opt_interactive()` now works when columns are merged with `cols_merge()` (@olivroy, #1785). 
+* Fixed a bug where `gt(row_group_as_column = TRUE)` would create the wrong layout with `as_gtable()` when all groups are unique (@olivroy, #1803).
 
-* `opt_interactive()` now works when columns are substituted with `sub_*()` (@olivroy, #1759). 
+* grid output has been improved. Namely, showing currency symbols now works (@olivroy, #1788). 
 
 * `data_color()` no longer errors when a tidyselect selection is empty (like `fmt_*()` functions) (@olivroy, #1665).
+
+* Fixed a bugs that caused an error in Latex when `row_group_as_column = TRUE`, the row groups were specified using the `tab_row_group`, and the user specified a width for the row name columns (@kbrevoort, #1804).
+
+* Improve the centering of the stubhead label in Latex when  `row_group_as_column = TRUE` and the width of the row name column is specified (@kbrevoort, #1804).
 
 # gt 0.11.0
 

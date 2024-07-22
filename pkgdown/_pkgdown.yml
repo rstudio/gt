@@ -7,6 +7,8 @@ home:
 
 template:
   bootstrap: 5
+  light-switch: true
+  assets: pkgdown/assets
 
 authors:
   JooYoung Seo:
@@ -360,10 +362,10 @@ reference:
 
   - title: Built in datasets
     desc: >
-      The **gt** package is equipped with twelve datasets that come in all
-      shapes and sizes. Use them to experiment with the package! Many examples
-      in the internal help documents use these datasets to quickly demonstrate
-      the awesome features of **gt**.
+      The **gt** package is equipped with 18 datasets that come in all shapes
+      and sizes. Use them to experiment with the package! Many examples in the
+      documentation use these datasets to demonstrate the awesome features of
+      **gt**.
     contents:
     - countrypops
     - sza
@@ -383,6 +385,26 @@ reference:
     - nuclides
     - rx_adsl
     - rx_addv
+
+
+articles:
+- title: Get started
+  navbar: ~
+  contents:
+  - creating-summary-lines
+- title: Case studies
+  navbar: Case studies
+  contents:
+  - case-study-gtcars
+  - case-study-clinical-tables
+
+- title: Datasets
+  contents:
+  - gt-datasets
+- title: Visual tests
+  contents:
+  - gt-interactive
+  - gt-visual
 
 redirects:
   - ["articles/intro-creating-gt-tables.html", "articles/gt.html"]

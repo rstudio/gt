@@ -113,16 +113,9 @@ render_as_ihtml <- function(data, id) {
       # With data$`_substitutions`
       row_names <- dplyr::coalesce(row_names, "NA")
       attr(data_tbl, "row.names") <- row_names
-      row_name_col_def <- list(reactable::colDef(
-          name = rowname_label
-          # TODO pass on other attributes of row names column if necessary.
-        ))
-      # Create colDef row name with special ".rownames" from reactable.
-      names(row_name_col_def) <- ".rownames"
-
+    } else {
+      rownames_to_stub <- FALSE
     }
-  } else {
-    row_name_col_def <- NULL
   }
 
   # Obtain column label attributes
@@ -187,6 +180,26 @@ render_as_ihtml <- function(data, id) {
   column_labels_border_bottom_style <- opt_val(data = data, option = "column_labels_border_bottom_style")
   column_labels_border_bottom_width <- opt_val(data = data, option = "column_labels_border_bottom_width")
   column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
+  # Don't allow NA
+  column_labels_background_color = opt_val(data = data, option = "column_labels_background_color")
+  # Apply stub font weight to
+  stub_font_weight <- opt_val(data = data, option = "stub_font_weight")
+
+  if (is.na(column_labels_background_color)) {
+    # apply all column labels formatting to both heading + groupCol styling (nothing specific for spanners styling in gt?)
+    column_labels_background_color <- "transparent"
+  }
+  # Part of #1307
+  borderless_borders <- opt_val(data = data, option = "table_body_hlines_style") == "none"
+
+  column_labels_font_weight <- opt_val(data = data, option = "column_labels_font_weight")
+  # Apply font weight to groupname_col title
+  row_group_font_weight = opt_val(data = data, "row_group_font_weight")
+  table_body_font_weight = opt_val(data = data, "table_font_weight")
+  # for row names + summary label
+  stub_font_weight <- opt_val(data = data, "stub_font_weight")
+  # #1693 table font size
+  table_font_size <- opt_val(data = data, "table_font_size")
 
   emoji_symbol_fonts <-
     c(
@@ -203,6 +216,20 @@ render_as_ihtml <- function(data, id) {
     )
 
   if (table_width == "auto") table_width <- NULL
+
+  if (rownames_to_stub) {
+    # Create colDef row name with special ".rownames" from reactable.
+    row_name_col_def <- list(reactable::colDef(
+      name = rowname_label,
+      style = list(
+        fontWeight = stub_font_weight
+      )
+      # TODO pass on other attributes of row names column if necessary.
+    ))
+    names(row_name_col_def) <- ".rownames"
+  } else {
+    row_name_col_def <- NULL
+  }
 
   #
   # Determine which columns will undergo some formatting
@@ -289,7 +316,6 @@ render_as_ihtml <- function(data, id) {
           na = "NA",
           # TODO support `summary_rows()` via `aggregate` #1359
           # TODO support `grand_summary_rows()` via `footer`. #1359
-          headerStyle = list(`font-weight` = "normal"),
           width = if (is.null(column_widths) || is.na(column_widths[x])) NULL else column_widths[x],
           html = TRUE
         )
@@ -320,6 +346,9 @@ render_as_ihtml <- function(data, id) {
       group_col_defs[[i]] <-
         reactable::colDef(
           name = group_label,
+          style = list(
+            `font-weight` = row_group_font_weight
+          ),
           # The total number of rows is wrong in colGroup, possibly due to the JS fn
           grouped = grp_fn,
           # FIXME Should groups be sticky? (or provide a way to do this)
@@ -508,10 +537,12 @@ render_as_ihtml <- function(data, id) {
             html = TRUE,
             align = NULL,
             headerVAlign = NULL,
+            # TODO #194
             sticky = NULL,
             headerClass = NULL,
             headerStyle = list(
               fontWeight = "normal",
+              backgroundColor = column_labels_background_color,
               borderBottomStyle = column_labels_border_bottom_style,
               borderBottomWidth = column_labels_border_bottom_width,
               borderBottomColor = column_labels_border_bottom_color,
@@ -538,27 +569,45 @@ render_as_ihtml <- function(data, id) {
       highlightColor = NULL,
       cellPadding = NULL,
       style = list(
-        fontFamily = font_family_str
+        `font-family` = font_family_str,
+        #1693
+        fontSize = table_font_size
       ),
       tableStyle = list(
         borderTopStyle = column_labels_border_top_style,
         borderTopWidth = column_labels_border_top_width,
         borderTopColor = column_labels_border_top_color
       ),
+      # cells_column_labels()
       headerStyle = list(
+        fontWeight = column_labels_font_weight,
+        backgroundColor = column_labels_background_color,
         borderBottomStyle = column_labels_border_bottom_style,
         borderBottomWidth = column_labels_border_bottom_width,
         borderBottomColor = column_labels_border_bottom_color
       ),
       # individually defined for the margins left+right
-      groupHeaderStyle = NULL,
+      # cells_spanner_labels() styling
+      groupHeaderStyle =  list(
+        fontWeight = column_labels_font_weight,
+        backgroundColor = column_labels_background_color,
+        borderBottomStyle = column_labels_border_bottom_style,
+        borderBottomWidth = column_labels_border_bottom_width,
+        borderBottomColor = column_labels_border_bottom_color
+      ),
       tableBodyStyle = NULL,
-      rowGroupStyle = NULL,
+      # stub styling?
+      # rowGroupStyle = list(
+      #   fontWeight = row_group_font_weight
+      # ),
       rowStyle = NULL,
       rowStripedStyle = NULL,
       rowHighlightStyle = NULL,
       rowSelectedStyle = NULL,
-      cellStyle = NULL,
+      # cells_body styling
+      cellStyle = list(
+        fontWeight = table_body_font_weight
+      ),
       footerStyle = NULL,
       inputStyle = NULL,
       filterInputStyle = NULL,
@@ -606,7 +655,8 @@ render_as_ihtml <- function(data, id) {
       highlight = use_highlight,
       outlined = FALSE,
       bordered = FALSE,
-      borderless = FALSE,
+      # equivalent to opt_table_lines(extent = "none")
+      borderless = borderless_borders,
       striped = use_row_striping,
       compact = use_compact_mode,
       wrap = use_text_wrapping,

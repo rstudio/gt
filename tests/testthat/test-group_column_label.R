@@ -656,3 +656,38 @@ test_that("Group labels as a column work well across many variations", {
   # Take a snapshot of `tbl_s16`
   tbl_s16 %>% render_as_html() %>% expect_snapshot()
 })
+
+test_that("Group labels as a column work well in Latex with specified column widths", {
+
+  tbl_17 <-
+    exibble_test(
+      row_group_column = TRUE,
+      use_row_groups = TRUE,
+      use_row_labels = TRUE,
+      add_group_summaries = TRUE,
+      add_grand_summary = TRUE,
+      add_styles = FALSE,
+      add_footnotes = FALSE
+    ) %>%
+    cols_width(everything() ~ pct(10))
+
+  # Take snapshots of `tbl_16`
+  tbl_17 %>% as_latex() %>% as.character() %>% expect_snapshot()
+
+  tbl_18 <-
+    exibble_test(
+      row_group_column = FALSE,
+      use_row_groups = TRUE,
+      use_row_labels = TRUE,
+      add_group_summaries = TRUE,
+      add_grand_summary = TRUE,
+      add_styles = FALSE,
+      add_footnotes = FALSE
+    ) %>%
+    cols_width(everything() ~ pct(10))
+
+  # Take snapshots of `tbl_16`
+  tbl_18 %>% as_latex() %>% as.character() %>% expect_snapshot()
+
+})
+

@@ -1,0 +1,45 @@
+---
+title: "gt interactive tables"
+format: html
+description: >
+  An overview of interactive tables with gt
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+gt provides an option to make interactive html tables via the [reactable](https://glin.github.io/reactable/index.html) package.
+
+It also provides an interactive to creating gt tables as plots.
+
+Let's use the following base for our gt table.
+
+```{r}
+library(gt)
+gt_tbl <- exibble |>
+  gt()
+```
+
+To create an interactive table, you have simply have to pipe `opt_interactive()` to your existing gt pipeline.
+
+```{r}
+gt_tbl
+```
+
+```{r}
+gt_tbl |>
+  opt_interactive()
+```
+
+# Current limitations
+
+* Some features like `tab_style()` may not be fully supported. 
+
+* `summary_rows()` and `grand_summary_rows()` have yet to be implemented.
+
+* Your interactive table may be visually different from your non-interactive table.
+
