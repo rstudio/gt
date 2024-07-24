@@ -807,7 +807,7 @@ footnote_mark_to_rtf <- function(
     rtf_raw(
       paste0(
       "{",
-      if (startsWith(spec, "^")) "\\super " else NULL,
+      if (grepl("^", spec, fixed = TRUE)) "\\super " else NULL,
       if (grepl("i", spec, fixed = TRUE)) "\\i " else NULL,
       if (grepl("b", spec, fixed = TRUE)) "\\b " else NULL
       )
