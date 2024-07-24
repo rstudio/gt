@@ -1408,7 +1408,7 @@ parse_css <- function(data) {
   classes <- Map(`:`, start + 1, end - 1)
   names(classes) <- names
   classes <- lapply(classes, function(x) unlist(split[x], FALSE))
-  classes <- grep("^gt_", names(classes), value = TRUE)
+  classes <- classes[startsWith(names(classes), "gt_")]
 
   # There are two entries for gt_table that we merge here
   is_table <- which(names(classes) == "gt_table")
