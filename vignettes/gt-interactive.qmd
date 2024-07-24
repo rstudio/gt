@@ -1,6 +1,7 @@
 ---
 title: "gt interactive tables"
 format: html
+html-table-processing: none
 description: >
   An overview of interactive tables with gt
 ---
@@ -21,9 +22,20 @@ It also provides an interactive to creating gt tables as plots.
 Let's use the following base for our gt table.
 
 ```{r}
-library(gt)
+ devtools::load_all("~/rrr-forks/gt")
+#library(gt)
 gt_tbl <- exibble |>
-  gt()
+  gt(groupname_col = "group", rowname_col = "row") |>
+  tab_header(
+    "Title"
+  ) |>
+  tab_footnote(
+    "A footnote"
+  ) |>
+  tab_spanner(
+    "Spanner",
+    columns = c(date, time)
+  )
 ```
 
 To create an interactive table, you have simply have to pipe `opt_interactive()` to your existing gt pipeline.
@@ -39,7 +51,21 @@ gt_tbl |>
 
 ## Examples
 
-![](images/clipboard-2210070624.png)
+Some styling is respected in `opt_interactive()`
+
+```{r}
+styled <- gt_tbl |>
+  tab_options(
+    heading.title.font.weight = "bold",
+    stub.background.color = "lightblue", 
+    table.border.bottom.style = "dotted"
+  )
+styled
+```
+
+```{r}
+styled %>% opt_interactive()
+```
 
 # Current limitations
 

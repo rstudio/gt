@@ -107,6 +107,8 @@
 #' @section Dataset Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
+#' @examples
+#' dplyr::glimpse(sza)
 "sza"
 
 #' Deluxe automobiles from the 2014-2017 period
@@ -163,6 +165,8 @@
 #' @section Dataset Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
+#' @examples
+#' dplyr::glimpse(gtcars)
 "gtcars"
 
 #' Daily S&P 500 Index data from 1950 to 2015
@@ -194,6 +198,8 @@
 #' @section Dataset Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
+#' @examples
+#' dplyr::glimpse(sp500)
 "sp500"
 
 #' A year of pizza sales from a pizza place
@@ -324,6 +330,8 @@
 #' @section Dataset Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
+#' @examples
+#' dplyr::glimpse(pizzaplace)
 "pizzaplace"
 
 #' A toy example tibble for testing with gt: exibble
@@ -366,6 +374,8 @@
 #' @section Dataset Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
+#' @examples
+#' exibble
 "exibble"
 
 #' Populations of all municipalities in Ontario from 1996 to 2021
@@ -432,6 +442,8 @@
 #' @section Dataset Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
+#' @examples
+#' dplyr::glimpse(towny)
 "towny"
 
 #' A table of personal information for people all over the world
@@ -482,6 +494,8 @@
 #' @section Dataset Introduced:
 #' `v0.11.0` (July 9, 2024)
 #'
+#' @examples
+#' dplyr::glimpse(peeps)
 "peeps"
 
 
@@ -528,6 +542,8 @@
 #' @section Dataset Introduced:
 #' `v0.11.0` (July 9, 2024)
 #'
+#' @examples
+#' dplyr::glimpse(films)
 "films"
 
 #' The stations of the Paris Metro
@@ -595,6 +611,8 @@
 #' @section Dataset Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
+#' @examples
+#' dplyr::glimpse(metro)
 "metro"
 
 #' Weather conditions in Gibraltar, May 2023
@@ -633,6 +651,8 @@
 #' @section Dataset Introduced:
 #' `v0.11.0` (July 9, 2024)
 #'
+#' @examples
+#' dplyr::glimpse(gibraltar)
 "gibraltar"
 
 #' The fundamental physical constants
@@ -674,6 +694,8 @@
 #' @section Dataset Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
+#' @examples
+#' dplyr::glimpse(constants)
 "constants"
 
 #' Lab tests for one suffering from an illness
@@ -759,6 +781,8 @@
 #' @section Dataset Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
+#' @examples
+#' dplyr::glimpse(illness)
 "illness"
 
 #' Reaction rates for gas-phase atmospheric reactions of organic compounds
@@ -855,6 +879,8 @@
 #' @section Dataset Introduced:
 #' `v0.11.0` (July 9, 2024)
 #'
+#' @examples
+#' dplyr::glimpse(reactions)
 "reactions"
 
 #' Data on photolysis rates for gas-phase organic compounds
@@ -906,6 +932,8 @@
 #' @section Dataset Introduced:
 #' `v0.11.0` (July 9, 2024)
 #'
+#' @examples
+#' dplyr::glimpse(photolysis)
 "photolysis"
 
 #' Nuclide data
@@ -959,6 +987,8 @@
 #' @section Dataset Introduced:
 #' `v0.11.0` (July 9, 2024)
 #'
+#' @examples
+#' dplyr::glimpse(nuclides)
 "nuclides"
 
 #' An ADSL-flavored clinical trial toy dataset
@@ -1021,6 +1051,8 @@
 #' @section Dataset Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
+#' @examples
+#' dplyr::glimpse(rx_adsl)
 "rx_adsl"
 
 #' An ADDV-flavored clinical trial toy dataset
@@ -1086,4 +1118,6 @@
 #' @section Dataset Introduced:
 #' `v0.9.0` (Mar 31, 2023)
 #'
+#' @examples
+#' dplyr::glimpse(rx_addv)
 "rx_addv"

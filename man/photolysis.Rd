@@ -57,6 +57,9 @@ DATA-15
 \code{v0.11.0} (July 9, 2024)
 }
 
+\examples{
+dplyr::glimpse(photolysis)
+}
 \seealso{
 Other datasets: 
 \code{\link{constants}},

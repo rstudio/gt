@@ -59,6 +59,9 @@ DATA-16
 \code{v0.11.0} (July 9, 2024)
 }
 
+\examples{
+dplyr::glimpse(nuclides)
+}
 \seealso{
 Other datasets: 
 \code{\link{constants}},
