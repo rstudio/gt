@@ -955,7 +955,7 @@ render_grid_svg <- function(label, style, margin) {
   }
 
   # Try if any width is declared in style attribute
-  if (any(startsWith(svg_style, "width:"))) {
+  if (any(grepl("^width:", svg_style))) {
     width <- gsub("^width:", "", svg_style[grep("^width:", svg_style)]) %>%
       parse_fontsize(style$text_gp$fontsize) %>%
       grid::unit(.grid_unit)
