@@ -18,7 +18,7 @@ test_that("fmt_auto() works correctly", {
 
   sp500_tbl <-
     sp500 %>%
-    dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") %>%
+    dplyr::filter(date >= "2015-01-05", date <= "2015-01-16") %>%
     dplyr::arrange(date) %>%
     dplyr::mutate(week = paste0("W", strftime(date, format = "%V")))
 

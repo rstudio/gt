@@ -3,8 +3,8 @@
 tbl <-
   sp500 %>%
   dplyr::filter(
-    date >= "2015-01-05" &
-      date <= "2015-01-16"
+    date >= "2015-01-05",
+    date <= "2015-01-16"
   ) %>%
   dplyr::arrange(date) %>%
   dplyr::mutate(
@@ -1068,7 +1068,7 @@ test_that("Summary rows can be created when there is no stub", {
   # four columns of values
   tbl_2 <-
     sp500 %>%
-    dplyr::filter(date >= "2015-01-05" & date <= "2015-01-09") %>%
+    dplyr::filter(date >= "2015-01-05", date <= "2015-01-09") %>%
     dplyr::arrange(date) %>%
     dplyr::select(-adj_close, -volume) %>%
     gt()
@@ -1886,7 +1886,7 @@ test_that("Creating summary rows works for hidden columns", {
   # 'low' columns
   tbl <-
     sp500 %>%
-    dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") %>%
+    dplyr::filter(date >= "2015-01-05", date <= "2015-01-16") %>%
     dplyr::arrange(date) %>%
     dplyr::mutate(
       week = paste0(

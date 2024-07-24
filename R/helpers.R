@@ -1114,7 +1114,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
     !is.character(groups) ||
     length(groups) < 1 ||
     !all(groups %in% c("title", "subtitle")) ||
-    any(duplicated(groups))
+    anyDuplicated(groups) > 0L
   ) {
     cli::cli_abort(
       "`groups` must be either {.val title}, {.val subtitle}, or both."

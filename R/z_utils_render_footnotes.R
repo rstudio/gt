@@ -416,7 +416,7 @@ set_footnote_marks_columns <- function(data, context = "html") {
         dplyr::ungroup() %>%
         dplyr::distinct(grpname, fs_id_coalesced)
 
-      for (i in seq(nrow(footnotes_columns_group_marks))) {
+      for (i in seq_len(nrow(footnotes_columns_group_marks))) {
 
         spanners <- dt_spanners_get(data = data)
 
@@ -603,7 +603,7 @@ apply_footnotes_to_output <- function(data, context = "html") {
 
         # Footnote placement on the right of the cell text
 
-        if (context == "html" && grepl("</p>\n</div>$", text)) {
+        if (context == "html" && endsWith(text, "</p>\n</div>")) {
 
           text <-
             paste0(
@@ -622,7 +622,7 @@ apply_footnotes_to_output <- function(data, context = "html") {
         # non-breaking space (added here as Unicode's 'NO-BREAK SPACE',
         # "U+00A0") separates the marks from the text content
 
-        if (context == "html" && grepl("^<div class='gt_from_md'><p>", text)) {
+        if (context == "html" && startsWith(text, "<div class='gt_from_md'><p>")) {
 
           text <-
             paste0(

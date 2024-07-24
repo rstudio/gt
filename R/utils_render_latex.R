@@ -57,7 +57,7 @@ footnote_mark_to_latex <- function(
   if (grepl("\\(|\\[", spec)) mark <- sprintf_unless_na("(%s", mark)
   if (grepl("\\)|\\]", spec)) mark <- sprintf_unless_na("%s)", mark)
 
-  if (grepl("\\^", spec)) {
+  if (startsWith(spec, "^")) {
     mark <- sprintf_unless_na("\\textsuperscript{%s}", mark)
   }
 
@@ -131,12 +131,12 @@ latex_group_row <- function(
 
 #' @noRd
 create_wrap_start_l <- function(data) {
-  tbl_pos = ifelse(check_quarto(),
-                   "",
-                   paste0("[",
-                          dt_options_get_value(data = data,
-                                               option = "latex_tbl_pos"),
-                          "]"))
+  tbl_pos <- ifelse(check_quarto(),
+                    "",
+                    paste0("[",
+                           dt_options_get_value(data = data,
+                                                option = "latex_tbl_pos"),
+                           "]"))
 
   ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
          "\\begingroup\n",
@@ -587,7 +587,7 @@ create_body_component_l <- function(data, colwidth_df) {
   }
 
   # Insert indentation where necessary
-  if (has_stub_column && any(!is.na(stub_df$indent))) {
+  if (has_stub_column && !all(is.na(stub_df$indent))) {
 
     stub_indent_length <-
       dt_options_get_value(

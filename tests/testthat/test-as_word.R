@@ -2323,8 +2323,8 @@ test_that("markdown with img refs work",{
   skip_on_ci()
   check_suggests()
 
-  ref_png <- file.path(system.file(package = "gt"),"/graphics/test_image.png")
-  ref_svg <- file.path(system.file(package = "gt"),"/graphics/test_image.svg")
+  ref_png <- system.file("graphics", "test_image.png", package = "gt")
+  ref_svg <- system.file("graphics", "test_image.svg", package = "gt")
 
   temp_png <- file.path(tempdir(),"test_image.png")
   temp_svg <- file.path(tempdir(),"test_image.svg")
@@ -2382,9 +2382,9 @@ test_that("table with image refs work - local only",{
   skip_on_ci()
   check_suggests()
 
-  ref_png <- file.path(system.file(package = "gt"),"/graphics/test_image.png")
-  ref_svg <- file.path(system.file(package = "gt"),"/graphics/test_image.svg")
-  ref_wide_svg <- file.path(system.file(package = "gt"),"/graphics/gt_parts_of_a_table.svg")
+  ref_png <- system.file("graphics", "test_image.png", package = "gt")
+  ref_svg <- system.file("graphics", "test_image.svg", package = "gt")
+  ref_wide_svg <- system.file("graphics", "gt_parts_of_a_table.svg", package = "gt")
 
   temp_png <- file.path(tempdir(),"test_image.png")
   temp_svg <- file.path(tempdir(),"test_image.svg")
@@ -2513,9 +2513,9 @@ test_that("table with image refs work - local only - setting image widths and he
   skip_on_ci()
   check_suggests()
 
-  ref_png <- file.path(system.file(package = "gt"),"/graphics/test_image.png")
-  ref_svg <- file.path(system.file(package = "gt"),"/graphics/test_image.svg")
-  ref_wide_svg <- file.path(system.file(package = "gt"),"/graphics/gt_parts_of_a_table.svg")
+  ref_png <- system.file("graphics", "test_image.png", package = "gt")
+  ref_svg <- system.file("graphics", "test_image.svg", package = "gt")
+  ref_wide_svg <- system.file("graphics", "gt_parts_of_a_table.svg", package = "gt")
 
   temp_png <- file.path(tempdir(),"test_image.png")
   temp_svg <- file.path(tempdir(),"test_image.svg")

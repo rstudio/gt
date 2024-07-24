@@ -129,7 +129,7 @@ format_pvalue <- function(p) glue::glue("{scales::pvalue(p)} {gtools::stars.pval
 get_cell_dim <- function(x) {
   dim <- NULL
   if (is.list(x) || is.vector(x)) dim <- length(x)
-  if (length(dim(x) > 1)) dim <- glue::glue('{dim(x)[1]} x {dim(x)[2]}')
+  if (length(dim(x)) > 1) dim <- glue::glue('{dim(x)[1]} x {dim(x)[2]}')
   return(dim)
 }
 
@@ -408,7 +408,7 @@ IRIS <- as.data.table(iris)[, Species := as.character(Species)]
 
 
 ```{r}
-mtcars |> filter(cyl >= 6 & disp < 180)
+mtcars |> filter(cyl >= 6, disp < 180)
 
 MT[cyl >= 6 & disp < 180]
 ```

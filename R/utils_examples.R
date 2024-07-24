@@ -91,9 +91,9 @@ get_example_text <- function(topic) {
 
     example_lines <- gsub(".*preformatted.(.*)", "```{r}\n\\1", example_lines)
     example_lines <- gsub("}\\if{html}{\\out{</div>}}", "```", example_lines, fixed = TRUE)
-    example_lines <- example_lines[!grepl("^}|<img", example_lines)]
-    example_lines <- example_lines[!grepl("\\if\\{html\\}", example_lines)]
-    example_lines <- example_lines[!grepl("^#>", example_lines)]
+    example_lines <- grep("^}|<img", example_lines, value = TRUE, invert = TRUE)
+    example_lines <- grep("\\if\\{html\\}", example_lines, value = TRUE, invert = TRUE)
+    example_lines <- grep("^#>", example_lines, value = TRUE, invert = TRUE)
 
     example_lines <- gsub("\\%", "%", example_lines, fixed = TRUE)
     example_lines <- gsub("\\{", "{", example_lines, fixed = TRUE)

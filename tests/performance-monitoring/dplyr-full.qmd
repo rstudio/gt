@@ -127,7 +127,7 @@ format_pvalue <- function(p) glue::glue("{scales::pvalue(p)} {gtools::stars.pval
 get_cell_dim <- function(x) {
   dim <- NULL
   if (is.list(x) || is.vector(x)) dim <- length(x)
-  if (length(dim(x) > 1)) dim <- glue::glue('{dim(x)[1]} x {dim(x)[2]}')
+  if (length(dim(x)) > 1) dim <- glue::glue('{dim(x)[1]} x {dim(x)[2]}')
   return(dim)
 }
 
@@ -396,7 +396,7 @@ IRIS <- as.data.table(iris)[, Species := as.character(Species)]
 
 
 ```{r}
-mtcars |> filter(cyl >= 6 & disp < 180)
+mtcars |> filter(cyl >= 6, disp < 180)
 
 MT[cyl >= 6 & disp < 180]
 ```
@@ -930,7 +930,7 @@ copy(MT)[, GRP := .GRP, keyby = cyl][]
 ```{r}
 mtcars |> arrange(gear) |> group_by(gear) |> mutate(I_GRP = row_number())
 
-copy(MT)[, I_GRP := 1:.N, keyby = gear][]
+copy(MT)[, I_GRP := seq_len(.N), keyby = gear][]
 ```
 
 
@@ -1020,7 +1020,7 @@ MT[, .N, by = .(cyl > 6)]
 **Group > filter > summarize**
 
 ```{r}
-mtcars |> filter(cyl >= 6 & disp >= 200) |> summarize(N = n())
+mtcars |> filter(cyl >= 6, disp >= 200) |> summarize(N = n())
 
 MT[cyl >= 6 & disp >= 200, .(.N)]
 ```
