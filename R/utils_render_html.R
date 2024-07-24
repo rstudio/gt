@@ -51,7 +51,7 @@ footnote_mark_to_html <- function(
     sup_class <- "gt_footnote_marks gt_asterisk"
   }
 
-  is_sup <- startsWith(spec, "^")
+  is_sup <- grepl("^", spec, fixed = TRUE)
 
   if (grepl(".", spec, fixed = TRUE)) mark <- paste0(mark, ".")
   if (grepl("(", spec, fixed = TRUE)) mark <- paste0("(", mark)
