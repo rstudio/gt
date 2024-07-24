@@ -755,7 +755,7 @@ footnote_mark_to_xml <- function(
     xml_r(
       xml_rPr(
         xml_baseline_adj(
-          v_align = if (startsWith(spec, "^")) "superscript" else "baseline"
+          v_align = if (grepl("^", spec, fixed = TRUE)) "superscript" else "baseline"
         ),
         if (grepl("i", spec, fixed = TRUE)) xml_i(active = TRUE) else NULL,
         if (grepl("b", spec, fixed = TRUE)) xml_b(active = TRUE) else NULL
