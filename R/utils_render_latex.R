@@ -57,7 +57,7 @@ footnote_mark_to_latex <- function(
   if (grepl("\\(|\\[", spec)) mark <- sprintf_unless_na("(%s", mark)
   if (grepl("\\)|\\]", spec)) mark <- sprintf_unless_na("%s)", mark)
 
-  if (startsWith(spec, "^")) {
+  if (grepl("^", spec, fixed = TRUE)) {
     mark <- sprintf_unless_na("\\textsuperscript{%s}", mark)
   }
 
