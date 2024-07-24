@@ -948,7 +948,7 @@ render_grid_svg <- function(label, style, margin) {
   width <- height <- NULL
 
   # Try if any height is declared in style attribute
-  if (any(startsWith(svg_style, "height:"))) {
+  if (any(grepl("^height:", svg_style))) {
     height <- gsub("^height:", "", svg_style[grep("^height:", svg_style)]) %>%
       parse_fontsize(style$text_gp$fontsize) %>%
       grid::unit(.grid_unit)
