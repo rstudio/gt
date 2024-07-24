@@ -1,7 +1,7 @@
 # Create a table that can be used for testing
 test_tbl <-
   sza %>%
-  dplyr::filter(latitude == 50 & !is.na(sza)) %>%
+  dplyr::filter(latitude == 50, !is.na(sza)) %>%
   dplyr::group_by(month) %>%
   dplyr::summarize(min_sza = min(sza))
 

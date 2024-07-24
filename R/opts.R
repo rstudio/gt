@@ -1174,9 +1174,9 @@ opt_all_caps <- function(
 
     values_vec <-
       dplyr::case_when(
-        grepl("\\.font\\.size$", options_vec) ~ "80%",
-        grepl("\\.font\\.weight$", options_vec) ~ "bolder",
-        grepl("\\.text_transform$", options_vec) ~ "uppercase"
+        endsWith(options_vec, ".font.size") ~ "80%",
+        endsWith(options_vec, ".font.weight") ~ "bolder",
+        endsWith(options_vec, ".text_transform") ~ "uppercase"
       )
 
     option_value_list <- create_option_value_list(options_vec, values_vec)

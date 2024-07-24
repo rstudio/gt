@@ -170,7 +170,7 @@ paste_on_side <- function(
   }
 
   # Stop function if `x` and `x_side` are not both of class character
-  if (any(!inherits(x, "character"), !inherits(x_side, "character"))) {
+  if (!all(inherits(x, "character"), inherits(x_side, "character"))) {
     cli::cli_abort(c(
       "*" = "The `x` and `x_side` objects must be of class `character`."
     ), .internal = TRUE)
@@ -326,7 +326,7 @@ is_adjacent_separate <- function(group_1, group_2) {
     return(FALSE)
   }
 
-  return(TRUE)
+  TRUE
 }
 
 str_catalog <- function(
@@ -377,10 +377,10 @@ str_title_case <- function(x) {
 
     s <- strsplit(y, " ", fixed = TRUE)[[1]]
 
-    paste(
+    paste0(
       toupper(substring(s, 1, 1)),
       substring(s, 2),
-      sep = "", collapse = " "
+      collapse = " "
     )
   }
 

@@ -51,7 +51,7 @@ footnote_mark_to_html <- function(
     sup_class <- "gt_footnote_marks gt_asterisk"
   }
 
-  is_sup <- grepl("\\^", spec)
+  is_sup <- grepl("^", spec, fixed = TRUE)
 
   if (grepl(".", spec, fixed = TRUE)) mark <- paste0(mark, ".")
   if (grepl("(", spec, fixed = TRUE)) mark <- paste0("(", mark)
@@ -2074,7 +2074,7 @@ build_row_styles <- function(
   # colnum values. Check and throw early.
   if (
     !isTRUE(all(styles_resolved_row$colnum %in% c(0, seq_len(n_cols)))) ||
-    any(duplicated(styles_resolved_row$colnum))
+    anyDuplicated(styles_resolved_row$colnum) > 0L
   ) {
     cli::cli_abort(
       "`build_row_styles()` was called with invalid `colnum` values."

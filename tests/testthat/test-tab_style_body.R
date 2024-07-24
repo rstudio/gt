@@ -3,7 +3,7 @@ test_that("tab_style_body() works correctly", {
   # Generate a table that will be used in checks of body styling
   gt_tbl <-
     sp500 %>%
-    dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") %>%
+    dplyr::filter(date >= "2015-01-05", date <= "2015-01-16") %>%
     dplyr::arrange(date) %>%
     dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) %>%
     dplyr::select(-adj_close, -volume) %>%

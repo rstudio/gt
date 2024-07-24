@@ -129,7 +129,7 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
           }
 
           # Conversion to subscripted, italicized 'x'
-          if (grepl("_x$", x)) {
+          if (endsWith(x, "_x")) {
             x <- gsub("^(.*)([a-zA-Z])_x$", "\\1\\2_*x*", x)
           }
 
@@ -229,7 +229,7 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
       FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        if (grepl("^/", x) && nchar(x) > 1) {
+        if (grepl("^/.", x)) {
           x <- gsub("^/", "", x)
           x <- paste0(x, "^-1")
         }
@@ -248,14 +248,7 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
     chemical_formula <- FALSE
     exponent <- NULL
 
-    if (
-      is_chemical_formula ||
-      (
-        grepl("^%", tokens_vec_i) &&
-        grepl("%$", tokens_vec_i) &&
-        nchar(tokens_vec_i) > 2
-      )
-    ) {
+    if (is_chemical_formula || grepl("^%.+%$", tokens_vec_i)) {
       # Case where the unit is marked as a chemical formula
 
       chemical_formula <- TRUE
