@@ -932,7 +932,7 @@ grid_align_gtable <- function(gtable, data) {
 
     left <- grid::unit(0.5, "null")
 
-  } else if (grepl("\\%$", left)) {
+  } else if (endsWith(left, "%")) {
 
     left <- as.numeric(sub("\\%$", "", left)) / 100
     left <- grid::unit(left * 0.5, "null")
@@ -946,7 +946,7 @@ grid_align_gtable <- function(gtable, data) {
 
     right <- grid::unit(0.5, "null")
 
-  } else if (grepl("\\%$", right)) {
+  } else if (endsWith(right, "%")) {
 
     right <- as.numeric(sub("\\%$", "", right)) / 100
     right <- grid::unit(right * 0.5, "null")
@@ -1010,7 +1010,7 @@ grid_layout_widths <- function(layout, data) {
 
   total_width <- dt_options_get_value(data, "table_width")
 
-  if (grepl("px$", total_width)) {
+  if (endsWith(total_width, "px")) {
 
     total_width <- parse_px_to_pt(total_width)
     extra_width <- total_width - sum(widths)
@@ -1028,7 +1028,7 @@ grid_layout_widths <- function(layout, data) {
     return(widths)
   }
 
-  if (grepl("\\%$", total_width)) {
+  if (endsWith(total_width, "%")) {
 
     # Set the total width in npc units
     total_width <- as.numeric(sub("\\%$", "", total_width)) / 100

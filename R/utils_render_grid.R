@@ -1381,7 +1381,7 @@ parse_css <- function(data) {
   # Find first and last line of definitions
   start <- grep("\\{$", css)
   end   <- which(css == "}")
-  if (!length(start) == length(end)) {
+  if (length(start) != length(end)) {
     cli::cli_abort("Formatting in {.fn compile_css} is unexpected.")
   }
 
@@ -1408,7 +1408,7 @@ parse_css <- function(data) {
   classes <- Map(`:`, start + 1, end - 1)
   names(classes) <- names
   classes <- lapply(classes, function(x) unlist(split[x], FALSE))
-  classes <- classes[grepl("^gt_", names(classes))]
+  classes <- classes[startsWith(names(classes), "gt_")]
 
   # There are two entries for gt_table that we merge here
   is_table <- which(names(classes) == "gt_table")

@@ -807,7 +807,7 @@ footnote_mark_to_rtf <- function(
     rtf_raw(
       paste0(
       "{",
-      if (grepl("\\^", spec)) "\\super " else NULL,
+      if (grepl("^", spec, fixed = TRUE)) "\\super " else NULL,
       if (grepl("i", spec, fixed = TRUE)) "\\i " else NULL,
       if (grepl("b", spec, fixed = TRUE)) "\\b " else NULL
       )
@@ -1026,7 +1026,7 @@ create_heading_component_rtf <- function(data) {
     unlist()
 
   if (is.null(col_widths)) {
-     n_cols <- nrow(dplyr::filter(boxh, type %in% c("default", "stub")))
+     n_cols <- sum(boxh$type %in% c("default", "stub"))
      col_widths <- rep("100%", n_cols)
   }
 
@@ -1814,7 +1814,7 @@ create_footer_component_rtf <- function(data) {
 
   if (is.null(col_widths)) {
 
-    n_cols <- nrow(dplyr::filter(boxh, type %in% c("default", "stub")))
+    n_cols <- sum(boxh$type %in% c("default", "stub"))
     col_widths <- rep("100%", n_cols)
   }
 

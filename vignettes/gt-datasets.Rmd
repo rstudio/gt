@@ -323,7 +323,7 @@ down_arrow <- "<span style=\"color:red\">&#9660;</span>"
 
 # Create a gt table based on a preprocessed `sp500`
 sp500 |>
-  filter(date >= start_date & date <= end_date) |>
+  filter(date >= start_date, date <= end_date) |>
   select(-adj_close) |>
   gt() |>
   tab_header(

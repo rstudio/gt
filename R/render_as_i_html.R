@@ -181,7 +181,7 @@ render_as_ihtml <- function(data, id) {
   column_labels_border_bottom_width <- opt_val(data = data, option = "column_labels_border_bottom_width")
   column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
   # Don't allow NA
-  column_labels_background_color = opt_val(data = data, option = "column_labels_background_color")
+  column_labels_background_color <- opt_val(data = data, option = "column_labels_background_color")
   # Apply stub font weight to
   stub_font_weight <- opt_val(data = data, option = "stub_font_weight")
 
@@ -194,8 +194,8 @@ render_as_ihtml <- function(data, id) {
 
   column_labels_font_weight <- opt_val(data = data, option = "column_labels_font_weight")
   # Apply font weight to groupname_col title
-  row_group_font_weight = opt_val(data = data, "row_group_font_weight")
-  table_body_font_weight = opt_val(data = data, "table_font_weight")
+  row_group_font_weight <- opt_val(data = data, "row_group_font_weight")
+  table_body_font_weight <- opt_val(data = data, "table_font_weight")
   # for row names + summary label
   stub_font_weight <- opt_val(data = data, "stub_font_weight")
   # #1693 table font size
