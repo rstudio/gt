@@ -34,7 +34,13 @@ authors:
   given-names: JooYoung
   email: jseo1005@illinois.edu
   orcid: https://orcid.org/0000-0002-4064-6012
-repository: https://CRAN.R-project.org/package=gt
+- family-names: Ken
+  given-names: Brevoort
+  email: ken@brevoort.com
+  orcid: https://orcid.org/0000-0002-4001-8358
+- family-names: Olivier
+  given-names: Roy
+repository: https://doi.org/10.32614/CRAN.package.gt
 repository-code: https://github.com/rstudio/gt
 url: https://gt.rstudio.com
 contact:
