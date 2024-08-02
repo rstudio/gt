@@ -78,7 +78,7 @@ sp500 |>
 <img src="man/figures/gt_sp500_table.svg" width="800px">
 </div>
 
-There are twelve datasets provided by **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, `exibble`, `towny`, `metro`, `constants`, `illness`, `rx_adsl`, and `rx_addv`.
+There are 18 datasets provided by **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, `exibble`, `towny`, `peeps`, `films`, `metro`, `gibraltar`, `constants`, `illness`, `reactions`, `photolysis`, `nuclides`, `rx_adsl`, and `rx_addv`.
 
 <div align="center" style="padding-top:20px">
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_countrypops.svg" style="width:15%;">
@@ -88,11 +88,19 @@ There are twelve datasets provided by **gt**: `countrypops`, `sza`, `gtcars`, `s
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_pizzaplace.svg" style="width:15%;">
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_exibble.svg" style="width:15%;">
 </div>
-<div align="center" style="padding-bottom:20px">
+<div align="center" style="padding-top:10px;padding-bottom:10px">
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_towny.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_peeps.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_films.svg" style="width:15%;">
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_metro.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_gibraltar.svg" style="width:15%;">
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_constants.svg" style="width:15%;">
+</div>
+<div align="center" style="padding-bottom:20px">
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_illness.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_reactions.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_photolysis.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_nuclides.svg" style="width:15%;">
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_adsl.svg" style="width:15%;">
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_addv.svg" style="width:15%;">
 </div>
@@ -125,7 +133,7 @@ Another fine venue for discussion is in the [`gt_package` *Discord server*](http
 
 [![Discord Server](https://img.shields.io/badge/Discord-Chat%20with%20us-blue?style=social&logo=discord&logoColor=purple)](https://discord.com/invite/Ux7nrcXHVV)
 
-Finally, there is the [`gt_package` *Twitter account*](https://twitter.com/gt_package). There you'll find tweets about **gt** (including sneak previews about in-development features) and other table-generation packages.
+Finally, there is the [`gt_package` *X/Twitter account*](https://twitter.com/gt_package). There you'll find tweets about **gt** (including sneak previews about in-development features) and other table-generation packages.
 
 [![Twitter Follow](https://img.shields.io/twitter/follow/gt_package?style=social)](https://twitter.com/gt_package)
 
