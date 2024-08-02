@@ -78,6 +78,8 @@ sp500 |>
 <img src="man/figures/gt_sp500_table.svg" width="800px">
 </div>
 
+<br>
+
 There are 18 datasets provided by **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, `exibble`, `towny`, `peeps`, `films`, `metro`, `gibraltar`, `constants`, `illness`, `reactions`, `photolysis`, `nuclides`, `rx_adsl`, and `rx_addv`.
 
 <div align="center" style="padding-top:20px">
@@ -104,6 +106,8 @@ There are 18 datasets provided by **gt**: `countrypops`, `sza`, `gtcars`, `sp500
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_adsl.svg" style="width:15%;">
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_addv.svg" style="width:15%;">
 </div>
+
+<br>
 
 All of this tabular data is great for experimenting with **gt**’s functions and we make extensive use of these datasets in our documentation.
 
