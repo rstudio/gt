@@ -27,7 +27,8 @@ Let's use the following base for our gt table.
 gt_tbl <- exibble |>
   gt(groupname_col = "group", rowname_col = "row") |>
   tab_header(
-    "Title"
+    "Title",
+    "Subtitle"
   ) |>
   tab_footnote(
     "A footnote"
@@ -40,14 +41,22 @@ gt_tbl <- exibble |>
 
 To create an interactive table, you have simply have to pipe `opt_interactive()` to your existing gt pipeline.
 
+::: {.panel-tabset}
+
+## Html
+
 ```{r}
 gt_tbl
 ```
+
+## Interactive
 
 ```{r}
 gt_tbl |>
   opt_interactive()
 ```
+
+:::
 
 ## Examples
 
@@ -58,14 +67,34 @@ styled <- gt_tbl |>
   tab_options(
     heading.title.font.weight = "bold",
     stub.background.color = "lightblue", 
-    table.border.bottom.style = "dotted"
+    table.border.bottom.style = "dotted",
+    column_labels.background.color = "pink",
+    table.font.weight = "italic",
+    stub.font.weight = "bolder",
+    table_body.vlines.color = "brown",
+    table_body.vlines.style = "dashed"
   )
+```
+
+::: {.panel-tabset}
+## Html
+
+```{r}
+#| echo: false
 styled
 ```
 
+## Interactive
+
 ```{r}
+#| echo: false
 styled %>% opt_interactive()
 ```
+
+:::
+
+
+
 
 # Current limitations
 

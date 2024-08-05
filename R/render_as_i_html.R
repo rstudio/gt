@@ -380,7 +380,7 @@ render_as_ihtml <- function(data, id) {
             borderStyle = "none",
             borderColor = "transparent",
             borderTopColor = "transparent",
-            borderBottomColor = "transparent"
+            borderBottomColor = "gray38"
           ),
           # The total number of rows is wrong in colGroup, possibly due to the JS fn
           grouped = grp_fn,
@@ -478,6 +478,7 @@ render_as_ihtml <- function(data, id) {
           `border-top-style` = "solid",
           `border-top-width` = "2px",
           `border-top-color` = "#D3D3D3",
+          `border-bottom-color` = "#D3D3D3",
           `padding-bottom` = if (use_search) "8px" else NULL
         ),
         htmltools::div(
@@ -494,7 +495,8 @@ render_as_ihtml <- function(data, id) {
             if (use_search) "gt_bottom_border" else NULL
           ),
           style = htmltools::css(
-            `font-weight` = heading_subtitle_font_weight
+            `font-weight` = heading_subtitle_font_weight,
+            `border-bottom-color` = "#D3D3D3"
           ),
           htmltools::HTML(tbl_heading$subtitle)
         )
@@ -635,7 +637,9 @@ render_as_ihtml <- function(data, id) {
         backgroundColor = column_labels_background_color,
         borderBottomStyle = column_labels_border_bottom_style,
         borderBottomWidth = column_labels_border_bottom_width,
-        borderBottomColor = column_labels_border_bottom_color
+        borderBottomColor = column_labels_border_bottom_color,
+        borderTopColor = "transparent",
+        borderTopStyle = "none"
       ),
       # individually defined for the margins left+right
       # cells_spanner_labels() styling
