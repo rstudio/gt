@@ -190,13 +190,15 @@ render_as_ihtml <- function(data, id) {
   column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
 
   # Don't allow NA
-  column_labels_background_color = opt_val(data = data, option = "column_labels_background_color")
+  column_labels_background_color <- opt_val(data = data, option = "column_labels_background_color")
   if (is.na(column_labels_background_color)) {
     # apply all column labels formatting to both heading + groupCol styling (nothing specific for spanners styling in gt?)
     column_labels_background_color <- "transparent"
   }
 
   column_labels_font_weight <- opt_val(data = data, option = "column_labels_font_weight")
+  # Apply stub font weight to
+  stub_font_weight <- opt_val(data = data, option = "stub_font_weight")
   # Apply font weight to groupname_col title
   row_group_font_weight <-  opt_val(data = data, "row_group_font_weight")
   row_group_background_color <- opt_val(data = data, "row_group_background_color")
@@ -215,7 +217,6 @@ render_as_ihtml <- function(data, id) {
   all_borders <- horizontal_borders != "none" && veritcal_borders != "none"
 
   # for row names + summary label
-  stub_font_weight <- opt_val(data = data, "stub_font_weight")
   stub_border_color <- opt_val(data, "stub_border_color")
   stub_border_style <- opt_val(data, "stub_border_style")
   # Apply stub font weight to

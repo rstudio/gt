@@ -1832,9 +1832,11 @@ non_na_index <- function(
     default_value = NA
 ) {
 
-  stopifnot(is.integer(index) || is.numeric(index))
-  stopifnot(all(index >= 1 | is.na(index)))
-  stopifnot(all(length(values) >= index | is.na(index)))
+  stopifnot(
+    is.numeric(index),
+    index >= 1 | is.na(index),
+    length(values) >= index | is.na(index)
+  )
 
   # Get a vector of suffixes, which may include NA values
   res <- values[index]

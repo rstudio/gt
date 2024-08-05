@@ -329,11 +329,11 @@ test_that("tab_footnote() works with cells_column_labels()", {
   # single-row `footnotes_df` data frame
   expect_equal(
     unlist(footnotes_df, use.names = FALSE),
-      c(
-        "columns_columns", NA_character_, "gear", "4", NA_character_,
-        NA_character_, "Single column label footnote.", "auto"
-      )
+    c(
+      "columns_columns", NA_character_, "gear", "4", NA_character_,
+      NA_character_, "Single column label footnote.", "auto"
     )
+  )
 })
 
 test_that("tab_footnote() works with cells_body()", {
@@ -586,8 +586,8 @@ test_that("tab_footnote() produces the correct output.", {
   data_4 <-
     sp500 %>%
     dplyr::filter(
-      date >= "2015-01-05" &
-        date <= "2015-01-10"
+      date >= "2015-01-05",
+      date <= "2015-01-10"
     ) %>%
     dplyr::select(-c(adj_close, volume, high, low)) %>%
     gt() %>%

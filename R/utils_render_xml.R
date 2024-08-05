@@ -755,7 +755,7 @@ footnote_mark_to_xml <- function(
     xml_r(
       xml_rPr(
         xml_baseline_adj(
-          v_align = if (grepl("\\^", spec)) "superscript" else "baseline"
+          v_align = if (grepl("^", spec, fixed = TRUE)) "superscript" else "baseline"
         ),
         if (grepl("i", spec, fixed = TRUE)) xml_i(active = TRUE) else NULL,
         if (grepl("b", spec, fixed = TRUE)) xml_b(active = TRUE) else NULL
@@ -2609,7 +2609,7 @@ process_cell_content_ooxml_t <- function(
 
     # If it's already set to preserve, respect preservation
 
-    if (!text_tag_attr == "preserve") {
+    if (text_tag_attr != "preserve") {
       xml_text(txt) <- white_space_in_text(x = text_tag_content, whitespace = whitespace)
       xml_attr(txt, attr = "xml:space") <- white_space_to_t_xml_space(whitespace)
     }
@@ -2792,7 +2792,7 @@ process_white_space_br_in_xml <- function(x, ..., whitespace = NULL) {
           break_tag <- paragraph_children[[break_tag_loc]]
 
           ## if the br is between two runs, replace with space
-          if (any(run_tags_locs > break_tag_loc) & any(run_tags_locs < break_tag_loc)) {
+          if (any(run_tags_locs > break_tag_loc) && any(run_tags_locs < break_tag_loc)) {
 
             replacement_br <-
               xml_r(xml_rPr(), xml_t(" ", xml_space = "preserve"))

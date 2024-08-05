@@ -1257,7 +1257,7 @@ tab_spanner_delim <- function(
         # Modify `spanner_id` to not collide with any other values
         if (spanner_id %in% spanner_id_vals) {
 
-          if (grepl("^spanner-", spanner_id)) {
+          if (startsWith(spanner_id, "spanner-")) {
 
             # Add number to spanner ID values on first duplication
             spanner_id <- gsub("^spanner-", "spanner:1-", spanner_id)

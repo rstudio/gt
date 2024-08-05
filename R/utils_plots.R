@@ -2097,23 +2097,17 @@ generate_ref_line_from_keyword <- function(vals, keyword) {
 
   rlang::arg_match0(keyword, reference_line_keywords())
 
-  if (keyword == "mean") {
-    ref_line <- mean(vals, na.rm = TRUE)
-  } else if (keyword == "median") {
-    ref_line <- stats::median(vals, na.rm = TRUE)
-  } else if (keyword == "min") {
-    ref_line <- min(vals, na.rm = TRUE)
-  } else if (keyword == "max") {
-    ref_line <- max(vals, na.rm = TRUE)
-  } else if (keyword == "first") {
-    ref_line <- vals[!is.na(vals)][1]
-  } else if (keyword == "last") {
-    ref_line <- vals[!is.na(vals)][length(vals[!is.na(vals)])]
-  } else if (keyword == "q1") {
-    ref_line <- as.numeric(stats::quantile(vals, 0.25, na.rm = TRUE))
-  } else {
-    ref_line <- as.numeric(stats::quantile(vals, 0.75, na.rm = TRUE))
-  }
+  ref_line <- switch(keyword,
+    mean = mean(vals, na.rm = TRUE),
+    median = stats::median(vals, na.rm = TRUE),
+    min = min(vals, na.rm = TRUE),
+    max = max(vals, na.rm = TRUE),
+    first = vals[!is.na(vals)][1],
+    last = vals[!is.na(vals)][length(vals[!is.na(vals)])],
+    q1 = as.numeric(stats::quantile(vals, 0.25, na.rm = TRUE)),
+    # default:
+    as.numeric(stats::quantile(vals, 0.75, na.rm = TRUE))
+  )
 
   ref_line
 }

@@ -2369,7 +2369,7 @@ fmt_fraction <- function(
 
 gcd <- function(x,y) {
   r <- x %% y
-  return(ifelse(r, gcd(y, r), y))
+  ifelse(r, gcd(y, r), y)
 }
 
 make_frac <- function(x, denom, simplify = TRUE) {
@@ -7114,7 +7114,7 @@ fmt_tf <- function(
     # If using SVG graphics for either of `true_val` or `false_val` then
     # we'd prefer to have center alignment of the icons
     if (
-      grepl("^<svg ", true_val) || grepl("^<svg ", false_val)
+      startsWith(true_val, "<svg ") || startsWith(false_val, "<svg ")
     ) {
       alignment <- "center"
     }
@@ -8263,7 +8263,7 @@ fmt_url <- function(
         target <- target %||% "_blank"
         target_values <- NULL
 
-        if (grepl("^_", target)) {
+        if (startsWith(target, "_")) {
           target_values <- c("_blank", "_self", "_parent", "_top")
         }
 
@@ -8951,7 +8951,7 @@ fmt_email <- function(
         target <- target %||% "_blank"
         target_values <- NULL
 
-        if (grepl("^_", target)) {
+        if (startsWith(target, "_")) {
           target_values <- c("_blank", "_self", "_parent", "_top")
         }
 
@@ -9018,9 +9018,8 @@ fmt_email <- function(
                   label_separated <- unlist(strsplit(label_str, " "))
 
                 } else if (
-                  grepl("^<", label_str) &&
-                  grepl(">$", label_str) &&
-                  !grepl("^<svg", label_str)
+                  grepl("^<.*>$", label_str) &&
+                  !startsWith(label_str, "<svg")
                 ) {
 
                   label_separated <- unlist(strsplit(label_str, ">\\s*<"))
