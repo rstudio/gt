@@ -16,6 +16,8 @@ authors:
 
 news:
   releases:
+  - text: "Version 0.11.0"
+    href: https://posit.co/blog/everything-new-thats-in-gt-0-11-0/
   - text: "Version 0.10.0"
     href: https://posit.co/blog/new-features-in-gt-0-10-0/
   - text: "Version 0.9.0"
