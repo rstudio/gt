@@ -619,7 +619,7 @@ test_that("The footnotes table is structured correctly", {
 
   # Expect that the `footnotes_resolved` object inherits
   # from `tbl_df`
-  expect_s3_class(footnotes_tbl, "tbl_df")
+  expect_s3_class(footnotes_tbl, "data.frame")
 
   # Expect that there are specific column names in
   # this tibble
@@ -654,7 +654,7 @@ test_that("The footnotes table is structured correctly", {
 
   # Expect that the `footnotes_resolved` object inherits
   # from `tbl_df`
-  expect_s3_class(footnotes_tbl, "tbl_df")
+  expect_s3_class(footnotes_tbl, "data.frame")
 
   # Expect that there are specific column names in
   # this tibble
