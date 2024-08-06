@@ -44,6 +44,9 @@ DATA-11
 \code{v0.11.0} (July 9, 2024)
 }
 
+\examples{
+dplyr::glimpse(gibraltar)
+}
 \seealso{
 Other datasets: 
 \code{\link{constants}},

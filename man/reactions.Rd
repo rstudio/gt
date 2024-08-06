@@ -102,6 +102,9 @@ DATA-14
 \code{v0.11.0} (July 9, 2024)
 }
 
+\examples{
+dplyr::glimpse(reactions)
+}
 \seealso{
 Other datasets: 
 \code{\link{constants}},
