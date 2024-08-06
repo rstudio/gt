@@ -33,6 +33,9 @@ nuclear physics, radiochemistry, and nuclear medicine."><meta property="og:image
     <li><a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a></li>
     <li><a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a></li>
     <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Datasets</h6></li>
+    <li><a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a></li>
+    <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
 <li class="nav-item dropdown">
@@ -174,6 +177,42 @@ uncertainty. In units of keV.</p></dd>
 <code><a href="towny.html">towny</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">nuclides</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 3,383</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ nuclide                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "^{1}_{1}H0", "^{2}_{1}H1", "^{3}_{1}H2", "…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ z                          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ n                          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 7, 8…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ element                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "H", "H", "H", "H", "H", "H", "H", "He", "H…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ radius                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.8783, 2.1421, 1.7591, NA, NA, NA, NA, 1.9…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ radius_uncert              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.0086, 0.0088, 0.0363, NA, NA, NA, NA, 0.0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ abundance                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.999855, 0.000145, NA, NA, NA, NA, NA, 0.0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ abundance_uncert           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.000078, 0.000078, NA, NA, NA, NA, NA, 0.0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ is_stable                  <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FAL…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ half_life                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, 3.887813e+08, NA, 8.608259e-23, 2.9…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ half_life_uncert           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, 6.311385e+05, NA, 6.496799e-24, 8.3…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ isospin                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, "1", NA, NA, NA, NA, "0", "1/2"…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ decay_1                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, "B-", "N", "2N", NA, NA, NA, NA, "N…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ decay_1_pct                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, 1, 1, 1, NA, NA, NA, NA, NA, 1, NA,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ decay_1_pct_uncert         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ decay_2                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ decay_2_pct                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ decay_2_pct_uncert         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ decay_3                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ decay_3_pct                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ decay_3_pct_uncert         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ magnetic_dipole            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2.7928474, 0.8574382, 2.9789625, NA, NA, NA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ magnetic_dipole_uncert     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9.0e-09, 5.0e-09, 1.4e-08, NA, NA, NA, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ electric_quadrupole        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, 0.0028578, NA, NA, NA, NA, NA, NA, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ electric_quadrupole_uncert <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, 3e-07, NA, NA, NA, NA, NA, NA, NA, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ atomic_mass                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1007825, 2014102, 3016049, 4026432, 5035311…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ atomic_mass_uncert         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.000014, 0.000015, 0.000080, 107.354000, 9…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ mass_excess                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7288.971, 13135.723, 14949.811, 24621.129, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ mass_excess_uncert         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.000013, 0.000015, 0.000080, 100.000000, 8…</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

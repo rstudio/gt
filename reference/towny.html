@@ -47,6 +47,9 @@ adjacent census years."><meta property="og:image" content="https://gt.rstudio.co
     <li><a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a></li>
     <li><a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a></li>
     <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Datasets</h6></li>
+    <li><a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a></li>
+    <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
 <li class="nav-item dropdown">
@@ -189,6 +192,38 @@ pop_change_2016_2021_pct</dt>
 <code><a href="sza.html">sza</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">towny</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 414</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ name                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Addington Highlands", "Adelaide Metcalfe", "…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ website                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "https://addingtonhighlands.ca", "https://ade…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ status                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "lower-tier", "lower-tier", "lower-tier", "lo…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ csd_type                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "township", "township", "township", "township…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ census_div               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Lennox and Addington", "Middlesex", "Simcoe"…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ latitude                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 45.00000, 42.95000, 44.13333, 45.52917, 43.85…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ longitude                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -77.25000, -81.70000, -79.93333, -76.89694, -…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ land_area_km2            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1293.99, 331.11, 371.53, 519.59, 66.64, 116.6…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ population_1996          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2429, 3128, 9359, 2837, 64430, 1027, 8315, 16…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ population_2001          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2402, 3149, 10082, 2824, 73753, 956, 8593, 18…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ population_2006          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2512, 3135, 10695, 2716, 90167, 958, 8654, 19…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ population_2011          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2517, 3028, 10603, 2844, 109600, 864, 9196, 2…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ population_2016          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2318, 2990, 10975, 2935, 119677, 969, 9680, 2…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ population_2021          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2534, 3011, 10989, 2995, 126666, 954, 9949, 2…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ density_1996             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.88, 9.45, 25.19, 5.46, 966.84, 8.81, 21.22,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ density_2001             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.86, 9.51, 27.14, 5.44, 1106.74, 8.20, 21.93…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ density_2006             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.94, 9.47, 28.79, 5.23, 1353.05, 8.22, 22.09…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ density_2011             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.95, 9.14, 28.54, 5.47, 1644.66, 7.41, 23.47…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ density_2016             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.79, 9.03, 29.54, 5.65, 1795.87, 8.31, 24.71…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ density_2021             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.96, 9.09, 29.58, 5.76, 1900.75, 8.18, 25.39…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ pop_change_1996_2001_pct <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -0.0111, 0.0067, 0.0773, -0.0046, 0.1447, -0.…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ pop_change_2001_2006_pct <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.0458, -0.0044, 0.0608, -0.0382, 0.2226, 0.0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ pop_change_2006_2011_pct <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.0020, -0.0341, -0.0086, 0.0471, 0.2155, -0.…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ pop_change_2011_2016_pct <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -0.0791, -0.0125, 0.0351, 0.0320, 0.0919, 0.1…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ pop_change_2016_2021_pct <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.0932, 0.0070, 0.0013, 0.0204, 0.0584, -0.01…</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

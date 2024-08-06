@@ -47,6 +47,9 @@ models."><meta property="og:image" content="https://gt.rstudio.com/logo.svg"></h
     <li><a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a></li>
     <li><a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a></li>
     <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Datasets</h6></li>
+    <li><a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a></li>
+    <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
 <li class="nav-item dropdown">
@@ -171,6 +174,23 @@ and they are in units of <code>cm^2 molecule^-1</code>.</p></dd>
 <code><a href="towny.html">towny</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">photolysis</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ cmpd_name     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "ozone", "ozone", "hydrogen peroxide", "nitrogen dioxide…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ cmpd_formula  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "O3", "O3", "H2O2", "NO2", "NO3", "NO3", "HONO", "HNO3",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ products      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "-&gt; O(^1D) + O2", "-&gt; O(^3P) + O2", "-&gt; OH + OH", "-&gt; NO…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ type          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "inorganic reactions", "inorganic reactions", "inorganic…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ l             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6.073e-05, 4.775e-04, 1.041e-05, 1.165e-02, 2.485e-02, 1…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ m             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.743, 0.298, 0.723, 0.244, 0.168, 0.155, 0.261, 1.230, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ n             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.474, 0.080, 0.279, 0.267, 0.108, 0.125, 0.288, 0.307, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ quantum_yield <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, 1.000, NA, 1.000, 1.000, 1.000, 1.000, NA, NA, N…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ wavelength_nm <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "290,291,292,293,294,295,296,297,298,299,300,301,302,303…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ sigma_298_cm2 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1.43E-18,1.27E-18,1.11E-18,9.94E-19,8.68E-19,7.69E-19,6…</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

@@ -43,6 +43,9 @@ possible."><meta property="og:image" content="https://gt.rstudio.com/logo.svg"><
     <li><a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a></li>
     <li><a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a></li>
     <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Datasets</h6></li>
+    <li><a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a></li>
+    <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
 <li class="nav-item dropdown">
@@ -175,6 +178,27 @@ centimeters (cm) and kilograms (kg), respectively.</p></dd>
 <code><a href="towny.html">towny</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">peeps</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ name_given   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Ruth", "Peter", "Fanette", "Judyta", "Leonard", "Maymun"…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ name_family  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Conte", "Möller", "Gadbois", "Borkowska", "Jacobs", "Kho…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ address      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4299 Bobcat Drive", "3705 Hidden Pond Road", "4200 Swick…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ city         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Baileys Crossroads", "Red Boiling Springs", "New Orleans…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ state_prov   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "MD", "TN", "LA", "NY", "CA", "OH", "IN", "MA", "CA", "TX…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ postcode     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "22041", "37150", "70112", "14125", "90036", "45013", "46…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ country      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "USA", "USA", "USA", "USA", "USA", "USA", "USA", "USA", "…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ email_addr   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "rcconte@example.com", "pmoeller@example.com", "fan_gadbo…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ phone_number <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "240-783-7630", "615-699-3517", "985-205-2970", "585-948-…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ country_code <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 32, 32, 32, 32, 32, 32, 32,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ gender       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "female", "male", "female", "female", "male", "male", "fe…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ dob          <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1949-03-16, 1939-11-22, 1970-12-20, 1965-07-19, 1985-10-…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ height_cm    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 153, 175, 167, 156, 177, 172, 168, 165, 181, 187, 164, 15…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ weight_kg    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 76.4, 74.9, 61.6, 54.5, 113.2, 88.4, 63.5, 61.3, 99.7, 10…</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

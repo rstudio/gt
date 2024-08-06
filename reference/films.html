@@ -37,6 +37,9 @@ original_title column provides the title of the film in its spoken language
     <li><a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a></li>
     <li><a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a></li>
     <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Datasets</h6></li>
+    <li><a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a></li>
+    <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
 <li class="nav-item dropdown">
@@ -156,6 +159,21 @@ Database (IMDB).</p></dd>
 <code><a href="towny.html">towny</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">films</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 1,851</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ year                <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1946, 1946, 1946, 1946, 1946, 1946, 1946, 1946, 19…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ title               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "The Lovers", "Anna and the King of Siam", "Blood …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ original_title      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Amanti in fuga", NA, "Blod och eld", "Brevet fra …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ director            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Giacomo Gentilomo", "John Cromwell", "Anders Henr…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ languages           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "it", "en", "sv", "da", "en,fr", "en", "pt", "ru",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ countries_of_origin <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "IT", "US", "SE", "DK", "GB", "GB", "PT", "SU", "D…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ run_time            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1h 30m", "2h 8m", "1h 40m", "1h 18m", "1h 26m", "…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ imdb_url            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "https://www.imdb.com/title/tt0038297/", "https://…</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

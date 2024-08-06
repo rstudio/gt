@@ -41,6 +41,9 @@ groupname_col arguments."><meta property="og:image" content="https://gt.rstudio.
     <li><a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a></li>
     <li><a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a></li>
     <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Datasets</h6></li>
+    <li><a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a></li>
+    <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
 <li class="nav-item dropdown">
@@ -157,6 +160,22 @@ values which can be useful for testing tables that contain row groups.</p></dd>
 <code><a href="towny.html">towny</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">exibble</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           num char       fctr  date       time  datetime    currency row   group</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>       0.111 apricot    one   2015-01-15 13:35 2018-01-01…    50.0  row_1 grp_a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>       2.22  banana     two   2015-02-15 14:40 2018-02-02…    18.0  row_2 grp_a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>      33.3   coconut    three 2015-03-15 15:45 2018-03-03…     1.39 row_3 grp_a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     444.    durian     four  2015-04-15 16:50 2018-04-04… <span style="text-decoration: underline;">65</span>100    row_4 grp_a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>    <span style="text-decoration: underline;">5</span>550     <span style="color: #BB0000;">NA</span>         five  2015-05-15 17:55 2018-05-05…  <span style="text-decoration: underline;">1</span>326.   row_5 grp_b</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>      <span style="color: #BB0000;">NA</span>     fig        six   2015-06-15 <span style="color: #BB0000;">NA</span>    2018-06-06…    13.3  row_6 grp_b</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span>  <span style="text-decoration: underline;">777</span>000     grapefruit seven <span style="color: #BB0000;">NA</span>         19:10 2018-07-07…    <span style="color: #BB0000;">NA</span>    row_7 grp_b</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> 8<span style="text-decoration: underline;">880</span>000     honeydew   eight 2015-08-15 20:20 <span style="color: #BB0000;">NA</span>              0.44 row_8 grp_b</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

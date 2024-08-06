@@ -59,6 +59,9 @@ stations (e.g., Gare du Nord, Gare de l'Est, etc.), and many bus lines."><meta p
     <li><a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a></li>
     <li><a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a></li>
     <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Datasets</h6></li>
+    <li><a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a></li>
+    <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
 <li class="nav-item dropdown">
@@ -204,6 +207,24 @@ show <code>NA</code> values.</p></dd>
 <code><a href="towny.html">towny</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">metro</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 314</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ name               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Argentine", "Bastille", "Bérault", "Champs-Élysées…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ caption            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, "Grand Palais", NA, NA, NA, NA, NA, NA,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ lines              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1", "1, 5, 8", "1", "1, 13", "1, 2, 6", "1", "1, 4…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ connect_rer        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, "A", NA, "A, B, D", NA, NA, NA, "A,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ connect_tramway    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ connect_transilien <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, "R", NA, NA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ connect_other      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, "TGV, TGV L…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ passengers         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2079212, 8069243, 2106827, 1909005, 4291663, 361773…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ latitude           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 48.87528, 48.85308, 48.84528, 48.86750, 48.87389, 4…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ longitude          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2.290000, 2.369077, 2.428333, 2.313500, 2.295000, 2…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ location           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Paris 16th, Paris 17th", "Paris 4th, Paris 11th, P…</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

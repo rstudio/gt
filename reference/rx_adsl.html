@@ -49,6 +49,9 @@ table creation rather than creating a fully CDISC-compliant ADaM dataset.'><meta
     <li><a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a></li>
     <li><a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a></li>
     <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Datasets</h6></li>
+    <li><a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a></li>
+    <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
 <li class="nav-item dropdown">
@@ -194,6 +197,27 @@ if the subject had the event) or <code>"N"</code>.</p></dd>
 <code><a href="towny.html">towny</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">rx_adsl</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 182</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ STUDYID  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "GT01", "GT01", "GT01", "GT01", "GT01", "GT01", "GT01", "GT01…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ STUDYIDN <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4001", "4001", "4001", "4001", "4001", "4001", "4001", "4001…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ USUBJID  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "GT1000", "GT1001", "GT1002", "GT1003", "GT1004", "GT1005", "…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ TRTA     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> NA, Placebo, Placebo, Placebo, Placebo, Placebo, Placebo, Pla…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ TRTAN    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ ITTFL    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "N", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ RANDFL   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "N", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ SCRFREAS <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "WITHDRAWAL BY SUBJECT", "", "", "", "", "", "", "", "", "", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ AGE      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 37, 41, 39, 38, 45, 35, 42, 35, 42, 38, 48, 36, 46, 34, 44, 4…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ AAGEGR1  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> &lt;40, &gt;=40, &lt;40, &lt;40, &gt;=40, &lt;40, &gt;=40, &lt;40, &gt;=40, &lt;40, &gt;=40, &lt;…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ SEX      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> Male, Male, Female, Male, Male, Female, Female, Male, Male, F…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ ETHNIC   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> Hispanic or Latino, Not Hispanic or Latino, Not Hispanic or L…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ BLBMI    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 33.76723, 33.35073, 30.45862, 22.85986, 23.89713, 29.09856, 2…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ EVNTFL   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "Y", "Y", "N", "Y", "Y", "N", "N", "N", "N", "N", "N", "Y…</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

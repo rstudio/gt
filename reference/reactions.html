@@ -53,6 +53,9 @@ where information is available."><meta property="og:image" content="https://gt.r
     <li><a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a></li>
     <li><a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a></li>
     <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Datasets</h6></li>
+    <li><a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a></li>
+    <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
 <li class="nav-item dropdown">
@@ -262,6 +265,52 @@ of K) for which the <code>Cl_a</code>, <code>Cl_b</code>, and <code>Cl_n</code> 
 <code><a href="towny.html">towny</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">reactions</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 1,683</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ cmpd_name     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "methane", "formaldehyde", "methanol", "fluoromethane", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ cmpd_mwt      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 16.04, 30.03, 32.04, 34.03, 46.03, 48.02, 48.04, 50.49, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ cmpd_formula  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "CH4", "CH2O", "CH4O", "CH3F", "CH2O2", "CHOF", "CH4O2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ cmpd_type     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "normal alkane", "aldehyde", "alcohol or glycol", "haloa…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ cmpd_smiles   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "C", "C=O", "CO", "CF", "OC=O", "FC=O", "COO", "CCl", "F…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ cmpd_inchi    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "InChI=1S/CH4/h1H4", "InChI=1S/CH2O/c1-2/h1H2", "InChI=1…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ cmpd_inchikey <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "VNWKTOKETHGBQD-UHFFFAOYSA-N", "WSFSSNUMVMOOMR-UHFFFAOYS…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ OH_k298       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6.36e-15, 8.50e-12, 8.78e-13, 1.97e-14, 4.50e-13, NA, 1.…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ OH_uncert     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.10, 0.20, 0.10, 0.10, NA, NA, NA, 0.20, 0.10, 0.21, 0.…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ OH_u_fac      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, 1.4, NA, 2.0, NA, NA, NA, NA, NA, NA, NA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ OH_A          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3.62e-13, 5.40e-12, 2.32e-13, 1.99e-13, 4.50e-13, NA, 5.…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ OH_B          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1200.3487, -135.0000, -402.0000, 685.4204, NA, NA, -190.…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ OH_n          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2.179936, NA, 2.720000, 2.040182, NA, NA, NA, NA, 1.8600…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ OH_t_low      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 200, 200, 210, 240, 290, NA, 220, 220, 220, 298, 298, NA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ OH_t_high     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2025, 300, 1344, 1800, 450, NA, 430, 330, 1800, 671, 393…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ O3_k298       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ O3_uncert     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ O3_u_fac      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ O3_A          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ O3_B          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ O3_n          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ O3_t_low      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ O3_t_high     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ NO3_k298      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, 5.5e-16, 1.3e-16, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ NO3_uncert    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ NO3_u_fac     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, 1.6, 3.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ NO3_A         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, 9.4e-13, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ NO3_B         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, 2650, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ NO3_n         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ NO3_t_low     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, 250, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ NO3_t_high    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, 370, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ Cl_k298       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.00e-13, 7.20e-11, 5.10e-11, 3.60e-13, 1.90e-13, 1.90e-…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ Cl_uncert     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.15, 0.15, 0.20, NA, NA, 0.11, NA, 0.10, 0.15, NA, 0.14…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ Cl_u_fac      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, 1.4, 1.4, NA, 3.0, NA, NA, NA, NA, NA, 2.0, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ Cl_A          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6.60e-12, 8.10e-11, 5.10e-11, 4.90e-12, NA, NA, NA, 4.32…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ Cl_B          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1240.0, 34.0, 0.0, 781.0, NA, NA, NA, 646.4, 1591.0, NA,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ Cl_n          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, 1.3057, NA, NA, NA, NA, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ Cl_t_low      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 200, 200, 225, 200, NA, NA, NA, 222, 250, NA, NA, 220, 2…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ Cl_t_high     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 300, 500, 950, 300, NA, NA, NA, 843, 300, NA, NA, 330, 3…</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

@@ -49,6 +49,9 @@ table creation rather than creating a fully CDISC-compliant ADaM dataset.'><meta
     <li><a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a></li>
     <li><a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a></li>
     <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Datasets</h6></li>
+    <li><a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a></li>
+    <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
 <li class="nav-item dropdown">
@@ -205,6 +208,33 @@ indicating whether PD is related to COVID-19 or not.</p></dd>
 <code><a href="towny.html">towny</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">rx_addv</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 291</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ STUDYID  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "GT01", "GT01", "GT01", "GT01", "GT01", "GT01", "GT01", "GT01…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ STUDYIDN <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4001", "4001", "4001", "4001", "4001", "4001", "4001", "4001…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ USUBJID  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "GT1001", "GT1002", "GT1002", "GT1003", "GT1003", "GT1003", "…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ TRTA     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> Placebo, Placebo, Placebo, Placebo, Placebo, Placebo, Placebo…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ TRTAN    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ ITTFL    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ AGE      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 41, 39, 39, 38, 38, 38, 45, 45, 35, 35, 35, 35, 35, 42, 35, 3…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ AAGEGR1  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> &gt;=40, &lt;40, &lt;40, &lt;40, &lt;40, &lt;40, &gt;=40, &gt;=40, &lt;40, &lt;40, &lt;40, &lt;40…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ SEX      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> Male, Female, Female, Male, Male, Male, Male, Male, Female, F…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ ETHNIC   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> Not Hispanic or Latino, Not Hispanic or Latino, Not Hispanic …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ BLBMI    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 33.35073, 30.45862, 30.45862, 22.85986, 22.85986, 22.85986, 2…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ DVTERM   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "", "Lab values not taken at month 3", "", "{gt} Question…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ PARAMCD  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> PDANYM, PDANYM, PDEV02, PDANYM, PDEV01, PDEV02, PDANYM, PDEV0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ PARAM    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> At least one major Protocol Deviation, At least one major Pro…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ PARCAT1  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "OVERALL", "OVERALL", "PROTOCOL DEVIATION", "OVERALL", "PROTO…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ DVCAT    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "", "Major", "", "Major", "Major", "", "Major", "", "", "…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ ACAT1    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "", "Study Procedures Criteria Deviations", "", "Study Pr…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ AVAL     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ CRIT1    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "COVID-19 Related", "COVID-19 Related", "COVID-19 Related", "…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ CRIT1FL  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "N", "N", "N", "N", "N", "N", "N", "N", "N", "Y", "N", "N", "…</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
