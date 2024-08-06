@@ -393,6 +393,7 @@ articles:
 - title: Get started
   navbar: ~
   contents:
+  - gt
   - creating-summary-lines
 - title: Case studies
   navbar: Case studies
@@ -401,6 +402,7 @@ articles:
   - case-study-clinical-tables
 
 - title: Datasets
+  navbar: Datasets
   contents:
   - gt-datasets
 - title: Visual tests

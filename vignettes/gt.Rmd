@@ -122,7 +122,7 @@ gt_tbl <-
 gt_tbl
 ```
 
-Footnotes live inside the **Footer** part and their footnote marks are attached to cell data. Footnotes are added with `tab_footnote()`. The helper function `cells_body()` can be used with the `location` argument to specify which data cells should be the target of the footnote. `cells_body()` has the two arguments `columns` and `rows`. For each of these, we can supply (1) a vector of colnames or rownames, (2) a vector of column/row indices, (3) bare column names wrapped in `c()` or row labels within `c()`, or (4) a select helper function (`starts_with()`, `ends_with()`, `contains()`, `matches()`, `one_of()`, and `everything()`). For `rows` specifically, we can use a conditional statement with column names as variables (e.g., `size > 15000`).
+Footnotes live inside the **Footer** part and their footnote marks are attached to cell data. Footnotes are added with `tab_footnote()`. The helper function `cells_body()` can be used with the `location` argument to specify which data cells should be the target of the footnote. `cells_body()` has the two arguments `columns` and `rows`. For each of these, we can supply (1) a vector of colnames or rownames, (2) a vector of column/row indices, (3) bare column names wrapped in `c()` or row labels within `c()`, or (4) a select helper function (`starts_with()`, `ends_with()`, `contains()`, `matches()`, `all_of()`, and `everything()`). For `rows` specifically, we can use a conditional statement with column names as variables (e.g., `size > 15000`).
 
 Here is a simple example on how a footnotes can be added to a table cell. Let's add a footnote that references the `North America` and `South America` cells in the `name` column:
 

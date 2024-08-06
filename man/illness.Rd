@@ -90,6 +90,9 @@ DATA-13
 \code{v0.10.0} (October 7, 2023)
 }
 
+\examples{
+dplyr::glimpse(illness)
+}
 \seealso{
 Other datasets: 
 \code{\link{constants}},
