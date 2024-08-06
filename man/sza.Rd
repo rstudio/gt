@@ -58,6 +58,9 @@ DATA-2
 \code{v0.2.0.5} (March 31, 2020)
 }
 
+\examples{
+dplyr::glimpse(sza)
+}
 \seealso{
 Other datasets: 
 \code{\link{constants}},

@@ -61,6 +61,9 @@ DATA-3
 \code{v0.2.0.5} (March 31, 2020)
 }
 
+\examples{
+dplyr::glimpse(gtcars)
+}
 \seealso{
 Other datasets: 
 \code{\link{constants}},
