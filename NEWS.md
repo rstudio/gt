@@ -6,12 +6,12 @@
 
 ## Interactive table support
 
-* Interactive tables will show no border if `opt_table_lines(extent = "none")` is specified (#1307).
+* Interactive tables respect`opt_table_lines(extent = "none")` and `opt_table_lines(extent = "all")` is specified (#1307).
 
 * Interactive tables now respect more styling options. 
 
   * `column_labels.background.color`, `row_group.background.color`, `row_group.font.weight`, `table_body.hlines.style`,
-     `table.font.weight`, `table.font.size`, `stub.font.weight` (#1693).
+     `table.font.weight`, `table.font.size`, `stub.font.weight`, `stub_background.color` (#1693).
 
 * `opt_interactive()` now works when columns are merged with `cols_merge()` (@olivroy, #1785). 
 
