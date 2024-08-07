@@ -73,6 +73,9 @@ DATA-10
 \code{v0.9.0} (Mar 31, 2023)
 }
 
+\examples{
+dplyr::glimpse(metro)
+}
 \seealso{
 Other datasets: 
 \code{\link{constants}},

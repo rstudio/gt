@@ -72,6 +72,9 @@ DATA-7
 \code{v0.9.0} (Mar 31, 2023)
 }
 
+\examples{
+dplyr::glimpse(towny)
+}
 \seealso{
 Other datasets: 
 \code{\link{constants}},

@@ -68,6 +68,9 @@ DATA-17
 \code{v0.9.0} (Mar 31, 2023)
 }
 
+\examples{
+dplyr::glimpse(rx_adsl)
+}
 \seealso{
 Other datasets: 
 \code{\link{constants}},

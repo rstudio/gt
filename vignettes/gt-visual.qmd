@@ -28,6 +28,8 @@ if (isTRUE(as.logical(Sys.getenv("CI", "false"))) || identical(Sys.getenv("IN_PK
 }
 # All tables are generated in vignettes/visual_tests.R
 # When updating this file, update also pkgdown/assets/gt-latex.qmd
+# generate the same table ID
+set.seed(112)
 ```
 
 ```{r}

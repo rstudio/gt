@@ -47,6 +47,9 @@ DATA-12
 \code{v0.10.0} (October 7, 2023)
 }
 
+\examples{
+dplyr::glimpse(constants)
+}
 \seealso{
 Other datasets: 
 \code{\link{countrypops}},

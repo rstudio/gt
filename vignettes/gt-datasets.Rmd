@@ -235,9 +235,7 @@ The table that we'll create from `gtcars` will meet these requirements:
 # Create a gt table based on a preprocessed `gtcars`
 gtcars |>
   filter(ctry_origin == "Germany") |>
-  group_by(mfr) |>
-  top_n(n = 2, msrp) |>
-  ungroup() |>
+  slice_max(n = 2, msrp, by = mfr) |>
   select(mfr, model, drivetrain, msrp) |>
   gt() |>
   tab_header(title = "Select German Automobiles") |>
