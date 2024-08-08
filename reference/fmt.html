@@ -152,7 +152,9 @@ By default this is <code>NULL</code>.</p></dd>
 <dt id="arg-fns">fns<a class="anchor" aria-label="anchor" href="#arg-fns"></a></dt>
 <dd><p><em>Formatting functions</em></p>
 <p><code>function|list of functions</code> // <strong>required</strong></p>
-<p>Either a single formatting function or a named list of functions.</p></dd>
+<p>Either a single formatting function or a named list of functions. Can also
+be anonymous functions, in both base R (<code>\(x) x + 1</code>) and <code>rlang</code>
+(<code>~.x + 1</code>) syntax.</p></dd>
 
 </dl></div>
     <div class="section level2">
