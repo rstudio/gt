@@ -45,7 +45,9 @@ By default this is \code{NULL}.}
 
 \verb{function|list of functions} // \strong{required}
 
-Either a single formatting function or a named list of functions.}
+Either a single formatting function or a named list of functions. Can also
+be anonymous functions, in both base R (\verb{\\(x) x + 1}) and \code{rlang}
+(\code{~.x + 1}) syntax.}
 }
 \value{
 An object of class \code{gt_tbl}.

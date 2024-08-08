@@ -37,6 +37,8 @@
 
 * Improve the centering of the stubhead label in Latex when  `row_group_as_column = TRUE` and the width of the row name column is specified (@kbrevoort, #1804).
 
+* Performance improvement for footnote rendering (@olivroy, #1818).
+
 # gt 0.11.0
 
 ## New features

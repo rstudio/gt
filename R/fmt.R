@@ -59,7 +59,10 @@
 #'
 #'   `function|list of functions` // **required**
 #'
-#'   Either a single formatting function or a named list of functions.
+#'   Either a single formatting function or a named list of functions. Can also
+#'   be anonymous functions, in both base R (`\(x) x + 1`) and `rlang`
+#'   (`~.x + 1`) syntax.
+#'
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -124,9 +127,12 @@ fmt <- function(
 
   # If a single function is supplied to `fns` then
   # repackage that into a list as the `default` function
-  if (is.function(fns)) {
+  if (!is.list(fns)) {
     fns <- list(default = fns)
   }
+
+  # Convert the `fns` with rlang, so that purrr-style works
+  fns <- lapply(fns, rlang::as_function)
 
   # Create the `formatter_list`, which is a bundle of
   # formatting functions for specific columns and rows
