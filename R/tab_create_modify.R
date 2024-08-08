@@ -772,7 +772,7 @@ tab_spanner <- function(
     data <-
       cols_move(
         data = data,
-        columns = column_names,
+        columns = dplyr::all_of(column_names),
         after = column_names[1]
       )
   }
@@ -1267,10 +1267,10 @@ tab_spanner_delim <- function(
 
             # Increment number to spanner ID values on subsequent duplications
             idx_str <- gsub("^spanner:([0-9]+)-.*", "\\1", spanner_id)
-            
+
             idx_int <- as.integer(idx_str)
 
-            spanner_id <- 
+            spanner_id <-
               gsub(
                 "^(spanner:)[0-9]+(-.*)",
                 paste0("\\1", idx_int + 1, "\\2"),

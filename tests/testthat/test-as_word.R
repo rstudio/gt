@@ -1972,7 +1972,7 @@ test_that("tables preserves spaces in text & can be added to a word doc", {
     gt() %>%
     tab_style(
       style = cell_text(whitespace = "pre"),
-      location = cells_body(columns = contains("preserve"))
+      locations = cells_body(columns = contains("preserve"))
     )
 
   ## Add table to empty word document
