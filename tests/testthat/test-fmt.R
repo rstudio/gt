@@ -261,6 +261,15 @@ test_that("fmt() works with conditional `rows`", {
   )
 })
 
+test_that("fmt() works when providing a purrr formula (#1762)", {
+  # Function has a different class, so that will differ
+  # - but makes sense since the passed function is actually different
+  expect_equal(
+    {v1 <- mtcars %>% gt() %>% fmt(mpg, fns = ~.x+1); v1$`_formats`[[1]]$func$default <- NULL; v1},
+    {v2 <- mtcars %>% gt() %>% fmt(mpg, fns = function(x) x+1); v2$`_formats`[[1]]$func$default <- NULL; v2}
+    )
+})
+
 test_that("filter_table_to_value() works correctly", {
 
   # Expect that filtering the `locales` table with
