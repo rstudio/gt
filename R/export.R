@@ -196,6 +196,9 @@ as_latex <- function(data) {
   # Create a LaTeX fragment for the start of the table
   table_start <- create_table_start_l(data = data, colwidth_df = colwidth_df)
 
+  # Create the caption component
+  caption_component <- create_caption_component_l(data = data)
+
   # Create the heading component
   heading_component <- create_heading_component_l(data = data)
 
@@ -238,6 +241,7 @@ as_latex <- function(data) {
         table_width_statement,
         fontsize_statement,
         table_start,
+        caption_component,
         heading_component,
         columns_component,
         body_component,
@@ -252,6 +256,7 @@ as_latex <- function(data) {
     knitr::asis_output(
       paste0(
         wrap_start_statement,
+        caption_component,
         heading_component,
         table_width_statement,
         fontsize_statement,

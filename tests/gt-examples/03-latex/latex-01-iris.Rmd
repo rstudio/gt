@@ -27,5 +27,6 @@ gt(iris) %>%
   tab_source_note(
     source_note = md("The data were collected by *Anderson* (1935).")
   ) %>%
-  tab_options(latex.use_longtable = TRUE)
+  tab_options(latex.use_longtable = TRUE) %>% 
+  tab_caption(md("The **iris** dataset"))
 ```

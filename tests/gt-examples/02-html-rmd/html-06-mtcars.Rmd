@@ -1,17 +1,18 @@
 ---
 title: "html-06-mtcars"
 output:
-  - html_document
+  - bookdown::html_document2
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(gt)
+options("htmltools.preserve.raw" = FALSE)
 ```
 
 Create a display table based on `mtcars`.
-
-```{r}
+Testing that the caption in \@ref(tab:mtcars) can be cross referenced.
+```{r mtcars}
 gt(mtcars, rownames_to_stub = TRUE) %>%
   cols_align(
     align = "right",
@@ -98,5 +99,6 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
   cols_label(
     hp = md("*HP*"),
     qsec = "QMT, seconds"
-  )
+  ) %>% 
+  tab_caption(md("The **mtcars** dataset"))
 ```
