@@ -1418,3 +1418,32 @@ test_that("tab_spanner_delim() won't overwrite any set column labels", {
     gt_tbl_last_2 %>% render_as_html()
   )
 })
+
+test_that("tab_spanner_delim() resolves duplicate spanner IDs (#1821)", {
+  df <- data.frame(
+    pop_rural_young_num = c(1000, 2000),
+    pop_rural_young_pct = c(0.33, 0.66),
+    pop_rural_old_num = c(1000, 2000),
+    pop_rural_old_pct = c(0.33, 0.66),
+    pop_urban_young_num = c(1000, 2000),
+    pop_urban_young_pct = c(0.33, 0.66),
+    pop_urban_old_num = c(1000, 2000),
+    pop_urban_old_pct = c(0.33, 0.66)
+  )
+
+  expect_no_error(dat <- gt::gt(df) %>%
+    tab_spanner_delim(
+      delim = "_",
+      contains("rural"),
+      limit = 2
+    ) %>%
+    tab_spanner_delim(
+      delim = "_",
+      contains("urban"),
+      limit = 2
+    ))
+  expect_equal(
+    nrow(dat$`_spanners`),
+    6
+  )
+})

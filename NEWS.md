@@ -39,6 +39,8 @@
 
 * Performance improvement for footnote rendering (@olivroy, #1818).
 
+* Fixed an issue where `tab_spanner_delim()` would fail to resolve a duplicate id (@olivroy, #1821).
+
 # gt 0.11.0
 
 ## New features
