@@ -338,6 +338,16 @@ test_that("text_case_match() works on the tab_spanner()", {
      new_tb,
      "awesome spanner"
   )
+  expect_no_error(new_tb2 <- gt_tbl %>%
+    text_case_match(
+      "the boring spanner" ~ "awesome spanner2",
+      .replace = "all",
+      .locations = cells_column_spanners()
+  ))
+  expect_match_html(
+    new_tb2,
+    "awesome spanner"
+  )
 })
 
 test_that("text_transform() works on row group labels", {

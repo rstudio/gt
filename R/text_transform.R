@@ -411,7 +411,7 @@ text_case_match <- function(
 
       if (.replace == "all") {
 
-        x <- dplyr::case_match(.x = x, !!!x_list, .default = .default)
+        x <- dplyr::case_match(.x = unlist(x), !!!x_list, .default = unlist(.default))
 
       } else {
 
