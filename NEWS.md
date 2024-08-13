@@ -37,6 +37,8 @@
 
 * Improve the centering of the stubhead label in Latex when  `row_group_as_column = TRUE` and the width of the row name column is specified (@kbrevoort, #1804).
 
+* Fixed an issue with `text_case_match(.replace = "all", .locations = cells_column_spanners())` (@olivroy, #1823).
+
 * Performance improvement for footnote rendering (@olivroy, #1818).
 
 # gt 0.11.0
