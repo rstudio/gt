@@ -1238,7 +1238,8 @@ tab_spanner_delim <- function(
     spanners_i_values <- rle_spanners_i$values
     spanners_i_col_i <- utils::head(cumsum(c(1, spanners_i_lengths)), -1)
 
-    spanner_id_vals <- c()
+    # Initialize spanner ids to existing spanners in the data
+    spanner_id_vals <- dt_spanners_get_ids(data)
 
     for (j in seq_along(spanners_i_lengths)) {
 
@@ -1289,9 +1290,7 @@ tab_spanner_delim <- function(
 
         # Set the spanner with a call to `tab_spanner()`
         existing_spanner_ids <- dt_spanners_get_ids(data = data)
-        if (spanner_id %in% existing_spanner_ids) {
-          spanner_id <- random_id(n =5)
-        }
+
         data <-
           tab_spanner(
             data = data,
