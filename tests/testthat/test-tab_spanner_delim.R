@@ -1446,4 +1446,11 @@ test_that("tab_spanner_delim() resolves duplicate spanner IDs (#1821)", {
     nrow(dat$`_spanners`),
     6
   )
+  expect_equal(
+    dat$`_spanners`$spanner_id,
+    c(
+      "spanner-young_num", "spanner-old_num", "spanner-pop_rural_young_num",
+      "spanner:1-young_num", "spanner:1-old_num", "spanner-pop_urban_young_num"
+   )
+  )
 })
