@@ -1289,8 +1289,6 @@ tab_spanner_delim <- function(
           )
 
         # Set the spanner with a call to `tab_spanner()`
-        existing_spanner_ids <- dt_spanners_get_ids(data = data)
-
         data <-
           tab_spanner(
             data = data,
