@@ -643,10 +643,7 @@ test_that("The ordering of groups shouldn't affect group/grand summary calcs", {
     expect_equal(c("3", "20", "99"))
 
   # Expect the HTML output tables of `gt_tbl_1` and `gt_tbl_1b` to be the same
-  expect_identical(
-    gt_tbl_1 %>% render_as_html(),
-    gt_tbl_1b %>% render_as_html()
-  )
+  expect_equal_gt(gt_tbl_1, gt_tbl_1b)
 
   # Expect the correct values in summary rows of `gt_tbl_2`
   gt_tbl_2 %>% render_as_html() %>% xml2::read_html() %>%
@@ -687,10 +684,7 @@ test_that("The ordering of groups shouldn't affect group/grand summary calcs", {
     expect_equal(c("122"))
 
   # Expect the HTML output tables of `gt_tbl_gs` and `gt_tbl_1b_gs` to be the same
-  expect_equal_gt(
-    gt_tbl_1_gs,
-    gt_tbl_1b_gs
-  )
+  expect_equal_gt(gt_tbl_1_gs, gt_tbl_1b_gs)
 
   # Expect the correct value in the grand summary row of `gt_tbl_2_gs`
   gt_tbl_2_gs %>% render_as_html() %>% xml2::read_html() %>%
@@ -1021,15 +1015,8 @@ test_that("Multiple ways of expressing formatting work equivalently", {
       fmt = ~ fmt_number(., decimals = 3)
     )
 
-  expect_equal_gt(
-    gt_tbl_1,
-    gt_tbl_2
-  )
-
-  expect_equal_gt(
-    gt_tbl_2,
-    gt_tbl_3
-  )
+  expect_equal_gt(gt_tbl_1, gt_tbl_2)
+  expect_equal_gt(gt_tbl_2, gt_tbl_3)
 })
 
 test_that("Labels can be intrepreted from Markdown using `md()`", {
