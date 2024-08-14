@@ -336,7 +336,7 @@ test_that("remove_html() works correctly", {
 
   # Expect that the `character` text object has had the
   # HTML tags removed
-  html_text_1_removed <- remove_html(html_text_2)
+  html_text_1_removed <- remove_html(html_text_1)
   expect_equal(html_text_1_removed, "this is text that's HTML")
 
   # Expect that the `character` text object retains the

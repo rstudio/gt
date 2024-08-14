@@ -21,7 +21,7 @@ test_that("Various `is_*()` utility functions work properly", {
   expect_false(is_gt_group(gt(exibble)))
   expect_false(is_gt_group(gt_preview(gtcars)))
   expect_false(is_gt_group(exibble))
-  expect_false(as_raw_html(is_gt_group(gt(exibble))))
+  expect_false(is_gt_group(as_raw_html(gt(exibble))))
 
   # Expect that `is_gt_tbl_or_group()` is TRUE with a `gt_group` or a
   # `gt_tbl` and FALSE in other cases
@@ -70,6 +70,8 @@ test_that("Various `is_*()` utility functions work properly", {
   expect_no_error(stop_if_not_gt_tbl_or_group(gt_group(gt(exibble), gt(exibble))))
   expect_error(stop_if_not_gt_tbl_or_group(exibble))
   expect_error(stop_if_not_gt_tbl_or_group(gt(exibble) %>% as_raw_html()))
+
+  skip_if_not_installed("shiny")
 
   # Expect that `is_html()` returns TRUE only for objects with the `html` class
   expect_true(is_html(html("This is <span>HTML</span>")))
