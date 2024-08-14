@@ -27,15 +27,36 @@ html_fragment_within <- function(raw_html, ...) {
 }
 
 # shortcut for expect_match(render_as_html(object), regexp)
+expect_match_raw_html <- function(object,
+                                  regexp,
+                                  perl = FALSE,
+                                  fixed = FALSE,
+                                  ...,
+                                  all = TRUE,
+                                  info = NULL,
+                                  label = NULL) {
+  expect_match_html(
+    object = object,
+    regexp = regexp,
+    f = as_raw_html,
+    perl = perl,
+    fixed = fixed,
+    ...,
+    all = TRUE,
+    info = NULL,
+    label = NULL
+  )
+}
 expect_match_html <- function(object,
                               regexp,
+                              f = render_as_html,
                               perl = FALSE,
                               fixed = FALSE,
                               ...,
                               all = TRUE,
                               info = NULL,
                               label = NULL) {
-  rendered <- render_as_html(object)
+  rendered <- f(object)
   for (i in seq_along(regexp)) {
     testthat::expect_match(
       object = rendered,
@@ -53,14 +74,15 @@ expect_match_html <- function(object,
 
 # shortcut for expect_match(render_as_html(object), regexp)
 expect_no_match_html <- function(object,
-                              regexp,
-                              perl = FALSE,
-                              fixed = FALSE,
-                              ...,
-                              all = TRUE,
-                              info = NULL,
-                              label = NULL) {
-  rendered <- render_as_html(object)
+                                 regexp,
+                                 f = render_as_html,
+                                 perl = FALSE,
+                                 fixed = FALSE,
+                                 ...,
+                                 all = TRUE,
+                                 info = NULL,
+                                 label = NULL) {
+  rendered <- f(object)
   for (i in seq_along(regexp)) {
     testthat::expect_no_match(
       object = rendered,
@@ -101,6 +123,29 @@ generate_html_units <- function(input) {
   render_units(
     define_units(input),
     context = "html"
+  )
+}
+
+#' Test if two gt tables are equal (or equivalent)
+#'
+#'
+#' @param gt_tbl1,gt_tbl2 A pair of gt tables to test for equality
+#' @param f A function to apply to two tables
+#' @param ignore_id Whether to ignore the html id
+#' @param ... Additional parameters passed on to `expect_equal()`
+#'
+#' @noRd
+expect_equal_gt <- function(gt_tbl1, gt_tbl2, f = render_as_html, ignore_id = FALSE, ...) {
+  gt_tbl1 <- f(gt_tbl1)
+  gt_tbl2 <- f(gt_tbl2)
+  if (ignore_id) {
+    gt_tbl1 <- gsub("id=\"[a-z]*?\"", "", gt_tbl1)
+    gt_tbl2 <- gsub("id=\"[a-z]*?\"", "", gt_tbl2)
+  }
+  expect_equal(
+    gt_tbl1,
+    gt_tbl2,
+    ...
   )
 }
 

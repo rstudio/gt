@@ -463,9 +463,9 @@ test_that("text_case_when() + text_case_match() work", {
       text_case_match(NA ~ "---")
   )
   # they are not changing numeric NA
-  expect_equal(
-    render_as_html(cw),
-    render_as_html(cm)
+  expect_equal_gt(
+    cw,
+    cm
   )
 })
 

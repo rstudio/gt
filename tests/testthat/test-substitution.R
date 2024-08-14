@@ -730,39 +730,29 @@ test_that("sub_large_vals() works correctly", {
 
   # Expect that the order of `fmt_*()` and `sub_*()` functions shouldn't
   # make a different in the final outputs
-  expect_equal(
+  expect_equal_gt(
     tab %>%
       fmt_integer(columns = "int_1") %>%
-      sub_large_vals(columns = "int_1", threshold = 3, sign = "-") %>%
-      render_as_html(),
+      sub_large_vals(columns = "int_1", threshold = 3, sign = "-"),
     tab %>%
       sub_large_vals(columns = "int_1", threshold = -3, sign = "-") %>%
-      fmt_integer(columns = "int_1") %>%
-      render_as_html()
+      fmt_integer(columns = "int_1")
   )
 
   # Expect that the sign of the `threshold` value doesn't affect anything
-  expect_equal(
-    tab %>%
-      sub_large_vals(columns = "int_1", threshold = 3, sign = "-") %>%
-      render_as_html(),
-    tab %>%
-      sub_large_vals(columns = "int_1", threshold = -3, sign = "-") %>%
-      render_as_html()
+  expect_equal_gt(
+    tab %>% sub_large_vals(columns = "int_1", threshold = 3, sign = "-"),
+    tab %>% sub_large_vals(columns = "int_1", threshold = -3, sign = "-")
   )
 
-  expect_equal(
-    tab %>%
-      sub_large_vals(columns = "num_1", threshold = 10, sign = "+") %>%
-      render_as_html(),
-    tab %>%
-      sub_large_vals(columns = "num_1", threshold = -10, sign = "+") %>%
-      render_as_html()
+  expect_equal_gt(
+    tab %>% sub_large_vals(columns = "num_1", threshold = 10, sign = "+"),
+    tab %>% sub_large_vals(columns = "num_1", threshold = -10, sign = "+")
   )
 
-  expect_equal(
-    tab %>% sub_large_vals(columns = "lett") %>% render_as_html(),
-    tab %>% render_as_html()
+  expect_equal_gt(
+    tab %>% sub_large_vals(columns = "lett"),
+    tab
   )
 
   # Expect an error if an invalid `sign` is used
