@@ -344,9 +344,9 @@ test_that("sub_zero() works correctly", {
     c("NA", "74.0000", "NA", "{\\i nil}", "NA", "0.0001", "NA")
   )
 
-  expect_equal(
-    tab %>% sub_zero(columns = "lett") %>% render_as_html(),
-    tab %>% render_as_html()
+  expect_equal_gt(
+    tab %>% sub_zero(columns = "lett"),
+    tab
   )
 
   # Format columns with `fmt_number()` then use
@@ -555,27 +555,19 @@ test_that("sub_small_vals() works correctly", {
   )
 
   # Expect that the sign of the `threshold` value doesn't affect anything
-  expect_equal(
-    tab %>%
-      sub_small_vals(columns = "num_1", threshold = 3, sign = "-") %>%
-      render_as_html(),
-    tab %>%
-      sub_small_vals(columns = "num_1", threshold = -3, sign = "-") %>%
-      render_as_html()
+  expect_equal_gt(
+    tab %>% sub_small_vals(columns = "num_1", threshold = 3, sign = "-"),
+    tab %>% sub_small_vals(columns = "num_1", threshold = -3, sign = "-")
   )
 
-  expect_equal(
-    tab %>%
-      sub_small_vals(columns = "num_1", threshold = 10, sign = "+") %>%
-      render_as_html(),
-    tab %>%
-      sub_small_vals(columns = "num_1", threshold = -10, sign = "+") %>%
-      render_as_html()
+  expect_equal_gt(
+    tab %>% sub_small_vals(columns = "num_1", threshold = 10, sign = "+"),
+    tab %>% sub_small_vals(columns = "num_1", threshold = -10, sign = "+")
   )
 
-  expect_equal(
-    tab %>% sub_small_vals(columns = "lett") %>% render_as_html(),
-    tab %>% render_as_html()
+  expect_equal_gt(
+    tab %>% sub_small_vals(columns = "lett"),
+    tab
   )
 
   # Expect an error if an invalid `sign` is used
