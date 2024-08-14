@@ -418,37 +418,34 @@ test_that("Using fonts in `cell_text()` works", {
 
   # Expect that system fonts can be combined with default fonts
   # and set at a specific location
-  tbl %>%
+  expect_match_raw_html(
     tab_style(
+      tbl,
       style = cell_text(font = c("Comic Sans MS", "Menlo", default_fonts())),
       locations = cells_body(columns = time, rows = 1)
-    ) %>%
-    as_raw_html() %>%
-    expect_match(
-      "<td headers=\"time\" class=\"gt_row gt_right\" style=\"border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: right; font-variant-numeric: tabular-nums; font-family: 'Comic Sans MS', Menlo, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';\" valign=\"middle\" align=\"right\">13:35</td>"
-    )
+    ),
+    "<td headers=\"time\" class=\"gt_row gt_right\" style=\"border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: right; font-variant-numeric: tabular-nums; font-family: 'Comic Sans MS', Menlo, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';\" valign=\"middle\" align=\"right\">13:35</td>"
+  )
 
   # Expect that a Google Fonts and system fonts can be combined
   # (using a list or `c()`) with default fonts and set at a specific location
-  tbl %>%
+  expect_match_raw_html(
     tab_style(
+      tbl,
       style = cell_text(font = c(google_font(name = "Dancing Script"), default_fonts())),
       locations = cells_body(columns = time, rows = 1)
-    ) %>%
-    as_raw_html() %>%
-    expect_match(
-      "<td headers=\"time\" class=\"gt_row gt_right\" style=\"border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: right; font-variant-numeric: tabular-nums; font-family: 'Dancing Script', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';\" valign=\"middle\" align=\"right\">13:35</td>"
-    )
+    ),
+    "<td headers=\"time\" class=\"gt_row gt_right\" style=\"border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: right; font-variant-numeric: tabular-nums; font-family: 'Dancing Script', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';\" valign=\"middle\" align=\"right\">13:35</td>"
+  )
 
-  tbl %>%
+  expect_match_raw_html(
     tab_style(
+      tbl,
       style = cell_text(font = list(google_font(name = "Dancing Script"), default_fonts())),
       locations = cells_body(columns = time, rows = 1)
-    ) %>%
-    as_raw_html() %>%
-    expect_match(
-      "<td headers=\"time\" class=\"gt_row gt_right\" style=\"border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: right; font-variant-numeric: tabular-nums; font-family: 'Dancing Script', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';\" valign=\"middle\" align=\"right\">13:35</td>"
-    )
+    ),
+    "<td headers=\"time\" class=\"gt_row gt_right\" style=\"border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: right; font-variant-numeric: tabular-nums; font-family: 'Dancing Script', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';\" valign=\"middle\" align=\"right\">13:35</td>"
+  )
 })
 
 test_that("tab_style() works with different locations.", {
@@ -513,34 +510,26 @@ test_that("tab_style() works with different locations.", {
       locations = cells_body(columns = hp)
     )
   )
-  expect_no_error(
-    tab_style(
-      gtcars_tbl,
-      style = cell_text(font = c("Times New Roman", "serif")),
-      locations = cells_body(columns = hp)
-    )
-  )
 })
 
 test_that("Setting white-space options in `cell_text()` works", {
 
   tbl_ws <-
-    dplyr::tibble(
-      ws = c("   space   ", "   space", "space   ", " a  b  c  d  e  f")
-    ) %>%
-    gt()
+    gt(data.frame(
+      ws = c("   space   ", "   space", "space   ", " a  b  c  d  e  f"),
+      stringsAsFactors = FALSE
+    ))
 
   # Expect that the white space `"pre"` style option will be present
   # when using `tab_style(style = cell_text(whitespace = "pre"), ... )`
-  tbl_ws %>%
+  expect_match_raw_html(
     tab_style(
+      tbl_ws,
       style = cell_text(whitespace = "pre"),
       locations = cells_body()
-    ) %>%
-    as_raw_html() %>%
-    expect_match(
-      "<td headers=\"ws\" class=\"gt_row gt_left\" style=\"border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; white-space: pre;\" valign=\"middle\" align=\"left\">   space   </td>"
-    )
+    ),
+    "<td headers=\"ws\" class=\"gt_row gt_left\" style=\"border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; white-space: pre;\" valign=\"middle\" align=\"left\">   space   </td>"
+  )
 })
 
 test_that("Hiding columns that have styles does not result in errors/warnings", {

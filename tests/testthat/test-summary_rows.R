@@ -618,10 +618,8 @@ test_that("Using `groups = FALSE` in `summary_rows()` returns data unchanged", {
 
   # Expect that using `groups = FALSE` with `summary_rows()`
   # creates no summary rows
-  expect_equal(
-    tbl %>%
-      as_raw_html() %>%
-      gsub("id=\"[a-z]*?\"", "", .),
+  expect_equal_gt(
+    tbl,
     tbl %>%
       summary_rows(
         groups = FALSE,
@@ -631,9 +629,9 @@ test_that("Using `groups = FALSE` in `summary_rows()` returns data unchanged", {
           total = ~ sum(., na.rm = TRUE),
           `std dev` = ~ sd(., na.rm = TRUE)
         )
-      ) %>%
-      as_raw_html() %>%
-      gsub("id=\"[a-z]*?\"", "", .)
+      ),
+    f = as_raw_html,
+    ignore_id = TRUE
   )
 })
 
@@ -681,9 +679,9 @@ test_that("Using `groups = NULL` in `summary_rows()` is a deprecated option", {
       )
     )
 
-  expect_equal(
-    summary_tbl_1 %>% render_as_html(),
-    summary_tbl_2 %>% render_as_html()
+  expect_equal_gt(
+    summary_tbl_1,
+    summary_tbl_2
   )
 })
 
@@ -927,9 +925,9 @@ test_that("The ordering of groups shouldn't affect group/grand summary calcs", {
     expect_equal(c("122"))
 
   # Expect the HTML output tables of `gt_tbl_gs` and `gt_tbl_1b_gs` to be the same
-  expect_identical(
-    gt_tbl_1_gs %>% render_as_html(),
-    gt_tbl_1b_gs %>% render_as_html()
+  expect_equal_gt(
+    gt_tbl_1_gs,
+    gt_tbl_1b_gs
   )
 
   # Expect the correct value in the grand summary row of `gt_tbl_2_gs`
@@ -1090,23 +1088,10 @@ test_that("Summary rows can be created when there is no stub", {
 
   # Expect that the grand summary row labels are
   # available in the rendered output table
-  expect_match(
-    gt_tbl %>%
-      as_raw_html(inline_css = FALSE),
-    "<th id=\"grand_summary_stub_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row\">average</th>"
-  )
-
-  expect_match(
-    gt_tbl %>%
-      as_raw_html(inline_css = FALSE),
-    "<th id=\"grand_summary_stub_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row\">total</th>"
-  )
-
-  expect_match(
-    gt_tbl %>%
-      as_raw_html(inline_css = FALSE),
-    "<th id=\"grand_summary_stub_3\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_last_summary_row\">std dev</th>"
-  )
+  raw_gt <- as_raw_html(gt_tbl, inline_css = FALSE)
+  expect_match(raw_gt, "<th id=\"grand_summary_stub_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row\">average</th>")
+  expect_match(raw_gt, "<th id=\"grand_summary_stub_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row\">total</th>")
+  expect_match(raw_gt, "<th id=\"grand_summary_stub_3\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_last_summary_row\">std dev</th>")
 })
 
 test_that("Summary row labels are added in narrow and wide tables", {
@@ -1274,14 +1259,14 @@ test_that("Multiple ways of expressing formatting work equivalently", {
       fmt = ~ fmt_number(., decimals = 3)
     )
 
-  expect_equal(
-    gt_tbl_1 %>% render_as_html(),
-    gt_tbl_2 %>% render_as_html()
+  expect_equal_gt(
+    gt_tbl_1,
+    gt_tbl_2
   )
 
-  expect_equal(
-    gt_tbl_2 %>% render_as_html(),
-    gt_tbl_3 %>% render_as_html()
+  expect_equal_gt(
+    gt_tbl_2,
+    gt_tbl_3
   )
 })
 
@@ -1513,9 +1498,9 @@ test_that("Groups can be formatted selectively with a formatting group directive
   summary_tbl_10 %>% as_rtf() %>% expect_snapshot()
 
   # Equality checks of summary_tbl_[10-13]
-  expect_equal(summary_tbl_10 %>% render_as_html(), summary_tbl_11 %>% render_as_html())
-  expect_equal(summary_tbl_10 %>% render_as_html(), summary_tbl_12 %>% render_as_html())
-  expect_equal(summary_tbl_10 %>% render_as_html(), summary_tbl_13 %>% render_as_html())
+  expect_equal_gt(summary_tbl_10, summary_tbl_11)
+  expect_equal_gt(summary_tbl_10, summary_tbl_12)
+  expect_equal_gt(summary_tbl_10, summary_tbl_13)
 })
 
 test_that("Formatting can be performed on summary cells in certain columns and rows", {
@@ -1676,10 +1661,7 @@ test_that("Formatting can be performed on summary cells in certain columns and r
       )
     )
 
-  expect_equal(
-    summary_tbl_5 %>% render_as_html(),
-    summary_tbl_8 %>% render_as_html()
-  )
+  expect_equal_gt(summary_tbl_5, summary_tbl_8)
 
   # Perform formatting at two columns of both groups
   summary_tbl_9 <-
@@ -1722,14 +1704,8 @@ test_that("Formatting can be performed on summary cells in certain columns and r
       )
     )
 
-  expect_equal(
-    summary_tbl_9 %>% render_as_html(),
-    summary_tbl_10 %>% render_as_html()
-  )
-  expect_equal(
-    summary_tbl_9 %>% render_as_html(),
-    summary_tbl_11 %>% render_as_html()
-  )
+  expect_equal_gt(summary_tbl_9, summary_tbl_10)
+  expect_equal_gt(summary_tbl_9, summary_tbl_11)
 })
 
 test_that("Extracting a summary from a gt table is possible", {
