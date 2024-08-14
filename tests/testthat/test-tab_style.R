@@ -488,50 +488,50 @@ test_that("Using fonts in `cell_text()` works", {
 
   # Don't expect any errors when styling with different fonts
   expect_no_error(
-    gtcars_tbl %>%
-      tab_style(
-        style = list(cell_text(font = c("Helvetica", "serif")), "font-size: 14px;"),
-        locations = cells_body(columns = hp)
-      )
+    tab_style(
+      gtcars_tbl,
+      style = list(cell_text(font = c("Helvetica", "serif")), "font-size: 14px;"),
+      locations = cells_body(columns = hp)
+    )
   )
   expect_no_error(
-    gtcars_tbl %>%
-      tab_style(
-        style = list("font-size: 14px;", cell_text(font = c("Helvetica", "serif"))),
-        locations = cells_body(columns = hp)
-      )
+    tab_style(
+      gtcars_tbl,
+      style = list("font-size: 14px;", cell_text(font = c("Helvetica", "serif"))),
+      locations = cells_body(columns = hp)
+    )
   )
   expect_no_error(
-    gtcars_tbl %>%
-      tab_style(
-        style = list(cell_text(font = c("Helvetica", "serif")), cell_borders()),
-        locations = cells_body(columns = hp)
-      )
+    tab_style(
+      gtcars_tbl,
+      style = list(cell_text(font = c("Helvetica", "serif")), cell_borders()),
+      locations = cells_body(columns = hp)
+    )
   )
   expect_no_error(
-    gtcars_tbl %>%
-      tab_style(
-        style = list(cell_borders(), cell_text(font = c("Helvetica", "serif"))),
-        locations = cells_body(columns = hp)
-      )
+    tab_style(
+      gtcars_tbl,
+      style = list(cell_borders(), cell_text(font = c("Helvetica", "serif"))),
+      locations = cells_body(columns = hp)
+    )
   )
   expect_no_error(
-    gtcars_tbl %>%
-      tab_style(
-        style = list(
-          cell_borders(sides = "b", color = "blue", weight = px(3)),
-          cell_text(size = px(18), font = c("Helvetica", "serif"), weight = "bold"),
-          cell_fill(color = "red", alpha = 0.5)
-          ),
-        locations = cells_body(columns = hp)
-      )
+    tab_style(
+      gtcars_tbl,
+      style = list(
+        cell_borders(sides = "b", color = "blue", weight = px(3)),
+        cell_text(size = px(18), font = c("Helvetica", "serif"), weight = "bold"),
+        cell_fill(color = "red", alpha = 0.5)
+      ),
+      locations = cells_body(columns = hp)
+    )
   )
   expect_no_error(
-    gtcars_tbl %>%
-      tab_style(
-        style = cell_text(font = c("Times New Roman", "serif")),
-        locations = cells_body(columns = hp)
-      )
+    tab_style(
+      gtcars_tbl,
+      style = cell_text(font = c("Times New Roman", "serif")),
+      locations = cells_body(columns = hp)
+    )
   )
 })
 
