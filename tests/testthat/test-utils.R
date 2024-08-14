@@ -14,14 +14,14 @@ test_that("Various `is_*()` utility functions work properly", {
   expect_true(is_gt_tbl(gt_preview(gtcars)))
   expect_false(is_gt_tbl(exibble))
   expect_false(is_gt_tbl(gt_group(gt(exibble), gt(exibble))))
-  expect_false(is_gt_tbl(gt(exibble) %>% as_raw_html()))
+  expect_false(is_gt_tbl(as_raw_html(gt(exibble))))
 
   # Expect that `is_gt_group()` is TRUE with a `gt_group` and FALSE in other cases
   expect_true(is_gt_group(gt_group(gt(exibble), gt(exibble))))
   expect_false(is_gt_group(gt(exibble)))
   expect_false(is_gt_group(gt_preview(gtcars)))
   expect_false(is_gt_group(exibble))
-  expect_false(is_gt_group(gt(exibble) %>% as_raw_html()))
+  expect_false(as_raw_html(is_gt_group(gt(exibble))))
 
   # Expect that `is_gt_tbl_or_group()` is TRUE with a `gt_group` or a
   # `gt_tbl` and FALSE in other cases
@@ -29,7 +29,7 @@ test_that("Various `is_*()` utility functions work properly", {
   expect_true(is_gt_tbl_or_group(gt(exibble)))
   expect_true(is_gt_tbl_or_group(gt_preview(gtcars)))
   expect_false(is_gt_tbl_or_group(exibble))
-  expect_false(is_gt_tbl_or_group(gt(exibble) %>% as_raw_html()))
+  expect_false(is_gt_tbl_or_group(as_raw_html(gt(exibble))))
 
   # Expect that a completely empty table *and* a table with rows but no
   # columns in a gt object yields TRUE via `is_gt_tbl_empty()`
@@ -245,15 +245,11 @@ test_that("process_footnote_marks() works properly", {
   )
   expect_equal(
     process_footnote_marks(1:4, marks = c("one", "two", "three", "four")),
-    c(
-      c("one", "two", "three", "four")
-    )
+    c("one", "two", "three", "four")
   )
   expect_equal(
     process_footnote_marks(4:1, marks = c("one", "two", "three", "four")),
-    c(
-      c("four", "three", "two", "one")
-    )
+    c("four", "three", "two", "one")
   )
   expect_equal(
     process_footnote_marks(1:4, marks = 10:13), c("10", "11", "12", "13")

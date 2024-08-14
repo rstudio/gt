@@ -414,7 +414,7 @@ test_that("tab_style() works with a single cell", {
 test_that("Using fonts in `cell_text()` works", {
 
   # Prepare a small gt table for all tests
-  tbl <- exibble %>% dplyr::select(char, time) %>% gt()
+  tbl <- gt(dplyr::select(exibble, char, time))
 
   # Expect that system fonts can be combined with default fonts
   # and set at a specific location

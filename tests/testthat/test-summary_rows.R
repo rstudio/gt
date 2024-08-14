@@ -56,7 +56,7 @@ test_that("summary_rows() can make group-wise summaries", {
   expect_equal(summary[[1]]$groups, "W02")
 
   # Expect the `columns` provided in `summary[[1]]$columns`
-  expect_equal(summary[[1]]$columns , c("open", "high", "low", "close"))
+  expect_equal(summary[[1]]$columns, c("open", "high", "low", "close"))
   expect_type(summary[[1]]$fns, "list")
 
   # Expect that the components of `summary[[1]]$fns` are lists
@@ -66,7 +66,8 @@ test_that("summary_rows() can make group-wise summaries", {
 
   # Expect that
   expect_equal(summary[[1]]$missing_text, "---")
-  expect_equal(summary[[1]]$formatter, NULL)
+  expect_null(summary[[1]]$formatter)
+
   # expect a zero-length list
   expect_type(summary[[1]]$formatter_options, "list")
   expect_length(summary[[1]]$formatter_options, 0)
