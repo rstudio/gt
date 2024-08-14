@@ -351,28 +351,15 @@ str_substitute <- function(string, start = 1L, end = -1L) {
     end <- start[, 2L]
     start <- start[, 1L]
   }
-
-  start <- recycler(start, string)
-  end <- recycler(end, string)
-
+  # Error if start or end is incorrect.
+  vec <- vctrs::vec_recycle_common(start = start, end = end, .size = length(string))
+  start <- vec$start
+  end <- vec$end
   n <- nchar(string)
   start <- ifelse(start < 0, start + n + 1, start)
   end <- ifelse(end < 0, end + n + 1, end)
 
   substr(string, start, end)
-}
-
-recycler <- function(x, to, arg = deparse(substitute(x))) {
-
-  if (length(x) == length(to)) {
-    return(x)
-  }
-
-  if (length(x) != 1) {
-    stop("Can't recycle `", arg, "` to length ", length(to), call. = FALSE)
-  }
-
-  rep(x, length(to))
 }
 
 str_complete_locate <- function(string, pattern) {

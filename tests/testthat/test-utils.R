@@ -483,6 +483,5 @@ test_that("str_substitute() works well", {
     str_substitute(c("223", "223", "224"), c(1,2), 2)
     str_substitute(c("223", "223", "224"), c(1), c(2, 3))
     str_substitute(c("223", "223", "224", "225"), c(1, 2, 3, 4), c(2, 3))
-
   })
 })
