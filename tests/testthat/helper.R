@@ -97,6 +97,13 @@ get_row_group_text <- function(tbl_html) {
   )
 }
 
+generate_html_units <- function(input) {
+  render_units(
+    define_units(input),
+    context = "html"
+  )
+}
+
 # Create a shortened version of `mtcars`
 mtcars_short <- datasets::mtcars[1:5, ]
 
