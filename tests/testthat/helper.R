@@ -128,7 +128,6 @@ generate_html_units <- function(input) {
 
 #' Test if two gt tables are equal (or equivalent)
 #'
-#'
 #' @param gt_tbl1,gt_tbl2 A pair of gt tables to test for equality
 #' @param f A function to apply to two tables
 #' @param ignore_id Whether to ignore the html id
@@ -148,6 +147,55 @@ expect_equal_gt <- function(gt_tbl1, gt_tbl2, f = render_as_html, ignore_id = FA
     ...
   )
 }
+
+#' Test that a summary object has the expected types.
+#'
+#' @param summary Object extracted with `dt_summary_get()`
+#' @param length Number of summary
+#' @param type A vector of length of summary that indicates a `"summary"` or
+#'   `"grand_summary"`.
+#' @noRd
+expect_summary <- function(summary, length, type = "summary") {
+  rlang::arg_match(type, c("summary", "grand_summary"), multiple = TRUE)
+  vec <- vctrs::vec_recycle_common(type = type, .size = length)
+  type <- vec$type
+
+  # The summary object has the following fields
+  summary_names <- c(
+    "groups", "columns", "fns", "fmt", "side",
+    "missing_text", "formatter", "formatter_options"
+  )
+
+  # Expect that the internal `summary` list object has a length
+  # of `length
+  # We expect this to be 1 if there was only one call of `summary_rows()`
+  expect_length(summary, length)
+
+  for (i in seq_along(length)) {
+    expect_named(summary[[i]], summary_names)
+
+    # Expect that `summary[[1]]$missing_text` has a specific value
+    expect_equal(summary[[i]]$missing_text, "---")
+
+    # Expect that `summary[[1]]$formatter_options` is a list
+    expect_type(summary[[i]]$formatter_options, "list")
+
+    # Expect the formatter to be NULL
+    expect_null(summary[[i]]$formatter)
+
+    expect_type(summary[[i]]$fns, "list")
+
+    if (type[[i]] == "summary") {
+      # Expect that `summary[[1]]$formatter_options` is
+      # of length 0 if column not formatted
+      expect_length(summary[[i]]$formatter_options, 0)
+
+    } else if (type[[i]] == "grand_summary") {
+      expect_equal(summary[[i]]$groups, ":GRAND_SUMMARY:")
+    }
+  }
+}
+
 
 # Create a shortened version of `mtcars`
 mtcars_short <- datasets::mtcars[1:5, ]
