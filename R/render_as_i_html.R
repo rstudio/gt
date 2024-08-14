@@ -63,6 +63,18 @@ render_as_ihtml <- function(data, id) {
   if (identical(column_groups, NA_character_)) {
     column_groups <- NULL
   }
+
+  # Derive styling for the stubhead
+  stubhead_style <-  dt_styles_get(data)
+  if (!is.null(stubhead_style)) {
+    stubhead_style <- stubhead_style[stubhead_style$locname == "stubhead"]
+    if (nrow(stubhead_style) == 0) {
+      stubhead_style <- NULL
+    } else {
+      stubhead_style <- stubhead_style$html_style
+    }
+  }
+
   rownames_to_stub <- stub_rownames_has_column(data)
   # value to use for rowname_col or groupname_col title
   # Will use it for rowname_col only if groupname_col is undefined.
@@ -81,6 +93,15 @@ render_as_ihtml <- function(data, id) {
     groupname_label <- NULL
   }
 
+  # Apply the stubhead styling to row group heading
+  if (is.null(column_groups)) {
+    rowname_header_style <- stubhead_style
+    rwo_group_header_style <- NULL
+  } else {
+    # Since row names don't appear under the row group column, style it (even if it is different in non-intereactive)
+    rowname_header_style   <- stubhead_style
+    row_group_header_style <- stubhead_style
+  }
 
   # Obtain the underlying data table (including group rows)
   data_tbl0 <- dt_data_get(data = data)
@@ -223,7 +244,9 @@ render_as_ihtml <- function(data, id) {
       name = rowname_label,
       style = list(
         fontWeight = stub_font_weight
-      )
+      ),
+      # part of the stubhead
+      headerStyle = rowname_header_style
       # TODO pass on other attributes of row names column if necessary.
     ))
     names(row_name_col_def) <- ".rownames"
@@ -338,9 +361,11 @@ render_as_ihtml <- function(data, id) {
       if (i == 1) {
         # Use the stubhead label for the first group
         group_label <- groupname_label
+        row_group_header_style <- stubhead_style
       } else {
         # by default, don't name groupname_col for consistency with non-interactive
         group_label <- ""
+        row_group_header_style <- stubhead_style
       }
 
       group_col_defs[[i]] <-
@@ -349,6 +374,7 @@ render_as_ihtml <- function(data, id) {
           style = list(
             `font-weight` = row_group_font_weight
           ),
+          headerStyle = row_group_header_style,
           # The total number of rows is wrong in colGroup, possibly due to the JS fn
           grouped = grp_fn,
           # FIXME Should groups be sticky? (or provide a way to do this)
@@ -520,7 +546,7 @@ render_as_ihtml <- function(data, id) {
       first_colgroups <- base::paste0(col_groups$built, collapse = "|")
 
       cli::cli_warn(c(
-        "When displaying an interactive gt table, there must not be more than 1 level of column groups (tab_spanners)",
+        "Interactive tables support a single spanner level.",
         "*" = "Currently there are {max(dt_spanners_get(data = data)$spanner_level)} levels of tab spanners.",
         "i" = "Only the first level will be used for the interactive table, that is: [{first_colgroups}]"
       ))
