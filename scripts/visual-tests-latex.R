@@ -58,8 +58,8 @@ header_latex <- c(
 
   if (length(table_titles) != n_chunks) {
     cli::cli_abort(c(
-      "The structure is not respected. We have {n_chunks} examples, but {length(table_titles)}.",
-      "Each table should be labelled with #| label: and have a tab_header(title = \"\") title"
+      "The structure is not respected. We have {n_chunks} examples, but {length(table_titles)} actually detected.",
+      i = "Each table should be labelled with #| label: and have a tab_header(title = \"<title>\") title"
     ))
   }
 

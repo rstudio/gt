@@ -50,7 +50,6 @@ tab <- exibble |>
   ) |>
   tab_spanner(c(num, char), label = "A spanner") |>
   tab_header(title = "background color")
-
 ```
 
 ::: panel-tabset
@@ -71,7 +70,49 @@ opt_interactive(tab)
 ### plot
 
 ```{r}
-#| echo: false  
+#| echo: false
+plot(tab)
+```
+:::
+
+## Spanner and Stubhead {#sec-spanners-stub}
+
+```{r}
+#| label: spanner-stub
+tab <- exibble %>%
+  gt(rowname_col = "row", groupname_col = "group", row_group_as_column = TRUE) |>
+  tab_spanner("spanners", c(char, num)) %>%
+  tab_spanner("Second level spanners", c(char, num, fctr)) %>%
+  tab_stubhead("Stubhead label") %>%
+  tab_style(
+    style = list(cell_fill("#f0f0f0"), cell_text(weight = "bold")),
+    cells_stubhead()
+  ) %>% 
+  tab_header(title = "Stubhead styling and multiple spanner levels")
+```
+
+::: panel-tabset
+### html
+
+```{r}
+#| echo: false
+tab
+# FIXME #1827
+```
+
+### interactive
+
+```{r}
+#| echo: false
+#| warning: false
+opt_interactive(tab)
+# FIXME Borders known not to be exact
+```
+
+### plot
+
+```{r}
+#| echo: false
 plot(tab)
 ```
 :::
@@ -141,7 +182,7 @@ opt_interactive(tab)
 ### plot
 
 ```{r}
-#| echo: false  
+#| echo: false
 plot(tab)
 ```
 :::
