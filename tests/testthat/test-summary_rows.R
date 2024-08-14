@@ -441,10 +441,7 @@ test_that("Using `groups = NULL` in `summary_rows()` is a deprecated option", {
       )
     )
 
-  expect_equal_gt(
-    summary_tbl_1,
-    summary_tbl_2
-  )
+  expect_equal_gt(summary_tbl_1, summary_tbl_2)
 })
 
 test_that("Summary rows can be added to the top of any group", {

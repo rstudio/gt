@@ -119,24 +119,22 @@ test_that("as_raw_html() produces the same table every time", {
 
   # Expect that font family values with multiple words (i.e., have a space
   # character) added with `tab_style()` preserve single-quote characters
-  expect_match(
+  expect_match_raw_html(
     exibble[1, ] %>%
       gt() %>%
       tab_header(title = "Title") %>%
-      tab_style(style = cell_text(font = "Two Words"), locations = cells_title()) %>%
-      as_raw_html(),
+      tab_style(style = cell_text(font = "Two Words"), locations = cells_title()),
     "font-family: 'Two Words';"
   )
 
-  expect_match(
+  expect_match_raw_html(
     exibble[1, ] %>%
       gt() %>%
       tab_header(title = "Title") %>%
       tab_style(
         style = cell_text(font = c("Fira Sans", "Droid Sans", "Arial", "sans-serif")),
         locations = cells_title()
-      ) %>%
-      as_raw_html(),
+      ),
     "font-family: 'Fira Sans', 'Droid Sans', Arial, sans-serif;"
   )
 })

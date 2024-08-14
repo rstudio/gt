@@ -463,12 +463,7 @@ test_that("tab_style() works with different locations.", {
   gt_tbl1 <- tab_style(gtcars_tbl, style = hp_styling, locations = hp_location)
   gt_tbl2 <- tab_style(gtcars_tbl, style = list(hp_styling), locations = hp_location)
 
-  expect_equal_gt(
-    gt_tbl1,
-    gt_tbl2,
-    f = as_raw_html,
-    ignore_id = TRUE
-  )
+  expect_equal_gt(gt_tbl1, gt_tbl2, f = as_raw_html, ignore_id = TRUE)
 
   # Don't expect any errors when styling with different fonts
   expect_no_error(

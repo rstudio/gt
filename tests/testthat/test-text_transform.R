@@ -332,20 +332,14 @@ test_that("text_case_match() works on the tab_spanner()", {
       .replace = "partial",
       .locations = cells_column_spanners()
     ))
-  expect_match_html(
-     new_tb,
-     "awesome spanner"
-  )
+  expect_match_html(new_tb, "awesome spanner")
   expect_no_error(new_tb2 <- gt_tbl %>%
     text_case_match(
       "the boring spanner" ~ "awesome spanner2",
       .replace = "all",
       .locations = cells_column_spanners()
   ))
-  expect_match_html(
-    new_tb2,
-    "awesome spanner"
-  )
+  expect_match_html(new_tb2, "awesome spanner2")
 })
 
 test_that("text_transform() works on row group labels", {
@@ -461,10 +455,7 @@ test_that("text_case_when() + text_case_match() work", {
       text_case_match(NA ~ "---")
   )
   # they are not changing numeric NA
-  expect_equal_gt(
-    cw,
-    cm
-  )
+  expect_equal_gt(cw, cm)
 })
 
 test_that("text_replace() works", {
@@ -473,8 +464,5 @@ test_that("text_replace() works", {
       gt() %>%
       text_replace("NA", "---")
   )
-  expect_match_html(
-    tr,
-    "---"
-  )
+  expect_match_html(tr, "---")
 })
