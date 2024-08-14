@@ -372,14 +372,6 @@ str_single_locate <- function(string, pattern) {
   location(out)
 }
 
-str_complete_replace <- function(string, pattern, replacement) {
-  gsub(pattern, replacement, string, perl = TRUE)
-}
-
-str_single_replace <- function(string, pattern, replacement) {
-  sub(pattern, replacement, string, perl = TRUE)
-}
-
 location <- function(x, all = FALSE) {
 
   start <- as.vector(x)
