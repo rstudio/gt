@@ -448,7 +448,7 @@ test_that("glue_gt() works in a safe manner", {
 
   # Basically works
   expect_identical(
-    glue_gt(lst, "{a}/{b}") %>% as.character(),
+    as.character(glue_gt(lst, "{a}/{b}")),
     c("foo/bar", "foo/baz")
   )
   expect_identical(
@@ -456,7 +456,7 @@ test_that("glue_gt() works in a safe manner", {
     c("foo/bar", "foo/baz")
   )
   expect_identical(
-    glue_gt(dplyr::as_tibble(lst), "{a}/{b}") %>% as.character(),
+    as.character(glue_gt(dplyr::as_tibble(lst), "{a}/{b}")),
     c("foo/bar", "foo/baz")
   )
 
@@ -523,16 +523,15 @@ test_that("check_spanner_id_unique() works properly", {
   )
 })
 
-test_that("get_file_ext() works correctly", {
+test_that("get_file_ext() returns the correct file extension", {
 
-  # Expect that filenames with various extensions are
-  # work with `get_file_ext()` to return the file extension
-  get_file_ext(file = "file.svg") %>% expect_equal("svg")
-  get_file_ext(file = "file.001.svg") %>% expect_equal("svg")
-  get_file_ext(file = "file.001..svg") %>% expect_equal("svg")
-  get_file_ext(file = "_file.jpg") %>% expect_equal("jpg")
-  get_file_ext(file = "file.png") %>% expect_equal("png")
-  get_file_ext(file = "file.gif") %>% expect_equal("gif")
+  expect_equal(get_file_ext("filess.svg"), "svg")
+  expect_equal(get_file_ext("filess.svg"), "svg")
+  expect_equal(get_file_ext("fi.001.svg"), "svg")
+  expect_equal(get_file_ext("fi.01..svg"), "svg")
+  expect_equal(get_file_ext("_files.jpg"), "jpg")
+  expect_equal(get_file_ext("filess.png"), "png")
+  expect_equal(get_file_ext("filess.gif"), "gif")
 })
 
 test_that("resolve_secondary_pattern() works properly", {
