@@ -1018,8 +1018,7 @@ create_heading_component_rtf <- function(data) {
 
   # Obtain widths for each visible column label
   col_widths <-
-    boxh %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
+    dplyr::filter(boxh, type %in% c("default", "stub")) %>%
     dplyr::arrange(dplyr::desc(type)) %>%
     dplyr::pull(column_width) %>%
     unlist()
