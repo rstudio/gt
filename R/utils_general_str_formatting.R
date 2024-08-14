@@ -329,48 +329,6 @@ is_adjacent_separate <- function(group_1, group_2) {
   TRUE
 }
 
-str_catalog <- function(
-    item_vector,
-    conj = "and",
-    surround = c("\"", "`"),
-    sep = ",",
-    oxford = TRUE
-) {
-
-  item_count <- length(item_vector)
-
-  surround_str_1 <- paste(rev(surround), collapse = "")
-  surround_str_2 <- paste(surround, collapse = "")
-
-  cat_str <- paste0(surround_str_1, item_vector, surround_str_2)
-
-  if (item_count == 1) {
-
-    return(cat_str)
-
-  } else if (item_count == 2) {
-
-    return(paste(cat_str[1], conj, cat_str[2]))
-
-  } else {
-
-    separators <- rep(paste_right(sep, " "), item_count - 1)
-
-    if (!oxford) {
-      separators[length(separators)] <- ""
-    }
-
-    separators[length(separators)] <-
-      paste_right(paste_right(separators[length(separators)], conj), " ")
-
-    separators[length(separators) + 1] <- ""
-
-    cat_str <- paste(paste0(cat_str, separators), collapse = "")
-
-    return(cat_str)
-  }
-}
-
 str_title_case <- function(x) {
 
   title_case_i <- function(y) {

@@ -403,8 +403,7 @@ parse_length_str <- function(
 
     cli::cli_abort(c(
       "Some of the values supplied cannot be interpreted.",
-      "*" = "Problem values are:
-      {str_catalog(bad_values, surround = c('\"'))}.",
+      "*" = "Problem values are: {.str {bad_values}}",
       "*" = "Use either of: `px`, `pt`, `in`, `cm`, `mm`, or `tw`
       (e.g., \"12px\")"
     ))
