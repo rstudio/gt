@@ -43,6 +43,8 @@
 
 * Performance improvement for footnote rendering (@olivroy, #1818).
 
+* `tab_footnote()` now correctly adds footnote marks in the `cells_stub_summary()` and `cells_stub_grand_summary()` (@olivroy, #1832).
+
 * Fixed an issue where `tab_spanner_delim()` would fail to resolve a duplicate id (@olivroy, #1821).
 
 # gt 0.11.0
