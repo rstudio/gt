@@ -367,7 +367,7 @@ tab_footnote <- function(
 ) {
 
   placement <- rlang::arg_match(placement)
-
+  rlang::check_required(footnote)
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
@@ -497,7 +497,7 @@ set_footnote.cells_column_labels <- function(
     placement
 ) {
 
-  resolved <- 
+  resolved <-
     resolve_cells_column_labels(
       data = data,
       object = loc,
@@ -598,7 +598,7 @@ set_footnote.cells_body <- function(
     placement
 ) {
 
-  resolved <- 
+  resolved <-
     resolve_cells_body(
       data = data,
       object = loc,
