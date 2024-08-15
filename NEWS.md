@@ -43,6 +43,7 @@
 
 * Fixed an issue where `tab_spanner_delim()` would fail to resolve a duplicate id (@olivroy, #1821).
 
+* `tidyselect::where()`, `tidyselect::all_of()`, `tidyselect::any_of()` are now re-exported by gt.
 # gt 0.11.0
 
 ## New features
