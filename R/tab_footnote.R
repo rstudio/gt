@@ -366,10 +366,11 @@ tab_footnote <- function(
     placement = c("auto", "right", "left")
 ) {
 
-  placement <- rlang::arg_match(placement)
-  rlang::check_required(footnote)
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  placement <- rlang::arg_match(placement)
+  rlang::check_required(footnote)
 
   if (is.null(locations)) {
 
