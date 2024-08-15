@@ -17,6 +17,8 @@
 
 * `opt_interactive()` now works when columns are substituted with `sub_*()` (@olivroy, #1759). 
 
+* More support for `cells_stubhead()` styling in interactive tables.
+
 ## Bug fixes
 
 * Improved error messages for the `text_transform()` function if `locations` couldn't be resolved. (@olivroy, #1774)

@@ -104,6 +104,16 @@ test_that("Interactive tables won't fail when using different options", {
     gt() %>%
     sub_missing(rows = 1:7) %>%
     opt_interactive()
+  # Styling with `cells_stubhead()` works
+  tbl_gt_i_30 <- exibble %>%
+    gt::gt(rowname_col = "row", groupname_col = "group", row_group_as_column = TRUE) |>
+    tab_spanner("spanners", c(char, num)) %>%
+    tab_stubhead("Stub row") %>%
+    tab_style(
+      style = list(cell_fill("#f0f0f0"), cell_text(weight = "bold")),
+      cells_stubhead()
+    ) %>% opt_interactive()
+
 
   capture_output(expect_no_error(tbl_gt_i_01))
   capture_output(expect_no_error(tbl_gt_i_02))
@@ -134,5 +144,6 @@ test_that("Interactive tables won't fail when using different options", {
   capture_output(expect_no_error(tbl_gt_i_27))
   capture_output(expect_no_error(tbl_gt_i_28))
   capture_output(expect_no_error(tbl_gt_i_29))
+  capture_output(expect_no_error(tbl_gt_i_30))
 
 })
