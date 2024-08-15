@@ -110,7 +110,7 @@ text_replace <- function(
     data = data,
     locations = locations,
     fn = function(x) {
-      str_complete_replace(x, pattern = pattern, replacement = replacement)
+      gsub(pattern = pattern, replacement = replacement, x, perl = TRUE)
     }
   )
 }
