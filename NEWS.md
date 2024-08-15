@@ -45,6 +45,8 @@
 
 * Fixed an issue where `tab_spanner_delim()` would fail to resolve a duplicate id (@olivroy, #1821).
 
+* Fixed an issue with multiple `text_replace()` calls would produce bad result with `cells_column_labels()` (@olivroy, #1824).
+
 # gt 0.11.0
 
 ## New features

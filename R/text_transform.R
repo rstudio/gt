@@ -703,7 +703,7 @@ text_transform_at_location.cells_column_labels <- function(
     if (col %in% boxh$var) {
       # Retrieve the original column label
       original_col_label <-
-        vctrs::vec_slice(boxh$column_label, boxh$var == col)[1]
+        vctrs::vec_slice(boxh$column_label, boxh$var == col)[[1]]
       column_label_edited <- fn(original_col_label)
 
       data <-
