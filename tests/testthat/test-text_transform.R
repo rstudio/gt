@@ -280,6 +280,32 @@ test_that("text_transform() works in column labels", {
     )
 })
 
+test_that("text_replace() works when called more than once (#1824)", {
+  # No problem with cells_body() / cells_column_spanners()
+  tbl_html <- exibble %>%
+    dplyr::select(1:3) %>%
+    gt() %>%
+    text_replace(
+      "fctr",
+      "aa",
+      locations = cells_column_labels()
+    ) %>%
+    text_replace(
+      "aa",
+      "aaaMD",
+      locations = cells_column_labels()
+    )
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("tr:first-child th") %>%
+    expect_equal(
+      c(
+        "num", "char", "aaaMD"
+      )
+    )
+})
+
 test_that("text_transform() works on row labels in the stub", {
 
   # Create a gt table and modify
