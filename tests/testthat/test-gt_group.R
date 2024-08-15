@@ -391,31 +391,26 @@ test_that("grp_options() can be used to set options for a group", {
       table.background.color = "gray95", table.font.color = "gray10"
     )
 
+  # Expect the default text and background colors for the input gt tables
+  expect_match_raw_html(
+    gt_tbl_1, "<table .* color: #333333;.*?bgcolor=\"#FFFFFF\">",
+  )
+
+  expect_match_raw_html(
+    gt_tbl_2, "<table .* color: #333333;.*?bgcolor=\"#FFFFFF\">",
+  )
+
   # Pull out the individual tables
   gt_tbl_1_alt <- gt_tbls_2 %>% grp_pull(which = 1)
   gt_tbl_2_alt <- gt_tbls_2 %>% grp_pull(which = 2)
 
-  # Expect the default text and background colors for the input gt tables
-  expect_match(
-    as_raw_html(gt_tbl_1),
-    "<table .* color: #333333;.*?bgcolor=\"#FFFFFF\">"
-  )
-
-  expect_match(
-    as_raw_html(gt_tbl_2),
-    "<table .* color: #333333;.*?bgcolor=\"#FFFFFF\">"
-  )
-
   # Expect the changed text and background colors for the input gt tables
   # that were pulled from the group that had group options applied (and
   # activated via `.use_grp_opts = TRUE`)
-  expect_match(
-    as_raw_html(gt_tbl_1_alt),
-    "<table .* color: #1A1A1A;.*?bgcolor=\"#F2F2F2\">"
+  expect_match_raw_html(
+    gt_tbl_1_alt, "<table .* color: #1A1A1A;.*?bgcolor=\"#F2F2F2\">"
   )
-
-  expect_match(
-    as_raw_html(gt_tbl_2_alt),
-    "<table .* color: #1A1A1A;.*?bgcolor=\"#F2F2F2\">"
+  expect_match_raw_html(
+    gt_tbl_2_alt, "<table .* color: #1A1A1A;.*?bgcolor=\"#F2F2F2\">"
   )
 })

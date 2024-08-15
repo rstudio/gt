@@ -14,14 +14,14 @@ test_that("Various `is_*()` utility functions work properly", {
   expect_true(is_gt_tbl(gt_preview(gtcars)))
   expect_false(is_gt_tbl(exibble))
   expect_false(is_gt_tbl(gt_group(gt(exibble), gt(exibble))))
-  expect_false(is_gt_tbl(gt(exibble) %>% as_raw_html()))
+  expect_false(is_gt_tbl(as_raw_html(gt(exibble))))
 
   # Expect that `is_gt_group()` is TRUE with a `gt_group` and FALSE in other cases
   expect_true(is_gt_group(gt_group(gt(exibble), gt(exibble))))
   expect_false(is_gt_group(gt(exibble)))
   expect_false(is_gt_group(gt_preview(gtcars)))
   expect_false(is_gt_group(exibble))
-  expect_false(is_gt_group(gt(exibble) %>% as_raw_html()))
+  expect_false(is_gt_group(as_raw_html(gt(exibble))))
 
   # Expect that `is_gt_tbl_or_group()` is TRUE with a `gt_group` or a
   # `gt_tbl` and FALSE in other cases
@@ -29,7 +29,7 @@ test_that("Various `is_*()` utility functions work properly", {
   expect_true(is_gt_tbl_or_group(gt(exibble)))
   expect_true(is_gt_tbl_or_group(gt_preview(gtcars)))
   expect_false(is_gt_tbl_or_group(exibble))
-  expect_false(is_gt_tbl_or_group(gt(exibble) %>% as_raw_html()))
+  expect_false(is_gt_tbl_or_group(as_raw_html(gt(exibble))))
 
   # Expect that a completely empty table *and* a table with rows but no
   # columns in a gt object yields TRUE via `is_gt_tbl_empty()`
@@ -70,6 +70,8 @@ test_that("Various `is_*()` utility functions work properly", {
   expect_no_error(stop_if_not_gt_tbl_or_group(gt_group(gt(exibble), gt(exibble))))
   expect_error(stop_if_not_gt_tbl_or_group(exibble))
   expect_error(stop_if_not_gt_tbl_or_group(gt(exibble) %>% as_raw_html()))
+
+  skip_if_not_installed("shiny")
 
   # Expect that `is_html()` returns TRUE only for objects with the `html` class
   expect_true(is_html(html("This is <span>HTML</span>")))
@@ -245,15 +247,11 @@ test_that("process_footnote_marks() works properly", {
   )
   expect_equal(
     process_footnote_marks(1:4, marks = c("one", "two", "three", "four")),
-    c(
-      c("one", "two", "three", "four")
-    )
+    c("one", "two", "three", "four")
   )
   expect_equal(
     process_footnote_marks(4:1, marks = c("one", "two", "three", "four")),
-    c(
-      c("four", "three", "two", "one")
-    )
+    c("four", "three", "two", "one")
   )
   expect_equal(
     process_footnote_marks(1:4, marks = 10:13), c("10", "11", "12", "13")
@@ -472,4 +470,16 @@ test_that("Escaping is working when using `markdown_to_rtf()`", {
 
   md_rtf("\\b{}", "\\'5cb\\'7b\\'7d")
   md_rtf("&lt;&amp;", "<&")
+})
+
+test_that("str_substitute() works well", {
+  expect_equal(
+    str_substitute(c("223", "223"), c(1,2), 2),
+    c("22", "2")
+  )
+  expect_snapshot(error = TRUE, {
+    str_substitute(c("223", "223", "224"), c(1,2), 2)
+    str_substitute(c("223", "223", "224"), c(1), c(2, 3))
+    str_substitute(c("223", "223", "224", "225"), c(1, 2, 3, 4), c(2, 3))
+  })
 })

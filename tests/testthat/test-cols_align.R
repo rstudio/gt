@@ -1,10 +1,3 @@
-# Create a data frame based on the internal `sp500.csv`
-sp500 <-
-  read.csv(
-    system.file("extdata", "sp500.csv", package = "gt"),
-    stringsAsFactors = FALSE
-  )
-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
@@ -104,6 +97,13 @@ test_that("cols_align() works correctly", {
     rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
     rvest::html_text() %>%
     expect_equal(colnames(mtcars_short))
+
+  # Create a data frame based on the internal `sp500.csv`
+  sp500 <-
+    read.csv(
+      system.file("extdata", "sp500.csv", package = "gt"),
+      stringsAsFactors = FALSE
+    )
 
   # Create a `tbl_html` object with the `sp500` data
   # frame and `auto`-align all columns

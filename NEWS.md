@@ -17,6 +17,8 @@
 
 * `opt_interactive()` now works when columns are substituted with `sub_*()` (@olivroy, #1759). 
 
+* More support for `cells_stubhead()` styling in interactive tables.
+
 ## Bug fixes
 
 * Improved error messages for the `text_transform()` function if `locations` couldn't be resolved. (@olivroy, #1774)
@@ -44,6 +46,7 @@
 * Fixed an issue where `tab_spanner_delim()` would fail to resolve a duplicate id (@olivroy, #1821).
 
 * `tidyselect::where()`, `tidyselect::all_of()`, `tidyselect::any_of()` are now re-exported by gt.
+
 # gt 0.11.0
 
 ## New features
