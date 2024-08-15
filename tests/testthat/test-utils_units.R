@@ -1,7 +1,3 @@
-generate_html_units <- function(input) {
-  input %>% define_units() %>% render_units(context = "html")
-}
-
 test_that("Units are rendered properly in HTML", {
 
   expect_equal(

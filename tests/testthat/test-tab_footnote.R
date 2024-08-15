@@ -757,16 +757,9 @@ test_that("Footnotes with no location are rendered correctly", {
 
   # Expect that `gt_footnotes_2` and `gt_footnotes_3` should be rendered the
   # same across the supported formats
-  expect_equal(
-    gt_footnotes_2 %>% render_as_html(), gt_footnotes_3 %>% render_as_html()
-  )
-  expect_equal(
-    gt_footnotes_2 %>% as_latex() %>% as.character(),
-    gt_footnotes_3 %>% as_latex() %>% as.character()
-  )
-  expect_equal(
-    gt_footnotes_2 %>% as_rtf(), gt_footnotes_3 %>% as_rtf()
-  )
+  expect_equal_gt(gt_footnotes_2, gt_footnotes_3, f = render_as_html)
+  expect_equal_gt(gt_footnotes_2, gt_footnotes_3, f = as_latex)
+  expect_equal_gt(gt_footnotes_2, gt_footnotes_3, f = as_rtf)
 
   gt_footnotes_4 <-
     gt_tbl %>%

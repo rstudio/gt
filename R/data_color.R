@@ -1493,7 +1493,7 @@ check_named_colors <- function(named_colors, call = rlang::caller_env()) {
       )
 
     cli::cli_abort(c(
-      "{one_several_invalid} used ({str_catalog(invalid_colors, conj = 'and')}).",
+      "{one_several_invalid} used ({.str {invalid_colors}}).",
       "*" = "Only R/X11 color names and CSS 3.0 color names can be used."
      ),
      call = call

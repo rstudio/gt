@@ -313,12 +313,9 @@ test_that("tab_row_group() gives the correct output", {
 
   # When specifying a row group that captures no rows, expect that
   # the rendered table is essentially unaffected by this function call
-  expect_equal(
-    gt(exibble, rowname_col = "row") %>%
-      tab_row_group(label = "group", rows = FALSE) %>%
-      render_as_html(),
-    gt(exibble, rowname_col = "row") %>%
-      render_as_html()
+  expect_equal_gt(
+    gt(exibble, rowname_col = "row") %>% tab_row_group(label = "group", rows = FALSE),
+    gt(exibble, rowname_col = "row")
   )
 })
 
