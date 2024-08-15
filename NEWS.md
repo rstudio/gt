@@ -17,7 +17,7 @@
 
 * `opt_interactive()` now works when columns are substituted with `sub_*()` (@olivroy, #1759). 
 
-* More support for `cells_stubhead()` styling in interactive tables.
+* More support for `cells_stubhead()` styling and footnotes in interactive tables.
 
 ## Bug fixes
 

@@ -114,6 +114,28 @@ test_that("Interactive tables won't fail when using different options", {
       cells_stubhead()
     ) %>% opt_interactive()
 
+  # footnote with cells_stubhead() works
+  tbl_gt_i_31 <- exibble %>%
+    gt(groupname_col = "group", row_group_as_column = TRUE) %>%
+    tab_stubhead(
+      "stubhead label"
+    ) %>%
+    tab_footnote(
+      footnote = "Stubhead foot",
+      locations = cells_stubhead()
+    ) %>%
+    opt_interactive()
+  # footnote with `cells_stubhead()` works
+  tbl_gt_i_32 <- exibble %>%
+    gt(rownames_to_stub = TRUE) %>%
+    tab_stubhead(
+      "stubhead label"
+    ) %>%
+    tab_footnote(
+      footnote = "Stubhead foot",
+      locations = cells_stubhead()
+    ) %>%
+    opt_interactive()
 
   capture_output(expect_no_error(tbl_gt_i_01))
   capture_output(expect_no_error(tbl_gt_i_02))
@@ -145,5 +167,7 @@ test_that("Interactive tables won't fail when using different options", {
   capture_output(expect_no_error(tbl_gt_i_28))
   capture_output(expect_no_error(tbl_gt_i_29))
   capture_output(expect_no_error(tbl_gt_i_30))
+  capture_output(expect_no_error(tbl_gt_i_31))
+  capture_output(expect_no_error(tbl_gt_i_32))
 
 })
