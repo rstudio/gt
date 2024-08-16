@@ -1018,10 +1018,10 @@ create_heading_component_rtf <- function(data) {
 
   # Obtain widths for each visible column label
   col_widths <-
-    dplyr::filter(boxh, type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>%
-    dplyr::pull(column_width) %>%
-    unlist()
+    vctrs::vec_slice(boxh, boxh$type %in% c("default", "stub"))
+  # arrange by descending type and grab the "column_width" column.
+  col_widths <- col_widths[order(col_widths$type, decreasing = TRUE), "column_width", drop = TRUE]
+  col_widths <- unlist(col_widths)
 
   if (is.null(col_widths)) {
      n_cols <- sum(boxh$type %in% c("default", "stub"))
@@ -1083,7 +1083,7 @@ create_heading_component_rtf <- function(data) {
   if (
     dt_heading_has_preheader(data = data) &&
     !dt_options_get_value(data, option = "page_numbering")
-    ) {
+  ) {
 
     # Case where one or more preheader lines are present
 
@@ -1191,8 +1191,10 @@ create_columns_component_rtf <- function(data) {
 
   stubh <- dt_stubhead_get(data = data)
 
+  boxh <- dt_boxhead_get(data = data)
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
+
 
   # Determine the finalized number of spanner rows
   spanner_row_count <-
@@ -1211,16 +1213,19 @@ create_columns_component_rtf <- function(data) {
   col_alignment <- dt_boxhead_get_vars_align_default(data = data)
 
   # Obtain widths for each visible column label in units of twips
+  col_widths <- vctrs::vec_slice(
+    boxh,
+    boxh$type %in% c("default", "stub")
+  )
+  # Sort the data frame by desc(type) and get the "column_width" column.
+  col_widths <- col_widths[order(col_widths$type, decreasing = TRUE), "column_width", drop = TRUE]
+  col_widths <- unlist(col_widths)
+
   col_widths <-
-    dt_boxhead_get(data = data) %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>%
-    dplyr::pull(column_width) %>%
-    unlist() %>%
     col_width_resolver_rtf(
       page_body_width = page_body_width,
       table_width = dt_options_get_value(data = data, option = "table_width"),
-      col_widths = .,
+      col_widths = col_widths,
       n_cols = get_effective_number_of_columns(data = data)
     )
 
@@ -1267,9 +1272,9 @@ create_columns_component_rtf <- function(data) {
           h_merge = merge_keys_cells[x],
           borders = list(
             rtf_border("bottom", color = column_labels_border_bottom_color, width = 20)#,
-          # rtf_border("top", color = column_labels_border_top_color, width = 40),
-          # rtf_border("left", color = column_labels_vlines_color),
-          # rtf_border("right", color = column_labels_vlines_color)
+            # rtf_border("top", color = column_labels_border_top_color, width = 40),
+            # rtf_border("left", color = column_labels_vlines_color),
+            # rtf_border("right", color = column_labels_vlines_color)
           )
         )
       }
@@ -1439,6 +1444,7 @@ create_body_component_rtf <- function(data) {
   # column names for the table
   default_vars <- dt_boxhead_get_vars_labels_default(data = data)
 
+  boxh <- dt_boxhead_get(data)
   # Create a named vector  https://github.com/rstudio/gt/issues/1233
   default_vars_names <-  dt_boxhead_get_vars_default(data = data)
   names(default_vars_names) <- default_vars
@@ -1470,16 +1476,19 @@ create_body_component_rtf <- function(data) {
   n_rows <- nrow(cell_matrix)
 
   # Obtain widths for each visible column label in units of twips
+
+  # Obtain widths for each visible column label
   col_widths <-
-    dt_boxhead_get(data = data) %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>%
-    dplyr::pull(column_width) %>%
-    unlist() %>%
+    vctrs::vec_slice(boxh, boxh$type %in% c("default", "stub"))
+  # arrange by descending type and grab the "column_width" column.
+  col_widths <- col_widths[order(col_widths$type, decreasing = TRUE), "column_width", drop = TRUE]
+  col_widths <- unlist(col_widths)
+
+  col_widths <-
     col_width_resolver_rtf(
       page_body_width = page_body_width,
       table_width = table_width,
-      col_widths = .,
+      col_widths = col_widths,
       n_cols = n_cols
     )
 
@@ -1805,10 +1814,10 @@ create_footer_component_rtf <- function(data) {
 
   # Obtain widths for each visible column label
   col_widths <-
-    dplyr::filter(boxh, type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>%
-    dplyr::pull(column_width) %>%
-    unlist()
+    vctrs::vec_slice(boxh, boxh$type %in% c("default", "stub"))
+  # arrange by descending type and grab the "column_width" column.
+  col_widths <- col_widths[order(col_widths$type, decreasing = TRUE), "column_width", drop = TRUE]
+  col_widths <- unlist(col_widths)
 
   if (is.null(col_widths)) {
 
