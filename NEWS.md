@@ -17,7 +17,7 @@
 
 * `opt_interactive()` now works when columns are substituted with `sub_*()` (@olivroy, #1759). 
 
-* More support for `cells_stubhead()` styling in interactive tables.
+* More support for `cells_stubhead()` styling and footnotes in interactive tables.
 
 ## Bug fixes
 
@@ -42,6 +42,8 @@
 * Fixed an issue with `text_case_match(.replace = "all", .locations = cells_column_spanners())` (@olivroy, #1823).
 
 * Performance improvement for footnote rendering (@olivroy, #1818).
+
+* `tab_footnote()` now correctly adds footnote marks in the `cells_stub_summary()` and `cells_stub_grand_summary()` (@olivroy, #1832).
 
 * Fixed an issue where `tab_spanner_delim()` would fail to resolve a duplicate id (@olivroy, #1821).
 
