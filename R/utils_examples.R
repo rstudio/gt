@@ -283,23 +283,23 @@ write_gt_examples_qmd_files <- function(
         )
       ) %>%
       dplyr::mutate(
-        group = dplyr::case_when(
-          family == 1 ~ "Table creation",
-          family == 2 ~ "Creating or modifying parts of a table",
-          family == 3 ~ "Formatting column data",
-          family == 4 ~ "Text transformation",
-          family == 5 ~ "Modifying columns",
-          family == 6 ~ "Adding or modifying rows",
-          family == 7 ~ "Removing parts of a table",
-          family == 8 ~ "Helper functions",
-          family == 9 ~ "Image addition utilities",
-          family == 10 ~ "Table options",
-          family == 11 ~ "Informational tables for reference",
-          family == 12 ~ "Shiny",
-          family == 13 ~ "Export and extraction functions",
-          family == 14 ~ "Working with table groups",
-          family == 15 ~ "Vector formatting",
-          family == 99 ~ "Built in datasets"
+        group = dplyr::case_match(family,
+          1 ~ "Table creation",
+          2 ~ "Creating or modifying parts of a table",
+          3 ~ "Formatting column data",
+          4 ~ "Text transformation",
+          5 ~ "Modifying columns",
+          6 ~ "Adding or modifying rows",
+          7 ~ "Removing parts of a table",
+          8 ~ "Helper functions",
+          9 ~ "Image addition utilities",
+          10 ~ "Table options",
+          11 ~ "Informational tables for reference",
+          12 ~ "Shiny",
+          13 ~ "Export and extraction functions",
+          14 ~ "Working with table groups",
+          15 ~ "Vector formatting",
+          99 ~ "Built in datasets"
         )
       ) %>%
       gt(groupname_col = "group", process_md = TRUE) %>%

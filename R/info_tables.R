@@ -941,7 +941,7 @@ info_paletteer <- function(color_pkgs = NULL) {
   palettes_strips <- palettes_strips_df$colors
 
   palettes_strips_df %>%
-    dplyr::select(package, palette, length) %>%
+    dplyr::select("package", "palette", "length") %>%
     dplyr::mutate(`Color Count and Palette` = NA) %>%
     gt(groupname_col = "package", rowname_col = "palette") %>%
     text_transform(

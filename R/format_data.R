@@ -6409,15 +6409,16 @@ extract_duration_pattern <- function(
 ) {
 
   x_val_i_type <-
-    dplyr::case_when(
-      value == 1 ~ "one",
-      value == 0 ~ "zero",
-      TRUE ~ "other"
+    dplyr::case_match(
+      value,
+      1 ~ "one",
+      0 ~ "zero",
+      .default = "other"
     )
 
-  pattern <- patterns[grepl(paste0(gsub("s$", "", time_p), ".*?.", x_val_i_type), names(patterns))][[1]]
+  pattern <- patterns[grepl(paste0(sub("s$", "", time_p), ".*?.", x_val_i_type), names(patterns))][[1]]
   if (!is.null(pattern) && is.na(pattern)) {
-    pattern <- patterns[grepl(paste0(gsub("s$", "", time_p), ".*?.other"), names(patterns))][[1]]
+    pattern <- patterns[grepl(paste0(sub("s$", "", time_p), ".*?.other"), names(patterns))][[1]]
   }
 
   pattern
