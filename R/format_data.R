@@ -528,7 +528,7 @@ fmt_scientific <- function(
               USE.NAMES = FALSE,
               FUN = function(x) {
                 if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
-                unlist(strsplit(x, "e"))[1]
+                unlist(strsplit(x, "e", fixed = TRUE))[1]
               }
             )
 
@@ -9399,7 +9399,7 @@ fmt_image <- function(
                   if (!is.null(path)) {
 
                     # Normalize ending of `path`
-                    path <- gsub("/\\s+$", "", path)
+                    path <- sub("/\\s+$", "", path)
                     uri <- paste0(path, "/", files[y])
                   } else {
                     uri <- files[y]

@@ -959,9 +959,11 @@ render_grid_svg <- function(label, style, margin) {
 
   # Try if any width is declared in style attribute
   if (any(grepl("^width:", svg_style))) {
-    width <- gsub("^width:", "", svg_style[grep("^width:", svg_style)]) %>%
-      parse_fontsize(style$text_gp$fontsize) %>%
-      grid::unit(.grid_unit)
+    width <- sub("^width:", "", svg_style[grep("^width:", svg_style)])
+    width <- grid::unit(
+      parse_fontsize(width, style$text_gp$fontsize),
+      .grid_unit
+    )
   }
 
   if (is.null(width) || is.null(height)) {
