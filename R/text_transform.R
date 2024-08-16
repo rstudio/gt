@@ -701,9 +701,10 @@ text_transform_at_location.cells_column_labels <- function(
   for (col in loc$colnames) {
 
     if (col %in% boxh$var) {
-
-      column_label_edited <-
-        fn(dplyr::filter(boxh, var == .env$col)[1, "column_label", drop = TRUE])
+      # Retrieve the original column label
+      original_col_label <-
+        vctrs::vec_slice(boxh$column_label, boxh$var == col)[[1]]
+      column_label_edited <- fn(original_col_label)
 
       data <-
         dt_boxhead_edit(
