@@ -174,7 +174,7 @@ more complex predicate expression.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">gt_tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="gt.html">gt</a></span><span class="op">(</span><span class="va">exibble</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">gt_tbl</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">gt_tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="fmt_time.html">fmt_time</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"time"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>     rows <span class="op">=</span> <span class="va">num</span> <span class="op">&gt;</span> <span class="fl">100</span> <span class="op">&amp;</span> <span class="va">group</span> <span class="op">==</span> <span class="st">"grp_b"</span></span></span>
@@ -257,10 +257,10 @@ more complex predicate expression.</p>
 <td headers="group" class="gt_row gt_left" style="border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left;" valign="middle" align="left">grp_b</td></tr></tbody></table></div></div><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Styling numeric columns based on range</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">gt_tbl</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="tab_style.html">tab_style</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">gt_tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="tab_style.html">tab_style</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  style <span class="op">=</span> <span class="fu"><a href="cell_text.html">cell_text</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  locations <span class="op">=</span> <span class="fu"><a href="cells_body.html">cells_body</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  columns <span class="op">=</span>  <span class="fu">where</span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  columns <span class="op">=</span>  <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <div class="gt-table"><div id="egslqeqmfa" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
@@ -342,7 +342,7 @@ more complex predicate expression.</p>
 <span class="r-in"><span><span class="co"># Naming rows</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">gt_tbl_rows</span> <span class="op">&lt;-</span> <span class="fu"><a href="gt.html">gt</a></span><span class="op">(</span><span class="va">exibble</span>, rowname_col <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">gt_tbl_rows</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">gt_tbl_rows</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="fmt_datetime.html">fmt_datetime</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    columns <span class="op">=</span> <span class="va">datetime</span>,</span></span>
 <span class="r-in"><span>    rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"row_1"</span>, <span class="st">"row_8"</span><span class="op">)</span></span></span>

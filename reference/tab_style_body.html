@@ -316,7 +316,7 @@ should be evaluated. For this next example, the supplied function should only
 be used on numeric values and we can make sure of this by using <code>columns = where(is.numeric)</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>,</span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"pink"</span><span class="op">)</span>,</span>
 <span>    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">0</span> <span class="op">&amp;&amp;</span> <span class="va">x</span> <span class="op">&lt;</span> <span class="fl">50</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
