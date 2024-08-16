@@ -78,7 +78,7 @@
 </ul></li>
 <li><p><code><a href="../reference/opt_interactive.html">opt_interactive()</a></code> now works when columns are merged with <code><a href="../reference/cols_merge.html">cols_merge()</a></code> (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1785" class="external-link">#1785</a>).</p></li>
 <li><p><code><a href="../reference/opt_interactive.html">opt_interactive()</a></code> now works when columns are substituted with <code>sub_*()</code> (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1759" class="external-link">#1759</a>).</p></li>
-<li><p>More support for <code><a href="../reference/cells_stubhead.html">cells_stubhead()</a></code> styling in interactive tables.</p></li>
+<li><p>More support for <code><a href="../reference/cells_stubhead.html">cells_stubhead()</a></code> styling and footnotes in interactive tables.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
@@ -93,6 +93,7 @@
 <li><p>Improve the centering of the stubhead label in Latex when <code>row_group_as_column = TRUE</code> and the width of the row name column is specified (<a href="https://github.com/kbrevoort" class="external-link">@kbrevoort</a>, <a href="https://github.com/rstudio/gt/issues/1804" class="external-link">#1804</a>).</p></li>
 <li><p>Fixed an issue with <code>text_case_match(.replace = "all", .locations = cells_column_spanners())</code> (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1823" class="external-link">#1823</a>).</p></li>
 <li><p>Performance improvement for footnote rendering (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1818" class="external-link">#1818</a>).</p></li>
+<li><p><code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> now correctly adds footnote marks in the <code><a href="../reference/cells_stub_summary.html">cells_stub_summary()</a></code> and <code><a href="../reference/cells_stub_grand_summary.html">cells_stub_grand_summary()</a></code> (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1832" class="external-link">#1832</a>).</p></li>
 <li><p>Fixed an issue where <code><a href="../reference/tab_spanner_delim.html">tab_spanner_delim()</a></code> would fail to resolve a duplicate id (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1821" class="external-link">#1821</a>).</p></li>
 <li><p><code><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">tidyselect::where()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">tidyselect::all_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">tidyselect::any_of()</a></code> are now re-exported by gt.</p></li>
 </ul></div>
