@@ -133,7 +133,7 @@ cols_align_decimal <- function(
   # `cols_align_decimal()` so `column_names` should be filtered
   # to those types of columns
   table_data <- dt_data_get(data = data)
-  table_data <- dplyr::select(table_data, dplyr::all_of(resolved))
+  table_data <- table_data[resolved]
 
   cols_are_numeric <-
     vapply(
