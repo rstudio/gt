@@ -45,7 +45,10 @@
 
 * Fixed an issue where `tab_spanner_delim()` would fail to resolve a duplicate id (@olivroy, #1821).
 
+
 * Fixed an issue with multiple `text_replace()` calls would produce bad result with `cells_column_labels()` (@olivroy, #1824).
+
+* `tidyselect::where()`, `tidyselect::all_of()`, `tidyselect::any_of()` are now re-exported by gt.
 
 # gt 0.11.0
 

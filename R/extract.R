@@ -260,7 +260,7 @@ extract_summary <- function(data) {
 
     cli::cli_abort(c(
       "There is no summary list to extract.",
-      "*" = "Use the `{.help [summary_rows](gt::summary_rows)}()` / 
+      "*" = "Use the `{.help [summary_rows](gt::summary_rows)}()` /
       `{.help [grand_summary_rows](gt::grand_summary_rows)}()` functions to
       generate summaries."
     ))
@@ -409,7 +409,7 @@ extract_cells <- function(
       data = data
     )
 
-  if (!dt_has_built_get(data)) {
+  if (!dt_has_built(data)) {
     #
     # Partially build the gt table using the resolved `output` as the
     # rendering context; this formats the body cells and applies merging

@@ -3,7 +3,7 @@ title: "dplyr <-> data.table"
 subtitle: "Notes I took while learning to use data.table"
 author:
   - name: "Marc-Aurèle Rivière"
-    url: https://ma-riviere.me
+    url: https://ma-riviere.com
     orcid: 0000-0002-5108-3382
 date: "2022-05-19"
 editor: source
