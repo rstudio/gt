@@ -261,6 +261,62 @@ test_that("tab_footnote() works for summary location", {
   )
 })
 
+test_that("tab_footnote() adds footnote marks for in the summary stub (#1832)", {
+  # Apply a footnote to the grand summary stub cells.
+  tab1 <-
+    tab_footnote(
+      data,
+      footnote = "Grand summary stub footnote.",
+      locations = list(
+        cells_stub_grand_summary(2)
+      )
+    )
+  # A footnote in the grand summary
+  tab2 <- tab_footnote(
+    data,
+    footnote = "Summary stub mean sum footnote.",
+    locations = list(
+      # FIXME doesn't work without specifying groups manually.
+      # Because not all groups have a summary
+      cells_stub_summary(groups = c(1, 3))
+    )
+  )
+  # Expect that the internal `footnotes_df` data frame will have
+  # its `locname` column entirely populated with `gramd_summary_cell`
+  expect_setequal(
+    dt_footnotes_get(tab1)$locname,
+    c("grand_summary_cells")
+  )
+  expect_setequal(
+    dt_footnotes_get(tab2)$locname,
+    c("summary_cells")
+  )
+  # Expect the colname to be NA
+  expect_setequal(
+    dt_footnotes_get(tab1)$colname,
+    NA_character_
+  )
+  # Expect tab2 to be in hp.
+  expect_setequal(
+    dt_footnotes_get(tab2)$colname,
+    NA_character_
+  )
+  # Expect that the internal `footnotes_df` data frame will have
+  # its `text` column entirely populated with the footnote text
+  expect_setequal(
+    unlist(dt_footnotes_get(tab1)$footnotes),
+    "Grand summary stub footnote."
+  )
+  expect_setequal(
+    unlist(dt_footnotes_get(tab2)$footnotes),
+    "Summary stub mean sum footnote."
+  )
+  # Make sure there is a footnote mark in the body (i.e. before the tfoot part)
+  expect_match_html(tab1, "gt_footnote_marks.+<tfoot class")
+  expect_match_html(tab2, "gt_footnote_marks.+<tfoot class")
+
+})
+
 test_that("tab_footnote() works in row groups", {
 
   # Apply a footnote to the `Mazdas` row group cell
