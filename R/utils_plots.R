@@ -2278,7 +2278,7 @@ process_number_stream <- function(number_stream) {
 
   number_stream <- gsub("[;,]", " ", number_stream)
   number_stream <- gsub("\\[|\\]", " ", number_stream)
-  number_stream <- gsub("^\\s+|\\s+$", "", number_stream)
+  number_stream <- sub("^\\s+|\\s+$", "", number_stream)
   number_stream <- unlist(strsplit(number_stream, split = "\\s+"))
   number_stream <- gsub("[\\(\\)a-dA-Df-zF-Z]", "", number_stream)
   number_stream <- as.numeric(number_stream)
