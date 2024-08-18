@@ -978,11 +978,10 @@ test_that("cols_width() correctly specifies LaTeX table when column widths are s
     )
 
   # Expect that all column widths are expressed as percentage of \linewidth
-  c(0.5, 0.3, 0.2, 0.1) %>%
-    pct_string() %>%
-    build_longtable_regex() %>%
-    grepl(as_latex(tbl_latex)) %>%
-    expect_true()
+  longtable_s <- build_longtable_regex(
+    pct_string(c(0.5, 0.3, 0.2, 0.1))
+  )
+  expect_match(as_latex(tbl_latex), longtable_s)
 
 
   # Check that LaTeX is correctly generated when only some

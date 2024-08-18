@@ -55,10 +55,7 @@ test_that("tab_spanner_delim() works correctly", {
     tab_spanner_delim(delim = ".", split = "first")
 
   # Expect the same table as with the `split = "last"` (default) option
-  expect_equal(
-    tbl_html_first %>% render_as_html(),
-    tbl_html %>% render_as_html()
-  )
+  expect_equal_gt(tbl_html_first, tbl_html)
 
   # Create a `tbl_html` object with `gt()`; split the column
   # names into spanner headings and column labels but constrain
@@ -936,10 +933,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
   # Take snapshots of `gt_tbl_spanner_A_1`
   gt_tbl_spanner_A_2 %>% render_as_html() %>% expect_snapshot()
 
-  expect_equal(
-    gt_tbl_spanner_A_1 %>% render_as_html(),
-    gt_tbl_spanner_A_2 %>% render_as_html()
-  )
+  expect_equal_gt(gt_tbl_spanner_A_1, gt_tbl_spanner_A_2)
 
   #
   # Highly specific placements of spanners
@@ -1150,18 +1144,9 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
   gt_tbl_7a %>% render_as_html() %>% expect_snapshot()
 
   # Expect all tables to be the same
-  expect_equal(
-    gt_tbl_7a %>% render_as_html(),
-    gt_tbl_7b %>% render_as_html()
-  )
-  expect_equal(
-    gt_tbl_7a %>% render_as_html(),
-    gt_tbl_7c %>% render_as_html()
-  )
-  expect_equal(
-    gt_tbl_7a %>% render_as_html(),
-    gt_tbl_7d %>% render_as_html()
-  )
+  expect_equal_gt(gt_tbl_7a, gt_tbl_7b)
+  expect_equal_gt(gt_tbl_7a, gt_tbl_7c)
+  expect_equal_gt(gt_tbl_7a, gt_tbl_7d)
 
 
   tbl_8 <-
@@ -1193,18 +1178,9 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
   gt_tbl_8a %>% render_as_html() %>% expect_snapshot()
 
   # Expect all tables to be the same
-  expect_equal(
-    gt_tbl_8a %>% render_as_html(),
-    gt_tbl_8b %>% render_as_html()
-  )
-  expect_equal(
-    gt_tbl_8a %>% render_as_html(),
-    gt_tbl_8c %>% render_as_html()
-  )
-  expect_equal(
-    gt_tbl_8a %>% render_as_html(),
-    gt_tbl_8d %>% render_as_html()
-  )
+  expect_equal_gt(gt_tbl_8a, gt_tbl_8b)
+  expect_equal_gt(gt_tbl_8a, gt_tbl_8b)
+  expect_equal_gt(gt_tbl_8a, gt_tbl_8d)
 
 
   tbl_9 <-
@@ -1236,18 +1212,9 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
   gt_tbl_9a %>% render_as_html() %>% expect_snapshot()
 
   # Expect all tables to be the same
-  expect_equal(
-    gt_tbl_9a %>% render_as_html(),
-    gt_tbl_9b %>% render_as_html()
-  )
-  expect_equal(
-    gt_tbl_9a %>% render_as_html(),
-    gt_tbl_9c %>% render_as_html()
-  )
-  expect_equal(
-    gt_tbl_9a %>% render_as_html(),
-    gt_tbl_9d %>% render_as_html()
-  )
+  expect_equal_gt(gt_tbl_9a, gt_tbl_9b)
+  expect_equal_gt(gt_tbl_9a, gt_tbl_9c)
+  expect_equal_gt(gt_tbl_9a, gt_tbl_9d)
 })
 
 test_that("tab_spanner_delim() works with complex splits", {
@@ -1357,10 +1324,7 @@ test_that("tab_spanner_delim() won't overwrite any set column labels", {
     tab_spanner_delim(".") %>%
     cols_label(Sepal.Width = md("Sepal.*W*idth"))
 
-  expect_equal(
-    tbl_1 %>% render_as_html(),
-    tbl_2 %>% render_as_html()
-  )
+  expect_equal_gt(tbl_1, tbl_2)
 
   tbl_3 <-
     iris_short %>%
@@ -1374,10 +1338,7 @@ test_that("tab_spanner_delim() won't overwrite any set column labels", {
     tab_spanner_delim(".") %>%
     cols_label(Sepal.Width = html("<em>Sepal.Width</em>"))
 
-  expect_equal(
-    tbl_3 %>% render_as_html(),
-    tbl_4 %>% render_as_html()
-  )
+  expect_equal_gt(tbl_3, tbl_4)
 
   data_tbl <-
     dplyr::tibble(
@@ -1398,10 +1359,7 @@ test_that("tab_spanner_delim() won't overwrite any set column labels", {
     tab_spanner_delim(delim = ".", reverse = TRUE) %>%
     cols_label(A.B.C.D.E = "ABCDE")
 
-  expect_equal(
-    gt_tbl_reverse_1 %>% render_as_html(),
-    gt_tbl_reverse_2 %>% render_as_html()
-  )
+  expect_equal_gt(gt_tbl_reverse_1, gt_tbl_reverse_2)
 
   gt_tbl_last_1 <-
     gt(data_tbl) %>%
@@ -1413,8 +1371,41 @@ test_that("tab_spanner_delim() won't overwrite any set column labels", {
     tab_spanner_delim(delim = ".", split = "last") %>%
     cols_label(A.B.C.D.E = "ABCDE")
 
+  expect_equal_gt(gt_tbl_last_1, gt_tbl_last_2)
+})
+
+test_that("tab_spanner_delim() resolves duplicate spanner IDs (#1821)", {
+  df <- data.frame(
+    pop_rural_young_num = c(1000, 2000),
+    pop_rural_young_pct = c(0.33, 0.66),
+    pop_rural_old_num = c(1000, 2000),
+    pop_rural_old_pct = c(0.33, 0.66),
+    pop_urban_young_num = c(1000, 2000),
+    pop_urban_young_pct = c(0.33, 0.66),
+    pop_urban_old_num = c(1000, 2000),
+    pop_urban_old_pct = c(0.33, 0.66)
+  )
+
+  expect_no_error(dat <- gt::gt(df) %>%
+    tab_spanner_delim(
+      delim = "_",
+      contains("rural"),
+      limit = 2
+    ) %>%
+    tab_spanner_delim(
+      delim = "_",
+      contains("urban"),
+      limit = 2
+    ))
   expect_equal(
-    gt_tbl_last_1 %>% render_as_html(),
-    gt_tbl_last_2 %>% render_as_html()
+    nrow(dat$`_spanners`),
+    6
+  )
+  expect_equal(
+    dat$`_spanners`$spanner_id,
+    c(
+      "spanner-young_num", "spanner-old_num", "spanner-pop_rural_young_num",
+      "spanner:1-young_num", "spanner:1-old_num", "spanner-pop_urban_young_num"
+   )
   )
 })

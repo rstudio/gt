@@ -1,4 +1,4 @@
-# create_columns_component_g creates columns and spanners
+# create_columns_component_g() creates columns and spanners
 
     Code
       test

@@ -30,14 +30,8 @@ test_that("A gt table can contain indentation in the stub", {
     tab_options(latex.use_longtable = TRUE)
 
   # Expect that `tbl_2` and `tbl_3` are the same
-  expect_equal(
-    tbl_2 %>% render_as_html(),
-    tbl_3 %>% render_as_html()
-  )
-  expect_equal(
-    tbl_2 %>% as_latex() %>% as.character(),
-    tbl_3 %>% as_latex() %>% as.character()
-  )
+  expect_equal_gt(tbl_2, tbl_3, f = render_as_html)
+  expect_equal_gt(tbl_2, tbl_3, f = as_latex)
 
   # Indent the three row labels by a level and then decrease by
   # the same amount; should be the same as no indentation at all
@@ -48,9 +42,9 @@ test_that("A gt table can contain indentation in the stub", {
     tab_stub_indent(rows = c(1, 2, 3), indent = "decrease") %>%
     tab_options(latex.use_longtable = TRUE)
 
-  expect_equal(
-    tbl_4 %>% render_as_html(),
-    exibble %>% gt(rowname_col = "row") %>% render_as_html()
+  expect_equal_gt(
+    tbl_4,
+    gt(exibble, rowname_col = "row")
   )
 
   # Indent using a `matches()` expression; this matches rows

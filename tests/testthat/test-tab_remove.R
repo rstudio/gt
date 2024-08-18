@@ -17,22 +17,20 @@ test_that("A table header can be removed using `rm_header()`", {
 
   # Expect that removing a header creates a table no different than
   # one never having a header in the table object
-  expect_equal(
+  expect_equal_gt(
     exibble %>%
       gt() %>%
       tab_header(title = "test title", subtitle = "test subtitle") %>%
-      rm_header() %>%
-      render_as_html(),
+      rm_header(),
     exibble %>%
-      gt() %>%
-      render_as_html()
+      gt()
   )
 
   # Expect that removing a non-existent header isn't different that
   # never having one in the table object
-  expect_equal(
-    exibble %>% gt() %>% render_as_html(),
-    exibble %>% gt() %>% rm_header() %>% render_as_html()
+  expect_equal_gt(
+    exibble %>% gt(),
+    exibble %>% gt() %>% rm_header()
   )
 
   # If there isn't a header in the input table the function should
@@ -75,9 +73,9 @@ test_that("Stubhead labels can be removed using `rm_stubhead()`", {
 
   # Expect that removing a non-existent stubhead label isn't different that
   # never having one in the table object
-  expect_equal(
-    exibble %>% gt(rowname_col = "row") %>% render_as_html(),
-    exibble %>% gt(rowname_col = "row") %>% rm_stubhead() %>% render_as_html()
+  expect_equal_gt(
+    exibble %>% gt(rowname_col = "row"),
+    exibble %>% gt(rowname_col = "row") %>% rm_stubhead()
   )
 
   # If there isn't a stubhead label or even a stub in the input table

@@ -666,10 +666,7 @@ test_that("cols_merge_range() works well", {
     )
 
   # Expect that the HTML produced from the two tables is the same
-  expect_identical(
-    gsub("id=\"[a-z]*?\"", "", as_raw_html(tbl_html_1)),
-    gsub("id=\"[a-z]*?\"", "", as_raw_html(tbl_html_2))
-  )
+  expect_equal_gt(tbl_html_1, tbl_html_2, f = as_raw_html, ignore_id = TRUE)
 
   # Create another variant that renames `col_2` as `1`, which
   # might be thought to interfere with the default pattern
@@ -684,10 +681,7 @@ test_that("cols_merge_range() works well", {
 
   # Expect that the HTML produced from `tbl_html_2` and
   # `tbl_html_3` is the same
-  expect_identical(
-    gsub("id=\"[a-z]*?\"", "", as_raw_html(tbl_html_2)),
-    gsub("id=\"[a-z]*?\"", "", as_raw_html(tbl_html_3))
-  )
+  expect_equal_gt(tbl_html_2, tbl_html_3, f = as_raw_html, ignore_id = TRUE)
 })
 
 test_that("cols_merge_range() produces the correct output", {

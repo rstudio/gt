@@ -37,6 +37,9 @@ DATA-4
 \code{v0.2.0.5} (March 31, 2020)
 }
 
+\examples{
+dplyr::glimpse(sp500)
+}
 \seealso{
 Other datasets: 
 \code{\link{constants}},

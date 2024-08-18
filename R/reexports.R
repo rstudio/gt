@@ -21,11 +21,6 @@
 #
 #------------------------------------------------------------------------------#
 
-
-#' @importFrom dplyr vars
-#' @export
-dplyr::vars
-
 #' @importFrom tidyselect starts_with
 #' @export
 tidyselect::starts_with
@@ -42,10 +37,6 @@ tidyselect::contains
 #' @export
 tidyselect::matches
 
-#' @importFrom tidyselect one_of
-#' @export
-tidyselect::one_of
-
 #' @importFrom tidyselect everything
 #' @export
 tidyselect::everything
@@ -54,6 +45,31 @@ tidyselect::everything
 #' @export
 tidyselect::num_range
 
+#' @importFrom tidyselect all_of
+#' @export
+tidyselect::all_of
+
+#' @importFrom tidyselect any_of
+#' @export
+tidyselect::any_of
+
+#' @importFrom tidyselect where
+#' @export
+tidyselect::where
+
 #' @importFrom htmltools css
 #' @export
 htmltools::css
+
+#' @importFrom magrittr %>%
+#' @export
+magrittr::`%>%`
+
+# TODO Avoid reexporting those helpers eventually -----
+#' @importFrom dplyr vars
+#' @export
+dplyr::vars
+
+#' @importFrom tidyselect one_of
+#' @export
+tidyselect::one_of

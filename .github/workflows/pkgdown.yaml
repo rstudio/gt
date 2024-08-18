@@ -9,7 +9,7 @@ on:
     types: [published]
   workflow_dispatch:
 
-name: pkgdown
+name: pkgdown.yaml
 
 permissions: read-all
 
@@ -25,12 +25,6 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-
-      - uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          tinytex: true
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: r-lib/actions/setup-pandoc@v2
 

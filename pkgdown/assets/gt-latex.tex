@@ -44,14 +44,28 @@
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % Make \paragraph and \subparagraph free-standing
+\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
+\makeatother
 
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -71,7 +85,7 @@
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
 \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
@@ -81,7 +95,7 @@
 \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
 \newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
 \newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
 \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
@@ -168,6 +182,7 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
+
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -184,17 +199,19 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
+
 \title{LaTeX Quarto test}
 \author{}
-\date{2024-07-18}
+\date{2024-08-14}
 
 \begin{document}
 \maketitle
 
 \listoftables
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{load\_all}\NormalTok{(}\StringTok{"."}\NormalTok{)}
+\NormalTok{pkgload}\SpecialCharTok{::}\FunctionTok{load\_all}\NormalTok{(}\StringTok{"."}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -210,6 +227,16 @@ i Loading gt
 
 \begin{verbatim}
 [1] '0.11.0.9000'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quarto}\SpecialCharTok{::}\FunctionTok{quarto\_version}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] '1.5.54'
 \end{verbatim}
 
 \newpage{}
@@ -256,6 +283,62 @@ NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\_6 & grp\_b \
 \caption{\label{tbl-background-color}background color}
 
 \end{table}%
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tab }\OtherTok{\textless{}{-}}\NormalTok{ exibble }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gt}\NormalTok{(}\AttributeTok{rowname\_col =} \StringTok{"row"}\NormalTok{, }\AttributeTok{groupname\_col =} \StringTok{"group"}\NormalTok{, }\AttributeTok{row\_group\_as\_column =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{tab\_spanner}\NormalTok{(}\StringTok{"spanners"}\NormalTok{, }\FunctionTok{c}\NormalTok{(char, num)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_spanner}\NormalTok{(}\StringTok{"Second level spanners"}\NormalTok{, }\FunctionTok{c}\NormalTok{(char, num, fctr)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_stubhead}\NormalTok{(}\StringTok{"Stubhead label"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_style}\NormalTok{(}
+    \AttributeTok{style =} \FunctionTok{list}\NormalTok{(}\FunctionTok{cell\_fill}\NormalTok{(}\StringTok{"\#f0f0f0"}\NormalTok{), }\FunctionTok{cell\_text}\NormalTok{(}\AttributeTok{weight =} \StringTok{"bold"}\NormalTok{)),}
+    \FunctionTok{cells\_stubhead}\NormalTok{()}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{tab\_header}\NormalTok{(}\AttributeTok{title =} \StringTok{"Stubhead styling and multiple spanner levels"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\centering{
+
+\caption*{
+{\large Stubhead styling and multiple spanner levels}
+} 
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l|l|lrcrrrr}
+\toprule
+\multicolumn{2}{l}{} & \multicolumn{3}{c}{Second level spanners} &  &  &  &  \\ 
+\cmidrule(lr){3-5}
+\multicolumn{2}{l}{} & \multicolumn{2}{c}{spanners} &  &  &  &  &  \\ 
+\cmidrule(lr){3-4}
+\multicolumn{2}{c}{{\bfseries \cellcolor[HTML]{F0F0F0}{Stubhead label}}} & char & num & fctr & date & time & datetime & currency \\ 
+\midrule\addlinespace[2.5pt]
+\multirow{4}{*}{grp\_a} & row\_1 & apricot & 1.111e-01 & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\ 
+ & row\_2 & banana & 2.222e+00 & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\ 
+ & row\_3 & coconut & 3.333e+01 & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\ 
+ & row\_4 & durian & 4.444e+02 & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\ 
+\midrule\addlinespace[2.5pt]
+\multirow{4}{*}{grp\_b} & row\_5 & NA & 5.550e+03 & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\ 
+ & row\_6 & fig & NA & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\ 
+ & row\_7 & grapefruit & 7.770e+05 & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\ 
+ & row\_8 & honeydew & 8.880e+06 & eight & 2015-08-15 & 20:20 & NA & 0.440 \\ 
+\bottomrule
+\end{tabular*}
+
+}
+
+\caption{\label{tbl-spanner-stub}Stubhead styling and multiple spanner
+levels}
+
+\end{table}%
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# }\AlertTok{FIXME}\CommentTok{ Borders known not to be exact}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -345,6 +428,7 @@ Source: the pizzaria\\
 \caption{\label{tbl-complete-output}Complete output}
 
 \end{table}%
+
 
 
 
