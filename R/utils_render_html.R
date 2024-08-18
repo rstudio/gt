@@ -810,7 +810,7 @@ create_columns_component_h <- function(data) {
               colspan = colspans[i],
               style = spanner_style,
               scope = ifelse(colspans[i] > 1, "colgroup", "col"),
-              id = spanners[level_1_index, ][i],
+              id = spanner_ids[level_1_index, ][i],
               htmltools::tags$span(
                 class = "gt_column_spanner",
                 htmltools::HTML(spanners[level_1_index, ][i])
