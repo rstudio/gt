@@ -142,5 +142,7 @@ finalize_html_table <- function(
   # needed since the CSS inliner cannot parse "&#39;")
   html_tbl <- gsub("&#39;", "'", html_tbl)
 
+  # Remove invalid id.
+  html_tbl <- gsub(' id=""', "", html_tbl)
   html_tbl
 }
