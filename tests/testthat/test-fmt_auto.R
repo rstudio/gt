@@ -30,7 +30,7 @@ test_that("fmt_auto() works correctly", {
     fmt_auto()
 
   # Take a snapshot of `gt_tbl_1`
-  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_1)
 
   # Use `fmt_auto()` on a table having a variety of column types and
   # prefer to use large-number suffixing
@@ -39,7 +39,7 @@ test_that("fmt_auto() works correctly", {
     fmt_auto(lg_num_pref = "suf")
 
   # Take a snapshot of `gt_tbl_2`
-  gt_tbl_2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_2)
 
   # Use `fmt_auto()` on a table having very small and very large values
   gt_tbl_3 <-
@@ -47,7 +47,7 @@ test_that("fmt_auto() works correctly", {
     fmt_auto()
 
   # Take a snapshot of `gt_tbl_3`
-  gt_tbl_3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_3)
 
   # Use `fmt_auto()` on a table having very small and very large values
   # and prefer to use large-number suffixing
@@ -56,7 +56,7 @@ test_that("fmt_auto() works correctly", {
     fmt_auto(lg_num_pref = "suf")
 
   # Take a snapshot of `gt_tbl_4`
-  gt_tbl_4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_4)
 
   # Use `fmt_auto()` on a table having row groups and row labels
   gt_tbl_5 <-
@@ -64,7 +64,7 @@ test_that("fmt_auto() works correctly", {
     fmt_auto()
 
   # Take a snapshot of `gt_tbl_5`
-  gt_tbl_5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5)
 
   # Use `fmt_auto()` on a table having row groups and row labels
   # and prefer to use large-number suffixing
@@ -73,7 +73,7 @@ test_that("fmt_auto() works correctly", {
     fmt_auto(lg_num_pref = "suf")
 
   # Take a snapshot of `gt_tbl_6`
-  gt_tbl_6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_6)
 
   # Use `fmt_auto()` on a table having extremely large numbers
   gt_tbl_7 <-
@@ -81,7 +81,7 @@ test_that("fmt_auto() works correctly", {
     fmt_auto()
 
   # Take a snapshot of `gt_tbl_7`
-  gt_tbl_7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_7)
 
   # Use `fmt_auto()` on a table having extremely large numbers
   # and prefer to use large-number suffixing
@@ -90,7 +90,7 @@ test_that("fmt_auto() works correctly", {
     fmt_auto(lg_num_pref = "suf")
 
   # Take a snapshot of `gt_tbl_8`
-  gt_tbl_8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_8)
 
   # Ensure that `fmt_auto()` can target specific columns
   gt_tbl_9 <-
@@ -98,7 +98,7 @@ test_that("fmt_auto() works correctly", {
     fmt_auto(columns = c(integer, amt.usd))
 
   # Take a snapshot of `gt_tbl_9`
-  gt_tbl_9 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_9)
 
   # Ensure that `fmt_auto()` can target specific rows
   gt_tbl_10 <-
@@ -106,5 +106,5 @@ test_that("fmt_auto() works correctly", {
     fmt_auto(rows = c(2, 4, 6, 8), lg_num_pref = "suf")
 
   # Take a snapshot of `gt_tbl_10`
-  gt_tbl_10 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_10)
 })

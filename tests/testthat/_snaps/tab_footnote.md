@@ -1,21 +1,21 @@
 # Footnotes with no location are rendered correctly
 
     Code
-      .
+      render_as_html(gt_tbl)
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"num\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"fctr\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"date\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"time\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"datetime\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"currency\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"row\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"group\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"num\" class=\"gt_row gt_right\">0.1111</td>\n<td headers=\"char\" class=\"gt_row gt_left\">apricot</td>\n<td headers=\"fctr\" class=\"gt_row gt_center\">one</td>\n<td headers=\"date\" class=\"gt_row gt_right\">2015-01-15</td>\n<td headers=\"time\" class=\"gt_row gt_right\">13:35</td>\n<td headers=\"datetime\" class=\"gt_row gt_right\">2018-01-01 02:22</td>\n<td headers=\"currency\" class=\"gt_row gt_right\">49.95</td>\n<td headers=\"row\" class=\"gt_row gt_left\">row_1</td>\n<td headers=\"group\" class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"9\"> A footnote.</td>\n    </tr>\n  </tfoot>\n</table>"
 
 ---
 
     Code
-      .
+      as.character(as_latex(gt_tbl))
     Output
       [1] "\\begingroup\n\\fontsize{12.0pt}{14.4pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nA footnote.\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
@@ -98,21 +98,21 @@
 ---
 
     Code
-      .
+      render_as_html(gt_tbl)
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"num\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"fctr\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"date\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"time\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"datetime\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"currency\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"row\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"group\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"num\" class=\"gt_row gt_right\">0.1111</td>\n<td headers=\"char\" class=\"gt_row gt_left\">apricot</td>\n<td headers=\"fctr\" class=\"gt_row gt_center\">one</td>\n<td headers=\"date\" class=\"gt_row gt_right\">2015-01-15</td>\n<td headers=\"time\" class=\"gt_row gt_right\">13:35</td>\n<td headers=\"datetime\" class=\"gt_row gt_right\">2018-01-01 02:22</td>\n<td headers=\"currency\" class=\"gt_row gt_right\">49.95</td>\n<td headers=\"row\" class=\"gt_row gt_left\">row_1</td>\n<td headers=\"group\" class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"9\"> A footnote.</td>\n    </tr>\n  </tfoot>\n</table>"
 
 ---
 
     Code
-      .
+      as.character(as_latex(gt_tbl))
     Output
       [1] "\\begingroup\n\\fontsize{12.0pt}{14.4pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nA footnote.\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
@@ -195,21 +195,21 @@
 ---
 
     Code
-      .
+      render_as_html(gt_tbl)
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"num\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"fctr\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"date\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"time\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"datetime\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"currency\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"row\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"group\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"num\" class=\"gt_row gt_right\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> 0.1111</td>\n<td headers=\"char\" class=\"gt_row gt_left\">apricot</td>\n<td headers=\"fctr\" class=\"gt_row gt_center\">one</td>\n<td headers=\"date\" class=\"gt_row gt_right\">2015-01-15</td>\n<td headers=\"time\" class=\"gt_row gt_right\">13:35</td>\n<td headers=\"datetime\" class=\"gt_row gt_right\">2018-01-01 02:22</td>\n<td headers=\"currency\" class=\"gt_row gt_right\">49.95</td>\n<td headers=\"row\" class=\"gt_row gt_left\">row_1</td>\n<td headers=\"group\" class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"9\"> A footnote.</td>\n    </tr>\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"9\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> A footnote.</td>\n    </tr>\n  </tfoot>\n</table>"
 
 ---
 
     Code
-      .
+      as.character(as_latex(gt_tbl))
     Output
       [1] "\\begingroup\n\\fontsize{12.0pt}{14.4pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n0.1111\\textsuperscript{\\textit{1}} & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nA footnote.\\\\\n\\textsuperscript{\\textit{1}}A footnote.\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
@@ -292,21 +292,21 @@
 ---
 
     Code
-      .
+      render_as_html(gt_tbl)
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"num\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"fctr\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"date\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"time\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"datetime\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"currency\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"row\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"group\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"num\" class=\"gt_row gt_right\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> 0.1111</td>\n<td headers=\"char\" class=\"gt_row gt_left\">apricot</td>\n<td headers=\"fctr\" class=\"gt_row gt_center\">one</td>\n<td headers=\"date\" class=\"gt_row gt_right\">2015-01-15</td>\n<td headers=\"time\" class=\"gt_row gt_right\">13:35</td>\n<td headers=\"datetime\" class=\"gt_row gt_right\">2018-01-01 02:22</td>\n<td headers=\"currency\" class=\"gt_row gt_right\">49.95</td>\n<td headers=\"row\" class=\"gt_row gt_left\">row_1</td>\n<td headers=\"group\" class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  \n  <tfoot>\n    <tr class=\"gt_footnotes\">\n      <td class=\"gt_footnote\" colspan=\"9\">\n        <div style=\"padding-bottom:2px;\"> A footnote.  A second footnote. <span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> location note</div>\n      </td>\n    </tr>\n  </tfoot>\n</table>"
 
 ---
 
     Code
-      .
+      as.character(as_latex(gt_tbl))
     Output
       [1] "\\begingroup\n\\fontsize{12.0pt}{14.4pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n0.1111\\textsuperscript{\\textit{1}} & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nA footnote. A second footnote. \\textsuperscript{\\textit{1}}location note\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
@@ -389,35 +389,35 @@
 # Footnotes are correctly placed with text produced by `fmt_markdown()`
 
     Code
-      .
+      render_as_html(gt_tbl)
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"char\" class=\"gt_row gt_left\"><span class='gt_from_md'>apricot</span><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span></td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"1\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> note</td>\n    </tr>\n  </tfoot>\n</table>"
 
 ---
 
     Code
-      .
+      render_as_html(gt_tbl)
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"char\" class=\"gt_row gt_left\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> <span class='gt_from_md'>apricot</span></td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"1\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> note</td>\n    </tr>\n  </tfoot>\n</table>"
 
 # Footnotes work with group labels in 2-column stub arrangements
 
     Code
-      .
+      render_as_html(gt_tbl)
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"2\" scope=\"colgroup\" id=\"a::stub\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"Pizzas-Sold\">Pizzas Sold</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr class=\"gt_row_group_first\"><td headers=\"peppr_salami stub_2_1 stub_1\" rowspan=\"4\" class=\"gt_row gt_left gt_stub_row_group\">peppr_salami<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span></td>\n<th id=\"stub_2_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">L</th>\n<td headers=\"peppr_salami stub_2_1 Pizzas Sold\" class=\"gt_row gt_right\">696</td></tr>\n    <tr><th id=\"Pizzas Sold_2\" scope=\"row\" class=\"gt_row gt_left gt_stub\">M</th>\n<td headers=\"peppr_salami Pizzas Sold_2 Pizzas Sold\" class=\"gt_row gt_right\">428</td></tr>\n    <tr><th id=\"Pizzas Sold_3\" scope=\"row\" class=\"gt_row gt_left gt_stub\">S</th>\n<td headers=\"peppr_salami Pizzas Sold_3 Pizzas Sold\" class=\"gt_row gt_right\">322</td></tr>\n    <tr><th id=\"summary_stub_peppr_salami_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row\">sum</th>\n<td headers=\"peppr_salami summary_stub_peppr_salami_1 Pizzas Sold\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row\">1,446</td></tr>\n    <tr class=\"gt_row_group_first\"><td headers=\"soppressata stub_2_4 stub_1\" rowspan=\"4\" class=\"gt_row gt_left gt_stub_row_group\">soppressata</td>\n<th id=\"stub_2_4\" scope=\"row\" class=\"gt_row gt_left gt_stub\">L</th>\n<td headers=\"soppressata stub_2_4 Pizzas Sold\" class=\"gt_row gt_right\">405</td></tr>\n    <tr><th id=\"Pizzas Sold_5\" scope=\"row\" class=\"gt_row gt_left gt_stub\">M</th>\n<td headers=\"soppressata Pizzas Sold_5 Pizzas Sold\" class=\"gt_row gt_right\">268</td></tr>\n    <tr><th id=\"Pizzas Sold_6\" scope=\"row\" class=\"gt_row gt_left gt_stub\">S</th>\n<td headers=\"soppressata Pizzas Sold_6 Pizzas Sold\" class=\"gt_row gt_right\">288</td></tr>\n    <tr><th id=\"summary_stub_soppressata_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row\">sum</th>\n<td headers=\"soppressata summary_stub_soppressata_1 Pizzas Sold\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row\">961</td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"3\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> The Pepper-Salami.</td>\n    </tr>\n  </tfoot>\n</table>"
 
 ---
 
     Code
-      .
+      as.character(as_latex(gt_tbl))
     Output
       [1] "\\begingroup\n\\fontsize{12.0pt}{14.4pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|l|r}\n\\toprule\n\\multicolumn{2}{c}{} & Pizzas Sold \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{4}{*}{peppr\\_salami\\textsuperscript{\\textit{1}}} & L & 696 \\\\ \n & M & 428 \\\\ \n & S & 322 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & 1,446 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{4}{*}{soppressata} & L & 405 \\\\ \n & M & 268 \\\\ \n & S & 288 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & 961 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}The Pepper-Salami.\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       

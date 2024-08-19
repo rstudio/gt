@@ -1831,8 +1831,8 @@ test_that("fmt_duration() can produce localized outputs", {
     tab_style(style = cell_text(size = "smaller"), locations = cells_body())
 
   # Perform snapshot tests
-  tab_narrow %>% render_as_html() %>% expect_snapshot()
-  tab_wide %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tab_narrow)
+  expect_snapshot_html(tab_wide)
 })
 
 test_that("fmt_duration() will error in specific cases", {

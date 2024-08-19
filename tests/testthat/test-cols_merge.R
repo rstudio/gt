@@ -133,7 +133,7 @@ test_that("cols_merge() works correctly", {
     cols_merge(columns = c(row, a))
 
   # Perform snapshot test
-  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_1)
 
   # Merge the stub column with column `b` (has character values)
   gt_tbl_2 <-
@@ -141,7 +141,7 @@ test_that("cols_merge() works correctly", {
     cols_merge(columns = c(row, b))
 
   # Perform snapshot test
-  gt_tbl_2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_2)
 
   # Merge the stub column with a formatted column `a`
   # (has lowercase Roman numerals, transformed to character from integer)
@@ -151,7 +151,7 @@ test_that("cols_merge() works correctly", {
     cols_merge(columns = c(row, a))
 
   # Perform snapshot test
-  gt_tbl_3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_3)
 
   # Ensure that `group` columns don't get the same treatment
   expect_equal(
@@ -174,7 +174,7 @@ test_that("cols_merge() works correctly", {
     )
 
   # Perform snapshot test
-  gt_tbl_4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_4)
 })
 
 test_that("The secondary pattern language works well in `cols_merge()`", {
@@ -418,7 +418,7 @@ test_that("cols_merge_uncert() works with row groups", {
     cols_merge_uncert(col_val = row, col_uncert = a)
 
   # Perform snapshot test
-  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_1)
 
   # Use `cols_merge_uncert()` with a vector of `rows` which limits the rows
   # that participate in the merging process
@@ -432,7 +432,7 @@ test_that("cols_merge_uncert() works with row groups", {
     )
 
   # Perform snapshot test
-  gt_tbl_2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_2)
 })
 
 test_that("cols_merge_uncert() works nicely with different error bounds", {
@@ -505,7 +505,7 @@ test_that("cols_merge_uncert() works nicely with different error bounds", {
     )
 
   # Perform snapshot test
-  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_1)
 })
 
 test_that("cols_merge_range() works correctly", {
@@ -705,7 +705,7 @@ test_that("cols_merge_range() produces the correct output", {
     cols_merge_range(col_begin = row, col_end = a)
 
   # Perform snapshot test
-  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_1)
 
   # Merge the stub column with column `b` (has character values)
   gt_tbl_2 <-
@@ -713,7 +713,7 @@ test_that("cols_merge_range() produces the correct output", {
     cols_merge_range(col_begin = row, col_end = b)
 
   # Perform snapshot test
-  gt_tbl_2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_2)
 
   # Merge the stub column with a formatted column `a`
   # (has lowercase Roman numerals, transformed to character from integer)
@@ -723,7 +723,7 @@ test_that("cols_merge_range() produces the correct output", {
     cols_merge_range(col_begin = row, col_end = a)
 
   # Perform snapshot test
-  gt_tbl_3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_3)
 
   # Merge the formatted stub column with column `a`
   # (has lowercase Roman numerals, transformed to character from integer)
@@ -733,7 +733,7 @@ test_that("cols_merge_range() produces the correct output", {
     cols_merge_range(col_begin = row, col_end = a)
 
   # Perform snapshot test
-  gt_tbl_4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_4)
 
   # Use `cols_merge_range()` with a vector of `rows` which limits the rows
   # that participate in the merging process
@@ -746,7 +746,7 @@ test_that("cols_merge_range() produces the correct output", {
     )
 
   # Perform snapshot test
-  gt_tbl_5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5)
 })
 
 test_that("cols_merge_n_pct() works correctly", {
@@ -822,7 +822,7 @@ test_that("cols_merge_n_pct() works correctly", {
     cols_merge_n_pct(col_n = row, col_pct = a)
 
   # Perform snapshot test
-  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_1)
 
   # Use `cols_merge_n_pct()` with a vector of `rows` which limits the rows
   # that participate in the merging process
@@ -837,5 +837,5 @@ test_that("cols_merge_n_pct() works correctly", {
     fmt_percent(columns = b, decimals = 1)
 
   # Perform snapshot test
-  gt_tbl_2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_2)
 })
