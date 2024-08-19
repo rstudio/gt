@@ -19,131 +19,112 @@ test_that("Using summary rows in LaTeX tables is correct", {
   # Tests with `grand_summary_rows()`
   #
 
-  gt(tbl) %>%
+  gt_tbl_1 <- gt(tbl) %>%
     grand_summary_rows(
       columns = col_1,
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+    tab_options(latex.use_longtable = TRUE)
 
-  gt(tbl, rowname_col = "row") %>%
-    grand_summary_rows(
-      columns = col_1,
-      fns = list(average = ~ mean(., na.rm = TRUE)),
-      fmt = list(~ fmt_number(.))
-    ) %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+  expect_snapshot_latex(gt_tbl_1)
 
-  gt(tbl, groupname_col = "group") %>%
+  gt_tbl_2 <- gt(tbl, rowname_col = "row") %>%
     grand_summary_rows(
       columns = col_1,
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+    tab_options(latex.use_longtable = TRUE)
+  expect_snapshot_latex(gt_tbl_2)
 
-  gt(tbl, rowname_col = "row", groupname_col = "group") %>%
+  gt_tbl_3 <- gt(tbl, groupname_col = "group") %>%
     grand_summary_rows(
       columns = col_1,
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+    tab_options(latex.use_longtable = TRUE)
+  expect_snapshot_latex(gt_tbl_3)
+
+  gt_tbl_4 <- gt(tbl, rowname_col = "row", groupname_col = "group") %>%
+    grand_summary_rows(
+      columns = col_1,
+      fns = list(average = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
+    ) %>%
+    tab_options(latex.use_longtable = TRUE)
+  expect_snapshot_latex(gt_tbl_4)
 
   #
   # Tests with `summary_rows()`
   #
 
-  gt(tbl, groupname_col = "group") %>%
+  gt_tbl_5 <- gt(tbl, groupname_col = "group") %>%
     summary_rows(
       groups = "first_five",
       columns = col_1,
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+    tab_options(latex.use_longtable = TRUE)
+  expect_snapshot_latex(gt_tbl_5)
 
-  gt(tbl, rowname_col = "row", groupname_col = "group") %>%
+  gt_tbl_6 <- gt(tbl, rowname_col = "row", groupname_col = "group") %>%
     summary_rows(
       groups = "first_five",
       columns = col_1,
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+    tab_options(latex.use_longtable = TRUE)
+  expect_snapshot_latex(gt_tbl_6)
 
-  gt(tbl, groupname_col = "group") %>%
+  gt_tbl_7 <- gt(tbl, groupname_col = "group") %>%
     summary_rows(
       groups = "first_five",
       columns = c(col_1, col_3),
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+    tab_options(latex.use_longtable = TRUE)
+  expect_snapshot_latex(gt_tbl_7)
 
-  gt(tbl, groupname_col = "group") %>%
+  gt_tbl_8 <- gt(tbl, groupname_col = "group") %>%
     summary_rows(
       groups = "first_five",
       columns = c(col_3, col_1, col_4),
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+    tab_options(latex.use_longtable = TRUE)
+  expect_snapshot_latex(gt_tbl_8)
 
-  gt(tbl, groupname_col = "group") %>%
+  gt_tbl_9 <- gt(tbl, groupname_col = "group") %>%
     summary_rows(
       groups = "first_five",
       columns = c(col_3, col_1, col_4, col_2),
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+    tab_options(latex.use_longtable = TRUE)
+  expect_snapshot_latex(gt_tbl_9)
 
-  gt(tbl, rowname_col = "row", groupname_col = "group") %>%
+  gt_tbl_10 <- gt(tbl, rowname_col = "row", groupname_col = "group") %>%
     summary_rows(
       groups = "first_five",
       columns = c(col_1, col_3),
       fns = list(average = ~ mean(., na.rm = TRUE)),
       fmt = list(~ fmt_number(.))
     ) %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+    tab_options(latex.use_longtable = TRUE)
+  expect_snapshot_latex(gt_tbl_10)
 
   #
   # Tests with both `summary_rows()` and `grand_summary_rows()`
   #
 
-  gt(tbl, groupname_col = "group") %>%
+  gt_tbl_11 <- gt(tbl, groupname_col = "group") %>%
     summary_rows(
       groups = "first_five",
       columns = col_1,
@@ -183,12 +164,10 @@ test_that("Using summary rows in LaTeX tables is correct", {
       ),
       fmt = list(~ fmt_number(.))
     ) %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+    tab_options(latex.use_longtable = TRUE)
 
-  gt(tbl, rowname_col = "row", groupname_col = "group") %>%
+  expect_snapshot_latex(gt_tbl_11)
+  gt_tbl_12 <- gt(tbl, rowname_col = "row", groupname_col = "group") %>%
     summary_rows(
       groups = "first_five",
       columns = col_1,
@@ -228,8 +207,6 @@ test_that("Using summary rows in LaTeX tables is correct", {
       ),
       fmt = list(~ fmt_number(.))
     ) %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+    tab_options(latex.use_longtable = TRUE)
+  expect_snapshot_latex(gt_tbl_12)
 })

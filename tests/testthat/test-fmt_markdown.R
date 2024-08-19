@@ -233,5 +233,5 @@ test_that("LaTeX formulas render correctly in HTML", {
     )
   skip_if_not_installed("katex", "1.4.1")
   # Take a snapshot of `gt_tbl`
-  gt_tbl %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl)
 })
