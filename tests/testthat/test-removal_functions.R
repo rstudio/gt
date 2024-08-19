@@ -42,7 +42,7 @@ test_that("The different removal functions work correctly", {
 
   gt_tbl_2 <- gt_tbl %>% rm_header()
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_2 %>% render_as_html())
-  gt_tbl_2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_2)
 
   #
   # Use `rm_stubhead()` to remove the stubhead label
@@ -50,7 +50,7 @@ test_that("The different removal functions work correctly", {
 
   gt_tbl_3 <- gt_tbl %>% rm_stubhead()
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_3 %>% render_as_html())
-  gt_tbl_3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_3)
 
   #
   # Use `rm_spanners()` to remove the different spanners
@@ -58,39 +58,39 @@ test_that("The different removal functions work correctly", {
 
   gt_tbl_4a <- gt_tbl %>% rm_spanners()
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_4a %>% render_as_html())
-  gt_tbl_4a %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_4a)
 
   gt_tbl_4b <- gt_tbl %>% rm_spanners(spanners = "Date and Time")
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_4b %>% render_as_html())
-  gt_tbl_4b %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_4b)
 
   gt_tbl_4c <- gt_tbl %>% rm_spanners(spanners = "Numbers")
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_4c %>% render_as_html())
-  gt_tbl_4c %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_4c)
 
   gt_tbl_4d <- gt_tbl %>% rm_spanners(spanners = "Words")
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_4d %>% render_as_html())
-  gt_tbl_4d %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_4d)
 
   gt_tbl_4e <- gt_tbl %>% rm_spanners(spanners = "Grand Spanner")
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_4e %>% render_as_html())
-  gt_tbl_4e %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_4e)
 
   gt_tbl_4f <- gt_tbl %>% rm_spanners(spanners = c("Date and Time", "Numbers", "Words"))
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_4f %>% render_as_html())
-  gt_tbl_4f %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_4f)
 
   gt_tbl_4g <- gt_tbl %>% rm_spanners(levels = 1)
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_4g %>% render_as_html())
-  gt_tbl_4g %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_4g)
 
   gt_tbl_4h <- gt_tbl %>% rm_spanners(levels = 2)
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_4h %>% render_as_html())
-  gt_tbl_4h %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_4h)
 
   gt_tbl_4i <- gt_tbl %>% rm_spanners(levels = 1:2)
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_4i %>% render_as_html())
-  gt_tbl_4i %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_4i)
 
   #
   # Use `rm_footnotes()` to remove the different footnotes
@@ -98,19 +98,19 @@ test_that("The different removal functions work correctly", {
 
   gt_tbl_5a <- gt_tbl %>% rm_footnotes()
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_5a %>% render_as_html())
-  gt_tbl_5a %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5a)
 
   gt_tbl_5b <- gt_tbl %>% rm_footnotes(footnotes = 2)
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_5b %>% render_as_html())
-  gt_tbl_5b %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5b)
 
   gt_tbl_5c <- gt_tbl %>% rm_footnotes(footnotes = 1)
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_5c %>% render_as_html())
-  gt_tbl_5c %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5c)
 
   gt_tbl_5d <- gt_tbl %>% rm_footnotes(footnotes = 1:2)
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_5d %>% render_as_html())
-  gt_tbl_5d %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5d)
 
   #
   # Use `rm_source_notes()` to remove the different source notes
@@ -118,19 +118,19 @@ test_that("The different removal functions work correctly", {
 
   gt_tbl_6a <- gt_tbl %>% rm_source_notes()
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_6a %>% render_as_html())
-  gt_tbl_6a %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_6a)
 
   gt_tbl_6b <- gt_tbl %>% rm_source_notes(source_notes = 2)
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_6b %>% render_as_html())
-  gt_tbl_6b %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_6b)
 
   gt_tbl_6c <- gt_tbl %>% rm_source_notes(source_notes = 1)
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_6c %>% render_as_html())
-  gt_tbl_6c %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_6c)
 
   gt_tbl_6d <- gt_tbl %>% rm_source_notes(source_notes = 1:2)
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_6d %>% render_as_html())
-  gt_tbl_6d %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_6d)
 
   #
   # Use `rm_caption()` to remove the table caption
@@ -138,5 +138,5 @@ test_that("The different removal functions work correctly", {
 
   gt_tbl_7 <- gt_tbl %>% rm_caption()
   expect_true(gt_tbl %>% render_as_html() != gt_tbl_7 %>% render_as_html())
-  gt_tbl_7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_7)
 })
