@@ -1040,7 +1040,7 @@ test_that("column widths are accurately reflected in Latex multicolumn statement
                n = runif(5),
                w = runif(5))
 
-  gt(tbl_random1,
+  gt_tbl <- gt(tbl_random1,
      rowname_col = 'x',
      row_group_as_column = FALSE) %>%
     fmt_number(decimals = 3) %>%
@@ -1050,12 +1050,8 @@ test_that("column widths are accurately reflected in Latex multicolumn statement
     tab_spanner(label = 'Spanner with a long title that should be wrapped', columns = c('y', 'z')) %>%
     tab_spanner(label = 'Spanner2', columns = c('n', 'w')) %>%
     tab_spanner(label = 'Another long spanner that needs to wrap even more than the other', columns = c('z', 'm')) %>%
-    summary_rows(fns = list("mean")) %>%
-    as_latex() %>%
-    expect_snapshot()
+    summary_rows(fns = list("mean"))
 
+  expect_snapshot(as_latex(gt_tbl))
 
 })
-
-
-

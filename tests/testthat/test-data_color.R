@@ -606,7 +606,7 @@ test_that("Color palettes can be obtained from the paletteer package", {
     data_color(palette = "ggsci::red_material")
 
   # Perform snapshot test
-  tbl_gt_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_1)
 })
 
 test_that("Some color palettes from the viridis package can be used", {
@@ -618,7 +618,7 @@ test_that("Some color palettes from the viridis package can be used", {
     data_color(palette = "viridis")
 
   # Perform snapshot test
-  tbl_gt_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_1)
 
   # Use `data_color()` with all defaults and the "magma" palette
   tbl_gt_2 <-
@@ -627,7 +627,7 @@ test_that("Some color palettes from the viridis package can be used", {
     data_color(palette = "magma")
 
   # Perform snapshot test
-  tbl_gt_2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_2)
 
   # Use `data_color()` with all defaults and the "plasma" palette
   tbl_gt_3 <-
@@ -636,7 +636,7 @@ test_that("Some color palettes from the viridis package can be used", {
     data_color(palette = "plasma")
 
   # Perform snapshot test
-  tbl_gt_3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_3)
 
   # Use `data_color()` with all defaults and the "inferno" palette
   tbl_gt_4 <-
@@ -645,7 +645,7 @@ test_that("Some color palettes from the viridis package can be used", {
     data_color(palette = "inferno")
 
   # Perform snapshot test
-  tbl_gt_4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_4)
 })
 
 test_that("Some color palettes from the RColorBrewer package can be used", {
@@ -679,7 +679,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color()
 
   # Perform snapshot test
-  tbl_gt_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_1)
 
   # Use `data_color()` with a subset of rows targeted
   tbl_gt_2 <-
@@ -688,7 +688,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(rows = c(3:5, 8:10))
 
   # Perform snapshot test
-  tbl_gt_2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_2)
 
   # Target the `num` column and use the `data_color()` "numeric" method
   tbl_gt_3 <-
@@ -697,7 +697,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(columns = num, method = "numeric")
 
   # Perform snapshot test
-  tbl_gt_3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_3)
 
   # Target the `num` column and use the `data_color()` "bin" method
   tbl_gt_4 <-
@@ -706,7 +706,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(columns = num, method = "bin")
 
   # Perform snapshot test
-  tbl_gt_4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_4)
 
   # Target the `num` column and use the `data_color()` "quantile" method
   tbl_gt_5 <-
@@ -715,7 +715,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(columns = num, method = "quantile")
 
   # Perform snapshot test
-  tbl_gt_5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_5)
 
   # Target the `num` column and use the `data_color()` "factor" method
   tbl_gt_6 <-
@@ -724,7 +724,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(columns = num, method = "factor")
 
   # Perform snapshot test
-  tbl_gt_6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_6)
 
   # Target the `char` column and use the `data_color()` "numeric" method
   tbl_gt_7 <-
@@ -733,7 +733,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(columns = char, method = "numeric")
 
   # Perform snapshot test
-  tbl_gt_7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_7)
 
   # Target the `char` column and use the `data_color()` "bin" method
   tbl_gt_8 <-
@@ -742,7 +742,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(columns = char, method = "bin")
 
   # Perform snapshot test
-  tbl_gt_8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_8)
 
   # Target the `char` column and use the `data_color()` "quantile" method
   tbl_gt_9 <-
@@ -751,7 +751,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(columns = char, method = "quantile")
 
   # Perform snapshot test
-  tbl_gt_9 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_9)
 
   # Target the `char` column and use the `data_color()` "factor" method
   tbl_gt_10 <-
@@ -760,7 +760,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(columns = char, method = "factor")
 
   # Perform snapshot test
-  tbl_gt_10 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_10)
 
   # Target the `fctr` column and use the `data_color()` "numeric" method
   tbl_gt_11 <-
@@ -769,7 +769,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(columns = fctr, method = "numeric")
 
   # Perform snapshot test
-  tbl_gt_11 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_11)
 
   # Target the `fctr` column and use the `data_color()` "bin" method
   tbl_gt_12 <-
@@ -778,7 +778,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(columns = fctr, method = "bin")
 
   # Perform snapshot test
-  tbl_gt_12 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_12)
 
   # Target the `fctr` column and use the `data_color()` "quantile" method
   tbl_gt_13 <-
@@ -787,7 +787,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(columns = fctr, method = "quantile")
 
   # Perform snapshot test
-  tbl_gt_13 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_13)
 
   # Target the `fctr` column and use the `data_color()` "factor" method
   tbl_gt_14 <-
@@ -796,7 +796,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(columns = fctr, method = "factor")
 
   # Perform snapshot test
-  tbl_gt_14 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_14)
 
   # With all columns, use the `data_color()` "numeric" method
   tbl_gt_15 <-
@@ -805,7 +805,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(method = "numeric")
 
   # Perform snapshot test
-  tbl_gt_15 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_15)
 
   # With all columns, use the `data_color()` "bin" method
   tbl_gt_16 <-
@@ -814,7 +814,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(method = "bin")
 
   # Perform snapshot test
-  tbl_gt_16 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_16)
 
   # With all columns, use the `data_color()` "quantile" method
   tbl_gt_17 <-
@@ -823,7 +823,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(method = "quantile")
 
   # Perform snapshot test
-  tbl_gt_17 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_17)
 
   # With all columns, use the `data_color()` "factor" method
   tbl_gt_18 <-
@@ -832,7 +832,7 @@ test_that("Different combinations of methods and column types work well", {
     data_color(method = "factor")
 
   # Perform snapshot test
-  tbl_gt_18 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_18)
 
   #
   # Use different options of the "bin" method
@@ -850,7 +850,7 @@ test_that("Different combinations of methods and column types work well", {
     )
 
   # Perform snapshot test
-  tbl_gt_19 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_19)
 
   # Using `bins = 5`
   tbl_gt_20 <-
@@ -864,7 +864,7 @@ test_that("Different combinations of methods and column types work well", {
     )
 
   # Perform snapshot test
-  tbl_gt_20 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_20)
 
   #
   # Use different options of the "quantile" method
@@ -882,7 +882,7 @@ test_that("Different combinations of methods and column types work well", {
     )
 
   # Perform snapshot test
-  tbl_gt_21 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_21)
 
   # Using `quantiles = 10`
   tbl_gt_22 <-
@@ -896,7 +896,7 @@ test_that("Different combinations of methods and column types work well", {
     )
 
   # Perform snapshot test
-  tbl_gt_22 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_22)
 })
 
 test_that("The direction of coloring can be column-wise or row-wise", {
@@ -923,7 +923,7 @@ test_that("The direction of coloring can be column-wise or row-wise", {
     )
 
   # Perform snapshot test
-  tbl_gt_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_1)
 
   # Use `data_color()` with `direction = "row"`
   tbl_gt_2 <-
@@ -936,7 +936,7 @@ test_that("The direction of coloring can be column-wise or row-wise", {
     )
 
   # Perform snapshot test
-  tbl_gt_2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_2)
 
   # Using a fixed domain should not result in any difference
   # between coloring that is applied column-wise or row-wise
@@ -994,7 +994,7 @@ test_that("The direction of coloring can be column-wise or row-wise", {
     )
 
   # Perform snapshot test
-  tbl_gt_3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_3)
 
   # Use `data_color()` with `direction = "row"` and `method = "quantile"`
   tbl_gt_4 <-
@@ -1007,7 +1007,7 @@ test_that("The direction of coloring can be column-wise or row-wise", {
     )
 
   # Perform snapshot test
-  tbl_gt_4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_4)
 
   # Use `data_color()` with `direction = "row"` and `method = "factor"`
   tbl_gt_5 <-
@@ -1020,7 +1020,7 @@ test_that("The direction of coloring can be column-wise or row-wise", {
     )
 
   # Perform snapshot test
-  tbl_gt_5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_5)
 })
 
 test_that("Columns can indirectly apply coloring to other columns", {
@@ -1045,7 +1045,7 @@ test_that("Columns can indirectly apply coloring to other columns", {
     )
 
   # Perform snapshot test
-  tbl_gt_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_1)
 
   # Apply coloring from one column to several different columns
   tbl_gt_2 <-
@@ -1058,7 +1058,7 @@ test_that("Columns can indirectly apply coloring to other columns", {
     )
 
   # Perform snapshot test
-  tbl_gt_2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_2)
 
   # Apply coloring from multiple columns to several columns
   # of the same multiple
@@ -1072,7 +1072,7 @@ test_that("Columns can indirectly apply coloring to other columns", {
     )
 
   # Perform snapshot test
-  tbl_gt_3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_3)
 
   # Apply coloring from multiple columns to several columns
   # of the same multiple, this time reversing the palette
@@ -1087,7 +1087,7 @@ test_that("Columns can indirectly apply coloring to other columns", {
     )
 
   # Perform snapshot test
-  tbl_gt_4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(tbl_gt_4)
 })
 
 test_that("data_color() validates its input related to color", {

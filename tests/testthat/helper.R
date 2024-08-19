@@ -126,6 +126,22 @@ generate_html_units <- function(input) {
   )
 }
 
+expect_snapshot_html <- function(gt_tbl) {
+  expect_snapshot(render_as_html(gt_tbl))
+}
+
+expect_snapshot_latex <- function(gt_tbl) {
+  expect_snapshot(as.character(as_latex(gt_tbl)))
+}
+
+expect_snapshot_word <- function(gt_tbl, ...) {
+  expect_snapshot(as_word(gt_tbl, ...))
+}
+
+expect_snapshot_rtf <- function(gt_tbl) {
+  expect_snapshot(as_rtf(gt_tbl))
+}
+
 #' Test if two gt tables are equal (or equivalent)
 #'
 #' @param gt_tbl1,gt_tbl2 A pair of gt tables to test for equality

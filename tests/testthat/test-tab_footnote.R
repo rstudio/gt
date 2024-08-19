@@ -793,9 +793,9 @@ test_that("Footnotes with no location are rendered correctly", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_1`
-  gt_footnotes_1 %>% render_as_html() %>% expect_snapshot()
-  gt_footnotes_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
-  gt_footnotes_1 %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(gt_footnotes_1)
+  expect_snapshot_latex(gt_footnotes_1)
+  expect_snapshot_rtf(gt_footnotes_1)
 
   gt_footnotes_2 <-
     gt_tbl %>%
@@ -824,9 +824,9 @@ test_that("Footnotes with no location are rendered correctly", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_4`
-  gt_footnotes_4 %>% render_as_html() %>% expect_snapshot()
-  gt_footnotes_4 %>% as_latex() %>% as.character() %>% expect_snapshot()
-  gt_footnotes_4 %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(gt_footnotes_4)
+  expect_snapshot_latex(gt_footnotes_4)
+  expect_snapshot_rtf(gt_footnotes_4)
 
   gt_footnotes_5 <-
     gt_tbl %>%
@@ -835,9 +835,9 @@ test_that("Footnotes with no location are rendered correctly", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_5`
-  gt_footnotes_5 %>% render_as_html() %>% expect_snapshot()
-  gt_footnotes_5 %>% as_latex() %>% as.character() %>% expect_snapshot()
-  gt_footnotes_5 %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(gt_footnotes_5)
+  expect_snapshot_latex(gt_footnotes_5)
+  expect_snapshot_rtf(gt_footnotes_5)
 
   gt_footnotes_6 <-
     gt_tbl %>%
@@ -848,9 +848,9 @@ test_that("Footnotes with no location are rendered correctly", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_6`
-  gt_footnotes_6 %>% render_as_html() %>% expect_snapshot()
-  gt_footnotes_6 %>% as_latex() %>% as.character() %>% expect_snapshot()
-  gt_footnotes_6 %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(gt_footnotes_6)
+  expect_snapshot_latex(gt_footnotes_6)
+  expect_snapshot_rtf(gt_footnotes_6)
 })
 
 test_that("The final placement of footnotes is correct with the 'auto' mode", {
@@ -1033,12 +1033,11 @@ test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`
     selection_text("[class='gt_row gt_left']") %>%
     expect_equal("apricot1")
 
-  exibble[1, 2] %>%
+  gt_tbl <- exibble[1, 2] %>%
     gt() %>%
     fmt_markdown(columns = char) %>%
-    tab_footnote(footnote = "note", locations = cells_body(char, 1)) %>%
-    render_as_html() %>%
-    expect_snapshot()
+    tab_footnote(footnote = "note", locations = cells_body(char, 1))
+  expect_snapshot_html(gt_tbl)
 
   exibble[1, 2] %>%
     gt() %>%
@@ -1049,12 +1048,11 @@ test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`
     selection_text("[class='gt_row gt_left']") %>%
     expect_equal(paste0("1", "\U000A0", "apricot"))
 
-  exibble[1, 2] %>%
+  gt_tbl <- exibble[1, 2] %>%
     gt() %>%
     fmt_markdown(columns = char) %>%
-    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "left") %>%
-    render_as_html() %>%
-    expect_snapshot()
+    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "left")
+  expect_snapshot_html(gt_tbl)
 })
 
 test_that("Footnotes work with group labels in 2-column stub arrangements", {
@@ -1079,9 +1077,9 @@ test_that("Footnotes work with group labels in 2-column stub arrangements", {
     )
 
   # Take snapshots of `gt_tbl`
-  gt_tbl %>% render_as_html() %>% expect_snapshot()
-  gt_tbl %>% as_latex() %>% as.character() %>% expect_snapshot()
-  gt_tbl %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl)
+  expect_snapshot_latex(gt_tbl)
+  expect_snapshot_rtf(gt_tbl)
 })
 
 test_that("tab_footnote() produces helpful error messages (#475).", {

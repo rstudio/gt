@@ -1,7 +1,7 @@
 # cols_width() works in making RTF tables
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -194,7 +194,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -387,7 +387,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -580,7 +580,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -773,7 +773,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -966,7 +966,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -1159,7 +1159,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -1352,7 +1352,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -1545,7 +1545,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -1738,7 +1738,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -1931,7 +1931,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -2124,7 +2124,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -2317,7 +2317,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -2510,7 +2510,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -2703,7 +2703,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -2896,7 +2896,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -3089,7 +3089,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -3282,7 +3282,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -3475,7 +3475,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -3668,7 +3668,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -3861,7 +3861,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -4054,7 +4054,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -4247,7 +4247,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -4440,7 +4440,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -4633,7 +4633,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -4826,7 +4826,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -5019,7 +5019,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
@@ -5212,7 +5212,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red51\green51\blue51;\red211\green211\blue211;}
       
