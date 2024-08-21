@@ -216,7 +216,7 @@ validate_currency <- function(currency, call = rlang::caller_env()) {
     currencies$curr_number,
     .ptype = character()
   )
-  if (!(currency_char %in% validate_currencies)) {
+  if (!(currency_char %in% valid_currencies)) {
     cli::cli_abort(c(
       "The supplied `currency` is not available in the list of supported currencies.",
       "i" = "Use {.run [info_currencies()](gt::info_currencies())} to see which currencies can be used.",
