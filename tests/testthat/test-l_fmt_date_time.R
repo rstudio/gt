@@ -318,3 +318,12 @@ test_that("fmt_datetime() works correctly", {
     )
   )
 })
+
+test_that("A gt table will properly output a date to LaTeX out of the box", {
+  skip()
+  tab <- gt(tibble::tibble(date = as.Date("2015-12-31"), open = 2060.5901))
+  expect_match(
+    as_latex(tab),
+    "2015-12-31"
+  )
+})
