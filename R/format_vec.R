@@ -3316,7 +3316,11 @@ vec_fmt_markdown <- function(
   if (output == "auto") {
     output <- determine_output_format()
   }
-
+  # Avoid modifying the output to base64enc in Quarto
+  if (check_quarto() && output == "html") {
+    rlang::check_installed("withr", "to use vec_fmt_markdown() in Quarto.")
+    withr::local_envvar(c("QUARTO_BIN_PATH" = ""))
+  }
   vec_fmt_out <-
     render_as_vector(
       fmt_markdown(
@@ -3364,7 +3368,7 @@ check_columns_valid_if_strict <- function(
     extra_msg = NULL,
     call = rlang::caller_env()
 ) {
-  
+
   # Don't check if strict mode is not enabled
   # strict mode is opt-in, not the default
   if (!isTRUE(getOption("gt.strict_column_fmt", FALSE))) {

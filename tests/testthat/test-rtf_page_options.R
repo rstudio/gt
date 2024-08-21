@@ -16,35 +16,36 @@ test_that("Page options can used for RTF output", {
     ) %>%
     tab_footnote(footnote = "The first footnote", locations = cells_body(columns = 1, rows = 1)) %>%
     tab_footnote(footnote = "The second footnote", locations = cells_body(columns = 2, rows = 1))
-
+  expect_snapshot_rtf(tbl_gt)
   #
   # Test RTF snapshots with varying degrees of header content and
   # different page options
   #
 
-  tbl_gt %>% as_rtf() %>% expect_snapshot()
-
-  tbl_gt %>%
+  tbl_gt_1 <- tbl_gt %>%
     tab_header(
       title = "The Table Title",
       subtitle = "The Table Subtitle"
-    ) %>% as_rtf() %>% expect_snapshot()
+    )
+  expect_snapshot_rtf(tbl_gt_1)
 
-  tbl_gt %>%
+  tbl_gt_2 <- tbl_gt %>%
     tab_header(
       title = "The Table Title",
       subtitle = "The Table Subtitle",
       preheader = "Protocol: Number #1"
-    ) %>% as_rtf() %>% expect_snapshot()
+    )
+  expect_snapshot_rtf(tbl_gt_2)
 
-  tbl_gt %>%
+  tbl_gt_3 <- tbl_gt %>%
     tab_header(
       title = "The Table Title",
       subtitle = "The Table Subtitle",
       preheader = c("Protocol: Number #1", "Population: Subset #1")
-    ) %>% as_rtf() %>% expect_snapshot()
+    )
+  expect_snapshot_rtf(tbl_gt_3)
 
-  tbl_gt %>%
+  tbl_gt_4 <- tbl_gt %>%
     tab_header(
       title = "The Table Title",
       subtitle = "The Table Subtitle",
@@ -55,10 +56,10 @@ test_that("Page options can used for RTF output", {
       page.numbering = FALSE,
       page.header.use_tbl_headings = TRUE,
       page.footer.use_tbl_notes = TRUE
-    ) %>%
-    as_rtf() %>% expect_snapshot()
+    )
+  expect_snapshot_rtf(tbl_gt_4)
 
-  tbl_gt %>%
+  tbl_gt_5 <- tbl_gt %>%
     tab_header(
       title = "The Table Title",
       subtitle = "The Table Subtitle",
@@ -69,10 +70,10 @@ test_that("Page options can used for RTF output", {
       page.numbering = TRUE,
       page.header.use_tbl_headings = TRUE,
       page.footer.use_tbl_notes = TRUE
-    ) %>%
-    as_rtf() %>% expect_snapshot()
+    )
+  expect_snapshot_rtf(tbl_gt_5)
 
-  tbl_gt %>%
+  tbl_gt_6 <- tbl_gt %>%
     tab_header(
       title = "The Table Title",
       subtitle = "The Table Subtitle",
@@ -83,10 +84,10 @@ test_that("Page options can used for RTF output", {
       page.numbering = TRUE,
       page.header.use_tbl_headings = FALSE,
       page.footer.use_tbl_notes = FALSE
-    ) %>%
-    as_rtf() %>% expect_snapshot()
+    )
+  expect_snapshot_rtf(tbl_gt_6)
 
-  tbl_gt %>%
+  tbl_gt_7 <- tbl_gt %>%
     tab_header(
       title = "The Table Title",
       subtitle = "The Table Subtitle"
@@ -96,10 +97,10 @@ test_that("Page options can used for RTF output", {
       page.numbering = TRUE,
       page.header.use_tbl_headings = TRUE,
       page.footer.use_tbl_notes = TRUE
-    ) %>%
-    as_rtf() %>% expect_snapshot()
+    )
+  expect_snapshot_rtf(tbl_gt_7)
 
-  tbl_gt %>%
+  tbl_gt_8 <- tbl_gt %>%
     tab_header(
       title = "The Table Title",
       subtitle = "The Table Subtitle",
@@ -110,10 +111,10 @@ test_that("Page options can used for RTF output", {
       page.numbering = FALSE,
       page.header.use_tbl_headings = TRUE,
       page.footer.use_tbl_notes = TRUE
-    ) %>%
-    as_rtf() %>% expect_snapshot()
+    )
+  expect_snapshot_rtf(tbl_gt_8)
 
-  tbl_gt %>%
+  tbl_gt_9 <- tbl_gt %>%
     tab_header(
       title = "The Table Title",
       subtitle = "The Table Subtitle",
@@ -124,10 +125,10 @@ test_that("Page options can used for RTF output", {
       page.numbering = TRUE,
       page.header.use_tbl_headings = TRUE,
       page.footer.use_tbl_notes = TRUE
-    ) %>%
-    as_rtf() %>% expect_snapshot()
+    )
+  expect_snapshot_rtf(tbl_gt_9)
 
-  tbl_gt %>%
+  tbl_gt_10 <- tbl_gt %>%
     tab_header(
       title = "The Table Title",
       subtitle = "The Table Subtitle",
@@ -138,10 +139,10 @@ test_that("Page options can used for RTF output", {
       page.numbering = TRUE,
       page.header.use_tbl_headings = FALSE,
       page.footer.use_tbl_notes = FALSE
-    ) %>%
-    as_rtf() %>% expect_snapshot()
+    )
+  expect_snapshot_rtf(tbl_gt_10)
 
-  tbl_gt %>%
+  tbl_gt_11 <- tbl_gt %>%
     tab_header(
       title = "The Table Title",
       subtitle = "The Table Subtitle"
@@ -151,6 +152,6 @@ test_that("Page options can used for RTF output", {
       page.numbering = TRUE,
       page.header.use_tbl_headings = TRUE,
       page.footer.use_tbl_notes = TRUE
-    ) %>%
-    as_rtf() %>% expect_snapshot()
+    )
+  expect_snapshot_rtf(tbl_gt_11)
 })

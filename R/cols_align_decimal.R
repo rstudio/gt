@@ -133,14 +133,14 @@ cols_align_decimal <- function(
   # `cols_align_decimal()` so `column_names` should be filtered
   # to those types of columns
   table_data <- dt_data_get(data = data)
-  table_data <- dplyr::select(table_data, dplyr::all_of(resolved))
+  table_data <- table_data[resolved]
 
   cols_are_numeric <-
     vapply(
       table_data,
-      FUN.VALUE = logical(1),
+      FUN.VALUE = logical(1L),
       USE.NAMES = FALSE,
-      FUN = function(x) inherits(x, "numeric") || inherits(x, "integer")
+      FUN = function(x) is.numeric(x)
     )
 
   # Subset columns to those that are numeric in the input table data

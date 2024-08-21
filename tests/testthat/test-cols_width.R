@@ -978,11 +978,10 @@ test_that("cols_width() correctly specifies LaTeX table when column widths are s
     )
 
   # Expect that all column widths are expressed as percentage of \linewidth
-  c(0.5, 0.3, 0.2, 0.1) %>%
-    pct_string() %>%
-    build_longtable_regex() %>%
-    grepl(as_latex(tbl_latex)) %>%
-    expect_true()
+  longtable_s <- build_longtable_regex(
+    pct_string(c(0.5, 0.3, 0.2, 0.1))
+  )
+  expect_match(as_latex(tbl_latex), longtable_s)
 
 
   # Check that LaTeX is correctly generated when only some
@@ -1041,7 +1040,7 @@ test_that("column widths are accurately reflected in Latex multicolumn statement
                n = runif(5),
                w = runif(5))
 
-  gt(tbl_random1,
+  gt_tbl <- gt(tbl_random1,
      rowname_col = 'x',
      row_group_as_column = FALSE) %>%
     fmt_number(decimals = 3) %>%
@@ -1051,12 +1050,8 @@ test_that("column widths are accurately reflected in Latex multicolumn statement
     tab_spanner(label = 'Spanner with a long title that should be wrapped', columns = c('y', 'z')) %>%
     tab_spanner(label = 'Spanner2', columns = c('n', 'w')) %>%
     tab_spanner(label = 'Another long spanner that needs to wrap even more than the other', columns = c('z', 'm')) %>%
-    summary_rows(fns = list("mean")) %>%
-    as_latex() %>%
-    expect_snapshot()
+    summary_rows(fns = list("mean"))
 
+  expect_snapshot(as_latex(gt_tbl))
 
 })
-
-
-

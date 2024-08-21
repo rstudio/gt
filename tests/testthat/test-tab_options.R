@@ -1431,7 +1431,7 @@ test_that("The internal `opts_df` table can be correctly modified", {
 test_that("The `opts_df` getter/setter functions properly", {
 
   # Obtain a local copy of the internal `_options` table
-  dt_options_get(data = data) %>% expect_s3_class("tbl_df")
+  expect_s3_class(dt_options_get(data = data), "tbl_df")
 
   # Get a value
   dt_options_get_value(data = data, option = "footnotes_font_size") %>%
@@ -1460,7 +1460,8 @@ test_that("All column labels can be entirely hidden from view", {
       render_as_html() %>%
       xml2::read_html() %>%
       selection_text("[class='gt_col_heading gt_right']"),
-    0)
+    0
+  )
 
   # Expect that not hiding the column labels yields a length
   # four vector when using the same search
@@ -1471,7 +1472,8 @@ test_that("All column labels can be entirely hidden from view", {
       render_as_html() %>%
       xml2::read_html() %>%
       selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']"),
-    4)
+    4
+  )
 })
 
 test_that("The row striping options work correctly", {
@@ -1486,7 +1488,8 @@ test_that("The row striping options work correctly", {
       render_as_html() %>%
       xml2::read_html() %>%
       selection_text("[class='gt_row gt_left gt_stub gt_striped']"),
-    0)
+    0
+  )
 
   # TODO: determine why this doesn't work as expected
 
@@ -1512,7 +1515,8 @@ test_that("The row striping options work correctly", {
       render_as_html() %>%
       xml2::read_html() %>%
       selection_text("[class='gt_row gt_right gt_striped']"),
-    25)
+    25
+  )
 
   # Expect that the options `row.striping.include_table_body = TRUE`
   # and `row.striping.include_stub = TRUE` will result in cells that
@@ -1785,7 +1789,7 @@ test_that("Vertical padding across several table parts can be applied", {
 
   snap_padded_tbl <- function(padding_px) {
 
-    mtcars[1:5, ] %>%
+    gt_tbl <- mtcars[1:5, ] %>%
       gt(rownames_to_stub = TRUE) %>%
       tab_header(title = "The mtcars Dataset", subtitle = "What a great dataset this is") %>%
       tab_spanner(label = "performance", columns = c(disp, hp, drat)) %>%
@@ -1797,9 +1801,8 @@ test_that("Vertical padding across several table parts can be applied", {
         heading.padding = padding_px,
         footnotes.padding = padding_px,
         source_notes.padding = padding_px
-      ) %>%
-      render_as_html() %>%
-      expect_snapshot()
+      )
+    expect_snapshot_html(gt_tbl)
   }
 
   # Generate a few snapshots at different `padding_px` amounts

@@ -20,9 +20,9 @@ test_that("The footer section formatting and options work well across all output
     )
 
   # Take snapshots of `exibble_multiline`
-  exibble_multiline %>% render_as_html() %>% expect_snapshot()
-  exibble_multiline %>% as_latex() %>% as.character() %>% expect_snapshot()
-  exibble_multiline %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(exibble_multiline)
+  expect_snapshot_latex(exibble_multiline)
+  expect_snapshot_rtf(exibble_multiline)
 
   # 2: Footer as single-line paragraphs with `sep` setting
   exibble_oneline <-
@@ -36,9 +36,9 @@ test_that("The footer section formatting and options work well across all output
     )
 
   # Take snapshots of `exibble_oneline`
-  exibble_oneline %>% render_as_html() %>% expect_snapshot()
-  exibble_oneline %>% as_latex() %>% as.character() %>% expect_snapshot()
-  exibble_oneline %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(exibble_oneline)
+  expect_snapshot_latex(exibble_oneline)
+  expect_snapshot_rtf(exibble_oneline)
 
   # 3: Preservation of raw `sep` value in HTML output
   exibble_sep_html <-
@@ -51,7 +51,7 @@ test_that("The footer section formatting and options work well across all output
     )
 
   # Take snapshot of `exibble_sep_html`
-  exibble_sep_html %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(exibble_sep_html)
 
   # 4: Preservation of raw `sep` value in LaTeX output
   exibble_sep_latex <-
@@ -65,7 +65,7 @@ test_that("The footer section formatting and options work well across all output
     )
 
   # Take snapshot of `exibble_sep_latex`
-  exibble_sep_latex %>% as_latex() %>% as.character() %>% expect_snapshot()
+  expect_snapshot_latex(exibble_sep_latex)
 
   # 5: Preservation of raw `sep` value in RTF output
   exibble_sep_rtf <-
@@ -78,5 +78,5 @@ test_that("The footer section formatting and options work well across all output
     )
 
   # Take snapshot of `exibble_sep_rtf`
-  exibble_sep_rtf %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_rtf(exibble_sep_rtf)
 })
