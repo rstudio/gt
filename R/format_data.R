@@ -528,7 +528,7 @@ fmt_scientific <- function(
               USE.NAMES = FALSE,
               FUN = function(x) {
                 if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
-                unlist(strsplit(x, "e"))[1]
+                unlist(strsplit(x, "e", fixed = TRUE))[1]
               }
             )
 
@@ -2369,7 +2369,7 @@ fmt_fraction <- function(
 
 gcd <- function(x,y) {
   r <- x %% y
-  return(ifelse(r, gcd(y, r), y))
+  ifelse(r, gcd(y, r), y)
 }
 
 make_frac <- function(x, denom, simplify = TRUE) {
@@ -6409,15 +6409,16 @@ extract_duration_pattern <- function(
 ) {
 
   x_val_i_type <-
-    dplyr::case_when(
-      value == 1 ~ "one",
-      value == 0 ~ "zero",
-      TRUE ~ "other"
+    dplyr::case_match(
+      value,
+      1 ~ "one",
+      0 ~ "zero",
+      .default = "other"
     )
 
-  pattern <- patterns[grepl(paste0(gsub("s$", "", time_p), ".*?.", x_val_i_type), names(patterns))][[1]]
+  pattern <- patterns[grepl(paste0(sub("s$", "", time_p), ".*?.", x_val_i_type), names(patterns))][[1]]
   if (!is.null(pattern) && is.na(pattern)) {
-    pattern <- patterns[grepl(paste0(gsub("s$", "", time_p), ".*?.other"), names(patterns))][[1]]
+    pattern <- patterns[grepl(paste0(sub("s$", "", time_p), ".*?.other"), names(patterns))][[1]]
   }
 
   pattern
@@ -7114,7 +7115,7 @@ fmt_tf <- function(
     # If using SVG graphics for either of `true_val` or `false_val` then
     # we'd prefer to have center alignment of the icons
     if (
-      grepl("^<svg ", true_val) || grepl("^<svg ", false_val)
+      startsWith(true_val, "<svg ") || startsWith(false_val, "<svg ")
     ) {
       alignment <- "center"
     }
@@ -8263,7 +8264,7 @@ fmt_url <- function(
         target <- target %||% "_blank"
         target_values <- NULL
 
-        if (grepl("^_", target)) {
+        if (startsWith(target, "_")) {
           target_values <- c("_blank", "_self", "_parent", "_top")
         }
 
@@ -8951,7 +8952,7 @@ fmt_email <- function(
         target <- target %||% "_blank"
         target_values <- NULL
 
-        if (grepl("^_", target)) {
+        if (startsWith(target, "_")) {
           target_values <- c("_blank", "_self", "_parent", "_top")
         }
 
@@ -9018,9 +9019,8 @@ fmt_email <- function(
                   label_separated <- unlist(strsplit(label_str, " "))
 
                 } else if (
-                  grepl("^<", label_str) &&
-                  grepl(">$", label_str) &&
-                  !grepl("^<svg", label_str)
+                  grepl("^<.*>$", label_str) &&
+                  !startsWith(label_str, "<svg")
                 ) {
 
                   label_separated <- unlist(strsplit(label_str, ">\\s*<"))
@@ -9400,7 +9400,7 @@ fmt_image <- function(
                   if (!is.null(path)) {
 
                     # Normalize ending of `path`
-                    path <- gsub("/\\s+$", "", path)
+                    path <- sub("/\\s+$", "", path)
                     uri <- paste0(path, "/", files[y])
                   } else {
                     uri <- files[y]

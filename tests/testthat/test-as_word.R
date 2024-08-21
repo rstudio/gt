@@ -93,68 +93,32 @@ test_that("word ooxml can be generated from gt object", {
   exibble_min <- exibble[1, ]
 
   ## basic table
-  exibble_min %>%
-    gt() %>%
-    as_word() %>%
-    expect_snapshot()
+  expect_snapshot_word(gt(exibble_min))
 
   ## basic table with title
-  exibble_min %>%
+  gt_tbl_1 <- exibble_min %>%
     gt() %>%
     tab_header(
       title = "TABLE TITLE",
       subtitle = "table subtitle"
-    ) %>%
-    as_word() %>%
-    expect_snapshot()
+    )
+  expect_snapshot_word(gt_tbl_1)
 
   ## basic table with title added below table
-  exibble_min %>%
-    gt() %>%
-    tab_header(
-      title = "TABLE TITLE",
-      subtitle = "table subtitle"
-    ) %>%
-    as_word(caption_location = "bottom") %>%
-    expect_snapshot()
+  expect_snapshot_word(gt_tbl_1, caption_location = "bottom")
 
   ## basic table with title embedded on the top of table
-  exibble_min %>%
-    gt() %>%
-    tab_header(
-      title = "TABLE TITLE",
-      subtitle = "table subtitle"
-    ) %>%
-    as_word(caption_location = "embed") %>%
-    expect_snapshot()
+  expect_snapshot_word(gt_tbl_1, caption_location = "embed")
 
   ## basic table with split enabled
-  exibble_min %>%
-    gt() %>%
-    tab_header(
-      title = "TABLE TITLE",
-      subtitle = "table subtitle"
-    ) %>%
-    as_word(
-      split = TRUE
-    ) %>%
-    expect_snapshot()
+  expect_snapshot_word(gt_tbl_1, split = TRUE)
 
   ## basic table with keep_with_next disabled (should only appear in the column
   ## headers)
-  exibble_min %>%
-    gt() %>%
-    tab_header(
-      title = "TABLE TITLE",
-      subtitle = "table subtitle"
-    ) %>%
-    as_word(
-      keep_with_next = FALSE
-    ) %>%
-    expect_snapshot()
+  expect_snapshot_word(gt_tbl_1, keep_with_next = FALSE)
 
   ## Table with cell styling
-  exibble[1:4,] %>%
+  gt_tbl_2 <- exibble[1:4,] %>%
     gt(rowname_col = "char") %>%
     tab_row_group("My Row Group 1",c(1:2)) %>%
     tab_row_group("My Row Group 2",c(3:4)) %>%
@@ -184,11 +148,8 @@ test_that("word ooxml can be generated from gt object", {
         color = "blue"
       ),
       locations = cells_row_groups()
-    ) %>%
-    as_word(
-      keep_with_next = FALSE
-    ) %>%
-    expect_snapshot()
+    )
+  expect_snapshot_word(gt_tbl_2, keep_with_next = FALSE)
 
   ## table with column and span styling
   gt_exibble_min <-
@@ -232,11 +193,7 @@ test_that("word ooxml escapes special characters in gt object", {
     dplyr::mutate(special_characters = "><&\n\r\"'")
 
   ## basic table
-  exibble_min %>%
-    gt() %>%
-    as_word() %>%
-    expect_snapshot()
-
+  expect_snapshot_word(gt(exibble_min))
 })
 
 test_that("word ooxml escapes special characters in gt object footer", {
@@ -245,11 +202,10 @@ test_that("word ooxml escapes special characters in gt object footer", {
   exibble_min <- exibble[1, ]
 
   ## basic table with invalid footnote
-  exibble_min %>%
+  gt_tbl <- exibble_min %>%
     gt() %>%
-    tab_footnote(footnote = "p < .05, ><&\n\r\"'") %>%
-    as_word() %>%
-    expect_snapshot()
+    tab_footnote(footnote = "p < .05, ><&\n\r\"'")
+  expect_snapshot_word(gt_tbl)
 
 })
 
@@ -1972,7 +1928,7 @@ test_that("tables preserves spaces in text & can be added to a word doc", {
     gt() %>%
     tab_style(
       style = cell_text(whitespace = "pre"),
-      location = cells_body(columns = contains("preserve"))
+      locations = cells_body(columns = contains("preserve"))
     )
 
   ## Add table to empty word document
@@ -2323,8 +2279,8 @@ test_that("markdown with img refs work",{
   skip_on_ci()
   check_suggests()
 
-  ref_png <- file.path(system.file(package = "gt"),"/graphics/test_image.png")
-  ref_svg <- file.path(system.file(package = "gt"),"/graphics/test_image.svg")
+  ref_png <- system.file("graphics", "test_image.png", package = "gt")
+  ref_svg <- system.file("graphics", "test_image.svg", package = "gt")
 
   temp_png <- file.path(tempdir(),"test_image.png")
   temp_svg <- file.path(tempdir(),"test_image.svg")
@@ -2382,9 +2338,9 @@ test_that("table with image refs work - local only",{
   skip_on_ci()
   check_suggests()
 
-  ref_png <- file.path(system.file(package = "gt"),"/graphics/test_image.png")
-  ref_svg <- file.path(system.file(package = "gt"),"/graphics/test_image.svg")
-  ref_wide_svg <- file.path(system.file(package = "gt"),"/graphics/gt_parts_of_a_table.svg")
+  ref_png <- system.file("graphics", "test_image.png", package = "gt")
+  ref_svg <- system.file("graphics", "test_image.svg", package = "gt")
+  ref_wide_svg <- system.file("graphics", "gt_parts_of_a_table.svg", package = "gt")
 
   temp_png <- file.path(tempdir(),"test_image.png")
   temp_svg <- file.path(tempdir(),"test_image.svg")
@@ -2513,9 +2469,9 @@ test_that("table with image refs work - local only - setting image widths and he
   skip_on_ci()
   check_suggests()
 
-  ref_png <- file.path(system.file(package = "gt"),"/graphics/test_image.png")
-  ref_svg <- file.path(system.file(package = "gt"),"/graphics/test_image.svg")
-  ref_wide_svg <- file.path(system.file(package = "gt"),"/graphics/gt_parts_of_a_table.svg")
+  ref_png <- system.file("graphics", "test_image.png", package = "gt")
+  ref_svg <- system.file("graphics", "test_image.svg", package = "gt")
+  ref_wide_svg <- system.file("graphics", "gt_parts_of_a_table.svg", package = "gt")
 
   temp_png <- file.path(tempdir(),"test_image.png")
   temp_svg <- file.path(tempdir(),"test_image.svg")

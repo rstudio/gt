@@ -235,9 +235,7 @@ The table that we'll create from `gtcars` will meet these requirements:
 # Create a gt table based on a preprocessed `gtcars`
 gtcars |>
   filter(ctry_origin == "Germany") |>
-  group_by(mfr) |>
-  top_n(n = 2, msrp) |>
-  ungroup() |>
+  slice_max(n = 2, msrp, by = mfr) |>
   select(mfr, model, drivetrain, msrp) |>
   gt() |>
   tab_header(title = "Select German Automobiles") |>
@@ -323,7 +321,7 @@ down_arrow <- "<span style=\"color:red\">&#9660;</span>"
 
 # Create a gt table based on a preprocessed `sp500`
 sp500 |>
-  filter(date >= start_date & date <= end_date) |>
+  filter(date >= start_date, date <= end_date) |>
   select(-adj_close) |>
   gt() |>
   tab_header(

@@ -133,14 +133,14 @@ cols_align_decimal <- function(
   # `cols_align_decimal()` so `column_names` should be filtered
   # to those types of columns
   table_data <- dt_data_get(data = data)
-  table_data <- dplyr::select(table_data, dplyr::all_of(resolved))
+  table_data <- table_data[resolved]
 
   cols_are_numeric <-
     vapply(
       table_data,
-      FUN.VALUE = logical(1),
+      FUN.VALUE = logical(1L),
       USE.NAMES = FALSE,
-      FUN = function(x) inherits(x, "numeric") || inherits(x, "integer")
+      FUN = function(x) is.numeric(x)
     )
 
   # Subset columns to those that are numeric in the input table data
@@ -173,7 +173,7 @@ cols_align_decimal <- function(
 # helper -----------------------------------
 align_to_char <- function(x, align_at = ".") {
 
-  na_x_vals <- grepl("^NA$", x)
+  na_x_vals <- x == "NA"
   no_a_char <- !grepl(align_at, x, fixed = TRUE) & !grepl("[0-9]", x)
   has_t_dec <- grepl("[0-9]\\.$", x)
 
@@ -225,7 +225,7 @@ align_to_char <- function(x, align_at = ".") {
 
       x_piece_rhs[i] <-
         gsub(
-          paste0(paste(rep("\U02007", n_char_extracted), collapse = ""), "$"),
+          paste0(strrep("\U02007", n_char_extracted), "$"),
           "",
           x_piece_rhs[i]
         )
@@ -238,15 +238,15 @@ align_to_char <- function(x, align_at = ".") {
 
   if (grepl(align_at, paste(x[!x_no_align], collapse = "|"), fixed = TRUE)) {
 
-    x_align[!nchar(x_rhs) > 0 & !grepl(align_at, x[!x_no_align], fixed = TRUE)] <-
-      sub(align_at, " ", x_align[!nchar(x_rhs) > 0], fixed = TRUE)
+    x_align[nchar(x_rhs) == 0 & !grepl(align_at, x[!x_no_align], fixed = TRUE)] <-
+      sub(align_at, " ", x_align[nchar(x_rhs) == 0], fixed = TRUE)
 
     x_align[x_align_parens] <- paste0(x_align[x_align_parens], "\U000A0")
 
   } else {
 
-    x_align[!nchar(x_rhs) > 0 & !grepl(align_at, x[!x_no_align], fixed = TRUE)] <-
-      sub(align_at, "", x_align[!nchar(x_rhs) > 0], fixed = TRUE)
+    x_align[nchar(x_rhs) == 0 & !grepl(align_at, x[!x_no_align], fixed = TRUE)] <-
+      sub(align_at, "", x_align[nchar(x_rhs) == 0], fixed = TRUE)
 
     x_align[!x_align_parens] <- paste0(x_align[!x_align_parens], "\U000A0")
   }

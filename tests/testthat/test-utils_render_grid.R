@@ -10,7 +10,7 @@ has_class <- function(layout, class) {
 
 # Layout tests ------------------------------------------------------------
 
-test_that("create_caption_component_g creates captions", {
+test_that("create_caption_component_g() creates captions", {
 
   df <- data.frame(x = 1:2, y = 3:4)
 
@@ -27,7 +27,7 @@ test_that("create_caption_component_g creates captions", {
   expect_length(test$classes[[1]], 2)
 })
 
-test_that("create_heading_component_g creates headings", {
+test_that("create_heading_component_g() creates headings", {
 
   df <- data.frame(x = 1:2, y = 3:4)
 
@@ -57,7 +57,7 @@ test_that("create_heading_component_g creates headings", {
   expect_match(test$label, "gt_footnote_marks")
 })
 
-test_that("create_columns_component_g creates columns and spanners", {
+test_that("create_columns_component_g() creates columns and spanners", {
 
   df <- data.frame(A = 1:2, B = 3:4, C = 5:6)
   gt <- gt(df)
@@ -114,7 +114,7 @@ test_that("create_columns_component_g creates columns and spanners", {
   expect_snapshot(test)
 })
 
-test_that("group_headings_g creates appropriate group headings", {
+test_that("group_headings_g() creates appropriate group headings", {
 
   df <- data.frame(x = 1:3, y = 4:6)
 
@@ -151,7 +151,7 @@ test_that("group_headings_g creates appropriate group headings", {
   expect_null(test)
 })
 
-test_that("body_cells_g creates appropriate cells", {
+test_that("body_cells_g() creates appropriate cells", {
 
   df <- data.frame(x = 1:3, y = 4:6, row = c("A", "B", "C"))
 
@@ -231,7 +231,7 @@ test_that("body_cells_g() creates appropriate cells with row_group_as_column = T
 
 })
 
-test_that("summary_rows_g creates appropriate cells for group summaries", {
+test_that("summary_rows_g() creates appropriate cells for group summaries", {
 
   df <- data.frame(x = 1:3, y = 4:6)
 
@@ -265,7 +265,7 @@ test_that("summary_rows_g creates appropriate cells for group summaries", {
   )
 })
 
-test_that("summary_rows_g creates appropriate cells for grand summaries", {
+test_that("summary_rows_g() creates appropriate cells for grand summaries", {
 
   df <- data.frame(x = 1:3, y = 4:6)
 
@@ -294,7 +294,7 @@ test_that("summary_rows_g creates appropriate cells for grand summaries", {
   )
 })
 
-test_that("create_body_component_g places group summaries correctly", {
+test_that("create_body_component_g() places group summaries correctly", {
 
   df <- data.frame(x = 1:3, y = 4:6)
 
@@ -328,7 +328,7 @@ test_that("create_body_component_g places group summaries correctly", {
   expect_equal(test$bottom[summary], rep(c(2, 6), each = 3))
 })
 
-test_that("create_body_component_g places grand summaries correctly", {
+test_that("create_body_component_g() places grand summaries correctly", {
 
   df <- data.frame(x = 1:3, y = 4:6)
 
@@ -351,7 +351,7 @@ test_that("create_body_component_g places grand summaries correctly", {
   expect_equal(test$bottom[summary], rep(4, each = 3))
 })
 
-test_that("create_source_notes_component_g creates source notes", {
+test_that("create_source_notes_component_g() creates source notes", {
 
   gt <- data.frame(x = 1:3, y = 4:6) %>%
     gt() %>%
@@ -374,7 +374,7 @@ test_that("create_source_notes_component_g creates source notes", {
   expect_equal(test$label, "Multi line")
 })
 
-test_that("create_footnotes_component_g creates footnotes", {
+test_that("create_footnotes_component_g() creates footnotes", {
 
   gt <- data.frame(x = 1:3, y = 4:6) %>%
     gt() %>%
@@ -571,7 +571,7 @@ test_that("Classes and styles are parsed correctly", {
 
 # Feature tests -----------------------------------------------------------
 
-test_that("as_gtable renders svg entries", {
+test_that("as_gtable() renders svg entries", {
 
   df <- data.frame(
     x = 1,

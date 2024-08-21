@@ -931,8 +931,8 @@ test_that("fmt_number() can render values in the Indian numbering system", {
       -Inf              #24
     )
 
-  # Create a single-column tibble with these values in `num`
-  numbers_tbl <- dplyr::tibble(num = numbers)
+  # Create a single-column data frame with these values in `num`
+  numbers_tbl <- data.frame(num = numbers)
 
   # Create a `gt_tbl` object with `gt()` and the `numbers_tbl` dataset
   tab <- gt(numbers_tbl)

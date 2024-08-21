@@ -16,6 +16,8 @@ authors:
 
 news:
   releases:
+  - text: "Version 0.11.0"
+    href: https://posit.co/blog/everything-new-thats-in-gt-0-11-0/
   - text: "Version 0.10.0"
     href: https://posit.co/blog/new-features-in-gt-0-10-0/
   - text: "Version 0.9.0"
@@ -391,6 +393,7 @@ articles:
 - title: Get started
   navbar: ~
   contents:
+  - gt
   - creating-summary-lines
 - title: Case studies
   navbar: Case studies
@@ -399,6 +402,7 @@ articles:
   - case-study-clinical-tables
 
 - title: Datasets
+  navbar: Datasets
   contents:
   - gt-datasets
 - title: Visual tests

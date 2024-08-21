@@ -3,7 +3,7 @@ title: "dplyr <-> data.table"
 subtitle: "Notes I took while learning to use data.table"
 author:
   - name: "Marc-Aurèle Rivière"
-    url: https://ma-riviere.me
+    url: https://ma-riviere.com
     orcid: 0000-0002-5108-3382
 date: "2022-05-19"
 editor: source
@@ -129,7 +129,7 @@ format_pvalue <- function(p) glue::glue("{scales::pvalue(p)} {gtools::stars.pval
 get_cell_dim <- function(x) {
   dim <- NULL
   if (is.list(x) || is.vector(x)) dim <- length(x)
-  if (length(dim(x) > 1)) dim <- glue::glue('{dim(x)[1]} x {dim(x)[2]}')
+  if (length(dim(x)) > 1) dim <- glue::glue('{dim(x)[1]} x {dim(x)[2]}')
   return(dim)
 }
 
@@ -408,7 +408,7 @@ IRIS <- as.data.table(iris)[, Species := as.character(Species)]
 
 
 ```{r}
-mtcars |> filter(cyl >= 6 & disp < 180)
+mtcars |> filter(cyl >= 6, disp < 180)
 
 MT[cyl >= 6 & disp < 180]
 ```

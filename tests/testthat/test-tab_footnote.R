@@ -46,124 +46,12 @@ data <-
     )
   )
 
-# Create a table from `gtcars` that has footnotes
-# in the column spanner labels and in the column labels
-data_2 <-
-  gtcars %>%
-  dplyr::filter(ctry_origin == "Germany") %>%
-  dplyr::group_by(mfr) %>%
-  dplyr::top_n(n = 2, msrp) %>%
-  dplyr::ungroup() %>%
-  dplyr::select(mfr, model, drivetrain, msrp) %>%
-  gt() %>%
-  tab_spanner(
-    label = "make and model",
-    id = "mm",
-    columns = c(mfr, model)
-  ) %>%
-  tab_spanner(
-    label = "specs and pricing",
-    id = "sp",
-    columns = c(drivetrain, msrp)
-  ) %>%
-  tab_footnote(
-    footnote = "Prices in USD.",
-    locations = cells_column_labels(columns = msrp)
-  ) %>%
-  tab_footnote(
-    footnote = "AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
-    locations = cells_column_labels(columns = drivetrain)
-  ) %>%
-  tab_footnote(
-    footnote = "The most important details.",
-    locations = cells_column_spanners(spanners = "sp")
-  ) %>%
-  tab_footnote(
-    footnote = "German cars only.",
-    locations = cells_column_spanners(spanners = "mm")
-  )
-
-# Create a table from `gtcars` that has footnotes
-# in group summary and grand summary cells
-data_3 <-
-  gtcars %>%
-  dplyr::filter(ctry_origin == "Germany") %>%
-  dplyr::group_by(mfr) %>%
-  dplyr::top_n(3, msrp) %>%
-  dplyr::ungroup() %>%
-  dplyr::select(mfr, model, drivetrain, msrp) %>%
-  gt(rowname_col = "model", groupname_col = "mfr") %>%
-  summary_rows(
-    groups = c("BMW", "Audi"),
-    columns = "msrp",
-    fns = list(
-      ~mean(., na.rm = TRUE),
-      ~min(., na.rm = TRUE)
-    )
-  ) %>%
-  grand_summary_rows(
-    columns = "msrp",
-    fns = list(
-      ~min(., na.rm = TRUE),
-      ~max(., na.rm = TRUE)
-    )
-  ) %>%
-  tab_footnote(
-    footnote = "Average price for BMW and Audi.",
-    locations = cells_summary(
-      groups = c("BMW", "Audi"),
-      columns = "msrp",
-      rows = starts_with("me")
-    )
-  ) %>%
-  tab_footnote(
-    footnote = "Maximum price across all cars.",
-    locations = cells_grand_summary(
-      columns = "msrp",
-      rows = starts_with("ma")
-    )
-  ) %>%
-  tab_footnote(
-    footnote = "Minimum price across all cars.",
-    locations = cells_grand_summary(
-      columns = "msrp",
-      rows = starts_with("mi")
-    )
-  )
-
-# Create a table from `sp500` that has footnotes
-# in the title and the subtitle cells
-data_4 <-
-  sp500 %>%
-  dplyr::filter(
-    date >= "2015-01-05" &
-      date <= "2015-01-10"
-  ) %>%
-  dplyr::select(-c(adj_close, volume, high, low)) %>%
-  gt() %>%
-  tab_header(
-    title = "S&P 500",
-    subtitle = "Open and Close Values"
-  ) %>%
-  tab_footnote(
-    footnote = "All values in USD.",
-    locations = list(cells_title(groups = "subtitle"))
-  ) %>%
-  tab_footnote(
-    footnote = "Standard and Poor 500.",
-    locations = list(cells_title(groups = "title"))
-  )
-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
 }
 
-test_that("tab_footnote() works correctly", {
-
-  # Check that specific suggested packages are available
-  check_suggests()
-
+test_that("tab_footnote() works correctly for in the stub and column labels", {
   # Apply a footnote to the column labels and stub cells
   tab <-
     tab_footnote(
@@ -198,23 +86,22 @@ test_that("tab_footnote() works correctly", {
       locations = cells_stub(rows = "Merc 240D")
     )
 
-  # Expect that the internal `footnotes_df` data frame will have
-  # a single row
-  dt_footnotes_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(1)
+  # Expect that the internal `footnotes_df` data frame has 1 row
+  footnotes_df <- dt_footnotes_get(data = tab)
+  expect_equal(nrow(footnotes_df), 1)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
-  dt_footnotes_get(data = tab) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c(
-        "stub", NA_character_, NA_character_, "5", "8",
-        NA_character_, "Stub cell footnote.", "auto"
-      )
+  expect_equal(
+    unlist(footnotes_df, use.names = FALSE),
+    c(
+      "stub", NA_character_, NA_character_, "5", "8",
+      NA_character_, "Stub cell footnote.", "auto"
     )
+  )
+})
+
+test_that("tab_footnote() works with cells_title()", {
 
   # Apply a footnote to the table title
   tab <-
@@ -224,23 +111,19 @@ test_that("tab_footnote() works correctly", {
       locations = cells_title(groups = "title")
     )
 
-  # Expect that the internal `footnotes_df` data frame will have
-  # a single row
-  dt_footnotes_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(1)
+  # Expect that the internal `footnotes_df` data frame has 1 row
+  footnotes_df <- dt_footnotes_get(data = tab)
+  expect_identical(nrow(footnotes_df), 1L)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
-  dt_footnotes_get(data = tab) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c(
-        "title", NA_character_, NA_character_, "1", NA_character_,
-        NA_character_, "Title footnote.", "auto"
-      )
+  expect_equal(
+    unlist(footnotes_df, use.names = FALSE),
+    c(
+      "title", NA_character_, NA_character_, "1", NA_character_,
+      NA_character_, "Title footnote.", "auto"
     )
+  )
 
   # Apply a footnote to the table subtitle
   tab <-
@@ -250,23 +133,22 @@ test_that("tab_footnote() works correctly", {
       locations = cells_title(groups = "subtitle")
     )
 
-  # Expect that the internal `footnotes_df` data frame will have
-  # a single row
-  dt_footnotes_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(1)
+  # Expect that the internal `footnotes_df` data frame has 1 row
+  footnotes_df <- dt_footnotes_get(data = tab)
+  expect_identical(nrow(footnotes_df), 1L)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
-  dt_footnotes_get(data = tab) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c(
-        "subtitle", NA_character_, NA_character_, "2", NA_character_,
-        NA_character_, "Subtitle footnote.", "auto"
-      )
+  expect_equal(
+    unlist(footnotes_df, use.names = FALSE),
+    c(
+      "subtitle", NA_character_, NA_character_, "2", NA_character_,
+      NA_character_, "Subtitle footnote.", "auto"
     )
+  )
+})
+
+test_that("tab_footnote() works with in the stubhead", {
 
   # Apply a footnote to the stubhead label
   tab <-
@@ -276,23 +158,23 @@ test_that("tab_footnote() works correctly", {
       locations = cells_stubhead()
     )
 
-  # Expect that the internal `footnotes_df` data frame will have
+  # Expect that the internal `footnotes_df` data frame has 1 row
   # a single row
-  dt_footnotes_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(1)
+  footnotes_df <- dt_footnotes_get(data = tab)
+  expect_identical(nrow(footnotes_df), 1L)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
-  dt_footnotes_get(data = tab) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c(
-        "stubhead", NA_character_, NA_character_, "2.5", NA_character_,
-        NA_character_, "Stubhead label footnote.", "auto"
-      )
+  expect_equal(
+    unlist(footnotes_df, use.names = FALSE),
+    c(
+      "stubhead", NA_character_, NA_character_, "2.5", NA_character_,
+      NA_character_, "Stubhead label footnote.", "auto"
     )
+  )
+})
+
+test_that("tab_footnote() works for summary location", {
 
   # Apply a footnote to a single cell in a group summary section
   tab <-
@@ -303,23 +185,19 @@ test_that("tab_footnote() works correctly", {
         groups = "Mercs", columns = "hp", rows = 2)
     )
 
-  # Expect that the internal `footnotes_df` data frame will have
-  # a single row
-  dt_footnotes_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(1)
+  # Expect that the internal `footnotes_df` data frame has 1 row
+  footnotes_df <- dt_footnotes_get(data = tab)
+  expect_identical(nrow(footnotes_df), 1L)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
-  dt_footnotes_get(data = tab) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c(
-        "summary_cells", "Mercs", "hp", "5", "2", NA_character_,
-        "Summary cell footnote.", "auto"
-      )
+  expect_equal(
+    unlist(footnotes_df, use.names = FALSE),
+    c(
+      "summary_cells", "Mercs", "hp", "5", "2", NA_character_,
+      "Summary cell footnote.", "auto"
     )
+  )
 
   # Apply a footnote to a single cell in a grand
   # summary section
@@ -332,24 +210,19 @@ test_that("tab_footnote() works correctly", {
       )
     )
 
-  # Expect that the internal `footnotes_df` data frame
-  # will have a single row
-  dt_footnotes_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(1)
+  # Expect that the internal `footnotes_df` data frame has 1 row
+  footnotes_df <- dt_footnotes_get(data = tab)
+  expect_identical(nrow(footnotes_df), 1L)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
-  dt_footnotes_get(data = tab) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c(
-        "grand_summary_cells", "::GRAND_SUMMARY", "wt", "6", "2",
-        NA_character_, "Grand summary cell footnote.", "auto"
-      )
+  expect_equal(
+    unlist(footnotes_df, use.names = FALSE),
+    c(
+      "grand_summary_cells", "::GRAND_SUMMARY", "wt", "6", "2",
+      NA_character_, "Grand summary cell footnote.", "auto"
     )
-
+  )
 
   # Apply a footnote to a single cell in a group
   # summary section, and, to a single cell in a grand
@@ -369,11 +242,9 @@ test_that("tab_footnote() works correctly", {
       )
     )
 
-  # Expect that the internal `footnotes_df` data frame
-  # will have two rows
-  dt_footnotes_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(2)
+  # Expect that the internal `footnotes_df` data frame has 2 rows
+  footnotes_df <- dt_footnotes_get(data = tab)
+  expect_identical(nrow(footnotes_df), 2L)
 
   # Expect certain values for each of the columns in the
   # double-row `footnotes_df` data frame
@@ -388,6 +259,65 @@ test_that("tab_footnote() works correctly", {
       "auto", "auto"
     )
   )
+})
+
+test_that("tab_footnote() adds footnote marks for in the summary stub (#1832)", {
+  # Apply a footnote to the grand summary stub cells.
+  tab1 <-
+    tab_footnote(
+      data,
+      footnote = "Grand summary stub footnote.",
+      locations = list(
+        cells_stub_grand_summary(2)
+      )
+    )
+  # A footnote in the grand summary
+  tab2 <- tab_footnote(
+    data,
+    footnote = "Summary stub mean sum footnote.",
+    locations = list(
+      # FIXME doesn't work without specifying groups manually.
+      # Because not all groups have a summary
+      cells_stub_summary(groups = c(1, 3))
+    )
+  )
+  # Expect that the internal `footnotes_df` data frame will have
+  # its `locname` column entirely populated with `gramd_summary_cell`
+  expect_setequal(
+    dt_footnotes_get(tab1)$locname,
+    c("grand_summary_cells")
+  )
+  expect_setequal(
+    dt_footnotes_get(tab2)$locname,
+    c("summary_cells")
+  )
+  # Expect the colname to be NA
+  expect_setequal(
+    dt_footnotes_get(tab1)$colname,
+    NA_character_
+  )
+  # Expect tab2 to be in hp.
+  expect_setequal(
+    dt_footnotes_get(tab2)$colname,
+    NA_character_
+  )
+  # Expect that the internal `footnotes_df` data frame will have
+  # its `text` column entirely populated with the footnote text
+  expect_setequal(
+    unlist(dt_footnotes_get(tab1)$footnotes),
+    "Grand summary stub footnote."
+  )
+  expect_setequal(
+    unlist(dt_footnotes_get(tab2)$footnotes),
+    "Summary stub mean sum footnote."
+  )
+  # Make sure there is a footnote mark in the body (i.e. before the tfoot part)
+  expect_match_html(tab1, "gt_footnote_marks.+<tfoot class")
+  expect_match_html(tab2, "gt_footnote_marks.+<tfoot class")
+
+})
+
+test_that("tab_footnote() works in row groups", {
 
   # Apply a footnote to the `Mazdas` row group cell
   tab <-
@@ -397,23 +327,22 @@ test_that("tab_footnote() works correctly", {
       locations = cells_row_groups(groups = "Mazdas")
     )
 
-  # Expect that the internal `footnotes_df` data frame
-  # will have a single row
-  dt_footnotes_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(1)
+  # Expect that the internal `footnotes_df` data frame has 1 row
+  footnotes_df <- dt_footnotes_get(data = tab)
+  expect_identical(nrow(footnotes_df), 1L)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
-  dt_footnotes_get(data = tab) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c(
-        "row_groups", "Mazdas", NA_character_, "5", NA_character_,
-        NA_character_, "Group cell footnote.", "auto"
-        )
+  expect_equal(
+    unlist(footnotes_df, use.names = FALSE),
+    c(
+      "row_groups", "Mazdas", NA_character_, "5", NA_character_,
+      NA_character_, "Group cell footnote.", "auto"
     )
+  )
+})
+
+test_that("tab_footnote() works with spanners", {
 
   # Apply a footnote to the `gear_carb_cyl` column spanner cell
   tab <-
@@ -423,23 +352,22 @@ test_that("tab_footnote() works correctly", {
       locations = cells_column_spanners(spanners = "gcc")
     )
 
-  # Expect that the internal `footnotes_df` data frame will have
-  # a single row
-  dt_footnotes_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(1)
+  # Expect that the internal `footnotes_df` data frame has 1 row
+  footnotes_df <- dt_footnotes_get(data = tab)
+  expect_identical(nrow(footnotes_df), 1L)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
-  dt_footnotes_get(data = tab) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c(
-        "columns_groups", "gcc", NA_character_, "3", NA_character_,
-        NA_character_, "Column group footnote.", "auto"
-      )
+  expect_equal(
+    unlist(footnotes_df, use.names = FALSE),
+    c(
+      "columns_groups", "gcc", NA_character_, "3", NA_character_,
+      NA_character_, "Column group footnote.", "auto"
     )
+  )
+})
+
+test_that("tab_footnote() works with cells_column_labels()", {
 
   # Apply a footnote to a single column label
   tab <-
@@ -449,23 +377,22 @@ test_that("tab_footnote() works correctly", {
       locations = cells_column_labels(columns = "gear")
     )
 
-  # Expect that the internal `footnotes_df` data frame will have
-  # a single row
-  dt_footnotes_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(1)
+  # Expect that the internal `footnotes_df` data frame has 1 row
+  footnotes_df <- dt_footnotes_get(data = tab)
+  expect_identical(nrow(footnotes_df), 1L)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
-  dt_footnotes_get(data = tab) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c(
-        "columns_columns", NA_character_, "gear", "4", NA_character_,
-        NA_character_, "Single column label footnote.", "auto"
-      )
+  expect_equal(
+    unlist(footnotes_df, use.names = FALSE),
+    c(
+      "columns_columns", NA_character_, "gear", "4", NA_character_,
+      NA_character_, "Single column label footnote.", "auto"
     )
+  )
+})
+
+test_that("tab_footnote() works with cells_body()", {
 
   # Apply a footnote to five rows of a single column
   tab <-
@@ -475,35 +402,22 @@ test_that("tab_footnote() works correctly", {
       locations = cells_body(columns = "hp", rows = 1:5)
     )
 
-  # Expect that the internal `footnotes_df` data frame will have five rows
-  dt_footnotes_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(5)
+  # Expect that the internal `footnotes_df` data frame has 5 rows
+  footnotes_df <- dt_footnotes_get(data = tab)
+  expect_equal(nrow(footnotes_df), 5)
 
   # Expect that the `rownum` values in `footnotes_df` will be 1:5
-  dt_footnotes_get(data = tab) %>%
-    dplyr::pull(rownum) %>%
-    expect_equal(1:5)
+  expect_equal(footnotes_df$rownum, 1:5)
 
   # Expect that the `text` in `footnotes_df` will be the same for
   # all five rows
-  dt_footnotes_get(data = tab) %>%
-    dplyr::pull(footnotes) %>%
-    unlist() %>%
-    unique() %>%
-    expect_equal("Five rows footnote.")
+  expect_setequal(unlist(footnotes_df$footnotes), "Five rows footnote.")
 
   # Expect that the `location` in `footnotes_df` is 'data' for all five rows
-  dt_footnotes_get(data = tab) %>%
-    dplyr::pull(locname) %>%
-    unique() %>%
-    expect_equal("data")
+  expect_setequal(footnotes_df$locname, "data")
 
   # Expect that the `colname` in `footnotes_df` is 'hp' for all five rows
-  dt_footnotes_get(data = tab) %>%
-    dplyr::pull(colname) %>%
-    unique() %>%
-    expect_equal("hp")
+  expect_setequal(footnotes_df$colname, "hp")
 
   # Apply a footnote to a single data cell; this time, use `c()`
   # to specify the `rows`
@@ -514,23 +428,19 @@ test_that("tab_footnote() works correctly", {
       locations = cells_body(columns = "disp", rows = c("Mazda RX4"))
     )
 
-  # Expect that the internal `footnotes_df` data frame will have
-  # a single row
-  dt_footnotes_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(1)
+  # Expect that the internal `footnotes_df` data frame has 1 row
+  footnotes_df <- dt_footnotes_get(data = tab)
+  expect_identical(nrow(footnotes_df), 1L)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
-  dt_footnotes_get(data = tab) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c(
-        "data", NA_character_, "disp", "5", "1",
-        NA_character_, "A footnote.", "auto"
-      )
+  expect_equal(
+    unlist(footnotes_df, use.names = FALSE),
+    c(
+      "data", NA_character_, "disp", "5", "1",
+      NA_character_, "A footnote.", "auto"
     )
+  )
 
   # Apply a footnote to a single data cell; this time, use `c()`
   # to specify the `columns`
@@ -542,52 +452,82 @@ test_that("tab_footnote() works correctly", {
     )
 
   # Expect that the internal `footnotes_df` data frame will have two rows
-  dt_footnotes_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(2)
+  footnotes_df <- dt_footnotes_get(data = tab)
+  expect_identical(nrow(footnotes_df), 2L)
 
   # Expect certain values for each of the columns in the two rows
   # of the `footnotes_df` data frame
-  dt_footnotes_get(data = tab)[1, ] %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c(
-        "data", NA_character_, "disp", "5", "1",
-        NA_character_, "A footnote.", "auto"
-      )
+  expect_equal(
+    unlist(footnotes_df[1, ], use.names = FALSE),
+    c(
+      "data", NA_character_, "disp", "5", "1",
+      NA_character_, "A footnote.", "auto"
+    )
+  )
+  expect_equal(
+    unlist(footnotes_df[2, ], use.names = FALSE),
+    c(
+      "data", NA_character_, "hp", "5", "1",
+      NA_character_, "A footnote.", "auto"
+    )
+  )
+})
+
+test_that("tab_footnote() produces the correct output.", {
+  # Create a table from `gtcars` that has footnotes
+  # in the column spanner labels and in the column labels
+  data_2 <-
+    gtcars %>%
+    dplyr::filter(ctry_origin == "Germany") %>%
+    dplyr::slice_max(n = 2, msrp, by = mfr) %>%
+    dplyr::select(mfr, model, drivetrain, msrp) %>%
+    gt() %>%
+    tab_spanner(
+      label = "make and model",
+      id = "mm",
+      columns = c(mfr, model)
+    ) %>%
+    tab_spanner(
+      label = "specs and pricing",
+      id = "sp",
+      columns = c(drivetrain, msrp)
+    ) %>%
+    tab_footnote(
+      footnote = "Prices in USD.",
+      locations = cells_column_labels(columns = msrp)
+    ) %>%
+    tab_footnote(
+      footnote = "AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
+      locations = cells_column_labels(columns = drivetrain)
+    ) %>%
+    tab_footnote(
+      footnote = "The most important details.",
+      locations = cells_column_spanners(spanners = "sp")
+    ) %>%
+    tab_footnote(
+      footnote = "German cars only.",
+      locations = cells_column_spanners(spanners = "mm")
     )
 
-  dt_footnotes_get(data = tab)[2, ] %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c(
-        "data", NA_character_, "hp", "5", "1",
-        NA_character_, "A footnote.", "auto"
-      )
-    )
-
-  # Use the `data_2` gt table as `tab`
-  tab <- data_2
+  # Check that specific suggested packages are available
+  check_suggests()
 
   # Expect that the internal `footnotes_df` data frame
   # will have four rows
-  dt_footnotes_get(data = tab) %>%
-    nrow() %>%
-    expect_equal(4)
+  footnotes_df <- dt_footnotes_get(data_2)
+  expect_identical(nrow(footnotes_df), 4L)
 
   # Expect that the internal `footnotes_df` data frame will have
   # its `locname` column entirely populated with `columns_columns`
   # and `columns_groups`
-  dt_footnotes_get(data = tab) %>%
-    dplyr::pull(locname) %>%
-    unique() %>%
-    expect_equal(c("columns_columns", "columns_groups"))
+  expect_setequal(
+    footnotes_df$locname,
+    c("columns_columns", "columns_groups")
+  )
 
   # Create a `tbl_html` object from the `tab` object
   tbl_html <-
-    tab %>%
+    data_2 %>%
     render_as_html() %>%
     xml2::read_html()
 
@@ -614,17 +554,62 @@ test_that("tab_footnote() works correctly", {
 
 test_that("The footnotes table is structured correctly", {
 
+  # Create a table from `gtcars` that has footnotes
+  # in group summary and grand summary cells
+  data_3 <-
+    gtcars %>%
+    dplyr::filter(ctry_origin == "Germany") %>%
+    dplyr::slice_max(n = 3, msrp, by = mfr) %>%
+    dplyr::select(mfr, model, drivetrain, msrp) %>%
+    gt(rowname_col = "model", groupname_col = "mfr") %>%
+    summary_rows(
+      groups = c("BMW", "Audi"),
+      columns = "msrp",
+      fns = list(
+        ~mean(., na.rm = TRUE),
+        ~min(., na.rm = TRUE)
+      )
+    ) %>%
+    grand_summary_rows(
+      columns = "msrp",
+      fns = list(
+        ~min(., na.rm = TRUE),
+        ~max(., na.rm = TRUE)
+      )
+    ) %>%
+    tab_footnote(
+      footnote = "Average price for BMW and Audi.",
+      locations = cells_summary(
+        groups = c("BMW", "Audi"),
+        columns = "msrp",
+        rows = starts_with("me")
+      )
+    ) %>%
+    tab_footnote(
+      footnote = "Maximum price across all cars.",
+      locations = cells_grand_summary(
+        columns = "msrp",
+        rows = starts_with("ma")
+      )
+    ) %>%
+    tab_footnote(
+      footnote = "Minimum price across all cars.",
+      locations = cells_grand_summary(
+        columns = "msrp",
+        rows = starts_with("mi")
+      )
+    )
   # Extract `footnotes_resolved` and `list_of_summaries`
   footnotes_tbl <- dt_footnotes_get(data = data_3)
 
   # Expect that the `footnotes_resolved` object inherits
   # from `tbl_df`
-  expect_s3_class(footnotes_tbl, "tbl_df")
+  expect_s3_class(footnotes_tbl, "data.frame")
 
   # Expect that there are specific column names in
   # this tibble
-  expect_equal(
-    colnames(footnotes_tbl),
+  expect_named(
+    footnotes_tbl,
     c("locname", "grpname", "colname", "locnum", "rownum",
       "colnum", "footnotes", "placement")
   )
@@ -649,17 +634,43 @@ test_that("The footnotes table is structured correctly", {
   )
   expect_equal(footnotes_tbl$placement, rep("auto", 4))
 
+})
+
+test_that("tab_footnote() produces the correct output.", {
+  # Create a table from `sp500` that has footnotes
+  # in the title and the subtitle cells
+  data_4 <-
+    sp500 %>%
+    dplyr::filter(
+      date >= "2015-01-05",
+      date <= "2015-01-10"
+    ) %>%
+    dplyr::select(-c(adj_close, volume, high, low)) %>%
+    gt() %>%
+    tab_header(
+      title = "S&P 500",
+      subtitle = "Open and Close Values"
+    ) %>%
+    tab_footnote(
+      footnote = "All values in USD.",
+      locations = list(cells_title(groups = "subtitle"))
+    ) %>%
+    tab_footnote(
+      footnote = "Standard and Poor 500.",
+      locations = list(cells_title(groups = "title"))
+    )
+
   # Extract `footnotes_resolved`
   footnotes_tbl <- dt_footnotes_get(data = data_4)
 
   # Expect that the `footnotes_resolved` object inherits
   # from `tbl_df`
-  expect_s3_class(footnotes_tbl, "tbl_df")
+  expect_s3_class(footnotes_tbl, "data.frame")
 
   # Expect that there are specific column names in
   # this tibble
-  expect_equal(
-    colnames(footnotes_tbl),
+  expect_named(
+    footnotes_tbl,
     c(
       "locname", "grpname", "colname", "locnum",
       "rownum", "colnum", "footnotes", "placement"
@@ -704,9 +715,7 @@ test_that("The `list_of_summaries` table is structured correctly", {
   gtcars_built <-
     gtcars %>%
     dplyr::filter(ctry_origin == "Germany") %>%
-    dplyr::group_by(mfr) %>%
-    dplyr::top_n(3, msrp) %>%
-    dplyr::ungroup() %>%
+    dplyr::slice_max(n = 3, msrp, by = mfr) %>%
     dplyr::select(mfr, model, drivetrain, msrp) %>%
     gt(rowname_col = "model", groupname_col = "mfr") %>%
     summary_rows(
@@ -784,9 +793,9 @@ test_that("Footnotes with no location are rendered correctly", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_1`
-  gt_footnotes_1 %>% render_as_html() %>% expect_snapshot()
-  gt_footnotes_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
-  gt_footnotes_1 %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(gt_footnotes_1)
+  expect_snapshot_latex(gt_footnotes_1)
+  expect_snapshot_rtf(gt_footnotes_1)
 
   gt_footnotes_2 <-
     gt_tbl %>%
@@ -804,16 +813,9 @@ test_that("Footnotes with no location are rendered correctly", {
 
   # Expect that `gt_footnotes_2` and `gt_footnotes_3` should be rendered the
   # same across the supported formats
-  expect_equal(
-    gt_footnotes_2 %>% render_as_html(), gt_footnotes_3 %>% render_as_html()
-  )
-  expect_equal(
-    gt_footnotes_2 %>% as_latex() %>% as.character(),
-    gt_footnotes_3 %>% as_latex() %>% as.character()
-  )
-  expect_equal(
-    gt_footnotes_2 %>% as_rtf(), gt_footnotes_3 %>% as_rtf()
-  )
+  expect_equal_gt(gt_footnotes_2, gt_footnotes_3, f = render_as_html)
+  expect_equal_gt(gt_footnotes_2, gt_footnotes_3, f = as_latex)
+  expect_equal_gt(gt_footnotes_2, gt_footnotes_3, f = as_rtf)
 
   gt_footnotes_4 <-
     gt_tbl %>%
@@ -822,9 +824,9 @@ test_that("Footnotes with no location are rendered correctly", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_4`
-  gt_footnotes_4 %>% render_as_html() %>% expect_snapshot()
-  gt_footnotes_4 %>% as_latex() %>% as.character() %>% expect_snapshot()
-  gt_footnotes_4 %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(gt_footnotes_4)
+  expect_snapshot_latex(gt_footnotes_4)
+  expect_snapshot_rtf(gt_footnotes_4)
 
   gt_footnotes_5 <-
     gt_tbl %>%
@@ -833,9 +835,9 @@ test_that("Footnotes with no location are rendered correctly", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_5`
-  gt_footnotes_5 %>% render_as_html() %>% expect_snapshot()
-  gt_footnotes_5 %>% as_latex() %>% as.character() %>% expect_snapshot()
-  gt_footnotes_5 %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(gt_footnotes_5)
+  expect_snapshot_latex(gt_footnotes_5)
+  expect_snapshot_rtf(gt_footnotes_5)
 
   gt_footnotes_6 <-
     gt_tbl %>%
@@ -846,9 +848,9 @@ test_that("Footnotes with no location are rendered correctly", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_6`
-  gt_footnotes_6 %>% render_as_html() %>% expect_snapshot()
-  gt_footnotes_6 %>% as_latex() %>% as.character() %>% expect_snapshot()
-  gt_footnotes_6 %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(gt_footnotes_6)
+  expect_snapshot_latex(gt_footnotes_6)
+  expect_snapshot_rtf(gt_footnotes_6)
 })
 
 test_that("The final placement of footnotes is correct with the 'auto' mode", {
@@ -1031,12 +1033,11 @@ test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`
     selection_text("[class='gt_row gt_left']") %>%
     expect_equal("apricot1")
 
-  exibble[1, 2] %>%
+  gt_tbl <- exibble[1, 2] %>%
     gt() %>%
     fmt_markdown(columns = char) %>%
-    tab_footnote(footnote = "note", locations = cells_body(char, 1)) %>%
-    render_as_html() %>%
-    expect_snapshot()
+    tab_footnote(footnote = "note", locations = cells_body(char, 1))
+  expect_snapshot_html(gt_tbl)
 
   exibble[1, 2] %>%
     gt() %>%
@@ -1047,12 +1048,11 @@ test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`
     selection_text("[class='gt_row gt_left']") %>%
     expect_equal(paste0("1", "\U000A0", "apricot"))
 
-  exibble[1, 2] %>%
+  gt_tbl <- exibble[1, 2] %>%
     gt() %>%
     fmt_markdown(columns = char) %>%
-    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "left") %>%
-    render_as_html() %>%
-    expect_snapshot()
+    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "left")
+  expect_snapshot_html(gt_tbl)
 })
 
 test_that("Footnotes work with group labels in 2-column stub arrangements", {
@@ -1077,9 +1077,9 @@ test_that("Footnotes work with group labels in 2-column stub arrangements", {
     )
 
   # Take snapshots of `gt_tbl`
-  gt_tbl %>% render_as_html() %>% expect_snapshot()
-  gt_tbl %>% as_latex() %>% as.character() %>% expect_snapshot()
-  gt_tbl %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl)
+  expect_snapshot_latex(gt_tbl)
+  expect_snapshot_rtf(gt_tbl)
 })
 
 test_that("tab_footnote() produces helpful error messages (#475).", {

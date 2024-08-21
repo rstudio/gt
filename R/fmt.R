@@ -59,7 +59,10 @@
 #'
 #'   `function|list of functions` // **required**
 #'
-#'   Either a single formatting function or a named list of functions.
+#'   Either a single formatting function or a named list of functions. Can also
+#'   be anonymous functions, in both base R (`\(x) x + 1`) and `rlang`
+#'   (`~.x + 1`) syntax.
+#'
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -124,9 +127,12 @@ fmt <- function(
 
   # If a single function is supplied to `fns` then
   # repackage that into a list as the `default` function
-  if (is.function(fns)) {
+  if (!is.list(fns)) {
     fns <- list(default = fns)
   }
+
+  # Convert the `fns` with rlang, so that purrr-style works
+  fns <- lapply(fns, rlang::as_function)
 
   # Create the `formatter_list`, which is a bundle of
   # formatting functions for specific columns and rows
@@ -635,7 +641,7 @@ format_num_to_str <- function(
     is_inf <- grepl("Inf", x_str, fixed = TRUE)
     x_str_numeric <- x_str[!is_inf]
     has_decimal <- grepl(".", x_str_numeric, fixed = TRUE)
-    is_negative <- grepl("^-", x_str_numeric)
+    is_negative <- startsWith(x_str_numeric, "-")
 
     integer_parts <- sub("\\..*", "", x_str_numeric)
 
@@ -757,23 +763,22 @@ to_latex_math_mode <- function(x, context) {
 
     return(x)
 
-  } else {
-
-    # Ensure that `$` signs only surround the correct number parts
-    # - certain LaTeX marks operate only in text mode and we need to
-    #   conditionally surround only the number portion in these cases
-    # - right now, the only marks that need to be situated outside of
-    #   the math context are the per mille and per myriad (10,000)
-    #   marks (provided by the `fmt_per()` function)
-    if (all(grepl("\\\\textper(ten)?thousand$", x))) {
-      out <- paste0("$", x)
-      out <- gsub("(\\s*?\\\\textper(ten)?thousand)", "$\\1", out)
-    } else {
-      out <- paste_between(x, x_2 = c("$", "$"))
-    }
-
-    return(out)
   }
+
+  # Ensure that `$` signs only surround the correct number parts
+  # - certain LaTeX marks operate only in text mode and we need to
+  #   conditionally surround only the number portion in these cases
+  # - right now, the only marks that need to be situated outside of
+  #   the math context are the per mille and per myriad (10,000)
+  #   marks (provided by the `fmt_per()` function)
+  if (all(grepl("\\\\textper(ten)?thousand$", x))) {
+    out <- paste0("$", x)
+    out <- gsub("(\\s*?\\\\textper(ten)?thousand)", "$\\1", out)
+  } else {
+    out <- paste_between(x, x_2 = c("$", "$"))
+  }
+
+  return(out)
 }
 
 #' Obtain the contextually correct minus mark

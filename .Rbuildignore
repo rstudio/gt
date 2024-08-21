@@ -180,4 +180,6 @@ tests/testthat/test-util_functions.R
 tests/testthat/test-utils_plots.R
 tests/testthat/test-utils_render_html.R
 tests/testthat/test-utils_units.R
+
+tests/testthat/_snaps/utils.md
 tests/testthat/test-utils.R

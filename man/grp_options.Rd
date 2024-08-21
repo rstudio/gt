@@ -257,7 +257,7 @@ The font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{column_labels},
 \code{row_group}, \code{footnotes}, and \code{source_notes}. Can be specified as a
 single-length character vector with units of pixels (e.g., \verb{12px}) or as a
-percentage (e.g., \verb{80\\\%}). If provided as a single-length numeric vector,
+percentage (e.g., \verb{80\%}). If provided as a single-length numeric vector,
 it is assumed that the value is given in units of pixels. The \code{\link[=px]{px()}} and
 \code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
 obtain values as pixel or percentage units.}

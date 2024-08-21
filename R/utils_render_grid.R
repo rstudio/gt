@@ -949,16 +949,21 @@ render_grid_svg <- function(label, style, margin) {
 
   # Try if any height is declared in style attribute
   if (any(grepl("^height:", svg_style))) {
-    height <- gsub("^height:", "", svg_style[grep("^height:", svg_style)]) %>%
-      parse_fontsize(style$text_gp$fontsize) %>%
-      grid::unit(.grid_unit)
+    height <- gsub("^height:", "", svg_style[grep("^height:", svg_style)])
+    height <-
+      grid::unit(
+        parse_fontsize(height, style$text_gp$fontsize),
+        .grid_unit
+      )
   }
 
   # Try if any width is declared in style attribute
   if (any(grepl("^width:", svg_style))) {
-    width <- gsub("^width:", "", svg_style[grep("^width:", svg_style)]) %>%
-      parse_fontsize(style$text_gp$fontsize) %>%
-      grid::unit(.grid_unit)
+    width <- sub("^width:", "", svg_style[grep("^width:", svg_style)])
+    width <- grid::unit(
+      parse_fontsize(width, style$text_gp$fontsize),
+      .grid_unit
+    )
   }
 
   if (is.null(width) || is.null(height)) {
@@ -1022,9 +1027,8 @@ render_grid_svg <- function(label, style, margin) {
 
   raster <- try_fetch(
     {
-      svg_string %>%
         # charToRaw("") return character(0)
-        charToRaw() %>%
+        charToRaw(svg_string) %>%
         rsvg::rsvg_nativeraster(width = w) %>%
         grid::rasterGrob(
           width = width, height = height,
@@ -1381,7 +1385,7 @@ parse_css <- function(data) {
   # Find first and last line of definitions
   start <- grep("\\{$", css)
   end   <- which(css == "}")
-  if (!length(start) == length(end)) {
+  if (length(start) != length(end)) {
     cli::cli_abort("Formatting in {.fn compile_css} is unexpected.")
   }
 
@@ -1408,7 +1412,7 @@ parse_css <- function(data) {
   classes <- Map(`:`, start + 1, end - 1)
   names(classes) <- names
   classes <- lapply(classes, function(x) unlist(split[x], FALSE))
-  classes <- classes[grepl("^gt_", names(classes))]
+  classes <- classes[startsWith(names(classes), "gt_")]
 
   # There are two entries for gt_table that we merge here
   is_table <- which(names(classes) == "gt_table")

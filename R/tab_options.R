@@ -105,7 +105,7 @@
 #'   elements: `heading.title`, `heading.subtitle`, `column_labels`,
 #'   `row_group`, `footnotes`, and `source_notes`. Can be specified as a
 #'   single-length character vector with units of pixels (e.g., `12px`) or as a
-#'   percentage (e.g., `80\%`). If provided as a single-length numeric vector,
+#'   percentage (e.g., `80%`). If provided as a single-length numeric vector,
 #'   it is assumed that the value is given in units of pixels. The [px()] and
 #'   [pct()] helper functions can also be used to pass in numeric values and
 #'   obtain values as pixel or percentage units.

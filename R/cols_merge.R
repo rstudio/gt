@@ -245,7 +245,7 @@ cols_merge <- function(
 
     hide_columns_from_supplied <- base::intersect(hide_columns, columns)
 
-    if (length(base::setdiff(hide_columns, columns) > 0)) {
+    if (length(base::setdiff(hide_columns, columns)) > 0) {
       cli::cli_warn(c(
         "Only a subset of columns supplied in `columns` will be hidden.",
         "*" = "Use an additional `cols_hide()` expression to hide any

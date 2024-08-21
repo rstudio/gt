@@ -807,7 +807,7 @@ normalize_summary_fns <- function(fns) {
   summary_fns <- list()
 
   if (rlang::is_formula(fns)) {
-    fns <- 
+    fns <-
       list(
         rlang::new_formula(
           lhs = rlang::f_lhs(fns),
@@ -1033,7 +1033,7 @@ normalize_fmt_fns <- function(fmt) {
   }
 
   if (rlang::is_formula(fmt)) {
-    fmt <- 
+    fmt <-
       list(
         rlang::new_formula(
           lhs = rlang::f_lhs(fmt),

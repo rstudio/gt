@@ -1,38 +1,34 @@
 test_that("A table header can be removed using `rm_header()`", {
 
   # Perform a snapshot test where an HTML table contains a title and a subtitle
-  exibble %>%
+  gt_tbl <- exibble %>%
     gt() %>%
-    tab_header(title = "test title", subtitle = "test subtitle") %>%
-    render_as_html() %>%
-    expect_snapshot()
+    tab_header(title = "test title", subtitle = "test subtitle")
+  expect_snapshot_html(gt_tbl)
 
   # Expect that we can remove the title and subtitle with `rm_header()`
-  exibble %>%
+  gt_tbl <- exibble %>%
     gt() %>%
     tab_header(title = "test title", subtitle = "") %>%
-    rm_header() %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_header()
+  expect_snapshot_html(gt_tbl)
 
   # Expect that removing a header creates a table no different than
   # one never having a header in the table object
-  expect_equal(
+  expect_equal_gt(
     exibble %>%
       gt() %>%
       tab_header(title = "test title", subtitle = "test subtitle") %>%
-      rm_header() %>%
-      render_as_html(),
+      rm_header(),
     exibble %>%
-      gt() %>%
-      render_as_html()
+      gt()
   )
 
   # Expect that removing a non-existent header isn't different that
   # never having one in the table object
-  expect_equal(
-    exibble %>% gt() %>% render_as_html(),
-    exibble %>% gt() %>% rm_header() %>% render_as_html()
+  expect_equal_gt(
+    exibble %>% gt(),
+    exibble %>% gt() %>% rm_header()
   )
 
   # If there isn't a header in the input table the function should
@@ -46,38 +42,34 @@ test_that("Stubhead labels can be removed using `rm_stubhead()`", {
 
   # Perform a snapshot test where an HTML table contains a stub
   # and a corresponding stubhead label
-  exibble %>%
+  gt_tbl <- exibble %>%
     gt(rowname_col = "row") %>%
-    tab_stubhead(label = "Stubhead Label") %>%
-    render_as_html() %>%
-    expect_snapshot()
+    tab_stubhead(label = "Stubhead Label")
+  expect_snapshot_html(gt_tbl)
 
   # Expect that we can remove the stubhead label with `rm_stubhead()`
-  exibble %>%
+  gt_tbl <- exibble %>%
     gt(rowname_col = "row") %>%
     tab_stubhead(label = "Stubhead Label") %>%
-    rm_stubhead() %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_stubhead()
+  expect_snapshot_html(gt_tbl)
 
   # Expect that removing the stubhead label creates a table no different than
   # one never having the label in the table object
-  expect_equal(
+  expect_equal_gt(
     exibble %>%
       gt(rowname_col = "row") %>%
       tab_stubhead(label = "Stubhead Label") %>%
-      rm_stubhead() %>%
-      render_as_html(),
+      rm_stubhead(),
     exibble %>%
-      gt(rowname_col = "row") %>%
-      render_as_html()
+      gt(rowname_col = "row")
   )
 
   # Expect that removing a non-existent stubhead label isn't different that
   # never having one in the table object
-  expect_equal(
-    exibble %>% gt(rowname_col = "row") %>% render_as_html(),
-    exibble %>% gt(rowname_col = "row") %>% rm_stubhead() %>% render_as_html()
+  expect_equal_gt(
+    exibble %>% gt(rowname_col = "row"),
+    exibble %>% gt(rowname_col = "row") %>% rm_stubhead()
   )
 
   # If there isn't a stubhead label or even a stub in the input table
@@ -94,7 +86,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
 
   # Perform a snapshot test where an HTML table contains spanners over
   # two different levels (`1` and `2`)
-  gtcars %>%
+  gt_tbl <- gtcars %>%
     dplyr::select(
       -mfr, -trim, bdy_style, drivetrain,
       -drivetrain, -trsmn, -ctry_origin
@@ -110,12 +102,11 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
         hp, hp_rpm, trq, trq_rpm,
         mpg_c, mpg_h
       )
-    ) %>%
-    render_as_html() %>%
-    expect_snapshot()
+    )
+  expect_snapshot_html(gt_tbl)
 
   # Expect that all spanner column labels can be removed with `rm_spanners()`
-  gtcars %>%
+  gt_tbl <- gtcars %>%
     dplyr::select(
       -mfr, -trim, bdy_style, drivetrain,
       -drivetrain, -trsmn, -ctry_origin
@@ -132,12 +123,11 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
         mpg_c, mpg_h
       )
     ) %>%
-    rm_spanners() %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_spanners()
+  expect_snapshot_html(gt_tbl)
 
   # Expect that spanners selected via ID can be selectively removed
-  gtcars %>%
+  gt_tbl <- gtcars %>%
     dplyr::select(
       -mfr, -trim, bdy_style, drivetrain,
       -drivetrain, -trsmn, -ctry_origin
@@ -154,11 +144,10 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
         mpg_c, mpg_h
       )
     ) %>%
-    rm_spanners(spanners = "HP") %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_spanners(spanners = "HP")
+  expect_snapshot_html(gt_tbl)
 
-  gtcars %>%
+  gt_tbl <- gtcars %>%
     dplyr::select(
       -mfr, -trim, bdy_style, drivetrain,
       -drivetrain, -trsmn, -ctry_origin
@@ -175,11 +164,10 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
         mpg_c, mpg_h
       )
     ) %>%
-    rm_spanners(spanners = "Torque") %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_spanners(spanners = "Torque")
+  expect_snapshot_html(gt_tbl)
 
-  gtcars %>%
+  gt_tbl <- gtcars %>%
     dplyr::select(
       -mfr, -trim, bdy_style, drivetrain,
       -drivetrain, -trsmn, -ctry_origin
@@ -196,11 +184,10 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
         mpg_c, mpg_h
       )
     ) %>%
-    rm_spanners(spanners = "MPG") %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_spanners(spanners = "MPG")
+  expect_snapshot_html(gt_tbl)
 
-  gtcars %>%
+  gt_tbl <- gtcars %>%
     dplyr::select(
       -mfr, -trim, bdy_style, drivetrain,
       -drivetrain, -trsmn, -ctry_origin
@@ -217,11 +204,10 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
         mpg_c, mpg_h
       )
     ) %>%
-    rm_spanners(spanners = "Performance") %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_spanners(spanners = "Performance")
+  expect_snapshot_html(gt_tbl)
 
-  gtcars %>%
+  gt_tbl <- gtcars %>%
     dplyr::select(
       -mfr, -trim, bdy_style, drivetrain,
       -drivetrain, -trsmn, -ctry_origin
@@ -238,11 +224,10 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
         mpg_c, mpg_h
       )
     ) %>%
-    rm_spanners(spanners = c("HP", "Torque", "MPG")) %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_spanners(spanners = c("HP", "Torque", "MPG"))
+  expect_snapshot_html(gt_tbl)
 
-  gtcars %>%
+  gt_tbl <- gtcars %>%
     dplyr::select(
       -mfr, -trim, bdy_style, drivetrain,
       -drivetrain, -trsmn, -ctry_origin
@@ -259,13 +244,12 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
         mpg_c, mpg_h
       )
     ) %>%
-    rm_spanners(spanners = c("HP", "Torque", "MPG", "Performance")) %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_spanners(spanners = c("HP", "Torque", "MPG", "Performance"))
+  expect_snapshot_html(gt_tbl)
 
   # Expect that all spanner column labels of targeted levels can be
   # removed from the table
-  gtcars %>%
+  gt_tbl <- gtcars %>%
     dplyr::select(
       -mfr, -trim, bdy_style, drivetrain,
       -drivetrain, -trsmn, -ctry_origin
@@ -282,11 +266,10 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
         mpg_c, mpg_h
       )
     ) %>%
-    rm_spanners(levels = 1) %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_spanners(levels = 1)
+  expect_snapshot_html(gt_tbl)
 
-  gtcars %>%
+  gt_tbl <- gtcars %>%
     dplyr::select(
       -mfr, -trim, bdy_style, drivetrain,
       -drivetrain, -trsmn, -ctry_origin
@@ -303,11 +286,10 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
         mpg_c, mpg_h
       )
     ) %>%
-    rm_spanners(levels = 2) %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_spanners(levels = 2)
+  expect_snapshot_html(gt_tbl)
 
-  gtcars %>%
+  gt_tbl <- gtcars %>%
     dplyr::select(
       -mfr, -trim, bdy_style, drivetrain,
       -drivetrain, -trsmn, -ctry_origin
@@ -324,13 +306,12 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
         mpg_c, mpg_h
       )
     ) %>%
-    rm_spanners(levels = 1:2) %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_spanners(levels = 1:2)
+  expect_snapshot_html(gt_tbl)
 
   # Expect that select helpers can be used to target the ID values
   # of the spanner column labels
-  expect_equal(
+  expect_equal_gt(
     gtcars %>%
       dplyr::select(
         -mfr, -trim, bdy_style, drivetrain,
@@ -348,8 +329,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
           mpg_c, mpg_h
         )
       ) %>%
-      rm_spanners(spanners = "Performance") %>%
-      render_as_html(),
+      rm_spanners(spanners = "Performance"),
     gtcars %>%
       dplyr::select(
         -mfr, -trim, bdy_style, drivetrain,
@@ -367,8 +347,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
           mpg_c, mpg_h
         )
       ) %>%
-      rm_spanners(spanners = starts_with("Perf")) %>%
-      render_as_html()
+      rm_spanners(spanners = starts_with("Perf"))
   )
 
   # Expect that a select expression that matches nothing will:
@@ -394,7 +373,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
       ) %>%
       rm_spanners(spanners = matches("nothing"))
   )
-  expect_equal(
+  expect_equal_gt(
     gtcars %>%
       dplyr::select(
         -mfr, -trim, bdy_style, drivetrain,
@@ -412,8 +391,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
           mpg_c, mpg_h
         )
       ) %>%
-      rm_spanners(spanners = matches("nothing")) %>%
-      render_as_html(),
+      rm_spanners(spanners = matches("nothing")),
     gtcars %>%
       dplyr::select(
         -mfr, -trim, bdy_style, drivetrain,
@@ -430,13 +408,12 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
           hp, hp_rpm, trq, trq_rpm,
           mpg_c, mpg_h
         )
-      ) %>%
-      render_as_html()
+      )
   )
 
   # Expect that `TRUE` has the same effect as `everything()` when used as
   # a value for the `spanners` argument
-  expect_equal(
+  expect_equal_gt(
     gtcars %>%
       dplyr::select(
         -mfr, -trim, bdy_style, drivetrain,
@@ -454,8 +431,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
           mpg_c, mpg_h
         )
       ) %>%
-      rm_spanners(spanners = everything()) %>%
-      render_as_html(),
+      rm_spanners(spanners = everything()),
     gtcars %>%
       dplyr::select(
         -mfr, -trim, bdy_style, drivetrain,
@@ -473,8 +449,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
           mpg_c, mpg_h
         )
       ) %>%
-      rm_spanners(spanners = TRUE) %>%
-      render_as_html()
+      rm_spanners(spanners = TRUE)
   )
 
   # Don't expect an error if targeting levels (in the `levels` arg of
@@ -539,55 +514,49 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
 test_that("Table footnotes can be removed using `rm_footnotes()`", {
 
   # Perform a snapshot test where an HTML table contains two footnotes
-  exibble %>%
+  gt_tbl <- exibble %>%
     gt() %>%
     tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
-    tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
-    render_as_html() %>%
-    expect_snapshot()
+    tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2))
+  expect_snapshot_html(gt_tbl)
 
   # Expect that we can remove both footnotes with `rm_footnotes()`
-  exibble %>%
+  gt_tbl <- exibble %>%
     gt() %>%
     tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
     tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
-    rm_footnotes() %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_footnotes()
+  expect_snapshot_html(gt_tbl)
 
   # Expect that we can remove the first footnote with `rm_footnotes()`
-  exibble %>%
+  gt_tbl <- exibble %>%
     gt() %>%
     tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
     tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
-    rm_footnotes(footnotes = 1) %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_footnotes(footnotes = 1)
+  expect_snapshot_html(gt_tbl)
 
   # Expect that we can remove the second footnote with `rm_footnotes()`
-  exibble %>%
+  gt_tbl <- exibble %>%
     gt() %>%
     tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
     tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
-    rm_footnotes(footnotes = 2) %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_footnotes(footnotes = 2)
+  expect_snapshot_html(gt_tbl)
 
   # Expect that we can remove both footnotes with `rm_footnotes()`
   # in two different ways
-  expect_equal(
+  expect_equal_gt(
     exibble %>%
       gt() %>%
       tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
       tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
-      rm_footnotes() %>%
-      render_as_html(),
+      rm_footnotes(),
     exibble %>%
       gt() %>%
       tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
       tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
-      rm_footnotes(footnotes = 1:2) %>%
-      render_as_html()
+      rm_footnotes(footnotes = 1:2)
   )
 
   # Expect an error when providing any integer values that don't correspond
@@ -620,18 +589,16 @@ test_that("Table footnotes can be removed using `rm_footnotes()`", {
       tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
       rm_footnotes(footnotes = matches("nothing"))
   )
-  expect_equal(
+  expect_equal_gt(
     exibble %>%
       gt() %>%
       tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
       tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
-      rm_footnotes(footnotes = matches("nothing")) %>%
-      render_as_html(),
+      rm_footnotes(footnotes = matches("nothing")),
     exibble %>%
       gt() %>%
       tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
-      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
-      render_as_html()
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2))
   )
 
   # If there are no footnotes the function should return the
@@ -641,69 +608,61 @@ test_that("Table footnotes can be removed using `rm_footnotes()`", {
       gt() %>%
       rm_footnotes(footnotes = 1:100)
   )
-  expect_equal(
+  expect_equal_gt(
     exibble %>%
       gt() %>%
-      rm_footnotes(footnotes = 1:100) %>%
-      render_as_html(),
+      rm_footnotes(footnotes = 1:100),
     exibble %>%
-      gt() %>%
-      render_as_html()
+      gt()
   )
 })
 
 test_that("Table source notes can be removed using `rm_source_notes()`", {
 
   # Perform a snapshot test where an HTML table contains two source notes
-  exibble %>%
+  gt_tbl <- exibble %>%
     gt() %>%
     tab_source_note(source_note = "Source Note 1") %>%
-    tab_source_note(source_note = "Source Note 2") %>%
-    render_as_html() %>%
-    expect_snapshot()
+    tab_source_note(source_note = "Source Note 2")
+  expect_snapshot_html(gt_tbl)
 
   # Expect that we can remove both source notes with `rm_source_notes()`
-  exibble %>%
+  gt_tbl <- exibble %>%
     gt() %>%
     tab_source_note(source_note = "Source Note 1") %>%
     tab_source_note(source_note = "Source Note 2") %>%
-    rm_source_notes() %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_source_notes()
+  expect_snapshot_html(gt_tbl)
 
   # Expect that we can remove the first source note with `rm_source_notes()`
-  exibble %>%
+  gt_tbl <- exibble %>%
     gt() %>%
     tab_source_note(source_note = "Source Note 1") %>%
     tab_source_note(source_note = "Source Note 2") %>%
-    rm_source_notes(source_notes = 1) %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_source_notes(source_notes = 1)
+  expect_snapshot_html(gt_tbl)
 
   # Expect that we can remove the second source note with `rm_source_notes()`
-  exibble %>%
+  gt_tbl <- exibble %>%
     gt() %>%
     tab_source_note(source_note = "Source Note 1") %>%
     tab_source_note(source_note = "Source Note 2") %>%
-    rm_source_notes(source_notes = 2) %>%
-    render_as_html() %>%
-    expect_snapshot()
+    rm_source_notes(source_notes = 2)
+  expect_snapshot_html(gt_tbl)
 
   # Expect that we can remove both source notes with `rm_source_notes()`
   # in two different ways
-  expect_equal(
+  expect_equal_gt(
     exibble %>%
       gt() %>%
       tab_source_note(source_note = "Source Note 1") %>%
       tab_source_note(source_note = "Source Note 2") %>%
-      rm_source_notes() %>%
-      render_as_html(),
+      rm_source_notes(),
     exibble %>%
       gt() %>%
       tab_source_note(source_note = "Source Note 1") %>%
       tab_source_note(source_note = "Source Note 2") %>%
-      rm_source_notes(source_notes = 1:2) %>%
-      render_as_html()
+      rm_source_notes(source_notes = 1:2)
   )
 
   # Expect an error when providing any integer values that don't correspond
@@ -737,18 +696,16 @@ test_that("Table source notes can be removed using `rm_source_notes()`", {
       tab_source_note(source_note = "Source Note 2") %>%
       rm_source_notes(source_notes = matches("nothing"))
   )
-  expect_equal(
+  expect_equal_gt(
     exibble %>%
       gt() %>%
       tab_source_note(source_note = "Source Note 1") %>%
       tab_source_note(source_note = "Source Note 2") %>%
-      rm_source_notes(source_notes = matches("nothing")) %>%
-      render_as_html(),
+      rm_source_notes(source_notes = matches("nothing")),
     exibble %>%
       gt() %>%
       tab_source_note(source_note = "Source Note 1") %>%
-      tab_source_note(source_note = "Source Note 2") %>%
-      render_as_html()
+      tab_source_note(source_note = "Source Note 2")
   )
 
   # If there are no source notes the function should return the
@@ -758,13 +715,11 @@ test_that("Table source notes can be removed using `rm_source_notes()`", {
       gt() %>%
       rm_source_notes(source_notes = 1:100)
   )
-  expect_equal(
+  expect_equal_gt(
     exibble %>%
       gt() %>%
-      rm_source_notes(source_notes = 1:100) %>%
-      render_as_html(),
+      rm_source_notes(source_notes = 1:100),
     exibble %>%
-      gt() %>%
-      render_as_html()
+      gt()
   )
 })

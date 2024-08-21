@@ -267,10 +267,14 @@ test_that("process_text() works correctly", {
   # Create the `md_text` variable, which is markdown text
   # with the class `from_markdown` (via the `md()` helper)
   md_text <- md("this is *text* interpreted as **markdown**")
+  expect_s3_class(md_text, "from_markdown")
+  expect_type(md_text, "character")
 
   # Create the `html_text` variable, which is HTML text with
   # the classes `html`/`character` (via the `html()` helper)
   html_text <- html("this is <em>text</em> that's <strong>HTML</strong>")
+  expect_s3_class(html_text, "html")
+  expect_type(html_text, "character")
 
   # Expect that text with the class `character` will
   # be returned from `process_text` as is
@@ -281,21 +285,17 @@ test_that("process_text() works correctly", {
   # Expect that text with the class `from_markdown` will
   # be returned from `process_text` as character-based
   # text that's been transformed to HTML
-  process_text(text = md_text) %>%
-    expect_equal("<span class='gt_from_md'>this is <em>text</em> interpreted as <strong>markdown</strong></span>")
 
-  expect_s3_class(md_text, "from_markdown")
-  process_text(text = md_text) %>% expect_type("character")
+  processed_md <- process_text(text = md_text)
+  expect_type(processed_md, "character")
+  expect_equal(processed_md, "<span class='gt_from_md'>this is <em>text</em> interpreted as <strong>markdown</strong></span>")
 
   # Expect that text with the class `html` will
   # be returned from `process_text` as character-based
   # text that's been transformed to HTML
-  process_text(text = html_text) %>%
-    expect_equal(as.character(html_text))
-
-  expect_s3_class(html_text, "html")
-  expect_type(html_text, "character")
-  process_text(text = html_text) %>% expect_type("character")
+  processed_html <- process_text(text = html_text)
+  expect_type(processed_html, "character")
+  expect_equal(processed_html, html_text, ignore_attr = TRUE)
 })
 
 test_that("apply_pattern_fmt_x() works correctly", {
@@ -336,12 +336,12 @@ test_that("remove_html() works correctly", {
 
   # Expect that the `character` text object has had the
   # HTML tags removed
-  remove_html(html_text_1) %>%
-    expect_equal("this is text that's HTML")
+  html_text_1_removed <- remove_html(html_text_1)
+  expect_equal(html_text_1_removed, "this is text that's HTML")
 
   # Expect that the `character` text object retains the
   # `character` class after transformation
-  remove_html(html_text_1) %>% expect_type("character")
+  expect_type(html_text_1_removed, "character")
 
   # Call `remove_html()` on HTML text that's
   # classed as `html` and `character`
@@ -349,8 +349,8 @@ test_that("remove_html() works correctly", {
 
   # Expect that the new object retains the html` and
   # `character` classes
-  html_text_2_removed %>% expect_s3_class("html")
-  html_text_2_removed %>% expect_type("character")
+  expect_s3_class(html_text_2_removed, "html")
+  expect_type(html_text_2_removed, "character")
 
   # Expect that the HTML tags have been removed from the
   # `html_text_2` string
@@ -368,28 +368,27 @@ test_that("as_locations() works correctly", {
     )
 
   # Expect certain structural features for a `locations` object
-  locations %>% expect_length(2)
-  locations[[1]] %>% expect_length(2)
-  locations[[1]] %>% expect_s3_class(c("quosure", "formula"))
-  locations[[2]] %>% expect_s3_class(c("quosure", "formula"))
+  expect_length(locations, 2)
+  # Each location has length 2
+  expect_length(locations[[1]], 2)
+  expect_length(locations[[2]], 2)
+  expect_s3_class(locations[[1]], c("quosure", "formula"))
+  expect_s3_class(locations[[2]], c("quosure", "formula"))
 
   # Upgrade `locations` to a list of locations
   locations_list <- as_locations(locations)
 
   # Expect certain structural features for this `locations_list` object
-  locations_list %>% expect_length(1)
-  locations_list[[1]] %>% expect_length(2)
-  locations_list[[1]] %>% expect_s3_class(c("cells_body", "location_cells"))
+  expect_length(locations_list, 1)
+  expect_length(locations_list[[1]], 2)
+  expect_s3_class(locations_list[[1]], c("cells_body", "location_cells"))
 
   # Define locations as a named vector
   locations <-
-    c(
-      columns = "hp",
-      rows = c("Datsun 710", "Valiant"))
+    c(columns = "hp", rows = c("Datsun 710", "Valiant"))
 
   # Expect an error with `locations` object structured in this way
-  expect_error(
-    as_locations(locations))
+  expect_error(as_locations(locations))
 })
 
 test_that("process_footnote_marks() works correctly", {
@@ -448,7 +447,7 @@ test_that("glue_gt() works in a safe manner", {
 
   # Basically works
   expect_identical(
-    glue_gt(lst, "{a}/{b}") %>% as.character(),
+    as.character(glue_gt(lst, "{a}/{b}")),
     c("foo/bar", "foo/baz")
   )
   expect_identical(
@@ -456,7 +455,7 @@ test_that("glue_gt() works in a safe manner", {
     c("foo/bar", "foo/baz")
   )
   expect_identical(
-    glue_gt(dplyr::as_tibble(lst), "{a}/{b}") %>% as.character(),
+    as.character(glue_gt(dplyr::as_tibble(lst), "{a}/{b}")),
     c("foo/bar", "foo/baz")
   )
 
@@ -523,16 +522,15 @@ test_that("check_spanner_id_unique() works properly", {
   )
 })
 
-test_that("get_file_ext() works correctly", {
+test_that("get_file_ext() returns the correct file extension", {
 
-  # Expect that filenames with various extensions are
-  # work with `get_file_ext()` to return the file extension
-  get_file_ext(file = "file.svg") %>% expect_equal("svg")
-  get_file_ext(file = "file.001.svg") %>% expect_equal("svg")
-  get_file_ext(file = "file.001..svg") %>% expect_equal("svg")
-  get_file_ext(file = "_file.jpg") %>% expect_equal("jpg")
-  get_file_ext(file = "file.png") %>% expect_equal("png")
-  get_file_ext(file = "file.gif") %>% expect_equal("gif")
+  expect_equal(get_file_ext("filess.svg"), "svg")
+  expect_equal(get_file_ext("filess.svg"), "svg")
+  expect_equal(get_file_ext("fi.001.svg"), "svg")
+  expect_equal(get_file_ext("fi.01..svg"), "svg")
+  expect_equal(get_file_ext("_files.jpg"), "jpg")
+  expect_equal(get_file_ext("filess.png"), "png")
+  expect_equal(get_file_ext("filess.gif"), "gif")
 })
 
 test_that("resolve_secondary_pattern() works properly", {

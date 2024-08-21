@@ -56,6 +56,9 @@ DATA-8
 \code{v0.11.0} (July 9, 2024)
 }
 
+\examples{
+dplyr::glimpse(peeps)
+}
 \seealso{
 Other datasets: 
 \code{\link{constants}},

@@ -33,7 +33,7 @@ test_that("Decimal alignment works in the basic case", {
   )
 
   # Perform snapshot test
-  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_1)
 
   # Ensure that trailing decimal marks are aligned;
   # use `cols_align_decimal()` on both columns
@@ -48,7 +48,7 @@ test_that("Decimal alignment works in the basic case", {
     cols_align_decimal()
 
   # Perform snapshot test
-  gt_tbl_3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_3)
 
   # Use `fmt_percent()` on the `num` column, then align
   # decimal marks
@@ -63,7 +63,7 @@ test_that("Decimal alignment works in the basic case", {
     cols_align_decimal()
 
   # Perform snapshot test
-  gt_tbl_4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_4)
 
   # Use `fmt_percent()` on the `num` column again, ensuring that
   # trailing decimal marks are not dropped; then align decimal marks
@@ -79,7 +79,7 @@ test_that("Decimal alignment works in the basic case", {
     cols_align_decimal()
 
   # Perform snapshot test
-  gt_tbl_5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5)
 
 
   # Use `fmt_partsper()` on the `num` column, then align
@@ -95,7 +95,7 @@ test_that("Decimal alignment works in the basic case", {
     cols_align_decimal()
 
   # Perform snapshot test
-  gt_tbl_6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_6)
 
   # Use `fmt_partsper()` on the `num` column again, ensuring that
   # trailing decimal marks are not dropped; then align decimal marks
@@ -111,7 +111,7 @@ test_that("Decimal alignment works in the basic case", {
     cols_align_decimal()
 
   # Perform snapshot test
-  gt_tbl_7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_7)
 
   # Use `fmt_partsper()` with `ppm` units; then align decimal marks
   gt_tbl_8 <-
@@ -126,7 +126,7 @@ test_that("Decimal alignment works in the basic case", {
     cols_align_decimal()
 
   # Perform snapshot test
-  gt_tbl_8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_8)
 
   # Use `fmt_partsper()` with `ppm` units, ensuring that
   # trailing decimal marks are not dropped; then align decimal marks
@@ -143,7 +143,7 @@ test_that("Decimal alignment works in the basic case", {
     cols_align_decimal()
 
   # Perform snapshot test
-  gt_tbl_9 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_9)
 
   # Use `cols_align_decimal()` on a table based on the exibble
   # dataset; expect that `cols_align_decimal()` has no material affect
@@ -153,7 +153,7 @@ test_that("Decimal alignment works in the basic case", {
     cols_align_decimal()
 
   # Perform snapshot test
-  gt_tbl_10 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_10)
 
   # Use `fmt_percent()` and use a non-default `pattern` value;
   # then align decimal marks
@@ -170,7 +170,7 @@ test_that("Decimal alignment works in the basic case", {
     cols_align_decimal()
 
   # Perform snapshot test
-  gt_tbl_11 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_11)
 
   # Use `fmt_number()` and use the `accounting` option; then align
   # decimal marks
@@ -186,7 +186,7 @@ test_that("Decimal alignment works in the basic case", {
     cols_align_decimal()
 
   # Perform snapshot test
-  gt_tbl_12 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_12)
 
   # Use `fmt_currency()` and use the `accounting` option with no decimals; then align
   # based on implied decimal
@@ -200,5 +200,5 @@ test_that("Decimal alignment works in the basic case", {
     cols_align_decimal()
 
   # Perform snapshot test
-  gt_tbl_13 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_13)
 })

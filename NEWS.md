@@ -17,6 +17,8 @@
 
 * `opt_interactive()` now works when columns are substituted with `sub_*()` (@olivroy, #1759). 
 
+* More support for `cells_stubhead()` styling and footnotes in interactive tables.
+
 ## Bug fixes
 
 * Improved error messages for the `text_transform()` function if `locations` couldn't be resolved. (@olivroy, #1774)
@@ -32,6 +34,24 @@
 * grid output has been improved. Namely, showing currency symbols now works (@olivroy, #1788). 
 
 * `data_color()` no longer errors when a tidyselect selection is empty (like `fmt_*()` functions) (@olivroy, #1665).
+
+* Fixed a bugs that caused an error in Latex when `row_group_as_column = TRUE`, the row groups were specified using the `tab_row_group`, and the user specified a width for the row name columns (@kbrevoort, #1804).
+
+* Improve the centering of the stubhead label in Latex when  `row_group_as_column = TRUE` and the width of the row name column is specified (@kbrevoort, #1804).
+
+* Fixed an issue with `text_case_match(.replace = "all", .locations = cells_column_spanners())` (@olivroy, #1823).
+
+* Performance improvement for footnote rendering (@olivroy, #1818).
+
+* `tab_footnote()` now correctly adds footnote marks in the `cells_stub_summary()` and `cells_stub_grand_summary()` (@olivroy, #1832).
+
+* Fixed an issue where `tab_spanner_delim()` would fail to resolve a duplicate id (@olivroy, #1821).
+
+* Fixed an issue with multiple `text_replace()` calls would produce bad result with `cells_column_labels()` (@olivroy, #1824).
+
+* `tidyselect::where()`, `tidyselect::all_of()`, `tidyselect::any_of()` are now re-exported by gt.
+
+* `vec_fmt_markdown()` works correctly inside Quarto again (@olivroy, #1840).
 
 * `gt(row_group_as_column = TRUE)` now works if multiple groups are supplied (@olivroy, #1552).
 

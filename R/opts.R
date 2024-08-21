@@ -1051,14 +1051,13 @@ get_padding_option_value_list <- function(scale, type) {
       dt_options_tbl[, c("parameter", "value")],
       dt_options_tbl$parameter %in% padding_params
     )
-  padding_options <-
-    dplyr::mutate(
-      padding_options,
-      parameter = gsub(pattern, gsub("_", ".", pattern, fixed = TRUE), parameter, fixed = TRUE),
-      value = unlist(value),
-      px = as.numeric(gsub("px", "", value, fixed = TRUE)),
-      px = px * scale
-    )
+
+  replacement <- gsub("_", ".", pattern, fixed = TRUE)
+
+  padding_options$parameter <- gsub(pattern, replacement, padding_options$parameter, fixed = TRUE)
+  padding_options$value <- unlist(padding_options$value)
+  padding_options$px <- as.numeric(gsub("px", "", padding_options$value, fixed = TRUE))
+  padding_options$px <- padding_options$px * scale
 
   create_option_value_list(
     padding_options$parameter,
@@ -1174,9 +1173,9 @@ opt_all_caps <- function(
 
     values_vec <-
       dplyr::case_when(
-        grepl("\\.font\\.size$", options_vec) ~ "80%",
-        grepl("\\.font\\.weight$", options_vec) ~ "bolder",
-        grepl("\\.text_transform$", options_vec) ~ "uppercase"
+        endsWith(options_vec, ".font.size") ~ "80%",
+        endsWith(options_vec, ".font.weight") ~ "bolder",
+        endsWith(options_vec, ".text_transform") ~ "uppercase"
       )
 
     option_value_list <- create_option_value_list(options_vec, values_vec)
