@@ -261,6 +261,7 @@ dt_boxhead_get_alignments_in_stub <- function(data) {
     if (length(grp_vars) > 1) {
       grp_alignment <- grp_alignment[1]
     }
+
     alignments <- c(alignments, grp_alignment)
   }
 

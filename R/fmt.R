@@ -152,34 +152,6 @@ fmt <- function(
 
 # Utils formatters -------------------------------------------------------------
 
-#' Filter an internal table to a single row with filtering expressions
-#'
-#' @param table The table to filter down to one row.
-#' @param column The column from which the single value should be obtained.
-#' @param ... The arguments passed to `dplyr::filter()`.
-#' @noRd
-filter_table_to_value <- function(
-    table,
-    column,
-    ...
-) {
-
-  filter_args_enquos <- rlang::enquos(...)
-  column_enquo <- rlang::enquo(column)
-
-  filtered_tbl <- dplyr::filter(table, !!!filter_args_enquos)
-
-  if (nrow(filtered_tbl) != 1) {
-
-    cli::cli_abort(c(
-      "*" = "The filtered table doesn't result in a table of exactly one row.",
-      "*" = "Found {nrow(filtered_tbl)} rows."
-    ), .internal = TRUE)
-  }
-
-  dplyr::pull(filtered_tbl, !!column_enquo)
-}
-
 normalize_locale <- function(locale = NULL) {
 
   # Return NULL if the locale isn't specified
@@ -188,7 +160,7 @@ normalize_locale <- function(locale = NULL) {
   }
 
   # Normalize any underscores to hyphens
-  locale <- gsub("_", "-", locale)
+  locale <- gsub("_", "-", locale, fixed = TRUE)
 
   # Resolve any default locales into their base names (e.g., 'en-US' -> 'en')
   if (locale %in% default_locales$default_locale) {
@@ -238,13 +210,13 @@ validate_currency <- function(currency, call = rlang::caller_env()) {
   currency_char <- as.character(currency)
 
   # Stop function if the `currency` provided isn't a valid one
-  if (
-    !(
-      currency_char %in% currency_symbols$curr_symbol ||
-      currency_char %in% currencies$curr_code ||
-      currency_char %in% currencies$curr_number
-    )
-  ) {
+  valid_currencies <- vctrs::vec_c(
+    currency_symbols$curr_symbol,
+    currencies$curr_code,
+    currencies$curr_number,
+    .ptype = character()
+  )
+  if (!(currency_char %in% valid_currencies)) {
     cli::cli_abort(c(
       "The supplied `currency` is not available in the list of supported currencies.",
       "i" = "Use {.run [info_currencies()](gt::info_currencies())} to see which currencies can be used.",
@@ -279,8 +251,8 @@ get_locale_sep_mark <- function(
   }
 
   # Get the correct `group_sep` value from the `gt:::locales` lookup table
-  sep_mark <- filter_table_to_value(locales, group, locale == {{ locale }})
-
+  sep_mark <- locales$group[locales$locale == locale]
+  validate_length_one(sep_mark)
   # Replace any `""` or "\u00a0" with `" "` since an empty string actually
   # signifies a space character, and, we want to normalize to a simple space
   if (sep_mark == "" || sep_mark == "\u00a0") sep_mark <- " "
@@ -302,7 +274,9 @@ get_locale_dec_mark <- function(locale = NULL, default) {
   }
 
   # Get the correct `decimal` value from the `gt:::locales` lookup table
-  filter_table_to_value(locales, decimal, locale == {{ locale }})
+  val <- locales$decimal[locales$locale == locale]
+  validate_length_one(val, "dec_mark")
+  val
 }
 
 #' Get the range pattern based on a locale
@@ -316,8 +290,8 @@ get_locale_range_pattern <- function(locale = NULL) {
   locale <- locale %||% "en"
 
   # Get the correct `range_pattern` value from the `gt:::locales` lookup table
-  range_pattern <-
-    filter_table_to_value(locales, range_pattern, locale == {{ locale }})
+  range_pattern <- locales$range_pattern[locales$locale == locale]
+  validate_length_one(range_pattern)
 
   range_pattern <- gsub("1", "2", range_pattern)
   range_pattern <- gsub("0", "1", range_pattern)
@@ -336,7 +310,7 @@ get_locale_currency_code <- function(locale = NULL) {
     return("USD")
   }
 
-  locale <- locales[locales$locale == locale, ][["currency_code"]][[1]]
+  locale <- locales$currency_code[locales$locale == locale]
 
   if (is.na(locale)) {
     return("USD")
@@ -357,7 +331,9 @@ get_locale_idx_set <- function(locale = NULL) {
     return(LETTERS)
   }
 
-  locales[locales$locale == locale, ][["chr_index"]][[1L]]
+  val <- locales$chr_index[locales$locale == locale]
+  validate_length_one(val)
+  val
 }
 
 #' Get the `idx_num_spellout` vector based on a locale
@@ -411,7 +387,9 @@ get_locale_no_table_data_text <- function(locale = NULL) {
 
   # Get the correct `no_table_data_text` value from the
   # `gt:::locales` lookup table
-  filter_table_to_value(locales, no_table_data_text, locale == {{ locale }})
+  val <- locales$no_table_data_text[locales$locale == locale]
+  validate_length_one(val)
+  val
 }
 
 get_locale_segments <- function(locale) {
@@ -450,11 +428,13 @@ resolve_locale <- function(data, locale) {
   # An 'undetermined' locale should map back to the `"en"` locale
   if (identical(locale, "und")) {
     locale <- "en"
+  } else {
+    # Validate locale if some value is sent
+    locale <- normalize_locale(locale = locale)
+    validate_locale(locale = locale)
   }
 
-  locale <- normalize_locale(locale = locale)
 
-  validate_locale(locale = locale)
 
   locale
 }

@@ -635,10 +635,10 @@ create_body_component_l <- function(data, colwidth_df) {
 
         styles_groups <-
           consolidate_cell_styles_l(
-            dplyr::filter(
+            vctrs::vec_slice(
               styles_tbl,
-              locname == "row_groups",
-              grpname == groups_rows_df$group_id[i]
+              styles_tbl$locname == "row_groups" &
+                styles_tbl$grpname == groups_rows_df$group_id[i]
             )
           )
 
@@ -1079,7 +1079,7 @@ create_body_rows_l <- function(
 ) {
 
   styles_tbl <- dt_styles_get(data = data)
-  styles_tbl <- dplyr::filter(styles_tbl, locname %in% c("stub", "data", "row_groups"))
+  styles_tbl <- vctrs::vec_slice(styles_tbl, styles_tbl$locname %in% c("stub", "data", "row_groups"))
 
   # Obtain all of the visible (`"default"`), non-stub column names
   # for the table from the `boxh` object
@@ -1100,7 +1100,7 @@ create_body_rows_l <- function(
   }
 
   if ("::group::" %in% vars) {
-    styles_tbl <- dplyr::mutate(styles_tbl, rownum = round(rownum))
+    styles_tbl$rownum <- round(styles_tbl$rownum)
   }
 
   body_rows <-
@@ -1113,7 +1113,7 @@ create_body_rows_l <- function(
             content <- row_splits_body[[x]]
             content_length <- length(content)
 
-            styles_tbl_i <- dplyr::filter(styles_tbl, rownum == x)
+            styles_tbl_i <- vctrs::vec_slice(styles_tbl, styles_tbl$rownum == x)
 
             if (nrow(styles_tbl_i) < 1L) {
               # Remove any latex footnote encoding
@@ -1130,7 +1130,7 @@ create_body_rows_l <- function(
                 "row_groups" %in% styles_tbl_i[["locname"]]
               ) {
 
-                styles_tbl_i_col <- dplyr::filter(styles_tbl_i, locname == "row_groups")
+                styles_tbl_i_col <- vctrs::vec_slice(styles_tbl_i, styles_tbl_i$locname == "row_groups")
                 #styles_i_col <- styles_tbl_i_col[["styles"]]
 
               } else if (
@@ -1138,7 +1138,7 @@ create_body_rows_l <- function(
                 "stub" %in% styles_tbl_i[["locname"]]
               ) {
 
-                styles_tbl_i_col <- dplyr::filter(styles_tbl_i, locname == "stub")
+                styles_tbl_i_col <- vctrs::vec_slice(styles_tbl_i, styles_tbl_i$locname == "stub")
                 #styles_i_col <- styles_tbl_i_col[["styles"]]
 
               } else if (
@@ -1146,7 +1146,7 @@ create_body_rows_l <- function(
                 colname_i %in% styles_tbl_i[["colname"]]
               ) {
 
-                styles_tbl_i_col <- dplyr::filter(styles_tbl_i, colname == colname_i)
+                styles_tbl_i_col <- vctrs::vec_slice(styles_tbl_i, styles_tbl_i$colname == colname_i)
                 #styles_i_col <- styles_tbl_i_col[["styles"]]
 
               } else {
