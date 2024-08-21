@@ -270,24 +270,6 @@ test_that("fmt() works when providing a purrr formula (#1762)", {
     )
 })
 
-test_that("filter_table_to_value() works correctly", {
-
-  # Expect that filtering the `locales` table with
-  # `filter_table_to_value()` will return a single value
-  # so long as the filtering expressions are well chosen
-  expect_equal(
-    locales %>% filter_table_to_value(lang_name, locale == "ar-AE"),
-    "ar"
-  )
-
-  # Expect an error with `filter_table_to_value()` if the
-  # chosen filtering expressions result in a number of
-  # returned rows not equal to 1
-  expect_error(
-    locales %>% filter_table_to_value(lang_desc, lang_name == "en")
-  )
-})
-
 test_that("get_locale_sep_mark() works correctly", {
 
   # Expect that a `locale` which is `NULL` will return the
