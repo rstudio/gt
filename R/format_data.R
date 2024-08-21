@@ -6296,11 +6296,11 @@ values_to_durations <- function(
       colon_sep_trim_zero_units <- colon_sep_params$trim_zero_units
 
       # Filter to only the output units needed
-      x_df_i <- dplyr::filter(x_df_i, time_part %in% colon_sep_output_units)
+      x_df_i <- vctrs::vec_slice(x_df_i, x_df_i$time_part %in% colon_sep_output_units)
 
       # If days has a zero value, remove that entry unconditionally
       if ("days" %in% x_df_i$time_part && x_df_i[[1, "value"]] == 0) {
-        x_df_i <- dplyr::filter(x_df_i, time_part != "days")
+        x_df_i <- vctrs::vec_slice(x_df_i, x_df_i$time_part != "days")
       }
 
       if (colon_sep_trim_zero_units == "leading") {
@@ -6308,7 +6308,7 @@ values_to_durations <- function(
           identical(x_df_i$time_part, c("hours", "minutes", "seconds")) &&
           x_df_i[[1, "value"]] == 0
         ) {
-          x_df_i <- dplyr::filter(x_df_i, time_part != "hours")
+          x_df_i <- vctrs::vec_slice(x_df_i, x_df_i$time_part != "hours")
         }
       }
 

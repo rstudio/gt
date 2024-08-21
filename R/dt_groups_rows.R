@@ -56,6 +56,7 @@ dt_groups_rows_build <- function(data, context) {
     table_body <- dt_data_get(data = data)
     stub_df[["rowname"]] <- as.character(table_body[[stub_var]])
   }
+  # what happens if dt_stub_df doesn't exist?
 
   l <- length(ordering)
   groups_rows <-
@@ -94,10 +95,7 @@ dt_groups_rows_build <- function(data, context) {
       dplyr::left_join(groups_rows, group_label_df, by = "group_id")
 
     groups_rows <-
-      dplyr::rename(groups_rows, group_label = "built_group_label")
-
-    groups_rows <-
-      dplyr::relocate(groups_rows, "group_id", "group_label", .before = 0)
+      dplyr::relocate(groups_rows, "group_id", group_label = "built_group_label", .before = 0)
 
     others_group <-
       dt_options_get_value(

@@ -42,7 +42,7 @@ test_that("resolve_rows_l() and resolve_rows_i() both work", {
   row_names_1 <- c(paste0("row_", 1:7), "")
 
   exibble_gt_2 <- gt(dplyr::bind_rows(exibble, exibble), rowname_col = "char")
-  row_names_2 <- rep(exibble %>% dplyr::pull(char), 2)
+  row_names_2 <- rep(exibble$char, 2)
 
   #
   # `resolve_rows_l()`

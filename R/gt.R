@@ -336,11 +336,12 @@ gt <- function(
   }
 
   # Initialize the main objects
+  rownames_to_column <- if (rownames_to_stub) rowname_col else NA_character_
   data <-
     dt_data_init(
       data = list(),
       data_tbl = data,
-      rownames_to_column = if (rownames_to_stub) rowname_col else NA_character_
+      rownames_to_column = rownames_to_column
     )
 
   data <- dt_boxhead_init(data = data)
