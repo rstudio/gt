@@ -758,7 +758,8 @@ info_locales <- function(begins_with = NULL) {
       " (",
       tab_1$territory_desc, ", ",
       tab_1$script_desc, ", ",
-      tab_1$variant_desc
+      tab_1$variant_desc,
+      ")"
     )
   )
 
