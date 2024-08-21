@@ -210,7 +210,7 @@ validate_currency <- function(currency, call = rlang::caller_env()) {
   currency_char <- as.character(currency)
 
   # Stop function if the `currency` provided isn't a valid one
-  valid_cuurencies <- vctrs::vec_c(
+  valid_currencies <- vctrs::vec_c(
     currency_symbols$curr_symbol,
     currencies$curr_code,
     currencies$curr_number,
