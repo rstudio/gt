@@ -210,15 +210,13 @@ validate_currency <- function(currency, call = rlang::caller_env()) {
   currency_char <- as.character(currency)
 
   # Stop function if the `currency` provided isn't a valid one
-  if (
-    !(
-      currency_char %in% vctrs::vec_c(
-        currency_symbols$curr_symbol,
-        currencies$curr_code,
-        currencies$curr_number
-      )
-    )
-  ) {
+  valid_cuurencies <- vctrs::vec_c(
+    currency_symbols$curr_symbol,
+    currencies$curr_code,
+    currencies$curr_number,
+    .ptype = character()
+  )
+  if (!(currency_char %in% validate_currencies)) {
     cli::cli_abort(c(
       "The supplied `currency` is not available in the list of supported currencies.",
       "i" = "Use {.run [info_currencies()](gt::info_currencies())} to see which currencies can be used.",
