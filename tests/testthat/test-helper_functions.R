@@ -310,6 +310,11 @@ test_that(" from_column() works correctly", {
   )
 
   # Perform a test with `fmt_scientific()`
+  if (getRversion() >= "4.4" && .Platform$OS.type == "windows") {
+    value_sci <- "2.77 $\\times$ 10\\textsuperscript{9}"
+  } else {
+    value_sci <- "2.78 $\\times$ 10\\textsuperscript{9}"
+  }
   expect_equal(
     (tab %>%
        fmt_scientific(
@@ -323,7 +328,7 @@ test_that(" from_column() works correctly", {
     c(
       "+1.11 $\\times$ 10\\textsuperscript{+4}", "+4.44 $\\times$ 10\\textsuperscript{+5}",
       "+1.00 $\\times$ 10\\textsuperscript{+7}", "+1.78 $\\times$ 10\\textsuperscript{+8}",
-      "2.77 $\\times$ 10\\textsuperscript{9}", "NA", # previously 2.78
+      value_sci, "NA",
       "5.44 $\\times$ 10\\textsuperscript{11}", "7.10 $\\times$ 10\\textsuperscript{12}"
     )
   )
