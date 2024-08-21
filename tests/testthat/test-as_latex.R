@@ -145,9 +145,9 @@ test_that("Table styles correctly applied for longtable", {
     tab_style(style = cell_fill(color = "#AAAAAA"),
               locations = cells_grand_summary()) %>%
     tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    expect_snapshot()
+    as_latex()
 
+  expect_snapshot(gt_latex_styled)
 })
 
 test_that("Table styles correctly applied for tabular*", {
@@ -210,7 +210,7 @@ test_that("Table styles correctly applied for tabular*", {
     tab_style(style = list(cell_text(color = "#FFFFFF"),
                            cell_fill(color = "#AA0000")),
               locations = cells_stub()) %>%
-    # Footnoe and source note styles
+    # Footnote and source note styles
     tab_style(style = cell_text(size = 8,
                                 style = "italic"),
               locations = cells_source_notes()) %>%
@@ -233,8 +233,8 @@ test_that("Table styles correctly applied for tabular*", {
     tab_style(style = cell_fill(color = "#AAAAAA"),
               locations = cells_grand_summary()) %>%
     tab_options(latex.use_longtable = FALSE) %>%
-    as_latex() %>%
-    expect_snapshot()
+    as_latex()
 
+  expect_snapshot(gt_latex_styled)
 })
 

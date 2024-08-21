@@ -9,8 +9,8 @@ test_that("A gt table can contain indentation in the stub", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_1`
-  tbl_1 %>% render_as_html() %>% expect_snapshot()
-  tbl_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  expect_snapshot_html(tbl_1)
+  expect_snapshot_latex(tbl_1)
 
   # Do much the same as previously but perform the same indentation
   # operation twice, putting the three row labels at level 2
@@ -56,8 +56,8 @@ test_that("A gt table can contain indentation in the stub", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_5`
-  tbl_5 %>% render_as_html() %>% expect_snapshot()
-  tbl_5 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  expect_snapshot_html(tbl_5)
+  expect_snapshot_latex(tbl_5)
 })
 
 test_that("Indentation values can be obtained from a table column", {
@@ -76,8 +76,8 @@ test_that("Indentation values can be obtained from a table column", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_6`
-  tbl_6 %>% render_as_html() %>% expect_snapshot()
-  tbl_6 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  expect_snapshot_html(tbl_6)
+  expect_snapshot_latex(tbl_6)
 
   # This time, create a table that also has row groups; use the same indentation
   tbl_7 <-
@@ -93,8 +93,8 @@ test_that("Indentation values can be obtained from a table column", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_7`
-  tbl_7 %>% render_as_html() %>% expect_snapshot()
-  tbl_7 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  expect_snapshot_html(tbl_7)
+  expect_snapshot_latex(tbl_7)
 
   # This variation of the previous includes an `na_value`
   tbl_8 <-
@@ -110,8 +110,8 @@ test_that("Indentation values can be obtained from a table column", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_8`
-  tbl_8 %>% render_as_html() %>% expect_snapshot()
-  tbl_8 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  expect_snapshot_html(tbl_8)
+  expect_snapshot_latex(tbl_8)
 
   # This variation of the previous includes a function provided to `fn`
   tbl_9 <-
@@ -131,8 +131,8 @@ test_that("Indentation values can be obtained from a table column", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_9`
-  tbl_9 %>% render_as_html() %>% expect_snapshot()
-  tbl_9 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  expect_snapshot_html(tbl_9)
+  expect_snapshot_latex(tbl_9)
 
   # This variation only affects rows where `matches("a")` is true for the stub
   tbl_10 <-
@@ -148,8 +148,8 @@ test_that("Indentation values can be obtained from a table column", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_10`
-  tbl_10 %>% render_as_html() %>% expect_snapshot()
-  tbl_10 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  expect_snapshot_html(tbl_10)
+  expect_snapshot_latex(tbl_10)
 
   # This variation uses non-intergerish values for `rank` (values are truncated)
   tbl_11 <-
@@ -165,6 +165,6 @@ test_that("Indentation values can be obtained from a table column", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `tbl_11`
-  tbl_11 %>% render_as_html() %>% expect_snapshot()
-  tbl_11 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  expect_snapshot_html(tbl_11)
+  expect_snapshot_latex(tbl_11)
 })

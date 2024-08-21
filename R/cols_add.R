@@ -363,8 +363,7 @@ cols_add <- function(
   columns_new <- base::setdiff(data_tbl_mutated_columns, data_tbl_columns)
 
   # Generate a table that has only the new columns
-  data_tbl_new_cols <-
-    dplyr::select(data_tbl_mutated, dplyr::all_of(columns_new))
+  data_tbl_new_cols <- data_tbl_mutated[columns_new]
 
   # Generate boxhead rows that correspond to the new columns
   boxh_df_new_cols <- dt_boxhead_get(data = gt(data_tbl_new_cols))

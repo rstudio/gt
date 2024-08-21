@@ -895,12 +895,11 @@ data_color <- function(
 
     if (direction == "column") {
 
-      data_vals <- dplyr::pull(dplyr::select(data_tbl, dplyr::all_of(resolved_columns[i])))
-      data_vals <- data_vals[resolved_rows]
+      data_vals <- data_tbl[resolved_rows, resolved_columns[i], drop = TRUE]
 
     } else {
 
-      data_vals <- dplyr::select(data_tbl, dplyr::all_of(resolved_columns))
+      data_vals <- data_tbl[resolved_columns]
       data_vals <- unname(unlist(as.vector(data_vals[resolved_rows[i], ])))
     }
 

@@ -1192,7 +1192,7 @@ create_body_component_h <- function(data) {
           )
 
         summary[[1]] <-
-          htmltools::HTML(gsub("^<tr>", paste0("<tr>", group_col_td), as.character(summary[[1]])))
+          htmltools::HTML(sub("^<tr>", paste0("<tr>", group_col_td), as.character(summary[[1]])))
       }
 
       summary

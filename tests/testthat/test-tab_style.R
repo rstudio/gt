@@ -605,5 +605,5 @@ test_that("Using fonts in `from_column()` works within `cell_*()` fns", {
     )
 
   # Perform snapshot test
-  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_1)
 })

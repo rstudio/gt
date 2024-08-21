@@ -242,6 +242,8 @@ render_as_ihtml <- function(data, id) {
     # Create colDef row name with special ".rownames" from reactable.
     row_name_col_def <- list(reactable::colDef(
       name = rowname_label,
+      # make sure the cells_stubhead() footnote renders properly.
+      html = TRUE,
       style = list(
         fontWeight = stub_font_weight
       ),
@@ -371,6 +373,8 @@ render_as_ihtml <- function(data, id) {
       group_col_defs[[i]] <-
         reactable::colDef(
           name = group_label,
+          # make sure the cells_stubhead() footnote renders properly.
+          html = TRUE,
           style = list(
             `font-weight` = row_group_font_weight
           ),
