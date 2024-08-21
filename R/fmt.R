@@ -152,34 +152,6 @@ fmt <- function(
 
 # Utils formatters -------------------------------------------------------------
 
-#' Filter an internal table to a single row with filtering expressions
-#'
-#' @param table The table to filter down to one row.
-#' @param column The column from which the single value should be obtained.
-#' @param ... The arguments passed to `dplyr::filter()`.
-#' @noRd
-filter_table_to_value <- function(
-    table,
-    column,
-    ...
-) {
-
-  filter_args_enquos <- rlang::enquos(...)
-  column_enquo <- rlang::enquo(column)
-
-  filtered_tbl <- dplyr::filter(table, !!!filter_args_enquos)
-
-  if (nrow(filtered_tbl) != 1) {
-
-    cli::cli_abort(c(
-      "*" = "The filtered table doesn't result in a table of exactly one row.",
-      "*" = "Found {nrow(filtered_tbl)} rows."
-    ), .internal = TRUE)
-  }
-
-  dplyr::pull(filtered_tbl, !!column_enquo)
-}
-
 normalize_locale <- function(locale = NULL) {
 
   # Return NULL if the locale isn't specified
@@ -305,9 +277,8 @@ get_locale_dec_mark <- function(locale = NULL, default) {
 
   # Get the correct `decimal` value from the `gt:::locales` lookup table
   val <- locales$decimal[locales$locale == locale]
-  validate_length_one(val, "locale")
+  validate_length_one(val, "dec_mark")
   val
-  # filter_table_to_value(locales, decimal, locale == {{ locale }})
 }
 
 #' Get the range pattern based on a locale
