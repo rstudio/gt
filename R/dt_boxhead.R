@@ -253,9 +253,7 @@ dt_boxhead_get_alignments_in_stub <- function(data) {
           data = data,
           var = grp_vars
         )
-    }
 
-    }
     alignments <- c(alignments, grp_alignment)
   }
 

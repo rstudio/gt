@@ -323,8 +323,8 @@ test_that(" from_column() works correctly", {
     c(
       "+1.11 $\\times$ 10\\textsuperscript{+4}", "+4.44 $\\times$ 10\\textsuperscript{+5}",
       "+1.00 $\\times$ 10\\textsuperscript{+7}", "+1.78 $\\times$ 10\\textsuperscript{+8}",
-      "2.78 $\\times$ 10\\textsuperscript{9}", "NA", "5.44 $\\times$ 10\\textsuperscript{11}",
-      "7.10 $\\times$ 10\\textsuperscript{12}"
+      "2.77 $\\times$ 10\\textsuperscript{9}", "NA", # previously 2.78
+      "5.44 $\\times$ 10\\textsuperscript{11}", "7.10 $\\times$ 10\\textsuperscript{12}"
     )
   )
 

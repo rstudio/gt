@@ -95,10 +95,7 @@ dt_groups_rows_build <- function(data, context) {
       dplyr::left_join(groups_rows, group_label_df, by = "group_id")
 
     groups_rows <-
-      dplyr::rename(groups_rows, group_label = "built_group_label")
-
-    groups_rows <-
-      dplyr::relocate(groups_rows, "group_id", "group_label", .before = 0)
+      dplyr::relocate(groups_rows, "group_id", group_label = "built_group_label", .before = 0)
 
     others_group <-
       dt_options_get_value(
@@ -108,11 +105,6 @@ dt_groups_rows_build <- function(data, context) {
 
     groups_rows[is.na(groups_rows[, "group_id"]), "group_label"] <-
       others_group
-    if (!is.null(stub_df$group_label)) {
-     # stub_df$group_label[is.null(stub_df$group_label[[1]])] <- others_group
-      #data <- dt_stub_df_set(data, stub_df)
-
-    }
 
   } else {
 
@@ -140,6 +132,5 @@ dt_groups_rows_build <- function(data, context) {
     }
   }
 
-  # print(groups_rows)
   dt_groups_rows_set(data = data, groups_rows = groups_rows)
 }
