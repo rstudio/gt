@@ -248,11 +248,19 @@ dt_boxhead_get_alignments_in_stub <- function(data) {
   if ("group_label" %in% stub_layout) {
     grp_vars <- dt_boxhead_get_vars_groups(data = data)
     # non-initialized grp_vars
+    if (identical(grp_vars, NA_character_)) {
+      # assign a value if the group has not b
+      grp_alignment <- "left"
+    } else {
       grp_alignment <-
         dt_boxhead_get_alignment_by_var(
           data = data,
           var = grp_vars
         )
+    }
+    if (length(grp_vars) > 1) {
+      grp_alignment <- grp_alignment[1]
+    }
 
     alignments <- c(alignments, grp_alignment)
   }
@@ -284,6 +292,13 @@ dt_boxhead_get_vars_align_default <- function(data) {
 
 dt_boxhead_get_alignment_by_var <- function(data, var) {
   boxhead <- dt_boxhead_get(data = data)
+  if (length(var) > 1L) {
+    # return multiple alignments in case of multiple variables
+    # requested. #1552
+    return(
+      boxhead$column_align[boxhead$var %in% var]
+    )
+  }
   boxhead$column_align[boxhead$var == var]
 }
 
