@@ -1022,37 +1022,34 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     expect_equal("0.11mark_1")
 })
 
-test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`", {
+test_that("Footnotes are correctly placed with text produced by `fmt_markdown()` (#1013)", {
 
-  exibble[1, 2] %>%
+  gt_tbl_foot_right <- exibble[1, 2] %>%
     gt() %>%
     fmt_markdown(columns = char) %>%
-    tab_footnote(footnote = "note", locations = cells_body(char, 1)) %>%
+    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "auto")
+
+  gt_tbl_foot_right %>%
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_left']") %>%
     expect_equal("apricot1")
 
-  gt_tbl <- exibble[1, 2] %>%
-    gt() %>%
-    fmt_markdown(columns = char) %>%
-    tab_footnote(footnote = "note", locations = cells_body(char, 1))
-  expect_snapshot_html(gt_tbl)
+  expect_snapshot_html(gt_tbl_foot_right)
 
-  exibble[1, 2] %>%
+  # placement = left
+  gt_tbl_foot_left <- exibble[1, 2] %>%
     gt() %>%
     fmt_markdown(columns = char) %>%
-    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "left") %>%
+    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "left")
+
+  gt_tbl_foot_left %>%
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_left']") %>%
     expect_equal(paste0("1", "\U000A0", "apricot"))
 
-  gt_tbl <- exibble[1, 2] %>%
-    gt() %>%
-    fmt_markdown(columns = char) %>%
-    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "left")
-  expect_snapshot_html(gt_tbl)
+  expect_snapshot_html(gt_tbl_foot_left)
 })
 
 test_that("Footnotes work with group labels in 2-column stub arrangements", {
