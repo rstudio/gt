@@ -10,6 +10,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+set.seed(123)
 ```
 
 gt provides an option to make interactive html tables via the [reactable](https://glin.github.io/reactable/index.html) package.
