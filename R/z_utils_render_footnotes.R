@@ -332,6 +332,8 @@ place_footnote_on_left <- function(text, mark, context) {
     # non-breaking space (added here as Unicode's 'NO-BREAK SPACE',
     # "U+00A0") separates the marks from the text content
     text <- paste(mark, text, sep = "\U000A0")
+  } else if (context == "rtf") {
+    text <- paste(mark, text)
   }
   text
 }
