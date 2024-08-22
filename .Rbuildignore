@@ -123,6 +123,9 @@ tests/testthat/test-location_cells.R
 
 tests/testthat/test-opts.R
 
+tests/testthat/test-quarto.R
+tests/testthat/_snaps/quarto.md
+
 tests/testthat/test-removal_functions.R
 tests/testthat/_snaps/removal_functions.md
 
