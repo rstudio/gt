@@ -317,13 +317,16 @@ apply_footnotes_to_output <- function(data, context = "html") {
 place_footnote_on_left <- function(text, mark, context) {
 
   if (context == "html" && startsWith(text, "<div class='gt_from_md'><p>")) {
-
+    # #1013
     text <-
       paste0(
         "<div class='gt_from_md'><p>",
         mark, "\U000A0",
         gsub("<div class='gt_from_md'><p>", "", text, fixed = TRUE)
       )
+  } else if (context == "html" && startsWith(text, "<div data-qmd-base64")) {
+    # FIXME #1737, figure out how to tweak the regex (in Quarto)
+    text <- paste(mark, text, sep = "\U000A0")
 
   } else if (context == "word" || context == "latex") {
     text <- apply_footnotes_method[[context]](text, mark, position = "left")
@@ -335,6 +338,7 @@ place_footnote_on_left <- function(text, mark, context) {
   } else if (context == "rtf") {
     text <- paste(mark, text)
   }
+
   text
 }
 
