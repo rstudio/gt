@@ -801,6 +801,7 @@ footnotes_dispatch <-
   list(
     html = footnote_mark_to_html,
     rtf = footnote_mark_to_rtf,
+    grid = footnote_mark_to_grid,
     latex = footnote_mark_to_latex,
     word = footnote_mark_to_xml
   )
@@ -809,6 +810,7 @@ apply_footnotes_method <-
   list(
     html = paste0,
     rtf = paste0,
+    grid = paste0,
     latex = paste_footnote_latex,
     word = paste_footnote_xml
   )
