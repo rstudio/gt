@@ -1337,9 +1337,7 @@ fmt_symbol <- function(
 #' ```r
 #' pizzaplace |>
 #'   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) |>
-#'   dplyr::group_by(month) |>
-#'   dplyr::summarize(pizzas_sold = dplyr::n()) |>
-#'   dplyr::ungroup() |>
+#'   dplyr::count(month, name = "pizzas_sold") |>
 #'   dplyr::mutate(frac_of_quota = pizzas_sold / 4000) |>
 #'   gt(rowname_col = "month") |>
 #'   fmt_percent(
