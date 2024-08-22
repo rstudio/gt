@@ -594,6 +594,8 @@ create_columns_component_h <- function(data) {
     headings_vars <- prepend_vec(headings_vars, "::stub")
   }
 
+  headings_ids <- valid_html_id(headings_vars)
+
   stubhead_label_alignment <- "left"
 
   table_col_headings <- list()
@@ -623,11 +625,12 @@ create_columns_component_h <- function(data) {
           colspan = length(stub_layout),
           style = stubhead_style,
           scope = ifelse(length(stub_layout) > 1, "colgroup", "col"),
-          id = headings_labels[1],
+          id = headings_ids[1],
           htmltools::HTML(headings_labels[1])
         )
 
       headings_vars <- headings_vars[-1]
+      headings_ids <- headings_ids[-1]
       headings_labels <- headings_labels[-1]
     }
 
@@ -655,7 +658,7 @@ create_columns_component_h <- function(data) {
           colspan = 1,
           style = column_style,
           scope = "col",
-          id = headings_labels[i],
+          id = headings_ids[i],
           htmltools::HTML(headings_labels[i])
         )
     }
@@ -711,10 +714,11 @@ create_columns_component_h <- function(data) {
           colspan = length(stub_layout),
           style = stubhead_style,
           scope = ifelse(length(stub_layout) > 1, "colgroup", "col"),
-          id = headings_labels[1],
+          id = headings_ids[1],
           htmltools::HTML(headings_labels[1])
         )
 
+      headings_ids <- headings_ids[-1]
       headings_vars <- headings_vars[-1]
       headings_labels <- headings_labels[-1]
     }
@@ -773,7 +777,7 @@ create_columns_component_h <- function(data) {
             colspan = 1,
             style = heading_style,
             scope = "col",
-            id = headings_labels[i],
+            id = headings_ids[i],
             htmltools::HTML(headings_labels[i])
           )
 
@@ -810,7 +814,7 @@ create_columns_component_h <- function(data) {
               colspan = colspans[i],
               style = spanner_style,
               scope = ifelse(colspans[i] > 1, "colgroup", "col"),
-              id = spanners[level_1_index, ][i],
+              id = spanner_ids[level_1_index, ][i],
               htmltools::tags$span(
                 class = "gt_column_spanner",
                 htmltools::HTML(spanners[level_1_index, ][i])
@@ -821,29 +825,29 @@ create_columns_component_h <- function(data) {
     }
 
     solo_headings <- headings_vars[is.na(spanner_ids[level_1_index, ])]
-    remaining_headings <- headings_vars[!(headings_vars %in% solo_headings)]
-
+    remaining_headings_vars <- headings_vars[!(headings_vars %in% solo_headings)]
     remaining_headings_labels <- dt_boxhead_get(data = data)
     remaining_headings_labels <-
       vctrs::vec_slice(
         remaining_headings_labels$column_label,
-        remaining_headings_labels$var %in% remaining_headings
+        remaining_headings_labels$var %in% remaining_headings_vars
       )
     remaining_headings_labels <-
       unlist(remaining_headings_labels)
+    remaining_headings_ids <- valid_html_id(remaining_headings_vars)
 
     col_alignment <- col_alignment[-1][!(headings_vars %in% solo_headings)]
 
-    if (length(remaining_headings) > 0) {
+    if (length(remaining_headings_vars) > 0) {
 
       spanned_column_labels <- c()
 
-      for (j in seq(remaining_headings)) {
+      for (j in seq(remaining_headings_vars)) {
         styles_remaining <-
           dplyr::filter(
             styles_tbl,
             locname == "columns_columns",
-            colname == remaining_headings[j]
+            colname == remaining_headings_vars[j]
           )
 
         remaining_style <-
@@ -854,7 +858,7 @@ create_columns_component_h <- function(data) {
           }
 
         remaining_alignment <-
-          dt_boxhead_get_alignment_by_var(data = data, remaining_headings[j])
+          dt_boxhead_get_alignment_by_var(data = data, remaining_headings_vars[j])
 
         spanned_column_labels[[length(spanned_column_labels) + 1]] <-
           htmltools::tags$th(
@@ -869,7 +873,7 @@ create_columns_component_h <- function(data) {
             rowspan = 1, colspan = 1,
             style = remaining_style,
             scope = "col",
-            id = remaining_headings_labels[j],
+            id = remaining_headings_ids[j],
             htmltools::HTML(remaining_headings_labels[j])
           )
       }
@@ -930,19 +934,17 @@ create_columns_component_h <- function(data) {
 
         if (colspans[j] > 0) {
 
-          styles_spanners <-
-            dplyr::filter(
-              styles_tbl,
-              locname == "columns_groups",
-              grpname %in% spanners_vars
+          spanner_style <-
+            vctrs::vec_slice(
+              styles_tbl$html_style,
+              styles_tbl$locname == "columns_groups" &
+                styles_tbl$grpname %in% spanners_vars
             )
 
-          spanner_style <-
-            if (nrow(styles_spanners) > 0) {
-              styles_spanners$html_style
-            } else {
-              NULL
-            }
+
+          if (length(spanner_style) == 0) {
+            spanner_style <- NULL
+          }
 
           level_i_spanners[[length(level_i_spanners) + 1]] <-
             htmltools::tags$th(
@@ -958,7 +960,7 @@ create_columns_component_h <- function(data) {
               colspan = colspans[j],
               style = spanner_style,
               scope = ifelse(colspans[j] > 1, "colgroup", "col"),
-              id = spanners_row[j],
+              id = spanner_ids_row[j],
               if (spanner_ids_row[j] != "") {
                 htmltools::tags$span(
                   class = "gt_column_spanner",
@@ -2118,4 +2120,11 @@ as_css_font_family_attr <- function(font_vec, value_only = FALSE) {
   }
 
   paste_between(value, x_2 = c("font-family: ", ";"))
+}
+
+valid_html_id <- function(x) {
+  # Make sure it starts with a letter.
+  valid_ids <- grepl("^[A-z]", x)
+  x[!valid_ids] <- paste0("a", x[!valid_ids])
+  gsub("\\s+", "-", x)
 }
