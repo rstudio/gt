@@ -54,6 +54,9 @@ process_md_quarto <- function(text, md_engine_fn) {
       }
     )
 
+  # Remove leading and trailing \n
+  # non_na_text_processed <- gsub("^<p>|</p>\n$", "", non_na_text_processed)
+
   # Tweak start and end of non_na_text
   non_na_text <- paste0("<div data-qmd-base64=\"", non_na_text, "\">")
 

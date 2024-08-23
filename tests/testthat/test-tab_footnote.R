@@ -1052,6 +1052,37 @@ test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`
   expect_snapshot_html(gt_tbl_foot_left)
 })
 
+test_that("Footnotes are correctly placed with text produced by `fmt_markdown()` + Quarto (#1773)", {
+  withr::local_envvar("QUARTO_BIN_PATH" = "path")
+
+  gt_tbl_foot_right <- exibble[1, 2] %>%
+    gt() %>%
+    fmt_markdown(columns = char) %>%
+    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "auto")
+
+  # gt_tbl_foot_right %>%
+  #   render_as_html() %>%
+  #   xml2::read_html() %>%
+  #   selection_text("[class='gt_row gt_left']") %>%
+  #   expect_equal("apricot1")
+
+  expect_snapshot_html(gt_tbl_foot_right)
+
+  # placement = left
+  gt_tbl_foot_left <- exibble[1, 2] %>%
+    gt() %>%
+    fmt_markdown(columns = char) %>%
+    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "left")
+
+  # gt_tbl_foot_left %>%
+  #   render_as_html() %>%
+  #   xml2::read_html() %>%
+  #   selection_text("[class='gt_row gt_left']") %>%
+  #   expect_equal(paste0("1", "\U000A0", "apricot"))
+
+  expect_snapshot_html(gt_tbl_foot_left)
+})
+
 test_that("Footnotes work with group labels in 2-column stub arrangements", {
 
   gt_tbl <-

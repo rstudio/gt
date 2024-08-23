@@ -1,4 +1,32 @@
 skip_on_cran()
+
+test_that("Quarto produces the correct output", {
+  withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
+  tab <- exibble %>%
+    dplyr::select(num, char, fctr) %>%
+    dplyr::slice_head(n  = 5) %>%
+    gt() %>%
+    fmt_markdown(num) %>%
+    tab_footnote(
+      md("Problem because num row 1 is fmt_markdown() + also the footnote is wrapped in md."),
+      locations = cells_body("num", 1)
+    ) %>%
+    tab_footnote(
+      "A problem because fctr is labelled with md",
+      locations = cells_column_labels("fctr")
+    ) %>%
+    tab_footnote(
+      "Not a problem",
+      locations = cells_column_labels("char")
+    ) %>%
+    cols_label(fctr = md("Factor")) %>%
+    tab_header(md("title")) %>%
+    tab_spanner(md("problem"), c(2, 3))
+
+  # currently incorrect
+  expect_snapshot_html(tab)
+})
+
 test_that("Rendering in Quarto doesn't error with empty string (#1769)", {
   withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
   tbl <-  mtcars_short %>%

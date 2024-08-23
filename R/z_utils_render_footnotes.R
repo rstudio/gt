@@ -653,7 +653,13 @@ place_footnote_on_left <- function(text, mark, context) {
   } else if (context == "html" && startsWith(text, "<div data-qmd-base64")) {
     # FIXME #1737, figure out how to tweak the regex (in Quarto)
     text <- paste(mark, text, sep = "\U000A0")
-
+    # text <- gsub("^(.+<p>)(.+)(</p>.*)$", paste0("\\1", mark,  "\U000A0", "\\2\\3"), text)
+    # text <-
+    #   paste0(
+    #     "<div class='gt_from_md'><p>",
+    #     mark, "\U000A0",
+    #     gsub("<div class='gt_from_md'><p>", "", text, fixed = TRUE)
+    #   )
   } else if (context == "word" || context == "latex") {
     text <- apply_footnotes_method[[context]](text, mark, position = "left")
   } else if (context == "html" || context == "grid") {
@@ -686,7 +692,12 @@ place_footnote_on_right <- function(text, mark, context) {
   } else if (endsWith(text, "</p>\n</div></div>")) {
     # Processing html
     # FIXME possibly the place where we could fix #1773
-    text <- apply_footnotes_method[[context]](text, mark)
+    text <-
+      paste0(
+        gsub("</p>\n</div></div>", "", text, fixed = TRUE),
+        mark,
+        "</p>\n</div></div>"
+      )
   } else {
     text <- apply_footnotes_method[[context]](text, mark)
   }
