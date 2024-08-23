@@ -331,8 +331,8 @@ test_that("tab_style() works with cells_column_spanners()", {
     paste0(
       "<th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" ",
       "rowspan=\"1\" colspan=\"2\" style=\"color: #FFFFFF; font-size: 20px; ",
-      "background-color: #FFA500;\" scope=\"colgroup\" id=\"spanner\">.*?<span class=\"gt_column_spanner\">",
-      "spanner</span>"
+      "background-color: #FFA500;\" scope=\"colgroup\" id=\"spanner\">.*?<div class=\"gt_column_spanner\">",
+      "spanner</div>"
     )
   )
 })
