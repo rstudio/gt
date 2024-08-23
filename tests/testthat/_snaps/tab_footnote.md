@@ -400,6 +400,20 @@
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"char\" class=\"gt_row gt_left\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> <span class='gt_from_md'>apricot</span></td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"1\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> note</td>\n    </tr>\n  </tfoot>\n</table>"
 
+# Footnotes are correctly placed with text produced by `fmt_markdown()` in Quarto (#1773)
+
+    Code
+      render_as_html(gt_tbl)
+    Output
+      [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"char\" class=\"gt_row gt_left\"><span data-qmd-base64=\"YXByaWNvdA==\"><span class='gt_from_md'>apricot</span></span><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span></td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"1\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> note</td>\n    </tr>\n  </tfoot>\n</table>"
+
+---
+
+    Code
+      render_as_html(gt_tbl)
+    Output
+      [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"char\" class=\"gt_row gt_left\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> <span data-qmd-base64=\"YXByaWNvdA==\"><span class='gt_from_md'>apricot</span></span></td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"1\"><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span> note</td>\n    </tr>\n  </tfoot>\n</table>"
+
 # Footnotes work with group labels in 2-column stub arrangements
 
     Code
