@@ -61,7 +61,8 @@ process_md_quarto <- function(text, md_engine_fn) {
 
   non_na_text <-
     paste0(
-      non_na_text, "</span>"
+      non_na_text, "<span class='gt_from_md'>",
+      non_na_text_processed, "</span></span>"
     )
 
   text[nzchar(text, keepNA = FALSE)] <- non_na_text
