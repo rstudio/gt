@@ -817,7 +817,7 @@ create_footnotes_component_g <- function(data) {
 
   marks <- vapply(
     footnote_ids,
-    FUN = footnote_mark_to_html,
+    FUN = footnote_mark_to_grid,
     FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
     data = data,
@@ -829,7 +829,7 @@ create_footnotes_component_g <- function(data) {
     FUN = process_text,
     FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
-    context = "html"
+    context = "grid"
   )
   text <- paste0(marks, text)
 
@@ -852,6 +852,61 @@ create_footnotes_component_g <- function(data) {
     name    = "footnotes"
   )
 }
+
+#' Transform a footnote mark to a grid representation
+#'
+#' @noRd
+footnote_mark_to_grid <- function(
+    data,
+    mark,
+    location = c("ref", "ftr")
+) {
+
+  location <- match.arg(location)
+
+  if (is.na(mark)) {
+    return("")
+  }
+
+  spec <- get_footnote_spec_by_location(data = data, location = location)
+
+  if (is.null(spec)) {
+    spec <- "^i"
+  }
+
+  # Generate the CSS classes needed on the basis of whether the
+  # mark is one or more asterisk characters or anything else
+  if (!grepl("^[\\*]+?$", mark)) {
+    sup_class <- "gt_footnote_marks"
+  } else {
+    sup_class <- "gt_footnote_marks gt_asterisk"
+  }
+
+  is_sup <- grepl("^", spec, fixed = TRUE)
+
+  if (grepl(".", spec, fixed = TRUE)) mark <- paste0(mark, ".")
+  if (grepl("(", spec, fixed = TRUE)) mark <- paste0("(", mark)
+  if (grepl("[", spec, fixed = TRUE)) mark <- paste0("[", mark)
+  if (grepl(")", spec, fixed = TRUE)) mark <- paste0(mark, ")")
+  if (grepl("]", spec, fixed = TRUE)) mark <- paste0(mark, "]")
+
+  # Not supported in grid
+  if (grepl("i", spec, fixed = TRUE)) {
+    font_style <- "italic"
+  } else {
+    font_style <- "normal"
+  }
+
+  if (grepl("b", spec, fixed = TRUE)) {
+    font_weight <- "bold"
+  } else {
+    font_weight <- "normal"
+  }
+
+  # return mark as plain text (all styling is ignored)
+  mark
+}
+
 
 # Cells -------------------------------------------------------------------
 

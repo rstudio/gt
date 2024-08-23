@@ -776,15 +776,10 @@ cols_merge_range <- function(
 #'
 #' ```r
 #' pizzaplace |>
-#'   dplyr::group_by(name, type, price) |>
-#'   dplyr::summarize(
-#'     n = dplyr::n(),
-#'     frac = n/nrow(pizzaplace),
-#'     .groups = "drop"
-#'   ) |>
-#'   dplyr::arrange(type, dplyr::desc(n)) |>
-#'   dplyr::group_by(type) |>
-#'   dplyr::slice_head(n = 3) |>
+#'   dplyr::count(name, type, price, sort = TRUE) |>
+#'   mutate(frac = prop.table(n)) |>
+#'   dplyr::slice_max(n, n = 3, by = type) |>
+#'   dplyr::arrange(type) |>
 #'   gt(
 #'     rowname_col = "name",
 #'     groupname_col = "type"

@@ -386,7 +386,7 @@
       
       }
 
-# Footnotes are correctly placed with text produced by `fmt_markdown()`
+# Footnotes are correctly placed with text produced by `fmt_markdown()` (#1013)
 
     Code
       render_as_html(gt_tbl)

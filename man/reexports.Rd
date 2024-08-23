@@ -3,12 +3,10 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
-\alias{vars}
 \alias{starts_with}
 \alias{ends_with}
 \alias{contains}
 \alias{matches}
-\alias{one_of}
 \alias{everything}
 \alias{num_range}
 \alias{all_of}
@@ -16,6 +14,8 @@
 \alias{where}
 \alias{css}
 \alias{\%>\%}
+\alias{vars}
+\alias{one_of}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
