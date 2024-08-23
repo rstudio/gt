@@ -390,6 +390,8 @@ resolve_footnotes_styles <- function(data, tbl_type) {
   data
 }
 
+#' set footnote marks for column labels and spanners
+#'
 #' @noRd
 set_footnote_marks_columns <- function(data, context = "html") {
 
@@ -450,9 +452,9 @@ set_footnote_marks_columns <- function(data, context = "html") {
         text <- unique(spanner_labels[vector_indices])
 
         text <-
-          apply_footnotes_method[[context]](
+          create_footnote_string[[context]](
             text,
-            footnotes_dispatch[[context]](
+            footnote_mark_to[[context]](
               data = data,
               mark = footnotes_columns_group_marks$fs_id_coalesced[i]
             )
@@ -491,10 +493,10 @@ set_footnote_marks_columns <- function(data, context = "html") {
       for (i in seq_len(nrow(footnotes_columns_column_marks))) {
 
         text <-
-          apply_footnotes_method[[context]](
+          create_footnote_string[[context]](
             boxh$column_label[
               boxh$var == footnotes_columns_column_marks$colname[i]][[1]],
-            footnotes_dispatch[[context]](
+            footnote_mark_to[[context]](
               data = data,
               mark = footnotes_columns_column_marks$fs_id_coalesced[i]
             )
@@ -546,7 +548,7 @@ set_footnote_marks_stubhead <- function(data, context = "html") {
       label <-
         paste0(
           label,
-          footnotes_dispatch[[context]](
+          footnote_mark_to[[context]](
             data = data,
             mark = footnotes_stubhead_marks
           )
@@ -594,11 +596,11 @@ apply_footnotes_to_output <- function(data, context = "html") {
 
     # Get the correct footnote rendering functions
     withCallingHandlers(
-      footnotes_dispatch[[context]],
+      footnote_mark_to[[context]],
       error = function(e) cli::cli_abort("Can't find the correct rendering function for context = {.val {context}}", parent = e)
     )
     withCallingHandlers(
-      apply_footnotes_method[[context]],
+      create_footnote_string[[context]],
       error = function(e) cli::cli_abort("Can't find the correct rendering function for footnotes for context = {.val {context}}", parent = e)
     )
     for (i in seq_len(nrow(footnotes_data_marks))) {
@@ -621,7 +623,7 @@ apply_footnotes_to_output <- function(data, context = "html") {
         )
 
       mark <-
-        footnotes_dispatch[[context]](
+        footnote_mark_to[[context]](
           data = data,
           mark = footnotes_data_marks$fs_id_coalesced[i]
         )
@@ -655,7 +657,7 @@ place_footnote_on_left <- function(text, mark, context) {
     text <- paste(mark, text, sep = "\U000A0")
 
   } else if (context == "word" || context == "latex") {
-    text <- apply_footnotes_method[[context]](text, mark, position = "left")
+    text <- create_footnote_string[[context]](text, mark, position = "left")
   } else if (context == "html" || context == "grid") {
     # Footnote placement on the left of the cell text; ensure that a
     # non-breaking space (added here as Unicode's 'NO-BREAK SPACE',
@@ -671,7 +673,7 @@ place_footnote_on_left <- function(text, mark, context) {
 place_footnote_on_right <- function(text, mark, context) {
   # Footnote placement on the right of the cell text
   if (context != "html") {
-    return(apply_footnotes_method[[context]](text, mark))
+    return(create_footnote_string[[context]](text, mark))
   }
 
   if (endsWith(text, "</p>\n</div>")) {
@@ -686,9 +688,9 @@ place_footnote_on_right <- function(text, mark, context) {
   } else if (endsWith(text, "</p>\n</div></div>")) {
     # Processing html
     # FIXME possibly the place where we could fix #1773
-    text <- apply_footnotes_method[[context]](text, mark)
+    text <- create_footnote_string[[context]](text, mark)
   } else {
-    text <- apply_footnotes_method[[context]](text, mark)
+    text <- create_footnote_string[[context]](text, mark)
   }
   text
 }
@@ -720,9 +722,9 @@ set_footnote_marks_row_groups <- function(data, context = "html") {
         which(groups_rows_df[, "group_id"] == footnotes_row_groups_marks$grpname[i])
 
       groups_rows_df[row_index, "group_label"] <-
-        apply_footnotes_method[[context]](
+        create_footnote_string[[context]](
           groups_rows_df[row_index, "group_label"],
-          footnotes_dispatch[[context]](
+          footnote_mark_to[[context]](
             data = data,
             mark = footnotes_row_groups_marks$fs_id_coalesced[i]
           )
@@ -773,10 +775,10 @@ apply_footnotes_to_summary <- function(data, context = "html") {
 
       summary_df_list[[footnotes_data_marks[i, ][["grpname"]]]][[
         footnotes_data_marks$row[i], footnotes_data_marks$colname[i]]] <-
-        apply_footnotes_method[[context]](
+        create_footnote_string[[context]](
           summary_df_list[[footnotes_data_marks[i, ][["grpname"]]]][[
             footnotes_data_marks$row[i], footnotes_data_marks$colname[i]]],
-          footnotes_dispatch[[context]](
+          footnote_mark_to[[context]](
             data = data,
             mark = footnotes_data_marks$fs_id_coalesced[i]
           )
@@ -808,10 +810,10 @@ apply_footnotes_to_summary <- function(data, context = "html") {
       summary_df_list[[grand_summary_col]][[
         footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]
       ]] <-
-        apply_footnotes_method[[context]](
+        create_footnote_string[[context]](
           summary_df_list[[grand_summary_col]][[
             footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]],
-          footnotes_dispatch[[context]](
+          footnote_mark_to[[context]](
             data = data,
             mark = footnotes_data_marks$fs_id_coalesced[i]
           )
@@ -828,7 +830,7 @@ apply_footnotes_to_summary <- function(data, context = "html") {
   )
 }
 
-footnotes_dispatch <-
+footnote_mark_to <-
   list(
     html = footnote_mark_to_html,
     rtf = footnote_mark_to_rtf,
@@ -837,7 +839,7 @@ footnotes_dispatch <-
     word = footnote_mark_to_xml
   )
 
-apply_footnotes_method <-
+create_footnote_string <-
   list(
     html = paste0,
     rtf = paste0,
