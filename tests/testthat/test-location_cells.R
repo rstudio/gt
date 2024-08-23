@@ -338,6 +338,170 @@ test_that("tab_style() works with cells_column_spanners()", {
 })
 
 test_that(
+  "tab_style() works with cells_column_spanners(), level argument",
+  {
+
+    tbl <- data.frame(
+      group = c("A", "B"),
+      row = c("1", "2"),
+      value_1 = c(361.1, 344.7),
+      value_2 = c(260.1, 281.2),
+      value_3 = c(3.8, 2.4),
+      stringsAsFactors = FALSE
+    )
+
+    # gt with only one spanner level coloured
+    gt_tbl_cells_column_spanners <-
+      tbl |>
+      gt(rowname_col = "row", groupname_col = "group") |>
+      cols_move_to_end(columns = value_1) |>
+      tab_spanner(label = "spanner", columns = c(value_1, value_3)) |>
+      tab_style(
+        style = list(
+          cell_text(size = px(20), color = "white"),
+          cell_fill(color = "#FFA500")
+        ),
+        locations = cells_column_spanners(spanners = "spanner")
+      )
+
+    # gt with both spanner levels coloured
+    gt_tbl_cells_column_spanners2 <- tbl |>
+      gt(rowname_col = "row", groupname_col = "group") |>
+      tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
+      tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+      tab_style(
+        style = list(
+          cell_text(size = px(20), color = "white"),
+          cell_fill(color = "#FFA500")
+        ),
+        locations = cells_column_spanners(spanners = c("spanner_small", "spanner_big"))
+      )
+
+    # selecting a level should work for spanners (all levels)
+    expect_equal(
+      gt_tbl_cells_column_spanners2,
+      tbl |>
+        gt(rowname_col = "row", groupname_col = "group") |>
+        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
+        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+        tab_style(
+          style = list(
+            cell_text(size = px(20), color = "white"),
+            cell_fill(color = "#FFA500")
+          ),
+          locations = cells_column_spanners(spanners = tidyselect::contains("spanner"), levels = c(1, 2))
+        )
+    )
+
+    expect_equal(
+      gt_tbl_cells_column_spanners2,
+      tbl |>
+        gt(rowname_col = "row", groupname_col = "group") |>
+        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
+        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+        tab_style(
+          style = list(
+            cell_text(size = px(20), color = "white"),
+            cell_fill(color = "#FFA500")
+          ),
+          locations = cells_column_spanners(spanners = tidyselect::contains("spanner"), levels = c())
+        )
+    )
+
+    expect_equal(
+      gt_tbl_cells_column_spanners2,
+      tbl |>
+        gt(rowname_col = "row", groupname_col = "group") |>
+        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
+        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+        tab_style(
+          style = list(
+            cell_text(size = px(20), color = "white"),
+            cell_fill(color = "#FFA500")
+          ),
+          locations = cells_column_spanners(spanners = tidyselect::contains("spanner"), levels = NULL)
+        )
+    )
+
+    # selecting a level should work for spanners (one level)
+
+    gt_tbl_cells_column_spanners <- tbl |>
+      gt(rowname_col = "row", groupname_col = "group") |>
+      tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
+      tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+      tab_style(
+        style = list(
+          cell_text(size = px(20), color = "white"),
+          cell_fill(color = "#FFA500")
+        ),
+        locations = cells_column_spanners(spanners = "spanner_big")
+      )
+
+    expect_equal(
+      gt_tbl_cells_column_spanners,
+      tbl |>
+        gt(rowname_col = "row", groupname_col = "group") |>
+        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
+        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+        tab_style(
+          style = list(
+            cell_text(size = px(20), color = "white"),
+            cell_fill(color = "#FFA500")
+          ),
+          locations = cells_column_spanners(spanners = tidyselect::contains("spanner"), levels = c(2))
+        )
+    )
+
+    # selecting non existing levels -> error
+    expect_warning(
+      label = "selecting non existing levels -> error",
+      tbl |>
+        gt(rowname_col = "row", groupname_col = "group") |>
+        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
+        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+        tab_style(
+          style = list(
+            cell_text(size = px(20), color = "white"),
+            cell_fill(color = "#FFA500")
+          ),
+          locations = cells_column_spanners(spanners = tidyselect::contains("spanner"), levels = c(5))
+        )
+    )
+
+    expect_warning(
+      label = "selecting non existing levels -> error",
+      tbl |>
+        gt(rowname_col = "row", groupname_col = "group") |>
+        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
+        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+        tab_style(
+          style = list(
+            cell_text(size = px(20), color = "white"),
+            cell_fill(color = "#FFA500")
+          ),
+          locations = cells_column_spanners(spanners = tidyselect::contains("spanner"), levels = c(0))
+        )
+    )
+
+    # selecting nun numeric spanner levels -> error
+    expect_warning(
+      label = "selecting nun numeric spanner levels -> error",
+      tbl |>
+        gt(rowname_col = "row", groupname_col = "group") |>
+        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
+        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+        tab_style(
+          style = list(
+            cell_text(size = px(20), color = "white"),
+            cell_fill(color = "#FFA500")
+          ),
+          locations = cells_column_spanners(spanners = tidyselect::contains("spanner"), levels = c("a"))
+        )
+    )
+  }
+)
+
+test_that(
   "tab_style() works with cells_column_labels()",
   {
     tbl <- data.frame(
