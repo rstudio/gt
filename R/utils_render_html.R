@@ -82,7 +82,7 @@ footnote_mark_to_html <- function(
     "white-space:nowrap;",
     "font-style:", font_style, ";",
     "font-weight:", font_weight, ";",
-    "line-height: 0;",
+    "line-height:0;",
     "\">",
     if (is_sup) {
       paste0("<sup>", mark, "</sup>")
@@ -1775,10 +1775,10 @@ create_footnotes_component_h <- function(data) {
         }
       )
     )
-
+  footnotes <- post_process_footnotes_string(footnotes)
   # Handle the multiline footnotes case (each footnote takes up one line)
   if (multiline) {
-
+   # browser()
     # Create the footnotes component as a series of `<tr><td>` (one per
     # footnote) inside of a `<tfoot>`
     return(
@@ -1821,6 +1821,16 @@ create_footnotes_component_h <- function(data) {
       )
     )
   )
+}
+# For Quarto (to avoid line breaks)
+post_process_footnotes_string <- function(str) {
+  if (any(grepl("data-qmd-base64", str))) {
+    str <- gsub("<p>.+</p>\n", "", str)
+    str <- gsub("<div", "<span", str)
+    str <- gsub("/div>", "/span>", str)
+   # str <- gsub("")
+  }
+  str
 }
 
 summary_rows_for_group_h <- function(

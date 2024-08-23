@@ -401,6 +401,7 @@ set_footnote_marks_columns <- function(data, context = "html") {
   # If there are any footnotes to apply to the columns,
   # process them individually for the spanner groups and
   # for the column label groups
+  # browser()
   if (any(c("columns_columns", "columns_groups") %in% footnotes_tbl$locname)) {
 
     # Filter the spanner column footnotes
@@ -450,7 +451,7 @@ set_footnote_marks_columns <- function(data, context = "html") {
           which(spanner_ids == footnotes_columns_group_marks$grpname[i])
 
         text <- unique(spanner_labels[vector_indices])
-
+        # browser()
         text <-
           create_footnote_string[[context]](
             text,
@@ -493,13 +494,14 @@ set_footnote_marks_columns <- function(data, context = "html") {
       for (i in seq_len(nrow(footnotes_columns_column_marks))) {
 
         text <-
-          create_footnote_string[[context]](
+          place_footnote_on_right(
             boxh$column_label[
               boxh$var == footnotes_columns_column_marks$colname[i]][[1]],
             footnote_mark_to[[context]](
               data = data,
               mark = footnotes_columns_column_marks$fs_id_coalesced[i]
-            )
+            ),
+            context
           )
 
         boxh <-

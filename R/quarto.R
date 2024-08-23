@@ -45,7 +45,7 @@ process_md_quarto <- function(text, md_engine_fn) {
   # that is recognized by Quarto
   non_na_text <-
     vapply(
-      non_na_text,
+      non_na_text_processed,
       FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(text) {

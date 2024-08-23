@@ -80,3 +80,25 @@ test_that("The footer section formatting and options work well across all output
   # Take snapshot of `exibble_sep_rtf`
   expect_snapshot_rtf(exibble_sep_rtf)
 })
+
+test_that("place_footnote() is correct.", {
+  place_footnote_on_left(
+
+  )
+})
+
+test_that("correctly normalized", {
+  # correct html
+  "<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;\"><sup>1</sup></span>&nbsp;<span class='gt_from_md'><em>Adding footnote</em></span>"
+  og_str <- "<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;\"><sup>1</sup></span>&nbsp;<div data-qmd-base64=\"X0FkZGluZyBmb290bm90ZV8=\"><div class='gt_from_md'><p><em>Adding footnote</em></p>\n</div></div>"
+
+  expect_equal(
+    post_process_footnotes_string(og_str),
+  # "<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;\"><sup>1</sup></span>&nbsp;<div data-qmd-base64=\"X0FkZGluZyBmb290bm90ZV8=\"><div class='gt_from_md'><p><em>Adding footnote</em></p>\n</div></div>"
+
+  # "<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;\"><sup>1</sup></span>&nbsp;<div data-qmd-base64=\"X0FkZGluZyBmb290bm90ZV8=\"><div class='gt_from_md'><em>Adding footnote</em></div></div>",
+  "<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;\"><sup>1</sup></span>&nbsp;<span data-qmd-base64=\"X0FkZGluZyBmb290bm90ZV8=\"><span class='gt_from_md'><em>Adding footnote</em></span></span>"
+
+  )
+
+})
