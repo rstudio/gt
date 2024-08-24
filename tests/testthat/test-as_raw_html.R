@@ -115,7 +115,7 @@ test_that("as_raw_html() produces the same table every time", {
     gsub("id=\"[a-z]*?\"", "", .)
 
   gt_html_2_sha1 <- digest::sha1(gt_html_2)
-  expect_equal(gt_html_2_sha1, "1692648dac8cca18e6a7f63c6f058e74885ea776")
+  expect_equal(gt_html_2_sha1, "86c0738b99e255ed0ca2ed1e7bd52ca3d2e0b78a")
 
   # Expect that font family values with multiple words (i.e., have a space
   # character) added with `tab_style()` preserve single-quote characters

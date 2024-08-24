@@ -153,7 +153,37 @@ resolve_cells_column_spanners <- function(
 
   spanners <- dt_spanners_get(data = data)
 
-  #
+  levels <- attr(object,"spanner_levels")
+
+  if(!is.null(levels)){
+    # check if there are wrong level expectations in the argument
+
+    # must be numeric
+    if(!all(suppressWarnings(!is.na(as.numeric(levels))))){
+      cli::cli_warn(c(
+        "All values of vector `levels` must be numeric.",
+        "!" = "Please check wrong element{?/s}: [{levels[suppressWarnings(is.na(as.numeric(levels)))]}]."
+      ))
+
+      levels <- levels[suppressWarnings(!is.na(as.numeric(levels)))]
+    }
+    # must actually exist
+
+    wrong_levels <- setdiff(levels, unique(spanners$spanner_level))
+    if(length(wrong_levels) > 0){
+      cli::cli_warn(c(
+        "All values of vector `levels` must exist in spanner definition.",
+        "i" = "currently only the following level{?s} {?is/are} available: [{as.character(unique(spanners$spanner_level))}].",
+        "!" = "Please check wrong element{?s} of vector `levels`: [{wrong_levels}]."
+      ))
+
+      levels <- setdiff(levels, wrong_levels)
+    }
+
+    # filter for levels
+    spanners <- spanners %>% dplyr::filter(spanner_level %in% levels)
+
+  }  #
   # Resolution of spanners as column spanner names
   #
   spanner_labels <- unlist(spanners$spanner_label)

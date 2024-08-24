@@ -677,7 +677,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     tab_spanner_delim(delim = ".")
 
   # Take snapshots of `gt_tbl_1`
-  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_1)
 
   tbl_2 <-
     dplyr::tibble(
@@ -692,7 +692,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     tab_spanner_delim(delim = ".")
 
   # Take snapshots of `gt_tbl_2`
-  gt_tbl_2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_2)
 
   tbl_3 <-
     dplyr::tibble(
@@ -707,7 +707,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     tab_spanner_delim(delim = ".")
 
   # Take snapshots of `gt_tbl_3`
-  gt_tbl_3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_3)
 
   tbl_4 <-
     dplyr::tibble(
@@ -722,7 +722,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     tab_spanner_delim(delim = ".")
 
   # Take snapshots of `gt_tbl_4`
-  gt_tbl_4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_4)
 
   tbl_5 <-
     dplyr::tibble(
@@ -737,7 +737,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     tab_spanner_delim(delim = ".")
 
   # Take snapshot of `gt_tbl_5a`
-  gt_tbl_5a %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5a)
 
   gt_tbl_5b <-
     gt(tbl_5) %>%
@@ -747,7 +747,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     )
 
   # Take snapshot of `gt_tbl_5b`
-  gt_tbl_5b %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5b)
 
   gt_tbl_5c <-
     gt(tbl_5) %>%
@@ -757,7 +757,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     )
 
   # Take snapshot of `gt_tbl_5c`
-  gt_tbl_5c %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5c)
 
   # Generate a table with delimiters that are composed of several characters
   # and are asymmetric with regard to the ordering of characters
@@ -774,70 +774,70 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     tab_spanner_delim(delim = "__1", split = "last")
 
   # Take snapshot of `gt_tbl_5m_a`
-  gt_tbl_5m_a %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5m_a)
 
   gt_tbl_5m_b <-
     gt(tbl_5m) %>%
     tab_spanner_delim(delim = "__1", split = "first")
 
   # Take snapshot of `gt_tbl_5m_b`
-  gt_tbl_5m_b %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5m_b)
 
   gt_tbl_5m_c <-
     gt(tbl_5m) %>%
     tab_spanner_delim(delim = "__1", split = "first", limit = 1)
 
   # Take snapshot of `gt_tbl_5m_c`
-  gt_tbl_5m_c %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5m_c)
 
   gt_tbl_5m_d <-
     gt(tbl_5m) %>%
     tab_spanner_delim(delim = "__1", split = "first", limit = 2)
 
   # Take snapshot of `gt_tbl_5m_d`
-  gt_tbl_5m_d %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5m_d)
 
   gt_tbl_5m_e <-
     gt(tbl_5m) %>%
     tab_spanner_delim(delim = "__1", split = "last", limit = 1)
 
   # Take snapshot of `gt_tbl_5m_e`
-  gt_tbl_5m_e %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5m_e)
 
   gt_tbl_5m_f <-
     gt(tbl_5m) %>%
     tab_spanner_delim(delim = "__1", split = "last", limit = 2)
 
   # Take snapshot of `gt_tbl_5m_f`
-  gt_tbl_5m_f %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5m_f)
 
   gt_tbl_5m_g <-
     gt(tbl_5m) %>%
     tab_spanner_delim(delim = "__1", split = "last", limit = 2, reverse = TRUE)
 
   # Take snapshot of `gt_tbl_5m_g`
-  gt_tbl_5m_g %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5m_g)
 
   gt_tbl_5m_h <-
     gt(tbl_5m) %>%
     tab_spanner_delim(delim = "__1", split = "first", limit = 2, reverse = TRUE)
 
   # Take snapshot of `gt_tbl_5m_h`
-  gt_tbl_5m_h %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5m_h)
 
   gt_tbl_5m_i <-
     gt(tbl_5m) %>%
     tab_spanner_delim(delim = "__1", split = "last", limit = 1, reverse = TRUE)
 
   # Take snapshot of `gt_tbl_5m_i`
-  gt_tbl_5m_i %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5m_i)
 
   gt_tbl_5m_j <-
     gt(tbl_5m) %>%
     tab_spanner_delim(delim = "__1", split = "first", limit = 1, reverse = TRUE)
 
   # Take snapshot of `gt_tbl_5m_j`
-  gt_tbl_5m_j %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_5m_j)
 
 
   #
@@ -854,7 +854,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     )
 
   # Take snapshots of `gt_tbl_spanner_1`
-  gt_tbl_spanner_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_spanner_1)
 
   gt_tbl_spanner_2 <-
     gt_tbl_spanner_1 %>%
@@ -865,7 +865,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     )
 
   # Take snapshots of `gt_tbl_spanner_2`
-  gt_tbl_spanner_2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_spanner_2)
 
   gt_tbl_spanner_3 <-
     gt_tbl_spanner_2 %>%
@@ -876,7 +876,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     )
 
   # Take snapshots of `gt_tbl_spanner_3`
-  gt_tbl_spanner_3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_spanner_3)
 
   # Expect that a replacement of a spanner won't work
   # because `replace = FALSE` by default
@@ -899,7 +899,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     )
 
   # Take snapshots of `gt_tbl_spanner_4`
-  gt_tbl_spanner_4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_spanner_4)
 
   gt_tbl_spanner_5 <-
     gt_tbl_spanner_4 %>%
@@ -909,7 +909,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     )
 
   # Take snapshots of `gt_tbl_spanner_5`
-  gt_tbl_spanner_5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_spanner_5)
 
   #
   # Equivalent ways to implicitly express the same spanner
@@ -922,7 +922,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     )
 
   # Take snapshots of `gt_tbl_spanner_A_1`
-  gt_tbl_spanner_A_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_spanner_A_1)
 
   gt_tbl_spanner_A_2 <-
     gt_tbl_1 %>%
@@ -931,7 +931,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     )
 
   # Take snapshots of `gt_tbl_spanner_A_1`
-  gt_tbl_spanner_A_2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_spanner_A_2)
 
   expect_equal_gt(gt_tbl_spanner_A_1, gt_tbl_spanner_A_2)
 
@@ -983,7 +983,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     )
 
   # Take snapshots of `gt_tbl_spanner_B`
-  gt_tbl_spanner_B %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_spanner_B)
 
   gt_tbl_spanner_C <-
     gt_tbl_spanner_B %>%
@@ -995,14 +995,14 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     cols_align(align = "center", columns = everything())
 
   # Take snapshots of `gt_tbl_spanner_C`
-  gt_tbl_spanner_C %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_spanner_C)
 
   gt_tbl_spanner_D <-
     gt_tbl_spanner_C %>%
     cols_move_to_start(columns = 3:4)
 
   # Take snapshots of `gt_tbl_spanner_D`
-  gt_tbl_spanner_D %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_spanner_D)
 
   #
   # Splitting direction
@@ -1021,7 +1021,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     tab_spanner_delim(delim = ".", split = "last")
 
   # Take snapshots of `gt_tbl_1`
-  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_1)
 
   tbl_1_rev <-
     dplyr::tibble(
@@ -1036,7 +1036,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     tab_spanner_delim(delim = ".", split = "first")
 
   # Take snapshots of `gt_tbl_1_rev`
-  gt_tbl_1_rev %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_1_rev)
 
 
   tbl_6 <-
@@ -1053,21 +1053,21 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     tab_spanner_delim(delim = ".", split = "first")
 
   # Take snapshot of `gt_tbl_6_first`
-  gt_tbl_6_first %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_6_first)
 
   gt_tbl_6_last <-
     gt(tbl_6) %>%
     tab_spanner_delim(delim = ".", split = "last")
 
   # Take snapshot of `gt_tbl_6_last`
-  gt_tbl_6_last %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_6_last)
 
   gt_tbl_6_first_rev <-
     gt(tbl_6) %>%
     tab_spanner_delim(delim = ".", split = "first", reverse = TRUE)
 
   # Take snapshot of `gt_tbl_6_first_rev`
-  gt_tbl_6_first_rev %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_6_first_rev)
 
   # Expect an error should a `id` value be reused (here,
   # it's `"**Z**"` that's used twice)
@@ -1085,7 +1085,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     tab_spanner(label = md("**Z**"), columns = 5, level = 1, id = "Z1")
 
   # Take snapshot of `gt_tbl_6_z`
-  gt_tbl_6_z %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_6_z)
 
   # A replacement of an spanner with the same `id` doesn't work (even
   # though the duplicated ID does not result in duplicate IDs afterward)
@@ -1112,7 +1112,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     )
 
   # Take snapshot of `gt_tbl_6_yzzz`
-  gt_tbl_6_yzzz %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_6_yzzz)
 
 
   tbl_7 <-
@@ -1141,7 +1141,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     tab_spanner_delim(delim = ".", split = "last", limit = 20)
 
   # Take snapshot of `gt_tbl_7a`
-  gt_tbl_7a %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_7a)
 
   # Expect all tables to be the same
   expect_equal_gt(gt_tbl_7a, gt_tbl_7b)
@@ -1175,7 +1175,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     tab_spanner_delim(delim = ".", split = "last", limit = 20)
 
   # Take snapshot of `gt_tbl_8a`
-  gt_tbl_8a %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_8a)
 
   # Expect all tables to be the same
   expect_equal_gt(gt_tbl_8a, gt_tbl_8b)
@@ -1209,7 +1209,7 @@ test_that("tab_spanner_delim() works on higher-order spanning", {
     tab_spanner_delim(delim = "_", split = "last", limit = 20)
 
   # Take snapshot of `gt_tbl_9a`
-  gt_tbl_9a %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_9a)
 
   # Expect all tables to be the same
   expect_equal_gt(gt_tbl_9a, gt_tbl_9b)

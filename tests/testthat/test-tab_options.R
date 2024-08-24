@@ -1789,7 +1789,7 @@ test_that("Vertical padding across several table parts can be applied", {
 
   snap_padded_tbl <- function(padding_px) {
 
-    mtcars[1:5, ] %>%
+    gt_tbl <- mtcars[1:5, ] %>%
       gt(rownames_to_stub = TRUE) %>%
       tab_header(title = "The mtcars Dataset", subtitle = "What a great dataset this is") %>%
       tab_spanner(label = "performance", columns = c(disp, hp, drat)) %>%
@@ -1801,9 +1801,8 @@ test_that("Vertical padding across several table parts can be applied", {
         heading.padding = padding_px,
         footnotes.padding = padding_px,
         source_notes.padding = padding_px
-      ) %>%
-      render_as_html() %>%
-      expect_snapshot()
+      )
+    expect_snapshot_html(gt_tbl)
   }
 
   # Generate a few snapshots at different `padding_px` amounts

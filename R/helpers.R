@@ -1211,6 +1211,13 @@ cells_stubhead <- function() {
 #'   (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
 #'   [num_range()], and [everything()]).
 #'
+#' @param levels *Specification of the spanner levels *
+#'
+#'   `scalar|vector<numerical>` // *default:* `NULL`
+#'
+#'   The *existing* spanner levels (1, 2, ...) to which targeting operations are
+#'   constrained. Use NULL to refer to all existing levels.
+#'
 #' @return A list object with the classes `cells_column_spanners` and
 #' `location_cells`.
 #'
@@ -1241,6 +1248,47 @@ cells_stubhead <- function() {
 #' `r man_get_image_tag(file = "man_cells_column_spanners_1.png")`
 #' }}
 #'
+#' Use the [`exibble`] dataset to create a **gt** table. We'll add two spanners
+#' for the column combinations of (`num`, `char`) and time related columns
+#' (`time` and `datetime`). Furthermore we add another level of spanners with
+#' a column label over all date- and time related  columns (`date`, `time`, and
+#' `datetime`). We want all spanner labels with "time" in their name to be bold.
+#' Additionally we want the text to be red of the spanner that is both time-
+#' related and on level 1.
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(-fctr, -currency, -group) |>
+#'   gt(rowname_col = "row") |>
+#'   tab_spanner(
+#'     label = "time related cols",
+#'     columns = c(datetime, time)
+#'   ) |>
+#'   tab_spanner(
+#'     label = "num and char",
+#'     columns = c(num, char)
+#'   ) |>
+#'   tab_spanner(
+#'     label = "date and time cols",
+#'     columns = c(date, time, datetime)
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(weight = "bold"),
+#'     locations = cells_column_spanners(spanners = tidyselect::contains("time"))
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(color = "red"),
+#'     locations = cells_column_spanners(
+#'       spanners = tidyselect::contains("time"),
+#'       levels = 1
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_column_spanners_2.png")`
+#' }}
+#'
 #' @family location helper functions
 #' @section Function ID:
 #' 8-14
@@ -1249,7 +1297,7 @@ cells_stubhead <- function() {
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
-cells_column_spanners <- function(spanners = everything()) {
+cells_column_spanners <- function(spanners = everything(), levels = NULL) {
 
   # Capture expression for the `spanners` argument
   spanners_expr <- rlang::enquo(spanners)
@@ -1259,6 +1307,9 @@ cells_column_spanners <- function(spanners = everything()) {
 
   # Apply the `cells_column_spanners` and `location_cells` classes
   class(cells) <- c("cells_column_spanners", "location_cells")
+
+  # Save what spanner_levels are in scope of the location selection
+  attr(cells,"spanner_levels") <- levels
 
   cells
 }

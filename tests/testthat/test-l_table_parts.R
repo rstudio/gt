@@ -55,43 +55,38 @@ test_that("A gt table contains the expected heading components", {
 
   # Perform a snapshot test where a LaTeX table
   # contains only a title
-  mtcars_short %>%
+  gt_tbl_1 <- mtcars_short %>%
     gt() %>%
     tab_header(title = "test title") %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+    tab_options(latex.use_longtable = TRUE)
+
+  expect_snapshot_latex(gt_tbl_1)
 
   # Perform a snapshot test where a LaTeX table
   # contains a title and a subtitle
-  mtcars_short %>%
+  gt_tbl_2 <- mtcars_short %>%
     gt() %>%
     tab_header(title = "test title", subtitle = "test subtitle") %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+    tab_options(latex.use_longtable = TRUE)
+
+  expect_snapshot_latex(gt_tbl_2)
 
   # Expect that providing a subtitle value with an empty
   # string won't produce a subtitle line
-  mtcars_short %>%
+  gt_tbl_3 <- mtcars_short %>%
     gt() %>%
     tab_header(title = "test title", subtitle = "") %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+    tab_options(latex.use_longtable = TRUE)
+  expect_snapshot_latex(gt_tbl_3)
 
   # Expect that providing a subtitle value with a series
   # a space characters also won't produce a subtitle line
-  mtcars_short %>%
+  gt_tbl_4 <- mtcars_short %>%
     gt() %>%
     tab_header(title = "test title", subtitle = "   ") %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+    tab_options(latex.use_longtable = TRUE)
+
+  expect_snapshot_latex(gt_tbl_4)
 })
 
 test_that("A gt table contains the expected stubhead label", {
@@ -127,10 +122,7 @@ test_that("A gt table contains the expected column spanner labels", {
     tab_options(latex.use_longtable = TRUE)
 
   # Expect that the spanner will be correctly produced
-  tbl_latex %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+  expect_snapshot_latex(tbl_latex)
 
   # Create a `tbl_latex` object with `gt()`; this table
   # contains the spanner heading `perimeter` over the
@@ -145,10 +137,7 @@ test_that("A gt table contains the expected column spanner labels", {
     tab_options(latex.use_longtable = TRUE)
 
   # Expect that the spanner will be correctly produced
-  tbl_latex %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+  expect_snapshot_latex(tbl_latex)
 
   # Expect an error when using column labels that don't exist
   expect_error(
@@ -182,10 +171,7 @@ test_that("A gt table contains the expected column spanner labels", {
     tab_options(latex.use_longtable = TRUE)
 
   # Expect that the spanners will be correctly produced
-  tbl_latex %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+  expect_snapshot_latex(tbl_latex)
 
   # Create a `tbl_latex` object that doesn't gather columns under their
   # respective spanner column labels; also, while the labels are all the same
@@ -199,10 +185,7 @@ test_that("A gt table contains the expected column spanner labels", {
     tab_options(latex.use_longtable = TRUE)
 
   # Expect that the spanners will be correctly produced
-  tbl_latex %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+  expect_snapshot_latex(tbl_latex)
 
   # Create a `tbl_latex` object with spanners with different IDs
   # but the same label; the spanner with ID `y` gathers columns beginning
@@ -215,10 +198,7 @@ test_that("A gt table contains the expected column spanner labels", {
     tab_options(latex.use_longtable = TRUE)
 
   # Expect that the spanners will be correctly produced
-  tbl_latex %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+  expect_snapshot_latex(tbl_latex)
 
   # Create a `tbl_latex` object that uses `tab_spanner_delim()`
   # on a subset of columns; the single spanner column label is
@@ -232,10 +212,7 @@ test_that("A gt table contains the expected column spanner labels", {
     tab_options(latex.use_longtable = TRUE)
 
   # Expect that the spanners will be correctly produced
-  tbl_latex %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+  expect_snapshot_latex(tbl_latex)
 })
 
 test_that("A gt table contains the expected source note", {
@@ -250,10 +227,7 @@ test_that("A gt table contains the expected source note", {
     tab_options(latex.use_longtable = TRUE)
 
   # Expect that the source note will be correctly produced
-  tbl_latex %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+  expect_snapshot_latex(tbl_latex)
 
   # Add another source note to the `gt_tbl` object
   # Create a `tbl_latex` object with `gt()`; this table
@@ -269,10 +243,7 @@ test_that("A gt table contains the expected source note", {
     tab_options(latex.use_longtable = TRUE)
 
   # Expect that both source notes will be correctly produced
-  tbl_latex %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+  expect_snapshot_latex(tbl_latex)
 })
 
 test_that("A gt table contains the correct placement of row groups", {
@@ -289,10 +260,7 @@ test_that("A gt table contains the correct placement of row groups", {
     tab_options(latex.use_longtable = TRUE)
 
   # Expect that the row groups will be correctly produced
-  tbl_latex %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+  expect_snapshot_latex(tbl_latex)
 
   # Create a `tbl_latex` object with `gt()`; this table
   # contains a three row groups and the use of `row_group_order()`
@@ -311,8 +279,5 @@ test_that("A gt table contains the correct placement of row groups", {
     tab_options(latex.use_longtable = TRUE)
 
   # Expect that the row groups will be correctly produced
-  tbl_latex %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+  expect_snapshot_latex(tbl_latex)
 })

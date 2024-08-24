@@ -19,93 +19,83 @@ test_that("Using summary rows in RTF tables is correct", {
   # Tests with `grand_summary_rows()`
   #
 
-  gt(tbl) %>%
+  gt_tbl <- gt(tbl) %>%
     grand_summary_rows(
       columns = col_1,
       fns = list(average = ~ mean(., na.rm = TRUE))
-    ) %>%
-    as_rtf() %>%
-    expect_snapshot()
+    )
+  expect_snapshot_rtf(gt_tbl)
 
-  gt(tbl, rowname_col = "row") %>%
+  gt_tbl <- gt(tbl, rowname_col = "row") %>%
     grand_summary_rows(
       columns = col_1,
       fns = list(average = ~ mean(., na.rm = TRUE))
-    ) %>%
-    as_rtf() %>%
-    expect_snapshot()
+    )
+  expect_snapshot_rtf(gt_tbl)
 
-  gt(tbl, groupname_col = "group") %>%
+  gt_tbl <- gt(tbl, groupname_col = "group") %>%
     grand_summary_rows(
       columns = col_1,
       fns = list(average = ~ mean(., na.rm = TRUE))
-    ) %>%
-    as_rtf() %>%
-    expect_snapshot()
+    )
+  expect_snapshot_rtf(gt_tbl)
 
-  gt(tbl, rowname_col = "row", groupname_col = "group") %>%
+  gt_tbl <- gt(tbl, rowname_col = "row", groupname_col = "group") %>%
     grand_summary_rows(
       columns = col_1,
       fns = list(average = ~ mean(., na.rm = TRUE))
-    ) %>%
-    as_rtf() %>%
-    expect_snapshot()
+    )
+  expect_snapshot_rtf(gt_tbl)
 
   #
   # Tests with `summary_rows()`
   #
 
-  gt(tbl, groupname_col = "group") %>%
+  gt_tbl <- gt(tbl, groupname_col = "group") %>%
     summary_rows(
       groups = "first_five",
       columns = col_1,
       fns = list(average = ~ mean(., na.rm = TRUE))
-    ) %>%
-    as_rtf() %>%
-    expect_snapshot()
+    )
+  expect_snapshot_rtf(gt_tbl)
 
-  gt(tbl, rowname_col = "row", groupname_col = "group") %>%
+  gt_tbl <- gt(tbl, rowname_col = "row", groupname_col = "group") %>%
     summary_rows(
       groups = "first_five",
       columns = col_1,
       fns = list(average = ~ mean(., na.rm = TRUE))
-    ) %>%
-    as_rtf() %>%
-    expect_snapshot()
+    )
+  expect_snapshot_rtf(gt_tbl)
 
-  gt(tbl, groupname_col = "group") %>%
+  gt_tbl <- gt(tbl, groupname_col = "group") %>%
     summary_rows(
       groups = "first_five",
       columns = c(col_1, col_3),
       fns = list(average = ~ mean(., na.rm = TRUE))
-    ) %>%
-    as_rtf() %>%
-    expect_snapshot()
+    )
+  expect_snapshot_rtf(gt_tbl)
 
-  gt(tbl, groupname_col = "group") %>%
+  gt_tbl <- gt(tbl, groupname_col = "group") %>%
     summary_rows(
       groups = "first_five",
       columns = c(col_3, col_1, col_4),
       fns = list(average = ~ mean(., na.rm = TRUE))
-    ) %>%
-    as_rtf() %>%
-    expect_snapshot()
+    )
+  expect_snapshot_rtf(gt_tbl)
 
-  gt(tbl, groupname_col = "group") %>%
+  gt_tbl <- gt(tbl, groupname_col = "group") %>%
     summary_rows(
       groups = "first_five",
       columns = c(col_3, col_1, col_4, col_2),
       fns = list(average = ~ mean(., na.rm = TRUE))
-    ) %>%
-    as_rtf() %>%
-    expect_snapshot()
+    )
+  expect_snapshot_rtf(gt_tbl)
 
-  gt(tbl, rowname_col = "row", groupname_col = "group") %>%
+  gt_tbl <- gt(tbl, rowname_col = "row", groupname_col = "group") %>%
     summary_rows(
       groups = "first_five",
       columns = c(col_1, col_3),
       fns = list(average = ~ mean(., na.rm = TRUE))
-    ) %>%
-    as_rtf() %>%
-    expect_snapshot()
+    )
+  expect_snapshot_rtf(gt_tbl)
 })
