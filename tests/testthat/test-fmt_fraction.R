@@ -519,19 +519,19 @@ test_that("fmt_fraction() produces reproducible results for HTML output", {
     tab_options(latex.use_longtable = TRUE)
 
   # Perform snapshot tests for HTML outputs
-  fraction_tbl_diagonal %>% render_as_html() %>% expect_snapshot()
-  fraction_tbl_inline %>% render_as_html() %>% expect_snapshot()
-  fraction_tbl_simplified %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(fraction_tbl_diagonal)
+  expect_snapshot_html(fraction_tbl_inline)
+  expect_snapshot_html(fraction_tbl_simplified)
 
   # Perform snapshot tests for LaTeX outputs
-  fraction_tbl_diagonal %>% as_latex() %>% as.character() %>% expect_snapshot()
-  fraction_tbl_inline %>% as_latex() %>% as.character() %>% expect_snapshot()
-  fraction_tbl_simplified %>% as_latex() %>% as.character() %>% expect_snapshot()
+  expect_snapshot_latex(fraction_tbl_diagonal)
+  expect_snapshot_latex(fraction_tbl_inline)
+  expect_snapshot_latex(fraction_tbl_simplified)
 
   # Perform snapshot tests for RTF outputs
-  fraction_tbl_diagonal %>% as_rtf() %>% expect_snapshot()
-  fraction_tbl_inline %>% as_rtf() %>% expect_snapshot()
-  fraction_tbl_simplified %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_rtf(fraction_tbl_diagonal)
+  expect_snapshot_rtf(fraction_tbl_inline)
+  expect_snapshot_rtf(fraction_tbl_simplified)
 })
 
 test_that("fmt_fraction() can render values in the Indian numbering system", {

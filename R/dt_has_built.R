@@ -42,13 +42,14 @@ dt_has_built <- function(data) {
 
 #nocov start
 
-dt_has_built_assert <- function(data) {
+dt_has_built_assert <- function(data, call = rlang::caller_env()) {
 
-  if (!dt_has_built(data = data)) {
+  if (!dt_has_built(data)) {
     cli::cli_abort(c(
       "The build hasn't yet occurred.",
       "*" = "Call `build_data()` before retrieving."
-    ))
+    ),
+    call = caller_env())
   }
 }
 

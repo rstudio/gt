@@ -439,7 +439,7 @@ cols_label <- function(
 
       if (grepl("\\{\\{.*?\\}\\}", new_label)) {
 
-        column_units <- gsub("^.*?(\\{\\{.*?\\}\\}).*?$", "\\1", new_label)
+        column_units <- sub("^.*?(\\{\\{.*?\\}\\}).*?$", "\\1", new_label)
 
         .data <-
           dt_boxhead_edit_column_units(

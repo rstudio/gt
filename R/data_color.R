@@ -895,12 +895,11 @@ data_color <- function(
 
     if (direction == "column") {
 
-      data_vals <- dplyr::pull(dplyr::select(data_tbl, dplyr::all_of(resolved_columns[i])))
-      data_vals <- data_vals[resolved_rows]
+      data_vals <- data_tbl[resolved_rows, resolved_columns[i], drop = TRUE]
 
     } else {
 
-      data_vals <- dplyr::select(data_tbl, dplyr::all_of(resolved_columns))
+      data_vals <- data_tbl[resolved_columns]
       data_vals <- unname(unlist(as.vector(data_vals[resolved_rows[i], ])))
     }
 
@@ -1493,7 +1492,7 @@ check_named_colors <- function(named_colors, call = rlang::caller_env()) {
       )
 
     cli::cli_abort(c(
-      "{one_several_invalid} used ({str_catalog(invalid_colors, conj = 'and')}).",
+      "{one_several_invalid} used ({.str {invalid_colors}}).",
       "*" = "Only R/X11 color names and CSS 3.0 color names can be used."
      ),
      call = call

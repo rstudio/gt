@@ -110,7 +110,7 @@ text_replace <- function(
     data = data,
     locations = locations,
     fn = function(x) {
-      str_complete_replace(x, pattern = pattern, replacement = replacement)
+      gsub(pattern = pattern, replacement = replacement, x, perl = TRUE)
     }
   )
 }
@@ -411,7 +411,7 @@ text_case_match <- function(
 
       if (.replace == "all") {
 
-        x <- dplyr::case_match(.x = x, !!!x_list, .default = .default)
+        x <- dplyr::case_match(.x = unlist(x), !!!x_list, .default = unlist(.default))
 
       } else {
 
@@ -701,9 +701,10 @@ text_transform_at_location.cells_column_labels <- function(
   for (col in loc$colnames) {
 
     if (col %in% boxh$var) {
-
-      column_label_edited <-
-        fn(dplyr::filter(boxh, var == .env$col)[1, "column_label", drop = TRUE])
+      # Retrieve the original column label
+      original_col_label <-
+        vctrs::vec_slice(boxh$column_label, boxh$var == col)[[1]]
+      column_label_edited <- fn(original_col_label)
 
       data <-
         dt_boxhead_edit(

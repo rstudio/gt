@@ -100,7 +100,7 @@ row_group_order <- function(
     cli::cli_abort(c(
       "All values given as `groups` must correspond to `group_id` values.",
       "*" = "The following `group_id` values can be
-      used {str_catalog(arrange_groups)}."
+      used {.str {arrange_groups}}."
     ))
   }
 

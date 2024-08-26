@@ -261,6 +261,62 @@ test_that("tab_footnote() works for summary location", {
   )
 })
 
+test_that("tab_footnote() adds footnote marks for in the summary stub (#1832)", {
+  # Apply a footnote to the grand summary stub cells.
+  tab1 <-
+    tab_footnote(
+      data,
+      footnote = "Grand summary stub footnote.",
+      locations = list(
+        cells_stub_grand_summary(2)
+      )
+    )
+  # A footnote in the grand summary
+  tab2 <- tab_footnote(
+    data,
+    footnote = "Summary stub mean sum footnote.",
+    locations = list(
+      # FIXME doesn't work without specifying groups manually.
+      # Because not all groups have a summary
+      cells_stub_summary(groups = c(1, 3))
+    )
+  )
+  # Expect that the internal `footnotes_df` data frame will have
+  # its `locname` column entirely populated with `gramd_summary_cell`
+  expect_setequal(
+    dt_footnotes_get(tab1)$locname,
+    c("grand_summary_cells")
+  )
+  expect_setequal(
+    dt_footnotes_get(tab2)$locname,
+    c("summary_cells")
+  )
+  # Expect the colname to be NA
+  expect_setequal(
+    dt_footnotes_get(tab1)$colname,
+    NA_character_
+  )
+  # Expect tab2 to be in hp.
+  expect_setequal(
+    dt_footnotes_get(tab2)$colname,
+    NA_character_
+  )
+  # Expect that the internal `footnotes_df` data frame will have
+  # its `text` column entirely populated with the footnote text
+  expect_setequal(
+    unlist(dt_footnotes_get(tab1)$footnotes),
+    "Grand summary stub footnote."
+  )
+  expect_setequal(
+    unlist(dt_footnotes_get(tab2)$footnotes),
+    "Summary stub mean sum footnote."
+  )
+  # Make sure there is a footnote mark in the body (i.e. before the tfoot part)
+  expect_match_html(tab1, "gt_footnote_marks.+<tfoot class")
+  expect_match_html(tab2, "gt_footnote_marks.+<tfoot class")
+
+})
+
 test_that("tab_footnote() works in row groups", {
 
   # Apply a footnote to the `Mazdas` row group cell
@@ -737,9 +793,9 @@ test_that("Footnotes with no location are rendered correctly", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_1`
-  gt_footnotes_1 %>% render_as_html() %>% expect_snapshot()
-  gt_footnotes_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
-  gt_footnotes_1 %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(gt_footnotes_1)
+  expect_snapshot_latex(gt_footnotes_1)
+  expect_snapshot_rtf(gt_footnotes_1)
 
   gt_footnotes_2 <-
     gt_tbl %>%
@@ -757,16 +813,9 @@ test_that("Footnotes with no location are rendered correctly", {
 
   # Expect that `gt_footnotes_2` and `gt_footnotes_3` should be rendered the
   # same across the supported formats
-  expect_equal(
-    gt_footnotes_2 %>% render_as_html(), gt_footnotes_3 %>% render_as_html()
-  )
-  expect_equal(
-    gt_footnotes_2 %>% as_latex() %>% as.character(),
-    gt_footnotes_3 %>% as_latex() %>% as.character()
-  )
-  expect_equal(
-    gt_footnotes_2 %>% as_rtf(), gt_footnotes_3 %>% as_rtf()
-  )
+  expect_equal_gt(gt_footnotes_2, gt_footnotes_3, f = render_as_html)
+  expect_equal_gt(gt_footnotes_2, gt_footnotes_3, f = as_latex)
+  expect_equal_gt(gt_footnotes_2, gt_footnotes_3, f = as_rtf)
 
   gt_footnotes_4 <-
     gt_tbl %>%
@@ -775,9 +824,9 @@ test_that("Footnotes with no location are rendered correctly", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_4`
-  gt_footnotes_4 %>% render_as_html() %>% expect_snapshot()
-  gt_footnotes_4 %>% as_latex() %>% as.character() %>% expect_snapshot()
-  gt_footnotes_4 %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(gt_footnotes_4)
+  expect_snapshot_latex(gt_footnotes_4)
+  expect_snapshot_rtf(gt_footnotes_4)
 
   gt_footnotes_5 <-
     gt_tbl %>%
@@ -786,9 +835,9 @@ test_that("Footnotes with no location are rendered correctly", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_5`
-  gt_footnotes_5 %>% render_as_html() %>% expect_snapshot()
-  gt_footnotes_5 %>% as_latex() %>% as.character() %>% expect_snapshot()
-  gt_footnotes_5 %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(gt_footnotes_5)
+  expect_snapshot_latex(gt_footnotes_5)
+  expect_snapshot_rtf(gt_footnotes_5)
 
   gt_footnotes_6 <-
     gt_tbl %>%
@@ -799,9 +848,9 @@ test_that("Footnotes with no location are rendered correctly", {
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `gt_footnotes_6`
-  gt_footnotes_6 %>% render_as_html() %>% expect_snapshot()
-  gt_footnotes_6 %>% as_latex() %>% as.character() %>% expect_snapshot()
-  gt_footnotes_6 %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(gt_footnotes_6)
+  expect_snapshot_latex(gt_footnotes_6)
+  expect_snapshot_rtf(gt_footnotes_6)
 })
 
 test_that("The final placement of footnotes is correct with the 'auto' mode", {
@@ -984,12 +1033,11 @@ test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`
     selection_text("[class='gt_row gt_left']") %>%
     expect_equal("apricot1")
 
-  exibble[1, 2] %>%
+  gt_tbl <- exibble[1, 2] %>%
     gt() %>%
     fmt_markdown(columns = char) %>%
-    tab_footnote(footnote = "note", locations = cells_body(char, 1)) %>%
-    render_as_html() %>%
-    expect_snapshot()
+    tab_footnote(footnote = "note", locations = cells_body(char, 1))
+  expect_snapshot_html(gt_tbl)
 
   exibble[1, 2] %>%
     gt() %>%
@@ -1000,12 +1048,11 @@ test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`
     selection_text("[class='gt_row gt_left']") %>%
     expect_equal(paste0("1", "\U000A0", "apricot"))
 
-  exibble[1, 2] %>%
+  gt_tbl <- exibble[1, 2] %>%
     gt() %>%
     fmt_markdown(columns = char) %>%
-    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "left") %>%
-    render_as_html() %>%
-    expect_snapshot()
+    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "left")
+  expect_snapshot_html(gt_tbl)
 })
 
 test_that("Footnotes work with group labels in 2-column stub arrangements", {
@@ -1030,9 +1077,9 @@ test_that("Footnotes work with group labels in 2-column stub arrangements", {
     )
 
   # Take snapshots of `gt_tbl`
-  gt_tbl %>% render_as_html() %>% expect_snapshot()
-  gt_tbl %>% as_latex() %>% as.character() %>% expect_snapshot()
-  gt_tbl %>% as_rtf() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl)
+  expect_snapshot_latex(gt_tbl)
+  expect_snapshot_rtf(gt_tbl)
 })
 
 test_that("tab_footnote() produces helpful error messages (#475).", {

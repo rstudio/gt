@@ -744,13 +744,7 @@ get_number_of_visible_data_columns <- function(data) {
 get_effective_number_of_columns <- function(data) {
 
   # Check if the table has been built, return an error if that's not the case
-  if (!dt_has_built(data = data)) {
-
-    cli::cli_abort(
-      "The `get_effective_number_of_columns()` function can only be used on
-      gt objects that have tables 'built'."
-    )
-  }
+  dt_has_built_assert(data = data)
 
   # Obtain the number of visible columns in the built table
   n_data_cols <- get_number_of_visible_data_columns(data = data)

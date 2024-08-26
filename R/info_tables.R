@@ -41,7 +41,7 @@
 #'   English (United States) and `"fr"` for French (France). We can call
 #'   [info_locales()] for a useful reference for all of the locales that are
 #'   supported.
-#' 
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
@@ -766,16 +766,14 @@ info_locales <- function(begins_with = NULL) {
       )
     )
 
-  tab_1 <-
-    dplyr::mutate(
-      tab_1,
-      group = dplyr::case_when(
-        group %in% c("\u00a0", "\u202f") ~ "space",
-        .default = group
-      )
+  tab_1$group <-
+    dplyr::case_match(
+      tab_1$group,
+      c("\u00a0", "\u202f") ~ "space",
+      .default = tab_1$group
     )
 
-  tab_1 <- dplyr::select(tab_1, "locale", "display_name", "group", "decimal")
+  tab_1 <- tab_1[c("locale", "display_name", "group", "decimal")]
   tab_1$display_name <- gsub(" (NA, NA, NA)", "", tab_1$display_name, fixed = TRUE)
   tab_1$display_name <- gsub(", NA, NA", "", tab_1$display_name, fixed = TRUE)
   tab_1$display_name <- gsub("NA, ", "", tab_1$display_name, fixed = TRUE)
@@ -943,7 +941,7 @@ info_paletteer <- function(color_pkgs = NULL) {
   palettes_strips <- palettes_strips_df$colors
 
   palettes_strips_df %>%
-    dplyr::select(package, palette, length) %>%
+    dplyr::select("package", "palette", "length") %>%
     dplyr::mutate(`Color Count and Palette` = NA) %>%
     gt(groupname_col = "package", rowname_col = "palette") %>%
     text_transform(

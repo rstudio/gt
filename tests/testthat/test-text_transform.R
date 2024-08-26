@@ -125,25 +125,23 @@ test_that("text_transform() works correctly", {
   transforms <- dt_transforms_get(data = tbl_html)
 
   # Expect two components to be held within `transforms`
-  transforms %>% expect_length(2)
+  expect_length(transforms, 2)
 
   # Expect that each component of `transforms` has the names
   # `resolved` and `fn`
-  transforms[[1]] %>% expect_named(c("resolved", "fn"))
-  transforms[[2]] %>% expect_named(c("resolved", "fn"))
+  expect_named(transforms[[1]] , c("resolved", "fn"))
+  expect_named(transforms[[2]] , c("resolved", "fn"))
 
   # Expect that `resolved` subcomponent of `transforms` has the names
   # `columns` and `rows`
-  transforms[[1]]$resolved %>% expect_named(c("columns", "rows", "colnames"))
-  transforms[[2]]$resolved %>% expect_named(c("columns", "rows", "colnames"))
+  expect_named(transforms[[1]]$resolved, c("columns", "rows", "colnames"))
+  expect_named(transforms[[2]]$resolved, c("columns", "rows", "colnames"))
 
   # Expect that `resolved` subcomponent of `transforms` has the class
   # names and `resolved`, `cells_body`, `location_cells`
-  transforms[[1]]$resolved %>%
-    expect_s3_class(c("resolved", "cells_body", "location_cells"))
-
-  transforms[[2]]$resolved %>%
-    expect_s3_class(c("resolved", "cells_body", "location_cells"))
+  resolved_class <- c("resolved", "cells_body", "location_cells")
+  expect_s3_class(transforms[[1]]$resolved, resolved_class)
+  expect_s3_class(transforms[[2]]$resolved, resolved_class)
 
   # Expect that `fn` subcomponent of `transforms` is a function
   expect_true(is.function(transforms[[1]]$fn))
@@ -282,6 +280,32 @@ test_that("text_transform() works in column labels", {
     )
 })
 
+test_that("text_replace() works when called more than once (#1824)", {
+  # No problem with cells_body() / cells_column_spanners()
+  tbl_html <- exibble %>%
+    dplyr::select(1:3) %>%
+    gt() %>%
+    text_replace(
+      "fctr",
+      "aa",
+      locations = cells_column_labels()
+    ) %>%
+    text_replace(
+      "aa",
+      "aaaMD",
+      locations = cells_column_labels()
+    )
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("tr:first-child th") %>%
+    expect_equal(
+      c(
+        "num", "char", "aaaMD"
+      )
+    )
+})
+
 test_that("text_transform() works on row labels in the stub", {
 
   # Create a gt table and modify
@@ -334,10 +358,14 @@ test_that("text_case_match() works on the tab_spanner()", {
       .replace = "partial",
       .locations = cells_column_spanners()
     ))
-  expect_match_html(
-     new_tb,
-     "awesome spanner"
-  )
+  expect_match_html(new_tb, "awesome spanner")
+  expect_no_error(new_tb2 <- gt_tbl %>%
+    text_case_match(
+      "the boring spanner" ~ "awesome spanner2",
+      .replace = "all",
+      .locations = cells_column_spanners()
+  ))
+  expect_match_html(new_tb2, "awesome spanner2")
 })
 
 test_that("text_transform() works on row group labels", {
@@ -453,10 +481,7 @@ test_that("text_case_when() + text_case_match() work", {
       text_case_match(NA ~ "---")
   )
   # they are not changing numeric NA
-  expect_equal(
-    render_as_html(cw),
-    render_as_html(cm)
-  )
+  expect_equal_gt(cw, cm)
 })
 
 test_that("text_replace() works", {
@@ -465,8 +490,5 @@ test_that("text_replace() works", {
       gt() %>%
       text_replace("NA", "---")
   )
-  expect_match_html(
-    tr,
-    "---"
-  )
+  expect_match_html(tr, "---")
 })

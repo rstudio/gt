@@ -1,7 +1,7 @@
 # Using summary rows in RTF tables is correct
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
@@ -315,7 +315,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
@@ -593,7 +593,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
@@ -885,7 +885,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
@@ -1141,7 +1141,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
@@ -1433,7 +1433,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
@@ -1689,7 +1689,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
@@ -1981,7 +1981,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
@@ -2273,7 +2273,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
@@ -2565,7 +2565,7 @@
 ---
 
     Code
-      .
+      as_rtf(gt_tbl)
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       

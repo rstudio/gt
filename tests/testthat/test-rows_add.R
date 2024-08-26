@@ -33,7 +33,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_a_01_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), NA))
 
   # Perform snapshot test
-  gt_tbl_a_01 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_a_01)
 
   # Add a single row, this time with more values
   gt_tbl_a_02 <-
@@ -59,7 +59,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_a_02_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), NA))
 
   # Perform snapshot test
-  gt_tbl_a_02 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_a_02)
 
   # Add three rows, include repeating values
   gt_tbl_a_03 <-
@@ -85,7 +85,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_a_03_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), rep(NA, 3)))
 
   # Perform snapshot test
-  gt_tbl_a_03 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_a_03)
 
   # Add one row, include a `rowname_col` value in 'row'
   gt_tbl_a_04 <-
@@ -112,7 +112,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_a_04_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), NA))
 
   # Perform snapshot test
-  gt_tbl_a_04 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_a_04)
 
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group'
@@ -141,7 +141,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_a_05_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 5)))
 
   # Perform snapshot test
-  gt_tbl_a_05 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_a_05)
 
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group' (this time using a new group name)
@@ -170,7 +170,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_a_06_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), "grp_c"))
 
   # Perform snapshot test
-  gt_tbl_a_06 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_a_06)
 
   # Add two rows, include two `rowname_col` values in 'row' and include
   # two different 'groupname_col' values in 'group'
@@ -199,7 +199,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_a_07_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), "grp_a", "grp_b"))
 
   # Perform snapshot test
-  gt_tbl_a_07 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_a_07)
 
   # Add two empty rows
   gt_tbl_a_08 <-
@@ -217,7 +217,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_a_08_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), rep(NA, 2)))
 
   # Perform snapshot test
-  gt_tbl_a_08 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_a_08)
 
   # Add no rows by supplying nothing to `rows_add()`
   gt_tbl_a_09 <-
@@ -238,7 +238,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_a_09_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4)))
 
   # Perform snapshot test
-  gt_tbl_a_09 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_a_09)
 
   # Add no rows by supplying `0` to `.n_empty`
   gt_tbl_a_10 <-
@@ -261,7 +261,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_a_10_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4)))
 
   # Perform snapshot test
-  gt_tbl_a_10 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_a_10)
 
   # Add two empty rows with `.n_empty` while attempting to add
   # rows with name-value pairs (which have no effect)
@@ -293,7 +293,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_identical(tbl_a_11_stub, tbl_a_08_stub)
 
   # Perform snapshot test
-  gt_tbl_a_11 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_a_11)
 
   gt_tbl_b <-
     exibble %>%
@@ -328,7 +328,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_b_01_stub$group_id, rep(NA_character_, 9))
 
   # Perform snapshot test
-  gt_tbl_b_01 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_b_01)
 
   # Add a single row, this time with more values
   gt_tbl_b_02 <-
@@ -354,7 +354,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_b_02_stub$group_id, rep(NA_character_, 9))
 
   # Perform snapshot test
-  gt_tbl_b_02 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_b_02)
 
   # Add three rows, include repeating values
   gt_tbl_b_03 <-
@@ -380,7 +380,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_b_03_stub$group_id, rep(NA_character_, 11))
 
   # Perform snapshot test
-  gt_tbl_b_03 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_b_03)
 
   # Add one row, include a `rowname_col` value in 'row'
   gt_tbl_b_04 <-
@@ -407,7 +407,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_b_04_stub$group_id, rep(NA_character_, 9))
 
   # Perform snapshot test
-  gt_tbl_b_04 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_b_04)
 
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group'
@@ -436,7 +436,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_b_05_stub$group_id, rep(NA_character_, 9))
 
   # Perform snapshot test
-  gt_tbl_b_05 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_b_05)
 
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group' (this time using a new group name)
@@ -465,7 +465,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_b_06_stub$group_id, rep(NA_character_, 9))
 
   # Perform snapshot test
-  gt_tbl_b_06 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_b_06)
 
   # Add two rows, include two `rowname_col` values in 'row' and include
   # two different 'groupname_col' values in 'group'
@@ -494,7 +494,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_b_07_stub$group_id, rep(NA_character_, 10))
 
   # Perform snapshot test
-  gt_tbl_b_07 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_b_07)
 
   # Add two empty rows
   gt_tbl_b_08 <-
@@ -512,7 +512,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_b_08_stub$group_id, rep(NA_character_, 10))
 
   # Perform snapshot test
-  gt_tbl_b_08 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_b_08)
 
   gt_tbl_c <-
     exibble %>%
@@ -547,7 +547,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_c_01_stub$group_id, rep(NA_character_, 9))
 
   # Perform snapshot test
-  gt_tbl_c_01 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_c_01)
 
   # Add a single row, this time with more values
   gt_tbl_c_02 <-
@@ -573,7 +573,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_c_02_stub$group_id, rep(NA_character_, 9))
 
   # Perform snapshot test
-  gt_tbl_c_02 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_c_02)
 
   # Add three rows, include repeating values
   gt_tbl_c_03 <-
@@ -599,7 +599,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_c_03_stub$group_id, rep(NA_character_, 11))
 
   # Perform snapshot test
-  gt_tbl_c_03 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_c_03)
 
   # Add one row, include a `rowname_col` value in 'row'
   gt_tbl_c_04 <-
@@ -626,7 +626,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_c_04_stub$group_id, rep(NA_character_, 9))
 
   # Perform snapshot test
-  gt_tbl_c_04 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_c_04)
 
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group'
@@ -655,7 +655,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_c_05_stub$group_id, rep(NA_character_, 9))
 
   # Perform snapshot test
-  gt_tbl_c_05 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_c_05)
 
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group' (this time using a new group name)
@@ -684,7 +684,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_c_06_stub$group_id, rep(NA_character_, 9))
 
   # Perform snapshot test
-  gt_tbl_c_06 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_c_06)
 
   # Add two rows, include two `rowname_col` values in 'row' and include
   # two different 'groupname_col' values in 'group'
@@ -713,7 +713,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_c_07_stub$group_id, rep(NA_character_, 10))
 
   # Perform snapshot test
-  gt_tbl_c_07 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_c_07)
 
   # Add two empty rows
   gt_tbl_c_08 <-
@@ -731,7 +731,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_equal(tbl_c_08_stub$group_id, rep(NA_character_, 10))
 
   # Perform snapshot test
-  gt_tbl_c_08 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_c_08)
 
   # Expect an error if non-valid values given to `.n_empty`
   expect_error(gt_tbl_c %>% rows_add(.n_empty = -1))
@@ -743,75 +743,75 @@ test_that("rows can be added to a table with name-value pairs", {
     gt()
 
   gt_tbl_d_add1_b1 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 1)
-  gt_tbl_d_add1_b1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_b1)
   gt_tbl_d_add1_b2 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 2)
-  gt_tbl_d_add1_b2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_b2)
   gt_tbl_d_add1_b3 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 3)
-  gt_tbl_d_add1_b3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_b3)
   gt_tbl_d_add1_b4 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 4)
-  gt_tbl_d_add1_b4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_b4)
   gt_tbl_d_add1_b5 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 5)
-  gt_tbl_d_add1_b5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_b5)
   gt_tbl_d_add1_b6 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 6)
-  gt_tbl_d_add1_b6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_b6)
   gt_tbl_d_add1_b7 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 7)
-  gt_tbl_d_add1_b7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_b7)
   gt_tbl_d_add1_b8 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 8)
-  gt_tbl_d_add1_b8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_b8)
   expect_error(gt_tbl_d %>% rows_add(.n_empty = 1, .before = 9))
 
   gt_tbl_d_add1_a1 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 1)
-  gt_tbl_d_add1_a1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_a1)
   gt_tbl_d_add1_a2 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 2)
-  gt_tbl_d_add1_a2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_a2)
   gt_tbl_d_add1_a3 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 3)
-  gt_tbl_d_add1_a3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_a3)
   gt_tbl_d_add1_a4 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 4)
-  gt_tbl_d_add1_a4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_a4)
   gt_tbl_d_add1_a5 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 5)
-  gt_tbl_d_add1_a5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_a5)
   gt_tbl_d_add1_a6 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 6)
-  gt_tbl_d_add1_a6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_a6)
   gt_tbl_d_add1_a7 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 7)
-  gt_tbl_d_add1_a7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_a7)
   gt_tbl_d_add1_a8 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 8)
-  gt_tbl_d_add1_a8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add1_a8)
   expect_error(gt_tbl_d %>% rows_add(.n_empty = 1, .after = 9))
 
   gt_tbl_d_add2_b1 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 1)
-  gt_tbl_d_add2_b1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_b1)
   gt_tbl_d_add2_b2 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 2)
-  gt_tbl_d_add2_b2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_b2)
   gt_tbl_d_add2_b3 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 3)
-  gt_tbl_d_add2_b3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_b3)
   gt_tbl_d_add2_b4 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 4)
-  gt_tbl_d_add2_b4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_b4)
   gt_tbl_d_add2_b5 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 5)
-  gt_tbl_d_add2_b5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_b5)
   gt_tbl_d_add2_b6 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 6)
-  gt_tbl_d_add2_b6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_b6)
   gt_tbl_d_add2_b7 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 7)
-  gt_tbl_d_add2_b7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_b7)
   gt_tbl_d_add2_b8 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 8)
-  gt_tbl_d_add2_b8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_b8)
   expect_error(gt_tbl_d %>% rows_add(.n_empty = 2, .before = 9))
 
   gt_tbl_d_add2_a1 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 1)
-  gt_tbl_d_add2_a1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_a1)
   gt_tbl_d_add2_a2 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 2)
-  gt_tbl_d_add2_a2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_a2)
   gt_tbl_d_add2_a3 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 3)
-  gt_tbl_d_add2_a3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_a3)
   gt_tbl_d_add2_a4 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 4)
-  gt_tbl_d_add2_a4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_a4)
   gt_tbl_d_add2_a5 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 5)
-  gt_tbl_d_add2_a5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_a5)
   gt_tbl_d_add2_a6 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 6)
-  gt_tbl_d_add2_a6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_a6)
   gt_tbl_d_add2_a7 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 7)
-  gt_tbl_d_add2_a7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_a7)
   gt_tbl_d_add2_a8 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 8)
-  gt_tbl_d_add2_a8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_d_add2_a8)
   expect_error(gt_tbl_d %>% rows_add(.n_empty = 2, .after = 9))
 
   gt_tbl_e <-
@@ -819,75 +819,75 @@ test_that("rows can be added to a table with name-value pairs", {
     gt(rowname_col = "row")
 
   gt_tbl_e_add1_b1 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 1)
-  gt_tbl_e_add1_b1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_b1)
   gt_tbl_e_add1_b2 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 2)
-  gt_tbl_e_add1_b2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_b2)
   gt_tbl_e_add1_b3 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 3)
-  gt_tbl_e_add1_b3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_b3)
   gt_tbl_e_add1_b4 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 4)
-  gt_tbl_e_add1_b4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_b4)
   gt_tbl_e_add1_b5 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 5)
-  gt_tbl_e_add1_b5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_b5)
   gt_tbl_e_add1_b6 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 6)
-  gt_tbl_e_add1_b6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_b6)
   gt_tbl_e_add1_b7 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 7)
-  gt_tbl_e_add1_b7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_b7)
   gt_tbl_e_add1_b8 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 8)
-  gt_tbl_e_add1_b8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_b8)
   expect_error(gt_tbl_e %>% rows_add(.n_empty = 1, .before = 9))
 
   gt_tbl_e_add1_a1 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 1)
-  gt_tbl_e_add1_a1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_a1)
   gt_tbl_e_add1_a2 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 2)
-  gt_tbl_e_add1_a2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_a2)
   gt_tbl_e_add1_a3 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 3)
-  gt_tbl_e_add1_a3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_a3)
   gt_tbl_e_add1_a4 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 4)
-  gt_tbl_e_add1_a4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_a4)
   gt_tbl_e_add1_a5 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 5)
-  gt_tbl_e_add1_a5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_a5)
   gt_tbl_e_add1_a6 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 6)
-  gt_tbl_e_add1_a6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_a6)
   gt_tbl_e_add1_a7 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 7)
-  gt_tbl_e_add1_a7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_a7)
   gt_tbl_e_add1_a8 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 8)
-  gt_tbl_e_add1_a8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add1_a8)
   expect_error(gt_tbl_e %>% rows_add(.n_empty = 1, .after = 9))
 
   gt_tbl_e_add2_b1 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 1)
-  gt_tbl_e_add2_b1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_b1)
   gt_tbl_e_add2_b2 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 2)
-  gt_tbl_e_add2_b2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_b2)
   gt_tbl_e_add2_b3 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 3)
-  gt_tbl_e_add2_b3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_b3)
   gt_tbl_e_add2_b4 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 4)
-  gt_tbl_e_add2_b4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_b4)
   gt_tbl_e_add2_b5 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 5)
-  gt_tbl_e_add2_b5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_b5)
   gt_tbl_e_add2_b6 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 6)
-  gt_tbl_e_add2_b6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_b6)
   gt_tbl_e_add2_b7 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 7)
-  gt_tbl_e_add2_b7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_b7)
   gt_tbl_e_add2_b8 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 8)
-  gt_tbl_e_add2_b8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_b8)
   expect_error(gt_tbl_e %>% rows_add(.n_empty = 2, .before = 9))
 
   gt_tbl_e_add2_a1 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 1)
-  gt_tbl_e_add2_a1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_a1)
   gt_tbl_e_add2_a2 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 2)
-  gt_tbl_e_add2_a2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_a2)
   gt_tbl_e_add2_a3 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 3)
-  gt_tbl_e_add2_a3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_a3)
   gt_tbl_e_add2_a4 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 4)
-  gt_tbl_e_add2_a4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_a4)
   gt_tbl_e_add2_a5 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 5)
-  gt_tbl_e_add2_a5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_a5)
   gt_tbl_e_add2_a6 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 6)
-  gt_tbl_e_add2_a6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_a6)
   gt_tbl_e_add2_a7 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 7)
-  gt_tbl_e_add2_a7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_a7)
   gt_tbl_e_add2_a8 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 8)
-  gt_tbl_e_add2_a8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_e_add2_a8)
   expect_error(gt_tbl_e %>% rows_add(.n_empty = 2, .after = 9))
 
   gt_tbl_f <-
@@ -895,75 +895,75 @@ test_that("rows can be added to a table with name-value pairs", {
     gt(rowname_col = "row", groupname_col = "group")
 
   gt_tbl_f_add1_b1 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 1)
-  gt_tbl_f_add1_b1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_b1)
   gt_tbl_f_add1_b2 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 2)
-  gt_tbl_f_add1_b2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_b2)
   gt_tbl_f_add1_b3 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 3)
-  gt_tbl_f_add1_b3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_b3)
   gt_tbl_f_add1_b4 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 4)
-  gt_tbl_f_add1_b4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_b4)
   gt_tbl_f_add1_b5 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 5)
-  gt_tbl_f_add1_b5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_b5)
   gt_tbl_f_add1_b6 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 6)
-  gt_tbl_f_add1_b6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_b6)
   gt_tbl_f_add1_b7 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 7)
-  gt_tbl_f_add1_b7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_b7)
   gt_tbl_f_add1_b8 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 8)
-  gt_tbl_f_add1_b8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_b8)
   expect_error(gt_tbl_f %>% rows_add(.n_empty = 1, .before = 9))
 
   gt_tbl_f_add1_a1 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 1)
-  gt_tbl_f_add1_a1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_a1)
   gt_tbl_f_add1_a2 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 2)
-  gt_tbl_f_add1_a2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_a2)
   gt_tbl_f_add1_a3 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 3)
-  gt_tbl_f_add1_a3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_a3)
   gt_tbl_f_add1_a4 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 4)
-  gt_tbl_f_add1_a4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_a4)
   gt_tbl_f_add1_a5 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 5)
-  gt_tbl_f_add1_a5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_a5)
   gt_tbl_f_add1_a6 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 6)
-  gt_tbl_f_add1_a6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_a6)
   gt_tbl_f_add1_a7 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 7)
-  gt_tbl_f_add1_a7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_a7)
   gt_tbl_f_add1_a8 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 8)
-  gt_tbl_f_add1_a8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add1_a8)
   expect_error(gt_tbl_f %>% rows_add(.n_empty = 1, .after = 9))
 
   gt_tbl_f_add2_b1 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 1)
-  gt_tbl_f_add2_b1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_b1)
   gt_tbl_f_add2_b2 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 2)
-  gt_tbl_f_add2_b2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_b2)
   gt_tbl_f_add2_b3 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 3)
-  gt_tbl_f_add2_b3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_b3)
   gt_tbl_f_add2_b4 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 4)
-  gt_tbl_f_add2_b4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_b4)
   gt_tbl_f_add2_b5 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 5)
-  gt_tbl_f_add2_b5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_b5)
   gt_tbl_f_add2_b6 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 6)
-  gt_tbl_f_add2_b6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_b6)
   gt_tbl_f_add2_b7 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 7)
-  gt_tbl_f_add2_b7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_b7)
   gt_tbl_f_add2_b8 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 8)
-  gt_tbl_f_add2_b8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_b8)
   expect_error(gt_tbl_f %>% rows_add(.n_empty = 2, .before = 9))
 
   gt_tbl_f_add2_a1 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 1)
-  gt_tbl_f_add2_a1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_a1)
   gt_tbl_f_add2_a2 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 2)
-  gt_tbl_f_add2_a2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_a2)
   gt_tbl_f_add2_a3 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 3)
-  gt_tbl_f_add2_a3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_a3)
   gt_tbl_f_add2_a4 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 4)
-  gt_tbl_f_add2_a4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_a4)
   gt_tbl_f_add2_a5 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 5)
-  gt_tbl_f_add2_a5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_a5)
   gt_tbl_f_add2_a6 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 6)
-  gt_tbl_f_add2_a6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_a6)
   gt_tbl_f_add2_a7 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 7)
-  gt_tbl_f_add2_a7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_a7)
   gt_tbl_f_add2_a8 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 8)
-  gt_tbl_f_add2_a8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_f_add2_a8)
   expect_error(gt_tbl_f %>% rows_add(.n_empty = 2, .after = 9))
 
   gt_tbl_g <-
@@ -971,75 +971,75 @@ test_that("rows can be added to a table with name-value pairs", {
     gt(groupname_col = "group")
 
   gt_tbl_g_add1_b1 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 1)
-  gt_tbl_g_add1_b1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_b1)
   gt_tbl_g_add1_b2 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 2)
-  gt_tbl_g_add1_b2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_b2)
   gt_tbl_g_add1_b3 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 3)
-  gt_tbl_g_add1_b3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_b3)
   gt_tbl_g_add1_b4 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 4)
-  gt_tbl_g_add1_b4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_b4)
   gt_tbl_g_add1_b5 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 5)
-  gt_tbl_g_add1_b5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_b5)
   gt_tbl_g_add1_b6 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 6)
-  gt_tbl_g_add1_b6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_b6)
   gt_tbl_g_add1_b7 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 7)
-  gt_tbl_g_add1_b7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_b7)
   gt_tbl_g_add1_b8 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 8)
-  gt_tbl_g_add1_b8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_b8)
   expect_error(gt_tbl_g %>% rows_add(.n_empty = 1, .before = 9))
 
   gt_tbl_g_add1_a1 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 1)
-  gt_tbl_g_add1_a1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_a1)
   gt_tbl_g_add1_a2 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 2)
-  gt_tbl_g_add1_a2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_a2)
   gt_tbl_g_add1_a3 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 3)
-  gt_tbl_g_add1_a3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_a3)
   gt_tbl_g_add1_a4 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 4)
-  gt_tbl_g_add1_a4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_a4)
   gt_tbl_g_add1_a5 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 5)
-  gt_tbl_g_add1_a5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_a5)
   gt_tbl_g_add1_a6 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 6)
-  gt_tbl_g_add1_a6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_a6)
   gt_tbl_g_add1_a7 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 7)
-  gt_tbl_g_add1_a7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_a7)
   gt_tbl_g_add1_a8 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 8)
-  gt_tbl_g_add1_a8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add1_a8)
   expect_error(gt_tbl_g %>% rows_add(.n_empty = 1, .after = 9))
 
   gt_tbl_g_add2_b1 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 1)
-  gt_tbl_g_add2_b1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_b1)
   gt_tbl_g_add2_b2 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 2)
-  gt_tbl_g_add2_b2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_b2)
   gt_tbl_g_add2_b3 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 3)
-  gt_tbl_g_add2_b3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_b3)
   gt_tbl_g_add2_b4 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 4)
-  gt_tbl_g_add2_b4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_b4)
   gt_tbl_g_add2_b5 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 5)
-  gt_tbl_g_add2_b5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_b5)
   gt_tbl_g_add2_b6 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 6)
-  gt_tbl_g_add2_b6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_b6)
   gt_tbl_g_add2_b7 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 7)
-  gt_tbl_g_add2_b7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_b7)
   gt_tbl_g_add2_b8 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 8)
-  gt_tbl_g_add2_b8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_b8)
   expect_error(gt_tbl_g %>% rows_add(.n_empty = 2, .before = 9))
 
   gt_tbl_g_add2_a1 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 1)
-  gt_tbl_g_add2_a1 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_a1)
   gt_tbl_g_add2_a2 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 2)
-  gt_tbl_g_add2_a2 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_a2)
   gt_tbl_g_add2_a3 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 3)
-  gt_tbl_g_add2_a3 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_a3)
   gt_tbl_g_add2_a4 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 4)
-  gt_tbl_g_add2_a4 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_a4)
   gt_tbl_g_add2_a5 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 5)
-  gt_tbl_g_add2_a5 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_a5)
   gt_tbl_g_add2_a6 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 6)
-  gt_tbl_g_add2_a6 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_a6)
   gt_tbl_g_add2_a7 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 7)
-  gt_tbl_g_add2_a7 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_a7)
   gt_tbl_g_add2_a8 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 8)
-  gt_tbl_g_add2_a8 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_g_add2_a8)
   expect_error(gt_tbl_g %>% rows_add(.n_empty = 2, .after = 9))
 
   # Expect an error if using both `.before` and `.after`
@@ -1116,7 +1116,7 @@ test_that("adding rows can be done using formula-based expressions", {
   expect_equal(tbl_h_01_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), NA))
 
   # Perform snapshot test
-  gt_tbl_h_01 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_h_01)
 
   # Add a single row, this time with more values
   gt_tbl_h_02 <-
@@ -1142,7 +1142,7 @@ test_that("adding rows can be done using formula-based expressions", {
   expect_equal(tbl_h_02_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), NA))
 
   # Perform snapshot test
-  gt_tbl_h_02 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_h_02)
 
   # Add three rows, include repeating values
   gt_tbl_h_03 <-
@@ -1168,7 +1168,7 @@ test_that("adding rows can be done using formula-based expressions", {
   expect_equal(tbl_h_03_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), rep(NA, 3)))
 
   # Perform snapshot test
-  gt_tbl_h_03 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_h_03)
 
   # Add one row, include a `rowname_col` value in 'row'
   gt_tbl_h_04 <-
@@ -1195,7 +1195,7 @@ test_that("adding rows can be done using formula-based expressions", {
   expect_equal(tbl_h_04_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), NA))
 
   # Perform snapshot test
-  gt_tbl_h_04 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_h_04)
 
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group'
@@ -1224,7 +1224,7 @@ test_that("adding rows can be done using formula-based expressions", {
   expect_equal(tbl_h_05_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 5)))
 
   # Perform snapshot test
-  gt_tbl_h_05 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_h_05)
 
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group' (this time using a new group name)
@@ -1253,7 +1253,7 @@ test_that("adding rows can be done using formula-based expressions", {
   expect_equal(tbl_h_06_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), "grp_c"))
 
   # Perform snapshot test
-  gt_tbl_h_06 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_h_06)
 
   # Add two rows, include two `rowname_col` values in 'row' and include
   # two different 'groupname_col' values in 'group'
@@ -1282,7 +1282,7 @@ test_that("adding rows can be done using formula-based expressions", {
   expect_equal(tbl_h_07_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), "grp_a", "grp_b"))
 
   # Perform snapshot test
-  gt_tbl_h_07 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_h_07)
 
   # Use a mix of name-value pairs and formula expressions
   gt_tbl_h_08 <-
@@ -1310,7 +1310,7 @@ test_that("adding rows can be done using formula-based expressions", {
   expect_equal(tbl_h_08_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), "grp_a", "grp_b"))
 
   # Perform snapshot test
-  gt_tbl_h_08 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_h_08)
 
   # Use Tidyselect-style expressions on the LHS
   gt_tbl_h_09 <-
@@ -1338,7 +1338,7 @@ test_that("adding rows can be done using formula-based expressions", {
   expect_equal(tbl_h_09_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), "grp_a", "grp_b"))
 
   # Perform snapshot test
-  gt_tbl_h_09 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_h_09)
 
   # Use mix of Tidyselect-style expressions and vectors on the LHS
   gt_tbl_h_10 <-
@@ -1368,7 +1368,7 @@ test_that("adding rows can be done using formula-based expressions", {
   expect_equal(tbl_h_10_data$num[10], tbl_h_10_data$currency[10])
 
   # Perform snapshot test
-  gt_tbl_h_10 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_h_10)
 
   # Use `everything()` to target all columns in a simple table
   gt_tbl_h_11 <-
@@ -1382,7 +1382,7 @@ test_that("adding rows can be done using formula-based expressions", {
     )
 
   # Perform snapshot test
-  gt_tbl_h_11 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_h_11)
 
   # Expect an error if using a one-sided formula
   expect_error(
@@ -1424,7 +1424,7 @@ test_that("adding rows can be done through the `.list` argument", {
   expect_equal(tbl_i_01_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), NA))
 
   # Perform snapshot test
-  gt_tbl_i_01 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_i_01)
 
   # Add a single row, this time with more values
   gt_tbl_i_02 <-
@@ -1452,7 +1452,7 @@ test_that("adding rows can be done through the `.list` argument", {
   expect_equal(tbl_i_02_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), NA))
 
   # Perform snapshot test
-  gt_tbl_i_02 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_i_02)
 
   # Add three rows, include repeating values
   gt_tbl_i_03 <-
@@ -1480,7 +1480,7 @@ test_that("adding rows can be done through the `.list` argument", {
   expect_equal(tbl_i_03_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), rep(NA, 3)))
 
   # Perform snapshot test
-  gt_tbl_i_03 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_i_03)
 
   # Add one row, include a `rowname_col` value in 'row'
   gt_tbl_i_04 <-
@@ -1509,7 +1509,7 @@ test_that("adding rows can be done through the `.list` argument", {
   expect_equal(tbl_i_04_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), NA))
 
   # Perform snapshot test
-  gt_tbl_i_04 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_i_04)
 
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group'
@@ -1540,7 +1540,7 @@ test_that("adding rows can be done through the `.list` argument", {
   expect_equal(tbl_i_05_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 5)))
 
   # Perform snapshot test
-  gt_tbl_i_05 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_i_05)
 
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group' (this time using a new group name)
@@ -1571,7 +1571,7 @@ test_that("adding rows can be done through the `.list` argument", {
   expect_equal(tbl_i_06_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), "grp_c"))
 
   # Perform snapshot test
-  gt_tbl_i_06 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_i_06)
 
   # Add two rows, include two `rowname_col` values in 'row' and include
   # two different 'groupname_col' values in 'group'
@@ -1602,7 +1602,7 @@ test_that("adding rows can be done through the `.list` argument", {
   expect_equal(tbl_i_07_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), "grp_a", "grp_b"))
 
   # Perform snapshot test
-  gt_tbl_i_07 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_i_07)
 
   # Use a mix of name-value pairs and formula expressions
   gt_tbl_i_08 <-
@@ -1632,7 +1632,7 @@ test_that("adding rows can be done through the `.list` argument", {
   expect_equal(tbl_i_08_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), "grp_a", "grp_b"))
 
   # Perform snapshot test
-  gt_tbl_i_08 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_i_08)
 
   # Use Tidyselect-style expressions on the LHS
   gt_tbl_i_09 <-
@@ -1662,7 +1662,7 @@ test_that("adding rows can be done through the `.list` argument", {
   expect_equal(tbl_i_09_stub$group_id, c(rep("grp_a", 4), rep("grp_b", 4), "grp_a", "grp_b"))
 
   # Perform snapshot test
-  gt_tbl_i_09 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_i_09)
 
   # Use mix of Tidyselect-style expressions and vectors on the LHS
   gt_tbl_i_10 <-
@@ -1694,7 +1694,7 @@ test_that("adding rows can be done through the `.list` argument", {
   expect_equal(tbl_i_10_data$num[10], tbl_i_10_data$currency[10])
 
   # Perform snapshot test
-  gt_tbl_i_10 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_i_10)
 
   # Use `everything()` to target all columns in a simple table
   gt_tbl_i_11 <-
@@ -1710,7 +1710,7 @@ test_that("adding rows can be done through the `.list` argument", {
     )
 
   # Perform snapshot test
-  gt_tbl_i_11 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_i_11)
 })
 
 test_that("adding rows can only involve columns already present in the table", {
@@ -1933,28 +1933,28 @@ test_that("adding rows and styling the table has the intended behavior", {
     rows_add(num = 2343, .after = "row_3")
 
   # Perform several snapshot tests
-  gt_tbl_style_01 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_02 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_03 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_04 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_05 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_06 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_07 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_08 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_09 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_10 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_11 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_12 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_13 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_14 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_15 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_16 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_17 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_18 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_19 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_20 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_21 %>% render_as_html() %>% expect_snapshot()
-  gt_tbl_style_22 %>% render_as_html() %>% expect_snapshot()
+  expect_snapshot_html(gt_tbl_style_01)
+  expect_snapshot_html(gt_tbl_style_02)
+  expect_snapshot_html(gt_tbl_style_03)
+  expect_snapshot_html(gt_tbl_style_04)
+  expect_snapshot_html(gt_tbl_style_05)
+  expect_snapshot_html(gt_tbl_style_06)
+  expect_snapshot_html(gt_tbl_style_07)
+  expect_snapshot_html(gt_tbl_style_08)
+  expect_snapshot_html(gt_tbl_style_09)
+  expect_snapshot_html(gt_tbl_style_10)
+  expect_snapshot_html(gt_tbl_style_11)
+  expect_snapshot_html(gt_tbl_style_12)
+  expect_snapshot_html(gt_tbl_style_13)
+  expect_snapshot_html(gt_tbl_style_14)
+  expect_snapshot_html(gt_tbl_style_15)
+  expect_snapshot_html(gt_tbl_style_16)
+  expect_snapshot_html(gt_tbl_style_17)
+  expect_snapshot_html(gt_tbl_style_18)
+  expect_snapshot_html(gt_tbl_style_19)
+  expect_snapshot_html(gt_tbl_style_20)
+  expect_snapshot_html(gt_tbl_style_21)
+  expect_snapshot_html(gt_tbl_style_22)
 
   # Expect an error when trying to resolve indices that don't yet exist
   # (i.e., the order of `rows_add()` and `tab_style()` matters)
