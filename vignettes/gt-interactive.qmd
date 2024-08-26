@@ -12,6 +12,15 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 set.seed(123)
+
+# for easier testing
+if (isTRUE(as.logical(Sys.getenv("CI", "false"))) || identical(Sys.getenv("IN_PKGDOWN"), "true")
+) {
+  library(gt)
+} else {
+  # allow easier testing with the render button.
+  devtools::load_all(".")
+}
 ```
 
 gt provides an option to make interactive html tables via the [reactable](https://glin.github.io/reactable/index.html) package.
@@ -21,8 +30,7 @@ It also provides an interactive to creating gt tables as plots.
 Let's use the following base for our gt table.
 
 ```{r}
- devtools::load_all("~/rrr-forks/gt")
-#library(gt)
+
 gt_tbl <- exibble |>
   gt(groupname_col = "group", rowname_col = "row") |>
   tab_header(
