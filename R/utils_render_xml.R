@@ -1529,10 +1529,10 @@ create_columns_component_xml <- function(
   spanners_present <- dt_spanners_exists(data = data)
 
   # Get the column alignments for all visible columns
-  col_alignment <- dplyr::pull(subset(boxh, type == "default"), column_align)
+  col_alignment <- vctrs::vec_slice(boxh$column_align, boxh$type == "default")
 
   # Get the column headings
-  headings_vars <- dplyr::pull(subset(boxh, type == "default"), var)
+  headings_vars <- vctrs::vec_slice(boxh$var, boxh$type == "default")
   headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
 
   # Determine the finalized number of spanner rows

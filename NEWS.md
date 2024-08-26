@@ -53,6 +53,10 @@
 
 * `vec_fmt_markdown()` works correctly inside Quarto again (@olivroy, #1840).
 
+* Fixed a bug where spanners didn't render correctly in Quarto (#1839).
+
+* Improved footnote rendering in Quarto with `fmt_markdown()` (@olivroy, #1773)
+
 # gt 0.11.0
 
 ## New features

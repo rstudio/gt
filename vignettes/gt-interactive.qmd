@@ -11,8 +11,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-# generate the same table ID
-set.seed(112)
+set.seed(123)
 ```
 
 gt provides an option to make interactive html tables via the [reactable](https://glin.github.io/reactable/index.html) package.

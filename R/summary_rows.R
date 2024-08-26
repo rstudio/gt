@@ -384,6 +384,7 @@ summary_rows <- function(
   # Collect all provided formatting options in a list
   formatter_options <- list(...)
 
+
   # Perform a partial build of the table to obtain the current
   # state of `group_id` values in the table; we should not assign this
   # to `data` but to a new object (`data_built`) so that we do not
@@ -393,7 +394,8 @@ summary_rows <- function(
   groups_rows_tbl <- dt_groups_rows_get(data = data_built)
 
   # Pull a character vector of available groups from `groups_rows_tbl`
-  available_groups <- dplyr::pull(groups_rows_tbl, group_id)
+  available_groups <- groups_rows_tbl$group_id
+  check_character(available_groups)
 
   # Resolve the group names
   groups <-
@@ -1028,7 +1030,7 @@ normalize_summary_fns <- function(fns) {
 
 normalize_fmt_fns <- function(fmt) {
 
-  if (is.null(fmt) || length(fmt) < 1) {
+  if (length(fmt) == 0) {
     return(NULL)
   }
 
