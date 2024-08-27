@@ -3,7 +3,8 @@ test_that("A gt table contains the expected caption component", {
   # Create a `tbl_latex` object with `gt()`; this table contains a caption
   tbl_latex <-
     gt(mtcars_short) %>%
-    tab_caption("test caption")
+    tab_caption("test caption") %>%
+    tab_options(latex.use_longtable = TRUE)
 
   # Expect a characteristic pattern
   expect_match(
