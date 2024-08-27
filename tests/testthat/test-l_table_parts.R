@@ -15,13 +15,7 @@ test_that("A gt table contains the expected caption component", {
 
   # Perform a snapshot test where a LaTeX table
   # contains only a caption
-  mtcars_short %>%
-    gt() %>%
-    tab_caption("test caption") %>%
-    tab_options(latex.use_longtable = TRUE) %>%
-    as_latex() %>%
-    as.character() %>%
-    expect_snapshot()
+  expect_snapshot_latex(tbl_latex)
 })
 
 test_that("A gt table contains the expected heading components", {
