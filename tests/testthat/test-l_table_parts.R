@@ -9,7 +9,7 @@ test_that("A gt table contains the expected caption component", {
   # Expect a characteristic pattern
   expect_match(
     as_latex(tbl_latex) %>% as.character(),
-    "\\caption{test caption} \n\\fontsize",
+    "\\caption{test caption} \\\\ \n",
     fixed = TRUE
   )
 
