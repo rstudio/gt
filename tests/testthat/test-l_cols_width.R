@@ -4,21 +4,21 @@ test_that("cols_width() works correctly", {
   # The `mpg` and `cyl` columns with one width, and the `cyl` and `hp` 
   # columns with another width.
   
-  tbl <- mtcars_short |>
-    gt() |>
-    cols_hide(c("drat", "wt", "qsec", "vs", "am", "gear", "carb")) |>
+  tbl <- mtcars_short %>%
+    gt() %>%
+    cols_hide(c("drat", "wt", "qsec", "vs", "am", "gear", "carb")) %>%
     cols_width(
       c("mpg", "disp") ~ px(150),
       c("cyl", "hp") ~ px(100)
     )
   
-  tbl_latex_tabul <- tbl |>
-    as_latex() |>
+  tbl_latex_tabul <- tbl %>%
+    as_latex() %>%
     as.character()
   
-  tbl_latex_lt <- tbl |>
-    tab_options(latex.use_longtable = TRUE) |>
-    as_latex() |>
+  tbl_latex_lt <- tbl %>%
+    tab_options(latex.use_longtable = TRUE) %>%
+    as_latex() %>%
     as.character()
   
   # Expect a characteristic pattern depending whether longtable or tabular is used.
@@ -32,29 +32,29 @@ test_that("cols_width() works correctly", {
   # The `mpg` and `cyl` columns are merged having one width, 
   # and the `cyl` and `hp` columns are merged having another width.
   
-  tbl <- mtcars_short |>
-    gt() |>
-    cols_hide(c("drat", "wt", "qsec", "vs", "am", "gear", "carb")) |>
+  tbl <- mtcars_short %>%
+    gt() %>%
+    cols_hide(c("drat", "wt", "qsec", "vs", "am", "gear", "carb")) %>%
     cols_merge(
       columns = c("mpg", "cyl"),
       pattern = "{1}-{2}"
-    ) |>
+    ) %>%
     cols_merge(
       columns = c("disp", "hp"),
       pattern = "{1}-{2}"
-    ) |>
+    ) %>%
     cols_width(
       "mpg" ~ px(150),
       "disp" ~ px(200)
     )
   
-  tbl_latex_tabul <- tbl |>
-    as_latex() |>
+  tbl_latex_tabul <- tbl %>%
+    as_latex() %>%
     as.character()
   
-  tbl_latex_lt <- tbl |>
-    tab_options(latex.use_longtable = TRUE) |>
-    as_latex() |>
+  tbl_latex_lt <- tbl %>%
+    tab_options(latex.use_longtable = TRUE) %>%
+    as_latex() %>%
     as.character()
   
   # Expect a characteristic pattern depending whether longtable or tabular is used.
@@ -69,31 +69,31 @@ test_that("cols_width() works correctly", {
   # The `mpg` and `cyl` columns are merged having one width, 
   # and the `cyl` and `hp` columns are merged having another width.
   
-  tbl <- mtcars_short |>
-    gt(rowname_col = "carb") |>
-    cols_hide(c("drat", "wt", "qsec", "vs", "am", "gear")) |>
-    tab_stubhead(label = "carb") |>
+  tbl <- mtcars_short %>%
+    gt(rowname_col = "carb") %>%
+    cols_hide(c("drat", "wt", "qsec", "vs", "am", "gear")) %>%
+    tab_stubhead(label = "carb") %>%
     cols_merge(
       columns = c("mpg", "cyl"),
       pattern = "{1}-{2}"
-    ) |>
+    ) %>%
     cols_merge(
       columns = c("disp", "hp"),
       pattern = "{1}-{2}"
-    ) |>
+    ) %>%
     cols_width(
       "mpg" ~ px(150),
       "disp" ~ px(200),
       "carb" ~ px(75)
     )
   
-  tbl_latex_tabul <- tbl |>
-    as_latex() |>
+  tbl_latex_tabul <- tbl %>%
+    as_latex() %>%
     as.character()
   
-  tbl_latex_lt <- tbl |>
-    tab_options(latex.use_longtable = TRUE) |>
-    as_latex() |>
+  tbl_latex_lt <- tbl %>%
+    tab_options(latex.use_longtable = TRUE) %>%
+    as_latex() %>%
     as.character()
   
   # Expect a characteristic pattern depending whether longtable or tabular is used.
@@ -110,19 +110,19 @@ test_that("cols_width() works correctly", {
   # We set the width of the row_groups here to check that the table isn't 
   # affected since `row_group_as_column` is FALSE.
   
-  tbl <- mtcars_short |>
-    dplyr::mutate(carb_grp = ifelse(carb <= 2, "<=2", ">2")) |>
-    gt(rowname_col = "carb", groupname_col = "carb_grp") |>
-    cols_hide(c("drat", "wt", "qsec", "vs", "am", "gear")) |>
-    tab_stubhead(label = "carb") |>
+  tbl <- mtcars_short %>%
+    dplyr::mutate(carb_grp = ifelse(carb <= 2, "<=2", ">2")) %>%
+    gt(rowname_col = "carb", groupname_col = "carb_grp") %>%
+    cols_hide(c("drat", "wt", "qsec", "vs", "am", "gear")) %>%
+    tab_stubhead(label = "carb") %>%
     cols_merge(
       columns = c("mpg", "cyl"),
       pattern = "{1}-{2}"
-    ) |>
+    ) %>%
     cols_merge(
       columns = c("disp", "hp"),
       pattern = "{1}-{2}"
-    ) |>
+    ) %>%
     cols_width(
       "mpg" ~ px(150),
       "disp" ~ px(200),
@@ -130,13 +130,13 @@ test_that("cols_width() works correctly", {
       "carb_grp"~ px(1000)
     )
   
-  tbl_latex_tabul <- tbl |>
-    as_latex() |>
+  tbl_latex_tabul <- tbl %>%
+    as_latex() %>%
     as.character()
   
-  tbl_latex_lt <- tbl |>
-    tab_options(latex.use_longtable = TRUE) |>
-    as_latex() |>
+  tbl_latex_lt <- tbl %>%
+    tab_options(latex.use_longtable = TRUE) %>%
+    as_latex() %>%
     as.character()
   
   # Expect a characteristic pattern depending whether longtable or tabular is used.
@@ -152,22 +152,22 @@ test_that("cols_width() works correctly", {
   # The `mpg` and `cyl` columns are merged having one width, 
   # and the `cyl` and `hp` columns are merged having another width. 
   
-  tbl <- mtcars_short |>
-    dplyr::mutate(carb_grp = ifelse(carb <= 2, "<=2", ">2")) |>
+  tbl <- mtcars_short %>%
+    dplyr::mutate(carb_grp = ifelse(carb <= 2, "<=2", ">2")) %>%
     gt(rowname_col = "carb",
        groupname_col = "carb_grp",
        row_group_as_column = TRUE
-    ) |>
-    cols_hide(c("drat", "wt", "qsec", "vs", "am", "gear")) |>
-    tab_stubhead(label = "carb") |>
+    ) %>%
+    cols_hide(c("drat", "wt", "qsec", "vs", "am", "gear")) %>%
+    tab_stubhead(label = "carb") %>%
     cols_merge(
       columns = c("mpg", "cyl"),
       pattern = "{1}-{2}"
-    ) |>
+    ) %>%
     cols_merge(
       columns = c("disp", "hp"),
       pattern = "{1}-{2}"
-    ) |>
+    ) %>%
     cols_width(
       "mpg" ~ px(150),
       "disp" ~ px(200),
@@ -175,13 +175,13 @@ test_that("cols_width() works correctly", {
       "carb_grp"~ px(50)
     )
   
-  tbl_latex_tabul <- tbl |>
-    as_latex() |>
+  tbl_latex_tabul <- tbl %>%
+    as_latex() %>%
     as.character()
   
-  tbl_latex_lt <- tbl |>
-    tab_options(latex.use_longtable = TRUE) |>
-    as_latex() |>
+  tbl_latex_lt <- tbl %>%
+    tab_options(latex.use_longtable = TRUE) %>%
+    as_latex() %>%
     as.character()
   
   # Expect a characteristic pattern depending whether longtable or tabular is used.
