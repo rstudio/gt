@@ -98,10 +98,10 @@ test_that("cols_width() works correctly", {
   
   # Expect a characteristic pattern depending whether longtable or tabular is used.
   expect_length(tbl_latex_lt, 1)
-  expect_match(tbl_latex_lt, "\\\\begin\\{longtable\\}\\{>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 56.25pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 112.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 150.00pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}\\}")
-  
+  expect_match(tbl_latex_lt, "\\\\begin\\{longtable\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}p\\{\\\\dimexpr 56.25pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 112.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 150.00pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}\\}")
+                             
   expect_length(tbl_latex_tabul, 1)
-  expect_match(tbl_latex_tabul, "\\\\begin\\{tabular\\*\\}\\{\\\\linewidth\\}\\{@\\{\\\\extracolsep\\{\\\\fill\\}\\}>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 56.25pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 112.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 150.00pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}\\}")
+  expect_match(tbl_latex_tabul, "\\\\begin\\{tabular\\*\\}\\{\\\\linewidth\\}\\{@\\{\\\\extracolsep\\{\\\\fill\\}\\}>\\{\\\\raggedright\\\\arraybackslash\\}p\\{\\\\dimexpr 56.25pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 112.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 150.00pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}\\}")
   
   # Create a `tbl_latex` object with `gt()`:
   # `carb` is used a stub with a specific width, and `carb_group` is used as row_groups.
@@ -141,10 +141,10 @@ test_that("cols_width() works correctly", {
   
   # Expect a characteristic pattern depending whether longtable or tabular is used.
   expect_length(tbl_latex_lt, 1)
-  expect_match(tbl_latex_lt, "\\\\begin\\{longtable\\}\\{>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 56.25pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 112.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 150.00pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}\\}")
+  expect_match(tbl_latex_lt, "\\\\begin\\{longtable\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}p\\{\\\\dimexpr 56.25pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 112.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 150.00pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}\\}")
   
   expect_length(tbl_latex_tabul, 1)
-  expect_match(tbl_latex_tabul, "\\\\begin\\{tabular\\*\\}\\{\\\\linewidth\\}\\{@\\{\\\\extracolsep\\{\\\\fill\\}\\}>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 56.25pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 112.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 150.00pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}\\}")
+  expect_match(tbl_latex_tabul, "\\\\begin\\{tabular\\*\\}\\{\\\\linewidth\\}\\{@\\{\\\\extracolsep\\{\\\\fill\\}\\}>\\{\\\\raggedright\\\\arraybackslash\\}p\\{\\\\dimexpr 56.25pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 112.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 150.00pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}\\}")
   
   # Create a `tbl_latex` object with `gt()`:
   # `carb` is used a stub with a specific width, and `carb_group` is used as row_groups
@@ -186,8 +186,8 @@ test_that("cols_width() works correctly", {
   
   # Expect a characteristic pattern depending whether longtable or tabular is used.
   expect_length(tbl_latex_lt, 1)
-  expect_match(tbl_latex_lt, "\\\\begin\\{longtable\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}p\\{\\\\dimexpr 37.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 56.25pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 112.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 150.00pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}\\}")
+  expect_match(tbl_latex_lt, "\\\\begin\\{longtable\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}p\\{\\\\dimexpr 37.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedright\\\\arraybackslash\\}p\\{\\\\dimexpr 56.25pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 112.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 150.00pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}\\}")
   
   expect_length(tbl_latex_tabul, 1)
-  expect_match(tbl_latex_tabul, "\\\\begin\\{tabular\\*\\}\\{\\\\linewidth\\}\\{@\\{\\\\extracolsep\\{\\\\fill\\}\\}>\\{\\\\raggedright\\\\arraybackslash\\}p\\{\\\\dimexpr 37.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 56.25pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 112.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 150.00pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}\\}")
+  expect_match(tbl_latex_tabul, "\\\\begin\\{tabular\\*\\}\\{\\\\linewidth\\}\\{@\\{\\\\extracolsep\\{\\\\fill\\}\\}>\\{\\\\raggedright\\\\arraybackslash\\}p\\{\\\\dimexpr 37.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedright\\\\arraybackslash\\}p\\{\\\\dimexpr 56.25pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 112.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 150.00pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}\\}")
 })
