@@ -49,6 +49,25 @@ dt_options_get_value <- function(data, option) {
   dt_options$value[[which(dt_options$parameter == option)]]
 }
 
+# Get a list of option values
+dt_options_get_values <- function(data) {
+  dt_options <- dt_options_get(data = data)[c(1, 2)]
+  # Similar to tibble::deframe
+  vctrs::vec_set_names(dt_options$value, dt_options$parameter)
+  res <- vctrs::vec_set_names(dt_options$value, dt_options$parameter)
+  class(res) <- c("gt_option", class(res))
+  res
+}
+
+#' @export
+`$.gt_option` <- function(x, name) {
+  out <- .subset2(x, name)
+  if (is.null(out)) {
+    cli::cli_abort("Can't find option {.val {name}}.")
+  }
+  out
+}
+
 default_fonts_vec <-
   c(
     "system-ui", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif",

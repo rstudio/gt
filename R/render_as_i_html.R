@@ -170,57 +170,59 @@ render_as_ihtml <- function(data, id) {
       )
   }
 
-  # Get options settable in `tab_options()`
-  opt_val <- dt_options_get_value
-  height <- opt_val(data = data, option = "ihtml_height")
-  use_pagination <- opt_val(data = data, option = "ihtml_use_pagination")
-  use_pagination_info <- opt_val(data = data, option = "ihtml_use_pagination_info")
-  use_search <- opt_val(data = data, option = "ihtml_use_search")
-  use_sorting <- opt_val(data = data, option = "ihtml_use_sorting")
-  use_filters <- opt_val(data = data, option = "ihtml_use_filters")
-  use_resizers <- opt_val(data = data, option = "ihtml_use_resizers")
-  use_highlight <- opt_val(data = data, option = "ihtml_use_highlight")
-  use_compact_mode <- opt_val(data = data, option = "ihtml_use_compact_mode")
-  use_text_wrapping <- opt_val(data = data, option = "ihtml_use_text_wrapping")
-  use_page_size_select <- opt_val(data = data, option = "ihtml_use_page_size_select")
-  page_size_default <- opt_val(data = data, option = "ihtml_page_size_default")
-  page_size_values <- opt_val(data = data, option = "ihtml_page_size_values")
-  pagination_type <- opt_val(data = data, option = "ihtml_pagination_type")
+  # Get all options settable in `tab_options()`
+  tbl_opts <- dt_options_get_values(data)
 
-  use_row_striping <- opt_val(data = data, option = "row_striping_include_table_body")
-  row_striping_color <- opt_val(data = data, option = "row_striping_background_color")
+  # Get specific options values
+  height <- tbl_opts$ihtml_height
+  use_pagination <- tbl_opts$ihtml_use_pagination
+  use_pagination_info <- tbl_opts$ihtml_use_pagination_info
+  use_search <- tbl_opts$ihtml_use_search
+  use_sorting <- tbl_opts$ihtml_use_sorting
+  use_filters <- tbl_opts$ihtml_use_filters
+  use_resizers <- tbl_opts$ihtml_use_resizers
+  use_highlight <- tbl_opts$ihtml_use_highlight
+  use_compact_mode <- tbl_opts$ihtml_use_compact_mode
+  use_text_wrapping <- tbl_opts$ihtml_use_text_wrapping
+  use_page_size_select <- tbl_opts$ihtml_use_page_size_select
+  page_size_default <- tbl_opts$ihtml_page_size_default
+  page_size_values <- tbl_opts$ihtml_page_size_values
+  pagination_type <- tbl_opts$ihtml_pagination_type
 
-  table_width <- opt_val(data = data, option = "table_width")
-  table_background_color <- opt_val(data = data, option = "table_background_color")
-  table_font_names <- opt_val(data = data, option = "table_font_names")
-  table_font_color <- opt_val(data = data, option = "table_font_color")
+  use_row_striping <- tbl_opts$row_striping_include_table_body
+  row_striping_color <- tbl_opts$row_striping_background_color
 
-  column_labels_border_top_style <- opt_val(data = data, option = "column_labels_border_top_style")
-  column_labels_border_top_width <- opt_val(data = data, option = "column_labels_border_top_width")
-  column_labels_border_top_color <- opt_val(data = data, option = "column_labels_border_top_color")
-  column_labels_border_bottom_style <- opt_val(data = data, option = "column_labels_border_bottom_style")
-  column_labels_border_bottom_width <- opt_val(data = data, option = "column_labels_border_bottom_width")
-  column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
+  table_width <- tbl_opts$table_width
+  table_background_color <- tbl_opts$table_background_color
+  table_font_names <- tbl_opts$table_font_names
+  table_font_color <- tbl_opts$table_font_color
+
+  column_labels_border_top_style <- tbl_opts$column_labels_border_top_style
+  column_labels_border_top_width <- tbl_opts$column_labels_border_top_width
+  column_labels_border_top_color <- tbl_opts$column_labels_border_top_color
+  column_labels_border_bottom_style <- tbl_opts$column_labels_border_bottom_style
+  column_labels_border_bottom_width <- tbl_opts$column_labels_border_bottom_width
+  column_labels_border_bottom_color <- tbl_opts$column_labels_border_bottom_color
   # Don't allow NA
-  column_labels_background_color <- opt_val(data = data, option = "column_labels_background_color")
+  column_labels_background_color <- tbl_opts$column_labels_background_color
   # Apply stub font weight to
-  stub_font_weight <- opt_val(data = data, option = "stub_font_weight")
+  stub_font_weight <- tbl_opts$stub_font_weight
 
   if (is.na(column_labels_background_color)) {
     # apply all column labels formatting to both heading + groupCol styling (nothing specific for spanners styling in gt?)
     column_labels_background_color <- "transparent"
   }
   # Part of #1307
-  borderless_borders <- opt_val(data = data, option = "table_body_hlines_style") == "none"
+  borderless_borders <- tbl_opts$table_body_hlines_style == "none"
 
-  column_labels_font_weight <- opt_val(data = data, option = "column_labels_font_weight")
+  column_labels_font_weight <- tbl_opts$column_labels_font_weight
   # Apply font weight to groupname_col title
-  row_group_font_weight <- opt_val(data = data, "row_group_font_weight")
-  table_body_font_weight <- opt_val(data = data, "table_font_weight")
+  row_group_font_weight <- tbl_opts$row_group_font_weight
+  table_body_font_weight <- tbl_opts$table_font_weight
   # for row names + summary label
-  stub_font_weight <- opt_val(data = data, "stub_font_weight")
+  stub_font_weight <- tbl_opts$stub_font_weight
   # #1693 table font size
-  table_font_size <- opt_val(data = data, "table_font_size")
+  table_font_size <- tbl_opts$table_font_size
 
   emoji_symbol_fonts <-
     c(
@@ -753,10 +755,10 @@ create_source_notes_component_ihtml <- function(data) {
   }
 
   # Get the source note multiline option
-  multiline <- dt_options_get_value(data = data, option = "source_notes_multiline")
+  multiline <- tbl_opts$source_notes_multiline
 
   # Get the source note separator option
-  separator <- dt_options_get_value(data = data, option = "source_notes_sep")
+  separator <- tbl_opts$source_notes_sep
 
   # Handle the multiline source notes case (each footnote takes up one line)
   if (multiline) {
@@ -829,10 +831,10 @@ create_footnotes_component_ihtml <- function(data) {
   }
 
   # Get the footnote multiline option
-  multiline <- dt_options_get_value(data = data, option = "footnotes_multiline")
+  multiline <- tbl_opts$footnotes_multiline
 
   # Get the footnote separator option
-  separator <- dt_options_get_value(data = data, option = "footnotes_sep")
+  separator <- tbl_opts$footnotes_sep
 
   # Obtain vectors of footnote ID values (prerendered glyphs) and
   # the associated text
