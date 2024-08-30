@@ -245,34 +245,20 @@ get_table_defs <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
 
-  # Get the `table-layout` value, which is set in `_options`
-  table_style <-
-    htmltools::css(
-      `table-layout` = dt_options_get_value(
-        data = data,
-        option = "table_layout"
-      )
-    )
-
   # In the case that column widths are not set for any columns,
   # there should not be a `<colgroup>` tag requirement
   if (length(unlist(boxh$column_width)) < 1) {
     return(list(table_style = NULL, table_colgroups = NULL))
   }
 
+  # Get the `table-layout` value, which is set in `_options`
+  table_layout <- dt_options_get_value(data = data, option = "table_layout")
+
   # Get the table's width (which or may not have been set)
-  table_width <-
-    dt_options_get_value(
-      data = data,
-      option = "table_width"
-    )
+  table_width <- dt_options_get_value(data = data, option = "table_width")
 
   # Determine whether the row group is placed in the stub
-  row_group_as_column <-
-    dt_options_get_value(
-      data = data,
-      option = "row_group_as_column"
-    )
+  row_group_as_column <- dt_options_get_value(data = data, option = "row_group_as_column")
 
   types <- c("default", "stub", if (row_group_as_column) "row_group" else NULL)
 
@@ -306,6 +292,7 @@ get_table_defs <- function(data) {
   if (table_width == "auto") {
 
     if (all(grepl("px", widths, fixed = TRUE))) {
+      # FIXME sometimes ends up being 0? #1532 and quarto-dev/quarto-cli#8233
       table_width <- "0px"
     } else if (all(grepl("%", widths, fixed = TRUE))) {
       table_width <- "100%"
@@ -313,7 +300,15 @@ get_table_defs <- function(data) {
   }
 
   if (table_width != "auto") {
-    table_style <- paste(table_style, paste0("width: ", table_width), sep = "; ")
+    table_style <- htmltools::css(
+      `table-layout` = table_layout,
+      width = table_width
+    )
+  } else {
+    table_style <-
+      htmltools::css(
+        `table-layout` = table_layout
+      )
   }
 
   # Create the `<colgroup>` tag
