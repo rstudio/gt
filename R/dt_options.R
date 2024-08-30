@@ -53,7 +53,6 @@ dt_options_get_value <- function(data, option) {
 dt_options_get_values <- function(data) {
   dt_options <- dt_options_get(data = data)[c("parameter", "value")]
   # Similar to tibble::deframe
-  vctrs::vec_set_names(dt_options$value, dt_options$parameter)
   res <- vctrs::vec_set_names(dt_options$value, dt_options$parameter)
   class(res) <- c("gt_option", class(res))
   res
