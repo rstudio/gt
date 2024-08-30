@@ -148,14 +148,15 @@ create_table_start_l <- function(data, colwidth_df) {
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
-  # Extract only visible columns of `colwidth_df`.
-  row_group_as_column <-
-    dt_options_get_value(
-      data = data,
-      option = "row_group_as_column"
-    )
+  # Extract only visible columns of `colwidth_df` based on stub_layout.
+  types <- c("default")
+  if ("rowname" %in% stub_layout) {
+    types <- c(types, "stub")
+  }
+  if ("group_label" %in% stub_layout) {
+    types <- c(types, "row_group")
+  }
   
-  types <- c("default", "stub", if (row_group_as_column) "row_group" else NULL)
   colwidth_df_visible <- colwidth_df[colwidth_df$type %in% types, ]
   
   # Ensure that the `colwidth_df_visible` df rows are sorted such that the 
@@ -167,7 +168,7 @@ create_table_start_l <- function(data, colwidth_df) {
     colwidth_df_visible <- dplyr::slice(colwidth_df_visible, stub_idx, othr_idx)
   }
   
-  if ("row_group" %in% colwidth_df_visible[["type"]] && row_group_as_column) {
+  if ("row_group" %in% colwidth_df_visible[["type"]]) {
     row_group_idx <- which(colwidth_df_visible$type == "row_group")
     othr_idx <- base::setdiff(seq_len(nrow(colwidth_df_visible)), row_group_idx)
     colwidth_df_visible <- dplyr::slice(colwidth_df_visible, row_group_idx, othr_idx)
