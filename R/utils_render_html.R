@@ -71,25 +71,24 @@ footnote_mark_to_html <- function(
     font_weight <- "normal"
   }
 
-  paste0(
-    "<span ",
+  htmltools::tags$span(
     if (is_sup) {
-      paste0("class=\"", sup_class, "\" ")
-    } else {
-      NULL
-    },
-    "style=\"",
-    "white-space:nowrap;",
-    "font-style:", font_style, ";",
-    "font-weight:", font_weight, ";",
-    "line-height: 0;",
-    "\">",
-    if (is_sup) {
-      paste0("<sup>", mark, "</sup>")
+      htmltools::tags$sup(mark, .noWS = "before")
     } else {
       mark
     },
-    "</span>"
+    class = if (is_sup) {
+      sup_class
+    } else {
+      NULL
+    },
+    style = htmltools::css(
+      `white-space` = "nowrap",
+      `font-style` = font_style,
+      `font-weight` = font_weight,
+      `line-height` = 0
+    ),
+    .noWS = "before-end"
   )
 }
 
@@ -248,13 +247,11 @@ get_table_defs <- function(data) {
 
   # Get the `table-layout` value, which is set in `_options`
   table_style <-
-    paste0(
-      "table-layout: ",
-      dt_options_get_value(
+    htmltools::css(
+      `table-layout` = dt_options_get_value(
         data = data,
         option = "table_layout"
-      ),
-      ";"
+      )
     )
 
   # In the case that column widths are not set for any columns,
