@@ -754,6 +754,7 @@ create_source_notes_component_ihtml <- function(data) {
     source_notes_styles <- NULL
   }
 
+  tbl_opts <- dt_options_get_values(data)
   # Get the source note multiline option
   multiline <- tbl_opts$source_notes_multiline
 
@@ -830,6 +831,7 @@ create_footnotes_component_ihtml <- function(data) {
     footnotes_styles <- NULL
   }
 
+  tbl_opts <- dt_options_get_values(data)
   # Get the footnote multiline option
   multiline <- tbl_opts$footnotes_multiline
 
