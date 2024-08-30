@@ -54,8 +54,8 @@ test_that("Extraction of the table body works well", {
   # test each of the vectors within each extracted table body
   tbl_body_1_1 <- gt_tbl_1 %>% extract_body(build_stage = "init")
   expect_true(all(is.na(tbl_body_1_1 %>% unlist() %>% unname())))
-  expect_equal(
-    colnames(tbl_body_1_1),
+  expect_named(
+    tbl_body_1_1,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
@@ -101,8 +101,8 @@ test_that("Extraction of the table body works well", {
       NA
     )
   )
-  expect_equal(
-    colnames(tbl_body_1_2),
+  expect_named(
+    tbl_body_1_2,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
@@ -149,8 +149,8 @@ test_that("Extraction of the table body works well", {
       NA
     )
   )
-  expect_equal(
-    colnames(tbl_body_1_3),
+  expect_named(
+    tbl_body_1_3,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
@@ -199,8 +199,8 @@ test_that("Extraction of the table body works well", {
       "NA"
     )
   )
-  expect_equal(
-    colnames(tbl_body_1_4),
+  expect_named(
+    tbl_body_1_4,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
@@ -252,8 +252,8 @@ test_that("Extraction of the table body works well", {
     tbl_body_1_5[["ltr_1"]],
     c("a", "b", "c", "d d d", "e e e", "f f f", "g g g")
   )
-  expect_equal(
-    colnames(tbl_body_1_5),
+  expect_named(
+    tbl_body_1_5,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
@@ -305,8 +305,8 @@ test_that("Extraction of the table body works well", {
     tbl_body_1_6[["ltr_1"]],
     c("a", "b", "c", "d d d", "e e e", "f f f", "g g g")
   )
-  expect_equal(
-    colnames(tbl_body_1_6),
+  expect_named(
+    tbl_body_1_6,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
@@ -358,8 +358,8 @@ test_that("Extraction of the table body works well", {
     tbl_body_1_7[["ltr_1"]],
     c("a", "b", "c", "d d d", "e e e", "f f f", "g g g")
   )
-  expect_equal(
-    colnames(tbl_body_1_7),
+  expect_named(
+    tbl_body_1_7,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
@@ -425,8 +425,8 @@ test_that("Extraction of the table body works well", {
     tbl_body_1_8[["ltr_1"]],
     c("a", "b", "c", "d d d", "e e e", "f f f", "g g g")
   )
-  expect_equal(
-    colnames(tbl_body_1_8),
+  expect_named(
+    tbl_body_1_8,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
@@ -492,8 +492,8 @@ test_that("Extraction of the table body works well", {
     tbl_body_1_8_b[["ltr_1"]],
     c("a", "b", "c", "d d d", "e e e", "f f f", "g g g")
   )
-  expect_equal(
-    colnames(tbl_body_1_8_b),
+  expect_named(
+    tbl_body_1_8_b,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
@@ -537,8 +537,8 @@ test_that("Extraction of the table body works well", {
   # test each of the vectors within each extracted table body
   tbl_body_2_1 <- gt_tbl_2 %>% extract_body(build_stage = "init")
   expect_true(all(is.na(tbl_body_2_1 %>% unlist() %>% unname())))
-  expect_equal(
-    colnames(tbl_body_2_1),
+  expect_named(
+    tbl_body_2_1,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
@@ -584,8 +584,8 @@ test_that("Extraction of the table body works well", {
       NA
     )
   )
-  expect_equal(
-    colnames(tbl_body_2_2),
+  expect_named(
+    tbl_body_2_2,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
@@ -632,8 +632,8 @@ test_that("Extraction of the table body works well", {
       NA
     )
   )
-  expect_equal(
-    colnames(tbl_body_2_3),
+  expect_named(
+    tbl_body_2_3,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
@@ -682,8 +682,8 @@ test_that("Extraction of the table body works well", {
       "NA"
     )
   )
-  expect_equal(
-    colnames(tbl_body_2_4),
+  expect_named(
+    tbl_body_2_4,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
@@ -735,8 +735,8 @@ test_that("Extraction of the table body works well", {
     tbl_body_2_5[["ltr_1"]],
     c("a", "b", "c", "d d d", "e e e", "f f f", "g g g")
   )
-  expect_equal(
-    colnames(tbl_body_2_5),
+  expect_named(
+    tbl_body_2_5,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
@@ -857,8 +857,8 @@ test_that("Extraction of the table body works well", {
     tbl_body_2_7[["ltr_1"]],
     c("a", "b", "e e e", "g g g", "c", "d d d", "f f f")
   )
-  expect_equal(
-    colnames(tbl_body_2_7),
+  expect_named(
+    tbl_body_2_7,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
@@ -925,8 +925,8 @@ test_that("Extraction of the table body works well", {
     tbl_body_2_8[["ltr_1"]],
     c("a", "b", "e e e", "g g g", "c", "d d d", "f f f")
   )
-  expect_equal(
-    colnames(tbl_body_2_8),
+  expect_named(
+    tbl_body_2_8,
     c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
       "ltr_2", "ltr_3", "group", "sci_1")
   )
