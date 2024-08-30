@@ -171,78 +171,80 @@ render_as_ihtml <- function(data, id) {
   }
 
   # Get options settable in `tab_options()`
-  opt_val <- dt_options_get_value
-  height <- opt_val(data = data, option = "ihtml_height")
-  use_pagination <- opt_val(data = data, option = "ihtml_use_pagination")
-  use_pagination_info <- opt_val(data = data, option = "ihtml_use_pagination_info")
-  use_search <- opt_val(data = data, option = "ihtml_use_search")
-  use_sorting <- opt_val(data = data, option = "ihtml_use_sorting")
-  use_filters <- opt_val(data = data, option = "ihtml_use_filters")
-  use_resizers <- opt_val(data = data, option = "ihtml_use_resizers")
-  use_highlight <- opt_val(data = data, option = "ihtml_use_highlight")
-  use_compact_mode <- opt_val(data = data, option = "ihtml_use_compact_mode")
-  use_text_wrapping <- opt_val(data = data, option = "ihtml_use_text_wrapping")
-  use_page_size_select <- opt_val(data = data, option = "ihtml_use_page_size_select")
-  page_size_default <- opt_val(data = data, option = "ihtml_page_size_default")
-  page_size_values <- opt_val(data = data, option = "ihtml_page_size_values")
-  pagination_type <- opt_val(data = data, option = "ihtml_pagination_type")
+  tbl_opts <- dt_options_get_values(data)
 
-  use_row_striping <- opt_val(data = data, option = "row_striping_include_table_body")
-  row_striping_color <- opt_val(data = data, option = "row_striping_background_color")
+  # get some options
+  height <- tbl_opts$ihtml_height
+  use_pagination <- tbl_opts$ihtml_use_pagination
+  use_pagination_info <- tbl_opts$ihtml_use_pagination_info
+  use_search <- tbl_opts$ihtml_use_search
+  use_sorting <- tbl_opts$ihtml_use_sorting
+  use_filters <- tbl_opts$ihtml_use_filters
+  use_resizers <- tbl_opts$ihtml_use_resizers
+  use_highlight <- tbl_opts$ihtml_use_highlight
+  use_compact_mode <- tbl_opts$ihtml_use_compact_mode
+  use_text_wrapping <- tbl_opts$ihtml_use_text_wrapping
+  use_page_size_select <- tbl_opts$ihtml_use_page_size_select
+  page_size_default <- tbl_opts$ihtml_page_size_default
+  page_size_values <- tbl_opts$ihtml_page_size_values
+  pagination_type <- tbl_opts$ihtml_pagination_type
 
-  table_width <- opt_val(data = data, option = "table_width")
-  table_background_color <- opt_val(data = data, option = "table_background_color")
-  table_font_size   <- opt_val(data = data, "table_font_size")
-  table_font_names <- opt_val(data = data, option = "table_font_names")
-  table_font_color <- opt_val(data = data, option = "table_font_color")
-  table_border_right_style <- opt_val(data, "table_border_right_style")
-  table_border_right_color <- opt_val(data, "table_border_right_color")
-  table_border_left_style <- opt_val(data, "table_border_left_style")
-  table_border_left_color <- opt_val(data, "table_border_left_color")
-  table_border_top_color <- opt_val(data, "table_border_top_color")
+  use_row_striping <- tbl_opts$row_striping_include_table_body
+  row_striping_color <- tbl_opts$row_striping_background_color
 
-  heading_border_bottom_color <- opt_val(data, "heading_border_bottom_color")
+  table_width <- tbl_opts$table_width
+  table_background_color <- tbl_opts$table_background_color
+  table_font_size   <- tbl_opts$table_font_size
+  table_font_names <- tbl_opts$table_font_names
+  table_font_color <- tbl_opts$table_font_color
+  table_border_right_style <- tbl_opts$table_border_right_style
+  table_border_right_color <- tbl_opts$table_border_right_color
+  table_border_left_style <- tbl_opts$table_border_left_style
+  table_border_left_color <- tbl_opts$table_border_left_color
+  table_border_top_color <- tbl_opts$table_border_top_color
 
-  column_labels_border_top_style <- opt_val(data = data, option = "column_labels_border_top_style")
-  column_labels_border_top_width <- opt_val(data = data, option = "column_labels_border_top_width")
-  column_labels_border_top_color <- opt_val(data = data, option = "column_labels_border_top_color")
-  column_labels_border_bottom_style <- opt_val(data = data, option = "column_labels_border_bottom_style")
-  column_labels_border_bottom_width <- opt_val(data = data, option = "column_labels_border_bottom_width")
-  column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
+  heading_border_bottom_color <- tbl_opts$heading_border_bottom_color
+
+  column_labels_border_top_style <- tbl_opts$column_labels_border_top_style
+  column_labels_border_top_width <- tbl_opts$column_labels_border_top_width
+  column_labels_border_top_color <- tbl_opts$column_labels_border_top_color
+  column_labels_border_bottom_style <- tbl_opts$column_labels_border_bottom_style
+  column_labels_border_bottom_width <- tbl_opts$column_labels_border_bottom_width
+  column_labels_border_bottom_color <- tbl_opts$column_labels_border_bottom_color
 
   # Don't allow NA
-  column_labels_background_color <- opt_val(data = data, option = "column_labels_background_color")
+  column_labels_background_color <- tbl_opts$column_labels_background_color
   if (is.na(column_labels_background_color)) {
     # apply all column labels formatting to both heading + groupCol styling (nothing specific for spanners styling in gt?)
     column_labels_background_color <- "transparent"
   }
 
-  column_labels_font_weight <- opt_val(data = data, option = "column_labels_font_weight")
+  column_labels_font_weight <- tbl_opts$column_labels_font_weight
   # Apply stub font weight to
-  stub_font_weight <- opt_val(data = data, option = "stub_font_weight")
+  stub_font_weight <- tbl_opts$stub_font_weight
   # Apply font weight to groupname_col title
-  row_group_font_weight <-  opt_val(data = data, "row_group_font_weight")
-  row_group_background_color <- opt_val(data = data, "row_group_background_color")
+  row_group_font_weight <-  tbl_opts$row_group_font_weight
+  row_group_background_color <- tbl_opts$row_group_background_color
 
-  table_body_font_weight  <- opt_val(data = data, "table_font_weight")
-  table_body_hlines_style <- opt_val(data = data, "table_body_hlines_style")
-  table_body_hlines_color <- opt_val(data = data, "table_body_hlines_color")
-  table_body_hlines_width <- opt_val(data = data, "table_body_hlines_width")
-  table_body_vlines_style <- opt_val(data = data, "table_body_vlines_style")
-  table_body_vlines_color <- opt_val(data = data, "table_body_vlines_color")
-  table_body_vlines_width <- opt_val(data = data, "table_body_vlines_width")
+  table_body_font_weight  <- tbl_opts$table_font_weight
+  table_body_hlines_style <- tbl_opts$table_body_hlines_style
+  table_body_hlines_color <- tbl_opts$table_body_hlines_color
+  table_body_hlines_width <- tbl_opts$table_body_hlines_width
+  table_body_vlines_style <- tbl_opts$table_body_vlines_style
+  table_body_vlines_color <- tbl_opts$table_body_vlines_color
+  table_body_vlines_width <- tbl_opts$table_body_vlines_width
 
-  horizontal_borders <- opt_val(data = data, option = "table_body_hlines_style")
-  veritcal_borders <- opt_val(data = data, option = "table_body_vlines_style")
+  horizontal_borders <- tbl_opts$table_body_hlines_style
+  veritcal_borders <- tbl_opts$table_body_vlines_style
   borderless_borders <- horizontal_borders == "none" && veritcal_borders == "none"
   all_borders <- horizontal_borders != "none" && veritcal_borders != "none"
 
   # for row names + summary label
-  stub_border_color <- opt_val(data, "stub_border_color")
-  stub_border_style <- opt_val(data, "stub_border_style")
+  stub_border_color <- tbl_opts$stub_border_color
+  stub_border_style <- tbl_opts$stub_border_style
   # Apply stub font weight to
-  stub_font_weight <- opt_val(data = data, option = "stub_font_weight")
-  stub_background_color <-  opt_val(data = data, option = "stub_background_color")
+  stub_font_weight <- tbl_opts$stub_font_weight
+  stub_background_color <-  tbl_opts$stub_background_color
 
   emoji_symbol_fonts <-
     c(

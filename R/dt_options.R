@@ -49,6 +49,13 @@ dt_options_get_value <- function(data, option) {
   dt_options$value[[which(dt_options$parameter == option)]]
 }
 
+# Get a list of option values
+dt_options_get_values <- function(data) {
+  dt_options <- dt_options_get(data = data)[c(1, 2)]
+  # Similar to tibble::deframe
+  vctrs::vec_set_names(dt_options$value, dt_options$parameter)
+}
+
 default_fonts_vec <-
   c(
     "system-ui", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif",
