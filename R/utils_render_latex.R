@@ -1707,7 +1707,7 @@ create_colwidth_df_l <- function(data) {
     column_align = boxhead$column_align
   )
   
-  width_df$align[width_df$type %in% c("stub", "row_group")] <- "left"
+  width_df$column_align[width_df$type %in% c("stub", "row_group")] <- "left"
 
   for (i in 1:n) {
     raw <- unlist(boxhead$column_width[i])[1L]
