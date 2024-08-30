@@ -237,8 +237,8 @@ coalesce_marks <- function(
     locname,
     delimiter = ","
 ) {
-  filtered_tbl <- dplyr::filter(fn_tbl, locname == !!locname)
-  dplyr::summarize(filtered_tbl, fs_id_c = paste(fs_id, collapse = delimiter))
+  fs_ids <- vctrs::vec_slice(fn_tbl$fs_id, fn_tbl$locname == locname)
+  paste(fs_ids, collapse = delimiter)
 }
 
 # Get the attributes for the table tag
@@ -415,7 +415,7 @@ create_heading_component_h <- function(data) {
     footnote_title_marks <-
       footnote_mark_to_html(
         data = data,
-        mark = footnote_title_marks$fs_id_c
+        mark = footnote_title_marks
       )
 
   } else {
@@ -449,7 +449,7 @@ create_heading_component_h <- function(data) {
     footnote_subtitle_marks <-
       footnote_mark_to_html(
         data = data,
-        mark = footnote_subtitle_marks$fs_id_c
+        mark = footnote_subtitle_marks
       )
 
   } else {
