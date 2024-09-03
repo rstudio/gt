@@ -3,9 +3,9 @@
 \docType{data}
 \name{countrypops}
 \alias{countrypops}
-\title{Yearly populations of countries from 1960 to 2022}
+\title{Yearly populations of countries from 1960 to 2023}
 \format{
-A tibble with 13,545 rows and 5 variables:
+A tibble with 13,760 rows and 5 variables:
 \describe{
 \item{country_name}{The name of the country.}
 \item{country_code_2, country_code_3}{The 2- and 3-letter ISO 3166-1 country
@@ -25,8 +25,9 @@ A dataset that presents yearly, total populations of countries. Total
 population is based on counts of all residents regardless of legal status or
 citizenship. Country identifiers include the English-language country names,
 and the 2- and 3-letter ISO 3166-1 country codes. Each row contains a
-\code{population} value for a given \code{year} (from 1960 to 2022). Any \code{NA} values
-for \code{populations} indicate the non-existence of the entity during that year.
+\code{population} value for a given \code{year} (from 1960 to 2023). Any \code{NA} values
+within \code{population} indicate the non-existence of the entity during that
+year.
 }
 \section{Dataset ID and Badge}{
 
