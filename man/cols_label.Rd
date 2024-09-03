@@ -135,8 +135,10 @@ the column on the left-hand side, and the label text on the right-hand side.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Uganda") |>
-  dplyr::slice_tail(n = 5) |>
+  dplyr::filter(
+    country_name == "Uganda",
+    year \%in\% 2017:2021
+  ) |>
   gt() |>
   cols_label(
     country_name = "Name",
@@ -156,8 +158,10 @@ a \code{~} between the column name and the label text.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Uganda") |>
-  dplyr::slice_tail(n = 5) |>
+  dplyr::filter(
+    country_name == "Uganda",
+    year \%in\% 2017:2021
+  ) |>
   gt() |>
   cols_label(
     country_name = md("**Name**"),

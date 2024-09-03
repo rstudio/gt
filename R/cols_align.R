@@ -78,9 +78,14 @@
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "San Marino") |>
-#'   dplyr::slice_tail(n = 5) |>
-#'   gt(rowname_col = "year", groupname_col = "country_name") |>
+#'   dplyr::filter(
+#'     country_name == "San Marino",
+#'     year %in% 2017:2021
+#'   ) |>
+#'   gt(
+#'     rowname_col = "year",
+#'     groupname_col = "country_name"
+#'   ) |>
 #'   cols_align(
 #'     align = "left",
 #'     columns = population

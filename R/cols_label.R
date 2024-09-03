@@ -142,8 +142,10 @@
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Uganda") |>
-#'   dplyr::slice_tail(n = 5) |>
+#'   dplyr::filter(
+#'     country_name == "Uganda",
+#'     year %in% 2017:2021
+#'   ) |>
 #'   gt() |>
 #'   cols_label(
 #'     country_name = "Name",
@@ -164,8 +166,10 @@
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Uganda") |>
-#'   dplyr::slice_tail(n = 5) |>
+#'   dplyr::filter(
+#'     country_name == "Uganda",
+#'     year %in% 2017:2021
+#'   ) |>
 #'   gt() |>
 #'   cols_label(
 #'     country_name = md("**Name**"),
