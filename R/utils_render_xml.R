@@ -1244,7 +1244,7 @@ create_table_caption_component_xml <- function(
     footnote_title_marks <-
       footnote_mark_to_xml(
         data = data,
-        mark = footnote_title_marks$fs_id_c
+        mark = footnote_title_marks
       )
     footnote_title_marks <- as_xml_node(footnote_title_marks)[[1L]]
 
@@ -1301,7 +1301,8 @@ create_table_caption_component_xml <- function(
       footnote_subtitle_marks <-
         footnote_mark_to_xml(
           data = data,
-          mark = footnote_subtitle_marks$fs_id_c)
+          mark = footnote_subtitle_marks
+        )
       footnote_subtitle_marks <- as_xml_node(footnote_subtitle_marks)[[1]]
 
       xml_add_child(
@@ -1396,7 +1397,7 @@ create_heading_component_xml <- function(
     footnote_title_marks <-
       footnote_mark_to_xml(
         data = data,
-        mark = footnote_title_marks$fs_id_c
+        mark = footnote_title_marks
       )
     footnote_title_marks <- as_xml_node(footnote_title_marks)[[1L]]
 
@@ -1426,7 +1427,7 @@ create_heading_component_xml <- function(
       footnote_subtitle_marks <-
         footnote_mark_to_xml(
           data = data,
-          mark = footnote_subtitle_marks$fs_id_c
+          mark = footnote_subtitle_marks
         )
       footnote_subtitle_marks <- as_xml_node(footnote_subtitle_marks)[[1L]]
 
