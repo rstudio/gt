@@ -110,7 +110,7 @@ merge the \code{n} and \code{frac} columns (and the \code{frac} column is format
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::count(name, type, price, sort = TRUE) |>
-  mutate(frac = prop.table(n)) |>
+  dplyr::mutate(frac = prop.table(n)) |>
   dplyr::slice_max(n, n = 3, by = type) |>
   dplyr::arrange(type) |>
   gt(

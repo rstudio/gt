@@ -1046,14 +1046,12 @@ create_heading_component_rtf <- function(data) {
 
   if ("title" %in% footnotes_tbl$locname) {
     footnote_title_marks <- coalesce_marks(fn_tbl = footnotes_tbl, locname = "title")
-    footnote_title_marks <- footnote_title_marks$fs_id_c
   } else {
     footnote_title_marks <- ""
   }
 
   if ("subtitle" %in% footnotes_tbl$locname) {
     footnote_subtitle_marks <- coalesce_marks(fn_tbl = footnotes_tbl, locname = "subtitle")
-    footnote_subtitle_marks <- footnote_subtitle_marks$fs_id_c
   } else {
     footnote_subtitle_marks <- ""
   }

@@ -170,10 +170,10 @@ render_as_ihtml <- function(data, id) {
       )
   }
 
-  # Get options settable in `tab_options()`
+  # Get all options settable in `tab_options()`
   tbl_opts <- dt_options_get_values(data)
 
-  # get some options
+  # Get specific options values
   height <- tbl_opts$ihtml_height
   use_pagination <- tbl_opts$ihtml_use_pagination
   use_pagination_info <- tbl_opts$ihtml_use_pagination_info
@@ -211,6 +211,10 @@ render_as_ihtml <- function(data, id) {
   column_labels_border_bottom_style <- tbl_opts$column_labels_border_bottom_style
   column_labels_border_bottom_width <- tbl_opts$column_labels_border_bottom_width
   column_labels_border_bottom_color <- tbl_opts$column_labels_border_bottom_color
+  # Don't allow NA
+  column_labels_background_color <- tbl_opts$column_labels_background_color
+  # Apply stub font weight to
+  stub_font_weight <- tbl_opts$stub_font_weight
 
   # Don't allow NA
   column_labels_background_color <- tbl_opts$column_labels_background_color
@@ -245,6 +249,14 @@ render_as_ihtml <- function(data, id) {
   # Apply stub font weight to
   stub_font_weight <- tbl_opts$stub_font_weight
   stub_background_color <-  tbl_opts$stub_background_color
+  borderless_borders <- tbl_opts$table_body_hlines_style == "none"
+
+  column_labels_font_weight <- tbl_opts$column_labels_font_weight
+  # Apply font weight to groupname_col title
+  row_group_font_weight <- tbl_opts$row_group_font_weight
+  table_body_font_weight <- tbl_opts$table_font_weight
+  # for row names + summary label
+  stub_font_weight <- tbl_opts$stub_font_weight
 
   emoji_symbol_fonts <-
     c(
@@ -861,11 +873,12 @@ create_source_notes_component_ihtml <- function(data) {
     source_notes_styles <- NULL
   }
 
+  tbl_opts <- dt_options_get_values(data)
   # Get the source note multiline option
-  multiline <- dt_options_get_value(data = data, option = "source_notes_multiline")
+  multiline <- tbl_opts$source_notes_multiline
 
   # Get the source note separator option
-  separator <- dt_options_get_value(data = data, option = "source_notes_sep")
+  separator <- tbl_opts$source_notes_sep
 
   # Handle the multiline source notes case (each footnote takes up one line)
   if (multiline) {
@@ -937,11 +950,12 @@ create_footnotes_component_ihtml <- function(data) {
     footnotes_styles <- NULL
   }
 
+  tbl_opts <- dt_options_get_values(data)
   # Get the footnote multiline option
-  multiline <- dt_options_get_value(data = data, option = "footnotes_multiline")
+  multiline <- tbl_opts$footnotes_multiline
 
   # Get the footnote separator option
-  separator <- dt_options_get_value(data = data, option = "footnotes_sep")
+  separator <- tbl_opts$footnotes_sep
 
   # Obtain vectors of footnote ID values (prerendered glyphs) and
   # the associated text

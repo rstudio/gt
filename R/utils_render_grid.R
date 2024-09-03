@@ -129,7 +129,7 @@ create_heading_component_g <- function(data) {
     footnote_title_marks <-
       footnote_mark_to_html(
         data = data,
-        mark = footnote_title_marks$fs_id_c
+        mark = footnote_title_marks
       )
   }
   footnote_subtitle_marks <- ""
@@ -142,7 +142,7 @@ create_heading_component_g <- function(data) {
     footnote_subtitle_marks <-
       footnote_mark_to_html(
         data = data,
-        mark = footnote_subtitle_marks$fs_id_c
+        mark = footnote_subtitle_marks
       )
   }
 

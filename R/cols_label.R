@@ -582,7 +582,7 @@ cols_label <- function(
 #' ```r
 #' pizzaplace |>
 #'   dplyr::mutate(month = substr(date, 6, 7)) |>
-#'   dplyr::count(month, name = "pizza_vendute") |>
+#'   dplyr::count(month, name = "pizze_vendute") |>
 #'   dplyr::mutate(frazione_della_quota = pizze_vendute / 4000) |>
 #'   dplyr::mutate(date = paste0("2015/", month, "/01")) |>
 #'   dplyr::select(-month) |>
