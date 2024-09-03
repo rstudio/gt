@@ -326,7 +326,7 @@ within \code{\link[=cell_fill]{cell_fill()}}.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_5.png" alt="This image of a table was generated from the fifth code example in the `tab_style()` help file." style="width:100\%;">
 }}
 
-\code{\link[=cell_text]{cell_text()}} also allows the use of \code{\link[=from_column]{from_column()}} for many ofits arguments.
+\code{\link[=cell_text]{cell_text()}} also allows the use of \code{\link[=from_column]{from_column()}} for many of its arguments.
 Let's take a small portion of data from \code{\link{sp500}} and add an up or down arrow
 based on the values in the \code{open} and \code{close} columns. Within \code{\link[=cols_add]{cols_add()}} we
 can create a new column (\code{dir}) with an expression to get either \code{"red"} or
