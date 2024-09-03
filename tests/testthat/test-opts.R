@@ -2,27 +2,23 @@ test_that("opt_footnote_marks() sets the correct options", {
 
   set_marks <- c("*", "+", "~", "<", ">")
 
-  exibble %>%
-    gt() %>%
-    dt_options_get_value("footnotes_marks") %>%
-    expect_equal("numbers")
+  gt_tbl <- gt(exibble)
+  tbl_opts <- dt_options_get_values(gt_tbl)
 
-  exibble %>%
-    gt() %>%
-    opt_footnote_marks(marks = set_marks) %>%
-    dt_options_get_value("footnotes_marks") %>%
-    expect_equal(c("*", "+", "~", "<", ">"))
+  expect_equal(tbl_opts$footnotes_marks, "numbers")
 
-  exibble %>%
-    gt() %>%
-    opt_footnote_marks(marks = LETTERS) %>%
-    dt_options_get_value("footnotes_marks") %>%
-    expect_equal(LETTERS)
+  gt_tbl_2 <- opt_footnote_marks(gt_tbl, marks = set_marks)
+  tbl_opts_2 <- dt_options_get_values(gt_tbl_2)
+  expect_equal(tbl_opts_2$footnotes_marks, set_marks)
 
-  expect_error(exibble %>% gt() %>% opt_footnote_marks(NULL))
-  expect_error(exibble %>% gt() %>% opt_footnote_marks("set_1"))
-  expect_error(exibble %>% gt() %>% opt_footnote_marks(1:5))
-  expect_error(exibble %>% gt() %>% opt_footnote_marks(character(0L)))
+  gt_tbl_3 <- opt_footnote_marks(gt_tbl, marks = LETTERS)
+  tbl_opts_3 <- dt_options_get_values(gt_tbl_3)
+  expect_equal(tbl_opts_3$footnotes_marks, LETTERS)
+
+  expect_error(gt_tbl %>% opt_footnote_marks(NULL))
+  expect_error(gt_tbl %>% opt_footnote_marks("set_1"))
+  expect_error(gt_tbl %>% opt_footnote_marks(1:5))
+  expect_error(gt_tbl %>% opt_footnote_marks(character(0L)))
 })
 
 test_that("opt_row_striping() sets the correct options", {
@@ -85,16 +81,18 @@ test_that("opt_align_table_header() sets the correct options", {
 test_that("opt_all_caps() sets the correct options", {
 
   tbl <- exibble %>% gt()
+  tbl_opts <- dt_options_get_values(tbl)
 
-  tbl %>% dt_options_get_value("column_labels_text_transform") %>% expect_equal("inherit")
-  tbl %>% dt_options_get_value("column_labels_font_size") %>% expect_equal("100%")
-  tbl %>% dt_options_get_value("column_labels_font_weight") %>% expect_equal("normal")
-  tbl %>% dt_options_get_value("stub_text_transform") %>% expect_equal("inherit")
-  tbl %>% dt_options_get_value("stub_font_size") %>% expect_equal("100%")
-  tbl %>% dt_options_get_value("stub_font_weight") %>% expect_equal("initial")
-  tbl %>% dt_options_get_value("row_group_text_transform") %>% expect_equal("inherit")
-  tbl %>% dt_options_get_value("row_group_font_size") %>% expect_equal("100%")
-  tbl %>% dt_options_get_value("row_group_font_weight") %>% expect_equal("initial")
+
+  expect_equal(tbl_opts$column_labels_text_transform, "inherit")
+  expect_equal(tbl_opts$column_labels_font_size, "100%")
+  expect_equal(tbl_opts$column_labels_font_weight, "normal")
+  expect_equal(tbl_opts$stub_text_transform, "inherit")
+  expect_equal(tbl_opts$stub_font_size, "100%")
+  expect_equal(tbl_opts$stub_font_weight, "initial")
+  expect_equal(tbl_opts$row_group_text_transform, "inherit")
+  expect_equal(tbl_opts$row_group_font_size, "100%")
+  expect_equal(tbl_opts$row_group_font_weight, "initial")
 
   tbl <- exibble %>% gt() %>% opt_all_caps()
 

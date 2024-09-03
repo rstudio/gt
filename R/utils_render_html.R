@@ -71,25 +71,24 @@ footnote_mark_to_html <- function(
     font_weight <- "normal"
   }
 
-  paste0(
-    "<span ",
+  htmltools::tags$span(
     if (is_sup) {
-      paste0("class=\"", sup_class, "\" ")
-    } else {
-      NULL
-    },
-    "style=\"",
-    "white-space:nowrap;",
-    "font-style:", font_style, ";",
-    "font-weight:", font_weight, ";",
-    "line-height: 0;",
-    "\">",
-    if (is_sup) {
-      paste0("<sup>", mark, "</sup>")
+      htmltools::tags$sup(mark, .noWS = "before")
     } else {
       mark
     },
-    "</span>"
+    class = if (is_sup) {
+      sup_class
+    } else {
+      NULL
+    },
+    style = htmltools::css(
+      `white-space` = "nowrap",
+      `font-style` = font_style,
+      `font-weight` = font_weight,
+      `line-height` = 0
+    ),
+    .noWS = "before-end"
   )
 }
 
@@ -237,8 +236,8 @@ coalesce_marks <- function(
     locname,
     delimiter = ","
 ) {
-  filtered_tbl <- dplyr::filter(fn_tbl, locname == !!locname)
-  dplyr::summarize(filtered_tbl, fs_id_c = paste(fs_id, collapse = delimiter))
+  fs_ids <- vctrs::vec_slice(fn_tbl$fs_id, fn_tbl$locname == locname)
+  paste(fs_ids, collapse = delimiter)
 }
 
 # Get the attributes for the table tag
@@ -246,36 +245,20 @@ get_table_defs <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
 
-  # Get the `table-layout` value, which is set in `_options`
-  table_style <-
-    paste0(
-      "table-layout: ",
-      dt_options_get_value(
-        data = data,
-        option = "table_layout"
-      ),
-      ";"
-    )
-
   # In the case that column widths are not set for any columns,
   # there should not be a `<colgroup>` tag requirement
   if (length(unlist(boxh$column_width)) < 1) {
     return(list(table_style = NULL, table_colgroups = NULL))
   }
 
+  # Get the `table-layout` value, which is set in `_options`
+  table_layout <- dt_options_get_value(data = data, option = "table_layout")
+
   # Get the table's width (which or may not have been set)
-  table_width <-
-    dt_options_get_value(
-      data = data,
-      option = "table_width"
-    )
+  table_width <- dt_options_get_value(data = data, option = "table_width")
 
   # Determine whether the row group is placed in the stub
-  row_group_as_column <-
-    dt_options_get_value(
-      data = data,
-      option = "row_group_as_column"
-    )
+  row_group_as_column <- dt_options_get_value(data = data, option = "row_group_as_column")
 
   types <- c("default", "stub", if (row_group_as_column) "row_group" else NULL)
 
@@ -309,6 +292,7 @@ get_table_defs <- function(data) {
   if (table_width == "auto") {
 
     if (all(grepl("px", widths, fixed = TRUE))) {
+      # FIXME sometimes ends up being 0? #1532 and quarto-dev/quarto-cli#8233
       table_width <- "0px"
     } else if (all(grepl("%", widths, fixed = TRUE))) {
       table_width <- "100%"
@@ -316,7 +300,15 @@ get_table_defs <- function(data) {
   }
 
   if (table_width != "auto") {
-    table_style <- paste(table_style, paste0("width: ", table_width), sep = "; ")
+    table_style <- htmltools::css(
+      `table-layout` = table_layout,
+      width = table_width
+    )
+  } else {
+    table_style <-
+      htmltools::css(
+        `table-layout` = table_layout
+      )
   }
 
   # Create the `<colgroup>` tag
@@ -415,7 +407,7 @@ create_heading_component_h <- function(data) {
     footnote_title_marks <-
       footnote_mark_to_html(
         data = data,
-        mark = footnote_title_marks$fs_id_c
+        mark = footnote_title_marks
       )
 
   } else {
@@ -449,7 +441,7 @@ create_heading_component_h <- function(data) {
     footnote_subtitle_marks <-
       footnote_mark_to_html(
         data = data,
-        mark = footnote_subtitle_marks$fs_id_c
+        mark = footnote_subtitle_marks
       )
 
   } else {
