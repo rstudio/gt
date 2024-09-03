@@ -299,7 +299,7 @@ get_table_defs <- function(data) {
     }
   }
 
-  if (table_width != "auto") {
+  if (!table_width %in% c("auto", "0", "0px")) {
     table_style <- htmltools::css(
       `table-layout` = table_layout,
       width = table_width

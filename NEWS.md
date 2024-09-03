@@ -59,6 +59,8 @@
 
 * Improved footnote rendering in Quarto with `fmt_markdown()` (@olivroy, #1773)
 
+* gt tables should no longer have `table-width:0px` attribute, fixing an isuse in Quarto and reveal.js (#1532).
+
 # gt 0.11.0
 
 ## New features
