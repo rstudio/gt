@@ -439,9 +439,11 @@
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_name == "Bangladesh") |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::slice_tail(n = 10) |>
+#'   dplyr::filter(
+#'     country_name == "Bangladesh",
+#'     year %in% 2012:2021
+#'   ) |>
 #'   gt() |>
 #'   data_color(
 #'     columns = population,
@@ -464,9 +466,11 @@
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_name == "Bangladesh") |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::slice_tail(n = 10) |>
+#'   dplyr::filter(
+#'     country_name == "Bangladesh",
+#'     year %in% 2012:2021
+#'   ) |>
 #'   gt() |>
 #'   data_color(
 #'     columns = population,

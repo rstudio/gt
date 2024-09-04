@@ -89,7 +89,7 @@ function helps with inserting a flag icon (or multiple) in body cells. To
 make this work seamlessly, the input cells need to contain some reference to
 a country, and this can be in the form of a 2- or 3-letter ISO 3166-1 country
 code (e.g., Egypt has the \code{"EG"} country code). This function will parse the
-targeted body cells for those codes (and the \link{countrypops} dataset contains
+targeted body cells for those codes (and the \code{\link{countrypops}} dataset contains
 all of them) and insert the appropriate flag graphics.
 
 Multiple flags can be included per cell by separating country codes with

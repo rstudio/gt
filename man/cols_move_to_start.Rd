@@ -51,8 +51,10 @@ middle column, to the start of the column series with \code{cols_move_to_start()
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Fiji") |>
-  dplyr::slice_tail(n = 5) |>
+  dplyr::filter(
+    country_name == "Fiji",
+    year \%in\% 2017:2021
+  ) |>
   gt() |>
   cols_move_to_start(columns = year)
 }\if{html}{\out{</div>}}
@@ -67,8 +69,10 @@ columns to the start of the column series.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Fiji") |>
-  dplyr::slice_tail(n = 5) |>
+  dplyr::filter(
+    country_name == "Fiji",
+    year \%in\% 2017:2021
+  ) |>
   gt() |>
   cols_move_to_start(columns = c(year, population))
 }\if{html}{\out{</div>}}

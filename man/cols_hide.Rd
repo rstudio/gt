@@ -54,8 +54,10 @@ table. We can hide the \code{country_code_2} and \code{country_code_3} columns w
 \code{cols_hide()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(country_name == "Egypt") |>
-  dplyr::slice_tail(n = 5) |>
+  dplyr::filter(
+    country_name == "Egypt",
+    year \%in\% 2017:2021
+  ) |>
   gt() |>
   cols_hide(columns = c(country_code_2, country_code_3))
 }\if{html}{\out{</div>}}
@@ -71,8 +73,10 @@ that column along with the \code{country_code_3} column. Note that the order of
 table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(country_name == "Pakistan") |>
-  dplyr::slice_tail(n = 5) |>
+  dplyr::filter(
+    country_name == "Pakistan",
+    year \%in\% 2017:2021
+  ) |>
   gt() |>
   cols_hide(columns = c(country_code_3, population)) |>
   tab_footnote(

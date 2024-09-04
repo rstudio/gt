@@ -457,9 +457,11 @@ to the \code{population} column with the \code{"numeric"} method, use a domain b
 2.5 and 3.4 million, and specify \code{palette = "viridis"}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(country_name == "Bangladesh") |>
   dplyr::select(-contains("code")) |>
-  dplyr::slice_tail(n = 10) |>
+  dplyr::filter(
+    country_name == "Bangladesh",
+    year \%in\% 2012:2021
+  ) |>
   gt() |>
   data_color(
     columns = population,
@@ -481,9 +483,11 @@ vector of numeric values and returns color values. Here is an alternate
 version of the code that returns the same table as in the previous example.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(country_name == "Bangladesh") |>
   dplyr::select(-contains("code")) |>
-  dplyr::slice_tail(n = 10) |>
+  dplyr::filter(
+    country_name == "Bangladesh",
+    year \%in\% 2012:2021
+  ) |>
   gt() |>
   data_color(
     columns = population,
