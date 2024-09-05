@@ -327,7 +327,7 @@
 #'   gt(rowname_col = "country_name") |>
 #'   tab_row_group(
 #'     label = md("*BRIC*"),
-#'     rows = c("Brazil", "Russian Federation", "India", "China"),
+#'     rows = c("Brazil", "Russia", "India", "China"),
 #'     id = "bric"
 #'   ) |>
 #'   tab_row_group(
