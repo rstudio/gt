@@ -107,6 +107,8 @@
 extract_body <- function(
     data,
     build_stage = NULL,
+    incl_hidden_cols = FALSE,
+    incl_stub_cols = FALSE,
     output = c("html", "latex", "rtf", "word", "grid")
 ) {
 
