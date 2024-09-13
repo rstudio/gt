@@ -86,6 +86,23 @@
 #'   value for `build_stage` then the entire build for the table body (i.e., up
 #'   to and including the `"footnotes_attached"` stage) will be performed before
 #'   returning the data frame.
+#' 
+#' @param incl_hidden_cols *Should hidden columns be included?*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   Certain columns may be hidden from final display via [cols_hide()]. By
+#'   default, those columns won't be part of the extracted data frame. However,
+#'   we can choose to include them by using `incl_hidden_cols = TRUE`.
+#' 
+#' @param incl_stub_cols *Should stub columns be included?*
+#' 
+#'   `scalar<logical>` // *default:* `FALSE`
+#' 
+#'   Any stub columns in the **gt** object (which may consist of a grouping
+#'   column and a column for row labels) are not included in the extracted data
+#'   frame. However, we can opt for their inclusion by using
+#'   `incl_stub_cols = TRUE`.
 #'
 #' @param output *Output format*
 #'
