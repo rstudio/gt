@@ -70,7 +70,8 @@
 #'
 #' @export
 md <- function(text) {
-
+  # Ensure input is text (e.g. for factors)
+  text <- as.character(text)
   # Apply the `from_markdown` class
   class(text) <- "from_markdown"
   text

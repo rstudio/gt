@@ -235,3 +235,23 @@ test_that("LaTeX formulas render correctly in HTML", {
   # Take a snapshot of `gt_tbl`
   expect_snapshot_html(gt_tbl)
 })
+
+test_that("fmt_markdown() works correctly with factors", {
+
+  text <- "This is Markdown *text*."
+
+  # Create a `gt_tbl` object with `gt()`
+  # and a tibble; format all columns with
+  # `fmt_markdown()`
+  tab <-
+    dplyr::tibble(column_1 = factor(text)) %>%
+    gt() %>%
+    fmt_markdown(columns = everything())
+
+  # Compare output of cell to the expected HTML output strings
+  expect_equal(
+    (tab %>%
+       render_formats_test(context = "html"))[["column_1"]][[1]],
+    "<span class='gt_from_md'>This is Markdown <em>text</em>.</span>"
+  )
+})
