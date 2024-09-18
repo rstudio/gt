@@ -1456,6 +1456,17 @@ opt_table_outline <- function(
 #'   A name that is representative of a font stack (obtained via internally via
 #'   the [system_fonts()] helper function). If provided, this new stack will
 #'   replace any defined fonts and any `font` values will be prepended.
+#' 
+#' @param size *Text size*
+#' 
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
+#' 
+#'   The text size for the entire table can be set by providing a `size` value.
+#'   Can be specified as a single-length character vector with units of pixels
+#'   (e.g., `12px`) or as a percentage (e.g., `80%`). If provided as a
+#'   single-length numeric vector, it is assumed that the value is given in
+#'   units of pixels. The [px()] and [pct()] helper functions can also be used
+#'   to pass in numeric values and obtain values as pixel or percentage units.
 #'
 #' @param style *Text style*
 #'
@@ -1472,6 +1483,13 @@ opt_table_outline <- function(
 #'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
 #'   `1` and `1000`, inclusive. Please note that typefaces have varying support
 #'   for the numeric mapping of weight.
+#' 
+#' @param color *Text color*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   The `color` option defines the text color used throughout the table. A
+#'   color name or a hexadecimal color code should be provided.
 #'
 #' @param add *Add to existing fonts*
 #'
