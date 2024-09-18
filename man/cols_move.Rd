@@ -65,8 +65,10 @@ position the \code{population} column after the \code{country_name} column by us
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Japan") |>
-  dplyr::slice_tail(n = 10) |>
+  dplyr::filter(
+    country_name == "Japan",
+    year \%in\% 2012:2021
+  ) |>
   gt() |>
   cols_move(
     columns = population,

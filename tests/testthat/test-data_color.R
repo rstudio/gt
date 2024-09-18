@@ -471,8 +471,8 @@ test_that("The correct color values are obtained when defining a palette", {
   tbl <-
     countrypops %>%
     dplyr::filter(country_name == "Mongolia") %>%
-    dplyr::select(-contains("code")) %>%
-    tail(10)
+    dplyr::filter(year >= 2013 & year <= 2022) %>%
+    dplyr::select(-contains("code"))
 
   tbl[1, ] <- NA
 
@@ -1030,7 +1030,7 @@ test_that("Columns can indirectly apply coloring to other columns", {
     countrypops %>%
     dplyr::filter(country_name == "Mongolia") %>%
     dplyr::select(-contains("code")) %>%
-    tail(10) %>%
+    dplyr::filter(year >= 2013 & year <= 2022) %>%
     tidyr::pivot_wider(names_from = "year", values_from = "population") %>%
     gt(rowname_col = "country_name")
 
