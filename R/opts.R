@@ -1635,7 +1635,9 @@ opt_table_font <- function(
 
   if (!is.null(weight)) {
 
-    if (is.numeric(weight)) weight <- as.character(weight)
+    if (is.numeric(weight)) {
+      weight <- as.character(weight)
+    }
 
     data <-
       tab_options(
