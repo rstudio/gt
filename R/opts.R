@@ -1653,6 +1653,16 @@ opt_table_font <- function(
       )
   }
 
+  if (!is.null(size)) {
+
+    data <-
+      tab_options(
+        data = data,
+        table.font.size = size
+      )
+
+  }
+
   if (!is.null(weight)) {
 
     if (is.numeric(weight)) {
@@ -1678,6 +1688,15 @@ opt_table_font <- function(
       tab_options(
         data = data,
         table.font.style = style
+      )
+  }
+
+  if (!is.null(color)) {
+
+    data <-
+      tab_options(
+        data = data,
+        table.font.color = color
       )
   }
 
