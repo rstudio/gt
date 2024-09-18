@@ -97,8 +97,10 @@ locations of the table. For that you would need to use <code><a href="tab_style.
 <span>  <span class="va">data</span>,</span>
 <span>  font <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stack <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  size <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  weight <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  add <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -130,6 +132,17 @@ the <code><a href="system_fonts.html">system_fonts()</a></code> helper function)
 replace any defined fonts and any <code>font</code> values will be prepended.</p></dd>
 
 
+<dt id="arg-size">size<a class="anchor" aria-label="anchor" href="#arg-size"></a></dt>
+<dd><p><em>Text size</em></p>
+<p><code>scalar&lt;character|numeric|integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The text size for the entire table can be set by providing a <code>size</code> value.
+Can be specified as a single-length character vector with units of pixels
+(e.g., <code>12px</code>) or as a percentage (e.g., <code>80%</code>). If provided as a
+single-length numeric vector, it is assumed that the value is given in
+units of pixels. The <code><a href="px.html">px()</a></code> and <code><a href="pct.html">pct()</a></code> helper functions can also be used
+to pass in numeric values and obtain values as pixel or percentage units.</p></dd>
+
+
 <dt id="arg-weight">weight<a class="anchor" aria-label="anchor" href="#arg-weight"></a></dt>
 <dd><p><em>Text weight</em></p>
 <p><code>scalar&lt;character|numeric|integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
@@ -144,6 +157,13 @@ for the numeric mapping of weight.</p></dd>
 <p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An option to modify the text style. Can be one of either <code>"normal"</code>,
 <code>"italic"</code>, or <code>"oblique"</code>.</p></dd>
+
+
+<dt id="arg-color">color<a class="anchor" aria-label="anchor" href="#arg-color"></a></dt>
+<dd><p><em>Text color</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The <code>color</code> option defines the text color used throughout the table. A
+color name or a hexadecimal color code should be provided.</p></dd>
 
 
 <dt id="arg-add">add<a class="anchor" aria-label="anchor" href="#arg-add"></a></dt>
@@ -204,9 +224,8 @@ multiple computer systems. Any of the following keywords can be used:</p><ul><li
 
 <p>Use a subset of the <code><a href="sp500.html">sp500</a></code> dataset to create a small <strong>gt</strong> table. We'll
 use <code><a href="fmt_currency.html">fmt_currency()</a></code> to display a dollar sign for the first row of monetary
-values. Then, set a larger font size for the table and use the
-<code>"Merriweather"</code> font (from <em>Google Fonts</em>, via <code><a href="google_font.html">google_font()</a></code>) with two
-system font fallbacks (<code>"Cochin"</code> and the generic <code>"serif"</code>).</p>
+values. The <code>"Merriweather"</code> font (from <em>Google Fonts</em>, via <code><a href="google_font.html">google_font()</a></code>)
+with two system font fallbacks (<code>"Cochin"</code> and the generic <code>"serif"</code>).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">sp500</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">volume</span>, <span class="op">-</span><span class="va">adj_close</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -277,7 +296,7 @@ environments.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>
