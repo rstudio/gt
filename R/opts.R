@@ -1582,8 +1582,10 @@ opt_table_font <- function(
     data,
     font = NULL,
     stack = NULL,
+    size = NULL,
     weight = NULL,
     style = NULL,
+    color = NULL,
     add = TRUE
 ) {
 
