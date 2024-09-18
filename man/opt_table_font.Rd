@@ -8,8 +8,10 @@ opt_table_font(
   data,
   font = NULL,
   stack = NULL,
+  size = NULL,
   weight = NULL,
   style = NULL,
+  color = NULL,
   add = TRUE
 )
 }
@@ -37,6 +39,17 @@ A name that is representative of a font stack (obtained via internally via
 the \code{\link[=system_fonts]{system_fonts()}} helper function). If provided, this new stack will
 replace any defined fonts and any \code{font} values will be prepended.}
 
+\item{size}{\emph{Text size}
+
+\verb{scalar<character|numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+The text size for the entire table can be set by providing a \code{size} value.
+Can be specified as a single-length character vector with units of pixels
+(e.g., \verb{12px}) or as a percentage (e.g., \verb{80\%}). If provided as a
+single-length numeric vector, it is assumed that the value is given in
+units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper functions can also be used
+to pass in numeric values and obtain values as pixel or percentage units.}
+
 \item{weight}{\emph{Text weight}
 
 \verb{scalar<character|numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
@@ -52,6 +65,13 @@ for the numeric mapping of weight.}
 
 An option to modify the text style. Can be one of either \code{"normal"},
 \code{"italic"}, or \code{"oblique"}.}
+
+\item{color}{\emph{Text color}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The \code{color} option defines the text color used throughout the table. A
+color name or a hexadecimal color code should be provided.}
 
 \item{add}{\emph{Add to existing fonts}
 
@@ -121,9 +141,8 @@ multiple computer systems. Any of the following keywords can be used:
 
 Use a subset of the \code{\link{sp500}} dataset to create a small \strong{gt} table. We'll
 use \code{\link[=fmt_currency]{fmt_currency()}} to display a dollar sign for the first row of monetary
-values. Then, set a larger font size for the table and use the
-\code{"Merriweather"} font (from \emph{Google Fonts}, via \code{\link[=google_font]{google_font()}}) with two
-system font fallbacks (\code{"Cochin"} and the generic \code{"serif"}).
+values. The \code{"Merriweather"} font (from \emph{Google Fonts}, via \code{\link[=google_font]{google_font()}})
+with two system font fallbacks (\code{"Cochin"} and the generic \code{"serif"}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::slice(1:10) |>
