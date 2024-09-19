@@ -1230,14 +1230,14 @@ remove_footnote_encoding <- function(x) {
 convert_font_size_l <- function(x) {
 
   size_map <- c(
-    `xx-small` = "\\tiny",
-    `x-small` = "\\scriptsize",
-    small = "\\small",
-    medium = "\\normalsize",
-    large = "\\large",
-    `x-large` = "\\Large",
-    `xx-large` = "\\LARGE",
-    `xxx-large` = "\\huge"
+    `xx-small` = "\\tiny{}",
+    `x-small` = "\\scriptsize{}",
+    small = "\\small{}",
+    medium = "\\normalsize{}",
+    large = "\\large{}",
+    `x-large` = "\\Large{}",
+    `xx-large` = "\\LARGE{}",
+    `xxx-large` = "\\huge{}"
   )
 
   if (as.character(x) %in% names(size_map))
