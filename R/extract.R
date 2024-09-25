@@ -97,7 +97,7 @@
 #' 
 #' @param incl_stub_cols *Should stub columns be included?*
 #' 
-#'   `scalar<logical>` // *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #' 
 #'   Any stub columns in the **gt** object (which may consist of a grouping
 #'   column and a column for row labels) are not included in the extracted data
@@ -125,7 +125,7 @@ extract_body <- function(
     data,
     build_stage = NULL,
     incl_hidden_cols = FALSE,
-    incl_stub_cols = FALSE,
+    incl_stub_cols = TRUE,
     output = c("html", "latex", "rtf", "word", "grid")
 ) {
 
