@@ -88,3 +88,16 @@ build_data <- function(data, context) {
 
   data
 }
+
+
+# Faster implementation that avoids some operations
+# for vec_*() functions
+# only build the body correctly.
+build_data_body <- function(data, context) {
+  
+  data <- dt_body_build(data = data)
+  data <- render_formats(data = data, context = context)
+  data <- migrate_unformatted_to_output(data = data, context = context)
+  
+  data
+}
