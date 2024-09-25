@@ -340,6 +340,22 @@ test_that("opt_table_font() sets the correct options", {
       "font-weight: bold;",
       "font-style: italic;"
     ) %>% expect_true()
+  
+  # Expect that the `size` option is passed as a CSS value
+  tbl %>%
+    opt_table_font(size = px(32)) %>%
+    compile_scss() %>%
+    as.character() %>%
+    html_fragment_within("font-size: 32px;") %>%
+    expect_true()
+  
+  # Expect that the `color` option is passed as a CSS value
+  tbl %>%
+    opt_table_font(color = "#228B23") %>%
+    compile_scss() %>%
+    as.character() %>%
+    html_fragment_within("color: #228B23;") %>%
+    expect_true()
 
   # Expect that adding a font from the Google Fonts service
   # is possible with the `google_font()` function

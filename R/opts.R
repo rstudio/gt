@@ -1456,6 +1456,17 @@ opt_table_outline <- function(
 #'   A name that is representative of a font stack (obtained via internally via
 #'   the [system_fonts()] helper function). If provided, this new stack will
 #'   replace any defined fonts and any `font` values will be prepended.
+#' 
+#' @param size *Text size*
+#' 
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
+#' 
+#'   The text size for the entire table can be set by providing a `size` value.
+#'   Can be specified as a single-length character vector with units of pixels
+#'   (e.g., `12px`) or as a percentage (e.g., `80%`). If provided as a
+#'   single-length numeric vector, it is assumed that the value is given in
+#'   units of pixels. The [px()] and [pct()] helper functions can also be used
+#'   to pass in numeric values and obtain values as pixel or percentage units.
 #'
 #' @param style *Text style*
 #'
@@ -1472,6 +1483,13 @@ opt_table_outline <- function(
 #'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
 #'   `1` and `1000`, inclusive. Please note that typefaces have varying support
 #'   for the numeric mapping of weight.
+#' 
+#' @param color *Text color*
+#' 
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#' 
+#'   The `color` option defines the text color used throughout the table. A
+#'   color name or a hexadecimal color code should be provided.
 #'
 #' @param add *Add to existing fonts*
 #'
@@ -1522,9 +1540,8 @@ opt_table_outline <- function(
 #'
 #' Use a subset of the [`sp500`] dataset to create a small **gt** table. We'll
 #' use [fmt_currency()] to display a dollar sign for the first row of monetary
-#' values. Then, set a larger font size for the table and use the
-#' `"Merriweather"` font (from *Google Fonts*, via [google_font()]) with two
-#' system font fallbacks (`"Cochin"` and the generic `"serif"`).
+#' values. The `"Merriweather"` font (from *Google Fonts*, via [google_font()])
+#' with two system font fallbacks (`"Cochin"` and the generic `"serif"`).
 #'
 #' ```r
 #' sp500 |>
@@ -1582,8 +1599,10 @@ opt_table_font <- function(
     data,
     font = NULL,
     stack = NULL,
+    size = NULL,
     weight = NULL,
     style = NULL,
+    color = NULL,
     add = TRUE
 ) {
 
@@ -1633,9 +1652,21 @@ opt_table_font <- function(
       )
   }
 
+  if (!is.null(size)) {
+
+    data <-
+      tab_options(
+        data = data,
+        table.font.size = size
+      )
+
+  }
+
   if (!is.null(weight)) {
 
-    if (is.numeric(weight)) weight <- as.character(weight)
+    if (is.numeric(weight)) {
+      weight <- as.character(weight)
+    }
 
     data <-
       tab_options(
@@ -1656,6 +1687,15 @@ opt_table_font <- function(
       tab_options(
         data = data,
         table.font.style = style
+      )
+  }
+
+  if (!is.null(color)) {
+
+    data <-
+      tab_options(
+        data = data,
+        table.font.color = color
       )
   }
 
