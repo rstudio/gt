@@ -135,40 +135,131 @@ extract_body <- function(
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
 
-  data <- dt_body_build(data = data)
+  # Generate vector of columns to include in output  
+  if (isTRUE(incl_hidden_cols)) {
 
+    boxhead_df <- dt_boxhead_get(data = data)
+
+    included_cols <- 
+      boxhead_df$var[boxhead_df$type %in% c("default", "hidden")]
+
+  } else {
+    included_cols <- dt_boxhead_get_vars_default(data = data)
+  }
+
+  # If there are any stub columns, get the column names for that component
+  group_col <- dt_boxhead_get_vars_groups(data = data)
+  if (is.na(group_col)) {
+    group_col <- NULL
+  }
+
+  rowname_col <- dt_boxhead_get_var_stub(data = data)
+  if (is.na(rowname_col)) {
+    rowname_col <- NULL
+  }
+
+  stub_cols <- c(group_col, rowname_col)
+
+  if (isTRUE(incl_stub_cols)) {
+
+    # Add stub columns to `included_cols`, if any are present; and deduplicate
+    included_cols <- unique(c(stub_cols, included_cols))
+  }
+
+  data <- dt_body_build(data = data)
+    
   if (identical(build_stage, "init")) {
-    return(data[["_body"]])
+    
+    out_df <- 
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
+    
+    return(out_df)
   }
 
   data <- render_formats(data = data, context = output)
 
   if (identical(build_stage, "fmt_applied")) {
-    return(data[["_body"]])
+    
+    out_df <- 
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
+    
+    return(out_df)
   }
 
   data <- render_substitutions(data = data, context = output)
 
   if (identical(build_stage, "sub_applied")) {
-    return(data[["_body"]])
+    
+    out_df <- 
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
+    
+    return(out_df)
   }
 
   data <- migrate_unformatted_to_output(data = data, context = output)
 
   if (identical(build_stage, "unfmt_included")) {
-    return(data[["_body"]])
+    
+    out_df <- 
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
+    
+    return(out_df)
   }
 
   data <- perform_col_merge(data = data, context = output)
 
   if (identical(build_stage, "cols_merged")) {
-    return(data[["_body"]])
+    
+    out_df <- 
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
+    
+    return(out_df)
   }
 
   data <- dt_body_reassemble(data = data)
 
   if (identical(build_stage, "body_reassembled")) {
-    return(data[["_body"]])
+    
+    out_df <- 
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
+    
+    return(out_df)
   }
 
   data <- reorder_stub_df(data = data)
@@ -178,7 +269,17 @@ extract_body <- function(
   data <- perform_text_transforms(data = data)
 
   if (identical(build_stage, "text_transformed")) {
-    return(data[["_body"]])
+
+    out_df <- 
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
+    
+    return(out_df)
   }
 
   data <- dt_boxhead_build(data = data, context = output)
@@ -192,11 +293,43 @@ extract_body <- function(
   data <- resolve_footnotes_styles(data = data, tbl_type = "footnotes")
   data <- apply_footnotes_to_output(data = data, context = output)
 
-  if (is.null(build_stage) || identical(build_stage, "footnotes_attached")) {
-    return(data[["_body"]])
+  if (is.null(build_stage) || identical(build_stage, "footnotes_attached")) {    
+    
+    out_df <- 
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
   }
 
-  data[["_body"]]
+  out_df
+}
+
+assemble_body_extract <- function(
+  data,
+  included_cols,
+  incl_stub_cols,
+  group_col,
+  rowname_col
+) {
+  
+  out_df <- data[["_body"]][, included_cols]
+  
+  if (isTRUE(incl_stub_cols)) {
+  
+    if (!is.null(group_col)) {
+      names(out_df)[names(out_df) == group_col] <- "::group_id::"
+    }
+  
+    if (!is.null(rowname_col)) {
+      names(out_df)[names(out_df) == rowname_col] <- "::rowname::"
+    }
+  }
+  
+  out_df
 }
 
 # extract_summary() ------------------------------------------------------------
