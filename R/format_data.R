@@ -9667,6 +9667,10 @@ fmt_markdown <- function(
     rows = {{ rows }},
     fns = list(
       html = function(x) {
+        # Ensure input is x (e.g. for factors)
+        if (!is.character(x)) {
+          x <- as.character(x)
+        }
         process_text(md(x), context = "html")
       },
       latex = function(x) {

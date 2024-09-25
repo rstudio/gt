@@ -552,7 +552,7 @@ format_num_to_str <- function(
     system = c("intl", "ind")
 ) {
 
-  system <- rlang::arg_match(system)
+  system <- rlang::arg_match0(system, c("intl", "ind"))
 
   # If this hardcoding is ever to change, then we need to
   # modify the regexes below
@@ -604,7 +604,7 @@ format_num_to_str <- function(
 
   # Remove `-` for any signed zeros returned by `formatC()`
   x_str_signed_zero <- grepl("^(-0|-0\\.0*?)$", x_str)
-  x_str[x_str_signed_zero] <- gsub("-", "", x_str[x_str_signed_zero])
+  x_str[x_str_signed_zero] <- gsub("-", "", x_str[x_str_signed_zero], fixed = TRUE)
 
   # If a trailing decimal mark is to be retained (not the
   # default option but sometimes desirable), affix the `dec_mark`
@@ -633,7 +633,7 @@ format_num_to_str <- function(
         FUN = insert_seps_ind
       )
 
-    decimal_str <- rep("", length(x_str_numeric))
+    decimal_str <- rep_len("", length(x_str_numeric))
 
     decimal_str[has_decimal] <-
       gsub("^.*?(\\..*)", "\\1", x_str_numeric[has_decimal])
@@ -670,7 +670,7 @@ format_num_to_str_c <- function(
     system = c("intl", "ind")
 ) {
 
-  system <- rlang::arg_match(system)
+  system <- rlang::arg_match0(system, c("intl", "ind"))
 
   format_num_to_str(
     x = x,
