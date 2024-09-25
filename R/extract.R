@@ -104,7 +104,7 @@
 #'   clarity but clearly marked with the names `"::group_id::"` and
 #'   `"::rowname::"`. We can exclude them by setting `incl_stub_cols = FALSE`.
 #'
-#'  @inheritParams rlang::args_dots_empty
+#' @inheritParams rlang::args_dots_empty
 #'
 #' @param output *Output format*
 #'

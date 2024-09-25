@@ -9,6 +9,7 @@ extract_body(
   build_stage = NULL,
   incl_hidden_cols = FALSE,
   incl_stub_cols = TRUE,
+  ...,
   output = c("html", "latex", "rtf", "word", "grid")
 )
 }
@@ -50,6 +51,8 @@ Any stub columns in the \strong{gt} object (which may consist of a grouping
 column and a column for row labels) are included in the extracted data for
 clarity but clearly marked with the names \code{"::group_id::"} and
 \code{"::rowname::"}. We can exclude them by setting \code{incl_stub_cols = FALSE}.}
+
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{output}{\emph{Output format}
 
