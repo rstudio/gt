@@ -135,6 +135,18 @@ extract_body <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # If `build_stage` is given a keyword value, check that value is valid
+  if (!is.null(build_stage)) {
+    
+    rlang::arg_match0(
+      build_stage,
+      values = c(
+        "init", "fmt_applied", "sub_applied", "unfmt_included", "cols_merged",
+        "body_reassembled", "text_transformed", "footnotes_attached"
+      )
+    )
+  }
+
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
   rlang::check_dots_empty()
