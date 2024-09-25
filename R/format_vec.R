@@ -3394,7 +3394,7 @@ check_columns_valid_if_strict <- function(
 }
 
 render_as_vector <- function(data, output) {
-  dt_body_get(build_data(data, context = output))[["x"]]
+  dt_body_get(build_data_body(data, context = output))[["x"]]
 }
 
 determine_output_format <- function() {

@@ -61,6 +61,8 @@
 
 * Fixed an issue where `md()` and `fmt_markdown()` would render factors as their numeric levels rather than their text labels (@rossellhayes, #1883).
 
+* `vec_fmt_*()` (and incidentally `cols_nanoplot()`) should be faster now (@olivroy, #1888, #1891).
+
 # gt 0.11.0
 
 ## New features
