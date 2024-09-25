@@ -100,9 +100,9 @@
 #'   `scalar<logical>` // *default:* `TRUE`
 #' 
 #'   Any stub columns in the **gt** object (which may consist of a grouping
-#'   column and a column for row labels) are not included in the extracted data
-#'   frame. However, we can opt for their inclusion by using
-#'   `incl_stub_cols = TRUE`.
+#'   column and a column for row labels) are included in the extracted data for
+#'   clarity but clearly marked with the names `"::group_id::"` and
+#'   `"::rowname::"`. We can exclude them by setting `incl_stub_cols = FALSE`.
 #'
 #' @param output *Output format*
 #'
