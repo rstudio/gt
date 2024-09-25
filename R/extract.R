@@ -135,6 +135,7 @@ extract_body <- function(
 
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
+  rlang::check_dots_empty()
 
   # Generate vector of columns to include in output  
   if (isTRUE(incl_hidden_cols)) {
