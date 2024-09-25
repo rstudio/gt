@@ -76,3 +76,7 @@ dd > p:nth-child(1) {
 dd > p:nth-child(2) {
   margin-left: -6px !important;
 }
+
+.row > main {
+  hyphens: none;
+}

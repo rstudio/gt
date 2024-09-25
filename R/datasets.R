@@ -22,7 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
-#' Yearly populations of countries from 1960 to 2022
+#' Yearly populations of countries from 1960 to 2023
 #'
 #' @description
 #'
@@ -30,10 +30,11 @@
 #' population is based on counts of all residents regardless of legal status or
 #' citizenship. Country identifiers include the English-language country names,
 #' and the 2- and 3-letter ISO 3166-1 country codes. Each row contains a
-#' `population` value for a given `year` (from 1960 to 2022). Any `NA` values
-#' for `populations` indicate the non-existence of the entity during that year.
+#' `population` value for a given `year` (from 1960 to 2023). Any `NA` values
+#' within `population` indicate the non-existence of the entity during that
+#' year.
 #'
-#' @format A tibble with 13,545 rows and 5 variables:
+#' @format A tibble with 13,760 rows and 5 variables:
 #' \describe{
 #' \item{country_name}{The name of the country.}
 #' \item{country_code_2, country_code_3}{The 2- and 3-letter ISO 3166-1 country
@@ -550,7 +551,7 @@
 #'
 #' @description
 #'
-#' A dataset with information on all 314 Paris Metro stations as of June 2024.
+#' A dataset with information on all 320 Paris Metro stations as of June 2024.
 #' Each record represents a station, describing which Metro lines are serviced
 #' by the station, which other connections are available, and annual passenger
 #' volumes. Basic location information is provided for each station in terms
@@ -571,7 +572,7 @@
 #' to the Transilien rail network, tramway stations, several major train
 #' stations (e.g., Gare du Nord, Gare de l'Est, etc.), and many bus lines.
 #'
-#' @format A tibble with 314 rows and 11 variables:
+#' @format A tibble with 320 rows and 11 variables:
 #' \describe{
 #' \item{name}{The name of the station.}
 #' \item{caption}{In some cases, a station will have a caption that might

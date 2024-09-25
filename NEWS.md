@@ -61,6 +61,8 @@
 
 * Improved footnote rendering in Quarto with `fmt_markdown()` (@olivroy, #1773)
 
+* Fixed an issue where `md()` and `fmt_markdown()` would render factors as their numeric levels rather than their text labels (@rossellhayes, #1883).
+
 # gt 0.11.0
 
 ## New features

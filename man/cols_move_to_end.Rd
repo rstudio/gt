@@ -50,8 +50,10 @@ middle column, to the end of the column series with \code{cols_move_to_end()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Benin") |>
-  dplyr::slice_tail(n = 5) |>
+  dplyr::filter(
+    country_name == "Benin",
+    year \%in\% 2017:2021
+  ) |>
   gt() |>
   cols_move_to_end(columns = year)
 }\if{html}{\out{</div>}}
@@ -66,8 +68,10 @@ columns to the end of the column series.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Benin") |>
-  dplyr::slice_tail(n = 5) |>
+  dplyr::filter(
+    country_name == "Benin",
+    year \%in\% 2017:2021
+  ) |>
   gt() |>
   cols_move_to_end(columns = c(year, country_name))
 }\if{html}{\out{</div>}}

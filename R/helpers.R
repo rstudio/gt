@@ -70,7 +70,6 @@
 #'
 #' @export
 md <- function(text) {
-
   # Apply the `from_markdown` class
   class(text) <- "from_markdown"
   text

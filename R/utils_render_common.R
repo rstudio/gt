@@ -471,7 +471,7 @@ perform_col_merge <- function(data, context) {
           }
         )
 
-      glue_src_data <- stats::setNames(glue_src_data, seq_len(length(glue_src_data)))
+      glue_src_data <- stats::setNames(glue_src_data, seq_along(glue_src_data))
 
       glued_cols <- as.character(glue_gt(glue_src_data, pattern))
 

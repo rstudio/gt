@@ -68,8 +68,10 @@
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_name == "Egypt") |>
-#'   dplyr::slice_tail(n = 5) |>
+#'   dplyr::filter(
+#'     country_name == "Egypt",
+#'     year %in% 2017:2021
+#'   ) |>
 #'   gt() |>
 #'   cols_hide(columns = c(country_code_2, country_code_3))
 #' ```
@@ -86,8 +88,10 @@
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_name == "Pakistan") |>
-#'   dplyr::slice_tail(n = 5) |>
+#'   dplyr::filter(
+#'     country_name == "Pakistan",
+#'     year %in% 2017:2021
+#'   ) |>
 #'   gt() |>
 #'   cols_hide(columns = c(country_code_3, population)) |>
 #'   tab_footnote(
@@ -189,8 +193,10 @@ cols_hide <- function(
 #' ```r
 #' tab_1 <-
 #'   countrypops |>
-#'   dplyr::filter(country_name == "Singapore") |>
-#'   dplyr::slice_tail(n = 5) |>
+#'   dplyr::filter(
+#'     country_name == "Singapore",
+#'     year %in% 2017:2021
+#'   ) |>
 #'   gt() |>
 #'   cols_hide(columns = c(country_code_2, country_code_3))
 #'
