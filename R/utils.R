@@ -1866,9 +1866,10 @@ num_suffix <- function(
     }
 
     return(
-      dplyr::tibble(
-        scale_by = rep_len(scale_by, length(x)),
-        suffix = rep_len("", length(x))
+      vctrs::data_frame(
+        scale_by = scale_by,
+        suffix = "",
+        .size = length(x)
       )
     )
   }
@@ -1919,7 +1920,7 @@ num_suffix <- function(
 
   # Create and return a tibble with `scale_by`
   # and `suffix` values
-  dplyr::tibble(
+  vctrs::data_frame(
     scale_by = 1 / base^suffix_index,
     suffix = suffix_labels
   )
@@ -1947,9 +1948,10 @@ num_suffix_ind <- function(
     }
 
     return(
-      dplyr::tibble(
-        scale_by = rep_len(scale_by, length(x)),
-        suffix = rep_len("", length(x))
+      vctrs::data_frame(
+        scale_by = scale_by,
+        suffix = "",
+        .size = length(x)
       )
     )
   }
@@ -2003,7 +2005,7 @@ num_suffix_ind <- function(
 
   # Create and return a tibble with `scale_by`
   # and `suffix` values
-  dplyr::tibble(
+  vctrs::data_frame(
     scale_by = 10^(-ifelse(suffix_index == 0, 0, (suffix_index * 2) + 1)),
     suffix = suffix_labels
   )
@@ -2320,6 +2322,10 @@ check_row_group_id_unique <- function(data, row_group_id, call = rlang::caller_e
 
 flatten_list <- function(x) {
   unlist(x, recursive = FALSE)
+}
+
+omit_na <- function(x) {
+  x[!is.na(x)]
 }
 
 #' Prepend a vector

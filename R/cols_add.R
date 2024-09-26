@@ -242,7 +242,7 @@ cols_add <- function(
   # columns
   #
 
-  if (nrow(data_tbl) < 1 && ncol(data_tbl) < 1) {
+  if (nrow(data_tbl) == 0L && ncol(data_tbl) == 0L) {
 
     # Generate boxhead rows that correspond to the new columns
     updated_boxh_df <-
@@ -279,7 +279,7 @@ cols_add <- function(
   # however, the number of rows should be consistent across the supplied columns
   #
 
-  if (nrow(data_tbl) < 1 && ncol(data_tbl) > 0) {
+  if (nrow(data_tbl) == 0L && ncol(data_tbl) > 0) {
 
     # Generate boxhead rows that correspond to the new columns
     updated_boxh_df <-
@@ -380,14 +380,9 @@ cols_add <- function(
       null_means = "nothing"
     )
 
-  if (length(resolved_column_before) < 1) {
+  if (length(resolved_column_before) == 0) {
     resolved_column_before <- NULL
-  }
-
-  if (
-    !is.null(resolved_column_before) &&
-    length(resolved_column_before) != 1
-  ) {
+  } else if (length(resolved_column_before) != 1) {
 
     if (length(resolved_column_before) < 1) {
       cli::cli_abort("The expression used for `.before` did not resolve a column.")
@@ -405,14 +400,9 @@ cols_add <- function(
       null_means = "nothing"
     )
 
-  if (length(resolved_column_after) < 1) {
+  if (length(resolved_column_after) == 0L) {
     resolved_column_after <- NULL
-  }
-
-  if (
-    !is.null(resolved_column_after) &&
-    length(resolved_column_after) != 1
-  ) {
+  } else if (length(resolved_column_after) != 1) {
 
     if (length(resolved_column_after) < 1) {
       cli::cli_abort("The expression used for `.after` did not resolve a column.")
@@ -465,7 +455,7 @@ cols_add <- function(
     before_colnum <- which(boxh_df[["var"]] == resolved_column_before)
 
     updated_boxh_df <-
-      dplyr::bind_rows(
+      vctrs::vec_cbind(
         boxh_df[(1:before_colnum) - 1, ],
         boxh_df_new_cols,
         boxh_df[before_colnum:nrow(boxh_df), ]
@@ -476,13 +466,13 @@ cols_add <- function(
     if (resolved_column_after == nrow(data_tbl)) {
 
       updated_data_tbl <-
-        dplyr::bind_cols(
+        vctrs::vec_cbind(
           data_tbl,
           data_tbl_new_cols
         )
 
       updated_boxh_df <-
-        dplyr::bind_rows(
+        vctrs::vec_rbind(
           boxh_df,
           boxh_df_new_cols
         )

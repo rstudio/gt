@@ -1736,7 +1736,8 @@ tab_row_group <- function(
 
   # Set the `_row_groups` vector here with the group id; new groups will
   # be placed at the front, pushing down `NA` (the 'Others' group)
-  arrange_groups_vars <- c(id, stats::na.omit(arrange_groups_vars))
+  arrange_groups_vars <- arrange_groups_vars[!is.na(arrange_groups_vars)]
+  arrange_groups_vars <- c(id, arrange_groups_vars)
   arrange_groups_vars <- unique(arrange_groups_vars)
   arrange_groups_vars <- arrange_groups_vars[arrange_groups_vars %in% stub_df$group_id]
 

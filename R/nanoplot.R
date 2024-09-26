@@ -1387,7 +1387,7 @@ generate_data_vals_list <- function(
 
     } else {
 
-      data_vals_i <- dplyr::select(data_tbl, dplyr::all_of(resolved_columns))
+      data_vals_i <- data_tbl[resolved_columns]
 
       data_vals_i <- as.vector(data_vals_i[i, ])
 
@@ -1419,7 +1419,7 @@ generate_data_vals_list <- function(
 
 
         } else {
-          data_vals_j <- c(data_vals_j, unname(unlist(data_vals_i[j][[1]])))
+          data_vals_j <- c(data_vals_j, unlist(data_vals_i[j][[1]], use.names = FALSE))
         }
       }
 
