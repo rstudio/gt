@@ -32,3 +32,18 @@ test_that("cols_add() errors with bad input", {
   )
 })
 
+test_that("cols_add() handles empty data frames", {
+  # These 2 cases are equal
+  expect_equal_gt(
+    gt(data.frame()) %>% cols_add(x = 1),
+    gt(data.frame(x = 1))
+  )
+  
+  expect_no_error(gt(data.frame()) %>% cols_add())
+  
+  expect_no_error(
+    tab <- gt(data.frame(x = character(0), y = character(0))) %>% cols_add(z = character(0))
+    )
+  expect_named(tab$`_data`, c("x", "y", "z"))
+  
+})

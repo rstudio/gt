@@ -470,49 +470,23 @@ cols_add <- function(
 
   } else if (is.null(resolved_column_before) && !is.null(resolved_column_after)) {
 
-    if (resolved_column_after == ncol(data_tbl)) {
+    after_colnum <- which(colnames(data_tbl) == resolved_column_after)
 
-      updated_data_tbl <-
-        vctrs::vec_cbind(
-          data_tbl,
-          data_tbl_new_cols
-        )
+    updated_data_tbl <-
+      dplyr::bind_cols(
+        dplyr::select(data_tbl, 1:dplyr::all_of(after_colnum)),
+        data_tbl_new_cols,
+        dplyr::select(data_tbl, (after_colnum + 1):ncol(data_tbl))
+      )
 
-      updated_boxh_df <-
-        vctrs::vec_rbind(
-          boxh_df,
-          boxh_df_new_cols
-        )
-
-    } else {
-
-      after_colnum <- which(colnames(data_tbl) == resolved_column_after)
-
-      if (after_colnum >= ncol(data_tbl)) {
-        updated_data_tbl <-
-          vctrs::vec_cbind(
-            data_tbl,
-            data_tbl_new_cols
-          )
-      } else {
-        updated_data_tbl <-
-          dplyr::bind_cols(
-            dplyr::select(data_tbl, 1:dplyr::all_of(after_colnum)),
-            data_tbl_new_cols,
-            dplyr::select(data_tbl, (after_colnum + 1):ncol(data_tbl))
-          )
-      }
-
-
-      after_colnum <- which(boxh_df[["var"]] == resolved_column_after)
+    after_colnum <- which(boxh_df[["var"]] == resolved_column_after)
       
-      updated_boxh_df <-
-        dplyr::bind_rows(
-          boxh_df[1:after_colnum, ],
-          boxh_df_new_cols,
-          boxh_df[(after_colnum + 1):nrow(boxh_df), ]
-        )
-    }
+    updated_boxh_df <-
+      dplyr::bind_rows(
+        boxh_df[1:after_colnum, ],
+        boxh_df_new_cols,
+        boxh_df[(after_colnum + 1):nrow(boxh_df), ]
+      )
   }
 
   # Modify the internal datasets
