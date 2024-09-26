@@ -63,6 +63,8 @@
 
 * `vec_fmt_*()` (and incidentally `cols_nanoplot()`) should be faster now (@olivroy, #1888, #1891).
 
+* `cols_add()` works in more cases (#1893).
+
 # gt 0.11.0
 
 ## New features
