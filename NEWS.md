@@ -6,6 +6,8 @@
 
 * PDF output now defaults to a full-width floating environment using `tabular*` (@AronGullickson, #1588). Float position can be controlled by the `latex.tbl.pos` argument in `tab_options`. Quarto users can alternatively use the `tbl-pos` argument to control positioning. To use a `longtable` environment instead, use `tab_option(latex.use_longtable = TRUE)`.
 
+* The `locale` argument of `gt()` now defaults to `getOption("gt.locale")` if set (#1894).
+
 ## Interactive table support
 
 * Interactive tables will show no border if `opt_table_lines(extent = "none")` is specified (#1307).
