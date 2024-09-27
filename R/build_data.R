@@ -40,7 +40,7 @@ build_data <- function(data, context) {
   # Reassemble the rows and columns of `body` in
   # the correct order
   data <- dt_body_build(data = data)
-  data <- render_formats(data = data, context = context)
+  data <- render_formats(data = data, skip_compat_check = FALSE, context = context)
   data <- render_substitutions(data = data, context = context)
   data <- migrate_unformatted_to_output(data = data, context = context)
   data <- perform_col_merge(data = data, context = context)
@@ -96,7 +96,7 @@ build_data <- function(data, context) {
 build_data_body <- function(data, context) {
   
   data <- dt_body_build(data = data)
-  data <- render_formats(data = data, context = context)
+  data <- render_formats(data = data, skip_compat_check = TRUE, context = context)
   data <- migrate_unformatted_to_output(data = data, context = context)
   
   data

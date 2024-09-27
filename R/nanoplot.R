@@ -894,8 +894,8 @@ cols_nanoplot <- function(
     cols_add(
       .data = data,
       nanoplots,
-      .before = before,
-      .after = after
+      .before = dplyr::all_of(before),
+      .after = dplyr::all_of(after)
     )
 
   if (!is.null(new_col_name)) {
@@ -923,7 +923,7 @@ cols_nanoplot <- function(
     data <-
       fmt_passthrough(
         data = data,
-        columns = validated_new_col_name,
+        columns = dplyr::all_of(validated_new_col_name),
         escape = FALSE
       )
 
@@ -974,7 +974,7 @@ cols_nanoplot <- function(
         "vertical-align: middle; ",
         "overflow-x: visible;"
       ),
-      locations = cells_body(columns = validated_new_col_name)
+      locations = cells_body(columns = dplyr::all_of(validated_new_col_name))
     )
 
   if (isTRUE(autohide)) {
@@ -982,7 +982,7 @@ cols_nanoplot <- function(
     data <-
       cols_hide(
         data = data,
-        columns = resolved_columns
+        columns = dplyr::all_of(resolved_columns)
       )
 
     if (length(resolved_columns_x) > 0) {
@@ -990,7 +990,7 @@ cols_nanoplot <- function(
       data <-
         cols_hide(
           data = data,
-          columns = resolved_columns_x
+          columns = dplyr::all_of(resolved_columns_x)
         )
     }
   }
@@ -1387,7 +1387,7 @@ generate_data_vals_list <- function(
 
     } else {
 
-      data_vals_i <- dplyr::select(data_tbl, dplyr::all_of(resolved_columns))
+      data_vals_i <- data_tbl[resolved_columns]
 
       data_vals_i <- as.vector(data_vals_i[i, ])
 
@@ -1419,7 +1419,7 @@ generate_data_vals_list <- function(
 
 
         } else {
-          data_vals_j <- c(data_vals_j, unname(unlist(data_vals_i[j][[1]])))
+          data_vals_j <- c(data_vals_j, unlist(data_vals_i[j][[1]], use.names = FALSE))
         }
       }
 
