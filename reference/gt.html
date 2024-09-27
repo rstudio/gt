@@ -88,7 +88,7 @@ before rendering to a display table of various formats.</p>
 <span>  row_group_as_column <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  auto_align <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  id <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  locale <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  locale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"gt.locale"</span><span class="op">)</span>,</span>
 <span>  row_group.sep <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"gt.row_group.sep"</span>, <span class="st">" - "</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -168,11 +168,12 @@ providing a character value.</p></dd>
 
 <dt id="arg-locale">locale<a class="anchor" aria-label="anchor" href="#arg-locale"></a></dt>
 <dd><p><em>Locale identifier</em></p>
-<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>getOption("gt.locale")</code> (<code>optional</code>)</p>
 <p>An optional locale identifier that can be set as the default locale for all
 functions that take a <code>locale</code> argument. Examples include <code>"en"</code> for
 English (United States) and <code>"fr"</code> for French (France). We can call
-<code><a href="info_locales.html">info_locales()</a></code> as a useful reference for all of the locales that are supported.</p></dd>
+<code><a href="info_locales.html">info_locales()</a></code> as a useful reference for all of the locales that are supported.
+If set, <code>options(gt.locale)</code> is also consulted.</p></dd>
 
 
 <dt id="arg-row-group-sep">row_group.sep<a class="anchor" aria-label="anchor" href="#arg-row-group-sep"></a></dt>
