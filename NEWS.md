@@ -1,10 +1,16 @@
 # gt (development version)
 
+## Breaking changes
+
+* The `extract_body()` function now, by default, will not display columns that have been hidden (e.g., by `cols_hide()` or `cols_merge*()`); the previous behavior can be restored by using `incl_hidden_cols = TRUE`.
+
 ## New features
 
 * Creating a caption with `tab_caption()` will now be preserved in Latex output with `as_latex()`. Cross-referencing a table using the internal cross-referencing system of **bookdown** is now enabled for PDF and HTML outputs (for HTML, set `options("htmltools.preserve.raw" = FALSE)`). Quarto users should use the `tbl-cap` and `label` cell options.
 
 * PDF output now defaults to a full-width floating environment using `tabular*` (@AronGullickson, #1588). Float position can be controlled by the `latex.tbl.pos` argument in `tab_options`. Quarto users can alternatively use the `tbl-pos` argument to control positioning. To use a `longtable` environment instead, use `tab_option(latex.use_longtable = TRUE)`.
+
+* New arguments have been added to `extract_body()` to better control which columns will be present in the returned data (#1875). (#1889)
 
 * The `locale` argument of `gt()` now defaults to `getOption("gt.locale")` if set (#1894).
 

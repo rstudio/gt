@@ -56,8 +56,10 @@ test_that("Extraction of the table body works well", {
   expect_true(all(is.na(tbl_body_1_1 %>% unlist() %>% unname())))
   expect_named(
     tbl_body_1_1,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "labels", "num_1", "num_2", "int_1", "int_2",
+      "sci_2", "ltr_1", "group", "sci_1"
+    )
   )
 
   tbl_body_1_2 <- gt_tbl_1 %>% extract_body(build_stage = "fmt_applied")
@@ -103,16 +105,16 @@ test_that("Extraction of the table body works well", {
   )
   expect_named(
     tbl_body_1_2,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "labels", "num_1", "num_2", "int_1", "int_2",
+      "sci_2", "ltr_1", "group", "sci_1"
+    )
   )
 
   tbl_body_1_3 <- gt_tbl_1 %>% extract_body(build_stage = "sub_applied")
   expect_true(all(is.na(tbl_body_1_3[["labels"]])))
   expect_true(all(is.na(tbl_body_1_3[["num_2"]])))
   expect_true(all(is.na(tbl_body_1_3[["ltr_1"]])))
-  expect_true(all(is.na(tbl_body_1_3[["ltr_2"]])))
-  expect_true(all(is.na(tbl_body_1_3[["ltr_3"]])))
   expect_true(all(is.na(tbl_body_1_3[["group"]])))
   expect_equal(
     tbl_body_1_3[["num_1"]],
@@ -151,15 +153,15 @@ test_that("Extraction of the table body works well", {
   )
   expect_named(
     tbl_body_1_3,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "labels", "num_1", "num_2", "int_1", "int_2",
+      "sci_2", "ltr_1", "group", "sci_1"
+    )
   )
 
   tbl_body_1_4 <- gt_tbl_1 %>% extract_body(build_stage = "unfmt_included")
   expect_equal(tbl_body_1_4[["labels"]], tbl[["labels"]])
   expect_equal(tbl_body_1_4[["ltr_1"]], tbl[["ltr_1"]])
-  expect_equal(tbl_body_1_4[["ltr_2"]], tbl[["ltr_2"]])
-  expect_equal(tbl_body_1_4[["ltr_3"]], tbl[["ltr_3"]])
   expect_equal(
     tbl_body_1_4[["num_1"]],
     c("int:0", "int:74", "NA", "int:0", "big", "int:0", "int:84")
@@ -201,14 +203,14 @@ test_that("Extraction of the table body works well", {
   )
   expect_named(
     tbl_body_1_4,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "labels", "num_1", "num_2", "int_1", "int_2",
+      "sci_2", "ltr_1", "group", "sci_1"
+    )
   )
 
   tbl_body_1_5 <- gt_tbl_1 %>% extract_body(build_stage = "cols_merged")
   expect_equal(tbl_body_1_5[["labels"]], tbl[["labels"]])
-  expect_equal(tbl_body_1_5[["ltr_2"]], tbl[["ltr_2"]])
-  expect_equal(tbl_body_1_5[["ltr_3"]], tbl[["ltr_3"]])
   expect_equal(
     tbl_body_1_5[["num_1"]],
     c("int:0", "int:74", "NA", "int:0", "big", "int:0", "int:84")
@@ -254,14 +256,14 @@ test_that("Extraction of the table body works well", {
   )
   expect_named(
     tbl_body_1_5,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "labels", "num_1", "num_2", "int_1", "int_2",
+      "sci_2", "ltr_1", "group", "sci_1"
+    )
   )
 
   tbl_body_1_6 <- gt_tbl_1 %>% extract_body(build_stage = "body_reassembled")
   expect_equal(tbl_body_1_6[["labels"]], tbl[["labels"]])
-  expect_equal(tbl_body_1_6[["ltr_2"]], tbl[["ltr_2"]])
-  expect_equal(tbl_body_1_6[["ltr_3"]], tbl[["ltr_3"]])
   expect_equal(
     tbl_body_1_6[["num_1"]],
     c("int:0", "int:74", "NA", "int:0", "big", "int:0", "int:84")
@@ -307,14 +309,14 @@ test_that("Extraction of the table body works well", {
   )
   expect_named(
     tbl_body_1_6,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "labels", "num_1", "num_2", "int_1", "int_2",
+      "sci_2", "ltr_1", "group", "sci_1"
+    )
   )
 
   tbl_body_1_7 <- gt_tbl_1 %>% extract_body(build_stage = "text_transformed")
   expect_equal(tbl_body_1_7[["labels"]], tbl[["labels"]])
-  expect_equal(tbl_body_1_7[["ltr_2"]], tbl[["ltr_2"]])
-  expect_equal(tbl_body_1_7[["ltr_3"]], tbl[["ltr_3"]])
   expect_equal(
     tbl_body_1_7[["num_1"]],
     c("int:0", "int:74", "NA", "int:0", "big", "int:0", "int:84 _84")
@@ -360,8 +362,10 @@ test_that("Extraction of the table body works well", {
   )
   expect_named(
     tbl_body_1_7,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "labels", "num_1", "num_2", "int_1", "int_2",
+      "sci_2", "ltr_1", "group", "sci_1"
+    )
   )
 
   tbl_body_1_8 <- gt_tbl_1 %>% extract_body(build_stage = "footnotes_attached")
@@ -373,8 +377,6 @@ test_that("Extraction of the table body works well", {
       "C", "D", "E", "F", "G"
     )
   )
-  expect_equal(tbl_body_1_8[["ltr_2"]], tbl[["ltr_2"]])
-  expect_equal(tbl_body_1_8[["ltr_3"]], tbl[["ltr_3"]])
   expect_equal(
     tbl_body_1_8[["num_1"]],
     c("int:0", "int:74", "NA", "int:0", "big", "int:0", "int:84 _84")
@@ -427,8 +429,10 @@ test_that("Extraction of the table body works well", {
   )
   expect_named(
     tbl_body_1_8,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "labels", "num_1", "num_2", "int_1", "int_2",
+      "sci_2", "ltr_1", "group", "sci_1"
+    )
   )
 
   tbl_body_1_8_b <- gt_tbl_1 %>% extract_body()
@@ -440,8 +444,6 @@ test_that("Extraction of the table body works well", {
       "C", "D", "E", "F", "G"
     )
   )
-  expect_equal(tbl_body_1_8_b[["ltr_2"]], tbl[["ltr_2"]])
-  expect_equal(tbl_body_1_8_b[["ltr_3"]], tbl[["ltr_3"]])
   expect_equal(
     tbl_body_1_8_b[["num_1"]],
     c("int:0", "int:74", "NA", "int:0", "big", "int:0", "int:84 _84")
@@ -494,12 +496,14 @@ test_that("Extraction of the table body works well", {
   )
   expect_named(
     tbl_body_1_8_b,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "labels", "num_1", "num_2", "int_1", "int_2",
+      "sci_2", "ltr_1", "group", "sci_1"
+    )
   )
 
-  # Create a similar gt table to the first, this time using row groups
-  # and a stub
+  # Create a similar gt table to the first, this time using
+  # row groups and a stub
   gt_tbl_2 <-
     tbl %>%
     gt(rowname_col = "labels", groupname_col = "group") %>%
@@ -539,17 +543,15 @@ test_that("Extraction of the table body works well", {
   expect_true(all(is.na(tbl_body_2_1 %>% unlist() %>% unname())))
   expect_named(
     tbl_body_2_1,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "::group_id::", "::rowname::", "num_1", "num_2",
+      "int_1", "int_2", "sci_2", "ltr_1", "sci_1"
+    )
   )
 
   tbl_body_2_2 <- gt_tbl_2 %>% extract_body(build_stage = "fmt_applied")
-  expect_true(all(is.na(tbl_body_2_2[["labels"]])))
   expect_true(all(is.na(tbl_body_2_2[["num_2"]])))
   expect_true(all(is.na(tbl_body_2_2[["ltr_1"]])))
-  expect_true(all(is.na(tbl_body_2_2[["ltr_2"]])))
-  expect_true(all(is.na(tbl_body_2_2[["ltr_3"]])))
-  expect_true(all(is.na(tbl_body_2_2[["group"]])))
   expect_equal(
     tbl_body_2_2[["num_1"]],
     c("int:0", "int:74", NA, "int:0", "int:500", "int:0", "int:84")
@@ -586,17 +588,15 @@ test_that("Extraction of the table body works well", {
   )
   expect_named(
     tbl_body_2_2,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "::group_id::", "::rowname::", "num_1", "num_2",
+      "int_1", "int_2", "sci_2", "ltr_1", "sci_1"
+    )
   )
 
   tbl_body_2_3 <- gt_tbl_2 %>% extract_body(build_stage = "sub_applied")
-  expect_true(all(is.na(tbl_body_2_3[["labels"]])))
   expect_true(all(is.na(tbl_body_2_3[["num_2"]])))
   expect_true(all(is.na(tbl_body_2_3[["ltr_1"]])))
-  expect_true(all(is.na(tbl_body_2_3[["ltr_2"]])))
-  expect_true(all(is.na(tbl_body_2_3[["ltr_3"]])))
-  expect_true(all(is.na(tbl_body_2_3[["group"]])))
   expect_equal(
     tbl_body_2_3[["num_1"]],
     c("int:0", "int:74", NA, "int:0", "big", "int:0", "int:84")
@@ -634,15 +634,14 @@ test_that("Extraction of the table body works well", {
   )
   expect_named(
     tbl_body_2_3,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "::group_id::", "::rowname::", "num_1", "num_2",
+      "int_1", "int_2", "sci_2", "ltr_1", "sci_1"
+    )
   )
 
   tbl_body_2_4 <- gt_tbl_2 %>% extract_body(build_stage = "unfmt_included")
-  expect_equal(tbl_body_2_4[["labels"]], tbl[["labels"]])
   expect_equal(tbl_body_2_4[["ltr_1"]], tbl[["ltr_1"]])
-  expect_equal(tbl_body_2_4[["ltr_2"]], tbl[["ltr_2"]])
-  expect_equal(tbl_body_2_4[["ltr_3"]], tbl[["ltr_3"]])
   expect_equal(
     tbl_body_2_4[["num_1"]],
     c("int:0", "int:74", "NA", "int:0", "big", "int:0", "int:84")
@@ -684,14 +683,13 @@ test_that("Extraction of the table body works well", {
   )
   expect_named(
     tbl_body_2_4,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "::group_id::", "::rowname::", "num_1", "num_2",
+      "int_1", "int_2", "sci_2", "ltr_1", "sci_1"
+    )
   )
 
   tbl_body_2_5 <- gt_tbl_2 %>% extract_body(build_stage = "cols_merged")
-  expect_equal(tbl_body_2_5[["labels"]], tbl[["labels"]])
-  expect_equal(tbl_body_2_5[["ltr_2"]], tbl[["ltr_2"]])
-  expect_equal(tbl_body_2_5[["ltr_3"]], tbl[["ltr_3"]])
   expect_equal(
     tbl_body_2_5[["num_1"]],
     c("int:0", "int:74", "NA", "int:0", "big", "int:0", "int:84")
@@ -737,23 +735,13 @@ test_that("Extraction of the table body works well", {
   )
   expect_named(
     tbl_body_2_5,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "::group_id::", "::rowname::", "num_1", "num_2",
+      "int_1", "int_2", "sci_2", "ltr_1", "sci_1"
+    )
   )
 
   tbl_body_2_6 <- gt_tbl_2 %>% extract_body(build_stage = "body_reassembled")
-  expect_equal(
-    tbl_body_2_6[["labels"]],
-    c("A", "B", "E", "G", "C", "D", "F")
-  )
-  expect_equal(
-    tbl_body_2_6[["ltr_2"]],
-    c("a", "b", "e", "g", "c", "d", "f")
-  )
-  expect_equal(
-    tbl_body_2_6[["ltr_3"]],
-    c("a", "b", "e", "g", "c", "d", "f")
-  )
   expect_equal(
     tbl_body_2_6[["num_1"]],
     c("int:0", "int:74", "big", "int:84", "NA", "int:0", "int:0")
@@ -798,23 +786,13 @@ test_that("Extraction of the table body works well", {
   )
   expect_equal(
     colnames(tbl_body_2_6),
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "::group_id::", "::rowname::", "num_1", "num_2",
+      "int_1", "int_2", "sci_2", "ltr_1", "sci_1"
+    )
   )
 
   tbl_body_2_7 <- gt_tbl_2 %>% extract_body(build_stage = "text_transformed")
-  expect_equal(
-    tbl_body_2_7[["labels"]],
-    c("A", "B", "E", "G", "C", "D", "F")
-  )
-  expect_equal(
-    tbl_body_2_7[["ltr_2"]],
-    c("a", "b", "e", "g", "c", "d", "f")
-  )
-  expect_equal(
-    tbl_body_2_7[["ltr_3"]],
-    c("a", "b", "e", "g", "c", "d", "f")
-  )
   expect_equal(
     tbl_body_2_7[["num_1"]],
     c("int:0", "int:74", "big", "int:84 _84", "NA", "int:0", "int:0")
@@ -859,23 +837,13 @@ test_that("Extraction of the table body works well", {
   )
   expect_named(
     tbl_body_2_7,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "::group_id::", "::rowname::", "num_1", "num_2",
+      "int_1", "int_2", "sci_2", "ltr_1", "sci_1"
+    )
   )
 
   tbl_body_2_8 <- gt_tbl_2 %>% extract_body(build_stage = "footnotes_attached")
-  expect_equal(
-    tbl_body_2_8[["labels"]],
-    c("A", "B", "E", "G", "C", "D", "F")
-  )
-  expect_equal(
-    tbl_body_2_8[["ltr_2"]],
-    c("a", "b", "e", "g", "c", "d", "f")
-  )
-  expect_equal(
-    tbl_body_2_8[["ltr_3"]],
-    c("a", "b", "e", "g", "c", "d", "f")
-  )
   expect_equal(
     tbl_body_2_8[["num_1"]],
     c("int:0", "int:74", "big", "int:84 _84", "NA", "int:0", "int:0")
@@ -927,7 +895,236 @@ test_that("Extraction of the table body works well", {
   )
   expect_named(
     tbl_body_2_8,
-    c("labels", "num_1", "num_2", "int_1", "int_2", "sci_2", "ltr_1",
-      "ltr_2", "ltr_3", "group", "sci_1")
+    c(
+      "::group_id::", "::rowname::", "num_1", "num_2",
+      "int_1", "int_2", "sci_2", "ltr_1", "sci_1"
+    )
   )
+})
+
+test_that("Extraction of the table body works with variation in arguments", {
+
+  #
+  # Inclusion of stub, don't show hidden columns
+  #
+
+  # Extract body from simple table
+  exibble %>%
+      gt() %>%
+      extract_body() %>%
+      expect_snapshot()
+
+  # Extract body from table with row labels and row groups
+  exibble %>%
+      gt(rowname_col = "row", groupname_col = "group") %>%
+      extract_body() %>%
+      expect_snapshot()
+
+  # Extract body from table with row labels
+  exibble %>%
+      gt(rowname_col = "row") %>%
+      extract_body() %>%
+      expect_snapshot()
+
+  # Extract body from table with row groups
+  exibble %>%
+      gt(groupname_col = "group") %>%
+      extract_body() %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from simple table with hidden columns
+  exibble %>%
+      gt() %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body() %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from table with row labels and row groups
+  exibble %>%
+      gt(rowname_col = "row", groupname_col = "group") %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body() %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from table with row labels
+  exibble %>%
+      gt(rowname_col = "row") %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body() %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from table with row groups
+  exibble %>%
+      gt(groupname_col = "group") %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body() %>%
+      expect_snapshot()
+
+  #
+  # Exclude display of stub columns, don't show hidden columns
+  #
+
+  # Extract body from simple table
+  exibble %>%
+      gt() %>%
+      extract_body(incl_stub_cols = FALSE) %>%
+      expect_snapshot()
+
+  # Extract body from table with row labels and row groups (don't include stub)
+  exibble %>%
+      gt(rowname_col = "row", groupname_col = "group") %>%
+      extract_body(incl_stub_cols = FALSE) %>%
+      expect_snapshot()
+
+  # Extract body from table with row labels (don't include stub)
+  exibble %>%
+      gt(rowname_col = "row") %>%
+      extract_body(incl_stub_cols = FALSE) %>%
+      expect_snapshot()
+
+  # Extract body from table with row groups (don't include stub)
+  exibble %>%
+      gt(groupname_col = "group") %>%
+      extract_body(incl_stub_cols = FALSE) %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from simple table with hidden columns
+  exibble %>%
+      gt() %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body(incl_stub_cols = FALSE) %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from table with row labels and row groups
+  exibble %>%
+      gt(rowname_col = "row", groupname_col = "group") %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body(incl_stub_cols = FALSE) %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from table with row labels
+  exibble %>%
+      gt(rowname_col = "row") %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body(incl_stub_cols = FALSE) %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from table with row groups
+  exibble %>%
+      gt(groupname_col = "group") %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body(incl_stub_cols = FALSE) %>%
+      expect_snapshot()
+
+  #
+  # Inclusion of stub, *show all* hidden columns
+  #
+
+  # Extract body from simple table
+  exibble %>%
+      gt() %>%
+      extract_body(incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
+
+  # Extract body from table with row labels and row groups
+  exibble %>%
+      gt(rowname_col = "row", groupname_col = "group") %>%
+      extract_body(incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
+
+  # Extract body from table with row labels
+  exibble %>%
+      gt(rowname_col = "row") %>%
+      extract_body(incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
+
+  # Extract body from table with row groups
+  exibble %>%
+      gt(groupname_col = "group") %>%
+      extract_body(incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from simple table with hidden columns
+  exibble %>%
+      gt() %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body(incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from table with row labels and row groups
+  exibble %>%
+      gt(rowname_col = "row", groupname_col = "group") %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body(incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from table with row labels
+  exibble %>%
+      gt(rowname_col = "row") %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body(incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from table with row groups
+  exibble %>%
+      gt(groupname_col = "group") %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body(incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
+
+  #
+  # Exclude display of stub columns, *show all* hidden columns
+  #
+
+  # Extract body from simple table
+  exibble %>%
+      gt() %>%
+      extract_body(incl_stub_cols = FALSE, incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
+
+  # Extract body from table with row labels and row groups (don't include stub)
+  exibble %>%
+      gt(rowname_col = "row", groupname_col = "group") %>%
+      extract_body(incl_stub_cols = FALSE, incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
+
+  # Extract body from table with row labels (don't include stub)
+  exibble %>%
+      gt(rowname_col = "row") %>%
+      extract_body(incl_stub_cols = FALSE, incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
+
+  # Extract body from table with row groups (don't include stub)
+  exibble %>%
+      gt(groupname_col = "group") %>%
+      extract_body(incl_stub_cols = FALSE, incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from simple table with hidden columns
+  exibble %>%
+      gt() %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body(incl_stub_cols = FALSE, incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from table with row labels and row groups
+  exibble %>%
+      gt(rowname_col = "row", groupname_col = "group") %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body(incl_stub_cols = FALSE, incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from table with row labels
+  exibble %>%
+      gt(rowname_col = "row") %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body(incl_stub_cols = FALSE, incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
+
+  # w/ hidden columns: Extract body from table with row groups
+  exibble %>%
+      gt(groupname_col = "group") %>%
+      cols_hide(columns = matches("date")) %>%
+      extract_body(incl_stub_cols = FALSE, incl_hidden_cols = TRUE) %>%
+      expect_snapshot()
 })
