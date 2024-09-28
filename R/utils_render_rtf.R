@@ -1630,7 +1630,7 @@ create_body_component_rtf <- function(data) {
 
       group_id <-
         groups_rows_df[
-          stats::na.omit(groups_rows_df$row_end == i),
+          omit_na(groups_rows_df$row_end == i),
           "group_id", drop = TRUE
         ]
 

@@ -138,6 +138,8 @@ utils::globalVariables(
 #'
 #' **gt** uses the following [options()] to configure behavior:
 #'
+#' - `gt.locale`: A [locale][info_locales()] to yse by default in
+#'  the [gt()] function.
 #' - `gt.row_group.sep`: A separator between groups for the row group label. By
 #' default this is `" - "`.
 #' - `gt.html_tag_check`: A logical scalar indicating whether or not to print a

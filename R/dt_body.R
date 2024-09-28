@@ -36,12 +36,12 @@ dt_body_get <- function(data) {
 }
 
 dt_body_set <- function(data, body) {
-  dt__set(data, .dt_body_key, dplyr::as_tibble(body))
+  dt__set(data, .dt_body_key, body)
 }
 
 dt_body_build_init <- function(data) {
 
-  body <- dt_data_get(data = data)[, dt_boxhead_get_vars(data = data)]
+  body <- dt_data_get(data = data)[dt_boxhead_get_vars(data = data)]
 
   if (NROW(body) > 0) {
     body[] <- NA_character_

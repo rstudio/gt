@@ -96,3 +96,13 @@
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"a\">a</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"a\" class=\"gt_row gt_right\">1 (7.1%)</td></tr>\n    <tr><td headers=\"a\" class=\"gt_row gt_right\">5</td></tr>\n    <tr><td headers=\"a\" class=\"gt_row gt_right\">0</td></tr>\n    <tr><td headers=\"a\" class=\"gt_row gt_right\">2 (14.3%)</td></tr>\n    <tr><td headers=\"a\" class=\"gt_row gt_right\">NA</td></tr>\n    <tr><td headers=\"a\" class=\"gt_row gt_right\">6</td></tr>\n    <tr><td headers=\"a\" class=\"gt_row gt_right\">5</td></tr>\n    <tr><td headers=\"a\" class=\"gt_row gt_right\">NA</td></tr>\n    <tr><td headers=\"a\" class=\"gt_row gt_right\">0</td></tr>\n    <tr><td headers=\"a\" class=\"gt_row gt_right\">NA</td></tr>\n  </tbody>\n  \n  \n</table>"
 
+# cols_merge() errors well when pattern is wrong
+
+    Code
+      exibble %>% gt() %>% cols_merge(num, pattern = "{2}")
+    Condition
+      Error in `perform_col_merge()`:
+      ! Can't perform column merging
+      Can't find reference 2.
+      i Review `pattern` provided to `cols_merge()`.
+

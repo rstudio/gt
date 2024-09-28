@@ -6,6 +6,8 @@
 
 * PDF output now defaults to a full-width floating environment using `tabular*` (@AronGullickson, #1588). Float position can be controlled by the `latex.tbl.pos` argument in `tab_options`. Quarto users can alternatively use the `tbl-pos` argument to control positioning. To use a `longtable` environment instead, use `tab_option(latex.use_longtable = TRUE)`.
 
+* The `locale` argument of `gt()` now defaults to `getOption("gt.locale")` if set (#1894).
+
 ## Interactive table support
 
 * Interactive tables will show no border if `opt_table_lines(extent = "none")` is specified (#1307).
@@ -60,6 +62,10 @@
 * Improved footnote rendering in Quarto with `fmt_markdown()` (@olivroy, #1773)
 
 * Fixed an issue where `md()` and `fmt_markdown()` would render factors as their numeric levels rather than their text labels (@rossellhayes, #1883).
+
+* `vec_fmt_*()` (and incidentally `cols_nanoplot()`) should be faster now (@olivroy, #1888, #1891).
+
+* `cols_add()` works in more cases (#1893).
 
 # gt 0.11.0
 

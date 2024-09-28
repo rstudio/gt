@@ -226,9 +226,9 @@ tf_formats <- function() {
 
   dplyr::tribble(
     ~format_number,  ~format_name,    ~characters,              ~idx,
-    "1",	           "true-false",    NA,                       1:2,
-    "2",	           "yes-no",        NA,                       3:4,
-    "3",	           "up-down",       NA,                       5:6,
+    "1",	           "true-false",    NA_character_,            1:2,
+    "2",	           "yes-no",        NA_character_,            3:4,
+    "3",	           "up-down",       NA_character_,            5:6,
     "4",             "check-mark",    c("\U02714", "\U02718"),  NA,
     "5",             "circles",       c("\U025CF", "\U02B58"),  NA,
     "6",             "squares",       c("\U025A0", "\U025A1"),  NA,
@@ -240,7 +240,7 @@ tf_formats <- function() {
 }
 
 tf_formats_icons <- function() {
-  as.character(stats::na.omit(tf_formats()[, "characters"][[1]]))
+  as.character(omit_na(tf_formats()[, "characters"][[1]]))
 }
 
 tf_formats_text <- function() {
@@ -1866,9 +1866,10 @@ num_suffix <- function(
     }
 
     return(
-      dplyr::tibble(
-        scale_by = rep_len(scale_by, length(x)),
-        suffix = rep_len("", length(x))
+      vctrs::data_frame(
+        scale_by = scale_by,
+        suffix = "",
+        .size = length(x)
       )
     )
   }
@@ -1919,7 +1920,7 @@ num_suffix <- function(
 
   # Create and return a tibble with `scale_by`
   # and `suffix` values
-  dplyr::tibble(
+  vctrs::data_frame(
     scale_by = 1 / base^suffix_index,
     suffix = suffix_labels
   )
@@ -1947,9 +1948,10 @@ num_suffix_ind <- function(
     }
 
     return(
-      dplyr::tibble(
-        scale_by = rep_len(scale_by, length(x)),
-        suffix = rep_len("", length(x))
+      vctrs::data_frame(
+        scale_by = scale_by,
+        suffix = "",
+        .size = length(x)
       )
     )
   }
@@ -2003,7 +2005,7 @@ num_suffix_ind <- function(
 
   # Create and return a tibble with `scale_by`
   # and `suffix` values
-  dplyr::tibble(
+  vctrs::data_frame(
     scale_by = 10^(-ifelse(suffix_index == 0, 0, (suffix_index * 2) + 1)),
     suffix = suffix_labels
   )
@@ -2320,6 +2322,10 @@ check_row_group_id_unique <- function(data, row_group_id, call = rlang::caller_e
 
 flatten_list <- function(x) {
   unlist(x, recursive = FALSE)
+}
+
+omit_na <- function(x) {
+  x[!is.na(x)]
 }
 
 #' Prepend a vector

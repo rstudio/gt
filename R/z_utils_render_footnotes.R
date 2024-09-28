@@ -190,7 +190,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
       )
 
     # Re-combine `tbl_not_summary_cells` with `tbl_summary_cells`
-    tbl <- dplyr::bind_rows(tbl_not_summary_cells, tbl_summary_cells)
+    tbl <- vctrs::vec_rbind(tbl_not_summary_cells, tbl_summary_cells)
   }
 
   # For the grand summary cells, insert a `colnum` based
@@ -210,7 +210,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     # Re-combine `tbl_not_g_summary_cells`
     # with `tbl_g_summary_cells`
     tbl <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         tbl_not_g_summary_cells, tbl_g_summary_cells
       )
   }
@@ -226,7 +226,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     tmp$colnum <- NULL
     tmp$rownum <- NULL
 
-    default_variables <- dplyr::tibble(
+    default_variables <- vctrs::data_frame(
       colnum = seq(default_vars),
       colname = default_vars,
       rownum = -1L

@@ -148,7 +148,7 @@ cols_align_decimal <- function(
 
   # If the subsetting of columns finally results in no columns, return
   # the data unchanged
-  if (length(columns) < 1) {
+  if (length(columns) == 0L) {
     return(data)
   }
 
