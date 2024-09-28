@@ -65,9 +65,14 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="gt-development-version">gt (development version)<a class="anchor" aria-label="anchor" href="#gt-development-version"></a></h2>
 <div class="section level3">
+<h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
+<ul><li>The <code><a href="../reference/extract_body.html">extract_body()</a></code> function now, by default, will not display columns that have been hidden (e.g., by <code><a href="../reference/cols_hide.html">cols_hide()</a></code> or <code>cols_merge*()</code>); the previous behavior can be restored by using <code>incl_hidden_cols = TRUE</code>.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
 <ul><li><p>Creating a caption with <code><a href="../reference/tab_caption.html">tab_caption()</a></code> will now be preserved in Latex output with <code><a href="../reference/as_latex.html">as_latex()</a></code>. Cross-referencing a table using the internal cross-referencing system of <strong>bookdown</strong> is now enabled for PDF and HTML outputs (for HTML, set <code>options("htmltools.preserve.raw" = FALSE)</code>). Quarto users should use the <code>tbl-cap</code> and <code>label</code> cell options.</p></li>
 <li><p>PDF output now defaults to a full-width floating environment using <code>tabular*</code> (<a href="https://github.com/AronGullickson" class="external-link">@AronGullickson</a>, <a href="https://github.com/rstudio/gt/issues/1588" class="external-link">#1588</a>). Float position can be controlled by the <code>latex.tbl.pos</code> argument in <code>tab_options</code>. Quarto users can alternatively use the <code>tbl-pos</code> argument to control positioning. To use a <code>longtable</code> environment instead, use <code>tab_option(latex.use_longtable = TRUE)</code>.</p></li>
+<li><p>New arguments have been added to <code><a href="../reference/extract_body.html">extract_body()</a></code> to better control which columns will be present in the returned data (<a href="https://github.com/rstudio/gt/issues/1875" class="external-link">#1875</a>). (<a href="https://github.com/rstudio/gt/issues/1889" class="external-link">#1889</a>)</p></li>
 <li><p>The <code>locale</code> argument of <code><a href="../reference/gt.html">gt()</a></code> now defaults to <code>getOption("gt.locale")</code> if set (<a href="https://github.com/rstudio/gt/issues/1894" class="external-link">#1894</a>).</p></li>
 </ul></div>
 <div class="section level3">
