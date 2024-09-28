@@ -114,6 +114,61 @@
 #'   `"html"` (the default), `"latex"`, `"rtf"`, or `"word"`.
 #'
 #' @return A data frame or tibble object containing the table body.
+#' 
+#' @section Examples:
+#'
+#' Use a modified version of [`sp500`] the dataset to create a **gt** table with
+#' row groups and row labels. Formatting will be applied to the date- and
+#' currency-based columns.
+#'
+#' ```r
+#' gt_tbl <-
+#'   sp500 |>
+#'   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>
+#'   dplyr::arrange(date) |>
+#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) |>
+#'   dplyr::select(-adj_close, -volume) |>
+#'   gt(
+#'     rowname_col = "date",
+#'     groupname_col = "week"
+#'   ) |>
+#'   fmt_date(columns = date, date_style = "day_month_year") |>
+#'   fmt_currency(columns = c(open, high, low, close)) |>
+#'   cols_hide(columns = c(high, low))
+#' 
+#' gt_tbl
+#' ```
+#' 
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_extract_body_1.png")`
+#' }}
+#' 
+#' Using `extract_body()` on the **gt** object (`gt_tbl`) will provide us with
+#' a tibble that contains the fully built data cells for the `output` context
+#' (in this case, `"html"`).
+#' 
+#' ```{r}
+#' extract_body(gt_tbl)
+#' ```
+#' 
+#' To provide us with a better frame of reference, the grouping and row label
+#' values are provided as the first columns in the returned output. We could
+#' suppress those in the output by setting `incl_stub_cols = FALSE`. 
+#' 
+#' ```{r}
+#' extract_body(gt_tbl, incl_stub_cols = FALSE)
+#' ```
+#' 
+#' The `high` and `low` columns were hidden via [`cols_hide()`] and so they
+#' won't be shown in the returned data unless we use `incl_hidden_cols = TRUE`.
+#' 
+#' ```{r}
+#' extract_body(
+#'   gt_tbl,
+#'   incl_stub_cols = FALSE,
+#'   incl_hidden_cols = TRUE
+#' )
+#' ```
 #'
 #' @family table export functions
 #' @section Function ID:
