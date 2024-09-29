@@ -572,7 +572,7 @@ render_as_ihtml <- function(data, id) {
       footnotes_component <- NULL
     }
 
-    table_border_bottom_style <- opt_val(data, "table_border_bottom_style")
+    table_border_bottom_style <- tbl_opts$table_border_bottom_style
 
     footer_component <-
       htmltools::div(
