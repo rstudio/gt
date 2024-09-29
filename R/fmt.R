@@ -176,22 +176,22 @@ normalize_locale <- function(locale = NULL) {
 #'   functions. This is expected as `NULL` if not supplied by the user.
 #' @noRd
 validate_locale <- function(locale, call = rlang::caller_env()) {
+  if (is.null(locale)) {
+    return(NULL)
+  }
 
-  # Stop function if the `locale` provided
-  # isn't a valid one
-  if (
-    !is.null(locale) &&
-    !(gsub("_", "-", locale, fixed = TRUE) %in% locales[["locale"]]) &&
-    !(gsub("_", "-", locale, fixed = TRUE) %in% default_locales[["default_locale"]])
-  ) {
-
-    cli::cli_abort(c(
-      "The supplied `locale` is not available in the list of supported locales.",
-      "i" = "Use {.run [info_locales()](gt::info_locales())} to see which locales can be used."
+  locale <- gsub("_", "-", locale, fixed = TRUE)
+  if (locale %in% c(locales[["locale"]], default_locales[["default_locale"]])) {
+    return(locale)
+  }
+  
+  # Stop function if the `locale` provided is invalid
+  cli::cli_abort(c(
+    "The supplied `locale` is not available in the list of supported locales.",
+    "i" = "Use {.run [info_locales()](gt::info_locales())} to see which locales can be used."
     ),
     call = call
-    )
-  }
+  )
 }
 
 #' Validate the user-supplied `currency` value
@@ -293,8 +293,8 @@ get_locale_range_pattern <- function(locale = NULL) {
   range_pattern <- locales$range_pattern[locales$locale == locale]
   validate_length_one(range_pattern)
 
-  range_pattern <- gsub("1", "2", range_pattern)
-  range_pattern <- gsub("0", "1", range_pattern)
+  range_pattern <- gsub("1", "2", range_pattern, fixed = TRUE)
+  range_pattern <- gsub("0", "1", range_pattern, fixed = TRUE)
   range_pattern
 }
 
@@ -552,7 +552,7 @@ format_num_to_str <- function(
     system = c("intl", "ind")
 ) {
 
-  system <- rlang::arg_match(system)
+  system <- rlang::arg_match0(system, c("intl", "ind"))
 
   # If this hardcoding is ever to change, then we need to
   # modify the regexes below
@@ -604,7 +604,7 @@ format_num_to_str <- function(
 
   # Remove `-` for any signed zeros returned by `formatC()`
   x_str_signed_zero <- grepl("^(-0|-0\\.0*?)$", x_str)
-  x_str[x_str_signed_zero] <- gsub("-", "", x_str[x_str_signed_zero])
+  x_str[x_str_signed_zero] <- gsub("-", "", x_str[x_str_signed_zero], fixed = TRUE)
 
   # If a trailing decimal mark is to be retained (not the
   # default option but sometimes desirable), affix the `dec_mark`
@@ -633,7 +633,7 @@ format_num_to_str <- function(
         FUN = insert_seps_ind
       )
 
-    decimal_str <- rep("", length(x_str_numeric))
+    decimal_str <- rep_len("", length(x_str_numeric))
 
     decimal_str[has_decimal] <-
       gsub("^.*?(\\..*)", "\\1", x_str_numeric[has_decimal])
@@ -670,7 +670,7 @@ format_num_to_str_c <- function(
     system = c("intl", "ind")
 ) {
 
-  system <- rlang::arg_match(system)
+  system <- rlang::arg_match0(system, c("intl", "ind"))
 
   format_num_to_str(
     x = x,
@@ -1284,7 +1284,7 @@ create_suffix_df <- function(
 
   suffix_fn <- if (system == "intl") num_suffix else num_suffix_ind
 
-  # Create a tibble with scaled values for `x` and the
+  # Create a data frame with scaled values for `x` and the
   # suffix labels to use for character formatting
   suffix_fn(
     round(x, decimals),
@@ -1344,7 +1344,7 @@ num_fmt_factory <- function(
   function(x) {
 
     # Create `x_str` with the same length as `x`
-    x_str <- rep(NA_character_, length(x))
+    x_str <- rep_len(NA_character_, length(x))
 
     # Determine which of `x` are not NA
     non_na_x <- !is.na(x)

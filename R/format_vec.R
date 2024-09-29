@@ -3341,7 +3341,7 @@ vec_fmt_markdown <- function(
 }
 
 gt_one_col <- function(x) {
-  gt(dplyr::tibble(x = x), auto_align = FALSE, process_md = FALSE)
+  gt(data.frame(x = x, stringsAsFactors = FALSE), auto_align = FALSE, process_md = FALSE, groupname_col = NULL)
 }
 
 # Similar as `stop_if_not_vector()` if `valid_classes` is not supplied.
@@ -3394,7 +3394,7 @@ check_columns_valid_if_strict <- function(
 }
 
 render_as_vector <- function(data, output) {
-  dt_body_get(build_data(data, context = output))[["x"]]
+  dt_body_get(build_data_body(data, context = output))[["x"]]
 }
 
 determine_output_format <- function() {

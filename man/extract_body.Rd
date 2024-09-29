@@ -7,6 +7,9 @@
 extract_body(
   data,
   build_stage = NULL,
+  incl_hidden_cols = FALSE,
+  incl_stub_cols = TRUE,
+  ...,
   output = c("html", "latex", "rtf", "word", "grid")
 )
 }
@@ -31,6 +34,25 @@ stages in order: (1) \code{"init"}, (2) \code{"fmt_applied"}, (3) \code{"sub_app
 value for \code{build_stage} then the entire build for the table body (i.e., up
 to and including the \code{"footnotes_attached"} stage) will be performed before
 returning the data frame.}
+
+\item{incl_hidden_cols}{\emph{Should hidden columns be included?}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Certain columns may be hidden from final display via \code{\link[=cols_hide]{cols_hide()}}. By
+default, those columns won't be part of the extracted data frame. However,
+we can choose to include them by using \code{incl_hidden_cols = TRUE}.}
+
+\item{incl_stub_cols}{\emph{Should stub columns be included?}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+Any stub columns in the \strong{gt} object (which may consist of a grouping
+column and a column for row labels) are included in the extracted data for
+clarity but clearly marked with the names \code{"::group_id::"} and
+\code{"::rowname::"}. We can exclude them by setting \code{incl_stub_cols = FALSE}.}
+
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{output}{\emph{Output format}
 
@@ -81,6 +103,98 @@ apparent.
 attachment.
 }
 }
+\section{Examples}{
+
+
+Use a modified version of \code{\link{sp500}} the dataset to create a \strong{gt} table with
+row groups and row labels. Formatting will be applied to the date- and
+currency-based columns.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
+  sp500 |>
+  dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>
+  dplyr::arrange(date) |>
+  dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) |>
+  dplyr::select(-adj_close, -volume) |>
+  gt(
+    rowname_col = "date",
+    groupname_col = "week"
+  ) |>
+  fmt_date(columns = date, date_style = "day_month_year") |>
+  fmt_currency(columns = c(open, high, low, close)) |>
+  cols_hide(columns = c(high, low))
+
+gt_tbl
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_extract_body_1.png" alt="This image of a table was generated from the first code example in the `extract_body()` help file." style="width:100\%;">
+}}
+
+Using \code{extract_body()} on the \strong{gt} object (\code{gt_tbl}) will provide us with
+a tibble that contains the fully built data cells for the \code{output} context
+(in this case, \code{"html"}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{extract_body(gt_tbl)
+#> # A tibble: 10 x 4
+#>    `::group_id::` `::rowname::`   open      close    
+#>    <chr>          <chr>           <chr>     <chr>    
+#>  1 W02            5 January 2015  $2,054.44 $2,020.58
+#>  2 W02            6 January 2015  $2,022.15 $2,002.61
+#>  3 W02            7 January 2015  $2,005.55 $2,025.90
+#>  4 W02            8 January 2015  $2,030.61 $2,062.14
+#>  5 W02            9 January 2015  $2,063.45 $2,044.81
+#>  6 W03            12 January 2015 $2,046.13 $2,028.26
+#>  7 W03            13 January 2015 $2,031.58 $2,023.03
+#>  8 W03            14 January 2015 $2,018.40 $2,011.27
+#>  9 W03            15 January 2015 $2,013.75 $1,992.67
+#> 10 W03            16 January 2015 $1,992.25 $2,019.42
+}\if{html}{\out{</div>}}
+
+To provide us with a better frame of reference, the grouping and row label
+values are provided as the first columns in the returned output. We could
+suppress those in the output by setting \code{incl_stub_cols = FALSE}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{extract_body(gt_tbl, incl_stub_cols = FALSE)
+#> # A tibble: 10 x 2
+#>    open      close    
+#>    <chr>     <chr>    
+#>  1 $2,054.44 $2,020.58
+#>  2 $2,022.15 $2,002.61
+#>  3 $2,005.55 $2,025.90
+#>  4 $2,030.61 $2,062.14
+#>  5 $2,063.45 $2,044.81
+#>  6 $2,046.13 $2,028.26
+#>  7 $2,031.58 $2,023.03
+#>  8 $2,018.40 $2,011.27
+#>  9 $2,013.75 $1,992.67
+#> 10 $1,992.25 $2,019.42
+}\if{html}{\out{</div>}}
+
+The \code{high} and \code{low} columns were hidden via \code{\link[=cols_hide]{cols_hide()}} and so they
+won't be shown in the returned data unless we use \code{incl_hidden_cols = TRUE}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{extract_body(
+  gt_tbl,
+  incl_stub_cols = FALSE,
+  incl_hidden_cols = TRUE
+)
+#> # A tibble: 10 x 4
+#>    open      high      low       close    
+#>    <chr>     <chr>     <chr>     <chr>    
+#>  1 $2,054.44 $2,054.44 $2,017.34 $2,020.58
+#>  2 $2,022.15 $2,030.25 $1,992.44 $2,002.61
+#>  3 $2,005.55 $2,029.61 $2,005.55 $2,025.90
+#>  4 $2,030.61 $2,064.08 $2,030.61 $2,062.14
+#>  5 $2,063.45 $2,064.43 $2,038.33 $2,044.81
+#>  6 $2,046.13 $2,049.30 $2,022.58 $2,028.26
+#>  7 $2,031.58 $2,056.93 $2,008.25 $2,023.03
+#>  8 $2,018.40 $2,018.40 $1,988.44 $2,011.27
+#>  9 $2,013.75 $2,021.35 $1,991.47 $1,992.67
+#> 10 $1,992.25 $2,020.46 $1,988.12 $2,019.42
+}\if{html}{\out{</div>}}
+}
+
 \section{Function ID}{
 
 13-7
