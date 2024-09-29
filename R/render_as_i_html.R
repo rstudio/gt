@@ -457,13 +457,30 @@ render_as_ihtml <- function(data, id) {
   col_defs <- c(col_defs, group_col_defs, row_name_col_def)
 
   styles_tbl <- dt_styles_get(data = data)
-  body_styles_tbl <- dplyr::filter(styles_tbl, locname %in% c("data", "stub"))
+  body_styles_tbl <- vctrs::vec_slice(styles_tbl, styles_tbl$locname %in% c("data", "stub"))
   body_styles_tbl <- dplyr::arrange(body_styles_tbl, colnum, rownum)
-  body_styles_tbl <- dplyr::select(body_styles_tbl, "colname", "rownum", "html_style")
+  body_styles_tbl <- body_styles_tbl[c("colname", "rownum", "html_style")]
 
+  
+  # Generate some options for global body style
+  # They will end up being added inside the JS() function,
+  # So, they need to have this format.
+  global_body_style <-
+    paste0(
+      "borderLeftColor: '", tbl_opts$table_body_vlines_color, "', ",
+      "borderLeftStyle: '", tbl_opts$table_body_vlines_style, "', ",
+      "borderLeftWidth: '", tbl_opts$table_body_vlines_width, "', ",
+      "borderRightColor: '", tbl_opts$table_body_vlines_color, "', ",
+      "borderRightStyle: '", tbl_opts$table_body_vlines_style, "', ",
+      "borderRightWidth: '", tbl_opts$table_body_vlines_width, "', ",
+      "borderTopColor: '", tbl_opts$table_body_hlines_color, "', ",
+      "borderTopStyle: '", tbl_opts$table_body_hlines_style, "', ",
+      "borderTopWidth: '", tbl_opts$table_body_hlines_width, "' "
+    )
+  
+  
   # Generate styling rule per combination of `colname` and
   # `rownum` in `body_styles_tbl`
-  # TODO combine with table_body_hlines_width
   body_style_rules <-
     vapply(
       seq_len(nrow(body_styles_tbl)), FUN.VALUE = character(1L), USE.NAMES = FALSE,
@@ -477,11 +494,15 @@ render_as_ihtml <- function(data, id) {
         html_style <- gsub("(:)\\s*(.*)", ": '\\2'", html_style, perl = TRUE)
         html_style <- paste(html_style, collapse = ", ")
         html_style <- gsub(";'$", "'", html_style)
-
+        
+        # Add the global body style afterwards. (Specific styling will have precedence)
+        html_style <- paste0(html_style, ", ", global_body_style)
         paste0(
           "if (colInfo.id === '", colname, "' & rowIndex === ", rownum, ") {\n",
           "  return { ", html_style , " }\n",
-          "}\n\n"
+          "}\n", 
+          "return { ", global_body_style, "}",
+          "\n"
         )
       }
     )
