@@ -72,6 +72,9 @@ tests/testthat/test-fmt_index.R
 tests/testthat/test-fmt_integer.R
 tests/testthat/_snaps/fmt_integer.md
 
+tests/testthat/test-fmt_markdown.R
+tests/testthat/_snaps/fmt_markdown.md
+
 tests/testthat/test-fmt_number.R
 tests/testthat/_snaps/fmt_number.md
 
