@@ -264,7 +264,7 @@ test_that("A gt table can be made with grouped data -- one group", {
 
   expect_equal(
     built_tbl$`_boxhead` %>% .[, 1:2],
-    dplyr::tibble(
+    vctrs::data_frame(
       var = colnames(exibble),
       type = c(rep("default", 8), "row_group")
     )
@@ -344,7 +344,7 @@ test_that("A gt table can be made with grouped data - two groups", {
 
   built_tbl$`_boxhead` %>% .[, 1:2] %>%
     expect_equal(
-      dplyr::tibble(
+      vctrs::data_frame(
         var = colnames(
           exibble %>%
             dplyr::mutate(group_2 = rep(paste0("grp_", 1:4), 2) %>% sort())
@@ -444,7 +444,7 @@ test_that("`groupname_col` in gt() will override any grouped data", {
 
   built_tbl$`_boxhead` %>% .[, 1:2] %>%
     expect_equal(
-      dplyr::tibble(
+      vctrs::data_frame(
         var = colnames(exibble),
         type = c(rep("default", 3), "row_group", rep("default", 5))
       )
@@ -544,7 +544,7 @@ test_that("rowname_col in gt() will be overridden by `rownames_to_stub = TRUE`",
 
   expect_equal(
     built_tbl$`_boxhead`[, 1:2],
-    dplyr::tibble(
+    vctrs::data_frame(
       var = c("__GT_ROWNAME_PRIVATE__", colnames(mtcars)),
       type = c("stub", rep("default", 11))
     )
@@ -616,7 +616,7 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
 
   built_tbl$`_boxhead` %>% .[, 1:2] %>%
     expect_equal(
-      dplyr::tibble(
+      vctrs::data_frame(
         var = c("__GT_ROWNAME_PRIVATE__", colnames(exibble), "rowname"),
         type = c("stub", rep("default", 10))
       )
