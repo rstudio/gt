@@ -634,7 +634,9 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
       ),
       ignore_attr = TRUE
     )
-
+  
+  check_suggests()
+  
   # Render the HTML table and read the HTML with the `xml2::read_html()` fn
   html_tbl <-
     exibble %>%
@@ -711,35 +713,30 @@ test_that("Escapable characters in rownames are handled correctly in each output
   # when rendered as HTML
 
   # Using the data frame and setting its rownames to be the stub
-  expect_match( # stub from data frame's row names
-    gt(tbl, rownames_to_stub = TRUE) %>%
-      render_as_html(),
+  expect_match_html( # stub from data frame's row names
+    gt(tbl, rownames_to_stub = TRUE),
     "<tr><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">&lt;em&gt;row_html&lt;/em&gt;</th>",
     fixed = TRUE
   )
-  expect_match( # `column_1`
-    gt(tbl, rownames_to_stub = TRUE) %>%
-      render_as_html(),
+  expect_match_html( # `column_1`
+    gt(tbl, rownames_to_stub = TRUE),
     "<td headers=\"stub_1_1 column_1\" class=\"gt_row gt_left\">&lt;em&gt;html&lt;/em&gt;</td>",
     fixed = TRUE
   )
-  expect_match( # `column_2`
-    gt(tbl, rownames_to_stub = TRUE) %>%
-      render_as_html(),
+  expect_match_html( # `column_2`
+    gt(tbl, rownames_to_stub = TRUE),
     "<td headers=\"stub_1_1 column_2\" class=\"gt_row gt_left\">html</td>",
     fixed = TRUE
   )
 
   # Using a tibble (removes row names) and setting `column_1` as the stub
-  expect_match( # stub from `column_1`
-    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
-      render_as_html(),
+  expect_match_html( # stub from `column_1`
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1"),
     "<tr><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">&lt;em&gt;html&lt;/em&gt;</th>",
     fixed = TRUE
   )
-  expect_match( # `column_2`
-    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
-      render_as_html(),
+  expect_match_html( # `column_2`
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1"),
     "<td headers=\"stub_1_1 column_2\" class=\"gt_row gt_left\">html</td>",
     fixed = TRUE
   )
@@ -918,6 +915,8 @@ test_that("Default locale settings are honored when generating summary rows", {
 
 test_that("Formatting functions operate with a 'last-one-wins' approach", {
 
+  check_suggests()
+  
   # Make a gt table from the first column of the exibble table and apply
   # two `fmt_*()` functions to the same column
   tbl_gt <-
