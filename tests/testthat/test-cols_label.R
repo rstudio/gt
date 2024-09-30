@@ -148,8 +148,8 @@ test_that("cols_label() correctly", {
 })
 
 test_that("cols_label() works with md()", {
-  tab <- gt(data.frame(x = 1, y = 2)) %>% 
-    cols_label(x = md("*x_1*"), y = md("Time Domain<br/>$\\small{f\\left( t \\right) = {\\mathcal{L}^{\\,\\, - 1}}\\left\\{ {F\\left( s \\right)} \\right\\}}$"), "z")
+  tab <- gt(data.frame(x = 1, y = 2, z = 3)) %>% 
+    cols_label(x = md("*x_1*"), y = md("Time Domain<br/>$\\small{f\\left( t \\right) = {\\mathcal{L}^{\\,\\, - 1}}\\left\\{ {F\\left( s \\right)} \\right\\}}$"))
   expect_equal(
     tab$`_boxhead`$column_label,
     list(
