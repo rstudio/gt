@@ -176,22 +176,22 @@ normalize_locale <- function(locale = NULL) {
 #'   functions. This is expected as `NULL` if not supplied by the user.
 #' @noRd
 validate_locale <- function(locale, call = rlang::caller_env()) {
+  if (is.null(locale)) {
+    return(NULL)
+  }
 
-  # Stop function if the `locale` provided
-  # isn't a valid one
-  if (
-    !is.null(locale) &&
-    !(gsub("_", "-", locale, fixed = TRUE) %in% locales[["locale"]]) &&
-    !(gsub("_", "-", locale, fixed = TRUE) %in% default_locales[["default_locale"]])
-  ) {
-
-    cli::cli_abort(c(
-      "The supplied `locale` is not available in the list of supported locales.",
-      "i" = "Use {.run [info_locales()](gt::info_locales())} to see which locales can be used."
+  locale <- gsub("_", "-", locale, fixed = TRUE)
+  if (locale %in% c(locales[["locale"]], default_locales[["default_locale"]])) {
+    return(locale)
+  }
+  
+  # Stop function if the `locale` provided is invalid
+  cli::cli_abort(c(
+    "The supplied `locale` is not available in the list of supported locales.",
+    "i" = "Use {.run [info_locales()](gt::info_locales())} to see which locales can be used."
     ),
     call = call
-    )
-  }
+  )
 }
 
 #' Validate the user-supplied `currency` value
@@ -293,8 +293,8 @@ get_locale_range_pattern <- function(locale = NULL) {
   range_pattern <- locales$range_pattern[locales$locale == locale]
   validate_length_one(range_pattern)
 
-  range_pattern <- gsub("1", "2", range_pattern)
-  range_pattern <- gsub("0", "1", range_pattern)
+  range_pattern <- gsub("1", "2", range_pattern, fixed = TRUE)
+  range_pattern <- gsub("0", "1", range_pattern, fixed = TRUE)
   range_pattern
 }
 
@@ -1284,7 +1284,7 @@ create_suffix_df <- function(
 
   suffix_fn <- if (system == "intl") num_suffix else num_suffix_ind
 
-  # Create a tibble with scaled values for `x` and the
+  # Create a data frame with scaled values for `x` and the
   # suffix labels to use for character formatting
   suffix_fn(
     round(x, decimals),
@@ -1344,7 +1344,7 @@ num_fmt_factory <- function(
   function(x) {
 
     # Create `x_str` with the same length as `x`
-    x_str <- rep(NA_character_, length(x))
+    x_str <- rep_len(NA_character_, length(x))
 
     # Determine which of `x` are not NA
     non_na_x <- !is.na(x)

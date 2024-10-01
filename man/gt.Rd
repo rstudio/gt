@@ -14,7 +14,7 @@ gt(
   row_group_as_column = FALSE,
   auto_align = TRUE,
   id = NULL,
-  locale = NULL,
+  locale = getOption("gt.locale"),
   row_group.sep = getOption("gt.row_group.sep", " - ")
 )
 }
@@ -90,12 +90,13 @@ providing a character value.}
 
 \item{locale}{\emph{Locale identifier}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{getOption("gt.locale")} (\code{optional})
 
 An optional locale identifier that can be set as the default locale for all
 functions that take a \code{locale} argument. Examples include \code{"en"} for
 English (United States) and \code{"fr"} for French (France). We can call
-\code{\link[=info_locales]{info_locales()}} as a useful reference for all of the locales that are supported.}
+\code{\link[=info_locales]{info_locales()}} as a useful reference for all of the locales that are supported.
+If set, \code{options(gt.locale)} is also consulted.}
 
 \item{row_group.sep}{\emph{Separator text for multiple row group labels}
 

@@ -81,7 +81,7 @@ rownum_translation <- function(body, rownum_start) {
 #' Render any formatting directives available in the `formats` list
 #'
 #' @noRd
-render_formats <- function(data, context) {
+render_formats <- function(data, skip_compat_check = FALSE, context) {
 
   body <- dt_body_get(data = data)
   data_tbl <- dt_data_get(data = data)
@@ -108,13 +108,17 @@ render_formats <- function(data, context) {
     for (col in fmt[["cols"]]) {
 
       # Perform rendering but only do so if the column is present
+      # Or if we are confident that we have a compatible formatter and no rows /cols are hidden
       if (
-        col %in% colnames(data_tbl) &&
-        is_compatible_formatter(
-          table = data_tbl,
-          column = col,
-          rows = rows,
-          compat = compat
+        skip_compat_check ||
+        (
+          col %in% colnames(data_tbl) &&
+          is_compatible_formatter(
+            table = data_tbl,
+            column = col,
+            rows = rows,
+            compat = compat
+          )
         )
       ) {
 
@@ -126,7 +130,7 @@ render_formats <- function(data, context) {
         # If any of the resulting output is `NA`, that means we want
         # to NOT make changes to those particular cells' output
         # (i.e. inherit the results of the previous formatter).
-        body[[col]][rows][!is.na(result)] <- stats::na.omit(result)
+        body[[col]][rows][!is.na(result)] <- omit_na(result)
       }
     }
   }
@@ -179,7 +183,7 @@ render_substitutions <- function(
         # means we want to NOT make changes to those
         # particular cells' output (i.e. inherit the
         # results of the previous substitution).
-        body[[col]][subst$rows][!is.na(result)] <- stats::na.omit(result)
+        body[[col]][subst$rows][!is.na(result)] <- omit_na(result)
       }
     }
   }
@@ -472,7 +476,17 @@ perform_col_merge <- function(data, context) {
         )
 
       glue_src_data <- stats::setNames(glue_src_data, seq_along(glue_src_data))
-
+      
+      which_cols <- unique(unlist(str_complete_extract(pattern, "\\{\\d+\\}")))
+      which_cols <- gsub("\\{|\\}", "", which_cols)
+      if (!all(which_cols %in% names(glue_src_data))) {
+        missing <- base::setdiff(which_cols, names(glue_src_data))
+        cli::cli_abort(c(
+          "Can't perform column merging",
+          "Can't find reference {missing}.",
+          "i" = 'Review {.arg pattern} provided to {.fn cols_merge}.'
+        ))
+      }
       glued_cols <- as.character(glue_gt(glue_src_data, pattern))
 
       if (grepl("<<.*?>>", pattern)) {

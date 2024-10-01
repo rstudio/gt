@@ -11,6 +11,8 @@
 
 \strong{gt} uses the following \code{\link[=options]{options()}} to configure behavior:
 \itemize{
+\item \code{gt.locale}: A \link[=info_locales]{locale} to yse by default in
+the \code{\link[=gt]{gt()}} function.
 \item \code{gt.row_group.sep}: A separator between groups for the row group label. By
 default this is \code{" - "}.
 \item \code{gt.html_tag_check}: A logical scalar indicating whether or not to print a
