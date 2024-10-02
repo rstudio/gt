@@ -1230,14 +1230,14 @@ remove_footnote_encoding <- function(x) {
 convert_font_size_l <- function(x) {
 
   size_map <- c(
-    `xx-small` = "\\tiny",
-    `x-small` = "\\scriptsize",
-    small = "\\small",
-    medium = "\\normalsize",
-    large = "\\large",
-    `x-large` = "\\Large",
-    `xx-large` = "\\LARGE",
-    `xxx-large` = "\\huge"
+    `xx-small` = "\\tiny ",
+    `x-small` = "\\scriptsize ",
+    small = "\\small ",
+    medium = "\\normalsize ",
+    large = "\\large ",
+    `x-large` = "\\Large ",
+    `xx-large` = "\\LARGE ",
+    `xxx-large` = "\\huge "
   )
 
   if (as.character(x) %in% names(size_map))
@@ -1478,12 +1478,15 @@ apply_cell_styles_l <- function(content, style_obj) {
       "{",
       .apply_style_style_l(style_obj),
       .apply_style_weight_l(style_obj),
+      # Can generate "\small for example
       .apply_style_fontsize_l(style_obj),
       .apply_style_indentation_l(style_obj),
       x,
       "}"
     )
-  } else out_text <- just_content
+  } else {
+    out_text <- just_content
+  }
 
   ifelse(mark_side == "right",
          paste0(out_text, mark),

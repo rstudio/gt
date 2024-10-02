@@ -73,6 +73,8 @@
 
 * `cols_add()` works in more cases (#1893).
 
+* LaTeX now correctly renders if text size is changed (@olivroy, #1885).
+
 # gt 0.11.0
 
 ## New features
