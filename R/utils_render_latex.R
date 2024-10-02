@@ -148,11 +148,30 @@ create_table_start_l <- function(data, colwidth_df) {
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
-  # Get default alignments for body columns
-  col_alignment <- dt_boxhead_get_vars_align_default(data = data)
-
-  if (length(stub_layout) > 0) {
-    col_alignment <- c(rep("left", length(stub_layout)), col_alignment)
+  # Extract only visible columns of `colwidth_df` based on stub_layout.
+  types <- c("default")
+  if ("rowname" %in% stub_layout) {
+    types <- c(types, "stub")
+  }
+  if ("group_label" %in% stub_layout) {
+    types <- c(types, "row_group")
+  }
+  
+  colwidth_df_visible <- colwidth_df[colwidth_df$type %in% types, ]
+  
+  # Ensure that the `colwidth_df_visible` df rows are sorted such that the 
+  # `"row_group"` row is first (only if it's located in the stub), then `"stub"`,
+  # and then everything else
+  if ("stub" %in% colwidth_df_visible[["type"]]) {
+    stub_idx <- which(colwidth_df_visible$type == "stub")
+    othr_idx <- base::setdiff(seq_len(nrow(colwidth_df_visible)), stub_idx)
+    colwidth_df_visible <- dplyr::slice(colwidth_df_visible, stub_idx, othr_idx)
+  }
+  
+  if ("row_group" %in% colwidth_df_visible[["type"]]) {
+    row_group_idx <- which(colwidth_df_visible$type == "row_group")
+    othr_idx <- base::setdiff(seq_len(nrow(colwidth_df_visible)), row_group_idx)
+    colwidth_df_visible <- dplyr::slice(colwidth_df_visible, row_group_idx, othr_idx)
   }
 
   # Determine if there are any footnotes or source notes; if any,
@@ -176,19 +195,19 @@ create_table_start_l <- function(data, colwidth_df) {
   # - `>{\centering\arraybackslash}` <- center alignment
   # the `\arraybackslash` command is used to restore the behavior of the
   # `\\` command in the table (all of this uses the CTAN `array` package)
-  if (any(colwidth_df$unspec < 1L)) {
+  if (any(colwidth_df_visible$unspec < 1L)) {
 
     col_defs <- NULL
 
-    for (i in seq_along(col_alignment)) {
-
-      if (colwidth_df$unspec[i] == 1L) {
-        col_defs_i <- substr(col_alignment[i], 1, 1)
+    for (i in seq_len(nrow(colwidth_df_visible))) {
+      
+      if (colwidth_df_visible$unspec[i] == 1L) {
+        col_defs_i <- substr(colwidth_df_visible$column_align[i], 1, 1)
       } else {
 
         align <-
           switch(
-            col_alignment[i],
+            colwidth_df_visible$column_align[i],
             left = ">{\\raggedright\\arraybackslash}",
             right = ">{\\raggedleft\\arraybackslash}",
             center = ">{\\centering\\arraybackslash}",
@@ -199,7 +218,7 @@ create_table_start_l <- function(data, colwidth_df) {
           paste0(
             align,
             "p{",
-            create_singlecolumn_width_text_l(pt = colwidth_df$pt[i], lw = colwidth_df$lw[i]),
+            create_singlecolumn_width_text_l(pt = colwidth_df_visible$pt[i], lw = colwidth_df_visible$lw[i]),
             "}"
           )
 
@@ -209,8 +228,8 @@ create_table_start_l <- function(data, colwidth_df) {
     }
 
   } else {
-
-    col_defs <- substr(col_alignment, 1, 1)
+    
+    col_defs <- substr(colwidth_df_visible$column_align, 1, 1)
   }
 
   # Add borders to the right of any columns in the stub
@@ -1688,8 +1707,11 @@ create_colwidth_df_l <- function(data) {
     type = boxhead$type,
     unspec = rep.int(0L, n),
     lw = rep.int(0L, n),
-    pt = rep.int(0L, n)
+    pt = rep.int(0L, n),
+    column_align = boxhead$column_align
   )
+  
+  width_df$column_align[width_df$type %in% c("stub", "row_group")] <- "left"
 
   for (i in 1:n) {
     raw <- unlist(boxhead$column_width[i])[1L]
