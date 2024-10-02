@@ -1020,6 +1020,12 @@ generate_nanoplot <- function(
     bar_tags <- paste(bar_strings, collapse = "\n")
   }
 
+  # Speed up nanoplots number formatting rendering by avoid
+  # calling resolve_cols_i() too much.
+  # To be used with caution, but setting this envvar 
+  # for 
+  withr::local_envvar(c("gt_avoid_resolve" = "true"))
+  
   if (plot_type == "bar" && single_horizontal_bar) {
 
     # This type of display assumes there is only a single `y` value and there
@@ -2204,7 +2210,7 @@ format_number_compactly <- function(
   }
 
   # Format value accordingly
-
+  
   if (!is.null(currency)) {
 
     if (abs(val) >= 1e15) {

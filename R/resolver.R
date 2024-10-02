@@ -181,8 +181,10 @@ resolve_cells_column_spanners <- function(
     }
 
     # filter for levels
-    spanners <- spanners %>% dplyr::filter(spanner_level %in% levels)
-
+    spanners <- vctrs::vec_slice(
+      spanners,
+      spanners$spanner_level %in% levels
+    )
   }  #
   # Resolution of spanners as column spanner names
   #
@@ -256,7 +258,11 @@ resolve_cols_c <- function(
 ) {
 
   null_means <- rlang::arg_match(null_means)
-
+  
+  if (identical(Sys.getenv("gt_avoid_resolve"), "true")) {
+    ret <- names(dt_data_get(data))
+    return(ret)
+  }
   names(
     resolve_cols_i(
       expr = {{ expr }},

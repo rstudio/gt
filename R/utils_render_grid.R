@@ -104,7 +104,7 @@ create_heading_component_g <- function(data) {
 
   title_styles <- NA_character_
   if ("title" %in% styles_tbl$locname) {
-    title_style_rows <- dplyr::filter(styles_tbl, locname == "title")
+    title_style_rows <- vctrs::vec_slice(styles_tbl, styles_tbl$locname == "title")
     if (nrow(title_style_rows) > 0) {
       title_styles <- title_style_rows$html_style
     }
@@ -112,7 +112,7 @@ create_heading_component_g <- function(data) {
 
   subtitle_styles <- NA_character_
   if (subtitle_defined && "subtitle" %in% styles_tbl$locname) {
-    subtitle_style_rows <- dplyr::filter(styles_tbl, locname == "subtitle")
+    subtitle_style_rows <- vctrs::vec_slice(styles_tbl, styles_tbl$locname == "subtitle")
     if (nrow(subtitle_style_rows) > 0) {
       subtitle_styles <- subtitle_style_rows$html_style
     }
@@ -762,7 +762,7 @@ create_source_notes_component_g <- function(data) {
 
   style <- NA
   if ("source_notes" %in% styles_tbl$locname) {
-    source_notes_style <- dplyr::filter(styles_tbl, locname == "source_notes")
+    source_notes_style <- vctrs::vec_slice(styles_tbl, styles_tbl$locname == "source_notes")
     if (nrow(source_notes_style)) {
       style <- source_notes_style$html_style
     }
@@ -804,7 +804,7 @@ create_footnotes_component_g <- function(data) {
 
   style <- NA
   if ("footnotes" %in% styles_tbl$locname) {
-    footnotes_style <- dplyr::filter(styles_tbl, locname == "footnotes")
+    footnotes_style <- vctrs::vec_slice(styles_tbl, styles_tbl$locname == "footnotes")
     if (nrow(footnotes_style) > 0) {
       style <- footnotes_style$html_style
     }

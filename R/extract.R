@@ -396,7 +396,8 @@ assemble_body_extract <- function(
     }
   
     if (!is.null(rowname_col)) {
-      names(out_df)[names(out_df) == rowname_col] <- "::rowname::"
+      # ::rowname::
+      names(out_df)[names(out_df) == rowname_col] <- rowname_col_private
     }
   }
   

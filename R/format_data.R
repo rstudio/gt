@@ -4953,12 +4953,12 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 
     # Format the LHS and RHS values
     val_tbl <-
-      dplyr::tibble(
+      vctrs::data_frame(
         left = as.numeric(x_str_lhs),
         right = as.numeric(x_str_rhs)
       )
 
-    val_tbl_gt <- gt(val_tbl)
+    val_tbl_gt <- gt(val_tbl, groupname_col = NULL)
 
     # Ensure that the expression (a RHS formula) is made a closure
     format_fn <- rlang::as_closure(fmt)

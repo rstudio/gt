@@ -197,13 +197,13 @@ tab_info <- function(data) {
 
     groups_rows <- dt_row_groups_get(data = data)
 
-    row_groups <- dplyr::select(stub_df, id = group_id, label = group_label)
+    row_groups <- dplyr::select(stub_df, id = "group_id", label = "group_label")
     row_groups <- dplyr::filter(row_groups, dplyr::row_number() == 1, .by = "id")
     row_groups <- dplyr::mutate(row_groups, i = which(groups_rows %in% id))
     row_groups$type <- NA_character_
     row_groups$label <- unlist(row_groups$label)
     row_groups$location <- "Row Groups"
-    row_groups <- dplyr::select(row_groups, id, i, label, type, location)
+    row_groups <- row_groups[c("id", "i", "label", "type", "location")]
 
   } else {
     row_groups <- empty_tbl

@@ -2384,7 +2384,8 @@ column_classes_are_valid <- function(data, columns, valid_classes, call = rlang:
     )
 
   table_data <- dt_data_get(data = data)
-  table_data <- dplyr::select(table_data, dplyr::all_of(resolved))
+  # select all resolved columns
+  table_data <- table_data[resolved]
 
   all(
     vapply(
