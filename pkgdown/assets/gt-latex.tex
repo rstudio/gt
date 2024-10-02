@@ -202,7 +202,7 @@
 
 \title{LaTeX Quarto test}
 \author{}
-\date{2024-08-14}
+\date{2024-10-02}
 
 \begin{document}
 \maketitle
@@ -236,7 +236,7 @@ i Loading gt
 \end{Shaded}
 
 \begin{verbatim}
-[1] '1.5.54'
+[1] '1.5.57'
 \end{verbatim}
 
 \newpage{}
@@ -292,7 +292,7 @@ NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\_6 & grp\_b \
   \FunctionTok{tab\_spanner}\NormalTok{(}\StringTok{"Second level spanners"}\NormalTok{, }\FunctionTok{c}\NormalTok{(char, num, fctr)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{tab\_stubhead}\NormalTok{(}\StringTok{"Stubhead label"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{tab\_style}\NormalTok{(}
-    \AttributeTok{style =} \FunctionTok{list}\NormalTok{(}\FunctionTok{cell\_fill}\NormalTok{(}\StringTok{"\#f0f0f0"}\NormalTok{), }\FunctionTok{cell\_text}\NormalTok{(}\AttributeTok{weight =} \StringTok{"bold"}\NormalTok{)),}
+    \AttributeTok{style =} \FunctionTok{list}\NormalTok{(}\FunctionTok{cell\_fill}\NormalTok{(}\StringTok{"\#f0f0f0"}\NormalTok{), }\FunctionTok{cell\_text}\NormalTok{(}\AttributeTok{weight =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \StringTok{"small"}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{)),}
     \FunctionTok{cells\_stubhead}\NormalTok{()}
 \NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{tab\_header}\NormalTok{(}\AttributeTok{title =} \StringTok{"Stubhead styling and multiple spanner levels"}\NormalTok{)}
@@ -313,7 +313,7 @@ NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\_6 & grp\_b \
 \cmidrule(lr){3-5}
 \multicolumn{2}{l}{} & \multicolumn{2}{c}{spanners} &  &  &  &  &  \\ 
 \cmidrule(lr){3-4}
-\multicolumn{2}{c}{{\bfseries \cellcolor[HTML]{F0F0F0}{Stubhead label}}} & char & num & fctr & date & time & datetime & currency \\ 
+\multicolumn{2}{c}{{\bfseries \small \cellcolor[HTML]{F0F0F0}{\textcolor[HTML]{0000FF}{Stubhead label}}}} & char & num & fctr & date & time & datetime & currency \\ 
 \midrule\addlinespace[2.5pt]
 \multirow{4}{*}{grp\_a} & row\_1 & apricot & 1.111e-01 & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\ 
  & row\_2 & banana & 2.222e+00 & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\ 

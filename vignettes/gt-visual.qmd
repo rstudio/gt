@@ -85,7 +85,7 @@ tab <- exibble %>%
   tab_spanner("Second level spanners", c(char, num, fctr)) %>%
   tab_stubhead("Stubhead label") %>%
   tab_style(
-    style = list(cell_fill("#f0f0f0"), cell_text(weight = "bold")),
+    style = list(cell_fill("#f0f0f0"), cell_text(weight = "bold", size = "small", color = "blue")),
     cells_stubhead()
   ) %>% 
   tab_header(title = "Stubhead styling and multiple spanner levels")
