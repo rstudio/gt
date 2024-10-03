@@ -4953,12 +4953,12 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 
     # Format the LHS and RHS values
     val_tbl <-
-      dplyr::tibble(
+      vctrs::data_frame(
         left = as.numeric(x_str_lhs),
         right = as.numeric(x_str_rhs)
       )
 
-    val_tbl_gt <- gt(val_tbl)
+    val_tbl_gt <- gt(val_tbl, groupname_col = NULL)
 
     # Ensure that the expression (a RHS formula) is made a closure
     format_fn <- rlang::as_closure(fmt)
@@ -9912,7 +9912,7 @@ fmt_passthrough <- function(
       rtf = function(x) {
 
         # Create `x_str` with same length as `x`
-        x_str <- rep(NA_character_, length(x))
+        x_str <- rep_len(NA_character_, length(x))
 
         # Handle formatting of pattern
         x_str <-
@@ -9930,7 +9930,7 @@ fmt_passthrough <- function(
       default = function(x) {
 
         # Create `x_str` with same length as `x`
-        x_str <- rep(NA_character_, length(x))
+        x_str <- rep_len(NA_character_, length(x))
 
         # Handle formatting of pattern
         x_str <-

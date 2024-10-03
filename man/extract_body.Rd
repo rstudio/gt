@@ -124,7 +124,9 @@ currency-based columns.
   fmt_currency(columns = c(open, high, low, close)) |>
   cols_hide(columns = c(high, low))
 
-gt_tbl
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

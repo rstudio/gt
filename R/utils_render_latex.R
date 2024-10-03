@@ -165,13 +165,13 @@ create_table_start_l <- function(data, colwidth_df) {
   if ("stub" %in% colwidth_df_visible[["type"]]) {
     stub_idx <- which(colwidth_df_visible$type == "stub")
     othr_idx <- base::setdiff(seq_len(nrow(colwidth_df_visible)), stub_idx)
-    colwidth_df_visible <- dplyr::slice(colwidth_df_visible, stub_idx, othr_idx)
+    colwidth_df_visible <- vctrs::vec_slice(colwidth_df_visible, c(stub_idx, othr_idx))
   }
   
   if ("row_group" %in% colwidth_df_visible[["type"]]) {
     row_group_idx <- which(colwidth_df_visible$type == "row_group")
     othr_idx <- base::setdiff(seq_len(nrow(colwidth_df_visible)), row_group_idx)
-    colwidth_df_visible <- dplyr::slice(colwidth_df_visible, row_group_idx, othr_idx)
+    colwidth_df_visible <- vctrs::vec_slice(colwidth_df_visible, c(row_group_idx, othr_idx))
   }
 
   # Determine if there are any footnotes or source notes; if any,
@@ -454,7 +454,7 @@ create_columns_component_l <- function(data, colwidth_df) {
 
     styles_stubhead <-
       consolidate_cell_styles_l(
-        dplyr::filter(styles_tbl, locname == "stubhead")
+        vctrs::vec_slice(styles_tbl, styles_tbl$locname == "stubhead")
       )
 
     headings_vars <- prepend_vec(headings_vars, "::stub")
@@ -948,7 +948,7 @@ summary_rows_for_group_l <- function(
     styles_df <- dt_styles_get(data)
     styles_df <- styles_df[styles_df$locname == loc_type & styles_df$grpname == group_id, , drop = FALSE]
     # set colname to ::rowname:: if colname is present and colnum = 0
-    styles_df$colname[is.na(styles_df$colname) & styles_df$colnum == 0] <- "::rowname::"
+    styles_df$colname[is.na(styles_df$colname) & styles_df$colnum == 0] <- rowname_col_private
 
     styles_summary <- styles_df[styles_df$colname == col_name, , drop = FALSE]
 

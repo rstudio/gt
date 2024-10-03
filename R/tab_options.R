@@ -880,7 +880,7 @@ tab_options <- function(
   new_df <-
     dplyr::left_join(
       new_df,
-      dplyr::select(opts_df, parameter, type),
+      dplyr::select(opts_df, "parameter", "type"),
       by = "parameter"
     )
   new_df$value <- mapply(

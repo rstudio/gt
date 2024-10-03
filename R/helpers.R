@@ -705,7 +705,11 @@ unit_conversion <- function(from, to) {
   }
 
   row_conversion <-
-    dplyr::filter(conversion_factors, from == {{ from }}, to == {{ to }})
+    vctrs::vec_slice(
+      conversion_factors,
+      conversion_factors$from == from &
+        conversion_factors$to == to
+    )
 
   # In the case where units are valid and available in the internal dataset,
   # they may be across categories; such pairings do not allow for a conversion

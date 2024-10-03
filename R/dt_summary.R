@@ -272,15 +272,12 @@ dt_summary_build <- function(data, context) {
     )] <- NA_real_
 
     summary_dfs_data <-
-      dplyr::select(
-        summary_dfs_data,
-        dplyr::all_of(c(
-          group_id_col_private,
-          row_id_col_private,
-          rowname_col_private,
-          colnames(body)
-        ))
-      )
+      summary_dfs_data[c(
+        group_id_col_private,
+        row_id_col_private,
+        rowname_col_private,
+        colnames(body)
+      )]
 
     #
     # Format with formatting formulae
@@ -297,11 +294,8 @@ dt_summary_build <- function(data, context) {
     summary_dfs_display_gt[["_data"]][is.na(summary_dfs_display_gt[["_data"]])] <-
       NA
 
-    summary_dfs_display_gt[["_stub_df"]] <-
-      dplyr::mutate(
-        summary_dfs_display_gt[["_stub_df"]],
-        row_id = gsub("__[0-9]*", "", row_id)
-      )
+    summary_dfs_display_gt[["_stub_df"]]$row_id <-
+      gsub("__[0-9]*", "", summary_dfs_display_gt[["_stub_df"]]$row_id)
 
     for (k in seq_along(fmt_exprs)) {
 
@@ -414,7 +408,7 @@ dt_summary_build <- function(data, context) {
     labels_processed <- unlist(lapply(labels, FUN = process_text, context = context))
 
     for (i in seq_len(nrow(summary_dfs_display))) {
-      summary_dfs_display[i, ][["::rowname::"]] <-
+      summary_dfs_display[i, ][[rowname_col_private]] <-
         unname(labels_processed[names(labels_processed) == summary_dfs_display[i, ][["::row_id::"]]])
     }
 

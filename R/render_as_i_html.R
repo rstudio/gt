@@ -412,9 +412,9 @@ render_as_ihtml <- function(data, id) {
   col_defs <- c(col_defs, group_col_defs, row_name_col_def)
 
   styles_tbl <- dt_styles_get(data = data)
-  body_styles_tbl <- dplyr::filter(styles_tbl, locname %in% c("data", "stub"))
+  body_styles_tbl <- vctrs::vec_slice(styles_tbl, styles_tbl$locname %in% c("data", "stub"))
   body_styles_tbl <- dplyr::arrange(body_styles_tbl, colnum, rownum)
-  body_styles_tbl <- dplyr::select(body_styles_tbl, colname, rownum, html_style)
+  body_styles_tbl <- dplyr::select(body_styles_tbl, "colname", "rownum", "html_style")
 
   # Generate styling rule per combination of `colname` and
   # `rownum` in `body_styles_tbl`
@@ -426,7 +426,7 @@ render_as_ihtml <- function(data, id) {
         colname <- body_styles_tbl[x, ][["colname"]]
         rownum <- body_styles_tbl[x, ][["rownum"]]
         html_style <- body_styles_tbl[x, ][["html_style"]]
-        html_style <- unlist(strsplit(html_style, "; "))
+        html_style <- unlist(strsplit(html_style, "; ", fixed = TRUE))
         html_style <- gsub("(-)\\s*(.)", "\\U\\2", html_style, perl = TRUE)
         html_style <- gsub("(:)\\s*(.*)", ": '\\2'", html_style, perl = TRUE)
         html_style <- paste(html_style, collapse = ", ")
@@ -537,7 +537,10 @@ render_as_ihtml <- function(data, id) {
   if (has_tab_spanners) {
 
     hidden_columns <- dt_boxhead_get_var_by_type(data = data, type = "hidden")
-    col_groups <- dplyr::filter(dt_spanners_get(data = data), spanner_level == 1)
+    spanners_df <- dt_spanners_get(data = data)
+    col_groups <- vctrs::vec_slice(
+      spanners_df, spanners_df$spanner_level == 1
+    )
 
     for (i in seq_len(nrow(col_groups))) {
 

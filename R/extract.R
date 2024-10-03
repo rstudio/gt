@@ -121,7 +121,7 @@
 #' row groups and row labels. Formatting will be applied to the date- and
 #' currency-based columns.
 #'
-#' ```r
+#' ```{r}
 #' gt_tbl <-
 #'   sp500 |>
 #'   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>
@@ -136,6 +136,9 @@
 #'   fmt_currency(columns = c(open, high, low, close)) |>
 #'   cols_hide(columns = c(high, low))
 #' 
+#' ```
+#' 
+#' ```r
 #' gt_tbl
 #' ```
 #' 
@@ -396,7 +399,8 @@ assemble_body_extract <- function(
     }
   
     if (!is.null(rowname_col)) {
-      names(out_df)[names(out_df) == rowname_col] <- "::rowname::"
+      # ::rowname::
+      names(out_df)[names(out_df) == rowname_col] <- rowname_col_private
     }
   }
   

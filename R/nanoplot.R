@@ -363,10 +363,8 @@
 #'
 #' ```r
 #' pizzaplace |>
-#'   dplyr::select(type, date) |>
-#'   dplyr::group_by(date, type) |>
-#'   dplyr::summarize(sold = dplyr::n(), .groups = "drop") |>
-#'   tidyr::pivot_wider(names_from = type, values_from = sold) |>
+#'   dplyr::count(type, date) |>
+#'   tidyr::pivot_wider(names_from = type, values_from = n) |>
 #'   dplyr::slice_head(n = 10) |>
 #'   gt(rowname_col = "date") |>
 #'   tab_header(

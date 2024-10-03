@@ -746,7 +746,7 @@ apply_footnotes_to_summary <- function(data, context = "html") {
   # make sure rownames are recognized to add footnote marks
   # to cells_stub_grand_summary() / cells_stub_summary() #1832
   # dplyr::coalesce()
-  footnotes_tbl$colname[is.na(footnotes_tbl$colname)] <- "::rowname::"
+  footnotes_tbl$colname[is.na(footnotes_tbl$colname)] <- rowname_col_private
   summary_df_list <- list_of_summaries$summary_df_display_list
 
   if ("summary_cells" %in% footnotes_tbl$locname) {

@@ -427,7 +427,7 @@ cols_add <- function(
   if (is.null(resolved_column_before) && is.null(resolved_column_after)) {
 
     updated_data_tbl <-
-      dplyr::bind_cols(
+      vctrs::vec_cbind(
         data_tbl,
         data_tbl_new_cols
       )
@@ -445,16 +445,16 @@ cols_add <- function(
     if (before_colnum <= 1) {
       # put new column first
       updated_data_tbl <-
-        dplyr::bind_cols(
+        vctrs::vec_cbind(
           data_tbl_new_cols,
           data_tbl
         )
     } else {
       updated_data_tbl <-
-        dplyr::bind_cols(
-          dplyr::select(data_tbl, 1:(dplyr::all_of(before_colnum) - 1)),
+        vctrs::vec_cbind(
+          data_tbl[1:(before_colnum - 1)],
           data_tbl_new_cols,
-          dplyr::select(data_tbl, dplyr::all_of(before_colnum):ncol(data_tbl))
+          data_tbl[before_colnum:ncol(data_tbl)]
         )
     }
 
@@ -474,15 +474,15 @@ cols_add <- function(
 
     updated_data_tbl <-
       dplyr::bind_cols(
-        dplyr::select(data_tbl, 1:dplyr::all_of(after_colnum)),
+        data_tbl[1:(after_colnum)],
         data_tbl_new_cols,
-        dplyr::select(data_tbl, (after_colnum + 1):ncol(data_tbl))
+        data_tbl[(after_colnum + 1):ncol(data_tbl)]
       )
 
     after_colnum <- which(boxh_df[["var"]] == resolved_column_after)
       
     updated_boxh_df <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         boxh_df[1:after_colnum, ],
         boxh_df_new_cols,
         boxh_df[(after_colnum + 1):nrow(boxh_df), ]
