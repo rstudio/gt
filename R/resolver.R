@@ -257,12 +257,13 @@ resolve_cols_c <- function(
     call = rlang::caller_env()
 ) {
 
-  null_means <- rlang::arg_match(null_means)
-  
-  if (identical(Sys.getenv("gt_avoid_resolve"), "true")) {
+  if (identical(Sys.getenv("GT_AVOID_RESOLVE"), "true")) {
     ret <- names(dt_data_get(data))
     return(ret)
   }
+  
+  null_means <- rlang::arg_match0(null_means, c("everything", "nothing"))
+  
   names(
     resolve_cols_i(
       expr = {{ expr }},
@@ -505,8 +506,11 @@ resolve_rows_i <- function(
     null_means = c("everything", "nothing"),
     call = rlang::caller_env()
 ) {
-
-  null_means <- rlang::arg_match(null_means)
+  if (identical(Sys.getenv("GT_AVOID_RESOLVE"), "true")) {
+    ret <- seq_len(nrow(dt_data_get(data)))
+    return(ret)
+  }
+  null_means <- rlang::arg_match0(null_means, c("everything", "nothing"))
 
   resolved_rows <-
     resolve_rows_l(

@@ -1022,9 +1022,14 @@ generate_nanoplot <- function(
 
   # Speed up nanoplots number formatting rendering by avoid
   # calling resolve_cols_i() too much.
-  # To be used with caution, but setting this envvar 
-  # for 
-  withr::local_envvar(c("gt_avoid_resolve" = "true"))
+  # To be used with caution, but setting this envvar for all the vec_*() calls
+  # similar to withr::local_envvar()
+  Sys.setenv(GT_AVOID_RESOLVE = "true")
+  on.exit(
+    Sys.unsetenv("GT_AVOID_RESOLVE"),
+    add = TRUE,
+    after = TRUE
+  )
   
   if (plot_type == "bar" && single_horizontal_bar) {
 

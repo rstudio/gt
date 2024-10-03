@@ -9912,7 +9912,7 @@ fmt_passthrough <- function(
       rtf = function(x) {
 
         # Create `x_str` with same length as `x`
-        x_str <- rep(NA_character_, length(x))
+        x_str <- rep_len(NA_character_, length(x))
 
         # Handle formatting of pattern
         x_str <-
@@ -9930,7 +9930,7 @@ fmt_passthrough <- function(
       default = function(x) {
 
         # Create `x_str` with same length as `x`
-        x_str <- rep(NA_character_, length(x))
+        x_str <- rep_len(NA_character_, length(x))
 
         # Handle formatting of pattern
         x_str <-

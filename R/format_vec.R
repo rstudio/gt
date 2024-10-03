@@ -3318,8 +3318,14 @@ vec_fmt_markdown <- function(
   }
   # Avoid modifying the output to base64enc in Quarto
   if (check_quarto() && output == "html") {
-    rlang::check_installed("withr", "to use vec_fmt_markdown() in Quarto.")
-    withr::local_envvar(c("QUARTO_BIN_PATH" = ""))
+    # Similar to withr::local_envvar 
+    current_envvar <- Sys.getenv("QUARTO_BIN_PATH")
+    Sys.unsetenv("QUARTO_BIN_PATH")
+    on.exit(
+      Sys.setenv(QUARTO_BIN_PATH = current_envvar),
+      add = TRUE,
+      after = TRUE
+    )
   }
   vec_fmt_out <-
     render_as_vector(
