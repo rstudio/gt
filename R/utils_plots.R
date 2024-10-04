@@ -2059,7 +2059,7 @@ get_extreme_value <- function(..., stat = c("max", "min")) {
 
   value_list <- list(...)
 
-  stat <- rlang::arg_match(stat)
+  stat <- rlang::arg_match0(stat, values = c("max", "min"))
 
   value_list_vec <- unlist(value_list)
 
