@@ -1,3 +1,5 @@
+# gt (development version)
+
 # gt 0.11.1
 
 ## Breaking changes
@@ -37,8 +39,6 @@
 * The `locale` argument of `gt()` now defaults to `getOption("gt.locale")` if set. (#1894)
 
 * The optional argument `levels` was added to `cells_column_spanners()` to constrain targeting of column spanners by their level. (@obsaditelnost, #1858)
-
-
 
 * Fixed a bug in using `pct()` column widths with `as_gtable()` (#1771). (@teunbrand, #1776)
 
