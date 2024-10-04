@@ -114,7 +114,11 @@ cols_align <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Get the `align` value, this stops the function if there is no match
-  align <- rlang::arg_match(align)
+  align <- 
+    rlang::arg_match0(
+      align,
+      values = c("auto", "left", "center", "right")
+    )
 
   # Get the columns supplied in `columns` as a character vector
   column_names <-
