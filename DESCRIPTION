@@ -36,7 +36,7 @@ Imports:
     bigD (>= 0.2),
     bitops (>= 1.0-7),
     cli (>= 3.6.3),
-    commonmark (>= 1.9.2),
+    commonmark (>= 1.9.1),
     dplyr (>= 1.1.4),
     fs (>= 1.6.4),
     glue (>= 1.8.0),
