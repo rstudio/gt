@@ -379,11 +379,10 @@ summary_rows <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Get the correct `side` value
-  side <- rlang::arg_match(side)
+  side <- rlang::arg_match0(side, values = c("bottom", "top"))
 
   # Collect all provided formatting options in a list
   formatter_options <- list(...)
-
 
   # Perform a partial build of the table to obtain the current
   # state of `group_id` values in the table; we should not assign this
@@ -777,7 +776,7 @@ grand_summary_rows <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Get the correct `side` value
-  side <- rlang::arg_match(side)
+  side <- rlang::arg_match0(side, values = c("bottom", "top"))
 
   summary_rows(
     data = data,

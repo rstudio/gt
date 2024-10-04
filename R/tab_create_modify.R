@@ -1129,7 +1129,7 @@ tab_spanner_delim <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
-  split <- rlang::arg_match(split)
+  split <- rlang::arg_match0(split, values = c("last", "first"))
 
   # Perform various input checks for `limit` if it is provided
   check_number_whole(limit, min = 1, allow_null = TRUE, allow_infinite = FALSE)

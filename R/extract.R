@@ -206,7 +206,12 @@ extract_body <- function(
   }
 
   # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
+  output <-
+    rlang::arg_match0(
+      output,
+      values = c("html", "latex", "rtf", "word", "grid")
+    )
+  
   rlang::check_dots_empty()
 
   # Generate vector of columns to include in output  
@@ -613,7 +618,11 @@ extract_cells <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
+  output <- 
+    rlang::arg_match0(
+      output,
+      values = c("auto", "plain", "html", "latex", "rtf", "word", "grid")
+    )
 
   if (output == "auto") {
     output <- determine_output_format()

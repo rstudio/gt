@@ -54,7 +54,7 @@ get_contrast_ratio <- function(
 ) {
 
   # Get the correct `algo` value
-  algo <- rlang::arg_match(algo)
+  algo <- rlang::arg_match0(algo, values = c("apca", "wcag"))
 
   if (length(color_1) < 1L || length(color_2) < 1L) {
     cli::cli_abort(
