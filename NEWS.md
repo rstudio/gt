@@ -1,4 +1,4 @@
-# gt (development version)
+# gt 0.11.1
 
 ## Breaking changes
 
