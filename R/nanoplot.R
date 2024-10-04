@@ -743,8 +743,16 @@ cols_nanoplot <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
-  missing_vals <- rlang::arg_match(missing_vals)
-  plot_type <- rlang::arg_match(plot_type)
+  missing_vals <- 
+    rlang::arg_match0(
+      missing_vals,
+      values = c("gap", "marker", "zero", "remove")
+    )
+  plot_type <- 
+    rlang::arg_match0(
+      plot_type,
+      values = c("line", "bar", "boxplot")
+    )
 
   #
   # Resolution of columns and rows as character vectors
