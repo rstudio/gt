@@ -482,7 +482,7 @@ info_currencies <- function(
 ) {
 
   # Get the correct `type` value
-  type <- rlang::arg_match(type)
+  type <- rlang::arg_match0(type, values = c("code", "symbol"))
 
   if (type == "code") {
 
