@@ -424,7 +424,8 @@ opt_interactive <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  pagination_type <- rlang::arg_match(pagination_type)
+  pagination_type <- 
+    rlang::arg_match0(pagination_type, values = c("numbers", "jump", "simple"))
 
   tab_options(
     data = data,
@@ -838,7 +839,7 @@ opt_align_table_header <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  align <- rlang::arg_match(align)
+  align <- rlang::arg_match0(align, values = c("left", "center", "right"))
 
   tab_options(
     data = data,
@@ -1264,7 +1265,7 @@ opt_table_lines <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  extent <- rlang::arg_match(extent)
+  extent <- rlang::arg_match0(extent, values = c("all", "none", "default"))
 
   # Normalize `extent` values to property values
   values_vec <- if (extent == "all") "solid" else extent
