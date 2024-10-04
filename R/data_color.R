@@ -676,16 +676,20 @@ data_color <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Get the correct `direction` value
-  direction <- rlang::arg_match(direction)
+  direction <- rlang::arg_match0(direction, values = c("column", "row"))
 
   # Get the correct `method` value
-  method <- rlang::arg_match(method)
+  method <- 
+    rlang::arg_match0(
+      method,
+      values = c("auto", "numeric", "bin", "quantile", "factor")
+    )
 
   # Get the correct `apply_to` value
-  apply_to <- rlang::arg_match(apply_to)
+  apply_to <- rlang::arg_match0(apply_to, values = c("fill", "text"))
 
   # Get the correct `contrast_algo` value
-  contrast_algo <- rlang::arg_match(contrast_algo)
+  contrast_algo <- rlang::arg_match0(contrast_algo, values = c("apca", "wcag"))
 
   # If no color is provided to `na_color`, use gray as a default
   na_color <- na_color %||% "#808080"
@@ -1276,7 +1280,7 @@ ideal_fgnd_color <- function(
 ) {
 
   # Get the correct `algo` value
-  algo <- rlang::arg_match(algo)
+  algo <- rlang::arg_match0(algo, values = c("apca", "wcag"))
 
   # Normalize color to hexadecimal color if it is in the 'rgba()' string format
   bgnd_color <- rgba_to_hex(colors = bgnd_color)
