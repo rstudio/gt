@@ -370,7 +370,7 @@ text_case_match <- function(
   stop_if_not_gt_tbl(data = .data)
 
   # Ensure that arguments are matched
-  .replace <- rlang::arg_match(.replace)
+  .replace <- rlang::arg_match0(.replace, values = c("all", "partial"))
 
   x_list <- list(...)
 
