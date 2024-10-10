@@ -148,11 +148,30 @@ create_table_start_l <- function(data, colwidth_df) {
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
-  # Get default alignments for body columns
-  col_alignment <- dt_boxhead_get_vars_align_default(data = data)
-
-  if (length(stub_layout) > 0) {
-    col_alignment <- c(rep("left", length(stub_layout)), col_alignment)
+  # Extract only visible columns of `colwidth_df` based on stub_layout.
+  types <- c("default")
+  if ("rowname" %in% stub_layout) {
+    types <- c(types, "stub")
+  }
+  if ("group_label" %in% stub_layout) {
+    types <- c(types, "row_group")
+  }
+  
+  colwidth_df_visible <- colwidth_df[colwidth_df$type %in% types, ]
+  
+  # Ensure that the `colwidth_df_visible` df rows are sorted such that the 
+  # `"row_group"` row is first (only if it's located in the stub), then `"stub"`,
+  # and then everything else
+  if ("stub" %in% colwidth_df_visible[["type"]]) {
+    stub_idx <- which(colwidth_df_visible$type == "stub")
+    othr_idx <- base::setdiff(seq_len(nrow(colwidth_df_visible)), stub_idx)
+    colwidth_df_visible <- vctrs::vec_slice(colwidth_df_visible, c(stub_idx, othr_idx))
+  }
+  
+  if ("row_group" %in% colwidth_df_visible[["type"]]) {
+    row_group_idx <- which(colwidth_df_visible$type == "row_group")
+    othr_idx <- base::setdiff(seq_len(nrow(colwidth_df_visible)), row_group_idx)
+    colwidth_df_visible <- vctrs::vec_slice(colwidth_df_visible, c(row_group_idx, othr_idx))
   }
 
   # Determine if there are any footnotes or source notes; if any,
@@ -176,19 +195,19 @@ create_table_start_l <- function(data, colwidth_df) {
   # - `>{\centering\arraybackslash}` <- center alignment
   # the `\arraybackslash` command is used to restore the behavior of the
   # `\\` command in the table (all of this uses the CTAN `array` package)
-  if (any(colwidth_df$unspec < 1L)) {
+  if (any(colwidth_df_visible$unspec < 1L)) {
 
     col_defs <- NULL
 
-    for (i in seq_along(col_alignment)) {
-
-      if (colwidth_df$unspec[i] == 1L) {
-        col_defs_i <- substr(col_alignment[i], 1, 1)
+    for (i in seq_len(nrow(colwidth_df_visible))) {
+      
+      if (colwidth_df_visible$unspec[i] == 1L) {
+        col_defs_i <- substr(colwidth_df_visible$column_align[i], 1, 1)
       } else {
 
         align <-
           switch(
-            col_alignment[i],
+            colwidth_df_visible$column_align[i],
             left = ">{\\raggedright\\arraybackslash}",
             right = ">{\\raggedleft\\arraybackslash}",
             center = ">{\\centering\\arraybackslash}",
@@ -199,7 +218,7 @@ create_table_start_l <- function(data, colwidth_df) {
           paste0(
             align,
             "p{",
-            create_singlecolumn_width_text_l(pt = colwidth_df$pt[i], lw = colwidth_df$lw[i]),
+            create_singlecolumn_width_text_l(pt = colwidth_df_visible$pt[i], lw = colwidth_df_visible$lw[i]),
             "}"
           )
 
@@ -209,8 +228,8 @@ create_table_start_l <- function(data, colwidth_df) {
     }
 
   } else {
-
-    col_defs <- substr(col_alignment, 1, 1)
+    
+    col_defs <- substr(colwidth_df_visible$column_align, 1, 1)
   }
 
   # Add borders to the right of any columns in the stub
@@ -435,7 +454,7 @@ create_columns_component_l <- function(data, colwidth_df) {
 
     styles_stubhead <-
       consolidate_cell_styles_l(
-        dplyr::filter(styles_tbl, locname == "stubhead")
+        vctrs::vec_slice(styles_tbl, styles_tbl$locname == "stubhead")
       )
 
     headings_vars <- prepend_vec(headings_vars, "::stub")
@@ -929,7 +948,7 @@ summary_rows_for_group_l <- function(
     styles_df <- dt_styles_get(data)
     styles_df <- styles_df[styles_df$locname == loc_type & styles_df$grpname == group_id, , drop = FALSE]
     # set colname to ::rowname:: if colname is present and colnum = 0
-    styles_df$colname[is.na(styles_df$colname) & styles_df$colnum == 0] <- "::rowname::"
+    styles_df$colname[is.na(styles_df$colname) & styles_df$colnum == 0] <- rowname_col_private
 
     styles_summary <- styles_df[styles_df$colname == col_name, , drop = FALSE]
 
@@ -1230,14 +1249,14 @@ remove_footnote_encoding <- function(x) {
 convert_font_size_l <- function(x) {
 
   size_map <- c(
-    `xx-small` = "\\tiny",
-    `x-small` = "\\scriptsize",
-    small = "\\small",
-    medium = "\\normalsize",
-    large = "\\large",
-    `x-large` = "\\Large",
-    `xx-large` = "\\LARGE",
-    `xxx-large` = "\\huge"
+    `xx-small` = "\\tiny ",
+    `x-small` = "\\scriptsize ",
+    small = "\\small ",
+    medium = "\\normalsize ",
+    large = "\\large ",
+    `x-large` = "\\Large ",
+    `xx-large` = "\\LARGE ",
+    `xxx-large` = "\\huge "
   )
 
   if (as.character(x) %in% names(size_map))
@@ -1478,12 +1497,15 @@ apply_cell_styles_l <- function(content, style_obj) {
       "{",
       .apply_style_style_l(style_obj),
       .apply_style_weight_l(style_obj),
+      # Can generate "\small for example
       .apply_style_fontsize_l(style_obj),
       .apply_style_indentation_l(style_obj),
       x,
       "}"
     )
-  } else out_text <- just_content
+  } else {
+    out_text <- just_content
+  }
 
   ifelse(mark_side == "right",
          paste0(out_text, mark),
@@ -1685,8 +1707,11 @@ create_colwidth_df_l <- function(data) {
     type = boxhead$type,
     unspec = rep.int(0L, n),
     lw = rep.int(0L, n),
-    pt = rep.int(0L, n)
+    pt = rep.int(0L, n),
+    column_align = boxhead$column_align
   )
+  
+  width_df$column_align[width_df$type %in% c("stub", "row_group")] <- "left"
 
   for (i in 1:n) {
     raw <- unlist(boxhead$column_width[i])[1L]

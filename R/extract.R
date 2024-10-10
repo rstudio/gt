@@ -121,7 +121,7 @@
 #' row groups and row labels. Formatting will be applied to the date- and
 #' currency-based columns.
 #'
-#' ```r
+#' ```{r}
 #' gt_tbl <-
 #'   sp500 |>
 #'   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>
@@ -136,6 +136,9 @@
 #'   fmt_currency(columns = c(open, high, low, close)) |>
 #'   cols_hide(columns = c(high, low))
 #' 
+#' ```
+#' 
+#' ```r
 #' gt_tbl
 #' ```
 #' 
@@ -203,7 +206,12 @@ extract_body <- function(
   }
 
   # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
+  output <-
+    rlang::arg_match0(
+      output,
+      values = c("html", "latex", "rtf", "word", "grid")
+    )
+  
   rlang::check_dots_empty()
 
   # Generate vector of columns to include in output  
@@ -396,7 +404,8 @@ assemble_body_extract <- function(
     }
   
     if (!is.null(rowname_col)) {
-      names(out_df)[names(out_df) == rowname_col] <- "::rowname::"
+      # ::rowname::
+      names(out_df)[names(out_df) == rowname_col] <- rowname_col_private
     }
   }
   
@@ -609,7 +618,11 @@ extract_cells <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
+  output <- 
+    rlang::arg_match0(
+      output,
+      values = c("auto", "plain", "html", "latex", "rtf", "word", "grid")
+    )
 
   if (output == "auto") {
     output <- determine_output_format()

@@ -270,13 +270,13 @@ get_table_defs <- function(data) {
   if ("stub" %in% widths[["type"]]) {
     stub_idx <- which(widths$type == "stub")
     othr_idx <- base::setdiff(seq_len(nrow(widths)), stub_idx)
-    widths <- dplyr::slice(widths, stub_idx, othr_idx)
+    widths <- vctrs::vec_slice(widths, c(stub_idx, othr_idx))
   }
 
   if ("row_group" %in% widths[["type"]] && row_group_as_column) {
     row_group_idx <- which(widths$type == "row_group")
     othr_idx <- base::setdiff(seq_len(nrow(widths)), row_group_idx)
-    widths <- dplyr::slice(widths, row_group_idx, othr_idx)
+    widths <- vctrs::vec_slice(widths, c(row_group_idx, othr_idx))
   }
 
   widths <- widths[seq_len(nrow(widths)), "column_width", drop = TRUE]

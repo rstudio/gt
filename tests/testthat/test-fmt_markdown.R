@@ -231,9 +231,14 @@ test_that("LaTeX formulas render correctly in HTML", {
       column_labels.border.lr.style = "solid",
       column_labels.border.lr.width = px(1)
     )
+  expect_snapshot(gt_tbl$`_boxhead`$column_label)
+  
   skip_if_not_installed("katex", "1.4.1")
+  strip_katex_version <- function(x) {
+    gsub("katex\\@[\\.\\d]+", "katex@<latest>", x, perl = TRUE)
+  }
   # Take a snapshot of `gt_tbl`
-  expect_snapshot_html(gt_tbl)
+  expect_snapshot_html(gt_tbl, transform = strip_katex_version)
 })
 
 test_that("fmt_markdown() works correctly with factors", {

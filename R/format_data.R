@@ -1089,7 +1089,7 @@ fmt_symbol <- function(
 ) {
 
   # Ensure that arguments are matched
-  system <- rlang::arg_match(system)
+  system <- rlang::arg_match0(system, values = c("intl", "ind"))
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -1462,7 +1462,7 @@ fmt_percent <- function(
   #
 
   # Ensure that arguments are matched
-  system <- rlang::arg_match(system)
+  system <- rlang::arg_match0(system, values = c("intl", "ind"))
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -1763,8 +1763,12 @@ fmt_partsper <- function(
   #
 
   # Ensure that arguments are matched
-  to_units <- rlang::arg_match(to_units)
-  system <- rlang::arg_match(system)
+  to_units <- 
+    rlang::arg_match0(
+      to_units,
+      values = c("per-mille", "per-myriad", "pcm", "ppm", "ppb", "ppt", "ppq")
+    )
+  system <- rlang::arg_match0(system, values = c("intl", "ind"))
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -2119,8 +2123,8 @@ fmt_fraction <- function(
   #
 
   # Ensure that arguments are matched
-  system <- rlang::arg_match(system)
-  layout <- rlang::arg_match(layout)
+  system <- rlang::arg_match0(system, values = c("intl", "ind"))
+  layout <- rlang::arg_match0(layout, values = c("inline", "diagonal"))
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -2857,7 +2861,7 @@ fmt_currency <- function(
   #
 
   # Ensure that arguments are matched
-  system <- rlang::arg_match(system)
+  system <- rlang::arg_match0(system, values = c("intl", "ind"))
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -3068,7 +3072,7 @@ fmt_roman <- function(
   #
 
   # Ensure that arguments are matched
-  case <- rlang::arg_match(case)
+  case <- rlang::arg_match0(case, values = c("upper", "lower"))
 
   valid_class <- c("numeric", "integer")
   check_columns_valid_if_strict(data, {{ columns }}, valid_class)
@@ -3296,8 +3300,8 @@ fmt_index <- function(
   #
 
   # Ensure that arguments are matched
-  case <- rlang::arg_match(case)
-  index_algo <- rlang::arg_match(index_algo)
+  case <- rlang::arg_match0(case, values = c("upper", "lower"))
+  index_algo <- rlang::arg_match0(index_algo, values = c("repeat", "excel"))
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -3978,7 +3982,7 @@ fmt_bytes <- function(
   #
 
   # Ensure that arguments are matched
-  standard <- rlang::arg_match(standard)
+  standard <- rlang::arg_match0(standard, values = c("decimal", "binary"))
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -4236,8 +4240,12 @@ fmt_duration <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
-  duration_style <- rlang::arg_match(duration_style)
-  system <- rlang::arg_match(system)
+  duration_style <- 
+    rlang::arg_match0(
+      duration_style,
+      values = c("narrow", "wide", "colon-sep", "iso")
+    )
+  system <- rlang::arg_match0(system, values = c("intl", "ind"))
 
   check_chr_has_length(output_units, allow_null = TRUE, allow_0 = FALSE)
   check_chr_has_length(input_units, allow_null = TRUE, allow_0 = FALSE)
@@ -4953,12 +4961,12 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 
     # Format the LHS and RHS values
     val_tbl <-
-      dplyr::tibble(
+      vctrs::data_frame(
         left = as.numeric(x_str_lhs),
         right = as.numeric(x_str_rhs)
       )
 
-    val_tbl_gt <- gt(val_tbl)
+    val_tbl_gt <- gt(val_tbl, groupname_col = NULL)
 
     # Ensure that the expression (a RHS formula) is made a closure
     format_fn <- rlang::as_closure(fmt)
@@ -9301,7 +9309,7 @@ fmt_icon <- function(
   #
 
   # Ensure that arguments are matched
-  a11y <- rlang::arg_match(a11y)
+  a11y <- rlang::arg_match0(a11y, values = c("semantic", "decorative", "none"))
 
   if (a11y == "semantic") {
     a11y <- "sem"
@@ -9657,7 +9665,11 @@ fmt_markdown <- function(
   #
 
   # Ensure that arguments are matched
-  md_engine <- rlang::arg_match(md_engine)
+  md_engine <- 
+    rlang::arg_match0(
+      md_engine,
+      values = c("markdown", "commonmark")
+    )
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -9912,7 +9924,7 @@ fmt_passthrough <- function(
       rtf = function(x) {
 
         # Create `x_str` with same length as `x`
-        x_str <- rep(NA_character_, length(x))
+        x_str <- rep_len(NA_character_, length(x))
 
         # Handle formatting of pattern
         x_str <-
@@ -9930,7 +9942,7 @@ fmt_passthrough <- function(
       default = function(x) {
 
         # Create `x_str` with same length as `x`
-        x_str <- rep(NA_character_, length(x))
+        x_str <- rep_len(NA_character_, length(x))
 
         # Handle formatting of pattern
         x_str <-
@@ -10036,7 +10048,7 @@ fmt_auto <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
-  lg_num_pref <- rlang::arg_match(lg_num_pref)
+  lg_num_pref <- rlang::arg_match0(lg_num_pref, values = c("sci", "suf"))
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)

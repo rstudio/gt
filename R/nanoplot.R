@@ -363,10 +363,8 @@
 #'
 #' ```r
 #' pizzaplace |>
-#'   dplyr::select(type, date) |>
-#'   dplyr::group_by(date, type) |>
-#'   dplyr::summarize(sold = dplyr::n(), .groups = "drop") |>
-#'   tidyr::pivot_wider(names_from = type, values_from = sold) |>
+#'   dplyr::count(type, date) |>
+#'   tidyr::pivot_wider(names_from = type, values_from = n) |>
 #'   dplyr::slice_head(n = 10) |>
 #'   gt(rowname_col = "date") |>
 #'   tab_header(
@@ -745,8 +743,16 @@ cols_nanoplot <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
-  missing_vals <- rlang::arg_match(missing_vals)
-  plot_type <- rlang::arg_match(plot_type)
+  missing_vals <- 
+    rlang::arg_match0(
+      missing_vals,
+      values = c("gap", "marker", "zero", "remove")
+    )
+  plot_type <- 
+    rlang::arg_match0(
+      plot_type,
+      values = c("line", "bar", "boxplot")
+    )
 
   #
   # Resolution of columns and rows as character vectors

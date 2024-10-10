@@ -509,7 +509,7 @@ fmt_number <- function(
   #
 
   # Ensure that arguments are matched
-  system <- rlang::arg_match(system)
+  system <- rlang::arg_match0(system, c("intl", "ind"))
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
