@@ -188,6 +188,8 @@ render_as_ihtml <- function(data, id) {
   page_size_default <- tbl_opts$ihtml_page_size_default
   page_size_values <- tbl_opts$ihtml_page_size_values
   pagination_type <- tbl_opts$ihtml_pagination_type
+  selection <- tbl_opts$ihtml_selection
+  onClick <- if (!is.null(selection)) "select"
 
   use_row_striping <- tbl_opts$row_striping_include_table_body
   row_striping_color <- tbl_opts$row_striping_background_color
@@ -683,10 +685,10 @@ render_as_ihtml <- function(data, id) {
       paginateSubRows = FALSE,
       details = NULL,
       defaultExpanded = expand_groupname_col,
-      selection = NULL,
+      selection = selection,
       selectionId = NULL,
       defaultSelected = NULL,
-      onClick = NULL,
+      onClick = onClick,
       highlight = use_highlight,
       outlined = FALSE,
       bordered = FALSE,
