@@ -12,12 +12,7 @@ $.extend(gtShinyBinding, {
    * @returns {jQuery} The jQuery object containing the gtShiny element.
    */
   find: function(scope) {
-    console.log('find() called');
-    var found = $(scope).find('.gt_shiny');
-    if (found.length) {
-      console.log('find() found', found.length, 'elements');
-    }
-    return found;
+    return $(scope).find('.gt_shiny');
   },
   /**
    * Gets the reactable element within the given gtShiny element.
@@ -26,7 +21,6 @@ $.extend(gtShinyBinding, {
    * @returns {HTMLElement|null} The reactable element, or null if not found.
    */
   getReactable: function(el) {
-    console.log('getReactable() called');
     return el.querySelector('.reactable');
   },
   /**
@@ -36,11 +30,7 @@ $.extend(gtShinyBinding, {
    * @returns {Array|null} The selected row IDs, or null if no rows are selected.
    */
   getValue: function(el) {
-    console.log('getValue() called');
     var rctbl = this.getReactable(el);
-    if (rctbl) {
-      console.log('Selected rows:', Reactable.getState(rctbl.id).selected);
-    }
     return rctbl ? Reactable.getState(rctbl.id).selected : null;
   },
   /**
@@ -51,12 +41,10 @@ $.extend(gtShinyBinding, {
    *                                 element changes.
    */
   subscribe: function(el, callback) {
-    console.log('subscribe() called');
     var rctbl = this.getReactable(el);
     if (rctbl) {
       console.log('Subscribing to changes for:', rctbl.id);
       rctbl.__reactableStateChangeListener = function() {
-        console.log('State change detected');
         callback();
       };
       Reactable.onStateChange(rctbl.id, rctbl.__reactableStateChangeListener);
@@ -71,8 +59,6 @@ $.extend(gtShinyBinding, {
     console.log('unsubscribe() called');
     var rctbl = this.getReactable(el);
     if (rctbl && rctbl.__reactableStateChangeListener) {
-      console.log('Unsubscribing from changes for:', rctbl.id);
-      // Using a custom way to track and remove listeners
       var listenerFn = rctbl.__reactableStateChangeListener;
       Reactable.onStateChange(rctbl.id, listenerFn, { remove: true });
       delete rctbl.__reactableStateChangeListener;
@@ -82,3 +68,22 @@ $.extend(gtShinyBinding, {
 
 // Register the input binding with Shiny
 Shiny.inputBindings.register(gtShinyBinding, 'gt.gtShinyBinding');
+
+
+// Mutation Observer to detect when gtShiny tables are fully loaded
+(function() {
+  var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      var gtShinyObjs = document.querySelectorAll('.gt_shiny');
+      gtShinyObjs.forEach(function(obj) {
+        var rows = obj.querySelectorAll('.rt-tbody .rt-tr');
+        if (rows.length > 0) {
+          Shiny.bindAll();
+          observer.disconnect(); // Stop observing once the element is found and loaded
+        }
+      });
+    });
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+})();
