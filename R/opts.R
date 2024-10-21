@@ -220,6 +220,7 @@ get_colorized_params <- function(
 #' - `ihtml.page_size_values`
 #' - `ihtml.pagination_type`
 #' - `ihtml.height`
+#' - `ihtml.selection`
 #'
 #' @inheritParams fmt_number
 #'

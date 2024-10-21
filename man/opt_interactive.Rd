@@ -183,6 +183,7 @@ This function serves as a shortcut for setting the following options in
 \item \code{ihtml.page_size_values}
 \item \code{ihtml.pagination_type}
 \item \code{ihtml.height}
+\item \code{ihtml.selection}
 }
 }
 \section{Examples}{
