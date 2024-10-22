@@ -20,7 +20,10 @@ $.extend(gtShinyBinding, {
    *
    * @param {HTMLElement} el - The element containing the gtShiny.
    */
-  initialize: function(el) {
+  initializeListener: function(el) {
+    if (el.__initialized) {
+      return;
+    }
     var self = this;
     var observer = new MutationObserver(function(mutations, obs) {
       var reactableElement = self.getReactable(el);
@@ -42,6 +45,19 @@ $.extend(gtShinyBinding, {
     observer.observe(el, { childList: true, subtree: true });
   },
   /**
+   * Initializes the gtShiny element by binding Shiny and setting up the listener.
+   *
+   * @param {string} id - The ID of the element to initialize.
+   */
+  initialize: function(id) {
+    var el = document.getElementById(id);
+    if (el) {
+      Shiny.bindAll();
+      el.__initialized = false;
+      this.initializeListener(el);
+    }
+  },
+  /**
    * Gets the reactable element within the given gtShiny element.
    *
    * @param {HTMLElement} el - The element containing the gtShiny.
@@ -57,9 +73,8 @@ $.extend(gtShinyBinding, {
    * @returns {Array|null} The selected row IDs, or null if no rows are selected.
    */
   getValue: function(el) {
-    console.log('In getValue for:', el.id);
     if (!el.__initialized) {
-      this.initialize(el);
+      this.initializeListener(el);
       return null;
     }
     var reactableElement = this.getReactable(el);

@@ -178,7 +178,9 @@ render_gt <- function(
       html_tbl <- htmltools::tagList(
         as.tags(result),
         shiny_deps(),
-        htmltools::HTML("<script>Shiny.bindAll();</script>")
+        htmltools::HTML(
+          glue::glue("<script>gtShinyBinding.initialize('{name}');</script>")
+        )
       )
 
       dependencies <-
