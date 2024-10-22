@@ -15,6 +15,33 @@ $.extend(gtShinyBinding, {
     return $(scope).find('.gt_shiny');
   },
   /**
+   * Initializes the gtShiny element by setting up the Reactable state change
+   * listener once the Reactable is loaded.
+   *
+   * @param {HTMLElement} el - The element containing the gtShiny.
+   */
+  initialize: function(el) {
+    var self = this;
+    var observer = new MutationObserver(function(mutations, obs) {
+      var reactableElement = self.getReactable(el);
+      if (reactableElement) {
+        var rows = reactableElement.querySelectorAll('.rt-tr');
+        if (rows.length > 0) {
+          if (!reactableElement.__reactableStateChangeListener) {
+            reactableElement.__reactableStateChangeListener = function() {
+              $(el).trigger('change.gtShiny');
+            };
+            Reactable.onStateChange(reactableElement.id, reactableElement.__reactableStateChangeListener);
+          }
+          $(el).trigger('change.gtShiny');
+          el.__initialized = true;
+          obs.disconnect();
+        }
+      }
+    });
+    observer.observe(el, { childList: true, subtree: true });
+  },
+  /**
    * Gets the reactable element within the given gtShiny element.
    *
    * @param {HTMLElement} el - The element containing the gtShiny.
@@ -30,6 +57,11 @@ $.extend(gtShinyBinding, {
    * @returns {Array|null} The selected row IDs, or null if no rows are selected.
    */
   getValue: function(el) {
+    console.log('In getValue for:', el.id);
+    if (!el.__initialized) {
+      this.initialize(el);
+      return null;
+    }
     var reactableElement = this.getReactable(el);
     if (reactableElement) {
       var selectedRows = Reactable.getState(reactableElement.id).selected;
@@ -61,51 +93,3 @@ $.extend(gtShinyBinding, {
 
 // Register the input binding with Shiny
 Shiny.inputBindings.register(gtShinyBinding, 'gt.gtShinyBinding');
-
-/**
- * Processes all gtShiny elements on the page and executes a callback for
- * each element that contains a populated Reactable table.
- *
- * @param {function} callback - The callback function to execute for each
- *                              gtShiny element that has a Reactable table
- *                              with rows. The callback receives the gtShiny
- *                              element and the Reactable element as
- *                              arguments.
- */
-function processGtShinyElements(callback) {
-  var gtShinyObjs = document.querySelectorAll('.gt_shiny');
-  gtShinyObjs.forEach(function(gtShinyElement) {
-    var reactableElement = gtShinyElement.querySelector('.reactable');
-    if (reactableElement) {
-      var rows = reactableElement.querySelectorAll('.rt-tr');
-      if (rows.length > 0) {
-        callback(gtShinyElement, reactableElement);
-      }
-    }
-  });
-}
-
-// Mutation Observer to detect when gtShiny tables are fully loaded initially
-(function() {
-  // Observer for setting up Shiny binding on first gt_shiny load
-  var bindObserver = new MutationObserver(function() {
-    processGtShinyElements(function(gtShinyElement, reactableElement) {
-      Shiny.bindAll();
-      bindObserver.disconnect();
-    });
-  });
-  bindObserver.observe(document.body, { childList: true, subtree: true });
-
-  // Observer for setting up Reactable state change listeners
-  var stateChangeObserver = new MutationObserver(function() {
-    processGtShinyElements(function(gtShinyElement, reactableElement) {
-      if (!reactableElement.__reactableStateChangeListener) {
-        reactableElement.__reactableStateChangeListener = function() {
-          $(gtShinyElement).trigger('change.gtShiny');
-        };
-        Reactable.onStateChange(reactableElement.id, reactableElement.__reactableStateChangeListener);
-      }
-    });
-  });
-  stateChangeObserver.observe(document.body, { childList: true, subtree: true });
-})();
