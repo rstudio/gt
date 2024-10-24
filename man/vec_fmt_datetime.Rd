@@ -819,7 +819,7 @@ the \code{output} argument (here, it is of the \code{"plain"} output type).
 
 We can choose from any of 41 different date styles and 25 time formatting
 styles. Many of these styles are flexible, meaning that the structure of the
-format will adapt to different locales. Let's use a combination of the the
+format will adapt to different locales. Let's use a combination of the
 \code{"yMMMd"} and \code{"hms"} date and time styles to demonstrate this (first in the
 default locale of \code{"en"}):
 

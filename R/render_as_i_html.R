@@ -451,7 +451,7 @@ render_as_ihtml <- function(data, id) {
       collapse = ""
     )
 
-  # TODO if `sub_missing()` is enabled gloablly, just use `na = ` here!
+  # TODO if `sub_missing()` is enabled globally, just use `na = ` here!
   default_col_def <-
     reactable::colDef(
       style = reactable::JS(body_style_js_str),

@@ -575,7 +575,7 @@
 
 * Added the `opt_horizontal_padding()` and `opt_vertical_padding()` functions to easily expand or contract an HTML table in the horizontal and vertical directions (#868). (#882) 
 
-* There is now a `locale` argument in the `gt()` function. If set, formatter functions like `fmt_number()` will automatically use this global locale while formatting. There also remains the the option to override the global locale with any non-`NULL` value set for `locale` within a `fmt_*()` call (#682). (#866)
+* There is now a `locale` argument in the `gt()` function. If set, formatter functions like `fmt_number()` will automatically use this global locale while formatting. There also remains the option to override the global locale with any non-`NULL` value set for `locale` within a `fmt_*()` call (#682). (#866)
 
 ## Minor improvements and bug fixes
 

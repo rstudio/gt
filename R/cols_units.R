@@ -56,7 +56,7 @@
 #'   column name to the **gt** units syntax; they should be of the form
 #'   `<column name> = <units text>`. Subsequent expressions that operate on the
 #'   columns assigned previously will result in overwriting column units
-#'   defintion values.
+#'   definition values.
 #'
 #' @param .list *Alternative to `...`*
 #'
