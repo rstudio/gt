@@ -1,5 +1,9 @@
 # gt (development version)
 
+* Interactive tables can support selection through the `ihtml.selection` option. (@jonthegeek, #1909)
+
+* Tables embedded in Shiny apps with `gt_output()` and `render_gt()` with `ihtml.selection` enabled also act as inputs, reporting the row numbers that are selected (#354, #1368). (@jonthegeek, #1909)
+
 # gt 0.11.1
 
 ## Breaking changes

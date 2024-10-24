@@ -175,7 +175,11 @@ render_gt <- function(
           table.align = align
         )
 
-      html_tbl <- as.tags(result)
+      html_tbl <- htmltools::tagList(
+        as.tags(result),
+        shiny_deps(),
+        initialize_shiny_gt(name)
+      )
 
       dependencies <-
         lapply(
@@ -191,6 +195,22 @@ render_gt <- function(
       )
     },
     gt_output, outputArgs
+  )
+}
+
+shiny_deps <- function() {
+  htmltools::htmlDependency(
+    "gtShiny",
+    "1.0.0",
+    src = "shiny",
+    package = "gt",
+    script = "gtShiny.js"
+  )
+}
+
+initialize_shiny_gt <- function(id) {
+  htmltools::HTML(
+    glue::glue("<script>gtShinyBinding.initialize('{id}');</script>")
   )
 }
 
@@ -264,7 +284,7 @@ gt_output <- function(outputId) {
   # Ensure that the shiny package is available
   rlang::check_installed("shiny", "to use `gt_output()`.")
 
-  shiny::htmlOutput(outputId)
+  shiny::htmlOutput(outputId, class = "gt_shiny")
 }
 
 #nocov end
