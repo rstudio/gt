@@ -95,7 +95,7 @@ helper is applied so long as the arguments belong to this closed set.
 
 Let's use the \code{\link{exibble}} dataset to create a single-column \strong{gt} table
 (with only the \code{char} column). Now we can pass the data in that column
-through the 'non-formatter' that is \code{fmt_passthrough()}. While the the
+through the 'non-formatter' that is \code{fmt_passthrough()}. While the
 function doesn't do any explicit formatting it has a feature common to all
 other formatting functions: the \code{pattern} argument. So that's what we'll use
 in this example, applying a simple pattern to the non-\code{NA} values that adds

@@ -230,7 +230,7 @@ NULL
 #'
 #' Will only affect the output of one specific function (or override global setting).
 #'
-#' `locale` has very low precedence usually. As soon as you override some parameteres,
+#' `locale` has very low precedence usually. As soon as you override some parameters,
 #' `sep_mark`, `dec_mark`, `incl_space`, they will be override `locale`.
 #'
 #' @examples

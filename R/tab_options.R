@@ -175,7 +175,7 @@
 #'   *Properties of all vertical lines by the column labels*
 #'
 #'   The style, width, and color properties for all vertical lines ('vlines')
-#'   of the the `column_labels`.
+#'   of the `column_labels`.
 #'
 #' @param column_labels.border.top.style,column_labels.border.top.width,column_labels.border.top.color
 #'   *Properties of the border above the column labels*
@@ -457,7 +457,7 @@
 #'
 #' @param page.orientation *Set RTF page orientation*
 #'
-#'   For RTF output, this provides an two options for page
+#'   For RTF output, this provides two options for page
 #'   orientation: `"portrait"` (the default) and `"landscape"`.
 #'
 #' @param page.numbering *Enable RTF page numbering*
