@@ -1756,7 +1756,7 @@ cells_body <- function(
 #' @section Examples:
 #'
 #' Use a portion of the [`countrypops`] dataset to create a **gt** table. Add
-#' some styling to the summary data cells with with [tab_style()], using
+#' some styling to the summary data cells with [tab_style()], using
 #' `cells_summary()` in the `locations` argument.
 #'
 #' ```r
@@ -2600,7 +2600,7 @@ cell_style_to_html.cell_text <- function(style) {
 #' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
 #' (keeping only the `num` and `currency` columns). Styles are added with
 #' [tab_style()] in two separate calls (targeting different body cells with the
-#' [cells_body()] helper function). With the `cell_fill()` helper funciton we
+#' [cells_body()] helper function). With the `cell_fill()` helper function we
 #' define cells with a `"lightblue"` background in one instance, and `"gray85"`
 #' in the other.
 #'

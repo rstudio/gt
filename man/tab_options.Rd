@@ -337,7 +337,7 @@ Options to apply text transformations to the \code{column_labels}, \code{row_gro
 \item{column_labels.vlines.style, column_labels.vlines.width, column_labels.vlines.color}{\emph{Properties of all vertical lines by the column labels}
 
 The style, width, and color properties for all vertical lines ('vlines')
-of the the \code{column_labels}.}
+of the \code{column_labels}.}
 
 \item{column_labels.border.top.style, column_labels.border.top.width, column_labels.border.top.color}{\emph{Properties of the border above the column labels}
 
@@ -607,7 +607,7 @@ is used in \code{\link[=render_gt]{render_gt()}}.}
 
 \item{page.orientation}{\emph{Set RTF page orientation}
 
-For RTF output, this provides an two options for page
+For RTF output, this provides two options for page
 orientation: \code{"portrait"} (the default) and \code{"landscape"}.}
 
 \item{page.numbering}{\emph{Enable RTF page numbering}

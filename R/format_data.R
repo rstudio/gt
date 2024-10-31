@@ -2171,7 +2171,7 @@ fmt_fraction <- function(
         # Get the correct minus mark based on the output context
         minus_mark <- context_minus_mark(context = context)
 
-        # Generate an vector of empty strings that will eventually contain
+        # Generate a vector of empty strings that will eventually contain
         # all of the fractional parts of the finalized numbers
         fraction_x <- rep_len("", length(x))
 
@@ -3089,7 +3089,7 @@ fmt_roman <- function(
       use_latex_math_mode = FALSE,
       format_fn = function(x, context) {
 
-        # Generate an vector of empty strings that will eventually contain
+        # Generate a vector of empty strings that will eventually contain
         # all of the roman numerals
         x_str <- character(length(x))
 
@@ -3327,7 +3327,7 @@ fmt_index <- function(
       use_latex_math_mode = FALSE,
       format_fn = function(x, context) {
 
-        # Generate an vector of empty strings that will eventually contain
+        # Generate a vector of empty strings that will eventually contain
         # all of the roman numerals
         x_str <- character(length(x))
 
@@ -3696,7 +3696,7 @@ fmt_spelled_num <- function(
       use_latex_math_mode = FALSE,
       format_fn = function(x, context) {
 
-        # Generate an vector of empty strings that will eventually contain
+        # Generate a vector of empty strings that will eventually contain
         # all of the roman numerals
         x_str <- character(length(x))
 
@@ -4932,7 +4932,7 @@ format_bins_by_context <- function(x, sep, fmt, context) {
     sep <- context_dash_mark(sep, context = context)
   }
 
-  # Generate an vector of empty strings that will eventually
+  # Generate a vector of empty strings that will eventually
   # contain all of the ranged value text
   x_str <- character(length(x))
 
@@ -5552,7 +5552,7 @@ format_tf_by_context <- function(
     context
 ) {
 
-  # Generate an vector of empty strings that will eventually
+  # Generate a vector of empty strings that will eventually
   # contain all of the text values
   x_str <- character(length(x))
 
@@ -6049,7 +6049,7 @@ format_units_by_context <- function(
     context = "html"
 ) {
 
-  # Generate an vector of empty strings that will eventually
+  # Generate a vector of empty strings that will eventually
   # contain all of the ranged value text
   x_str <- character(length(x))
 
@@ -6587,7 +6587,7 @@ fmt_url <- function(
     fns = list(
       html = function(x) {
 
-        # Generate an vector of empty strings that will eventually
+        # Generate a vector of empty strings that will eventually
         # contain all of the link text
         x_str <- character(length(x))
 
@@ -7269,7 +7269,7 @@ fmt_email <- function(
     fns = list(
       html = function(x) {
 
-        # Generate an vector of empty strings that will eventually
+        # Generate a vector of empty strings that will eventually
         # contain all of the link text
         x_str <- character(length(x))
 
@@ -7704,7 +7704,7 @@ fmt_image <- function(
     fns = list(
       html = function(x) {
 
-        # Generate an vector of empty strings that will eventually
+        # Generate a vector of empty strings that will eventually
         # contain all of the link text
         x_str <- character(length(x))
 
@@ -7963,7 +7963,7 @@ convert_to_px <- function(x) {
     rlang::abort(
       paste0(
         "invalid units provided - `", units,
-        "`. Must be one of of type ",
+        "`. Must be one of type ",
         paste0("`", names(px_conversion), "`", collapse = "")
       )
     )
@@ -8312,7 +8312,7 @@ fmt_flag <- function(
     fns = list(
       html = function(x) {
 
-        # Generate an vector of empty strings that will eventually
+        # Generate a vector of empty strings that will eventually
         # contain all of the link text
         x_str <- character(length(x))
 
@@ -8796,7 +8796,7 @@ fmt_country <- function(
       use_latex_math_mode = FALSE,
       format_fn = function(x, context) {
 
-        # Generate an vector of empty strings that will eventually
+        # Generate a vector of empty strings that will eventually
         # contain all of the link text
         x_str <- character(length(x))
 
@@ -9330,7 +9330,7 @@ fmt_icon <- function(
     fns = list(
       html = function(x) {
 
-        # Generate an vector of empty strings that will eventually
+        # Generate a vector of empty strings that will eventually
         # contain all of the link text
         x_str <- character(length(x))
 
@@ -9768,7 +9768,7 @@ fmt_markdown <- function(
 #'
 #' Let's use the [`exibble`] dataset to create a single-column **gt** table
 #' (with only the `char` column). Now we can pass the data in that column
-#' through the 'non-formatter' that is `fmt_passthrough()`. While the the
+#' through the 'non-formatter' that is `fmt_passthrough()`. While the
 #' function doesn't do any explicit formatting it has a feature common to all
 #' other formatting functions: the `pattern` argument. So that's what we'll use
 #' in this example, applying a simple pattern to the non-`NA` values that adds

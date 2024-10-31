@@ -2906,7 +2906,7 @@ vec_fmt_time <- function(
 #'
 #' We can choose from any of 41 different date styles and 25 time formatting
 #' styles. Many of these styles are flexible, meaning that the structure of the
-#' format will adapt to different locales. Let's use a combination of the the
+#' format will adapt to different locales. Let's use a combination of the
 #' `"yMMMd"` and `"hms"` date and time styles to demonstrate this (first in the
 #' default locale of `"en"`):
 #'
@@ -3219,7 +3219,7 @@ vec_fmt_duration <- function(
   # Stop function if class of `x` is incompatible with the formatting
   check_vector_valid(x, valid_classes = c("numeric", "integer", "difftime"))
 
-  # Ensure that `duration_style` and `ouput` are matched correctly to one option
+  # Ensure that `duration_style` and `output` are matched correctly to one option
   duration_style <- 
     rlang::arg_match0(
       duration_style,
