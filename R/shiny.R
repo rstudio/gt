@@ -36,7 +36,11 @@
 #' holding the **gt** table. The `width` and `height` arguments allow for sizing
 #' the container, and the `align` argument allows us to align the table within
 #' the container (some other fine-grained options for positioning are available
-#' in [tab_options()]).
+#' in [tab_options()]). If the table is interactive, the selected row indices
+#' (relative to the underlying data, regardless of sorting) are available as
+#' `input$id`, where `id` is the `outputId` used for this table in [gt_output()].
+#' If the user has deselected all rows, the value is `0` (vs `NULL` when the
+#' table initializes).
 #'
 #' @param expr *Expression*
 #'
@@ -285,6 +289,46 @@ gt_output <- function(outputId) {
   rlang::check_installed("shiny", "to use `gt_output()`.")
 
   shiny::htmlOutput(outputId, class = "gt_shiny")
+}
+
+# gt_update_select() -----------------------------------------------------------
+#' Update a **gt** selection in Shiny
+#'
+#' @description
+#'
+#' Update the selection in an interactive **gt** table rendered using
+#' [render_gt()]. The table must be interactive and have selection enabled (see
+#' [opt_interactive()]).
+#'
+#' @param outputId *Shiny output ID*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   The id of the [gt_output()] element to update.
+#' @param rows *Row indices*
+#'
+#'   `<integer>` // **required**
+#'
+#'   The id of the [gt_output()] element to update.
+#' @param session *Shiny session*
+#'
+#'   `scalar<ShinySession>` // **required**
+#'
+#'   The session in which the [gt_output()] element can be found. You almost
+#'   certainly want to leave this as the default value.
+#'
+#' @return A call to the JavaScript binding of the table.
+#' @family Shiny functions
+#' @section Function ID:
+#' 12-3
+#'
+#' @export
+#'
+#' @examples
+gt_update_select <- function(outputId,
+                             rows,
+                             session = shiny::getDefaultReactiveDomain()) {
+  session$sendInputMessage(outputId, rows - 1)
 }
 
 #nocov end

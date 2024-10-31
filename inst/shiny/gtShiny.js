@@ -25,19 +25,32 @@ $.extend(gtShinyBinding, {
       return;
     }
     var self = this;
+    el.__clickFlag = false;
+
     var observer = new MutationObserver(function(mutations, obs) {
       var reactableElement = self.getReactable(el);
       if (reactableElement) {
         var rows = reactableElement.querySelectorAll('.rt-tr');
         if (rows.length > 0) {
+          if (!reactableElement.__clickListenerAdded) {
+            reactableElement.addEventListener('click', function() {
+              el.__clickFlag = true;
+            });
+            reactableElement.__clickListenerAdded = true;
+          }
+
           if (!reactableElement.__reactableStateChangeListener) {
             reactableElement.__reactableStateChangeListener = function() {
               $(el).trigger('change.gtShiny');
             };
             Reactable.onStateChange(reactableElement.id, reactableElement.__reactableStateChangeListener);
           }
-          $(el).trigger('change.gtShiny');
           el.__initialized = true;
+          if (el.__awaiting_set && el.__awaiting_set.length) {
+            value = el.__awaiting_set;
+            el.__awaiting_set = null;
+            self.setValue(el, value);
+          }
           obs.disconnect();
         }
       }
@@ -75,14 +88,49 @@ $.extend(gtShinyBinding, {
   getValue: function(el) {
     if (!el.__initialized) {
       this.initializeListener(el);
-      return null;
+      return; // Table is reloading or not fully initialized
     }
     var reactableElement = this.getReactable(el);
     if (reactableElement) {
       var selectedRows = Reactable.getState(reactableElement.id).selected;
-      return selectedRows ? selectedRows.map(function(row) { return row + 1; }) : null;
+      if (selectedRows === undefined) {
+        return null;
+      } else if (selectedRows.length === 0) {
+        if (el.__clickFlag) {
+          el.__clickFlag = false;
+          return [0]; // [0] if nothing is selected due to user click
+        } else {
+          return null; // null if table is initializing or reloading
+        }
+      } else {
+        el.__clickFlag = false;
+        return selectedRows.map(function(row) { return row + 1; });
+      }
     }
     return null;
+  },
+  /**
+   * Sets the value of the selected rows in the gtShiny element.
+   *
+   * @param {HTMLElement} el    - The element containing the gtShiny.
+   * @param {Array}       value - The row IDs to set as selected.
+   */
+  setValue: function(el, value) {
+    if (!Array.isArray(value)) {
+      value = [value];
+    }
+    if (!el.__initialized) {
+      el.__awaiting_set = value;
+      this.initializeListener(el);
+      return;
+    }
+    var reactableElement = this.getReactable(el);
+    if (reactableElement) {
+      var instance = Reactable.getInstance(reactableElement.id);
+      if (instance) {
+        instance.setRowsSelected(value);
+      }
+    }
   },
   /**
    * Update Shiny when a gtShiny element changes.
@@ -103,6 +151,15 @@ $.extend(gtShinyBinding, {
    */
   unsubscribe: function(el) {
     $(el).off('change.gtShiny');
+  },
+  /**
+   * Receives a message from Shiny and sets the selected rows.
+   *
+   * @param {HTMLElement} el    - The element containing the gtShiny.
+   * @param {Array}       value - The row IDs to set as selected.
+   */
+  receiveMessage: function(el, value){
+    this.setValue(el, value);
   }
 });
 
