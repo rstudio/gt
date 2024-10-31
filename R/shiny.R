@@ -323,8 +323,6 @@ gt_output <- function(outputId) {
 #' 12-3
 #'
 #' @export
-#'
-#' @examples
 gt_update_select <- function(outputId,
                              rows,
                              session = shiny::getDefaultReactiveDomain()) {
