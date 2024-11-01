@@ -21,7 +21,7 @@ opt_interactive(
   page_size_values = c(10, 25, 50, 100),
   pagination_type = c("numbers", "jump", "simple"),
   height = "auto",
-  selection = NULL
+  selection_mode = NULL
 )
 }
 \arguments{
@@ -146,15 +146,16 @@ and 'next' buttons are displayed.}
 
 Height of the table in pixels. Defaults to \code{"auto"} for automatic sizing.}
 
-\item{selection}{\emph{Allow row selection}
+\item{selection_mode}{\emph{Allow row selection}
 
 \verb{scalar<character>} // \emph{default:} \code{NULL}
 
-The \code{selection} options allows users to select rows by clicking them. When
-this option is \code{"single"}, clicking another value toggles selection of the
-previously selected row off. When this option is \code{"multiple"}, multiple
-rows can be selected at once. Selected values are available in Shiny apps
-when \code{selection} is not \code{NULL} and the table is used in \code{\link[=render_gt]{render_gt()}}.}
+The \code{selection_mode} options allows users to select rows by clicking them.
+When this option is \code{"single"}, clicking another value toggles selection
+of the previously selected row off. When this option is \code{"multiple"},
+multiple rows can be selected at once. Selected values are available in
+Shiny apps when \code{selection_mode} is not \code{NULL} and the table is used in
+\code{\link[=render_gt]{render_gt()}}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -183,7 +184,7 @@ This function serves as a shortcut for setting the following options in
 \item \code{ihtml.page_size_values}
 \item \code{ihtml.pagination_type}
 \item \code{ihtml.height}
-\item \code{ihtml.selection}
+\item \code{ihtml.selection_mode}
 }
 }
 \section{Examples}{

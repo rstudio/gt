@@ -220,7 +220,7 @@ get_colorized_params <- function(
 #' - `ihtml.page_size_values`
 #' - `ihtml.pagination_type`
 #' - `ihtml.height`
-#' - `ihtml.selection`
+#' - `ihtml.selection_mode`
 #'
 #' @inheritParams fmt_number
 #'
@@ -338,15 +338,16 @@ get_colorized_params <- function(
 #'
 #'   Height of the table in pixels. Defaults to `"auto"` for automatic sizing.
 #'
-#' @param selection *Allow row selection*
+#' @param selection_mode *Allow row selection*
 #'
 #'    `scalar<character>` // *default:* `NULL`
 #'
-#'    The `selection` options allows users to select rows by clicking them. When
-#'    this option is `"single"`, clicking another value toggles selection of the
-#'    previously selected row off. When this option is `"multiple"`, multiple
-#'    rows can be selected at once. Selected values are available in Shiny apps
-#'    when `selection` is not `NULL` and the table is used in [render_gt()].
+#'    The `selection_mode` options allows users to select rows by clicking them.
+#'    When this option is `"single"`, clicking another value toggles selection
+#'    of the previously selected row off. When this option is `"multiple"`,
+#'    multiple rows can be selected at once. Selected values are available in
+#'    Shiny apps when `selection_mode` is not `NULL` and the table is used in
+#'    [render_gt()].
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -430,7 +431,7 @@ opt_interactive <- function(
     page_size_values = c(10, 25, 50, 100),
     pagination_type = c("numbers", "jump", "simple"),
     height = "auto",
-    selection = NULL
+    selection_mode = NULL
 ) {
 
   # Perform input object validation
@@ -456,7 +457,7 @@ opt_interactive <- function(
     ihtml.page_size_values = page_size_values,
     ihtml.pagination_type = pagination_type,
     ihtml.height = height,
-    ihtml.selection = selection
+    ihtml.selection_mode = selection_mode
   )
 }
 

@@ -178,7 +178,7 @@ tab_options(
   ihtml.page_size_values = NULL,
   ihtml.pagination_type = NULL,
   ihtml.height = NULL,
-  ihtml.selection = NULL,
+  ihtml.selection_mode = NULL,
   page.orientation = NULL,
   page.numbering = NULL,
   page.header.use_tbl_headings = NULL,
@@ -596,14 +596,14 @@ displayed.}
 
 Height of the table in pixels. Defaults to \code{"auto"} for automatic sizing.}
 
-\item{ihtml.selection}{\emph{Allow row selection}
+\item{ihtml.selection_mode}{\emph{Allow row selection}
 
 For interactive HTML output, this allows users to select rows by clicking
 them. When this option is \code{"single"}, clicking another value toggles
 selection of the previously selected row off. When this option is
 \code{"multiple"}, multiple rows can be selected at once. Selected values are
-available in Shiny apps when \code{ihtml.selection} is not \code{NULL} and the table
-is used in \code{\link[=render_gt]{render_gt()}}.}
+available in Shiny apps when \code{ihtml.selection_mode} is not \code{NULL} and the
+table is used in \code{\link[=render_gt]{render_gt()}}.}
 
 \item{page.orientation}{\emph{Set RTF page orientation}
 

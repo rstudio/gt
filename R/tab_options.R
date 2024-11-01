@@ -455,14 +455,14 @@
 #'
 #'   Height of the table in pixels. Defaults to `"auto"` for automatic sizing.
 #'
-#' @param ihtml.selection *Allow row selection*
+#' @param ihtml.selection_mode *Allow row selection*
 #'
 #'   For interactive HTML output, this allows users to select rows by clicking
 #'   them. When this option is `"single"`, clicking another value toggles
 #'   selection of the previously selected row off. When this option is
 #'   `"multiple"`, multiple rows can be selected at once. Selected values are
-#'   available in Shiny apps when `ihtml.selection` is not `NULL` and the table
-#'   is used in [render_gt()].
+#'   available in Shiny apps when `ihtml.selection_mode` is not `NULL` and the
+#'   table is used in [render_gt()].
 #'
 #' @param page.orientation *Set RTF page orientation*
 #'
@@ -847,7 +847,7 @@ tab_options <- function(
     ihtml.page_size_values = NULL,
     ihtml.pagination_type = NULL,
     ihtml.height = NULL,
-    ihtml.selection = NULL,
+    ihtml.selection_mode = NULL,
     page.orientation = NULL,
     page.numbering = NULL,
     page.header.use_tbl_headings = NULL,
@@ -1044,16 +1044,16 @@ set_super_options <- function(arg_vals) {
       )
   }
 
-  if ("ihtml.selection" %in% names(arg_vals)) {
-    ihtml_selection_val <- arg_vals$ihtml.selection
+  if ("ihtml.selection_mode" %in% names(arg_vals)) {
+    ihtml_selection_mode_val <- arg_vals$ihtml.selection_mode
     if (
         !(
-          rlang::is_scalar_character(ihtml_selection_val) &&
-          ihtml_selection_val %in% c("single", "multiple")
+          rlang::is_scalar_character(ihtml_selection_mode_val) &&
+          ihtml_selection_mode_val %in% c("single", "multiple")
         )
     ) {
       cli::cli_abort(c(
-        "The chosen option for `ihtml.selection` (`{ihtml_selection_val}`) is invalid.",
+        "The chosen option for `ihtml.selection_mode` (`{ihtml_selection_mode_val}`) is invalid.",
         "*" = "We can use either \"single\" or \"multiple\"."
       ))
     }
