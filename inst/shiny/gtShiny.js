@@ -32,13 +32,20 @@ $.extend(gtShinyBinding, {
       if (reactableElement) {
         var rows = reactableElement.querySelectorAll('.rt-tr');
         if (rows.length > 0) {
-          if (!reactableElement.__clickListenerAdded) {
-            reactableElement.addEventListener('click', function() {
-              el.__clickFlag = true;
+          // Listener so we know it's an actual click, not another state change.
+          body_rows = reactableElement.querySelectorAll('.rt-tbody .rt-tr');
+          if (body_rows.length > 0) {
+            body_rows.forEach(function(row) {
+              if (!row.__clickListenerAdded) {
+                row.addEventListener('click', function() {
+                  el.__clickFlag = true;
+                });
+                row.__clickListenerAdded = true;
+              }
             });
-            reactableElement.__clickListenerAdded = true;
           }
 
+          // State change listener, so we fire getValue *after* the state updates.
           if (!reactableElement.__reactableStateChangeListener) {
             reactableElement.__reactableStateChangeListener = function() {
               $(el).trigger('change.gtShiny');
@@ -90,24 +97,27 @@ $.extend(gtShinyBinding, {
       this.initializeListener(el);
       return; // Table is reloading or not fully initialized
     }
+
     var reactableElement = this.getReactable(el);
-    if (reactableElement) {
-      var selectedRows = Reactable.getState(reactableElement.id).selected;
-      if (selectedRows === undefined) {
-        return null;
-      } else if (selectedRows.length === 0) {
-        if (el.__clickFlag) {
-          el.__clickFlag = false;
-          return [0]; // [0] if nothing is selected due to user click
-        } else {
-          return null; // null if table is initializing or reloading
-        }
-      } else {
-        el.__clickFlag = false;
-        return selectedRows.map(function(row) { return row + 1; });
-      }
+    if (!reactableElement) {
+      return; // Initialization is finishing, state will report when finished.
     }
-    return null;
+
+    var selectedRows = Reactable.getState(reactableElement.id).selected;
+    if (selectedRows === undefined) {
+      return; // Initialization is finishing, state will report when finished.
+    }
+
+    if (selectedRows.length === 0) {
+      if (el.__clickFlag) {
+        el.__clickFlag = false;
+        return [0]; // [0] if nothing is selected due to user click
+      }
+      return null; // null if table is initializing or reloading
+    }
+
+    el.__clickFlag = false;
+    return selectedRows.map(function(row) { return row + 1; });
   },
   /**
    * Sets the value of the selected rows in the gtShiny element.
