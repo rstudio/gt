@@ -1,5 +1,7 @@
 # gt (development version)
 
+* The `random_id()` function now relies on `withr::with_seed()` and no longer affects the seed of the random number generator in the global environment.
+
 # gt 0.11.1
 
 ## Breaking changes
