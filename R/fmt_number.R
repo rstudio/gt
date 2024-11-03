@@ -144,7 +144,7 @@
 #'   scaling.
 #'
 #'   We can alternatively provide a character vector that serves as a
-#'   specification for which symbols are to used for each of the value ranges.
+#'   specification for which symbols are to be used for each of the value ranges.
 #'   These preferred symbols will replace the defaults (e.g.,
 #'   `c("k", "Ml", "Bn", "Tr")` replaces `"K"`, `"M"`, `"B"`, and `"T"`).
 #'
@@ -215,7 +215,7 @@
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported. A locale ID can
 #'   be also set in the initial [gt()] function call (where it would be used
@@ -646,7 +646,7 @@ fmt_number <- function(
 #'   billions (`B`), and trillions (`T`) suffixes after automatic value scaling.
 #'
 #'   We can alternatively provide a character vector that serves as a
-#'   specification for which symbols are to used for each of the value ranges.
+#'   specification for which symbols are to be used for each of the value ranges.
 #'   These preferred symbols will replace the defaults (e.g.,
 #'   `c("k", "Ml", "Bn", "Tr")` replaces `"K"`, `"M"`, `"B"`, and `"T"`).
 #'

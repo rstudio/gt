@@ -37,7 +37,7 @@
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for displaying formatted
-#'   date values according the locale's rules. Examples include `"en"` for
+#'   date values according to the locale's rules. Examples include `"en"` for
 #'   English (United States) and `"fr"` for French (France). We can call
 #'   [info_locales()] for a useful reference for all of the locales that are
 #'   supported.
@@ -220,7 +220,7 @@ info_date_style <- function(locale = NULL) {
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for displaying formatted
-#'   time values according the locale's rules. Examples include `"en"` for
+#'   time values according to the locale's rules. Examples include `"en"` for
 #'   English (United States) and `"fr"` for French (France). We can call
 #'   [info_locales()] for a useful reference for all of the locales that are
 #'   supported.
