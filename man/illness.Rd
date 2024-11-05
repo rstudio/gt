@@ -56,7 +56,7 @@ provides the full names of any abbreviations seen in that column.
 \item \code{"HBDH"}: hydroxybutyrate dehydrogenase.
 \item \code{"CK"}: creatine kinase.
 \item \code{"CKMB"}: the MB fraction of creatine kinase.
-\item \code{"BNP"}: B-type natriuetic peptide.
+\item \code{"BNP"}: B-type natriuretic peptide.
 \item \code{"MYO"}: myohemoglobin.
 \item \code{"TnI"}: troponin inhibitory.
 \item \code{"CREA"}: creatinine.

@@ -740,7 +740,7 @@
 #' \item `"HBDH"`: hydroxybutyrate dehydrogenase.
 #' \item `"CK"`: creatine kinase.
 #' \item `"CKMB"`: the MB fraction of creatine kinase.
-#' \item `"BNP"`: B-type natriuetic peptide.
+#' \item `"BNP"`: B-type natriuretic peptide.
 #' \item `"MYO"`: myohemoglobin.
 #' \item `"TnI"`: troponin inhibitory.
 #' \item `"CREA"`: creatinine.

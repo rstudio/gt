@@ -151,7 +151,7 @@ billions (\code{"B"}), and trillions (\code{"T"}) suffixes after automatic value
 scaling.
 
 We can alternatively provide a character vector that serves as a
-specification for which symbols are to used for each of the value ranges.
+specification for which symbols are to be used for each of the value ranges.
 These preferred symbols will replace the defaults (e.g.,
 \code{c("k", "Ml", "Bn", "Tr")} replaces \code{"K"}, \code{"M"}, \code{"B"}, and \code{"T"}).
 
@@ -236,7 +236,7 @@ crore, and higher quantities.}
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional locale identifier that can be used for formatting values
-according the locale's rules. Examples include \code{"en"} for English (United
+according to the locale's rules. Examples include \code{"en"} for English (United
 States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
 useful reference for all of the locales that are supported. A locale ID can
 be also set in the initial \code{\link[=gt]{gt()}} function call (where it would be used

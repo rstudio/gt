@@ -27,7 +27,7 @@
 #' @description
 #'
 #' It's possible to add color to data cells according to their values with
-#' `data_color()` There is a multitude of ways to perform data cell
+#' `data_color()`. There is a multitude of ways to perform data cell
 #' colorizing here:
 #'
 #' - targeting: we can constrain which columns and rows should receive the
@@ -44,7 +44,7 @@
 #' for finer control over color evaluation with data; the `scales::col_*()`
 #' color mapping functions can be used here or any function you might want to define
 #' - color palettes: with `palette` we could supply a vector of colors, a
-#' **virdis** or **RColorBrewer** palette name, or, a palette from the
+#' **viridis** or **RColorBrewer** palette name, or, a palette from the
 #' **paletteer** package
 #' - value domain: we can either opt to have the range of values define the
 #' domain, or, specify one explicitly with the `domain` argument
