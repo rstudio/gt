@@ -187,7 +187,7 @@ accept a logical value, where <code>FALSE</code> (the default) will not perform 
 transformation and <code>TRUE</code> will apply thousands (<code>K</code>), millions (<code>M</code>),
 billions (<code>B</code>), and trillions (<code>T</code>) suffixes after automatic value scaling.</p>
 <p>We can alternatively provide a character vector that serves as a
-specification for which symbols are to used for each of the value ranges.
+specification for which symbols are to be used for each of the value ranges.
 These preferred symbols will replace the defaults (e.g.,
 <code>c("k", "Ml", "Bn", "Tr")</code> replaces <code>"K"</code>, <code>"M"</code>, <code>"B"</code>, and <code>"T"</code>).</p>
 <p>Including <code>NA</code> values in the vector will ensure that the particular range
@@ -246,7 +246,7 @@ crore, and higher quantities.</p></dd>
 <dd><p><em>Locale identifier</em></p>
 <p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional locale identifier that can be used for formatting values
-according the locale's rules. Examples include <code>"en"</code> for English (United
+according to the locale's rules. Examples include <code>"en"</code> for English (United
 States) and <code>"fr"</code> for French (France). We can call <code><a href="info_locales.html">info_locales()</a></code> for a
 useful reference for all of the locales that are supported. A locale ID can
 be also set in the initial <code><a href="gt.html">gt()</a></code> function call (where it would be used
