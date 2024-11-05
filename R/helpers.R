@@ -2926,7 +2926,19 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #' @export
 random_id <- function(n = 10) {
 
-  paste(sample(letters, n, replace = TRUE), collapse = "")
+  # use last 5 digits of system time as seed
+  random_id_seed <- Sys.time() |>
+    as.numeric() |>
+    as.character() |>
+    # remove decimal point
+    sub("\\.", "", x = _) |>
+    # select last 5 digits
+    sub("\\d*(\\d{5}$)", "\\1", x = _) |>
+    as.numeric()
+
+  withr::with_seed(random_id_seed, {
+    paste(sample(letters, n, replace = TRUE), collapse = "")
+  })
 }
 
 latex_special_chars <- c(
