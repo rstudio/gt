@@ -215,7 +215,7 @@ An object of class \code{gt_tbl}.
 }
 \description{
 It's possible to add color to data cells according to their values with
-\code{data_color()} There is a multitude of ways to perform data cell
+\code{data_color()}. There is a multitude of ways to perform data cell
 colorizing here:
 \itemize{
 \item targeting: we can constrain which columns and rows should receive the
@@ -232,7 +232,7 @@ specific methods
 for finer control over color evaluation with data; the \verb{scales::col_*()}
 color mapping functions can be used here or any function you might want to define
 \item color palettes: with \code{palette} we could supply a vector of colors, a
-\strong{virdis} or \strong{RColorBrewer} palette name, or, a palette from the
+\strong{viridis} or \strong{RColorBrewer} palette name, or, a palette from the
 \strong{paletteer} package
 \item value domain: we can either opt to have the range of values define the
 domain, or, specify one explicitly with the \code{domain} argument

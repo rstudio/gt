@@ -72,7 +72,7 @@
 #' @section Targeting the column for insertion with `.before` or `.after`:
 #'
 #' The targeting of a column for insertion is done through the `.before` or
-#' `.after` arguments (only one of these options should be be used). While
+#' `.after` arguments (only one of these options should be used). While
 #' **tidyselect**-style expressions or indices can used to target a column, it's
 #' advised that a single column name be used. This is to avoid the possibility
 #' of inadvertently resolving multiple columns (since the requirement is for a

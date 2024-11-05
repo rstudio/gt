@@ -1800,7 +1800,7 @@ tab_row_group <- function(
 #' `r man_get_image_tag(file = "man_tab_stubhead_1.png")`
 #' }}
 #'
-#' The stuhead can contain all sorts of interesting content. How about an icon
+#' The stubhead can contain all sorts of interesting content. How about an icon
 #' for a car? We can make this happen with help from the **fontawesome**
 #' package.
 #'
