@@ -74,6 +74,7 @@ shinyApp(ui = ui, server = server)
 
 \seealso{
 Other Shiny functions: 
+\code{\link{gt_update_select}()},
 \code{\link{render_gt}()}
 }
 \concept{Shiny functions}

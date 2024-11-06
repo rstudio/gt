@@ -295,6 +295,7 @@ reference:
     contents:
     - render_gt
     - gt_output
+    - gt_update_select
 
   - title: Export and extraction functions
     desc: >

@@ -74,7 +74,11 @@ component. We have some options for controlling the size of the container
 holding the \strong{gt} table. The \code{width} and \code{height} arguments allow for sizing
 the container, and the \code{align} argument allows us to align the table within
 the container (some other fine-grained options for positioning are available
-in \code{\link[=tab_options]{tab_options()}}).
+in \code{\link[=tab_options]{tab_options()}}). If the table is interactive, the selected row indices
+(relative to the underlying data, regardless of sorting) are available as
+\code{input$id}, where \code{id} is the \code{outputId} used for this table in \code{\link[=gt_output]{gt_output()}}.
+If the user has deselected all rows, the value is \code{0} (vs \code{NULL} when the
+table initializes).
 }
 \section{Examples}{
 
@@ -124,6 +128,7 @@ shinyApp(ui = ui, server = server)
 
 \seealso{
 Other Shiny functions: 
-\code{\link{gt_output}()}
+\code{\link{gt_output}()},
+\code{\link{gt_update_select}()}
 }
 \concept{Shiny functions}

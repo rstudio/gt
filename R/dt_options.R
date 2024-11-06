@@ -256,6 +256,7 @@ dt_options_tbl <-
     "ihtml_page_size_default",           FALSE,  "interactive",      "values",  10,
     "ihtml_page_size_values",            FALSE,  "interactive",      "values",  default_page_size_vec,
     "ihtml_pagination_type",             FALSE,  "interactive",      "value",   "numbers",
+    "ihtml_selection_mode",              FALSE,  "interactive",      "value",   NA_character_,
     "page_orientation",                  FALSE,  "page",             "value",   "portrait",
     "page_numbering",                    FALSE,  "page",             "logical", FALSE,
     "page_header_use_tbl_headings",      FALSE,  "page",             "logical", FALSE,
