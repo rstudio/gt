@@ -20,6 +20,7 @@ ihtml.page_size_default
 ihtml.page_size_values
 ihtml.pagination_type
 ihtml.height
+ihtml.selection_mode
 
 "><meta property="og:description" content="By default, a gt table rendered as HTML will essentially be a 'static'
 table. However, we can make it 'interactive' and configure those interactive
@@ -42,6 +43,7 @@ ihtml.page_size_default
 ihtml.page_size_values
 ihtml.pagination_type
 ihtml.height
+ihtml.selection_mode
 
 "><meta property="og:image" content="https://gt.rstudio.com/logo.svg"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -128,6 +130,7 @@ filtering, sorting, and more.</p>
 <li><p><code>ihtml.page_size_values</code></p></li>
 <li><p><code>ihtml.pagination_type</code></p></li>
 <li><p><code>ihtml.height</code></p></li>
+<li><p><code>ihtml.selection_mode</code></p></li>
 </ul></div>
 
     <div class="section level2">
@@ -148,7 +151,8 @@ filtering, sorting, and more.</p>
 <span>  page_size_default <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  page_size_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">25</span>, <span class="fl">50</span>, <span class="fl">100</span><span class="op">)</span>,</span>
 <span>  pagination_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"numbers"</span>, <span class="st">"jump"</span>, <span class="st">"simple"</span><span class="op">)</span>,</span>
-<span>  height <span class="op">=</span> <span class="st">"auto"</span></span>
+<span>  height <span class="op">=</span> <span class="st">"auto"</span>,</span>
+<span>  selection_mode <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -276,6 +280,17 @@ and 'next' buttons are displayed.</p></dd>
 <dt id="arg-height">height<a class="anchor" aria-label="anchor" href="#arg-height"></a></dt>
 <dd><p><em>Height of interactive HTML table</em></p>
 <p>Height of the table in pixels. Defaults to <code>"auto"</code> for automatic sizing.</p></dd>
+
+
+<dt id="arg-selection-mode">selection_mode<a class="anchor" aria-label="anchor" href="#arg-selection-mode"></a></dt>
+<dd><p><em>Allow row selection</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code></p>
+<p>The <code>selection_mode</code> options allows users to select rows by clicking them.
+When this option is <code>"single"</code>, clicking another value toggles selection
+of the previously selected row off. When this option is <code>"multiple"</code>,
+multiple rows can be selected at once. Selected values are available in
+Shiny apps when <code>selection_mode</code> is not <code>NULL</code> and the table is used in
+<code><a href="render_gt.html">render_gt()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -246,6 +246,7 @@ components, the subcomponents, and the element that can adjusted.</p>
 <span>  ihtml.page_size_values <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ihtml.pagination_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ihtml.height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ihtml.selection_mode <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  page.orientation <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  page.numbering <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  page.header.use_tbl_headings <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -724,6 +725,16 @@ displayed.</p></dd>
 <dt id="arg-ihtml-height">ihtml.height<a class="anchor" aria-label="anchor" href="#arg-ihtml-height"></a></dt>
 <dd><p><em>Height of interactive HTML table</em></p>
 <p>Height of the table in pixels. Defaults to <code>"auto"</code> for automatic sizing.</p></dd>
+
+
+<dt id="arg-ihtml-selection-mode">ihtml.selection_mode<a class="anchor" aria-label="anchor" href="#arg-ihtml-selection-mode"></a></dt>
+<dd><p><em>Allow row selection</em></p>
+<p>For interactive HTML output, this allows users to select rows by clicking
+them. When this option is <code>"single"</code>, clicking another value toggles
+selection of the previously selected row off. When this option is
+<code>"multiple"</code>, multiple rows can be selected at once. Selected values are
+available in Shiny apps when <code>ihtml.selection_mode</code> is not <code>NULL</code> and the
+table is used in <code><a href="render_gt.html">render_gt()</a></code>.</p></dd>
 
 
 <dt id="arg-page-orientation">page.orientation<a class="anchor" aria-label="anchor" href="#arg-page-orientation"></a></dt>
