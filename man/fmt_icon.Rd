@@ -151,7 +151,7 @@ reference to an icon name. We are exclusively using \emph{Font Awesome} icons he
 (and we do need to have the \strong{fontawesome} package installed) so the
 reference is the short icon name. Multiple icons can be included per cell by
 separating icon names with commas (e.g., \code{"hard-drive,clock"}). The \code{sep}
-argument allows for a common separator to be applied between flag icons.
+argument allows for a common separator to be applied between icons.
 }
 \section{Compatibility of formatting function with data values}{
 

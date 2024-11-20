@@ -8880,7 +8880,7 @@ fmt_country <- function(
 #' (and we do need to have the **fontawesome** package installed) so the
 #' reference is the short icon name. Multiple icons can be included per cell by
 #' separating icon names with commas (e.g., `"hard-drive,clock"`). The `sep`
-#' argument allows for a common separator to be applied between flag icons.
+#' argument allows for a common separator to be applied between icons.
 #'
 #' @inheritParams fmt_number
 #'
