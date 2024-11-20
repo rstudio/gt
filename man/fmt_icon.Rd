@@ -350,7 +350,7 @@ A fairly common thing to do with icons in tables is to indicate whether
 a quantity is either higher or lower than another. Up and down arrow symbols
 can serve as good visual indicators for this purpose. We can make use of the
 \code{"up-arrow"} and \code{"down-arrow"} icons here. The \code{fmt_icon()} function has to
-find those text values in cells to generate the icons, so, lets generate the
+find those text values in cells to generate the icons, so, let's generate the
 text within a new column with \code{\link[=cols_add]{cols_add()}} (an expression is used therein to
 generate the correct text given the \code{close} and \code{open} values). Following
 that, \code{fmt_icon()} is used and its \code{fill_color} argument is provided with a

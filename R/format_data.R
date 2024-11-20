@@ -9170,7 +9170,7 @@ fmt_country <- function(
 #' a quantity is either higher or lower than another. Up and down arrow symbols
 #' can serve as good visual indicators for this purpose. We can make use of the
 #' `"up-arrow"` and `"down-arrow"` icons here. The `fmt_icon()` function has to
-#' find those text values in cells to generate the icons, so, lets generate the
+#' find those text values in cells to generate the icons, so, let's generate the
 #' text within a new column with [cols_add()] (an expression is used therein to
 #' generate the correct text given the `close` and `open` values). Following
 #' that, `fmt_icon()` is used and its `fill_color` argument is provided with a
