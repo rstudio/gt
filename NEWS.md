@@ -1,5 +1,7 @@
 # gt (development version)
 
+* Significantly faster rendering of certain large tables, by optimizing the internal `rownum_translation()` utility. (@magnusdv, #1924) 
+
 * Interactive tables can support selection through the `ihtml.selection_mode` option. (@jonthegeek, #1909)
 
 * Tables embedded in Shiny apps with `gt_output()` and `render_gt()` with `ihtml.selection_mode` enabled also act as inputs, reporting the row numbers that are selected (#354, #1368). (@jonthegeek, #1909)

@@ -63,19 +63,7 @@ colname_to_colnum <- function(
 # Utility function to generate finalized row numbers;
 # used in: `resolve_footnotes_styles()`
 rownum_translation <- function(body, rownum_start) {
-
-  rownum_final <- c()
-
-  for (rownum_s in rownum_start) {
-
-    rownum_final <-
-      c(
-        rownum_final,
-        which(as.numeric(rownames(body)) == rownum_s)
-      )
-  }
-
-  rownum_final
+  match(rownum_start, as.numeric(rownames(body)))
 }
 
 #' Render any formatting directives available in the `formats` list
