@@ -8,7 +8,7 @@
     Code
       cols_add(tbl, x = 1, .after = 15)
     Condition
-      Error in `vars_select_eval()`:
+      Error in `cols_add()`:
       ! Can't select columns past the end.
       i Location 15 doesn't exist.
       i There are only 9 columns.
