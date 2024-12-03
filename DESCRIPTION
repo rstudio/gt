@@ -38,6 +38,7 @@ Imports:
     cli (>= 3.6.3),
     commonmark (>= 1.9.1),
     dplyr (>= 1.1.4),
+    farver,
     fs (>= 1.6.4),
     glue (>= 1.8.0),
     htmltools (>= 0.5.8.1),
