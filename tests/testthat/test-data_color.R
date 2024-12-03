@@ -467,6 +467,53 @@ test_that("The correct color values are obtained when defining a palette", {
     html_color(alpha = 1) %>%
     expect_in(pal_12)
 
+  # Create a `tbl_html_6` object by using `data_color` with color names (random
+  # selection) on the `min_sza` column (which is of the `numeric` class); this
+  # time use non-default `autocolor_light` and `autocolor_dark` with #RRGGBB
+  # format
+  tbl_html_6 <-
+    test_tbl %>%
+    gt() %>%
+    data_color(
+      columns = min_sza,
+      palette = c("red", "white", "blue"),
+      autocolor_text = TRUE,
+      autocolor_light = "#EEE9E9",
+      autocolor_dark = "#0D0D0D"
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that the text colors vary between #0D0D0D and #EEE9E9
+  # since the `autocolor_text` option is TRUE and these colors are used
+  tbl_html_6 %>%
+    selection_value("style") %>%
+    gsub("(.*: |;$)", "", .) %>%
+    expect_in(c("#0D0D0D", "#EEE9E9"))
+
+  # Create a `tbl_html_7` object by using `data_color` with color names (random
+  # selection) on the `min_sza` column (which is of the `numeric` class); this
+  # time use non-default `autocolor_light` and `autocolor_dark` with color names
+  tbl_html_7 <-
+    test_tbl %>%
+    gt() %>%
+    data_color(
+      columns = min_sza,
+      palette = c("red", "white", "blue"),
+      autocolor_text = TRUE,
+      autocolor_light = "snow2",
+      autocolor_dark = "gray5"
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that the text colors vary between #0D0D0D and #EEE9E9
+  # since the `autocolor_text` option is TRUE and these colors are used
+  tbl_html_7 %>%
+    selection_value("style") %>%
+    gsub("(.*: |;$)", "", .) %>%
+    expect_in(c("#0D0D0D", "#EEE9E9"))
+
   # Expect that NAs in column values will result in default colors
   tbl <-
     countrypops %>%
@@ -1192,6 +1239,56 @@ test_that("data_color() validates its input related to color", {
         target_columns = c(row, group),
       )
   )
+
+  # Expect an error if there is a malformed hexadecimal color value given
+  # to `autocolor_light`
+  expect_error(
+    test_tbl %>%
+      gt() %>%
+      data_color(
+        columns = min_sza,
+        palette = c("#EEFFAA", "#45AA22"),
+        autocolor_text = TRUE,
+        autocolor_light = "##EEE9E9"
+      )
+  )
+
+  # Expect an error if there is a malformed hexadecimal color value given
+  # to `autocolor_dark`
+  expect_error(
+    test_tbl %>%
+      gt() %>%
+      data_color(
+        columns = min_sza,
+        palette = c("#EEFFAA", "#45AA22"),
+        autocolor_text = TRUE,
+        autocolor_dark = "#0D0D0DF"
+      )
+  )
+
+  # Expect an error if there is a invalid color name given to `autocolor_light`
+  expect_error(
+    test_tbl %>%
+      gt() %>%
+      data_color(
+        columns = min_sza,
+        palette = c("#EEFFAA", "#45AA22"),
+        autocolor_text = TRUE,
+        autocolor_light = "snoow2"
+      )
+  )
+
+  # Expect an error if there is a invalid color name given to `autocolor_dark`
+  expect_error(
+    test_tbl %>%
+      gt() %>%
+      data_color(
+        columns = min_sza,
+        palette = c("#EEFFAA", "#45AA22"),
+        autocolor_text = TRUE,
+        autocolor_dark = "ggrreey5"
+      )
+  )
 })
 
 test_that("Certain warnings can be expected when using deprecated arguments", {
@@ -1587,7 +1684,7 @@ test_that("The various color utility functions work correctly", {
       "rgba(255,170,0,0.5)", "rgba(255,187,52,1)", "rgba( 127, 46, 22, 0.523 )",
       "rgba(0,0,0,0)", "rgba(128,    20 , 94, 1.000)"
       )
-  ) %>%
+    ) %>%
     all() %>%
     expect_true()
 
@@ -1597,7 +1694,7 @@ test_that("The various color utility functions work correctly", {
       "rgba (255,170,0,0.5)", "rgbc(255,187,52,1)", "rgb( 127, 46, 22, 0.523 )",
       "#FFFFFF", "rgba(128,    20 , 94, a)"
     )
-  ) %>%
+    ) %>%
     any() %>%
     expect_false()
 
@@ -1787,14 +1884,31 @@ test_that("The various color utility functions work correctly", {
 
   # Expect that the `ideal_fgnd_color()` function returns a vector containing
   # either a light color ("#FFFFFF") or a dark color ("#000000") based on the
-  # input colors; this should work with all of the color formats that
-  # `html_color()` produces
+  # `bgnd_color` input colors; this should work with all of the color formats
+  # that `html_color()` produces
   expect_equal(
     ideal_fgnd_color(bgnd_color = c(c_name, c_hex, c_hex_a, c_rgba)),
     c(
       "#FFFFFF", "#FFFFFF", "#FFFFFF", "#000000", "#000000", "#FFFFFF",
       "#000000", "#000000", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF",
       "#000000", "#000000", "#000000", "#000000", "#000000"
+    )
+  )
+
+  # Expect that the `ideal_fgnd_color()` function returns a vector containing
+  # either a light color or a dark color based on the `bgnd_color` input colors;
+  # this should work with all of the color formats that `html_color()`
+  # produces; this time using non-default `light` and `dark`
+  expect_equal(
+    ideal_fgnd_color(
+      bgnd_color = c(c_name, c_hex, c_hex_a, c_rgba),
+      light = "snow2",
+      dark = "#0D0D0D"
+      ),
+    c(
+      "#EEE9E9", "#0D0D0D", "#EEE9E9", "#0D0D0D", "#0D0D0D", "#EEE9E9",
+      "#0D0D0D", "#0D0D0D", "#EEE9E9", "#EEE9E9", "#EEE9E9", "#EEE9E9",
+      "#0D0D0D", "#0D0D0D", "#0D0D0D", "#0D0D0D", "#0D0D0D"
     )
   )
 
@@ -1831,6 +1945,26 @@ test_that("The various color utility functions work correctly", {
   )
   expect_error(
     ideal_fgnd_color(bgnd_color = c(c_hex, c_hex_a, "#FF0033100"))
+  )
+  expect_error(
+    ideal_fgnd_color(
+      bgnd_color = c(c_name, c_hex, c_hex_a, c_rgba), light = "##EEE9E9"
+    )
+  )
+  expect_error(
+    ideal_fgnd_color(
+      bgnd_color = c(c_name, c_hex, c_hex_a, c_rgba), dark = "#0D0D0DF"
+    )
+  )
+  expect_error(
+    ideal_fgnd_color(
+      bgnd_color = c(c_name, c_hex, c_hex_a, c_rgba), light = "snoow2"
+    )
+  )
+  expect_error(
+    ideal_fgnd_color(
+      bgnd_color = c(c_name, c_hex, c_hex_a, c_rgba), dark = "ggrreey5"
+    )
   )
 
   # Expect specific and reproducible output color values in the #RRGGBBAA
