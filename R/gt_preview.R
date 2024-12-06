@@ -191,7 +191,7 @@ gt_preview <- function(
       tab_style(
         gt_tbl,
         style = cell_fill(color = "#E4E4E4"),
-        locations = cells_body(columns = visible_vars, rows = ellipsis_row)
+        locations = cells_body(columns = all_of(visible_vars), rows = ellipsis_row)
       )
 
     gt_tbl <-
