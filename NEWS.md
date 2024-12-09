@@ -6,6 +6,8 @@
 
 * Tables embedded in Shiny apps with `gt_output()` and `render_gt()` with `ihtml.selection_mode` enabled also act as inputs, reporting the row numbers that are selected (#354, #1368). (@jonthegeek, #1909)
 
+* Improved width calculations in `as_gtable()` (@teunbrand, #1923)
+
 # gt 0.11.1
 
 ## Breaking changes
