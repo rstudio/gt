@@ -145,7 +145,7 @@ test_that("gtable widths are set appropriately", {
 
   expect_equal(
     as.character(test$widths),
-    c("0.5null", "0.2npc", "150.5625points", "0.5null")
+    c("0.5null", "100points", "150.5625points", "0.5null")
   )
 })
 
