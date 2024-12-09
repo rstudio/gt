@@ -95,7 +95,7 @@ test_that("gtable widths are set appropriately", {
 
   cell_width <- grid::unit.pmax(
     grid::unit(100, "pt"),
-    grid::unit(0.4, "npc") + grid::unit(0, "pt")
+    grid::unit(0.4, "npc")
   )
 
   expect_equal(
@@ -138,6 +138,34 @@ test_that("gtable widths are set appropriately", {
     as.numeric(test$widths)[1] * 3,
     as.numeric(test$widths)[4]
   )
+
+  # Test relative columns
+  # + absolute width
+  test <- tbl %>%
+    cols_width(y ~ pct(30)) %>%
+    tab_options(table.width = px(500)) %>%
+    as_gtable(text_grob = dummy_text)
+  test <- as.numeric(test$widths[2:3])
+  expect_equal(test / sum(test), c(0.7, 0.3), tolerance = 1e-6)
+
+  # + relative width
+  test <- tbl %>%
+    cols_width(y ~ pct(30)) %>%
+    tab_options(table.width = pct(50)) %>%
+    as_gtable(text_grob = dummy_text)
+
+  expect_equal(
+    test$widths[2:3],
+    grid::unit.pmax(grid::unit(c(100, 0), "pt"), grid::unit(c(0.35, 0.15), "npc"))
+  )
+
+  # + unspecified width
+  test <- tbl %>%
+    cols_width(y ~ pct(30)) %>%
+    as_gtable(text_grob = dummy_text)
+  test <- as.numeric(test$widths[2:3])
+  expect_equal(test / sum(test), c(0.7, 0.3), tolerance = 1e-6)
+  expect_equal(min(test), 100)
 
   test <- tbl %>%
     cols_width(x ~ pct(20), y ~ px(200)) %>%
