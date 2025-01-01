@@ -8,6 +8,8 @@
 
 * Improved width calculations in `as_gtable()` (@teunbrand, #1923)
 
+* Tables output to HTML and LaTeX now respect the document/browser default font sizes, only changing the size if the user sets the `table.font.size` option. (@capnrefsmmat, #1937)
+
 # gt 0.11.1
 
 ## Breaking changes
