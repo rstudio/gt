@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -966,94 +966,126 @@ grid_align_gtable <- function(gtable, data) {
 }
 
 grid_layout_widths <- function(layout, data) {
+  # This aims to follow §17.5.2.2 of
+  # https://www.w3.org/TR/CSS21/tables.html#auto-table-layout
+  # with the adjustment that we only care about *minimum* widths, as we
+  # cannot dynamically reflow cell content in grid.
 
-  widths <- vapply(layout$grobs, `[[`, numeric(1), "width")
+  # Step 1: Calculate the minimum content width (MCW) of each cell.
+  # We already added this information to grobs during their construction
+  mcw <- vapply(layout$grobs, `[[`, numeric(1), "width")
 
-  columns <- vctrs::vec_group_loc(layout[, c("left", "right")])
-  columns$width <- vapply(columns$loc, function(i) max(widths[i]), numeric(1L))
+  # Step 2: For each column, determine minimum column width from the cells
+  # that span that column.
+  columns  <- vctrs::vec_group_loc(layout[, c("left", "right")])
+  columns$min_width <- vapply(columns$loc, function(i) max(mcw[i]), numeric(1L))
+  # For now, we only care about 1-cell columns, we deal with spans later
+  singles <- vctrs::vec_slice(columns, columns$key$left == columns$key$right)
+  width_fix <- width_rel <- rep(0L, max(layout$right))
+  width_fix[singles$key$left] <- singles$min_width
+  orig_width <- width_fix
 
-  is_single <- columns$key$left == columns$key$right
-  singles <- columns[is_single, ]
-  spanner <- columns[!is_single, ]
-
-  widths <- rep_len(0, max(layout$right))
-  widths[singles$key$left] <- singles$width
-
-  # Enlarge columns if fixed column widths have been set
-  column_width <- unlist(dt_boxhead_get(data)$column_width)
-  fixed    <- integer(0)
-  relative <- rep(NA_real_, length(widths))
-
-  if (any(nzchar(column_width)) && length(column_width) == length(widths)) {
-    fixed <- which(endsWith(column_width, "px"))
-    if (length(fixed) > 0) {
-      widths[fixed] <- pmax(parse_px_to_pt(column_width[fixed]), widths[fixed])
-    }
-    pct <- which(endsWith(column_width, "%"))
-    if (length(pct) > 0) {
-      relative[pct] <- as.numeric(sub("\\%$", "", column_width[pct])) / 100
-    }
+  # (or the column width, whichever is largest)
+  set_width <- unlist(dt_boxhead_get(data)$column_width)
+  is_rel <- grep("\\%$", set_width)
+  if (length(is_rel) > 0) {
+    rel <- rep(0L, length(width_rel))
+    rel[is_rel] <- as.numeric(gsub("\\%$", "", set_width[is_rel])) / 100
+    width_rel <- pmax(width_rel, rel)
+    width_fix[is_rel] <- 0
+    set_width[is_rel] <- ""
   }
-  pct <- which(!is.na(relative))
+  is_fix <- which(nzchar(set_width))
+  if (length(is_fix) > 0) {
+    fix <- rep(0L, length(width_fix))
+    fix[is_fix] <- parse_px_to_pt(set_width[is_fix])
+    width_fix <- pmax(width_fix, fix)
+  }
 
-  spanner <- spanner[order(spanner$key$left, spanner$key$right), ]
+  # Step 3: For each cell that spans more than one column, increase the column
+  # widths it spans so that together, they are at least as wide as the cell.
+  spans <- vctrs::vec_slice(columns, columns$key$left != columns$key$right)
+  spans <- vctrs::vec_slice(spans, order(spans$key$left, spans$key$right))
+  spans <- vctrs::vec_slice(spans, spans$min_width > 0)
 
-  for (i in seq_len(nrow(spanner))) {
-
-    left <- spanner$key$left[i]
-    right <- spanner$key$right[i]
-    single_size <- sum(widths[left:right])
-    extra_width <- spanner$width[i] - single_size
-
-    if (extra_width < 0) {
+  for (i in vctrs::vec_seq_along(spans)) {
+    left  <- spans$key$left[i]
+    right <- spans$key$right[i]
+    idx   <- left:right
+    current_width <- sum(width_fix[idx])
+    extra_width <- spans$min_width[i] - current_width
+    if (extra_width <= 0) {
       next
     }
-    extra_width <- extra_width / (right - left + 1)
-    widths[left:right] <- widths[left:right] + extra_width
+    # Distribute additional width over columns
+    width_fix[idx] <- width_fix[idx] + extra_width / (right - left + 1)
   }
 
+  # We skip step 4 because I don't think column groups are recognized.
+  # Instead, we are going to integrate the total table width setting
   total_width <- dt_options_get_value(data, "table_width")
 
-  if (endsWith(total_width, "px")) {
+  # The thought here is that when the total width is more than the sum
+  # of column widths, the extra width is distributed over the columns.
+  # When the total width is less, it becomes the minimum width required by all
+  # columns.
 
+  # Total width is a percentage
+  if (grepl("\\%$", total_width)) {
+    total_width <- as.numeric(gsub("\\%$", "", total_width)) / 100
+
+    # A percentage value for a column width is relative to the table width
+    width_rel <- width_rel * total_width
+
+    # Distribute extra width over the columns
+    available_width <- total_width - sum(width_rel)
+    not_rel <- setdiff(seq_along(width_rel), is_rel)
+    width_rel[not_rel] <- pmax(available_width / length(not_rel), 0)
+
+  } else if (grepl("px$", total_width)) {
+    # Total width is absolute
     total_width <- parse_px_to_pt(total_width)
-    extra_width <- total_width - sum(widths)
 
-    if (extra_width <= 0 || length(fixed) == length(widths)) {
-      return(grid::unit(widths, .grid_unit))
-    }
+    # Distribute extra width over the columns
+    available_width <- total_width * (1 - sum(width_rel)) - sum(width_fix)
+    not_rel <- setdiff(seq_along(width_fix), is_rel)
+    available_width <- pmax(available_width / length(not_rel), 0)
+    width_fix[not_rel] <- width_fix[not_rel] + available_width
 
-    change <- setdiff(seq_along(widths), fixed)
-    widths[change] <- widths[change] + extra_width / (length(widths[change]))
-    widths <- grid::unit(widths, .grid_unit)
-    if (length(pct) > 0) {
-      widths[pct] <- grid::unit(relative[pct], "npc")
-    }
-    return(widths)
+    # Translate relative units to absolute units
+    width_fix[is_rel]  <- width_rel[is_rel] * total_width
+    width_rel <- rep(0, length(width_fix))
+  } else if (length(is_rel) > 0 && sum(width_rel) > 0) {
+    # We have a mixture of relative and absolute units and no total width goal
+
+    # Compute theoretical total width if we scale everything
+    # based on fixed widths
+    frac_rel <- sum(width_rel)
+    sum_fix <- sum(width_fix) / (1 - frac_rel)
+
+    # Compute theoretical total width if we scale everything
+    # based on relative widths
+    mult <- width_rel[is_rel] / min(width_rel[is_rel])
+    sum_rel <- sum(mult * orig_width[is_rel]) / frac_rel
+
+    # The actual width we use is the maximum
+    total_width <- max(sum_rel, sum_fix)
+
+    # Redistribute residual width over non-fixed and non-relative columns
+    available_width <- max(total_width * (1 - frac_rel) - sum(width_fix), 0)
+    # available_width <- max(total_width - sum(width_fix) - sum_rel * frac_rel, 0)
+    spread <- setdiff(seq_along(width_fix), union(is_rel, is_fix))
+    width_fix[spread] <- width_fix[spread] + available_width / length(spread)
+
+    # Translate relative units
+    width_fix[is_rel] <- width_rel[is_rel] * total_width
+    width_rel <- rep(0, length(width_fix))
   }
 
-  if (endsWith(total_width, "%")) {
-
-    # Set the total width in npc units
-    total_width <- as.numeric(sub("\\%$", "", total_width)) / 100
-    change <- setdiff(seq_along(widths), fixed)
-    extra_width <- rep_len(0, length(widths))
-    extra_width[change] <- total_width / length(change)
-    extra_width <- grid::unit(extra_width, "npc")
-
-    # Subtract the size of fixed columns from the npc units
-    extra_width[change] <- extra_width[change] -
-      grid::unit(sum(widths[fixed]) / length(change), .grid_unit)
-
-    # Take pairwise max between minimal size and relative size
-    widths <- grid::unit.pmax(grid::unit(widths, .grid_unit), extra_width)
-    if (length(pct) > 0) {
-      widths[pct] <- grid::unit(relative[pct], "npc")
-    }
-    return(widths)
+  # Combine absolute and relative units
+  width <- grid::unit(width_fix, .grid_unit)
+  if (sum(width_rel) > 0) {
+    width <- grid::unit.pmax(width, grid::unit(width_rel, "npc"))
   }
-  grid::unit(
-    ifelse(is.na(relative), widths, relative),
-    ifelse(is.na(relative), .grid_unit, "npc")
-  )
+  width
 }
