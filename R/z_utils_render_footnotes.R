@@ -236,7 +236,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     # Re-combine `tbl_not_column_cells`
     # with `tbl_column_cells`
     tbl <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         tbl_not_column_cells,
         tbl_column_cells
       )

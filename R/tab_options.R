@@ -906,7 +906,7 @@ tab_options <- function(
     dplyr::bind_rows(
       dplyr::inner_join(
         new_df,
-        dplyr::select(opts_df, -value),
+        dplyr::select(opts_df, -"value"),
         by = "parameter"
       ),
       dplyr::anti_join(opts_df, new_df, by = "parameter")
