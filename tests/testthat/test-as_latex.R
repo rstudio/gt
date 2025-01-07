@@ -179,7 +179,7 @@ test_that("Table styles correctly applied for tabular*", {
     tab_style(style = cell_text(transform = "uppercase"),
               locations = cells_column_labels(columns = c("num", "fctr", "datetime"))) %>%
     tab_style(style = gt::cell_text(style = "italic"),
-              locations = cells_column_spanners(spanner = "a1")) %>%
+              locations = cells_column_spanners(spanners = "a1")) %>%
 
     # Body styles
     tab_style(style = cell_text(size = 20,

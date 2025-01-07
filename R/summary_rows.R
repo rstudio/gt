@@ -443,12 +443,7 @@ summary_rows <- function(
     data$`_data` <-
       dplyr::mutate(
         data$`_data`,
-        !!rowname_col_private := rep("", nrow(data$`_data`))
-      )
-    data$`_data` <-
-      dplyr::relocate(
-        data$`_data`,
-        dplyr::all_of(rowname_col_private),
+        !!rowname_col_private := rep("", nrow(data$`_data`)),
         .after = dplyr::last_col()
       )
 

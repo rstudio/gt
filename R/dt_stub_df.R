@@ -79,7 +79,6 @@ dt_stub_df_init <- function(
   # Handle column of data specified as the `groupname_col`
   #
   if (
-    !is.null(groupname_col) &&
     length(groupname_col) > 0L &&
     all(groupname_col %in% colnames(data_tbl))
   ) {

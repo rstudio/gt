@@ -51,7 +51,7 @@ compile_scss <- function(data, id = NULL) {
   additional_css <- dt_options_get_value(data = data, option = "table_additional_css")
 
   # Determine if there are any additional CSS statements
-  has_additional_css <- any(nchar(additional_css) > 0)
+  has_additional_css <- any(nzchar(additional_css))
 
   # Combine any additional CSS statements and separate with `\n`
   if (has_additional_css) {
