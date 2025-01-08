@@ -131,18 +131,13 @@ dt_summary_build <- function(data, context) {
 
       groups <- unique(stub_df$group_id)
 
-    } else if (
-      !is.null(groups) &&
-      is.character(groups) &&
-      length(groups) == 1 &&
-      groups == ":GRAND_SUMMARY:"
-    ) {
+    } else if (is_string(groups, ":GRAND_SUMMARY:")) {
 
       # If groups is given as ":GRAND_SUMMARY:" then use a
       # special group (`::GRAND_SUMMARY`)
       groups <- grand_summary_col
 
-    } else if (!is.null(groups) && is.character(groups)) {
+    } else if (is.character(groups)) {
 
       assert_rowgroups()
 

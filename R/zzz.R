@@ -138,7 +138,7 @@ utils::globalVariables(
 #'
 #' **gt** uses the following [options()] to configure behavior:
 #'
-#' - `gt.locale`: A [locale][info_locales()] to yse by default in
+#' - `gt.locale`: A [locale][info_locales()] to use by default in
 #'  the [gt()] function.
 #' - `gt.row_group.sep`: A separator between groups for the row group label. By
 #' default this is `" - "`.
@@ -151,7 +151,7 @@ utils::globalVariables(
 #' - `gt.latex_packages`: A vector of LaTeX package names to use when generating
 #' tables in the LaTeX output context. The set of packages loaded is controlled
 #' by this default vector:
-#' `c("booktabs", "caption", "longtable", "colortbl", "array")`.
+#' `c("booktabs", "caption", "longtable", "colortbl", "array", "anyfontsize", "multirow")`.
 #'
 #' @keywords internal
 #' @name gt-options

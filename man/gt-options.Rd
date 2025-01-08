@@ -11,7 +11,7 @@
 
 \strong{gt} uses the following \code{\link[=options]{options()}} to configure behavior:
 \itemize{
-\item \code{gt.locale}: A \link[=info_locales]{locale} to yse by default in
+\item \code{gt.locale}: A \link[=info_locales]{locale} to use by default in
 the \code{\link[=gt]{gt()}} function.
 \item \code{gt.row_group.sep}: A separator between groups for the row group label. By
 default this is \code{" - "}.
@@ -24,7 +24,7 @@ incompatible with the function. This is \code{FALSE} by default.
 \item \code{gt.latex_packages}: A vector of LaTeX package names to use when generating
 tables in the LaTeX output context. The set of packages loaded is controlled
 by this default vector:
-\code{c("booktabs", "caption", "longtable", "colortbl", "array")}.
+\code{c("booktabs", "caption", "longtable", "colortbl", "array", "anyfontsize", "multirow")}.
 }
 }
 

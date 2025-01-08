@@ -397,7 +397,7 @@ render_as_ihtml <- function(data, id) {
     # for defaultExpanded = TRUE
     expand_groupname_col <- TRUE
     # modify data_tbl to include
-    data_tbl <- dplyr::bind_cols(
+    data_tbl <- vctrs::vec_cbind(
       data_tbl,
       data_tbl0[ , groupname_col, drop = FALSE]
     )

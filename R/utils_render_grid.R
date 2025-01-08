@@ -104,17 +104,17 @@ create_heading_component_g <- function(data) {
 
   title_styles <- NA_character_
   if ("title" %in% styles_tbl$locname) {
-    title_style_rows <- vctrs::vec_slice(styles_tbl, styles_tbl$locname == "title")
-    if (nrow(title_style_rows) > 0) {
-      title_styles <- title_style_rows$html_style
+    title_styles <- vctrs::vec_slice(styles_tbl$html_style, styles_tbl$locname == "title")
+    if (length(title_styles) == 0) {
+      title_styles <- NA_character_
     }
   }
 
   subtitle_styles <- NA_character_
   if (subtitle_defined && "subtitle" %in% styles_tbl$locname) {
-    subtitle_style_rows <- vctrs::vec_slice(styles_tbl, styles_tbl$locname == "subtitle")
-    if (nrow(subtitle_style_rows) > 0) {
-      subtitle_styles <- subtitle_style_rows$html_style
+    subtitle_styles <- vctrs::vec_slice(styles_tbl$html_style, styles_tbl$locname == "subtitle")
+    if (length(subtitle_styles) == 0) {
+      subtitle_styles <- NA_character_
     }
   }
 

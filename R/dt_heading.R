@@ -67,7 +67,7 @@ dt_heading_has_title <- function(data) {
 
   heading <- dt_heading_get(data = data)
 
-   length(heading) > 0 && !is.null(heading$title) && length(heading$title) > 0
+   length(heading) > 0 && length(heading$title) > 0
 }
 
 dt_heading_has_subtitle <- function(data) {

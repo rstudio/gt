@@ -906,7 +906,7 @@ tab_options <- function(
     dplyr::bind_rows(
       dplyr::inner_join(
         new_df,
-        dplyr::select(opts_df, -value),
+        dplyr::select(opts_df, -"value"),
         by = "parameter"
       ),
       dplyr::anti_join(opts_df, new_df, by = "parameter")
@@ -946,9 +946,7 @@ tab_options <- function(
 dt_options_get_default_value <- function(option) {
 
   # Validate the provided `option` value
-  if (length(option) != 1) {
-    cli::cli_abort("A character vector of length one must be provided.")
-  }
+  check_string(option)
   if (!(option %in% dt_options_tbl$parameter)) {
     cli::cli_abort("The `option` provided is invalid.")
   }
@@ -1046,12 +1044,7 @@ set_super_options <- function(arg_vals) {
 
   if ("ihtml.selection_mode" %in% names(arg_vals)) {
     ihtml_selection_mode_val <- arg_vals$ihtml.selection_mode
-    if (
-        !(
-          rlang::is_scalar_character(ihtml_selection_mode_val) &&
-          ihtml_selection_mode_val %in% c("single", "multiple")
-        )
-    ) {
+    if (!rlang::is_string(ihtml_selection_mode_val, c("single", "multiple"))) {
       cli::cli_abort(c(
         "The chosen option for `ihtml.selection_mode` (`{ihtml_selection_mode_val}`) is invalid.",
         "*" = "We can use either \"single\" or \"multiple\"."

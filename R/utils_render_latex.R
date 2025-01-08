@@ -46,10 +46,7 @@ footnote_mark_to_latex <- function(
   }
 
   spec <- get_footnote_spec_by_location(data = data, location = location)
-
-  if (is.null(spec)) {
-    spec <- "^i"
-  }
+  spec <- spec %||% "^i"
 
   if (grepl(".", spec, fixed = TRUE)) mark <- sprintf_unless_na("%s.", mark)
   if (grepl("b", spec, fixed = TRUE)) mark <- sprintf_unless_na("\\textbf{%s}", mark)
@@ -156,10 +153,10 @@ create_table_start_l <- function(data, colwidth_df) {
   if ("group_label" %in% stub_layout) {
     types <- c(types, "row_group")
   }
-  
+
   colwidth_df_visible <- colwidth_df[colwidth_df$type %in% types, ]
-  
-  # Ensure that the `colwidth_df_visible` df rows are sorted such that the 
+
+  # Ensure that the `colwidth_df_visible` df rows are sorted such that the
   # `"row_group"` row is first (only if it's located in the stub), then `"stub"`,
   # and then everything else
   if ("stub" %in% colwidth_df_visible[["type"]]) {
@@ -167,7 +164,7 @@ create_table_start_l <- function(data, colwidth_df) {
     othr_idx <- base::setdiff(seq_len(nrow(colwidth_df_visible)), stub_idx)
     colwidth_df_visible <- vctrs::vec_slice(colwidth_df_visible, c(stub_idx, othr_idx))
   }
-  
+
   if ("row_group" %in% colwidth_df_visible[["type"]]) {
     row_group_idx <- which(colwidth_df_visible$type == "row_group")
     othr_idx <- base::setdiff(seq_len(nrow(colwidth_df_visible)), row_group_idx)
@@ -200,7 +197,7 @@ create_table_start_l <- function(data, colwidth_df) {
     col_defs <- NULL
 
     for (i in seq_len(nrow(colwidth_df_visible))) {
-      
+
       if (colwidth_df_visible$unspec[i] == 1L) {
         col_defs_i <- substr(colwidth_df_visible$column_align[i], 1, 1)
       } else {
@@ -228,7 +225,7 @@ create_table_start_l <- function(data, colwidth_df) {
     }
 
   } else {
-    
+
     col_defs <- substr(colwidth_df_visible$column_align, 1, 1)
   }
 
@@ -1710,7 +1707,7 @@ create_colwidth_df_l <- function(data) {
     pt = rep.int(0L, n),
     column_align = boxhead$column_align
   )
-  
+
   width_df$column_align[width_df$type %in% c("stub", "row_group")] <- "left"
 
   for (i in 1:n) {

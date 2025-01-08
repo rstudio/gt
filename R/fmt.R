@@ -184,7 +184,7 @@ validate_locale <- function(locale, call = rlang::caller_env()) {
   if (locale %in% c(locales[["locale"]], default_locales[["default_locale"]])) {
     return(locale)
   }
-  
+
   # Stop function if the `locale` provided is invalid
   cli::cli_abort(c(
     "The supplied `locale` is not available in the list of supported locales.",
@@ -252,7 +252,7 @@ get_locale_sep_mark <- function(
 
   # Get the correct `group_sep` value from the `gt:::locales` lookup table
   sep_mark <- locales$group[locales$locale == locale]
-  validate_length_one(sep_mark)
+  validate_length_one(sep_mark, "sep_mark")
   # Replace any `""` or "\u00a0" with `" "` since an empty string actually
   # signifies a space character, and, we want to normalize to a simple space
   if (sep_mark == "" || sep_mark == "\u00a0") sep_mark <- " "
@@ -291,7 +291,7 @@ get_locale_range_pattern <- function(locale = NULL) {
 
   # Get the correct `range_pattern` value from the `gt:::locales` lookup table
   range_pattern <- locales$range_pattern[locales$locale == locale]
-  validate_length_one(range_pattern)
+  validate_length_one(range_pattern, "range_pattern")
 
   range_pattern <- gsub("1", "2", range_pattern, fixed = TRUE)
   range_pattern <- gsub("0", "1", range_pattern, fixed = TRUE)
@@ -332,7 +332,7 @@ get_locale_idx_set <- function(locale = NULL) {
   }
 
   val <- locales$chr_index[locales$locale == locale]
-  validate_length_one(val)
+  validate_length_one(val, "locale")
   val
 }
 
@@ -388,7 +388,7 @@ get_locale_no_table_data_text <- function(locale = NULL) {
   # Get the correct `no_table_data_text` value from the
   # `gt:::locales` lookup table
   val <- locales$no_table_data_text[locales$locale == locale]
-  validate_length_one(val)
+  validate_length_one(val, "locale")
   val
 }
 
