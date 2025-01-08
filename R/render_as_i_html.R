@@ -609,7 +609,7 @@ render_as_ihtml <- function(data, id) {
       style = list(
         `font-family` = font_family_str,
         #1693
-        fontSize = table_font_size
+        fontSize = if (is.na(table_font_size)) NULL else table_font_size
       ),
       tableStyle = list(
         borderTopStyle = column_labels_border_top_style,

@@ -28,7 +28,7 @@ test_that("A gt table contains the expected heading components", {
   # Expect a characteristic pattern
   expect_match(
      as_latex(tbl_latex) %>% as.character(),
-    "\\caption*{\n{\\large test title}\n} \n\\fontsize",
+    "\\caption*{\n{\\large test title}\n} \n\\begin{",
     fixed = TRUE
   )
 
