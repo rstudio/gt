@@ -6193,9 +6193,8 @@ format_units_by_context <- function(
 #' ```r
 #' towny |>
 #'   dplyr::filter(csd_type == "city") |>
-#'   dplyr::arrange(desc(population_2021)) |>
 #'   dplyr::select(name, website, population_2021) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(population_2021, n = 10) |>
 #'   gt() |>
 #'   tab_header(
 #'     title = md("The 10 Largest Municipalities in `towny`"),
@@ -6223,9 +6222,8 @@ format_units_by_context <- function(
 #' ```r
 #' towny |>
 #'   dplyr::filter(csd_type == "city") |>
-#'   dplyr::arrange(desc(population_2021)) |>
 #'   dplyr::select(name, website, population_2021) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(population_2021, n = 10) |>
 #'   gt() |>
 #'   tab_header(
 #'     title = md("The 10 Largest Municipalities in `towny`"),
@@ -6261,9 +6259,8 @@ format_units_by_context <- function(
 #' ```r
 #' towny |>
 #'   dplyr::filter(csd_type == "city") |>
-#'   dplyr::arrange(desc(population_2021)) |>
 #'   dplyr::select(name, website, population_2021) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(population_2021, n = 10) |>
 #'   dplyr::mutate(ranking = dplyr::row_number()) |>
 #'   gt(rowname_col = "ranking") |>
 #'   tab_header(
@@ -6302,9 +6299,8 @@ format_units_by_context <- function(
 #'
 #' ```r
 #' towny |>
-#'   dplyr::arrange(population_2021) |>
 #'   dplyr::select(name, website, population_2021) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_min(population_2021, n = 10) |>
 #'   gt() |>
 #'   tab_header(
 #'     title = md("The 10 Smallest Municipalities in `towny`"),
@@ -10017,7 +10013,7 @@ fmt_passthrough <- function(
 #'   dplyr::select(country_code_3, year, population) |>
 #'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
 #'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
-#'   tidyr::pivot_wider(names_from = year, values_from = population)
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
 #'   dplyr::arrange(desc(`2020`)) |>
 #'   gt(rowname_col = "country_code_3") |>
 #'   fmt_auto(lg_num_pref = "suf")

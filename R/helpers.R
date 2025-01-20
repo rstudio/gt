@@ -582,8 +582,7 @@ currency <- function(
 #'
 #' ```r
 #' towny |>
-#'   dplyr::arrange(desc(density_2021)) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(density_2021, n = 10) |>
 #'   dplyr::select(name, population_2021, density_2021, land_area_km2) |>
 #'   gt(rowname_col = "name") |>
 #'   fmt_integer(columns = population_2021) |>
