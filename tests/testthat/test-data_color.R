@@ -907,7 +907,7 @@ test_that("The direction of coloring can be column-wise or row-wise", {
     dplyr::filter(latitude == 20, tst <= "1200") %>%
     dplyr::select(-latitude) %>%
     dplyr::filter(!is.na(sza)) %>%
-    tidyr::spread(key = "tst", value = sza) %>%
+    tidyr::pivot_wider(names_from = "tst", values_from = sza, names_sort = TRUE) %>%
     gt(rowname_col = "month") %>%
     sub_missing(missing_text = "")
 

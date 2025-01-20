@@ -1763,7 +1763,7 @@ fmt_partsper <- function(
   #
 
   # Ensure that arguments are matched
-  to_units <- 
+  to_units <-
     rlang::arg_match0(
       to_units,
       values = c("per-mille", "per-myriad", "pcm", "ppm", "ppb", "ppt", "ppq")
@@ -4240,7 +4240,7 @@ fmt_duration <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
-  duration_style <- 
+  duration_style <-
     rlang::arg_match0(
       duration_style,
       values = c("narrow", "wide", "colon-sep", "iso")
@@ -9665,7 +9665,7 @@ fmt_markdown <- function(
   #
 
   # Ensure that arguments are matched
-  md_engine <- 
+  md_engine <-
     rlang::arg_match0(
       md_engine,
       values = c("markdown", "commonmark")
@@ -10017,7 +10017,7 @@ fmt_passthrough <- function(
 #'   dplyr::select(country_code_3, year, population) |>
 #'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
 #'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
-#'   tidyr::spread(year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population)
 #'   dplyr::arrange(desc(`2020`)) |>
 #'   gt(rowname_col = "country_code_3") |>
 #'   fmt_auto(lg_num_pref = "suf")

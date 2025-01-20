@@ -68,7 +68,7 @@ Suggests:
     rvest,
     shiny (>= 1.9.1),
     testthat (>= 3.1.9),
-    tidyr,
+    tidyr (>= 1.0.0),
     webshot2 (>= 0.1.0),
     withr
 Config/Needs/coverage: officer

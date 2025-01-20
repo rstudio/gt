@@ -1,5 +1,4 @@
 library(tidyverse)
-library(lubridate)
 library(progress)
 
 # Define the pizza names, types, available sizes, and prices for each;
@@ -503,7 +502,11 @@ orders_year <-
     daily_random_orders =
       sample(floor(rnorm(100, mean = 15, sd = 4)), n(), replace = TRUE)
   ) %>%
-  tidyr::gather("order_type", "n", grp_ord_n:daily_random_orders) %>%
+  tidyr::pivot_longer(
+    cols = grp_ord_n:daily_random_orders,
+    names_to = "order_type",
+    values_to = "n"
+  ) %>%
   dplyr::arrange(date, order_type) %>%
   dplyr::filter(!(date %in% full_closures)) %>%
   apply_exceptional_days(exceptional_df = exceptional_tbl)
