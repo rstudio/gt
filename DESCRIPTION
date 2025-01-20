@@ -53,7 +53,6 @@ Imports:
     vctrs,
     xml2 (>= 1.3.6)
 Suggests:
-    digest (>= 0.6.31),
     fontawesome (>= 0.5.2),
     ggplot2,
     grid,

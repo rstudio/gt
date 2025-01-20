@@ -181,8 +181,8 @@ test_that("word ooxml can be generated from gt object", {
     ) %>%
     as_word()
 
-  gt_exibble_min_sha1 <- digest::sha1(gt_exibble_min)
-  expect_equal(gt_exibble_min_sha1, "818e5b7186faca5038cc62b607d01fd43ee86e11")
+  gt_exibble_min_sha1 <- rlang::hash(gt_exibble_min)
+  expect_equal(gt_exibble_min_sha1, "302bc4daceb5b50a7a41c5e80e5d7187")
 
 })
 
