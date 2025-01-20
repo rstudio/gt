@@ -335,8 +335,7 @@ In terms of structuring the code, we're taking all the previous statements and p
 # this will be used to target the correct cell for a footnote
 best_gas_mileage_city <- 
   gtcars |> 
-  arrange(desc(mpg_c)) |>
-  slice(1) |>
+  slice_max(mpg_c, n = 1) |>
   mutate(car = paste(mfr, model)) |>
   pull(car)
 
@@ -344,8 +343,7 @@ best_gas_mileage_city <-
 # this will be used to target the correct cell for a footnote
 highest_horsepower <- 
   gtcars |> 
-  arrange(desc(hp)) |>
-  slice(1) |>
+  slice_max(hp, n = 1) |>
   mutate(car = paste(mfr, model)) |>
   pull(car)
 

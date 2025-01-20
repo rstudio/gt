@@ -162,9 +162,8 @@ for you (it's dark cyan).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::filter(csd_type == "city") |>
-  dplyr::arrange(desc(population_2021)) |>
   dplyr::select(name, website, population_2021) |>
-  dplyr::slice_head(n = 10) |>
+  dplyr::slice_max(population_2021, n = 10) |>
   gt() |>
   tab_header(
     title = md("The 10 Largest Municipalities in `towny`"),
@@ -191,9 +190,8 @@ text in parentheses (\code{\link[=cols_merge]{cols_merge()}} handles all that).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::filter(csd_type == "city") |>
-  dplyr::arrange(desc(population_2021)) |>
   dplyr::select(name, website, population_2021) |>
-  dplyr::slice_head(n = 10) |>
+  dplyr::slice_max(population_2021, n = 10) |>
   gt() |>
   tab_header(
     title = md("The 10 Largest Municipalities in `towny`"),
@@ -228,9 +226,8 @@ the URLs by eliminating any leading \code{"https://"} or \code{"www."} parts.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::filter(csd_type == "city") |>
-  dplyr::arrange(desc(population_2021)) |>
   dplyr::select(name, website, population_2021) |>
-  dplyr::slice_head(n = 10) |>
+  dplyr::slice_max(population_2021, n = 10) |>
   dplyr::mutate(ranking = dplyr::row_number()) |>
   gt(rowname_col = "ranking") |>
   tab_header(
@@ -268,9 +265,8 @@ of URLs. \code{fmt_url()} will preserve input \code{NA} values, allowing you to 
 them with \code{\link[=sub_missing]{sub_missing()}}. Here's an example of that.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
-  dplyr::arrange(population_2021) |>
   dplyr::select(name, website, population_2021) |>
-  dplyr::slice_head(n = 10) |>
+  dplyr::slice_min(population_2021, n = 10) |>
   gt() |>
   tab_header(
     title = md("The 10 Smallest Municipalities in `towny`"),

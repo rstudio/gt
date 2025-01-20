@@ -38,8 +38,7 @@ islands_tbl <-
     name = names(islands),
     size = islands
   ) |>
-  arrange(desc(size)) |>
-  slice(1:10)
+  slice_max(size, n = 10)
 
 # Display the table
 islands_tbl
@@ -147,8 +146,7 @@ Here is a slightly more complex example of adding footnotes that use expressions
 # largest landmass ('Asia')
 largest <- 
   islands_tbl |> 
-  arrange(desc(size)) |>
-  slice(1) |>
+  slice_max(size, n = 1) |>
   pull(name)
 
 # Create two additional footnotes, using the
