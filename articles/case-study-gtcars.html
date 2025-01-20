@@ -7596,8 +7596,7 @@ in order) and expect the same output table.</p>
 <span><span class="co"># this will be used to target the correct cell for a footnote</span></span>
 <span><span class="va">best_gas_mileage_city</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">gtcars</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">mpg_c</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">slice_max</span><span class="op">(</span><span class="va">mpg_c</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>car <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">pull</span><span class="op">(</span><span class="va">car</span><span class="op">)</span></span>
 <span></span>
@@ -7605,8 +7604,7 @@ in order) and expect the same output table.</p>
 <span><span class="co"># this will be used to target the correct cell for a footnote</span></span>
 <span><span class="va">highest_horsepower</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">gtcars</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">hp</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">slice_max</span><span class="op">(</span><span class="va">hp</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>car <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">pull</span><span class="op">(</span><span class="va">car</span><span class="op">)</span></span>
 <span></span>

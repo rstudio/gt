@@ -131,8 +131,7 @@ not a data frame but a named vector. That’s okay though, we can use use
 <span>    name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">islands</span><span class="op">)</span>,</span>
 <span>    size <span class="op">=</span> <span class="va">islands</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">size</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<span>  <span class="fu">slice_max</span><span class="op">(</span><span class="va">size</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Display the table</span></span>
 <span><span class="va">islands_tbl</span></span>
@@ -2812,8 +2811,7 @@ supplying a conditional statement that gets the lowest population.</p>
 <span><span class="co"># largest landmass ('Asia')</span></span>
 <span><span class="va">largest</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">islands_tbl</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">size</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">slice_max</span><span class="op">(</span><span class="va">size</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">pull</span><span class="op">(</span><span class="va">name</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create two additional footnotes, using the</span></span>
