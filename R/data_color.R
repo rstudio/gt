@@ -623,7 +623,11 @@
 #'   dplyr::filter(latitude == 20 & tst <= "1200") |>
 #'   dplyr::select(-latitude) |>
 #'   dplyr::filter(!is.na(sza)) |>
-#'   tidyr::spread(key = "tst", value = sza) |>
+#'   tidyr::pivot_wider(
+#'     names_from = tst,
+#'     values_from = sza,
+#'     names_sort = TRUE
+#'   ) |>
 #'   gt(rowname_col = "month") |>
 #'   sub_missing(missing_text = "") |>
 #'   data_color(
@@ -679,7 +683,7 @@ data_color <- function(
   direction <- rlang::arg_match0(direction, values = c("column", "row"))
 
   # Get the correct `method` value
-  method <- 
+  method <-
     rlang::arg_match0(
       method,
       values = c("auto", "numeric", "bin", "quantile", "factor")

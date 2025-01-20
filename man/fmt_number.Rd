@@ -314,7 +314,7 @@ option.
   dplyr::select(country_code_3, year, population) |>
   dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) |>
   dplyr::filter(year > 1975 & year \%\% 5 == 0) |>
-  tidyr::spread(year, population) |>
+  tidyr::pivot_wider(names_from = year, values_from = population) |>
   dplyr::arrange(desc(`2015`)) |>
   gt(rowname_col = "country_code_3") |>
   fmt_number(suffixing = TRUE)
@@ -332,7 +332,7 @@ like population figures, \code{n_sigfig = 3} is a very good option.
   dplyr::select(country_code_3, year, population) |>
   dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) |>
   dplyr::filter(year > 1975 & year \%\% 5 == 0) |>
-  tidyr::spread(year, population) |>
+  tidyr::pivot_wider(names_from = year, values_from = population) |>
   dplyr::arrange(desc(`2015`)) |>
   gt(rowname_col = "country_code_3") |>
   fmt_number(suffixing = TRUE, n_sigfig = 3)
