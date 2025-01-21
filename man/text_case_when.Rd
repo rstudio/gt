@@ -66,8 +66,8 @@ cases with an empty string (\code{""}). Finally, we use \code{\link[=cols_label]
 the labels of the three columns.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
-  dplyr::select(name, lines, connect_rer) |>
   dplyr::slice_max(passengers, n = 10) |>
+  dplyr::select(name, lines, connect_rer) |>
   gt() |>
   text_case_when(
     stringr::str_count(x, pattern = "[ABCDE]") == 1 ~ "One connection.",
