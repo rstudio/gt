@@ -137,7 +137,7 @@ Another fine venue for discussion is in the [`gt_package` *Discord server*](http
 
 [![Discord Server](https://img.shields.io/badge/Discord-Chat%20with%20us-blue?style=social&logo=discord&logoColor=purple)](https://discord.com/invite/Ux7nrcXHVV)
 
-Finally, there is the [`gt-package` *Bluesky account*](https://bsky.app/profile/gt-package.bsky.social). There you'll find tweets about **gt** (including sneak previews about in-development features) and other table-generation packages.
+Finally, there is the [`gt-package` *Bluesky account*](https://bsky.app/profile/gt-package.bsky.social). There you'll find posts about **gt** (including sneak previews about in-development features) and other table-generation packages.
 
 [![Follow on Bluesky](https://img.shields.io/badge/Bluesky-0285FF?logo=bluesky&logoColor=0285FF&label=Follow%20on&color=0285FF)](https://bsky.app/profile/gt-package.bsky.social)
 
