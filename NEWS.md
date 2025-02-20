@@ -1,5 +1,7 @@
 # gt (development version)
 
+* The default table position in LaTeX is now "t" instead of "!t" (@AaronGullickson, #1935).
+
 * Fixed an issue where cross-references would fail in bookdown::html_document2 (@olivroy, #1948)
 
 * Significantly faster rendering of certain large tables, by optimizing the internal `rownum_translation()` utility. (@magnusdv, #1924) 
