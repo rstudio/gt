@@ -129,7 +129,7 @@ cols_width <- function(
     all(
       vapply(
         widths_list,
-        FUN = function(width) rlang::is_formula(width),
+        FUN = rlang::is_formula,
         FUN.VALUE = logical(1L)
       )
     )

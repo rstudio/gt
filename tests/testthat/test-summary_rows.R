@@ -80,11 +80,11 @@ test_that("summary_rows() can make group-wise summaries", {
   expect_equal(summary[[1]]$columns, "open")
 
   # Expect that `summary[[1]]$fns` is a `list` object
-  expect_type(summary[[1]]$fns , "list")
+  expect_type(summary[[1]]$fns, "list")
 
   # Expect that the components of `summary[[1]]$fns` are lists
   expect_type(summary[[1]]$fns$average, "list")
-  expect_type(summary[[1]]$fns$total , "list")
+  expect_type(summary[[1]]$fns$total, "list")
   expect_type(summary[[1]]$fns$`std dev`, "list")
 
   # Create a table with summary rows for the `W02` and `W03`
@@ -116,7 +116,7 @@ test_that("summary_rows() can make group-wise summaries", {
 
   # Expect that the components of `summary[[1]]$fns` are lists
   expect_type(summary[[1]]$fns$average , "list")
-  expect_type(summary[[1]]$fns$total , "list")
+  expect_type(summary[[1]]$fns$total, "list")
   expect_type(summary[[1]]$fns$`std dev`, "list")
 
   # Create a table with summary rows for the `W02` and `W03`
@@ -147,9 +147,9 @@ test_that("summary_rows() can make group-wise summaries", {
   expect_equal(summary[[1]]$columns, "open")
 
   # Expect that the components of `summary[[1]]$fns` are lists
-  expect_type(summary[[1]]$fns$average , "list")
+  expect_type(summary[[1]]$fns$average, "list")
   expect_type(summary[[1]]$fns$total, "list")
-  expect_type(summary[[1]]$fns$`std dev` , "list")
+  expect_type(summary[[1]]$fns$`std dev`, "list")
 
   # Create a table with two sets of summary rows for all groups
   # and all columns

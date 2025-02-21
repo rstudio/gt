@@ -17,8 +17,8 @@ rx_adsl <- dplyr::tribble(
     data.frame(STUDYID = "GT01",
                STUDYIDN = "4001",
                USUBJID = rx_subjects,
-               TRTA = rep(rx_treatments, each = length(rx_subjects)/length(rx_treatments)),
-               TRTAN = rep(seq_along(rx_treatments), each = length(rx_subjects)/length(rx_treatments)),
+               TRTA = rep(rx_treatments, each = length(rx_subjects) / length(rx_treatments)),
+               TRTAN = rep(seq_along(rx_treatments), each = length(rx_subjects) / length(rx_treatments)),
                ITTFL = "Y",
                RANDFL = "Y",
                SCRFREAS = ""
@@ -220,4 +220,3 @@ attr(rx_addv$ACAT1, "label") <- "Analysis Category 1"
 attr(rx_addv$AVAL, "label") <- "Analysis Value"
 attr(rx_addv$CRIT1, "label") <- "Analysis Criterion 1"
 attr(rx_addv$CRIT1FL, "label") <- "Criterion 1 Evaluation Flag"
-

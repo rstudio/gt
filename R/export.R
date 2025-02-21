@@ -409,7 +409,7 @@ as_rtf <- function(
       incl_close = incl_close
     )
 
-  if (isTRUE(getOption('knitr.in.progress'))) {
+  if (isTRUE(getOption("knitr.in.progress"))) {
     rtf_table <- knitr::raw_output(rtf_table)
   }
 
@@ -499,7 +499,7 @@ as_word <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  caption_location <- 
+  caption_location <-
     rlang::arg_match0(
       caption_location,
       values = c("top", "bottom", "embed")

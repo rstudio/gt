@@ -406,15 +406,12 @@ get_tf_vals <- function(tf_style, locale) {
   }
 
   # Stop function if a numeric `tf_style` value is invalid
-  if (is.numeric(tf_style)) {
-
-    if (!(tf_style %in% tf_format_num_range)) {
-      cli::cli_abort(c(
-        "If using a numeric value for a `tf_style`, it must be
-        between `1` and `{nrow((tf_format_tbl))}`.",
-        "*" = "Use `info_tf_style()` for a useful visual reference."
-      ))
-    }
+  if (is.numeric(tf_style) && !(tf_style %in% tf_format_num_range)) {
+    cli::cli_abort(c(
+      "If using a numeric value for a `tf_style`, it must be
+      between `1` and `{nrow((tf_format_tbl))}`.",
+      "*" = "Use `info_tf_style()` for a useful visual reference."
+    ))
   }
 
   # Stop function if a character-based `tf_style` value is invalid
@@ -446,9 +443,9 @@ get_tf_vals <- function(tf_style, locale) {
 
     return(c(true_str, false_str))
 
-  } else {
-    return(unlist(tf_format_tbl_i[["characters"]]))
   }
+
+  unlist(tf_format_tbl_i[["characters"]])
 }
 
 #' Are string values 24 hour times?
@@ -538,9 +535,9 @@ resolve_footnote_placement <- function(
 
   if (cell_alignment == "right") {
     return("left")
-  } else {
-    return("right")
   }
+
+  "right"
 }
 
 get_alignment_at_body_cell <- function(

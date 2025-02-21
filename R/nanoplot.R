@@ -743,12 +743,12 @@ cols_nanoplot <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
-  missing_vals <- 
+  missing_vals <-
     rlang::arg_match0(
       missing_vals,
       values = c("gap", "marker", "zero", "remove")
     )
-  plot_type <- 
+  plot_type <-
     rlang::arg_match0(
       plot_type,
       values = c("line", "bar", "boxplot")
@@ -811,7 +811,7 @@ cols_nanoplot <- function(
 
   # Get all `y` vals from single-valued components of `data_vals_plot_y`
   # into a vector
-  all_single_y_vals <- c()
+  all_single_y_vals <- NULL
   for (i in seq_along(data_vals_plot_y)) {
     if (length(data_vals_plot_y[[i]]) == 1 && !is.na(data_vals_plot_y[[i]])) {
       all_single_y_vals <- c(all_single_y_vals, data_vals_plot_y[[i]])
@@ -836,7 +836,7 @@ cols_nanoplot <- function(
   }
 
   # Initialize vector that will contain the nanoplots
-  nanoplots <- c()
+  nanoplots <- NULL
 
   for (i in seq_along(data_vals_plot_y)) {
 
