@@ -6,7 +6,7 @@
       <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
         <thead>
           <tr class="gt_heading">
-            <td colspan="4" class="gt_heading gt_title gt_font_normal gt_bottom_border" style><span data-qmd-base64="PGEgaHJlZj0iaHR0cHM6Ly9nb29nbGUuY29tIj5nb2c8L2E+"><span class='gt_from_md'><a href="https://google.com">gog</a></span></span></td>
+            <td colspan="4" class="gt_heading gt_title gt_font_normal gt_bottom_border" style><span data-qmd-base64="W2dvZ10oaHR0cHM6Ly9nb29nbGUuY29tKQ=="><span class='gt_from_md'><a href="https://google.com">gog</a></span></span></td>
           </tr>
           
           <tr class="gt_col_headings gt_spanner_row">
@@ -52,7 +52,7 @@
             <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> A problem because fctr is labelled with md</td>
           </tr>
           <tr>
-            <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>3</sup></span> <span data-qmd-base64="UHJvYmxlbSBiZWNhdXNlIG51bSByb3cgMSBpcyA8Y29kZT5mbXRfbWFya2Rvd24oKTwvY29kZT4gKyBhbHNvIHRoZSBmb290bm90ZSBpcyB3cmFwcGVkIGluIG1kLg=="><span class='gt_from_md'>Problem because num row 1 is <code>fmt_markdown()</code> + also the footnote is wrapped in md.</span></span></td>
+            <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>3</sup></span> <span data-qmd-base64="UHJvYmxlbSBiZWNhdXNlIG51bSByb3cgMSBpcyBgZm10X21hcmtkb3duKClgICsgYWxzbyB0aGUgZm9vdG5vdGUgaXMgd3JhcHBlZCBpbiBtZC4="><span class='gt_from_md'>Problem because num row 1 is <code>fmt_markdown()</code> + also the footnote is wrapped in md.</span></span></td>
           </tr>
         </tfoot>
       </table>
