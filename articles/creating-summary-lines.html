@@ -1248,7 +1248,7 @@ provide our preferred names by naming the functions within the list
 <span><span class="co"># groups (using `groups = everything()`); use the</span></span>
 <span><span class="co"># `mean()`, `sum()`, and `sd()` functions</span></span>
 <span><span class="co"># (only for the `num` column)</span></span>
-<span><span class="va">exibble_b</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">exibble_b</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">exibble_a</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/summary_rows.html">summary_rows</a></span><span class="op">(</span></span>
 <span>    groups <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -1838,7 +1838,7 @@ avoid this, let’s rewrite the above using the
 <code class="sourceCode R"><span><span class="co"># Create group-wise summary rows for both</span></span>
 <span><span class="co"># groups (using `groups = everything()`); we will</span></span>
 <span><span class="co"># use names and formulas this time in `fns`</span></span>
-<span><span class="va">exibble_c</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">exibble_c</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">exibble_a</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/summary_rows.html">summary_rows</a></span><span class="op">(</span></span>
 <span>    groups <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -2413,17 +2413,17 @@ the options of <code>decimals = 3</code>).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Define a named list of aggregation</span></span>
 <span><span class="co"># functions and summary row labels</span></span>
-<span><span class="va">fns_labels</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">fns_labels</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    avg <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>    total <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">.</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>    s.d. <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">.</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    avg <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    total <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">.</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    s.d. <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">.</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create group-wise summary rows as</span></span>
 <span><span class="co"># before, supply `fns_labels` to `fns`,</span></span>
 <span><span class="co"># and format the cell summary data</span></span>
-<span><span class="va">exibble_d</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">exibble_d</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">exibble_a</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_scientific.html">fmt_scientific</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">num</span>,</span>
@@ -3023,7 +3023,7 @@ formatting:</p>
 <code class="sourceCode R"><span><span class="co"># Create group-wise summary rows as</span></span>
 <span><span class="co"># before, supply `fns_labels` to `fns`,</span></span>
 <span><span class="co"># and format the cell summary data</span></span>
-<span><span class="va">exibble_e</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">exibble_e</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">exibble_a</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_scientific.html">fmt_scientific</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">num</span>,</span>
@@ -3645,7 +3645,7 @@ Here’s an example of that, which additional passes the
 <code class="sourceCode R"><span><span class="co"># Provide common formatting parameters to a list</span></span>
 <span><span class="co"># object named `formats`; the number of decimal</span></span>
 <span><span class="co"># places will be `2` and the locale is "fr_BE"</span></span>
-<span><span class="va">formats</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">formats</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    decimals <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>    locale <span class="op">=</span> <span class="st">"fr_BE"</span>,</span>
@@ -3656,7 +3656,7 @@ Here’s an example of that, which additional passes the
 <span><span class="co"># (using the values stored in `formats`);</span></span>
 <span><span class="co"># when generating summary rows we can also</span></span>
 <span><span class="co"># supply formatter options from this list</span></span>
-<span><span class="va">exibble_f</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">exibble_f</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">exibble_a</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_scientific.html">fmt_scientific</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">num</span>,</span>
@@ -3682,8 +3682,8 @@ Here’s an example of that, which additional passes the
 <span>    columns <span class="op">=</span> <span class="va">currency</span>,</span>
 <span>    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>      <span class="va">fns_labels</span>,</span>
-<span>      min <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>,</span>
-<span>      max <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span></span>
+<span>      min <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>,</span>
+<span>      max <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span></span>
 <span>    <span class="op">)</span>,</span>
 <span>    fmt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span><span class="va">.</span>,</span>
 <span>      currency <span class="op">=</span> <span class="va">formats</span><span class="op">$</span><span class="va">currency</span>,</span>
@@ -4833,7 +4833,7 @@ Here’s an table where both types of summaries are present:</p>
 <span><span class="co"># grand summary rows (using two separate</span></span>
 <span><span class="co"># calls of `grand_summary_rows()` since</span></span>
 <span><span class="co"># the formatting will be different)</span></span>
-<span><span class="va">exibble_h</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">exibble_h</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">exibble_f</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/grand_summary_rows.html">grand_summary_rows</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">num</span>,</span>
@@ -5488,7 +5488,7 @@ footnotes are added.</p>
 <code class="sourceCode R"><span><span class="co"># Using the gt table of `exibble_h` as a</span></span>
 <span><span class="co"># starting point, style summary cells with</span></span>
 <span><span class="co"># `tab_options()` and add two footnotes</span></span>
-<span><span class="va">exibble_i</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">exibble_i</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">exibble_h</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span></span>
 <span>    summary_row.background.color <span class="op">=</span> <span class="st">"lightblue"</span>,</span>
@@ -6730,10 +6730,9 @@ formatted <code>character</code> string.</p>
 <code class="sourceCode R"><span><span class="co"># Define a function that gives the</span></span>
 <span><span class="co"># highest two values above a threshold</span></span>
 <span><span class="va">agg_highest_two_above_value</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">threshold</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  </span>
 <span>  <span class="co"># Get sorted values above threshold value</span></span>
 <span>  <span class="va">values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="va">threshold</span><span class="op">]</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="co"># Return character string with 2 highest values above threshold</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">values</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"No values above "</span>, <span class="va">threshold</span><span class="op">)</span><span class="op">)</span></span>
@@ -6742,8 +6741,13 @@ formatted <code>character</code> string.</p>
 <span>      <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
 <span>        <span class="fu"><a href="https://rdrr.io/r/base/formatc.html" class="external-link">formatC</a></span><span class="op">(</span></span>
 <span>          <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span></span>
-<span>            <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">x</span> <span class="op">&gt;</span> <span class="va">threshold</span><span class="op">]</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span>          format <span class="op">=</span> <span class="st">"f"</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span><span class="op">)</span></span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">x</span> <span class="op">&gt;</span> <span class="va">threshold</span><span class="op">]</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>, <span class="fl">2</span></span>
+<span>          <span class="op">)</span>,</span>
+<span>          format <span class="op">=</span> <span class="st">"f"</span>, digits <span class="op">=</span> <span class="fl">2</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        collapse <span class="op">=</span> <span class="st">", "</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span>
 <span></span>
@@ -6768,7 +6772,7 @@ do) and it provides the option to decorate the output with a
 <span><span class="co"># the custom function with a threshold of `20`;</span></span>
 <span><span class="co"># `fmt_passthrough()` allows for minimal formatting</span></span>
 <span><span class="co"># of the aggregate values</span></span>
-<span><span class="va">exibble_j</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">exibble_j</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">exibble_a</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/grand_summary_rows.html">grand_summary_rows</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">currency</span><span class="op">)</span>,</span>

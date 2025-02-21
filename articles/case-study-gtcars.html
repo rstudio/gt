@@ -2697,8 +2697,8 @@ options here in <strong>gt</strong> via
 <code><a href="../reference/cols_move_to_start.html">cols_move_to_start()</a></code>, <code><a href="../reference/cols_move.html">cols_move()</a></code>, and
 <code><a href="../reference/cols_move_to_end.html">cols_move_to_end()</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Use a few `cols_*()` functions to hide and move columns </span></span>
-<span><span class="va">tab</span> <span class="op">&lt;-</span> </span>
+<code class="sourceCode R"><span><span class="co"># Use a few `cols_*()` functions to hide and move columns</span></span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">tab</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">drivetrain</span>, <span class="va">bdy_style</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_move.html">cols_move</a></span><span class="op">(</span></span>
@@ -3310,7 +3310,7 @@ spanner column label is styled with Markdown by using the
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Put the first three columns under a spanner</span></span>
 <span><span class="co"># column with the label 'Performance'</span></span>
-<span><span class="va">tab</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">tab</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_spanner.html">tab_spanner</a></span><span class="op">(</span></span>
 <span>    label <span class="op">=</span> <span class="st">"Performance"</span>,</span>
@@ -3956,7 +3956,7 @@ possible. It accepts a series of named arguments in the form of
 <code class="sourceCode R"><span><span class="co"># Perform three column merges to better present</span></span>
 <span><span class="co"># MPG, HP, and torque; relabel all the remaining</span></span>
 <span><span class="co"># columns for a nicer-looking presentation</span></span>
-<span><span class="va">tab</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">tab</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_merge.html">cols_merge</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg_c</span>, <span class="va">mpg_h</span><span class="op">)</span>,</span>
@@ -4560,7 +4560,7 @@ want to apply the formatting to the entire column of data.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Format the `msrp` column to USD currency</span></span>
 <span><span class="co"># with no display of the currency subunits</span></span>
-<span><span class="va">tab</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">tab</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">msrp</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
@@ -5157,7 +5157,7 @@ supply our target columns to its own <code>columns</code> argument.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Center-align three columns in the gt table and</span></span>
 <span><span class="co"># modify the text size of a few columns of data</span></span>
-<span><span class="va">tab</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">tab</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_align.html">cols_align</a></span><span class="op">(</span></span>
 <span>    align <span class="op">=</span> <span class="st">"center"</span>,</span>
@@ -5755,16 +5755,15 @@ table.</p>
 <span><span class="co"># a custom function within `text_transform()`;</span></span>
 <span><span class="co"># here `x` represents a character vector defined</span></span>
 <span><span class="co"># in the `cells_body()` function</span></span>
-<span><span class="va">tab</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">tab</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/text_transform.html">text_transform</a></span><span class="op">(</span></span>
 <span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">trsmn</span><span class="op">)</span>,</span>
 <span>    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>      </span>
 <span>      <span class="co"># The first character of `x` always</span></span>
 <span>      <span class="co"># indicates the number of transmission speeds</span></span>
 <span>      <span class="va">speed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span>      </span>
+<span></span>
 <span>      <span class="co"># We can carefully determine which transmission</span></span>
 <span>      <span class="co"># type we have in `x` with a `dplyr::case_when()`</span></span>
 <span>      <span class="co"># statement</span></span>
@@ -5775,7 +5774,7 @@ table.</p>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">==</span> <span class="st">"a"</span> <span class="op">~</span> <span class="st">"Automatic"</span>,</span>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span> <span class="op">==</span> <span class="st">"dd"</span> <span class="op">~</span> <span class="st">"Direct Drive"</span></span>
 <span>        <span class="op">)</span></span>
-<span>      </span>
+<span></span>
 <span>      <span class="co"># Let's paste together the `speed` and `type`</span></span>
 <span>      <span class="co"># vectors to create HTML text replacing `x`</span></span>
 <span>      <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">speed</span>, <span class="st">" Speed&lt;br&gt;&lt;em&gt;"</span>, <span class="va">type</span>, <span class="st">"&lt;/em&gt;"</span><span class="op">)</span></span>
@@ -6367,7 +6366,7 @@ below).</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Add a table title and subtitle; we can use</span></span>
 <span><span class="co"># markdown with the `md()` helper function</span></span>
-<span><span class="va">tab</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">tab</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"The Cars of **gtcars**"</span><span class="op">)</span>,</span>
@@ -6965,7 +6964,7 @@ the source of the data.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Add a source note to the bottom of the table; this</span></span>
 <span><span class="co"># appears below the footnotes</span></span>
-<span><span class="va">tab</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">tab</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_source_note.html">tab_source_note</a></span><span class="op">(</span></span>
 <span>    source_note <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span></span>
@@ -7594,16 +7593,16 @@ in order) and expect the same output table.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Use dplyr functions to get the car with the best city gas mileage;</span></span>
 <span><span class="co"># this will be used to target the correct cell for a footnote</span></span>
-<span><span class="va">best_gas_mileage_city</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">gtcars</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">best_gas_mileage_city</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">slice_max</span><span class="op">(</span><span class="va">mpg_c</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>car <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">pull</span><span class="op">(</span><span class="va">car</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Use dplyr functions to get the car with the highest horsepower</span></span>
 <span><span class="co"># this will be used to target the correct cell for a footnote</span></span>
-<span><span class="va">highest_horsepower</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">gtcars</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">highest_horsepower</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">slice_max</span><span class="op">(</span><span class="va">hp</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>car <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">pull</span><span class="op">(</span><span class="va">car</span><span class="op">)</span></span>
@@ -7667,9 +7666,8 @@ in order) and expect the same output table.</p>
 <span>  <span class="fu"><a href="../reference/text_transform.html">text_transform</a></span><span class="op">(</span></span>
 <span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">trsmn</span><span class="op">)</span>,</span>
 <span>    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>      </span>
 <span>      <span class="va">speed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span>      </span>
+<span></span>
 <span>      <span class="va">type</span> <span class="op">&lt;-</span></span>
 <span>        <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span> <span class="op">==</span> <span class="st">"am"</span> <span class="op">~</span> <span class="st">"Automatic/Manual"</span>,</span>
@@ -7677,7 +7675,7 @@ in order) and expect the same output table.</p>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">==</span> <span class="st">"a"</span> <span class="op">~</span> <span class="st">"Automatic"</span>,</span>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span> <span class="op">==</span> <span class="st">"dd"</span> <span class="op">~</span> <span class="st">"Direct Drive"</span></span>
 <span>        <span class="op">)</span></span>
-<span>      </span>
+<span></span>
 <span>      <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">speed</span>, <span class="st">" Speed&lt;br&gt;&lt;em&gt;"</span>, <span class="va">type</span>, <span class="st">"&lt;/em&gt;"</span><span class="op">)</span></span>
 <span>    <span class="op">}</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>

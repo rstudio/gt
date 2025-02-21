@@ -126,7 +126,7 @@ not a data frame but a named vector. That’s okay though, we can use use
 <code class="sourceCode R"><span><span class="co"># Take the `islands` dataset and use some</span></span>
 <span><span class="co"># dplyr functionality to obtain the ten</span></span>
 <span><span class="co"># biggest islands in the world</span></span>
-<span><span class="va">islands_tbl</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">islands_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">tibble</span><span class="op">(</span></span>
 <span>    name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">islands</span><span class="op">)</span>,</span>
 <span>    size <span class="op">=</span> <span class="va">islands</span></span>
@@ -707,7 +707,7 @@ add this part using the <code><a href="../reference/tab_header.html">tab_header(
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Make a display table with the `islands_tbl`</span></span>
 <span><span class="co"># table; put a heading just above the column labels</span></span>
-<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Large Landmasses of the World"</span>,</span>
@@ -1233,7 +1233,7 @@ truncated for brevity:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Use markdown for the heading's `title` and `subtitle` to</span></span>
 <span><span class="co"># add bold and italicized characters</span></span>
-<span><span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="va">islands_tbl</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="va">islands_tbl</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"**Large Landmasses of the World**"</span><span class="op">)</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"The *top two* largest are presented"</span><span class="op">)</span></span>
@@ -1720,7 +1720,7 @@ invocation results in the addition of a source note.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Display the `islands_tbl` data with a heading and</span></span>
 <span><span class="co"># two source notes</span></span>
-<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_source_note.html">tab_source_note</a></span><span class="op">(</span></span>
 <span>    source_note <span class="op">=</span> <span class="st">"Source: The World Almanac and Book of Facts, 1975, page 406."</span></span>
@@ -2267,7 +2267,7 @@ cell. Let’s add a footnote that references the
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Add footnotes (the same text) to two different</span></span>
 <span><span class="co"># cell; data cells are targeted with `data_cells()`</span></span>
-<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_footnote.html">tab_footnote</a></span><span class="op">(</span></span>
 <span>    footnote <span class="op">=</span> <span class="st">"The Americas."</span>,</span>
@@ -2809,14 +2809,14 @@ supplying a conditional statement that gets the lowest population.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Determine the row that contains the</span></span>
 <span><span class="co"># largest landmass ('Asia')</span></span>
-<span><span class="va">largest</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">islands_tbl</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">largest</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">islands_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">slice_max</span><span class="op">(</span><span class="va">size</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">pull</span><span class="op">(</span><span class="va">name</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create two additional footnotes, using the</span></span>
 <span><span class="co"># `columns` and `where` arguments of `data_cells()`</span></span>
-<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_footnote.html">tab_footnote</a></span><span class="op">(</span></span>
 <span>    footnote <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"The **largest** by area."</span><span class="op">)</span>,</span>
@@ -3397,7 +3397,7 @@ making <em>row labels</em>. Let’s add a stub with our
 <code class="sourceCode R"><span><span class="co"># Create a gt table showing ten of the</span></span>
 <span><span class="co"># largest islands in the world; this</span></span>
 <span><span class="co"># time with a stub</span></span>
-<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">islands_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span>
 <span></span>
@@ -3908,7 +3908,7 @@ That’s the <strong>stub</strong>. We can apply what’s known as a
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Generate a simple table with a stub</span></span>
 <span><span class="co"># and add a stubhead label</span></span>
-<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_stubhead.html">tab_stubhead</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"landmass"</span><span class="op">)</span></span>
 <span></span>
@@ -4422,7 +4422,7 @@ footnotes) we use the following statements:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Display the `islands_tbl` data with a stub,</span></span>
 <span><span class="co"># a heading, source notes, and footnotes</span></span>
-<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Large Landmasses of the World"</span>,</span>
@@ -4991,8 +4991,8 @@ names/indices, select helpers, etc.).</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create three row groups with the</span></span>
 <span><span class="co"># `tab_row_group()` function</span></span>
-<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">gt_tbl</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_row_group.html">tab_row_group</a></span><span class="op">(</span></span>
 <span>    label <span class="op">=</span> <span class="st">"continent"</span>,</span>
 <span>    rows <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span></span>
@@ -5607,14 +5607,14 @@ with <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code>.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Modify the `airquality` dataset by adding the year</span></span>
 <span><span class="co"># of the measurements (1973) and limiting to 10 rows</span></span>
-<span><span class="va">airquality_m</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">airquality_m</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">airquality</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>Year <span class="op">=</span> <span class="fl">1973L</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
-<span>  </span>
+<span></span>
 <span><span class="co"># Create a display table using the `airquality`</span></span>
 <span><span class="co"># dataset; arrange columns into groups</span></span>
-<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="va">airquality_m</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"New York Air Quality Measurements"</span>,</span>
@@ -6212,7 +6212,7 @@ with <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code>.</p>
 <code class="sourceCode R"><span><span class="co"># Move the time-based columns to the start of</span></span>
 <span><span class="co"># the column series; modify the column labels of</span></span>
 <span><span class="co"># the measurement-based columns</span></span>
-<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_move_to_start.html">cols_move_to_start</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Year</span>, <span class="va">Month</span>, <span class="va">Day</span><span class="op">)</span></span>
