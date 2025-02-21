@@ -1917,10 +1917,10 @@ create_body_component_xml <- function(
     # Replace an NA group with an empty string
     groups_rows_df$group_label[is.na(groups_rows_df$group_label)] <- ""
     # Change NA at beginning into unicode?
-    group_rows_df$group_label <-
+    groups_rows_df$group_label <-
       gsub(
         "^NA", "\u2014",
-        group_rows_df$group_label
+        groups_rows_df$group_label
     )
   }
 
