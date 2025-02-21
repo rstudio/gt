@@ -238,7 +238,7 @@ create_table_start_l <- function(data, colwidth_df) {
 
   # If a table width is specified, add an extra column
   # space to fill in enough space to match the width
-  extra_sep <- ''
+  extra_sep <- ""
   if (dt_options_get_value(data = data, option = "table_width") != "auto")
     extra_sep <- "@{\\extracolsep{\\fill}}"
 
@@ -247,8 +247,8 @@ create_table_start_l <- function(data, colwidth_df) {
   if(!dt_options_get_value(data = data, option = "latex_use_longtable")) {
 
     # we need to use the extracolsep here for tabular* regardless of width
-    extra_sep <- '@{\\extracolsep{\\fill}}'
-    table_width <- dt_options_get_value(data = data, 'table_width')
+    extra_sep <- "@{\\extracolsep{\\fill}}"
+    table_width <- dt_options_get_value(data = data, "table_width")
 
     if (endsWith(table_width, "%")) {
 
@@ -544,9 +544,9 @@ create_columns_component_l <- function(data, colwidth_df) {
       span_widths <- calculate_multicolumn_width_text_l(begins = firsts, ends = lasts, colwidth_df = colwidth_df)
       tex_widths <-
         ifelse(
-          span_widths == "",
-          "c",
-          paste0(">{\\centering\\arraybackslash}m{", span_widths, "}")
+          nzchar(span_widths),
+          paste0(">{\\centering\\arraybackslash}m{", span_widths, "}"),
+          "c"
         )
 
       multicol <-
@@ -1384,11 +1384,11 @@ split_row_content <- function(x) {
 
 derive_table_width_statement_l <- function(data) {
 
-  table_width <- dt_options_get_value(data = data, 'table_width')
+  table_width <- dt_options_get_value(data = data, "table_width")
 
   # Bookends are not required if a table width is not specified
   # of if using floating table
-  if (table_width == 'auto' ||
+  if (table_width == "auto" ||
       !dt_options_get_value(data = data, option = "latex_use_longtable")) {
 
     statement <- ''
@@ -1515,11 +1515,11 @@ apply_cell_styles_l <- function(content, style_obj) {
   if (is.null(style_obj[["cell_text"]][["style"]])) return(NULL)
 
   switch(
-    style_obj[['cell_text']][['style']],
-    italic = '\\itshape ',
-    oblique = '\\slshape ',
-    normal = '\\upshape ',
-    ''
+    style_obj[["cell_text"]][["style"]],
+    italic = "\\itshape ",
+    oblique = "\\slshape ",
+    normal = "\\upshape ",
+    ""
   )
 
 }
@@ -1539,17 +1539,17 @@ apply_cell_styles_l <- function(content, style_obj) {
 
 .apply_style_weight_l <- function(style_obj) {
 
-  if (is.null(style_obj[['cell_text']][['weight']])) return('')
+  if (is.null(style_obj[["cell_text"]][["weight"]])) return("")
 
   # TODO:  Figure out how to implement weights expressed as numbers.
-  if (is.numeric(style_obj[['cell_text']][['weight']])) return('')
+  if (is.numeric(style_obj[["cell_text"]][["weight"]])) return("")
 
   switch(
-    style_obj[['cell_text']][['weight']],
-    normal = '\\mdseries ',
-    bold = '\\bfseries ',
-    bolder = '\\bfseries ',  # Not implemented
-    lighter = '\\mdseries ', # lfseries is not fully supported in Latex - caused errors with some fonts
+    style_obj[["cell_text"]][["weight"]],
+    normal = "\\mdseries ",
+    bold = "\\bfseries ",
+    bolder = "\\bfseries ",  # Not implemented
+    lighter = "\\mdseries ", # lfseries is not fully supported in Latex - caused errors with some fonts
     ''
   )
 
@@ -1571,9 +1571,9 @@ apply_cell_styles_l <- function(content, style_obj) {
 
 .apply_style_fontsize_l <- function(style_obj) {
 
-  if (is.null(style_obj[['cell_text']][['size']])) return('')
+  if (is.null(style_obj[["cell_text"]][["size"]])) return("")
 
-  if (is.numeric(style_obj[['cell_text']][['size']])) {
+  if (is.numeric(style_obj[["cell_text"]][["size"]])) {
     # According to the documentation for the cell_text function,
     # numeric values are assumed to be in pixels.  Latex requires
     # points
@@ -1581,26 +1581,26 @@ apply_cell_styles_l <- function(content, style_obj) {
     return(
       paste0(
         "\\fontsize{",
-        style_obj[['cell_text']][['size']] * 0.75,
+        style_obj[["cell_text"]][["size"]] * 0.75,
         "}{",
-        style_obj[['cell_text']][['size']] * 0.75 * 1.25,
+        style_obj[["cell_text"]][["size"]] * 0.75 * 1.25,
         "}\\selectfont "
       )
     )
 
   }
 
-  convert_font_size_l(style_obj[['cell_text']][['size']])
+  convert_font_size_l(style_obj[["cell_text"]][["size"]])
 
 }
 
 .apply_style_color_l <- function(x, style_obj) {
 
-  if (is.null(style_obj[['cell_text']][['color']])) return(x)
+  if (is.null(style_obj[["cell_text"]][["color"]])) return(x)
 
   paste0(
     "\\textcolor[HTML]{",
-    gsub("#", "", style_obj[['cell_text']][['color']], fixed = TRUE),
+    gsub("#", "", style_obj[["cell_text"]][["color"]], fixed = TRUE),
     "}{", x, "}"
   )
 }

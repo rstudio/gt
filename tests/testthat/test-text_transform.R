@@ -129,8 +129,8 @@ test_that("text_transform() works correctly", {
 
   # Expect that each component of `transforms` has the names
   # `resolved` and `fn`
-  expect_named(transforms[[1]] , c("resolved", "fn"))
-  expect_named(transforms[[2]] , c("resolved", "fn"))
+  expect_named(transforms[[1]], c("resolved", "fn"))
+  expect_named(transforms[[2]], c("resolved", "fn"))
 
   # Expect that `resolved` subcomponent of `transforms` has the names
   # `columns` and `rows`

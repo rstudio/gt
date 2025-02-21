@@ -204,7 +204,7 @@ test_that("fmt_currency() works correctly", {
     (tab %>%
        fmt_currency(
          columns = "num_1", currency = "USD", decimals = 4,
-         scale_by = 1/1000, pattern = "{x}K"
+         scale_by = 1 / 1000, pattern = "{x}K"
        ) %>%
        render_formats_test("html"))[["num_1"]],
     c(

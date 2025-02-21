@@ -93,8 +93,7 @@ test_that("validate_currency() works correctly", {
   # Expect that specific currency names supplied to
   # `validate_currency()` will all return NULL
   expect_null(
-    lapply(currency_symbols$curr_symbol, validate_currency) %>%
-      unlist()
+    unlist(lapply(currency_symbols$curr_symbol, validate_currency))
   )
 
   # Expect that invalid currency names supplied to
@@ -105,8 +104,7 @@ test_that("validate_currency() works correctly", {
   # Expect that specific currency codes supplied to
   # `validate_currency()` will all return NULL
   expect_null(
-    lapply(currencies$curr_code, validate_currency) %>%
-      unlist()
+    unlist(lapply(currencies$curr_code, validate_currency))
   )
 
   # Expect that invalid currency codes supplied to
@@ -116,13 +114,12 @@ test_that("validate_currency() works correctly", {
   # Expect that specific currency codes (3-number)
   # supplied to `validate_currency()` will return NULL
   expect_null(
-    lapply(currencies$curr_number, validate_currency) %>%
+    unlist(lapply(currencies$curr_number, validate_currency))
       unlist()
   )
 
   expect_null(
-    lapply(as.numeric(currencies$curr_number), validate_currency) %>%
-      unlist()
+    unlist(lapply(as.numeric(currencies$curr_number), validate_currency))
   )
 
   # Expect that invalid currency codes supplied to

@@ -152,10 +152,10 @@ create_heading_component_g <- function(data) {
   title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
   subtitle_classes <- sub("title", "subtitle", title_classes, fixed = TRUE)
 
-  if (!subtitle_defined) {
-    title_classes <- c("gt_bottom_border", title_classes)
-  } else {
+  if (subtitle_defined) {
     subtitle_classes <- c("gt_bottom_border", subtitle_classes)
+  } else {
+    title_classes <- c("gt_bottom_border", title_classes)
   }
 
   n_cols_total <- get_effective_number_of_columns(data = data)
@@ -1451,7 +1451,7 @@ parse_css <- function(data) {
 
   # Clean up whitespace and trailing semicolons
   css <- trimws(css)
-  css <- gsub(";", "", css)
+  css <- gsub(";", "", css, fixed = TRUE)
 
   # Split up key-value pairs
   split <- strsplit(css, ": ", fixed = TRUE)

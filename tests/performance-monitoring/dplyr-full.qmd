@@ -105,7 +105,7 @@ knitr::opts_chunk$set(
   fig.align = "center",
   fig.retina = 2,
   dpi = 500,
-  dev = 'svg',
+  dev = "svg",
   dev.args = list(bg = "transparent")
 )
 
@@ -127,38 +127,37 @@ format_pvalue <- function(p) glue::glue("{scales::pvalue(p)} {gtools::stars.pval
 get_cell_dim <- function(x) {
   dim <- NULL
   if (is.list(x) || is.vector(x)) dim <- length(x)
-  if (length(dim(x)) > 1) dim <- glue::glue('{dim(x)[1]} x {dim(x)[2]}')
+  if (length(dim(x)) > 1) dim <- glue::glue("{dim(x)[1]} x {dim(x)[2]}")
   return(dim)
 }
 
 summarize_nested_col <- \(x) lapply(x, \(r) glue::glue("<{class(r)[[1]]} [{get_cell_dim(r)}]>"))
 
 format_gt <- function(gt_tbl) {
-  
   gt_tbl <- gt::fmt(
     gt_tbl,
     columns = select(gt_tbl[["_data"]], where(is.list)) |> colnames(),
     fns = \(x) summarize_nested_col(x)
   )
-  
+
   gt_tbl <- gt::fmt(
     gt_tbl,
     columns = select(gt_tbl[["_data"]], matches("p.val|^pr|pr\\(.*\\)|^p$")) |> colnames(),
     fns = \(x) purrr::map_chr(x, \(v) ifelse(!is.na(v) && utils::type.convert(v, as.is = TRUE) |> is.numeric(), format_pvalue(as.numeric(v)), v))
   )
-  
+
   gt_tbl <- gt::fmt_number(
     gt_tbl,
     columns = select(gt_tbl[["_data"]], where(\(v) is.numeric(v))) |> colnames(),
     decimals = 3, sep_mark = " ", drop_trailing_zeros = TRUE # n_sigfig = 2
   )
-  
+
   return(gt_tbl)
 }
 
 gt_style_light <- function(gt_tbl) {
-  gt_tbl <- (gt_tbl 
-    |> format_gt()
+  gt_tbl <- (gt_tbl
+  |> format_gt()
     |> gt::tab_style(
       style = list(
         cell_fill(color = bg_color_light, alpha = 1),
@@ -166,7 +165,7 @@ gt_style_light <- function(gt_tbl) {
         cell_borders(sides = c("top", "bottom"), color = secondary_color_light, style = "solid", weight = px(2))
       ),
       locations = list(cells_title(), cells_column_labels())
-    ) 
+    )
     |> gt::tab_style(
       style = list(
         cell_fill(color = bg_color_light, alpha = 1),
@@ -180,16 +179,17 @@ gt_style_light <- function(gt_tbl) {
     )
     |> gt::tab_options(container.width = pct(100), table.width = pct(100))
   )
-  
-  if (nrow(gt_tbl[["_data"]]) > 2) 
+
+  if (nrow(gt_tbl[["_data"]]) > 2) {
     gt_tbl <- gt_tbl |> gtExtras::gt_highlight_rows(rows = seq(2, nrow(gt_tbl[["_data"]]), by = 2), fill = "#E9E9E9", font_weight = "normal")
-  
+  }
+
   return(gt_tbl)
 }
 
 gt_style_dark <- function(gt_tbl) {
-  gt_tbl <- (gt_tbl 
-    |> format_gt()
+  gt_tbl <- (gt_tbl
+  |> format_gt()
     |> gt::tab_style(
       style = list(
         cell_fill(color = bg_color_dark, alpha = 1),
@@ -197,7 +197,7 @@ gt_style_dark <- function(gt_tbl) {
         cell_borders(sides = c("top", "bottom"), color = secondary_color_dark, style = "solid", weight = px(2))
       ),
       locations = list(cells_title(), cells_column_labels())
-    ) 
+    )
     |> gt::tab_style(
       style = list(
         cell_fill(color = bg_color_dark, alpha = 1),
@@ -211,19 +211,20 @@ gt_style_dark <- function(gt_tbl) {
     )
     |> gt::tab_options(container.width = pct(100), table.width = pct(100))
   )
-  
-  if (nrow(gt_tbl[["_data"]]) > 2) 
+
+  if (nrow(gt_tbl[["_data"]]) > 2) {
     gt_tbl <- gt_tbl |> gtExtras::gt_highlight_rows(rows = seq(2, nrow(gt_tbl[["_data"]]), by = 2), fill = "#1e1e1e", font_weight = "normal")
-  
+  }
+
   return(gt_tbl)
 }
 
 style_table <- function(data, theme = "light", nrow_max = 15) {
   if (theme == "light") tbl <- gt::gt(data |> head(nrow_max)) |> gt_style_light()
   if (theme == "dark") tbl <- gt::gt(data |> head(nrow_max)) |> gt_style_dark()
-  
+
   if (nrow(data) > nrow_max) tbl <- tbl |> tab_source_note(md(glue::glue("*[ omitted {nrow(data) - nrow_max} entries ]*")))
-  
+
   return(tbl)
 }
 
@@ -236,7 +237,7 @@ knit_print.grouped_df <- function(x, options, ...) {
   if ("grouped_df" %in% class(x)) x <- ungroup(x)
 
   cl <- intersect(class(x), c("data.table", "data.frame"))[1]
-  
+
   cat("\n<details>\n")
   cat("<summary>\n")
   cat(glue::glue("\n*{cl} [{dim(x)[1]} x {dim(x)[2]}]*\n"))
@@ -253,7 +254,7 @@ registerS3method("knit_print", "grouped_df", knit_print.grouped_df)
 
 knit_print.data.frame <- function(x, options, ...) {
   cl <- intersect(class(x), c("data.table", "data.frame"))[1]
-  
+
   cat("\n<details>\n")
   cat("<summary>\n")
   cat(glue::glue("\n*{cl} [{dim(x)[1]} x {dim(x)[2]}]*\n"))
@@ -501,7 +502,7 @@ MT |> select(matches("cyl|disp"))
 
 MT[, .(mpg, disp)]
 
-MT[ , .SD, .SDcols = c("mpg", "disp")]
+MT[, .SD, .SDcols = c("mpg", "disp")]
 MT[, .SD, .SDcols = patterns("mpg|disp")]
 ```
 
@@ -662,7 +663,7 @@ Dynamic name on the LHS:
 ```{r}
 CN <- "MPG"
 
-mtcars |> mutate({{CN}} := mean(mpg))
+mtcars |> mutate({{ CN }} := mean(mpg))
 
 mtcars |> mutate("{CN}" := mean(mpg))
 
@@ -678,7 +679,7 @@ cn <- "mpg"
 
 mtcars |> mutate("{CN}" := as.character(.data[[cn]]))
 
-mtcars |> mutate({{CN}} := as.character(cur_data()[[cn]]))
+mtcars |> mutate({{ CN }} := as.character(cur_data()[[cn]]))
 
 copy(MT)[, c(CN) := as.character(get(cn))][]
 ```
@@ -698,13 +699,13 @@ copy(MT)[, Size := fifelse(cyl >= 6, "BIG", "small")][]
 
 ```{r}
 mtcars |> mutate(Size = case_when(
-  cyl %between% c(2,4) ~ "small",
-  cyl %between% c(4,8) ~ "BIG"
+  cyl %between% c(2, 4) ~ "small",
+  cyl %between% c(4, 8) ~ "BIG"
 ))
 
 copy(MT)[, Size := fcase(
-  cyl %between% c(2,4), "small", 
-  cyl %between% c(4,8), "BIG"
+  cyl %between% c(2, 4), "small",
+  cyl %between% c(4, 8), "BIG"
 )][]
 ```
 
@@ -747,7 +748,10 @@ copy(MT)[, c("min_mpg", "max_mpg") := lapply(.SD, \(x) list(min(x), max(x))) |> 
 **One function applied to multiple columns (across columns)**
 
 ```{r}
-mtcars |> rowwise() |> mutate(RowSum = sum(c_across(where(is.numeric)))) |> ungroup()
+mtcars |>
+  rowwise() |>
+  mutate(RowSum = sum(c_across(where(is.numeric)))) |>
+  ungroup()
 
 copy(MT)[, RowSum := rowSums(.SD), .SDcols = is.numeric][]
 ```
@@ -822,7 +826,8 @@ Use the `.BY` argument to get the current group name:
 #| layout-nrow: 1
 #| layout-ncol: 3
 
-mtcars |> group_by(cyl) |> 
+mtcars |>
+  group_by(cyl) |>
   group_walk(
     \(d, g) with(d, plot(gear, mpg, main = paste("Cylinders:", g$cyl)))
   )
@@ -866,7 +871,7 @@ MT[, .I]
 ```{r}
 mtcars |> mutate(I = row_number())
 
-copy(MT)[ , I := .I][]
+copy(MT)[, I := .I][]
 ```
 
 
@@ -879,7 +884,10 @@ copy(MT)[ , I := .I][]
 Returns the row numbers in the original dataset:
 
 ```{r}
-mtcars |> mutate(I = row_number()) |> filter(gear == 4) |> pull(I)
+mtcars |>
+  mutate(I = row_number()) |>
+  filter(gear == 4) |>
+  pull(I)
 
 MT[, .I[gear == 4]]
 ```
@@ -887,7 +895,10 @@ MT[, .I[gear == 4]]
 Returns the row numbers in the new dataset (after filtering):
 
 ```{r}
-mtcars |> filter(gear == 4) |> mutate(I = row_number()) |> pull(I)
+mtcars |>
+  filter(gear == 4) |>
+  mutate(I = row_number()) |>
+  pull(I)
 
 MT[gear == 4, .I]
 ```
@@ -898,11 +909,11 @@ MT[gear == 4, .I]
 ```{r}
 mtcars |> tail(10)
 
-MT[(.N-10):.N] # Get the last 10 rows
+MT[(.N - 10):.N] # Get the last 10 rows
 ```
 
 ```{r}
-MT[MT[, .I[(.N-10):.N]]]
+MT[MT[, .I[(.N - 10):.N]]]
 ```
 
 (Gets the indices of the last 10 rows and filters based on them)
@@ -911,7 +922,9 @@ MT[MT[, .I[(.N-10):.N]]]
 **Adding group indices:**
 
 ```{r}
-mtcars |> group_by(cyl) |> summarize(GRP = cur_group_id())
+mtcars |>
+  group_by(cyl) |>
+  summarize(GRP = cur_group_id())
 
 MT[, .GRP, by = cyl]
 ```
@@ -919,7 +932,10 @@ MT[, .GRP, by = cyl]
 Mutate instead of summarize:
 
 ```{r}
-mtcars |> arrange(cyl) |> group_by(cyl) |> mutate(GRP = cur_group_id())
+mtcars |>
+  arrange(cyl) |>
+  group_by(cyl) |>
+  mutate(GRP = cur_group_id())
 
 copy(MT)[, GRP := .GRP, keyby = cyl][]
 ```
@@ -928,7 +944,10 @@ copy(MT)[, GRP := .GRP, keyby = cyl][]
 **Row numbers by group:**
 
 ```{r}
-mtcars |> arrange(gear) |> group_by(gear) |> mutate(I_GRP = row_number())
+mtcars |>
+  arrange(gear) |>
+  group_by(gear) |>
+  mutate(I_GRP = row_number())
 
 copy(MT)[, I_GRP := seq_len(.N), keyby = gear][]
 ```
@@ -945,7 +964,9 @@ MT[sample(.N, 5)]
 Sample by group:
 
 ```{r}
-mtcars |> group_by(cyl) |> slice_sample(n = 5)
+mtcars |>
+  group_by(cyl) |>
+  slice_sample(n = 5)
 
 MT[, .SD[sample(.N, 5)], keyby = cyl]
 ```
@@ -954,9 +975,11 @@ MT[, .SD[sample(.N, 5)], keyby = cyl]
 **Filter by group size:**
 
 ```{r}
-mtcars |> group_by(cyl) |> filter(n() >= 8)
+mtcars |>
+  group_by(cyl) |>
+  filter(n() >= 8)
 
-MT[, if(.N >= 8) .SD, by = cyl]
+MT[, if (.N >= 8) .SD, by = cyl]
 ```
 
 
@@ -965,9 +988,11 @@ MT[, if(.N >= 8) .SD, by = cyl]
 ## Relocate:
 
 ```{r}
-mtcars |> group_by(cyl) |> mutate(GRP = cur_group_id(), .before = 1)
+mtcars |>
+  group_by(cyl) |>
+  mutate(GRP = cur_group_id(), .before = 1)
 
-(copy(MT)[ , GRP := .GRP, by = cyl] |> setcolorder(c("GRP", .SD)))[]
+(copy(MT)[, GRP := .GRP, by = cyl] |> setcolorder(c("GRP", .SD)))[]
 ```
 
 
@@ -994,7 +1019,9 @@ MT[, .(mean_cyl = mean(cyl, na.rm = T))]
 **Group > summarize**
 
 ```{r}
-mtcars |> group_by(cyl) |> summarize(N = n())
+mtcars |>
+  group_by(cyl) |>
+  summarize(N = n())
 
 MT[, .N, by = cyl]
 ```
@@ -1011,7 +1038,9 @@ MT[, .N, by = cyl][order(cyl)]
 Grouping on a condition:
 
 ```{r}
-mtcars |> group_by(cyl > 6) |> summarize(N = n())
+mtcars |>
+  group_by(cyl > 6) |>
+  summarize(N = n())
 
 MT[, .N, by = .(cyl > 6)]
 ```
@@ -1020,7 +1049,9 @@ MT[, .N, by = .(cyl > 6)]
 **Group > filter > summarize**
 
 ```{r}
-mtcars |> filter(cyl >= 6, disp >= 200) |> summarize(N = n())
+mtcars |>
+  filter(cyl >= 6, disp >= 200) |>
+  summarize(N = n())
 
 MT[cyl >= 6 & disp >= 200, .(.N)]
 ```
@@ -1036,7 +1067,9 @@ MT[, .(N = sum(cyl >= 6 & disp >= 200, na.rm = T))]
 **Obtaining one summary statistic on multiple columns**
 
 ```{r}
-mtcars |> group_by(cyl) |> summarize(across(everything(), \(col) mean(col)))
+mtcars |>
+  group_by(cyl) |>
+  summarize(across(everything(), \(col) mean(col)))
 
 MT[, lapply(.SD, \(col) mean(col)), keyby = cyl]
 ```
@@ -1044,7 +1077,9 @@ MT[, lapply(.SD, \(col) mean(col)), keyby = cyl]
 Apply summary function based on column type:
 
 ```{r}
-mtcars |> group_by(cyl) |> summarize(across(where(is.double), \(col) mean(col)))
+mtcars |>
+  group_by(cyl) |>
+  summarize(across(where(is.double), \(col) mean(col)))
 
 MT[, lapply(.SD, \(col) mean(col)), keyby = cyl, .SDcols = is.double][, cyl := NULL][]
 ```
@@ -1052,7 +1087,9 @@ MT[, lapply(.SD, \(col) mean(col)), keyby = cyl, .SDcols = is.double][, cyl := N
 Apply summary function to specific columns:
 
 ```{r}
-mtcars |> group_by(cyl) |> summarize(across(c(mpg, disp), \(.x) mean(.x)))
+mtcars |>
+  group_by(cyl) |>
+  summarize(across(c(mpg, disp), \(.x) mean(.x)))
 
 MT[, lapply(.SD, \(.x) mean(.x)), keyby = cyl, .SDcols = c("mpg", "disp")]
 MT[, lapply(.SD[, .(mpg, disp)], \(.x) mean(.x)), keyby = cyl]
@@ -1061,7 +1098,9 @@ MT[, lapply(.SD[, .(mpg, disp)], \(.x) mean(.x)), keyby = cyl]
 Apply summary function to specific columns (by pattern):
 
 ```{r}
-mtcars |> group_by(cyl) |> summarize(across(matches("^mpg|^disp"), \(.x) mean(.x)))
+mtcars |>
+  group_by(cyl) |>
+  summarize(across(matches("^mpg|^disp"), \(.x) mean(.x)))
 
 MT[, lapply(.SD, mean), keyby = cyl, .SDcols = patterns("^mpg|^disp")]
 ```
@@ -1070,7 +1109,9 @@ MT[, lapply(.SD, mean), keyby = cyl, .SDcols = patterns("^mpg|^disp")]
 **Obtaining multiple summary statistics for one column:**
 
 ```{r}
-mtcars |> group_by(cyl) |> summarize(mean_mpg = mean(mpg), sd_mpg = sd(mpg))
+mtcars |>
+  group_by(cyl) |>
+  summarize(mean_mpg = mean(mpg), sd_mpg = sd(mpg))
 
 MT[, .(mean_mpg = mean(mpg), sd_mpg = sd(mpg)), keyby = cyl]
 
@@ -1108,7 +1149,9 @@ funs_as_list <- \(x) list(mean = mean(x, na.rm = TRUE), sd = sd(x, na.rm = TRUE)
 :::
 
 ```{r}
-mtcars |> group_by(gear) |> summarize(across(cols, .fns = list_of_funs, .names = "{.col}.{.fn}"))
+mtcars |>
+  group_by(gear) |>
+  summarize(across(cols, .fns = list_of_funs, .names = "{.col}.{.fn}"))
 
 MT[, lapply(.SD, funs_as_list) |> unlist(recursive = FALSE), keyby = gear, .SDcols = cols]
 
@@ -1318,8 +1361,11 @@ We can customize that behavior using the `fun.aggregate` argument:
 *Here, we count the number of child for each each combination of (family_id + age_mother) -> sum all non-NA `value`*
 
 ```{r}
-FAM1L |> pivot_wider(id_cols = c(family_id, age_mother), names_from = variable, values_fn = \(.x) sum(!is.na(.x))) |>
-  rowwise() |> mutate(child_count = sum(c_across(matches("_child")))) |> ungroup()
+FAM1L |>
+  pivot_wider(id_cols = c(family_id, age_mother), names_from = variable, values_fn = \(.x) sum(!is.na(.x))) |>
+  rowwise() |>
+  mutate(child_count = sum(c_across(matches("_child")))) |>
+  ungroup()
 
 (FAM1L |> dcast(family_id + age_mother ~ ., fun.agg = \(.x) sum(!is.na(.x))) |> setnames(".", "child_count"))
 ```
@@ -1371,7 +1417,7 @@ Matching two tables based on their rows can be done:
 **Data:**
 
 ```{r}
-(DT1 <- data.table( 
+(DT1 <- data.table(
   ID = LETTERS[1:10],
   A = sample(1:5, 10, replace = TRUE),
   B = sample(10:20, 10)
@@ -1380,7 +1426,7 @@ Matching two tables based on their rows can be done:
 (DT2 <- data.table(
   ID = LETTERS[5:14],
   C = sample(1:5, 10, replace = TRUE),
-  D = sample(10:20, 10) 
+  D = sample(10:20, 10)
 ))
 ```
 
@@ -1390,7 +1436,7 @@ Matching two tables based on their rows can be done:
 ```{r}
 right_join(
   DT1 |> select(ID, A),
-  DT2 |> select(ID, C), 
+  DT2 |> select(ID, C),
   by = "ID"
 ) |> as_tibble()
 
@@ -1497,7 +1543,7 @@ DT1[DT2[unique_keys, on = "ID"]]
 **Inner:**
 
 ```{r}
-inner_join(DT1, DT2, by = "ID") 
+inner_join(DT1, DT2, by = "ID")
 
 DT1[DT2, on = .(ID), nomatch = NULL]
 ```
@@ -1591,7 +1637,7 @@ MT.ext <- MT[, .(x = paste(gear, carb, sep = "_"))]
 ```{r}
 MT.ext |> tidyr::extract(col = x, into = c("a", "b"), regex = "(.*)_(.*)", remove = F)
 
-MT.ext[, c("a", "b") := tstrsplit(x, "_", fixed = TRUE)][] 
+MT.ext[, c("a", "b") := tstrsplit(x, "_", fixed = TRUE)][]
 ```
 
 
@@ -1601,9 +1647,9 @@ MT.ext[, c("a", "b") := tstrsplit(x, "_", fixed = TRUE)][]
 
 ```{r}
 (SP <- data.table(
-  val = c(1,"2,3",4), 
+  val = c(1, "2,3", 4),
   date = as.Date(c("2020-01-01", "2020-01-02", "2020-01-03"), origin = "1970-01-01")
-  )
+)
 )
 ```
 
@@ -1655,9 +1701,7 @@ _(With type conversion)_
 ```
 
 ```{r}
-copy(SP)[rep(1:.N, lengths(strsplit(val, ",")))
-  ][, val := strsplit(val, ","), by = val
-  ][, val := utils::type.convert(val, as.is = T)][]
+copy(SP)[rep(1:.N, lengths(strsplit(val, ",")))][, val := strsplit(val, ","), by = val][, val := utils::type.convert(val, as.is = T)][]
 ```
 
 
@@ -1665,9 +1709,11 @@ copy(SP)[rep(1:.N, lengths(strsplit(val, ",")))
 ## Duplicates:
 
 ```{r}
-mtcars |> group_by(mpg, hp) |> filter(n() > 1)
+mtcars |>
+  group_by(mpg, hp) |>
+  filter(n() > 1)
 
-MT[, if(.N > 1) .SD, by = .(mpg, hp)]
+MT[, if (.N > 1) .SD, by = .(mpg, hp)]
 ```
 
 **Only keeping non-duplicated rows:**
@@ -1682,9 +1728,11 @@ This removes all groups which have duplicated rows.
 Solution 1:
 
 ```{r}
-mtcars |> group_by(mpg, hp) |> filter(n() == 1)
+mtcars |>
+  group_by(mpg, hp) |>
+  filter(n() == 1)
 
-MT[, if(.N == 1) .SD, by = .(mpg, hp)]
+MT[, if (.N == 1) .SD, by = .(mpg, hp)]
 ```
 
 Solution 2:
@@ -1692,11 +1740,14 @@ Solution 2:
 _More convoluted_
 
 ```{r}
-mtcars |> group_by(mpg, hp) |> filter(n() > 1) |> anti_join(mtcars, y = _)
+mtcars |>
+  group_by(mpg, hp) |>
+  filter(n() > 1) |>
+  anti_join(mtcars, y = _)
 
-MT[!MT[, if(.N > 1) .SD, by = .(mpg, hp)], on = names(MT)]
+MT[!MT[, if (.N > 1) .SD, by = .(mpg, hp)], on = names(MT)]
 
-fsetdiff(MT, setcolorder(MT[, if(.N > 1) .SD, by = .(mpg, hp)], names(MT)))
+fsetdiff(MT, setcolorder(MT[, if (.N > 1) .SD, by = .(mpg, hp)], names(MT)))
 ```
 
 
@@ -1745,7 +1796,7 @@ Solution 1:
 ```{r}
 mtcars_list2 |> unnest(mpg) # group_by(cyl, gear) is optional
 
-MT_LIST2[, .(mpg = unlist(mpg)), by = setdiff(names(MT_LIST2), 'mpg')]
+MT_LIST2[, .(mpg = unlist(mpg)), by = setdiff(names(MT_LIST2), "mpg")]
 ```
 
 Solution 2:
@@ -1792,7 +1843,9 @@ When a column contains a data.table (with multiple columns, structured)
 **Unnesting**
 
 ```{r}
-mtcars_nest |> unnest(data) |> ungroup()
+mtcars_nest |>
+  unnest(data) |>
+  ungroup()
 
 MT_NEST[, rbindlist(data), keyby = cyl]
 # MT_NEST[, do.call(c, data), keyby = cyl]
@@ -1812,11 +1865,13 @@ MT_NEST[, rbindlist(data), keyby = cyl]
 **Unnesting:**
 
 ```{r}
-mtcars_nest_mult |> unnest(c(data1, data2)) |> ungroup()
+mtcars_nest_mult |>
+  unnest(c(data1, data2)) |>
+  ungroup()
 
 MT_NEST_MULT[, c(rbindlist(data1), rbindlist(data2)), keyby = .(cyl, gear)]
 
-MT_NEST_MULT[, do.call(c, unname(lapply(.SD, \(c) rbindlist(c)))), .SDcols = patterns('data'), keyby = .(cyl, gear)]
+MT_NEST_MULT[, do.call(c, unname(lapply(.SD, \(c) rbindlist(c)))), .SDcols = patterns("data"), keyby = .(cyl, gear)]
 ```
 
 
@@ -1834,7 +1889,10 @@ MT_NEST_MULT[, do.call(c, unname(lapply(.SD, \(c) rbindlist(c)))), .SDcols = pat
 Keeping the nested column:
 
 ```{r}
-mtcars_nest |> group_by(cyl) |> mutate(sum = sum(unlist(data))) |> ungroup()
+mtcars_nest |>
+  group_by(cyl) |>
+  mutate(sum = sum(unlist(data))) |>
+  ungroup()
 
 copy(MT_NEST)[, sum := sapply(data, \(r) sum(r)), keyby = cyl][]
 ```
@@ -1842,7 +1900,10 @@ copy(MT_NEST)[, sum := sapply(data, \(r) sum(r)), keyby = cyl][]
 Dropping the nested column:
 
 ```{r}
-mtcars_nest |> group_by(cyl) |> summarize(sum = sum(unlist(data))) |> ungroup()
+mtcars_nest |>
+  group_by(cyl) |>
+  summarize(sum = sum(unlist(data))) |>
+  ungroup()
 
 MT_NEST[, .(sum = sapply(data, \(r) sum(r))), keyby = cyl]
 ```
@@ -1855,7 +1916,10 @@ linreg <- \(data) lm(mpg ~ hp, data = data) |> broom::tidy()
 ```
 
 ```{r}
-mtcars_nest |> group_by(cyl) |> group_modify(\(d, g) linreg(unnest(d, everything()))) |> ungroup()
+mtcars_nest |>
+  group_by(cyl) |>
+  group_modify(\(d, g) linreg(unnest(d, everything()))) |>
+  ungroup()
 
 MT_NEST[, rbindlist(lapply(data, \(ndt) linreg(ndt))), keyby = cyl][]
 ```
@@ -1872,15 +1936,16 @@ MT_NEST[, rbindlist(lapply(data, \(ndt) linreg(ndt))), keyby = cyl][]
 **Data**
 
 ```{r}
-(DAT <- structure(list(
-  id = c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L), 
-  name = c("Jane", "Jane", "Jane", "Jane", "Jane", "Jane", "Jane", "Jane", "Bob", "Bob", "Bob", "Bob", "Bob", "Bob", "Bob", "Bob"), 
-  year = c(1980L, 1981L, 1982L, 1983L, 1984L, 1985L, 1986L, 1987L, 1985L, 1986L, 1987L, 1988L, 1989L, 1990L, 1991L, 1992L), 
-  job = c("Manager", "Manager", "Manager", "Manager", "Manager", "Manager", "Boss", "Boss", "Manager", "Manager", "Manager", "Boss", "Boss", "Boss", "Boss", "Boss"), 
-  job2 = c(1L, 1L, 1L, 1L, 1L, 1L, 0L, 0L, 1L, 1L, 1L, 0L, 0L, 0L, 0L, 0L)
-  ), 
-  .Names = c("id", "name", "year", "job", "job2"), 
-  class = "data.frame", 
+(DAT <- structure(
+  list(
+    id = c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L),
+    name = c("Jane", "Jane", "Jane", "Jane", "Jane", "Jane", "Jane", "Jane", "Bob", "Bob", "Bob", "Bob", "Bob", "Bob", "Bob", "Bob"),
+    year = c(1980L, 1981L, 1982L, 1983L, 1984L, 1985L, 1986L, 1987L, 1985L, 1986L, 1987L, 1988L, 1989L, 1990L, 1991L, 1992L),
+    job = c("Manager", "Manager", "Manager", "Manager", "Manager", "Manager", "Boss", "Boss", "Manager", "Manager", "Manager", "Boss", "Boss", "Boss", "Boss", "Boss"),
+    job2 = c(1L, 1L, 1L, 1L, 1L, 1L, 0L, 0L, 1L, 1L, 1L, 0L, 0L, 0L, 0L, 0L)
+  ),
+  .Names = c("id", "name", "year", "job", "job2"),
+  class = "data.frame",
   row.names = c(NA, -16L)
 ) |> setDT())
 ```
@@ -1888,9 +1953,10 @@ MT_NEST[, rbindlist(lapply(data, \(ndt) linreg(ndt))), keyby = cyl][]
 **`dplyr`**
 
 ```{r}
-DAT |> group_by(name, job) |> 
-  filter(job != "Boss" | year == min(year)) |> 
-  mutate(cumu_job2 = cumsum(job2)) |> 
+DAT |>
+  group_by(name, job) |>
+  filter(job != "Boss" | year == min(year)) |>
+  mutate(cumu_job2 = cumsum(job2)) |>
   ungroup()
 ```
 
@@ -1903,23 +1969,24 @@ Here, the grouping is done BEFORE the filter -> there will be empty groups, mean
 Solution 1:
 
 ```{r}
-DAT[ , .SD[job != "Boss" | year == min(year), .(cumu_job2 = cumsum(job2))], by = .(name, job)]
+DAT[, .SD[job != "Boss" | year == min(year), .(cumu_job2 = cumsum(job2))], by = .(name, job)]
 ```
 
 Solution 2:
 
 ```{r}
-DAT[ , .(cum_job2 = cumsum(job2[job != "Boss" | year == min(year)])), by = .(name, job)]
+DAT[, .(cum_job2 = cumsum(job2[job != "Boss" | year == min(year)])), by = .(name, job)]
 ```
 
 Solution 3:
 
 ```{r}
 DAT[
-    DAT[, .I[job != "Boss" | year == min(year)], by = .(name, job)]$V1 # Row indices
-  ][
-    , cumu_job2 := cumsum(job2), by = .(name, job)
-  ][]
+  DAT[, .I[job != "Boss" | year == min(year)], by = .(name, job)]$V1 # Row indices
+][
+  , cumu_job2 := cumsum(job2),
+  by = .(name, job)
+][]
 ```
 
 **If we filtered after the grouping:**
@@ -1935,19 +2002,19 @@ DAT[job != "Boss" | year == min(year), list(cumu_job2 = cumsum(job2)), by = .(na
 **Data**
 
 ```{r}
-(GSJM1 <- data.table(x = c(1,1,1,1,2,2,2,2), y = c("a", "a", "b", "b"), z = 1:8, key = c("x", "y")))
+(GSJM1 <- data.table(x = c(1, 1, 1, 1, 2, 2, 2, 2), y = c("a", "a", "b", "b"), z = 1:8, key = c("x", "y")))
 (GSJM2 <- data.table(x = 1:2, y = c("a", "b"), mul = 4:3, key = c("x", "y")))
 ```
 
 **`dplyr`**
 
 ```{r}
-as.data.frame(GSJM1) |> 
+as.data.frame(GSJM1) |>
   group_by(x, y) |>
   summarise(z = sum(z)) |>
-  ungroup() |> 
+  ungroup() |>
   right_join(GSJM2) |>
-  mutate(z = z * mul) |> 
+  mutate(z = z * mul) |>
   select(-mul)
 ```
 
@@ -1989,18 +2056,18 @@ ID <- c(1:5)
 **`dplyr`**
 
 ```{r}
-SURV |> 
-  separate(response, paste0("Opt", 1:7), sep="([|])") |> 
-  pivot_longer(cols = -ID) |> 
-  pivot_wider(id_cols = ID, names_from = value, values_fn = \(.x) sum(!is.na(.x)), values_fill = 0) |> 
+SURV |>
+  separate(response, paste0("Opt", 1:7), sep = "([|])") |>
+  pivot_longer(cols = -ID) |>
+  pivot_wider(id_cols = ID, names_from = value, values_fn = \(.x) sum(!is.na(.x)), values_fill = 0) |>
   select(-"NA")
 ```
 
 **`data.table`**
 
 ```{r}
-SURV[, c(.SD, tstrsplit(response, "|", fixed = T))][, -"response"] |> 
-  melt(measure.vars = patterns("^V")) |> 
+SURV[, c(.SD, tstrsplit(response, "|", fixed = T))][, -"response"] |>
+  melt(measure.vars = patterns("^V")) |>
   dcast(ID ~ value, fun.agg = \(.x) sum(!is.na(.x)), subset = .(!is.na(value)))
 ```
 
@@ -2012,11 +2079,11 @@ SURV[, c(.SD, tstrsplit(response, "|", fixed = T))][, -"response"] |>
 
 ```{r}
 (DT_COMA <- data.table(
-  first = c(1,"2,3",3,4,5,6.5,7,8,9,0), 
-  second = c(1,"2,,5",3,4,5,"6,5,9",7,8,9,0), 
-  third = c("one", "two", "thr,ee", "four", "five", "six", "sev,en", "eight", "nine", "zero"), 
-  fourth = as.Date(c(1/1/2020, 2/1/2020, 3/1/2020, 4/1/2020, 5/1/2020, 6/1/2020, 7/1/2020, 8/1/2020, 9/1/2020, 10/1/2020), origin = "1970-01-01")
-  )
+  first = c(1, "2,3", 3, 4, 5, 6.5, 7, 8, 9, 0),
+  second = c(1, "2,,5", 3, 4, 5, "6,5,9", 7, 8, 9, 0),
+  third = c("one", "two", "thr,ee", "four", "five", "six", "sev,en", "eight", "nine", "zero"),
+  fourth = as.Date(c(1 / 1 / 2020, 2 / 1 / 2020, 3 / 1 / 2020, 4 / 1 / 2020, 5 / 1 / 2020, 6 / 1 / 2020, 7 / 1 / 2020, 8 / 1 / 2020, 9 / 1 / 2020, 10 / 1 / 2020), origin = "1970-01-01")
+)
 )
 ```
 
@@ -2046,11 +2113,13 @@ Each numeric row that has multiple comma-separated values has to be split into m
 **`dplyr`**
 
 ```{r}
-cols_to_separate <- DT_COMA |> select(where(\(v) is.character(v) & any(!is.na(as.numeric(v))))) |> colnames()
+cols_to_separate <- DT_COMA |>
+  select(where(\(v) is.character(v) & any(!is.na(as.numeric(v))))) |>
+  colnames()
 
 purrr::reduce(
-  cols_to_separate, 
-  \(acc, col) acc |> tidyr::separate_rows(col, sep = ",", convert = T), 
+  cols_to_separate,
+  \(acc, col) acc |> tidyr::separate_rows(col, sep = ",", convert = T),
   .init = DT_COMA
 )
 ```
@@ -2076,8 +2145,8 @@ cols_to_separate <- DT_COMA[, .SD, .SDcols = \(v) is.character(v) & any(!is.na(a
 DT_COMA <- DT_COMA |> mutate(across(where(\(v) is.character(v) & all(is.na(as.numeric(v)))), \(v) stringr::str_remove_all(v, ",")))
 
 purrr::reduce(
-  select(DT_COMA, where(\(v) is.character(v) & any(!is.na(as.numeric(v))))) |> colnames(), 
-  \(acc, col) acc |> tidyr::separate_rows(col, sep = ",", convert = T), 
+  select(DT_COMA, where(\(v) is.character(v) & any(!is.na(as.numeric(v))))) |> colnames(),
+  \(acc, col) acc |> tidyr::separate_rows(col, sep = ",", convert = T),
   .init = DT_COMA
 )
 ```
@@ -2108,12 +2177,12 @@ See [this SO question](https://stackoverflow.com/questions/71952593/filling-rows
 ```{r}
 ZIP <- structure(
   list(
-    zipcode = c(1001, 1002, 1003, 1004, 1101, 1102, 1103, 1104, 1201, 1202, 1203, 1302), 
-    areacode = c(4, 4, NA, 4, 4, 4, NA, 1, 4, 4, NA, 4), 
-    type = structure(c(1L, 1L, NA, 1L, 2L, 2L, NA, 1L, 1L, 1L, NA, 1L), .Label = c("clay", "sand"), class = "factor"), 
-    region = c(3, 3, NA, 3, 3, 3, NA, 3, 3, 3, NA, 3), 
+    zipcode = c(1001, 1002, 1003, 1004, 1101, 1102, 1103, 1104, 1201, 1202, 1203, 1302),
+    areacode = c(4, 4, NA, 4, 4, 4, NA, 1, 4, 4, NA, 4),
+    type = structure(c(1L, 1L, NA, 1L, 2L, 2L, NA, 1L, 1L, 1L, NA, 1L), .Label = c("clay", "sand"), class = "factor"),
+    region = c(3, 3, NA, 3, 3, 3, NA, 3, 3, 3, NA, 3),
     do_not_fill = c(1, NA, NA, 1, 1, NA, NA, 1, NA, NA, NA, 1)
-    ), 
+  ),
   class = c("data.table", "data.frame"), row.names = c(NA, -4L)
 )
 ```
@@ -2125,21 +2194,25 @@ as_tibble(ZIP) |>
   mutate(type = as.character(type)) |>
   mutate(
     across(1:4, ~ ifelse(
-        is.na(.) & lag(areacode) == lead(areacode) & 
-          lag(as.numeric(substr(zipcode, 1, 2))) == lead(as.numeric(substr(zipcode, 1, 2))),
-        lag(.), .
-      )
-    )
+      is.na(.) & lag(areacode) == lead(areacode) &
+        lag(as.numeric(substr(zipcode, 1, 2))) == lead(as.numeric(substr(zipcode, 1, 2))),
+      lag(.), .
+    ))
   )
 ```
 
 **`data.table`**
 
 ```{r}
-ZIP[, c(lapply(.SD, \(v) {fifelse(
-  is.na(areacode) & lag(areacode) == lead(areacode) &
-    lag(as.numeric(substr(zipcode, 1, 2))) == lead(as.numeric(substr(zipcode, 1, 2))), lag(v), v)}), 
-  .SD[, .(do_not_fill)]), .SDcols = !patterns("do_not_fill")]
+ZIP[, c(
+  lapply(.SD, \(v) {
+    fifelse(
+      is.na(areacode) & lag(areacode) == lead(areacode) &
+        lag(as.numeric(substr(zipcode, 1, 2))) == lead(as.numeric(substr(zipcode, 1, 2))), lag(v), v
+    )
+  }),
+  .SD[, .(do_not_fill)]
+), .SDcols = !patterns("do_not_fill")]
 ```
 
 

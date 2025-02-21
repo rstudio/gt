@@ -352,10 +352,10 @@ test_that(
 
     # gt with only one spanner level coloured
     gt_tbl_cells_column_spanners <-
-      tbl |>
-      gt(rowname_col = "row", groupname_col = "group") |>
-      cols_move_to_end(columns = value_1) |>
-      tab_spanner(label = "spanner", columns = c(value_1, value_3)) |>
+      tbl %>%
+      gt(rowname_col = "row", groupname_col = "group") %>%
+      cols_move_to_end(columns = value_1) %>%
+      tab_spanner(label = "spanner", columns = c(value_1, value_3)) %>%
       tab_style(
         style = list(
           cell_text(size = px(20), color = "white"),
@@ -365,10 +365,10 @@ test_that(
       )
 
     # gt with both spanner levels coloured
-    gt_tbl_cells_column_spanners2 <- tbl |>
-      gt(rowname_col = "row", groupname_col = "group") |>
-      tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
-      tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+    gt_tbl_cells_column_spanners2 <- tbl %>%
+      gt(rowname_col = "row", groupname_col = "group") %>%
+      tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) %>%
+      tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) %>%
       tab_style(
         style = list(
           cell_text(size = px(20), color = "white"),
@@ -380,10 +380,10 @@ test_that(
     # selecting a level should work for spanners (all levels)
     expect_equal(
       gt_tbl_cells_column_spanners2,
-      tbl |>
-        gt(rowname_col = "row", groupname_col = "group") |>
-        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
-        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+      tbl %>%
+        gt(rowname_col = "row", groupname_col = "group") %>%
+        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) %>%
+        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) %>%
         tab_style(
           style = list(
             cell_text(size = px(20), color = "white"),
@@ -395,10 +395,10 @@ test_that(
 
     expect_equal(
       gt_tbl_cells_column_spanners2,
-      tbl |>
-        gt(rowname_col = "row", groupname_col = "group") |>
-        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
-        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+      tbl %>%
+        gt(rowname_col = "row", groupname_col = "group") %>%
+        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) %>%
+        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) %>%
         tab_style(
           style = list(
             cell_text(size = px(20), color = "white"),
@@ -410,10 +410,10 @@ test_that(
 
     expect_equal(
       gt_tbl_cells_column_spanners2,
-      tbl |>
-        gt(rowname_col = "row", groupname_col = "group") |>
-        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
-        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+      tbl %>%
+        gt(rowname_col = "row", groupname_col = "group") %>%
+        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) %>%
+        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) %>%
         tab_style(
           style = list(
             cell_text(size = px(20), color = "white"),
@@ -425,10 +425,10 @@ test_that(
 
     # selecting a level should work for spanners (one level)
 
-    gt_tbl_cells_column_spanners <- tbl |>
-      gt(rowname_col = "row", groupname_col = "group") |>
-      tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
-      tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+    gt_tbl_cells_column_spanners <- tbl %>%
+      gt(rowname_col = "row", groupname_col = "group") %>%
+      tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) %>%
+      tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) %>%
       tab_style(
         style = list(
           cell_text(size = px(20), color = "white"),
@@ -439,10 +439,10 @@ test_that(
 
     expect_equal(
       gt_tbl_cells_column_spanners,
-      tbl |>
-        gt(rowname_col = "row", groupname_col = "group") |>
-        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
-        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+      tbl %>%
+        gt(rowname_col = "row", groupname_col = "group") %>%
+        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) %>%
+        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) %>%
         tab_style(
           style = list(
             cell_text(size = px(20), color = "white"),
@@ -455,10 +455,10 @@ test_that(
     # selecting non existing levels -> error
     expect_warning(
       label = "selecting non existing levels -> error",
-      tbl |>
-        gt(rowname_col = "row", groupname_col = "group") |>
-        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
-        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+      tbl %>%
+        gt(rowname_col = "row", groupname_col = "group") %>%
+        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) %>%
+        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) %>%
         tab_style(
           style = list(
             cell_text(size = px(20), color = "white"),
@@ -470,10 +470,10 @@ test_that(
 
     expect_warning(
       label = "selecting non existing levels -> error",
-      tbl |>
-        gt(rowname_col = "row", groupname_col = "group") |>
-        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
-        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+      tbl %>%
+        gt(rowname_col = "row", groupname_col = "group") %>%
+        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) %>%
+        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) %>%
         tab_style(
           style = list(
             cell_text(size = px(20), color = "white"),
@@ -486,10 +486,10 @@ test_that(
     # selecting nun numeric spanner levels -> error
     expect_warning(
       label = "selecting nun numeric spanner levels -> error",
-      tbl |>
-        gt(rowname_col = "row", groupname_col = "group") |>
-        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
-        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) |>
+      tbl %>%
+        gt(rowname_col = "row", groupname_col = "group") %>%
+        tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) %>%
+        tab_spanner(label = "spanner_big", columns = c(value_1, value_2, value_3)) %>%
         tab_style(
           style = list(
             cell_text(size = px(20), color = "white"),
@@ -501,9 +501,7 @@ test_that(
   }
 )
 
-test_that(
-  "tab_style() works with cells_column_labels()",
-  {
+test_that("tab_style() works with cells_column_labels()", {
     tbl <- data.frame(
       group = c("A", "B"),
       row = c("1", "2"),

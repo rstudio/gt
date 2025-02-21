@@ -4,7 +4,7 @@ test_that("cols_add() works", {
     dat <- cols_add(tbl, x = 1, .before = 1)
   )
   expect_equal(dat$`_boxhead`$var[1], "x")
-  
+
   expect_no_error(
     dat <- cols_add(tbl, x = 1, .before = 2)
   )
@@ -20,14 +20,14 @@ test_that("cols_add() works", {
 
 test_that("cols_add() errors with bad input", {
   tbl <- gt(exibble)
-  
+
   expect_snapshot(
     error = TRUE, {
       cols_add(tbl, x = 1, .after = 2, .before = 3)
       cols_add(tbl, x = 1, .after = 15)
       cols_add(tbl, x = 1, .before = c(1, 2))
       cols_add(tbl, x = 1, .after = c(1, 2))
-      
+
     }
   )
 })
@@ -38,12 +38,12 @@ test_that("cols_add() handles empty data frames", {
     gt(data.frame()) %>% cols_add(x = 1),
     gt(data.frame(x = 1))
   )
-  
+
   expect_no_error(gt(data.frame()) %>% cols_add())
-  
+
   expect_no_error(
     tab <- gt(data.frame(x = character(0), y = character(0))) %>% cols_add(z = character(0))
     )
   expect_named(tab$`_data`, c("x", "y", "z"))
-  
+
 })

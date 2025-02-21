@@ -160,8 +160,8 @@ render_as_ihtml <- function(data, id) {
         FUN.VALUE = integer(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
-          if (grepl("px", x)) {
-            x <- as.integer(gsub("px", "", x))
+          if (grepl("px", x, fixed = TRUE)) {
+            x <- as.integer(gsub("px", "", x, fixed = TRUE))
           } else {
             x <- NA_integer_
           }
@@ -437,7 +437,7 @@ render_as_ihtml <- function(data, id) {
 
         paste0(
           "if (colInfo.id === '", colname, "' & rowIndex === ", rownum, ") {\n",
-          "  return { ", html_style , " }\n",
+          "  return { ", html_style, " }\n",
           "}\n\n"
         )
       }

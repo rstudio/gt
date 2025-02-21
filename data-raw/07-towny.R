@@ -35,10 +35,12 @@ towny <-
     col = coordinates,
     into = c("latitude", "longitude"), sep = ", "
   ) %>%
-  dplyr::mutate(latitude = as.numeric(latitude)) %>%
-  dplyr::mutate(longitude = as.numeric(longitude)) %>%
+  dplyr::mutate(
+    latitude = as.numeric(latitude),
+    longitude = as.numeric(longitude)
+  ) %>%
   dplyr::rename(land_area_km2 = land_area_km) %>%
-  dplyr::select(
+  dplyr::relocate(
     name, website, status, csd_type, census_div,
-    latitude, longitude, everything()
+    latitude, longitude
   )

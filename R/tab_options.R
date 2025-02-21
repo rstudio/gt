@@ -1116,7 +1116,7 @@ create_option_value_list <- function(tab_options_args, values) {
 create_default_option_value_list <- function(tab_options_args) {
 
   lapply(
-    stats::setNames(, tab_options_args),
+    rlang::set_names(tab_options_args),
     FUN = function(x) {
       dt_options_get_default_value(gsub(".", "_", x, fixed = TRUE))
     }

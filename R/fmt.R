@@ -470,12 +470,10 @@ get_currency_decimals <- function(
       # that most currencies present two decimal places
       return(2)
 
-    } else if (!use_subunits) {
-
-      return(0)
-
-    } else {
+    } else if (use_subunits) {
       return(decimals)
+    } else {
+      return(0)
     }
   }
 
@@ -884,7 +882,7 @@ context_lte_mark <- function(context) {
 
   switch(
     context,
-    grid =,
+    grid = ,
     html = "\U02264",
     latex = "$\\leq$",
     "<="
@@ -899,7 +897,7 @@ context_gte_mark <- function(context) {
 
   switch(
     context,
-    grid =,
+    grid = ,
     html = "\U02265",
     latex = "$\\geq$",
     ">="
@@ -1007,10 +1005,10 @@ context_exp_str <- function(context, exp_style) {
     exp_str <-
       switch(
         context,
-        html = c("<sub style='font-size: 65%;'>10</sub>"),
-        latex = c("{}_10"),
-        rtf = c("{\\sub 10}"),
-        word = c("10^"),
+        html = "<sub style='font-size: 65%;'>10</sub>",
+        latex = "{}_10",
+        rtf = "{\\sub 10}",
+        word = "10^",
         "E"
       )
   }
@@ -1067,7 +1065,9 @@ context_symbol_str <- function(context, symbol) {
       },
       html = get_currency_str(currency = symbol, fallback_to_code = FALSE),
       latex = {
-        if (!inherits(symbol, "AsIs")) {
+        if (inherits(symbol, "AsIs")) {
+          symbol
+        } else {
           #paste_between(
           markdown_to_latex(
             get_currency_str(currency = symbol, fallback_to_code = TRUE),
@@ -1075,8 +1075,6 @@ context_symbol_str <- function(context, symbol) {
           )#,
           #  c("\\text{", "}")
           #)
-        } else {
-          symbol
         }
       },
       get_currency_str(currency = symbol, fallback_to_code = TRUE)
@@ -1379,7 +1377,7 @@ get_arg_names <- function(
 ) {
 
   if (!is.null(in_args) && !is.null(all_args_except)) {
-    stop("The `in_args` and `all_args_except` args should not both be used.")
+    cli::cli_abort("The `in_args` and `all_args_except` args should not both be used.")
   }
 
   if (is.null(in_args) && is.null(all_args_except)) {

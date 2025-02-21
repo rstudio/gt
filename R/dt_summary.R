@@ -336,7 +336,7 @@ dt_summary_build <- function(data, context) {
 
             fmt_expr_components <- fmt_expr_values
             names(fmt_expr_components) <- fmt_expr_names
-            fmt_expr_components <- fmt_expr_components[fmt_expr_names != ""]
+            fmt_expr_components <- fmt_expr_components[nzchar(fmt_expr_names)]
 
             if ("rows" %in% names(fmt_expr_components)) {
 
