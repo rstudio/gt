@@ -1,7 +1,6 @@
 # gt (development version)
 
-* Fixed an issue where `fmt_markdown()` could create strange output in Quarto (html and Typst formats) (@olivroy, #1957, [quarto-dev/quarto-cli#11932](https://github.com/quarto-dev/quarto-cli/issues/11932)).
-  This means that using  `#| html-table-processing: none` may no longer work as expected in some cases.
+* Fixed an issue where `fmt_markdown()` could create strange output in Quarto (html and Typst formats) (@olivroy, #1957, [quarto-dev/quarto-cli#11932](https://github.com/quarto-dev/quarto-cli/issues/11932), [quarto-dev/quarto-cli#11610](https://github.com/quarto-dev/quarto-cli/issues/11610)).
  
 * The default table position in LaTeX is now "t" instead of "!t" (@AaronGullickson, #1935).
 
