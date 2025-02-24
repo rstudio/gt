@@ -126,7 +126,7 @@ default only negative values will display a minus sign.}
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional locale identifier that can be used for formatting values
-according the locale's rules. Examples include \code{"en"} for English (United
+according to the locale's rules. Examples include \code{"en"} for English (United
 States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
 useful reference for all of the locales that are supported.}
 

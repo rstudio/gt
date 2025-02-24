@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -236,7 +236,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     # Re-combine `tbl_not_column_cells`
     # with `tbl_column_cells`
     tbl <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         tbl_not_column_cells,
         tbl_column_cells
       )

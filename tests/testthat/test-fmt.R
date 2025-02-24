@@ -265,8 +265,8 @@ test_that("fmt() works when providing a purrr formula (#1762)", {
   # Function has a different class, so that will differ
   # - but makes sense since the passed function is actually different
   expect_equal(
-    {v1 <- mtcars %>% gt() %>% fmt(mpg, fns = ~.x+1); v1$`_formats`[[1]]$func$default <- NULL; v1},
-    {v2 <- mtcars %>% gt() %>% fmt(mpg, fns = function(x) x+1); v2$`_formats`[[1]]$func$default <- NULL; v2}
+    {v1 <- mtcars %>% gt() %>% fmt(mpg, fns = ~.x + 1); v1$`_formats`[[1]]$func$default <- NULL; v1},
+    {v2 <- mtcars %>% gt() %>% fmt(mpg, fns = function(x) x + 1); v2$`_formats`[[1]]$func$default <- NULL; v2}
     )
 })
 
@@ -376,7 +376,7 @@ test_that("has_order_zero() works correctly", {
   )
   expect_equal(
     has_order_zero(x_has_NA),
-    c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE,FALSE, FALSE, TRUE, FALSE, FALSE)
+    c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE)
   )
 })
 
@@ -540,4 +540,3 @@ test_that("paste_right() works correctly", {
   expect_error(paste_left(x = "center", x_right = c("r1", "r2", "r3")))
   expect_error(paste_left(x = c("c1", "c2", "c3"), x_right = c("r1", "r2")))
 })
-

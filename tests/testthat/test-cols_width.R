@@ -1020,10 +1020,10 @@ test_that("cols_width() correctly specifies LaTeX table when column widths are s
   # when table width is specified by user in pixels
   tbl_latex_tw_px <-
     tbl_latex %>%
-    tab_options(table.width = '400px')
+    tab_options(table.width = "400px")
 
   (400 * 0.75 * c(0.5, 0.3, 0.2, 0.1)) %>%
-    pct_string(unit = 'pt') %>%
+    pct_string(unit = "pt") %>%
     build_longtable_regex() %>%
     grepl(as_latex(tbl_latex_tw_px))
 
@@ -1033,7 +1033,7 @@ test_that("cols_width() correctly specifies LaTeX table when column widths are s
 test_that("column widths are accurately reflected in Latex multicolumn statements", {
 
   set.seed(1234)
-  tbl_random1 <- data.frame(x = c('a', 'b', 'c', 'd', 'e'),
+  tbl_random1 <- data.frame(x = c("a", "b", "c", "d", "e"),
                y = runif(5),
                z = runif(5),
                m = runif(5),
@@ -1041,15 +1041,15 @@ test_that("column widths are accurately reflected in Latex multicolumn statement
                w = runif(5))
 
   gt_tbl <- gt(tbl_random1,
-     rowname_col = 'x',
+     rowname_col = "x",
      row_group_as_column = FALSE) %>%
     fmt_number(decimals = 3) %>%
-    tab_row_group(label = 'Only row group label',
+    tab_row_group(label = "Only row group label",
                   rows = 1:2) %>%
-    cols_width(everything() ~ '2cm') %>%
-    tab_spanner(label = 'Spanner with a long title that should be wrapped', columns = c('y', 'z')) %>%
-    tab_spanner(label = 'Spanner2', columns = c('n', 'w')) %>%
-    tab_spanner(label = 'Another long spanner that needs to wrap even more than the other', columns = c('z', 'm')) %>%
+    cols_width(everything() ~ "2cm") %>%
+    tab_spanner(label = "Spanner with a long title that should be wrapped", columns = c("y", "z")) %>%
+    tab_spanner(label = "Spanner2", columns = c("n", "w")) %>%
+    tab_spanner(label = "Another long spanner that needs to wrap even more than the other", columns = c("z", "m")) %>%
     summary_rows(fns = list("mean"))
 
   expect_snapshot(as_latex(gt_tbl))

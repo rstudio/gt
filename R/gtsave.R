@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -257,7 +257,7 @@ gt_save_html <- function(
 
       html_tbl_i <-
         as_raw_html(grp_pull(data, which = i), inline_css = inline_css)
-      
+
       html_tbls <- htmltools::tagList(html_tbls, html_tbl_i)
     }
 

@@ -63,7 +63,7 @@ values only).}
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional locale identifier that can be used for formatting values
-according the locale's rules. Examples include \code{"en"} for English (United
+according to the locale's rules. Examples include \code{"en"} for English (United
 States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
 useful reference for all of the locales that are supported. A locale ID can
 be also set in the initial \code{\link[=gt]{gt()}} function call (where it would be used
@@ -107,7 +107,7 @@ scientific notation. This is done by using the \code{lg_num_pref = "suf"} option
   dplyr::select(country_code_3, year, population) |>
   dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) |>
   dplyr::filter(year > 1975 & year \%\% 5 == 0) |>
-  tidyr::spread(year, population) |>
+  tidyr::pivot_wider(names_from = year, values_from = population) |>
   dplyr::arrange(desc(`2020`)) |>
   gt(rowname_col = "country_code_3") |>
   fmt_auto(lg_num_pref = "suf")

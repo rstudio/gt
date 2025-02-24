@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -37,7 +37,7 @@
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for displaying formatted
-#'   date values according the locale's rules. Examples include `"en"` for
+#'   date values according to the locale's rules. Examples include `"en"` for
 #'   English (United States) and `"fr"` for French (France). We can call
 #'   [info_locales()] for a useful reference for all of the locales that are
 #'   supported.
@@ -220,7 +220,7 @@ info_date_style <- function(locale = NULL) {
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for displaying formatted
-#'   time values according the locale's rules. Examples include `"en"` for
+#'   time values according to the locale's rules. Examples include `"en"` for
 #'   English (United States) and `"fr"` for French (France). We can call
 #'   [info_locales()] for a useful reference for all of the locales that are
 #'   supported.
@@ -787,7 +787,7 @@ info_locales <- function(begins_with = NULL) {
       locale = from_column("locale")
     ) %>%
     text_transform(
-      fn = function(x) sub("space", "\U02420", x),
+      fn = function(x) sub("space", "\U02420", x, fixed = TRUE),
       locations = cells_body(columns = "group")
     ) %>%
     cols_merge(

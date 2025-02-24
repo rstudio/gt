@@ -54,7 +54,7 @@ describe what's in the stub.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_1.png" alt="This image of a table was generated from the first code example in the `tab_stubhead()` help file." style="width:100\%;">
 }}
 
-The stuhead can contain all sorts of interesting content. How about an icon
+The stubhead can contain all sorts of interesting content. How about an icon
 for a car? We can make this happen with help from the \strong{fontawesome}
 package.
 

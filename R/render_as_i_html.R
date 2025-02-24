@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -160,8 +160,8 @@ render_as_ihtml <- function(data, id) {
         FUN.VALUE = integer(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
-          if (grepl("px", x)) {
-            x <- as.integer(gsub("px", "", x))
+          if (grepl("px", x, fixed = TRUE)) {
+            x <- as.integer(gsub("px", "", x, fixed = TRUE))
           } else {
             x <- NA_integer_
           }
@@ -188,6 +188,9 @@ render_as_ihtml <- function(data, id) {
   page_size_default <- tbl_opts$ihtml_page_size_default
   page_size_values <- tbl_opts$ihtml_page_size_values
   pagination_type <- tbl_opts$ihtml_pagination_type
+  selection_mode <- tbl_opts$ihtml_selection_mode
+  if (is.na(selection_mode)) selection_mode <- NULL
+  onClick <- if (!is.null(selection_mode)) "select"
 
   use_row_striping <- tbl_opts$row_striping_include_table_body
   row_striping_color <- tbl_opts$row_striping_background_color
@@ -439,7 +442,7 @@ render_as_ihtml <- function(data, id) {
     # for defaultExpanded = TRUE
     expand_groupname_col <- TRUE
     # modify data_tbl to include
-    data_tbl <- dplyr::bind_cols(
+    data_tbl <- vctrs::vec_cbind(
       data_tbl,
       data_tbl0[ , groupname_col, drop = FALSE]
     )
@@ -516,7 +519,7 @@ render_as_ihtml <- function(data, id) {
       collapse = ""
     )
 
-  # TODO if `sub_missing()` is enabled gloablly, just use `na = ` here!
+  # TODO if `sub_missing()` is enabled globally, just use `na = ` here!
   default_col_def <-
     reactable::colDef(
 
@@ -821,10 +824,10 @@ render_as_ihtml <- function(data, id) {
       paginateSubRows = TRUE,
       details = NULL,
       defaultExpanded = expand_groupname_col,
-      selection = NULL,
+      selection = selection_mode,
       selectionId = NULL,
       defaultSelected = NULL,
-      onClick = NULL,
+      onClick = onClick,
       highlight = use_highlight,
       outlined = FALSE,
       # equivalent to opt_table_lines(extent = "all")

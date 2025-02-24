@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -140,9 +140,9 @@ finalize_html_table <- function(
 
   # Unescape single quotes that may present as HTML entities (this is
   # needed since the CSS inliner cannot parse "&#39;")
-  html_tbl <- gsub("&#39;", "'", html_tbl)
+  html_tbl <- gsub("&#39;", "'", html_tbl, fixed = TRUE)
 
   # Remove invalid id.
-  html_tbl <- gsub(' id=""', "", html_tbl)
+  html_tbl <- gsub(' id=""', "", html_tbl, fixed = TRUE)
   html_tbl
 }

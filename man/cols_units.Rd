@@ -28,7 +28,7 @@ the LHS. Named arguments are also valid as input for simple mappings of
 column name to the \strong{gt} units syntax; they should be of the form
 \verb{<column name> = <units text>}. Subsequent expressions that operate on the
 columns assigned previously will result in overwriting column units
-defintion values.}
+definition values.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 

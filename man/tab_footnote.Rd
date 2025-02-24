@@ -253,9 +253,8 @@ placed on the \code{"Density"} column label. Here, changing the order of the
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::filter(csd_type == "city") |>
-  dplyr::arrange(desc(population_2021)) |>
   dplyr::select(name, density_2021, population_2021) |>
-  dplyr::slice_head(n = 10) |>
+  dplyr::slice_max(population_2021, n = 10) |>
   gt(rowname_col = "name") |>
   tab_header(
     title = md("The 10 Largest Municipalities in `towny`"),

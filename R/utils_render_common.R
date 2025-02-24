@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -63,19 +63,7 @@ colname_to_colnum <- function(
 # Utility function to generate finalized row numbers;
 # used in: `resolve_footnotes_styles()`
 rownum_translation <- function(body, rownum_start) {
-
-  rownum_final <- c()
-
-  for (rownum_s in rownum_start) {
-
-    rownum_final <-
-      c(
-        rownum_final,
-        which(as.numeric(rownames(body)) == rownum_s)
-      )
-  }
-
-  rownum_final
+  match(rownum_start, as.numeric(rownames(body)))
 }
 
 #' Render any formatting directives available in the `formats` list
@@ -476,7 +464,7 @@ perform_col_merge <- function(data, context) {
         )
 
       glue_src_data <- stats::setNames(glue_src_data, seq_along(glue_src_data))
-      
+
       which_cols <- unique(unlist(str_complete_extract(pattern, "\\{\\d+\\}")))
       which_cols <- gsub("\\{|\\}", "", which_cols)
       if (!all(which_cols %in% names(glue_src_data))) {
@@ -484,7 +472,7 @@ perform_col_merge <- function(data, context) {
         cli::cli_abort(c(
           "Can't perform column merging",
           "Can't find reference {missing}.",
-          "i" = 'Review {.arg pattern} provided to {.fn cols_merge}.'
+          "i" = "Review {.arg pattern} provided to {.fn cols_merge}."
         ))
       }
       glued_cols <- as.character(glue_gt(glue_src_data, pattern))

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -67,7 +67,7 @@ output_types <- c("auto", "plain", "html", "latex", "rtf", "word")
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported.
 #'
@@ -235,7 +235,7 @@ vec_fmt_number <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported.
 #'
@@ -373,7 +373,7 @@ vec_fmt_integer <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported.
 #'
@@ -531,7 +531,7 @@ vec_fmt_scientific <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported.
 #'
@@ -687,7 +687,7 @@ vec_fmt_engineering <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported.
 #'
@@ -871,7 +871,7 @@ vec_fmt_percent <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported.
 #'
@@ -977,7 +977,7 @@ vec_fmt_partsper <- function(
   check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
   # Ensure that `to_units` is matched correctly to one option
-  to_units <- 
+  to_units <-
     rlang::arg_match0(
       to_units,
       values = c("per-mille", "per-myriad", "pcm", "ppm", "ppb", "ppt", "ppq")
@@ -1046,7 +1046,7 @@ vec_fmt_partsper <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported.
 #'
@@ -1212,7 +1212,7 @@ vec_fmt_fraction <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported.
 #'
@@ -1464,7 +1464,7 @@ vec_fmt_roman <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for
 #'   a useful reference for all of the locales that are supported.
 #'
@@ -1589,7 +1589,7 @@ vec_fmt_index <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported.
 #'
@@ -1740,7 +1740,7 @@ vec_fmt_spelled_num <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported.
 #'
@@ -1885,7 +1885,7 @@ vec_fmt_bytes <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported.
 #'
@@ -2068,7 +2068,7 @@ vec_fmt_date <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported.
 #'
@@ -2241,7 +2241,7 @@ vec_fmt_time <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported.
 #'
@@ -2906,7 +2906,7 @@ vec_fmt_time <- function(
 #'
 #' We can choose from any of 41 different date styles and 25 time formatting
 #' styles. Many of these styles are flexible, meaning that the structure of the
-#' format will adapt to different locales. Let's use a combination of the the
+#' format will adapt to different locales. Let's use a combination of the
 #' `"yMMMd"` and `"hms"` date and time styles to demonstrate this (first in the
 #' default locale of `"en"`):
 #'
@@ -3086,7 +3086,7 @@ vec_fmt_datetime <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported.
 #'
@@ -3219,8 +3219,8 @@ vec_fmt_duration <- function(
   # Stop function if class of `x` is incompatible with the formatting
   check_vector_valid(x, valid_classes = c("numeric", "integer", "difftime"))
 
-  # Ensure that `duration_style` and `ouput` are matched correctly to one option
-  duration_style <- 
+  # Ensure that `duration_style` and `output` are matched correctly to one option
+  duration_style <-
     rlang::arg_match0(
       duration_style,
       values = c("narrow", "wide", "colon-sep", "iso")
@@ -3319,7 +3319,7 @@ vec_fmt_markdown <- function(
   check_vector_valid(x)
 
   # Ensure that arguments are matched
-  md_engine <- 
+  md_engine <-
     rlang::arg_match0(
       md_engine,
       values = c("markdown", "commonmark")
@@ -3331,7 +3331,7 @@ vec_fmt_markdown <- function(
   }
   # Avoid modifying the output to base64enc in Quarto
   if (check_quarto() && output == "html") {
-    # Similar to withr::local_envvar 
+    # Similar to withr::local_envvar
     current_envvar <- Sys.getenv("QUARTO_BIN_PATH")
     Sys.unsetenv("QUARTO_BIN_PATH")
     on.exit(

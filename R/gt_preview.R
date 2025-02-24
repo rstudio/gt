@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -191,7 +191,7 @@ gt_preview <- function(
       tab_style(
         gt_tbl,
         style = cell_fill(color = "#E4E4E4"),
-        locations = cells_body(columns = visible_vars, rows = ellipsis_row)
+        locations = cells_body(columns = all_of(visible_vars), rows = ellipsis_row)
       )
 
     gt_tbl <-

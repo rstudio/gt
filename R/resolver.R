@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -153,13 +153,13 @@ resolve_cells_column_spanners <- function(
 
   spanners <- dt_spanners_get(data = data)
 
-  levels <- attr(object,"spanner_levels")
+  levels <- attr(object, "spanner_levels")
 
-  if(!is.null(levels)){
+  if (!is.null(levels)) {
     # check if there are wrong level expectations in the argument
 
     # must be numeric
-    if(!all(suppressWarnings(!is.na(as.numeric(levels))))){
+    if (!all(suppressWarnings(!is.na(as.numeric(levels))))) {
       cli::cli_warn(c(
         "All values of vector `levels` must be numeric.",
         "!" = "Please check wrong element{?/s}: [{levels[suppressWarnings(is.na(as.numeric(levels)))]}]."
@@ -170,7 +170,7 @@ resolve_cells_column_spanners <- function(
     # must actually exist
 
     wrong_levels <- setdiff(levels, unique(spanners$spanner_level))
-    if(length(wrong_levels) > 0){
+    if (length(wrong_levels) > 0) {
       cli::cli_warn(c(
         "All values of vector `levels` must exist in spanner definition.",
         "i" = "currently only the following level{?s} {?is/are} available: [{as.character(unique(spanners$spanner_level))}].",
@@ -261,9 +261,9 @@ resolve_cols_c <- function(
     ret <- names(dt_data_get(data))
     return(ret)
   }
-  
+
   null_means <- rlang::arg_match0(null_means, c("everything", "nothing"))
-  
+
   names(
     resolve_cols_i(
       expr = {{ expr }},
@@ -520,11 +520,11 @@ resolve_rows_i <- function(
       call = call
     )
 
-  if (!is.null(resolved_rows)) {
-    return(which(resolved_rows))
-  } else {
+  if (is.null(resolved_rows)) {
     return(NULL)
   }
+
+  which(resolved_rows)
 }
 
 resolve_vector_l <- function(
@@ -601,7 +601,7 @@ resolve_groups <- function(expr, vector) {
     resolved <- NULL
   }
 
-  if (length(resolved) < 1) {
+  if (length(resolved) == 0) {
     # Error if groups = everything() and no row groups. Return NULL otherwise.
     input <- tryCatch(rlang::as_label(quo), error = NULL)
     if (identical(input, "everything()")) {
@@ -624,7 +624,7 @@ resolve_groups <- function(expr, vector) {
 
     resolved <- base::intersect(resolved, vector)
 
-    if (length(resolved) < 1) {
+    if (length(resolved) == 0) {
       return(NULL)
     }
 

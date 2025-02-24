@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -582,8 +582,7 @@ currency <- function(
 #'
 #' ```r
 #' towny |>
-#'   dplyr::arrange(desc(density_2021)) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(density_2021, n = 10) |>
 #'   dplyr::select(name, population_2021, density_2021, land_area_km2) |>
 #'   gt(rowname_col = "name") |>
 #'   fmt_integer(columns = population_2021) |>
@@ -714,7 +713,7 @@ unit_conversion <- function(from, to) {
   # In the case where units are valid and available in the internal dataset,
   # they may be across categories; such pairings do not allow for a conversion
   # to take place
-  if (nrow(row_conversion) < 1) {
+  if (nrow(row_conversion) == 0L) {
     cli::cli_abort("The conversion specified cannot be performed.")
   }
 
@@ -754,29 +753,29 @@ normalize_temp_keyword <- function(keyword) {
 
   switch(
     keyword,
-    temperature.celsius =,
-    temp.celsius =,
-    celsius =,
-    temperature.C =,
-    temp.C =,
+    temperature.celsius = ,
+    temp.celsius = ,
+    celsius = ,
+    temperature.C = ,
+    temp.C = ,
     C = "C",
-    temperature.fahrenheit =,
-    temp.fahrenheit =,
-    fahrenheit =,
-    temperature.F =,
-    temp.F =,
+    temperature.fahrenheit = ,
+    temp.fahrenheit = ,
+    fahrenheit = ,
+    temperature.F = ,
+    temp.F = ,
     `F` = "F",
-    temperature.kelvin =,
-    temp.kelvin =,
-    kelvin =,
-    temperature.K =,
-    temp.K =,
+    temperature.kelvin = ,
+    temp.kelvin = ,
+    kelvin = ,
+    temperature.K = ,
+    temp.K = ,
     K = "K",
-    temperature.rankine =,
-    temp.rankine =,
-    rankine =,
-    temperature.R =,
-    temp.R =,
+    temperature.rankine = ,
+    temp.rankine = ,
+    rankine = ,
+    temperature.R = ,
+    temp.R = ,
     R = "R"
   )
 }
@@ -1312,7 +1311,7 @@ cells_column_spanners <- function(spanners = everything(), levels = NULL) {
   class(cells) <- c("cells_column_spanners", "location_cells")
 
   # Save what spanner_levels are in scope of the location selection
-  attr(cells,"spanner_levels") <- levels
+  attr(cells, "spanner_levels") <- levels
 
   cells
 }
@@ -1542,7 +1541,11 @@ cells_group <- function(groups = everything()) {
 #'   dplyr::filter(latitude == 20 & tst <= "1000") |>
 #'   dplyr::select(-latitude) |>
 #'   dplyr::filter(!is.na(sza)) |>
-#'   tidyr::spread(key = "tst", value = sza) |>
+#'   tidyr::pivot_wider(
+#'     names_from = "tst",
+#'     values_from = sza,
+#'     names_sort = TRUE
+#'   ) |>
 #'   gt(rowname_col = "month") |>
 #'   sub_missing(missing_text = "") |>
 #'   tab_style(
@@ -1756,7 +1759,7 @@ cells_body <- function(
 #' @section Examples:
 #'
 #' Use a portion of the [`countrypops`] dataset to create a **gt** table. Add
-#' some styling to the summary data cells with with [tab_style()], using
+#' some styling to the summary data cells with [tab_style()], using
 #' `cells_summary()` in the `locations` argument.
 #'
 #' ```r
@@ -2600,7 +2603,7 @@ cell_style_to_html.cell_text <- function(style) {
 #' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
 #' (keeping only the `num` and `currency` columns). Styles are added with
 #' [tab_style()] in two separate calls (targeting different body cells with the
-#' [cells_body()] helper function). With the `cell_fill()` helper funciton we
+#' [cells_body()] helper function). With the `cell_fill()` helper function we
 #' define cells with a `"lightblue"` background in one instance, and `"gray85"`
 #' in the other.
 #'

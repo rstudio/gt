@@ -37,7 +37,7 @@ There's a quick reference [here](https://commonmark.org/help/).
     dplyr::tribble(
       ~column_1, ~column_2,
       text_1a,   text_2a,
-      text_1b,   text_2b,
+      text_1b,   text_2b
     ) %>%
     gt() %>%
     fmt_markdown(columns = everything())
@@ -232,7 +232,7 @@ test_that("LaTeX formulas render correctly in HTML", {
       column_labels.border.lr.width = px(1)
     )
   expect_snapshot(gt_tbl$`_boxhead`$column_label)
-  
+
   skip_if_not_installed("katex", "1.4.1")
   strip_katex_version <- function(x) {
     gsub("katex\\@[\\.\\d]+", "katex@<latest>", x, perl = TRUE)

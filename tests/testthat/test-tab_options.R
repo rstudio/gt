@@ -1428,6 +1428,25 @@ test_that("The internal `opts_df` table can be correctly modified", {
     expect_equal(c(" ", "  "))
 })
 
+test_that("ihtml.selection option can be modified", {
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  tbl_html_single <- tab_options(data, ihtml.selection_mode = "single")
+  tbl_html_multi <-  tab_options(data, ihtml.selection_mode = "multiple")
+
+  c(dt_options_get_value(data = data, option = "ihtml_selection_mode"),
+    dt_options_get_value(data = tbl_html_single, option = "ihtml_selection_mode"),
+    dt_options_get_value(data = tbl_html_multi, option = "ihtml_selection_mode")
+  ) %>%
+    expect_equal(c(NA_character_, "single", "multiple"))
+
+  expect_error(
+    tab_options(data, ihtml.selection_mode = "bad"),
+    "The chosen option for `ihtml\\.selection_mode"
+  )
+})
+
 test_that("The `opts_df` getter/setter functions properly", {
 
   # Obtain a local copy of the internal `_options` table

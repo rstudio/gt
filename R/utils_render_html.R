@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -190,7 +190,7 @@ styles_to_html <- function(styles) {
           style <- as.character(x)
         } else if (all(names(x) != "")) {
           x <- cell_style_to_html(x)
-          style <- gsub(";;", ";", paste0(names(x), ": ", x, ";", collapse = " "))
+          style <- gsub(";;", ";", paste0(names(x), ": ", x, ";", collapse = " "), fixed = TRUE)
         } else {
           style <- as.character(x)
         }
@@ -417,11 +417,11 @@ create_heading_component_h <- function(data) {
   # Get the style attrs for the title
   if ("title" %in% styles_tbl$locname) {
 
-    title_style_rows <- styles_tbl[styles_tbl$locname == "title", ]
-
-    if (nrow(title_style_rows) > 0) {
-      title_styles <- title_style_rows$html_style
-    } else {
+    title_styles <- vctrs::vec_slice(
+      styles_tbl$html_style,
+      styles_tbl$locname == "title"
+    )
+    if (length(title_styles) == 0) {
       title_styles <- NULL
     }
 
@@ -450,11 +450,12 @@ create_heading_component_h <- function(data) {
 
   # Get the style attrs for the subtitle
   if (subtitle_defined && "subtitle" %in% styles_tbl$locname) {
-    subtitle_style_rows <- styles_tbl[styles_tbl$locname == "subtitle", ]
+    subtitle_styles <- vctrs::vec_slice(
+      styles_tbl$html_style,
+      styles_tbl$locname == "subtitle"
+    )
 
-    if (nrow(subtitle_style_rows) > 0) {
-      subtitle_styles <- subtitle_style_rows$html_style
-    } else {
+    if (length(subtitle_styles) == 0) {
       subtitle_styles <- NULL
     }
 

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -184,7 +184,7 @@ validate_locale <- function(locale, call = rlang::caller_env()) {
   if (locale %in% c(locales[["locale"]], default_locales[["default_locale"]])) {
     return(locale)
   }
-  
+
   # Stop function if the `locale` provided is invalid
   cli::cli_abort(c(
     "The supplied `locale` is not available in the list of supported locales.",
@@ -252,7 +252,7 @@ get_locale_sep_mark <- function(
 
   # Get the correct `group_sep` value from the `gt:::locales` lookup table
   sep_mark <- locales$group[locales$locale == locale]
-  validate_length_one(sep_mark)
+  validate_length_one(sep_mark, "sep_mark")
   # Replace any `""` or "\u00a0" with `" "` since an empty string actually
   # signifies a space character, and, we want to normalize to a simple space
   if (sep_mark == "" || sep_mark == "\u00a0") sep_mark <- " "
@@ -291,7 +291,7 @@ get_locale_range_pattern <- function(locale = NULL) {
 
   # Get the correct `range_pattern` value from the `gt:::locales` lookup table
   range_pattern <- locales$range_pattern[locales$locale == locale]
-  validate_length_one(range_pattern)
+  validate_length_one(range_pattern, "range_pattern")
 
   range_pattern <- gsub("1", "2", range_pattern, fixed = TRUE)
   range_pattern <- gsub("0", "1", range_pattern, fixed = TRUE)
@@ -332,7 +332,7 @@ get_locale_idx_set <- function(locale = NULL) {
   }
 
   val <- locales$chr_index[locales$locale == locale]
-  validate_length_one(val)
+  validate_length_one(val, "locale")
   val
 }
 
@@ -388,7 +388,7 @@ get_locale_no_table_data_text <- function(locale = NULL) {
   # Get the correct `no_table_data_text` value from the
   # `gt:::locales` lookup table
   val <- locales$no_table_data_text[locales$locale == locale]
-  validate_length_one(val)
+  validate_length_one(val, "locale")
   val
 }
 
@@ -470,12 +470,10 @@ get_currency_decimals <- function(
       # that most currencies present two decimal places
       return(2)
 
-    } else if (!use_subunits) {
-
-      return(0)
-
-    } else {
+    } else if (use_subunits) {
       return(decimals)
+    } else {
+      return(0)
     }
   }
 
@@ -884,7 +882,7 @@ context_lte_mark <- function(context) {
 
   switch(
     context,
-    grid =,
+    grid = ,
     html = "\U02264",
     latex = "$\\leq$",
     "<="
@@ -899,7 +897,7 @@ context_gte_mark <- function(context) {
 
   switch(
     context,
-    grid =,
+    grid = ,
     html = "\U02265",
     latex = "$\\geq$",
     ">="
@@ -1007,10 +1005,10 @@ context_exp_str <- function(context, exp_style) {
     exp_str <-
       switch(
         context,
-        html = c("<sub style='font-size: 65%;'>10</sub>"),
-        latex = c("{}_10"),
-        rtf = c("{\\sub 10}"),
-        word = c("10^"),
+        html = "<sub style='font-size: 65%;'>10</sub>",
+        latex = "{}_10",
+        rtf = "{\\sub 10}",
+        word = "10^",
         "E"
       )
   }
@@ -1067,7 +1065,9 @@ context_symbol_str <- function(context, symbol) {
       },
       html = get_currency_str(currency = symbol, fallback_to_code = FALSE),
       latex = {
-        if (!inherits(symbol, "AsIs")) {
+        if (inherits(symbol, "AsIs")) {
+          symbol
+        } else {
           #paste_between(
           markdown_to_latex(
             get_currency_str(currency = symbol, fallback_to_code = TRUE),
@@ -1075,8 +1075,6 @@ context_symbol_str <- function(context, symbol) {
           )#,
           #  c("\\text{", "}")
           #)
-        } else {
-          symbol
         }
       },
       get_currency_str(currency = symbol, fallback_to_code = TRUE)
@@ -1379,7 +1377,7 @@ get_arg_names <- function(
 ) {
 
   if (!is.null(in_args) && !is.null(all_args_except)) {
-    stop("The `in_args` and `all_args_except` args should not both be used.")
+    cli::cli_abort("The `in_args` and `all_args_except` args should not both be used.")
   }
 
   if (is.null(in_args) && is.null(all_args_except)) {

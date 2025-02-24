@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -175,7 +175,7 @@
 #'   *Properties of all vertical lines by the column labels*
 #'
 #'   The style, width, and color properties for all vertical lines ('vlines')
-#'   of the the `column_labels`.
+#'   of the `column_labels`.
 #'
 #' @param column_labels.border.top.style,column_labels.border.top.width,column_labels.border.top.color
 #'   *Properties of the border above the column labels*
@@ -455,9 +455,18 @@
 #'
 #'   Height of the table in pixels. Defaults to `"auto"` for automatic sizing.
 #'
+#' @param ihtml.selection_mode *Allow row selection*
+#'
+#'   For interactive HTML output, this allows users to select rows by clicking
+#'   them. When this option is `"single"`, clicking another value toggles
+#'   selection of the previously selected row off. When this option is
+#'   `"multiple"`, multiple rows can be selected at once. Selected values are
+#'   available in Shiny apps when `ihtml.selection_mode` is not `NULL` and the
+#'   table is used in [render_gt()].
+#'
 #' @param page.orientation *Set RTF page orientation*
 #'
-#'   For RTF output, this provides an two options for page
+#'   For RTF output, this provides two options for page
 #'   orientation: `"portrait"` (the default) and `"landscape"`.
 #'
 #' @param page.numbering *Enable RTF page numbering*
@@ -529,10 +538,11 @@
 #'
 #'   *Specify latex floating position*
 #'
-#'   The latex position indicator for a floating environment (e.g., `"!t"`,
-#'   `"H"`). It should be specified without square brackets. Quarto users should
-#'   instead set the floating position within the code chunk argument `tbl-pos`.
-#'   The output table will only float if `latex.use_longtable = FALSE`.
+#'   The latex position indicator for a floating environment (e.g., `"tb"`,
+#'   `"h"`). If not specified, latex position will default to `"t"``. It should be
+#'   specified without square brackets. Quarto users should instead set the
+#'   floating position within the code chunk argument `tbl-pos`. The output
+#'   table will only float if `latex.use_longtable = FALSE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -838,6 +848,7 @@ tab_options <- function(
     ihtml.page_size_values = NULL,
     ihtml.pagination_type = NULL,
     ihtml.height = NULL,
+    ihtml.selection_mode = NULL,
     page.orientation = NULL,
     page.numbering = NULL,
     page.header.use_tbl_headings = NULL,
@@ -896,7 +907,7 @@ tab_options <- function(
     dplyr::bind_rows(
       dplyr::inner_join(
         new_df,
-        dplyr::select(opts_df, -value),
+        dplyr::select(opts_df, -"value"),
         by = "parameter"
       ),
       dplyr::anti_join(opts_df, new_df, by = "parameter")
@@ -936,9 +947,7 @@ tab_options <- function(
 dt_options_get_default_value <- function(option) {
 
   # Validate the provided `option` value
-  if (length(option) != 1) {
-    cli::cli_abort("A character vector of length one must be provided.")
-  }
+  check_string(option)
   if (!(option %in% dt_options_tbl$parameter)) {
     cli::cli_abort("The `option` provided is invalid.")
   }
@@ -1034,6 +1043,15 @@ set_super_options <- function(arg_vals) {
       )
   }
 
+  if ("ihtml.selection_mode" %in% names(arg_vals)) {
+    ihtml_selection_mode_val <- arg_vals$ihtml.selection_mode
+    if (!rlang::is_string(ihtml_selection_mode_val, c("single", "multiple"))) {
+      cli::cli_abort(c(
+        "The chosen option for `ihtml.selection_mode` (`{ihtml_selection_mode_val}`) is invalid.",
+        "*" = "We can use either \"single\" or \"multiple\"."
+      ))
+    }
+  }
   arg_vals
 }
 
@@ -1098,7 +1116,7 @@ create_option_value_list <- function(tab_options_args, values) {
 create_default_option_value_list <- function(tab_options_args) {
 
   lapply(
-    stats::setNames(, tab_options_args),
+    rlang::set_names(tab_options_args),
     FUN = function(x) {
       dt_options_get_default_value(gsub(".", "_", x, fixed = TRUE))
     }

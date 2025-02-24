@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -740,7 +740,7 @@
 #' \item `"HBDH"`: hydroxybutyrate dehydrogenase.
 #' \item `"CK"`: creatine kinase.
 #' \item `"CKMB"`: the MB fraction of creatine kinase.
-#' \item `"BNP"`: B-type natriuetic peptide.
+#' \item `"BNP"`: B-type natriuretic peptide.
 #' \item `"MYO"`: myohemoglobin.
 #' \item `"TnI"`: troponin inhibitory.
 #' \item `"CREA"`: creatinine.
