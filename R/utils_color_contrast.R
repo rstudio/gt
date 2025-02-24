@@ -135,7 +135,7 @@ get_relative_luminance_wcag <- function(col) {
 
   coef <- round(c(apca_coeffs$sRco, apca_coeffs$sGco, apca_coeffs$sBco), 4)
 
-  rgb[] <- ifelse(rgb <= 0.03928, rgb / 12.92, ((rgb + 0.055) / 1.055)^2.4)
+  rgb[] <- ifelse(rgb <= 0.04045, rgb / 12.92, ((rgb + 0.055) / 1.055)^2.4)
 
   as.numeric(rgb %*% coef)
 }
