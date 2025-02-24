@@ -5,14 +5,10 @@ test_that("Table width correctly output in LaTeX using longtable", {
     tab_options(table.width = pct(90), latex.use_longtable = TRUE) %>%
     as_latex()
 
+  expect_match(gt_latex_width_1, "begin\\{longtable")
+  expect_match(gt_latex_width_1, "end\\{longtable")
+
   start_pt <- regexpr("begin\\{longtable", gt_latex_width_1)
-
-  expect_gt(start_pt, 0)  # Verifies the long table command appears in the text
-
-  end_pt <- regexpr("end\\{longtable", gt_latex_width_1)
-
-  expect_gt(end_pt, 0)
-
   latex_prefix <- substr(gt_latex_width_1, 1L, start_pt)
 
   # Verify that LTleft and LTright are correctly specified
@@ -27,7 +23,6 @@ test_that("Table width correctly output in LaTeX using longtable", {
     as_latex()
 
   expect_match(gt_latex_width_2, "\\\\setlength\\\\LTleft\\{\\\\dimexpr\\(0.5\\\\linewidth - 225pt\\)\\}")
-
   expect_match(gt_latex_width_2, "\\\\setlength\\\\LTright\\{\\\\dimexpr\\(0.5\\\\linewidth - 225pt\\)\\}")
 
 })
@@ -184,7 +179,7 @@ test_that("Table styles correctly applied for tabular*", {
     tab_style(style = cell_text(transform = "uppercase"),
               locations = cells_column_labels(columns = c("num", "fctr", "datetime"))) %>%
     tab_style(style = gt::cell_text(style = "italic"),
-              locations = cells_column_spanners(spanner = "a1")) %>%
+              locations = cells_column_spanners(spanners = "a1")) %>%
 
     # Body styles
     tab_style(style = cell_text(size = 20,

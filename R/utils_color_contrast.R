@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -54,7 +54,7 @@ get_contrast_ratio <- function(
 ) {
 
   # Get the correct `algo` value
-  algo <- rlang::arg_match(algo)
+  algo <- rlang::arg_match0(algo, values = c("apca", "wcag"))
 
   if (length(color_1) < 1L || length(color_2) < 1L) {
     cli::cli_abort(

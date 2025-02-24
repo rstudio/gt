@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -160,8 +160,8 @@ render_as_ihtml <- function(data, id) {
         FUN.VALUE = integer(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
-          if (grepl("px", x)) {
-            x <- as.integer(gsub("px", "", x))
+          if (grepl("px", x, fixed = TRUE)) {
+            x <- as.integer(gsub("px", "", x, fixed = TRUE))
           } else {
             x <- NA_integer_
           }
@@ -170,57 +170,62 @@ render_as_ihtml <- function(data, id) {
       )
   }
 
-  # Get options settable in `tab_options()`
-  opt_val <- dt_options_get_value
-  height <- opt_val(data = data, option = "ihtml_height")
-  use_pagination <- opt_val(data = data, option = "ihtml_use_pagination")
-  use_pagination_info <- opt_val(data = data, option = "ihtml_use_pagination_info")
-  use_search <- opt_val(data = data, option = "ihtml_use_search")
-  use_sorting <- opt_val(data = data, option = "ihtml_use_sorting")
-  use_filters <- opt_val(data = data, option = "ihtml_use_filters")
-  use_resizers <- opt_val(data = data, option = "ihtml_use_resizers")
-  use_highlight <- opt_val(data = data, option = "ihtml_use_highlight")
-  use_compact_mode <- opt_val(data = data, option = "ihtml_use_compact_mode")
-  use_text_wrapping <- opt_val(data = data, option = "ihtml_use_text_wrapping")
-  use_page_size_select <- opt_val(data = data, option = "ihtml_use_page_size_select")
-  page_size_default <- opt_val(data = data, option = "ihtml_page_size_default")
-  page_size_values <- opt_val(data = data, option = "ihtml_page_size_values")
-  pagination_type <- opt_val(data = data, option = "ihtml_pagination_type")
+  # Get all options settable in `tab_options()`
+  tbl_opts <- dt_options_get_values(data)
 
-  use_row_striping <- opt_val(data = data, option = "row_striping_include_table_body")
-  row_striping_color <- opt_val(data = data, option = "row_striping_background_color")
+  # Get specific options values
+  height <- tbl_opts$ihtml_height
+  use_pagination <- tbl_opts$ihtml_use_pagination
+  use_pagination_info <- tbl_opts$ihtml_use_pagination_info
+  use_search <- tbl_opts$ihtml_use_search
+  use_sorting <- tbl_opts$ihtml_use_sorting
+  use_filters <- tbl_opts$ihtml_use_filters
+  use_resizers <- tbl_opts$ihtml_use_resizers
+  use_highlight <- tbl_opts$ihtml_use_highlight
+  use_compact_mode <- tbl_opts$ihtml_use_compact_mode
+  use_text_wrapping <- tbl_opts$ihtml_use_text_wrapping
+  use_page_size_select <- tbl_opts$ihtml_use_page_size_select
+  page_size_default <- tbl_opts$ihtml_page_size_default
+  page_size_values <- tbl_opts$ihtml_page_size_values
+  pagination_type <- tbl_opts$ihtml_pagination_type
+  selection_mode <- tbl_opts$ihtml_selection_mode
+  if (is.na(selection_mode)) selection_mode <- NULL
+  onClick <- if (!is.null(selection_mode)) "select"
 
-  table_width <- opt_val(data = data, option = "table_width")
-  table_background_color <- opt_val(data = data, option = "table_background_color")
-  table_font_names <- opt_val(data = data, option = "table_font_names")
-  table_font_color <- opt_val(data = data, option = "table_font_color")
+  use_row_striping <- tbl_opts$row_striping_include_table_body
+  row_striping_color <- tbl_opts$row_striping_background_color
 
-  column_labels_border_top_style <- opt_val(data = data, option = "column_labels_border_top_style")
-  column_labels_border_top_width <- opt_val(data = data, option = "column_labels_border_top_width")
-  column_labels_border_top_color <- opt_val(data = data, option = "column_labels_border_top_color")
-  column_labels_border_bottom_style <- opt_val(data = data, option = "column_labels_border_bottom_style")
-  column_labels_border_bottom_width <- opt_val(data = data, option = "column_labels_border_bottom_width")
-  column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
+  table_width <- tbl_opts$table_width
+  table_background_color <- tbl_opts$table_background_color
+  table_font_names <- tbl_opts$table_font_names
+  table_font_color <- tbl_opts$table_font_color
+
+  column_labels_border_top_style <- tbl_opts$column_labels_border_top_style
+  column_labels_border_top_width <- tbl_opts$column_labels_border_top_width
+  column_labels_border_top_color <- tbl_opts$column_labels_border_top_color
+  column_labels_border_bottom_style <- tbl_opts$column_labels_border_bottom_style
+  column_labels_border_bottom_width <- tbl_opts$column_labels_border_bottom_width
+  column_labels_border_bottom_color <- tbl_opts$column_labels_border_bottom_color
   # Don't allow NA
-  column_labels_background_color <- opt_val(data = data, option = "column_labels_background_color")
+  column_labels_background_color <- tbl_opts$column_labels_background_color
   # Apply stub font weight to
-  stub_font_weight <- opt_val(data = data, option = "stub_font_weight")
+  stub_font_weight <- tbl_opts$stub_font_weight
 
   if (is.na(column_labels_background_color)) {
     # apply all column labels formatting to both heading + groupCol styling (nothing specific for spanners styling in gt?)
     column_labels_background_color <- "transparent"
   }
   # Part of #1307
-  borderless_borders <- opt_val(data = data, option = "table_body_hlines_style") == "none"
+  borderless_borders <- tbl_opts$table_body_hlines_style == "none"
 
-  column_labels_font_weight <- opt_val(data = data, option = "column_labels_font_weight")
+  column_labels_font_weight <- tbl_opts$column_labels_font_weight
   # Apply font weight to groupname_col title
-  row_group_font_weight <- opt_val(data = data, "row_group_font_weight")
-  table_body_font_weight <- opt_val(data = data, "table_font_weight")
+  row_group_font_weight <- tbl_opts$row_group_font_weight
+  table_body_font_weight <- tbl_opts$table_font_weight
   # for row names + summary label
-  stub_font_weight <- opt_val(data = data, "stub_font_weight")
+  stub_font_weight <- tbl_opts$stub_font_weight
   # #1693 table font size
-  table_font_size <- opt_val(data = data, "table_font_size")
+  table_font_size <- tbl_opts$table_font_size
 
   emoji_symbol_fonts <-
     c(
@@ -392,7 +397,7 @@ render_as_ihtml <- function(data, id) {
     # for defaultExpanded = TRUE
     expand_groupname_col <- TRUE
     # modify data_tbl to include
-    data_tbl <- dplyr::bind_cols(
+    data_tbl <- vctrs::vec_cbind(
       data_tbl,
       data_tbl0[ , groupname_col, drop = FALSE]
     )
@@ -410,9 +415,9 @@ render_as_ihtml <- function(data, id) {
   col_defs <- c(col_defs, group_col_defs, row_name_col_def)
 
   styles_tbl <- dt_styles_get(data = data)
-  body_styles_tbl <- dplyr::filter(styles_tbl, locname %in% c("data", "stub"))
+  body_styles_tbl <- vctrs::vec_slice(styles_tbl, styles_tbl$locname %in% c("data", "stub"))
   body_styles_tbl <- dplyr::arrange(body_styles_tbl, colnum, rownum)
-  body_styles_tbl <- dplyr::select(body_styles_tbl, colname, rownum, html_style)
+  body_styles_tbl <- dplyr::select(body_styles_tbl, "colname", "rownum", "html_style")
 
   # Generate styling rule per combination of `colname` and
   # `rownum` in `body_styles_tbl`
@@ -424,7 +429,7 @@ render_as_ihtml <- function(data, id) {
         colname <- body_styles_tbl[x, ][["colname"]]
         rownum <- body_styles_tbl[x, ][["rownum"]]
         html_style <- body_styles_tbl[x, ][["html_style"]]
-        html_style <- unlist(strsplit(html_style, "; "))
+        html_style <- unlist(strsplit(html_style, "; ", fixed = TRUE))
         html_style <- gsub("(-)\\s*(.)", "\\U\\2", html_style, perl = TRUE)
         html_style <- gsub("(:)\\s*(.*)", ": '\\2'", html_style, perl = TRUE)
         html_style <- paste(html_style, collapse = ", ")
@@ -432,7 +437,7 @@ render_as_ihtml <- function(data, id) {
 
         paste0(
           "if (colInfo.id === '", colname, "' & rowIndex === ", rownum, ") {\n",
-          "  return { ", html_style , " }\n",
+          "  return { ", html_style, " }\n",
           "}\n\n"
         )
       }
@@ -449,7 +454,7 @@ render_as_ihtml <- function(data, id) {
       collapse = ""
     )
 
-  # TODO if `sub_missing()` is enabled gloablly, just use `na = ` here!
+  # TODO if `sub_missing()` is enabled globally, just use `na = ` here!
   default_col_def <-
     reactable::colDef(
       style = reactable::JS(body_style_js_str),
@@ -535,7 +540,10 @@ render_as_ihtml <- function(data, id) {
   if (has_tab_spanners) {
 
     hidden_columns <- dt_boxhead_get_var_by_type(data = data, type = "hidden")
-    col_groups <- dplyr::filter(dt_spanners_get(data = data), spanner_level == 1)
+    spanners_df <- dt_spanners_get(data = data)
+    col_groups <- vctrs::vec_slice(
+      spanners_df, spanners_df$spanner_level == 1
+    )
 
     for (i in seq_len(nrow(col_groups))) {
 
@@ -678,10 +686,10 @@ render_as_ihtml <- function(data, id) {
       paginateSubRows = FALSE,
       details = NULL,
       defaultExpanded = expand_groupname_col,
-      selection = NULL,
+      selection = selection_mode,
       selectionId = NULL,
       defaultSelected = NULL,
-      onClick = NULL,
+      onClick = onClick,
       highlight = use_highlight,
       outlined = FALSE,
       bordered = FALSE,
@@ -752,11 +760,12 @@ create_source_notes_component_ihtml <- function(data) {
     source_notes_styles <- NULL
   }
 
+  tbl_opts <- dt_options_get_values(data)
   # Get the source note multiline option
-  multiline <- dt_options_get_value(data = data, option = "source_notes_multiline")
+  multiline <- tbl_opts$source_notes_multiline
 
   # Get the source note separator option
-  separator <- dt_options_get_value(data = data, option = "source_notes_sep")
+  separator <- tbl_opts$source_notes_sep
 
   # Handle the multiline source notes case (each footnote takes up one line)
   if (multiline) {
@@ -828,11 +837,12 @@ create_footnotes_component_ihtml <- function(data) {
     footnotes_styles <- NULL
   }
 
+  tbl_opts <- dt_options_get_values(data)
   # Get the footnote multiline option
-  multiline <- dt_options_get_value(data = data, option = "footnotes_multiline")
+  multiline <- tbl_opts$footnotes_multiline
 
   # Get the footnote separator option
-  separator <- dt_options_get_value(data = data, option = "footnotes_sep")
+  separator <- tbl_opts$footnotes_sep
 
   # Obtain vectors of footnote ID values (prerendered glyphs) and
   # the associated text

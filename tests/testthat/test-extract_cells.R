@@ -90,7 +90,7 @@ test_that("Extraction of table cells works well", {
       fmt_number(columns = num, decimals = 5) %>%
       tab_footnote(footnote = "Footnote", locations = cells_body(columns = num)) %>%
       extract_cells(columns = num, rows = c(1, 3), output = "plain"),
-    c("0.11110","33.33000")
+    c("0.11110", "33.33000")
   )
 
   # Expect that the correct rendering context will be used

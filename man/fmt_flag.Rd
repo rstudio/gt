@@ -70,7 +70,7 @@ hovering over the flag icon.}
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional locale identifier that can be used for formatting values
-according the locale's rules. Examples include \code{"en"} for English (United
+according to the locale's rules. Examples include \code{"en"} for English (United
 States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
 useful reference for all of the locales that are supported. A locale ID can
 be also set in the initial \code{\link[=gt]{gt()}} function call (where it would be used
@@ -89,7 +89,7 @@ function helps with inserting a flag icon (or multiple) in body cells. To
 make this work seamlessly, the input cells need to contain some reference to
 a country, and this can be in the form of a 2- or 3-letter ISO 3166-1 country
 code (e.g., Egypt has the \code{"EG"} country code). This function will parse the
-targeted body cells for those codes (and the \link{countrypops} dataset contains
+targeted body cells for those codes (and the \code{\link{countrypops}} dataset contains
 all of them) and insert the appropriate flag graphics.
 
 Multiple flags can be included per cell by separating country codes with

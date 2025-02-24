@@ -37,7 +37,7 @@ setting of custom styles to one or more cells. Specifically, the call to
 Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
 (keeping only the \code{num} and \code{currency} columns). Styles are added with
 \code{\link[=tab_style]{tab_style()}} in two separate calls (targeting different body cells with the
-\code{\link[=cells_body]{cells_body()}} helper function). With the \code{cell_fill()} helper funciton we
+\code{\link[=cells_body]{cells_body()}} helper function). With the \code{cell_fill()} helper function we
 define cells with a \code{"lightblue"} background in one instance, and \code{"gray85"}
 in the other.
 

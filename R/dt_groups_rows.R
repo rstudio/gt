@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -71,10 +71,10 @@ dt_groups_rows_build <- function(data, context) {
   # values), build the `groups_rows` table
   for (i in seq_along(ordering)) {
 
-    if (!all(is.na(ordering[i]))) {
-      rows_matched <- which(stub_df$group_id == ordering[i])
-    } else {
+    if (all(is.na(ordering[i]))) {
       rows_matched <- which(is.na(stub_df$group_id))
+    } else {
+      rows_matched <- which(stub_df$group_id == ordering[i])
     }
 
     # If `rows_matched` is NA then go to next iteration

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -230,7 +230,7 @@ NULL
 #'
 #' Will only affect the output of one specific function (or override global setting).
 #'
-#' `locale` has very low precedence usually. As soon as you override some parameteres,
+#' `locale` has very low precedence usually. As soon as you override some parameters,
 #' `sep_mark`, `dec_mark`, `incl_space`, they will be override `locale`.
 #'
 #' @examples

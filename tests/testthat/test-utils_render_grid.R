@@ -534,8 +534,7 @@ test_that("Classes and styles are parsed correctly", {
       locations = cells_body("y")
     )
 
-  test <- gt %>%
-    prep_data()
+  test <-  prep_data(gt)
 
   rows <- create_body_component_g(test)
 

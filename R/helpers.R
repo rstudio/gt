@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -70,7 +70,6 @@
 #'
 #' @export
 md <- function(text) {
-
   # Apply the `from_markdown` class
   class(text) <- "from_markdown"
   text
@@ -583,8 +582,7 @@ currency <- function(
 #'
 #' ```r
 #' towny |>
-#'   dplyr::arrange(desc(density_2021)) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(density_2021, n = 10) |>
 #'   dplyr::select(name, population_2021, density_2021, land_area_km2) |>
 #'   gt(rowname_col = "name") |>
 #'   fmt_integer(columns = population_2021) |>
@@ -706,12 +704,16 @@ unit_conversion <- function(from, to) {
   }
 
   row_conversion <-
-    dplyr::filter(conversion_factors, from == {{ from }}, to == {{ to }})
+    vctrs::vec_slice(
+      conversion_factors,
+      conversion_factors$from == from &
+        conversion_factors$to == to
+    )
 
   # In the case where units are valid and available in the internal dataset,
   # they may be across categories; such pairings do not allow for a conversion
   # to take place
-  if (nrow(row_conversion) < 1) {
+  if (nrow(row_conversion) == 0L) {
     cli::cli_abort("The conversion specified cannot be performed.")
   }
 
@@ -751,29 +753,29 @@ normalize_temp_keyword <- function(keyword) {
 
   switch(
     keyword,
-    temperature.celsius =,
-    temp.celsius =,
-    celsius =,
-    temperature.C =,
-    temp.C =,
+    temperature.celsius = ,
+    temp.celsius = ,
+    celsius = ,
+    temperature.C = ,
+    temp.C = ,
     C = "C",
-    temperature.fahrenheit =,
-    temp.fahrenheit =,
-    fahrenheit =,
-    temperature.F =,
-    temp.F =,
+    temperature.fahrenheit = ,
+    temp.fahrenheit = ,
+    fahrenheit = ,
+    temperature.F = ,
+    temp.F = ,
     `F` = "F",
-    temperature.kelvin =,
-    temp.kelvin =,
-    kelvin =,
-    temperature.K =,
-    temp.K =,
+    temperature.kelvin = ,
+    temp.kelvin = ,
+    kelvin = ,
+    temperature.K = ,
+    temp.K = ,
     K = "K",
-    temperature.rankine =,
-    temp.rankine =,
-    rankine =,
-    temperature.R =,
-    temp.R =,
+    temperature.rankine = ,
+    temp.rankine = ,
+    rankine = ,
+    temperature.R = ,
+    temp.R = ,
     R = "R"
   )
 }
@@ -1211,6 +1213,13 @@ cells_stubhead <- function() {
 #'   (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
 #'   [num_range()], and [everything()]).
 #'
+#' @param levels *Specification of the spanner levels *
+#'
+#'   `scalar|vector<numerical>` // *default:* `NULL`
+#'
+#'   The *existing* spanner levels (1, 2, ...) to which targeting operations are
+#'   constrained. Use NULL to refer to all existing levels.
+#'
 #' @return A list object with the classes `cells_column_spanners` and
 #' `location_cells`.
 #'
@@ -1241,6 +1250,47 @@ cells_stubhead <- function() {
 #' `r man_get_image_tag(file = "man_cells_column_spanners_1.png")`
 #' }}
 #'
+#' Use the [`exibble`] dataset to create a **gt** table. We'll add two spanners
+#' for the column combinations of (`num`, `char`) and time related columns
+#' (`time` and `datetime`). Furthermore we add another level of spanners with
+#' a column label over all date- and time related  columns (`date`, `time`, and
+#' `datetime`). We want all spanner labels with "time" in their name to be bold.
+#' Additionally we want the text to be red of the spanner that is both time-
+#' related and on level 1.
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(-fctr, -currency, -group) |>
+#'   gt(rowname_col = "row") |>
+#'   tab_spanner(
+#'     label = "time related cols",
+#'     columns = c(datetime, time)
+#'   ) |>
+#'   tab_spanner(
+#'     label = "num and char",
+#'     columns = c(num, char)
+#'   ) |>
+#'   tab_spanner(
+#'     label = "date and time cols",
+#'     columns = c(date, time, datetime)
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(weight = "bold"),
+#'     locations = cells_column_spanners(spanners = tidyselect::contains("time"))
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(color = "red"),
+#'     locations = cells_column_spanners(
+#'       spanners = tidyselect::contains("time"),
+#'       levels = 1
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_column_spanners_2.png")`
+#' }}
+#'
 #' @family location helper functions
 #' @section Function ID:
 #' 8-14
@@ -1249,7 +1299,7 @@ cells_stubhead <- function() {
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
-cells_column_spanners <- function(spanners = everything()) {
+cells_column_spanners <- function(spanners = everything(), levels = NULL) {
 
   # Capture expression for the `spanners` argument
   spanners_expr <- rlang::enquo(spanners)
@@ -1259,6 +1309,9 @@ cells_column_spanners <- function(spanners = everything()) {
 
   # Apply the `cells_column_spanners` and `location_cells` classes
   class(cells) <- c("cells_column_spanners", "location_cells")
+
+  # Save what spanner_levels are in scope of the location selection
+  attr(cells, "spanner_levels") <- levels
 
   cells
 }
@@ -1488,7 +1541,11 @@ cells_group <- function(groups = everything()) {
 #'   dplyr::filter(latitude == 20 & tst <= "1000") |>
 #'   dplyr::select(-latitude) |>
 #'   dplyr::filter(!is.na(sza)) |>
-#'   tidyr::spread(key = "tst", value = sza) |>
+#'   tidyr::pivot_wider(
+#'     names_from = "tst",
+#'     values_from = sza,
+#'     names_sort = TRUE
+#'   ) |>
 #'   gt(rowname_col = "month") |>
 #'   sub_missing(missing_text = "") |>
 #'   tab_style(
@@ -1702,7 +1759,7 @@ cells_body <- function(
 #' @section Examples:
 #'
 #' Use a portion of the [`countrypops`] dataset to create a **gt** table. Add
-#' some styling to the summary data cells with with [tab_style()], using
+#' some styling to the summary data cells with [tab_style()], using
 #' `cells_summary()` in the `locations` argument.
 #'
 #' ```r
@@ -2546,7 +2603,7 @@ cell_style_to_html.cell_text <- function(style) {
 #' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
 #' (keeping only the `num` and `currency` columns). Styles are added with
 #' [tab_style()] in two separate calls (targeting different body cells with the
-#' [cells_body()] helper function). With the `cell_fill()` helper funciton we
+#' [cells_body()] helper function). With the `cell_fill()` helper function we
 #' define cells with a `"lightblue"` background in one instance, and `"gray85"`
 #' in the other.
 #'

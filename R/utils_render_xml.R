@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -1244,7 +1244,7 @@ create_table_caption_component_xml <- function(
     footnote_title_marks <-
       footnote_mark_to_xml(
         data = data,
-        mark = footnote_title_marks$fs_id_c
+        mark = footnote_title_marks
       )
     footnote_title_marks <- as_xml_node(footnote_title_marks)[[1L]]
 
@@ -1301,7 +1301,8 @@ create_table_caption_component_xml <- function(
       footnote_subtitle_marks <-
         footnote_mark_to_xml(
           data = data,
-          mark = footnote_subtitle_marks$fs_id_c)
+          mark = footnote_subtitle_marks
+        )
       footnote_subtitle_marks <- as_xml_node(footnote_subtitle_marks)[[1]]
 
       xml_add_child(
@@ -1396,7 +1397,7 @@ create_heading_component_xml <- function(
     footnote_title_marks <-
       footnote_mark_to_xml(
         data = data,
-        mark = footnote_title_marks$fs_id_c
+        mark = footnote_title_marks
       )
     footnote_title_marks <- as_xml_node(footnote_title_marks)[[1L]]
 
@@ -1426,7 +1427,7 @@ create_heading_component_xml <- function(
       footnote_subtitle_marks <-
         footnote_mark_to_xml(
           data = data,
-          mark = footnote_subtitle_marks$fs_id_c
+          mark = footnote_subtitle_marks
         )
       footnote_subtitle_marks <- as_xml_node(footnote_subtitle_marks)[[1L]]
 
@@ -1628,11 +1629,11 @@ create_columns_component_xml <- function(
   for (i in seq_len(length(headings_vars) - stub_available)) {
 
     cell_style <-
-      dplyr::filter(
+      vctrs::vec_slice(
         styles_tbl,
-        locname %in% c("columns_columns"),
-        rownum == -1,
-        colnum == i
+        styles_tbl$locname %in% c("columns_columns") &
+        styles_tbl$rownum == -1 &
+        styles_tbl$colnum == i
       )
     cell_style <- cell_style$styles[1][[1]]
 
@@ -1779,10 +1780,10 @@ create_columns_component_xml <- function(
           if (colspans[i] > 0) {
 
             cell_style <-
-              dplyr::filter(
+              vctrs::vec_slice(
                 styles_tbl,
-                locname %in% c("columns_groups"),
-                grpname %in% spanner_row_ids[i]
+                styles_tbl$locname %in% c("columns_groups") &
+                styles_tbl$grpname %in% spanner_row_ids[i]
               )
             cell_style <- cell_style$styles[1][[1]]
 
@@ -1868,7 +1869,7 @@ create_body_component_xml <- function(
 
   # Get the column alignments for the data columns (this
   # doesn't include the stub alignment)
-  col_alignment <- boxh[boxh$type == "default", ][["column_align"]]
+  col_alignment <- vctrs::vec_slice(boxh$column_align, boxh$type == "default")
 
   # Determine whether the stub is available through analysis
   # of the `stub_components`
@@ -1916,10 +1917,10 @@ create_body_component_xml <- function(
     # Replace an NA group with an empty string
     groups_rows_df$group_label[is.na(groups_rows_df$group_label)] <- ""
     # Change NA at beginning into unicode?
-    group_rows_df$group_label <-
+    groups_rows_df$group_label <-
       gsub(
         "^NA", "\u2014",
-        group_rows_df$group_label
+        groups_rows_df$group_label
     )
   }
 
@@ -1943,10 +1944,10 @@ create_body_component_xml <- function(
             ][[1]]
 
           cell_style <-
-            dplyr::filter(
+            vctrs::vec_slice(
               styles_tbl,
-              locname == "row_groups",
-              rownum == (i - 0.1)
+              styles_tbl$locname == "row_groups" &
+                styles_tbl$rownum == (i - 0.1)
             )
           cell_style <- cell_style$styles[1][[1]]
 
@@ -1997,11 +1998,11 @@ create_body_component_xml <- function(
           style_col_idx <- ifelse(stub_available, y - 1, y)
 
           cell_style <-
-            dplyr::filter(
+            vctrs::vec_slice(
               styles_tbl,
-              locname %in% c("data","stub"),
-              rownum == i,
-              colnum == style_col_idx
+              styles_tbl$locname %in% c("data","stub") &
+              styles_tbl$rownum == i &
+              styles_tbl$colnum == style_col_idx
             )
           cell_style <- cell_style$styles[1][[1]]
 
@@ -2109,10 +2110,10 @@ create_body_component_xml <- function(
       grand_summary_col %in% names(list_of_summaries$summary_df_display_list)) {
 
     summary_styles <-
-      dplyr::filter(
+      vctrs::vec_slice(
         styles_tbl,
-        locname %in% "grand_summary_cells",
-        grpname %in% c("::GRAND_SUMMARY")
+        styles_tbl$locname %in% "grand_summary_cells" &
+          styles_tbl$grpname %in% c("::GRAND_SUMMARY")
       )
 
     grand_summary_section <-

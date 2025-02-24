@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -226,9 +226,9 @@ tf_formats <- function() {
 
   dplyr::tribble(
     ~format_number,  ~format_name,    ~characters,              ~idx,
-    "1",	           "true-false",    NA,                       1:2,
-    "2",	           "yes-no",        NA,                       3:4,
-    "3",	           "up-down",       NA,                       5:6,
+    "1",	           "true-false",    NA_character_,            1:2,
+    "2",	           "yes-no",        NA_character_,            3:4,
+    "3",	           "up-down",       NA_character_,            5:6,
     "4",             "check-mark",    c("\U02714", "\U02718"),  NA,
     "5",             "circles",       c("\U025CF", "\U02B58"),  NA,
     "6",             "squares",       c("\U025A0", "\U025A1"),  NA,
@@ -240,7 +240,7 @@ tf_formats <- function() {
 }
 
 tf_formats_icons <- function() {
-  as.character(stats::na.omit(tf_formats()[, "characters"][[1]]))
+  as.character(omit_na(tf_formats()[, "characters"][[1]]))
 }
 
 tf_formats_text <- function() {
@@ -406,15 +406,12 @@ get_tf_vals <- function(tf_style, locale) {
   }
 
   # Stop function if a numeric `tf_style` value is invalid
-  if (is.numeric(tf_style)) {
-
-    if (!(tf_style %in% tf_format_num_range)) {
-      cli::cli_abort(c(
-        "If using a numeric value for a `tf_style`, it must be
-        between `1` and `{nrow((tf_format_tbl))}`.",
-        "*" = "Use `info_tf_style()` for a useful visual reference."
-      ))
-    }
+  if (is.numeric(tf_style) && !(tf_style %in% tf_format_num_range)) {
+    cli::cli_abort(c(
+      "If using a numeric value for a `tf_style`, it must be
+      between `1` and `{nrow((tf_format_tbl))}`.",
+      "*" = "Use `info_tf_style()` for a useful visual reference."
+    ))
   }
 
   # Stop function if a character-based `tf_style` value is invalid
@@ -446,9 +443,9 @@ get_tf_vals <- function(tf_style, locale) {
 
     return(c(true_str, false_str))
 
-  } else {
-    return(unlist(tf_format_tbl_i[["characters"]]))
   }
+
+  unlist(tf_format_tbl_i[["characters"]])
 }
 
 #' Are string values 24 hour times?
@@ -538,9 +535,9 @@ resolve_footnote_placement <- function(
 
   if (cell_alignment == "right") {
     return("left")
-  } else {
-    return("right")
   }
+
+  "right"
 }
 
 get_alignment_at_body_cell <- function(
@@ -729,45 +726,8 @@ process_text <- function(text, context = "html") {
       # Markdown text handling for Quarto
       #
       if (in_quarto) {
-        # exclude "" and NA #1769
-        non_na_text <- text[nzchar(text, keepNA = FALSE)]
-
-        non_na_text_processed <-
-          vapply(
-            non_na_text,
-            FUN.VALUE = character(1L),
-            USE.NAMES = FALSE,
-            FUN = function(text) {
-              md_engine_fn[[1]](text = text)
-            }
-          )
-
-        # Use base64 encoding to avoid issues with escaping internal double
-        # quotes; used in conjunction with the 'data-qmd-base64' attribute
-        # that is recognized by Quarto
-        non_na_text <-
-          vapply(
-            non_na_text,
-            FUN.VALUE = character(1L),
-            USE.NAMES = FALSE,
-            FUN = function(text) {
-              # charToRaw("") returns character(0)
-              base64enc::base64encode(charToRaw(as.character(text)))
-            }
-          )
-
-        # Tweak start and end of non_na_text
-        non_na_text <- paste0("<div data-qmd-base64=\"", non_na_text, "\">")
-
-        non_na_text <-
-          paste0(
-            non_na_text, "<div class='gt_from_md'>",
-            non_na_text_processed, "</div></div>"
-          )
-
-        text[nzchar(text, keepNA = FALSE)] <- non_na_text
-
-        return(text)
+        processed_text <- process_md_quarto(text, md_engine_fn)
+        return(processed_text)
       }
 
       #
@@ -1903,9 +1863,10 @@ num_suffix <- function(
     }
 
     return(
-      dplyr::tibble(
-        scale_by = rep_len(scale_by, length(x)),
-        suffix = rep_len("", length(x))
+      vctrs::data_frame(
+        scale_by = scale_by,
+        suffix = "",
+        .size = length(x)
       )
     )
   }
@@ -1956,7 +1917,7 @@ num_suffix <- function(
 
   # Create and return a tibble with `scale_by`
   # and `suffix` values
-  dplyr::tibble(
+  vctrs::data_frame(
     scale_by = 1 / base^suffix_index,
     suffix = suffix_labels
   )
@@ -1984,9 +1945,10 @@ num_suffix_ind <- function(
     }
 
     return(
-      dplyr::tibble(
-        scale_by = rep_len(scale_by, length(x)),
-        suffix = rep_len("", length(x))
+      vctrs::data_frame(
+        scale_by = scale_by,
+        suffix = "",
+        .size = length(x)
       )
     )
   }
@@ -2040,7 +2002,7 @@ num_suffix_ind <- function(
 
   # Create and return a tibble with `scale_by`
   # and `suffix` values
-  dplyr::tibble(
+  vctrs::data_frame(
     scale_by = 10^(-ifelse(suffix_index == 0, 0, (suffix_index * 2) + 1)),
     suffix = suffix_labels
   )
@@ -2359,6 +2321,10 @@ flatten_list <- function(x) {
   unlist(x, recursive = FALSE)
 }
 
+omit_na <- function(x) {
+  x[!is.na(x)]
+}
+
 #' Prepend a vector
 #'
 #' @inheritParams append
@@ -2415,7 +2381,8 @@ column_classes_are_valid <- function(data, columns, valid_classes, call = rlang:
     )
 
   table_data <- dt_data_get(data = data)
-  table_data <- dplyr::select(table_data, dplyr::all_of(resolved))
+  # select all resolved columns
+  table_data <- table_data[resolved]
 
   all(
     vapply(

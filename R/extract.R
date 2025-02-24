@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -87,6 +87,25 @@
 #'   to and including the `"footnotes_attached"` stage) will be performed before
 #'   returning the data frame.
 #'
+#' @param incl_hidden_cols *Should hidden columns be included?*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   Certain columns may be hidden from final display via [cols_hide()]. By
+#'   default, those columns won't be part of the extracted data frame. However,
+#'   we can choose to include them by using `incl_hidden_cols = TRUE`.
+#'
+#' @param incl_stub_cols *Should stub columns be included?*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   Any stub columns in the **gt** object (which may consist of a grouping
+#'   column and a column for row labels) are included in the extracted data for
+#'   clarity but clearly marked with the names `"::group_id::"` and
+#'   `"::rowname::"`. We can exclude them by setting `incl_stub_cols = FALSE`.
+#'
+#' @inheritParams rlang::args_dots_empty
+#'
 #' @param output *Output format*
 #'
 #'   `singl-kw:[html|latex|rtf|word]` // *default:* `"html"`
@@ -95,6 +114,64 @@
 #'   `"html"` (the default), `"latex"`, `"rtf"`, or `"word"`.
 #'
 #' @return A data frame or tibble object containing the table body.
+#'
+#' @section Examples:
+#'
+#' Use a modified version of [`sp500`] the dataset to create a **gt** table with
+#' row groups and row labels. Formatting will be applied to the date- and
+#' currency-based columns.
+#'
+#' ```{r}
+#' gt_tbl <-
+#'   sp500 |>
+#'   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>
+#'   dplyr::arrange(date) |>
+#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) |>
+#'   dplyr::select(-adj_close, -volume) |>
+#'   gt(
+#'     rowname_col = "date",
+#'     groupname_col = "week"
+#'   ) |>
+#'   fmt_date(columns = date, date_style = "day_month_year") |>
+#'   fmt_currency(columns = c(open, high, low, close)) |>
+#'   cols_hide(columns = c(high, low))
+#'
+#' ```
+#'
+#' ```r
+#' gt_tbl
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_extract_body_1.png")`
+#' }}
+#'
+#' Using `extract_body()` on the **gt** object (`gt_tbl`) will provide us with
+#' a tibble that contains the fully built data cells for the `output` context
+#' (in this case, `"html"`).
+#'
+#' ```{r}
+#' extract_body(gt_tbl)
+#' ```
+#'
+#' To provide us with a better frame of reference, the grouping and row label
+#' values are provided as the first columns in the returned output. We could
+#' suppress those in the output by setting `incl_stub_cols = FALSE`.
+#'
+#' ```{r}
+#' extract_body(gt_tbl, incl_stub_cols = FALSE)
+#' ```
+#'
+#' The `high` and `low` columns were hidden via [`cols_hide()`] and so they
+#' won't be shown in the returned data unless we use `incl_hidden_cols = TRUE`.
+#'
+#' ```{r}
+#' extract_body(
+#'   gt_tbl,
+#'   incl_stub_cols = FALSE,
+#'   incl_hidden_cols = TRUE
+#' )
+#' ```
 #'
 #' @family table export functions
 #' @section Function ID:
@@ -107,49 +184,161 @@
 extract_body <- function(
     data,
     build_stage = NULL,
+    incl_hidden_cols = FALSE,
+    incl_stub_cols = TRUE,
+    ...,
     output = c("html", "latex", "rtf", "word", "grid")
 ) {
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # If `build_stage` is given a keyword value, check that value is valid
+  if (!is.null(build_stage)) {
+
+    rlang::arg_match0(
+      build_stage,
+      values = c(
+        "init", "fmt_applied", "sub_applied", "unfmt_included", "cols_merged",
+        "body_reassembled", "text_transformed", "footnotes_attached"
+      )
+    )
+  }
+
   # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
+  output <-
+    rlang::arg_match0(
+      output,
+      values = c("html", "latex", "rtf", "word", "grid")
+    )
+
+  rlang::check_dots_empty()
+
+  # Generate vector of columns to include in output
+  if (isTRUE(incl_hidden_cols)) {
+
+    boxhead_df <- dt_boxhead_get(data = data)
+
+    included_cols <-
+      boxhead_df$var[boxhead_df$type %in% c("default", "hidden")]
+
+  } else {
+    included_cols <- dt_boxhead_get_vars_default(data = data)
+  }
+
+  # If there are any stub columns, get the column names for that component
+  group_col <- dt_boxhead_get_vars_groups(data = data)
+  if (is.na(group_col)) {
+    group_col <- NULL
+  }
+
+  rowname_col <- dt_boxhead_get_var_stub(data = data)
+  if (is.na(rowname_col)) {
+    rowname_col <- NULL
+  }
+
+  stub_cols <- c(group_col, rowname_col)
+
+  if (isTRUE(incl_stub_cols)) {
+
+    # Add stub columns to `included_cols`, if any are present; and deduplicate
+    included_cols <- unique(c(stub_cols, included_cols))
+  }
 
   data <- dt_body_build(data = data)
 
   if (identical(build_stage, "init")) {
-    return(data[["_body"]])
+
+    out_df <-
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
+
+    return(out_df)
   }
 
   data <- render_formats(data = data, context = output)
 
   if (identical(build_stage, "fmt_applied")) {
-    return(data[["_body"]])
+
+    out_df <-
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
+
+    return(out_df)
   }
 
   data <- render_substitutions(data = data, context = output)
 
   if (identical(build_stage, "sub_applied")) {
-    return(data[["_body"]])
+
+    out_df <-
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
+
+    return(out_df)
   }
 
   data <- migrate_unformatted_to_output(data = data, context = output)
 
   if (identical(build_stage, "unfmt_included")) {
-    return(data[["_body"]])
+
+    out_df <-
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
+
+    return(out_df)
   }
 
   data <- perform_col_merge(data = data, context = output)
 
   if (identical(build_stage, "cols_merged")) {
-    return(data[["_body"]])
+
+    out_df <-
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
+
+    return(out_df)
   }
 
   data <- dt_body_reassemble(data = data)
 
   if (identical(build_stage, "body_reassembled")) {
-    return(data[["_body"]])
+
+    out_df <-
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
+
+    return(out_df)
   }
 
   data <- reorder_stub_df(data = data)
@@ -159,7 +348,17 @@ extract_body <- function(
   data <- perform_text_transforms(data = data)
 
   if (identical(build_stage, "text_transformed")) {
-    return(data[["_body"]])
+
+    out_df <-
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
+
+    return(out_df)
   }
 
   data <- dt_boxhead_build(data = data, context = output)
@@ -174,10 +373,43 @@ extract_body <- function(
   data <- apply_footnotes_to_output(data = data, context = output)
 
   if (is.null(build_stage) || identical(build_stage, "footnotes_attached")) {
-    return(data[["_body"]])
+
+    out_df <-
+      assemble_body_extract(
+        data = data,
+        included_cols = included_cols,
+        incl_stub_cols = incl_stub_cols,
+        group_col = group_col,
+        rowname_col = rowname_col
+      )
   }
 
-  data[["_body"]]
+  out_df
+}
+
+assemble_body_extract <- function(
+  data,
+  included_cols,
+  incl_stub_cols,
+  group_col,
+  rowname_col
+) {
+
+  out_df <- data[["_body"]][, included_cols]
+
+  if (isTRUE(incl_stub_cols)) {
+
+    if (!is.null(group_col)) {
+      names(out_df)[names(out_df) == group_col] <- "::group_id::"
+    }
+
+    if (!is.null(rowname_col)) {
+      # ::rowname::
+      names(out_df)[names(out_df) == rowname_col] <- rowname_col_private
+    }
+  }
+
+  out_df
 }
 
 # extract_summary() ------------------------------------------------------------
@@ -386,7 +618,11 @@ extract_cells <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
+  output <-
+    rlang::arg_match0(
+      output,
+      values = c("auto", "plain", "html", "latex", "rtf", "word", "grid")
+    )
 
   if (output == "auto") {
     output <- determine_output_format()

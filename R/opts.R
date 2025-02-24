@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -220,6 +220,7 @@ get_colorized_params <- function(
 #' - `ihtml.page_size_values`
 #' - `ihtml.pagination_type`
 #' - `ihtml.height`
+#' - `ihtml.selection_mode`
 #'
 #' @inheritParams fmt_number
 #'
@@ -337,6 +338,17 @@ get_colorized_params <- function(
 #'
 #'   Height of the table in pixels. Defaults to `"auto"` for automatic sizing.
 #'
+#' @param selection_mode *Allow row selection*
+#'
+#'    `scalar<character>` // *default:* `NULL`
+#'
+#'    The `selection_mode` options allows users to select rows by clicking them.
+#'    When this option is `"single"`, clicking another value toggles selection
+#'    of the previously selected row off. When this option is `"multiple"`,
+#'    multiple rows can be selected at once. Selected values are available in
+#'    Shiny apps when `selection_mode` is not `NULL` and the table is used in
+#'    [render_gt()].
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
@@ -418,13 +430,15 @@ opt_interactive <- function(
     page_size_default = 10,
     page_size_values = c(10, 25, 50, 100),
     pagination_type = c("numbers", "jump", "simple"),
-    height = "auto"
+    height = "auto",
+    selection_mode = NULL
 ) {
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  pagination_type <- rlang::arg_match(pagination_type)
+  pagination_type <-
+    rlang::arg_match0(pagination_type, values = c("numbers", "jump", "simple"))
 
   tab_options(
     data = data,
@@ -442,7 +456,8 @@ opt_interactive <- function(
     ihtml.page_size_default = page_size_default,
     ihtml.page_size_values = page_size_values,
     ihtml.pagination_type = pagination_type,
-    ihtml.height = height
+    ihtml.height = height,
+    ihtml.selection_mode = selection_mode
   )
 }
 
@@ -838,7 +853,7 @@ opt_align_table_header <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  align <- rlang::arg_match(align)
+  align <- rlang::arg_match0(align, values = c("left", "center", "right"))
 
   tab_options(
     data = data,
@@ -1264,7 +1279,7 @@ opt_table_lines <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  extent <- rlang::arg_match(extent)
+  extent <- rlang::arg_match0(extent, values = c("all", "none", "default"))
 
   # Normalize `extent` values to property values
   values_vec <- if (extent == "all") "solid" else extent
@@ -1457,6 +1472,17 @@ opt_table_outline <- function(
 #'   the [system_fonts()] helper function). If provided, this new stack will
 #'   replace any defined fonts and any `font` values will be prepended.
 #'
+#' @param size *Text size*
+#'
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   The text size for the entire table can be set by providing a `size` value.
+#'   Can be specified as a single-length character vector with units of pixels
+#'   (e.g., `12px`) or as a percentage (e.g., `80%`). If provided as a
+#'   single-length numeric vector, it is assumed that the value is given in
+#'   units of pixels. The [px()] and [pct()] helper functions can also be used
+#'   to pass in numeric values and obtain values as pixel or percentage units.
+#'
 #' @param style *Text style*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
@@ -1472,6 +1498,13 @@ opt_table_outline <- function(
 #'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
 #'   `1` and `1000`, inclusive. Please note that typefaces have varying support
 #'   for the numeric mapping of weight.
+#'
+#' @param color *Text color*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The `color` option defines the text color used throughout the table. A
+#'   color name or a hexadecimal color code should be provided.
 #'
 #' @param add *Add to existing fonts*
 #'
@@ -1522,9 +1555,8 @@ opt_table_outline <- function(
 #'
 #' Use a subset of the [`sp500`] dataset to create a small **gt** table. We'll
 #' use [fmt_currency()] to display a dollar sign for the first row of monetary
-#' values. Then, set a larger font size for the table and use the
-#' `"Merriweather"` font (from *Google Fonts*, via [google_font()]) with two
-#' system font fallbacks (`"Cochin"` and the generic `"serif"`).
+#' values. The `"Merriweather"` font (from *Google Fonts*, via [google_font()])
+#' with two system font fallbacks (`"Cochin"` and the generic `"serif"`).
 #'
 #' ```r
 #' sp500 |>
@@ -1582,8 +1614,10 @@ opt_table_font <- function(
     data,
     font = NULL,
     stack = NULL,
+    size = NULL,
     weight = NULL,
     style = NULL,
+    color = NULL,
     add = TRUE
 ) {
 
@@ -1633,9 +1667,21 @@ opt_table_font <- function(
       )
   }
 
+  if (!is.null(size)) {
+
+    data <-
+      tab_options(
+        data = data,
+        table.font.size = size
+      )
+
+  }
+
   if (!is.null(weight)) {
 
-    if (is.numeric(weight)) weight <- as.character(weight)
+    if (is.numeric(weight)) {
+      weight <- as.character(weight)
+    }
 
     data <-
       tab_options(
@@ -1656,6 +1702,15 @@ opt_table_font <- function(
       tab_options(
         data = data,
         table.font.style = style
+      )
+  }
+
+  if (!is.null(color)) {
+
+    data <-
+      tab_options(
+        data = data,
+        table.font.color = color
       )
   }
 

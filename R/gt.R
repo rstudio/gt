@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -120,12 +120,13 @@
 #'
 #' @param locale *Locale identifier*
 #'
-#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `getOption("gt.locale")` (`optional`)
 #'
 #'   An optional locale identifier that can be set as the default locale for all
 #'   functions that take a `locale` argument. Examples include `"en"` for
 #'   English (United States) and `"fr"` for French (France). We can call
 #'   [info_locales()] as a useful reference for all of the locales that are supported.
+#'   If set, `options(gt.locale)` is also consulted.
 #'
 #' @param row_group.sep *Separator text for multiple row group labels*
 #'
@@ -302,7 +303,7 @@ gt <- function(
     row_group_as_column = FALSE,
     auto_align = TRUE,
     id = NULL,
-    locale = NULL,
+    locale = getOption("gt.locale"),
     row_group.sep = getOption("gt.row_group.sep", " - ")
 ) {
 

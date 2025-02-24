@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -131,18 +131,13 @@ dt_summary_build <- function(data, context) {
 
       groups <- unique(stub_df$group_id)
 
-    } else if (
-      !is.null(groups) &&
-      is.character(groups) &&
-      length(groups) == 1 &&
-      groups == ":GRAND_SUMMARY:"
-    ) {
+    } else if (is_string(groups, ":GRAND_SUMMARY:")) {
 
       # If groups is given as ":GRAND_SUMMARY:" then use a
       # special group (`::GRAND_SUMMARY`)
       groups <- grand_summary_col
 
-    } else if (!is.null(groups) && is.character(groups)) {
+    } else if (is.character(groups)) {
 
       assert_rowgroups()
 
@@ -272,15 +267,12 @@ dt_summary_build <- function(data, context) {
     )] <- NA_real_
 
     summary_dfs_data <-
-      dplyr::select(
-        summary_dfs_data,
-        dplyr::all_of(c(
-          group_id_col_private,
-          row_id_col_private,
-          rowname_col_private,
-          colnames(body)
-        ))
-      )
+      summary_dfs_data[c(
+        group_id_col_private,
+        row_id_col_private,
+        rowname_col_private,
+        colnames(body)
+      )]
 
     #
     # Format with formatting formulae
@@ -297,11 +289,8 @@ dt_summary_build <- function(data, context) {
     summary_dfs_display_gt[["_data"]][is.na(summary_dfs_display_gt[["_data"]])] <-
       NA
 
-    summary_dfs_display_gt[["_stub_df"]] <-
-      dplyr::mutate(
-        summary_dfs_display_gt[["_stub_df"]],
-        row_id = gsub("__[0-9]*", "", row_id)
-      )
+    summary_dfs_display_gt[["_stub_df"]]$row_id <-
+      gsub("__[0-9]*", "", summary_dfs_display_gt[["_stub_df"]]$row_id)
 
     for (k in seq_along(fmt_exprs)) {
 
@@ -347,7 +336,7 @@ dt_summary_build <- function(data, context) {
 
             fmt_expr_components <- fmt_expr_values
             names(fmt_expr_components) <- fmt_expr_names
-            fmt_expr_components <- fmt_expr_components[fmt_expr_names != ""]
+            fmt_expr_components <- fmt_expr_components[nzchar(fmt_expr_names)]
 
             if ("rows" %in% names(fmt_expr_components)) {
 
@@ -414,7 +403,7 @@ dt_summary_build <- function(data, context) {
     labels_processed <- unlist(lapply(labels, FUN = process_text, context = context))
 
     for (i in seq_len(nrow(summary_dfs_display))) {
-      summary_dfs_display[i, ][["::rowname::"]] <-
+      summary_dfs_display[i, ][[rowname_col_private]] <-
         unname(labels_processed[names(labels_processed) == summary_dfs_display[i, ][["::row_id::"]]])
     }
 

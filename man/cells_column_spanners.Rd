@@ -4,7 +4,7 @@
 \alias{cells_column_spanners}
 \title{Location helper for targeting the column spanners}
 \usage{
-cells_column_spanners(spanners = everything())
+cells_column_spanners(spanners = everything(), levels = NULL)
 }
 \arguments{
 \item{spanners}{\emph{Specification of spanner IDs}
@@ -15,6 +15,13 @@ The spanners to which targeting operations are constrained. Can either be a
 series of spanner ID values provided in \code{c()} or a select helper function
 (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
 \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
+
+\item{levels}{*Specification of the spanner levels *
+
+\verb{scalar|vector<numerical>} // \emph{default:} \code{NULL}
+
+The \emph{existing} spanner levels (1, 2, ...) to which targeting operations are
+constrained. Use NULL to refer to all existing levels.}
 }
 \value{
 A list object with the classes \code{cells_column_spanners} and
@@ -53,6 +60,46 @@ we are making the text of the column spanner label appear as bold.
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_column_spanners_1.png" alt="This image of a table was generated from the first code example in the `cells_column_spanners()` help file." style="width:100\%;">
+}}
+
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. We'll add two spanners
+for the column combinations of (\code{num}, \code{char}) and time related columns
+(\code{time} and \code{datetime}). Furthermore we add another level of spanners with
+a column label over all date- and time related  columns (\code{date}, \code{time}, and
+\code{datetime}). We want all spanner labels with "time" in their name to be bold.
+Additionally we want the text to be red of the spanner that is both time-
+related and on level 1.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(-fctr, -currency, -group) |>
+  gt(rowname_col = "row") |>
+  tab_spanner(
+    label = "time related cols",
+    columns = c(datetime, time)
+  ) |>
+  tab_spanner(
+    label = "num and char",
+    columns = c(num, char)
+  ) |>
+  tab_spanner(
+    label = "date and time cols",
+    columns = c(date, time, datetime)
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_spanners(spanners = tidyselect::contains("time"))
+  ) |>
+  tab_style(
+    style = cell_text(color = "red"),
+    locations = cells_column_spanners(
+      spanners = tidyselect::contains("time"),
+      levels = 1
+    )
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_column_spanners_2.png" alt="This image of a table was generated from the second code example in the `cells_column_spanners()` help file." style="width:100\%;">
 }}
 }
 

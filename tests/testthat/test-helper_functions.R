@@ -4,7 +4,7 @@ test_that("pct() works correctly", {
   percentage <- pct(x = 50)
 
   # Expect that the value is formatted correctly
-  percentage %>% expect_equal("50%")
+  expect_equal(percentage, "50%")
 
   # Expect an error if the value supplied is not numeric
   expect_error(

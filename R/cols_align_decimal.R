@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -148,7 +148,7 @@ cols_align_decimal <- function(
 
   # If the subsetting of columns finally results in no columns, return
   # the data unchanged
-  if (length(columns) < 1) {
+  if (length(columns) == 0L) {
     return(data)
   }
 

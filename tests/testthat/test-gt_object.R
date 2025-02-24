@@ -264,7 +264,7 @@ test_that("A gt table can be made with grouped data -- one group", {
 
   expect_equal(
     built_tbl$`_boxhead` %>% .[, 1:2],
-    dplyr::tibble(
+    vctrs::data_frame(
       var = colnames(exibble),
       type = c(rep("default", 8), "row_group")
     )
@@ -344,7 +344,7 @@ test_that("A gt table can be made with grouped data - two groups", {
 
   built_tbl$`_boxhead` %>% .[, 1:2] %>%
     expect_equal(
-      dplyr::tibble(
+      vctrs::data_frame(
         var = colnames(
           exibble %>%
             dplyr::mutate(group_2 = rep(paste0("grp_", 1:4), 2) %>% sort())
@@ -444,7 +444,7 @@ test_that("`groupname_col` in gt() will override any grouped data", {
 
   built_tbl$`_boxhead` %>% .[, 1:2] %>%
     expect_equal(
-      dplyr::tibble(
+      vctrs::data_frame(
         var = colnames(exibble),
         type = c(rep("default", 3), "row_group", rep("default", 5))
       )
@@ -544,7 +544,7 @@ test_that("rowname_col in gt() will be overridden by `rownames_to_stub = TRUE`",
 
   expect_equal(
     built_tbl$`_boxhead`[, 1:2],
-    dplyr::tibble(
+    vctrs::data_frame(
       var = c("__GT_ROWNAME_PRIVATE__", colnames(mtcars)),
       type = c("stub", rep("default", 11))
     )
@@ -616,7 +616,7 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
 
   built_tbl$`_boxhead` %>% .[, 1:2] %>%
     expect_equal(
-      dplyr::tibble(
+      vctrs::data_frame(
         var = c("__GT_ROWNAME_PRIVATE__", colnames(exibble), "rowname"),
         type = c("stub", rep("default", 10))
       )
@@ -634,6 +634,8 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
       ),
       ignore_attr = TRUE
     )
+
+  check_suggests()
 
   # Render the HTML table and read the HTML with the `xml2::read_html()` fn
   html_tbl <-
@@ -711,35 +713,30 @@ test_that("Escapable characters in rownames are handled correctly in each output
   # when rendered as HTML
 
   # Using the data frame and setting its rownames to be the stub
-  expect_match( # stub from data frame's row names
-    gt(tbl, rownames_to_stub = TRUE) %>%
-      render_as_html(),
+  expect_match_html( # stub from data frame's row names
+    gt(tbl, rownames_to_stub = TRUE),
     "<tr><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">&lt;em&gt;row_html&lt;/em&gt;</th>",
     fixed = TRUE
   )
-  expect_match( # `column_1`
-    gt(tbl, rownames_to_stub = TRUE) %>%
-      render_as_html(),
+  expect_match_html( # `column_1`
+    gt(tbl, rownames_to_stub = TRUE),
     "<td headers=\"stub_1_1 column_1\" class=\"gt_row gt_left\">&lt;em&gt;html&lt;/em&gt;</td>",
     fixed = TRUE
   )
-  expect_match( # `column_2`
-    gt(tbl, rownames_to_stub = TRUE) %>%
-      render_as_html(),
+  expect_match_html( # `column_2`
+    gt(tbl, rownames_to_stub = TRUE),
     "<td headers=\"stub_1_1 column_2\" class=\"gt_row gt_left\">html</td>",
     fixed = TRUE
   )
 
   # Using a tibble (removes row names) and setting `column_1` as the stub
-  expect_match( # stub from `column_1`
-    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
-      render_as_html(),
+  expect_match_html( # stub from `column_1`
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1"),
     "<tr><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">&lt;em&gt;html&lt;/em&gt;</th>",
     fixed = TRUE
   )
-  expect_match( # `column_2`
-    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
-      render_as_html(),
+  expect_match_html( # `column_2`
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1"),
     "<td headers=\"stub_1_1 column_2\" class=\"gt_row gt_left\">html</td>",
     fixed = TRUE
   )
@@ -880,7 +877,7 @@ test_that("Default locale settings are honored by formatting functions", {
   exibble_1 <- exibble[8, 1]
 
   # `fmt_bytes()`
-  (exibble_1 %>% gt() %>% fmt_bytes(num, ) %>% render_formats_test(context = "plain"))[["num"]] %>%
+  (exibble_1 %>% gt() %>% fmt_bytes(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
     expect_equal("8.9 MB")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_bytes(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
     expect_equal("8,9 MB")
@@ -917,6 +914,8 @@ test_that("Default locale settings are honored when generating summary rows", {
 })
 
 test_that("Formatting functions operate with a 'last-one-wins' approach", {
+
+  check_suggests()
 
   # Make a gt table from the first column of the exibble table and apply
   # two `fmt_*()` functions to the same column

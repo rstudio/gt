@@ -1,3 +1,23 @@
+test_that("A gt table contains the expected caption component", {
+
+  # Create a `tbl_latex` object with `gt()`; this table contains a caption
+  tbl_latex <-
+    gt(mtcars_short) %>%
+    tab_caption("test caption") %>%
+    tab_options(latex.use_longtable = TRUE)
+
+  # Expect a characteristic pattern
+  expect_match(
+    as_latex(tbl_latex) %>% as.character(),
+    "\\caption{test caption} \\\\ \n",
+    fixed = TRUE
+  )
+
+  # Perform a snapshot test where a LaTeX table
+  # contains only a caption
+  expect_snapshot_latex(tbl_latex)
+})
+
 test_that("A gt table contains the expected heading components", {
 
   # Create a `tbl_latex` object with `gt()`; this table contains a title

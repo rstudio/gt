@@ -135,8 +135,10 @@ the column on the left-hand side, and the label text on the right-hand side.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Uganda") |>
-  dplyr::slice_tail(n = 5) |>
+  dplyr::filter(
+    country_name == "Uganda",
+    year \%in\% 2017:2021
+  ) |>
   gt() |>
   cols_label(
     country_name = "Name",
@@ -156,8 +158,10 @@ a \code{~} between the column name and the label text.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Uganda") |>
-  dplyr::slice_tail(n = 5) |>
+  dplyr::filter(
+    country_name == "Uganda",
+    year \%in\% 2017:2021
+  ) |>
   gt() |>
   cols_label(
     country_name = md("**Name**"),
@@ -212,8 +216,7 @@ single column name, we must use formula syntax (i.e., with the \code{~}).
     name, ends_with("2001"), ends_with("2006"), matches("2001_2006")
   ) |>
   dplyr::filter(population_2001 > 100000) |>
-  dplyr::arrange(desc(pop_change_2001_2006_pct)) |>
-  dplyr::slice_head(n = 10) |>
+  dplyr::slice_max(pop_change_2001_2006_pct, n = 10) |>
   gt() |>
   fmt_integer() |>
   fmt_percent(columns = matches("change"), decimals = 1) |>
@@ -239,9 +242,7 @@ incorporates unit notation text (within \code{"{{"}/\code{"}}"}).
   dplyr::select(
     name, population_2021, density_2021, land_area_km2, latitude, longitude
   ) |>
-  dplyr::filter(population_2021 > 100000) |>
-  dplyr::arrange(desc(population_2021)) |>
-  dplyr::slice_head(n = 10) |>
+  dplyr::slice_max(population_2021, n = 10) |>
   gt() |>
   fmt_integer(columns = population_2021) |>
   fmt_number(

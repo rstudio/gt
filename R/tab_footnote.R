@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -256,9 +256,8 @@
 #' ```r
 #' towny |>
 #'   dplyr::filter(csd_type == "city") |>
-#'   dplyr::arrange(desc(population_2021)) |>
 #'   dplyr::select(name, density_2021, population_2021) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(population_2021, n = 10) |>
 #'   gt(rowname_col = "name") |>
 #'   tab_header(
 #'     title = md("The 10 Largest Municipalities in `towny`"),
@@ -369,7 +368,7 @@ tab_footnote <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  placement <- rlang::arg_match(placement)
+  placement <- rlang::arg_match0(placement, values = c("auto", "right", "left"))
   rlang::check_required(footnote)
 
   if (is.null(locations)) {

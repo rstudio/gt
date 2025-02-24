@@ -31,7 +31,7 @@ Will localize everything possible in the \code{gt()} pipeline.
 
 Will only affect the output of one specific function (or override global setting).
 
-\code{locale} has very low precedence usually. As soon as you override some parameteres,
+\code{locale} has very low precedence usually. As soon as you override some parameters,
 \code{sep_mark}, \code{dec_mark}, \code{incl_space}, they will be override \code{locale}.
 }
 

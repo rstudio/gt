@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -144,7 +144,7 @@
 #'   scaling.
 #'
 #'   We can alternatively provide a character vector that serves as a
-#'   specification for which symbols are to used for each of the value ranges.
+#'   specification for which symbols are to be used for each of the value ranges.
 #'   These preferred symbols will replace the defaults (e.g.,
 #'   `c("k", "Ml", "Bn", "Tr")` replaces `"K"`, `"M"`, `"B"`, and `"T"`).
 #'
@@ -215,7 +215,7 @@
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
+#'   according to the locale's rules. Examples include `"en"` for English (United
 #'   States) and `"fr"` for French (France). We can call [info_locales()] for a
 #'   useful reference for all of the locales that are supported. A locale ID can
 #'   be also set in the initial [gt()] function call (where it would be used
@@ -308,7 +308,7 @@
 #'   dplyr::select(country_code_3, year, population) |>
 #'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
 #'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
-#'   tidyr::spread(year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
 #'   dplyr::arrange(desc(`2015`)) |>
 #'   gt(rowname_col = "country_code_3") |>
 #'   fmt_number(suffixing = TRUE)
@@ -327,7 +327,7 @@
 #'   dplyr::select(country_code_3, year, population) |>
 #'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
 #'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
-#'   tidyr::spread(year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
 #'   dplyr::arrange(desc(`2015`)) |>
 #'   gt(rowname_col = "country_code_3") |>
 #'   fmt_number(suffixing = TRUE, n_sigfig = 3)
@@ -509,7 +509,7 @@ fmt_number <- function(
   #
 
   # Ensure that arguments are matched
-  system <- rlang::arg_match(system)
+  system <- rlang::arg_match0(system, c("intl", "ind"))
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
@@ -646,7 +646,7 @@ fmt_number <- function(
 #'   billions (`B`), and trillions (`T`) suffixes after automatic value scaling.
 #'
 #'   We can alternatively provide a character vector that serves as a
-#'   specification for which symbols are to used for each of the value ranges.
+#'   specification for which symbols are to be used for each of the value ranges.
 #'   These preferred symbols will replace the defaults (e.g.,
 #'   `c("k", "Ml", "Bn", "Tr")` replaces `"K"`, `"M"`, `"B"`, and `"T"`).
 #'
@@ -676,7 +676,7 @@ fmt_number <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' [from_column()] can be used with certain arguments of  `fmt_integer()` to
+#' [from_column()] can be used with certain arguments of `fmt_integer()` to
 #' obtain varying parameter values from a specified column within the table.
 #' This means that each row could be formatted a little bit differently. These
 #' arguments provide support for [from_column()]:
@@ -742,7 +742,7 @@ fmt_number <- function(
 #'   dplyr::select(country_code_3, year, population) |>
 #'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
 #'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
-#'   tidyr::spread(year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
 #'   dplyr::arrange(desc(`2015`)) |>
 #'   gt(rowname_col = "country_code_3") |>
 #'   fmt_integer(scale_by = 1 / 1E6) |>

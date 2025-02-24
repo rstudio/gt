@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -48,7 +48,7 @@ dt_boxhead_init <- function(data) {
   empty_list <- lapply(seq_along(vars), function(x) NULL)
 
   boxh_df <-
-    dplyr::tibble(
+    vctrs::data_frame(
       # Matches to the name of the `data` column
       var = vars,
       # The mode of the column in the rendered table
@@ -98,10 +98,20 @@ dt_boxhead_edit <- function(data, var, ...) {
 
   check_vars_dt_boxhead(var = var, dt_boxhead = dt_boxhead)
 
+  col_row_num <- which(dt_boxhead$var == var_name)
+
   if (is.list(dt_boxhead[[names(val_list)]])) {
-    dt_boxhead[[which(dt_boxhead$var == var_name), names(val_list)]] <- unname(val_list)
+    dt_boxhead[[col_row_num, names(val_list)]] <- unname(val_list)
+    # Fixup md() in column_label column
+    # if a problem occurs. (preserve "from_markdown" class)
+    if ("column_label" %in% names(val_list) &&
+        is.list(dt_boxhead$column_label[[col_row_num]])) {
+      # Remove one level of nesting
+      dt_boxhead$column_label[[col_row_num]] <- dt_boxhead$column_label[[col_row_num]][[1]]
+    }
+
   } else {
-    dt_boxhead[[which(dt_boxhead$var == var_name), names(val_list)]] <- unlist(val_list)
+    dt_boxhead[[col_row_num, names(val_list)]] <- unlist(val_list)
   }
 
   dt_boxhead_set(data = data, boxh = dt_boxhead)
@@ -123,7 +133,7 @@ dt_boxhead_add_var <- function(
   dt_boxhead <- dt_boxhead_get(data = data)
 
   dt_boxhead_row <-
-    dplyr::tibble(
+    vctrs::data_frame(
       var = var,
       type = type,
       column_label = column_label,
@@ -136,9 +146,9 @@ dt_boxhead_add_var <- function(
   add_where <- rlang::arg_match0(add_where, c("top", "bottom"))
 
   if (add_where == "top") {
-    dt_boxhead <- dplyr::bind_rows(dt_boxhead_row, dt_boxhead)
+    dt_boxhead <- vctrs::vec_rbind(dt_boxhead_row, dt_boxhead)
   } else if (add_where == "bottom") {
-    dt_boxhead <- dplyr::bind_rows(dt_boxhead, dt_boxhead_row)
+    dt_boxhead <- vctrs::vec_rbind(dt_boxhead, dt_boxhead_row)
   }
 
   dt_boxhead_set(data = data, boxh = dt_boxhead)
@@ -214,8 +224,8 @@ dt_boxhead_get_vars <- function(data) {
 }
 
 dt_boxhead_get_vars_default <- function(data) {
-  df <- dt_boxhead_get(data = data)
-  df$var[df$type == "default"]
+  dat <- dt_boxhead_get(data = data)
+  dat$var[dat$type == "default"]
 }
 
 dt_boxhead_get_var_stub <- function(data) {

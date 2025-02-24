@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -376,7 +376,7 @@ tab_header <- function(
 #'
 #' - `"m/s"` and `"m / s"` both render as `"m/s"`
 #' - `"m s^-1"` will appear with the `"-1"` exponent intact
-#' - `"m /s"` gives the the same result, as `"/<unit>"` is equivalent to
+#' - `"m /s"` gives the same result, as `"/<unit>"` is equivalent to
 #'   `"<unit>^-1"`
 #' - `"E_h"` will render an `"E"` with the `"h"` subscript
 #' - `"t_i^2.5"` provides a `t` with an `"i"` subscript and a `"2.5"` exponent
@@ -1129,7 +1129,7 @@ tab_spanner_delim <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
-  split <- rlang::arg_match(split)
+  split <- rlang::arg_match0(split, values = c("last", "first"))
 
   # Perform various input checks for `limit` if it is provided
   check_number_whole(limit, min = 1, allow_null = TRUE, allow_infinite = FALSE)
@@ -1736,7 +1736,8 @@ tab_row_group <- function(
 
   # Set the `_row_groups` vector here with the group id; new groups will
   # be placed at the front, pushing down `NA` (the 'Others' group)
-  arrange_groups_vars <- c(id, stats::na.omit(arrange_groups_vars))
+  arrange_groups_vars <- arrange_groups_vars[!is.na(arrange_groups_vars)]
+  arrange_groups_vars <- c(id, arrange_groups_vars)
   arrange_groups_vars <- unique(arrange_groups_vars)
   arrange_groups_vars <- arrange_groups_vars[arrange_groups_vars %in% stub_df$group_id]
 
@@ -1799,7 +1800,7 @@ tab_row_group <- function(
 #' `r man_get_image_tag(file = "man_tab_stubhead_1.png")`
 #' }}
 #'
-#' The stuhead can contain all sorts of interesting content. How about an icon
+#' The stubhead can contain all sorts of interesting content. How about an icon
 #' for a car? We can make this happen with help from the **fontawesome**
 #' package.
 #'

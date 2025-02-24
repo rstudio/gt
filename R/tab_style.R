@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -339,7 +339,7 @@
 #' `r man_get_image_tag(file = "man_tab_style_5.png")`
 #' }}
 #'
-#' [cell_text()] also allows the use of [from_column()] for many ofits arguments.
+#' [cell_text()] also allows the use of [from_column()] for many of its arguments.
 #' Let's take a small portion of data from [`sp500`] and add an up or down arrow
 #' based on the values in the `open` and `close` columns. Within [cols_add()] we
 #' can create a new column (`dir`) with an expression to get either `"red"` or

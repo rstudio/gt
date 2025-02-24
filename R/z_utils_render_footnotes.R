@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -77,7 +77,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
 
   # Filter by `subtitle`
   if (!dt_heading_has_subtitle(data = data)) {
-     tbl <- tbl[tbl$locname != "subtitle", ]
+    tbl <- tbl[tbl$locname != "subtitle", ]
   }
 
   # Filter by `grpname` in columns groups
@@ -128,7 +128,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
       tbl_data$colnum <- ifelse(
         tbl_data$locname == "stub",
         0L, colname_to_colnum(
-              data = data, colname = tbl_data$colname))
+          data = data, colname = tbl_data$colname))
     }
 
     # Re-combine `tbl_data` with `tbl`
@@ -190,7 +190,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
       )
 
     # Re-combine `tbl_not_summary_cells` with `tbl_summary_cells`
-    tbl <- dplyr::bind_rows(tbl_not_summary_cells, tbl_summary_cells)
+    tbl <- vctrs::vec_rbind(tbl_not_summary_cells, tbl_summary_cells)
   }
 
   # For the grand summary cells, insert a `colnum` based
@@ -210,7 +210,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     # Re-combine `tbl_not_g_summary_cells`
     # with `tbl_g_summary_cells`
     tbl <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         tbl_not_g_summary_cells, tbl_g_summary_cells
       )
   }
@@ -226,7 +226,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     tmp$colnum <- NULL
     tmp$rownum <- NULL
 
-    default_variables <- dplyr::tibble(
+    default_variables <- vctrs::data_frame(
       colnum = seq(default_vars),
       colname = default_vars,
       rownum = -1L
@@ -236,7 +236,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     # Re-combine `tbl_not_column_cells`
     # with `tbl_column_cells`
     tbl <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         tbl_not_column_cells,
         tbl_column_cells
       )
@@ -592,6 +592,15 @@ apply_footnotes_to_output <- function(data, context = "html") {
     footnotes_data_marks <-
       dplyr::distinct(footnotes_data_marks, colname, rownum, locname, placement, fs_id_coalesced)
 
+    # Get the correct footnote rendering functions
+    withCallingHandlers(
+      footnotes_dispatch[[context]],
+      error = function(e) cli::cli_abort("Can't find the correct rendering function for context = {.val {context}}", parent = e)
+    )
+    withCallingHandlers(
+      apply_footnotes_method[[context]],
+      error = function(e) cli::cli_abort("Can't find the correct rendering function for footnotes for context = {.val {context}}", parent = e)
+    )
     for (i in seq_len(nrow(footnotes_data_marks))) {
 
       text <-
@@ -618,42 +627,10 @@ apply_footnotes_to_output <- function(data, context = "html") {
         )
 
       if (footnote_placement == "right") {
-
-        # Footnote placement on the right of the cell text
-
-        if (context == "html" && endsWith(text, "</p>\n</div>")) {
-          # FIXME possibly the place where we could fix #1773
-          text <-
-            paste0(
-              gsub("</p>\n</div>", "", text, fixed = TRUE),
-              mark,
-              "</p></div>"
-            )
-
-        } else {
-          text <- apply_footnotes_method[[context]](text, mark)
-        }
-
+        text <- place_footnote_on_right(text, mark, context)
       } else {
-
-        # Footnote placement on the left of the cell text; ensure that a
-        # non-breaking space (added here as Unicode's 'NO-BREAK SPACE',
-        # "U+00A0") separates the marks from the text content
-
-        if (context == "html" && startsWith(text, "<div class='gt_from_md'><p>")) {
-
-          text <-
-            paste0(
-              "<div class='gt_from_md'><p>",
-              mark, "\U000A0",
-              gsub("<div class='gt_from_md'><p>", "", text, fixed = TRUE)
-            )
-
-        } else if (context == "word" || context == "latex") {
-          text <- apply_footnotes_method[[context]](text, mark, position = "left")
-        } else {
-          text <- paste0(mark, if (context == "html") "\U000A0" else " ", text)
-        }
+        # footnote_placement = "left"
+        text <- place_footnote_on_left(text, mark, context)
       }
 
       body[footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]] <- text
@@ -662,6 +639,60 @@ apply_footnotes_to_output <- function(data, context = "html") {
 
   dt_body_set(data = data, body = body)
 }
+
+place_footnote_on_left <- function(text, mark, context) {
+
+  if (context == "html" && startsWith(text, "<div class='gt_from_md'><p>")) {
+    # #1013
+    text <-
+      paste0(
+        "<div class='gt_from_md'><p>",
+        mark, "\U000A0",
+        gsub("<div class='gt_from_md'><p>", "", text, fixed = TRUE)
+      )
+  } else if (context == "html" && startsWith(text, "<div data-qmd-base64")) {
+    # FIXME #1773, figure out how to tweak the regex (in Quarto)
+    text <- paste(mark, text, sep = "\U000A0")
+
+  } else if (context == "word" || context == "latex") {
+    text <- apply_footnotes_method[[context]](text, mark, position = "left")
+  } else if (context == "html" || context == "grid") {
+    # Footnote placement on the left of the cell text; ensure that a
+    # non-breaking space (added here as Unicode's 'NO-BREAK SPACE',
+    # "U+00A0") separates the marks from the text content
+    text <- paste(mark, text, sep = "\U000A0")
+  } else if (context == "rtf") {
+    text <- paste(mark, text)
+  }
+
+  text
+}
+
+place_footnote_on_right <- function(text, mark, context) {
+  # Footnote placement on the right of the cell text
+  if (context != "html") {
+    return(apply_footnotes_method[[context]](text, mark))
+  }
+
+  if (endsWith(text, "</p>\n</div>")) {
+    # regular html from_markdown #1013
+    text <-
+      paste0(
+        gsub("</p>\n</div>", "", text, fixed = TRUE),
+        mark,
+        "</p></div>"
+      )
+
+  } else if (endsWith(text, "</p>\n</div></div>")) {
+    # Processing html (This code may not be valid as of #1860)
+    # FIXME possibly the place where we could fix #1773
+    text <- apply_footnotes_method[[context]](text, mark)
+  } else {
+    text <- apply_footnotes_method[[context]](text, mark)
+  }
+  text
+}
+
 
 #' @noRd
 set_footnote_marks_row_groups <- function(data, context = "html") {
@@ -715,7 +746,7 @@ apply_footnotes_to_summary <- function(data, context = "html") {
   # make sure rownames are recognized to add footnote marks
   # to cells_stub_grand_summary() / cells_stub_summary() #1832
   # dplyr::coalesce()
-  footnotes_tbl$colname[is.na(footnotes_tbl$colname)] <- "::rowname::"
+  footnotes_tbl$colname[is.na(footnotes_tbl$colname)] <- rowname_col_private
   summary_df_list <- list_of_summaries$summary_df_display_list
 
   if ("summary_cells" %in% footnotes_tbl$locname) {
@@ -801,6 +832,7 @@ footnotes_dispatch <-
   list(
     html = footnote_mark_to_html,
     rtf = footnote_mark_to_rtf,
+    grid = footnote_mark_to_grid,
     latex = footnote_mark_to_latex,
     word = footnote_mark_to_xml
   )
@@ -809,6 +841,7 @@ apply_footnotes_method <-
   list(
     html = paste0,
     rtf = paste0,
+    grid = paste0,
     latex = paste_footnote_latex,
     word = paste_footnote_xml
   )

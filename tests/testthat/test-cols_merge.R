@@ -839,3 +839,11 @@ test_that("cols_merge_n_pct() works correctly", {
   # Perform snapshot test
   expect_snapshot_html(gt_tbl_2)
 })
+
+test_that("cols_merge() errors well when pattern is wrong", {
+  expect_snapshot(error = TRUE, {
+    exibble %>%
+      gt() %>%
+      cols_merge(num, pattern = "{2}")
+  })
+})

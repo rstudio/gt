@@ -152,7 +152,7 @@ Le Peletier,,7,,,,,1677832,48.874720,2.339550,Paris 9th,7
 Les Gobelins,,7,,,,,2365942,48.836400,2.352250,"Paris 5th, Paris 13th",7
 Louis Blanc,,7,,,,,1548029,48.881137,2.364839,Paris 10th,7
 Mairie d'Ivry,,7,,,,,2042071,48.811120,2.383390,Ivry-sur-Seine,7
-Maison Blanche,,7,,,,,1203631,48.822155,2.358531,Paris 13th,7
+Maison Blanche,,"7, 14",,,,,1203631,48.822155,2.358531,Paris 13th,7
 Pierre et Marie Curie,,7,,,,,1100552,48.815920,2.377890,Ivry-sur-Seine,7
 Place Monge,Jardin des Plantes—Arènes de Lutèce,7,,,,,1837996,48.843590,2.352279,Paris 5th,7
 Poissonnière,,7,,,,,2306725,48.877080,2.348450,"Paris 9th, Paris 10th",7
@@ -308,8 +308,14 @@ Saint-Denis—Porte de Paris,Stade de France,13,,T8,,,3355836,48.930280,2.357780
 Saint-Denis—Université,,13,,T5,,,3569990,48.945830,2.363610,Saint-Denis,13
 Saint-François-Xavier,,13,,,,,1213378,48.851951,2.314475,Paris 7th,13
 Varenne,,13,,,,,782697,48.856238,2.314921,Paris 7th,13
+Aéroport d'Orly,Paray-Vieille-Poste,14,,T7,,,,48.728081,2.362364,Paray-Vieille-Poste,14
 Bibliothèque François Mitterrand,,14,C,T3a,,,11104474,48.829822,2.376781,Paris 13th,14
+Chevilly-Larue,Marché International,14,,T7,,,,48.758360,2.366663,Chevilly-Larue,14
 Cour Saint-Émilion,,14,,,,,2985122,48.834000,2.386000,Paris 12th,14
+Hôpital Bicêtre,Kremlin-Bicêtre–Gentilly,14,,,,,,48.809722,2.349722,Le Kremlin-Bicêtre,14
+L'Haÿ-les-Roses,,14,,,,,,48.775278,2.354167,L'Haÿ-les-Roses,14
 Olympiades,,14,,,,,5214595,48.827222,2.368333,Paris 13th,14
 Pont Cardinet,,14,,,L,,4168538,48.889481,2.315206,Paris 17th,14
+Saint-Denis–Pleyel,,14,,,,,,48.917709,2.344116,Saint-Denis,14
 Saint-Ouen,,14,C,,,,3420852,48.904497,2.321806,"Clichy, Saint-Ouen-sur-Seine",14
+Thiais–Orly,Pont de Rungis,14,,,,,,48.747367,2.372931,Thiais,14

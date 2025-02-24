@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -162,9 +162,8 @@ text_replace <- function(
 #'
 #' ```r
 #' metro |>
-#'   dplyr::arrange(desc(passengers)) |>
+#'   dplyr::slice_max(passengers, n = 10) |>
 #'   dplyr::select(name, lines, connect_rer) |>
-#'   dplyr::slice_head(n = 10) |>
 #'   gt() |>
 #'   text_case_when(
 #'     stringr::str_count(x, pattern = "[ABCDE]") == 1 ~ "One connection.",
@@ -370,7 +369,7 @@ text_case_match <- function(
   stop_if_not_gt_tbl(data = .data)
 
   # Ensure that arguments are matched
-  .replace <- rlang::arg_match(.replace)
+  .replace <- rlang::arg_match0(.replace, values = c("all", "partial"))
 
   x_list <- list(...)
 

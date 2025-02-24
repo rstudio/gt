@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -47,6 +47,24 @@ dt_options_set_value <- function(data, option, value) {
 dt_options_get_value <- function(data, option) {
   dt_options <- dt_options_get(data = data)
   dt_options$value[[which(dt_options$parameter == option)]]
+}
+
+# Get a list of option values
+dt_options_get_values <- function(data) {
+  dt_options <- dt_options_get(data = data)[c("parameter", "value")]
+  # Similar to tibble::deframe
+  res <- vctrs::vec_set_names(dt_options$value, dt_options$parameter)
+  class(res) <- c("gt_option", class(res))
+  res
+}
+
+#' @export
+`$.gt_option` <- function(x, name) {
+  out <- .subset2(x, name)
+  if (is.null(out)) {
+    cli::cli_abort("Can't find option {.val {name}}.")
+  }
+  out
 }
 
 default_fonts_vec <-
@@ -238,6 +256,7 @@ dt_options_tbl <-
     "ihtml_page_size_default",           FALSE,  "interactive",      "values",  10,
     "ihtml_page_size_values",            FALSE,  "interactive",      "values",  default_page_size_vec,
     "ihtml_pagination_type",             FALSE,  "interactive",      "value",   "numbers",
+    "ihtml_selection_mode",              FALSE,  "interactive",      "value",   NA_character_,
     "page_orientation",                  FALSE,  "page",             "value",   "portrait",
     "page_numbering",                    FALSE,  "page",             "logical", FALSE,
     "page_header_use_tbl_headings",      FALSE,  "page",             "logical", FALSE,
@@ -253,5 +272,5 @@ dt_options_tbl <-
     "quarto_disable_processing",         FALSE,  "quarto",           "logical", FALSE,
     "quarto_use_bootstrap",              FALSE,  "quarto",           "logical", FALSE,
     "latex_use_longtable",               FALSE,  "latex",            "logical", FALSE,
-    "latex_tbl_pos",                     FALSE,  "latex",            "value",   "!t",
+    "latex_tbl_pos",                     FALSE,  "latex",            "value",   "t",
   )[-1, ]

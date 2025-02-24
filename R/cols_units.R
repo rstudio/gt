@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -56,7 +56,7 @@
 #'   column name to the **gt** units syntax; they should be of the form
 #'   `<column name> = <units text>`. Subsequent expressions that operate on the
 #'   columns assigned previously will result in overwriting column units
-#'   defintion values.
+#'   definition values.
 #'
 #' @param .list *Alternative to `...`*
 #'

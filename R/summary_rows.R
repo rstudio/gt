@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -327,7 +327,7 @@
 #'   gt(rowname_col = "country_name") |>
 #'   tab_row_group(
 #'     label = md("*BRIC*"),
-#'     rows = c("Brazil", "Russian Federation", "India", "China"),
+#'     rows = c("Brazil", "Russia", "India", "China"),
 #'     id = "bric"
 #'   ) |>
 #'   tab_row_group(
@@ -379,11 +379,10 @@ summary_rows <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Get the correct `side` value
-  side <- rlang::arg_match(side)
+  side <- rlang::arg_match0(side, values = c("bottom", "top"))
 
   # Collect all provided formatting options in a list
   formatter_options <- list(...)
-
 
   # Perform a partial build of the table to obtain the current
   # state of `group_id` values in the table; we should not assign this
@@ -444,12 +443,7 @@ summary_rows <- function(
     data$`_data` <-
       dplyr::mutate(
         data$`_data`,
-        !!rowname_col_private := rep("", nrow(data$`_data`))
-      )
-    data$`_data` <-
-      dplyr::relocate(
-        data$`_data`,
-        dplyr::all_of(rowname_col_private),
+        !!rowname_col_private := rep("", nrow(data$`_data`)),
         .after = dplyr::last_col()
       )
 
@@ -777,7 +771,7 @@ grand_summary_rows <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Get the correct `side` value
-  side <- rlang::arg_match(side)
+  side <- rlang::arg_match0(side, values = c("bottom", "top"))
 
   summary_rows(
     data = data,

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -91,7 +91,7 @@
 #' @section Targeting the row for insertion with `.before` or `.after`:
 #'
 #' The targeting of a row for insertion is done through the `.before` or
-#' `.after` arguments (only one of these options should be be used). This can be
+#' `.after` arguments (only one of these options should be used). This can be
 #' done in a variety of ways. If a stub is present, then we potentially have row
 #' identifiers. This is the ideal method to use for establishing a row target.
 #' We can use **tidyselect**-style expressions to target a row. It's also

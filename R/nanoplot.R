@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -363,10 +363,8 @@
 #'
 #' ```r
 #' pizzaplace |>
-#'   dplyr::select(type, date) |>
-#'   dplyr::group_by(date, type) |>
-#'   dplyr::summarize(sold = dplyr::n(), .groups = "drop") |>
-#'   tidyr::pivot_wider(names_from = type, values_from = sold) |>
+#'   dplyr::count(type, date) |>
+#'   tidyr::pivot_wider(names_from = type, values_from = n) |>
 #'   dplyr::slice_head(n = 10) |>
 #'   gt(rowname_col = "date") |>
 #'   tab_header(
@@ -745,8 +743,16 @@ cols_nanoplot <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
-  missing_vals <- rlang::arg_match(missing_vals)
-  plot_type <- rlang::arg_match(plot_type)
+  missing_vals <-
+    rlang::arg_match0(
+      missing_vals,
+      values = c("gap", "marker", "zero", "remove")
+    )
+  plot_type <-
+    rlang::arg_match0(
+      plot_type,
+      values = c("line", "bar", "boxplot")
+    )
 
   #
   # Resolution of columns and rows as character vectors
@@ -805,7 +811,7 @@ cols_nanoplot <- function(
 
   # Get all `y` vals from single-valued components of `data_vals_plot_y`
   # into a vector
-  all_single_y_vals <- c()
+  all_single_y_vals <- NULL
   for (i in seq_along(data_vals_plot_y)) {
     if (length(data_vals_plot_y[[i]]) == 1 && !is.na(data_vals_plot_y[[i]])) {
       all_single_y_vals <- c(all_single_y_vals, data_vals_plot_y[[i]])
@@ -830,7 +836,7 @@ cols_nanoplot <- function(
   }
 
   # Initialize vector that will contain the nanoplots
-  nanoplots <- c()
+  nanoplots <- NULL
 
   for (i in seq_along(data_vals_plot_y)) {
 
@@ -894,8 +900,8 @@ cols_nanoplot <- function(
     cols_add(
       .data = data,
       nanoplots,
-      .before = before,
-      .after = after
+      .before = dplyr::all_of(before),
+      .after = dplyr::all_of(after)
     )
 
   if (!is.null(new_col_name)) {
@@ -923,7 +929,7 @@ cols_nanoplot <- function(
     data <-
       fmt_passthrough(
         data = data,
-        columns = validated_new_col_name,
+        columns = dplyr::all_of(validated_new_col_name),
         escape = FALSE
       )
 
@@ -974,7 +980,7 @@ cols_nanoplot <- function(
         "vertical-align: middle; ",
         "overflow-x: visible;"
       ),
-      locations = cells_body(columns = validated_new_col_name)
+      locations = cells_body(columns = dplyr::all_of(validated_new_col_name))
     )
 
   if (isTRUE(autohide)) {
@@ -982,7 +988,7 @@ cols_nanoplot <- function(
     data <-
       cols_hide(
         data = data,
-        columns = resolved_columns
+        columns = dplyr::all_of(resolved_columns)
       )
 
     if (length(resolved_columns_x) > 0) {
@@ -990,7 +996,7 @@ cols_nanoplot <- function(
       data <-
         cols_hide(
           data = data,
-          columns = resolved_columns_x
+          columns = dplyr::all_of(resolved_columns_x)
         )
     }
   }
@@ -1387,7 +1393,7 @@ generate_data_vals_list <- function(
 
     } else {
 
-      data_vals_i <- dplyr::select(data_tbl, dplyr::all_of(resolved_columns))
+      data_vals_i <- data_tbl[resolved_columns]
 
       data_vals_i <- as.vector(data_vals_i[i, ])
 
@@ -1419,7 +1425,7 @@ generate_data_vals_list <- function(
 
 
         } else {
-          data_vals_j <- c(data_vals_j, unname(unlist(data_vals_i[j][[1]])))
+          data_vals_j <- c(data_vals_j, unlist(data_vals_i[j][[1]], use.names = FALSE))
         }
       }
 

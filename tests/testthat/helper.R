@@ -126,8 +126,8 @@ generate_html_units <- function(input) {
   )
 }
 
-expect_snapshot_html <- function(gt_tbl) {
-  expect_snapshot(render_as_html(gt_tbl))
+expect_snapshot_html <- function(gt_tbl, transform = NULL) {
+  expect_snapshot(cat(render_as_html(gt_tbl)), transform = transform)
 }
 
 expect_snapshot_latex <- function(gt_tbl) {

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -104,17 +104,17 @@ create_heading_component_g <- function(data) {
 
   title_styles <- NA_character_
   if ("title" %in% styles_tbl$locname) {
-    title_style_rows <- dplyr::filter(styles_tbl, locname == "title")
-    if (nrow(title_style_rows) > 0) {
-      title_styles <- title_style_rows$html_style
+    title_styles <- vctrs::vec_slice(styles_tbl$html_style, styles_tbl$locname == "title")
+    if (length(title_styles) == 0) {
+      title_styles <- NA_character_
     }
   }
 
   subtitle_styles <- NA_character_
   if (subtitle_defined && "subtitle" %in% styles_tbl$locname) {
-    subtitle_style_rows <- dplyr::filter(styles_tbl, locname == "subtitle")
-    if (nrow(subtitle_style_rows) > 0) {
-      subtitle_styles <- subtitle_style_rows$html_style
+    subtitle_styles <- vctrs::vec_slice(styles_tbl$html_style, styles_tbl$locname == "subtitle")
+    if (length(subtitle_styles) == 0) {
+      subtitle_styles <- NA_character_
     }
   }
 
@@ -129,7 +129,7 @@ create_heading_component_g <- function(data) {
     footnote_title_marks <-
       footnote_mark_to_html(
         data = data,
-        mark = footnote_title_marks$fs_id_c
+        mark = footnote_title_marks
       )
   }
   footnote_subtitle_marks <- ""
@@ -142,7 +142,7 @@ create_heading_component_g <- function(data) {
     footnote_subtitle_marks <-
       footnote_mark_to_html(
         data = data,
-        mark = footnote_subtitle_marks$fs_id_c
+        mark = footnote_subtitle_marks
       )
   }
 
@@ -152,10 +152,10 @@ create_heading_component_g <- function(data) {
   title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
   subtitle_classes <- sub("title", "subtitle", title_classes, fixed = TRUE)
 
-  if (!subtitle_defined) {
-    title_classes <- c("gt_bottom_border", title_classes)
-  } else {
+  if (subtitle_defined) {
     subtitle_classes <- c("gt_bottom_border", subtitle_classes)
+  } else {
+    title_classes <- c("gt_bottom_border", title_classes)
   }
 
   n_cols_total <- get_effective_number_of_columns(data = data)
@@ -762,7 +762,7 @@ create_source_notes_component_g <- function(data) {
 
   style <- NA
   if ("source_notes" %in% styles_tbl$locname) {
-    source_notes_style <- dplyr::filter(styles_tbl, locname == "source_notes")
+    source_notes_style <- vctrs::vec_slice(styles_tbl, styles_tbl$locname == "source_notes")
     if (nrow(source_notes_style)) {
       style <- source_notes_style$html_style
     }
@@ -804,7 +804,7 @@ create_footnotes_component_g <- function(data) {
 
   style <- NA
   if ("footnotes" %in% styles_tbl$locname) {
-    footnotes_style <- dplyr::filter(styles_tbl, locname == "footnotes")
+    footnotes_style <- vctrs::vec_slice(styles_tbl, styles_tbl$locname == "footnotes")
     if (nrow(footnotes_style) > 0) {
       style <- footnotes_style$html_style
     }
@@ -817,7 +817,7 @@ create_footnotes_component_g <- function(data) {
 
   marks <- vapply(
     footnote_ids,
-    FUN = footnote_mark_to_html,
+    FUN = footnote_mark_to_grid,
     FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
     data = data,
@@ -829,7 +829,7 @@ create_footnotes_component_g <- function(data) {
     FUN = process_text,
     FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
-    context = "html"
+    context = "grid"
   )
   text <- paste0(marks, text)
 
@@ -852,6 +852,61 @@ create_footnotes_component_g <- function(data) {
     name    = "footnotes"
   )
 }
+
+#' Transform a footnote mark to a grid representation
+#'
+#' @noRd
+footnote_mark_to_grid <- function(
+    data,
+    mark,
+    location = c("ref", "ftr")
+) {
+
+  location <- match.arg(location)
+
+  if (is.na(mark)) {
+    return("")
+  }
+
+  spec <- get_footnote_spec_by_location(data = data, location = location)
+
+  if (is.null(spec)) {
+    spec <- "^i"
+  }
+
+  # Generate the CSS classes needed on the basis of whether the
+  # mark is one or more asterisk characters or anything else
+  if (!grepl("^[\\*]+?$", mark)) {
+    sup_class <- "gt_footnote_marks"
+  } else {
+    sup_class <- "gt_footnote_marks gt_asterisk"
+  }
+
+  is_sup <- grepl("^", spec, fixed = TRUE)
+
+  if (grepl(".", spec, fixed = TRUE)) mark <- paste0(mark, ".")
+  if (grepl("(", spec, fixed = TRUE)) mark <- paste0("(", mark)
+  if (grepl("[", spec, fixed = TRUE)) mark <- paste0("[", mark)
+  if (grepl(")", spec, fixed = TRUE)) mark <- paste0(mark, ")")
+  if (grepl("]", spec, fixed = TRUE)) mark <- paste0(mark, "]")
+
+  # Not supported in grid
+  if (grepl("i", spec, fixed = TRUE)) {
+    font_style <- "italic"
+  } else {
+    font_style <- "normal"
+  }
+
+  if (grepl("b", spec, fixed = TRUE)) {
+    font_weight <- "bold"
+  } else {
+    font_weight <- "normal"
+  }
+
+  # return mark as plain text (all styling is ignored)
+  mark
+}
+
 
 # Cells -------------------------------------------------------------------
 
@@ -1396,7 +1451,7 @@ parse_css <- function(data) {
 
   # Clean up whitespace and trailing semicolons
   css <- trimws(css)
-  css <- gsub(";", "", css)
+  css <- gsub(";", "", css, fixed = TRUE)
 
   # Split up key-value pairs
   split <- strsplit(css, ": ", fixed = TRUE)

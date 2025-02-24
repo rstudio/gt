@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -78,9 +78,14 @@
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "San Marino") |>
-#'   dplyr::slice_tail(n = 5) |>
-#'   gt(rowname_col = "year", groupname_col = "country_name") |>
+#'   dplyr::filter(
+#'     country_name == "San Marino",
+#'     year %in% 2017:2021
+#'   ) |>
+#'   gt(
+#'     rowname_col = "year",
+#'     groupname_col = "country_name"
+#'   ) |>
 #'   cols_align(
 #'     align = "left",
 #'     columns = population
@@ -109,7 +114,11 @@ cols_align <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Get the `align` value, this stops the function if there is no match
-  align <- rlang::arg_match(align)
+  align <- 
+    rlang::arg_match0(
+      align,
+      values = c("auto", "left", "center", "right")
+    )
 
   # Get the columns supplied in `columns` as a character vector
   column_names <-

@@ -1,7 +1,7 @@
 ---
 title: "latex-06-mtcars"
 output: 
-  - pdf_document
+  - bookdown::pdf_document2
 ---
 
 ```{r setup, include=FALSE}
@@ -11,8 +11,9 @@ library(gt)
 ```
 
 Create a display table based on `mtcars` (Motor Trend Car Road Test).
+Testing that the caption in \@ref(tab:mtcars) can be cross referenced.
 
-```{r}
+```{r mtcars}
 gt(mtcars, rownames_to_stub = TRUE) %>%
   cols_align(
     align = "right",
@@ -100,5 +101,6 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
     hp = md("*HP*"),
     qsec = "QMT, seconds"
   ) %>%
-  tab_options(latex.use_longtable = TRUE)
+  tab_options(latex.use_longtable = TRUE) %>% 
+  tab_caption(md("The **mtcars** dataset"))
 ```

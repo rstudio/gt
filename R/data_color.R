@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -27,7 +27,7 @@
 #' @description
 #'
 #' It's possible to add color to data cells according to their values with
-#' `data_color()` There is a multitude of ways to perform data cell
+#' `data_color()`. There is a multitude of ways to perform data cell
 #' colorizing here:
 #'
 #' - targeting: we can constrain which columns and rows should receive the
@@ -44,7 +44,7 @@
 #' for finer control over color evaluation with data; the `scales::col_*()`
 #' color mapping functions can be used here or any function you might want to define
 #' - color palettes: with `palette` we could supply a vector of colors, a
-#' **virdis** or **RColorBrewer** palette name, or, a palette from the
+#' **viridis** or **RColorBrewer** palette name, or, a palette from the
 #' **paletteer** package
 #' - value domain: we can either opt to have the range of values define the
 #' domain, or, specify one explicitly with the `domain` argument
@@ -439,9 +439,11 @@
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_name == "Bangladesh") |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::slice_tail(n = 10) |>
+#'   dplyr::filter(
+#'     country_name == "Bangladesh",
+#'     year %in% 2012:2021
+#'   ) |>
 #'   gt() |>
 #'   data_color(
 #'     columns = population,
@@ -464,9 +466,11 @@
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_name == "Bangladesh") |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::slice_tail(n = 10) |>
+#'   dplyr::filter(
+#'     country_name == "Bangladesh",
+#'     year %in% 2012:2021
+#'   ) |>
 #'   gt() |>
 #'   data_color(
 #'     columns = population,
@@ -619,7 +623,11 @@
 #'   dplyr::filter(latitude == 20 & tst <= "1200") |>
 #'   dplyr::select(-latitude) |>
 #'   dplyr::filter(!is.na(sza)) |>
-#'   tidyr::spread(key = "tst", value = sza) |>
+#'   tidyr::pivot_wider(
+#'     names_from = tst,
+#'     values_from = sza,
+#'     names_sort = TRUE
+#'   ) |>
 #'   gt(rowname_col = "month") |>
 #'   sub_missing(missing_text = "") |>
 #'   data_color(
@@ -672,16 +680,20 @@ data_color <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Get the correct `direction` value
-  direction <- rlang::arg_match(direction)
+  direction <- rlang::arg_match0(direction, values = c("column", "row"))
 
   # Get the correct `method` value
-  method <- rlang::arg_match(method)
+  method <-
+    rlang::arg_match0(
+      method,
+      values = c("auto", "numeric", "bin", "quantile", "factor")
+    )
 
   # Get the correct `apply_to` value
-  apply_to <- rlang::arg_match(apply_to)
+  apply_to <- rlang::arg_match0(apply_to, values = c("fill", "text"))
 
   # Get the correct `contrast_algo` value
-  contrast_algo <- rlang::arg_match(contrast_algo)
+  contrast_algo <- rlang::arg_match0(contrast_algo, values = c("apca", "wcag"))
 
   # If no color is provided to `na_color`, use gray as a default
   na_color <- na_color %||% "#808080"
@@ -1272,7 +1284,7 @@ ideal_fgnd_color <- function(
 ) {
 
   # Get the correct `algo` value
-  algo <- rlang::arg_match(algo)
+  algo <- rlang::arg_match0(algo, values = c("apca", "wcag"))
 
   # Normalize color to hexadecimal color if it is in the 'rgba()' string format
   bgnd_color <- rgba_to_hex(colors = bgnd_color)

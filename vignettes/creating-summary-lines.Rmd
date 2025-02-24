@@ -61,7 +61,7 @@ Because each function will yield a row, we need to be able to label that row. So
 # groups (using `groups = everything()`); use the
 # `mean()`, `sum()`, and `sd()` functions
 # (only for the `num` column)
-exibble_b <- 
+exibble_b <-
   exibble_a |>
   summary_rows(
     groups = everything(),
@@ -86,7 +86,7 @@ In the previous example we have an `NA` value in the `num/row_6` cell, and so we
 # Create group-wise summary rows for both
 # groups (using `groups = everything()`); we will
 # use names and formulas this time in `fns`
-exibble_c <- 
+exibble_c <-
   exibble_a |>
   summary_rows(
     groups = everything(),
@@ -106,17 +106,17 @@ Here we see that summary rows were created for both groups. However, the output 
 ```{r exibble_d}
 # Define a named list of aggregation
 # functions and summary row labels
-fns_labels <- 
+fns_labels <-
   list(
-    avg = ~mean(., na.rm = TRUE),
-    total = ~sum(., na.rm = TRUE),
-    s.d. = ~sd(., na.rm = TRUE)
+    avg = ~ mean(., na.rm = TRUE),
+    total = ~ sum(., na.rm = TRUE),
+    s.d. = ~ sd(., na.rm = TRUE)
   )
 
 # Create group-wise summary rows as
 # before, supply `fns_labels` to `fns`,
 # and format the cell summary data
-exibble_d <- 
+exibble_d <-
   exibble_a |>
   fmt_scientific(
     columns = num,
@@ -144,7 +144,7 @@ We can re-use summary row labels and fill the otherwise empty summary cells with
 # Create group-wise summary rows as
 # before, supply `fns_labels` to `fns`,
 # and format the cell summary data
-exibble_e <- 
+exibble_e <-
   exibble_a |>
   fmt_scientific(
     columns = num,
@@ -182,7 +182,7 @@ We can also store these argument values as local variables and pass them in both
 # Provide common formatting parameters to a list
 # object named `formats`; the number of decimal
 # places will be `2` and the locale is "fr_BE"
-formats <- 
+formats <-
   list(
     decimals = 3,
     locale = "fr_BE",
@@ -193,7 +193,7 @@ formats <-
 # (using the values stored in `formats`);
 # when generating summary rows we can also
 # supply formatter options from this list
-exibble_f <- 
+exibble_f <-
   exibble_a |>
   fmt_scientific(
     columns = num,
@@ -219,8 +219,8 @@ exibble_f <-
     columns = currency,
     fns = c(
       fns_labels,
-      min = ~min(.),
-      max = ~max(.)
+      min = ~ min(.),
+      max = ~ max(.)
     ),
     fmt = list(~ fmt_currency(.,
       currency = formats$currency,
@@ -261,7 +261,7 @@ A grand summary can be used in conjunction with group-wise summaries. Here's an 
 # grand summary rows (using two separate
 # calls of `grand_summary_rows()` since
 # the formatting will be different)
-exibble_h <- 
+exibble_h <-
   exibble_f |>
   grand_summary_rows(
     columns = num,
@@ -301,7 +301,7 @@ Here is an example that uses multiple calls of `tab_options()` and `tab_footnote
 # Using the gt table of `exibble_h` as a
 # starting point, style summary cells with
 # `tab_options()` and add two footnotes
-exibble_i <- 
+exibble_i <-
   exibble_h |>
   tab_options(
     summary_row.background.color = "lightblue",
@@ -378,10 +378,9 @@ Here, we'll define a function that takes a vector of numeric values and outputs 
 # Define a function that gives the
 # highest two values above a threshold
 agg_highest_two_above_value <- function(x, threshold) {
-  
   # Get sorted values above threshold value
   values <- sort(round(x[x >= threshold], 2))
-  
+
   # Return character string with 2 highest values above threshold
   if (length(values) == 0) {
     return(paste0("No values above ", threshold))
@@ -390,8 +389,13 @@ agg_highest_two_above_value <- function(x, threshold) {
       paste(
         formatC(
           tail(
-            sort(round(x[x > threshold], 2)), 2),
-          format = "f", digits = 2), collapse = ", "))
+            sort(round(x[x > threshold], 2)), 2
+          ),
+          format = "f", digits = 2
+        ),
+        collapse = ", "
+      )
+    )
   }
 }
 
@@ -409,7 +413,7 @@ Because this is character value that's returned, we don't need formatting functi
 # the custom function with a threshold of `20`;
 # `fmt_passthrough()` allows for minimal formatting
 # of the aggregate values
-exibble_j <- 
+exibble_j <-
   exibble_a |>
   grand_summary_rows(
     columns = c(num, currency),

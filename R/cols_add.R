@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -72,7 +72,7 @@
 #' @section Targeting the column for insertion with `.before` or `.after`:
 #'
 #' The targeting of a column for insertion is done through the `.before` or
-#' `.after` arguments (only one of these options should be be used). While
+#' `.after` arguments (only one of these options should be used). While
 #' **tidyselect**-style expressions or indices can used to target a column, it's
 #' advised that a single column name be used. This is to avoid the possibility
 #' of inadvertently resolving multiple columns (since the requirement is for a
@@ -242,7 +242,7 @@ cols_add <- function(
   # columns
   #
 
-  if (nrow(data_tbl) < 1 && ncol(data_tbl) < 1) {
+  if (nrow(data_tbl) == 0L && ncol(data_tbl) == 0L) {
 
     # Generate boxhead rows that correspond to the new columns
     updated_boxh_df <-
@@ -279,7 +279,7 @@ cols_add <- function(
   # however, the number of rows should be consistent across the supplied columns
   #
 
-  if (nrow(data_tbl) < 1 && ncol(data_tbl) > 0) {
+  if (nrow(data_tbl) == 0L && ncol(data_tbl) > 0) {
 
     # Generate boxhead rows that correspond to the new columns
     updated_boxh_df <-
@@ -380,18 +380,9 @@ cols_add <- function(
       null_means = "nothing"
     )
 
-  if (length(resolved_column_before) < 1) {
+  if (length(resolved_column_before) == 0) {
     resolved_column_before <- NULL
-  }
-
-  if (
-    !is.null(resolved_column_before) &&
-    length(resolved_column_before) != 1
-  ) {
-
-    if (length(resolved_column_before) < 1) {
-      cli::cli_abort("The expression used for `.before` did not resolve a column.")
-    }
+  } else if (length(resolved_column_before) != 1) {
 
     if (length(resolved_column_before) > 1) {
       cli::cli_abort("The expression used for `.before` resolved multiple columns.")
@@ -405,23 +396,19 @@ cols_add <- function(
       null_means = "nothing"
     )
 
-  if (length(resolved_column_after) < 1) {
+  if (length(resolved_column_after) == 0L) {
     resolved_column_after <- NULL
-  }
-
-  if (
-    !is.null(resolved_column_after) &&
-    length(resolved_column_after) != 1
-  ) {
-
-    if (length(resolved_column_after) < 1) {
-      cli::cli_abort("The expression used for `.after` did not resolve a column.")
-    }
+  } else if (length(resolved_column_after) != 1) {
 
     if (length(resolved_column_after) > 1) {
       cli::cli_abort("The expression used for `.after` resolved multiple columns.")
     }
   }
+  
+  if (length(resolved_column_after) == 1 && resolved_column_after == colnames(data_tbl)[NCOL(data_tbl)]) {
+    # if requesting the last column to add after, use NULL instead.
+    resolved_column_after <- NULL
+  } 
 
   # Stop function if expressions are given to both `.before` and `.after`
   if (!is.null(resolved_column_before) && !is.null(resolved_column_after)) {
@@ -440,7 +427,7 @@ cols_add <- function(
   if (is.null(resolved_column_before) && is.null(resolved_column_after)) {
 
     updated_data_tbl <-
-      dplyr::bind_cols(
+      vctrs::vec_cbind(
         data_tbl,
         data_tbl_new_cols
       )
@@ -454,18 +441,28 @@ cols_add <- function(
   } else if (!is.null(resolved_column_before) && is.null(resolved_column_after)) {
 
     before_colnum <- which(colnames(data_tbl) == resolved_column_before)
+    
+    if (before_colnum <= 1) {
+      # put new column first
+      updated_data_tbl <-
+        vctrs::vec_cbind(
+          data_tbl_new_cols,
+          data_tbl
+        )
+    } else {
+      updated_data_tbl <-
+        vctrs::vec_cbind(
+          data_tbl[1:(before_colnum - 1)],
+          data_tbl_new_cols,
+          data_tbl[before_colnum:ncol(data_tbl)]
+        )
+    }
 
-    updated_data_tbl <-
-      dplyr::bind_cols(
-        dplyr::select(data_tbl, 1:(before_colnum - 1)),
-        data_tbl_new_cols,
-        dplyr::select(data_tbl, before_colnum:ncol(data_tbl))
-      )
 
     before_colnum <- which(boxh_df[["var"]] == resolved_column_before)
 
     updated_boxh_df <-
-      dplyr::bind_rows(
+      vctrs::vec_rbind(
         boxh_df[(1:before_colnum) - 1, ],
         boxh_df_new_cols,
         boxh_df[before_colnum:nrow(boxh_df), ]
@@ -473,40 +470,23 @@ cols_add <- function(
 
   } else if (is.null(resolved_column_before) && !is.null(resolved_column_after)) {
 
-    if (resolved_column_after == nrow(data_tbl)) {
+    after_colnum <- which(colnames(data_tbl) == resolved_column_after)
 
-      updated_data_tbl <-
-        dplyr::bind_cols(
-          data_tbl,
-          data_tbl_new_cols
-        )
+    updated_data_tbl <-
+      dplyr::bind_cols(
+        data_tbl[1:(after_colnum)],
+        data_tbl_new_cols,
+        data_tbl[(after_colnum + 1):ncol(data_tbl)]
+      )
 
-      updated_boxh_df <-
-        dplyr::bind_rows(
-          boxh_df,
-          boxh_df_new_cols
-        )
-
-    } else {
-
-      after_colnum <- which(colnames(data_tbl) == resolved_column_after)
-
-      updated_data_tbl <-
-        dplyr::bind_cols(
-          dplyr::select(data_tbl, 1:after_colnum),
-          data_tbl_new_cols,
-          dplyr::select(data_tbl, (after_colnum + 1):ncol(data_tbl))
-        )
-
-      after_colnum <- which(boxh_df[["var"]] == resolved_column_after)
-
-      updated_boxh_df <-
-        dplyr::bind_rows(
-          boxh_df[1:after_colnum, ],
-          boxh_df_new_cols,
-          boxh_df[(after_colnum + 1):nrow(boxh_df), ]
-        )
-    }
+    after_colnum <- which(boxh_df[["var"]] == resolved_column_after)
+      
+    updated_boxh_df <-
+      vctrs::vec_rbind(
+        boxh_df[1:after_colnum, ],
+        boxh_df_new_cols,
+        boxh_df[(after_colnum + 1):nrow(boxh_df), ]
+      )
   }
 
   # Modify the internal datasets

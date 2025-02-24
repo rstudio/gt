@@ -4,12 +4,12 @@ check_suggests <- function() {
 }
 
 # returns the json-object of the reactable javascript-part
-reactive_table_to_json <- function(reactable_obj){
+reactive_table_to_json <- function(reactable_obj) {
   tmp_html_tag <- reactable_obj %>%
     htmltools::as.tags()  %>%
     htmltools::doRenderTags()  %>%
     stringr::str_match(pattern = '<script type="application/json" data-for="[^>]+>(?<found>.+)</script>') %>%
-    tibble::as_tibble(.name_repair = "minimal") %>%
+    dplyr::as_tibble(.name_repair = "minimal") %>%
     .$found %>%
     as.character() %>%
     jsonlite::parse_json()
@@ -954,18 +954,26 @@ test_that("tab_spanner() is compatible with interactive tables", {
     reactive_table_to_json()
 
   interactive_tbl_colgroups <- do.call(rbind, interactive_tbl$x$tag$attribs$columnGroups) %>%
-    tibble::as_tibble() %>%
-    dplyr::mutate(across(c(-columns), ~ .x %>% sapply("[[", 1)))
+    dplyr::as_tibble() %>%
+    dplyr::mutate(across(c(-columns), ~ sapply(.x, "[[", 1)))
 
-  testthat::expect_equal(nrow(interactive_tbl_colgroups), 1)
-  testthat::expect_equal(
+  expect_equal(nrow(interactive_tbl_colgroups), 1)
+  expect_equal(
     interactive_tbl_colgroups$name %>% sort(),
     c("spanner_datechar")
   )
 
   # expected spanners should contain the expected cols
-  testthat::expect_equal(
-    interactive_tbl_colgroups %>% dplyr::filter(name == "spanner_datechar") %>% .$columns %>% .[[1]] %>% sapply("[[", 1) %>% sort(),
+  expect_equal(
+    sort(
+      sapply(
+        vctrs::vec_slice(
+          interactive_tbl_colgroups$columns,
+          interactive_tbl_colgroups$name == "spanner_datechar"
+         )[[1]],
+        "[[", 1
+      )
+    ),
     c("char", "date")
   )
 
@@ -982,22 +990,22 @@ test_that("tab_spanner() is compatible with interactive tables", {
     reactive_table_to_json()
 
   interactive_tbl_colgroups <- do.call(rbind, interactive_tbl$x$tag$attribs$columnGroups) %>%
-    tibble::as_tibble() %>%
+    dplyr::as_tibble() %>%
     dplyr::mutate(across(c(-columns), ~ .x %>% sapply("[[", 1)))
 
-  testthat::expect_equal(nrow(interactive_tbl_colgroups), 2)
-  testthat::expect_equal(
+  expect_equal(nrow(interactive_tbl_colgroups), 2)
+  expect_equal(
     interactive_tbl_colgroups$name %>% sort(),
     c("spanner_dat", "spanner_numchar")
   )
 
   # expected spanners should contain the expected cols
-  testthat::expect_equal(
+  expect_equal(
     interactive_tbl_colgroups %>% dplyr::filter(name == "spanner_numchar") %>% .$columns %>% .[[1]] %>% sapply("[[", 1) %>% sort(),
     c("char", "num")
   )
 
-  testthat::expect_equal(
+  expect_equal(
     interactive_tbl_colgroups %>% dplyr::filter(name == "spanner_dat") %>% .$columns %>% .[[1]] %>% sapply("[[", 1) %>% sort(),
     c("date")
   )
@@ -1016,18 +1024,21 @@ test_that("tab_spanner() is compatible with interactive tables", {
     reactive_table_to_json()
 
   interactive_tbl_colgroups <- do.call(rbind, interactive_tbl$x$tag$attribs$columnGroups) %>%
-    tibble::as_tibble() %>%
+    dplyr::as_tibble() %>%
     dplyr::mutate(across(c(-columns), ~ .x %>% sapply("[[", 1)))
 
-  testthat::expect_match(interactive_tbl_colgroups %>% dplyr::filter(name == "*md spanner*") %>% dplyr::select(header) %>% as.character(),
-    regexp = "<span.+md spanner.+"
+  expect_match(
+    interactive_tbl_colgroups %>% dplyr::filter(name == "*md spanner*") %>% dplyr::select(header) %>% as.character(),
+    "<span.+md spanner.+"
   )
 
-  testthat::expect_match(interactive_tbl_colgroups %>% dplyr::filter(name == "<u>html spanner</u>") %>% dplyr::select(header) %>% as.character(),
+  expect_match(
+    interactive_tbl_colgroups %>% dplyr::filter(name == "<u>html spanner</u>") %>% dplyr::select(header) %>% as.character(),
     regexp = "<u>html spanner</u>"
   )
 
-  testthat::expect_match(interactive_tbl_colgroups %>% dplyr::filter(name == "normal spanner with <u>tags</u> and *more*") %>% dplyr::select(header) %>% as.character(),
+  expect_match(
+    interactive_tbl_colgroups %>% dplyr::filter(name == "normal spanner with <u>tags</u> and *more*") %>% dplyr::select(header) %>% as.character(),
     regexp = "normal spanner with &lt;u&gt;.+"
   )
 
@@ -1045,7 +1056,7 @@ test_that("tab_spanner() is compatible with interactive tables", {
     reactive_table_to_json()
 
   interactive_tbl_colgroups <- do.call(rbind, interactive_tbl$x$tag$attribs$columnGroups) %>%
-    tibble::as_tibble() %>%
+    dplyr::as_tibble() %>%
     dplyr::mutate(across(c(-columns), ~ .x %>% sapply("[[", 1))) %>%
     dplyr::rowwise() %>%
     dplyr::mutate(size = length(columns)) %>%
@@ -1095,7 +1106,7 @@ test_that("tab_spanner() can't render multiple spanners in interactive tables an
 
 
   interactive_tbl_colgroups <- do.call(rbind, interactive_tbl$x$tag$attribs$columnGroups) %>%
-    tibble::as_tibble() %>%
+    dplyr::as_tibble() %>%
     dplyr::mutate(across(c(-columns), ~ .x %>% sapply("[[", 1))) %>%
     dplyr::rowwise() %>%
     dplyr::mutate(size = length(columns)) %>%
@@ -1107,7 +1118,7 @@ test_that("tab_spanner() can't render multiple spanners in interactive tables an
     c("char")
   )
 
-  testthat::expect_equal(
+  expect_equal(
     interactive_tbl_colgroups %>% dplyr::filter(name == "spanner_numdat") %>% .$columns %>% .[[1]] %>% sapply("[[", 1) %>% sort(),
     c("date", "num")
   )

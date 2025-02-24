@@ -14,7 +14,7 @@ flag_file_two_lett <-
 if (length(base::setdiff(flag_file_countries, flag_file_two_lett)) > 0) {
 
   files_to_delete <-
-    tolower(base::setdiff(flag_file_countries, flag_file_two_lett)) |>
+    tolower(base::setdiff(flag_file_countries, flag_file_two_lett)) %>%
     paste0(".svg")
 
   if (length(files_to_delete) > 0) {

@@ -1,61 +1,100 @@
 # gt (development version)
 
-## New features
+* Fixed an issue where `fmt_markdown()` could create strange output in Quarto (html and Typst formats) (@olivroy, #1957, [quarto-dev/quarto-cli#11932](https://github.com/quarto-dev/quarto-cli/issues/11932), [quarto-dev/quarto-cli#11610](https://github.com/quarto-dev/quarto-cli/issues/11610)).
+ 
+* The default table position in LaTeX is now "t" instead of "!t" (@AaronGullickson, #1935).
 
-* PDF output now defaults to a full-width floating environment using `tabular*` (@AronGullickson, #1588). Float position can be controlled by the `latex.tbl.pos` argument in `tab_options`. Quarto users can alternatively use the `tbl-pos` argument to control positioning. To use a `longtable` environment instead, use `tab_option(latex.use_longtable = TRUE)`.
+* Fixed an issue where cross-references would fail in bookdown::html_document2 (@olivroy, #1948)
+
+* Significantly faster rendering of certain large tables, by optimizing the internal `rownum_translation()` utility. (@magnusdv, #1924) 
+
+* Interactive tables can support selection through the `ihtml.selection_mode` option. (@jonthegeek, #1909)
+
+* Tables embedded in Shiny apps with `gt_output()` and `render_gt()` with `ihtml.selection_mode` enabled also act as inputs, reporting the row numbers that are selected (#354, #1368). (@jonthegeek, #1909)
+
+* Improved width calculations in `as_gtable()` (@teunbrand, #1923)
+
+* `gt(row_group_as_column = TRUE)` now works if multiple groups are supplied (@olivroy, #1552).
+
+* `tab_row_group()` now works if `row_group_as_column = TRUE` (@olivroy, #1552).
+
+# gt 0.11.1
+
+## Breaking changes
+
+* The `extract_body()` function now, by default, will not display columns that have been hidden (e.g., by `cols_hide()` or `cols_merge*()`); the previous behavior can be restored by using `incl_hidden_cols = TRUE`.
+
+## Improvements to the LaTeX output format
+
+* PDF output now defaults to a full-width floating environment using `tabular*`. Float position can be controlled by the `latex.tbl.pos` argument in `tab_options`. Quarto users can alternatively use the `tbl-pos` argument to control positioning. To use a `longtable` environment instead, use `tab_option(latex.use_longtable = TRUE)`. (@AronGullickson, #1588)
+
+* Creating a caption with `tab_caption()` will now be preserved in LaTeX output with `as_latex()`. Cross-referencing a table using the internal cross-referencing system of **bookdown** is now enabled for PDF and HTML outputs (for HTML, set `options("htmltools.preserve.raw" = FALSE)`). Quarto users should use the `tbl-cap` and `label` cell options. (@nielsbock, #1800)
+
+* Improved the centering of the stubhead label in Latex when `row_group_as_column = TRUE` and the width of the row name column is specified. (@kbrevoort, #1804)
+
+* LaTeX now correctly renders if text size is changed (#1885). (@olivroy, #1899)
+
+* Fixed a bug that caused an error in LaTeX when (1) `row_group_as_column = TRUE`, (2) the row groups were specified using `tab_row_group()`, and (3) the user specified a width for the row label column. (@kbrevoort, #1804)
+
+* Fixed an issue where column widths weren't set properly using `col_widths()` for LaTeX output (#1837). (@snhansen, #1867)
 
 ## Interactive table support
 
 * Interactive tables will show no border if `opt_table_lines(extent = "none")` is specified (#1307).
 
-* Interactive tables now respect more styling options. 
+* Interactive tables now respect more styling options, namely: `column_labels.background.color`, `row_group.background.color`, `row_group.font.weight`, `table_body.hlines.style`, `table.font.weight`, `table.font.size`, and `stub.font.weight`. (#1693)
 
-  * `column_labels.background.color`, `row_group.background.color`, `row_group.font.weight`, `table_body.hlines.style`,
-     `table.font.weight`, `table.font.size`, `stub.font.weight` (#1693).
+* `opt_interactive()` now works when columns are merged with `cols_merge()`. (@olivroy, #1785) 
 
-* `opt_interactive()` now works when columns are merged with `cols_merge()` (@olivroy, #1785). 
-
-* `opt_interactive()` now works when columns are substituted with `sub_*()` (@olivroy, #1759). 
+* `opt_interactive()` now works when columns are substituted with `sub_*()`. (@olivroy, #1759) 
 
 * More support for `cells_stubhead()` styling and footnotes in interactive tables.
 
-## Bug fixes
+## Minor improvements and bug fixes
+
+* New arguments have been added to `extract_body()` to better control which columns will be present in the returned data (#1875). (#1889)
+
+* The `locale` argument of `gt()` now defaults to `getOption("gt.locale")` if set. (#1894)
+
+* The optional argument `levels` was added to `cells_column_spanners()` to constrain targeting of column spanners by their level. (@obsaditelnost, #1858)
+
+* Fixed a bug in using `pct()` column widths with `as_gtable()` (#1771). (@teunbrand, #1776)
+
+* Fixed a bug where `gt(row_group_as_column = TRUE)` would create the wrong layout with `as_gtable()` when all groups are unique. (@olivroy, #1803)
+
+* Showing currency symbols in grid output now works. (@olivroy, #1788)
+
+* `data_color()` no longer errors when a tidyselect selection is empty (like `fmt_*()` functions) (#1665). (@olivroy, #1795)
+
+* Fixed an issue when using `text_case_match(.replace = "all", .locations = cells_column_spanners())`. (@olivroy, #1823)
+
+* Improved performance during footnote rendering. (@olivroy, #1818)
+
+* Improved footnote rendering in Quarto with `fmt_markdown()` (#1773). (@olivroy, #1860)
+
+* Fixed an issue where `md("")` would fail in Quarto (#1769). (@olivroy, #1772)
+
+* Fixed a bug where spanners didn't render correctly in Quarto (#1839). (#1856)
+
+* `vec_fmt_markdown()` works correctly inside Quarto again (#1840). (@olivroy, #1841)
+
+* Fixed an issue where `tab_spanner_delim()` would fail to resolve a duplicate ID value. (@olivroy, #1821)
+
+* Fixed an issue with multiple `text_replace()` calls would produce bad results with `cells_column_labels()`. (@olivroy, #1824)
+
+* `cols_add()` works correctly in more cases. (#1893)
+
+* `tab_footnote()` now correctly adds footnote marks in the `cells_stub_summary()` and `cells_stub_grand_summary()` locations (#1832). (@olivroy, #1833)
+
+* `tidyselect::where()`, `tidyselect::all_of()`, and `tidyselect::any_of()` are now re-exported by gt. (#1830)
+
+* Fixed an issue where `md()` and `fmt_markdown()` would render factors as their numeric levels rather than their text labels (#1882). (@rossellhayes, #1883)
+
+* `vec_fmt_*()` (and incidentally `cols_nanoplot()`) should be faster now. (@olivroy, #1888, #1891, #1896, #1901)
 
 * Improved error messages for the `text_transform()` function if `locations` couldn't be resolved. (@olivroy, #1774)
 
 * `tab_row_group()` gives a more precise error message when `rows` can't be resolved correctly (#1535). (@olivroy, #1770)
-
-* Fixed an issue where `md("")` would fail in Quarto. (@olivroy, #1769)
-
-* Fixed a bug in using `pct()` column widths with `as_gtable()` (@teunbrand, #1771)
-
-* Fixed a bug where `gt(row_group_as_column = TRUE)` would create the wrong layout with `as_gtable()` when all groups are unique (@olivroy, #1803).
-
-* grid output has been improved. Namely, showing currency symbols now works (@olivroy, #1788). 
-
-* `data_color()` no longer errors when a tidyselect selection is empty (like `fmt_*()` functions) (@olivroy, #1665).
-
-* Fixed a bugs that caused an error in Latex when `row_group_as_column = TRUE`, the row groups were specified using the `tab_row_group`, and the user specified a width for the row name columns (@kbrevoort, #1804).
-
-* Improve the centering of the stubhead label in Latex when  `row_group_as_column = TRUE` and the width of the row name column is specified (@kbrevoort, #1804).
-
-* Fixed an issue with `text_case_match(.replace = "all", .locations = cells_column_spanners())` (@olivroy, #1823).
-
-* Performance improvement for footnote rendering (@olivroy, #1818).
-
-* `tab_footnote()` now correctly adds footnote marks in the `cells_stub_summary()` and `cells_stub_grand_summary()` (@olivroy, #1832).
-
-* Fixed an issue where `tab_spanner_delim()` would fail to resolve a duplicate id (@olivroy, #1821).
-
-* Fixed an issue with multiple `text_replace()` calls would produce bad result with `cells_column_labels()` (@olivroy, #1824).
-
-* `tidyselect::where()`, `tidyselect::all_of()`, `tidyselect::any_of()` are now re-exported by gt.
-
-* `vec_fmt_markdown()` works correctly inside Quarto again (@olivroy, #1840).
-
-* `gt(row_group_as_column = TRUE)` now works if multiple groups are supplied (@olivroy, #1552).
-
-* `tab_row_group()` now works if `row_group_as_column = TRUE` (@olivroy, #1552).
 
 # gt 0.11.0
 
@@ -554,7 +593,7 @@
 
 * Added the `opt_horizontal_padding()` and `opt_vertical_padding()` functions to easily expand or contract an HTML table in the horizontal and vertical directions (#868). (#882) 
 
-* There is now a `locale` argument in the `gt()` function. If set, formatter functions like `fmt_number()` will automatically use this global locale while formatting. There also remains the the option to override the global locale with any non-`NULL` value set for `locale` within a `fmt_*()` call (#682). (#866)
+* There is now a `locale` argument in the `gt()` function. If set, formatter functions like `fmt_number()` will automatically use this global locale while formatting. There also remains the option to override the global locale with any non-`NULL` value set for `locale` within a `fmt_*()` call (#682). (#866)
 
 ## Minor improvements and bug fixes
 

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -233,8 +233,8 @@ cols_merge <- function(
   # that `pattern` not be evaluated, for much the same reason as above.
 
   # Get the columns supplied in `hide_columns` as a character vector
-  suppressWarnings(
-    hide_columns <-
+  hide_columns <-
+    suppressWarnings(
       resolve_cols_c(
         expr = {{ hide_columns }},
         data = data
@@ -776,15 +776,10 @@ cols_merge_range <- function(
 #'
 #' ```r
 #' pizzaplace |>
-#'   dplyr::group_by(name, type, price) |>
-#'   dplyr::summarize(
-#'     n = dplyr::n(),
-#'     frac = n/nrow(pizzaplace),
-#'     .groups = "drop"
-#'   ) |>
-#'   dplyr::arrange(type, dplyr::desc(n)) |>
-#'   dplyr::group_by(type) |>
-#'   dplyr::slice_head(n = 3) |>
+#'   dplyr::count(name, type, price, sort = TRUE) |>
+#'   dplyr::mutate(frac = prop.table(n)) |>
+#'   dplyr::slice_max(n, n = 3, by = type) |>
+#'   dplyr::arrange(type) |>
 #'   gt(
 #'     rowname_col = "name",
 #'     groupname_col = "type"

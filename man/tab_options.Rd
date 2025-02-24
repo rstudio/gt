@@ -178,6 +178,7 @@ tab_options(
   ihtml.page_size_values = NULL,
   ihtml.pagination_type = NULL,
   ihtml.height = NULL,
+  ihtml.selection_mode = NULL,
   page.orientation = NULL,
   page.numbering = NULL,
   page.header.use_tbl_headings = NULL,
@@ -336,7 +337,7 @@ Options to apply text transformations to the \code{column_labels}, \code{row_gro
 \item{column_labels.vlines.style, column_labels.vlines.width, column_labels.vlines.color}{\emph{Properties of all vertical lines by the column labels}
 
 The style, width, and color properties for all vertical lines ('vlines')
-of the the \code{column_labels}.}
+of the \code{column_labels}.}
 
 \item{column_labels.border.top.style, column_labels.border.top.width, column_labels.border.top.color}{\emph{Properties of the border above the column labels}
 
@@ -595,9 +596,18 @@ displayed.}
 
 Height of the table in pixels. Defaults to \code{"auto"} for automatic sizing.}
 
+\item{ihtml.selection_mode}{\emph{Allow row selection}
+
+For interactive HTML output, this allows users to select rows by clicking
+them. When this option is \code{"single"}, clicking another value toggles
+selection of the previously selected row off. When this option is
+\code{"multiple"}, multiple rows can be selected at once. Selected values are
+available in Shiny apps when \code{ihtml.selection_mode} is not \code{NULL} and the
+table is used in \code{\link[=render_gt]{render_gt()}}.}
+
 \item{page.orientation}{\emph{Set RTF page orientation}
 
-For RTF output, this provides an two options for page
+For RTF output, this provides two options for page
 orientation: \code{"portrait"} (the default) and \code{"landscape"}.}
 
 \item{page.numbering}{\emph{Enable RTF page numbering}
@@ -653,10 +663,8 @@ pages.}
 
 \item{latex.tbl.pos}{\emph{Specify latex floating position}
 
-The latex position indicator for a floating environment (e.g., \code{"!t"},
-\code{"H"}). It should be specified without square brackets. Quarto users should
-instead set the floating position within the code chunk argument \code{tbl-pos}.
-The output table will only float if \code{latex.use_longtable = FALSE}.}
+The latex position indicator for a floating environment (e.g., \code{"tb"},
+\code{"h"}). If not specified, latex position will default to \verb{"t"``. It should be specified without square brackets. Quarto users should instead set the floating position within the code chunk argument }tbl-pos\verb{. The output table will only float if }latex.use_longtable = FALSE`.}
 }
 \value{
 An object of class \code{gt_tbl}.

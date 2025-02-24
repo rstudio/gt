@@ -82,7 +82,7 @@ test_that("Interactive tables won't fail when using different options", {
     opt_interactive()
   # #1758 tab_stubhead() respected (shown on top of group)
   tbl_gt_i_26 <-
-    gt(mtcars_short, groupname_col = "vs", rownames_to_stub = T) %>%
+    gt(mtcars_short, groupname_col = "vs", rownames_to_stub = TRUE) %>%
     tab_stubhead("stub label on top of vs") %>%
     opt_interactive()
   # #1758 NA rows show correctly + stubhead shows on top of row
@@ -106,7 +106,7 @@ test_that("Interactive tables won't fail when using different options", {
     opt_interactive()
   # Styling with `cells_stubhead()` works
   tbl_gt_i_30 <- exibble %>%
-    gt::gt(rowname_col = "row", groupname_col = "group", row_group_as_column = TRUE) |>
+    gt::gt(rowname_col = "row", groupname_col = "group", row_group_as_column = TRUE) %>%
     tab_spanner("spanners", c(char, num)) %>%
     tab_stubhead("Stub row") %>%
     tab_style(

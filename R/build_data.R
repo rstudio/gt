@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -40,7 +40,7 @@ build_data <- function(data, context) {
   # Reassemble the rows and columns of `body` in
   # the correct order
   data <- dt_body_build(data = data)
-  data <- render_formats(data = data, context = context)
+  data <- render_formats(data = data, skip_compat_check = FALSE, context = context)
   data <- render_substitutions(data = data, context = context)
   data <- migrate_unformatted_to_output(data = data, context = context)
   data <- perform_col_merge(data = data, context = context)
@@ -86,5 +86,18 @@ build_data <- function(data, context) {
   # Set the `_has_built` flag to `TRUE`
   data <- dt_has_built_set(data = data, value = TRUE)
 
+  data
+}
+
+
+# Faster implementation that avoids some operations
+# for vec_*() functions
+# only build the body correctly.
+build_data_body <- function(data, context) {
+  
+  data <- dt_body_build(data = data)
+  data <- render_formats(data = data, skip_compat_check = TRUE, context = context)
+  data <- migrate_unformatted_to_output(data = data, context = context)
+  
   data
 }

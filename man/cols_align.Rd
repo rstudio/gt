@@ -63,9 +63,14 @@ the label and body cells of \code{population} will be aligned to the left.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "San Marino") |>
-  dplyr::slice_tail(n = 5) |>
-  gt(rowname_col = "year", groupname_col = "country_name") |>
+  dplyr::filter(
+    country_name == "San Marino",
+    year \%in\% 2017:2021
+  ) |>
+  gt(
+    rowname_col = "year",
+    groupname_col = "country_name"
+  ) |>
   cols_align(
     align = "left",
     columns = population

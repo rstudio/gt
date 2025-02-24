@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -79,8 +79,10 @@
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Japan") |>
-#'   dplyr::slice_tail(n = 10) |>
+#'   dplyr::filter(
+#'     country_name == "Japan",
+#'     year %in% 2012:2021
+#'   ) |>
 #'   gt() |>
 #'   cols_move(
 #'     columns = population,
@@ -214,8 +216,10 @@ cols_move <- function(
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Fiji") |>
-#'   dplyr::slice_tail(n = 5) |>
+#'   dplyr::filter(
+#'     country_name == "Fiji",
+#'     year %in% 2017:2021
+#'   ) |>
 #'   gt() |>
 #'   cols_move_to_start(columns = year)
 #' ```
@@ -231,8 +235,10 @@ cols_move <- function(
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Fiji") |>
-#'   dplyr::slice_tail(n = 5) |>
+#'   dplyr::filter(
+#'     country_name == "Fiji",
+#'     year %in% 2017:2021
+#'   ) |>
 #'   gt() |>
 #'   cols_move_to_start(columns = c(year, population))
 #' ```
@@ -336,8 +342,10 @@ cols_move_to_start <- function(
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Benin") |>
-#'   dplyr::slice_tail(n = 5) |>
+#'   dplyr::filter(
+#'     country_name == "Benin",
+#'     year %in% 2017:2021
+#'   ) |>
 #'   gt() |>
 #'   cols_move_to_end(columns = year)
 #' ```
@@ -353,8 +361,10 @@ cols_move_to_start <- function(
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Benin") |>
-#'   dplyr::slice_tail(n = 5) |>
+#'   dplyr::filter(
+#'     country_name == "Benin",
+#'     year %in% 2017:2021
+#'   ) |>
 #'   gt() |>
 #'   cols_move_to_end(columns = c(year, country_name))
 #' ```
