@@ -1,5 +1,7 @@
 # gt (development version)
 
+* Fixed an issue in `fmt_number()` where `drop_trailing_dec_mark` would be ignored if `use_seps = FALSE` (@olivroy, #1961).
+
 * The default table position in LaTeX is now "t" instead of "!t" (@AaronGullickson, #1935).
 
 * Fixed an issue where cross-references would fail in bookdown::html_document2 (@olivroy, #1948)

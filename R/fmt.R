@@ -610,6 +610,10 @@ format_num_to_str <- function(
   if (!drop_trailing_dec_mark) {
     x_str_no_dec <- !grepl(dec_mark, x_str, fixed = TRUE)
     x_str[x_str_no_dec] <- paste_right(x_str[x_str_no_dec], dec_mark)
+  } else if (nzchar(dec_mark) && !nzchar(sep_mark)) {
+    # drop the trailing dec mark if sep mark is the empty ""
+    # needed in some cases https://github.com/rstudio/gt/issues/1961
+    x_str[endsWith(x_str, dec_mark)] <- sub(dec_mark, "", x_str[endsWith(x_str, dec_mark)], fixed = TRUE)
   }
 
   # Perform modifications to `x_str` values if formatting values to
