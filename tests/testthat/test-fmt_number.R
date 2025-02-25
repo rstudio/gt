@@ -1092,3 +1092,10 @@ test_that("fmt_number() can render values in the Indian numbering system", {
     render_formats_test(expected_tab, context = "html")[["num"]]
   )
 })
+
+test_that("fmt_number() works with n_sigfig, drop_trailing_dec_mark = TRUE (#1961)", {
+  expect_equal(
+    format_num_to_str(1335.3, "html",  n_sigfig = 4, sep_mark = "", dec_mark = ".", drop_trailing_dec_mark = T,format = "fg"),
+    "1335"
+  )
+})
