@@ -1,10 +1,20 @@
 # gt (development version)
 
+* Fixed an issue where `fmt_markdown()` could create strange output in Quarto (html and Typst formats) (@olivroy, #1957, [quarto-dev/quarto-cli#11932](https://github.com/quarto-dev/quarto-cli/issues/11932), [quarto-dev/quarto-cli#11610](https://github.com/quarto-dev/quarto-cli/issues/11610)).
+ 
+* The default table position in LaTeX is now "t" instead of "!t" (@AaronGullickson, #1935).
+
+* Fixed an issue where cross-references would fail in bookdown::html_document2 (@olivroy, #1948)
+
 * Significantly faster rendering of certain large tables, by optimizing the internal `rownum_translation()` utility. (@magnusdv, #1924) 
 
 * Interactive tables can support selection through the `ihtml.selection_mode` option. (@jonthegeek, #1909)
 
 * Tables embedded in Shiny apps with `gt_output()` and `render_gt()` with `ihtml.selection_mode` enabled also act as inputs, reporting the row numbers that are selected (#354, #1368). (@jonthegeek, #1909)
+
+* Improved width calculations in `as_gtable()` (@teunbrand, #1923)
+
+* `data_color()` now allows to specify which light/dark color to use when `autocolor_text = TRUE` (@xx02al, #1930).
 
 # gt 0.11.1
 
