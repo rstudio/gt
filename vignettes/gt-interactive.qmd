@@ -1,6 +1,7 @@
 ---
 title: "gt interactive tables"
 format: html
+html-table-processing: none
 description: >
   An overview of interactive tables with gt
 ---
@@ -11,6 +12,15 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 set.seed(123)
+
+# for easier testing
+if (isTRUE(as.logical(Sys.getenv("CI", "false"))) || identical(Sys.getenv("IN_PKGDOWN"), "true")
+) {
+  library(gt)
+} else {
+  # allow easier testing with the render button.
+  devtools::load_all(".")
+}
 ```
 
 gt provides an option to make interactive html tables via the [reactable](https://glin.github.io/reactable/index.html) package.
@@ -20,27 +30,83 @@ It also provides an interactive to creating gt tables as plots.
 Let's use the following base for our gt table.
 
 ```{r}
-library(gt)
+
 gt_tbl <- exibble |>
-  gt()
+  gt(groupname_col = "group", rowname_col = "row") |>
+  tab_header(
+    "Title",
+    "Subtitle"
+  ) |>
+  tab_footnote(
+    "A footnote"
+  ) |>
+  tab_spanner(
+    "Spanner",
+    columns = c(date, time)
+  )
 ```
 
 To create an interactive table, you have simply have to pipe `opt_interactive()` to your existing gt pipeline.
 
+::: {.panel-tabset}
+
+## Html
+
 ```{r}
 gt_tbl
 ```
+
+## Interactive
 
 ```{r}
 gt_tbl |>
   opt_interactive()
 ```
 
+:::
+
+## Examples
+
+Some styling is respected in `opt_interactive()`
+
+```{r}
+styled <- gt_tbl |>
+  tab_options(
+    heading.title.font.weight = "bold",
+    stub.background.color = "lightblue", 
+    table.border.bottom.style = "dotted",
+    column_labels.background.color = "pink",
+    table.font.weight = "italic",
+    stub.font.weight = "bolder",
+    table_body.vlines.color = "brown",
+    table_body.vlines.style = "dashed"
+  )
+```
+
+::: {.panel-tabset}
+## Html
+
+```{r}
+#| echo: false
+styled
+```
+
+## Interactive
+
+```{r}
+#| echo: false
+styled %>% opt_interactive()
+```
+
+:::
+
+
+
+
 # Current limitations
 
-* Some features like `tab_style()` may not be fully supported. 
+-   Some features like `tab_style()` may not be fully supported.
 
-* `summary_rows()` and `grand_summary_rows()` have yet to be implemented.
+-   `summary_rows()` and `grand_summary_rows()` have yet to be implemented.
 
-* Your interactive table may be visually different from your non-interactive table.
-
+-   Your interactive table may be visually different from your non-interactive table.

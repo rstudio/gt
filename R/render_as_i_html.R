@@ -197,8 +197,16 @@ render_as_ihtml <- function(data, id) {
 
   table_width <- tbl_opts$table_width
   table_background_color <- tbl_opts$table_background_color
+  table_font_size   <- tbl_opts$table_font_size
   table_font_names <- tbl_opts$table_font_names
   table_font_color <- tbl_opts$table_font_color
+  table_border_right_style <- tbl_opts$table_border_right_style
+  table_border_right_color <- tbl_opts$table_border_right_color
+  table_border_left_style <- tbl_opts$table_border_left_style
+  table_border_left_color <- tbl_opts$table_border_left_color
+  table_border_top_color <- tbl_opts$table_border_top_color
+
+  heading_border_bottom_color <- tbl_opts$heading_border_bottom_color
 
   column_labels_border_top_style <- tbl_opts$column_labels_border_top_style
   column_labels_border_top_width <- tbl_opts$column_labels_border_top_width
@@ -211,11 +219,39 @@ render_as_ihtml <- function(data, id) {
   # Apply stub font weight to
   stub_font_weight <- tbl_opts$stub_font_weight
 
+  # Don't allow NA
+  column_labels_background_color <- tbl_opts$column_labels_background_color
   if (is.na(column_labels_background_color)) {
     # apply all column labels formatting to both heading + groupCol styling (nothing specific for spanners styling in gt?)
     column_labels_background_color <- "transparent"
   }
-  # Part of #1307
+
+  column_labels_font_weight <- tbl_opts$column_labels_font_weight
+  # Apply stub font weight to
+  stub_font_weight <- tbl_opts$stub_font_weight
+  # Apply font weight to groupname_col title
+  row_group_font_weight <-  tbl_opts$row_group_font_weight
+  row_group_background_color <- tbl_opts$row_group_background_color
+
+  table_body_font_weight  <- tbl_opts$table_font_weight
+  table_body_hlines_style <- tbl_opts$table_body_hlines_style
+  table_body_hlines_color <- tbl_opts$table_body_hlines_color
+  table_body_hlines_width <- tbl_opts$table_body_hlines_width
+  table_body_vlines_style <- tbl_opts$table_body_vlines_style
+  table_body_vlines_color <- tbl_opts$table_body_vlines_color
+  table_body_vlines_width <- tbl_opts$table_body_vlines_width
+
+  horizontal_borders <- tbl_opts$table_body_hlines_style
+  veritcal_borders <- tbl_opts$table_body_vlines_style
+  borderless_borders <- horizontal_borders == "none" && veritcal_borders == "none"
+  all_borders <- horizontal_borders != "none" && veritcal_borders != "none"
+
+  # for row names + summary label
+  stub_border_color <- tbl_opts$stub_border_color
+  stub_border_style <- tbl_opts$stub_border_style
+  # Apply stub font weight to
+  stub_font_weight <- tbl_opts$stub_font_weight
+  stub_background_color <-  tbl_opts$stub_background_color
   borderless_borders <- tbl_opts$table_body_hlines_style == "none"
 
   column_labels_font_weight <- tbl_opts$column_labels_font_weight
@@ -224,8 +260,6 @@ render_as_ihtml <- function(data, id) {
   table_body_font_weight <- tbl_opts$table_font_weight
   # for row names + summary label
   stub_font_weight <- tbl_opts$stub_font_weight
-  # #1693 table font size
-  table_font_size <- tbl_opts$table_font_size
 
   emoji_symbol_fonts <-
     c(
@@ -250,7 +284,12 @@ render_as_ihtml <- function(data, id) {
       # make sure the cells_stubhead() footnote renders properly.
       html = TRUE,
       style = list(
-        fontWeight = stub_font_weight
+        fontWeight = stub_font_weight,
+        color = if (!is.na(stub_background_color)) unname(ideal_fgnd_color(stub_background_color)) else NULL,
+        borderRight = stub_border_color,
+        borderRightStyle = stub_border_style,
+        backgroundColor = stub_background_color#,
+        # borderLeft, borderRight are possible
       ),
       # part of the stubhead
       headerStyle = rowname_header_style
@@ -381,7 +420,13 @@ render_as_ihtml <- function(data, id) {
           # make sure the cells_stubhead() footnote renders properly.
           html = TRUE,
           style = list(
-            `font-weight` = row_group_font_weight
+            `font-weight` = row_group_font_weight,
+            color =  if (is.na(row_group_background_color)) NULL else unname(ideal_fgnd_color(row_group_background_colorfgggee )),
+            backgroundColor = row_group_background_color,
+            borderStyle = "none",
+            borderColor = "transparent",
+            borderTopColor = "transparent",
+            borderBottomColor = "gray38"
           ),
           headerStyle = row_group_header_style,
           # The total number of rows is wrong in colGroup, possibly due to the JS fn
@@ -417,8 +462,25 @@ render_as_ihtml <- function(data, id) {
   styles_tbl <- dt_styles_get(data = data)
   body_styles_tbl <- vctrs::vec_slice(styles_tbl, styles_tbl$locname %in% c("data", "stub"))
   body_styles_tbl <- dplyr::arrange(body_styles_tbl, colnum, rownum)
-  body_styles_tbl <- dplyr::select(body_styles_tbl, "colname", "rownum", "html_style")
-
+  body_styles_tbl <- body_styles_tbl[c("colname", "rownum", "html_style")]
+  
+  # Generate some options for global body style
+  # They will end up being added inside the JS() function,
+  # So, they need to have this format.
+  global_body_style <-
+    paste0(
+      "borderLeftColor: '", tbl_opts$table_body_vlines_color, "', ",
+      "borderLeftStyle: '", tbl_opts$table_body_vlines_style, "', ",
+      "borderLeftWidth: '", tbl_opts$table_body_vlines_width, "', ",
+      "borderRightColor: '", tbl_opts$table_body_vlines_color, "', ",
+      "borderRightStyle: '", tbl_opts$table_body_vlines_style, "', ",
+      "borderRightWidth: '", tbl_opts$table_body_vlines_width, "', ",
+      "borderTopColor: '", tbl_opts$table_body_hlines_color, "', ",
+      "borderTopStyle: '", tbl_opts$table_body_hlines_style, "', ",
+      "borderTopWidth: '", tbl_opts$table_body_hlines_width, "' "
+    )
+  
+  
   # Generate styling rule per combination of `colname` and
   # `rownum` in `body_styles_tbl`
   body_style_rules <-
@@ -434,17 +496,20 @@ render_as_ihtml <- function(data, id) {
         html_style <- gsub("(:)\\s*(.*)", ": '\\2'", html_style, perl = TRUE)
         html_style <- paste(html_style, collapse = ", ")
         html_style <- gsub(";'$", "'", html_style)
-
+        
+        # Add the global body style afterwards. (Specific styling will have precedence)
+        html_style <- paste0(html_style, ", ", global_body_style)
         paste0(
           "if (colInfo.id === '", colname, "' & rowIndex === ", rownum, ") {\n",
-          "  return { ", html_style, " }\n",
-          "}\n\n"
+          "  return { ", html_style , " }\n",
+          "}\n", 
+          "return { ", global_body_style, "}",
+          "\n"
         )
       }
     )
 
   body_style_rules <- paste(body_style_rules, collapse = "")
-
   body_style_js_str <-
     paste0(
       "function(rowInfo, colInfo) {\n",
@@ -457,7 +522,14 @@ render_as_ihtml <- function(data, id) {
   # TODO if `sub_missing()` is enabled globally, just use `na = ` here!
   default_col_def <-
     reactable::colDef(
+
       style = reactable::JS(body_style_js_str),
+      # style = list(
+      #   borderLeftStyle = tbl_opts$table_body_vlines_style,
+      #   borderLeftColor = tbl_opts$table_body_vlines_color,
+      #   borderLeftWidth = tbl_opts$table_body_vlines_width
+      #
+      # ),
       minWidth = 125,
       # Has no effect with sub_missing()
       na = "NA",
@@ -466,27 +538,39 @@ render_as_ihtml <- function(data, id) {
 
   # Generate the table header if there are any heading components
   if (has_header_section) {
+    # These don't work in non-interactive context.
+    heading_title_font_weight <- tbl_opts$heading_title_font_weight
+    heading_subtitle_font_weight <- tbl_opts$heading_subtitle_font_weight
+    heading_background_color <- tbl_opts$heading_background_color
 
     tbl_heading <- dt_heading_get(data = data)
-
     heading_component <-
       htmltools::div(
         style = htmltools::css(
           `font-family` = font_family_str,
+          `background-color` = heading_background_color,
           `border-top-style` = "solid",
           `border-top-width` = "2px",
           `border-top-color` = "#D3D3D3",
+          `border-bottom-color` = "#D3D3D3",
           `padding-bottom` = if (use_search) "8px" else NULL
         ),
         htmltools::div(
           class = "gt_heading gt_title gt_font_normal",
-          style = htmltools::css(`text-size` = "bigger"),
+          style = htmltools::css(
+            `text-size` = "bigger",
+            `font-weight` = heading_title_font_weight
+          ),
           htmltools::HTML(tbl_heading$title)
         ),
         htmltools::div(
           class = paste(
             "gt_heading", "gt_subtitle",
             if (use_search) "gt_bottom_border" else NULL
+          ),
+          style = htmltools::css(
+            `font-weight` = heading_subtitle_font_weight,
+            `border-bottom-color` = "#D3D3D3"
           ),
           htmltools::HTML(tbl_heading$subtitle)
         )
@@ -511,6 +595,8 @@ render_as_ihtml <- function(data, id) {
       footnotes_component <- NULL
     }
 
+    table_border_bottom_style <- tbl_opts$table_border_bottom_style
+
     footer_component <-
       htmltools::div(
         style = htmltools::css(
@@ -518,7 +604,7 @@ render_as_ihtml <- function(data, id) {
           `border-top-style` = "solid",
           `border-top-width` = "2px",
           `border-top-color` = "#D3D3D3",
-          `border-bottom-style` = "solid",
+          `border-bottom-style` = table_border_bottom_style,
           `border-bottom-width` = "2px",
           `border-bottom-color` = "#D3D3D3",
           `padding-top` = "6px",
@@ -580,6 +666,7 @@ render_as_ihtml <- function(data, id) {
             headerClass = NULL,
             headerStyle = list(
               fontWeight = "normal",
+              color = if (is.na(column_labels_background_color)) NULL else unname(ideal_fgnd_color(column_labels_background_color)),
               backgroundColor = column_labels_background_color,
               borderBottomStyle = column_labels_border_bottom_style,
               borderBottomWidth = column_labels_border_bottom_width,
@@ -611,10 +698,21 @@ render_as_ihtml <- function(data, id) {
         #1693
         fontSize = table_font_size
       ),
-      tableStyle = list(
-        borderTopStyle = column_labels_border_top_style,
-        borderTopWidth = column_labels_border_top_width,
-        borderTopColor = column_labels_border_top_color
+      # borders in the body
+      rowStyle = list(
+        fontWeight = table_body_font_weight,
+        borderTopStyle = table_body_hlines_style,
+        borderTopColor = table_body_hlines_color,
+        borderTopWidth = table_body_hlines_width,
+        borderBottomStyle = table_body_hlines_style,
+        borderBottomColor = table_body_hlines_color,
+        borderBottomWidth = table_body_hlines_width,
+        BorderRightStyle = table_body_vlines_style,
+        BorderRightColor = table_body_vlines_color,
+        BorderRightWidth = table_body_vlines_width,
+        BorderLeftStyle = table_body_vlines_style,
+        BorderLeftColor = table_body_vlines_color,
+        BorderLeftWidth = table_body_vlines_width
       ),
       # cells_column_labels()
       headerStyle = list(
@@ -622,7 +720,11 @@ render_as_ihtml <- function(data, id) {
         backgroundColor = column_labels_background_color,
         borderBottomStyle = column_labels_border_bottom_style,
         borderBottomWidth = column_labels_border_bottom_width,
-        borderBottomColor = column_labels_border_bottom_color
+        borderBottomColor = column_labels_border_bottom_color,
+        borderTopColor = tbl_opts$column_labels_border_top_color
+        #
+        #borderTopColor = "transparent",
+        #borderTopStyle = "none"
       ),
       # individually defined for the margins left+right
       # cells_spanner_labels() styling
@@ -631,21 +733,57 @@ render_as_ihtml <- function(data, id) {
         backgroundColor = column_labels_background_color,
         borderBottomStyle = column_labels_border_bottom_style,
         borderBottomWidth = column_labels_border_bottom_width,
-        borderBottomColor = column_labels_border_bottom_color
+        borderBottomColor = column_labels_border_bottom_color,
+        borderTopColor = tbl_opts$column_labels_border_top_color
       ),
-      tableBodyStyle = NULL,
+      # body = table
+      tableStyle = list(
+        borderRightStyle = tbl_opts$table_body_vlines_style,
+        borderRightColor = tbl_opts$table_body_vlines_color,
+        borderRightWidth = tbl_opts$table_body_vlines_width,
+        borderLeftStyle = tbl_opts$table_body_vlines_style,
+        borderLeftColor = tbl_opts$table_body_vlines_color,
+        borderLeftWidth = tbl_opts$table_body_vlines_width,
+        # borderRightStyle = tbl_opts$table_border_right_style,
+        # borderRightColor = tbl_opts$table_border_right_color,
+        # borderRightWidth = tbl_opts$table_border_right_width,
+        # borderLeftStyle = tbl_opts$table_border_left_style,
+        # borderLeftColor = tbl_opts$table_border_left_color,
+        # borderLeftWidth = tbl_opts$table_border_left_width,
+        borderTopStyle = tbl_opts$table_border_top_style,
+        borderTopColor = tbl_opts$table_border_top_color,
+        borderTopWidth = tbl_opts$table_border_top_width,
+        borderBottomStyle = tbl_opts$table_border_bottom_style,
+        borderBottomColor = tbl_opts$table_border_bottom_color,
+        borderBottomWidth = tbl_opts$table_border_bottom_width
+      ),
       # stub styling?
+      # Also, rowGroupStyle isn't named or documented well I've realized. "Row group" in that context means a single row including the expandable details.
+      # rowStyle does the same thing, but does not include expandable details.
+      # I don't really use expandable details
+
       # rowGroupStyle = list(
+      #   backgroundColor = row_group_background_color,
       #   fontWeight = row_group_font_weight
       # ),
-      rowStyle = NULL,
+      # exclude pagination and search
+      tableBodyStyle = list(
+        borderTopStyle = tbl_opts$table_body_border_top_style,
+        borderTopColor = tbl_opts$table_body_border_top_color,
+        borderTopWidth = tbl_opts$table_body_border_top_width,
+        borderBottomStyle = tbl_opts$table_body_border_bottom_style,
+        borderBottomColor = tbl_opts$table_body_border_bottom_color,
+        borderBottomWidth = tbl_opts$table_body_border_bottom_width
+      ),
       rowStripedStyle = NULL,
       rowHighlightStyle = NULL,
       rowSelectedStyle = NULL,
       # cells_body styling
-      cellStyle = list(
-        fontWeight = table_body_font_weight
-      ),
+      # cellStyle = list(
+      #   fontWeight = table_body_font_weight,
+      #   backgroundColor = table_background_color
+      # ),
+      # grand_summary style
       footerStyle = NULL,
       inputStyle = NULL,
       filterInputStyle = NULL,
@@ -683,7 +821,7 @@ render_as_ihtml <- function(data, id) {
       showPagination = use_pagination,
       showPageInfo = use_pagination_info,
       minRows = 1,
-      paginateSubRows = FALSE,
+      paginateSubRows = TRUE,
       details = NULL,
       defaultExpanded = expand_groupname_col,
       selection = selection_mode,
@@ -692,7 +830,8 @@ render_as_ihtml <- function(data, id) {
       onClick = onClick,
       highlight = use_highlight,
       outlined = FALSE,
-      bordered = FALSE,
+      # equivalent to opt_table_lines(extent = "all")
+      bordered = all_borders,
       # equivalent to opt_table_lines(extent = "none")
       borderless = borderless_borders,
       striped = use_row_striping,
@@ -700,7 +839,7 @@ render_as_ihtml <- function(data, id) {
       wrap = use_text_wrapping,
       showSortIcon = TRUE,
       showSortable = FALSE,
-      class = NULL,
+      class = "gt_table",
       style = NULL,
       rowClass = NULL,
       rowStyle = NULL,
