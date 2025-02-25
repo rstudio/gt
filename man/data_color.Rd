@@ -204,13 +204,17 @@ The color contrast algorithm to use when \code{autocolor_text = TRUE}. By
 default this is \code{"apca"} (Accessible Perceptual Contrast Algorithm) and the
 alternative to this is \code{"wcag"} (Web Content Accessibility Guidelines).}
 
-\item{autocolor_light}{\verb{scalar<character>} // \emph{default:} \code{"white"}
+\item{autocolor_light}{\emph{Automatically recolor text, light color}
+
+\verb{scalar<character>} // \emph{default:} \code{"white"}
 
 The light color to use when \code{autocolor_text = TRUE}. By default the color
 \code{"white"} will be used (\verb{#FFFFFF"}). Alpha channel values will be set to
 1.0 (fully opaque).}
 
-\item{autocolor_dark}{\verb{scalar<character>} // \emph{default:} \code{"black"}
+\item{autocolor_dark}{\emph{Automatically recolor text, dark color}
+
+\verb{scalar<character>} // \emph{default:} \code{"black"}
 
 The dark color to use when \code{autocolor_text = TRUE}. By default the color
 \code{"black"} will be used (\verb{#000000"}). Alpha channel values will be set to

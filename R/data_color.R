@@ -234,7 +234,7 @@
 #'   default this is `"apca"` (Accessible Perceptual Contrast Algorithm) and the
 #'   alternative to this is `"wcag"` (Web Content Accessibility Guidelines).
 #'
-#' @param autocolor_light
+#' @param autocolor_light *Automatically recolor text, light color*
 #'
 #'   `scalar<character>` // *default:* `"white"`
 #'
@@ -242,7 +242,7 @@
 #'   `"white"` will be used (`#FFFFFF"`). Alpha channel values will be set to
 #'   1.0 (fully opaque).
 #'
-#' @param autocolor_dark
+#' @param autocolor_dark *Automatically recolor text, dark color*
 #'
 #'   `scalar<character>` // *default:* `"black"`
 #'
@@ -711,6 +711,21 @@ data_color <- function(
 
   # Get the correct `contrast_algo` value
   contrast_algo <- rlang::arg_match0(contrast_algo, values = c("apca", "wcag"))
+
+  # When using non-default `autocolor_light` or `autocolor_dark`, check if
+  # {farver} is installed and stop if not (we would error in `ideal_fgnd_color()`,
+  # check here to get out early)
+  if (rlang::is_true(autocolor_text) && !autocolor_light %in% c("white", "#FFFFFF", "#FFF")) {
+    rlang::check_installed(
+      "farver", reason = "to use non-default `autocolor_light`."
+      )
+  }
+
+  if (rlang::is_true(autocolor_text) && !autocolor_dark %in% c("black", "#000000", "#000")) {
+    rlang::check_installed(
+      "farver", reason = "to use non-default `autocolor_dark`."
+      )
+  }
 
   # If no color is provided to `na_color`, use gray as a default
   na_color <- na_color %||% "#808080"

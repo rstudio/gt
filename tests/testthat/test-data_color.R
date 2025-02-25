@@ -15,6 +15,7 @@ check_suggests()
 test_that("The correct color values are obtained when defining a palette", {
 
   skip_if_not_installed("paletteer")
+  skip_if_not_installed("farver") # For non-default `autocolor_light|dark`
 
   # Obtain a palette of 12 colors in #RRGGBB format
   pal_12 <-
@@ -1138,6 +1139,8 @@ test_that("Columns can indirectly apply coloring to other columns", {
 })
 
 test_that("data_color() validates its input related to color", {
+
+  skip_if_not_installed("farver") # For non-default `autocolor_light|dark`
 
   # Expect an error when using an invalid color name in `palette`
   expect_error(
