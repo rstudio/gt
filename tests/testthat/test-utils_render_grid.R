@@ -202,35 +202,6 @@ test_that("body_cells_g() creates appropriate cells", {
   )
 })
 
-test_that("body_cells_g() creates appropriate cells with row_group_as_column = TRUE (#1552)", {
-
-  df <- data.frame(x = 1:3, y = 4:6, row = c("A", "B", "C"))
-
-  gt <- gt(df, rowname_col = "row", row_group_as_column = T) %>%
-    tab_row_group("X", rows = 1) %>%
-    tab_row_group("Y", rows = 3) %>%
-    row_group_order(c("X", "Y")) %>%
-    tab_options(row_group.default_label = "Z")
-
-  test <- gt %>%
-    tab_options(
-      row.striping.include_table_body = TRUE,
-      row.striping.include_stub = TRUE
-    ) %>%
-    prep_data() %>%
-    body_cells_g()
-
-  expect_equal(vctrs::list_sizes(test), c(4, 4, 4))
-  test <- vctrs::vec_c(!!!test)
-  expect_equal(
-    has_class(test, "gt_striped"),
-    rep(c(FALSE, TRUE, FALSE), each = 4)
-  )
-
-  expect_equal(test$label, c("X", "A", 1, 4, "Y", "C", 3, 6, "Z", "B", 2, 5))
-
-})
-
 test_that("summary_rows_g() creates appropriate cells for group summaries", {
 
   df <- data.frame(x = 1:3, y = 4:6)

@@ -321,10 +321,6 @@ gt <- function(
 
   if (length(groupname_col) == 0) {
     groupname_col <- NULL
-    if (rownames_to_stub) {
-      # initialize a stub just in case users want to add them.
-      groupname_col <- "__GT_GROUPNAME_PRIVATE__"
-    }
   }
 
   # Stop function if `rowname_col` and `groupname_col`

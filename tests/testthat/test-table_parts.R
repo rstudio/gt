@@ -383,48 +383,6 @@ test_that("tab_row_group() errors with bad input", {
   )
 })
 
-test_that("tab_row_group() works with uninitialized row group (#1552)", {
-  dat <- gtcars %>%
-    dplyr::select(model, year, hp, trq) %>%
-    dplyr::slice(1:8) %>%
-    gt(rowname_col = "model",
-       row_group_as_column = TRUE
-    ) %>%
-    tab_row_group(
-      label = "numbered cars",
-      rows = matches("^[0-9]"),
-      id = "xx"
-    ) %>%
-    tab_options(
-      row_group.default_label = "The other category"
-    )
-  expect_no_error(xml_text <- xml2::read_xml(render_as_html(dat)))
-
-  # expect 2 row groups
-  row_groups <- selection_text(
-    xml_text,
-    "[class='gt_row_group_first']"
-  )
-  expect_length(row_groups, 2)
-  expect_match(
-    row_groups[1],
-    "numbered cars"
-  )
-
-  # no stub in plot mode, which means the boxhead is
-  # incorrect
-
-  test <- as_gtable(dat)
-  test$layout$name
-  skip("the stub is not correctly initialized.")
-  # shows as NA.
-  expect_match(
-    row_groups[2],
-    "The other category"
-  )
-
-})
-
 test_that("tab_row_group() errors when named rows are supplied (#1535)", {
 
   # create a gt tbl with no rows
