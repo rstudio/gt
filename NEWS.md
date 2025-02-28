@@ -16,6 +16,8 @@
 
 * Improved width calculations in `as_gtable()` (@teunbrand, #1923)
 
+* `gt(row_group_as_column = TRUE)` now works if multiple groups are supplied (@olivroy, #1552).
+
 # gt 0.11.1
 
 ## Breaking changes
