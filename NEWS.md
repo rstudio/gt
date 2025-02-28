@@ -1,5 +1,7 @@
 # gt (development version)
 
+* Fixed an issue in `fmt_number()` where `drop_trailing_dec_mark` would be ignored if `use_seps = FALSE` (@olivroy, #1961).
+
 * Fixed an issue where `fmt_markdown()` could create strange output in Quarto (html and Typst formats) (@olivroy, #1957, [quarto-dev/quarto-cli#11932](https://github.com/quarto-dev/quarto-cli/issues/11932), [quarto-dev/quarto-cli#11610](https://github.com/quarto-dev/quarto-cli/issues/11610)).
  
 * The default table position in LaTeX is now "t" instead of "!t" (@AaronGullickson, #1935).
