@@ -530,6 +530,9 @@ create_columns_component_h <- function(data) {
   stubh <- dt_stubhead_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
   body <- dt_body_get(data = data)
+  
+  # Get the table ID if available
+  tbl_id <- dt_options_get_value(data = data, option = "table_id")
 
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
@@ -587,7 +590,7 @@ create_columns_component_h <- function(data) {
     headings_vars <- prepend_vec(headings_vars, "::stub")
   }
 
-  headings_ids <- valid_html_id(headings_vars)
+  headings_ids <- valid_html_id(headings_vars, tbl_id)
 
   stubhead_label_alignment <- "left"
 
@@ -827,7 +830,7 @@ create_columns_component_h <- function(data) {
       )
     remaining_headings_labels <-
       unlist(remaining_headings_labels)
-    remaining_headings_ids <- valid_html_id(remaining_headings_vars)
+    remaining_headings_ids <- valid_html_id(remaining_headings_vars, tbl_id)
 
     col_alignment <- col_alignment[-1][!(headings_vars %in% solo_headings)]
 
@@ -1007,6 +1010,9 @@ create_body_component_h <- function(data) {
   list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
+  
+  # Get the table ID if available
+  tbl_id <- dt_options_get_value(data = data, option = "table_id")
 
   # Get effective number of columns
   n_cols_total <- get_effective_number_of_columns(data = data)
@@ -1829,6 +1835,9 @@ summary_rows_for_group_h <- function(
 
   list_of_summaries <- dt_summary_df_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
+  
+  # Get the table ID if available
+  tbl_id <- dt_options_get_value(data = data, option = "table_id")
 
   # Obtain all of the visible (`"default"`), non-stub column names
   # for the table from the `boxh` object
@@ -1981,10 +1990,11 @@ summary_rows_for_group_h <- function(
                       "th ",
                       "id=\"",
                       if (summary_row_type == "grand") {
-                        paste0("grand_summary_stub_", j, "\" ")
+                        valid_html_id(paste0("grand_summary_stub_", j), tbl_id)
                       } else {
-                        paste0("summary_stub_", group_id, "_", j, "\" ")
+                        valid_html_id(paste0("summary_stub_", group_id, "_", j), tbl_id)
                       },
+                      "\" ",
                       "scope=\"row\""
                     )
                   } else {
@@ -1994,13 +2004,13 @@ summary_rows_for_group_h <- function(
                       "headers=\"",
                       if (summary_row_type == "grand") {
                         paste0(
-                          "grand_summary_stub_",
-                          j, " ", col_name, "\""
+                          valid_html_id("grand_summary_stub_", tbl_id),
+                          j, " ", valid_html_id(col_name, tbl_id), "\""
                         )
                       } else {
                         paste0(
-                          group_id, " summary_stub_",
-                          group_id, "_", j, " ", col_name, "\""
+                          valid_html_id(group_id, tbl_id), " ", valid_html_id("summary_stub_", tbl_id),
+                          group_id, "_", j, " ", valid_html_id(col_name, tbl_id), "\""
                         )
                       }
                     )
@@ -2115,9 +2125,16 @@ as_css_font_family_attr <- function(font_vec, value_only = FALSE) {
   paste_between(value, x_2 = c("font-family: ", ";"))
 }
 
-valid_html_id <- function(x) {
+valid_html_id <- function(x, tbl_id = NULL) {
   # Make sure it starts with a letter.
   valid_ids <- grepl("^[A-z]", x)
   x[!valid_ids] <- paste0("a", x[!valid_ids])
-  gsub("\\s+", "-", x)
+  x <- gsub("\\s+", "-", x)
+  
+  # If a table ID is provided, prepend it to each element ID
+  if (!is.null(tbl_id) && nchar(tbl_id) > 0) {
+    x <- paste(tbl_id, x, sep = "-")
+  }
+  
+  x
 }
