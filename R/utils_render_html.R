@@ -1554,19 +1554,28 @@ render_row_data <- function(
   # Create headers for each cell individually
   headers <- character(n)
   
-  # Determine if we have a group ID to include
-  has_group_id <- FALSE
+  # Get group ID if available (only once for the entire row)
   group_id_prefixed <- NULL
-  
   if (length(current_group_id) == 1 && !is.na(current_group_id)) {
-    has_group_id <- TRUE
     group_id_prefixed <- valid_html_id(current_group_id, tbl_id)
   } else if (length(current_group_id) > 1) {
-    # For vector case, use first non-NA value
     non_na_groups <- current_group_id[!is.na(current_group_id)]
     if (length(non_na_groups) > 0) {
-      has_group_id <- TRUE
       group_id_prefixed <- valid_html_id(non_na_groups[1], tbl_id)
+    }
+  }
+  
+  # Get the row header ID (already prefixed in create_body_component_h)
+  # We'll use the first stub cell's ID as the row header for all cells
+  row_header_id <- NULL
+  if (any(has_stub_class) && any(nzchar(row_id_i))) {
+    # Find the first stub cell's ID
+    stub_indices <- which(has_stub_class)
+    if (length(stub_indices) > 0) {
+      first_stub_idx <- stub_indices[1]
+      if (nzchar(row_id_i[first_stub_idx])) {
+        row_header_id <- row_id_i[first_stub_idx]
+      }
     }
   }
   
@@ -1575,12 +1584,17 @@ render_row_data <- function(
     # Start with an empty vector of header components
     cell_headers <- character(0)
     
-    # Add the group ID if available
-    if (has_group_id) {
+    # 1. Add the group ID if available - relevant for all cells in the group
+    if (!is.null(group_id_prefixed)) {
       cell_headers <- c(cell_headers, group_id_prefixed)
     }
     
-    # Add only this cell's column ID
+    # 2. Add the row header ID if available - relevant for all cells in the row
+    if (!is.null(row_header_id) && !has_stub_class[i]) {
+      cell_headers <- c(cell_headers, row_header_id)
+    }
+    
+    # 3. Add this cell's column ID - column headers should already be prefixed
     col_id_prefixed <- valid_html_id(col_id_i[i], tbl_id)
     cell_headers <- c(cell_headers, col_id_prefixed)
     
@@ -1588,7 +1602,7 @@ render_row_data <- function(
     headers[i] <- paste(cell_headers, collapse = " ")
   }
 
-  # For stub cells, use the already-prefixed row_id_i directly
+  # For stub cells, use the already-prefixed row_id_i directly 
   base_attributes <- ifelse(
     has_stub_class,
     paste0("id=\"", row_id_i, "\" ", "scope=\"", scope, "\" "),
