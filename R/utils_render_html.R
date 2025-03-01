@@ -2202,7 +2202,8 @@ valid_html_id <- function(x, tbl_id = NULL) {
   x <- gsub("\\s+", "-", x)
   
   # If a table ID is provided, prepend it to each element ID
-  if (!is.null(tbl_id) && nchar(tbl_id) > 0) {
+  # Added check for NA values in tbl_id
+  if (!is.null(tbl_id) && length(tbl_id) > 0 && !is.na(tbl_id) && nchar(tbl_id) > 0) {
     x <- paste(tbl_id, x, sep = "-")
   }
   
