@@ -1582,10 +1582,11 @@ render_row_data <- function(
   # Join with spaces to form the headers attribute
   header <- paste(unlist(header_components_prefixed), collapse = " ")
 
-  # For stub cells, also use valid_html_id with the complete ID
+  # Fix: Don't re-apply valid_html_id to row_id_i for stub cells
+  # since they were already prefixed in create_body_component_h()
   base_attributes <- ifelse(
     has_stub_class,
-    paste0("id=\"", valid_html_id(row_id_i, tbl_id), "\" ", "scope=\"", scope, "\" "),
+    paste0("id=\"", row_id_i, "\" ", "scope=\"", scope, "\" "),
     paste0("headers=\"", header, "\" ")
   )
 
