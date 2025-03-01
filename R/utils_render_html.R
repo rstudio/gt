@@ -1553,14 +1553,28 @@ render_row_data <- function(
 
   has_group <- !is.na(current_group_id)
   
-  # Use tbl_id when calling valid_html_id
-  header <- paste0(
-    ifelse(has_group, valid_html_id(current_group_id, tbl_id), ""), ifelse(has_group, " ", ""),
-    row_id_i, ifelse(has_group | nzchar(row_id_i), " ", ""),
-    valid_html_id(col_id_i, tbl_id)
-  )
+  # Construct complete headers before applying valid_html_id
+  header_components <- list()
+  
+  if (has_group) {
+    header_components <- c(header_components, current_group_id)
+  }
+  
+  if (any(nzchar(row_id_i))) {
+    # Only include non-empty row IDs
+    header_components <- c(header_components, row_id_i)
+  }
+  
+  # Add column IDs
+  header_components <- c(header_components, col_id_i)
+  
+  # Apply valid_html_id to each component after construction
+  header_components_prefixed <- lapply(header_components, valid_html_id, tbl_id = tbl_id)
+  
+  # Join with spaces to form the headers attribute
+  header <- paste(unlist(header_components_prefixed), collapse = " ")
 
-  # For stub cells, also use valid_html_id for consistent IDs
+  # For stub cells, also use valid_html_id with the complete ID
   base_attributes <- ifelse(
     has_stub_class,
     paste0("id=\"", valid_html_id(row_id_i, tbl_id), "\" ", "scope=\"", scope, "\" "),
@@ -1994,7 +2008,7 @@ summary_rows_for_group_h <- function(
                 sprintf(
                   "<%s %sclass=\"%s\"%s>%s</%s>",
                   if ("gt_stub" %in% extra_class) {
-                    # 1. opening tag
+                    # 1. opening tag - construct complete ID before prefixing
                     paste0(
                       "th ",
                       "id=\"",
@@ -2007,19 +2021,24 @@ summary_rows_for_group_h <- function(
                       "scope=\"row\""
                     )
                   } else {
-                    # headers = "group_row_id row_header_id col_header_id"
+                    # headers attribute - construct complete IDs before prefixing
                     paste0(
                       "td ",
                       "headers=\"",
                       if (summary_row_type == "grand") {
+                        # Construct complete ID before prefixing
                         paste0(
-                          valid_html_id("grand_summary_stub_", tbl_id),
-                          j, " ", valid_html_id(col_name, tbl_id), "\""
+                          valid_html_id(paste0("grand_summary_stub_", j), tbl_id),
+                          " ", 
+                          valid_html_id(col_name, tbl_id), "\""
                         )
                       } else {
+                        # Construct complete IDs before prefixing
                         paste0(
-                          valid_html_id(group_id, tbl_id), " ", valid_html_id("summary_stub_", tbl_id),
-                          group_id, "_", j, " ", valid_html_id(col_name, tbl_id), "\""
+                          valid_html_id(group_id, tbl_id), " ", 
+                          valid_html_id(paste0("summary_stub_", group_id, "_", j), tbl_id),
+                          " ", 
+                          valid_html_id(col_name, tbl_id), "\""
                         )
                       }
                     )
