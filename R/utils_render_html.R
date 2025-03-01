@@ -1554,7 +1554,7 @@ render_row_data <- function(
   # Create headers for each cell individually
   headers <- character(n)
   
-  # Get group ID if available (only once for the entire row)
+  # Identify group ID (if available)
   group_id_prefixed <- NULL
   if (length(current_group_id) == 1 && !is.na(current_group_id)) {
     group_id_prefixed <- valid_html_id(current_group_id, tbl_id)
@@ -1565,44 +1565,58 @@ render_row_data <- function(
     }
   }
   
-  # Get the row header ID (already prefixed in create_body_component_h)
-  # We'll use the first stub cell's ID as the row header for all cells
-  row_header_id <- NULL
-  if (any(has_stub_class) && any(nzchar(row_id_i))) {
-    # Find the first stub cell's ID
-    stub_indices <- which(has_stub_class)
-    if (length(stub_indices) > 0) {
-      first_stub_idx <- stub_indices[1]
-      if (nzchar(row_id_i[first_stub_idx])) {
-        row_header_id <- row_id_i[first_stub_idx]
+  # Determine row boundaries in flattened data by tracking the pattern of stubs
+  row_starts <- which(has_stub_class)
+  
+  if (length(row_starts) > 0) {
+    # For each cell, find which row it belongs to
+    for (i in seq_len(n)) {
+      # Find which row this cell belongs to
+      row_idx <- findInterval(i, row_starts)
+      if (row_idx > 0 && row_idx <= length(row_starts)) {
+        # Get the stub position for this cell's row
+        stub_pos <- row_starts[row_idx]
+        
+        # Start with an empty vector of header components
+        cell_headers <- character(0)
+        
+        # Add the group ID if available
+        if (!is.null(group_id_prefixed)) {
+          cell_headers <- c(cell_headers, group_id_prefixed)
+        }
+        
+        # If this is not a stub cell itself, add a reference to this row's stub
+        if (!has_stub_class[i] && has_stub_class[stub_pos] && nzchar(row_id_i[stub_pos])) {
+          cell_headers <- c(cell_headers, row_id_i[stub_pos])
+        }
+        
+        # Add this cell's column ID 
+        col_id_prefixed <- valid_html_id(col_id_i[i], tbl_id)
+        cell_headers <- c(cell_headers, col_id_prefixed)
+        
+        # Set headers for this cell
+        headers[i] <- paste(cell_headers, collapse = " ")
       }
     }
-  }
-  
-  # For each cell, create its specific headers attribute
-  for (i in seq_len(n)) {
-    # Start with an empty vector of header components
-    cell_headers <- character(0)
-    
-    # 1. Add the group ID if available - relevant for all cells in the group
-    if (!is.null(group_id_prefixed)) {
-      cell_headers <- c(cell_headers, group_id_prefixed)
+  } else {
+    # No stub cells, just reference column headers
+    for (i in seq_len(n)) {
+      cell_headers <- character(0)
+      
+      # Add group ID if available
+      if (!is.null(group_id_prefixed)) {
+        cell_headers <- c(cell_headers, group_id_prefixed)
+      }
+      
+      # Add column ID
+      col_id_prefixed <- valid_html_id(col_id_i[i], tbl_id)
+      cell_headers <- c(cell_headers, col_id_prefixed)
+      
+      headers[i] <- paste(cell_headers, collapse = " ")
     }
-    
-    # 2. Add the row header ID if available - relevant for all cells in the row
-    if (!is.null(row_header_id) && !has_stub_class[i]) {
-      cell_headers <- c(cell_headers, row_header_id)
-    }
-    
-    # 3. Add this cell's column ID - column headers should already be prefixed
-    col_id_prefixed <- valid_html_id(col_id_i[i], tbl_id)
-    cell_headers <- c(cell_headers, col_id_prefixed)
-    
-    # Set the headers for this cell
-    headers[i] <- paste(cell_headers, collapse = " ")
   }
 
-  # For stub cells, use the already-prefixed row_id_i directly 
+  # For stub cells, use the already-prefixed row_id_i directly
   base_attributes <- ifelse(
     has_stub_class,
     paste0("id=\"", row_id_i, "\" ", "scope=\"", scope, "\" "),
