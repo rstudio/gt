@@ -786,7 +786,7 @@ create_columns_component_h <- function(data) {
             dplyr::filter(
               spanner_style_attrs,
               locname == "columns_groups",
-              grpname = spanner_ids[level_1_index, ][i]
+              grpname == spanner_ids[level_1_index, ][i]
             )
 
           spanner_style <-
@@ -1551,18 +1551,26 @@ render_row_data <- function(
   scope <- rep.int("row", n)
   scope[!is.na(row_span_vals) & row_span_vals > 1] <- "rowgroup"
 
-  has_group <- !is.na(current_group_id)
-  
   # Construct complete headers before applying valid_html_id
   header_components <- list()
   
-  if (has_group) {
-    header_components <- c(header_components, current_group_id)
+  # Fix: Handle current_group_id as a vector - only include non-NA values
+  if (length(current_group_id) == 1) {
+    # Single value case
+    if (!is.na(current_group_id)) {
+      header_components <- c(header_components, current_group_id)
+    }
+  } else {
+    # Vector case - add any non-NA values
+    non_na_groups <- current_group_id[!is.na(current_group_id)]
+    if (length(non_na_groups) > 0) {
+      header_components <- c(header_components, non_na_groups)
+    }
   }
   
   if (any(nzchar(row_id_i))) {
     # Only include non-empty row IDs
-    header_components <- c(header_components, row_id_i)
+    header_components <- c(header_components, row_id_i[nzchar(row_id_i)])
   }
   
   # Add column IDs
