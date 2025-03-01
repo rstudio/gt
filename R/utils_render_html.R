@@ -1385,7 +1385,7 @@ create_body_component_h <- function(data) {
     # Situation where we have two columns in the stub and the row label
     # isn't the first (the `row_df` vector will have one less element)
     if (length(col_names_id) > length(row_df)) {
-      col_id_i <- col_names_id[-(length(col_names_id) - length(row_df))]
+      col_id_i <- col_names_id[-(length(col_names_id) - length(row_df) + 1)]
     } else {
       col_id_i <- col_names_id
     }
@@ -1398,8 +1398,15 @@ create_body_component_h <- function(data) {
       # Add table ID prefix to row ID base, but keep the same logic
       row_id_i <- rep(valid_html_id(paste0(col_id_i[1], "_", i), tbl_id), length(col_id_i))
     } else if (stub_width == 2) {
-      # Add table ID prefix to row ID base, but keep the same logic
-      row_id_i <- rep(valid_html_id(paste0(col_id_i[2], "_", i), tbl_id), length(col_id_i))
+      # For 2-column stubs, we need to handle both first and non-first rows in a group
+      if (has_two_col_stub && !group_start) {
+        # For non-first rows, use the first column ID after the group column was removed
+        # This is what was originally the second column (stub column)
+        row_id_i <- rep(valid_html_id(paste0(col_id_i[1], "_", i), tbl_id), length(col_id_i))
+      } else {
+        # First row or other cases - use the second column ID
+        row_id_i <- rep(valid_html_id(paste0(col_id_i[2], "_", i), tbl_id), length(col_id_i))
+      }
     }
 
     # In the situation where there is:
