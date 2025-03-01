@@ -1445,6 +1445,8 @@ create_body_component_h <- function(data) {
     # needs to be repeated to match the size of the other fields
     group_ids <- vctrs::vec_rep_each(group_ids, times = ns)
     body_rows_data_flat$current_group_id <- group_ids
+    # Pass the table_id to render_row_data
+    body_rows_data_flat$tbl_id <- tbl_id
     ## here we have to make sur the lengths can be recycled to each others.
     # vctrs::vec_recycle_common()
     body_rows_uncollapsed <- vctrs::vec_chop(
@@ -1527,7 +1529,8 @@ render_row_data <- function(
     row_span_vals,
     alignment_classes,
     extra_classes,
-    row_styles
+    row_styles,
+    tbl_id = NULL  # Add parameter for table_id
 ) {
   n <- length(row_df)
 
@@ -1546,15 +1549,18 @@ render_row_data <- function(
   scope[!is.na(row_span_vals) & row_span_vals > 1] <- "rowgroup"
 
   has_group <- !is.na(current_group_id)
+  
+  # Use tbl_id when calling valid_html_id
   header <- paste0(
-    ifelse(has_group, current_group_id, ""), ifelse(has_group, " ", ""),
+    ifelse(has_group, valid_html_id(current_group_id, tbl_id), ""), ifelse(has_group, " ", ""),
     row_id_i, ifelse(has_group | nzchar(row_id_i), " ", ""),
-    col_id_i
+    valid_html_id(col_id_i, tbl_id)
   )
 
+  # For stub cells, also use valid_html_id for consistent IDs
   base_attributes <- ifelse(
     has_stub_class,
-    paste0("id=\"", row_id_i, "\" ", "scope=\"", scope, "\" "),
+    paste0("id=\"", valid_html_id(row_id_i, tbl_id), "\" ", "scope=\"", scope, "\" "),
     paste0("headers=\"", header, "\" ")
   )
 
