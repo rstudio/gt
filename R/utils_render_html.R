@@ -1551,39 +1551,42 @@ render_row_data <- function(
   scope <- rep.int("row", n)
   scope[!is.na(row_span_vals) & row_span_vals > 1] <- "rowgroup"
 
-  # Construct complete headers before applying valid_html_id
-  header_components <- list()
+  # Construct headers before applying valid_html_id
+  header_components_unprefixed <- list()
+  header_components_prefixed <- list()
   
   # Fix: Handle current_group_id as a vector - only include non-NA values
   if (length(current_group_id) == 1) {
     # Single value case
     if (!is.na(current_group_id)) {
-      header_components <- c(header_components, current_group_id)
+      header_components_unprefixed <- c(header_components_unprefixed, current_group_id)
     }
   } else {
     # Vector case - add any non-NA values
     non_na_groups <- current_group_id[!is.na(current_group_id)]
     if (length(non_na_groups) > 0) {
-      header_components <- c(header_components, non_na_groups)
+      header_components_unprefixed <- c(header_components_unprefixed, non_na_groups)
     }
   }
   
+  # Add column IDs to unprefixed components (these need prefixing)
+  header_components_unprefixed <- c(header_components_unprefixed, col_id_i)
+  
+  # Fix: Put row_id_i values directly into the prefixed components list
+  # since they've already been prefixed in create_body_component_h()
   if (any(nzchar(row_id_i))) {
-    # Only include non-empty row IDs
-    header_components <- c(header_components, row_id_i[nzchar(row_id_i)])
+    # Only include non-empty row IDs and don't apply valid_html_id again
+    header_components_prefixed <- row_id_i[nzchar(row_id_i)]
   }
   
-  # Add column IDs
-  header_components <- c(header_components, col_id_i)
+  # Apply valid_html_id only to components that need prefixing
+  header_components_newly_prefixed <- lapply(header_components_unprefixed, valid_html_id, tbl_id = tbl_id)
   
-  # Apply valid_html_id to each component after construction
-  header_components_prefixed <- lapply(header_components, valid_html_id, tbl_id = tbl_id)
-  
-  # Join with spaces to form the headers attribute
-  header <- paste(unlist(header_components_prefixed), collapse = " ")
+  # Combine both lists of components and join with spaces
+  all_header_components <- c(header_components_newly_prefixed, header_components_prefixed)
+  header <- paste(unlist(all_header_components), collapse = " ")
 
   # Fix: Don't re-apply valid_html_id to row_id_i for stub cells
-  # since they were already prefixed in create_body_component_h()
   base_attributes <- ifelse(
     has_stub_class,
     paste0("id=\"", row_id_i, "\" ", "scope=\"", scope, "\" "),
