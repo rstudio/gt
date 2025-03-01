@@ -786,7 +786,7 @@ create_columns_component_h <- function(data) {
             dplyr::filter(
               spanner_style_attrs,
               locname == "columns_groups",
-              grpname == spanner_ids[level_1_index, ][i]
+              grpname = spanner_ids[level_1_index, ][i]
             )
 
           spanner_style <-
@@ -810,7 +810,7 @@ create_columns_component_h <- function(data) {
               colspan = colspans[i],
               style = spanner_style,
               scope = ifelse(colspans[i] > 1, "colgroup", "col"),
-              id = spanner_ids[level_1_index, ][i],
+              id = valid_html_id(spanner_ids[level_1_index, ][i], tbl_id), # Use valid_html_id with tbl_id
               htmltools::tags$div(
                 class = "gt_column_spanner",
                 htmltools::HTML(spanners[level_1_index, ][i])
@@ -956,7 +956,7 @@ create_columns_component_h <- function(data) {
               colspan = colspans[j],
               style = spanner_style,
               scope = ifelse(colspans[j] > 1, "colgroup", "col"),
-              id = spanner_ids_row[j],
+              id = valid_html_id(spanner_ids_row[j], tbl_id), # Use valid_html_id with tbl_id
               if (spanner_ids_row[j] != "") {
                 htmltools::tags$div(
                   class = "gt_column_spanner",
@@ -1128,7 +1128,7 @@ create_body_component_h <- function(data) {
           class = group_class,
           style = row_style_group_heading_row,
           scope = if (n_cols_total > 1) "colgroup" else "col",
-          id = group_label,
+          id = valid_html_id(group_label, tbl_id),  # Use valid_html_id with tbl_id
           htmltools::HTML(group_label)
         )
       )
@@ -1182,13 +1182,14 @@ create_body_component_h <- function(data) {
 
         row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
 
+        # Update TD element to use valid_html_id for both headers and id attributes
         group_col_td <-
           htmltools::tags$td(
-            headers = group_id,
+            headers = valid_html_id(group_id, tbl_id),
             rowspan = rowspan_val,
             class = "gt_row gt_left gt_stub_row_group",
             style = row_style_group_heading_row,
-            id = group_id,
+            id = valid_html_id(group_id, tbl_id),
             htmltools::HTML(group_label)
           )
 
@@ -1394,9 +1395,11 @@ create_body_component_h <- function(data) {
     if (stub_width == 0) {
       row_id_i <- character(length(col_id_i))
     } else if (stub_width == 1) {
-      row_id_i <- rep(paste0(col_id_i[1], "_", i), length(col_id_i))
+      # Add table ID prefix to row ID base, but keep the same logic
+      row_id_i <- rep(valid_html_id(paste0(col_id_i[1], "_", i), tbl_id), length(col_id_i))
     } else if (stub_width == 2) {
-      row_id_i <- rep(paste0(col_id_i[2], "_", i), length(col_id_i))
+      # Add table ID prefix to row ID base, but keep the same logic
+      row_id_i <- rep(valid_html_id(paste0(col_id_i[2], "_", i), tbl_id), length(col_id_i))
     }
 
     # In the situation where there is:
