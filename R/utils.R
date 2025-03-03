@@ -1162,42 +1162,40 @@ markdown_to_xml <- function(text) {
 
         if (inherits(x, "xml_nodeset")) {
 
-           results <- lapply(x, apply_rules)
+          results <- lapply(x, apply_rules)
           do.call("paste0", c(results, collapse = "\n"))
 
-         } else {
+        } else {
 
           output <- if (xml2::xml_type(x) == "element") {
+          rule <- cmark_rules_xml[[xml2::xml_name(x)]]
 
-            rule <- cmark_rules_xml[[xml2::xml_name(x)]]
+          if (is.null(rule)) {
 
-            if (is.null(rule)) {
+            cli::cli_warn(
+              "Unknown commonmark element encountered: {xml2::xml_name(x)}",
+              .frequency = "once",
+              .frequency_id = "gt_commonmark_unknown_element"
+            )
 
-              rlang::warn(
-                paste0("Unknown commonmark element encountered: ", xml2::xml_name(x)),
-                .frequency = "once",
-                .frequency_id = "gt_commonmark_unknown_element"
-              )
+            apply_rules(xml2::xml_children(x))
 
-              apply_rules(xml2::xml_children(x))
+          } else if (is.function(rule)) {
 
-            } else if (is.function(rule)) {
+            rule(x, apply_rules, ...)
 
-              rule(x, apply_rules, ...)
-
-            }
           }
+        }
 
         paste0(output, collapse = "")
-        }
       }
-
-      res <- lapply(children, apply_rules)
-      res <- vapply(res, FUN = as.character, FUN.VALUE = character(1L))
-      res <-  paste0(res, collapse = "")
-      paste0("<md_container>", res, "</md_container>")
     }
-  )
+
+    res <- lapply(children, apply_rules)
+    res <- vapply(res, FUN = as.character, FUN.VALUE = character(1L))
+    res <-  paste0(res, collapse = "")
+    paste0("<md_container>", res, "</md_container>")
+  })
 
 }
 
