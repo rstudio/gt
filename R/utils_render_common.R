@@ -359,13 +359,24 @@ resolve_secondary_pattern <- function(x) {
 
   while (grepl("<<.*?>>", x)) {
 
-    m <- gregexpr("<<[^<]*?>>", x, perl = TRUE)
+    # stringr::str_extract_all(x, regexp)[1]
+    # (?<!<) means not preceded by <
+    # (?!>) means not followed by >
+    # Which means we take the outer match
+    # safeguarding about potential html elements within
+    # rstudio/gt#1880
+    m <- gregexpr("(?<!<)<<.*>>(?!>)", x, perl = TRUE)
 
     matched <- unlist(regmatches(x, m))[1]
 
     m_start <- as.integer(m[[1]])
     m_length <- attr(m[[1]], "match.length")
 
+    if (m_start == -1) {
+      # Add safeguard instead of going in a very long loop
+      # rstudio/gt#1880
+      cli::cli_abort("Can't resolve pattern.", .internal = TRUE)
+    }
     if (grepl(missing_val_token, matched)) {
 
       # Remove `matched` text from `x`
