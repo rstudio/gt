@@ -1,30 +1,3 @@
-# Create a table with four columns of values
-tbl <-
-  dplyr::tribble(
-    ~col_1, ~col_2, ~col_3, ~col_4,
-     767.6,  928.1,  382.0,  674.5,
-     403.3,  461.5,   15.1,  242.8,
-     686.4,   54.1,  282.7,   56.3,
-     662.6,  148.8,  984.6,  928.1,
-     198.5,   65.1,  127.4,  219.3,
-     132.1,  118.1,   91.2,  874.3,
-     349.7,  307.1,  566.7,  542.9,
-      63.7,  504.3,  152.0,  724.5,
-     105.4,  729.8,  962.4,  336.4,
-     924.2,  424.6,  740.8,  104.2
-  )
-
-# Create a table with three columns, the last two having different
-# combinations of NA values
-tbl_na <-
-  dplyr::tibble(
-    a = 1:4,
-    b = c(1, NA, 3,  NA),
-    c = c(1, 2,  NA, NA),
-    d = c("1", "2", NA_character_, NA_character_),
-    e = c(TRUE, FALSE, NA, NA)
-  )
-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
@@ -154,12 +127,10 @@ test_that("cols_merge() works correctly", {
   expect_snapshot_html(gt_tbl_3)
 
   # Ensure that `group` columns don't get the same treatment
-  expect_equal(
+  expect_equal_gt(
+    gt(tbl, groupname_col = "row"),
     gt(tbl, groupname_col = "row") %>%
-      render_as_html(),
-    gt(tbl, groupname_col = "row") %>%
-      cols_merge(columns = c(row, a)) %>%
-      render_as_html()
+      cols_merge(columns = c(row, a))
   )
 
   # Use `cols_merge()` with a vector of `rows` which limits the rows
@@ -178,6 +149,17 @@ test_that("cols_merge() works correctly", {
 })
 
 test_that("The secondary pattern language works well in `cols_merge()`", {
+
+  # Create a table with three columns, the last two having different
+  # combinations of NA values
+  tbl_na <-
+    dplyr::tibble(
+      a = 1:4,
+      b = c(1, NA, 3,  NA),
+      c = c(1, 2,  NA, NA),
+      d = c("1", "2", NA_character_, NA_character_),
+      e = c(TRUE, FALSE, NA, NA)
+    )
 
   # Create a `tbl_html` object with `gt()`
   tbl_gt <- gt(tbl_na)
@@ -321,6 +303,21 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
 })
 
 test_that("cols_merge_uncert() works correctly", {
+  # Create a table with four columns of values
+  tbl <-
+    dplyr::tribble(
+      ~col_1, ~col_2, ~col_3, ~col_4,
+      767.6,  928.1,  382.0,  674.5,
+      403.3,  461.5,   15.1,  242.8,
+      686.4,   54.1,  282.7,   56.3,
+      662.6,  148.8,  984.6,  928.1,
+      198.5,   65.1,  127.4,  219.3,
+      132.1,  118.1,   91.2,  874.3,
+      349.7,  307.1,  566.7,  542.9,
+      63.7,  504.3,  152.0,  724.5,
+      105.4,  729.8,  962.4,  336.4,
+      924.2,  424.6,  740.8,  104.2
+    )
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -529,6 +526,21 @@ test_that("cols_merge_uncert() works nicely with different error bounds", {
 })
 
 test_that("cols_merge_range() works correctly", {
+  # Create a table with four columns of values
+  tbl <-
+    dplyr::tribble(
+      ~col_1, ~col_2, ~col_3, ~col_4,
+      767.6,  928.1,  382.0,  674.5,
+      403.3,  461.5,   15.1,  242.8,
+      686.4,   54.1,  282.7,   56.3,
+      662.6,  148.8,  984.6,  928.1,
+      198.5,   65.1,  127.4,  219.3,
+      132.1,  118.1,   91.2,  874.3,
+      349.7,  307.1,  566.7,  542.9,
+      63.7,  504.3,  152.0,  724.5,
+      105.4,  729.8,  962.4,  336.4,
+      924.2,  424.6,  740.8,  104.2
+    )
 
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with `cols_merge_range()`
@@ -549,6 +561,21 @@ test_that("cols_merge_range() works correctly", {
 })
 
 test_that("cols_merge_range works 2", {
+  # Create a table with four columns of values
+  tbl <-
+    dplyr::tribble(
+      ~col_1, ~col_2, ~col_3, ~col_4,
+      767.6,  928.1,  382.0,  674.5,
+      403.3,  461.5,   15.1,  242.8,
+      686.4,   54.1,  282.7,   56.3,
+      662.6,  148.8,  984.6,  928.1,
+      198.5,   65.1,  127.4,  219.3,
+      132.1,  118.1,   91.2,  874.3,
+      349.7,  307.1,  566.7,  542.9,
+      63.7,  504.3,  152.0,  724.5,
+      105.4,  729.8,  962.4,  336.4,
+      924.2,  424.6,  740.8,  104.2
+    )
 
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with `cols_merge_range()`
@@ -569,6 +596,22 @@ test_that("cols_merge_range works 2", {
 })
 
 test_that("cols_merge_range() works with 2 statements", {
+  # Create a table with four columns of values
+  tbl <-
+    dplyr::tribble(
+      ~col_1, ~col_2, ~col_3, ~col_4,
+      767.6,  928.1,  382.0,  674.5,
+      403.3,  461.5,   15.1,  242.8,
+      686.4,   54.1,  282.7,   56.3,
+      662.6,  148.8,  984.6,  928.1,
+      198.5,   65.1,  127.4,  219.3,
+      132.1,  118.1,   91.2,  874.3,
+      349.7,  307.1,  566.7,  542.9,
+      63.7,  504.3,  152.0,  724.5,
+      105.4,  729.8,  962.4,  336.4,
+      924.2,  424.6,  740.8,  104.2
+    )
+
   # Create a `tbl_html` object with `gt()`; merge two columns, twice,
   # with `cols_merge_range()`
   tbl_html <-
@@ -614,6 +657,22 @@ test_that("cols_merge_range() respects locale for separators", {
 })
 
 test_that("cols_merge_range() works", {
+  # Create a table with four columns of values
+  tbl <-
+    dplyr::tribble(
+      ~col_1, ~col_2, ~col_3, ~col_4,
+      767.6,  928.1,  382.0,  674.5,
+      403.3,  461.5,   15.1,  242.8,
+      686.4,   54.1,  282.7,   56.3,
+      662.6,  148.8,  984.6,  928.1,
+      198.5,   65.1,  127.4,  219.3,
+      132.1,  118.1,   91.2,  874.3,
+      349.7,  307.1,  566.7,  542.9,
+      63.7,  504.3,  152.0,  724.5,
+      105.4,  729.8,  962.4,  336.4,
+      924.2,  424.6,  740.8,  104.2
+    )
+
   # Create a `tbl_html` object with `gt()`; merge two
   # columns with `cols_merge_range()` but use the `I()`
   # function to keep the `--` separator text as is
@@ -665,6 +724,22 @@ test_that("cols_merge_range() works", {
 })
 
 test_that("cols_merge_range() works well", {
+  # Create a table with four columns of values
+  tbl <-
+    dplyr::tribble(
+      ~col_1, ~col_2, ~col_3, ~col_4,
+      767.6,  928.1,  382.0,  674.5,
+      403.3,  461.5,   15.1,  242.8,
+      686.4,   54.1,  282.7,   56.3,
+      662.6,  148.8,  984.6,  928.1,
+      198.5,   65.1,  127.4,  219.3,
+      132.1,  118.1,   91.2,  874.3,
+      349.7,  307.1,  566.7,  542.9,
+      63.7,  504.3,  152.0,  724.5,
+      105.4,  729.8,  962.4,  336.4,
+      924.2,  424.6,  740.8,  104.2
+    )
+
   # Create two gt table objects; the first will be based
   # on `tbl` while the second will use a different column name
   # in `tbl` (`sep`) that collides with a pattern element name
