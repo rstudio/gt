@@ -68,8 +68,8 @@ test_that("gtsave() creates an HTML file based on the extension", {
   skip_on_cran()
   # Expect lines_html_inline_css1 and 2 to be the same (if we exclude id)
   expect_equal(
-    sub("id=\"\\S+\" ", "", lines_html_inline_css1),
-    sub("id=\"\\S+\" ", "", lines_html_inline_css2)
+    lines_html_inline_css1 %>% remove_id_prefixes(),
+    lines_html_inline_css2 %>% remove_id_prefixes()
   )
 })
 
