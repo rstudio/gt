@@ -1561,17 +1561,6 @@ render_row_data <- function(
   # Create headers for each cell individually
   headers <- character(n)
   
-  # Identify group ID (if available)
-  group_id_prefixed <- NULL
-  if (length(current_group_id) == 1 && !is.na(current_group_id)) {
-    group_id_prefixed <- valid_html_id(current_group_id, tbl_id)
-  } else if (length(current_group_id) > 1) {
-    non_na_groups <- current_group_id[!is.na(current_group_id)]
-    if (length(non_na_groups) > 0) {
-      group_id_prefixed <- valid_html_id(non_na_groups[1], tbl_id)
-    }
-  }
-  
   # Determine row boundaries in flattened data by tracking the pattern of stubs
   row_starts <- which(has_stub_class)
   
@@ -1587,9 +1576,10 @@ render_row_data <- function(
         # Start with an empty vector of header components
         cell_headers <- character(0)
         
-        # Add the group ID if available
-        if (!is.null(group_id_prefixed)) {
-          cell_headers <- c(cell_headers, group_id_prefixed)
+        # Add the group ID if available - use the group ID specific to this cell's position
+        cell_group_id <- current_group_id[i]
+        if (!is.na(cell_group_id)) {
+          cell_headers <- c(cell_headers, valid_html_id(cell_group_id, tbl_id))
         }
         
         # If this is not a stub cell itself, add a reference to this row's stub
@@ -1610,9 +1600,10 @@ render_row_data <- function(
     for (i in seq_len(n)) {
       cell_headers <- character(0)
       
-      # Add group ID if available
-      if (!is.null(group_id_prefixed)) {
-        cell_headers <- c(cell_headers, group_id_prefixed)
+      # Add group ID if available - use the group ID specific to this cell's position
+      cell_group_id <- current_group_id[i]
+      if (!is.na(cell_group_id)) {
+        cell_headers <- c(cell_headers, valid_html_id(cell_group_id, tbl_id))
       }
       
       # Add column ID
