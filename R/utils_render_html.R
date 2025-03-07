@@ -1293,7 +1293,7 @@ create_body_component_h <- function(data) {
     if (!is.null(indentation_stub) && indentation_stub != 0) {
 
       extra_classes[[row_label_col]] <-
-        paste(
+        c(
           extra_classes[[row_label_col]],
           paste0("gt_indent_", indentation_stub)
         )
