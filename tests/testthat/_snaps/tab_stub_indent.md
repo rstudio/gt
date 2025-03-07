@@ -18,33 +18,33 @@
           </tr>
         </thead>
         <tbody class="gt_table_body">
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_1">row_1</td>
-      <td headers="" class="gt_row gt_right">1.111e-01</td>
-      <td headers="" class="gt_row gt_left">apricot</td>
-      <td headers="" class="gt_row gt_center">one</td>
-      <td headers="" class="gt_row gt_right">2015-01-15</td>
-      <td headers="" class="gt_row gt_right">13:35</td>
-      <td headers="" class="gt_row gt_right">2018-01-01 02:22</td>
-      <td headers="" class="gt_row gt_right">49.950</td>
-      <td headers="" class="gt_row gt_left">grp_a</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_1">row_2</td>
-      <td headers="" class="gt_row gt_right">2.222e+00</td>
-      <td headers="" class="gt_row gt_left">banana</td>
-      <td headers="" class="gt_row gt_center">two</td>
-      <td headers="" class="gt_row gt_right">2015-02-15</td>
-      <td headers="" class="gt_row gt_right">14:40</td>
-      <td headers="" class="gt_row gt_right">2018-02-02 14:33</td>
-      <td headers="" class="gt_row gt_right">17.950</td>
-      <td headers="" class="gt_row gt_left">grp_a</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_1">row_3</td>
-      <td headers="" class="gt_row gt_right">3.333e+01</td>
-      <td headers="" class="gt_row gt_left">coconut</td>
-      <td headers="" class="gt_row gt_center">three</td>
-      <td headers="" class="gt_row gt_right">2015-03-15</td>
-      <td headers="" class="gt_row gt_right">15:45</td>
-      <td headers="" class="gt_row gt_right">2018-03-03 03:44</td>
-      <td headers="" class="gt_row gt_right">1.390</td>
-      <td headers="" class="gt_row gt_left">grp_a</td></tr>
+          <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub  gt_indent_1">row_1</th>
+      <td headers="stub_1_1 num" class="gt_row gt_right">1.111e-01</td>
+      <td headers="stub_1_1 char" class="gt_row gt_left">apricot</td>
+      <td headers="stub_1_1 fctr" class="gt_row gt_center">one</td>
+      <td headers="stub_1_1 date" class="gt_row gt_right">2015-01-15</td>
+      <td headers="stub_1_1 time" class="gt_row gt_right">13:35</td>
+      <td headers="stub_1_1 datetime" class="gt_row gt_right">2018-01-01 02:22</td>
+      <td headers="stub_1_1 currency" class="gt_row gt_right">49.950</td>
+      <td headers="stub_1_1 group" class="gt_row gt_left">grp_a</td></tr>
+          <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub  gt_indent_1">row_2</th>
+      <td headers="stub_1_2 num" class="gt_row gt_right">2.222e+00</td>
+      <td headers="stub_1_2 char" class="gt_row gt_left">banana</td>
+      <td headers="stub_1_2 fctr" class="gt_row gt_center">two</td>
+      <td headers="stub_1_2 date" class="gt_row gt_right">2015-02-15</td>
+      <td headers="stub_1_2 time" class="gt_row gt_right">14:40</td>
+      <td headers="stub_1_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
+      <td headers="stub_1_2 currency" class="gt_row gt_right">17.950</td>
+      <td headers="stub_1_2 group" class="gt_row gt_left">grp_a</td></tr>
+          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub  gt_indent_1">row_3</th>
+      <td headers="stub_1_3 num" class="gt_row gt_right">3.333e+01</td>
+      <td headers="stub_1_3 char" class="gt_row gt_left">coconut</td>
+      <td headers="stub_1_3 fctr" class="gt_row gt_center">three</td>
+      <td headers="stub_1_3 date" class="gt_row gt_right">2015-03-15</td>
+      <td headers="stub_1_3 time" class="gt_row gt_right">15:45</td>
+      <td headers="stub_1_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
+      <td headers="stub_1_3 currency" class="gt_row gt_right">1.390</td>
+      <td headers="stub_1_3 group" class="gt_row gt_left">grp_a</td></tr>
           <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub">row_4</th>
       <td headers="stub_1_4 num" class="gt_row gt_right">4.444e+02</td>
       <td headers="stub_1_4 char" class="gt_row gt_left">durian</td>
@@ -140,33 +140,33 @@
       <td headers="stub_1_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
       <td headers="stub_1_2 currency" class="gt_row gt_right">17.950</td>
       <td headers="stub_1_2 group" class="gt_row gt_left">grp_a</td></tr>
-          <tr><td headers="stub_1_2 stub_1" class="gt_row gt_left gt_stub gt_indent_2">row_3</td>
-      <td headers="stub_1_2 num" class="gt_row gt_right">3.333e+01</td>
-      <td headers="stub_1_2 char" class="gt_row gt_left">coconut</td>
-      <td headers="stub_1_2 fctr" class="gt_row gt_center">three</td>
-      <td headers="stub_1_2 date" class="gt_row gt_right">2015-03-15</td>
-      <td headers="stub_1_2 time" class="gt_row gt_right">15:45</td>
-      <td headers="stub_1_2 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
-      <td headers="stub_1_2 currency" class="gt_row gt_right">1.390</td>
-      <td headers="stub_1_2 group" class="gt_row gt_left">grp_a</td></tr>
-          <tr><td headers="stub_1_2 stub_1" class="gt_row gt_left gt_stub gt_indent_2">row_4</td>
-      <td headers="stub_1_2 num" class="gt_row gt_right">4.444e+02</td>
-      <td headers="stub_1_2 char" class="gt_row gt_left">durian</td>
-      <td headers="stub_1_2 fctr" class="gt_row gt_center">four</td>
-      <td headers="stub_1_2 date" class="gt_row gt_right">2015-04-15</td>
-      <td headers="stub_1_2 time" class="gt_row gt_right">16:50</td>
-      <td headers="stub_1_2 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
-      <td headers="stub_1_2 currency" class="gt_row gt_right">65100.000</td>
-      <td headers="stub_1_2 group" class="gt_row gt_left">grp_a</td></tr>
-          <tr><td headers="stub_1_2 stub_1" class="gt_row gt_left gt_stub gt_indent_2">row_5</td>
-      <td headers="stub_1_2 num" class="gt_row gt_right">5.550e+03</td>
-      <td headers="stub_1_2 char" class="gt_row gt_left">NA</td>
-      <td headers="stub_1_2 fctr" class="gt_row gt_center">five</td>
-      <td headers="stub_1_2 date" class="gt_row gt_right">2015-05-15</td>
-      <td headers="stub_1_2 time" class="gt_row gt_right">17:55</td>
-      <td headers="stub_1_2 datetime" class="gt_row gt_right">2018-05-05 04:00</td>
-      <td headers="stub_1_2 currency" class="gt_row gt_right">1325.810</td>
-      <td headers="stub_1_2 group" class="gt_row gt_left">grp_b</td></tr>
+          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub  gt_indent_2">row_3</th>
+      <td headers="stub_1_3 num" class="gt_row gt_right">3.333e+01</td>
+      <td headers="stub_1_3 char" class="gt_row gt_left">coconut</td>
+      <td headers="stub_1_3 fctr" class="gt_row gt_center">three</td>
+      <td headers="stub_1_3 date" class="gt_row gt_right">2015-03-15</td>
+      <td headers="stub_1_3 time" class="gt_row gt_right">15:45</td>
+      <td headers="stub_1_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
+      <td headers="stub_1_3 currency" class="gt_row gt_right">1.390</td>
+      <td headers="stub_1_3 group" class="gt_row gt_left">grp_a</td></tr>
+          <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub  gt_indent_2">row_4</th>
+      <td headers="stub_1_4 num" class="gt_row gt_right">4.444e+02</td>
+      <td headers="stub_1_4 char" class="gt_row gt_left">durian</td>
+      <td headers="stub_1_4 fctr" class="gt_row gt_center">four</td>
+      <td headers="stub_1_4 date" class="gt_row gt_right">2015-04-15</td>
+      <td headers="stub_1_4 time" class="gt_row gt_right">16:50</td>
+      <td headers="stub_1_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
+      <td headers="stub_1_4 currency" class="gt_row gt_right">65100.000</td>
+      <td headers="stub_1_4 group" class="gt_row gt_left">grp_a</td></tr>
+          <tr><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub  gt_indent_2">row_5</th>
+      <td headers="stub_1_5 num" class="gt_row gt_right">5.550e+03</td>
+      <td headers="stub_1_5 char" class="gt_row gt_left">NA</td>
+      <td headers="stub_1_5 fctr" class="gt_row gt_center">five</td>
+      <td headers="stub_1_5 date" class="gt_row gt_right">2015-05-15</td>
+      <td headers="stub_1_5 time" class="gt_row gt_right">17:55</td>
+      <td headers="stub_1_5 datetime" class="gt_row gt_right">2018-05-05 04:00</td>
+      <td headers="stub_1_5 currency" class="gt_row gt_right">1325.810</td>
+      <td headers="stub_1_5 group" class="gt_row gt_left">grp_b</td></tr>
           <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub">row_6</th>
       <td headers="stub_1_6 num" class="gt_row gt_right">NA</td>
       <td headers="stub_1_6 char" class="gt_row gt_left">fig</td>
@@ -221,34 +221,34 @@
           </tr>
         </thead>
         <tbody class="gt_table_body">
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_1">durian</td>
-      <td headers="" class="gt_row gt_center">four</td>
-      <td headers="" class="gt_row gt_right">65100.000</td>
-      <td headers="" class="gt_row gt_right">1</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_2">NA</td>
-      <td headers="" class="gt_row gt_center">five</td>
-      <td headers="" class="gt_row gt_right">1325.810</td>
-      <td headers="" class="gt_row gt_right">2</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_3">apricot</td>
-      <td headers="" class="gt_row gt_center">one</td>
-      <td headers="" class="gt_row gt_right">49.950</td>
-      <td headers="" class="gt_row gt_right">3</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_4">banana</td>
-      <td headers="" class="gt_row gt_center">two</td>
-      <td headers="" class="gt_row gt_right">17.950</td>
-      <td headers="" class="gt_row gt_right">4</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_5">fig</td>
-      <td headers="" class="gt_row gt_center">six</td>
-      <td headers="" class="gt_row gt_right">13.255</td>
-      <td headers="" class="gt_row gt_right">5</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_5">coconut</td>
-      <td headers="" class="gt_row gt_center">three</td>
-      <td headers="" class="gt_row gt_right">1.390</td>
-      <td headers="" class="gt_row gt_right">6</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_5">honeydew</td>
-      <td headers="" class="gt_row gt_center">eight</td>
-      <td headers="" class="gt_row gt_right">0.440</td>
-      <td headers="" class="gt_row gt_right">7</td></tr>
+          <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub  gt_indent_1">durian</th>
+      <td headers="stub_1_1 fctr" class="gt_row gt_center">four</td>
+      <td headers="stub_1_1 currency" class="gt_row gt_right">65100.000</td>
+      <td headers="stub_1_1 rank" class="gt_row gt_right">1</td></tr>
+          <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub  gt_indent_2">NA</th>
+      <td headers="stub_1_2 fctr" class="gt_row gt_center">five</td>
+      <td headers="stub_1_2 currency" class="gt_row gt_right">1325.810</td>
+      <td headers="stub_1_2 rank" class="gt_row gt_right">2</td></tr>
+          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub  gt_indent_3">apricot</th>
+      <td headers="stub_1_3 fctr" class="gt_row gt_center">one</td>
+      <td headers="stub_1_3 currency" class="gt_row gt_right">49.950</td>
+      <td headers="stub_1_3 rank" class="gt_row gt_right">3</td></tr>
+          <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub  gt_indent_4">banana</th>
+      <td headers="stub_1_4 fctr" class="gt_row gt_center">two</td>
+      <td headers="stub_1_4 currency" class="gt_row gt_right">17.950</td>
+      <td headers="stub_1_4 rank" class="gt_row gt_right">4</td></tr>
+          <tr><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">fig</th>
+      <td headers="stub_1_5 fctr" class="gt_row gt_center">six</td>
+      <td headers="stub_1_5 currency" class="gt_row gt_right">13.255</td>
+      <td headers="stub_1_5 rank" class="gt_row gt_right">5</td></tr>
+          <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">coconut</th>
+      <td headers="stub_1_6 fctr" class="gt_row gt_center">three</td>
+      <td headers="stub_1_6 currency" class="gt_row gt_right">1.390</td>
+      <td headers="stub_1_6 rank" class="gt_row gt_right">6</td></tr>
+          <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">honeydew</th>
+      <td headers="stub_1_7 fctr" class="gt_row gt_center">eight</td>
+      <td headers="stub_1_7 currency" class="gt_row gt_right">0.440</td>
+      <td headers="stub_1_7 rank" class="gt_row gt_right">7</td></tr>
           <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub">grapefruit</th>
       <td headers="stub_1_8 fctr" class="gt_row gt_center">seven</td>
       <td headers="stub_1_8 currency" class="gt_row gt_right">NA</td>
@@ -283,37 +283,37 @@
           <tr class="gt_group_heading_row">
             <th colspan="4" class="gt_group_heading" scope="colgroup" id="grp_a">grp_a</th>
           </tr>
-          <tr class="gt_row_group_first"><td headers="" class="gt_row gt_left gt_stub gt_indent_1">durian</td>
-      <td headers="" class="gt_row gt_center">four</td>
-      <td headers="" class="gt_row gt_right">65100.000</td>
-      <td headers="" class="gt_row gt_right">1</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_3">apricot</td>
-      <td headers="" class="gt_row gt_center">one</td>
-      <td headers="" class="gt_row gt_right">49.950</td>
-      <td headers="" class="gt_row gt_right">3</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_4">banana</td>
-      <td headers="" class="gt_row gt_center">two</td>
-      <td headers="" class="gt_row gt_right">17.950</td>
-      <td headers="" class="gt_row gt_right">4</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_5">coconut</td>
-      <td headers="" class="gt_row gt_center">three</td>
-      <td headers="" class="gt_row gt_right">1.390</td>
-      <td headers="" class="gt_row gt_right">6</td></tr>
+          <tr class="gt_row_group_first"><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub  gt_indent_1">durian</th>
+      <td headers="grp_a stub_1_1 fctr" class="gt_row gt_center">four</td>
+      <td headers="grp_a stub_1_1 currency" class="gt_row gt_right">65100.000</td>
+      <td headers="grp_a stub_1_1 rank" class="gt_row gt_right">1</td></tr>
+          <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub  gt_indent_3">apricot</th>
+      <td headers="grp_a stub_1_2 fctr" class="gt_row gt_center">one</td>
+      <td headers="grp_a stub_1_2 currency" class="gt_row gt_right">49.950</td>
+      <td headers="grp_a stub_1_2 rank" class="gt_row gt_right">3</td></tr>
+          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub  gt_indent_4">banana</th>
+      <td headers="grp_a stub_1_3 fctr" class="gt_row gt_center">two</td>
+      <td headers="grp_a stub_1_3 currency" class="gt_row gt_right">17.950</td>
+      <td headers="grp_a stub_1_3 rank" class="gt_row gt_right">4</td></tr>
+          <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">coconut</th>
+      <td headers="grp_a stub_1_4 fctr" class="gt_row gt_center">three</td>
+      <td headers="grp_a stub_1_4 currency" class="gt_row gt_right">1.390</td>
+      <td headers="grp_a stub_1_4 rank" class="gt_row gt_right">6</td></tr>
           <tr class="gt_group_heading_row">
             <th colspan="4" class="gt_group_heading" scope="colgroup" id="grp_b">grp_b</th>
           </tr>
-          <tr class="gt_row_group_first"><td headers="" class="gt_row gt_left gt_stub gt_indent_2">NA</td>
-      <td headers="" class="gt_row gt_center">five</td>
-      <td headers="" class="gt_row gt_right">1325.810</td>
-      <td headers="" class="gt_row gt_right">2</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_5">fig</td>
-      <td headers="" class="gt_row gt_center">six</td>
-      <td headers="" class="gt_row gt_right">13.255</td>
-      <td headers="" class="gt_row gt_right">5</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_5">honeydew</td>
-      <td headers="" class="gt_row gt_center">eight</td>
-      <td headers="" class="gt_row gt_right">0.440</td>
-      <td headers="" class="gt_row gt_right">7</td></tr>
+          <tr class="gt_row_group_first"><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub  gt_indent_2">NA</th>
+      <td headers="grp_b stub_1_5 fctr" class="gt_row gt_center">five</td>
+      <td headers="grp_b stub_1_5 currency" class="gt_row gt_right">1325.810</td>
+      <td headers="grp_b stub_1_5 rank" class="gt_row gt_right">2</td></tr>
+          <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">fig</th>
+      <td headers="grp_b stub_1_6 fctr" class="gt_row gt_center">six</td>
+      <td headers="grp_b stub_1_6 currency" class="gt_row gt_right">13.255</td>
+      <td headers="grp_b stub_1_6 rank" class="gt_row gt_right">5</td></tr>
+          <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">honeydew</th>
+      <td headers="grp_b stub_1_7 fctr" class="gt_row gt_center">eight</td>
+      <td headers="grp_b stub_1_7 currency" class="gt_row gt_right">0.440</td>
+      <td headers="grp_b stub_1_7 rank" class="gt_row gt_right">7</td></tr>
           <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub">grapefruit</th>
       <td headers="grp_b stub_1_8 fctr" class="gt_row gt_center">seven</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">NA</td>
@@ -348,41 +348,41 @@
           <tr class="gt_group_heading_row">
             <th colspan="4" class="gt_group_heading" scope="colgroup" id="grp_a">grp_a</th>
           </tr>
-          <tr class="gt_row_group_first"><td headers="grp_a stub_1" class="gt_row gt_left gt_stub gt_indent_1">durian</td>
-      <td headers="grp_a fctr" class="gt_row gt_center">four</td>
-      <td headers="grp_a currency" class="gt_row gt_right">65100.000</td>
-      <td headers="grp_a rank" class="gt_row gt_right">1</td></tr>
-          <tr><td headers="grp_a stub_1" class="gt_row gt_left gt_stub gt_indent_3">apricot</td>
-      <td headers="grp_a fctr" class="gt_row gt_center">one</td>
-      <td headers="grp_a currency" class="gt_row gt_right">49.950</td>
-      <td headers="grp_a rank" class="gt_row gt_right">3</td></tr>
-          <tr><td headers="grp_a stub_1" class="gt_row gt_left gt_stub gt_indent_4">banana</td>
-      <td headers="grp_a fctr" class="gt_row gt_center">two</td>
-      <td headers="grp_a currency" class="gt_row gt_right">17.950</td>
-      <td headers="grp_a rank" class="gt_row gt_right">4</td></tr>
-          <tr><td headers="grp_a stub_1" class="gt_row gt_left gt_stub gt_indent_5">coconut</td>
-      <td headers="grp_a fctr" class="gt_row gt_center">three</td>
-      <td headers="grp_a currency" class="gt_row gt_right">1.390</td>
-      <td headers="grp_a rank" class="gt_row gt_right">6</td></tr>
+          <tr class="gt_row_group_first"><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub  gt_indent_1">durian</th>
+      <td headers="grp_a stub_1_1 fctr" class="gt_row gt_center">four</td>
+      <td headers="grp_a stub_1_1 currency" class="gt_row gt_right">65100.000</td>
+      <td headers="grp_a stub_1_1 rank" class="gt_row gt_right">1</td></tr>
+          <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub  gt_indent_3">apricot</th>
+      <td headers="grp_a stub_1_2 fctr" class="gt_row gt_center">one</td>
+      <td headers="grp_a stub_1_2 currency" class="gt_row gt_right">49.950</td>
+      <td headers="grp_a stub_1_2 rank" class="gt_row gt_right">3</td></tr>
+          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub  gt_indent_4">banana</th>
+      <td headers="grp_a stub_1_3 fctr" class="gt_row gt_center">two</td>
+      <td headers="grp_a stub_1_3 currency" class="gt_row gt_right">17.950</td>
+      <td headers="grp_a stub_1_3 rank" class="gt_row gt_right">4</td></tr>
+          <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">coconut</th>
+      <td headers="grp_a stub_1_4 fctr" class="gt_row gt_center">three</td>
+      <td headers="grp_a stub_1_4 currency" class="gt_row gt_right">1.390</td>
+      <td headers="grp_a stub_1_4 rank" class="gt_row gt_right">6</td></tr>
           <tr class="gt_group_heading_row">
             <th colspan="4" class="gt_group_heading" scope="colgroup" id="grp_b">grp_b</th>
           </tr>
-          <tr class="gt_row_group_first"><td headers="grp_b stub_1" class="gt_row gt_left gt_stub gt_indent_2">NA</td>
-      <td headers="grp_b fctr" class="gt_row gt_center">five</td>
-      <td headers="grp_b currency" class="gt_row gt_right">1325.810</td>
-      <td headers="grp_b rank" class="gt_row gt_right">2</td></tr>
-          <tr><td headers="grp_b stub_1" class="gt_row gt_left gt_stub gt_indent_5">fig</td>
-      <td headers="grp_b fctr" class="gt_row gt_center">six</td>
-      <td headers="grp_b currency" class="gt_row gt_right">13.255</td>
-      <td headers="grp_b rank" class="gt_row gt_right">5</td></tr>
-          <tr><td headers="grp_b stub_1" class="gt_row gt_left gt_stub gt_indent_5">honeydew</td>
-      <td headers="grp_b fctr" class="gt_row gt_center">eight</td>
-      <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
-      <td headers="grp_b rank" class="gt_row gt_right">7</td></tr>
-          <tr><td headers="grp_b stub_1" class="gt_row gt_left gt_stub gt_indent_3">grapefruit</td>
-      <td headers="grp_b fctr" class="gt_row gt_center">seven</td>
-      <td headers="grp_b currency" class="gt_row gt_right">NA</td>
-      <td headers="grp_b rank" class="gt_row gt_right">NA</td></tr>
+          <tr class="gt_row_group_first"><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub  gt_indent_2">NA</th>
+      <td headers="grp_b stub_1_5 fctr" class="gt_row gt_center">five</td>
+      <td headers="grp_b stub_1_5 currency" class="gt_row gt_right">1325.810</td>
+      <td headers="grp_b stub_1_5 rank" class="gt_row gt_right">2</td></tr>
+          <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">fig</th>
+      <td headers="grp_b stub_1_6 fctr" class="gt_row gt_center">six</td>
+      <td headers="grp_b stub_1_6 currency" class="gt_row gt_right">13.255</td>
+      <td headers="grp_b stub_1_6 rank" class="gt_row gt_right">5</td></tr>
+          <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">honeydew</th>
+      <td headers="grp_b stub_1_7 fctr" class="gt_row gt_center">eight</td>
+      <td headers="grp_b stub_1_7 currency" class="gt_row gt_right">0.440</td>
+      <td headers="grp_b stub_1_7 rank" class="gt_row gt_right">7</td></tr>
+          <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub  gt_indent_3">grapefruit</th>
+      <td headers="grp_b stub_1_8 fctr" class="gt_row gt_center">seven</td>
+      <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_1_8 rank" class="gt_row gt_right">NA</td></tr>
         </tbody>
         
         
@@ -413,41 +413,41 @@
           <tr class="gt_group_heading_row">
             <th colspan="4" class="gt_group_heading" scope="colgroup" id="grp_a">grp_a</th>
           </tr>
-          <tr class="gt_row_group_first"><td headers="grp_a stub_1" class="gt_row gt_left gt_stub gt_indent_2">durian</td>
-      <td headers="grp_a fctr" class="gt_row gt_center">four</td>
-      <td headers="grp_a currency" class="gt_row gt_right">65100.000</td>
-      <td headers="grp_a rank" class="gt_row gt_right">1</td></tr>
-          <tr><td headers="grp_a stub_1" class="gt_row gt_left gt_stub gt_indent_4">apricot</td>
-      <td headers="grp_a fctr" class="gt_row gt_center">one</td>
-      <td headers="grp_a currency" class="gt_row gt_right">49.950</td>
-      <td headers="grp_a rank" class="gt_row gt_right">3</td></tr>
-          <tr><td headers="grp_a stub_1" class="gt_row gt_left gt_stub gt_indent_5">banana</td>
-      <td headers="grp_a fctr" class="gt_row gt_center">two</td>
-      <td headers="grp_a currency" class="gt_row gt_right">17.950</td>
-      <td headers="grp_a rank" class="gt_row gt_right">4</td></tr>
-          <tr><td headers="grp_a stub_1" class="gt_row gt_left gt_stub gt_indent_5">coconut</td>
-      <td headers="grp_a fctr" class="gt_row gt_center">three</td>
-      <td headers="grp_a currency" class="gt_row gt_right">1.390</td>
-      <td headers="grp_a rank" class="gt_row gt_right">6</td></tr>
+          <tr class="gt_row_group_first"><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub  gt_indent_2">durian</th>
+      <td headers="grp_a stub_1_1 fctr" class="gt_row gt_center">four</td>
+      <td headers="grp_a stub_1_1 currency" class="gt_row gt_right">65100.000</td>
+      <td headers="grp_a stub_1_1 rank" class="gt_row gt_right">1</td></tr>
+          <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub  gt_indent_4">apricot</th>
+      <td headers="grp_a stub_1_2 fctr" class="gt_row gt_center">one</td>
+      <td headers="grp_a stub_1_2 currency" class="gt_row gt_right">49.950</td>
+      <td headers="grp_a stub_1_2 rank" class="gt_row gt_right">3</td></tr>
+          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">banana</th>
+      <td headers="grp_a stub_1_3 fctr" class="gt_row gt_center">two</td>
+      <td headers="grp_a stub_1_3 currency" class="gt_row gt_right">17.950</td>
+      <td headers="grp_a stub_1_3 rank" class="gt_row gt_right">4</td></tr>
+          <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">coconut</th>
+      <td headers="grp_a stub_1_4 fctr" class="gt_row gt_center">three</td>
+      <td headers="grp_a stub_1_4 currency" class="gt_row gt_right">1.390</td>
+      <td headers="grp_a stub_1_4 rank" class="gt_row gt_right">6</td></tr>
           <tr class="gt_group_heading_row">
             <th colspan="4" class="gt_group_heading" scope="colgroup" id="grp_b">grp_b</th>
           </tr>
-          <tr class="gt_row_group_first"><td headers="grp_b stub_1" class="gt_row gt_left gt_stub gt_indent_3">NA</td>
-      <td headers="grp_b fctr" class="gt_row gt_center">five</td>
-      <td headers="grp_b currency" class="gt_row gt_right">1325.810</td>
-      <td headers="grp_b rank" class="gt_row gt_right">2</td></tr>
-          <tr><td headers="grp_b stub_1" class="gt_row gt_left gt_stub gt_indent_5">fig</td>
-      <td headers="grp_b fctr" class="gt_row gt_center">six</td>
-      <td headers="grp_b currency" class="gt_row gt_right">13.255</td>
-      <td headers="grp_b rank" class="gt_row gt_right">5</td></tr>
-          <tr><td headers="grp_b stub_1" class="gt_row gt_left gt_stub gt_indent_5">honeydew</td>
-      <td headers="grp_b fctr" class="gt_row gt_center">eight</td>
-      <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
-      <td headers="grp_b rank" class="gt_row gt_right">7</td></tr>
-          <tr><td headers="grp_b stub_1" class="gt_row gt_left gt_stub gt_indent_3">grapefruit</td>
-      <td headers="grp_b fctr" class="gt_row gt_center">seven</td>
-      <td headers="grp_b currency" class="gt_row gt_right">NA</td>
-      <td headers="grp_b rank" class="gt_row gt_right">NA</td></tr>
+          <tr class="gt_row_group_first"><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub  gt_indent_3">NA</th>
+      <td headers="grp_b stub_1_5 fctr" class="gt_row gt_center">five</td>
+      <td headers="grp_b stub_1_5 currency" class="gt_row gt_right">1325.810</td>
+      <td headers="grp_b stub_1_5 rank" class="gt_row gt_right">2</td></tr>
+          <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">fig</th>
+      <td headers="grp_b stub_1_6 fctr" class="gt_row gt_center">six</td>
+      <td headers="grp_b stub_1_6 currency" class="gt_row gt_right">13.255</td>
+      <td headers="grp_b stub_1_6 rank" class="gt_row gt_right">5</td></tr>
+          <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">honeydew</th>
+      <td headers="grp_b stub_1_7 fctr" class="gt_row gt_center">eight</td>
+      <td headers="grp_b stub_1_7 currency" class="gt_row gt_right">0.440</td>
+      <td headers="grp_b stub_1_7 rank" class="gt_row gt_right">7</td></tr>
+          <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub  gt_indent_3">grapefruit</th>
+      <td headers="grp_b stub_1_8 fctr" class="gt_row gt_center">seven</td>
+      <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_1_8 rank" class="gt_row gt_right">NA</td></tr>
         </tbody>
         
         
@@ -478,18 +478,18 @@
           <tr class="gt_group_heading_row">
             <th colspan="4" class="gt_group_heading" scope="colgroup" id="grp_a">grp_a</th>
           </tr>
-          <tr class="gt_row_group_first"><td headers="" class="gt_row gt_left gt_stub gt_indent_1">durian</td>
-      <td headers="" class="gt_row gt_center">four</td>
-      <td headers="" class="gt_row gt_right">65100.000</td>
-      <td headers="" class="gt_row gt_right">1</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_3">apricot</td>
-      <td headers="" class="gt_row gt_center">one</td>
-      <td headers="" class="gt_row gt_right">49.950</td>
-      <td headers="" class="gt_row gt_right">3</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_4">banana</td>
-      <td headers="" class="gt_row gt_center">two</td>
-      <td headers="" class="gt_row gt_right">17.950</td>
-      <td headers="" class="gt_row gt_right">4</td></tr>
+          <tr class="gt_row_group_first"><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub  gt_indent_1">durian</th>
+      <td headers="grp_a stub_1_1 fctr" class="gt_row gt_center">four</td>
+      <td headers="grp_a stub_1_1 currency" class="gt_row gt_right">65100.000</td>
+      <td headers="grp_a stub_1_1 rank" class="gt_row gt_right">1</td></tr>
+          <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub  gt_indent_3">apricot</th>
+      <td headers="grp_a stub_1_2 fctr" class="gt_row gt_center">one</td>
+      <td headers="grp_a stub_1_2 currency" class="gt_row gt_right">49.950</td>
+      <td headers="grp_a stub_1_2 rank" class="gt_row gt_right">3</td></tr>
+          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub  gt_indent_4">banana</th>
+      <td headers="grp_a stub_1_3 fctr" class="gt_row gt_center">two</td>
+      <td headers="grp_a stub_1_3 currency" class="gt_row gt_right">17.950</td>
+      <td headers="grp_a stub_1_3 rank" class="gt_row gt_right">4</td></tr>
           <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub">coconut</th>
       <td headers="grp_a stub_1_4 fctr" class="gt_row gt_center">three</td>
       <td headers="grp_a stub_1_4 currency" class="gt_row gt_right">1.390</td>
@@ -509,10 +509,10 @@
       <td headers="grp_b stub_1_7 fctr" class="gt_row gt_center">eight</td>
       <td headers="grp_b stub_1_7 currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b stub_1_7 rank" class="gt_row gt_right">7</td></tr>
-          <tr><td headers="grp_b stub_1_7 stub_1" class="gt_row gt_left gt_stub gt_indent_3">grapefruit</td>
-      <td headers="grp_b stub_1_7 fctr" class="gt_row gt_center">seven</td>
-      <td headers="grp_b stub_1_7 currency" class="gt_row gt_right">NA</td>
-      <td headers="grp_b stub_1_7 rank" class="gt_row gt_right">NA</td></tr>
+          <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub  gt_indent_3">grapefruit</th>
+      <td headers="grp_b stub_1_8 fctr" class="gt_row gt_center">seven</td>
+      <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_1_8 rank" class="gt_row gt_right">NA</td></tr>
         </tbody>
         
         
@@ -540,34 +540,34 @@
           </tr>
         </thead>
         <tbody class="gt_table_body">
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_1">durian</td>
-      <td headers="" class="gt_row gt_center">four</td>
-      <td headers="" class="gt_row gt_right">65100.000</td>
-      <td headers="" class="gt_row gt_right">1.7</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_2">NA</td>
-      <td headers="" class="gt_row gt_center">five</td>
-      <td headers="" class="gt_row gt_right">1325.810</td>
-      <td headers="" class="gt_row gt_right">2.7</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_3">apricot</td>
-      <td headers="" class="gt_row gt_center">one</td>
-      <td headers="" class="gt_row gt_right">49.950</td>
-      <td headers="" class="gt_row gt_right">3.7</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_4">banana</td>
-      <td headers="" class="gt_row gt_center">two</td>
-      <td headers="" class="gt_row gt_right">17.950</td>
-      <td headers="" class="gt_row gt_right">4.7</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_5">fig</td>
-      <td headers="" class="gt_row gt_center">six</td>
-      <td headers="" class="gt_row gt_right">13.255</td>
-      <td headers="" class="gt_row gt_right">5.7</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_5">coconut</td>
-      <td headers="" class="gt_row gt_center">three</td>
-      <td headers="" class="gt_row gt_right">1.390</td>
-      <td headers="" class="gt_row gt_right">6.7</td></tr>
-          <tr><td headers="" class="gt_row gt_left gt_stub gt_indent_5">honeydew</td>
-      <td headers="" class="gt_row gt_center">eight</td>
-      <td headers="" class="gt_row gt_right">0.440</td>
-      <td headers="" class="gt_row gt_right">7.7</td></tr>
+          <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub  gt_indent_1">durian</th>
+      <td headers="stub_1_1 fctr" class="gt_row gt_center">four</td>
+      <td headers="stub_1_1 currency" class="gt_row gt_right">65100.000</td>
+      <td headers="stub_1_1 rank" class="gt_row gt_right">1.7</td></tr>
+          <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub  gt_indent_2">NA</th>
+      <td headers="stub_1_2 fctr" class="gt_row gt_center">five</td>
+      <td headers="stub_1_2 currency" class="gt_row gt_right">1325.810</td>
+      <td headers="stub_1_2 rank" class="gt_row gt_right">2.7</td></tr>
+          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub  gt_indent_3">apricot</th>
+      <td headers="stub_1_3 fctr" class="gt_row gt_center">one</td>
+      <td headers="stub_1_3 currency" class="gt_row gt_right">49.950</td>
+      <td headers="stub_1_3 rank" class="gt_row gt_right">3.7</td></tr>
+          <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub  gt_indent_4">banana</th>
+      <td headers="stub_1_4 fctr" class="gt_row gt_center">two</td>
+      <td headers="stub_1_4 currency" class="gt_row gt_right">17.950</td>
+      <td headers="stub_1_4 rank" class="gt_row gt_right">4.7</td></tr>
+          <tr><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">fig</th>
+      <td headers="stub_1_5 fctr" class="gt_row gt_center">six</td>
+      <td headers="stub_1_5 currency" class="gt_row gt_right">13.255</td>
+      <td headers="stub_1_5 rank" class="gt_row gt_right">5.7</td></tr>
+          <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">coconut</th>
+      <td headers="stub_1_6 fctr" class="gt_row gt_center">three</td>
+      <td headers="stub_1_6 currency" class="gt_row gt_right">1.390</td>
+      <td headers="stub_1_6 rank" class="gt_row gt_right">6.7</td></tr>
+          <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub  gt_indent_5">honeydew</th>
+      <td headers="stub_1_7 fctr" class="gt_row gt_center">eight</td>
+      <td headers="stub_1_7 currency" class="gt_row gt_right">0.440</td>
+      <td headers="stub_1_7 rank" class="gt_row gt_right">7.7</td></tr>
           <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub">grapefruit</th>
       <td headers="stub_1_8 fctr" class="gt_row gt_center">seven</td>
       <td headers="stub_1_8 currency" class="gt_row gt_right">NA</td>
