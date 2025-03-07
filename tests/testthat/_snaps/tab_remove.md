@@ -401,11 +401,11 @@
         <thead>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup"></th>
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="a"></th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="6" scope="colgroup" id="Performance">
               <div class="gt_column_spanner">Performance</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col"></th>
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="a"></th>
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="a::stub"></th>
@@ -632,11 +632,11 @@
         <thead>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup"></th>
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="a"></th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="6" scope="colgroup" id="Performance">
               <div class="gt_column_spanner">Performance</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col"></th>
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="a"></th>
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="a::stub"></th>
@@ -754,11 +754,11 @@
         <thead>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup"></th>
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="a"></th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="6" scope="colgroup" id="Performance">
               <div class="gt_column_spanner">Performance</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col"></th>
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="a"></th>
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="a::stub"></th>
@@ -876,11 +876,11 @@
         <thead>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup"></th>
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="a"></th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="6" scope="colgroup" id="Performance">
               <div class="gt_column_spanner">Performance</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col"></th>
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="a"></th>
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="a::stub"></th>

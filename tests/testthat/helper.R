@@ -55,8 +55,12 @@ expect_match_html <- function(object,
                               ...,
                               all = TRUE,
                               info = NULL,
-                              label = NULL) {
+                              label = NULL,
+                              ignore_id = TRUE) {
   rendered <- f(object)
+  if (ignore_id) {
+    rendered <- remove_id_prefixes(rendered)
+  }
   for (i in seq_along(regexp)) {
     testthat::expect_match(
       object = rendered,
@@ -154,8 +158,8 @@ expect_equal_gt <- function(gt_tbl1, gt_tbl2, f = render_as_html, ignore_id = FA
   gt_tbl1 <- f(gt_tbl1)
   gt_tbl2 <- f(gt_tbl2)
   if (ignore_id) {
-    gt_tbl1 <- gsub("id=\"[a-z]*?\"", "", gt_tbl1)
-    gt_tbl2 <- gsub("id=\"[a-z]*?\"", "", gt_tbl2)
+    gt_tbl1 <- remove_id_prefixes(gt_tbl1)
+    gt_tbl2 <- remove_id_prefixes(gt_tbl2)
   }
   expect_equal(
     gt_tbl1,
@@ -218,3 +222,13 @@ mtcars_short <- datasets::mtcars[1:5, ]
 
 # Create a shortened version of `iris`
 iris_short <- datasets::iris[1:5, ]
+
+
+# Remove id prefixes from html output for testing
+remove_id_prefixes <- function(lines) {
+  if (length(lines) > 1) {
+    lines <- paste0(lines, collapse = "\n")
+  }
+  .id <- stringr::str_extract(lines, "(?<=div id=\")[a-z]+(?=\")")
+  stringr::str_remove_all(lines, paste0(.id, "-?"))
+}
