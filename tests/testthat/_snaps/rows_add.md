@@ -88,7 +88,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">5.790e+00</td>
@@ -193,7 +193,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">5.790e+00</td>
@@ -298,7 +298,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">5.790e+00</td>
@@ -419,7 +419,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">row_9</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">5.790e+00</td>
@@ -841,7 +841,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -1142,7 +1142,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -10095,7 +10095,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -10200,7 +10200,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -10305,7 +10305,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -10410,7 +10410,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -10515,7 +10515,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -10620,7 +10620,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -10725,7 +10725,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -10830,7 +10830,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -10935,7 +10935,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -11040,7 +11040,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -11145,7 +11145,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -11250,7 +11250,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -11355,7 +11355,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -11460,7 +11460,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -11565,7 +11565,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -11670,7 +11670,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -11775,7 +11775,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -11888,7 +11888,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -12001,7 +12001,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -12114,7 +12114,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -12227,7 +12227,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -12340,7 +12340,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -12453,7 +12453,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -12566,7 +12566,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -12679,7 +12679,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -12792,7 +12792,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -12905,7 +12905,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -13018,7 +13018,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -13131,7 +13131,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -13244,7 +13244,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -13357,7 +13357,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -13470,7 +13470,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">NA</td>
@@ -13583,7 +13583,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -13688,7 +13688,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -13793,7 +13793,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -13898,7 +13898,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -14003,7 +14003,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -14108,7 +14108,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -14213,7 +14213,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -14318,7 +14318,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -14423,7 +14423,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -14528,7 +14528,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -14633,7 +14633,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -14738,7 +14738,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -14843,7 +14843,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -14948,7 +14948,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -15053,7 +15053,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -15158,7 +15158,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -15263,7 +15263,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -15376,7 +15376,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -15489,7 +15489,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -15602,7 +15602,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -15715,7 +15715,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -15828,7 +15828,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -15941,7 +15941,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -16054,7 +16054,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -16167,7 +16167,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -16280,7 +16280,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -16393,7 +16393,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -16506,7 +16506,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -16619,7 +16619,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -16732,7 +16732,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -16845,7 +16845,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -16958,7 +16958,7 @@
       <td headers="grp_b currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b row" class="gt_row gt_left">row_8</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><td headers="NA num" class="gt_row gt_right">NA</td>
       <td headers="NA char" class="gt_row gt_left">NA</td>
@@ -17071,7 +17071,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">5.790e+00</td>
@@ -17176,7 +17176,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">5.790e+00</td>
@@ -17281,7 +17281,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">5.790e+00</td>
@@ -17402,7 +17402,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">row_9</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">5.790e+00</td>
@@ -18194,7 +18194,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">5.790e+00</td>
@@ -18299,7 +18299,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">5.790e+00</td>
@@ -18404,7 +18404,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">NA</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">5.790e+00</td>
@@ -18525,7 +18525,7 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="8" class="gt_empty_group_heading" scope="colgroup" id="a"></th>
+            <th colspan="8" class="gt_empty_group_heading" scope="colgroup"></th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">row_9</th>
       <td headers="NA stub_1_9 num" class="gt_row gt_right">5.790e+00</td>

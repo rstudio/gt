@@ -2194,16 +2194,26 @@ as_css_font_family_attr <- function(font_vec, value_only = FALSE) {
 }
 
 valid_html_id <- function(x, tbl_id = NULL) {
-  # Make sure it starts with a letter.
-  valid_ids <- grepl("^[A-z]", x)
-  x[!valid_ids] <- paste0("a", x[!valid_ids])
-  x <- gsub("\\s+", "-", x)
+  # Identify empty strings after trimming whitespace
+  is_empty <- trimws(x) == ""
   
-  # If a table ID is provided, prepend it to each element ID
-  # Added check for NA values in tbl_id
-  if (!is.null(tbl_id) && length(tbl_id) > 0 && !is.na(tbl_id) && nchar(tbl_id) > 0) {
-    x <- paste(tbl_id, x, sep = "-")
+  # Process non-empty strings
+  if (any(!is_empty)) {
+    # Make sure non-empty strings start with a letter
+    valid_ids <- grepl("^[A-z]", x[!is_empty])
+    x[!is_empty][!valid_ids] <- paste0("a", x[!is_empty][!valid_ids])
+    
+    # Replace whitespace with hyphens
+    x[!is_empty] <- gsub("\\s+", "-", x[!is_empty])
+    
+    # If a table ID is provided, prepend it to each non-empty element ID
+    if (!is.null(tbl_id) && length(tbl_id) > 0 && !is.na(tbl_id) && nchar(tbl_id) > 0) {
+      x[!is_empty] <- paste(tbl_id, x[!is_empty], sep = "-")
+    }
   }
   
-  x
+  # Ensure empty strings are empty
+  x[is_empty] <- ""
+  
+  return(x)
 }

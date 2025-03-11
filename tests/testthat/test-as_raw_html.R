@@ -115,7 +115,7 @@ test_that("as_raw_html() produces the same table every time", {
     remove_id_prefixes()
 
   gt_html_2_sha1 <- rlang::hash(gt_html_2)
-  expect_equal(gt_html_2_sha1, "547ab348e15e1fc015fbc3e3329ebb15")
+  expect_equal(gt_html_2_sha1, "3adbdd22a26672ab271e5ae81b05c16b")
 
   # Expect that font family values with multiple words (i.e., have a space
   # character) added with `tab_style()` preserve single-quote characters
