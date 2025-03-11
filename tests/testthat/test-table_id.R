@@ -21,6 +21,28 @@ test_that("Table ID is used as prefix for element IDs", {
   expect_true(grepl('id="test-table-Spanner"', html_str, fixed = TRUE))
 })
 
+test_that("All IDs in headers exist", {
+  tbl <- exibble %>%
+    gt(id = "test-table") 
+
+  html_str <- as.character(render_as_html(tbl))
+
+  .nodes <- xml2::read_html(html_str)
+
+  ids <- .nodes %>%
+    xml_find_all(".//*[@id]") %>%
+    xml_attr("id")
+
+  all_headers_attrs <- .nodes %>%
+    xml_find_all("//*[@headers]") %>%
+    xml_attr("headers") %>%
+    stringr::str_split(" +") %>%
+    unlist() %>%
+    unique()
+
+  expect_true(all(all_headers_attrs %in% ids))
+})
+
 test_that("Random IDs are consistently applied within a table", {
   # Create a table without specifying an ID
   tbl <- exibble %>%
@@ -79,4 +101,9 @@ test_that("Multiple tables have unique element IDs", {
   # This ensures that if multiple tables are on the same page, they won't have ID conflicts
   expect_false(grepl('id="table1-Group"', html_str2, fixed = TRUE))
   expect_false(grepl('id="table2-Group"', html_str1, fixed = TRUE))
+
+  # Ensure no duplicate IDs
+  ids1 <- regmatches(html_str1, regexpr('id="[^"]*"', html_str1))
+  ids2 <- regmatches(html_str2, regexpr('id="[^"]*"', html_str2))
+  expect_false(any(duplicated(c(ids1, ids2))))
 })

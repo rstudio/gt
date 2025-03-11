@@ -232,3 +232,5 @@ remove_id_prefixes <- function(lines) {
   .id <- stringr::str_extract(lines, "(?<=div id=\")[a-z]+(?=\")")
   stringr::str_remove_all(lines, paste0(.id, "-?"))
 }
+
+
