@@ -229,8 +229,12 @@ remove_id_prefixes <- function(lines) {
   if (length(lines) > 1) {
     lines <- paste0(lines, collapse = "\n")
   }
-  .id <- stringr::str_extract(lines, "(?<=div id=\")[a-z]+(?=\")")
-  stringr::str_remove_all(lines, paste0(.id, "-?"))
+  .id <- regmatches(lines, regexpr("(?<=div id=\")[^\"]+", lines, perl = TRUE))
+  if (length(.id) > 0) {
+    lines <- gsub(paste0(.id, "-"), "", lines, fixed = TRUE)
+    lines <- gsub(.id, "", lines, fixed = TRUE)
+  }
+  lines
 }
 
 
