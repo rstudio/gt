@@ -194,6 +194,8 @@ as.tags.gt_tbl <- function(x, ...) {
 
   if (is.na(table_id)) {
     id <- random_id()
+    # Store the generated ID back into the table options so it can be accessed by rendering functions
+    x <- dt_options_set_value(data = x, option = "table_id", value = id)
   } else {
     id <- table_id
   }

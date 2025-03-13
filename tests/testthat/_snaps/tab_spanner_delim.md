@@ -722,7 +722,7 @@
       <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
         <thead>
           <tr class="gt_col_headings gt_spanner_row">
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="4" scope="colgroup" id="ALL ABOVE">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="4" scope="colgroup" id="ALL-ABOVE">
               <div class="gt_column_spanner">ALL ABOVE</div>
             </th>
           </tr>
@@ -768,7 +768,7 @@
       <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
         <thead>
           <tr class="gt_col_headings gt_spanner_row">
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="4" scope="colgroup" id="ALL ABOVE">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="4" scope="colgroup" id="ALL-ABOVE">
               <div class="gt_column_spanner">ALL ABOVE</div>
             </th>
           </tr>
@@ -816,7 +816,7 @@
       <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
         <thead>
           <tr class="gt_col_headings gt_spanner_row">
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="4" scope="colgroup" id="ALL ABOVE">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="4" scope="colgroup" id="ALL-ABOVE">
               <div class="gt_column_spanner">ALL ABOVE</div>
             </th>
           </tr>
@@ -867,7 +867,7 @@
       <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
         <thead>
           <tr class="gt_col_headings gt_spanner_row">
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="4" scope="colgroup" id="**REPLACED**">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="4" scope="colgroup" id="a**REPLACED**">
               <div class="gt_column_spanner"><span class='gt_from_md'><strong>REPLACED</strong></span></div>
             </th>
           </tr>
@@ -918,12 +918,12 @@
       <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
         <thead>
           <tr class="gt_col_headings gt_spanner_row">
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="4" scope="colgroup" id="**_Above It All_**">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="4" scope="colgroup" id="a**_Above-It-All_**">
               <div class="gt_column_spanner"><span class='gt_from_md'><strong><em>Above It All</em></strong></span></div>
             </th>
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="4" scope="colgroup" id="**REPLACED**">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="4" scope="colgroup" id="a**REPLACED**">
               <div class="gt_column_spanner"><span class='gt_from_md'><strong>REPLACED</strong></span></div>
             </th>
           </tr>
@@ -1076,7 +1076,7 @@
       <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
         <thead>
           <tr class="gt_col_headings gt_spanner_row">
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Cut In">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Cut-In">
               <div class="gt_column_spanner">Cut In</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Data">
@@ -1137,13 +1137,13 @@
         <thead>
           <tr class="gt_col_headings gt_spanner_row">
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Cut Across">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Cut-Across">
               <div class="gt_column_spanner">Cut Across</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col"></th>
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Cut In">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Cut-In">
               <div class="gt_column_spanner">Cut In</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Data">
@@ -1203,11 +1203,11 @@
         </colgroup>
         <thead>
           <tr class="gt_col_headings gt_spanner_row">
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Cut Across">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Cut-Across">
               <div class="gt_column_spanner">Cut Across</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Cut Across">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Cut-Across">
               <div class="gt_column_spanner">Cut Across</div>
             </th>
           </tr>
@@ -1215,7 +1215,7 @@
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Data">
               <div class="gt_column_spanner">Data</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Cut In">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Cut-In">
               <div class="gt_column_spanner">Cut In</div>
             </th>
           </tr>
@@ -1815,11 +1815,11 @@
           </tr>
         </thead>
         <tbody class="gt_table_body">
-          <tr><td headers=".A..B..C..D..E." class="gt_row gt_right">1</td>
-      <td headers=".A..B..C..D." class="gt_row gt_right">2</td>
-      <td headers=".A..B..C." class="gt_row gt_right">3</td>
-      <td headers=".A..B." class="gt_row gt_right">4</td>
-      <td headers=".A." class="gt_row gt_right">5</td></tr>
+          <tr><td headers="a.A..B..C..D..E." class="gt_row gt_right">1</td>
+      <td headers="a.A..B..C..D." class="gt_row gt_right">2</td>
+      <td headers="a.A..B..C." class="gt_row gt_right">3</td>
+      <td headers="a.A..B." class="gt_row gt_right">4</td>
+      <td headers="a.A." class="gt_row gt_right">5</td></tr>
         </tbody>
         
         
