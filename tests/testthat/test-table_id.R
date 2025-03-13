@@ -36,7 +36,7 @@ test_that("All IDs in headers exist", {
   all_headers_attrs <- .nodes %>%
     xml_find_all("//*[@headers]") %>%
     xml_attr("headers") %>%
-    stringr::str_split(" +") %>%
+    strsplit(" +") %>%
     unlist() %>%
     unique()
 
