@@ -56,7 +56,7 @@ Suggests:
     fontawesome (>= 0.5.2),
     ggplot2,
     grid,
-    gtable,
+    gtable (>= 0.3.6),
     katex (>= 1.4.1),
     knitr,
     lubridate,
