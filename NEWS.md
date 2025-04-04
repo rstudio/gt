@@ -1,4 +1,4 @@
-# gt (development version)
+# gt 1.0.0
 
 * Fixed an issue in `fmt_number()` where `drop_trailing_dec_mark` would be ignored if `use_seps = FALSE` (@olivroy, #1961).
 
