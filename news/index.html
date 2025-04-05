@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.11.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,17 +63,20 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="gt-development-version">gt (development version)<a class="anchor" aria-label="anchor" href="#gt-development-version"></a></h2>
-<ul><li><p>Fixed an issue in <code><a href="../reference/fmt_number.html">fmt_number()</a></code> where <code>drop_trailing_dec_mark</code> would be ignored if <code>use_seps = FALSE</code> (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1961" class="external-link">#1961</a>).</p></li>
-<li><p>Fixed an issue where <code><a href="../reference/fmt_markdown.html">fmt_markdown()</a></code> could create strange output in Quarto (html and Typst formats) (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1957" class="external-link">#1957</a>, <a href="https://github.com/quarto-dev/quarto-cli/issues/11932" class="external-link">quarto-dev/quarto-cli#11932</a>, <a href="https://github.com/quarto-dev/quarto-cli/issues/11610" class="external-link">quarto-dev/quarto-cli#11610</a>).</p></li>
+<h2 class="pkg-version" data-toc-text="1.0.0" id="gt-100">gt 1.0.0<a class="anchor" aria-label="anchor" href="#gt-100"></a></h2><p class="text-muted">CRAN release: 2025-04-05</p>
+<div class="section level3">
+<h3 id="minor-improvements-and-bug-fixes-1-0-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-1-0-0"></a></h3>
+<ul><li><p>Tables embedded in Shiny apps with <code><a href="../reference/gt_output.html">gt_output()</a></code> and <code><a href="../reference/render_gt.html">render_gt()</a></code> with <code>ihtml.selection_mode</code> enabled also act as inputs, reporting the row numbers that are selected (<a href="https://github.com/rstudio/gt/issues/354" class="external-link">#354</a>, <a href="https://github.com/rstudio/gt/issues/1368" class="external-link">#1368</a>). (<a href="https://github.com/jonthegeek" class="external-link">@jonthegeek</a>, <a href="https://github.com/rstudio/gt/issues/1909" class="external-link">#1909</a>)</p></li>
+<li><p>Significantly faster rendering of certain large tables, by optimizing the internal <code>rownum_translation()</code> utility (<a href="https://github.com/rstudio/gt/issues/1924" class="external-link">#1924</a>). (<a href="https://github.com/magnusdv" class="external-link">@magnusdv</a>, <a href="https://github.com/rstudio/gt/issues/1925" class="external-link">#1925</a>)</p></li>
+<li><p>Fixed an issue in <code><a href="../reference/fmt_number.html">fmt_number()</a></code> where <code>drop_trailing_dec_mark</code> would be ignored if <code>use_seps = FALSE</code> (<a href="https://github.com/rstudio/gt/issues/1961" class="external-link">#1961</a>). (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1962" class="external-link">#1962</a>).</p></li>
+<li><p>Fixed an issue where <code><a href="../reference/fmt_markdown.html">fmt_markdown()</a></code> could create strange output in Quarto (html and Typst formats) (<a href="https://github.com/rstudio/gt/issues/1957" class="external-link">#1957</a>). (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1958" class="external-link">#1958</a>, <a href="https://github.com/quarto-dev/quarto-cli/issues/11932" class="external-link">quarto-dev/quarto-cli#11932</a>, <a href="https://github.com/quarto-dev/quarto-cli/issues/11610" class="external-link">quarto-dev/quarto-cli#11610</a>).</p></li>
 <li><p>The default table position in LaTeX is now “t” instead of “!t” (<a href="https://github.com/AaronGullickson" class="external-link">@AaronGullickson</a>, <a href="https://github.com/rstudio/gt/issues/1935" class="external-link">#1935</a>).</p></li>
 <li><p>Fixed an issue where cross-references would fail in bookdown::html_document2 (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1948" class="external-link">#1948</a>)</p></li>
-<li><p>Significantly faster rendering of certain large tables, by optimizing the internal <code>rownum_translation()</code> utility. (<a href="https://github.com/magnusdv" class="external-link">@magnusdv</a>, <a href="https://github.com/rstudio/gt/issues/1924" class="external-link">#1924</a>)</p></li>
-<li><p>Interactive tables can support selection through the <code>ihtml.selection_mode</code> option. (<a href="https://github.com/jonthegeek" class="external-link">@jonthegeek</a>, <a href="https://github.com/rstudio/gt/issues/1909" class="external-link">#1909</a>)</p></li>
-<li><p>Tables embedded in Shiny apps with <code><a href="../reference/gt_output.html">gt_output()</a></code> and <code><a href="../reference/render_gt.html">render_gt()</a></code> with <code>ihtml.selection_mode</code> enabled also act as inputs, reporting the row numbers that are selected (<a href="https://github.com/rstudio/gt/issues/354" class="external-link">#354</a>, <a href="https://github.com/rstudio/gt/issues/1368" class="external-link">#1368</a>). (<a href="https://github.com/jonthegeek" class="external-link">@jonthegeek</a>, <a href="https://github.com/rstudio/gt/issues/1909" class="external-link">#1909</a>)</p></li>
 <li><p>Improved width calculations in <code><a href="../reference/as_gtable.html">as_gtable()</a></code> (<a href="https://github.com/teunbrand" class="external-link">@teunbrand</a>, <a href="https://github.com/rstudio/gt/issues/1923" class="external-link">#1923</a>)</p></li>
-<li><p><code>gt(row_group_as_column = TRUE)</code> now works if multiple groups are supplied (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1552" class="external-link">#1552</a>).</p></li>
+<li><p><code>gt(row_group_as_column = TRUE)</code> now works if multiple groups are supplied (<a href="https://github.com/rstudio/gt/issues/1552" class="external-link">#1552</a>). (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1801" class="external-link">#1801</a>).</p></li>
+<li><p>Fixed many typos in the documentation. (<a href="https://github.com/rstudio/gt/issues/1910" class="external-link">#1910</a>, thanks <a href="https://github.com/MichaelChirico" class="external-link">@MichaelChirico</a>!)</p></li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.11.1" id="gt-0111">gt 0.11.1<a class="anchor" aria-label="anchor" href="#gt-0111"></a></h2><p class="text-muted">CRAN release: 2024-10-04</p>
 <div class="section level3">
