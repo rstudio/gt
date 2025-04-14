@@ -1,22 +1,26 @@
 # gt (development version)
 
-* Fixed an issue in `fmt_number()` where `drop_trailing_dec_mark` would be ignored if `use_seps = FALSE` (@olivroy, #1961).
+# gt 1.0.0
 
-* Fixed an issue where `fmt_markdown()` could create strange output in Quarto (html and Typst formats) (@olivroy, #1957, [quarto-dev/quarto-cli#11932](https://github.com/quarto-dev/quarto-cli/issues/11932), [quarto-dev/quarto-cli#11610](https://github.com/quarto-dev/quarto-cli/issues/11610)).
+## Minor improvements and bug fixes
+
+* Tables embedded in Shiny apps with `gt_output()` and `render_gt()` with `ihtml.selection_mode` enabled also act as inputs, reporting the row numbers that are selected (#354, #1368). (@jonthegeek, #1909)
+
+* Significantly faster rendering of certain large tables, by optimizing the internal `rownum_translation()` utility (#1924). (@magnusdv, #1925)
+
+* Fixed an issue in `fmt_number()` where `drop_trailing_dec_mark` would be ignored if `use_seps = FALSE` (#1961). (@olivroy, #1962).
+
+* Fixed an issue where `fmt_markdown()` could create strange output in Quarto (html and Typst formats) (#1957). (@olivroy, #1958, [quarto-dev/quarto-cli#11932](https://github.com/quarto-dev/quarto-cli/issues/11932), [quarto-dev/quarto-cli#11610](https://github.com/quarto-dev/quarto-cli/issues/11610)).
  
 * The default table position in LaTeX is now "t" instead of "!t" (@AaronGullickson, #1935).
 
 * Fixed an issue where cross-references would fail in bookdown::html_document2 (@olivroy, #1948)
 
-* Significantly faster rendering of certain large tables, by optimizing the internal `rownum_translation()` utility. (@magnusdv, #1924) 
-
-* Interactive tables can support selection through the `ihtml.selection_mode` option. (@jonthegeek, #1909)
-
-* Tables embedded in Shiny apps with `gt_output()` and `render_gt()` with `ihtml.selection_mode` enabled also act as inputs, reporting the row numbers that are selected (#354, #1368). (@jonthegeek, #1909)
-
 * Improved width calculations in `as_gtable()` (@teunbrand, #1923)
 
-* `gt(row_group_as_column = TRUE)` now works if multiple groups are supplied (@olivroy, #1552).
+* `gt(row_group_as_column = TRUE)` now works if multiple groups are supplied (#1552). (@olivroy, #1801).
+
+* Fixed many typos in the documentation. (#1910, thanks @MichaelChirico!)
 
 # gt 0.11.1
 

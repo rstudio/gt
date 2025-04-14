@@ -539,7 +539,7 @@
 #'   *Specify latex floating position*
 #'
 #'   The latex position indicator for a floating environment (e.g., `"tb"`,
-#'   `"h"`). If not specified, latex position will default to `"t"``. It should be
+#'   `"h"`). If not specified, latex position will default to `"t"`. It should be
 #'   specified without square brackets. Quarto users should instead set the
 #'   floating position within the code chunk argument `tbl-pos`. The output
 #'   table will only float if `latex.use_longtable = FALSE`.
