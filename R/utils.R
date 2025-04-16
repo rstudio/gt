@@ -974,7 +974,7 @@ process_text <- function(text, context = "html") {
 
       text <- markdown_to_xml(text)
     } else {
-      text <- as.character(text)
+      text <- linebreak_br(as.character(text))
     }
 
     return(text)
@@ -1029,6 +1029,14 @@ unescape_html <- function(text) {
   # universal linebreak
   text <- gsub("<br>", "\n", text, fixed = TRUE)
   text
+}
+
+
+#' apply a double newline for implementing universal line break in markdown
+#' @noRd
+
+linebreak_br <- function(x){
+  gsub("<br>","\n\n\n",x)
 }
 
 #' Transform Markdown text to HTML and also perform HTML escaping
@@ -1138,11 +1146,12 @@ markdown_to_latex <- function(text, md_engine) {
 
 # Transform Markdown text to ooxml
 markdown_to_xml <- function(text) {
+
   res <- vapply(
-    as.character(text),
+    gsub("<br>","\n\n",as.character(text)),
     FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
-    FUN = commonmark::markdown_xml
+    FUN = \(x, ...) commonmark::markdown_xml(linebreak_br(x), ...)
   )
   vapply(
     res,
