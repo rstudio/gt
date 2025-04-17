@@ -973,8 +973,12 @@ process_text <- function(text, context = "html") {
     if (inherits(text, "from_markdown")) {
 
       text <- markdown_to_xml(text)
+    } else if (is_html(text)) {
+
+      text <- markdown_to_xml(unescape_html(linebreak_br(text)))
+
     } else {
-      text <- linebreak_br(as.character(text))
+      text <- as.character(text)
     }
 
     return(text)
