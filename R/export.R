@@ -761,6 +761,8 @@ as_gtable <- function(data, plot = FALSE, text_grob = grid::textGrob) {
   gtable
 }
 
+as.gtable.gt_tbl <- function(x, ...) as_gtable(x, ...)
+
 combine_components <- function(
     caption = NULL,
     heading = NULL,

@@ -18,6 +18,13 @@ pkgdown/assets/gt-latex.qmd
 man/figures/
 tests/gt-examples
 tests/performance-monitoring
+
+tests/testthat/test-as_gtable.R
+tests/testthat/_snaps/as_gtable.md
+
+tests/testthat/test-as_latex.R
+tests/testthat/_snaps/as_latex.md
+
 tests/testthat/test-as_raw_html.R
 
 tests/testthat/test-as_word.R
@@ -112,6 +119,8 @@ tests/testthat/_snaps/image.md
 tests/testthat/test-info_tables.R
 tests/testthat/test-input_data_validation.R
 
+tests/testthat/test-l_fmt_date_time.R
+
 tests/testthat/test-l_summary_rows.R
 tests/testthat/_snaps/l_summary_rows.md
 
@@ -181,6 +190,10 @@ tests/testthat/_snaps/text_transform.md
 
 tests/testthat/test-util_functions.R
 tests/testthat/test-utils_plots.R
+
+tests/testthat/test-utils_render_grid.R
+tests/testthat/_snaps/utils_render_grid.md
+
 tests/testthat/test-utils_render_html.R
 tests/testthat/test-utils_units.R
 
