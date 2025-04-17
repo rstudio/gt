@@ -18,6 +18,8 @@
 
 * `gt(row_group_as_column = TRUE)` now works if multiple groups are supplied (@olivroy, #1552).
 
+* as_word() now handles "<br>"" line breaks for md() and html(), and no longer automatically adds "Table N" ahead of the caption. 
+
 # gt 0.11.1
 
 ## Breaking changes
