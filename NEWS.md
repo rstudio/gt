@@ -1,5 +1,7 @@
 # gt (development version)
 
+* Fixed an issue with a warning in Quarto (@olivroy, #1985)
+
 # gt 1.0.0
 
 ## Minor improvements and bug fixes
