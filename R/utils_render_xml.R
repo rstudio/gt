@@ -1271,7 +1271,7 @@ create_table_caption_component_xml <- function(
 
   title_caption_xml <- as_xml_node(title_caption_xml)
 
-  if(autonum){
+  if (autonum) {
     autonum_node_xml <-
       xml_table_autonum(
         font = xml_r_font(header_title_style[["cell_text"]][["font"]] %||% "Calibri"),

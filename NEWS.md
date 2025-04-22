@@ -26,8 +26,6 @@
 
 * Fixed many typos in the documentation. (#1910, thanks @MichaelChirico!)
 
-
-
 # gt 0.11.1
 
 ## Breaking changes
