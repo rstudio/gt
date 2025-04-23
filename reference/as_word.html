@@ -78,7 +78,8 @@ single-element character vector.</p>
 <span>  caption_location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top"</span>, <span class="st">"bottom"</span>, <span class="st">"embed"</span><span class="op">)</span>,</span>
 <span>  caption_align <span class="op">=</span> <span class="st">"left"</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  keep_with_next <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  keep_with_next <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  autonum <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -126,6 +127,14 @@ only used when <code>caption_location</code> is not set as <code>"embed"</code>.
 <p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>A logical value that indicates whether a table should use Word option
 <code>Keep rows together</code>.</p></dd>
+
+
+<dt id="arg-autonum">autonum<a class="anchor" aria-label="anchor" href="#arg-autonum"></a></dt>
+<dd><p>Automatic Table Numbering</p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
+<p>A logical value that indicates whether a table should use Words built-in
+auto table numbering option in the caption.
+<code>Automatic Table Numbering</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
