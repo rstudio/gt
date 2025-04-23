@@ -69,4 +69,5 @@ process_md_quarto <- function(text, md_engine_fn) {
     )
 
   text[nzchar(text, keepNA = FALSE)] <- non_na_text
+  text
 }

@@ -2,6 +2,8 @@
 
 ## Minor improvements and bug fixes
 
+* Fixed an issue with a warning in Quarto (@olivroy, #1985)
+
 * as_word() now handles "<br>" line breaks for md() and html(), and no longer automatically adds "Table N" ahead of the caption. 
 
 # gt 1.0.0
