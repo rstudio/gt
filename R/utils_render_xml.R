@@ -2924,7 +2924,7 @@ parse_to_xml <- function(x, ...) {
 
   ## add namespace for later processing
   parsed_xml_contents <-
-    suppressWarnings(read_xml(add_ns(x)))
+    suppressWarnings(xml2::read_xml(add_ns(x)))
 
   xml_children(parsed_xml_contents)
 }
