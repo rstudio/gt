@@ -863,6 +863,9 @@ tab_options <- function(
     quarto.use_bootstrap = NULL,
     quarto.disable_processing = NULL,
     latex.use_longtable = NULL,
+    latex.header_repeat = NULL,
+    latex.toprule = NULL,
+    latex.bottomrule = NULL,
     latex.tbl.pos = NULL
 ) {
 
