@@ -1118,6 +1118,8 @@ markdown_to_latex <- function(text, md_engine) {
             return(NA_character_)
           }
 
+          x <- gsub("<br>","___linebreak___ ", x)
+
           if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
 
             if (grepl("<[a-zA-Z\\/][^>]*>", x)) {
@@ -1128,11 +1130,19 @@ markdown_to_latex <- function(text, md_engine) {
             }
           }
 
+
           if (names(md_engine_fn) == "commonmark") {
-            gsub("\\n$", "", md_engine_fn[[1]](text = x))
+           x <- gsub("\\n$", "", md_engine_fn[[1]](text = x))
           } else {
-            gsub("\\n$", "", md_engine_fn[[1]](text = x, format = "latex"))
+           x <- gsub("\\n$", "", md_engine_fn[[1]](text = x, format = "latex"))
           }
+
+          if(grepl("\\_\\_\\_linebreak\\_\\_\\_", x, fixed = TRUE)){
+            x <- paste0("\\shortstack[l]{",gsub("\\_\\_\\_linebreak\\_\\_\\_"," \\\\", x, fixed = TRUE),"}")
+          }
+
+          x
+
         }
       )
     )
