@@ -137,6 +137,58 @@ html <- function(text, ...) {
   htmltools::HTML(text, ...)
 }
 
+# latex() -----------------------------------------------------------------------
+#' Interpret input text as LaTeX-formatted text
+#'
+#' @description
+#'
+#' For certain pieces of text (like in column labels or table headings) we may
+#' want to express them as raw LaTeX. In fact, with LaTeX, so much more can be done for formatting.
+#' The `latex()` function will guard the input LaTeX from being escaped.
+#'
+#' @param text *LaTeX text*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   The text that is understood to be LaTeX text, which is to be preserved in
+#'   the LaTeX output context.
+#'
+##'
+#' @return A character object of class `latex`. It's tagged as an latex fragment
+#'   that is not to be sanitized.
+#'
+#' @section Examples:
+#'
+#' Use the [`exibble`] dataset to create a **gt** table. When adding a title
+#' through [tab_header()], we'll use the `latex()` helper to signify to **gt**
+#' that we're using LaTeX formatting.
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(currency, char) |>
+#'   gt() |>
+#'   tab_header(title = LaTeX("<em>HTML</em>"))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_html_1.png")`
+#' }}
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-2
+#'
+#' @section Function Introduced:
+#' `v1.0.1` (May 10, 2025)
+#'
+#' @export
+latex <- function(text, ...) {
+
+  # Apply the `from_latex` class
+  class(text) <- "from_latex"
+  text
+}
+
 # px() -------------------------------------------------------------------------
 #' Helper for providing a numeric value as pixels value
 #'

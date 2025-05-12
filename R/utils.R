@@ -942,6 +942,12 @@ process_text <- function(text, context = "html") {
 
       return(text)
 
+    } else if (inherits(text, "from_latex")) {
+
+      text <- as.character(text)
+
+      return(text)
+
     } else {
 
       text <- escape_latex(text = text)
