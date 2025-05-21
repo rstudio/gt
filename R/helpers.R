@@ -167,11 +167,11 @@ html <- function(text, ...) {
 #' exibble |>
 #'   dplyr::select(currency, char) |>
 #'   gt() |>
-#'   tab_header(title = LaTeX("<em>HTML</em>"))
+#'   tab_header(title = latex("\\emph{HTML}"))
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_html_1.png")`
+#' `r man_get_image_tag(file = "man_latex_1.png")`
 #' }}
 #'
 #' @family helper functions
