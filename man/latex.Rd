@@ -33,7 +33,7 @@ that we're using LaTeX formatting.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(currency, char) |>
   gt() |>
-  tab_header(title = latex("\\\\emph\{HTML\}"))
+  tab_header(title = latex("\\\\emph\{LaTeX\}"))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
