@@ -8,6 +8,10 @@
 
 * Improved width calculations in `as_gtable()` (@teunbrand, #1923)
 
+* Improvements to options for LaTeX including repeating Headers, removing top and bottom lines, applying font sizes, and line breaks (@thebioengineer, #1630, #1061, #1767)
+
+* Add `latex()` function to let users write the LaTeX they wish to see in the table cell or text (@thebioengineer)
+
 # gt 0.11.1
 
 ## Breaking changes
