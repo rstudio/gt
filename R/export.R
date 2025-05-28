@@ -499,7 +499,7 @@ as_word <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  caption_location <- 
+  caption_location <-
     rlang::arg_match0(
       caption_location,
       values = c("top", "bottom", "embed")

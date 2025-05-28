@@ -388,26 +388,37 @@ create_heading_component_l <- function(data) {
   }
 
   title_font_size <- dt_options_get_value(data, "heading_title_font_size")
-  default_fontsize <- dt_options_get_value(data, "table_font_size")
+  table_font_size <- dt_options_get_value(data, "table_font_size")
 
   if(identical(title_font_size,"default")){
-    title_font_size <- default_fontsize
+    title_font_size <- table_font_size
   }
 
-  title_row <- latex_group(if(!identical(title_font_size,default_fontsize)) convert_font_size_l(title_font_size)," ", heading$title, footnote_title_marks, if(!identical(title_font_size,default_fontsize)) convert_font_size_l(default_fontsize))
+  title_row <- latex_group(
+    convert_font_size_l(title_font_size),
+    " ",
+    heading$title,
+    footnote_title_marks,
+    convert_font_size_l(table_font_size)
+    )
 
   if (subtitle_defined) {
 
     subtitle_font_size <- dt_options_get_value(data, "heading_subtitle_font_size")
 
     if(identical(subtitle_font_size,"default")){
-      subtitle_font_size <- default_fontsize
+      subtitle_font_size <- table_font_size
     }
 
     subtitle_row <-
       paste0(
         " \\\\ \n",
-        latex_group(if(!identical(subtitle_font_size,default_fontsize)) convert_font_size_l(subtitle_font_size)," ", heading$subtitle, footnote_subtitle_marks, if(!identical(subtitle_font_size,default_fontsize)) convert_font_size_l(default_fontsize))
+        latex_group(
+          convert_font_size_l(subtitle_font_size),
+          " ",
+          heading$subtitle,
+          footnote_subtitle_marks,
+          convert_font_size_l(table_font_size))
       )
 
   } else {
@@ -1283,8 +1294,8 @@ convert_font_size_l <- function(x) {
 
   if (as.character(x) %in% names(size_map)){
     return(size_map[[x]])
-  }else if(grepl("pt",x)){
-    return(.apply_style_fontsize_l(list('cell_text' = list('size' = parse_font_size_l(x)))))
+  }else if(grepl("(pt|%|px|in|cm|emu|em)",x)){
+    return(.apply_style_fontsize_l(list('cell_text' = list('size' = round(parse_font_size_l(x))))))
   }
 
   NULL
@@ -1610,9 +1621,9 @@ apply_cell_styles_l <- function(content, style_obj) {
     return(
       paste0(
         "\\fontsize{",
-        style_obj[['cell_text']][['size']] * 0.75,
+        round(style_obj[['cell_text']][['size']] * 0.75),
         "}{",
-        style_obj[['cell_text']][['size']] * 0.75 * 1.25,
+        round(style_obj[['cell_text']][['size']] * 0.75 * 1.25),
         "}\\selectfont "
       )
     )
@@ -1699,7 +1710,8 @@ create_fontsize_statement_l <- function(data) {
   fs_fmt <- "\\fontsize{%3.1fpt}{%3.1fpt}\\selectfont\n"
   if (grepl(pattern = "^[[:digit:]]+(\\%|in|cm|emu|em|pt|px)$", size)) {
     font_size <- parse_font_size_l(size)
-    fs_statement <- sprintf(fs_fmt, font_size, font_size* 1.2)
+    ## parse_font_size_l returns font size in p
+    fs_statement <- sprintf(fs_fmt, round(font_size*.75), round(font_size* 1.2 * .75))
   } else {
     return("")
   }
@@ -1711,15 +1723,11 @@ create_fontsize_statement_l <- function(data) {
 parse_font_size_l <- function(x){
   if (endsWith(x, "%")) {
 
-    size <- (as.numeric(gsub("%", "", x, fixed = TRUE)) / 100 ) * 12
-
-  } else if (endsWith(x, "pt")) {
-
-    size <- as.numeric(sub("pt$", "", x))
+    size <- (as.numeric(gsub("%", "", x, fixed = TRUE)) / 100) * 16 * (4/3) ## 12pt is default font size, 4/3 to convert to px
 
   } else {
 
-    size <- convert_to_px(x) * 0.75
+    size <- convert_to_px(x)
   }
 
   size

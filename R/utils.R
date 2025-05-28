@@ -1124,7 +1124,7 @@ markdown_to_latex <- function(text, md_engine) {
             return(NA_character_)
           }
 
-          x <- gsub("<br>","___linebreak___ ", x)
+          x <- gsub("<br>","..gt_linebreak_indicator..", x)
 
           if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
 
@@ -1143,8 +1143,8 @@ markdown_to_latex <- function(text, md_engine) {
            x <- gsub("\\n$", "", md_engine_fn[[1]](text = x, format = "latex"))
           }
 
-          if(grepl("\\_\\_\\_linebreak\\_\\_\\_", x, fixed = TRUE)){
-            x <- paste0("\\shortstack[l]{",gsub("\\_\\_\\_linebreak\\_\\_\\_"," \\\\", x, fixed = TRUE),"}")
+          if(grepl("..gt\\_linebreak\\_indicator..", x, fixed = TRUE)){
+            x <- paste0("\\shortstack[l]{",gsub("..gt\\_linebreak\\_indicator.."," \\\\", x, fixed = TRUE),"}")
           }
 
           x
