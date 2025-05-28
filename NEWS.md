@@ -8,6 +8,8 @@
 
 * Improved width calculations in `as_gtable()` (@teunbrand, #1923)
 
+* Added support for some unicode characters when going out to LaTeX (@thebioengineer)
+
 # gt 0.11.1
 
 ## Breaking changes
