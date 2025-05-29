@@ -23,12 +23,16 @@ test_that("A gt table contains the expected heading components", {
   # Create a `tbl_latex` object with `gt()`; this table contains a title
   tbl_latex <-
     gt(mtcars_short) %>%
-    tab_header(title = "test title")
+    tab_header(title = "test title") %>%
+    tab_options(
+      heading.title.font.size = "large",
+      heading.subtitle.font.size = "small"
+    )
 
   # Expect a characteristic pattern
   expect_match(
      as_latex(tbl_latex) %>% as.character(),
-    "\\caption*{\n{\\large test title}\n} \n\\fontsize",
+    "\\caption*{\n{\\large  test title\\fontsize{12}{15}\\selectfont }\n} \n\\fontsize",
     fixed = TRUE
   )
 
@@ -36,14 +40,18 @@ test_that("A gt table contains the expected heading components", {
   # contains a title and a subtitle
   tbl_latex <-
     gt(mtcars_short) %>%
-    tab_header(title = "test title", subtitle = "test subtitle")
+    tab_header(title = "test title", subtitle = "test subtitle") %>%
+    tab_options(
+      heading.title.font.size = "large",
+      heading.subtitle.font.size = "small"
+    )
 
   # Expect a characteristic pattern
   expect_match(
     as_latex(tbl_latex) %>% as.character(),
     paste0(
-      ".*.large test title",
-      ".*.small test subtitle",
+      ".*.large  test title",
+      ".*.small  test subtitle",
       ".*"
     )
   )
