@@ -113,6 +113,9 @@ test_that("word ooxml can be generated from gt object", {
   ## basic table with split enabled
   expect_snapshot_word(gt_tbl_1, split = TRUE)
 
+  ## basic table with autonum disabled
+  expect_snapshot_word(gt_tbl_1, autonum = FALSE)
+
   ## basic table with keep_with_next disabled (should only appear in the column
   ## headers)
   expect_snapshot_word(gt_tbl_1, keep_with_next = FALSE)
@@ -181,8 +184,27 @@ test_that("word ooxml can be generated from gt object", {
     ) %>%
     as_word()
 
-  gt_exibble_min_sha1 <- digest::sha1(gt_exibble_min)
-  expect_equal(gt_exibble_min_sha1, "818e5b7186faca5038cc62b607d01fd43ee86e11")
+  gt_exibble_min_sha1 <- rlang::hash(gt_exibble_min)
+  expect_equal(gt_exibble_min_sha1, "302bc4daceb5b50a7a41c5e80e5d7187")
+
+  ## basic table with linebreak in title
+  gt_tbl_linebreaks_md <- exibble_min %>%
+    gt() %>%
+    tab_header(
+      title = md("TABLE <br> TITLE"),
+      subtitle = md("table <br> subtitle")
+    )
+  expect_snapshot_word(gt_tbl_linebreaks_md)
+
+  ## basic table with linebreak in title
+  gt_tbl_linebreaks_html <- exibble_min %>%
+    gt() %>%
+    tab_header(
+      title = html("TABLE <br> TITLE"),
+      subtitle = html("table <br> subtitle")
+    )
+
+  expect_snapshot_word(gt_tbl_linebreaks_html)
 
 })
 
@@ -643,9 +665,9 @@ test_that("tables with multi-level spans can be added to a word doc", {
     docx_table_body_header %>%
       xml2::xml_find_all(".//w:p") %>%
       xml2::xml_text(),
-    c("", "My Column Span L2", "","","","",
-      "My 1st Column Span L1", "","", "My 2nd Column Span L1",
-      "num", "char","fctr", "date", "time","datetime", "currency", "row","group")
+    c("", "My Column Span L2", "", "", "", "",
+      "My 1st Column Span L1", "", "", "My 2nd Column Span L1",
+      "num", "char", "fctr", "date", "time", "datetime", "currency", "row", "group")
   )
 
   expect_equal(
@@ -903,9 +925,9 @@ test_that("tables with grand summaries but no rownames can be added to a word do
       x %>% xml2::xml_find_all(".//w:p") %>% xml2::xml_text()),
     list(
       c("", "0.1111", "apricot", "49.95"),
-      c("", "2.2220", "banana","17.95"),
+      c("", "2.2220", "banana", "17.95"),
       c("", "33.3300", "coconut", "1.39"),
-      c("Total", "3","—", "3")
+      c("Total", "3", "—", "3")
     )
   )
 
@@ -929,7 +951,7 @@ test_that("tables with grand summaries but no rownames can be added to a word do
 
   ## save word doc to temporary file
   temp_word_file_top <- tempfile(fileext = ".docx")
-  print(word_doc_top,target = temp_word_file_top)
+  print(word_doc_top, target = temp_word_file_top)
 
   ## Manual Review
   if (!testthat::is_testing() && interactive()) {
@@ -1395,15 +1417,15 @@ test_that("tables with cell & text coloring can be added to a word doc - no span
   ## header
   expect_equal(
     docx_table_body_header %>% xml2::xml_find_all(".//w:p") %>% xml2::xml_text(),
-    c("","num", "fctr","date", "time","datetime","currency",  "row", "group")
+    c("","num", "fctr","date", "time", "datetime", "currency", "row", "group")
   )
   expect_equal(
     lapply(docx_table_body_header, function(x) x %>% xml2::xml_find_all(".//w:shd") %>% xml2::xml_attr(attr = "fill")),
-    list(c("FFC0CB","00FF00","00FF00","00FF00","00FF00","00FF00","00FF00","00FF00","00FF00"))
+    list(c("FFC0CB", "00FF00", "00FF00", "00FF00", "00FF00", "00FF00", "00FF00", "00FF00", "00FF00"))
   )
   expect_equal(
     lapply(docx_table_body_header, function(x) x %>% xml2::xml_find_all(".//w:color") %>% xml2::xml_attr(attr = "val")),
-    list(c("008080","008080","008080","008080","008080","008080","008080","008080"))
+    list(c("008080", "008080", "008080", "008080", "008080", "008080", "008080", "008080"))
   )
 
   ## cell background styling
@@ -1414,11 +1436,11 @@ test_that("tables with cell & text coloring can be added to a word doc - no span
     })}),
     list(
       list(character()),
-      list(character(),"FFA500","FFA500",character(),"FFA500",character(),"FFA500",character(),"FFA500"),
-      list(character(),"FFA500","FFA500",character(),"FFA500",character(),"FFA500",character(),"FFA500"),
+      list(character(), "FFA500", "FFA500", character(), "FFA500", character(), "FFA500", character(), "FFA500"),
+      list(character(), "FFA500", "FFA500", character(), "FFA500", character(), "FFA500", character(), "FFA500"),
       list(character()),
-      list(character(),"FFA500","FFA500",character(),"FFA500",character(),"FFA500",character(),"FFA500"),
-      list(character(),"FFA500","FFA500",character(),"FFA500",character(),"FFA500",character(),"FFA500")
+      list(character(), "FFA500", "FFA500", character(), "FFA500", character(),"FFA500", character(), "FFA500"),
+      list(character(), "FFA500", "FFA500", character(), "FFA500", character(),"FFA500", character(), "FFA500")
     )
   )
 
@@ -1430,11 +1452,11 @@ test_that("tables with cell & text coloring can be added to a word doc - no span
       })}),
     list(
       list("0000FF"),
-      list("00FF00",character(),character(),character(),character(),character(),character(),character(),character()),
-      list("00FF00",character(),character(),character(),character(),character(),character(),character(),character()),
+      list("00FF00",character(), character(), character(), character(), character(), character(), character(), character()),
+      list("00FF00",character(), character(), character(), character(), character(), character(), character(), character()),
       list("0000FF"),
-      list("00FF00",character(),character(),character(),character(),character(),character(),character(),character()),
-      list("00FF00",character(),character(),character(),character(),character(),character(),character(),character())
+      list("00FF00", character(), character(), character(), character(), character(), character(), character(), character()),
+      list("00FF00", character(), character(), character(), character(), character(), character(), character(), character())
     )
   )
 
@@ -1582,7 +1604,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with sp
     list(
       list(character(0L), character(0L), character(0L), character(0L),character(0L), character(0L), character(0L), character(0L)),
       list(character(0L), character(0L), character(0L), character(0L),character(0L), character(0L)),
-      list(character(0L), "A020F0","A020F0", "A020F0", "A020F0", "A020F0", "A020F0", "A020F0","A020F0")
+      list(character(0L), "A020F0", "A020F0", "A020F0", "A020F0", "A020F0", "A020F0", "A020F0", "A020F0")
       )
   )
 })
@@ -1826,9 +1848,9 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
       c("row_2","2.222e+00", "banana", "17.950"),
       c("row_3", "3.333e+01", "coconut","1.390"),
       c("row_4", "4.444e+02", "durian", "65100.000"),
-      c("avg","120.02", "—", "—"),
-      c("total", "480.06", "—", "—"),
-      c("s.d.","216.79", "—", "—"),
+      c("avg", "120.02", "—", "—"),
+      c("total",  "480.06", "—", "—"),
+      c("s.d.", "216.79", "—", "—"),
       "grp_b",
       c("row_5", "5.550e+03", "NA", "1325.810"),
       c("row_6", "NA", "fig", "13.255"),
@@ -2556,7 +2578,7 @@ test_that("table with image refs work - local only - setting image widths and he
   docx3$doc_obj$get() %>%
     xml2::xml_find_all(".//wp:extent") %>%
     xml2::xml_attrs() %>%
-    lapply(function(x) {list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) %>%
+    lapply(function(x) {list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]]) / as.numeric(x[["cx"]]))}) %>%
     expect_equal(
       list(list(height = "914400", width = "914400", ratio = 1),
            list(height = "914400", width = "914400", ratio = 1),

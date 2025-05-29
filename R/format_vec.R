@@ -977,7 +977,7 @@ vec_fmt_partsper <- function(
   check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
   # Ensure that `to_units` is matched correctly to one option
-  to_units <- 
+  to_units <-
     rlang::arg_match0(
       to_units,
       values = c("per-mille", "per-myriad", "pcm", "ppm", "ppb", "ppt", "ppq")
@@ -3220,7 +3220,7 @@ vec_fmt_duration <- function(
   check_vector_valid(x, valid_classes = c("numeric", "integer", "difftime"))
 
   # Ensure that `duration_style` and `output` are matched correctly to one option
-  duration_style <- 
+  duration_style <-
     rlang::arg_match0(
       duration_style,
       values = c("narrow", "wide", "colon-sep", "iso")
@@ -3319,7 +3319,7 @@ vec_fmt_markdown <- function(
   check_vector_valid(x)
 
   # Ensure that arguments are matched
-  md_engine <- 
+  md_engine <-
     rlang::arg_match0(
       md_engine,
       values = c("markdown", "commonmark")
@@ -3331,7 +3331,7 @@ vec_fmt_markdown <- function(
   }
   # Avoid modifying the output to base64enc in Quarto
   if (check_quarto() && output == "html") {
-    # Similar to withr::local_envvar 
+    # Similar to withr::local_envvar
     current_envvar <- Sys.getenv("QUARTO_BIN_PATH")
     Sys.unsetenv("QUARTO_BIN_PATH")
     on.exit(

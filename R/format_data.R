@@ -506,10 +506,10 @@ fmt_scientific <- function(
 
                 if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
 
-                x <- unlist(strsplit(x, "e"))[2L]
+                x <- unlist(strsplit(x, "e", fixed = TRUE))[2L]
 
-                if (grepl("-", x)) {
-                  x <- gsub("-", "", x)
+                if (grepl("-", x, fixed = TRUE)) {
+                  x <- gsub("-", "", x, fixed = TRUE)
                   x <- formatC(as.numeric(x), width = n_min_width, flag = "0")
                   x <- paste0("-", x)
                 } else {
@@ -1763,7 +1763,7 @@ fmt_partsper <- function(
   #
 
   # Ensure that arguments are matched
-  to_units <- 
+  to_units <-
     rlang::arg_match0(
       to_units,
       values = c("per-mille", "per-myriad", "pcm", "ppm", "ppb", "ppt", "ppq")
@@ -2282,14 +2282,14 @@ fmt_fraction <- function(
         # Generate diagonal fractions if the `layout = "diagonal"` option was chosen
         if (layout == "diagonal") {
 
-          has_a_fraction <- grepl("/", x_str)
+          has_a_fraction <- grepl("/", x_str, fixed = TRUE)
 
           non_fraction_part <- gsub("^(.*?)[0-9]*/[0-9]*", "\\1", x_str[has_a_fraction])
 
           fraction_part <- gsub("^(.*?)([0-9]*/[0-9]*)", "\\2", x_str[has_a_fraction])
 
-          num_vec <- unlist(lapply(strsplit(fraction_part, "/"), `[[`, 1))
-          denom_vec <- unlist(lapply(strsplit(fraction_part, "/"), `[[`, 2))
+          num_vec <- unlist(lapply(strsplit(fraction_part, "/", fixed = TRUE), `[[`, 1))
+          denom_vec <- unlist(lapply(strsplit(fraction_part, "/", fixed = TRUE), `[[`, 2))
 
           if (context == "html") {
 
@@ -4240,7 +4240,7 @@ fmt_duration <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
-  duration_style <- 
+  duration_style <-
     rlang::arg_match0(
       duration_style,
       values = c("narrow", "wide", "colon-sep", "iso")
@@ -4537,7 +4537,7 @@ values_to_durations <- function(
     first_non_zero_unit_idx <- utils::head(which(x_df_i$value != 0), 1)
     last_non_zero_unit_idx <- utils::tail(which(x_df_i$value != 0), 1)
 
-    remove_idx <- c()
+    remove_idx <- NULL
 
     # Possibly add leading zero time parts to `remove_idx`
     if (
@@ -6193,9 +6193,8 @@ format_units_by_context <- function(
 #' ```r
 #' towny |>
 #'   dplyr::filter(csd_type == "city") |>
-#'   dplyr::arrange(desc(population_2021)) |>
 #'   dplyr::select(name, website, population_2021) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(population_2021, n = 10) |>
 #'   gt() |>
 #'   tab_header(
 #'     title = md("The 10 Largest Municipalities in `towny`"),
@@ -6223,9 +6222,8 @@ format_units_by_context <- function(
 #' ```r
 #' towny |>
 #'   dplyr::filter(csd_type == "city") |>
-#'   dplyr::arrange(desc(population_2021)) |>
 #'   dplyr::select(name, website, population_2021) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(population_2021, n = 10) |>
 #'   gt() |>
 #'   tab_header(
 #'     title = md("The 10 Largest Municipalities in `towny`"),
@@ -6261,9 +6259,8 @@ format_units_by_context <- function(
 #' ```r
 #' towny |>
 #'   dplyr::filter(csd_type == "city") |>
-#'   dplyr::arrange(desc(population_2021)) |>
 #'   dplyr::select(name, website, population_2021) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(population_2021, n = 10) |>
 #'   dplyr::mutate(ranking = dplyr::row_number()) |>
 #'   gt(rowname_col = "ranking") |>
 #'   tab_header(
@@ -6302,9 +6299,8 @@ format_units_by_context <- function(
 #'
 #' ```r
 #' towny |>
-#'   dplyr::arrange(population_2021) |>
 #'   dplyr::select(name, website, population_2021) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_min(population_2021, n = 10) |>
 #'   gt() |>
 #'   tab_header(
 #'     title = md("The 10 Smallest Municipalities in `towny`"),
@@ -7843,7 +7839,7 @@ fmt_image <- function(
             USE.NAMES = FALSE,
             FUN = function(x) {
 
-              if (grepl(",", x_str_non_missing[x])) {
+              if (grepl(",", x_str_non_missing[x], fixed = TRUE)) {
                 files <- unlist(strsplit(x_str_non_missing[x], ",\\s*"))
               } else {
                 files <- x_str_non_missing[x]
@@ -7939,7 +7935,7 @@ convert_to_pt <- function(x) {
 
 convert_to_px <- function(x) {
 
-  units <- tolower(gsub("[[:digit:]\\.\\,]+","", x))
+  units <- tolower(gsub("[[:digit:]\\.\\,]+", "", x))
   value <- as.numeric(gsub(units, "", x))
 
   px_conversion <- c(
@@ -7960,13 +7956,9 @@ convert_to_px <- function(x) {
 
   } else {
 
-    rlang::abort(
-      paste0(
-        "invalid units provided - `", units,
-        "`. Must be one of type ",
-        paste0("`", names(px_conversion), "`", collapse = "")
-      )
-    )
+    cli::cli_abort(c(
+      "Conversion units must be one of type {.code {px_conversion}}, not -{.code {units}}."
+    ))
   }
 }
 
@@ -8325,7 +8317,7 @@ fmt_flag <- function(
             USE.NAMES = FALSE,
             FUN = function(x) {
 
-              if (grepl(",", x_str_non_missing[x])) {
+              if (grepl(",", x_str_non_missing[x], fixed = TRUE)) {
                 countries <-
                   toupper(unlist(strsplit(x_str_non_missing[x], ",\\s*")))
               } else {
@@ -8348,7 +8340,7 @@ fmt_flag <- function(
                 # Check whether the country code is valid
                 if (!(country_i %in% valid_country_codes))  {
                   cli::cli_abort(
-                    "The country code provided (\"{country_i}\") is invalid."
+                    "The country code provided ({.val {country_i}}) is invalid."
                   )
                 }
 
@@ -8816,7 +8808,7 @@ fmt_country <- function(
                 countries <- toupper(x_str_non_missing[x])
               }
 
-              out <- c()
+              out <- NULL
 
               for (y in seq_along(countries)) {
 
@@ -9665,7 +9657,7 @@ fmt_markdown <- function(
   #
 
   # Ensure that arguments are matched
-  md_engine <- 
+  md_engine <-
     rlang::arg_match0(
       md_engine,
       values = c("markdown", "commonmark")
@@ -10017,7 +10009,7 @@ fmt_passthrough <- function(
 #'   dplyr::select(country_code_3, year, population) |>
 #'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
 #'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
-#'   tidyr::spread(year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
 #'   dplyr::arrange(desc(`2020`)) |>
 #'   gt(rowname_col = "country_code_3") |>
 #'   fmt_auto(lg_num_pref = "suf")

@@ -474,11 +474,11 @@ test_that("Escaping is working when using `markdown_to_rtf()`", {
 
 test_that("str_substitute() works well", {
   expect_equal(
-    str_substitute(c("223", "223"), c(1,2), 2),
+    str_substitute(c("223", "223"), c(1, 2), 2),
     c("22", "2")
   )
   expect_snapshot(error = TRUE, {
-    str_substitute(c("223", "223", "224"), c(1,2), 2)
+    str_substitute(c("223", "223", "224"), c(1, 2), 2)
     str_substitute(c("223", "223", "224"), c(1), c(2, 3))
     str_substitute(c("223", "223", "224", "225"), c(1, 2, 3, 4), c(2, 3))
   })

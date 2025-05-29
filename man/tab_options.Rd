@@ -663,10 +663,11 @@ pages.}
 
 \item{latex.tbl.pos}{\emph{Specify latex floating position}
 
-The latex position indicator for a floating environment (e.g., \code{"!t"},
-\code{"H"}). It should be specified without square brackets. Quarto users should
-instead set the floating position within the code chunk argument \code{tbl-pos}.
-The output table will only float if \code{latex.use_longtable = FALSE}.}
+The latex position indicator for a floating environment (e.g., \code{"tb"},
+\code{"h"}). If not specified, latex position will default to \code{"t"}. It should be
+specified without square brackets. Quarto users should instead set the
+floating position within the code chunk argument \code{tbl-pos}. The output
+table will only float if \code{latex.use_longtable = FALSE}.}
 }
 \value{
 An object of class \code{gt_tbl}.

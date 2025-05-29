@@ -787,7 +787,7 @@ info_locales <- function(begins_with = NULL) {
       locale = from_column("locale")
     ) %>%
     text_transform(
-      fn = function(x) sub("space", "\U02420", x),
+      fn = function(x) sub("space", "\U02420", x, fixed = TRUE),
       locations = cells_body(columns = "group")
     ) %>%
     cols_merge(

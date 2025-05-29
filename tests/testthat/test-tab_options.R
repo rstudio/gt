@@ -1830,4 +1830,3 @@ test_that("Vertical padding across several table parts can be applied", {
   snap_padded_tbl(padding_px = px(5))
   snap_padded_tbl(padding_px = px(10))
 })
-

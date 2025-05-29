@@ -41,7 +41,7 @@ test_that("bookdown-style crossrefs are added when appropriate", {
 
   # If bookdown, then ref is generated
   knitr::opts_knit$set(bookdown.internal.label = TRUE)
-  expect_caption_eq("test", "(\\#tab:foo)test")
+  expect_caption_eq("test", "(#tab:foo)test")
 
   expect_null(create_caption_component_h(exibble %>% gt()))
 

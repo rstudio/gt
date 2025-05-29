@@ -464,7 +464,7 @@ perform_col_merge <- function(data, context) {
         )
 
       glue_src_data <- stats::setNames(glue_src_data, seq_along(glue_src_data))
-      
+
       which_cols <- unique(unlist(str_complete_extract(pattern, "\\{\\d+\\}")))
       which_cols <- gsub("\\{|\\}", "", which_cols)
       if (!all(which_cols %in% names(glue_src_data))) {
@@ -472,7 +472,7 @@ perform_col_merge <- function(data, context) {
         cli::cli_abort(c(
           "Can't perform column merging",
           "Can't find reference {missing}.",
-          "i" = 'Review {.arg pattern} provided to {.fn cols_merge}.'
+          "i" = "Review {.arg pattern} provided to {.fn cols_merge}."
         ))
       }
       glued_cols <- as.character(glue_gt(glue_src_data, pattern))

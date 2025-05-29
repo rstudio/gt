@@ -71,10 +71,10 @@ dt_groups_rows_build <- function(data, context) {
   # values), build the `groups_rows` table
   for (i in seq_along(ordering)) {
 
-    if (!all(is.na(ordering[i]))) {
-      rows_matched <- which(stub_df$group_id == ordering[i])
-    } else {
+    if (all(is.na(ordering[i]))) {
       rows_matched <- which(is.na(stub_df$group_id))
+    } else {
+      rows_matched <- which(stub_df$group_id == ordering[i])
     }
 
     # If `rows_matched` is NA then go to next iteration
@@ -105,6 +105,11 @@ dt_groups_rows_build <- function(data, context) {
 
     groups_rows[is.na(groups_rows[, "group_id"]), "group_label"] <-
       others_group
+    if (!is.null(stub_df$group_label)) {
+     # stub_df$group_label[is.null(stub_df$group_label[[1]])] <- others_group
+      #data <- dt_stub_df_set(data, stub_df)
+
+    }
 
   } else {
 
@@ -132,5 +137,6 @@ dt_groups_rows_build <- function(data, context) {
     }
   }
 
+  # print(groups_rows)
   dt_groups_rows_set(data = data, groups_rows = groups_rows)
 }

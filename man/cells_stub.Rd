@@ -44,7 +44,11 @@ using \code{cells_stub()} in \code{locations}.
   dplyr::filter(latitude == 20 & tst <= "1000") |>
   dplyr::select(-latitude) |>
   dplyr::filter(!is.na(sza)) |>
-  tidyr::spread(key = "tst", value = sza) |>
+  tidyr::pivot_wider(
+    names_from = "tst",
+    values_from = sza,
+    names_sort = TRUE
+  ) |>
   gt(rowname_col = "month") |>
   sub_missing(missing_text = "") |>
   tab_style(

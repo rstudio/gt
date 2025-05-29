@@ -1208,7 +1208,8 @@ create_table_props_component_xml <- function(data, align = c("center", "start", 
 create_table_caption_component_xml <- function(
     data,
     align = "center",
-    keep_with_next = TRUE
+    keep_with_next = TRUE,
+    autonum = TRUE
 ) {
 
   # If there is no title or heading component, then return an empty string
@@ -1267,17 +1268,21 @@ create_table_caption_component_xml <- function(
       align = header_title_style[["cell_text"]][["align"]] %||% align,
       keep_with_next = keep_with_next
     )
+
   title_caption_xml <- as_xml_node(title_caption_xml)
 
-  autonum_node_xml <-
-    xml_table_autonum(
-      font = xml_r_font(header_title_style[["cell_text"]][["font"]] %||% "Calibri"),
-      size = xml_sz(val = header_title_style[["cell_text"]][["size"]] %||% 24)
-    )
-  autonum_node_xml <- as_xml_node(autonum_node_xml)
+  if (autonum) {
+    autonum_node_xml <-
+      xml_table_autonum(
+        font = xml_r_font(header_title_style[["cell_text"]][["font"]] %||% "Calibri"),
+        size = xml_sz(val = header_title_style[["cell_text"]][["size"]] %||% 24)
+      )
 
-  for (autonum_node in rev(autonum_node_xml)) {
-    xml_add_child(title_caption_xml, autonum_node, .where = 1)
+    autonum_node_xml <- as_xml_node(autonum_node_xml)
+
+    for (autonum_node in rev(autonum_node_xml)) {
+      xml_add_child(title_caption_xml[1], autonum_node, .where = 1)
+    }
   }
 
   title_caption <- as.character(title_caption_xml)
@@ -1917,10 +1922,10 @@ create_body_component_xml <- function(
     # Replace an NA group with an empty string
     groups_rows_df$group_label[is.na(groups_rows_df$group_label)] <- ""
     # Change NA at beginning into unicode?
-    group_rows_df$group_label <-
+    groups_rows_df$group_label <-
       gsub(
         "^NA", "\u2014",
-        group_rows_df$group_label
+        groups_rows_df$group_label
     )
   }
 

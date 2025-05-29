@@ -420,8 +420,7 @@ rm(palettes_tbl_gt, color_pkgs, palettes_strips_df)
 
 conversions_tbl <-
   conversion_factors %>%
-  dplyr::select(type, from) %>%
-  dplyr::distinct() %>%
+  dplyr::distinct(type, from) %>%
   dplyr::mutate(name = gsub(".*\\.", "", from)) %>%
   dplyr::mutate(name = gsub("-", " ", name)) %>%
   dplyr::mutate(name = gsub("therm us", "US therm", name)) %>%
@@ -439,16 +438,16 @@ conversions_tbl_gt <-
   gt(groupname_col = "type", id = "unit_conversion") %>%
   rows_add(
     type = "temperature", name = "degree Celsius", from = "temperature.celsius",
-  ) |>
+  ) %>%
   rows_add(
     type = "temperature", name = "degree Fahrenheit", from = "temperature.fahrenheit"
-  ) |>
+  ) %>%
   rows_add(
     type = "temperature", name = "kelvin", from = "temperature.kelvin"
-  ) |>
+  ) %>%
   rows_add(
     type = "temperature", name = "rankine", from = "temperature.rankine"
-  ) |>
+  ) %>%
   cols_label(
     name = "Unit",
     from = "Keyword"

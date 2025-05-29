@@ -257,7 +257,7 @@ gt_save_html <- function(
 
       html_tbl_i <-
         as_raw_html(grp_pull(data, which = i), inline_css = inline_css)
-      
+
       html_tbls <- htmltools::tagList(html_tbls, html_tbl_i)
     }
 
@@ -427,6 +427,7 @@ gt_save_docx <- function(
     filename,
     path = NULL,
     ...,
+    autonum = TRUE,
     open = rlang::is_interactive()
 ) {
 
@@ -443,7 +444,7 @@ gt_save_docx <- function(
       paste0(
         c(
           "```{=openxml}",
-          enc2utf8(as_word(data = data)),
+          enc2utf8(as_word(data = data, autonum = autonum)),
           "```",
           ""),
         collapse = "\n"
@@ -456,7 +457,7 @@ gt_save_docx <- function(
     seq_tbls <- seq_len(nrow(data$gt_tbls))
 
     for (i in seq_tbls) {
-      word_tbl_i <- as_word(grp_pull(data, which = i))
+      word_tbl_i <- as_word(grp_pull(data, which = i), autonum = autonum)
       word_tbls <- c(word_tbls, word_tbl_i)
     }
 
