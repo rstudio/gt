@@ -167,7 +167,7 @@ html <- function(text, ...) {
 #' exibble |>
 #'   dplyr::select(currency, char) |>
 #'   gt() |>
-#'   tab_header(title = latex("\\emph{HTML}"))
+#'   tab_header(title = latex("\\emph{LaTeX}"))
 #' ```
 #'
 #' \if{html}{\out{
@@ -182,7 +182,7 @@ html <- function(text, ...) {
 #' `v1.0.1` (May 10, 2025)
 #'
 #' @export
-latex <- function(text, ...) {
+latex <- function(text) {
 
   # Apply the `from_latex` class
   class(text) <- "from_latex"
