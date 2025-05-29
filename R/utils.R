@@ -406,15 +406,12 @@ get_tf_vals <- function(tf_style, locale) {
   }
 
   # Stop function if a numeric `tf_style` value is invalid
-  if (is.numeric(tf_style)) {
-
-    if (!(tf_style %in% tf_format_num_range)) {
-      cli::cli_abort(c(
-        "If using a numeric value for a `tf_style`, it must be
-        between `1` and `{nrow((tf_format_tbl))}`.",
-        "*" = "Use `info_tf_style()` for a useful visual reference."
-      ))
-    }
+  if (is.numeric(tf_style) && !(tf_style %in% tf_format_num_range)) {
+    cli::cli_abort(c(
+      "If using a numeric value for a `tf_style`, it must be
+      between `1` and `{nrow((tf_format_tbl))}`.",
+      "*" = "Use `info_tf_style()` for a useful visual reference."
+    ))
   }
 
   # Stop function if a character-based `tf_style` value is invalid
@@ -446,9 +443,9 @@ get_tf_vals <- function(tf_style, locale) {
 
     return(c(true_str, false_str))
 
-  } else {
-    return(unlist(tf_format_tbl_i[["characters"]]))
   }
+
+  unlist(tf_format_tbl_i[["characters"]])
 }
 
 #' Are string values 24 hour times?
@@ -538,9 +535,9 @@ resolve_footnote_placement <- function(
 
   if (cell_alignment == "right") {
     return("left")
-  } else {
-    return("right")
   }
+
+  "right"
 }
 
 get_alignment_at_body_cell <- function(
@@ -982,6 +979,10 @@ process_text <- function(text, context = "html") {
     if (inherits(text, "from_markdown")) {
 
       text <- markdown_to_xml(text)
+    } else if (is_html(text)) {
+
+      text <- markdown_to_xml(unescape_html(linebreak_br(text)))
+
     } else {
       text <- as.character(text)
     }
@@ -1038,6 +1039,13 @@ unescape_html <- function(text) {
   # universal linebreak
   text <- gsub("<br>", "\n", text, fixed = TRUE)
   text
+}
+
+
+#' apply a double newline for implementing universal line break in markdown
+#' @noRd
+linebreak_br <- function(x) {
+  gsub("<br>", "\n\n\n", x, fixed = TRUE)
 }
 
 #' Transform Markdown text to HTML and also perform HTML escaping
@@ -1124,7 +1132,7 @@ markdown_to_latex <- function(text, md_engine) {
             return(NA_character_)
           }
 
-          x <- gsub("<br>","___linebreak___ ", x)
+          x <- gsub("<br>","..gt_linebreak_indicator..", x)
 
           if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
 
@@ -1143,8 +1151,8 @@ markdown_to_latex <- function(text, md_engine) {
            x <- gsub("\\n$", "", md_engine_fn[[1]](text = x, format = "latex"))
           }
 
-          if(grepl("\\_\\_\\_linebreak\\_\\_\\_", x, fixed = TRUE)){
-            x <- paste0("\\shortstack[l]{",gsub("\\_\\_\\_linebreak\\_\\_\\_"," \\\\", x, fixed = TRUE),"}")
+          if(grepl("..gt\\_linebreak\\_indicator..", x, fixed = TRUE)){
+            x <- paste0("\\shortstack[l]{",gsub("..gt\\_linebreak\\_indicator.."," \\\\", x, fixed = TRUE),"}")
           }
 
           x
@@ -1157,11 +1165,12 @@ markdown_to_latex <- function(text, md_engine) {
 
 # Transform Markdown text to ooxml
 markdown_to_xml <- function(text) {
+
   res <- vapply(
-    as.character(text),
+    gsub("<br>","\n\n",as.character(text)),
     FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
-    FUN = commonmark::markdown_xml
+    FUN = function(x, ...) commonmark::markdown_xml(linebreak_br(x), ...)
   )
   vapply(
     res,

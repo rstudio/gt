@@ -233,8 +233,8 @@ cols_merge <- function(
   # that `pattern` not be evaluated, for much the same reason as above.
 
   # Get the columns supplied in `hide_columns` as a character vector
-  suppressWarnings(
-    hide_columns <-
+  hide_columns <-
+    suppressWarnings(
       resolve_cols_c(
         expr = {{ hide_columns }},
         data = data

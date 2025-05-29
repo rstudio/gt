@@ -308,7 +308,7 @@
 #'   dplyr::select(country_code_3, year, population) |>
 #'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
 #'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
-#'   tidyr::spread(year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
 #'   dplyr::arrange(desc(`2015`)) |>
 #'   gt(rowname_col = "country_code_3") |>
 #'   fmt_number(suffixing = TRUE)
@@ -327,7 +327,7 @@
 #'   dplyr::select(country_code_3, year, population) |>
 #'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
 #'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
-#'   tidyr::spread(year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
 #'   dplyr::arrange(desc(`2015`)) |>
 #'   gt(rowname_col = "country_code_3") |>
 #'   fmt_number(suffixing = TRUE, n_sigfig = 3)
@@ -676,7 +676,7 @@ fmt_number <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' [from_column()] can be used with certain arguments of  `fmt_integer()` to
+#' [from_column()] can be used with certain arguments of `fmt_integer()` to
 #' obtain varying parameter values from a specified column within the table.
 #' This means that each row could be formatted a little bit differently. These
 #' arguments provide support for [from_column()]:
@@ -742,7 +742,7 @@ fmt_number <- function(
 #'   dplyr::select(country_code_3, year, population) |>
 #'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
 #'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
-#'   tidyr::spread(year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
 #'   dplyr::arrange(desc(`2015`)) |>
 #'   gt(rowname_col = "country_code_3") |>
 #'   fmt_integer(scale_by = 1 / 1E6) |>

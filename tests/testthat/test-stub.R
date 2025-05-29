@@ -429,3 +429,25 @@ test_that("The stub can be formatted with `fmt_*()` functions and `stub()", {
     selection_text(selection = "[class='gt_footnote']") %>%
     expect_equal(c("1 footnote `3`", "2 footnote `4`"))
 })
+
+test_that("gt(row_group_as_column = TRUE) works with multiple `groupname_col` (#1552)", {
+  many_grps <- gt(
+    utils::head(gtcars, n = 8),
+    groupname_col = c("ctry_origin", "mfr"),
+    row_group_as_column = TRUE
+  )
+  stub_look <- xml2::read_xml(render_as_html(many_grps))
+  row_groups <- stub_look %>%
+    selection_text(
+      "[class='gt_row_group_first']"
+    )
+  # we expect 2 groups here
+  expect_match(
+    row_groups[1],
+    "United States.+Ford"
+  )
+  expect_match(
+    row_groups[2],
+    "Italy.+Ferrari"
+  )
+})

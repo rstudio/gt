@@ -170,9 +170,15 @@ test_that("body_cells_g() creates appropriate cells", {
 
   expect_equal(vctrs::list_sizes(test), c(3, 3, 3))
   test <- vctrs::vec_c(!!!test)
+  # FIXME with row.striping.include_stub = TRUE,
   expect_equal(
     has_class(test, "gt_striped"),
     rep(c(FALSE, TRUE, FALSE), each = 3)
+  )
+  # Has the correct class, but is not striped?
+  expect_contains(
+    unlist(test[test$label == "B", ]$classes),
+    c("gt_stub", "gt_striped")
   )
   expect_equal(
     has_class(test, "gt_stub"),
@@ -499,8 +505,7 @@ test_that("Classes and styles are parsed correctly", {
       locations = cells_body("y")
     )
 
-  test <- gt %>%
-    prep_data()
+  test <-  prep_data(gt)
 
   rows <- create_body_component_g(test)
 

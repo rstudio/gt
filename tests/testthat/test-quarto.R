@@ -42,11 +42,12 @@ test_that("Quarto produces the valid output", {
   withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
   tab <- exibble %>%
     dplyr::select(num, char, fctr) %>%
+    dplyr::mutate(x = "- 1") %>% # create bullet list
     dplyr::slice_head(n  = 5) %>%
     gt() %>%
     fmt_markdown(num) %>%
     tab_footnote(
-      md("Problem because num row 1 is fmt_markdown() + also the footnote is wrapped in md."),
+      md("Problem because num row 1 is `fmt_markdown()` + also the footnote is wrapped in md."),
       locations = cells_body("num", 1)
     ) %>%
     tab_footnote(
@@ -58,7 +59,7 @@ test_that("Quarto produces the valid output", {
       locations = cells_column_labels("char")
     ) %>%
     cols_label(fctr = md("Factor")) %>%
-    tab_header(md("title")) %>%
+    tab_header(md("[gog](https://google.com)")) %>%
     tab_spanner(md("problem"), c(2, 3))
 
   expect_snapshot_html(tab)

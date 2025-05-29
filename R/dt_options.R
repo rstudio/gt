@@ -275,5 +275,5 @@ dt_options_tbl <-
     "latex_header_repeat",               FALSE,  "latex",            "logical", FALSE,
     "latex_toprule",                     FALSE,  "latex",            "logical",  TRUE,
     "latex_bottomrule",                  FALSE,  "latex",            "logical",  TRUE,
-    "latex_tbl_pos",                     FALSE,  "latex",            "value",   "!t",
+    "latex_tbl_pos",                     FALSE,  "latex",            "value",   "t",
   )[-1, ]

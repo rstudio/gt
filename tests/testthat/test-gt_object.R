@@ -634,9 +634,9 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
       ),
       ignore_attr = TRUE
     )
-  
+
   check_suggests()
-  
+
   # Render the HTML table and read the HTML with the `xml2::read_html()` fn
   html_tbl <-
     exibble %>%
@@ -877,7 +877,7 @@ test_that("Default locale settings are honored by formatting functions", {
   exibble_1 <- exibble[8, 1]
 
   # `fmt_bytes()`
-  (exibble_1 %>% gt() %>% fmt_bytes(num, ) %>% render_formats_test(context = "plain"))[["num"]] %>%
+  (exibble_1 %>% gt() %>% fmt_bytes(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
     expect_equal("8.9 MB")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_bytes(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
     expect_equal("8,9 MB")
@@ -916,7 +916,7 @@ test_that("Default locale settings are honored when generating summary rows", {
 test_that("Formatting functions operate with a 'last-one-wins' approach", {
 
   check_suggests()
-  
+
   # Make a gt table from the first column of the exibble table and apply
   # two `fmt_*()` functions to the same column
   tbl_gt <-

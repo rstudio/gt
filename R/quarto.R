@@ -42,12 +42,15 @@ process_md_quarto <- function(text, md_engine_fn) {
 
   # Remove paragraph
   non_na_text_processed <- gsub("^<p>|</p>\n$", "", non_na_text_processed)
-  # Use base64 encoding to avoid issues with escaping internal double
+
+  # Use base64 encoding on the unprocessed text
+  # https://github.com/quarto-dev/quarto-cli/issues/11932#issuecomment-2609871584
+  # to avoid issues with escaping internal double
   # quotes; used in conjunction with the 'data-qmd-base64' attribute
   # that is recognized by Quarto
   non_na_text <-
     vapply(
-      non_na_text_processed,
+      non_na_text,
       FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(text) {
@@ -66,4 +69,5 @@ process_md_quarto <- function(text, md_engine_fn) {
     )
 
   text[nzchar(text, keepNA = FALSE)] <- non_na_text
+  text
 }

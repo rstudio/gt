@@ -117,8 +117,8 @@ Let's hide two columns that we don't need to the final table: `drivetrain` and `
 Aside from hiding columns, let's *move* some of them. Again, this could be done with `dplyr::select()` but there are options here in **gt** via `cols_move_to_start()`, `cols_move()`, and `cols_move_to_end()`.
 
 ```{r cols_hide_move}
-# Use a few `cols_*()` functions to hide and move columns 
-tab <- 
+# Use a few `cols_*()` functions to hide and move columns
+tab <-
   tab |>
   cols_hide(columns = c(drivetrain, bdy_style)) |>
   cols_move(
@@ -139,7 +139,7 @@ Here, we'll put the `mpg_c`, `mpg_h`, `hp`, `hp_rpm`, `trq`, `trq_rpm` columns u
 ```{r tab_spanner}
 # Put the first three columns under a spanner
 # column with the label 'Performance'
-tab <- 
+tab <-
   tab |>
   tab_spanner(
     label = "Performance",
@@ -168,7 +168,7 @@ Labeling columns essentially means that we are choosing display-friendly labels 
 # Perform three column merges to better present
 # MPG, HP, and torque; relabel all the remaining
 # columns for a nicer-looking presentation
-tab <- 
+tab <-
   tab |>
   cols_merge(
     columns = c(mpg_c, mpg_h),
@@ -203,7 +203,7 @@ There are a number of formatter functions, all with the general naming conventio
 ```{r fmt_currency}
 # Format the `msrp` column to USD currency
 # with no display of the currency subunits
-tab <- 
+tab <-
   tab |>
   fmt_currency(columns = msrp, decimals = 0)
 
@@ -222,7 +222,7 @@ Here we will use `cell_text()` and specify a text `size` of `"12px"` for our tar
 ```{r align_style}
 # Center-align three columns in the gt table and
 # modify the text size of a few columns of data
-tab <- 
+tab <-
   tab |>
   cols_align(
     align = "center",
@@ -248,16 +248,15 @@ Transforming text with `text_transform()` is a great way to further manipulate t
 # a custom function within `text_transform()`;
 # here `x` represents a character vector defined
 # in the `cells_body()` function
-tab <- 
+tab <-
   tab |>
   text_transform(
     locations = cells_body(columns = trsmn),
     fn = function(x) {
-      
       # The first character of `x` always
       # indicates the number of transmission speeds
       speed <- substr(x, 1, 1)
-      
+
       # We can carefully determine which transmission
       # type we have in `x` with a `dplyr::case_when()`
       # statement
@@ -268,7 +267,7 @@ tab <-
           substr(x, 2, 2) == "a" ~ "Automatic",
           substr(x, 2, 3) == "dd" ~ "Direct Drive"
         )
-      
+
       # Let's paste together the `speed` and `type`
       # vectors to create HTML text replacing `x`
       paste(speed, " Speed<br><em>", type, "</em>")
@@ -286,7 +285,7 @@ tab
 ```{r tab_header}
 # Add a table title and subtitle; we can use
 # markdown with the `md()` helper function
-tab <- 
+tab <-
   tab |>
   tab_header(
     title = md("The Cars of **gtcars**"),
@@ -304,7 +303,7 @@ A *source note* can be added below the display table with `tab_source_note()`. W
 ```{r tab_source_note}
 # Add a source note to the bottom of the table; this
 # appears below the footnotes
-tab <- 
+tab <-
   tab |>
   tab_source_note(
     source_note = md(
@@ -333,19 +332,17 @@ In terms of structuring the code, we're taking all the previous statements and p
 ```{r tab_footnote}
 # Use dplyr functions to get the car with the best city gas mileage;
 # this will be used to target the correct cell for a footnote
-best_gas_mileage_city <- 
-  gtcars |> 
-  arrange(desc(mpg_c)) |>
-  slice(1) |>
+best_gas_mileage_city <-
+  gtcars |>
+  slice_max(mpg_c, n = 1) |>
   mutate(car = paste(mfr, model)) |>
   pull(car)
 
 # Use dplyr functions to get the car with the highest horsepower
 # this will be used to target the correct cell for a footnote
-highest_horsepower <- 
-  gtcars |> 
-  arrange(desc(hp)) |>
-  slice(1) |>
+highest_horsepower <-
+  gtcars |>
+  slice_max(hp, n = 1) |>
   mutate(car = paste(mfr, model)) |>
   pull(car)
 
@@ -408,9 +405,8 @@ tab <-
   text_transform(
     locations = cells_body(columns = trsmn),
     fn = function(x) {
-      
       speed <- substr(x, 1, 1)
-      
+
       type <-
         dplyr::case_when(
           substr(x, 2, 3) == "am" ~ "Automatic/Manual",
@@ -418,7 +414,7 @@ tab <-
           substr(x, 2, 2) == "a" ~ "Automatic",
           substr(x, 2, 3) == "dd" ~ "Direct Drive"
         )
-      
+
       paste(speed, " Speed<br><em>", type, "</em>")
     }
   ) |>

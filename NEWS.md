@@ -1,14 +1,39 @@
 # gt (development version)
 
-* Significantly faster rendering of certain large tables, by optimizing the internal `rownum_translation()` utility. (@magnusdv, #1924) 
+## Minor improvements and bug fixes
 
-* Interactive tables can support selection through the `ihtml.selection_mode` option. (@jonthegeek, #1909)
+* Fixed an issue with a warning in Quarto (@olivroy, #1985)
+
+* as_word() now handles "<br>" line breaks for md() and html(), and no longer automatically adds "Table N" ahead of the caption. 
+
+# gt 1.0.0
+
+## Minor improvements and bug fixes
 
 * Tables embedded in Shiny apps with `gt_output()` and `render_gt()` with `ihtml.selection_mode` enabled also act as inputs, reporting the row numbers that are selected (#354, #1368). (@jonthegeek, #1909)
 
+* Significantly faster rendering of certain large tables, by optimizing the internal `rownum_translation()` utility (#1924). (@magnusdv, #1925)
+
+* Fixed an issue in `fmt_number()` where `drop_trailing_dec_mark` would be ignored if `use_seps = FALSE` (#1961). (@olivroy, #1962).
+
+* Fixed an issue where `fmt_markdown()` could create strange output in Quarto (html and Typst formats) (#1957). (@olivroy, #1958, [quarto-dev/quarto-cli#11932](https://github.com/quarto-dev/quarto-cli/issues/11932), [quarto-dev/quarto-cli#11610](https://github.com/quarto-dev/quarto-cli/issues/11610)).
+ 
+* The default table position in LaTeX is now "t" instead of "!t" (@AaronGullickson, #1935).
+
+* Fixed an issue where cross-references would fail in bookdown::html_document2 (@olivroy, #1948)
+
 * Improved width calculations in `as_gtable()` (@teunbrand, #1923)
 
+* `gt(row_group_as_column = TRUE)` now works if multiple groups are supplied (#1552). (@olivroy, #1801).
+
+* Fixed many typos in the documentation. (#1910, thanks @MichaelChirico!)
+
+* Improvements to options for LaTeX including repeating Headers, removing top and bottom lines, applying font sizes, and line breaks (@thebioengineer, #1630, #1061, #1767)
+
+* Add `latex()` function to let users write the LaTeX they wish to see in the table cell or text (@thebioengineer)
+
 * Added support for some unicode characters when going out to LaTeX (@thebioengineer)
+
 
 # gt 0.11.1
 

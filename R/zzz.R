@@ -174,6 +174,9 @@ gt_default_options <-
   toset <- !(names(gt_default_options) %in% names(op))
   if (any(toset)) options(gt_default_options[toset])
 
+  # Only register S3 method once package is loaded
+  vctrs::s3_register("gtable::as.gtable", "gt_tbl")
+
   invisible()
 }
 

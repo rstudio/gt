@@ -186,8 +186,8 @@ for (i in seq_along(all_locales)) {
 #
 
 numbers_metadata_tbl <-
-  i18n::numbers %>%
   dplyr::select(
+    i18n::numbers,
     locale, decimal, group, percent_sign, plus_sign, minus_sign, approx_sign,
     exp_sign, sup_exp, per_mille, infinity, nan,
     approx_pattern, at_least_pattern, at_most_pattern, range_pattern,
