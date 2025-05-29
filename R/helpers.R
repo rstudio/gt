@@ -4090,8 +4090,8 @@ latex_unicode_chars <- c(
     "\U2AFD"='\\ensuremath{{{/}\\!\\!{/}}}',                          # DOUBLE SOLIDUS OPERATOR [⫽]")
 
     # CJK Symbols Punktuation (!) U+3000 : for \langle/\rangle
-    "\U3008"='\ensuremath{\langle}',
-    "\U3009"='\ensuremath{\rangle}'
+    "\U3008"='\\ensuremath{\langle}',
+    "\U3009"='\\ensuremath{\rangle}'
 )
 
 # escape_latex() ---------------------------------------------------------------
