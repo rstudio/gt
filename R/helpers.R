@@ -3311,6 +3311,7 @@ latex_unicode_chars <- c(
     "\U03CD"="\\ensuremath{\\acute\\upsilon}",           # GREEK SMALL LETTER UPSILON WITH TONOS [�\u008d]",
     "\U03CE"="\\ensuremath{\\acute\\omega}",             # GREEK SMALL LETTER OMEGA WITH TONOS [�\u008e]",
 
+    "\U0251"='\\ensuremath{\\alpha}',                  # Greek Small Letter Alpha",
     "\U03B1"='\\ensuremath{\\alpha}',                  # Greek Small Letter Alpha",
     "\U03B2"='\\ensuremath{\\beta}',
     "\U03B3"='\\ensuremath{\\gamma}',
@@ -4090,8 +4091,8 @@ latex_unicode_chars <- c(
     "\U2AFD"='\\ensuremath{{{/}\\!\\!{/}}}',                          # DOUBLE SOLIDUS OPERATOR [⫽]")
 
     # CJK Symbols Punktuation (!) U+3000 : for \langle/\rangle
-    "\U3008"='\\ensuremath{\langle}',
-    "\U3009"='\\ensuremath{\rangle}'
+    "\U3008"='\\ensuremath{\\langle}',
+    "\U3009"='\\ensuremath{\\rangle}'
 )
 
 # escape_latex() ---------------------------------------------------------------
@@ -4142,7 +4143,7 @@ escape_latex <- function(text) {
 
   regmatches(text[!na_text], m) <- escaped_chars
 
-  m2 <- gregexpr(paste0(names(latex_unicode_chars),collapse = "|"), text[!na_text], perl = TRUE)
+  m2 <- gregexpr(paste0("[",paste0(names(latex_unicode_chars), collapse = ""),"]"), text[!na_text], perl = TRUE)
 
   unicode_chars <- regmatches(text[!na_text], m2)
 
