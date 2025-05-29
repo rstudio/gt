@@ -4,7 +4,7 @@
 \alias{latex}
 \title{Interpret input text as LaTeX-formatted text}
 \usage{
-latex(text, ...)
+latex(text)
 }
 \arguments{
 \item{text}{\emph{LaTeX text}
@@ -52,7 +52,7 @@ that we're using LaTeX formatting.
 }
 
 \seealso{
-Other helper functions:
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
