@@ -3000,20 +3000,6 @@ latex_special_chars <- c(
 ## Copied from https://github.com/phfaist/pylatexenc/blob/6dc2ce7fcd89b7cd1536c79c800f49f09535f5e9/pylatexenc/latexencode/_uni2latexmap.py
 
 latex_unicode_chars <- c(
-    "\U0022"='"',                                    # character ",
-    "\U0023"='\\#',                                   # character #",
-    "\U0024"='\\$',                                   # character $",
-    "\U0025"='\\%',                                   # character %",
-    "\U0026"='\\&',                                   # character &",
-    "\U003C"='\\ensuremath{<}',                       # <",
-    "\U003E"='\\ensuremath{>}',                       # >",
-    "\U005C"='\\textbackslash',                       # the \\ character itself",
-    "\U005E"='\\textasciicircum',                     # character ^",
-    "\U005F"='\\_',                                   # character _",
-    "\U007B"='\\{',                                   # character {",
-    "\U007D"='\\}',                                   # character }",
-    "\U007E"='\\textasciitilde',                      # character ~",
-    "\U00A0"='~',                                    # character NO-BREAK SPACE",
     "\U00A1"='\\textexclamdown',                      # character ¡",
     "\U00A2"='\\textcent',                            # character ¢",
     "\U00A3"='\\textsterling',                        # character £",
@@ -3026,7 +3012,6 @@ latex_unicode_chars <- c(
     "\U00AA"='\\textordfeminine',                     # character ª",
     "\U00AB"='\\guillemotleft',                       # character «",
     "\U00AC"='\\textlnot',                            # character ¬",
-    "\U00AD"='\\-',                                   # SOFT HYPHEN [­]",
     "\U00AE"='\\textregistered',                      # character ®",
     "\U00AF"='\\textasciimacron',                     # character ¯",
     "\U00B0"='\\textdegree',                          # character °",
@@ -3260,8 +3245,6 @@ latex_unicode_chars <- c(
     "\U02DC"='\\textasciitilde',
     "\U02DD"='\\textacutedbl',                        # 0x02DD",
 
-    "\U02BC"="'",                                     # MODIFIER LETTER APOSTROPHE",
-
     "\U0307"='\\ensuremath{\\dot{}}',
     "\U0308"='\\ensuremath{\\ddot{}}',
 
@@ -3277,24 +3260,24 @@ latex_unicode_chars <- c(
     "\U0392"='B',                                    # GREEK CAPITAL LETTER BETA",
     "\U0393"='\\ensuremath{\\Gamma}',                  # GREEK CAPITAL LETTER GAMMA",
     "\U0394"='\\ensuremath{\\Delta}',                  # ...",
-    "\U0395"='E',
-    "\U0396"='Z',
-    "\U0397"='H',
+    # "\U0395"='E',
+    # "\U0396"='Z',
+    # "\U0397"='H',
     "\U0398"='\\ensuremath{\\Theta}',
-    "\U0399"='I',
-    "\U039A"='K',
+    # "\U0399"='I',
+    # "\U039A"='K',
     "\U039B"='\\ensuremath{\\Lambda}',
-    "\U039C"='M',
-    "\U039D"='N',
+    # "\U039C"='M',
+    # "\U039D"='N',
     "\U039E"='\\ensuremath{\\Xi}',
-    "\U039F"='O',
+    # "\U039F"='O',
     "\U03A0"='\\ensuremath{\\Pi}',
-    "\U03A1"='P',
+    # "\U03A1"='P',
     "\U03A3"='\\ensuremath{\\Sigma}',
-    "\U03A4"='T',
+    # "\U03A4"='T',
     "\U03A5"='\\ensuremath{\\Upsilon}',
     "\U03A6"='\\ensuremath{\\Phi}',
-    "\U03A7"='X',
+    # "\U03A7"='X',
     "\U03A8"='\\ensuremath{\\Psi}',
     "\U03A9"='\\ensuremath{\\Omega}',
 
@@ -3608,9 +3591,9 @@ latex_unicode_chars <- c(
 
     "\U200C"='\\textcompwordmark',                    # ZERO WIDTH NON-JOINER",
 
-    "\U2010"='-',                                    # HYPHEN",
+    # "\U2010"='-',                                    # HYPHEN",
     "\U2011"='\\nobreakdash-',                        # NON-BREAKING HYPHEN, https://tex.stackexchange.com/a/330437/32188",
-    "\U2012"='-',                                    # FIGURE DASH",
+    # "\U2012"='-',                                    # FIGURE DASH",
     "\U2013"='\\textendash',                          # 0x2013",
     "\U2014"='\\textemdash',
     "\U2015"='\\textemdash',                          # HORIZONTAL BAR",
@@ -3624,14 +3607,14 @@ latex_unicode_chars <- c(
     "\U2020"='\\textdagger',
     "\U2021"='\\textdaggerdbl',
     "\U2022"='\\textbullet',
-    "\U2024"='.',                                     # ONE DOT LEADER [�\u0080�]",
-    "\U2025"='..',                                    # TWO DOT LEADER [�\u0080�]",
+    # "\U2024"='.',                                     # ONE DOT LEADER [�\u0080�]",
+    # "\U2025"='..',                                    # TWO DOT LEADER [�\u0080�]",
     "\U2026"='\\textellipsis',
     "\U2030"='\\textperthousand',
     "\U2031"='\\textpertenthousand',
-    "\U2032: \"'\",                                      # PRIME [�\u0080�]",
-    "\U2033: \"''\",                                     # DOUBLE PRIME [�\u0080�]",
-    "\U2034: \"'''\",                                    # TRIPLE PRIME [�\u0080�]",
+    "\U2032"="'",                                      # PRIME [�\u0080�]",
+    "\U2033"="''",                                     # DOUBLE PRIME [�\u0080�]",
+    "\U2034"="'''",                                    # TRIPLE PRIME [�\u0080�]",
     "\U2035"='\\ensuremath{\\backprime}',               # REVERSED PRIME [�\u0080�]",
     "\U2039"='\\guilsinglleft',
     "\U203A"='\\guilsinglright',
@@ -3640,11 +3623,11 @@ latex_unicode_chars <- c(
     "\U2044"='\\textfractionsolidus',
     "\U204E"='\\textasteriskcentered',
     "\U2052"='\\textdiscount',                        # 0x2052",
-    "\U2057: \"''''\",                                   # QUADRUPLE PRIME [�\u0081\u0097]",
+    "\U2057"="''''",                                   # QUADRUPLE PRIME [�\u0081\u0097]",
 
     "\U205F"='\\hspace{0.22em}',                             # MEDIUM MATHEMATICAL SPACE [�\u0081\u009f]",
     "\U2060"='\\nolinebreak',                          # WORD JOINER [�\u0081�]",
-    "\U2061"='',                                     # FUNCTION APPLICATION",
+    # "\U2061"='',                                     # FUNCTION APPLICATION",
 
     "\U20A1"='\\textcolonmonetary',                   # 0x20A1",
     "\U20A4"='\\textlira',
@@ -3828,8 +3811,8 @@ latex_unicode_chars <- c(
     #"\U2233"=NA, #ANTICLOCKWISE CONTOUR INTEGRAL
     "\U2234"='\\ensuremath{\\therefore}',
     "\U2235"='\\ensuremath{\\because}',
-    "\U2236"='\\ensuremath{:}',
-    "\U2237"='\\ensuremath{::}',
+    # "\U2236"='\\ensuremath{:}',
+    # "\U2237"='\\ensuremath{::}',
 
     "\U223A"='\\ensuremath{\\mathbin{{:}\\!\\!{-}\\!\\!{:}}}', # GEOMETRIC PROPORTION [∺]",
     "\U223B"='\\ensuremath{\\homothetic}',              # HOMOTHETIC [∻]",
@@ -4143,13 +4126,19 @@ escape_latex <- function(text) {
 
   regmatches(text[!na_text], m) <- escaped_chars
 
-  m2 <- gregexpr(paste0("[",paste0(names(latex_unicode_chars), collapse = ""),"]"), text[!na_text], perl = TRUE)
+  m2 <- gregexpr(paste0("[",paste0(names(latex_unicode_chars), collapse = "|"),"]"), text[!na_text], perl = TRUE)
 
   unicode_chars <- regmatches(text[!na_text], m2)
 
+  # browser()
+
   latex_unicode <-
     lapply(unicode_chars, function(x) {
-      latex_unicode_chars[x]
+      new_var <- latex_unicode_chars[x]
+      if(length(new_var) > 0){
+        x[!is.na(new_var)] <- new_var[!is.na(new_var)]
+      }
+      x
     })
 
   regmatches(text[!na_text], m2) <- latex_unicode
