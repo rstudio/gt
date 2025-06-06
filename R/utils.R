@@ -1152,7 +1152,7 @@ markdown_to_latex <- function(text, md_engine) {
           }
 
           if(grepl("..gt\\_linebreak\\_indicator..", x, fixed = TRUE)){
-            x <- paste0("\\shortstack[l]{",gsub("..gt\\_linebreak\\_indicator.."," \\\\", x, fixed = TRUE),"}")
+            x <- paste0("\\shortstack[l]{" ,gsub("..gt\\_linebreak\\_indicator..", " \\\\", x, fixed = TRUE), "}")
           }
 
           x
