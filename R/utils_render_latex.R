@@ -94,7 +94,7 @@ latex_heading_row <- function(content, header_repeat = FALSE) {
   paste0(
     paste(paste(content, collapse = " & "), "\\\\ \n"),
     "\\midrule",
-    if(header_repeat){"\\endhead"},
+    if (header_repeat) {"\\endhead"},
     "\\addlinespace[2.5pt]\n",
     collapse = ""
   )
@@ -627,7 +627,7 @@ create_columns_component_l <- function(data, colwidth_df) {
   include_toprule <- dt_options_get_value(data, "latex_toprule")
 
   paste0(
-    if(include_toprule){"\\toprule\n"},
+    if (include_toprule) {"\\toprule\n"},
     paste0(table_col_spanners, collapse = ""),
     table_col_headings
   )

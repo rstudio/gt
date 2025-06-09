@@ -153,7 +153,7 @@ html <- function(text, ...) {
 #'   The text that is understood to be LaTeX text, which is to be preserved in
 #'   the LaTeX output context.
 #'
-##'
+#'
 #' @return A character object of class `latex`. It's tagged as an latex fragment
 #'   that is not to be sanitized.
 #'
