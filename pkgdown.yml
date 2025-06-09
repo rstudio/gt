@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   case-study-clinical-tables: case-study-clinical-tables.html
@@ -9,7 +9,7 @@ articles:
   gt-interactive: gt-interactive.html
   gt-visual: gt-visual.html
   gt: gt.html
-last_built: 2025-04-23T17:09Z
+last_built: 2025-06-09T12:37Z
 urls:
   reference: https://gt.rstudio.com/reference
   article: https://gt.rstudio.com/articles
