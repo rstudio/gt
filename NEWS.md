@@ -10,6 +10,9 @@
 
 * Add `latex()` function to let users write the LaTeX they wish to see in the table cell or text (@thebioengineer, #1912)
 
+* Added support for some unicode characters when going out to LaTeX (@thebioengineer)
+
+
 # gt 1.0.0
 
 ## Minor improvements and bug fixes
@@ -31,7 +34,6 @@
 * `gt(row_group_as_column = TRUE)` now works if multiple groups are supplied (#1552). (@olivroy, #1801).
 
 * Fixed many typos in the documentation. (#1910, thanks @MichaelChirico!)
-
 
 # gt 0.11.1
 

@@ -356,3 +356,36 @@ test_that("Table can apply font sizes", {
   expect_snapshot(gt_latex_font_size_10_subtitle_20)
 
 })
+
+test_that("Tables with unicode characters were acceptable and updated to latex compliant code", {
+
+  gt_tbl_unicode <- data.frame( unicode = c("ɑβΔ")) %>%
+    gt() %>%
+    tab_header(
+      title = "≥ unicode text",
+      subtitle = "≠ not equal"
+    ) %>%
+    as_latex()
+
+  ##  title should be \\ensuremath{\\geq} unicode text
+  expect_match(
+    gt_tbl_unicode %>% as.character(),
+    "\\ensuremath{\\geq} unicode text",
+    fixed = TRUE
+    )
+
+  ##  subtitle should be \\ensuremath{\\neq} not equal
+  expect_match(
+    gt_tbl_unicode %>% as.character(),
+    "\\ensuremath{\\neq} not equal",
+    fixed = TRUE
+  )
+
+  ##  content should be \\\ensuremath{\\alpha}\\ensuremath{\\beta}\\ensuremath{\\Delta}
+  expect_match(
+    gt_tbl_unicode %>% as.character(),
+    "\n\\ensuremath{\\alpha}\\ensuremath{\\beta}\\ensuremath{\\Delta} \\\\",
+    fixed = TRUE
+  )
+
+})
