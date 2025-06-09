@@ -194,6 +194,9 @@ tab_options(
   quarto.use_bootstrap = NULL,
   quarto.disable_processing = NULL,
   latex.use_longtable = NULL,
+  latex.header_repeat = NULL,
+  latex.toprule = NULL,
+  latex.bottomrule = NULL,
   latex.tbl.pos = NULL
 )
 }
@@ -660,6 +663,24 @@ By default, tables produced using latex code will be embedded in the
 \code{table} floating environment. Setting this parameter to \code{TRUE} will instead
 use the \code{longtable} environment which will not float and may span multiple
 pages.}
+
+\item{latex.header_repeat}{\itemize{
+\item Specify if the header should repeat or not across pages*
+
+For Long tables, it may be desirable to have the column headers repeat on
+every page. Setting this parameter to \code{TRUE} will add a \verb{\\endhead} command
+after the table headers so LaTeX knows where the headers end and will
+repeat them on every page.
+}}
+
+\item{latex.toprule, latex.bottomrule}{\itemize{
+\item Specify if an hrule should be put in the table at the top (latex.toprule) or bottom (latex.bottomrule)*
+
+By default the tables produced using latex code will include top and bottom
+lines in the table via \verb{\\toprule} and \verb{\\bottomrule}. Setting these
+parameters to \code{FALSE} will instead not have these commands added, which
+lets the tables be produced without the top and bottom lines.
+}}
 
 \item{latex.tbl.pos}{\emph{Specify latex floating position}
 

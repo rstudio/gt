@@ -233,3 +233,126 @@ test_that("Table styles correctly applied for tabular*", {
   expect_snapshot(gt_latex_styled)
 })
 
+test_that("Table heading allows for repeating", {
+
+  gt_latex_repeat_header <-
+    gt(exibble) %>%
+    tab_options(
+      latex.header_repeat = TRUE
+    ) %>%
+    as_latex()
+
+  expect_snapshot(gt_latex_repeat_header)
+})
+
+test_that("Table can remove top and bottom rules", {
+
+  gt_latex_no_top_rule <-
+    gt(exibble) %>%
+    tab_options(
+      latex.toprule = FALSE
+    ) %>%
+    as_latex()
+
+  expect_snapshot(gt_latex_no_top_rule)
+
+  gt_latex_no_bottom_rule <-
+    gt(exibble) %>%
+    tab_options(
+      latex.bottomrule = FALSE
+    ) %>%
+    as_latex()
+
+  expect_snapshot(gt_latex_no_bottom_rule)
+
+  gt_latex_no_top_or_bottom_rule <-
+    gt(exibble) %>%
+    tab_options(
+      latex.toprule = FALSE,
+      latex.bottomrule = FALSE
+    ) %>%
+    as_latex()
+
+  expect_snapshot(gt_latex_no_top_or_bottom_rule)
+})
+
+test_that("Latex table allows for line breaks in title and cells", {
+
+  gt_tbl_linebreaks <- data.frame(x = c("x<br>y"))  %>%
+    gt() %>%
+    fmt_markdown() %>%
+    tab_header(
+      title = md("TABLE <br> TITLE"),
+      subtitle = md("table <br> subtitle")
+    ) %>%
+    as_latex()
+
+  expect_snapshot(gt_tbl_linebreaks)
+
+})
+
+test_that("Latex() function lets users pass their own latex to titles", {
+
+  gt_tbl_inline_latex<- data.frame(
+      x = c("\\textbf{x}","\\textbf{y}")
+    )  %>%
+    gt() %>%
+    fmt(columns = 1, rows = 1, fns = ~latex(.x)) %>%
+    tab_header(
+      title = latex("\\textbf{TABLE TITLE}"),
+      subtitle = "\\textbf{TABLE SUBTITLE}"
+    ) %>%
+    as_latex()
+
+  ##  1st row should and title should also be as-is
+  ## 2nd row and subtitle should be escaped
+  expect_snapshot(gt_tbl_inline_latex %>% as.character())
+
+})
+
+test_that("Table can apply font sizes", {
+
+  gt_latex_font_size_10 <-
+    gt(exibble[1,]) %>%
+    tab_options(
+      table.font.size = "10pt",
+      heading.title.font.size = "10pt",
+      heading.subtitle.font.size = "10pt"
+    )%>%
+    tab_header(title = "My title",
+               subtitle = "My subtitle")%>%
+    as_latex()%>%
+    as.character()
+
+  expect_snapshot(gt_latex_font_size_10)
+
+  gt_latex_font_size_10_title_20 <-
+    gt(exibble[1,]) %>%
+    tab_options(
+      table.font.size = "10pt",
+      heading.title.font.size = "20pt",
+      heading.subtitle.font.size = "10pt"
+    )%>%
+    tab_header(title = "My title",
+               subtitle = "My subtitle")%>%
+    as_latex() %>%
+    as.character()
+
+  expect_snapshot(gt_latex_font_size_10_title_20)
+
+
+  gt_latex_font_size_10_subtitle_20 <-
+    gt(exibble[1,]) %>%
+    tab_options(
+      table.font.size = "10pt",
+      heading.title.font.size = "10pt",
+      heading.subtitle.font.size = "20pt"
+    )%>%
+    tab_header(title = "My title",
+               subtitle = "My subtitle")%>%
+    as_latex()%>%
+    as.character()
+
+  expect_snapshot(gt_latex_font_size_10_subtitle_20)
+
+})
