@@ -939,6 +939,12 @@ process_text <- function(text, context = "html") {
 
       return(text)
 
+    } else if (inherits(text, "from_latex")) {
+
+      text <- as.character(text)
+
+      return(text)
+
     } else {
 
       text <- escape_latex(text = text)
@@ -1126,6 +1132,8 @@ markdown_to_latex <- function(text, md_engine) {
             return(NA_character_)
           }
 
+          x <- gsub("<br>","..gt_linebreak_indicator..", x)
+
           if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
 
             if (grepl("<[a-zA-Z\\/][^>]*>", x)) {
@@ -1136,11 +1144,19 @@ markdown_to_latex <- function(text, md_engine) {
             }
           }
 
+
           if (names(md_engine_fn) == "commonmark") {
-            gsub("\\n$", "", md_engine_fn[[1]](text = x))
+           x <- gsub("\\n$", "", md_engine_fn[[1]](text = x))
           } else {
-            gsub("\\n$", "", md_engine_fn[[1]](text = x, format = "latex"))
+           x <- gsub("\\n$", "", md_engine_fn[[1]](text = x, format = "latex"))
           }
+
+          if(grepl("..gt\\_linebreak\\_indicator..", x, fixed = TRUE)){
+            x <- paste0("\\shortstack[l]{" ,gsub("..gt\\_linebreak\\_indicator..", " \\\\", x, fixed = TRUE), "}")
+          }
+
+          x
+
         }
       )
     )

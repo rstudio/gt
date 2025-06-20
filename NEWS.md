@@ -6,6 +6,10 @@
 
 * as_word() now handles "<br>" line breaks for md() and html(), and no longer automatically adds "Table N" ahead of the caption. 
 
+* Improvements to options for LaTeX including repeating Headers, removing top and bottom lines, applying font sizes, and line breaks (@thebioengineer, #1630, #1061, #1767)
+
+* Add `latex()` function to let users write the LaTeX they wish to see in the table cell or text (@thebioengineer, #1912)
+
 # gt 1.0.0
 
 ## Minor improvements and bug fixes
@@ -27,6 +31,7 @@
 * `gt(row_group_as_column = TRUE)` now works if multiple groups are supplied (#1552). (@olivroy, #1801).
 
 * Fixed many typos in the documentation. (#1910, thanks @MichaelChirico!)
+
 
 # gt 0.11.1
 
