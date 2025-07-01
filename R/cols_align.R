@@ -33,12 +33,19 @@
 #' allow **gt** to automatically choose the alignment of each column based on
 #' the data type (with the `auto` option).
 #'
-#' @param data *The gt table data object*
+#' @param data *The gt table or gt group data object*
 #'
 #'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
+#'
+#'   OR
+#'
+#'   `obj:<gt_group>` // **required**
+#'
+#'   This is the **gt** group object that is commonly created through use of the
+#'   [gt_group()] function.
 #'
 #' @param align *Alignment type*
 #'
@@ -120,7 +127,7 @@ cols_align <- function(
   }
 
   # Get the `align` value, this stops the function if there is no match
-  align <- 
+  align <-
     rlang::arg_match0(
       align,
       values = c("auto", "left", "center", "right")

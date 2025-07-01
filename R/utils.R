@@ -2508,7 +2508,7 @@ data_get_image_tag <- function(file, dir = "images") {
 #nocov end
 
 #' Function to iterate over the gt_tbls in a gt_group and apply a function
-#' @param data
+#' @param data gt_group obj
 #' @param arg_list list of function arguments and function name from match.call in parent function
 #' @noRd
 func_to_grp <- function(data, arg_list){
