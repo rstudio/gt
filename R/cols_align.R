@@ -111,7 +111,13 @@ cols_align <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
+
+  # handle gt_group
+  if(inherits(data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(func_to_grp(data, arg_list))
+  }
 
   # Get the `align` value, this stops the function if there is no match
   align <- 

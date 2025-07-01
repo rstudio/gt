@@ -216,3 +216,24 @@ test_that("The stub gets its alignment set properly with `cols_align()`", {
     cols_align(align = "center", columns = stub())
   )
 })
+
+
+test_that("check cols_align is applied gt_group", {
+
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  group_tables <-
+    gt_group(gt(mtcars_short), gt(mtcars_short)) %>%
+    cols_align(align = "left", columns = c(mpg, cyl, drat))
+
+  # Expect each gt_tbl object has the alignment assigned as expected
+  gt_tbl1 <- grp_pull(group_tables, which = 1)
+  gt_tbl2 <- grp_pull(group_tables, which = 2)
+  expected_alignment <- c("left","left","right","right","left","right","right","right","right","right","right")
+
+  expect_equal(gt_tbl1$`_boxhead`$column_align, expected_alignment)
+  expect_equal(gt_tbl2$`_boxhead`$column_align, expected_alignment)
+
+})

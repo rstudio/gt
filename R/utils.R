@@ -2506,3 +2506,30 @@ data_get_image_tag <- function(file, dir = "images") {
 }
 
 #nocov end
+
+#' Function to iterate over the gt_tbls in a gt_group and apply a function
+#' @param data
+#' @param arg_list list of function arguments and function name from match.call in parent function
+#' @noRd
+func_to_grp <- function(data, arg_list){
+  func <- as.character(arg_list[[1]])
+  args <- arg_list[-1]
+
+  # check function is a valid gt exported function
+  if(!(func %in% getNamespaceExports("gt"))){
+    stop("function must be a valid gt function")
+  }
+
+  for (i in 1:nrow(data$gt_tbls)) {
+    # pull out gt_tbl, apply function, reinsert into group
+    gt_tbl <- grp_pull(data, i)
+    # replace data arg with current gt_tbl
+    args[[1]] <- gt_tbl
+    gt_tbl <- do.call(func, args)
+    data <- grp_replace(data, gt_tbl, .which = i)
+  }
+
+  data
+}
+
+
