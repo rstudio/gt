@@ -2510,22 +2510,31 @@ data_get_image_tag <- function(file, dir = "images") {
 #' Function to iterate over the gt_tbls in a gt_group and apply a function
 #' @param data gt_group obj
 #' @param arg_list list of function arguments and function name from match.call in parent function
+#' @param call caller env
+#' @importFrom rlang caller_env
 #' @noRd
-func_to_grp <- function(data, arg_list){
+apply_to_grp <- function(data, arg_list, call = caller_env()){
   func <- as.character(arg_list[[1]])
   args <- arg_list[-1]
-
   # check function is a valid gt exported function
   if(!(func %in% getNamespaceExports("gt"))){
-    stop("function must be a valid gt function")
+    cli::cli_abort("{.val {func}} is not an exported gt function")
   }
 
-  for (i in 1:nrow(data$gt_tbls)) {
+  for (i in seq_len(nrow(data$gt_tbls))) {
     # pull out gt_tbl, apply function, reinsert into group
     gt_tbl <- grp_pull(data, i)
     # replace data arg with current gt_tbl
     args[[1]] <- gt_tbl
-    gt_tbl <- do.call(func, args)
+
+    #make it clear which table if an error occurs
+    gt_tbl <- tryCatch({
+      do.call(func, args, envir = call)
+    },
+    error = function(e) {
+      cli::cli_abort("Table {i} caused the following error:", parent = e)
+    })
+
     data <- grp_replace(data, gt_tbl, .which = i)
   }
 

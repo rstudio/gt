@@ -220,20 +220,19 @@ test_that("The stub gets its alignment set properly with `cols_align()`", {
 
 test_that("check cols_align is applied gt_group", {
 
-  # Check that specific suggested packages are available
-  check_suggests()
-
   # Create a `gt_group` object of two `gt_tbl`s
-  group_tables <-
-    gt_group(gt(mtcars_short), gt(mtcars_short)) %>%
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply alignment to table and group
+  aligned_gt_tbl <- gt_tbl %>%
     cols_align(align = "left", columns = c(mpg, cyl, drat))
 
-  # Expect each gt_tbl object has the alignment assigned as expected
-  gt_tbl1 <- grp_pull(group_tables, which = 1)
-  gt_tbl2 <- grp_pull(group_tables, which = 2)
-  expected_alignment <- c("left","left","right","right","left","right","right","right","right","right","right")
+  aligned_gt_group <- gt_group %>%
+    cols_align(align = "left", columns = c(mpg, cyl, drat))
 
-  expect_equal(gt_tbl1$`_boxhead`$column_align, expected_alignment)
-  expect_equal(gt_tbl2$`_boxhead`$column_align, expected_alignment)
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(aligned_gt_group, gt_group(aligned_gt_tbl, aligned_gt_tbl))
 
 })
