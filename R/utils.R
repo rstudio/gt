@@ -2532,7 +2532,7 @@ apply_to_grp <- function(data, arg_list, call = caller_env()){
       do.call(func, args, envir = call)
     },
     error = function(e) {
-      cli::cli_abort("Table {i} caused the following error:", parent = e)
+      cli::cli_abort("Failure in Table {i}", parent = e)
     })
 
     data <- grp_replace(data, gt_tbl, .which = i)

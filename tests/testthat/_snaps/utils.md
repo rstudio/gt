@@ -16,3 +16,15 @@
       Error in `str_substitute()`:
       ! Can't recycle `end` (size 2) to size 4.
 
+# apply_to_grp works
+
+    Code
+      tryCatch(apply_to_grp(gt_group_error, arg_list), error = function(e) e)
+    Output
+      <error/rlang_error>
+      Error in `apply_to_grp()`:
+      ! Failure in Table 2
+      Caused by error in `cols_align()`:
+      ! Can't select columns that don't exist.
+      x Column `num` doesn't exist.
+
