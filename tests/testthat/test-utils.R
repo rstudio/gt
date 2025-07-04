@@ -518,5 +518,5 @@ test_that("apply_to_grp works",{
   arg_list <- list("cols_align", data = "gt_group(gt_tbl, gt_tbl)", align = c("center"), columns = "num")
 
   # captures error of individual table and table number
- expect_snapshot_error(apply_to_grp(gt_group_error, arg_list))
+ expect_snapshot(apply_to_grp(gt_group_error, arg_list), error=TRUE)
 })
