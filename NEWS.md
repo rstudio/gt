@@ -10,6 +10,8 @@
 
 * Add `latex()` function to let users write the LaTeX they wish to see in the table cell or text (@thebioengineer, #1912)
 
+* Fixed an issue where grand summary rows would not be saved properly to Word (@olivroy, #2000).
+
 # gt 1.0.0
 
 ## Minor improvements and bug fixes
