@@ -1218,6 +1218,11 @@ create_body_component_h <- function(data) {
 
   non_center_alignments <- alignment_classes != "gt_center"
 
+  # Calculate hierarchical stub rowspan information for multi-column stubs
+  # TODO: Re-enable this after fixing vector length issues
+  # hierarchical_stub_info <- calculate_hierarchical_stub_rowspans(data)
+  hierarchical_stub_info <- calculate_hierarchical_stub_rowspans(data)
+
   body_rows_data <- list()
   body_rows_data$row_df <- vector("list", n_rows)
   body_rows_data$col_id_i <- vector("list", n_rows)
@@ -1249,6 +1254,29 @@ create_body_component_h <- function(data) {
   for (i in seq_len(n_rows)) {
     alignment_classes_i <- alignment_classes
     row_span_vals_i <- row_span_vals
+
+    # Apply hierarchical stub rowspan logic if available
+    if (!is.null(hierarchical_stub_info)) {
+      # Get stub variables and layout
+      stub_vars <- dt_boxhead_get_var_stub(data = data)
+      
+      if (!(length(stub_vars) == 1 && is.na(stub_vars))) {
+        hierarchy_vars <- stub_vars[-length(stub_vars)]  # Exclude rightmost stub column
+        
+        # Apply rowspan values for hierarchical stub columns
+        for (var_idx in seq_along(hierarchy_vars)) {
+          var_name <- hierarchy_vars[var_idx]
+          if (var_name %in% names(hierarchical_stub_info)) {
+            stub_info <- hierarchical_stub_info[[var_name]]
+            
+            # Set rowspan for this column if > 1
+            if (stub_info$rowspans[i] > 1) {
+              row_span_vals_i[[var_idx]] <- stub_info$rowspans[i]
+            }
+          }
+        }
+      }
+    }
 
     g <- group_idx[[i]]
     group_id <- groups_list$group_id[g]
@@ -1372,13 +1400,68 @@ create_body_component_h <- function(data) {
         i = i,
         cell_matrix = cell_matrix,
         groups_rows_df = groups_rows_df,
-        has_two_col_stub = has_two_col_stub
+        has_two_col_stub = has_two_col_stub,
+        hierarchical_stub_info = hierarchical_stub_info
       )
 
-    # Situation where we have two columns in the stub and the row label
+    # Apply hierarchical stub logic to filter out elements that should be hidden
+    cols_to_remove <- c()
+    if (!is.null(hierarchical_stub_info)) {
+      stub_vars <- dt_boxhead_get_var_stub(data = data)
+      if (!(length(stub_vars) == 1 && is.na(stub_vars))) {
+        hierarchy_vars <- stub_vars[-length(stub_vars)]  # Exclude rightmost stub column
+        
+        for (var_idx in seq_along(hierarchy_vars)) {
+          var_name <- hierarchy_vars[var_idx]
+          if (var_name %in% names(hierarchical_stub_info)) {
+            stub_info <- hierarchical_stub_info[[var_name]]
+            
+            # If this row should not display this column's value (it's part of a merge)
+            if (!stub_info$display_mask[i]) {
+              cols_to_remove <- c(cols_to_remove, var_idx)
+            }
+          }
+        }
+      }
+    }
+    
+    # Remove the columns/elements that should be hidden
+    if (length(cols_to_remove) > 0) {
+      # Adjust indices if they are beyond the current vector length
+      cols_to_remove <- cols_to_remove[cols_to_remove <= length(row_df)]
+      
+      if (length(cols_to_remove) > 0) {
+        row_df <- row_df[-cols_to_remove]
+        # Also remove from other vectors to maintain synchronization
+        if (length(col_id_i) >= max(cols_to_remove)) {
+          col_id_i <- col_id_i[-cols_to_remove]
+        }
+        if (length(row_id_i) >= max(cols_to_remove)) {
+          row_id_i <- row_id_i[-cols_to_remove]
+        }
+        if (length(row_span_vals_i) >= max(cols_to_remove)) {
+          row_span_vals_i <- row_span_vals_i[-cols_to_remove]
+        }
+        if (length(alignment_classes_i) >= max(cols_to_remove)) {
+          alignment_classes_i <- alignment_classes_i[-cols_to_remove]
+        }
+        if (length(has_rtl_i) >= max(cols_to_remove)) {
+          has_rtl_i <- has_rtl_i[-cols_to_remove]
+        }
+        if (length(extra_classes) >= max(cols_to_remove)) {
+          extra_classes <- extra_classes[-cols_to_remove]
+        }
+        if (length(row_styles) >= max(cols_to_remove)) {
+          row_styles <- row_styles[-cols_to_remove]
+        }
+      }
+    }
+
+    # Situation where we have multiple columns in the stub and the row label
     # isn't the first (the `row_df` vector will have one less element)
     if (length(col_names_id) > length(row_df)) {
-      col_id_i <- col_names_id[-(length(col_names_id) - length(row_df))]
+      # Take the first n elements where n = length(row_df)
+      col_id_i <- col_names_id[seq_len(length(row_df))]
     } else {
       col_id_i <- col_names_id
     }
@@ -1389,8 +1472,14 @@ create_body_component_h <- function(data) {
       row_id_i <- character(length(col_id_i))
     } else if (stub_width == 1) {
       row_id_i <- rep(paste0(col_id_i[1], "_", i), length(col_id_i))
-    } else if (stub_width == 2) {
-      row_id_i <- rep(paste0(col_id_i[2], "_", i), length(col_id_i))
+    } else {
+      # For multi-column stubs (>= 2), use the last stub column for row ID
+      last_stub_idx <- min(stub_width, length(col_id_i))
+      if (last_stub_idx > 0) {
+        row_id_i <- rep(paste0(col_id_i[last_stub_idx], "_", i), length(col_id_i))
+      } else {
+        row_id_i <- character(length(col_id_i))
+      }
     }
 
     # In the situation where there is:
@@ -1416,6 +1505,49 @@ create_body_component_h <- function(data) {
       has_rtl_i <- has_rtl_i[-1]
       extra_classes <- extra_classes[-1]
       row_styles <- row_styles[-1]
+    }
+
+    # Ensure all vectors have the same length before adding to body_rows_data
+    target_length <- length(row_df)
+    
+    # Truncate or pad vectors to match row_df length
+    col_id_i <- col_id_i[seq_len(min(length(col_id_i), target_length))]
+    if (length(col_id_i) < target_length) {
+      col_id_i <- c(col_id_i, rep(NA_character_, target_length - length(col_id_i)))
+    }
+    
+    row_id_i <- row_id_i[seq_len(min(length(row_id_i), target_length))]
+    if (length(row_id_i) < target_length) {
+      row_id_i <- c(row_id_i, rep(NA_character_, target_length - length(row_id_i)))
+    }
+    
+    row_span_vals_i <- row_span_vals_i[seq_len(min(length(row_span_vals_i), target_length))]
+    if (length(row_span_vals_i) < target_length) {
+      row_span_vals_i <- c(row_span_vals_i, rep(NA_integer_, target_length - length(row_span_vals_i)))
+    }
+    
+    alignment_classes_i <- alignment_classes_i[seq_len(min(length(alignment_classes_i), target_length))]
+    if (length(alignment_classes_i) < target_length) {
+      alignment_classes_i <- c(alignment_classes_i, rep("gt_left", target_length - length(alignment_classes_i)))
+    }
+    
+    has_rtl_i <- has_rtl_i[seq_len(min(length(has_rtl_i), target_length))]
+    if (length(has_rtl_i) < target_length) {
+      has_rtl_i <- c(has_rtl_i, rep(FALSE, target_length - length(has_rtl_i)))
+    }
+    
+    if (length(extra_classes) != target_length) {
+      if (length(extra_classes) > target_length) {
+        extra_classes <- extra_classes[seq_len(target_length)]
+      } else {
+        # Pad with empty lists
+        extra_classes <- c(extra_classes, replicate(target_length - length(extra_classes), list(character(0)), simplify = FALSE))
+      }
+    }
+    
+    row_styles <- row_styles[seq_len(min(length(row_styles), target_length))]
+    if (length(row_styles) < target_length) {
+      row_styles <- c(row_styles, rep(NA_character_, target_length - length(row_styles)))
     }
 
     body_rows_data$row_df[[i]] <- row_df
@@ -1586,7 +1718,8 @@ output_df_row_as_vec <- function(
     i,
     cell_matrix,
     groups_rows_df,
-    has_two_col_stub
+    has_two_col_stub,
+    hierarchical_stub_info = NULL
 ) {
 
   cell_matrix <- cell_matrix[i, ]
@@ -2059,8 +2192,8 @@ build_row_styles <- function(
 
   # The styles_resolved_row data frame should contain the columns `colnum` and
   # `html_style`. Each colnum should match the number of a data column in the
-  # output table; the first data column is number 1. No colnum should appear
-  # more than once in styles_resolved_row. It's OK for a column not to appear in
+  # output table; the first data column is number 1. No colnum should appear in
+  # styles_resolved_row, and it's OK for a column not to appear in
   # styles_resolved_row, and it's OK for styles_resolved_row to have 0 rows.
   #
   # If `include_stub` is TRUE, then a row with column==0 will be used as the
@@ -2120,4 +2253,98 @@ valid_html_id <- function(x) {
   valid_ids <- grepl("^[A-z]", x)
   x[!valid_ids] <- paste0("a", x[!valid_ids])
   gsub("\\s+", "-", x)
+}
+
+# Function to calculate rowspan values for hierarchical stub columns
+calculate_hierarchical_stub_rowspans <- function(data) {
+  
+  # Get stub layout and information
+  stub_layout <- get_stub_layout(data = data)
+  boxh <- dt_boxhead_get(data = data)
+  
+  # Check if we have multiple stub columns
+  stub_vars <- dt_boxhead_get_var_stub(data = data)
+  
+  if (length(stub_vars) == 1 && is.na(stub_vars)) {
+    # No stub columns
+    return(NULL)
+  }
+  
+  if (length(stub_vars) <= 1) {
+    # Single stub column or no stub - no hierarchical merging needed
+    return(NULL)
+  }
+  
+  # Get the body data for stub columns
+  body <- dt_body_get(data = data)
+  n_rows <- nrow(body)
+  
+  if (n_rows == 0) {
+    return(NULL)
+  }
+  
+  # Create a matrix of stub values (excluding the rightmost column which is the row identifier)
+  hierarchy_vars <- stub_vars[-length(stub_vars)]  # Remove rightmost stub column
+  stub_matrix <- as.matrix(body[, hierarchy_vars, drop = FALSE])
+  
+  # Initialize rowspan information
+  rowspan_info <- list()
+  
+  # For each hierarchical stub column (left to right, excluding rightmost)
+  for (col_idx in seq_along(hierarchy_vars)) {
+    var_name <- hierarchy_vars[col_idx]
+    col_values <- stub_matrix[, col_idx]
+    
+    # Calculate rowspans for this column based on consecutive identical values
+    # and values in columns to the left
+    rowspans <- rep(1L, n_rows)
+    display_mask <- rep(TRUE, n_rows)  # TRUE = display value, FALSE = merge/hide
+    
+    current_span_start <- 1
+    
+    for (row_idx in 2:n_rows) {
+      # Check if current row should continue the span from previous row
+      should_continue_span <- TRUE
+      
+      # Must match current column value
+      if (col_values[row_idx] != col_values[row_idx - 1]) {
+        should_continue_span <- FALSE
+      }
+      
+      # Must match all values in columns to the left
+      if (col_idx > 1) {
+        for (left_col_idx in 1:(col_idx - 1)) {
+          if (stub_matrix[row_idx, left_col_idx] != stub_matrix[row_idx - 1, left_col_idx]) {
+            should_continue_span <- FALSE
+            break
+          }
+        }
+      }
+      
+      if (should_continue_span) {
+        # Continue the current span
+        display_mask[row_idx] <- FALSE
+      } else {
+        # End current span and start a new one
+        span_length <- row_idx - current_span_start
+        if (span_length > 1) {
+          rowspans[current_span_start] <- span_length
+        }
+        current_span_start <- row_idx
+      }
+    }
+    
+    # Handle the last span
+    span_length <- n_rows - current_span_start + 1
+    if (span_length > 1) {
+      rowspans[current_span_start] <- span_length
+    }
+    
+    rowspan_info[[var_name]] <- list(
+      rowspans = rowspans,
+      display_mask = display_mask
+    )
+  }
+  
+  rowspan_info
 }
