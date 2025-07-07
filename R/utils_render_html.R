@@ -580,8 +580,19 @@ create_columns_component_h <- function(data) {
   # If columns are present in the stub, then replace with a set stubhead
   # label or nothing
   if (length(stub_layout) > 0 && length(stubh$label) > 0) {
-    headings_labels <- prepend_vec(headings_labels, stubh$label)
-    headings_vars <- prepend_vec(headings_vars, "::stub")
+    # Check if we have multiple labels for multi-column stub
+    stub_vars <- dt_boxhead_get_var_stub(data = data)
+    has_multi_column_stub <- length(stub_vars) > 1 && !any(is.na(stub_vars))
+    
+    if (has_multi_column_stub && length(stubh$label) > 1) {
+      # Multiple labels for multi-column stub - add each label individually
+      headings_labels <- c(stubh$label, headings_labels)
+      headings_vars <- c(paste0("::stub", seq_along(stubh$label)), headings_vars)
+    } else {
+      # Single label (may span multiple columns) - use current behavior
+      headings_labels <- prepend_vec(headings_labels, stubh$label)
+      headings_vars <- prepend_vec(headings_vars, "::stub")
+    }
   } else if (length(stub_layout) > 0) {
     headings_labels <- prepend_vec(headings_labels, "")
     headings_vars <- prepend_vec(headings_vars, "::stub")
@@ -595,7 +606,7 @@ create_columns_component_h <- function(data) {
 
   if (spanner_row_count < 1) {
 
-    # Create the cell for the stubhead label
+    # Create the cell(s) for the stubhead label(s)
     if (length(stub_layout) > 0) {
 
       stubhead_style <-
@@ -605,26 +616,59 @@ create_columns_component_h <- function(data) {
           NULL
         }
 
-      table_col_headings[[length(table_col_headings) + 1]] <-
-        htmltools::tags$th(
-          class = paste(
-            c(
-              "gt_col_heading", "gt_columns_bottom_border",
-              paste0("gt_", stubhead_label_alignment)
+      # Check if we have multiple stubhead labels for multi-column stub
+      stub_vars <- dt_boxhead_get_var_stub(data = data)
+      has_multi_column_stub <- length(stub_vars) > 1 && !any(is.na(stub_vars))
+      has_multiple_labels <- has_multi_column_stub && length(stubh$label) > 1
+      
+      if (has_multiple_labels) {
+        # Create individual <th> elements for each stubhead label
+        for (i in seq_along(stubh$label)) {
+          table_col_headings[[length(table_col_headings) + 1]] <-
+            htmltools::tags$th(
+              class = paste(
+                c(
+                  "gt_col_heading", "gt_columns_bottom_border",
+                  paste0("gt_", stubhead_label_alignment)
+                ),
+                collapse = " "
+              ),
+              rowspan = 1,
+              colspan = 1,
+              style = stubhead_style,
+              scope = "col",
+              id = headings_ids[i],
+              htmltools::HTML(headings_labels[i])
+            )
+        }
+        # Remove the stubhead labels from the lists
+        headings_vars <- headings_vars[-seq_along(stubh$label)]
+        headings_ids <- headings_ids[-seq_along(stubh$label)]
+        headings_labels <- headings_labels[-seq_along(stubh$label)]
+      } else {
+        # Single label spanning all stub columns (current behavior)
+        table_col_headings[[length(table_col_headings) + 1]] <-
+          htmltools::tags$th(
+            class = paste(
+              c(
+                "gt_col_heading", "gt_columns_bottom_border",
+                paste0("gt_", stubhead_label_alignment)
+              ),
+              collapse = " "
             ),
-            collapse = " "
-          ),
-          rowspan = 1,
-          colspan = length(stub_layout),
-          style = stubhead_style,
-          scope = ifelse(length(stub_layout) > 1, "colgroup", "col"),
-          id = headings_ids[1],
-          htmltools::HTML(headings_labels[1])
-        )
-
-      headings_vars <- headings_vars[-1]
-      headings_ids <- headings_ids[-1]
-      headings_labels <- headings_labels[-1]
+            rowspan = 1,
+            colspan = get_stub_column_count(data),
+            style = stubhead_style,
+            scope = ifelse(get_stub_column_count(data) > 1, "colgroup", "col"),
+            id = headings_ids[1],
+            htmltools::HTML(headings_labels[1])
+          )
+        
+        # Remove the single stubhead from the lists
+        headings_vars <- headings_vars[-1]
+        headings_ids <- headings_ids[-1]
+        headings_labels <- headings_labels[-1]
+      }
     }
 
     for (i in seq_along(headings_vars)) {
@@ -685,7 +729,7 @@ create_columns_component_h <- function(data) {
     # all column labels that DO have spanners above them.
     spanned_column_labels <- list()
 
-    # Create the cell for the stubhead label
+    # Create the cell(s) for the stubhead label(s)
     if (length(stub_layout) > 0) {
       stubhead_style <-
         if (nrow(stubhead_style_attrs) > 0) {
@@ -694,26 +738,59 @@ create_columns_component_h <- function(data) {
           NULL
         }
 
-      level_1_spanners[[length(level_1_spanners) + 1]] <-
-        htmltools::tags$th(
-          class = paste(
-            c(
-              "gt_col_heading", "gt_columns_bottom_border",
-              paste0("gt_", stubhead_label_alignment)
+      # Check if we have multiple stubhead labels for multi-column stub
+      stub_vars <- dt_boxhead_get_var_stub(data = data)
+      has_multi_column_stub <- length(stub_vars) > 1 && !any(is.na(stub_vars))
+      has_multiple_labels <- has_multi_column_stub && length(stubh$label) > 1
+      
+      if (has_multiple_labels) {
+        # Create individual <th> elements for each stubhead label
+        for (i in seq_along(stubh$label)) {
+          level_1_spanners[[length(level_1_spanners) + 1]] <-
+            htmltools::tags$th(
+              class = paste(
+                c(
+                  "gt_col_heading", "gt_columns_bottom_border",
+                  paste0("gt_", stubhead_label_alignment)
+                ),
+                collapse = " "
+              ),
+              rowspan = 2,
+              colspan = 1,
+              style = stubhead_style,
+              scope = "col",
+              id = headings_ids[i],
+              htmltools::HTML(headings_labels[i])
+            )
+        }
+        # Remove the stubhead labels from the lists
+        headings_ids <- headings_ids[-seq_along(stubh$label)]
+        headings_vars <- headings_vars[-seq_along(stubh$label)]
+        headings_labels <- headings_labels[-seq_along(stubh$label)]
+      } else {
+        # Single label spanning all stub columns (current behavior)
+        level_1_spanners[[length(level_1_spanners) + 1]] <-
+          htmltools::tags$th(
+            class = paste(
+              c(
+                "gt_col_heading", "gt_columns_bottom_border",
+                paste0("gt_", stubhead_label_alignment)
+              ),
+              collapse = " "
             ),
-            collapse = " "
-          ),
-          rowspan = 2,
-          colspan = length(stub_layout),
-          style = stubhead_style,
-          scope = ifelse(length(stub_layout) > 1, "colgroup", "col"),
-          id = headings_ids[1],
-          htmltools::HTML(headings_labels[1])
-        )
-
-      headings_ids <- headings_ids[-1]
-      headings_vars <- headings_vars[-1]
-      headings_labels <- headings_labels[-1]
+            rowspan = 2,
+            colspan = get_stub_column_count(data),
+            style = stubhead_style,
+            scope = ifelse(get_stub_column_count(data) > 1, "colgroup", "col"),
+            id = headings_ids[1],
+            htmltools::HTML(headings_labels[1])
+          )
+        
+        # Remove the single stubhead from the lists
+        headings_ids <- headings_ids[-1]
+        headings_vars <- headings_vars[-1]
+        headings_labels <- headings_labels[-1]
+      }
     }
 
     # NOTE: `rle()` treats NA values as distinct from each other;
@@ -1076,9 +1153,23 @@ create_body_component_h <- function(data) {
 
       row_label_col <- which(stub_layout == "rowname")
 
-      extra_classes_1[[row_label_col]] <- "gt_stub"
-      extra_classes_2[[row_label_col]] <-
-        c("gt_stub", if (table_stub_striped) "gt_striped" else NULL)
+      # For multi-column stubs, apply the thick border to all stub columns
+      # This creates a nice visual hierarchy with "boxes" for each level
+      stub_vars <- dt_boxhead_get_var_stub(data = data)
+      
+      if (length(stub_vars) > 1 && !any(is.na(stub_vars))) {
+        # Multi-column stub: apply gt_stub class to all stub columns
+        for (i in seq_len(length(stub_vars))) {
+          extra_classes_1[[i]] <- "gt_stub"
+          extra_classes_2[[i]] <-
+            c("gt_stub", if (table_stub_striped) "gt_striped" else NULL)
+        }
+      } else {
+        # Single column stub: apply gt_stub class to the rowname column (existing behavior)
+        extra_classes_1[[row_label_col]] <- "gt_stub"
+        extra_classes_2[[row_label_col]] <-
+          c("gt_stub", if (table_stub_striped) "gt_striped" else NULL)
+      }
     }
   }
 

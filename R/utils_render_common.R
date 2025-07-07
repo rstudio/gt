@@ -839,3 +839,27 @@ summary_row_side <- function(data, group_id) {
 
   unique(summary_df[["::side::"]])
 }
+
+# Get the number of columns in the stub for layout purposes
+get_stub_column_count <- function(data) {
+  
+  stub_layout <- get_stub_layout(data = data)
+  
+  if (is.null(stub_layout)) {
+    return(0)
+  }
+  
+  # Check if we have "rowname" in the layout
+  if ("rowname" %in% stub_layout) {
+    # Check if there are multiple stub columns
+    stub_vars <- dt_boxhead_get_var_stub(data = data)
+    if (length(stub_vars) > 1 && !any(is.na(stub_vars))) {
+      # Multiple stub columns
+      group_count <- if ("group_label" %in% stub_layout) 1 else 0
+      return(length(stub_vars) + group_count)
+    }
+  }
+  
+  # Default: return the length of the layout (original behavior)
+  return(length(stub_layout))
+}
