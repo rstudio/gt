@@ -2060,7 +2060,8 @@ create_body_component_xml <- function(
             i >= groups_rows_df$row_start & i <= groups_rows_df$row_end, ]
 
           group_summary_row_side <- unique(group_info[, "summary_row_side"])[[1]]
-
+          # https://github.com/rstudio/gt/issues/2000
+          group_summary_row_side <- ifelse(is.na(group_summary_row_side), "bottom", group_summary_row_side)
           group_row_add_row_loc <- group_info[,ifelse(group_summary_row_side == "top", "row_start","row_end")][[1]]
 
           if (i == group_row_add_row_loc) {
