@@ -750,7 +750,7 @@ get_effective_number_of_columns <- function(data) {
 
   # Obtain the number of visible columns in the built table
   n_data_cols <- get_number_of_visible_data_columns(data = data)
-  n_data_cols + length(get_stub_layout(data = data))
+  n_data_cols + get_stub_column_count(data)
 }
 
 get_stub_layout <- function(data) {
