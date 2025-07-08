@@ -35,7 +35,7 @@
 #' we even have the option to use [md()] or [html()] for rendering column labels
 #' from Markdown or using HTML.
 #'
-#' @inheritParams cols_width
+#' @inheritParams cols_align
 #'
 #' @param ... *Column label assignments*
 #'
