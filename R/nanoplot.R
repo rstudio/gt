@@ -76,7 +76,7 @@
 #' helper, layers of the nanoplots can be selectively removed and the aesthetics
 #' of the remaining plot components can be modified.
 #'
-#' @inheritParams cols_align
+#' @inheritParams cols_hide
 #'
 #' @param columns *Columns from which to get data for the dependent variable*
 #'

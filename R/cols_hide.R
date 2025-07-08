@@ -34,7 +34,12 @@
 #' reference during formatting of other columns) but the final display of those
 #' columns is not necessary.
 #'
-#' @inheritParams cols_align
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` // **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
 #'
 #' @param columns *Columns to target*
 #'
@@ -162,7 +167,7 @@ cols_hide <- function(
 #' be important in cases where the user obtains a `gt_tbl` object with hidden
 #' columns and there is motivation to reveal one or more of those.
 #'
-#' @inheritParams cols_align
+#' @inheritParams cols_hide
 #'
 #' @param columns *Columns to target*
 #'

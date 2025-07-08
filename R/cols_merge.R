@@ -37,7 +37,7 @@
 #' columns (i.e., second and subsequent columns given in `columns`). The
 #' formatting of values in different columns will be preserved upon merging.
 #'
-#' @inheritParams cols_align
+#' @inheritParams cols_hide
 #'
 #' @param columns *Columns to target*
 #'
@@ -291,7 +291,7 @@ cols_merge <- function(
 #' uncertainties, and any columns specified in `col_uncert` are hidden from
 #' appearing the output table.
 #'
-#' @inheritParams cols_align
+#' @inheritParams cols_hide
 #'
 #' @param col_val *Column to target for base values*
 #'
@@ -478,7 +478,7 @@ cols_merge_uncert <- function(
 #' containing both values separated by an em dash. The column specified in
 #' `col_end` is dropped from the output table.
 #'
-#' @inheritParams cols_align
+#' @inheritParams cols_hide
 #'
 #' @param col_begin *Column to target for beginning of range*
 #'
@@ -691,7 +691,7 @@ cols_merge_range <- function(
 #' percentages (e.g., `12 (23.2%)`). The column specified in `col_pct` is
 #' dropped from the output table.
 #'
-#' @inheritParams cols_align
+#' @inheritParams cols_hide
 #'
 #' @param col_n *Column to target for counts*
 #'
