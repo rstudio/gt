@@ -10,6 +10,8 @@
 
 * Add `latex()` function to let users write the LaTeX they wish to see in the table cell or text (@thebioengineer, #1912)
 
+* Fixed an issue where grand summary rows would not be saved properly to Word (@olivroy, #2000).
+
 * Enable `cols_align()` and `cols_label()` functions for gt_group objects (@shannonhaughton, #2005)
 
 # gt 1.0.0
