@@ -55,7 +55,7 @@ test_that("check cols_add is applied gt_group", {
   gt_tbl <- mtcars_short %>% gt()
   gt_group <- gt_group(gt_tbl, gt_tbl)
 
-  # apply alignment to table and group
+  # apply cols_add to table and group
   add_gt_tbl <- gt_tbl %>%
     cols_add(num = 1:5, char = rep("x",5))
 
