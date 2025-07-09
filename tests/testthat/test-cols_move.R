@@ -260,3 +260,22 @@ test_that("cols_move_to_end() works correctly", {
       cols_move_to_end(columns = c(mpg, cyls, disp))
   )
 })
+
+test_that("check cols_move is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply move to table and group
+  move_gt_tbl <- gt_tbl %>%
+    cols_move(columns = mpg, after = cyl)
+
+  move_gt_group <- gt_group %>%
+    cols_move(columns = mpg, after = cyl)
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(move_gt_group, gt_group(move_gt_tbl, move_gt_tbl))
+
+})
