@@ -47,3 +47,22 @@ test_that("cols_add() handles empty data frames", {
   expect_named(tab$`_data`, c("x", "y", "z"))
 
 })
+
+test_that("check cols_add is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply alignment to table and group
+  add_gt_tbl <- gt_tbl %>%
+    cols_add(num = 1:5, char = rep("x",5))
+
+  add_gt_group <- gt_group %>%
+    cols_add(num = 1:5, char = rep("x",5))
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(add_gt_group, gt_group(add_gt_tbl, add_gt_tbl))
+
+})
