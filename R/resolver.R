@@ -86,6 +86,42 @@ resolve_cells_stub <- function(data,
                                call = rlang::caller_env()) {
 
   #
+  # Resolution of columns as a character vector providing 
+  # the names of the matched stub variables
+  #
+  stub_vars <- dt_boxhead_get_var_stub(data = data)
+  
+  # Handle case where no stub exists
+  if (length(stub_vars) == 0 || all(is.na(stub_vars))) {
+    resolved_columns <- character(0)
+  } else if (!is.null(object$columns)) {
+    # Only resolve columns if the columns parameter exists (new behavior)
+    # First resolve columns normally with stub inclusion
+    resolved_columns <-
+      resolve_cols_c(
+        expr = !!object$columns,
+        data = data,
+        excl_stub = FALSE,
+        call = call
+      )
+    
+    # Filter to only include actual stub variables
+    resolved_columns <- intersect(resolved_columns, stub_vars)
+    
+    # If no columns were resolved but we have stub vars, default to all stub vars
+    if (length(resolved_columns) == 0) {
+      # Check if columns expression is everything() (default)
+      expr_text <- rlang::quo_text(object$columns)
+      if (expr_text == "everything()") {
+        resolved_columns <- stub_vars
+      }
+    }
+  } else {
+    # Legacy behavior: no columns parameter provided
+    resolved_columns <- character(0)
+  }
+
+  #
   # Resolution of rows as integer vectors
   # providing the positions of the matched variables
   #
@@ -97,7 +133,7 @@ resolve_cells_stub <- function(data,
     )
 
   # Create a list object
-  cells_resolved <- list(rows = resolved_rows_idx)
+  cells_resolved <- list(columns = resolved_columns, rows = resolved_rows_idx)
 
   # Apply the `stub_cells_resolved` class
   class(cells_resolved) <- "stub_cells_resolved"
