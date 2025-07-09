@@ -423,7 +423,7 @@ display of nicely-formatted units.
   fmt_percent(columns = matches("change"), decimals = 1) |>
   tab_spanner(
     label = "Population",
-    columns = starts_with("population")
+    columns = starts_with("pop")
   ) |>
   tab_spanner(
     label = "Density, \{\{*persons* km^-2\}\}",
