@@ -583,6 +583,12 @@ apply_footnotes_to_output <- function(data, context = "html") {
         boxhead_var_stub
     }
 
+    # Ensure fs_id column exists (it should be added by resolve_footnotes_styles)
+    if (!"fs_id" %in% names(footnotes_tbl_data)) {
+      # Add a temporary fs_id based on row numbers as fallback
+      footnotes_tbl_data$fs_id <- as.character(seq_len(nrow(footnotes_tbl_data)))
+    }
+
     footnotes_data_marks <-
       dplyr::mutate(
         footnotes_tbl_data,
