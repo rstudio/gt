@@ -1418,12 +1418,22 @@ create_body_component_h <- function(data) {
         locname = c("data", "stub"),
         rownum = i
       )
+    
+    # Get stub column styles separately
+    stub_column_styles <-
+      dt_styles_pluck(
+        styles_tbl = styles_tbl,
+        locname = "stub_column",
+        rownum = i
+      )
 
     row_styles <-
-      build_row_styles(
+      build_row_styles_with_stub_columns(
         styles_resolved_row = styles_row,
+        stub_column_styles = stub_column_styles,
         include_stub = has_stub_column,
-        n_cols = n_data_cols
+        n_cols = n_data_cols,
+        data = data
       )
 
     # Handle the layout case where there is a 'two-column stub', which
@@ -1939,6 +1949,12 @@ create_footnotes_component_h <- function(data) {
   if (nrow(footnotes_tbl) == 0) {
     return("")
   }
+  
+  # Ensure fs_id column exists (it should be added by resolve_footnotes_styles)
+  if (!"fs_id" %in% names(footnotes_tbl)) {
+    # Add a temporary fs_id based on row numbers as fallback
+    footnotes_tbl$fs_id <- as.character(seq_len(nrow(footnotes_tbl)))
+  }
 
   styles_tbl <- dt_styles_get(data = data)
 
@@ -2328,6 +2344,60 @@ build_row_styles <- function(
   }
 
   result
+}
+
+build_row_styles_with_stub_columns <- function(
+    styles_resolved_row,
+    stub_column_styles,
+    include_stub,
+    n_cols,
+    data
+) {
+  
+  # First, build normal row styles
+  row_styles <- build_row_styles(
+    styles_resolved_row = styles_resolved_row,
+    include_stub = include_stub,
+    n_cols = n_cols
+  )
+  
+  # If we have stub column styles and a stub exists, modify the stub styles
+  if (include_stub && nrow(stub_column_styles) > 0) {
+    
+    # Get stub variables to map column names to positions
+    stub_vars <- dt_boxhead_get_var_stub(data = data)
+    
+    if (!all(is.na(stub_vars))) {
+      # Create mapping from column names to stub positions
+      stub_positions <- seq_along(stub_vars)
+      names(stub_positions) <- stub_vars
+      
+      # Apply per-column stub styles
+      for (j in seq_len(nrow(stub_column_styles))) {
+        col_name <- stub_column_styles$colname[j]
+        if (col_name %in% names(stub_positions)) {
+          stub_pos <- stub_positions[col_name]
+          # For multi-column stubs, we need to handle positioning differently
+          # For now, we'll apply the style to the first stub position
+          # TODO: Enhance this to support proper multi-column stub positioning
+          if (stub_pos == 1) {
+            # MERGE styles instead of overwriting
+            existing_style <- row_styles[1]
+            new_style <- stub_column_styles$html_style[j]
+            
+            if (is.na(existing_style) || existing_style == "") {
+              row_styles[1] <- new_style
+            } else if (!is.na(new_style) && new_style != "") {
+              # Merge CSS styles by combining them
+              row_styles[1] <- paste(existing_style, new_style, sep = "; ")
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  row_styles
 }
 
 as_css_font_family_attr <- function(font_vec, value_only = FALSE) {
