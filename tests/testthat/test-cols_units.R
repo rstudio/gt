@@ -40,3 +40,22 @@ test_that("cols_units() works when unit is caught (#1733)", {
   tab <- cols_units(gt(d), everything() ~ "1")
   expect_no_error(render_as_html(tab))
 })
+
+test_that("check cols_units is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply units to table and group
+  units_gt_tbl <- gt_tbl %>%
+    cols_units(mpg="miles gallon^-1")
+
+  units_gt_group <- gt_group %>%
+    cols_units(mpg="miles gallon^-1")
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(units_gt_group, gt_group(units_gt_tbl, units_gt_tbl))
+
+})
