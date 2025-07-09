@@ -667,20 +667,20 @@ set_footnote.cells_stub <- function(
       }
     }
 
-    # Apply footnotes to each specified stub column
-    for (col in columns) {
-      data <-
-        dt_footnotes_add(
-          data = data,
-          locname = "data",  # Treat stub columns like data columns for individual footnotes
-          grpname = NA_character_,
-          colname = col,
-          locnum = 5,
-          rownum = rows,
-          footnotes = footnote,
-          placement = placement
-        )
-    }
+    # For multi-column stub footnotes, we still use "stub" locname to ensure
+    # proper footnote consolidation and ordering. This allows footnotes with
+    # the same text to be consolidated across all stub cells.
+    data <-
+      dt_footnotes_add(
+        data = data,
+        locname = "stub",
+        grpname = NA_character_,
+        colname = NA_character_,
+        locnum = 5,
+        rownum = rows,
+        footnotes = footnote,
+        placement = placement
+      )
   }
 
   data
