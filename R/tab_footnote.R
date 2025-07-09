@@ -634,19 +634,54 @@ set_footnote.cells_stub <- function(
 
   resolved <- resolve_cells_stub(data = data, object = loc)
 
+  columns <- resolved$columns
   rows <- resolved$rows
 
-  data <-
-    dt_footnotes_add(
-      data = data,
-      locname = "stub",
-      grpname = NA_character_,
-      colname = NA_character_,
-      locnum = 5,
-      rownum = rows,
-      footnotes = footnote,
-      placement = placement
-    )
+  # Get all stub variables for fallback
+  stub_vars <- dt_boxhead_get_var_stub(data = data)
+  
+  # Check if this is traditional usage (no columns parameter) 
+  # vs. new usage (explicit columns parameter provided)
+  is_traditional_usage <- is.null(loc$columns)
+  
+  if (is_traditional_usage) {
+    # For backward compatibility: traditional cells_stub() usage without columns parameter
+    # Use the original "stub" locname for compatibility with existing code
+    data <-
+      dt_footnotes_add(
+        data = data,
+        locname = "stub",
+        grpname = NA_character_,
+        colname = NA_character_,
+        locnum = 5,
+        rownum = rows,
+        footnotes = footnote,
+        placement = placement
+      )
+  } else {
+    # New usage: per-column stub footnotes
+    # If no stub columns are resolved, apply to all stub columns (backward compatibility)
+    if (length(columns) == 0) {
+      if (!all(is.na(stub_vars))) {
+        columns <- stub_vars
+      }
+    }
+
+    # Apply footnotes to each specified stub column
+    for (col in columns) {
+      data <-
+        dt_footnotes_add(
+          data = data,
+          locname = "data",  # Treat stub columns like data columns for individual footnotes
+          grpname = NA_character_,
+          colname = col,
+          locnum = 5,
+          rownum = rows,
+          footnotes = footnote,
+          placement = placement
+        )
+    }
+  }
 
   data
 }
