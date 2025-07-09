@@ -12,6 +12,8 @@
 
 * Fixed an issue where grand summary rows would not be saved properly to Word (@olivroy, #2000).
 
+* Enable `cols_align()` and `cols_label()` functions for gt_group objects (@shannonhaughton, #2005)
+
 # gt 1.0.0
 
 ## Minor improvements and bug fixes
