@@ -1091,15 +1091,6 @@ create_body_component_h <- function(data) {
   # Get the number of columns for the body cells only
   n_data_cols <- get_number_of_visible_data_columns(data = data)
 
-  # Create ID components for every column that will be rendered
-  col_names_id <-
-    c(
-      if ((n_cols_total - n_data_cols) > 0) {
-        paste0("stub_", seq_len(n_cols_total - n_data_cols))
-      },
-      dt_boxhead_get_vars_default(data = data)
-    )
-
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
@@ -1107,6 +1098,16 @@ create_body_component_h <- function(data) {
   # have a two-column stub (with the group label on the left side)
   has_stub_column <- "rowname" %in% stub_layout
   has_two_col_stub <- "group_label" %in% stub_layout
+
+  # Create ID components for every column that will be rendered
+  col_names_id <-
+    c(
+      if ((n_cols_total - n_data_cols) > 0) {
+        # For all stub columns, use generic stub IDs for backward compatibility
+        paste0("stub_", seq_len(n_cols_total - n_data_cols))
+      },
+      dt_boxhead_get_vars_default(data = data)
+    )
 
   # Get a matrix of all cells in the body (not including summary cells)
   cell_matrix <- get_body_component_cell_matrix(data = data)
@@ -1551,8 +1552,14 @@ create_body_component_h <- function(data) {
     # Situation where we have multiple columns in the stub and the row label
     # isn't the first (the `row_df` vector will have one less element)
     if (length(col_names_id) > length(row_df)) {
-      # Take the first n elements where n = length(row_df)
-      col_id_i <- col_names_id[seq_len(length(row_df))]
+      if (has_two_col_stub && !group_start) {
+        # For 2-column stub non-first rows, skip the group column (first element)
+        # and take the remaining elements that match row_df length
+        col_id_i <- col_names_id[-1][seq_len(length(row_df))]
+      } else {
+        # Take the first n elements where n = length(row_df)
+        col_id_i <- col_names_id[seq_len(length(row_df))]
+      }
     } else {
       col_id_i <- col_names_id
     }
@@ -1561,18 +1568,22 @@ create_body_component_h <- function(data) {
 
     if (stub_width == 0) {
       row_id_i <- character(length(col_id_i))
+    } else if (has_two_col_stub) {
+      # For group labels as columns (2-column stub), we always use stub_2_X pattern
+      row_id_i <- rep(paste0("stub_2_", i), length(col_id_i))
     } else if (stub_width == 1) {
-      row_id_i <- rep(paste0(col_id_i[1], "_", i), length(col_id_i))
+      # Always use stub_1_X pattern for row IDs when there's a stub
+      row_id_i <- rep(paste0("stub_1_", i), length(col_id_i))
     } else {
-      # For multi-column stubs (>= 2), use the last stub column for row ID
+      # For multi-column stubs (>= 2), use stub_X_Y pattern
       last_stub_idx <- min(stub_width, length(col_id_i))
       if (last_stub_idx > 0) {
-        row_id_i <- rep(paste0(col_id_i[last_stub_idx], "_", i), length(col_id_i))
+        row_id_i <- rep(paste0("stub_", last_stub_idx, "_", i), length(col_id_i))
       } else {
         row_id_i <- character(length(col_id_i))
       }
     }
-
+    
     # In the situation where there is:
     # (1) a group summary to be situated at the top of the group, and,
     # (2) a two-column stub
@@ -2067,8 +2078,7 @@ summary_rows_for_group_h <- function(
   # In the below conditions
   # - `grand_summary_col` is a global variable (`"::GRAND_SUMMARY"`, assigned
   #   in `dt_summary.R`)
-  # - `group_id` might be passed in as NA when there are unnamed groups (this
-  #   can happen usually when using `tab_row_group()` to build these row groups)
+  # - `group_id` might be passed in as NA when there are unnamed groups (this can happen usually when using `tab_row_group()` to build these row groups)
   #   and you cannot create summary rows for unnamed groups
   if (is.na(group_id)) {
     return(summary_row_lines)
