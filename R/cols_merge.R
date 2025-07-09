@@ -37,7 +37,7 @@
 #' columns (i.e., second and subsequent columns given in `columns`). The
 #' formatting of values in different columns will be preserved upon merging.
 #'
-#' @inheritParams cols_hide
+#' @inheritParams cols_align
 #'
 #' @param columns *Columns to target*
 #'
@@ -208,7 +208,13 @@ cols_merge <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
+
+  # Handle gt_group
+  if(inherits(data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(data, arg_list))
+  }
 
   # Get the columns supplied in `columns` as a character vector
   columns <-

@@ -847,3 +847,28 @@ test_that("cols_merge() errors well when pattern is wrong", {
       cols_merge(num, pattern = "{2}")
   })
 })
+
+test_that("check cols_merge is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply merge to table and group
+  merged_gt_tbl <- gt_tbl %>%
+    cols_merge(
+      columns = c(mpg,cyl),
+      pattern = "<<{1} mpg<</{2} cyl>>>>"
+    )
+
+  merged_gt_group <- gt_group %>%
+    cols_merge(
+      columns = c(mpg,cyl),
+      pattern = "<<{1} mpg<</{2} cyl>>>>"
+    )
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(merged_gt_group, gt_group(merged_gt_tbl, merged_gt_tbl))
+
+})
