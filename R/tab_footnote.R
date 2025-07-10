@@ -726,15 +726,14 @@ set_footnote.cells_stub <- function(
       }
     }
 
-    # For multi-column stub footnotes, we still use "stub" locname to ensure
-    # proper footnote consolidation and ordering. This allows footnotes with
-    # the same text to be consolidated across all stub cells.
+    # For multi-column stub footnotes, we use "stub" locname for consolidation
+    # but pass the specific column names to ensure footnotes are targeted correctly
     data <-
       dt_footnotes_add(
         data = data,
         locname = "stub",
         grpname = NA_character_,
-        colname = NA_character_,
+        colname = columns,
         locnum = 5,
         rownum = rows,
         footnotes = footnote,
