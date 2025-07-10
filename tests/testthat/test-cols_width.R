@@ -1055,3 +1055,22 @@ test_that("column widths are accurately reflected in Latex multicolumn statement
   expect_snapshot(as_latex(gt_tbl))
 
 })
+
+test_that("check cols_width is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply width to table and group
+  width_gt_tbl <- gt_tbl %>%
+    cols_width(mpg ~ px(150))
+
+  width_gt_group <- gt_group %>%
+    cols_width(mpg ~ px(150))
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(width_gt_group, gt_group(width_gt_tbl, width_gt_tbl))
+
+})
