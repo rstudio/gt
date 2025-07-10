@@ -30,554 +30,554 @@
         </thead>
         <tbody class="gt_table_body">
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="0 to 1">0 to 1</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="a0-to-1">0 to 1</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_1" scope="row" class="gt_row gt_right gt_stub">0.0001</th>
-      <td headers="0 to 1 stub_1_1 low" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 med" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 high" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 hundredths" class="gt_row gt_right">0</td></tr>
+      <td headers="a0-to-1 stub_1_1 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 med" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 high" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 hundredths" class="gt_row gt_right">0</td></tr>
           <tr><th id="stub_1_2" scope="row" class="gt_row gt_right gt_stub">0.0010</th>
-      <td headers="0 to 1 stub_1_2 low" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 med" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
-      <td headers="0 to 1 stub_1_2 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 hundredths" class="gt_row gt_right">0</td></tr>
+      <td headers="a0-to-1 stub_1_2 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 med" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
+      <td headers="a0-to-1 stub_1_2 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 hundredths" class="gt_row gt_right">0</td></tr>
           <tr><th id="stub_1_3" scope="row" class="gt_row gt_right gt_stub">0.0100</th>
-      <td headers="0 to 1 stub_1_3 low" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_3 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
-      <td headers="0 to 1 stub_1_3 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
-      <td headers="0 to 1 stub_1_3 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_3 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_3 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_3 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_3 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to-1 stub_1_3 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_3 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
+      <td headers="a0-to-1 stub_1_3 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
+      <td headers="a0-to-1 stub_1_3 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_3 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_3 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_3 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_3 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_4" scope="row" class="gt_row gt_right gt_stub">0.1000</th>
-      <td headers="0 to 1 stub_1_4 low" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
-      <td headers="0 to 1 stub_1_4 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="0 to 1 stub_1_4 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="0 to 1 stub_1_4 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_4 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_4 eighths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="0 to 1 stub_1_4 sixteenths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="0 to 1 stub_1_4 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to-1 stub_1_4 low" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
+      <td headers="a0-to-1 stub_1_4 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a0-to-1 stub_1_4 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a0-to-1 stub_1_4 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_4 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_4 eighths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a0-to-1 stub_1_4 sixteenths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a0-to-1 stub_1_4 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_5" scope="row" class="gt_row gt_right gt_stub">0.2500</th>
-      <td headers="0 to 1 stub_1_5 low" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to 1 stub_1_5 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to 1 stub_1_5 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to 1 stub_1_5 halves" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="0 to 1 stub_1_5 quarters" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to 1 stub_1_5 eighths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="0 to 1 stub_1_5 sixteenths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="0 to 1 stub_1_5 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">25</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to-1 stub_1_5 low" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to-1 stub_1_5 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to-1 stub_1_5 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to-1 stub_1_5 halves" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a0-to-1 stub_1_5 quarters" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to-1 stub_1_5 eighths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a0-to-1 stub_1_5 sixteenths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a0-to-1 stub_1_5 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">25</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_6" scope="row" class="gt_row gt_right gt_stub">0.4000</th>
-      <td headers="0 to 1 stub_1_6 low" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="0 to 1 stub_1_6 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="0 to 1 stub_1_6 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="0 to 1 stub_1_6 halves" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="0 to 1 stub_1_6 quarters" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to 1 stub_1_6 eighths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="0 to 1 stub_1_6 sixteenths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="0 to 1 stub_1_6 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">40</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to-1 stub_1_6 low" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a0-to-1 stub_1_6 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a0-to-1 stub_1_6 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a0-to-1 stub_1_6 halves" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a0-to-1 stub_1_6 quarters" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to-1 stub_1_6 eighths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a0-to-1 stub_1_6 sixteenths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a0-to-1 stub_1_6 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">40</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_7" scope="row" class="gt_row gt_right gt_stub">0.5000</th>
-      <td headers="0 to 1 stub_1_7 low" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="0 to 1 stub_1_7 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="0 to 1 stub_1_7 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="0 to 1 stub_1_7 halves" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="0 to 1 stub_1_7 quarters" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to 1 stub_1_7 eighths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="0 to 1 stub_1_7 sixteenths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="0 to 1 stub_1_7 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">50</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to-1 stub_1_7 low" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a0-to-1 stub_1_7 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a0-to-1 stub_1_7 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a0-to-1 stub_1_7 halves" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a0-to-1 stub_1_7 quarters" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to-1 stub_1_7 eighths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a0-to-1 stub_1_7 sixteenths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a0-to-1 stub_1_7 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">50</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_8" scope="row" class="gt_row gt_right gt_stub">0.6000</th>
-      <td headers="0 to 1 stub_1_8 low" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="0 to 1 stub_1_8 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="0 to 1 stub_1_8 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="0 to 1 stub_1_8 halves" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="0 to 1 stub_1_8 quarters" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to 1 stub_1_8 eighths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">5</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="0 to 1 stub_1_8 sixteenths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="0 to 1 stub_1_8 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">60</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to-1 stub_1_8 low" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a0-to-1 stub_1_8 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a0-to-1 stub_1_8 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a0-to-1 stub_1_8 halves" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a0-to-1 stub_1_8 quarters" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to-1 stub_1_8 eighths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">5</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a0-to-1 stub_1_8 sixteenths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a0-to-1 stub_1_8 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">60</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_9" scope="row" class="gt_row gt_right gt_stub">0.7500</th>
-      <td headers="0 to 1 stub_1_9 low" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to 1 stub_1_9 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to 1 stub_1_9 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to 1 stub_1_9 halves" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_9 quarters" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to 1 stub_1_9 eighths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="0 to 1 stub_1_9 sixteenths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">12</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="0 to 1 stub_1_9 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">75</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to-1 stub_1_9 low" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to-1 stub_1_9 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to-1 stub_1_9 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to-1 stub_1_9 halves" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_9 quarters" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to-1 stub_1_9 eighths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a0-to-1 stub_1_9 sixteenths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">12</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a0-to-1 stub_1_9 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">75</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_10" scope="row" class="gt_row gt_right gt_stub">0.9000</th>
-      <td headers="0 to 1 stub_1_10 low" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
-      <td headers="0 to 1 stub_1_10 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="0 to 1 stub_1_10 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="0 to 1 stub_1_10 halves" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_10 quarters" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_10 eighths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">7</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="0 to 1 stub_1_10 sixteenths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">14</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="0 to 1 stub_1_10 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">90</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to-1 stub_1_10 low" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
+      <td headers="a0-to-1 stub_1_10 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a0-to-1 stub_1_10 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a0-to-1 stub_1_10 halves" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_10 quarters" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_10 eighths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">7</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a0-to-1 stub_1_10 sixteenths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">14</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a0-to-1 stub_1_10 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">90</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_11" scope="row" class="gt_row gt_right gt_stub">0.9900</th>
-      <td headers="0 to 1 stub_1_11 low" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_11 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">98</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
-      <td headers="0 to 1 stub_1_11 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
-      <td headers="0 to 1 stub_1_11 halves" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_11 quarters" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_11 eighths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_11 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_11 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to-1 stub_1_11 low" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_11 med" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">98</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
+      <td headers="a0-to-1 stub_1_11 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
+      <td headers="a0-to-1 stub_1_11 halves" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_11 quarters" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_11 eighths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_11 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_11 hundredths" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_12" scope="row" class="gt_row gt_right gt_stub">0.9990</th>
-      <td headers="0 to 1 stub_1_12 low" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 med" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">998</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
-      <td headers="0 to 1 stub_1_12 halves" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 quarters" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 eighths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 hundredths" class="gt_row gt_right">1</td></tr>
+      <td headers="a0-to-1 stub_1_12 low" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 med" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 high" class="gt_row gt_right"><span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">998</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
+      <td headers="a0-to-1 stub_1_12 halves" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 quarters" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 eighths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 hundredths" class="gt_row gt_right">1</td></tr>
           <tr><th id="stub_1_13" scope="row" class="gt_row gt_right gt_stub">0.9999</th>
-      <td headers="0 to 1 stub_1_13 low" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 med" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 high" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 halves" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 quarters" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 eighths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 hundredths" class="gt_row gt_right">1</td></tr>
+      <td headers="a0-to-1 stub_1_13 low" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 med" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 high" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 halves" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 quarters" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 eighths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 hundredths" class="gt_row gt_right">1</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="0 to -1">0 to -1</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="a0-to--1">0 to -1</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_14" scope="row" class="gt_row gt_right gt_stub">-0.0001</th>
-      <td headers="0 to -1 stub_1_14 low" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 med" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 high" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 hundredths" class="gt_row gt_right">0</td></tr>
+      <td headers="a0-to--1 stub_1_14 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 med" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 high" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 hundredths" class="gt_row gt_right">0</td></tr>
           <tr><th id="stub_1_15" scope="row" class="gt_row gt_right gt_stub">-0.0010</th>
-      <td headers="0 to -1 stub_1_15 low" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 med" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
-      <td headers="0 to -1 stub_1_15 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 hundredths" class="gt_row gt_right">0</td></tr>
+      <td headers="a0-to--1 stub_1_15 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 med" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
+      <td headers="a0-to--1 stub_1_15 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 hundredths" class="gt_row gt_right">0</td></tr>
           <tr><th id="stub_1_16" scope="row" class="gt_row gt_right gt_stub">-0.0100</th>
-      <td headers="0 to -1 stub_1_16 low" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_16 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
-      <td headers="0 to -1 stub_1_16 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
-      <td headers="0 to -1 stub_1_16 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_16 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_16 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_16 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_16 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to--1 stub_1_16 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_16 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
+      <td headers="a0-to--1 stub_1_16 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
+      <td headers="a0-to--1 stub_1_16 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_16 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_16 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_16 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_16 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_17" scope="row" class="gt_row gt_right gt_stub">-0.1000</th>
-      <td headers="0 to -1 stub_1_17 low" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
-      <td headers="0 to -1 stub_1_17 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="0 to -1 stub_1_17 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="0 to -1 stub_1_17 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_17 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_17 eighths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="0 to -1 stub_1_17 sixteenths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="0 to -1 stub_1_17 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to--1 stub_1_17 low" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
+      <td headers="a0-to--1 stub_1_17 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a0-to--1 stub_1_17 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a0-to--1 stub_1_17 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_17 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_17 eighths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a0-to--1 stub_1_17 sixteenths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a0-to--1 stub_1_17 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_18" scope="row" class="gt_row gt_right gt_stub">-0.2500</th>
-      <td headers="0 to -1 stub_1_18 low" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to -1 stub_1_18 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to -1 stub_1_18 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to -1 stub_1_18 halves" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="0 to -1 stub_1_18 quarters" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to -1 stub_1_18 eighths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="0 to -1 stub_1_18 sixteenths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="0 to -1 stub_1_18 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">25</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to--1 stub_1_18 low" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to--1 stub_1_18 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to--1 stub_1_18 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to--1 stub_1_18 halves" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a0-to--1 stub_1_18 quarters" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to--1 stub_1_18 eighths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a0-to--1 stub_1_18 sixteenths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a0-to--1 stub_1_18 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">25</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_19" scope="row" class="gt_row gt_right gt_stub">-0.4000</th>
-      <td headers="0 to -1 stub_1_19 low" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="0 to -1 stub_1_19 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="0 to -1 stub_1_19 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="0 to -1 stub_1_19 halves" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="0 to -1 stub_1_19 quarters" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to -1 stub_1_19 eighths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="0 to -1 stub_1_19 sixteenths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="0 to -1 stub_1_19 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">40</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to--1 stub_1_19 low" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a0-to--1 stub_1_19 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a0-to--1 stub_1_19 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a0-to--1 stub_1_19 halves" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a0-to--1 stub_1_19 quarters" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to--1 stub_1_19 eighths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a0-to--1 stub_1_19 sixteenths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a0-to--1 stub_1_19 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">40</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_20" scope="row" class="gt_row gt_right gt_stub">-0.5000</th>
-      <td headers="0 to -1 stub_1_20 low" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="0 to -1 stub_1_20 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="0 to -1 stub_1_20 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="0 to -1 stub_1_20 halves" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="0 to -1 stub_1_20 quarters" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to -1 stub_1_20 eighths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="0 to -1 stub_1_20 sixteenths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="0 to -1 stub_1_20 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">50</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to--1 stub_1_20 low" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a0-to--1 stub_1_20 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a0-to--1 stub_1_20 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a0-to--1 stub_1_20 halves" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a0-to--1 stub_1_20 quarters" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to--1 stub_1_20 eighths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a0-to--1 stub_1_20 sixteenths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a0-to--1 stub_1_20 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">50</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_21" scope="row" class="gt_row gt_right gt_stub">-0.6000</th>
-      <td headers="0 to -1 stub_1_21 low" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="0 to -1 stub_1_21 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="0 to -1 stub_1_21 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="0 to -1 stub_1_21 halves" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="0 to -1 stub_1_21 quarters" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to -1 stub_1_21 eighths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">5</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="0 to -1 stub_1_21 sixteenths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="0 to -1 stub_1_21 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">60</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to--1 stub_1_21 low" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a0-to--1 stub_1_21 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a0-to--1 stub_1_21 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a0-to--1 stub_1_21 halves" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a0-to--1 stub_1_21 quarters" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to--1 stub_1_21 eighths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">5</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a0-to--1 stub_1_21 sixteenths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a0-to--1 stub_1_21 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">60</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_22" scope="row" class="gt_row gt_right gt_stub">-0.7500</th>
-      <td headers="0 to -1 stub_1_22 low" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to -1 stub_1_22 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to -1 stub_1_22 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to -1 stub_1_22 halves" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_22 quarters" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="0 to -1 stub_1_22 eighths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="0 to -1 stub_1_22 sixteenths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">12</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="0 to -1 stub_1_22 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">75</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to--1 stub_1_22 low" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to--1 stub_1_22 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to--1 stub_1_22 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to--1 stub_1_22 halves" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_22 quarters" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a0-to--1 stub_1_22 eighths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a0-to--1 stub_1_22 sixteenths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">12</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a0-to--1 stub_1_22 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">75</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_23" scope="row" class="gt_row gt_right gt_stub">-0.9000</th>
-      <td headers="0 to -1 stub_1_23 low" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
-      <td headers="0 to -1 stub_1_23 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="0 to -1 stub_1_23 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="0 to -1 stub_1_23 halves" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_23 quarters" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_23 eighths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">7</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="0 to -1 stub_1_23 sixteenths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">14</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="0 to -1 stub_1_23 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">90</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to--1 stub_1_23 low" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
+      <td headers="a0-to--1 stub_1_23 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a0-to--1 stub_1_23 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a0-to--1 stub_1_23 halves" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_23 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_23 eighths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">7</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a0-to--1 stub_1_23 sixteenths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">14</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a0-to--1 stub_1_23 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">90</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_24" scope="row" class="gt_row gt_right gt_stub">-0.9900</th>
-      <td headers="0 to -1 stub_1_24 low" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_24 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">98</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
-      <td headers="0 to -1 stub_1_24 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
-      <td headers="0 to -1 stub_1_24 halves" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_24 quarters" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_24 eighths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_24 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_24 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a0-to--1 stub_1_24 low" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_24 med" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">98</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
+      <td headers="a0-to--1 stub_1_24 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
+      <td headers="a0-to--1 stub_1_24 halves" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_24 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_24 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_24 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_24 hundredths" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_25" scope="row" class="gt_row gt_right gt_stub">-0.9990</th>
-      <td headers="0 to -1 stub_1_25 low" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 med" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">998</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
-      <td headers="0 to -1 stub_1_25 halves" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 quarters" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 eighths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 hundredths" class="gt_row gt_right">−1</td></tr>
+      <td headers="a0-to--1 stub_1_25 low" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 med" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 high" class="gt_row gt_right">−<span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">998</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
+      <td headers="a0-to--1 stub_1_25 halves" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 hundredths" class="gt_row gt_right">−1</td></tr>
           <tr><th id="stub_1_26" scope="row" class="gt_row gt_right gt_stub">-0.9999</th>
-      <td headers="0 to -1 stub_1_26 low" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 med" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 high" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 halves" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 quarters" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 eighths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 hundredths" class="gt_row gt_right">−1</td></tr>
+      <td headers="a0-to--1 stub_1_26 low" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 med" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 high" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 halves" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 hundredths" class="gt_row gt_right">−1</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="1 to 2">1 to 2</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="a1-to-2">1 to 2</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_27" scope="row" class="gt_row gt_right gt_stub">1.0001</th>
-      <td headers="1 to 2 stub_1_27 low" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 med" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 high" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 halves" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 quarters" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 eighths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 hundredths" class="gt_row gt_right">1</td></tr>
+      <td headers="a1-to-2 stub_1_27 low" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 med" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 high" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 halves" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 quarters" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 eighths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 hundredths" class="gt_row gt_right">1</td></tr>
           <tr><th id="stub_1_28" scope="row" class="gt_row gt_right gt_stub">1.0010</th>
-      <td headers="1 to 2 stub_1_28 low" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 med" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
-      <td headers="1 to 2 stub_1_28 halves" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 quarters" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 eighths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 hundredths" class="gt_row gt_right">1</td></tr>
+      <td headers="a1-to-2 stub_1_28 low" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 med" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
+      <td headers="a1-to-2 stub_1_28 halves" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 quarters" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 eighths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 hundredths" class="gt_row gt_right">1</td></tr>
           <tr><th id="stub_1_29" scope="row" class="gt_row gt_right gt_stub">1.0100</th>
-      <td headers="1 to 2 stub_1_29 low" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_29 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
-      <td headers="1 to 2 stub_1_29 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
-      <td headers="1 to 2 stub_1_29 halves" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_29 quarters" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_29 eighths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_29 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_29 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a1-to-2 stub_1_29 low" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_29 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
+      <td headers="a1-to-2 stub_1_29 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
+      <td headers="a1-to-2 stub_1_29 halves" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_29 quarters" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_29 eighths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_29 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_29 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_30" scope="row" class="gt_row gt_right gt_stub">1.1000</th>
-      <td headers="1 to 2 stub_1_30 low" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
-      <td headers="1 to 2 stub_1_30 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="1 to 2 stub_1_30 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="1 to 2 stub_1_30 halves" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_30 quarters" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_30 eighths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="1 to 2 stub_1_30 sixteenths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="1 to 2 stub_1_30 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a1-to-2 stub_1_30 low" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
+      <td headers="a1-to-2 stub_1_30 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a1-to-2 stub_1_30 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a1-to-2 stub_1_30 halves" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_30 quarters" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_30 eighths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a1-to-2 stub_1_30 sixteenths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a1-to-2 stub_1_30 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_31" scope="row" class="gt_row gt_right gt_stub">1.2500</th>
-      <td headers="1 to 2 stub_1_31 low" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="1 to 2 stub_1_31 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="1 to 2 stub_1_31 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="1 to 2 stub_1_31 halves" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="1 to 2 stub_1_31 quarters" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="1 to 2 stub_1_31 eighths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="1 to 2 stub_1_31 sixteenths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="1 to 2 stub_1_31 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">25</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a1-to-2 stub_1_31 low" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a1-to-2 stub_1_31 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a1-to-2 stub_1_31 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a1-to-2 stub_1_31 halves" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a1-to-2 stub_1_31 quarters" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a1-to-2 stub_1_31 eighths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a1-to-2 stub_1_31 sixteenths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a1-to-2 stub_1_31 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">25</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_32" scope="row" class="gt_row gt_right gt_stub">1.4000</th>
-      <td headers="1 to 2 stub_1_32 low" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="1 to 2 stub_1_32 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="1 to 2 stub_1_32 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="1 to 2 stub_1_32 halves" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="1 to 2 stub_1_32 quarters" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="1 to 2 stub_1_32 eighths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="1 to 2 stub_1_32 sixteenths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="1 to 2 stub_1_32 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">40</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a1-to-2 stub_1_32 low" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a1-to-2 stub_1_32 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a1-to-2 stub_1_32 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a1-to-2 stub_1_32 halves" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a1-to-2 stub_1_32 quarters" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a1-to-2 stub_1_32 eighths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a1-to-2 stub_1_32 sixteenths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a1-to-2 stub_1_32 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">40</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_33" scope="row" class="gt_row gt_right gt_stub">1.5000</th>
-      <td headers="1 to 2 stub_1_33 low" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="1 to 2 stub_1_33 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="1 to 2 stub_1_33 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="1 to 2 stub_1_33 halves" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="1 to 2 stub_1_33 quarters" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="1 to 2 stub_1_33 eighths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="1 to 2 stub_1_33 sixteenths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="1 to 2 stub_1_33 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">50</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a1-to-2 stub_1_33 low" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a1-to-2 stub_1_33 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a1-to-2 stub_1_33 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a1-to-2 stub_1_33 halves" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a1-to-2 stub_1_33 quarters" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a1-to-2 stub_1_33 eighths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a1-to-2 stub_1_33 sixteenths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a1-to-2 stub_1_33 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">50</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_34" scope="row" class="gt_row gt_right gt_stub">1.6000</th>
-      <td headers="1 to 2 stub_1_34 low" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="1 to 2 stub_1_34 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="1 to 2 stub_1_34 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="1 to 2 stub_1_34 halves" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="1 to 2 stub_1_34 quarters" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="1 to 2 stub_1_34 eighths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">5</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="1 to 2 stub_1_34 sixteenths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="1 to 2 stub_1_34 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">60</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a1-to-2 stub_1_34 low" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a1-to-2 stub_1_34 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a1-to-2 stub_1_34 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a1-to-2 stub_1_34 halves" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a1-to-2 stub_1_34 quarters" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a1-to-2 stub_1_34 eighths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">5</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a1-to-2 stub_1_34 sixteenths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a1-to-2 stub_1_34 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">60</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_35" scope="row" class="gt_row gt_right gt_stub">1.7500</th>
-      <td headers="1 to 2 stub_1_35 low" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="1 to 2 stub_1_35 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="1 to 2 stub_1_35 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="1 to 2 stub_1_35 halves" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_35 quarters" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="1 to 2 stub_1_35 eighths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="1 to 2 stub_1_35 sixteenths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">12</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="1 to 2 stub_1_35 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">75</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a1-to-2 stub_1_35 low" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a1-to-2 stub_1_35 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a1-to-2 stub_1_35 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a1-to-2 stub_1_35 halves" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_35 quarters" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a1-to-2 stub_1_35 eighths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a1-to-2 stub_1_35 sixteenths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">12</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a1-to-2 stub_1_35 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">75</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_36" scope="row" class="gt_row gt_right gt_stub">1.9000</th>
-      <td headers="1 to 2 stub_1_36 low" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
-      <td headers="1 to 2 stub_1_36 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="1 to 2 stub_1_36 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="1 to 2 stub_1_36 halves" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_36 quarters" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_36 eighths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">7</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="1 to 2 stub_1_36 sixteenths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">14</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="1 to 2 stub_1_36 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">90</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a1-to-2 stub_1_36 low" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
+      <td headers="a1-to-2 stub_1_36 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a1-to-2 stub_1_36 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a1-to-2 stub_1_36 halves" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_36 quarters" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_36 eighths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">7</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a1-to-2 stub_1_36 sixteenths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">14</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a1-to-2 stub_1_36 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">90</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_37" scope="row" class="gt_row gt_right gt_stub">1.9900</th>
-      <td headers="1 to 2 stub_1_37 low" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_37 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">98</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
-      <td headers="1 to 2 stub_1_37 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
-      <td headers="1 to 2 stub_1_37 halves" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_37 quarters" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_37 eighths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_37 sixteenths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_37 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a1-to-2 stub_1_37 low" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_37 med" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">98</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
+      <td headers="a1-to-2 stub_1_37 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
+      <td headers="a1-to-2 stub_1_37 halves" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_37 quarters" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_37 eighths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_37 sixteenths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_37 hundredths" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_38" scope="row" class="gt_row gt_right gt_stub">1.9990</th>
-      <td headers="1 to 2 stub_1_38 low" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 med" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">998</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
-      <td headers="1 to 2 stub_1_38 halves" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 quarters" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 eighths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 sixteenths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 hundredths" class="gt_row gt_right">2</td></tr>
+      <td headers="a1-to-2 stub_1_38 low" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 med" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 high" class="gt_row gt_right">1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">998</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
+      <td headers="a1-to-2 stub_1_38 halves" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 quarters" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 eighths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 sixteenths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 hundredths" class="gt_row gt_right">2</td></tr>
           <tr><th id="stub_1_39" scope="row" class="gt_row gt_right gt_stub">1.9999</th>
-      <td headers="1 to 2 stub_1_39 low" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 med" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 high" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 halves" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 quarters" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 eighths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 sixteenths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 hundredths" class="gt_row gt_right">2</td></tr>
+      <td headers="a1-to-2 stub_1_39 low" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 med" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 high" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 halves" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 quarters" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 eighths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 sixteenths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 hundredths" class="gt_row gt_right">2</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="-1 to -2">-1 to -2</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="a-1-to--2">-1 to -2</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_40" scope="row" class="gt_row gt_right gt_stub">-1.0001</th>
-      <td headers="-1 to -2 stub_1_40 low" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 med" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 high" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 halves" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 quarters" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 eighths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 hundredths" class="gt_row gt_right">−1</td></tr>
+      <td headers="a-1-to--2 stub_1_40 low" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 med" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 high" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 halves" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 hundredths" class="gt_row gt_right">−1</td></tr>
           <tr><th id="stub_1_41" scope="row" class="gt_row gt_right gt_stub">-1.0010</th>
-      <td headers="-1 to -2 stub_1_41 low" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 med" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
-      <td headers="-1 to -2 stub_1_41 halves" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 quarters" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 eighths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 hundredths" class="gt_row gt_right">−1</td></tr>
+      <td headers="a-1-to--2 stub_1_41 low" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 med" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
+      <td headers="a-1-to--2 stub_1_41 halves" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 hundredths" class="gt_row gt_right">−1</td></tr>
           <tr><th id="stub_1_42" scope="row" class="gt_row gt_right gt_stub">-1.0100</th>
-      <td headers="-1 to -2 stub_1_42 low" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_42 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
-      <td headers="-1 to -2 stub_1_42 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
-      <td headers="-1 to -2 stub_1_42 halves" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_42 quarters" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_42 eighths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_42 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_42 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a-1-to--2 stub_1_42 low" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_42 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
+      <td headers="a-1-to--2 stub_1_42 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
+      <td headers="a-1-to--2 stub_1_42 halves" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_42 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_42 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_42 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_42 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_43" scope="row" class="gt_row gt_right gt_stub">-1.1000</th>
-      <td headers="-1 to -2 stub_1_43 low" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
-      <td headers="-1 to -2 stub_1_43 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="-1 to -2 stub_1_43 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="-1 to -2 stub_1_43 halves" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_43 quarters" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_43 eighths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="-1 to -2 stub_1_43 sixteenths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="-1 to -2 stub_1_43 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a-1-to--2 stub_1_43 low" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
+      <td headers="a-1-to--2 stub_1_43 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a-1-to--2 stub_1_43 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a-1-to--2 stub_1_43 halves" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_43 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_43 eighths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a-1-to--2 stub_1_43 sixteenths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a-1-to--2 stub_1_43 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_44" scope="row" class="gt_row gt_right gt_stub">-1.2500</th>
-      <td headers="-1 to -2 stub_1_44 low" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="-1 to -2 stub_1_44 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="-1 to -2 stub_1_44 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="-1 to -2 stub_1_44 halves" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="-1 to -2 stub_1_44 quarters" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="-1 to -2 stub_1_44 eighths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="-1 to -2 stub_1_44 sixteenths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="-1 to -2 stub_1_44 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">25</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a-1-to--2 stub_1_44 low" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a-1-to--2 stub_1_44 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a-1-to--2 stub_1_44 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a-1-to--2 stub_1_44 halves" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a-1-to--2 stub_1_44 quarters" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a-1-to--2 stub_1_44 eighths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a-1-to--2 stub_1_44 sixteenths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a-1-to--2 stub_1_44 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">25</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_45" scope="row" class="gt_row gt_right gt_stub">-1.4000</th>
-      <td headers="-1 to -2 stub_1_45 low" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="-1 to -2 stub_1_45 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="-1 to -2 stub_1_45 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="-1 to -2 stub_1_45 halves" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="-1 to -2 stub_1_45 quarters" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="-1 to -2 stub_1_45 eighths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="-1 to -2 stub_1_45 sixteenths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="-1 to -2 stub_1_45 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">40</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a-1-to--2 stub_1_45 low" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a-1-to--2 stub_1_45 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a-1-to--2 stub_1_45 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a-1-to--2 stub_1_45 halves" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a-1-to--2 stub_1_45 quarters" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a-1-to--2 stub_1_45 eighths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a-1-to--2 stub_1_45 sixteenths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a-1-to--2 stub_1_45 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">40</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_46" scope="row" class="gt_row gt_right gt_stub">-1.5000</th>
-      <td headers="-1 to -2 stub_1_46 low" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="-1 to -2 stub_1_46 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="-1 to -2 stub_1_46 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="-1 to -2 stub_1_46 halves" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="-1 to -2 stub_1_46 quarters" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="-1 to -2 stub_1_46 eighths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="-1 to -2 stub_1_46 sixteenths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="-1 to -2 stub_1_46 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">50</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a-1-to--2 stub_1_46 low" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a-1-to--2 stub_1_46 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a-1-to--2 stub_1_46 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a-1-to--2 stub_1_46 halves" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a-1-to--2 stub_1_46 quarters" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a-1-to--2 stub_1_46 eighths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">4</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a-1-to--2 stub_1_46 sixteenths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a-1-to--2 stub_1_46 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">50</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_47" scope="row" class="gt_row gt_right gt_stub">-1.6000</th>
-      <td headers="-1 to -2 stub_1_47 low" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="-1 to -2 stub_1_47 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="-1 to -2 stub_1_47 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
-      <td headers="-1 to -2 stub_1_47 halves" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
-      <td headers="-1 to -2 stub_1_47 quarters" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="-1 to -2 stub_1_47 eighths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">5</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="-1 to -2 stub_1_47 sixteenths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="-1 to -2 stub_1_47 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">60</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a-1-to--2 stub_1_47 low" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a-1-to--2 stub_1_47 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a-1-to--2 stub_1_47 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">5</span></td>
+      <td headers="a-1-to--2 stub_1_47 halves" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">1</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">2</span></td>
+      <td headers="a-1-to--2 stub_1_47 quarters" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">2</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a-1-to--2 stub_1_47 eighths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">5</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a-1-to--2 stub_1_47 sixteenths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">10</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a-1-to--2 stub_1_47 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">60</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_48" scope="row" class="gt_row gt_right gt_stub">-1.7500</th>
-      <td headers="-1 to -2 stub_1_48 low" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="-1 to -2 stub_1_48 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="-1 to -2 stub_1_48 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="-1 to -2 stub_1_48 halves" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_48 quarters" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
-      <td headers="-1 to -2 stub_1_48 eighths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="-1 to -2 stub_1_48 sixteenths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">12</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="-1 to -2 stub_1_48 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">75</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a-1-to--2 stub_1_48 low" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a-1-to--2 stub_1_48 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a-1-to--2 stub_1_48 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a-1-to--2 stub_1_48 halves" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_48 quarters" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">3</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">4</span></td>
+      <td headers="a-1-to--2 stub_1_48 eighths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">6</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a-1-to--2 stub_1_48 sixteenths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">12</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a-1-to--2 stub_1_48 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">75</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_49" scope="row" class="gt_row gt_right gt_stub">-1.9000</th>
-      <td headers="-1 to -2 stub_1_49 low" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
-      <td headers="-1 to -2 stub_1_49 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="-1 to -2 stub_1_49 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
-      <td headers="-1 to -2 stub_1_49 halves" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_49 quarters" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_49 eighths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">7</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
-      <td headers="-1 to -2 stub_1_49 sixteenths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">14</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
-      <td headers="-1 to -2 stub_1_49 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">90</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a-1-to--2 stub_1_49 low" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">8</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">9</span></td>
+      <td headers="a-1-to--2 stub_1_49 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a-1-to--2 stub_1_49 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">9</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">10</span></td>
+      <td headers="a-1-to--2 stub_1_49 halves" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_49 quarters" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_49 eighths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">7</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">8</span></td>
+      <td headers="a-1-to--2 stub_1_49 sixteenths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">14</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">16</span></td>
+      <td headers="a-1-to--2 stub_1_49 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">90</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_50" scope="row" class="gt_row gt_right gt_stub">-1.9900</th>
-      <td headers="-1 to -2 stub_1_50 low" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_50 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">98</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
-      <td headers="-1 to -2 stub_1_50 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
-      <td headers="-1 to -2 stub_1_50 halves" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_50 quarters" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_50 eighths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_50 sixteenths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_50 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
+      <td headers="a-1-to--2 stub_1_50 low" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_50 med" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">98</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">99</span></td>
+      <td headers="a-1-to--2 stub_1_50 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td>
+      <td headers="a-1-to--2 stub_1_50 halves" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_50 quarters" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_50 eighths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_50 sixteenths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_50 hundredths" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">99</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">100</span></td></tr>
           <tr><th id="stub_1_51" scope="row" class="gt_row gt_right gt_stub">-1.9990</th>
-      <td headers="-1 to -2 stub_1_51 low" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 med" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">998</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
-      <td headers="-1 to -2 stub_1_51 halves" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 quarters" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 eighths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 sixteenths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 hundredths" class="gt_row gt_right">−2</td></tr>
+      <td headers="a-1-to--2 stub_1_51 low" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 med" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 high" class="gt_row gt_right">−1 <span style="font-size:0.6em;line-height:0.6em;vertical-align:0.45em;">998</span><span style="font-size:0.7em;line-height:0.7em;vertical-align:0.15em;">⁄</span><span style="font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;">999</span></td>
+      <td headers="a-1-to--2 stub_1_51 halves" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 quarters" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 eighths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 sixteenths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 hundredths" class="gt_row gt_right">−2</td></tr>
           <tr><th id="stub_1_52" scope="row" class="gt_row gt_right gt_stub">-1.9999</th>
-      <td headers="-1 to -2 stub_1_52 low" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 med" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 high" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 halves" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 quarters" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 eighths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 sixteenths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 hundredths" class="gt_row gt_right">−2</td></tr>
+      <td headers="a-1-to--2 stub_1_52 low" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 med" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 high" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 halves" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 quarters" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 eighths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 sixteenths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 hundredths" class="gt_row gt_right">−2</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="Exact Numbers">Exact Numbers</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="Exact-Numbers">Exact Numbers</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_53" scope="row" class="gt_row gt_right gt_stub">-1.0000</th>
-      <td headers="Exact Numbers stub_1_53 low" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 med" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 high" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 halves" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 quarters" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 eighths" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 hundredths" class="gt_row gt_right">−1</td></tr>
+      <td headers="Exact-Numbers stub_1_53 low" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 med" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 high" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 halves" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 quarters" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 eighths" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 hundredths" class="gt_row gt_right">−1</td></tr>
           <tr><th id="stub_1_54" scope="row" class="gt_row gt_right gt_stub">0.0000</th>
-      <td headers="Exact Numbers stub_1_54 low" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 med" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 high" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 halves" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 quarters" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 eighths" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 hundredths" class="gt_row gt_right">0</td></tr>
+      <td headers="Exact-Numbers stub_1_54 low" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 med" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 high" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 halves" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 quarters" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 eighths" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 hundredths" class="gt_row gt_right">0</td></tr>
           <tr><th id="stub_1_55" scope="row" class="gt_row gt_right gt_stub">1.0000</th>
-      <td headers="Exact Numbers stub_1_55 low" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 med" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 high" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 halves" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 quarters" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 eighths" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 hundredths" class="gt_row gt_right">1</td></tr>
+      <td headers="Exact-Numbers stub_1_55 low" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 med" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 high" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 halves" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 quarters" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 eighths" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 hundredths" class="gt_row gt_right">1</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="Not Numbers">Not Numbers</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="Not-Numbers">Not Numbers</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_56" scope="row" class="gt_row gt_right gt_stub">NA</th>
-      <td headers="Not Numbers stub_1_56 low" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 med" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 high" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 halves" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 quarters" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 eighths" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 sixteenths" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 hundredths" class="gt_row gt_right">NA</td></tr>
+      <td headers="Not-Numbers stub_1_56 low" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 med" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 high" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 halves" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 quarters" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 eighths" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 sixteenths" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 hundredths" class="gt_row gt_right">NA</td></tr>
           <tr><th id="stub_1_57" scope="row" class="gt_row gt_right gt_stub">NaN</th>
-      <td headers="Not Numbers stub_1_57 low" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 med" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 high" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 halves" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 quarters" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 eighths" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 sixteenths" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 hundredths" class="gt_row gt_right">NaN</td></tr>
+      <td headers="Not-Numbers stub_1_57 low" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 med" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 high" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 halves" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 quarters" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 eighths" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 sixteenths" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 hundredths" class="gt_row gt_right">NaN</td></tr>
           <tr><th id="stub_1_58" scope="row" class="gt_row gt_right gt_stub">Inf</th>
-      <td headers="Not Numbers stub_1_58 low" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 med" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 high" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 halves" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 quarters" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 eighths" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 sixteenths" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 hundredths" class="gt_row gt_right">Inf</td></tr>
+      <td headers="Not-Numbers stub_1_58 low" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 med" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 high" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 halves" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 quarters" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 eighths" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 sixteenths" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 hundredths" class="gt_row gt_right">Inf</td></tr>
           <tr><th id="stub_1_59" scope="row" class="gt_row gt_right gt_stub">-Inf</th>
-      <td headers="Not Numbers stub_1_59 low" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 med" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 high" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 halves" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 quarters" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 eighths" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 sixteenths" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 hundredths" class="gt_row gt_right">-Inf</td></tr>
+      <td headers="Not-Numbers stub_1_59 low" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 med" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 high" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 halves" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 quarters" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 eighths" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 sixteenths" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 hundredths" class="gt_row gt_right">-Inf</td></tr>
         </tbody>
         
         
@@ -615,554 +615,554 @@
         </thead>
         <tbody class="gt_table_body">
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="0 to 1">0 to 1</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="a0-to-1">0 to 1</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_1" scope="row" class="gt_row gt_right gt_stub">0.0001</th>
-      <td headers="0 to 1 stub_1_1 low" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 med" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 high" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 hundredths" class="gt_row gt_right">0</td></tr>
+      <td headers="a0-to-1 stub_1_1 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 med" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 high" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 hundredths" class="gt_row gt_right">0</td></tr>
           <tr><th id="stub_1_2" scope="row" class="gt_row gt_right gt_stub">0.0010</th>
-      <td headers="0 to 1 stub_1_2 low" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 med" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 high" class="gt_row gt_right">1/999</td>
-      <td headers="0 to 1 stub_1_2 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 hundredths" class="gt_row gt_right">0</td></tr>
+      <td headers="a0-to-1 stub_1_2 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 med" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 high" class="gt_row gt_right">1/999</td>
+      <td headers="a0-to-1 stub_1_2 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 hundredths" class="gt_row gt_right">0</td></tr>
           <tr><th id="stub_1_3" scope="row" class="gt_row gt_right gt_stub">0.0100</th>
-      <td headers="0 to 1 stub_1_3 low" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_3 med" class="gt_row gt_right">1/99</td>
-      <td headers="0 to 1 stub_1_3 high" class="gt_row gt_right">1/100</td>
-      <td headers="0 to 1 stub_1_3 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_3 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_3 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_3 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_3 hundredths" class="gt_row gt_right">1/100</td></tr>
+      <td headers="a0-to-1 stub_1_3 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_3 med" class="gt_row gt_right">1/99</td>
+      <td headers="a0-to-1 stub_1_3 high" class="gt_row gt_right">1/100</td>
+      <td headers="a0-to-1 stub_1_3 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_3 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_3 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_3 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_3 hundredths" class="gt_row gt_right">1/100</td></tr>
           <tr><th id="stub_1_4" scope="row" class="gt_row gt_right gt_stub">0.1000</th>
-      <td headers="0 to 1 stub_1_4 low" class="gt_row gt_right">1/9</td>
-      <td headers="0 to 1 stub_1_4 med" class="gt_row gt_right">1/10</td>
-      <td headers="0 to 1 stub_1_4 high" class="gt_row gt_right">1/10</td>
-      <td headers="0 to 1 stub_1_4 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_4 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_4 eighths" class="gt_row gt_right">1/8</td>
-      <td headers="0 to 1 stub_1_4 sixteenths" class="gt_row gt_right">2/16</td>
-      <td headers="0 to 1 stub_1_4 hundredths" class="gt_row gt_right">10/100</td></tr>
+      <td headers="a0-to-1 stub_1_4 low" class="gt_row gt_right">1/9</td>
+      <td headers="a0-to-1 stub_1_4 med" class="gt_row gt_right">1/10</td>
+      <td headers="a0-to-1 stub_1_4 high" class="gt_row gt_right">1/10</td>
+      <td headers="a0-to-1 stub_1_4 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_4 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_4 eighths" class="gt_row gt_right">1/8</td>
+      <td headers="a0-to-1 stub_1_4 sixteenths" class="gt_row gt_right">2/16</td>
+      <td headers="a0-to-1 stub_1_4 hundredths" class="gt_row gt_right">10/100</td></tr>
           <tr><th id="stub_1_5" scope="row" class="gt_row gt_right gt_stub">0.2500</th>
-      <td headers="0 to 1 stub_1_5 low" class="gt_row gt_right">1/4</td>
-      <td headers="0 to 1 stub_1_5 med" class="gt_row gt_right">1/4</td>
-      <td headers="0 to 1 stub_1_5 high" class="gt_row gt_right">1/4</td>
-      <td headers="0 to 1 stub_1_5 halves" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_5 quarters" class="gt_row gt_right">1/4</td>
-      <td headers="0 to 1 stub_1_5 eighths" class="gt_row gt_right">2/8</td>
-      <td headers="0 to 1 stub_1_5 sixteenths" class="gt_row gt_right">4/16</td>
-      <td headers="0 to 1 stub_1_5 hundredths" class="gt_row gt_right">25/100</td></tr>
+      <td headers="a0-to-1 stub_1_5 low" class="gt_row gt_right">1/4</td>
+      <td headers="a0-to-1 stub_1_5 med" class="gt_row gt_right">1/4</td>
+      <td headers="a0-to-1 stub_1_5 high" class="gt_row gt_right">1/4</td>
+      <td headers="a0-to-1 stub_1_5 halves" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_5 quarters" class="gt_row gt_right">1/4</td>
+      <td headers="a0-to-1 stub_1_5 eighths" class="gt_row gt_right">2/8</td>
+      <td headers="a0-to-1 stub_1_5 sixteenths" class="gt_row gt_right">4/16</td>
+      <td headers="a0-to-1 stub_1_5 hundredths" class="gt_row gt_right">25/100</td></tr>
           <tr><th id="stub_1_6" scope="row" class="gt_row gt_right gt_stub">0.4000</th>
-      <td headers="0 to 1 stub_1_6 low" class="gt_row gt_right">2/5</td>
-      <td headers="0 to 1 stub_1_6 med" class="gt_row gt_right">2/5</td>
-      <td headers="0 to 1 stub_1_6 high" class="gt_row gt_right">2/5</td>
-      <td headers="0 to 1 stub_1_6 halves" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_6 quarters" class="gt_row gt_right">2/4</td>
-      <td headers="0 to 1 stub_1_6 eighths" class="gt_row gt_right">3/8</td>
-      <td headers="0 to 1 stub_1_6 sixteenths" class="gt_row gt_right">6/16</td>
-      <td headers="0 to 1 stub_1_6 hundredths" class="gt_row gt_right">40/100</td></tr>
+      <td headers="a0-to-1 stub_1_6 low" class="gt_row gt_right">2/5</td>
+      <td headers="a0-to-1 stub_1_6 med" class="gt_row gt_right">2/5</td>
+      <td headers="a0-to-1 stub_1_6 high" class="gt_row gt_right">2/5</td>
+      <td headers="a0-to-1 stub_1_6 halves" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_6 quarters" class="gt_row gt_right">2/4</td>
+      <td headers="a0-to-1 stub_1_6 eighths" class="gt_row gt_right">3/8</td>
+      <td headers="a0-to-1 stub_1_6 sixteenths" class="gt_row gt_right">6/16</td>
+      <td headers="a0-to-1 stub_1_6 hundredths" class="gt_row gt_right">40/100</td></tr>
           <tr><th id="stub_1_7" scope="row" class="gt_row gt_right gt_stub">0.5000</th>
-      <td headers="0 to 1 stub_1_7 low" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_7 med" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_7 high" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_7 halves" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_7 quarters" class="gt_row gt_right">2/4</td>
-      <td headers="0 to 1 stub_1_7 eighths" class="gt_row gt_right">4/8</td>
-      <td headers="0 to 1 stub_1_7 sixteenths" class="gt_row gt_right">8/16</td>
-      <td headers="0 to 1 stub_1_7 hundredths" class="gt_row gt_right">50/100</td></tr>
+      <td headers="a0-to-1 stub_1_7 low" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_7 med" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_7 high" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_7 halves" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_7 quarters" class="gt_row gt_right">2/4</td>
+      <td headers="a0-to-1 stub_1_7 eighths" class="gt_row gt_right">4/8</td>
+      <td headers="a0-to-1 stub_1_7 sixteenths" class="gt_row gt_right">8/16</td>
+      <td headers="a0-to-1 stub_1_7 hundredths" class="gt_row gt_right">50/100</td></tr>
           <tr><th id="stub_1_8" scope="row" class="gt_row gt_right gt_stub">0.6000</th>
-      <td headers="0 to 1 stub_1_8 low" class="gt_row gt_right">3/5</td>
-      <td headers="0 to 1 stub_1_8 med" class="gt_row gt_right">3/5</td>
-      <td headers="0 to 1 stub_1_8 high" class="gt_row gt_right">3/5</td>
-      <td headers="0 to 1 stub_1_8 halves" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_8 quarters" class="gt_row gt_right">2/4</td>
-      <td headers="0 to 1 stub_1_8 eighths" class="gt_row gt_right">5/8</td>
-      <td headers="0 to 1 stub_1_8 sixteenths" class="gt_row gt_right">10/16</td>
-      <td headers="0 to 1 stub_1_8 hundredths" class="gt_row gt_right">60/100</td></tr>
+      <td headers="a0-to-1 stub_1_8 low" class="gt_row gt_right">3/5</td>
+      <td headers="a0-to-1 stub_1_8 med" class="gt_row gt_right">3/5</td>
+      <td headers="a0-to-1 stub_1_8 high" class="gt_row gt_right">3/5</td>
+      <td headers="a0-to-1 stub_1_8 halves" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_8 quarters" class="gt_row gt_right">2/4</td>
+      <td headers="a0-to-1 stub_1_8 eighths" class="gt_row gt_right">5/8</td>
+      <td headers="a0-to-1 stub_1_8 sixteenths" class="gt_row gt_right">10/16</td>
+      <td headers="a0-to-1 stub_1_8 hundredths" class="gt_row gt_right">60/100</td></tr>
           <tr><th id="stub_1_9" scope="row" class="gt_row gt_right gt_stub">0.7500</th>
-      <td headers="0 to 1 stub_1_9 low" class="gt_row gt_right">3/4</td>
-      <td headers="0 to 1 stub_1_9 med" class="gt_row gt_right">3/4</td>
-      <td headers="0 to 1 stub_1_9 high" class="gt_row gt_right">3/4</td>
-      <td headers="0 to 1 stub_1_9 halves" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_9 quarters" class="gt_row gt_right">3/4</td>
-      <td headers="0 to 1 stub_1_9 eighths" class="gt_row gt_right">6/8</td>
-      <td headers="0 to 1 stub_1_9 sixteenths" class="gt_row gt_right">12/16</td>
-      <td headers="0 to 1 stub_1_9 hundredths" class="gt_row gt_right">75/100</td></tr>
+      <td headers="a0-to-1 stub_1_9 low" class="gt_row gt_right">3/4</td>
+      <td headers="a0-to-1 stub_1_9 med" class="gt_row gt_right">3/4</td>
+      <td headers="a0-to-1 stub_1_9 high" class="gt_row gt_right">3/4</td>
+      <td headers="a0-to-1 stub_1_9 halves" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_9 quarters" class="gt_row gt_right">3/4</td>
+      <td headers="a0-to-1 stub_1_9 eighths" class="gt_row gt_right">6/8</td>
+      <td headers="a0-to-1 stub_1_9 sixteenths" class="gt_row gt_right">12/16</td>
+      <td headers="a0-to-1 stub_1_9 hundredths" class="gt_row gt_right">75/100</td></tr>
           <tr><th id="stub_1_10" scope="row" class="gt_row gt_right gt_stub">0.9000</th>
-      <td headers="0 to 1 stub_1_10 low" class="gt_row gt_right">8/9</td>
-      <td headers="0 to 1 stub_1_10 med" class="gt_row gt_right">9/10</td>
-      <td headers="0 to 1 stub_1_10 high" class="gt_row gt_right">9/10</td>
-      <td headers="0 to 1 stub_1_10 halves" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_10 quarters" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_10 eighths" class="gt_row gt_right">7/8</td>
-      <td headers="0 to 1 stub_1_10 sixteenths" class="gt_row gt_right">14/16</td>
-      <td headers="0 to 1 stub_1_10 hundredths" class="gt_row gt_right">90/100</td></tr>
+      <td headers="a0-to-1 stub_1_10 low" class="gt_row gt_right">8/9</td>
+      <td headers="a0-to-1 stub_1_10 med" class="gt_row gt_right">9/10</td>
+      <td headers="a0-to-1 stub_1_10 high" class="gt_row gt_right">9/10</td>
+      <td headers="a0-to-1 stub_1_10 halves" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_10 quarters" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_10 eighths" class="gt_row gt_right">7/8</td>
+      <td headers="a0-to-1 stub_1_10 sixteenths" class="gt_row gt_right">14/16</td>
+      <td headers="a0-to-1 stub_1_10 hundredths" class="gt_row gt_right">90/100</td></tr>
           <tr><th id="stub_1_11" scope="row" class="gt_row gt_right gt_stub">0.9900</th>
-      <td headers="0 to 1 stub_1_11 low" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_11 med" class="gt_row gt_right">98/99</td>
-      <td headers="0 to 1 stub_1_11 high" class="gt_row gt_right">99/100</td>
-      <td headers="0 to 1 stub_1_11 halves" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_11 quarters" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_11 eighths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_11 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_11 hundredths" class="gt_row gt_right">99/100</td></tr>
+      <td headers="a0-to-1 stub_1_11 low" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_11 med" class="gt_row gt_right">98/99</td>
+      <td headers="a0-to-1 stub_1_11 high" class="gt_row gt_right">99/100</td>
+      <td headers="a0-to-1 stub_1_11 halves" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_11 quarters" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_11 eighths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_11 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_11 hundredths" class="gt_row gt_right">99/100</td></tr>
           <tr><th id="stub_1_12" scope="row" class="gt_row gt_right gt_stub">0.9990</th>
-      <td headers="0 to 1 stub_1_12 low" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 med" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 high" class="gt_row gt_right">998/999</td>
-      <td headers="0 to 1 stub_1_12 halves" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 quarters" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 eighths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 hundredths" class="gt_row gt_right">1</td></tr>
+      <td headers="a0-to-1 stub_1_12 low" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 med" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 high" class="gt_row gt_right">998/999</td>
+      <td headers="a0-to-1 stub_1_12 halves" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 quarters" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 eighths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 hundredths" class="gt_row gt_right">1</td></tr>
           <tr><th id="stub_1_13" scope="row" class="gt_row gt_right gt_stub">0.9999</th>
-      <td headers="0 to 1 stub_1_13 low" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 med" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 high" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 halves" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 quarters" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 eighths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 hundredths" class="gt_row gt_right">1</td></tr>
+      <td headers="a0-to-1 stub_1_13 low" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 med" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 high" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 halves" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 quarters" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 eighths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 hundredths" class="gt_row gt_right">1</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="0 to -1">0 to -1</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="a0-to--1">0 to -1</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_14" scope="row" class="gt_row gt_right gt_stub">-0.0001</th>
-      <td headers="0 to -1 stub_1_14 low" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 med" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 high" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 hundredths" class="gt_row gt_right">0</td></tr>
+      <td headers="a0-to--1 stub_1_14 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 med" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 high" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 hundredths" class="gt_row gt_right">0</td></tr>
           <tr><th id="stub_1_15" scope="row" class="gt_row gt_right gt_stub">-0.0010</th>
-      <td headers="0 to -1 stub_1_15 low" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 med" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 high" class="gt_row gt_right">−1/999</td>
-      <td headers="0 to -1 stub_1_15 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 hundredths" class="gt_row gt_right">0</td></tr>
+      <td headers="a0-to--1 stub_1_15 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 med" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 high" class="gt_row gt_right">−1/999</td>
+      <td headers="a0-to--1 stub_1_15 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 hundredths" class="gt_row gt_right">0</td></tr>
           <tr><th id="stub_1_16" scope="row" class="gt_row gt_right gt_stub">-0.0100</th>
-      <td headers="0 to -1 stub_1_16 low" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_16 med" class="gt_row gt_right">−1/99</td>
-      <td headers="0 to -1 stub_1_16 high" class="gt_row gt_right">−1/100</td>
-      <td headers="0 to -1 stub_1_16 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_16 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_16 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_16 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_16 hundredths" class="gt_row gt_right">−1/100</td></tr>
+      <td headers="a0-to--1 stub_1_16 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_16 med" class="gt_row gt_right">−1/99</td>
+      <td headers="a0-to--1 stub_1_16 high" class="gt_row gt_right">−1/100</td>
+      <td headers="a0-to--1 stub_1_16 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_16 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_16 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_16 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_16 hundredths" class="gt_row gt_right">−1/100</td></tr>
           <tr><th id="stub_1_17" scope="row" class="gt_row gt_right gt_stub">-0.1000</th>
-      <td headers="0 to -1 stub_1_17 low" class="gt_row gt_right">−1/9</td>
-      <td headers="0 to -1 stub_1_17 med" class="gt_row gt_right">−1/10</td>
-      <td headers="0 to -1 stub_1_17 high" class="gt_row gt_right">−1/10</td>
-      <td headers="0 to -1 stub_1_17 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_17 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_17 eighths" class="gt_row gt_right">−1/8</td>
-      <td headers="0 to -1 stub_1_17 sixteenths" class="gt_row gt_right">−2/16</td>
-      <td headers="0 to -1 stub_1_17 hundredths" class="gt_row gt_right">−10/100</td></tr>
+      <td headers="a0-to--1 stub_1_17 low" class="gt_row gt_right">−1/9</td>
+      <td headers="a0-to--1 stub_1_17 med" class="gt_row gt_right">−1/10</td>
+      <td headers="a0-to--1 stub_1_17 high" class="gt_row gt_right">−1/10</td>
+      <td headers="a0-to--1 stub_1_17 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_17 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_17 eighths" class="gt_row gt_right">−1/8</td>
+      <td headers="a0-to--1 stub_1_17 sixteenths" class="gt_row gt_right">−2/16</td>
+      <td headers="a0-to--1 stub_1_17 hundredths" class="gt_row gt_right">−10/100</td></tr>
           <tr><th id="stub_1_18" scope="row" class="gt_row gt_right gt_stub">-0.2500</th>
-      <td headers="0 to -1 stub_1_18 low" class="gt_row gt_right">−1/4</td>
-      <td headers="0 to -1 stub_1_18 med" class="gt_row gt_right">−1/4</td>
-      <td headers="0 to -1 stub_1_18 high" class="gt_row gt_right">−1/4</td>
-      <td headers="0 to -1 stub_1_18 halves" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_18 quarters" class="gt_row gt_right">−1/4</td>
-      <td headers="0 to -1 stub_1_18 eighths" class="gt_row gt_right">−2/8</td>
-      <td headers="0 to -1 stub_1_18 sixteenths" class="gt_row gt_right">−4/16</td>
-      <td headers="0 to -1 stub_1_18 hundredths" class="gt_row gt_right">−25/100</td></tr>
+      <td headers="a0-to--1 stub_1_18 low" class="gt_row gt_right">−1/4</td>
+      <td headers="a0-to--1 stub_1_18 med" class="gt_row gt_right">−1/4</td>
+      <td headers="a0-to--1 stub_1_18 high" class="gt_row gt_right">−1/4</td>
+      <td headers="a0-to--1 stub_1_18 halves" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_18 quarters" class="gt_row gt_right">−1/4</td>
+      <td headers="a0-to--1 stub_1_18 eighths" class="gt_row gt_right">−2/8</td>
+      <td headers="a0-to--1 stub_1_18 sixteenths" class="gt_row gt_right">−4/16</td>
+      <td headers="a0-to--1 stub_1_18 hundredths" class="gt_row gt_right">−25/100</td></tr>
           <tr><th id="stub_1_19" scope="row" class="gt_row gt_right gt_stub">-0.4000</th>
-      <td headers="0 to -1 stub_1_19 low" class="gt_row gt_right">−2/5</td>
-      <td headers="0 to -1 stub_1_19 med" class="gt_row gt_right">−2/5</td>
-      <td headers="0 to -1 stub_1_19 high" class="gt_row gt_right">−2/5</td>
-      <td headers="0 to -1 stub_1_19 halves" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_19 quarters" class="gt_row gt_right">−2/4</td>
-      <td headers="0 to -1 stub_1_19 eighths" class="gt_row gt_right">−3/8</td>
-      <td headers="0 to -1 stub_1_19 sixteenths" class="gt_row gt_right">−6/16</td>
-      <td headers="0 to -1 stub_1_19 hundredths" class="gt_row gt_right">−40/100</td></tr>
+      <td headers="a0-to--1 stub_1_19 low" class="gt_row gt_right">−2/5</td>
+      <td headers="a0-to--1 stub_1_19 med" class="gt_row gt_right">−2/5</td>
+      <td headers="a0-to--1 stub_1_19 high" class="gt_row gt_right">−2/5</td>
+      <td headers="a0-to--1 stub_1_19 halves" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_19 quarters" class="gt_row gt_right">−2/4</td>
+      <td headers="a0-to--1 stub_1_19 eighths" class="gt_row gt_right">−3/8</td>
+      <td headers="a0-to--1 stub_1_19 sixteenths" class="gt_row gt_right">−6/16</td>
+      <td headers="a0-to--1 stub_1_19 hundredths" class="gt_row gt_right">−40/100</td></tr>
           <tr><th id="stub_1_20" scope="row" class="gt_row gt_right gt_stub">-0.5000</th>
-      <td headers="0 to -1 stub_1_20 low" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_20 med" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_20 high" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_20 halves" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_20 quarters" class="gt_row gt_right">−2/4</td>
-      <td headers="0 to -1 stub_1_20 eighths" class="gt_row gt_right">−4/8</td>
-      <td headers="0 to -1 stub_1_20 sixteenths" class="gt_row gt_right">−8/16</td>
-      <td headers="0 to -1 stub_1_20 hundredths" class="gt_row gt_right">−50/100</td></tr>
+      <td headers="a0-to--1 stub_1_20 low" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_20 med" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_20 high" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_20 halves" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_20 quarters" class="gt_row gt_right">−2/4</td>
+      <td headers="a0-to--1 stub_1_20 eighths" class="gt_row gt_right">−4/8</td>
+      <td headers="a0-to--1 stub_1_20 sixteenths" class="gt_row gt_right">−8/16</td>
+      <td headers="a0-to--1 stub_1_20 hundredths" class="gt_row gt_right">−50/100</td></tr>
           <tr><th id="stub_1_21" scope="row" class="gt_row gt_right gt_stub">-0.6000</th>
-      <td headers="0 to -1 stub_1_21 low" class="gt_row gt_right">−3/5</td>
-      <td headers="0 to -1 stub_1_21 med" class="gt_row gt_right">−3/5</td>
-      <td headers="0 to -1 stub_1_21 high" class="gt_row gt_right">−3/5</td>
-      <td headers="0 to -1 stub_1_21 halves" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_21 quarters" class="gt_row gt_right">−2/4</td>
-      <td headers="0 to -1 stub_1_21 eighths" class="gt_row gt_right">−5/8</td>
-      <td headers="0 to -1 stub_1_21 sixteenths" class="gt_row gt_right">−10/16</td>
-      <td headers="0 to -1 stub_1_21 hundredths" class="gt_row gt_right">−60/100</td></tr>
+      <td headers="a0-to--1 stub_1_21 low" class="gt_row gt_right">−3/5</td>
+      <td headers="a0-to--1 stub_1_21 med" class="gt_row gt_right">−3/5</td>
+      <td headers="a0-to--1 stub_1_21 high" class="gt_row gt_right">−3/5</td>
+      <td headers="a0-to--1 stub_1_21 halves" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_21 quarters" class="gt_row gt_right">−2/4</td>
+      <td headers="a0-to--1 stub_1_21 eighths" class="gt_row gt_right">−5/8</td>
+      <td headers="a0-to--1 stub_1_21 sixteenths" class="gt_row gt_right">−10/16</td>
+      <td headers="a0-to--1 stub_1_21 hundredths" class="gt_row gt_right">−60/100</td></tr>
           <tr><th id="stub_1_22" scope="row" class="gt_row gt_right gt_stub">-0.7500</th>
-      <td headers="0 to -1 stub_1_22 low" class="gt_row gt_right">−3/4</td>
-      <td headers="0 to -1 stub_1_22 med" class="gt_row gt_right">−3/4</td>
-      <td headers="0 to -1 stub_1_22 high" class="gt_row gt_right">−3/4</td>
-      <td headers="0 to -1 stub_1_22 halves" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_22 quarters" class="gt_row gt_right">−3/4</td>
-      <td headers="0 to -1 stub_1_22 eighths" class="gt_row gt_right">−6/8</td>
-      <td headers="0 to -1 stub_1_22 sixteenths" class="gt_row gt_right">−12/16</td>
-      <td headers="0 to -1 stub_1_22 hundredths" class="gt_row gt_right">−75/100</td></tr>
+      <td headers="a0-to--1 stub_1_22 low" class="gt_row gt_right">−3/4</td>
+      <td headers="a0-to--1 stub_1_22 med" class="gt_row gt_right">−3/4</td>
+      <td headers="a0-to--1 stub_1_22 high" class="gt_row gt_right">−3/4</td>
+      <td headers="a0-to--1 stub_1_22 halves" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_22 quarters" class="gt_row gt_right">−3/4</td>
+      <td headers="a0-to--1 stub_1_22 eighths" class="gt_row gt_right">−6/8</td>
+      <td headers="a0-to--1 stub_1_22 sixteenths" class="gt_row gt_right">−12/16</td>
+      <td headers="a0-to--1 stub_1_22 hundredths" class="gt_row gt_right">−75/100</td></tr>
           <tr><th id="stub_1_23" scope="row" class="gt_row gt_right gt_stub">-0.9000</th>
-      <td headers="0 to -1 stub_1_23 low" class="gt_row gt_right">−8/9</td>
-      <td headers="0 to -1 stub_1_23 med" class="gt_row gt_right">−9/10</td>
-      <td headers="0 to -1 stub_1_23 high" class="gt_row gt_right">−9/10</td>
-      <td headers="0 to -1 stub_1_23 halves" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_23 quarters" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_23 eighths" class="gt_row gt_right">−7/8</td>
-      <td headers="0 to -1 stub_1_23 sixteenths" class="gt_row gt_right">−14/16</td>
-      <td headers="0 to -1 stub_1_23 hundredths" class="gt_row gt_right">−90/100</td></tr>
+      <td headers="a0-to--1 stub_1_23 low" class="gt_row gt_right">−8/9</td>
+      <td headers="a0-to--1 stub_1_23 med" class="gt_row gt_right">−9/10</td>
+      <td headers="a0-to--1 stub_1_23 high" class="gt_row gt_right">−9/10</td>
+      <td headers="a0-to--1 stub_1_23 halves" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_23 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_23 eighths" class="gt_row gt_right">−7/8</td>
+      <td headers="a0-to--1 stub_1_23 sixteenths" class="gt_row gt_right">−14/16</td>
+      <td headers="a0-to--1 stub_1_23 hundredths" class="gt_row gt_right">−90/100</td></tr>
           <tr><th id="stub_1_24" scope="row" class="gt_row gt_right gt_stub">-0.9900</th>
-      <td headers="0 to -1 stub_1_24 low" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_24 med" class="gt_row gt_right">−98/99</td>
-      <td headers="0 to -1 stub_1_24 high" class="gt_row gt_right">−99/100</td>
-      <td headers="0 to -1 stub_1_24 halves" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_24 quarters" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_24 eighths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_24 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_24 hundredths" class="gt_row gt_right">−99/100</td></tr>
+      <td headers="a0-to--1 stub_1_24 low" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_24 med" class="gt_row gt_right">−98/99</td>
+      <td headers="a0-to--1 stub_1_24 high" class="gt_row gt_right">−99/100</td>
+      <td headers="a0-to--1 stub_1_24 halves" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_24 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_24 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_24 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_24 hundredths" class="gt_row gt_right">−99/100</td></tr>
           <tr><th id="stub_1_25" scope="row" class="gt_row gt_right gt_stub">-0.9990</th>
-      <td headers="0 to -1 stub_1_25 low" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 med" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 high" class="gt_row gt_right">−998/999</td>
-      <td headers="0 to -1 stub_1_25 halves" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 quarters" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 eighths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 hundredths" class="gt_row gt_right">−1</td></tr>
+      <td headers="a0-to--1 stub_1_25 low" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 med" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 high" class="gt_row gt_right">−998/999</td>
+      <td headers="a0-to--1 stub_1_25 halves" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 hundredths" class="gt_row gt_right">−1</td></tr>
           <tr><th id="stub_1_26" scope="row" class="gt_row gt_right gt_stub">-0.9999</th>
-      <td headers="0 to -1 stub_1_26 low" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 med" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 high" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 halves" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 quarters" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 eighths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 hundredths" class="gt_row gt_right">−1</td></tr>
+      <td headers="a0-to--1 stub_1_26 low" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 med" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 high" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 halves" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 hundredths" class="gt_row gt_right">−1</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="1 to 2">1 to 2</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="a1-to-2">1 to 2</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_27" scope="row" class="gt_row gt_right gt_stub">1.0001</th>
-      <td headers="1 to 2 stub_1_27 low" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 med" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 high" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 halves" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 quarters" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 eighths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 hundredths" class="gt_row gt_right">1</td></tr>
+      <td headers="a1-to-2 stub_1_27 low" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 med" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 high" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 halves" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 quarters" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 eighths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 hundredths" class="gt_row gt_right">1</td></tr>
           <tr><th id="stub_1_28" scope="row" class="gt_row gt_right gt_stub">1.0010</th>
-      <td headers="1 to 2 stub_1_28 low" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 med" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 high" class="gt_row gt_right">1 1/999</td>
-      <td headers="1 to 2 stub_1_28 halves" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 quarters" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 eighths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 hundredths" class="gt_row gt_right">1</td></tr>
+      <td headers="a1-to-2 stub_1_28 low" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 med" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 high" class="gt_row gt_right">1 1/999</td>
+      <td headers="a1-to-2 stub_1_28 halves" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 quarters" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 eighths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 hundredths" class="gt_row gt_right">1</td></tr>
           <tr><th id="stub_1_29" scope="row" class="gt_row gt_right gt_stub">1.0100</th>
-      <td headers="1 to 2 stub_1_29 low" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_29 med" class="gt_row gt_right">1 1/99</td>
-      <td headers="1 to 2 stub_1_29 high" class="gt_row gt_right">1 1/100</td>
-      <td headers="1 to 2 stub_1_29 halves" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_29 quarters" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_29 eighths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_29 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_29 hundredths" class="gt_row gt_right">1 1/100</td></tr>
+      <td headers="a1-to-2 stub_1_29 low" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_29 med" class="gt_row gt_right">1 1/99</td>
+      <td headers="a1-to-2 stub_1_29 high" class="gt_row gt_right">1 1/100</td>
+      <td headers="a1-to-2 stub_1_29 halves" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_29 quarters" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_29 eighths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_29 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_29 hundredths" class="gt_row gt_right">1 1/100</td></tr>
           <tr><th id="stub_1_30" scope="row" class="gt_row gt_right gt_stub">1.1000</th>
-      <td headers="1 to 2 stub_1_30 low" class="gt_row gt_right">1 1/9</td>
-      <td headers="1 to 2 stub_1_30 med" class="gt_row gt_right">1 1/10</td>
-      <td headers="1 to 2 stub_1_30 high" class="gt_row gt_right">1 1/10</td>
-      <td headers="1 to 2 stub_1_30 halves" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_30 quarters" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_30 eighths" class="gt_row gt_right">1 1/8</td>
-      <td headers="1 to 2 stub_1_30 sixteenths" class="gt_row gt_right">1 2/16</td>
-      <td headers="1 to 2 stub_1_30 hundredths" class="gt_row gt_right">1 10/100</td></tr>
+      <td headers="a1-to-2 stub_1_30 low" class="gt_row gt_right">1 1/9</td>
+      <td headers="a1-to-2 stub_1_30 med" class="gt_row gt_right">1 1/10</td>
+      <td headers="a1-to-2 stub_1_30 high" class="gt_row gt_right">1 1/10</td>
+      <td headers="a1-to-2 stub_1_30 halves" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_30 quarters" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_30 eighths" class="gt_row gt_right">1 1/8</td>
+      <td headers="a1-to-2 stub_1_30 sixteenths" class="gt_row gt_right">1 2/16</td>
+      <td headers="a1-to-2 stub_1_30 hundredths" class="gt_row gt_right">1 10/100</td></tr>
           <tr><th id="stub_1_31" scope="row" class="gt_row gt_right gt_stub">1.2500</th>
-      <td headers="1 to 2 stub_1_31 low" class="gt_row gt_right">1 1/4</td>
-      <td headers="1 to 2 stub_1_31 med" class="gt_row gt_right">1 1/4</td>
-      <td headers="1 to 2 stub_1_31 high" class="gt_row gt_right">1 1/4</td>
-      <td headers="1 to 2 stub_1_31 halves" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_31 quarters" class="gt_row gt_right">1 1/4</td>
-      <td headers="1 to 2 stub_1_31 eighths" class="gt_row gt_right">1 2/8</td>
-      <td headers="1 to 2 stub_1_31 sixteenths" class="gt_row gt_right">1 4/16</td>
-      <td headers="1 to 2 stub_1_31 hundredths" class="gt_row gt_right">1 25/100</td></tr>
+      <td headers="a1-to-2 stub_1_31 low" class="gt_row gt_right">1 1/4</td>
+      <td headers="a1-to-2 stub_1_31 med" class="gt_row gt_right">1 1/4</td>
+      <td headers="a1-to-2 stub_1_31 high" class="gt_row gt_right">1 1/4</td>
+      <td headers="a1-to-2 stub_1_31 halves" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_31 quarters" class="gt_row gt_right">1 1/4</td>
+      <td headers="a1-to-2 stub_1_31 eighths" class="gt_row gt_right">1 2/8</td>
+      <td headers="a1-to-2 stub_1_31 sixteenths" class="gt_row gt_right">1 4/16</td>
+      <td headers="a1-to-2 stub_1_31 hundredths" class="gt_row gt_right">1 25/100</td></tr>
           <tr><th id="stub_1_32" scope="row" class="gt_row gt_right gt_stub">1.4000</th>
-      <td headers="1 to 2 stub_1_32 low" class="gt_row gt_right">1 2/5</td>
-      <td headers="1 to 2 stub_1_32 med" class="gt_row gt_right">1 2/5</td>
-      <td headers="1 to 2 stub_1_32 high" class="gt_row gt_right">1 2/5</td>
-      <td headers="1 to 2 stub_1_32 halves" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_32 quarters" class="gt_row gt_right">1 2/4</td>
-      <td headers="1 to 2 stub_1_32 eighths" class="gt_row gt_right">1 3/8</td>
-      <td headers="1 to 2 stub_1_32 sixteenths" class="gt_row gt_right">1 6/16</td>
-      <td headers="1 to 2 stub_1_32 hundredths" class="gt_row gt_right">1 40/100</td></tr>
+      <td headers="a1-to-2 stub_1_32 low" class="gt_row gt_right">1 2/5</td>
+      <td headers="a1-to-2 stub_1_32 med" class="gt_row gt_right">1 2/5</td>
+      <td headers="a1-to-2 stub_1_32 high" class="gt_row gt_right">1 2/5</td>
+      <td headers="a1-to-2 stub_1_32 halves" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_32 quarters" class="gt_row gt_right">1 2/4</td>
+      <td headers="a1-to-2 stub_1_32 eighths" class="gt_row gt_right">1 3/8</td>
+      <td headers="a1-to-2 stub_1_32 sixteenths" class="gt_row gt_right">1 6/16</td>
+      <td headers="a1-to-2 stub_1_32 hundredths" class="gt_row gt_right">1 40/100</td></tr>
           <tr><th id="stub_1_33" scope="row" class="gt_row gt_right gt_stub">1.5000</th>
-      <td headers="1 to 2 stub_1_33 low" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_33 med" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_33 high" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_33 halves" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_33 quarters" class="gt_row gt_right">1 2/4</td>
-      <td headers="1 to 2 stub_1_33 eighths" class="gt_row gt_right">1 4/8</td>
-      <td headers="1 to 2 stub_1_33 sixteenths" class="gt_row gt_right">1 8/16</td>
-      <td headers="1 to 2 stub_1_33 hundredths" class="gt_row gt_right">1 50/100</td></tr>
+      <td headers="a1-to-2 stub_1_33 low" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_33 med" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_33 high" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_33 halves" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_33 quarters" class="gt_row gt_right">1 2/4</td>
+      <td headers="a1-to-2 stub_1_33 eighths" class="gt_row gt_right">1 4/8</td>
+      <td headers="a1-to-2 stub_1_33 sixteenths" class="gt_row gt_right">1 8/16</td>
+      <td headers="a1-to-2 stub_1_33 hundredths" class="gt_row gt_right">1 50/100</td></tr>
           <tr><th id="stub_1_34" scope="row" class="gt_row gt_right gt_stub">1.6000</th>
-      <td headers="1 to 2 stub_1_34 low" class="gt_row gt_right">1 3/5</td>
-      <td headers="1 to 2 stub_1_34 med" class="gt_row gt_right">1 3/5</td>
-      <td headers="1 to 2 stub_1_34 high" class="gt_row gt_right">1 3/5</td>
-      <td headers="1 to 2 stub_1_34 halves" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_34 quarters" class="gt_row gt_right">1 2/4</td>
-      <td headers="1 to 2 stub_1_34 eighths" class="gt_row gt_right">1 5/8</td>
-      <td headers="1 to 2 stub_1_34 sixteenths" class="gt_row gt_right">1 10/16</td>
-      <td headers="1 to 2 stub_1_34 hundredths" class="gt_row gt_right">1 60/100</td></tr>
+      <td headers="a1-to-2 stub_1_34 low" class="gt_row gt_right">1 3/5</td>
+      <td headers="a1-to-2 stub_1_34 med" class="gt_row gt_right">1 3/5</td>
+      <td headers="a1-to-2 stub_1_34 high" class="gt_row gt_right">1 3/5</td>
+      <td headers="a1-to-2 stub_1_34 halves" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_34 quarters" class="gt_row gt_right">1 2/4</td>
+      <td headers="a1-to-2 stub_1_34 eighths" class="gt_row gt_right">1 5/8</td>
+      <td headers="a1-to-2 stub_1_34 sixteenths" class="gt_row gt_right">1 10/16</td>
+      <td headers="a1-to-2 stub_1_34 hundredths" class="gt_row gt_right">1 60/100</td></tr>
           <tr><th id="stub_1_35" scope="row" class="gt_row gt_right gt_stub">1.7500</th>
-      <td headers="1 to 2 stub_1_35 low" class="gt_row gt_right">1 3/4</td>
-      <td headers="1 to 2 stub_1_35 med" class="gt_row gt_right">1 3/4</td>
-      <td headers="1 to 2 stub_1_35 high" class="gt_row gt_right">1 3/4</td>
-      <td headers="1 to 2 stub_1_35 halves" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_35 quarters" class="gt_row gt_right">1 3/4</td>
-      <td headers="1 to 2 stub_1_35 eighths" class="gt_row gt_right">1 6/8</td>
-      <td headers="1 to 2 stub_1_35 sixteenths" class="gt_row gt_right">1 12/16</td>
-      <td headers="1 to 2 stub_1_35 hundredths" class="gt_row gt_right">1 75/100</td></tr>
+      <td headers="a1-to-2 stub_1_35 low" class="gt_row gt_right">1 3/4</td>
+      <td headers="a1-to-2 stub_1_35 med" class="gt_row gt_right">1 3/4</td>
+      <td headers="a1-to-2 stub_1_35 high" class="gt_row gt_right">1 3/4</td>
+      <td headers="a1-to-2 stub_1_35 halves" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_35 quarters" class="gt_row gt_right">1 3/4</td>
+      <td headers="a1-to-2 stub_1_35 eighths" class="gt_row gt_right">1 6/8</td>
+      <td headers="a1-to-2 stub_1_35 sixteenths" class="gt_row gt_right">1 12/16</td>
+      <td headers="a1-to-2 stub_1_35 hundredths" class="gt_row gt_right">1 75/100</td></tr>
           <tr><th id="stub_1_36" scope="row" class="gt_row gt_right gt_stub">1.9000</th>
-      <td headers="1 to 2 stub_1_36 low" class="gt_row gt_right">1 8/9</td>
-      <td headers="1 to 2 stub_1_36 med" class="gt_row gt_right">1 9/10</td>
-      <td headers="1 to 2 stub_1_36 high" class="gt_row gt_right">1 9/10</td>
-      <td headers="1 to 2 stub_1_36 halves" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_36 quarters" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_36 eighths" class="gt_row gt_right">1 7/8</td>
-      <td headers="1 to 2 stub_1_36 sixteenths" class="gt_row gt_right">1 14/16</td>
-      <td headers="1 to 2 stub_1_36 hundredths" class="gt_row gt_right">1 90/100</td></tr>
+      <td headers="a1-to-2 stub_1_36 low" class="gt_row gt_right">1 8/9</td>
+      <td headers="a1-to-2 stub_1_36 med" class="gt_row gt_right">1 9/10</td>
+      <td headers="a1-to-2 stub_1_36 high" class="gt_row gt_right">1 9/10</td>
+      <td headers="a1-to-2 stub_1_36 halves" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_36 quarters" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_36 eighths" class="gt_row gt_right">1 7/8</td>
+      <td headers="a1-to-2 stub_1_36 sixteenths" class="gt_row gt_right">1 14/16</td>
+      <td headers="a1-to-2 stub_1_36 hundredths" class="gt_row gt_right">1 90/100</td></tr>
           <tr><th id="stub_1_37" scope="row" class="gt_row gt_right gt_stub">1.9900</th>
-      <td headers="1 to 2 stub_1_37 low" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_37 med" class="gt_row gt_right">1 98/99</td>
-      <td headers="1 to 2 stub_1_37 high" class="gt_row gt_right">1 99/100</td>
-      <td headers="1 to 2 stub_1_37 halves" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_37 quarters" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_37 eighths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_37 sixteenths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_37 hundredths" class="gt_row gt_right">1 99/100</td></tr>
+      <td headers="a1-to-2 stub_1_37 low" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_37 med" class="gt_row gt_right">1 98/99</td>
+      <td headers="a1-to-2 stub_1_37 high" class="gt_row gt_right">1 99/100</td>
+      <td headers="a1-to-2 stub_1_37 halves" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_37 quarters" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_37 eighths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_37 sixteenths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_37 hundredths" class="gt_row gt_right">1 99/100</td></tr>
           <tr><th id="stub_1_38" scope="row" class="gt_row gt_right gt_stub">1.9990</th>
-      <td headers="1 to 2 stub_1_38 low" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 med" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 high" class="gt_row gt_right">1 998/999</td>
-      <td headers="1 to 2 stub_1_38 halves" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 quarters" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 eighths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 sixteenths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 hundredths" class="gt_row gt_right">2</td></tr>
+      <td headers="a1-to-2 stub_1_38 low" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 med" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 high" class="gt_row gt_right">1 998/999</td>
+      <td headers="a1-to-2 stub_1_38 halves" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 quarters" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 eighths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 sixteenths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 hundredths" class="gt_row gt_right">2</td></tr>
           <tr><th id="stub_1_39" scope="row" class="gt_row gt_right gt_stub">1.9999</th>
-      <td headers="1 to 2 stub_1_39 low" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 med" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 high" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 halves" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 quarters" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 eighths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 sixteenths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 hundredths" class="gt_row gt_right">2</td></tr>
+      <td headers="a1-to-2 stub_1_39 low" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 med" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 high" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 halves" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 quarters" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 eighths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 sixteenths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 hundredths" class="gt_row gt_right">2</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="-1 to -2">-1 to -2</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="a-1-to--2">-1 to -2</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_40" scope="row" class="gt_row gt_right gt_stub">-1.0001</th>
-      <td headers="-1 to -2 stub_1_40 low" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 med" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 high" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 halves" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 quarters" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 eighths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 hundredths" class="gt_row gt_right">−1</td></tr>
+      <td headers="a-1-to--2 stub_1_40 low" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 med" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 high" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 halves" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 hundredths" class="gt_row gt_right">−1</td></tr>
           <tr><th id="stub_1_41" scope="row" class="gt_row gt_right gt_stub">-1.0010</th>
-      <td headers="-1 to -2 stub_1_41 low" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 med" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 high" class="gt_row gt_right">−1 1/999</td>
-      <td headers="-1 to -2 stub_1_41 halves" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 quarters" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 eighths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 hundredths" class="gt_row gt_right">−1</td></tr>
+      <td headers="a-1-to--2 stub_1_41 low" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 med" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 high" class="gt_row gt_right">−1 1/999</td>
+      <td headers="a-1-to--2 stub_1_41 halves" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 hundredths" class="gt_row gt_right">−1</td></tr>
           <tr><th id="stub_1_42" scope="row" class="gt_row gt_right gt_stub">-1.0100</th>
-      <td headers="-1 to -2 stub_1_42 low" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_42 med" class="gt_row gt_right">−1 1/99</td>
-      <td headers="-1 to -2 stub_1_42 high" class="gt_row gt_right">−1 1/100</td>
-      <td headers="-1 to -2 stub_1_42 halves" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_42 quarters" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_42 eighths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_42 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_42 hundredths" class="gt_row gt_right">−1 1/100</td></tr>
+      <td headers="a-1-to--2 stub_1_42 low" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_42 med" class="gt_row gt_right">−1 1/99</td>
+      <td headers="a-1-to--2 stub_1_42 high" class="gt_row gt_right">−1 1/100</td>
+      <td headers="a-1-to--2 stub_1_42 halves" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_42 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_42 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_42 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_42 hundredths" class="gt_row gt_right">−1 1/100</td></tr>
           <tr><th id="stub_1_43" scope="row" class="gt_row gt_right gt_stub">-1.1000</th>
-      <td headers="-1 to -2 stub_1_43 low" class="gt_row gt_right">−1 1/9</td>
-      <td headers="-1 to -2 stub_1_43 med" class="gt_row gt_right">−1 1/10</td>
-      <td headers="-1 to -2 stub_1_43 high" class="gt_row gt_right">−1 1/10</td>
-      <td headers="-1 to -2 stub_1_43 halves" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_43 quarters" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_43 eighths" class="gt_row gt_right">−1 1/8</td>
-      <td headers="-1 to -2 stub_1_43 sixteenths" class="gt_row gt_right">−1 2/16</td>
-      <td headers="-1 to -2 stub_1_43 hundredths" class="gt_row gt_right">−1 10/100</td></tr>
+      <td headers="a-1-to--2 stub_1_43 low" class="gt_row gt_right">−1 1/9</td>
+      <td headers="a-1-to--2 stub_1_43 med" class="gt_row gt_right">−1 1/10</td>
+      <td headers="a-1-to--2 stub_1_43 high" class="gt_row gt_right">−1 1/10</td>
+      <td headers="a-1-to--2 stub_1_43 halves" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_43 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_43 eighths" class="gt_row gt_right">−1 1/8</td>
+      <td headers="a-1-to--2 stub_1_43 sixteenths" class="gt_row gt_right">−1 2/16</td>
+      <td headers="a-1-to--2 stub_1_43 hundredths" class="gt_row gt_right">−1 10/100</td></tr>
           <tr><th id="stub_1_44" scope="row" class="gt_row gt_right gt_stub">-1.2500</th>
-      <td headers="-1 to -2 stub_1_44 low" class="gt_row gt_right">−1 1/4</td>
-      <td headers="-1 to -2 stub_1_44 med" class="gt_row gt_right">−1 1/4</td>
-      <td headers="-1 to -2 stub_1_44 high" class="gt_row gt_right">−1 1/4</td>
-      <td headers="-1 to -2 stub_1_44 halves" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_44 quarters" class="gt_row gt_right">−1 1/4</td>
-      <td headers="-1 to -2 stub_1_44 eighths" class="gt_row gt_right">−1 2/8</td>
-      <td headers="-1 to -2 stub_1_44 sixteenths" class="gt_row gt_right">−1 4/16</td>
-      <td headers="-1 to -2 stub_1_44 hundredths" class="gt_row gt_right">−1 25/100</td></tr>
+      <td headers="a-1-to--2 stub_1_44 low" class="gt_row gt_right">−1 1/4</td>
+      <td headers="a-1-to--2 stub_1_44 med" class="gt_row gt_right">−1 1/4</td>
+      <td headers="a-1-to--2 stub_1_44 high" class="gt_row gt_right">−1 1/4</td>
+      <td headers="a-1-to--2 stub_1_44 halves" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_44 quarters" class="gt_row gt_right">−1 1/4</td>
+      <td headers="a-1-to--2 stub_1_44 eighths" class="gt_row gt_right">−1 2/8</td>
+      <td headers="a-1-to--2 stub_1_44 sixteenths" class="gt_row gt_right">−1 4/16</td>
+      <td headers="a-1-to--2 stub_1_44 hundredths" class="gt_row gt_right">−1 25/100</td></tr>
           <tr><th id="stub_1_45" scope="row" class="gt_row gt_right gt_stub">-1.4000</th>
-      <td headers="-1 to -2 stub_1_45 low" class="gt_row gt_right">−1 2/5</td>
-      <td headers="-1 to -2 stub_1_45 med" class="gt_row gt_right">−1 2/5</td>
-      <td headers="-1 to -2 stub_1_45 high" class="gt_row gt_right">−1 2/5</td>
-      <td headers="-1 to -2 stub_1_45 halves" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_45 quarters" class="gt_row gt_right">−1 2/4</td>
-      <td headers="-1 to -2 stub_1_45 eighths" class="gt_row gt_right">−1 3/8</td>
-      <td headers="-1 to -2 stub_1_45 sixteenths" class="gt_row gt_right">−1 6/16</td>
-      <td headers="-1 to -2 stub_1_45 hundredths" class="gt_row gt_right">−1 40/100</td></tr>
+      <td headers="a-1-to--2 stub_1_45 low" class="gt_row gt_right">−1 2/5</td>
+      <td headers="a-1-to--2 stub_1_45 med" class="gt_row gt_right">−1 2/5</td>
+      <td headers="a-1-to--2 stub_1_45 high" class="gt_row gt_right">−1 2/5</td>
+      <td headers="a-1-to--2 stub_1_45 halves" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_45 quarters" class="gt_row gt_right">−1 2/4</td>
+      <td headers="a-1-to--2 stub_1_45 eighths" class="gt_row gt_right">−1 3/8</td>
+      <td headers="a-1-to--2 stub_1_45 sixteenths" class="gt_row gt_right">−1 6/16</td>
+      <td headers="a-1-to--2 stub_1_45 hundredths" class="gt_row gt_right">−1 40/100</td></tr>
           <tr><th id="stub_1_46" scope="row" class="gt_row gt_right gt_stub">-1.5000</th>
-      <td headers="-1 to -2 stub_1_46 low" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_46 med" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_46 high" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_46 halves" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_46 quarters" class="gt_row gt_right">−1 2/4</td>
-      <td headers="-1 to -2 stub_1_46 eighths" class="gt_row gt_right">−1 4/8</td>
-      <td headers="-1 to -2 stub_1_46 sixteenths" class="gt_row gt_right">−1 8/16</td>
-      <td headers="-1 to -2 stub_1_46 hundredths" class="gt_row gt_right">−1 50/100</td></tr>
+      <td headers="a-1-to--2 stub_1_46 low" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_46 med" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_46 high" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_46 halves" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_46 quarters" class="gt_row gt_right">−1 2/4</td>
+      <td headers="a-1-to--2 stub_1_46 eighths" class="gt_row gt_right">−1 4/8</td>
+      <td headers="a-1-to--2 stub_1_46 sixteenths" class="gt_row gt_right">−1 8/16</td>
+      <td headers="a-1-to--2 stub_1_46 hundredths" class="gt_row gt_right">−1 50/100</td></tr>
           <tr><th id="stub_1_47" scope="row" class="gt_row gt_right gt_stub">-1.6000</th>
-      <td headers="-1 to -2 stub_1_47 low" class="gt_row gt_right">−1 3/5</td>
-      <td headers="-1 to -2 stub_1_47 med" class="gt_row gt_right">−1 3/5</td>
-      <td headers="-1 to -2 stub_1_47 high" class="gt_row gt_right">−1 3/5</td>
-      <td headers="-1 to -2 stub_1_47 halves" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_47 quarters" class="gt_row gt_right">−1 2/4</td>
-      <td headers="-1 to -2 stub_1_47 eighths" class="gt_row gt_right">−1 5/8</td>
-      <td headers="-1 to -2 stub_1_47 sixteenths" class="gt_row gt_right">−1 10/16</td>
-      <td headers="-1 to -2 stub_1_47 hundredths" class="gt_row gt_right">−1 60/100</td></tr>
+      <td headers="a-1-to--2 stub_1_47 low" class="gt_row gt_right">−1 3/5</td>
+      <td headers="a-1-to--2 stub_1_47 med" class="gt_row gt_right">−1 3/5</td>
+      <td headers="a-1-to--2 stub_1_47 high" class="gt_row gt_right">−1 3/5</td>
+      <td headers="a-1-to--2 stub_1_47 halves" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_47 quarters" class="gt_row gt_right">−1 2/4</td>
+      <td headers="a-1-to--2 stub_1_47 eighths" class="gt_row gt_right">−1 5/8</td>
+      <td headers="a-1-to--2 stub_1_47 sixteenths" class="gt_row gt_right">−1 10/16</td>
+      <td headers="a-1-to--2 stub_1_47 hundredths" class="gt_row gt_right">−1 60/100</td></tr>
           <tr><th id="stub_1_48" scope="row" class="gt_row gt_right gt_stub">-1.7500</th>
-      <td headers="-1 to -2 stub_1_48 low" class="gt_row gt_right">−1 3/4</td>
-      <td headers="-1 to -2 stub_1_48 med" class="gt_row gt_right">−1 3/4</td>
-      <td headers="-1 to -2 stub_1_48 high" class="gt_row gt_right">−1 3/4</td>
-      <td headers="-1 to -2 stub_1_48 halves" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_48 quarters" class="gt_row gt_right">−1 3/4</td>
-      <td headers="-1 to -2 stub_1_48 eighths" class="gt_row gt_right">−1 6/8</td>
-      <td headers="-1 to -2 stub_1_48 sixteenths" class="gt_row gt_right">−1 12/16</td>
-      <td headers="-1 to -2 stub_1_48 hundredths" class="gt_row gt_right">−1 75/100</td></tr>
+      <td headers="a-1-to--2 stub_1_48 low" class="gt_row gt_right">−1 3/4</td>
+      <td headers="a-1-to--2 stub_1_48 med" class="gt_row gt_right">−1 3/4</td>
+      <td headers="a-1-to--2 stub_1_48 high" class="gt_row gt_right">−1 3/4</td>
+      <td headers="a-1-to--2 stub_1_48 halves" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_48 quarters" class="gt_row gt_right">−1 3/4</td>
+      <td headers="a-1-to--2 stub_1_48 eighths" class="gt_row gt_right">−1 6/8</td>
+      <td headers="a-1-to--2 stub_1_48 sixteenths" class="gt_row gt_right">−1 12/16</td>
+      <td headers="a-1-to--2 stub_1_48 hundredths" class="gt_row gt_right">−1 75/100</td></tr>
           <tr><th id="stub_1_49" scope="row" class="gt_row gt_right gt_stub">-1.9000</th>
-      <td headers="-1 to -2 stub_1_49 low" class="gt_row gt_right">−1 8/9</td>
-      <td headers="-1 to -2 stub_1_49 med" class="gt_row gt_right">−1 9/10</td>
-      <td headers="-1 to -2 stub_1_49 high" class="gt_row gt_right">−1 9/10</td>
-      <td headers="-1 to -2 stub_1_49 halves" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_49 quarters" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_49 eighths" class="gt_row gt_right">−1 7/8</td>
-      <td headers="-1 to -2 stub_1_49 sixteenths" class="gt_row gt_right">−1 14/16</td>
-      <td headers="-1 to -2 stub_1_49 hundredths" class="gt_row gt_right">−1 90/100</td></tr>
+      <td headers="a-1-to--2 stub_1_49 low" class="gt_row gt_right">−1 8/9</td>
+      <td headers="a-1-to--2 stub_1_49 med" class="gt_row gt_right">−1 9/10</td>
+      <td headers="a-1-to--2 stub_1_49 high" class="gt_row gt_right">−1 9/10</td>
+      <td headers="a-1-to--2 stub_1_49 halves" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_49 quarters" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_49 eighths" class="gt_row gt_right">−1 7/8</td>
+      <td headers="a-1-to--2 stub_1_49 sixteenths" class="gt_row gt_right">−1 14/16</td>
+      <td headers="a-1-to--2 stub_1_49 hundredths" class="gt_row gt_right">−1 90/100</td></tr>
           <tr><th id="stub_1_50" scope="row" class="gt_row gt_right gt_stub">-1.9900</th>
-      <td headers="-1 to -2 stub_1_50 low" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_50 med" class="gt_row gt_right">−1 98/99</td>
-      <td headers="-1 to -2 stub_1_50 high" class="gt_row gt_right">−1 99/100</td>
-      <td headers="-1 to -2 stub_1_50 halves" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_50 quarters" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_50 eighths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_50 sixteenths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_50 hundredths" class="gt_row gt_right">−1 99/100</td></tr>
+      <td headers="a-1-to--2 stub_1_50 low" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_50 med" class="gt_row gt_right">−1 98/99</td>
+      <td headers="a-1-to--2 stub_1_50 high" class="gt_row gt_right">−1 99/100</td>
+      <td headers="a-1-to--2 stub_1_50 halves" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_50 quarters" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_50 eighths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_50 sixteenths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_50 hundredths" class="gt_row gt_right">−1 99/100</td></tr>
           <tr><th id="stub_1_51" scope="row" class="gt_row gt_right gt_stub">-1.9990</th>
-      <td headers="-1 to -2 stub_1_51 low" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 med" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 high" class="gt_row gt_right">−1 998/999</td>
-      <td headers="-1 to -2 stub_1_51 halves" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 quarters" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 eighths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 sixteenths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 hundredths" class="gt_row gt_right">−2</td></tr>
+      <td headers="a-1-to--2 stub_1_51 low" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 med" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 high" class="gt_row gt_right">−1 998/999</td>
+      <td headers="a-1-to--2 stub_1_51 halves" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 quarters" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 eighths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 sixteenths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 hundredths" class="gt_row gt_right">−2</td></tr>
           <tr><th id="stub_1_52" scope="row" class="gt_row gt_right gt_stub">-1.9999</th>
-      <td headers="-1 to -2 stub_1_52 low" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 med" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 high" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 halves" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 quarters" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 eighths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 sixteenths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 hundredths" class="gt_row gt_right">−2</td></tr>
+      <td headers="a-1-to--2 stub_1_52 low" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 med" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 high" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 halves" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 quarters" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 eighths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 sixteenths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 hundredths" class="gt_row gt_right">−2</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="Exact Numbers">Exact Numbers</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="Exact-Numbers">Exact Numbers</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_53" scope="row" class="gt_row gt_right gt_stub">-1.0000</th>
-      <td headers="Exact Numbers stub_1_53 low" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 med" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 high" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 halves" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 quarters" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 eighths" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 hundredths" class="gt_row gt_right">−1</td></tr>
+      <td headers="Exact-Numbers stub_1_53 low" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 med" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 high" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 halves" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 quarters" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 eighths" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 hundredths" class="gt_row gt_right">−1</td></tr>
           <tr><th id="stub_1_54" scope="row" class="gt_row gt_right gt_stub">0.0000</th>
-      <td headers="Exact Numbers stub_1_54 low" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 med" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 high" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 halves" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 quarters" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 eighths" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 hundredths" class="gt_row gt_right">0</td></tr>
+      <td headers="Exact-Numbers stub_1_54 low" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 med" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 high" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 halves" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 quarters" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 eighths" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 hundredths" class="gt_row gt_right">0</td></tr>
           <tr><th id="stub_1_55" scope="row" class="gt_row gt_right gt_stub">1.0000</th>
-      <td headers="Exact Numbers stub_1_55 low" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 med" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 high" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 halves" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 quarters" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 eighths" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 hundredths" class="gt_row gt_right">1</td></tr>
+      <td headers="Exact-Numbers stub_1_55 low" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 med" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 high" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 halves" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 quarters" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 eighths" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 hundredths" class="gt_row gt_right">1</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="Not Numbers">Not Numbers</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="Not-Numbers">Not Numbers</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_56" scope="row" class="gt_row gt_right gt_stub">NA</th>
-      <td headers="Not Numbers stub_1_56 low" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 med" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 high" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 halves" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 quarters" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 eighths" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 sixteenths" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 hundredths" class="gt_row gt_right">NA</td></tr>
+      <td headers="Not-Numbers stub_1_56 low" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 med" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 high" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 halves" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 quarters" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 eighths" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 sixteenths" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 hundredths" class="gt_row gt_right">NA</td></tr>
           <tr><th id="stub_1_57" scope="row" class="gt_row gt_right gt_stub">NaN</th>
-      <td headers="Not Numbers stub_1_57 low" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 med" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 high" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 halves" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 quarters" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 eighths" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 sixteenths" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 hundredths" class="gt_row gt_right">NaN</td></tr>
+      <td headers="Not-Numbers stub_1_57 low" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 med" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 high" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 halves" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 quarters" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 eighths" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 sixteenths" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 hundredths" class="gt_row gt_right">NaN</td></tr>
           <tr><th id="stub_1_58" scope="row" class="gt_row gt_right gt_stub">Inf</th>
-      <td headers="Not Numbers stub_1_58 low" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 med" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 high" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 halves" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 quarters" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 eighths" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 sixteenths" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 hundredths" class="gt_row gt_right">Inf</td></tr>
+      <td headers="Not-Numbers stub_1_58 low" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 med" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 high" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 halves" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 quarters" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 eighths" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 sixteenths" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 hundredths" class="gt_row gt_right">Inf</td></tr>
           <tr><th id="stub_1_59" scope="row" class="gt_row gt_right gt_stub">-Inf</th>
-      <td headers="Not Numbers stub_1_59 low" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 med" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 high" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 halves" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 quarters" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 eighths" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 sixteenths" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 hundredths" class="gt_row gt_right">-Inf</td></tr>
+      <td headers="Not-Numbers stub_1_59 low" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 med" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 high" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 halves" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 quarters" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 eighths" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 sixteenths" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 hundredths" class="gt_row gt_right">-Inf</td></tr>
         </tbody>
         
         
@@ -1200,554 +1200,554 @@
         </thead>
         <tbody class="gt_table_body">
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="0 to 1">0 to 1</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="a0-to-1">0 to 1</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_1" scope="row" class="gt_row gt_right gt_stub">0.0001</th>
-      <td headers="0 to 1 stub_1_1 low" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 med" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 high" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_1 hundredths" class="gt_row gt_right">0</td></tr>
+      <td headers="a0-to-1 stub_1_1 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 med" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 high" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_1 hundredths" class="gt_row gt_right">0</td></tr>
           <tr><th id="stub_1_2" scope="row" class="gt_row gt_right gt_stub">0.0010</th>
-      <td headers="0 to 1 stub_1_2 low" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 med" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 high" class="gt_row gt_right">1/999</td>
-      <td headers="0 to 1 stub_1_2 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_2 hundredths" class="gt_row gt_right">0</td></tr>
+      <td headers="a0-to-1 stub_1_2 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 med" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 high" class="gt_row gt_right">1/999</td>
+      <td headers="a0-to-1 stub_1_2 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_2 hundredths" class="gt_row gt_right">0</td></tr>
           <tr><th id="stub_1_3" scope="row" class="gt_row gt_right gt_stub">0.0100</th>
-      <td headers="0 to 1 stub_1_3 low" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_3 med" class="gt_row gt_right">1/99</td>
-      <td headers="0 to 1 stub_1_3 high" class="gt_row gt_right">1/100</td>
-      <td headers="0 to 1 stub_1_3 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_3 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_3 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_3 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_3 hundredths" class="gt_row gt_right">1/100</td></tr>
+      <td headers="a0-to-1 stub_1_3 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_3 med" class="gt_row gt_right">1/99</td>
+      <td headers="a0-to-1 stub_1_3 high" class="gt_row gt_right">1/100</td>
+      <td headers="a0-to-1 stub_1_3 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_3 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_3 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_3 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_3 hundredths" class="gt_row gt_right">1/100</td></tr>
           <tr><th id="stub_1_4" scope="row" class="gt_row gt_right gt_stub">0.1000</th>
-      <td headers="0 to 1 stub_1_4 low" class="gt_row gt_right">1/9</td>
-      <td headers="0 to 1 stub_1_4 med" class="gt_row gt_right">1/10</td>
-      <td headers="0 to 1 stub_1_4 high" class="gt_row gt_right">1/10</td>
-      <td headers="0 to 1 stub_1_4 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_4 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to 1 stub_1_4 eighths" class="gt_row gt_right">1/8</td>
-      <td headers="0 to 1 stub_1_4 sixteenths" class="gt_row gt_right">1/8</td>
-      <td headers="0 to 1 stub_1_4 hundredths" class="gt_row gt_right">1/10</td></tr>
+      <td headers="a0-to-1 stub_1_4 low" class="gt_row gt_right">1/9</td>
+      <td headers="a0-to-1 stub_1_4 med" class="gt_row gt_right">1/10</td>
+      <td headers="a0-to-1 stub_1_4 high" class="gt_row gt_right">1/10</td>
+      <td headers="a0-to-1 stub_1_4 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_4 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to-1 stub_1_4 eighths" class="gt_row gt_right">1/8</td>
+      <td headers="a0-to-1 stub_1_4 sixteenths" class="gt_row gt_right">1/8</td>
+      <td headers="a0-to-1 stub_1_4 hundredths" class="gt_row gt_right">1/10</td></tr>
           <tr><th id="stub_1_5" scope="row" class="gt_row gt_right gt_stub">0.2500</th>
-      <td headers="0 to 1 stub_1_5 low" class="gt_row gt_right">1/4</td>
-      <td headers="0 to 1 stub_1_5 med" class="gt_row gt_right">1/4</td>
-      <td headers="0 to 1 stub_1_5 high" class="gt_row gt_right">1/4</td>
-      <td headers="0 to 1 stub_1_5 halves" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_5 quarters" class="gt_row gt_right">1/4</td>
-      <td headers="0 to 1 stub_1_5 eighths" class="gt_row gt_right">1/4</td>
-      <td headers="0 to 1 stub_1_5 sixteenths" class="gt_row gt_right">1/4</td>
-      <td headers="0 to 1 stub_1_5 hundredths" class="gt_row gt_right">1/4</td></tr>
+      <td headers="a0-to-1 stub_1_5 low" class="gt_row gt_right">1/4</td>
+      <td headers="a0-to-1 stub_1_5 med" class="gt_row gt_right">1/4</td>
+      <td headers="a0-to-1 stub_1_5 high" class="gt_row gt_right">1/4</td>
+      <td headers="a0-to-1 stub_1_5 halves" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_5 quarters" class="gt_row gt_right">1/4</td>
+      <td headers="a0-to-1 stub_1_5 eighths" class="gt_row gt_right">1/4</td>
+      <td headers="a0-to-1 stub_1_5 sixteenths" class="gt_row gt_right">1/4</td>
+      <td headers="a0-to-1 stub_1_5 hundredths" class="gt_row gt_right">1/4</td></tr>
           <tr><th id="stub_1_6" scope="row" class="gt_row gt_right gt_stub">0.4000</th>
-      <td headers="0 to 1 stub_1_6 low" class="gt_row gt_right">2/5</td>
-      <td headers="0 to 1 stub_1_6 med" class="gt_row gt_right">2/5</td>
-      <td headers="0 to 1 stub_1_6 high" class="gt_row gt_right">2/5</td>
-      <td headers="0 to 1 stub_1_6 halves" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_6 quarters" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_6 eighths" class="gt_row gt_right">3/8</td>
-      <td headers="0 to 1 stub_1_6 sixteenths" class="gt_row gt_right">3/8</td>
-      <td headers="0 to 1 stub_1_6 hundredths" class="gt_row gt_right">2/5</td></tr>
+      <td headers="a0-to-1 stub_1_6 low" class="gt_row gt_right">2/5</td>
+      <td headers="a0-to-1 stub_1_6 med" class="gt_row gt_right">2/5</td>
+      <td headers="a0-to-1 stub_1_6 high" class="gt_row gt_right">2/5</td>
+      <td headers="a0-to-1 stub_1_6 halves" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_6 quarters" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_6 eighths" class="gt_row gt_right">3/8</td>
+      <td headers="a0-to-1 stub_1_6 sixteenths" class="gt_row gt_right">3/8</td>
+      <td headers="a0-to-1 stub_1_6 hundredths" class="gt_row gt_right">2/5</td></tr>
           <tr><th id="stub_1_7" scope="row" class="gt_row gt_right gt_stub">0.5000</th>
-      <td headers="0 to 1 stub_1_7 low" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_7 med" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_7 high" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_7 halves" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_7 quarters" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_7 eighths" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_7 sixteenths" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_7 hundredths" class="gt_row gt_right">1/2</td></tr>
+      <td headers="a0-to-1 stub_1_7 low" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_7 med" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_7 high" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_7 halves" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_7 quarters" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_7 eighths" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_7 sixteenths" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_7 hundredths" class="gt_row gt_right">1/2</td></tr>
           <tr><th id="stub_1_8" scope="row" class="gt_row gt_right gt_stub">0.6000</th>
-      <td headers="0 to 1 stub_1_8 low" class="gt_row gt_right">3/5</td>
-      <td headers="0 to 1 stub_1_8 med" class="gt_row gt_right">3/5</td>
-      <td headers="0 to 1 stub_1_8 high" class="gt_row gt_right">3/5</td>
-      <td headers="0 to 1 stub_1_8 halves" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_8 quarters" class="gt_row gt_right">1/2</td>
-      <td headers="0 to 1 stub_1_8 eighths" class="gt_row gt_right">5/8</td>
-      <td headers="0 to 1 stub_1_8 sixteenths" class="gt_row gt_right">5/8</td>
-      <td headers="0 to 1 stub_1_8 hundredths" class="gt_row gt_right">3/5</td></tr>
+      <td headers="a0-to-1 stub_1_8 low" class="gt_row gt_right">3/5</td>
+      <td headers="a0-to-1 stub_1_8 med" class="gt_row gt_right">3/5</td>
+      <td headers="a0-to-1 stub_1_8 high" class="gt_row gt_right">3/5</td>
+      <td headers="a0-to-1 stub_1_8 halves" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_8 quarters" class="gt_row gt_right">1/2</td>
+      <td headers="a0-to-1 stub_1_8 eighths" class="gt_row gt_right">5/8</td>
+      <td headers="a0-to-1 stub_1_8 sixteenths" class="gt_row gt_right">5/8</td>
+      <td headers="a0-to-1 stub_1_8 hundredths" class="gt_row gt_right">3/5</td></tr>
           <tr><th id="stub_1_9" scope="row" class="gt_row gt_right gt_stub">0.7500</th>
-      <td headers="0 to 1 stub_1_9 low" class="gt_row gt_right">3/4</td>
-      <td headers="0 to 1 stub_1_9 med" class="gt_row gt_right">3/4</td>
-      <td headers="0 to 1 stub_1_9 high" class="gt_row gt_right">3/4</td>
-      <td headers="0 to 1 stub_1_9 halves" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_9 quarters" class="gt_row gt_right">3/4</td>
-      <td headers="0 to 1 stub_1_9 eighths" class="gt_row gt_right">3/4</td>
-      <td headers="0 to 1 stub_1_9 sixteenths" class="gt_row gt_right">3/4</td>
-      <td headers="0 to 1 stub_1_9 hundredths" class="gt_row gt_right">3/4</td></tr>
+      <td headers="a0-to-1 stub_1_9 low" class="gt_row gt_right">3/4</td>
+      <td headers="a0-to-1 stub_1_9 med" class="gt_row gt_right">3/4</td>
+      <td headers="a0-to-1 stub_1_9 high" class="gt_row gt_right">3/4</td>
+      <td headers="a0-to-1 stub_1_9 halves" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_9 quarters" class="gt_row gt_right">3/4</td>
+      <td headers="a0-to-1 stub_1_9 eighths" class="gt_row gt_right">3/4</td>
+      <td headers="a0-to-1 stub_1_9 sixteenths" class="gt_row gt_right">3/4</td>
+      <td headers="a0-to-1 stub_1_9 hundredths" class="gt_row gt_right">3/4</td></tr>
           <tr><th id="stub_1_10" scope="row" class="gt_row gt_right gt_stub">0.9000</th>
-      <td headers="0 to 1 stub_1_10 low" class="gt_row gt_right">8/9</td>
-      <td headers="0 to 1 stub_1_10 med" class="gt_row gt_right">9/10</td>
-      <td headers="0 to 1 stub_1_10 high" class="gt_row gt_right">9/10</td>
-      <td headers="0 to 1 stub_1_10 halves" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_10 quarters" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_10 eighths" class="gt_row gt_right">7/8</td>
-      <td headers="0 to 1 stub_1_10 sixteenths" class="gt_row gt_right">7/8</td>
-      <td headers="0 to 1 stub_1_10 hundredths" class="gt_row gt_right">9/10</td></tr>
+      <td headers="a0-to-1 stub_1_10 low" class="gt_row gt_right">8/9</td>
+      <td headers="a0-to-1 stub_1_10 med" class="gt_row gt_right">9/10</td>
+      <td headers="a0-to-1 stub_1_10 high" class="gt_row gt_right">9/10</td>
+      <td headers="a0-to-1 stub_1_10 halves" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_10 quarters" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_10 eighths" class="gt_row gt_right">7/8</td>
+      <td headers="a0-to-1 stub_1_10 sixteenths" class="gt_row gt_right">7/8</td>
+      <td headers="a0-to-1 stub_1_10 hundredths" class="gt_row gt_right">9/10</td></tr>
           <tr><th id="stub_1_11" scope="row" class="gt_row gt_right gt_stub">0.9900</th>
-      <td headers="0 to 1 stub_1_11 low" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_11 med" class="gt_row gt_right">98/99</td>
-      <td headers="0 to 1 stub_1_11 high" class="gt_row gt_right">99/100</td>
-      <td headers="0 to 1 stub_1_11 halves" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_11 quarters" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_11 eighths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_11 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_11 hundredths" class="gt_row gt_right">99/100</td></tr>
+      <td headers="a0-to-1 stub_1_11 low" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_11 med" class="gt_row gt_right">98/99</td>
+      <td headers="a0-to-1 stub_1_11 high" class="gt_row gt_right">99/100</td>
+      <td headers="a0-to-1 stub_1_11 halves" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_11 quarters" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_11 eighths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_11 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_11 hundredths" class="gt_row gt_right">99/100</td></tr>
           <tr><th id="stub_1_12" scope="row" class="gt_row gt_right gt_stub">0.9990</th>
-      <td headers="0 to 1 stub_1_12 low" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 med" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 high" class="gt_row gt_right">998/999</td>
-      <td headers="0 to 1 stub_1_12 halves" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 quarters" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 eighths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_12 hundredths" class="gt_row gt_right">1</td></tr>
+      <td headers="a0-to-1 stub_1_12 low" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 med" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 high" class="gt_row gt_right">998/999</td>
+      <td headers="a0-to-1 stub_1_12 halves" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 quarters" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 eighths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_12 hundredths" class="gt_row gt_right">1</td></tr>
           <tr><th id="stub_1_13" scope="row" class="gt_row gt_right gt_stub">0.9999</th>
-      <td headers="0 to 1 stub_1_13 low" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 med" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 high" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 halves" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 quarters" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 eighths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="0 to 1 stub_1_13 hundredths" class="gt_row gt_right">1</td></tr>
+      <td headers="a0-to-1 stub_1_13 low" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 med" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 high" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 halves" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 quarters" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 eighths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a0-to-1 stub_1_13 hundredths" class="gt_row gt_right">1</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="0 to -1">0 to -1</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="a0-to--1">0 to -1</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_14" scope="row" class="gt_row gt_right gt_stub">-0.0001</th>
-      <td headers="0 to -1 stub_1_14 low" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 med" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 high" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_14 hundredths" class="gt_row gt_right">0</td></tr>
+      <td headers="a0-to--1 stub_1_14 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 med" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 high" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_14 hundredths" class="gt_row gt_right">0</td></tr>
           <tr><th id="stub_1_15" scope="row" class="gt_row gt_right gt_stub">-0.0010</th>
-      <td headers="0 to -1 stub_1_15 low" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 med" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 high" class="gt_row gt_right">−1/999</td>
-      <td headers="0 to -1 stub_1_15 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_15 hundredths" class="gt_row gt_right">0</td></tr>
+      <td headers="a0-to--1 stub_1_15 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 med" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 high" class="gt_row gt_right">−1/999</td>
+      <td headers="a0-to--1 stub_1_15 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_15 hundredths" class="gt_row gt_right">0</td></tr>
           <tr><th id="stub_1_16" scope="row" class="gt_row gt_right gt_stub">-0.0100</th>
-      <td headers="0 to -1 stub_1_16 low" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_16 med" class="gt_row gt_right">−1/99</td>
-      <td headers="0 to -1 stub_1_16 high" class="gt_row gt_right">−1/100</td>
-      <td headers="0 to -1 stub_1_16 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_16 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_16 eighths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_16 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_16 hundredths" class="gt_row gt_right">−1/100</td></tr>
+      <td headers="a0-to--1 stub_1_16 low" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_16 med" class="gt_row gt_right">−1/99</td>
+      <td headers="a0-to--1 stub_1_16 high" class="gt_row gt_right">−1/100</td>
+      <td headers="a0-to--1 stub_1_16 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_16 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_16 eighths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_16 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_16 hundredths" class="gt_row gt_right">−1/100</td></tr>
           <tr><th id="stub_1_17" scope="row" class="gt_row gt_right gt_stub">-0.1000</th>
-      <td headers="0 to -1 stub_1_17 low" class="gt_row gt_right">−1/9</td>
-      <td headers="0 to -1 stub_1_17 med" class="gt_row gt_right">−1/10</td>
-      <td headers="0 to -1 stub_1_17 high" class="gt_row gt_right">−1/10</td>
-      <td headers="0 to -1 stub_1_17 halves" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_17 quarters" class="gt_row gt_right">0</td>
-      <td headers="0 to -1 stub_1_17 eighths" class="gt_row gt_right">−1/8</td>
-      <td headers="0 to -1 stub_1_17 sixteenths" class="gt_row gt_right">−1/8</td>
-      <td headers="0 to -1 stub_1_17 hundredths" class="gt_row gt_right">−1/10</td></tr>
+      <td headers="a0-to--1 stub_1_17 low" class="gt_row gt_right">−1/9</td>
+      <td headers="a0-to--1 stub_1_17 med" class="gt_row gt_right">−1/10</td>
+      <td headers="a0-to--1 stub_1_17 high" class="gt_row gt_right">−1/10</td>
+      <td headers="a0-to--1 stub_1_17 halves" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_17 quarters" class="gt_row gt_right">0</td>
+      <td headers="a0-to--1 stub_1_17 eighths" class="gt_row gt_right">−1/8</td>
+      <td headers="a0-to--1 stub_1_17 sixteenths" class="gt_row gt_right">−1/8</td>
+      <td headers="a0-to--1 stub_1_17 hundredths" class="gt_row gt_right">−1/10</td></tr>
           <tr><th id="stub_1_18" scope="row" class="gt_row gt_right gt_stub">-0.2500</th>
-      <td headers="0 to -1 stub_1_18 low" class="gt_row gt_right">−1/4</td>
-      <td headers="0 to -1 stub_1_18 med" class="gt_row gt_right">−1/4</td>
-      <td headers="0 to -1 stub_1_18 high" class="gt_row gt_right">−1/4</td>
-      <td headers="0 to -1 stub_1_18 halves" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_18 quarters" class="gt_row gt_right">−1/4</td>
-      <td headers="0 to -1 stub_1_18 eighths" class="gt_row gt_right">−1/4</td>
-      <td headers="0 to -1 stub_1_18 sixteenths" class="gt_row gt_right">−1/4</td>
-      <td headers="0 to -1 stub_1_18 hundredths" class="gt_row gt_right">−1/4</td></tr>
+      <td headers="a0-to--1 stub_1_18 low" class="gt_row gt_right">−1/4</td>
+      <td headers="a0-to--1 stub_1_18 med" class="gt_row gt_right">−1/4</td>
+      <td headers="a0-to--1 stub_1_18 high" class="gt_row gt_right">−1/4</td>
+      <td headers="a0-to--1 stub_1_18 halves" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_18 quarters" class="gt_row gt_right">−1/4</td>
+      <td headers="a0-to--1 stub_1_18 eighths" class="gt_row gt_right">−1/4</td>
+      <td headers="a0-to--1 stub_1_18 sixteenths" class="gt_row gt_right">−1/4</td>
+      <td headers="a0-to--1 stub_1_18 hundredths" class="gt_row gt_right">−1/4</td></tr>
           <tr><th id="stub_1_19" scope="row" class="gt_row gt_right gt_stub">-0.4000</th>
-      <td headers="0 to -1 stub_1_19 low" class="gt_row gt_right">−2/5</td>
-      <td headers="0 to -1 stub_1_19 med" class="gt_row gt_right">−2/5</td>
-      <td headers="0 to -1 stub_1_19 high" class="gt_row gt_right">−2/5</td>
-      <td headers="0 to -1 stub_1_19 halves" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_19 quarters" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_19 eighths" class="gt_row gt_right">−3/8</td>
-      <td headers="0 to -1 stub_1_19 sixteenths" class="gt_row gt_right">−3/8</td>
-      <td headers="0 to -1 stub_1_19 hundredths" class="gt_row gt_right">−2/5</td></tr>
+      <td headers="a0-to--1 stub_1_19 low" class="gt_row gt_right">−2/5</td>
+      <td headers="a0-to--1 stub_1_19 med" class="gt_row gt_right">−2/5</td>
+      <td headers="a0-to--1 stub_1_19 high" class="gt_row gt_right">−2/5</td>
+      <td headers="a0-to--1 stub_1_19 halves" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_19 quarters" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_19 eighths" class="gt_row gt_right">−3/8</td>
+      <td headers="a0-to--1 stub_1_19 sixteenths" class="gt_row gt_right">−3/8</td>
+      <td headers="a0-to--1 stub_1_19 hundredths" class="gt_row gt_right">−2/5</td></tr>
           <tr><th id="stub_1_20" scope="row" class="gt_row gt_right gt_stub">-0.5000</th>
-      <td headers="0 to -1 stub_1_20 low" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_20 med" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_20 high" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_20 halves" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_20 quarters" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_20 eighths" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_20 sixteenths" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_20 hundredths" class="gt_row gt_right">−1/2</td></tr>
+      <td headers="a0-to--1 stub_1_20 low" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_20 med" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_20 high" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_20 halves" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_20 quarters" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_20 eighths" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_20 sixteenths" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_20 hundredths" class="gt_row gt_right">−1/2</td></tr>
           <tr><th id="stub_1_21" scope="row" class="gt_row gt_right gt_stub">-0.6000</th>
-      <td headers="0 to -1 stub_1_21 low" class="gt_row gt_right">−3/5</td>
-      <td headers="0 to -1 stub_1_21 med" class="gt_row gt_right">−3/5</td>
-      <td headers="0 to -1 stub_1_21 high" class="gt_row gt_right">−3/5</td>
-      <td headers="0 to -1 stub_1_21 halves" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_21 quarters" class="gt_row gt_right">−1/2</td>
-      <td headers="0 to -1 stub_1_21 eighths" class="gt_row gt_right">−5/8</td>
-      <td headers="0 to -1 stub_1_21 sixteenths" class="gt_row gt_right">−5/8</td>
-      <td headers="0 to -1 stub_1_21 hundredths" class="gt_row gt_right">−3/5</td></tr>
+      <td headers="a0-to--1 stub_1_21 low" class="gt_row gt_right">−3/5</td>
+      <td headers="a0-to--1 stub_1_21 med" class="gt_row gt_right">−3/5</td>
+      <td headers="a0-to--1 stub_1_21 high" class="gt_row gt_right">−3/5</td>
+      <td headers="a0-to--1 stub_1_21 halves" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_21 quarters" class="gt_row gt_right">−1/2</td>
+      <td headers="a0-to--1 stub_1_21 eighths" class="gt_row gt_right">−5/8</td>
+      <td headers="a0-to--1 stub_1_21 sixteenths" class="gt_row gt_right">−5/8</td>
+      <td headers="a0-to--1 stub_1_21 hundredths" class="gt_row gt_right">−3/5</td></tr>
           <tr><th id="stub_1_22" scope="row" class="gt_row gt_right gt_stub">-0.7500</th>
-      <td headers="0 to -1 stub_1_22 low" class="gt_row gt_right">−3/4</td>
-      <td headers="0 to -1 stub_1_22 med" class="gt_row gt_right">−3/4</td>
-      <td headers="0 to -1 stub_1_22 high" class="gt_row gt_right">−3/4</td>
-      <td headers="0 to -1 stub_1_22 halves" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_22 quarters" class="gt_row gt_right">−3/4</td>
-      <td headers="0 to -1 stub_1_22 eighths" class="gt_row gt_right">−3/4</td>
-      <td headers="0 to -1 stub_1_22 sixteenths" class="gt_row gt_right">−3/4</td>
-      <td headers="0 to -1 stub_1_22 hundredths" class="gt_row gt_right">−3/4</td></tr>
+      <td headers="a0-to--1 stub_1_22 low" class="gt_row gt_right">−3/4</td>
+      <td headers="a0-to--1 stub_1_22 med" class="gt_row gt_right">−3/4</td>
+      <td headers="a0-to--1 stub_1_22 high" class="gt_row gt_right">−3/4</td>
+      <td headers="a0-to--1 stub_1_22 halves" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_22 quarters" class="gt_row gt_right">−3/4</td>
+      <td headers="a0-to--1 stub_1_22 eighths" class="gt_row gt_right">−3/4</td>
+      <td headers="a0-to--1 stub_1_22 sixteenths" class="gt_row gt_right">−3/4</td>
+      <td headers="a0-to--1 stub_1_22 hundredths" class="gt_row gt_right">−3/4</td></tr>
           <tr><th id="stub_1_23" scope="row" class="gt_row gt_right gt_stub">-0.9000</th>
-      <td headers="0 to -1 stub_1_23 low" class="gt_row gt_right">−8/9</td>
-      <td headers="0 to -1 stub_1_23 med" class="gt_row gt_right">−9/10</td>
-      <td headers="0 to -1 stub_1_23 high" class="gt_row gt_right">−9/10</td>
-      <td headers="0 to -1 stub_1_23 halves" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_23 quarters" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_23 eighths" class="gt_row gt_right">−7/8</td>
-      <td headers="0 to -1 stub_1_23 sixteenths" class="gt_row gt_right">−7/8</td>
-      <td headers="0 to -1 stub_1_23 hundredths" class="gt_row gt_right">−9/10</td></tr>
+      <td headers="a0-to--1 stub_1_23 low" class="gt_row gt_right">−8/9</td>
+      <td headers="a0-to--1 stub_1_23 med" class="gt_row gt_right">−9/10</td>
+      <td headers="a0-to--1 stub_1_23 high" class="gt_row gt_right">−9/10</td>
+      <td headers="a0-to--1 stub_1_23 halves" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_23 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_23 eighths" class="gt_row gt_right">−7/8</td>
+      <td headers="a0-to--1 stub_1_23 sixteenths" class="gt_row gt_right">−7/8</td>
+      <td headers="a0-to--1 stub_1_23 hundredths" class="gt_row gt_right">−9/10</td></tr>
           <tr><th id="stub_1_24" scope="row" class="gt_row gt_right gt_stub">-0.9900</th>
-      <td headers="0 to -1 stub_1_24 low" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_24 med" class="gt_row gt_right">−98/99</td>
-      <td headers="0 to -1 stub_1_24 high" class="gt_row gt_right">−99/100</td>
-      <td headers="0 to -1 stub_1_24 halves" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_24 quarters" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_24 eighths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_24 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_24 hundredths" class="gt_row gt_right">−99/100</td></tr>
+      <td headers="a0-to--1 stub_1_24 low" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_24 med" class="gt_row gt_right">−98/99</td>
+      <td headers="a0-to--1 stub_1_24 high" class="gt_row gt_right">−99/100</td>
+      <td headers="a0-to--1 stub_1_24 halves" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_24 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_24 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_24 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_24 hundredths" class="gt_row gt_right">−99/100</td></tr>
           <tr><th id="stub_1_25" scope="row" class="gt_row gt_right gt_stub">-0.9990</th>
-      <td headers="0 to -1 stub_1_25 low" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 med" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 high" class="gt_row gt_right">−998/999</td>
-      <td headers="0 to -1 stub_1_25 halves" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 quarters" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 eighths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_25 hundredths" class="gt_row gt_right">−1</td></tr>
+      <td headers="a0-to--1 stub_1_25 low" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 med" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 high" class="gt_row gt_right">−998/999</td>
+      <td headers="a0-to--1 stub_1_25 halves" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_25 hundredths" class="gt_row gt_right">−1</td></tr>
           <tr><th id="stub_1_26" scope="row" class="gt_row gt_right gt_stub">-0.9999</th>
-      <td headers="0 to -1 stub_1_26 low" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 med" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 high" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 halves" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 quarters" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 eighths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="0 to -1 stub_1_26 hundredths" class="gt_row gt_right">−1</td></tr>
+      <td headers="a0-to--1 stub_1_26 low" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 med" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 high" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 halves" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a0-to--1 stub_1_26 hundredths" class="gt_row gt_right">−1</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="1 to 2">1 to 2</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="a1-to-2">1 to 2</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_27" scope="row" class="gt_row gt_right gt_stub">1.0001</th>
-      <td headers="1 to 2 stub_1_27 low" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 med" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 high" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 halves" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 quarters" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 eighths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_27 hundredths" class="gt_row gt_right">1</td></tr>
+      <td headers="a1-to-2 stub_1_27 low" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 med" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 high" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 halves" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 quarters" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 eighths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_27 hundredths" class="gt_row gt_right">1</td></tr>
           <tr><th id="stub_1_28" scope="row" class="gt_row gt_right gt_stub">1.0010</th>
-      <td headers="1 to 2 stub_1_28 low" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 med" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 high" class="gt_row gt_right">1 1/999</td>
-      <td headers="1 to 2 stub_1_28 halves" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 quarters" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 eighths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_28 hundredths" class="gt_row gt_right">1</td></tr>
+      <td headers="a1-to-2 stub_1_28 low" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 med" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 high" class="gt_row gt_right">1 1/999</td>
+      <td headers="a1-to-2 stub_1_28 halves" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 quarters" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 eighths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_28 hundredths" class="gt_row gt_right">1</td></tr>
           <tr><th id="stub_1_29" scope="row" class="gt_row gt_right gt_stub">1.0100</th>
-      <td headers="1 to 2 stub_1_29 low" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_29 med" class="gt_row gt_right">1 1/99</td>
-      <td headers="1 to 2 stub_1_29 high" class="gt_row gt_right">1 1/100</td>
-      <td headers="1 to 2 stub_1_29 halves" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_29 quarters" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_29 eighths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_29 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_29 hundredths" class="gt_row gt_right">1 1/100</td></tr>
+      <td headers="a1-to-2 stub_1_29 low" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_29 med" class="gt_row gt_right">1 1/99</td>
+      <td headers="a1-to-2 stub_1_29 high" class="gt_row gt_right">1 1/100</td>
+      <td headers="a1-to-2 stub_1_29 halves" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_29 quarters" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_29 eighths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_29 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_29 hundredths" class="gt_row gt_right">1 1/100</td></tr>
           <tr><th id="stub_1_30" scope="row" class="gt_row gt_right gt_stub">1.1000</th>
-      <td headers="1 to 2 stub_1_30 low" class="gt_row gt_right">1 1/9</td>
-      <td headers="1 to 2 stub_1_30 med" class="gt_row gt_right">1 1/10</td>
-      <td headers="1 to 2 stub_1_30 high" class="gt_row gt_right">1 1/10</td>
-      <td headers="1 to 2 stub_1_30 halves" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_30 quarters" class="gt_row gt_right">1</td>
-      <td headers="1 to 2 stub_1_30 eighths" class="gt_row gt_right">1 1/8</td>
-      <td headers="1 to 2 stub_1_30 sixteenths" class="gt_row gt_right">1 1/8</td>
-      <td headers="1 to 2 stub_1_30 hundredths" class="gt_row gt_right">1 1/10</td></tr>
+      <td headers="a1-to-2 stub_1_30 low" class="gt_row gt_right">1 1/9</td>
+      <td headers="a1-to-2 stub_1_30 med" class="gt_row gt_right">1 1/10</td>
+      <td headers="a1-to-2 stub_1_30 high" class="gt_row gt_right">1 1/10</td>
+      <td headers="a1-to-2 stub_1_30 halves" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_30 quarters" class="gt_row gt_right">1</td>
+      <td headers="a1-to-2 stub_1_30 eighths" class="gt_row gt_right">1 1/8</td>
+      <td headers="a1-to-2 stub_1_30 sixteenths" class="gt_row gt_right">1 1/8</td>
+      <td headers="a1-to-2 stub_1_30 hundredths" class="gt_row gt_right">1 1/10</td></tr>
           <tr><th id="stub_1_31" scope="row" class="gt_row gt_right gt_stub">1.2500</th>
-      <td headers="1 to 2 stub_1_31 low" class="gt_row gt_right">1 1/4</td>
-      <td headers="1 to 2 stub_1_31 med" class="gt_row gt_right">1 1/4</td>
-      <td headers="1 to 2 stub_1_31 high" class="gt_row gt_right">1 1/4</td>
-      <td headers="1 to 2 stub_1_31 halves" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_31 quarters" class="gt_row gt_right">1 1/4</td>
-      <td headers="1 to 2 stub_1_31 eighths" class="gt_row gt_right">1 1/4</td>
-      <td headers="1 to 2 stub_1_31 sixteenths" class="gt_row gt_right">1 1/4</td>
-      <td headers="1 to 2 stub_1_31 hundredths" class="gt_row gt_right">1 1/4</td></tr>
+      <td headers="a1-to-2 stub_1_31 low" class="gt_row gt_right">1 1/4</td>
+      <td headers="a1-to-2 stub_1_31 med" class="gt_row gt_right">1 1/4</td>
+      <td headers="a1-to-2 stub_1_31 high" class="gt_row gt_right">1 1/4</td>
+      <td headers="a1-to-2 stub_1_31 halves" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_31 quarters" class="gt_row gt_right">1 1/4</td>
+      <td headers="a1-to-2 stub_1_31 eighths" class="gt_row gt_right">1 1/4</td>
+      <td headers="a1-to-2 stub_1_31 sixteenths" class="gt_row gt_right">1 1/4</td>
+      <td headers="a1-to-2 stub_1_31 hundredths" class="gt_row gt_right">1 1/4</td></tr>
           <tr><th id="stub_1_32" scope="row" class="gt_row gt_right gt_stub">1.4000</th>
-      <td headers="1 to 2 stub_1_32 low" class="gt_row gt_right">1 2/5</td>
-      <td headers="1 to 2 stub_1_32 med" class="gt_row gt_right">1 2/5</td>
-      <td headers="1 to 2 stub_1_32 high" class="gt_row gt_right">1 2/5</td>
-      <td headers="1 to 2 stub_1_32 halves" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_32 quarters" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_32 eighths" class="gt_row gt_right">1 3/8</td>
-      <td headers="1 to 2 stub_1_32 sixteenths" class="gt_row gt_right">1 3/8</td>
-      <td headers="1 to 2 stub_1_32 hundredths" class="gt_row gt_right">1 2/5</td></tr>
+      <td headers="a1-to-2 stub_1_32 low" class="gt_row gt_right">1 2/5</td>
+      <td headers="a1-to-2 stub_1_32 med" class="gt_row gt_right">1 2/5</td>
+      <td headers="a1-to-2 stub_1_32 high" class="gt_row gt_right">1 2/5</td>
+      <td headers="a1-to-2 stub_1_32 halves" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_32 quarters" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_32 eighths" class="gt_row gt_right">1 3/8</td>
+      <td headers="a1-to-2 stub_1_32 sixteenths" class="gt_row gt_right">1 3/8</td>
+      <td headers="a1-to-2 stub_1_32 hundredths" class="gt_row gt_right">1 2/5</td></tr>
           <tr><th id="stub_1_33" scope="row" class="gt_row gt_right gt_stub">1.5000</th>
-      <td headers="1 to 2 stub_1_33 low" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_33 med" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_33 high" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_33 halves" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_33 quarters" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_33 eighths" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_33 sixteenths" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_33 hundredths" class="gt_row gt_right">1 1/2</td></tr>
+      <td headers="a1-to-2 stub_1_33 low" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_33 med" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_33 high" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_33 halves" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_33 quarters" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_33 eighths" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_33 sixteenths" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_33 hundredths" class="gt_row gt_right">1 1/2</td></tr>
           <tr><th id="stub_1_34" scope="row" class="gt_row gt_right gt_stub">1.6000</th>
-      <td headers="1 to 2 stub_1_34 low" class="gt_row gt_right">1 3/5</td>
-      <td headers="1 to 2 stub_1_34 med" class="gt_row gt_right">1 3/5</td>
-      <td headers="1 to 2 stub_1_34 high" class="gt_row gt_right">1 3/5</td>
-      <td headers="1 to 2 stub_1_34 halves" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_34 quarters" class="gt_row gt_right">1 1/2</td>
-      <td headers="1 to 2 stub_1_34 eighths" class="gt_row gt_right">1 5/8</td>
-      <td headers="1 to 2 stub_1_34 sixteenths" class="gt_row gt_right">1 5/8</td>
-      <td headers="1 to 2 stub_1_34 hundredths" class="gt_row gt_right">1 3/5</td></tr>
+      <td headers="a1-to-2 stub_1_34 low" class="gt_row gt_right">1 3/5</td>
+      <td headers="a1-to-2 stub_1_34 med" class="gt_row gt_right">1 3/5</td>
+      <td headers="a1-to-2 stub_1_34 high" class="gt_row gt_right">1 3/5</td>
+      <td headers="a1-to-2 stub_1_34 halves" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_34 quarters" class="gt_row gt_right">1 1/2</td>
+      <td headers="a1-to-2 stub_1_34 eighths" class="gt_row gt_right">1 5/8</td>
+      <td headers="a1-to-2 stub_1_34 sixteenths" class="gt_row gt_right">1 5/8</td>
+      <td headers="a1-to-2 stub_1_34 hundredths" class="gt_row gt_right">1 3/5</td></tr>
           <tr><th id="stub_1_35" scope="row" class="gt_row gt_right gt_stub">1.7500</th>
-      <td headers="1 to 2 stub_1_35 low" class="gt_row gt_right">1 3/4</td>
-      <td headers="1 to 2 stub_1_35 med" class="gt_row gt_right">1 3/4</td>
-      <td headers="1 to 2 stub_1_35 high" class="gt_row gt_right">1 3/4</td>
-      <td headers="1 to 2 stub_1_35 halves" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_35 quarters" class="gt_row gt_right">1 3/4</td>
-      <td headers="1 to 2 stub_1_35 eighths" class="gt_row gt_right">1 3/4</td>
-      <td headers="1 to 2 stub_1_35 sixteenths" class="gt_row gt_right">1 3/4</td>
-      <td headers="1 to 2 stub_1_35 hundredths" class="gt_row gt_right">1 3/4</td></tr>
+      <td headers="a1-to-2 stub_1_35 low" class="gt_row gt_right">1 3/4</td>
+      <td headers="a1-to-2 stub_1_35 med" class="gt_row gt_right">1 3/4</td>
+      <td headers="a1-to-2 stub_1_35 high" class="gt_row gt_right">1 3/4</td>
+      <td headers="a1-to-2 stub_1_35 halves" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_35 quarters" class="gt_row gt_right">1 3/4</td>
+      <td headers="a1-to-2 stub_1_35 eighths" class="gt_row gt_right">1 3/4</td>
+      <td headers="a1-to-2 stub_1_35 sixteenths" class="gt_row gt_right">1 3/4</td>
+      <td headers="a1-to-2 stub_1_35 hundredths" class="gt_row gt_right">1 3/4</td></tr>
           <tr><th id="stub_1_36" scope="row" class="gt_row gt_right gt_stub">1.9000</th>
-      <td headers="1 to 2 stub_1_36 low" class="gt_row gt_right">1 8/9</td>
-      <td headers="1 to 2 stub_1_36 med" class="gt_row gt_right">1 9/10</td>
-      <td headers="1 to 2 stub_1_36 high" class="gt_row gt_right">1 9/10</td>
-      <td headers="1 to 2 stub_1_36 halves" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_36 quarters" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_36 eighths" class="gt_row gt_right">1 7/8</td>
-      <td headers="1 to 2 stub_1_36 sixteenths" class="gt_row gt_right">1 7/8</td>
-      <td headers="1 to 2 stub_1_36 hundredths" class="gt_row gt_right">1 9/10</td></tr>
+      <td headers="a1-to-2 stub_1_36 low" class="gt_row gt_right">1 8/9</td>
+      <td headers="a1-to-2 stub_1_36 med" class="gt_row gt_right">1 9/10</td>
+      <td headers="a1-to-2 stub_1_36 high" class="gt_row gt_right">1 9/10</td>
+      <td headers="a1-to-2 stub_1_36 halves" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_36 quarters" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_36 eighths" class="gt_row gt_right">1 7/8</td>
+      <td headers="a1-to-2 stub_1_36 sixteenths" class="gt_row gt_right">1 7/8</td>
+      <td headers="a1-to-2 stub_1_36 hundredths" class="gt_row gt_right">1 9/10</td></tr>
           <tr><th id="stub_1_37" scope="row" class="gt_row gt_right gt_stub">1.9900</th>
-      <td headers="1 to 2 stub_1_37 low" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_37 med" class="gt_row gt_right">1 98/99</td>
-      <td headers="1 to 2 stub_1_37 high" class="gt_row gt_right">1 99/100</td>
-      <td headers="1 to 2 stub_1_37 halves" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_37 quarters" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_37 eighths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_37 sixteenths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_37 hundredths" class="gt_row gt_right">1 99/100</td></tr>
+      <td headers="a1-to-2 stub_1_37 low" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_37 med" class="gt_row gt_right">1 98/99</td>
+      <td headers="a1-to-2 stub_1_37 high" class="gt_row gt_right">1 99/100</td>
+      <td headers="a1-to-2 stub_1_37 halves" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_37 quarters" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_37 eighths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_37 sixteenths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_37 hundredths" class="gt_row gt_right">1 99/100</td></tr>
           <tr><th id="stub_1_38" scope="row" class="gt_row gt_right gt_stub">1.9990</th>
-      <td headers="1 to 2 stub_1_38 low" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 med" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 high" class="gt_row gt_right">1 998/999</td>
-      <td headers="1 to 2 stub_1_38 halves" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 quarters" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 eighths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 sixteenths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_38 hundredths" class="gt_row gt_right">2</td></tr>
+      <td headers="a1-to-2 stub_1_38 low" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 med" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 high" class="gt_row gt_right">1 998/999</td>
+      <td headers="a1-to-2 stub_1_38 halves" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 quarters" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 eighths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 sixteenths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_38 hundredths" class="gt_row gt_right">2</td></tr>
           <tr><th id="stub_1_39" scope="row" class="gt_row gt_right gt_stub">1.9999</th>
-      <td headers="1 to 2 stub_1_39 low" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 med" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 high" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 halves" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 quarters" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 eighths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 sixteenths" class="gt_row gt_right">2</td>
-      <td headers="1 to 2 stub_1_39 hundredths" class="gt_row gt_right">2</td></tr>
+      <td headers="a1-to-2 stub_1_39 low" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 med" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 high" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 halves" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 quarters" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 eighths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 sixteenths" class="gt_row gt_right">2</td>
+      <td headers="a1-to-2 stub_1_39 hundredths" class="gt_row gt_right">2</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="-1 to -2">-1 to -2</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="a-1-to--2">-1 to -2</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_40" scope="row" class="gt_row gt_right gt_stub">-1.0001</th>
-      <td headers="-1 to -2 stub_1_40 low" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 med" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 high" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 halves" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 quarters" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 eighths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_40 hundredths" class="gt_row gt_right">−1</td></tr>
+      <td headers="a-1-to--2 stub_1_40 low" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 med" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 high" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 halves" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_40 hundredths" class="gt_row gt_right">−1</td></tr>
           <tr><th id="stub_1_41" scope="row" class="gt_row gt_right gt_stub">-1.0010</th>
-      <td headers="-1 to -2 stub_1_41 low" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 med" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 high" class="gt_row gt_right">−1 1/999</td>
-      <td headers="-1 to -2 stub_1_41 halves" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 quarters" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 eighths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_41 hundredths" class="gt_row gt_right">−1</td></tr>
+      <td headers="a-1-to--2 stub_1_41 low" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 med" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 high" class="gt_row gt_right">−1 1/999</td>
+      <td headers="a-1-to--2 stub_1_41 halves" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_41 hundredths" class="gt_row gt_right">−1</td></tr>
           <tr><th id="stub_1_42" scope="row" class="gt_row gt_right gt_stub">-1.0100</th>
-      <td headers="-1 to -2 stub_1_42 low" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_42 med" class="gt_row gt_right">−1 1/99</td>
-      <td headers="-1 to -2 stub_1_42 high" class="gt_row gt_right">−1 1/100</td>
-      <td headers="-1 to -2 stub_1_42 halves" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_42 quarters" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_42 eighths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_42 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_42 hundredths" class="gt_row gt_right">−1 1/100</td></tr>
+      <td headers="a-1-to--2 stub_1_42 low" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_42 med" class="gt_row gt_right">−1 1/99</td>
+      <td headers="a-1-to--2 stub_1_42 high" class="gt_row gt_right">−1 1/100</td>
+      <td headers="a-1-to--2 stub_1_42 halves" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_42 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_42 eighths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_42 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_42 hundredths" class="gt_row gt_right">−1 1/100</td></tr>
           <tr><th id="stub_1_43" scope="row" class="gt_row gt_right gt_stub">-1.1000</th>
-      <td headers="-1 to -2 stub_1_43 low" class="gt_row gt_right">−1 1/9</td>
-      <td headers="-1 to -2 stub_1_43 med" class="gt_row gt_right">−1 1/10</td>
-      <td headers="-1 to -2 stub_1_43 high" class="gt_row gt_right">−1 1/10</td>
-      <td headers="-1 to -2 stub_1_43 halves" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_43 quarters" class="gt_row gt_right">−1</td>
-      <td headers="-1 to -2 stub_1_43 eighths" class="gt_row gt_right">−1 1/8</td>
-      <td headers="-1 to -2 stub_1_43 sixteenths" class="gt_row gt_right">−1 1/8</td>
-      <td headers="-1 to -2 stub_1_43 hundredths" class="gt_row gt_right">−1 1/10</td></tr>
+      <td headers="a-1-to--2 stub_1_43 low" class="gt_row gt_right">−1 1/9</td>
+      <td headers="a-1-to--2 stub_1_43 med" class="gt_row gt_right">−1 1/10</td>
+      <td headers="a-1-to--2 stub_1_43 high" class="gt_row gt_right">−1 1/10</td>
+      <td headers="a-1-to--2 stub_1_43 halves" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_43 quarters" class="gt_row gt_right">−1</td>
+      <td headers="a-1-to--2 stub_1_43 eighths" class="gt_row gt_right">−1 1/8</td>
+      <td headers="a-1-to--2 stub_1_43 sixteenths" class="gt_row gt_right">−1 1/8</td>
+      <td headers="a-1-to--2 stub_1_43 hundredths" class="gt_row gt_right">−1 1/10</td></tr>
           <tr><th id="stub_1_44" scope="row" class="gt_row gt_right gt_stub">-1.2500</th>
-      <td headers="-1 to -2 stub_1_44 low" class="gt_row gt_right">−1 1/4</td>
-      <td headers="-1 to -2 stub_1_44 med" class="gt_row gt_right">−1 1/4</td>
-      <td headers="-1 to -2 stub_1_44 high" class="gt_row gt_right">−1 1/4</td>
-      <td headers="-1 to -2 stub_1_44 halves" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_44 quarters" class="gt_row gt_right">−1 1/4</td>
-      <td headers="-1 to -2 stub_1_44 eighths" class="gt_row gt_right">−1 1/4</td>
-      <td headers="-1 to -2 stub_1_44 sixteenths" class="gt_row gt_right">−1 1/4</td>
-      <td headers="-1 to -2 stub_1_44 hundredths" class="gt_row gt_right">−1 1/4</td></tr>
+      <td headers="a-1-to--2 stub_1_44 low" class="gt_row gt_right">−1 1/4</td>
+      <td headers="a-1-to--2 stub_1_44 med" class="gt_row gt_right">−1 1/4</td>
+      <td headers="a-1-to--2 stub_1_44 high" class="gt_row gt_right">−1 1/4</td>
+      <td headers="a-1-to--2 stub_1_44 halves" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_44 quarters" class="gt_row gt_right">−1 1/4</td>
+      <td headers="a-1-to--2 stub_1_44 eighths" class="gt_row gt_right">−1 1/4</td>
+      <td headers="a-1-to--2 stub_1_44 sixteenths" class="gt_row gt_right">−1 1/4</td>
+      <td headers="a-1-to--2 stub_1_44 hundredths" class="gt_row gt_right">−1 1/4</td></tr>
           <tr><th id="stub_1_45" scope="row" class="gt_row gt_right gt_stub">-1.4000</th>
-      <td headers="-1 to -2 stub_1_45 low" class="gt_row gt_right">−1 2/5</td>
-      <td headers="-1 to -2 stub_1_45 med" class="gt_row gt_right">−1 2/5</td>
-      <td headers="-1 to -2 stub_1_45 high" class="gt_row gt_right">−1 2/5</td>
-      <td headers="-1 to -2 stub_1_45 halves" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_45 quarters" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_45 eighths" class="gt_row gt_right">−1 3/8</td>
-      <td headers="-1 to -2 stub_1_45 sixteenths" class="gt_row gt_right">−1 3/8</td>
-      <td headers="-1 to -2 stub_1_45 hundredths" class="gt_row gt_right">−1 2/5</td></tr>
+      <td headers="a-1-to--2 stub_1_45 low" class="gt_row gt_right">−1 2/5</td>
+      <td headers="a-1-to--2 stub_1_45 med" class="gt_row gt_right">−1 2/5</td>
+      <td headers="a-1-to--2 stub_1_45 high" class="gt_row gt_right">−1 2/5</td>
+      <td headers="a-1-to--2 stub_1_45 halves" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_45 quarters" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_45 eighths" class="gt_row gt_right">−1 3/8</td>
+      <td headers="a-1-to--2 stub_1_45 sixteenths" class="gt_row gt_right">−1 3/8</td>
+      <td headers="a-1-to--2 stub_1_45 hundredths" class="gt_row gt_right">−1 2/5</td></tr>
           <tr><th id="stub_1_46" scope="row" class="gt_row gt_right gt_stub">-1.5000</th>
-      <td headers="-1 to -2 stub_1_46 low" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_46 med" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_46 high" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_46 halves" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_46 quarters" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_46 eighths" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_46 sixteenths" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_46 hundredths" class="gt_row gt_right">−1 1/2</td></tr>
+      <td headers="a-1-to--2 stub_1_46 low" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_46 med" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_46 high" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_46 halves" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_46 quarters" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_46 eighths" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_46 sixteenths" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_46 hundredths" class="gt_row gt_right">−1 1/2</td></tr>
           <tr><th id="stub_1_47" scope="row" class="gt_row gt_right gt_stub">-1.6000</th>
-      <td headers="-1 to -2 stub_1_47 low" class="gt_row gt_right">−1 3/5</td>
-      <td headers="-1 to -2 stub_1_47 med" class="gt_row gt_right">−1 3/5</td>
-      <td headers="-1 to -2 stub_1_47 high" class="gt_row gt_right">−1 3/5</td>
-      <td headers="-1 to -2 stub_1_47 halves" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_47 quarters" class="gt_row gt_right">−1 1/2</td>
-      <td headers="-1 to -2 stub_1_47 eighths" class="gt_row gt_right">−1 5/8</td>
-      <td headers="-1 to -2 stub_1_47 sixteenths" class="gt_row gt_right">−1 5/8</td>
-      <td headers="-1 to -2 stub_1_47 hundredths" class="gt_row gt_right">−1 3/5</td></tr>
+      <td headers="a-1-to--2 stub_1_47 low" class="gt_row gt_right">−1 3/5</td>
+      <td headers="a-1-to--2 stub_1_47 med" class="gt_row gt_right">−1 3/5</td>
+      <td headers="a-1-to--2 stub_1_47 high" class="gt_row gt_right">−1 3/5</td>
+      <td headers="a-1-to--2 stub_1_47 halves" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_47 quarters" class="gt_row gt_right">−1 1/2</td>
+      <td headers="a-1-to--2 stub_1_47 eighths" class="gt_row gt_right">−1 5/8</td>
+      <td headers="a-1-to--2 stub_1_47 sixteenths" class="gt_row gt_right">−1 5/8</td>
+      <td headers="a-1-to--2 stub_1_47 hundredths" class="gt_row gt_right">−1 3/5</td></tr>
           <tr><th id="stub_1_48" scope="row" class="gt_row gt_right gt_stub">-1.7500</th>
-      <td headers="-1 to -2 stub_1_48 low" class="gt_row gt_right">−1 3/4</td>
-      <td headers="-1 to -2 stub_1_48 med" class="gt_row gt_right">−1 3/4</td>
-      <td headers="-1 to -2 stub_1_48 high" class="gt_row gt_right">−1 3/4</td>
-      <td headers="-1 to -2 stub_1_48 halves" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_48 quarters" class="gt_row gt_right">−1 3/4</td>
-      <td headers="-1 to -2 stub_1_48 eighths" class="gt_row gt_right">−1 3/4</td>
-      <td headers="-1 to -2 stub_1_48 sixteenths" class="gt_row gt_right">−1 3/4</td>
-      <td headers="-1 to -2 stub_1_48 hundredths" class="gt_row gt_right">−1 3/4</td></tr>
+      <td headers="a-1-to--2 stub_1_48 low" class="gt_row gt_right">−1 3/4</td>
+      <td headers="a-1-to--2 stub_1_48 med" class="gt_row gt_right">−1 3/4</td>
+      <td headers="a-1-to--2 stub_1_48 high" class="gt_row gt_right">−1 3/4</td>
+      <td headers="a-1-to--2 stub_1_48 halves" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_48 quarters" class="gt_row gt_right">−1 3/4</td>
+      <td headers="a-1-to--2 stub_1_48 eighths" class="gt_row gt_right">−1 3/4</td>
+      <td headers="a-1-to--2 stub_1_48 sixteenths" class="gt_row gt_right">−1 3/4</td>
+      <td headers="a-1-to--2 stub_1_48 hundredths" class="gt_row gt_right">−1 3/4</td></tr>
           <tr><th id="stub_1_49" scope="row" class="gt_row gt_right gt_stub">-1.9000</th>
-      <td headers="-1 to -2 stub_1_49 low" class="gt_row gt_right">−1 8/9</td>
-      <td headers="-1 to -2 stub_1_49 med" class="gt_row gt_right">−1 9/10</td>
-      <td headers="-1 to -2 stub_1_49 high" class="gt_row gt_right">−1 9/10</td>
-      <td headers="-1 to -2 stub_1_49 halves" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_49 quarters" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_49 eighths" class="gt_row gt_right">−1 7/8</td>
-      <td headers="-1 to -2 stub_1_49 sixteenths" class="gt_row gt_right">−1 7/8</td>
-      <td headers="-1 to -2 stub_1_49 hundredths" class="gt_row gt_right">−1 9/10</td></tr>
+      <td headers="a-1-to--2 stub_1_49 low" class="gt_row gt_right">−1 8/9</td>
+      <td headers="a-1-to--2 stub_1_49 med" class="gt_row gt_right">−1 9/10</td>
+      <td headers="a-1-to--2 stub_1_49 high" class="gt_row gt_right">−1 9/10</td>
+      <td headers="a-1-to--2 stub_1_49 halves" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_49 quarters" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_49 eighths" class="gt_row gt_right">−1 7/8</td>
+      <td headers="a-1-to--2 stub_1_49 sixteenths" class="gt_row gt_right">−1 7/8</td>
+      <td headers="a-1-to--2 stub_1_49 hundredths" class="gt_row gt_right">−1 9/10</td></tr>
           <tr><th id="stub_1_50" scope="row" class="gt_row gt_right gt_stub">-1.9900</th>
-      <td headers="-1 to -2 stub_1_50 low" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_50 med" class="gt_row gt_right">−1 98/99</td>
-      <td headers="-1 to -2 stub_1_50 high" class="gt_row gt_right">−1 99/100</td>
-      <td headers="-1 to -2 stub_1_50 halves" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_50 quarters" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_50 eighths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_50 sixteenths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_50 hundredths" class="gt_row gt_right">−1 99/100</td></tr>
+      <td headers="a-1-to--2 stub_1_50 low" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_50 med" class="gt_row gt_right">−1 98/99</td>
+      <td headers="a-1-to--2 stub_1_50 high" class="gt_row gt_right">−1 99/100</td>
+      <td headers="a-1-to--2 stub_1_50 halves" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_50 quarters" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_50 eighths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_50 sixteenths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_50 hundredths" class="gt_row gt_right">−1 99/100</td></tr>
           <tr><th id="stub_1_51" scope="row" class="gt_row gt_right gt_stub">-1.9990</th>
-      <td headers="-1 to -2 stub_1_51 low" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 med" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 high" class="gt_row gt_right">−1 998/999</td>
-      <td headers="-1 to -2 stub_1_51 halves" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 quarters" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 eighths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 sixteenths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_51 hundredths" class="gt_row gt_right">−2</td></tr>
+      <td headers="a-1-to--2 stub_1_51 low" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 med" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 high" class="gt_row gt_right">−1 998/999</td>
+      <td headers="a-1-to--2 stub_1_51 halves" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 quarters" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 eighths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 sixteenths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_51 hundredths" class="gt_row gt_right">−2</td></tr>
           <tr><th id="stub_1_52" scope="row" class="gt_row gt_right gt_stub">-1.9999</th>
-      <td headers="-1 to -2 stub_1_52 low" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 med" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 high" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 halves" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 quarters" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 eighths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 sixteenths" class="gt_row gt_right">−2</td>
-      <td headers="-1 to -2 stub_1_52 hundredths" class="gt_row gt_right">−2</td></tr>
+      <td headers="a-1-to--2 stub_1_52 low" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 med" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 high" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 halves" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 quarters" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 eighths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 sixteenths" class="gt_row gt_right">−2</td>
+      <td headers="a-1-to--2 stub_1_52 hundredths" class="gt_row gt_right">−2</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="Exact Numbers">Exact Numbers</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="Exact-Numbers">Exact Numbers</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_53" scope="row" class="gt_row gt_right gt_stub">-1.0000</th>
-      <td headers="Exact Numbers stub_1_53 low" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 med" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 high" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 halves" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 quarters" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 eighths" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 sixteenths" class="gt_row gt_right">−1</td>
-      <td headers="Exact Numbers stub_1_53 hundredths" class="gt_row gt_right">−1</td></tr>
+      <td headers="Exact-Numbers stub_1_53 low" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 med" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 high" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 halves" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 quarters" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 eighths" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 sixteenths" class="gt_row gt_right">−1</td>
+      <td headers="Exact-Numbers stub_1_53 hundredths" class="gt_row gt_right">−1</td></tr>
           <tr><th id="stub_1_54" scope="row" class="gt_row gt_right gt_stub">0.0000</th>
-      <td headers="Exact Numbers stub_1_54 low" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 med" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 high" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 halves" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 quarters" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 eighths" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 sixteenths" class="gt_row gt_right">0</td>
-      <td headers="Exact Numbers stub_1_54 hundredths" class="gt_row gt_right">0</td></tr>
+      <td headers="Exact-Numbers stub_1_54 low" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 med" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 high" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 halves" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 quarters" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 eighths" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 sixteenths" class="gt_row gt_right">0</td>
+      <td headers="Exact-Numbers stub_1_54 hundredths" class="gt_row gt_right">0</td></tr>
           <tr><th id="stub_1_55" scope="row" class="gt_row gt_right gt_stub">1.0000</th>
-      <td headers="Exact Numbers stub_1_55 low" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 med" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 high" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 halves" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 quarters" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 eighths" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 sixteenths" class="gt_row gt_right">1</td>
-      <td headers="Exact Numbers stub_1_55 hundredths" class="gt_row gt_right">1</td></tr>
+      <td headers="Exact-Numbers stub_1_55 low" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 med" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 high" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 halves" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 quarters" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 eighths" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 sixteenths" class="gt_row gt_right">1</td>
+      <td headers="Exact-Numbers stub_1_55 hundredths" class="gt_row gt_right">1</td></tr>
           <tr class="gt_group_heading_row">
-            <th colspan="9" class="gt_group_heading" scope="colgroup" id="Not Numbers">Not Numbers</th>
+            <th colspan="9" class="gt_group_heading" scope="colgroup" id="Not-Numbers">Not Numbers</th>
           </tr>
           <tr class="gt_row_group_first"><th id="stub_1_56" scope="row" class="gt_row gt_right gt_stub">NA</th>
-      <td headers="Not Numbers stub_1_56 low" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 med" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 high" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 halves" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 quarters" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 eighths" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 sixteenths" class="gt_row gt_right">NA</td>
-      <td headers="Not Numbers stub_1_56 hundredths" class="gt_row gt_right">NA</td></tr>
+      <td headers="Not-Numbers stub_1_56 low" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 med" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 high" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 halves" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 quarters" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 eighths" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 sixteenths" class="gt_row gt_right">NA</td>
+      <td headers="Not-Numbers stub_1_56 hundredths" class="gt_row gt_right">NA</td></tr>
           <tr><th id="stub_1_57" scope="row" class="gt_row gt_right gt_stub">NaN</th>
-      <td headers="Not Numbers stub_1_57 low" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 med" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 high" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 halves" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 quarters" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 eighths" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 sixteenths" class="gt_row gt_right">NaN</td>
-      <td headers="Not Numbers stub_1_57 hundredths" class="gt_row gt_right">NaN</td></tr>
+      <td headers="Not-Numbers stub_1_57 low" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 med" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 high" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 halves" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 quarters" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 eighths" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 sixteenths" class="gt_row gt_right">NaN</td>
+      <td headers="Not-Numbers stub_1_57 hundredths" class="gt_row gt_right">NaN</td></tr>
           <tr><th id="stub_1_58" scope="row" class="gt_row gt_right gt_stub">Inf</th>
-      <td headers="Not Numbers stub_1_58 low" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 med" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 high" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 halves" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 quarters" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 eighths" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 sixteenths" class="gt_row gt_right">Inf</td>
-      <td headers="Not Numbers stub_1_58 hundredths" class="gt_row gt_right">Inf</td></tr>
+      <td headers="Not-Numbers stub_1_58 low" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 med" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 high" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 halves" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 quarters" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 eighths" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 sixteenths" class="gt_row gt_right">Inf</td>
+      <td headers="Not-Numbers stub_1_58 hundredths" class="gt_row gt_right">Inf</td></tr>
           <tr><th id="stub_1_59" scope="row" class="gt_row gt_right gt_stub">-Inf</th>
-      <td headers="Not Numbers stub_1_59 low" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 med" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 high" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 halves" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 quarters" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 eighths" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 sixteenths" class="gt_row gt_right">-Inf</td>
-      <td headers="Not Numbers stub_1_59 hundredths" class="gt_row gt_right">-Inf</td></tr>
+      <td headers="Not-Numbers stub_1_59 low" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 med" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 high" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 halves" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 quarters" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 eighths" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 sixteenths" class="gt_row gt_right">-Inf</td>
+      <td headers="Not-Numbers stub_1_59 hundredths" class="gt_row gt_right">-Inf</td></tr>
         </tbody>
         
         

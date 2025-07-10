@@ -530,6 +530,9 @@ create_columns_component_h <- function(data) {
   stubh <- dt_stubhead_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
   body <- dt_body_get(data = data)
+  
+  # Get the table ID if available
+  tbl_id <- dt_options_get_value(data = data, option = "table_id")
 
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
@@ -587,7 +590,7 @@ create_columns_component_h <- function(data) {
     headings_vars <- prepend_vec(headings_vars, "::stub")
   }
 
-  headings_ids <- valid_html_id(headings_vars)
+  headings_ids <- valid_html_id(headings_vars, tbl_id)
 
   stubhead_label_alignment <- "left"
 
@@ -807,7 +810,7 @@ create_columns_component_h <- function(data) {
               colspan = colspans[i],
               style = spanner_style,
               scope = ifelse(colspans[i] > 1, "colgroup", "col"),
-              id = spanner_ids[level_1_index, ][i],
+              id = valid_html_id(spanner_ids[level_1_index, ][i], tbl_id), # Use valid_html_id with tbl_id
               htmltools::tags$div(
                 class = "gt_column_spanner",
                 htmltools::HTML(spanners[level_1_index, ][i])
@@ -827,7 +830,7 @@ create_columns_component_h <- function(data) {
       )
     remaining_headings_labels <-
       unlist(remaining_headings_labels)
-    remaining_headings_ids <- valid_html_id(remaining_headings_vars)
+    remaining_headings_ids <- valid_html_id(remaining_headings_vars, tbl_id)
 
     col_alignment <- col_alignment[-1][!(headings_vars %in% solo_headings)]
 
@@ -953,7 +956,7 @@ create_columns_component_h <- function(data) {
               colspan = colspans[j],
               style = spanner_style,
               scope = ifelse(colspans[j] > 1, "colgroup", "col"),
-              id = spanner_ids_row[j],
+              id = valid_html_id(spanner_ids_row[j], tbl_id), # Use valid_html_id with tbl_id
               if (spanner_ids_row[j] != "") {
                 htmltools::tags$div(
                   class = "gt_column_spanner",
@@ -1007,6 +1010,9 @@ create_body_component_h <- function(data) {
   list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
+  
+  # Get the table ID if available
+  tbl_id <- dt_options_get_value(data = data, option = "table_id")
 
   # Get effective number of columns
   n_cols_total <- get_effective_number_of_columns(data = data)
@@ -1122,7 +1128,7 @@ create_body_component_h <- function(data) {
           class = group_class,
           style = row_style_group_heading_row,
           scope = if (n_cols_total > 1) "colgroup" else "col",
-          id = group_label,
+          id = valid_html_id(group_label, tbl_id),  # Use valid_html_id with tbl_id
           htmltools::HTML(group_label)
         )
       )
@@ -1176,13 +1182,14 @@ create_body_component_h <- function(data) {
 
         row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
 
+        # Update TD element to use valid_html_id for both headers and id attributes
         group_col_td <-
           htmltools::tags$td(
-            headers = group_id,
+            headers = valid_html_id(group_id, tbl_id),
             rowspan = rowspan_val,
             class = "gt_row gt_left gt_stub_row_group",
             style = row_style_group_heading_row,
-            id = group_id,
+            id = valid_html_id(group_id, tbl_id),
             htmltools::HTML(group_label)
           )
 
@@ -1286,7 +1293,7 @@ create_body_component_h <- function(data) {
     if (!is.null(indentation_stub) && indentation_stub != 0) {
 
       extra_classes[[row_label_col]] <-
-        paste(
+        c(
           extra_classes[[row_label_col]],
           paste0("gt_indent_", indentation_stub)
         )
@@ -1378,7 +1385,7 @@ create_body_component_h <- function(data) {
     # Situation where we have two columns in the stub and the row label
     # isn't the first (the `row_df` vector will have one less element)
     if (length(col_names_id) > length(row_df)) {
-      col_id_i <- col_names_id[-(length(col_names_id) - length(row_df))]
+      col_id_i <- col_names_id[-(length(col_names_id) - length(row_df) + 1)]
     } else {
       col_id_i <- col_names_id
     }
@@ -1388,9 +1395,18 @@ create_body_component_h <- function(data) {
     if (stub_width == 0) {
       row_id_i <- character(length(col_id_i))
     } else if (stub_width == 1) {
-      row_id_i <- rep(paste0(col_id_i[1], "_", i), length(col_id_i))
+      # Add table ID prefix to row ID base, but keep the same logic
+      row_id_i <- rep(valid_html_id(paste0(col_id_i[1], "_", i), tbl_id), length(col_id_i))
     } else if (stub_width == 2) {
-      row_id_i <- rep(paste0(col_id_i[2], "_", i), length(col_id_i))
+      # For 2-column stubs, we need to handle both first and non-first rows in a group
+      if (has_two_col_stub && !group_start) {
+        # For non-first rows, use the first column ID after the group column was removed
+        # This is what was originally the second column (stub column)
+        row_id_i <- rep(valid_html_id(paste0(col_id_i[1], "_", i), tbl_id), length(col_id_i))
+      } else {
+        # First row or other cases - use the second column ID
+        row_id_i <- rep(valid_html_id(paste0(col_id_i[2], "_", i), tbl_id), length(col_id_i))
+      }
     }
 
     # In the situation where there is:
@@ -1439,6 +1455,8 @@ create_body_component_h <- function(data) {
     # needs to be repeated to match the size of the other fields
     group_ids <- vctrs::vec_rep_each(group_ids, times = ns)
     body_rows_data_flat$current_group_id <- group_ids
+    # Pass the table_id to render_row_data
+    body_rows_data_flat$tbl_id <- tbl_id
     ## here we have to make sur the lengths can be recycled to each others.
     # vctrs::vec_recycle_common()
     body_rows_uncollapsed <- vctrs::vec_chop(
@@ -1521,7 +1539,8 @@ render_row_data <- function(
     row_span_vals,
     alignment_classes,
     extra_classes,
-    row_styles
+    row_styles,
+    tbl_id = NULL  # Add parameter for table_id
 ) {
   n <- length(row_df)
 
@@ -1539,17 +1558,67 @@ render_row_data <- function(
   scope <- rep.int("row", n)
   scope[!is.na(row_span_vals) & row_span_vals > 1] <- "rowgroup"
 
-  has_group <- !is.na(current_group_id)
-  header <- paste0(
-    ifelse(has_group, current_group_id, ""), ifelse(has_group, " ", ""),
-    row_id_i, ifelse(has_group | nzchar(row_id_i), " ", ""),
-    col_id_i
-  )
+  # Create headers for each cell individually
+  headers <- character(n)
+  
+  # Determine row boundaries in flattened data by tracking the pattern of stubs
+  row_starts <- which(has_stub_class)
+  
+  if (length(row_starts) > 0) {
+    # For each cell, find which row it belongs to
+    for (i in seq_len(n)) {
+      # Find which row this cell belongs to
+      row_idx <- findInterval(i, row_starts)
+      if (row_idx > 0 && row_idx <= length(row_starts)) {
+        # Get the stub position for this cell's row
+        stub_pos <- row_starts[row_idx]
+        
+        # Start with an empty vector of header components
+        cell_headers <- character(0)
+        
+        # Add the group ID if available - use the group ID specific to this cell's position
+        cell_group_id <- current_group_id[i]
+        if (!is.na(cell_group_id)) {
+          cell_headers <- c(cell_headers, valid_html_id(cell_group_id, tbl_id))
+        }
+        
+        # If this is not a stub cell itself, add a reference to this row's stub
+        if (!has_stub_class[i] && has_stub_class[stub_pos] && nzchar(row_id_i[stub_pos])) {
+          cell_headers <- c(cell_headers, row_id_i[stub_pos])
+        }
+        
+        # Add this cell's column ID 
+        col_id_prefixed <- valid_html_id(col_id_i[i], tbl_id)
+        cell_headers <- c(cell_headers, col_id_prefixed)
+        
+        # Set headers for this cell
+        headers[i] <- paste(cell_headers, collapse = " ")
+      }
+    }
+  } else {
+    # No stub cells, just reference column headers
+    for (i in seq_len(n)) {
+      cell_headers <- character(0)
+      
+      # Add group ID if available - use the group ID specific to this cell's position
+      cell_group_id <- current_group_id[i]
+      if (!is.na(cell_group_id)) {
+        cell_headers <- c(cell_headers, valid_html_id(cell_group_id, tbl_id))
+      }
+      
+      # Add column ID
+      col_id_prefixed <- valid_html_id(col_id_i[i], tbl_id)
+      cell_headers <- c(cell_headers, col_id_prefixed)
+      
+      headers[i] <- paste(cell_headers, collapse = " ")
+    }
+  }
 
+  # For stub cells, use the already-prefixed row_id_i directly
   base_attributes <- ifelse(
     has_stub_class,
     paste0("id=\"", row_id_i, "\" ", "scope=\"", scope, "\" "),
-    paste0("headers=\"", header, "\" ")
+    paste0("headers=\"", headers, "\" ")
   )
 
   row_span_attributes <- character(n)
@@ -1829,6 +1898,9 @@ summary_rows_for_group_h <- function(
 
   list_of_summaries <- dt_summary_df_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
+  
+  # Get the table ID if available
+  tbl_id <- dt_options_get_value(data = data, option = "table_id")
 
   # Obtain all of the visible (`"default"`), non-stub column names
   # for the table from the `boxh` object
@@ -1976,31 +2048,37 @@ summary_rows_for_group_h <- function(
                 sprintf(
                   "<%s %sclass=\"%s\"%s>%s</%s>",
                   if ("gt_stub" %in% extra_class) {
-                    # 1. opening tag
+                    # 1. opening tag - construct complete ID before prefixing
                     paste0(
                       "th ",
                       "id=\"",
                       if (summary_row_type == "grand") {
-                        paste0("grand_summary_stub_", j, "\" ")
+                        valid_html_id(paste0("grand_summary_stub_", j), tbl_id)
                       } else {
-                        paste0("summary_stub_", group_id, "_", j, "\" ")
+                        valid_html_id(paste0("summary_stub_", group_id, "_", j), tbl_id)
                       },
+                      "\" ",
                       "scope=\"row\""
                     )
                   } else {
-                    # headers = "group_row_id row_header_id col_header_id"
+                    # headers attribute - construct complete IDs before prefixing
                     paste0(
                       "td ",
                       "headers=\"",
                       if (summary_row_type == "grand") {
+                        # Construct complete ID before prefixing
                         paste0(
-                          "grand_summary_stub_",
-                          j, " ", col_name, "\""
+                          valid_html_id(paste0("grand_summary_stub_", j), tbl_id),
+                          " ", 
+                          valid_html_id(col_name, tbl_id), "\""
                         )
                       } else {
+                        # Construct complete IDs before prefixing
                         paste0(
-                          group_id, " summary_stub_",
-                          group_id, "_", j, " ", col_name, "\""
+                          valid_html_id(group_id, tbl_id), " ", 
+                          valid_html_id(paste0("summary_stub_", group_id, "_", j), tbl_id),
+                          " ", 
+                          valid_html_id(col_name, tbl_id), "\""
                         )
                       }
                     )
@@ -2115,9 +2193,27 @@ as_css_font_family_attr <- function(font_vec, value_only = FALSE) {
   paste_between(value, x_2 = c("font-family: ", ";"))
 }
 
-valid_html_id <- function(x) {
-  # Make sure it starts with a letter.
-  valid_ids <- grepl("^[A-z]", x)
-  x[!valid_ids] <- paste0("a", x[!valid_ids])
-  gsub("\\s+", "-", x)
+valid_html_id <- function(x, tbl_id = NULL) {
+  # Identify empty strings after trimming whitespace
+  is_empty <- trimws(x) == ""
+  
+  # Process non-empty strings
+  if (any(!is_empty)) {
+    # Make sure non-empty strings start with a letter
+    valid_ids <- grepl("^[A-z]", x[!is_empty])
+    x[!is_empty][!valid_ids] <- paste0("a", x[!is_empty][!valid_ids])
+    
+    # Replace whitespace with hyphens
+    x[!is_empty] <- gsub("\\s+", "-", x[!is_empty])
+    
+    # If a table ID is provided, prepend it to each non-empty element ID
+    if (!is.null(tbl_id) && length(tbl_id) > 0 && !is.na(tbl_id) && nchar(tbl_id) > 0) {
+      x[!is_empty] <- paste(tbl_id, x[!is_empty], sep = "-")
+    }
+  }
+  
+  # Ensure empty strings are empty
+  x[is_empty] <- ""
+  
+  return(x)
 }

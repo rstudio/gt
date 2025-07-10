@@ -841,7 +841,7 @@ test_that("Summary rows can be created when there is no stub", {
 
   # Expect that the grand summary row labels are
   # available in the rendered output table
-  raw_gt <- as_raw_html(gt_tbl, inline_css = FALSE)
+  raw_gt <- as_raw_html(gt_tbl, inline_css = FALSE) %>% remove_id_prefixes()
   expect_match(raw_gt, "<th id=\"grand_summary_stub_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row\">average</th>")
   expect_match(raw_gt, "<th id=\"grand_summary_stub_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row\">total</th>")
   expect_match(raw_gt, "<th id=\"grand_summary_stub_3\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_last_summary_row\">std dev</th>")
@@ -945,7 +945,8 @@ test_that("Summary row labels are added in narrow and wide tables", {
   # both tables have `"the_sum"` and `"mean"`
   expect_match(
     narrow_gt_tbl %>%
-      as_raw_html(inline_css = FALSE),
+      as_raw_html(inline_css = FALSE) %>%
+      remove_id_prefixes(),
     paste0(
       "<th id=\"summary_stub_one_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">the_sum</th>.*?",
       "<th id=\"summary_stub_one_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_last_summary_row\">mean</th>.*?",
@@ -956,7 +957,8 @@ test_that("Summary row labels are added in narrow and wide tables", {
 
   expect_match(
     wide_gt_tbl %>%
-      as_raw_html(inline_css = FALSE),
+      as_raw_html(inline_css = FALSE) %>%
+      remove_id_prefixes(),
     paste0(
       "<th id=\"summary_stub_one_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">the_sum</th>.*?",
       "<th id=\"summary_stub_one_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_last_summary_row\">mean</th>.*?",
