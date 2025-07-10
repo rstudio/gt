@@ -279,3 +279,41 @@ test_that("check cols_move is applied gt_group", {
   expect_identical(move_gt_group, gt_group(move_gt_tbl, move_gt_tbl))
 
 })
+
+test_that("check cols_move_to_start is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply move to table and group
+  move_gt_tbl <- gt_tbl %>%
+    cols_move_to_start(columns = gear)
+
+  move_gt_group <- gt_group %>%
+    cols_move_to_start(columns = gear)
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(move_gt_group, gt_group(move_gt_tbl, move_gt_tbl))
+
+})
+
+test_that("check cols_move_to_end is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply move to table and group
+  move_gt_tbl <- gt_tbl %>%
+    cols_move_to_end(columns = gear)
+
+  move_gt_group <- gt_group %>%
+    cols_move_to_end(columns = gear)
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(move_gt_group, gt_group(move_gt_tbl, move_gt_tbl))
+
+})
