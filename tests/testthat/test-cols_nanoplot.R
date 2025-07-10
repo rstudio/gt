@@ -9,7 +9,7 @@ test_that("cols_nanoplot() works without error ", {
   expect_no_condition(
     cols_nanoplot(tbl_gt, columns = open:close, autohide = TRUE)
   )
-  
+
   expect_no_warning({
     pizzaplace %>%
     dplyr::count(date, type, name = "sold") %>%
@@ -32,4 +32,36 @@ test_that("cols_nanoplot() works without error ", {
       # make sure the formatter works
       fmt_number()
   })
+})
+
+test_that("check cols_nanoplot is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply nanoplot to table and group
+  nano_gt_tbl <- gt_tbl %>%
+    cols_nanoplot(
+      columns = mpg,
+      plot_type = "bar",
+      autohide = FALSE
+    )
+
+  nano_gt_group <- gt_group %>%
+    cols_nanoplot(
+      columns = mpg,
+      plot_type = "bar",
+      autohide = FALSE
+    )
+  # Expect identical doesn't like the tidyselect, comparing nanoplots directly
+  group_plot1 <- nano_gt_group$gt_tbls$gt_tbl[[1]]$`_data`$nanoplots
+  group_plot2 <- nano_gt_group$gt_tbls$gt_tbl[[2]]$`_data`$nanoplots
+  tbl_plot <- nano_gt_tbl$`_data`$nanoplots
+
+  expect_identical(group_plot1, tbl_plot)
+  expect_identical(group_plot2, tbl_plot)
+
+
 })
