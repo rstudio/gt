@@ -887,6 +887,7 @@ context_lte_mark <- function(context) {
   switch(
     context,
     grid = ,
+    word = ,
     html = "\U02264",
     latex = "$\\leq$",
     "<="
@@ -902,6 +903,7 @@ context_gte_mark <- function(context) {
   switch(
     context,
     grid = ,
+    word = ,
     html = "\U02265",
     latex = "$\\geq$",
     ">="
