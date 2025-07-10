@@ -237,7 +237,7 @@ coalesce_marks <- function(
     delimiter = ","
 ) {
   fs_ids <- vctrs::vec_slice(fn_tbl$fs_id, fn_tbl$locname == locname)
-  paste(fs_ids, collapse = delimiter)
+  paste(sort(fs_ids), collapse = delimiter)
 }
 
 # Get the attributes for the table tag

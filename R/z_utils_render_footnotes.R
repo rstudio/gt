@@ -414,7 +414,7 @@ set_footnote_marks_columns <- function(data, context = "html") {
       footnotes_columns_group_marks <-
         dplyr::mutate(
           footnotes_columns_groups_tbl,
-          fs_id_coalesced = paste(fs_id, collapse = ","),
+          fs_id_coalesced = paste(sort(fs_id), collapse = ","),
           .by = "grpname"
         )
       footnotes_columns_group_marks <-
@@ -480,7 +480,7 @@ set_footnote_marks_columns <- function(data, context = "html") {
       footnotes_columns_column_marks <-
         dplyr::mutate(
           footnotes_columns_column_marks,
-          fs_id_coalesced = paste(fs_id, collapse = ","),
+          fs_id_coalesced = paste(sort(fs_id), collapse = ","),
           .by = "colname"
         )
       footnotes_columns_column_marks <-
@@ -536,7 +536,7 @@ set_footnote_marks_stubhead <- function(data, context = "html") {
       footnotes_stubhead_marks <-
         dplyr::mutate(
           footnotes_tbl,
-          fs_id_coalesced = paste(fs_id, collapse = ","),
+          fs_id_coalesced = paste(sort(fs_id), collapse = ","),
           .by = "grpname"
         )
       footnotes_stubhead_marks <-
@@ -592,7 +592,7 @@ apply_footnotes_to_output <- function(data, context = "html") {
     footnotes_data_marks <-
       dplyr::mutate(
         footnotes_tbl_data,
-        fs_id_coalesced = paste(fs_id, collapse = ","),
+        fs_id_coalesced = paste(sort(fs_id), collapse = ","),
         .by = c("rownum", "colnum")
       )
     footnotes_data_marks <-
@@ -714,7 +714,7 @@ set_footnote_marks_row_groups <- function(data, context = "html") {
     footnotes_row_groups_marks <-
       dplyr::mutate(
         footnotes_row_groups_tbl,
-        fs_id_coalesced = paste(fs_id, collapse = ","),
+        fs_id_coalesced = paste(sort(fs_id), collapse = ","),
         .by = "grpname"
       )
     # will only remain
@@ -768,7 +768,7 @@ apply_footnotes_to_summary <- function(data, context = "html") {
     footnotes_data_marks <-
       dplyr::mutate(
         footnotes_tbl_data,
-        fs_id_coalesced = paste(fs_id, collapse = ","),
+        fs_id_coalesced = paste(sort(fs_id), collapse = ","),
         .by = c("grpname", "row", "colnum"),
       )
 
@@ -803,7 +803,7 @@ apply_footnotes_to_summary <- function(data, context = "html") {
     footnotes_data_marks <-
       dplyr::mutate(
         footnotes_tbl_data,
-        fs_id_coalesced = paste(fs_id, collapse = ","),
+        fs_id_coalesced = paste(sort(fs_id), collapse = ","),
         .by = c("rownum", "colnum")
       )
 
