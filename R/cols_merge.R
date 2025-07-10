@@ -297,7 +297,7 @@ cols_merge <- function(
 #' uncertainties, and any columns specified in `col_uncert` are hidden from
 #' appearing the output table.
 #'
-#' @inheritParams cols_hide
+#' @inheritParams cols_align
 #'
 #' @param col_val *Column to target for base values*
 #'
@@ -426,7 +426,13 @@ cols_merge_uncert <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
+
+  # Handle gt_group
+  if(inherits(data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(data, arg_list))
+  }
 
   resolved <-
     cols_merge_resolver(
@@ -484,7 +490,7 @@ cols_merge_uncert <- function(
 #' containing both values separated by an em dash. The column specified in
 #' `col_end` is dropped from the output table.
 #'
-#' @inheritParams cols_hide
+#' @inheritParams cols_align
 #'
 #' @param col_begin *Column to target for beginning of range*
 #'
@@ -620,7 +626,13 @@ cols_merge_range <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
+
+  # Handle gt_group
+  if(inherits(data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(data, arg_list))
+  }
 
   resolved <-
     cols_merge_resolver(
@@ -697,7 +709,7 @@ cols_merge_range <- function(
 #' percentages (e.g., `12 (23.2%)`). The column specified in `col_pct` is
 #' dropped from the output table.
 #'
-#' @inheritParams cols_hide
+#' @inheritParams cols_align
 #'
 #' @param col_n *Column to target for counts*
 #'
@@ -830,7 +842,13 @@ cols_merge_n_pct <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
+
+  # Handle gt_group
+  if(inherits(data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(data, arg_list))
+  }
 
   resolved <-
     cols_merge_resolver(
