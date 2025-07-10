@@ -55,6 +55,10 @@ test_that("check cols_nanoplot is applied gt_group", {
       plot_type = "bar",
       autohide = FALSE
     )
+
+  # Expect identical if function applied before or after group is constructed
+  # expect_identical(nano_gt_group, gt_group(nano_gt_tbl, nano_gt_tbl))
+
   # Expect identical doesn't like the tidyselect, comparing nanoplots directly
   group_plot1 <- nano_gt_group$gt_tbls$gt_tbl[[1]]$`_data`$nanoplots
   group_plot2 <- nano_gt_group$gt_tbls$gt_tbl[[2]]$`_data`$nanoplots
