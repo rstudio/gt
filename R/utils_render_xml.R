@@ -2268,8 +2268,9 @@ create_footnotes_component_xml <- function(
     lapply(
       seq_along(footnote_ids),
       function(x) {
-
-        footnote_text_xml <- parse_to_xml(footnote_text[[x]])
+        # in the build stage, we don't process markdown for footnote text
+        # So, we process it now https://github.com/rstudio/gt/issues/1892
+        footnote_text_xml <- parse_to_xml(process_text(footnote_text[[x]], context = "word"))
 
         # Get the footnote marks for the subtitle. Don't write
         # marks when footnote value is NA or ""
