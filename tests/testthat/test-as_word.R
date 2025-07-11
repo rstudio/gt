@@ -2587,3 +2587,14 @@ test_that("table with image refs work - local only - setting image widths and he
     )
 
 })
+
+test_that("sub_small_vals() and sub_large_vals() are properly encoded", {
+  data <- dplyr::tibble(x = c(0.001, 0.01, 150),
+                 y = c("<", "%", ">"))
+
+  tbl <- data %>%
+    gt() %>%
+    sub_small_vals() %>%
+    sub_large_vals(threshold = 100)
+  expect_snapshot_word(tbl)
+})
