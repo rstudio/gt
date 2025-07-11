@@ -63,4 +63,5 @@ test_that("Quarto produces the valid output", {
     tab_spanner(md("problem"), c(2, 3))
 
   expect_snapshot_html(tab)
+  expect_snapshot_latex(tab)
 })

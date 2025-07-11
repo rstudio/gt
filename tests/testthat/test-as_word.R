@@ -2246,7 +2246,7 @@ There's a quick reference [here](https://commonmark.org/help/).
 
 })
 
-test_that("markdown with urls work",{
+test_that("markdown with urls work", {
 
   skip_on_ci()
   check_suggests()
