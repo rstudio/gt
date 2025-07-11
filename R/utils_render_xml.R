@@ -2273,7 +2273,7 @@ create_footnotes_component_xml <- function(
 
         # Get the footnote marks for the subtitle. Don't write
         # marks when footnote value is NA or ""
-        if (!is.na(footnote_ids[x]) & !identical(footnote_ids[x], "")) {
+        if (!is.na(footnote_ids[x]) && !identical(footnote_ids[x], "")) {
 
           footnote_id_xml <- footnote_mark_to_xml(
             data = data,

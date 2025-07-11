@@ -2243,13 +2243,6 @@ resolve_border_side <- function(side) {
   )
 }
 
-#' Expand a path using fs::path_expand
-#'
-#' @noRd
-path_expand <- function(file) {
-  fs::path_expand(file)
-}
-
 # TODO: the `get_file_ext()` function overlaps greatly with `gtsave_file_ext()`;
 #       both are not vectorized
 
