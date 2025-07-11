@@ -638,7 +638,7 @@ set_footnote.cells_stub <- function(
   rows <- resolved$rows
 
   # Get all stub variables for fallback
-  stub_vars <- dt_boxhead_get_var_stub(data = data)
+  stub_vars <- dt_boxhead_get_var_by_type(data = data, type = "stub")
 
   # Validate that specified columns are actually stub columns
   if (!is.null(loc$columns)) {

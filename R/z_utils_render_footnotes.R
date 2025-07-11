@@ -98,8 +98,11 @@ resolve_footnotes_styles <- function(data, tbl_type) {
       )
   }
 
-  # Filter `tbl` by the remaining columns in `body`
-  tbl <- tbl[is.na(tbl$colname) | tbl$colname %in%  dt_boxhead_get_vars_default(data = data), , drop = FALSE]
+  # Filter `tbl` by the remaining columns in `body` AND stub columns
+  # Include stub columns so that stub footnotes are not filtered out
+  default_vars <- dt_boxhead_get_vars_default(data = data)
+  stub_vars <- dt_boxhead_get_var_by_type(data = data, type = "stub")
+  tbl <- tbl[is.na(tbl$colname) | tbl$colname %in% c(default_vars, stub_vars), , drop = FALSE]
 
   # Return `data` unchanged if there are no rows in `tbl`
   if (nrow(tbl) == 0L) {
@@ -113,7 +116,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     tbl_not_data <- tbl[!data_cond, ]
 
     tbl_data <- tbl[data_cond, ]
-
+    
     if (nrow(tbl_data) > 0L) {
 
       # Re-map the `rownum` to the new row numbers for the
@@ -125,11 +128,43 @@ resolve_footnotes_styles <- function(data, tbl_type) {
       # Add a `colnum` column that's required for
       # arranging `tbl` in such a way that the order
       # of records moves from top-to-bottom, left-to-right
-      tbl_data$colnum <- ifelse(
-        tbl_data$locname == "stub",
-        0L,  # Traditional stub behavior - all stub footnotes use colnum 0
-        colname_to_colnum(data = data, colname = tbl_data$colname)
-      )
+      
+      # For stub footnotes, we need to set colnum based on the position
+      # of each stub column (leftmost = most negative)
+      tbl_data$colnum <- rep(NA_integer_, nrow(tbl_data))
+      
+      # Handle stub footnotes
+      stub_mask <- tbl_data$locname == "stub"
+      
+      if (any(stub_mask)) {
+        # Get stub columns in order
+        stub_cols <- dt_boxhead_get_var_by_type(data = data, type = "stub")
+        
+        for (i in which(stub_mask)) {
+          colname <- tbl_data$colname[i]
+          
+          if (is.na(colname)) {
+            # Traditional stub footnotes without specific column
+            tbl_data$colnum[i] <- 0L
+          } else {
+            # Find position of this column in stub columns
+            stub_pos <- match(colname, stub_cols)
+            
+            if (is.na(stub_pos)) {
+              tbl_data$colnum[i] <- 0L  # fallback
+            } else {
+              # Make leftmost column most negative
+              tbl_data$colnum[i] <- -(length(stub_cols) - stub_pos + 1)
+            }
+          }
+        }
+      }
+      
+      # Handle data footnotes
+      data_mask <- tbl_data$locname == "data"
+      if (any(data_mask)) {
+        tbl_data$colnum[data_mask] <- colname_to_colnum(data = data, colname = tbl_data$colname[data_mask])
+      }
     }
 
     # Re-combine `tbl_data` with `tbl`
@@ -327,30 +362,8 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     }
   }
 
-  # Sort the table rows
-  # For footnotes, we need special handling of stub columns to ensure left-to-right ordering
-  if (tbl_type == "footnotes") {
-    # Add a sort column for stub footnotes based on their position
-    tbl$sort_colnum <- tbl$colnum
-    
-    # For stub footnotes, replace colnum with stub position for proper sorting
-    stub_mask <- tbl$locname == "stub" & !is.na(tbl$colname)
-    if (any(stub_mask)) {
-      # Get stub variables and create position mapping
-      stub_vars <- dt_boxhead_get_var_stub(data = data)
-      stub_positions <- match(tbl$colname[stub_mask], stub_vars)
-      
-      # Use negative values to ensure stub columns sort before data columns
-      # Position 1 (leftmost) gets the most negative value for earliest sorting
-      tbl$sort_colnum[stub_mask] <- -length(stub_vars) - 1 + stub_positions
-    }
-    
-    order_of_tbl <- order(tbl$locnum, tbl$rownum, tbl$sort_colnum)
-    tbl <- tbl[order_of_tbl, , drop = FALSE]
-    
-    # Remove the temporary sort column
-    tbl$sort_colnum <- NULL
-  } else {
+  # For styles, sort the table rows by the standard order
+  if (tbl_type == "styles") {
     order_of_tbl <- order(tbl$locnum, tbl$rownum, tbl$colnum)
     tbl <- tbl[order_of_tbl, , drop = FALSE]
   }
@@ -359,20 +372,32 @@ resolve_footnotes_styles <- function(data, tbl_type) {
   # column with footnote marks
   if (tbl_type == "footnotes") {
 
-    # Generate a lookup table with ID'd footnote
-    # text elements (that are distinct) but preserve the sorted order
-    footnotes_ordered <- tbl[tbl$locname != "none", "footnotes", drop = FALSE]
-    
-    # Create a lookup table that preserves the order from the sorted table
-    # Use the order of first appearance in the sorted table
-    lookup_tbl <- footnotes_ordered[!duplicated(footnotes_ordered$footnotes), , drop = FALSE]
-    
-    # Assign fs_id based on the order in the sorted table (1, 2, 3, ...)
-    lookup_tbl$fs_id <- as.character(seq_len(nrow(lookup_tbl)))
+    # Sort all footnotes by visual position: locnum, rownum, colnum
+    # This ensures left-to-right, top-to-bottom ordering of footnote marks
+    # since we've already set proper colnum values for stub footnotes
+    if (nrow(tbl) > 0L) {
+      order_of_tbl <- order(tbl$locnum, tbl$rownum, tbl$colnum, na.last = TRUE)
+      tbl <- tbl[order_of_tbl, , drop = FALSE]
+    }
 
-    # Join the lookup table to `tbl`
-    tbl <- dplyr::left_join(tbl, lookup_tbl, by = "footnotes")
-    tbl$fs_id <- ifelse(tbl$locname == "none", NA_character_, tbl$fs_id)
+    # Generate footnote marks based on the sorted table order
+    tbl_footnotes <- tbl[tbl$locname != "none", , drop = FALSE]
+    
+    if (nrow(tbl_footnotes) > 0) {
+      # Assign fs_id sequentially based on the sorted order (1, 2, 3, ...)
+      tbl_footnotes$fs_id <- as.character(seq_len(nrow(tbl_footnotes)))
+      
+      # Handle footnotes with no location
+      tbl_none <- tbl[tbl$locname == "none", , drop = FALSE]
+      if (nrow(tbl_none) > 0) {
+        tbl_none$fs_id <- NA_character_
+      }
+      
+      # Combine the tables back together
+      tbl <- rbind(tbl_footnotes, tbl_none)
+    } else {
+      tbl$fs_id <- NA_character_
+    }
 
     if (nrow(tbl) > 0L) {
 
@@ -618,7 +643,7 @@ apply_footnotes_to_output <- function(data, context = "html") {
     footnotes_data_marks <-
       dplyr::mutate(
         footnotes_tbl_data,
-        fs_id_coalesced = paste(sort(fs_id), collapse = ","),
+        fs_id_coalesced = paste(fs_id, collapse = ","),
         .by = if (any(footnotes_tbl_data$locname == "stub")) {
           # For stub footnotes, group by rownum, colnum, and colname to ensure
           # footnotes are targeted correctly to specific stub columns
@@ -629,7 +654,7 @@ apply_footnotes_to_output <- function(data, context = "html") {
         }
       )
     footnotes_data_marks <-
-      dplyr::distinct(footnotes_data_marks, colname, rownum, locname, placement, fs_id_coalesced)
+      dplyr::distinct(footnotes_data_marks, colname, rownum, locname, placement, fs_id_coalesced, .keep_all = TRUE)
 
     # Get the correct footnote rendering functions
     withCallingHandlers(
