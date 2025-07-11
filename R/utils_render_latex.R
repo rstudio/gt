@@ -135,12 +135,13 @@ create_wrap_start_l <- function(data) {
   } else {
     tbl_pos <- paste0("[", tbl_pos_val, "]")
   }
-
-  ifelse(
-    dt_options_get_value(data = data, option = "latex_use_longtable"),
-    "\\begingroup\n",
+  if (check_quarto()) {
+    ""
+  } else if (dt_options_get_value(data = data, option = "latex_use_longtable")) {
+    "\\begingroup\n"
+  } else {
     paste0("\\begin{table}", tbl_pos, "\n")
-  )
+  }
 }
 
 #' @noRd
@@ -1073,9 +1074,13 @@ create_table_end_l <- function(data) {
 
 #' @noRd
 create_wrap_end_l <- function(data) {
-  ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
-         "\\endgroup\n",
-         "\\end{table}\n")
+  if (check_quarto()) {
+    ""
+  } else if (dt_options_get_value(data = data, option = "latex_use_longtable")) {
+    "\\endgroup\n"
+  } else {
+    "\\end{table}\n"
+  }
 }
 
 #' @noRd

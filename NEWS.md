@@ -16,6 +16,8 @@
 
 * Enable `cols_align()` and `cols_label()` functions for gt_group objects (@shannonhaughton, #2005)
 
+* Fixed an issue with table positioning in Quarto (@olivroy, #2003, [quarto-dev/quarto-cli#11653](https://github.com/quarto-dev/quarto-cli/issues/11653)).
+
 * `tab_footnote()` + `md()` + docx is now processed correctly (@olivroy, #1892).
 
 # gt 1.0.0
