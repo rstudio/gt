@@ -34,7 +34,7 @@
 #' left-hand side defines the target columns and the right-hand side is a single
 #' dimension.
 #'
-#' @inheritParams fmt_number
+#' @inheritParams cols_align
 #'
 #' @param ... *Column width assignments*
 #'
@@ -112,7 +112,13 @@ cols_width <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = .data)
+  stop_if_not_gt_tbl_or_group(data = .data)
+
+  # Handle gt_group
+  if(inherits(.data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(.data, arg_list))
+  }
 
   # Collect a named list of column widths
   widths_list <- .list
