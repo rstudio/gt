@@ -105,6 +105,34 @@ resolve_cells_stub <- function(data,
         call = call
       )
     
+    # Validate that all requested columns are actually stub columns
+    if (length(resolved_columns) > 0) {
+      # Check if the requested columns are stub columns
+      all_data_cols <- names(dt_data_get(data))
+      requested_cols <- intersect(resolved_columns, all_data_cols)
+      
+      if (length(requested_cols) > 0) {
+        non_stub_cols <- setdiff(requested_cols, stub_vars)
+        
+        if (length(non_stub_cols) > 0) {
+          available_stub_cols <- if (length(stub_vars) > 0) {
+            paste0("Available stub columns: ", paste(stub_vars, collapse = ", "))
+          } else {
+            "This table has no stub columns."
+          }
+          
+          cli::cli_abort(
+            c(
+              "Column{?s} {.val {non_stub_cols}} {?is/are} not stub column{?s}.",
+              "i" = "cells_stub() can only target columns that are part of the table stub.",
+              "i" = available_stub_cols,
+              "i" = "To target non-stub columns, use cells_body() instead."
+            )
+          )
+        }
+      }
+    }
+    
     # Filter to only include actual stub variables
     resolved_columns <- intersect(resolved_columns, stub_vars)
     

@@ -2377,19 +2377,18 @@ build_row_styles_with_stub_columns <- function(
         col_name <- stub_column_styles$colname[j]
         if (col_name %in% names(stub_positions)) {
           stub_pos <- stub_positions[col_name]
-          # For multi-column stubs, we need to handle positioning differently
-          # For now, we'll apply the style to the first stub position
-          # TODO: Enhance this to support proper multi-column stub positioning
-          if (stub_pos == 1) {
+          # Apply style to the correct stub position
+          # Each stub column has its own position in the row_styles array
+          if (stub_pos <= length(row_styles)) {
             # MERGE styles instead of overwriting
-            existing_style <- row_styles[1]
+            existing_style <- row_styles[stub_pos]
             new_style <- stub_column_styles$html_style[j]
             
             if (is.na(existing_style) || existing_style == "") {
-              row_styles[1] <- new_style
+              row_styles[stub_pos] <- new_style
             } else if (!is.na(new_style) && new_style != "") {
               # Merge CSS styles by combining them
-              row_styles[1] <- paste(existing_style, new_style, sep = "; ")
+              row_styles[stub_pos] <- paste(existing_style, new_style, sep = "; ")
             }
           }
         }
