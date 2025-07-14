@@ -994,3 +994,202 @@ test_that("`tab_style()` works with complex multi-column stub scenarios", {
   expect_equal(code_styles$rownum, c(2, 4))
   expect_true(all(sapply(code_styles$styles, function(x) x$cell_text$style == "italic")))
 })
+
+# Add comprehensive tests for the enhanced stub targeting system
+
+test_that("Enhanced stub targeting: content-based targeting works", {
+  
+  # Test data
+  test_data <- dplyr::tibble(
+    mfr = c("Ford", "Ford", "BMW", "BMW", "Audi"),
+    model = c("GT", "F-150", "X5", "X3", "A4"),
+    trim = c("Base", "XLT", "xDrive35i", "sDrive28i", "Premium"),
+    year = c(2017, 2018, 2019, 2020, 2021)
+  )
+  
+  # Test content-based targeting
+  styled_table <- test_data %>%
+    gt(rowname_col = c("mfr", "model", "trim")) %>%
+    tab_style(
+      style = cell_fill(color = "lightgreen"),
+      locations = cells_stub(rows = "Ford")
+    )
+  
+  # Check that styles are applied correctly
+  styles <- gt:::dt_styles_get(styled_table)
+  expect_equal(nrow(styles), 2)  # Should target 2 Ford rows
+  expect_equal(unique(styles$rownum), c(1, 2))
+  expect_equal(unique(styles$locname), "stub")
+  
+  # Test table renders without error
+  expect_no_error(as_raw_html(styled_table))
+})
+
+test_that("Enhanced stub targeting: multi-value targeting works", {
+  
+  # Test data
+  test_data <- dplyr::tibble(
+    mfr = c("Ford", "Ford", "BMW", "BMW", "Audi"),
+    model = c("GT", "F-150", "X5", "X3", "A4"),
+    trim = c("Base", "XLT", "xDrive35i", "sDrive28i", "Premium")
+  )
+  
+  # Test multi-value targeting
+  styled_table <- test_data %>%
+    gt(rowname_col = c("mfr", "model", "trim")) %>%
+    tab_style(
+      style = cell_fill(color = "lightblue"),
+      locations = cells_stub(rows = c("Ford", "BMW"))
+    )
+  
+  # Check that styles are applied correctly
+  styles <- gt:::dt_styles_get(styled_table)
+  expect_equal(nrow(styles), 4)  # Should target 4 rows (2 Ford + 2 BMW)
+  expect_equal(unique(styles$rownum), c(1, 2, 3, 4))
+  expect_equal(unique(styles$locname), "stub")
+})
+
+test_that("Enhanced stub targeting: column-specific targeting works", {
+  
+  # Test data
+  test_data <- dplyr::tibble(
+    mfr = c("Ford", "Ford", "BMW", "BMW", "Audi"),
+    model = c("GT", "F-150", "X5", "X3", "A4"),
+    trim = c("Base", "XLT", "xDrive35i", "sDrive28i", "Premium")
+  )
+  
+  # Test column-specific targeting
+  styled_table <- test_data %>%
+    gt(rowname_col = c("mfr", "model", "trim")) %>%
+    tab_style(
+      style = cell_fill(color = "lightcoral"),
+      locations = cells_stub(rows = "Ford", columns = "model")
+    )
+  
+  # Check that styles are applied correctly
+  styles <- gt:::dt_styles_get(styled_table)
+  expect_equal(nrow(styles), 2)  # Should target 2 Ford rows
+  expect_equal(unique(styles$rownum), c(1, 2))
+  expect_equal(unique(styles$colname), "model")
+  expect_equal(unique(styles$locname), "stub_column")
+})
+
+test_that("Enhanced stub targeting: model-specific targeting works", {
+  
+  # Test data
+  test_data <- dplyr::tibble(
+    mfr = c("Ford", "Ford", "BMW", "BMW", "Audi"),
+    model = c("GT", "F-150", "X5", "X3", "A4"),
+    trim = c("Base", "XLT", "xDrive35i", "sDrive28i", "Premium")
+  )
+  
+  # Test model-specific targeting
+  styled_table <- test_data %>%
+    gt(rowname_col = c("mfr", "model", "trim")) %>%
+    tab_style(
+      style = cell_fill(color = "yellow"),
+      locations = cells_stub(rows = c("GT", "A4"))
+    )
+  
+  # Check that styles are applied correctly
+  styles <- gt:::dt_styles_get(styled_table)
+  expect_equal(nrow(styles), 2)  # Should target 2 rows (GT and A4)
+  expect_equal(unique(styles$rownum), c(1, 5))
+  expect_equal(unique(styles$locname), "stub")
+})
+
+test_that("Enhanced stub targeting: backward compatibility with numeric indices", {
+  
+  # Test data
+  test_data <- dplyr::tibble(
+    mfr = c("Ford", "Ford", "BMW", "BMW", "Audi"),
+    model = c("GT", "F-150", "X5", "X3", "A4"),
+    trim = c("Base", "XLT", "xDrive35i", "sDrive28i", "Premium")
+  )
+  
+  # Test numeric targeting (backward compatibility)
+  styled_table <- test_data %>%
+    gt(rowname_col = c("mfr", "model", "trim")) %>%
+    tab_style(
+      style = cell_fill(color = "orange"),
+      locations = cells_stub(rows = c(1, 3, 5))
+    )
+  
+  # Check that styles are applied correctly
+  styles <- gt:::dt_styles_get(styled_table)
+  expect_equal(nrow(styles), 3)  # Should target 3 rows
+  expect_equal(unique(styles$rownum), c(1, 3, 5))
+  expect_equal(unique(styles$locname), "stub")
+})
+
+test_that("Enhanced stub targeting: error handling for invalid targets", {
+  
+  # Test data
+  test_data <- dplyr::tibble(
+    mfr = c("Ford", "Ford", "BMW"),
+    model = c("GT", "F-150", "X5"),
+    trim = c("Base", "XLT", "Premium")
+  )
+  
+  # Test error handling for invalid targets
+  expect_error(
+    test_data %>%
+      gt(rowname_col = c("mfr", "model", "trim")) %>%
+      tab_style(
+        style = cell_fill(color = "red"),
+        locations = cells_stub(rows = "InvalidBrand")
+      ),
+    "Row \"InvalidBrand\" does not exist in the data"
+  )
+})
+
+test_that("Enhanced stub targeting: integration with footnotes", {
+  
+  # Test data
+  test_data <- dplyr::tibble(
+    mfr = c("Ford", "Ford", "BMW"),
+    model = c("GT", "F-150", "X5"),
+    trim = c("Base", "XLT", "Premium")
+  )
+  
+  # Test footnote integration
+  footnoted_table <- test_data %>%
+    gt(rowname_col = c("mfr", "model", "trim")) %>%
+    tab_footnote(
+      footnote = "American manufacturer",
+      locations = cells_stub(rows = "Ford", columns = "mfr")
+    )
+  
+  # Check that footnotes are applied correctly
+  footnotes <- gt:::dt_footnotes_get(footnoted_table)
+  expect_equal(nrow(footnotes), 2)  # Should target 2 Ford rows
+  expect_equal(unique(footnotes$rownum), c(1, 2))
+  expect_equal(unique(footnotes$colname), "mfr")
+  
+  # Test table renders without error
+  expect_no_error(as_raw_html(footnoted_table))
+})
+
+test_that("Enhanced stub targeting: single column stub compatibility", {
+  
+  # Test data
+  test_data <- dplyr::tibble(
+    mfr = c("Ford", "Ford", "BMW"),
+    model = c("GT", "F-150", "X5"),
+    trim = c("Base", "XLT", "Premium")
+  )
+  
+  # Test single column stub (regression test)
+  styled_table <- test_data %>%
+    gt(rowname_col = "mfr") %>%
+    tab_style(
+      style = cell_fill(color = "lightpink"),
+      locations = cells_stub(rows = "Ford")
+    )
+  
+  # Check that styles are applied correctly
+  styles <- gt:::dt_styles_get(styled_table)
+  expect_equal(nrow(styles), 2)  # Should target 2 Ford rows
+  expect_equal(unique(styles$rownum), c(1, 2))
+  expect_equal(unique(styles$locname), "stub")
+})
