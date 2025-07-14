@@ -13,11 +13,25 @@ cells_stub(rows = everything(), columns = NULL)
 
 The rows to which targeting operations are constrained. The default
 \code{\link[=everything]{everything()}} results in all rows in the stub being targeted.
-Alternatively, we can supply a vector of row IDs within \code{c()}, a vector of
-row indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}). We can also use expressions to filter down to the rows we
-need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+Multiple targeting methods are supported:
+
+\strong{Numeric indices:} A vector of row indices within \code{c()} (e.g., \code{c(1, 3, 5)}).
+
+\strong{Content-based targeting:} A vector of content values within \code{c()} that match
+values in any stub column (e.g., \code{c("Ford", "BMW")} to target all rows
+containing those manufacturer names). This is particularly useful for
+multi-column stubs where you want to target based on content rather than
+calculating row indices.
+
+\strong{Select helpers:} Use functions like \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
+
+\strong{Expressions:} Filter expressions to target specific rows
+(e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).
+
+When using content-based targeting with multi-column stubs, the function
+will search all stub columns for matching values unless specific \code{columns}
+are provided to constrain the search.}
 
 \item{columns}{\emph{Stub columns to target}
 
@@ -95,6 +109,24 @@ dplyr::tibble(
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_stub(columns = "region", rows = c(1, 3, 5))
+  )
+}\if{html}{\out{</div>}}
+
+You can also use content-based targeting to target rows by their actual values
+rather than calculating row indices:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Content-based targeting example
+gtcars |>
+  dplyr::select(mfr, model, year, hp, msrp) |>
+  dplyr::slice(1:8) |>
+  gt(rowname_col = c("mfr", "model")) |>
+  tab_style(
+    style = cell_fill(color = "lightcoral"),
+    locations = cells_stub(rows = "Ford")  # Targets all Ford rows
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_stub(rows = c("BMW", "Audi"), columns = "mfr")
   )
 }\if{html}{\out{</div>}}
 }

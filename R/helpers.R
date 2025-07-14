@@ -1574,11 +1574,25 @@ cells_group <- function(groups = everything()) {
 #'
 #'   The rows to which targeting operations are constrained. The default
 #'   [everything()] results in all rows in the stub being targeted.
-#'   Alternatively, we can supply a vector of row IDs within `c()`, a vector of
-#'   row indices, or a select helper function (e.g. [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [num_range()], and
-#'   [everything()]). We can also use expressions to filter down to the rows we
-#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   Multiple targeting methods are supported:
+#'   
+#'   **Numeric indices:** A vector of row indices within `c()` (e.g., `c(1, 3, 5)`).
+#'   
+#'   **Content-based targeting:** A vector of content values within `c()` that match
+#'   values in any stub column (e.g., `c("Ford", "BMW")` to target all rows 
+#'   containing those manufacturer names). This is particularly useful for 
+#'   multi-column stubs where you want to target based on content rather than 
+#'   calculating row indices.
+#'   
+#'   **Select helpers:** Use functions like [starts_with()], [ends_with()], 
+#'   [contains()], [matches()], [num_range()], and [everything()].
+#'   
+#'   **Expressions:** Filter expressions to target specific rows 
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   
+#'   When using content-based targeting with multi-column stubs, the function
+#'   will search all stub columns for matching values unless specific `columns`
+#'   are provided to constrain the search.
 #'
 #' @param columns *Stub columns to target*
 #'
@@ -1645,6 +1659,25 @@ cells_group <- function(groups = everything()) {
 #'   tab_style(
 #'     style = cell_text(weight = "bold"),
 #'     locations = cells_stub(columns = "region", rows = c(1, 3, 5))
+#'   )
+#' ```
+#'
+#' You can also use content-based targeting to target rows by their actual values
+#' rather than calculating row indices:
+#'
+#' ```r
+#' # Content-based targeting example
+#' gtcars |>
+#'   dplyr::select(mfr, model, year, hp, msrp) |>
+#'   dplyr::slice(1:8) |>
+#'   gt(rowname_col = c("mfr", "model")) |>
+#'   tab_style(
+#'     style = cell_fill(color = "lightcoral"),
+#'     locations = cells_stub(rows = "Ford")  # Targets all Ford rows
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(weight = "bold"),
+#'     locations = cells_stub(rows = c("BMW", "Audi"), columns = "mfr")
 #'   )
 #' ```
 #'
