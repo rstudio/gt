@@ -96,53 +96,52 @@ resolve_cells_stub <- function(data,
     resolved_columns <- character(0)
   } else if (!is.null(object$columns)) {
     # Only resolve columns if the columns parameter exists (new behavior)
-    # First resolve columns normally with stub inclusion
-    resolved_columns <-
-      resolve_cols_c(
-        expr = !!object$columns,
-        data = data,
-        excl_stub = FALSE,
-        call = call
-      )
     
-    # Validate that all requested columns are actually stub columns
-    if (length(resolved_columns) > 0) {
-      # Check if the requested columns are stub columns
-      all_data_cols <- names(dt_data_get(data))
-      requested_cols <- intersect(resolved_columns, all_data_cols)
+    # Check if columns expression is everything() (default)
+    expr_text <- rlang::quo_text(object$columns)
+    if (expr_text == "everything()") {
+      # Handle everything() case explicitly for stub columns
+      resolved_columns <- stub_vars
+    } else {
+      # First resolve columns normally with stub inclusion
+      resolved_columns <-
+        resolve_cols_c(
+          expr = !!object$columns,
+          data = data,
+          excl_stub = FALSE,
+          call = call
+        )
       
-      if (length(requested_cols) > 0) {
-        non_stub_cols <- setdiff(requested_cols, stub_vars)
+      # Validate that all requested columns are actually stub columns
+      if (length(resolved_columns) > 0) {
+        # Check if the requested columns are stub columns
+        all_data_cols <- names(dt_data_get(data))
+        requested_cols <- intersect(resolved_columns, all_data_cols)
         
-        if (length(non_stub_cols) > 0) {
-          available_stub_cols <- if (length(stub_vars) > 0) {
-            paste0("Available stub columns: ", paste(stub_vars, collapse = ", "))
-          } else {
-            "This table has no stub columns."
-          }
+        if (length(requested_cols) > 0) {
+          non_stub_cols <- setdiff(requested_cols, stub_vars)
           
-          cli::cli_abort(
-            c(
-              "Column{?s} {.val {non_stub_cols}} {?is/are} not stub column{?s}.",
-              "i" = "cells_stub() can only target columns that are part of the table stub.",
-              "i" = available_stub_cols,
-              "i" = "To target non-stub columns, use cells_body() instead."
+          if (length(non_stub_cols) > 0) {
+            available_stub_cols <- if (length(stub_vars) > 0) {
+              paste0("Available stub columns: ", paste(stub_vars, collapse = ", "))
+            } else {
+              "This table has no stub columns."
+            }
+            
+            cli::cli_abort(
+              c(
+                "Column{?s} {.val {non_stub_cols}} {?is/are} not stub column{?s}.",
+                "i" = "cells_stub() can only target columns that are part of the table stub.",
+                "i" = available_stub_cols,
+                "i" = "To target non-stub columns, use cells_body() instead."
+              )
             )
-          )
+          }
         }
       }
-    }
-    
-    # Filter to only include actual stub variables
-    resolved_columns <- intersect(resolved_columns, stub_vars)
-    
-    # If no columns were resolved but we have stub vars, default to all stub vars
-    if (length(resolved_columns) == 0) {
-      # Check if columns expression is everything() (default)
-      expr_text <- rlang::quo_text(object$columns)
-      if (expr_text == "everything()") {
-        resolved_columns <- stub_vars
-      }
+      
+      # Filter to only include actual stub variables
+      resolved_columns <- intersect(resolved_columns, stub_vars)
     }
   } else {
     # Legacy behavior: no columns parameter provided
@@ -152,11 +151,13 @@ resolve_cells_stub <- function(data,
   #
   # Resolution of rows as integer vectors
   # providing the positions of the matched variables
+  # Enhanced to support content-based targeting
   #
   resolved_rows_idx <-
-    resolve_rows_i(
+    resolve_stub_rows_enhanced(
       expr = !!object$rows,
       data = data,
+      columns = resolved_columns,
       call = call
     )
 
@@ -834,4 +835,199 @@ resolver_stop_unknown <- function(
 cap_first_letter <- function(x) {
   substr(x, 1, 1) <- toupper(substr(x, 1, 1))
   x
+}
+
+#' Enhanced stub row resolution with content-based targeting
+#'
+#' @param expr The expression for row specification (can be numeric indices or content values)
+#' @param data The gt table data object
+#' @param columns The resolved stub columns for context
+#' @param call The calling environment for error reporting
+#' @noRd
+resolve_stub_rows_enhanced <- function(
+    expr,
+    data,
+    columns = NULL,
+    call = rlang::caller_env()
+) {
+  
+  # Evaluate the expression to get the rows specification
+  quo <- rlang::enquo(expr)
+  
+  # Handle the special case of everything() which is the default
+  if (identical(rlang::quo_get_expr(quo), quote(everything()))) {
+    return(seq_len(nrow(dt_data_get(data))))
+  }
+  
+  # Try to evaluate the expression
+  tryCatch({
+    rows_spec <- rlang::eval_tidy(quo, data = dt_data_get(data))
+    
+    # If NULL or missing, return all rows
+    if (is.null(rows_spec)) {
+      return(seq_len(nrow(dt_data_get(data))))
+    }
+    
+    # If TRUE, return all rows
+    if (identical(rows_spec, TRUE)) {
+      return(seq_len(nrow(dt_data_get(data))))
+    }
+    
+    # If logical vector, convert to row indices
+    if (is.logical(rows_spec)) {
+      return(which(rows_spec))
+    }
+    
+    # If character, use enhanced content-based targeting (do this BEFORE numeric check)
+    if (is.character(rows_spec)) {
+      return(resolve_stub_content_targeting(data, rows_spec, columns, call))
+    }
+    
+    # If numeric, use traditional resolution (backwards compatibility)
+    if (is.numeric(rows_spec)) {
+      return(resolve_rows_i(expr = {{ expr }}, data = data, call = call))
+    }
+    
+    # For other types, fall back to traditional resolution
+    return(resolve_rows_i(expr = {{ expr }}, data = data, call = call))
+    
+  }, error = function(e) {
+    # If evaluation fails, fall back to traditional resolution
+    return(resolve_rows_i(expr = {{ expr }}, data = data, call = call))
+  })
+}
+
+#' Resolve stub rows by content-based targeting
+#'
+#' @param data The gt table data object  
+#' @param rows_spec Character vector of content values to target
+#' @param columns Specific stub columns to search in (optional)
+#' @param call The calling environment for error reporting
+#' @noRd
+resolve_stub_content_targeting <- function(data, rows_spec, columns = NULL, call = rlang::caller_env()) {
+  
+  # Get the data table and stub variables
+  data_tbl <- dt_data_get(data)
+  stub_vars <- dt_boxhead_get_var_stub(data)
+  
+  # Handle case where no stub exists
+  if (length(stub_vars) == 0 || all(is.na(stub_vars))) {
+    cli::cli_abort(
+      c(
+        "Cannot use content-based targeting: table has no stub columns.",
+        "i" = "Use numeric row indices instead, or add stub columns with rowname_col in gt()."
+      ),
+      call = call
+    )
+  }
+  
+  # Create a comprehensive stub targeting map
+  stub_map <- create_stub_targeting_map_internal(data_tbl, stub_vars)
+  
+  resolved_rows <- c()
+  
+  for (row_spec in rows_spec) {
+    current_rows <- c()
+    
+    # Strategy 1: Direct value match in specified columns (if provided)
+    if (!is.null(columns) && length(columns) > 0) {
+      for (col in columns) {
+        key <- paste0(col, ":", row_spec)
+        if (key %in% names(stub_map)) {
+          current_rows <- c(current_rows, stub_map[[key]])
+        }
+      }
+    }
+    
+    # Strategy 2: Search all stub columns for the value (if no specific columns or no matches)
+    if (length(current_rows) == 0) {
+      for (col in stub_vars) {
+        key <- paste0(col, ":", row_spec)
+        if (key %in% names(stub_map)) {
+          current_rows <- c(current_rows, stub_map[[key]])
+        }
+      }
+    }
+    
+    # Strategy 3: Hierarchical match (partial keys) - for complex hierarchical targeting
+    if (length(current_rows) == 0) {
+      # Look for hierarchical keys that contain this value
+      matching_keys <- names(stub_map)[grepl(paste0(":", row_spec, "$"), names(stub_map))]
+      for (key in matching_keys) {
+        current_rows <- c(current_rows, stub_map[[key]])
+      }
+    }
+    
+    # If still no matches found, provide helpful error
+    if (length(current_rows) == 0) {
+      # Get available values for error message
+      available_values <- c()
+      for (col in stub_vars) {
+        col_values <- unique(data_tbl[[col]])
+        available_values <- c(available_values, paste0(col, ": ", col_values))
+      }
+      
+      cli::cli_abort(
+        c(
+          "Cannot find '{row_spec}' in any stub column.",
+          "i" = "Available values in stub columns:",
+          set_names(paste0("  ", available_values), rep("*", length(available_values)))
+        ),
+        call = call
+      )
+    }
+    
+    resolved_rows <- c(resolved_rows, current_rows)
+  }
+  
+  # Return unique rows in original order
+  unique(resolved_rows)
+}
+
+#' Create an internal stub targeting map
+#'
+#' @param data_tbl The data table
+#' @param stub_vars The stub column variables
+#' @noRd
+create_stub_targeting_map_internal <- function(data_tbl, stub_vars) {
+  
+  stub_map <- list()
+  
+  # For each stub column, create mappings from values to row indices
+  for (col_name in stub_vars) {
+    col_values <- data_tbl[[col_name]]
+    unique_values <- unique(col_values)
+    
+    for (value in unique_values) {
+      rows_with_value <- which(col_values == value)
+      key <- paste0(col_name, ":", value)
+      stub_map[[key]] <- rows_with_value
+    }
+  }
+  
+  # Add hierarchical mappings for multi-column stubs
+  if (length(stub_vars) > 1) {
+    for (row_idx in seq_len(nrow(data_tbl))) {
+      row_values <- sapply(stub_vars, function(col) data_tbl[[col]][row_idx])
+      
+      # Add mappings for each level of hierarchy
+      for (level in seq_along(stub_vars)) {
+        partial_values <- row_values[1:level]
+        partial_key <- paste(stub_vars[1:level], partial_values, sep=":", collapse="|")
+        
+        # Find all rows that match this partial hierarchy
+        matching_rows <- c()
+        for (check_row in seq_len(nrow(data_tbl))) {
+          check_values <- sapply(stub_vars[1:level], function(col) data_tbl[[col]][check_row])
+          if (all(check_values == partial_values)) {
+            matching_rows <- c(matching_rows, check_row)
+          }
+        }
+        
+        stub_map[[partial_key]] <- matching_rows
+      }
+    }
+  }
+  
+  stub_map
 }
