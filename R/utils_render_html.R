@@ -1084,6 +1084,7 @@ create_body_component_h <- function(data) {
   list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
+  footnotes_tbl <- dt_footnotes_get(data = data)
 
   # Get effective number of columns
   n_cols_total <- get_effective_number_of_columns(data = data)
@@ -2445,9 +2446,10 @@ calculate_hierarchical_stub_rowspans <- function(data) {
     return(NULL)
   }
   
-  # Get the body data for stub columns
-  body <- dt_body_get(data = data)
-  n_rows <- nrow(body)
+  # Get the body data for stub columns using the original data (before footnotes)
+  # This is crucial to avoid footnote markup interfering with hierarchical grouping
+  original_body <- dt_data_get(data = data)
+  n_rows <- nrow(original_body)
   
   if (n_rows == 0) {
     return(NULL)
@@ -2455,7 +2457,7 @@ calculate_hierarchical_stub_rowspans <- function(data) {
   
   # Create a matrix of stub values (excluding the rightmost column which is the row identifier)
   hierarchy_vars <- stub_vars[-length(stub_vars)]  # Remove rightmost stub column
-  stub_matrix <- as.matrix(body[, hierarchy_vars, drop = FALSE])
+  stub_matrix <- as.matrix(original_body[, hierarchy_vars, drop = FALSE])
   
   # Initialize rowspan information
   rowspan_info <- list()
