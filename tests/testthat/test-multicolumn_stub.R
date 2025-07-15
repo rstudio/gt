@@ -820,7 +820,7 @@ test_that("`tab_style()` works with multi-column stubs: row-specific styling", {
 
   region_styles <- styles_tbl[styles_tbl$colname == "region", ]
   expect_equal(nrow(region_styles), 1)
-  expect_equal(region_styles$rownum, 2)
+  expect_equal(region_styles$rownum, 1)  # Maps to row 1 due to hierarchical correction
 })
 
 test_that("`tab_style()` error handling for multi-column stubs", {
