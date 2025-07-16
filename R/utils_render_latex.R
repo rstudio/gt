@@ -129,10 +129,11 @@ latex_group_row <- function(
 
 #' @noRd
 create_wrap_start_l <- function(data) {
-  if (check_quarto()) {
+  tbl_pos_val <- dt_options_get_value(data = data, option = "latex_tbl_pos")
+  if (check_quarto() || is.na(tbl_pos_val)) {
     tbl_pos <- ""
   } else {
-    tbl_pos <- paste0("[", dt_options_get_value(data = data, option = "latex_tbl_pos"), "]")
+    tbl_pos <- paste0("[", tbl_pos_val, "]")
   }
 
   ifelse(
