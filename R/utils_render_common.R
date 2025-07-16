@@ -750,7 +750,7 @@ get_effective_number_of_columns <- function(data) {
 
   # Obtain the number of visible columns in the built table
   n_data_cols <- get_number_of_visible_data_columns(data = data)
-  n_data_cols + length(get_stub_layout(data = data))
+  n_data_cols + get_stub_column_count(data)
 }
 
 get_stub_layout <- function(data) {
@@ -838,4 +838,28 @@ summary_row_side <- function(data, group_id) {
   summary_df <- list_of_summaries$summary_df_display_list[[group_id]]
 
   unique(summary_df[["::side::"]])
+}
+
+# Get the number of columns in the stub for layout purposes
+get_stub_column_count <- function(data) {
+  
+  stub_layout <- get_stub_layout(data = data)
+  
+  if (is.null(stub_layout)) {
+    return(0)
+  }
+  
+  # Check if we have "rowname" in the layout
+  if ("rowname" %in% stub_layout) {
+    # Check if there are multiple stub columns
+    stub_vars <- dt_boxhead_get_var_stub(data = data)
+    if (length(stub_vars) > 1 && !any(is.na(stub_vars))) {
+      # Multiple stub columns
+      group_count <- if ("group_label" %in% stub_layout) 1 else 0
+      return(length(stub_vars) + group_count)
+    }
+  }
+  
+  # Default: return the length of the layout (original behavior)
+  return(length(stub_layout))
 }

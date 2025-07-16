@@ -347,6 +347,7 @@ resolve_location.cells_stub <- function(loc, data) {
   call <- call("cells_stub")
   resolved <- resolve_cells_stub(data = data, object = loc, call = call)
 
+  loc$columns <- resolved$columns
   loc$rows <- resolved$rows
 
   class(loc) <- c("resolved", class(loc))

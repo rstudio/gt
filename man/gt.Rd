@@ -6,7 +6,7 @@
 \usage{
 gt(
   data,
-  rowname_col = "rowname",
+  rowname_col = NULL,
   groupname_col = dplyr::group_vars(data),
   process_md = FALSE,
   caption = NULL,
@@ -25,12 +25,15 @@ gt(
 
 A \code{data.frame} object or a tibble (\code{tbl_df}).}
 
-\item{rowname_col}{\emph{Column for row names/labels from \code{data}}
+\item{rowname_col}{\emph{Column(s) for row names/labels from \code{data}}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-The column name in the input \code{data} table to use as row labels to be placed
-in the table stub. If the \code{rownames_to_stub} option is \code{TRUE} then any
+The column name(s) in the input \code{data} table to use as row labels to be
+placed in the table stub. If multiple column names are provided, they will
+create a hierarchical stub layout where values from the leftmost column form
+the highest level of the hierarchy, proceeding to individual row identifiers
+in the rightmost column. If the \code{rownames_to_stub} option is \code{TRUE} then any
 column name provided to \code{rowname_col} will be ignored.}
 
 \item{groupname_col}{\emph{Column for group names/labels from \code{data}}

@@ -619,19 +619,19 @@
           <tr class="gt_row_group_first"><td headers="peppr_salami stub_2_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">peppr_salami<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
       <th id="stub_2_1" scope="row" class="gt_row gt_left gt_stub">L</th>
       <td headers="peppr_salami stub_2_1 Pizzas Sold" class="gt_row gt_right">696</td></tr>
-          <tr><th id="Pizzas Sold_2" scope="row" class="gt_row gt_left gt_stub">M</th>
-      <td headers="peppr_salami Pizzas Sold_2 Pizzas Sold" class="gt_row gt_right">428</td></tr>
-          <tr><th id="Pizzas Sold_3" scope="row" class="gt_row gt_left gt_stub">S</th>
-      <td headers="peppr_salami Pizzas Sold_3 Pizzas Sold" class="gt_row gt_right">322</td></tr>
+          <tr><th id="stub_2_2" scope="row" class="gt_row gt_left gt_stub">M</th>
+      <td headers="peppr_salami stub_2_2 Pizzas Sold" class="gt_row gt_right">428</td></tr>
+          <tr><th id="stub_2_3" scope="row" class="gt_row gt_left gt_stub">S</th>
+      <td headers="peppr_salami stub_2_3 Pizzas Sold" class="gt_row gt_right">322</td></tr>
           <tr><th id="summary_stub_peppr_salami_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row">sum</th>
       <td headers="peppr_salami summary_stub_peppr_salami_1 Pizzas Sold" class="gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row">1,446</td></tr>
           <tr class="gt_row_group_first"><td headers="soppressata stub_2_4 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">soppressata</td>
       <th id="stub_2_4" scope="row" class="gt_row gt_left gt_stub">L</th>
       <td headers="soppressata stub_2_4 Pizzas Sold" class="gt_row gt_right">405</td></tr>
-          <tr><th id="Pizzas Sold_5" scope="row" class="gt_row gt_left gt_stub">M</th>
-      <td headers="soppressata Pizzas Sold_5 Pizzas Sold" class="gt_row gt_right">268</td></tr>
-          <tr><th id="Pizzas Sold_6" scope="row" class="gt_row gt_left gt_stub">S</th>
-      <td headers="soppressata Pizzas Sold_6 Pizzas Sold" class="gt_row gt_right">288</td></tr>
+          <tr><th id="stub_2_5" scope="row" class="gt_row gt_left gt_stub">M</th>
+      <td headers="soppressata stub_2_5 Pizzas Sold" class="gt_row gt_right">268</td></tr>
+          <tr><th id="stub_2_6" scope="row" class="gt_row gt_left gt_stub">S</th>
+      <td headers="soppressata stub_2_6 Pizzas Sold" class="gt_row gt_right">288</td></tr>
           <tr><th id="summary_stub_soppressata_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row">sum</th>
       <td headers="soppressata summary_stub_soppressata_1 Pizzas Sold" class="gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row">961</td></tr>
         </tbody>
