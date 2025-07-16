@@ -7609,6 +7609,7 @@ generate_email_links <- function(email_address, anchor_attr, label_str) {
 #' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
+#' @importFrom fs path_expand
 fmt_image <- function(
     data,
     columns = everything(),
