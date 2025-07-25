@@ -33,7 +33,7 @@
 #' number of columns (the function will skip over columns that don't require
 #' this type of alignment).
 #'
-#' @inheritParams cols_align
+#' @inheritParams cols_hide
 #'
 #' @param columns *Columns to target*
 #'

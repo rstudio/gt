@@ -36,7 +36,7 @@
 #' `columns` to be moved is preserved, as is the ordering of all other columns
 #' in the table.
 #'
-#' @inheritParams cols_align
+#' @inheritParams cols_hide
 #'
 #' @param columns *Columns to target*
 #'
@@ -185,7 +185,7 @@ cols_move <- function(
 #' start is preserved (same with the ordering of all other columns in the
 #' table).
 #'
-#' @inheritParams cols_align
+#' @inheritParams cols_hide
 #'
 #' @param columns *Columns to target*
 #'
@@ -311,7 +311,7 @@ cols_move_to_start <- function(
 #' error prone. The ordering of the `columns` that are moved to the end is
 #' preserved (same with the ordering of all other columns in the table).
 #'
-#' @inheritParams cols_align
+#' @inheritParams cols_hide
 #'
 #' @param columns *Columns to target*
 #'

@@ -113,6 +113,9 @@ test_that("word ooxml can be generated from gt object", {
   ## basic table with split enabled
   expect_snapshot_word(gt_tbl_1, split = TRUE)
 
+  ## basic table with autonum disabled
+  expect_snapshot_word(gt_tbl_1, autonum = FALSE)
+
   ## basic table with keep_with_next disabled (should only appear in the column
   ## headers)
   expect_snapshot_word(gt_tbl_1, keep_with_next = FALSE)
@@ -183,6 +186,25 @@ test_that("word ooxml can be generated from gt object", {
 
   gt_exibble_min_sha1 <- rlang::hash(gt_exibble_min)
   expect_equal(gt_exibble_min_sha1, "302bc4daceb5b50a7a41c5e80e5d7187")
+
+  ## basic table with linebreak in title
+  gt_tbl_linebreaks_md <- exibble_min %>%
+    gt() %>%
+    tab_header(
+      title = md("TABLE <br> TITLE"),
+      subtitle = md("table <br> subtitle")
+    )
+  expect_snapshot_word(gt_tbl_linebreaks_md)
+
+  ## basic table with linebreak in title
+  gt_tbl_linebreaks_html <- exibble_min %>%
+    gt() %>%
+    tab_header(
+      title = html("TABLE <br> TITLE"),
+      subtitle = html("table <br> subtitle")
+    )
+
+  expect_snapshot_word(gt_tbl_linebreaks_html)
 
 })
 
@@ -2224,7 +2246,7 @@ There's a quick reference [here](https://commonmark.org/help/).
 
 })
 
-test_that("markdown with urls work",{
+test_that("markdown with urls work", {
 
   skip_on_ci()
   check_suggests()
@@ -2564,4 +2586,15 @@ test_that("table with image refs work - local only - setting image widths and he
            list(height = "571500", width = "914400", ratio = 0.625))
     )
 
+})
+
+test_that("sub_small_vals() and sub_large_vals() are properly encoded", {
+  data <- dplyr::tibble(x = c(0.001, 0.01, 150),
+                 y = c("<", "%", ">"))
+
+  tbl <- data %>%
+    gt() %>%
+    sub_small_vals() %>%
+    sub_large_vals(threshold = 100)
+  expect_snapshot_word(tbl)
 })

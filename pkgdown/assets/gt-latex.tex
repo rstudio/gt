@@ -201,7 +201,7 @@
 
 \title{LaTeX Quarto test}
 \author{}
-\date{2025-02-21}
+\date{2025-07-07}
 
 \begin{document}
 \maketitle
@@ -225,7 +225,7 @@ i Loading gt
 \end{Shaded}
 
 \begin{verbatim}
-[1] '0.11.1.9000'
+[1] '1.0.0.9000'
 \end{verbatim}
 
 \begin{Shaded}
@@ -235,7 +235,7 @@ i Loading gt
 \end{Shaded}
 
 \begin{verbatim}
-[1] '1.6.40'
+[1] '1.6.42'
 \end{verbatim}
 
 \newpage{}
@@ -257,9 +257,9 @@ i Loading gt
 \centering{
 
 \caption*{
-{\large background color}
+{\fontsize{20}{25}\selectfont  background color\fontsize{12}{15}\selectfont }
 } 
-\fontsize{12.0pt}{14.4pt}\selectfont
+\fontsize{12.0pt}{14.0pt}\selectfont
 \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}rlcrrrrll}
 \toprule
 \multicolumn{2}{c}{A spanner} &  &  &  &  &  &  &  \\ 
@@ -303,9 +303,9 @@ NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\_6 & grp\_b \
 \centering{
 
 \caption*{
-{\large Stubhead styling and multiple spanner levels}
+{\fontsize{20}{25}\selectfont  Stubhead styling and multiple spanner levels\fontsize{12}{15}\selectfont }
 } 
-\fontsize{12.0pt}{14.4pt}\selectfont
+\fontsize{12.0pt}{14.0pt}\selectfont
 \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l|l|lrcrrrr}
 \toprule
 \multicolumn{2}{l}{} & \multicolumn{3}{c}{Second level spanners} &  &  &  &  \\ 
@@ -314,12 +314,12 @@ NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\_6 & grp\_b \
 \cmidrule(lr){3-4}
 \multicolumn{2}{c}{{\bfseries \small \cellcolor[HTML]{F0F0F0}{\textcolor[HTML]{0000FF}{Stubhead label}}}} & char & num & fctr & date & time & datetime & currency \\ 
 \midrule\addlinespace[2.5pt]
-\multirow{4}{*}{grp\_a} & row\_1 & apricot & 1.111e-01 & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\ 
+\multirow[t]{4}{*}{grp\_a} & row\_1 & apricot & 1.111e-01 & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\ 
  & row\_2 & banana & 2.222e+00 & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\ 
  & row\_3 & coconut & 3.333e+01 & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\ 
  & row\_4 & durian & 4.444e+02 & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\ 
 \midrule\addlinespace[2.5pt]
-\multirow{4}{*}{grp\_b} & row\_5 & NA & 5.550e+03 & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\ 
+\multirow[t]{4}{*}{grp\_b} & row\_5 & NA & 5.550e+03 & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\ 
  & row\_6 & fig & NA & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\ 
  & row\_7 & grapefruit & 7.770e+05 & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\ 
  & row\_8 & honeydew & 8.880e+06 & eight & 2015-08-15 & 20:20 & NA & 0.440 \\ 
@@ -390,16 +390,16 @@ levels}
 \centering{
 
 \caption*{
-{\large Complete output}
+{\fontsize{20}{25}\selectfont  Complete output\fontsize{12}{15}\selectfont }
 } 
-\fontsize{12.0pt}{14.4pt}\selectfont
+\fontsize{12.0pt}{14.0pt}\selectfont
 \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l|l|rr}
 \toprule
 \multicolumn{2}{l}{} & \multicolumn{2}{c}{Spanner} \\ 
 \cmidrule(lr){3-4}
 \multicolumn{2}{c}{Stubhead label} & sold & income \\ 
 \midrule\addlinespace[2.5pt]
-\multirow{6}{*}{classic} & \multicolumn{1}{l|}{All Sizes} & 14,888 & \$220,053.10 \\ 
+\multirow[t]{6}{*}{classic} & \multicolumn{1}{l|}{All Sizes} & 14,888 & \$220,053.10 \\ 
 \cmidrule(l{-0.05em}r){2-4}
  & \hspace*{7.5pt} L & 4,057 & \$74,518.50 \\ 
  & \hspace*{7.5pt} M & 4,112 & \$60,581.75 \\ 
@@ -407,7 +407,7 @@ levels}
  & \hspace*{7.5pt} XL & 552 & \$14,076.00 \\ 
  & \hspace*{7.5pt} XXL & 28 & \$1,006.60 \\ 
 \midrule\addlinespace[2.5pt]
-\multirow{4}{*}{veggie} & \multicolumn{1}{l|}{All Sizes} & 11,649 & \$193,690.45 \\ 
+\multirow[t]{4}{*}{veggie} & \multicolumn{1}{l|}{All Sizes} & 11,649 & \$193,690.45 \\ 
 \cmidrule(l{-0.05em}r){2-4}
  & \hspace*{7.5pt} L & 5,403 & \$104,202.70 \\ 
  & \hspace*{7.5pt} M & 3,583 & \$57,101.00 \\ 

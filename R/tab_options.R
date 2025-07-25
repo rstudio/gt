@@ -534,12 +534,32 @@
 #'   use the `longtable` environment which will not float and may span multiple
 #'   pages.
 #'
+#'
+#' @param latex.header_repeat
+#'
+#'   * Specify if the header should repeat or not across pages*
+#'
+#'   For Long tables, it may be desirable to have the column headers repeat on
+#'   every page. Setting this parameter to `TRUE` will add a `\endhead` command
+#'   after the table headers so LaTeX knows where the headers end and will
+#'   repeat them on every page.
+#'
+#' @param latex.toprule,latex.bottomrule
+#'
+#'   * Specify if an hrule should be put in the table at the top (latex.toprule) or bottom (latex.bottomrule)*
+#'
+#'   By default the tables produced using latex code will include top and bottom
+#'   lines in the table via `\toprule` and `\bottomrule`. Setting these
+#'   parameters to `FALSE` will instead not have these commands added, which
+#'   lets the tables be produced without the top and bottom lines.
+#'
+#'
 #' @param latex.tbl.pos
 #'
 #'   *Specify latex floating position*
 #'
 #'   The latex position indicator for a floating environment (e.g., `"tb"`,
-#'   `"h"`). If not specified, latex position will default to `"t"``. It should be
+#'   `"h"`). If not specified, latex position will default to `"t"`. It should be
 #'   specified without square brackets. Quarto users should instead set the
 #'   floating position within the code chunk argument `tbl-pos`. The output
 #'   table will only float if `latex.use_longtable = FALSE`.
@@ -864,6 +884,9 @@ tab_options <- function(
     quarto.use_bootstrap = NULL,
     quarto.disable_processing = NULL,
     latex.use_longtable = NULL,
+    latex.header_repeat = NULL,
+    latex.toprule = NULL,
+    latex.bottomrule = NULL,
     latex.tbl.pos = NULL
 ) {
 

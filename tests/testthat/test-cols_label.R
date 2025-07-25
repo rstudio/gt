@@ -148,7 +148,7 @@ test_that("cols_label() correctly", {
 })
 
 test_that("cols_label() works with md()", {
-  tab <- gt(data.frame(x = 1, y = 2, z = 3)) %>% 
+  tab <- gt(data.frame(x = 1, y = 2, z = 3)) %>%
     cols_label(x = md("*x_1*"), y = md("Time Domain<br/>$\\small{f\\left( t \\right) = {\\mathcal{L}^{\\,\\, - 1}}\\left\\{ {F\\left( s \\right)} \\right\\}}$"))
   expect_equal(
     tab$`_boxhead`$column_label,
@@ -158,5 +158,28 @@ test_that("cols_label() works with md()", {
       "z"
     )
   )
-  
+
+})
+
+test_that("check cols_label is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply alignment to table and group
+  label_gt_tbl <- gt_tbl %>%
+    cols_label(
+      mpg = "Miles per gallon"
+    )
+
+  label_gt_group <- gt_group %>%
+    cols_label(
+      mpg = "Miles per gallon"
+    )
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(label_gt_group, gt_group(label_gt_tbl, label_gt_tbl))
+
 })

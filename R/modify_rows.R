@@ -35,7 +35,7 @@
 #' top of the table and the remaining row groups will follow in their original
 #' ordering.
 #'
-#' @inheritParams cols_align
+#' @inheritParams cols_hide
 #'
 #' @param groups *Specification of row group IDs*
 #'

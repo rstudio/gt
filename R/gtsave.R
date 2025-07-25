@@ -427,6 +427,7 @@ gt_save_docx <- function(
     filename,
     path = NULL,
     ...,
+    autonum = TRUE,
     open = rlang::is_interactive()
 ) {
 
@@ -443,7 +444,7 @@ gt_save_docx <- function(
       paste0(
         c(
           "```{=openxml}",
-          enc2utf8(as_word(data = data)),
+          enc2utf8(as_word(data = data, autonum = autonum)),
           "```",
           ""),
         collapse = "\n"
@@ -456,7 +457,7 @@ gt_save_docx <- function(
     seq_tbls <- seq_len(nrow(data$gt_tbls))
 
     for (i in seq_tbls) {
-      word_tbl_i <- as_word(grp_pull(data, which = i))
+      word_tbl_i <- as_word(grp_pull(data, which = i), autonum = autonum)
       word_tbls <- c(word_tbls, word_tbl_i)
     }
 
@@ -512,7 +513,7 @@ gtsave_filename <- function(path, filename) {
   # the saving code in `htmltools::save_html()`
   # See rstudio/htmltools#165 for more details
   as.character(
-    fs::path_expand(
+    path_expand(
       fs::path_abs(
         path = filename,
         start = path
