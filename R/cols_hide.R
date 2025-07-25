@@ -34,12 +34,7 @@
 #' reference during formatting of other columns) but the final display of those
 #' columns is not necessary.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams cols_align
 #'
 #' @param columns *Columns to target*
 #'
@@ -128,7 +123,13 @@ cols_hide <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
+
+  # Handle gt_group
+  if(inherits(data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(data, arg_list))
+  }
 
   # if no `columns` are provided, return data unaltered
   if (rlang::quo_is_missing(rlang::enquo(columns))) {
@@ -167,7 +168,7 @@ cols_hide <- function(
 #' be important in cases where the user obtains a `gt_tbl` object with hidden
 #' columns and there is motivation to reveal one or more of those.
 #'
-#' @inheritParams cols_hide
+#' @inheritParams cols_align
 #'
 #' @param columns *Columns to target*
 #'
@@ -240,7 +241,13 @@ cols_unhide <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
+
+  # Handle gt_group
+  if(inherits(data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(data, arg_list))
+  }
 
   # Get the columns supplied in `columns` as a character vector
   columns <-

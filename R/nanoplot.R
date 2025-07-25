@@ -76,7 +76,7 @@
 #' helper, layers of the nanoplots can be selectively removed and the aesthetics
 #' of the remaining plot components can be modified.
 #'
-#' @inheritParams cols_hide
+#' @inheritParams cols_align
 #'
 #' @param columns *Columns from which to get data for the dependent variable*
 #'
@@ -740,7 +740,13 @@ cols_nanoplot <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
+
+  # Handle gt_group
+  if(inherits(data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(data, arg_list))
+  }
 
   # Ensure that arguments are matched
   missing_vals <-
