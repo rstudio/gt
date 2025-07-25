@@ -54,7 +54,9 @@ dt_groups_rows_build <- function(data, context) {
 
     stub_var <- dt_boxhead_get_var_stub(data = data)
     table_body <- dt_data_get(data = data)
-    stub_df[["rowname"]] <- as.character(table_body[[stub_var]])
+    # For multiple stub columns, use the rightmost (primary) column for rowname
+    primary_stub_var <- stub_var[length(stub_var)]
+    stub_df[["rowname"]] <- as.character(table_body[[primary_stub_var]])
   }
   # what happens if dt_stub_df doesn't exist?
 

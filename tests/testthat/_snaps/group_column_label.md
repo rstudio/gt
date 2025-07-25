@@ -1390,72 +1390,72 @@
           </tr>
         </thead>
         <tbody class="gt_table_body">
-          <tr class="gt_row_group_first"><td headers="grp_a stub_1_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_a</td>
-      <td headers="grp_a stub_1_1 num" class="gt_row gt_right">1.111e-01</td>
-      <td headers="grp_a stub_1_1 char" class="gt_row gt_left">apricot</td>
-      <td headers="grp_a stub_1_1 fctr" class="gt_row gt_center">one</td>
-      <td headers="grp_a stub_1_1 date" class="gt_row gt_right">2015-01-15</td>
-      <td headers="grp_a stub_1_1 time" class="gt_row gt_right">13:35</td>
-      <td headers="grp_a stub_1_1 datetime" class="gt_row gt_right">2018-01-01 02:22</td>
-      <td headers="grp_a stub_1_1 currency" class="gt_row gt_right">49.950</td>
-      <td headers="grp_a stub_1_1 row" class="gt_row gt_left">row_1</td></tr>
-          <tr><td headers="grp_a num_2 num" class="gt_row gt_right">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right">17.950</td>
-      <td headers="grp_a num_2 row" class="gt_row gt_left">row_2</td></tr>
-          <tr><td headers="grp_a num_3 num" class="gt_row gt_right">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right">1.390</td>
-      <td headers="grp_a num_3 row" class="gt_row gt_left">row_3</td></tr>
-          <tr><td headers="grp_a num_4 num" class="gt_row gt_right">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right">65100.000</td>
-      <td headers="grp_a num_4 row" class="gt_row gt_left">row_4</td></tr>
-          <tr class="gt_row_group_first"><td headers="grp_b stub_1_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_b</td>
-      <td headers="grp_b stub_1_5 num" class="gt_row gt_right">5.550e+03</td>
-      <td headers="grp_b stub_1_5 char" class="gt_row gt_left">NA</td>
-      <td headers="grp_b stub_1_5 fctr" class="gt_row gt_center">five</td>
-      <td headers="grp_b stub_1_5 date" class="gt_row gt_right">2015-05-15</td>
-      <td headers="grp_b stub_1_5 time" class="gt_row gt_right">17:55</td>
-      <td headers="grp_b stub_1_5 datetime" class="gt_row gt_right">2018-05-05 04:00</td>
-      <td headers="grp_b stub_1_5 currency" class="gt_row gt_right">1325.810</td>
-      <td headers="grp_b stub_1_5 row" class="gt_row gt_left">row_5</td></tr>
-          <tr><td headers="grp_b num_6 num" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right">13.255</td>
-      <td headers="grp_b num_6 row" class="gt_row gt_left">row_6</td></tr>
-          <tr><td headers="grp_b num_7 num" class="gt_row gt_right">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_7 row" class="gt_row gt_left">row_7</td></tr>
-          <tr><td headers="grp_b num_8 num" class="gt_row gt_right">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right">0.440</td>
-      <td headers="grp_b num_8 row" class="gt_row gt_left">row_8</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_a stub_2_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_a</td>
+      <td headers="grp_a stub_2_1 num" class="gt_row gt_right">1.111e-01</td>
+      <td headers="grp_a stub_2_1 char" class="gt_row gt_left">apricot</td>
+      <td headers="grp_a stub_2_1 fctr" class="gt_row gt_center">one</td>
+      <td headers="grp_a stub_2_1 date" class="gt_row gt_right">2015-01-15</td>
+      <td headers="grp_a stub_2_1 time" class="gt_row gt_right">13:35</td>
+      <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right">2018-01-01 02:22</td>
+      <td headers="grp_a stub_2_1 currency" class="gt_row gt_right">49.950</td>
+      <td headers="grp_a stub_2_1 row" class="gt_row gt_left">row_1</td></tr>
+          <tr><td headers="grp_a stub_2_2 num" class="gt_row gt_right">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right">17.950</td>
+      <td headers="grp_a stub_2_2 row" class="gt_row gt_left">row_2</td></tr>
+          <tr><td headers="grp_a stub_2_3 num" class="gt_row gt_right">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right">1.390</td>
+      <td headers="grp_a stub_2_3 row" class="gt_row gt_left">row_3</td></tr>
+          <tr><td headers="grp_a stub_2_4 num" class="gt_row gt_right">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right">65100.000</td>
+      <td headers="grp_a stub_2_4 row" class="gt_row gt_left">row_4</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_b stub_2_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_b</td>
+      <td headers="grp_b stub_2_5 num" class="gt_row gt_right">5.550e+03</td>
+      <td headers="grp_b stub_2_5 char" class="gt_row gt_left">NA</td>
+      <td headers="grp_b stub_2_5 fctr" class="gt_row gt_center">five</td>
+      <td headers="grp_b stub_2_5 date" class="gt_row gt_right">2015-05-15</td>
+      <td headers="grp_b stub_2_5 time" class="gt_row gt_right">17:55</td>
+      <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right">2018-05-05 04:00</td>
+      <td headers="grp_b stub_2_5 currency" class="gt_row gt_right">1325.810</td>
+      <td headers="grp_b stub_2_5 row" class="gt_row gt_left">row_5</td></tr>
+          <tr><td headers="grp_b stub_2_6 num" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right">13.255</td>
+      <td headers="grp_b stub_2_6 row" class="gt_row gt_left">row_6</td></tr>
+          <tr><td headers="grp_b stub_2_7 num" class="gt_row gt_right">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_7 row" class="gt_row gt_left">row_7</td></tr>
+          <tr><td headers="grp_b stub_2_8 num" class="gt_row gt_right">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right">0.440</td>
+      <td headers="grp_b stub_2_8 row" class="gt_row gt_left">row_8</td></tr>
         </tbody>
         <tfoot class="gt_sourcenotes">
           <tr>
@@ -3213,30 +3213,30 @@
       <td headers="grp_a stub_2_1 time" class="gt_row gt_right">13:35</td>
       <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right">2018-01-01 02:22</td>
       <td headers="grp_a stub_2_1 currency" class="gt_row gt_right">49.950</td></tr>
-          <tr><th id="num_2" scope="row" class="gt_row gt_left gt_stub">row_2</th>
-      <td headers="grp_a num_2 num" class="gt_row gt_right">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right">17.950</td></tr>
-          <tr><th id="num_3" scope="row" class="gt_row gt_left gt_stub">row_3</th>
-      <td headers="grp_a num_3 num" class="gt_row gt_right">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right">1.390</td></tr>
-          <tr><th id="num_4" scope="row" class="gt_row gt_left gt_stub">row_4</th>
-      <td headers="grp_a num_4 num" class="gt_row gt_right">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right">65100.000</td></tr>
+          <tr><th id="stub_2_2" scope="row" class="gt_row gt_left gt_stub">row_2</th>
+      <td headers="grp_a stub_2_2 num" class="gt_row gt_right">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right">17.950</td></tr>
+          <tr><th id="stub_2_3" scope="row" class="gt_row gt_left gt_stub">row_3</th>
+      <td headers="grp_a stub_2_3 num" class="gt_row gt_right">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right">1.390</td></tr>
+          <tr><th id="stub_2_4" scope="row" class="gt_row gt_left gt_stub">row_4</th>
+      <td headers="grp_a stub_2_4 num" class="gt_row gt_right">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right">65100.000</td></tr>
           <tr class="gt_row_group_first"><td headers="grp_b stub_2_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_b</td>
       <th id="stub_2_5" scope="row" class="gt_row gt_left gt_stub">row_5</th>
       <td headers="grp_b stub_2_5 num" class="gt_row gt_right">5.550e+03</td>
@@ -3246,30 +3246,30 @@
       <td headers="grp_b stub_2_5 time" class="gt_row gt_right">17:55</td>
       <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right">2018-05-05 04:00</td>
       <td headers="grp_b stub_2_5 currency" class="gt_row gt_right">1325.810</td></tr>
-          <tr><th id="num_6" scope="row" class="gt_row gt_left gt_stub">row_6</th>
-      <td headers="grp_b num_6 num" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right">13.255</td></tr>
-          <tr><th id="num_7" scope="row" class="gt_row gt_left gt_stub">row_7</th>
-      <td headers="grp_b num_7 num" class="gt_row gt_right">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right">NA</td></tr>
-          <tr><th id="num_8" scope="row" class="gt_row gt_left gt_stub">row_8</th>
-      <td headers="grp_b num_8 num" class="gt_row gt_right">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right">0.440</td></tr>
+          <tr><th id="stub_2_6" scope="row" class="gt_row gt_left gt_stub">row_6</th>
+      <td headers="grp_b stub_2_6 num" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right">13.255</td></tr>
+          <tr><th id="stub_2_7" scope="row" class="gt_row gt_left gt_stub">row_7</th>
+      <td headers="grp_b stub_2_7 num" class="gt_row gt_right">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right">NA</td></tr>
+          <tr><th id="stub_2_8" scope="row" class="gt_row gt_left gt_stub">row_8</th>
+      <td headers="grp_b stub_2_8 num" class="gt_row gt_right">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right">0.440</td></tr>
         </tbody>
         <tfoot class="gt_sourcenotes">
           <tr>
@@ -5760,39 +5760,39 @@
           </tr>
         </thead>
         <tbody class="gt_table_body">
-          <tr class="gt_row_group_first"><td headers="grp_a stub_1_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_a</td>
-      <td headers="grp_a stub_1_1 num" class="gt_row gt_right">1.111e-01</td>
-      <td headers="grp_a stub_1_1 char" class="gt_row gt_left">apricot</td>
-      <td headers="grp_a stub_1_1 fctr" class="gt_row gt_center">one</td>
-      <td headers="grp_a stub_1_1 date" class="gt_row gt_right">2015-01-15</td>
-      <td headers="grp_a stub_1_1 time" class="gt_row gt_right">13:35</td>
-      <td headers="grp_a stub_1_1 datetime" class="gt_row gt_right">2018-01-01 02:22</td>
-      <td headers="grp_a stub_1_1 currency" class="gt_row gt_right">49.950</td>
-      <td headers="grp_a stub_1_1 row" class="gt_row gt_left">row_1</td></tr>
-          <tr><td headers="grp_a num_2 num" class="gt_row gt_right">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right">17.950</td>
-      <td headers="grp_a num_2 row" class="gt_row gt_left">row_2</td></tr>
-          <tr><td headers="grp_a num_3 num" class="gt_row gt_right">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right">1.390</td>
-      <td headers="grp_a num_3 row" class="gt_row gt_left">row_3</td></tr>
-          <tr><td headers="grp_a num_4 num" class="gt_row gt_right">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right">65100.000</td>
-      <td headers="grp_a num_4 row" class="gt_row gt_left">row_4</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_a stub_2_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_a</td>
+      <td headers="grp_a stub_2_1 num" class="gt_row gt_right">1.111e-01</td>
+      <td headers="grp_a stub_2_1 char" class="gt_row gt_left">apricot</td>
+      <td headers="grp_a stub_2_1 fctr" class="gt_row gt_center">one</td>
+      <td headers="grp_a stub_2_1 date" class="gt_row gt_right">2015-01-15</td>
+      <td headers="grp_a stub_2_1 time" class="gt_row gt_right">13:35</td>
+      <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right">2018-01-01 02:22</td>
+      <td headers="grp_a stub_2_1 currency" class="gt_row gt_right">49.950</td>
+      <td headers="grp_a stub_2_1 row" class="gt_row gt_left">row_1</td></tr>
+          <tr><td headers="grp_a stub_2_2 num" class="gt_row gt_right">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right">17.950</td>
+      <td headers="grp_a stub_2_2 row" class="gt_row gt_left">row_2</td></tr>
+          <tr><td headers="grp_a stub_2_3 num" class="gt_row gt_right">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right">1.390</td>
+      <td headers="grp_a stub_2_3 row" class="gt_row gt_left">row_3</td></tr>
+          <tr><td headers="grp_a stub_2_4 num" class="gt_row gt_right">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right">65100.000</td>
+      <td headers="grp_a stub_2_4 row" class="gt_row gt_left">row_4</td></tr>
           <tr><th id="summary_stub_grp_a_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row">min</th>
       <td headers="grp_a summary_stub_grp_a_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row">0.11</td>
       <td headers="grp_a summary_stub_grp_a_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row">—</td>
@@ -5820,39 +5820,39 @@
       <td headers="grp_a summary_stub_grp_a_3 datetime" class="gt_row gt_right gt_summary_row gt_last_summary_row">—</td>
       <td headers="grp_a summary_stub_grp_a_3 currency" class="gt_row gt_right gt_summary_row gt_last_summary_row">16292.32</td>
       <td headers="grp_a summary_stub_grp_a_3 row" class="gt_row gt_left gt_summary_row gt_last_summary_row">—</td></tr>
-          <tr class="gt_row_group_first"><td headers="grp_b stub_1_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_b</td>
-      <td headers="grp_b stub_1_5 num" class="gt_row gt_right">5.550e+03</td>
-      <td headers="grp_b stub_1_5 char" class="gt_row gt_left">NA</td>
-      <td headers="grp_b stub_1_5 fctr" class="gt_row gt_center">five</td>
-      <td headers="grp_b stub_1_5 date" class="gt_row gt_right">2015-05-15</td>
-      <td headers="grp_b stub_1_5 time" class="gt_row gt_right">17:55</td>
-      <td headers="grp_b stub_1_5 datetime" class="gt_row gt_right">2018-05-05 04:00</td>
-      <td headers="grp_b stub_1_5 currency" class="gt_row gt_right">1325.810</td>
-      <td headers="grp_b stub_1_5 row" class="gt_row gt_left">row_5</td></tr>
-          <tr><td headers="grp_b num_6 num" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right">13.255</td>
-      <td headers="grp_b num_6 row" class="gt_row gt_left">row_6</td></tr>
-          <tr><td headers="grp_b num_7 num" class="gt_row gt_right">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_7 row" class="gt_row gt_left">row_7</td></tr>
-          <tr><td headers="grp_b num_8 num" class="gt_row gt_right">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right">0.440</td>
-      <td headers="grp_b num_8 row" class="gt_row gt_left">row_8</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_b stub_2_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_b</td>
+      <td headers="grp_b stub_2_5 num" class="gt_row gt_right">5.550e+03</td>
+      <td headers="grp_b stub_2_5 char" class="gt_row gt_left">NA</td>
+      <td headers="grp_b stub_2_5 fctr" class="gt_row gt_center">five</td>
+      <td headers="grp_b stub_2_5 date" class="gt_row gt_right">2015-05-15</td>
+      <td headers="grp_b stub_2_5 time" class="gt_row gt_right">17:55</td>
+      <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right">2018-05-05 04:00</td>
+      <td headers="grp_b stub_2_5 currency" class="gt_row gt_right">1325.810</td>
+      <td headers="grp_b stub_2_5 row" class="gt_row gt_left">row_5</td></tr>
+          <tr><td headers="grp_b stub_2_6 num" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right">13.255</td>
+      <td headers="grp_b stub_2_6 row" class="gt_row gt_left">row_6</td></tr>
+          <tr><td headers="grp_b stub_2_7 num" class="gt_row gt_right">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_7 row" class="gt_row gt_left">row_7</td></tr>
+          <tr><td headers="grp_b stub_2_8 num" class="gt_row gt_right">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right">0.440</td>
+      <td headers="grp_b stub_2_8 row" class="gt_row gt_left">row_8</td></tr>
           <tr><th id="summary_stub_grp_b_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row">min</th>
       <td headers="grp_b summary_stub_grp_b_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row">5550.00</td>
       <td headers="grp_b summary_stub_grp_b_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row">—</td>
@@ -8507,30 +8507,30 @@
       <td headers="grp_a stub_2_1 time" class="gt_row gt_right">13:35</td>
       <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right">2018-01-01 02:22</td>
       <td headers="grp_a stub_2_1 currency" class="gt_row gt_right">49.950</td></tr>
-          <tr><th id="num_2" scope="row" class="gt_row gt_left gt_stub">row_2</th>
-      <td headers="grp_a num_2 num" class="gt_row gt_right">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right">17.950</td></tr>
-          <tr><th id="num_3" scope="row" class="gt_row gt_left gt_stub">row_3</th>
-      <td headers="grp_a num_3 num" class="gt_row gt_right">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right">1.390</td></tr>
-          <tr><th id="num_4" scope="row" class="gt_row gt_left gt_stub">row_4</th>
-      <td headers="grp_a num_4 num" class="gt_row gt_right">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right">65100.000</td></tr>
+          <tr><th id="stub_2_2" scope="row" class="gt_row gt_left gt_stub">row_2</th>
+      <td headers="grp_a stub_2_2 num" class="gt_row gt_right">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right">17.950</td></tr>
+          <tr><th id="stub_2_3" scope="row" class="gt_row gt_left gt_stub">row_3</th>
+      <td headers="grp_a stub_2_3 num" class="gt_row gt_right">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right">1.390</td></tr>
+          <tr><th id="stub_2_4" scope="row" class="gt_row gt_left gt_stub">row_4</th>
+      <td headers="grp_a stub_2_4 num" class="gt_row gt_right">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right">65100.000</td></tr>
           <tr><th id="summary_stub_grp_a_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick">min</th>
       <td headers="grp_a summary_stub_grp_a_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row thick">0.11</td>
       <td headers="grp_a summary_stub_grp_a_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row thick">—</td>
@@ -8564,30 +8564,30 @@
       <td headers="grp_b stub_2_5 time" class="gt_row gt_right">17:55</td>
       <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right">2018-05-05 04:00</td>
       <td headers="grp_b stub_2_5 currency" class="gt_row gt_right">1325.810</td></tr>
-          <tr><th id="num_6" scope="row" class="gt_row gt_left gt_stub">row_6</th>
-      <td headers="grp_b num_6 num" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right">13.255</td></tr>
-          <tr><th id="num_7" scope="row" class="gt_row gt_left gt_stub">row_7</th>
-      <td headers="grp_b num_7 num" class="gt_row gt_right">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right">NA</td></tr>
-          <tr><th id="num_8" scope="row" class="gt_row gt_left gt_stub">row_8</th>
-      <td headers="grp_b num_8 num" class="gt_row gt_right">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right">0.440</td></tr>
+          <tr><th id="stub_2_6" scope="row" class="gt_row gt_left gt_stub">row_6</th>
+      <td headers="grp_b stub_2_6 num" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right">13.255</td></tr>
+          <tr><th id="stub_2_7" scope="row" class="gt_row gt_left gt_stub">row_7</th>
+      <td headers="grp_b stub_2_7 num" class="gt_row gt_right">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right">NA</td></tr>
+          <tr><th id="stub_2_8" scope="row" class="gt_row gt_left gt_stub">row_8</th>
+      <td headers="grp_b stub_2_8 num" class="gt_row gt_right">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr><th id="summary_stub_grp_b_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick">min</th>
       <td headers="grp_b summary_stub_grp_b_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row thick">5550.00</td>
       <td headers="grp_b summary_stub_grp_b_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row thick">—</td>
@@ -9645,72 +9645,72 @@
           </tr>
         </thead>
         <tbody class="gt_table_body">
-          <tr class="gt_row_group_first"><td headers="grp_a stub_1_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_a</td>
-      <td headers="grp_a stub_1_1 num" class="gt_row gt_right" style="background-color: #D9D9D9;">1.111e-01</td>
-      <td headers="grp_a stub_1_1 char" class="gt_row gt_left" style="background-color: #CCCCCC;">apricot</td>
-      <td headers="grp_a stub_1_1 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">one</td>
-      <td headers="grp_a stub_1_1 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-01-15</td>
-      <td headers="grp_a stub_1_1 time" class="gt_row gt_right" style="background-color: #A6A6A6;">13:35</td>
-      <td headers="grp_a stub_1_1 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-01-01 02:22</td>
-      <td headers="grp_a stub_1_1 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">49.950</td>
-      <td headers="grp_a stub_1_1 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_1</td></tr>
-          <tr><td headers="grp_a num_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td>
-      <td headers="grp_a num_2 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_2</td></tr>
-          <tr><td headers="grp_a num_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td>
-      <td headers="grp_a num_3 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_3</td></tr>
-          <tr><td headers="grp_a num_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td>
-      <td headers="grp_a num_4 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_4</td></tr>
-          <tr class="gt_row_group_first"><td headers="grp_b stub_1_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_b</td>
-      <td headers="grp_b stub_1_5 num" class="gt_row gt_right" style="background-color: #D9D9D9;">5.550e+03</td>
-      <td headers="grp_b stub_1_5 char" class="gt_row gt_left" style="background-color: #CCCCCC;">NA</td>
-      <td headers="grp_b stub_1_5 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">five</td>
-      <td headers="grp_b stub_1_5 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-05-15</td>
-      <td headers="grp_b stub_1_5 time" class="gt_row gt_right" style="background-color: #A6A6A6;">17:55</td>
-      <td headers="grp_b stub_1_5 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-05-05 04:00</td>
-      <td headers="grp_b stub_1_5 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1325.810</td>
-      <td headers="grp_b stub_1_5 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_5</td></tr>
-          <tr><td headers="grp_b num_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td>
-      <td headers="grp_b num_6 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_6</td></tr>
-          <tr><td headers="grp_b num_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td>
-      <td headers="grp_b num_7 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_7</td></tr>
-          <tr><td headers="grp_b num_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td>
-      <td headers="grp_b num_8 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_8</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_a stub_2_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_a</td>
+      <td headers="grp_a stub_2_1 num" class="gt_row gt_right" style="background-color: #D9D9D9;">1.111e-01</td>
+      <td headers="grp_a stub_2_1 char" class="gt_row gt_left" style="background-color: #CCCCCC;">apricot</td>
+      <td headers="grp_a stub_2_1 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">one</td>
+      <td headers="grp_a stub_2_1 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-01-15</td>
+      <td headers="grp_a stub_2_1 time" class="gt_row gt_right" style="background-color: #A6A6A6;">13:35</td>
+      <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-01-01 02:22</td>
+      <td headers="grp_a stub_2_1 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">49.950</td>
+      <td headers="grp_a stub_2_1 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_1</td></tr>
+          <tr><td headers="grp_a stub_2_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td>
+      <td headers="grp_a stub_2_2 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_2</td></tr>
+          <tr><td headers="grp_a stub_2_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td>
+      <td headers="grp_a stub_2_3 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_3</td></tr>
+          <tr><td headers="grp_a stub_2_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td>
+      <td headers="grp_a stub_2_4 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_4</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_b stub_2_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_b</td>
+      <td headers="grp_b stub_2_5 num" class="gt_row gt_right" style="background-color: #D9D9D9;">5.550e+03</td>
+      <td headers="grp_b stub_2_5 char" class="gt_row gt_left" style="background-color: #CCCCCC;">NA</td>
+      <td headers="grp_b stub_2_5 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">five</td>
+      <td headers="grp_b stub_2_5 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-05-15</td>
+      <td headers="grp_b stub_2_5 time" class="gt_row gt_right" style="background-color: #A6A6A6;">17:55</td>
+      <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-05-05 04:00</td>
+      <td headers="grp_b stub_2_5 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1325.810</td>
+      <td headers="grp_b stub_2_5 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_5</td></tr>
+          <tr><td headers="grp_b stub_2_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td>
+      <td headers="grp_b stub_2_6 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_6</td></tr>
+          <tr><td headers="grp_b stub_2_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td>
+      <td headers="grp_b stub_2_7 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_7</td></tr>
+          <tr><td headers="grp_b stub_2_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td>
+      <td headers="grp_b stub_2_8 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_8</td></tr>
         </tbody>
         <tfoot class="gt_sourcenotes">
           <tr>
@@ -10104,30 +10104,30 @@
       <td headers="grp_a stub_2_1 time" class="gt_row gt_right" style="background-color: #A6A6A6;">13:35</td>
       <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-01-01 02:22</td>
       <td headers="grp_a stub_2_1 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">49.950</td></tr>
-          <tr><th id="num_2" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_2</th>
-      <td headers="grp_a num_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td></tr>
-          <tr><th id="num_3" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_3</th>
-      <td headers="grp_a num_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td></tr>
-          <tr><th id="num_4" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_4</th>
-      <td headers="grp_a num_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td></tr>
+          <tr><th id="stub_2_2" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_2</th>
+      <td headers="grp_a stub_2_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td></tr>
+          <tr><th id="stub_2_3" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_3</th>
+      <td headers="grp_a stub_2_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td></tr>
+          <tr><th id="stub_2_4" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_4</th>
+      <td headers="grp_a stub_2_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td></tr>
           <tr class="gt_row_group_first"><td headers="grp_b stub_2_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_b</td>
       <th id="stub_2_5" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_5</th>
       <td headers="grp_b stub_2_5 num" class="gt_row gt_right" style="background-color: #D9D9D9;">5.550e+03</td>
@@ -10137,30 +10137,30 @@
       <td headers="grp_b stub_2_5 time" class="gt_row gt_right" style="background-color: #A6A6A6;">17:55</td>
       <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-05-05 04:00</td>
       <td headers="grp_b stub_2_5 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1325.810</td></tr>
-          <tr><th id="num_6" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_6</th>
-      <td headers="grp_b num_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td></tr>
-          <tr><th id="num_7" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_7</th>
-      <td headers="grp_b num_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td></tr>
-          <tr><th id="num_8" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_8</th>
-      <td headers="grp_b num_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td></tr>
+          <tr><th id="stub_2_6" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_6</th>
+      <td headers="grp_b stub_2_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td></tr>
+          <tr><th id="stub_2_7" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_7</th>
+      <td headers="grp_b stub_2_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td></tr>
+          <tr><th id="stub_2_8" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_8</th>
+      <td headers="grp_b stub_2_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td></tr>
         </tbody>
         <tfoot class="gt_sourcenotes">
           <tr>
@@ -10714,39 +10714,39 @@
           </tr>
         </thead>
         <tbody class="gt_table_body">
-          <tr class="gt_row_group_first"><td headers="grp_a stub_1_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_a</td>
-      <td headers="grp_a stub_1_1 num" class="gt_row gt_right" style="background-color: #D9D9D9;">1.111e-01</td>
-      <td headers="grp_a stub_1_1 char" class="gt_row gt_left" style="background-color: #CCCCCC;">apricot</td>
-      <td headers="grp_a stub_1_1 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">one</td>
-      <td headers="grp_a stub_1_1 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-01-15</td>
-      <td headers="grp_a stub_1_1 time" class="gt_row gt_right" style="background-color: #A6A6A6;">13:35</td>
-      <td headers="grp_a stub_1_1 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-01-01 02:22</td>
-      <td headers="grp_a stub_1_1 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">49.950</td>
-      <td headers="grp_a stub_1_1 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_1</td></tr>
-          <tr><td headers="grp_a num_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td>
-      <td headers="grp_a num_2 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_2</td></tr>
-          <tr><td headers="grp_a num_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td>
-      <td headers="grp_a num_3 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_3</td></tr>
-          <tr><td headers="grp_a num_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td>
-      <td headers="grp_a num_4 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_4</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_a stub_2_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_a</td>
+      <td headers="grp_a stub_2_1 num" class="gt_row gt_right" style="background-color: #D9D9D9;">1.111e-01</td>
+      <td headers="grp_a stub_2_1 char" class="gt_row gt_left" style="background-color: #CCCCCC;">apricot</td>
+      <td headers="grp_a stub_2_1 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">one</td>
+      <td headers="grp_a stub_2_1 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-01-15</td>
+      <td headers="grp_a stub_2_1 time" class="gt_row gt_right" style="background-color: #A6A6A6;">13:35</td>
+      <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-01-01 02:22</td>
+      <td headers="grp_a stub_2_1 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">49.950</td>
+      <td headers="grp_a stub_2_1 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_1</td></tr>
+          <tr><td headers="grp_a stub_2_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td>
+      <td headers="grp_a stub_2_2 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_2</td></tr>
+          <tr><td headers="grp_a stub_2_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td>
+      <td headers="grp_a stub_2_3 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_3</td></tr>
+          <tr><td headers="grp_a stub_2_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td>
+      <td headers="grp_a stub_2_4 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_4</td></tr>
           <tr><th id="summary_stub_grp_a_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row" style="background-color: #FFA500;">min</th>
       <td headers="grp_a summary_stub_grp_a_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row" style="background-color: #8FBC8F;">0.11</td>
       <td headers="grp_a summary_stub_grp_a_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row">—</td>
@@ -10774,39 +10774,39 @@
       <td headers="grp_a summary_stub_grp_a_3 datetime" class="gt_row gt_right gt_summary_row gt_last_summary_row">—</td>
       <td headers="grp_a summary_stub_grp_a_3 currency" class="gt_row gt_right gt_summary_row gt_last_summary_row" style="background-color: #8FBC8F;">16292.32</td>
       <td headers="grp_a summary_stub_grp_a_3 row" class="gt_row gt_left gt_summary_row gt_last_summary_row">—</td></tr>
-          <tr class="gt_row_group_first"><td headers="grp_b stub_1_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_b</td>
-      <td headers="grp_b stub_1_5 num" class="gt_row gt_right" style="background-color: #D9D9D9;">5.550e+03</td>
-      <td headers="grp_b stub_1_5 char" class="gt_row gt_left" style="background-color: #CCCCCC;">NA</td>
-      <td headers="grp_b stub_1_5 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">five</td>
-      <td headers="grp_b stub_1_5 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-05-15</td>
-      <td headers="grp_b stub_1_5 time" class="gt_row gt_right" style="background-color: #A6A6A6;">17:55</td>
-      <td headers="grp_b stub_1_5 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-05-05 04:00</td>
-      <td headers="grp_b stub_1_5 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1325.810</td>
-      <td headers="grp_b stub_1_5 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_5</td></tr>
-          <tr><td headers="grp_b num_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td>
-      <td headers="grp_b num_6 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_6</td></tr>
-          <tr><td headers="grp_b num_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td>
-      <td headers="grp_b num_7 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_7</td></tr>
-          <tr><td headers="grp_b num_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td>
-      <td headers="grp_b num_8 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_8</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_b stub_2_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_b</td>
+      <td headers="grp_b stub_2_5 num" class="gt_row gt_right" style="background-color: #D9D9D9;">5.550e+03</td>
+      <td headers="grp_b stub_2_5 char" class="gt_row gt_left" style="background-color: #CCCCCC;">NA</td>
+      <td headers="grp_b stub_2_5 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">five</td>
+      <td headers="grp_b stub_2_5 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-05-15</td>
+      <td headers="grp_b stub_2_5 time" class="gt_row gt_right" style="background-color: #A6A6A6;">17:55</td>
+      <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-05-05 04:00</td>
+      <td headers="grp_b stub_2_5 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1325.810</td>
+      <td headers="grp_b stub_2_5 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_5</td></tr>
+          <tr><td headers="grp_b stub_2_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td>
+      <td headers="grp_b stub_2_6 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_6</td></tr>
+          <tr><td headers="grp_b stub_2_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td>
+      <td headers="grp_b stub_2_7 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_7</td></tr>
+          <tr><td headers="grp_b stub_2_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td>
+      <td headers="grp_b stub_2_8 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_8</td></tr>
           <tr><th id="summary_stub_grp_b_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row" style="background-color: #FFA500;">min</th>
       <td headers="grp_b summary_stub_grp_b_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row" style="background-color: #8FBC8F;">5550.00</td>
       <td headers="grp_b summary_stub_grp_b_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row">—</td>
@@ -11380,30 +11380,30 @@
       <td headers="grp_a stub_2_1 time" class="gt_row gt_right" style="background-color: #A6A6A6;">13:35</td>
       <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-01-01 02:22</td>
       <td headers="grp_a stub_2_1 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">49.950</td></tr>
-          <tr><th id="num_2" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_2</th>
-      <td headers="grp_a num_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td></tr>
-          <tr><th id="num_3" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_3</th>
-      <td headers="grp_a num_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td></tr>
-          <tr><th id="num_4" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_4</th>
-      <td headers="grp_a num_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td></tr>
+          <tr><th id="stub_2_2" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_2</th>
+      <td headers="grp_a stub_2_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td></tr>
+          <tr><th id="stub_2_3" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_3</th>
+      <td headers="grp_a stub_2_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td></tr>
+          <tr><th id="stub_2_4" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_4</th>
+      <td headers="grp_a stub_2_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td></tr>
           <tr><th id="summary_stub_grp_a_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick" style="background-color: #FFA500;">min</th>
       <td headers="grp_a summary_stub_grp_a_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row thick" style="background-color: #8FBC8F;">0.11</td>
       <td headers="grp_a summary_stub_grp_a_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row thick">—</td>
@@ -11437,30 +11437,30 @@
       <td headers="grp_b stub_2_5 time" class="gt_row gt_right" style="background-color: #A6A6A6;">17:55</td>
       <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-05-05 04:00</td>
       <td headers="grp_b stub_2_5 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1325.810</td></tr>
-          <tr><th id="num_6" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_6</th>
-      <td headers="grp_b num_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td></tr>
-          <tr><th id="num_7" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_7</th>
-      <td headers="grp_b num_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td></tr>
-          <tr><th id="num_8" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_8</th>
-      <td headers="grp_b num_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td></tr>
+          <tr><th id="stub_2_6" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_6</th>
+      <td headers="grp_b stub_2_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td></tr>
+          <tr><th id="stub_2_7" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_7</th>
+      <td headers="grp_b stub_2_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td></tr>
+          <tr><th id="stub_2_8" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_8</th>
+      <td headers="grp_b stub_2_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td></tr>
           <tr><th id="summary_stub_grp_b_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick" style="background-color: #FFA500;">min</th>
       <td headers="grp_b summary_stub_grp_b_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row thick" style="background-color: #8FBC8F;">5550.00</td>
       <td headers="grp_b summary_stub_grp_b_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row thick">—</td>
