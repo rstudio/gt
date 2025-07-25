@@ -55,12 +55,15 @@
 #'
 #'   A `data.frame` object or a tibble (`tbl_df`).
 #'
-#' @param rowname_col *Column for row names/labels from `data`*
+#' @param rowname_col *Column(s) for row names/labels from `data`*
 #'
-#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'   `vector<character>` // *default:* `NULL` (`optional`)
 #'
-#'   The column name in the input `data` table to use as row labels to be placed
-#'   in the table stub. If the `rownames_to_stub` option is `TRUE` then any
+#'   The column name(s) in the input `data` table to use as row labels to be 
+#'   placed in the table stub. If multiple column names are provided, they will 
+#'   create a hierarchical stub layout where values from the leftmost column form 
+#'   the highest level of the hierarchy, proceeding to individual row identifiers 
+#'   in the rightmost column. If the `rownames_to_stub` option is `TRUE` then any
 #'   column name provided to `rowname_col` will be ignored.
 #'
 #' @param groupname_col *Column for group names/labels from `data`*
@@ -295,7 +298,7 @@
 #' @export
 gt <- function(
     data,
-    rowname_col = "rowname",
+    rowname_col = NULL,
     groupname_col = dplyr::group_vars(data),
     process_md = FALSE,
     caption = NULL,
@@ -319,6 +322,11 @@ gt <- function(
     rowname_col <- "__GT_ROWNAME_PRIVATE__"
   }
 
+  # Auto-detect rowname column if not specified and a "rowname" column exists
+  if (is.null(rowname_col) && !rownames_to_stub && "rowname" %in% names(data)) {
+    rowname_col <- "rowname"
+  }
+
   if (length(groupname_col) == 0) {
     groupname_col <- NULL
   }
@@ -331,13 +339,25 @@ gt <- function(
     any(rowname_col %in% groupname_col)
   ) {
     cli::cli_abort(c(
-      "The value {.val {rowname_col}} appears in both `rowname_col` and `groupname_col`.",
+      "The value(s) {.val {intersect(rowname_col, groupname_col)}} appear(s) in both `rowname_col` and `groupname_col`.",
       "*" = "These arguments must not have any values in common."
     ))
   }
 
+  # Stop function if any `rowname_col` values don't exist in the data
+  if (!is.null(rowname_col) && !rownames_to_stub) {
+    data_names <- names(data)
+    missing_cols <- setdiff(rowname_col, data_names)
+    if (length(missing_cols) > 0) {
+      cli::cli_abort(c(
+        "The column(s) {.val {missing_cols}} specified in `rowname_col` do not exist in the data.",
+        "*" = "Available columns are: {.val {data_names}}"
+      ))
+    }
+  }
+
   # Initialize the main objects
-  rownames_to_column <- if (rownames_to_stub) rowname_col else NA_character_
+  rownames_to_column <- if (rownames_to_stub) rowname_col[1] else NA_character_
   data <-
     dt_data_init(
       data = list(),
@@ -420,11 +440,13 @@ gt <- function(
     # If there is a stub, tweak the alignment by checking whether the values
     # are predominantly number-like; this will generally get the correct
     # appearance for either a row-label-type stub or an numeric-index-type stub
-    if (!is.na(stub_var)) {
+    if (!any(is.na(stub_var))) {
 
       data_tbl <- dt_data_get(data = data)
 
-      col_vals <- data_tbl[[stub_var]]
+      # For multiple stub columns, check only the rightmost (primary) column for numeric alignment
+      primary_stub_var <- stub_var[length(stub_var)]
+      col_vals <- data_tbl[[primary_stub_var]]
 
       res <- grepl("^[0-9 -/:\\.]*$", col_vals[!is.na(col_vals)])
 
@@ -433,7 +455,7 @@ gt <- function(
         data <-
           dt_boxhead_edit(
             data = data,
-            var = stub_var,
+            var = primary_stub_var,
             column_align = "right"
           )
       }
@@ -443,7 +465,7 @@ gt <- function(
   if (
     process_md &&
     !is.null(rowname_col) &&
-    rowname_col %in% colnames(dt_data_get(data = data))
+    all(rowname_col %in% colnames(dt_data_get(data = data)))
   ) {
     data <- fmt_markdown(data = data, columns = rowname_col)
   }
