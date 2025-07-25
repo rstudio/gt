@@ -2397,6 +2397,33 @@ build_row_styles_with_stub_columns <- function(
     }
   }
   
+  # For multi-column stubs, modify border widths for internal columns
+  if (include_stub) {
+    stub_vars <- dt_boxhead_get_var_stub(data = data)
+    
+    if (length(stub_vars) > 1 && !all(is.na(stub_vars))) {
+      # Multi-column stub: apply half-thickness borders to internal columns
+      for (i in seq_along(stub_vars)) {
+        if (i < length(stub_vars)) {
+          # Internal stub columns: use half-thickness border (1px instead of 2px)
+          border_override <- "border-right-width: 1px"
+          
+          if (is.na(row_styles[i]) || row_styles[i] == "") {
+            row_styles[i] <- border_override
+          } else {
+            # Check if border-right-width is already set and replace it
+            if (grepl("border-right-width:", row_styles[i])) {
+              row_styles[i] <- gsub("border-right-width:[^;]*", "border-right-width: 1px", row_styles[i])
+            } else {
+              row_styles[i] <- paste(row_styles[i], border_override, sep = "; ")
+            }
+          }
+        }
+        # Last column keeps default border-right-width (2px from CSS)
+      }
+    }
+  }
+  
   row_styles
 }
 
