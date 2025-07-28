@@ -4,11 +4,21 @@
 
 * Fixed an issue with a warning in Quarto (@olivroy, #1985)
 
-* as_word() now handles "<br>" line breaks for md() and html(), and no longer automatically adds "Table N" ahead of the caption. 
+* `as_word()` now handles "<br>" line breaks for `md()` and `html()`, and no longer automatically adds "Table N" ahead of the caption. 
 
 * Improvements to options for LaTeX including repeating Headers, removing top and bottom lines, applying font sizes, and line breaks (@thebioengineer, #1630, #1061, #1767)
 
 * Add `latex()` function to let users write the LaTeX they wish to see in the table cell or text (@thebioengineer, #1912)
+
+* Fixed an issue where grand summary rows would not be saved properly to Word (@olivroy, #2000).
+
+* Fixed an encoding issue with docx output and `sub_small_vals()`/`sub_large_vals()` (@olivroy, #1997).
+
+* Enable `cols_align()` and `cols_label()` functions for gt_group objects (@shannonhaughton, #2005)
+
+* Enable remaining `cols_*` functions for gt_group objects (@shannonhaughton, #2012)
+
+* `tab_footnote()` + `md()` + docx is now processed correctly (@olivroy, #1892).
 
 * Added support for some unicode characters when going out to LaTeX (@thebioengineer)
 

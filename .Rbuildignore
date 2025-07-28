@@ -130,6 +130,9 @@ tests/testthat/_snaps/l_table_parts.md
 tests/testthat/_snaps/location_cells.md
 tests/testthat/test-location_cells.R
 
+tests/testthat/_snaps/multicolumn_stub.md
+tests/testthat/test-multicolumn_stub.R
+
 tests/testthat/test-opts.R
 
 tests/testthat/test-quarto.R

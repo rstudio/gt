@@ -2246,7 +2246,7 @@ There's a quick reference [here](https://commonmark.org/help/).
 
 })
 
-test_that("markdown with urls work",{
+test_that("markdown with urls work", {
 
   skip_on_ci()
   check_suggests()
@@ -2586,4 +2586,15 @@ test_that("table with image refs work - local only - setting image widths and he
            list(height = "571500", width = "914400", ratio = 0.625))
     )
 
+})
+
+test_that("sub_small_vals() and sub_large_vals() are properly encoded", {
+  data <- dplyr::tibble(x = c(0.001, 0.01, 150),
+                 y = c("<", "%", ">"))
+
+  tbl <- data %>%
+    gt() %>%
+    sub_small_vals() %>%
+    sub_large_vals(threshold = 100)
+  expect_snapshot_word(tbl)
 })

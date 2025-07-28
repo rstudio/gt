@@ -1,6 +1,10 @@
 test_that("All exported functions validate the incoming `data` object", {
 
-  regexp_stop <- "`data` must be a `gt_tbl` object"
+  # Stop messages can be either of:
+  # - "`data` must be a `gt_tbl` object, not a tibble."
+  # - "`data` must either be a `gt_tbl` or a `gt_group`, not a tibble."
+  # The regex below handles both adequately
+  regexp_stop <- "`data` must.*?be a `gt_tbl`"
 
   # Test the `exibble` tibble with all exported functions;
   # don't provide values for any arguments and ensure that
