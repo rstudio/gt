@@ -2998,7 +2998,6 @@ latex_special_chars <- c(
 )
 
 ## Copied from https://github.com/phfaist/pylatexenc/blob/6dc2ce7fcd89b7cd1536c79c800f49f09535f5e9/pylatexenc/latexencode/_uni2latexmap.py
-
 latex_unicode_chars <- c(
     "\U00A1"='\\textexclamdown',                      # character ¡",
     "\U00A2"='\\textcent',                            # character ¢",
@@ -4066,7 +4065,7 @@ latex_unicode_chars <- c(
     "\U2AB7"='\\ensuremath{\\precapprox}',                          # PRECEDES ABOVE ALMOST EQUAL TO [⪷]",
     "\U2AB8"='\\ensuremath{\\succapprox}',                          # SUCCEEDS ABOVE ALMOST EQUAL TO [⪸]",
     "\U2AB9"='\\ensuremath{\\precnapprox}',                         # PRECEDES ABOVE NOT ALMOST EQUAL TO [⪹]",
-    "\U2ABA"='\\ensuremath{\\succnapprox}',                         # SUCCEEDS ABOVE NOT ALMOST EQUAL TO [⪺]",
+    "\U2ABA"='\\ensuremath{\\succna pprox}',                         # SUCCEEDS ABOVE NOT ALMOST EQUAL TO [⪺]",
     "\U2AC5"='\\ensuremath{\\subseteqq}',                           # SUBSET OF ABOVE EQUALS SIGN [⫅]",
     "\U2AC6"='\\ensuremath{\\supseteqq}',                           # SUPERSET OF ABOVE EQUALS SIGN [⫆]",
     "\U2ACB"='\\ensuremath{\\subsetneqq}',                          # SUBSET OF ABOVE NOT EQUAL TO [⫋]",
@@ -4076,7 +4075,12 @@ latex_unicode_chars <- c(
     # CJK Symbols Punktuation (!) U+3000 : for \langle/\rangle
     "\U3008"='\\ensuremath{\\langle}',
     "\U3009"='\\ensuremath{\\rangle}'
-)
+) %>%
+  (function(x){
+    unicode_names <- names(x)
+    dupe_unicode_names <- unique(unicode_names[duplicated(unicode_names)])
+    x[!unicode_names %in% c(dupe_unicode_names, LETTERS, letters)]
+  })()
 
 # escape_latex() ---------------------------------------------------------------
 #' Perform LaTeX escaping
