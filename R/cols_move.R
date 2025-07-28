@@ -36,7 +36,7 @@
 #' `columns` to be moved is preserved, as is the ordering of all other columns
 #' in the table.
 #'
-#' @inheritParams cols_hide
+#' @inheritParams cols_align
 #'
 #' @param columns *Columns to target*
 #'
@@ -110,7 +110,13 @@ cols_move <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
+
+  # Handle gt_group
+  if(inherits(data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(data, arg_list))
+  }
 
   # if no `columns` are provided, return data unaltered
   if (rlang::quo_is_missing(rlang::enquo(columns))) {
@@ -185,7 +191,7 @@ cols_move <- function(
 #' start is preserved (same with the ordering of all other columns in the
 #' table).
 #'
-#' @inheritParams cols_hide
+#' @inheritParams cols_align
 #'
 #' @param columns *Columns to target*
 #'
@@ -261,7 +267,13 @@ cols_move_to_start <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
+
+  # Handle gt_group
+  if(inherits(data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(data, arg_list))
+  }
 
   # if no `columns` are provided, return data unaltered
   if (rlang::quo_is_missing(rlang::enquo(columns))) {
@@ -311,7 +323,7 @@ cols_move_to_start <- function(
 #' error prone. The ordering of the `columns` that are moved to the end is
 #' preserved (same with the ordering of all other columns in the table).
 #'
-#' @inheritParams cols_hide
+#' @inheritParams cols_align
 #'
 #' @param columns *Columns to target*
 #'
@@ -387,7 +399,13 @@ cols_move_to_end <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
+
+  # Handle gt_group
+  if(inherits(data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(data, arg_list))
+  }
 
   # if no `columns` are provided, return data unaltered
   if (rlang::quo_is_missing(rlang::enquo(columns))) {

@@ -16,6 +16,8 @@
 
 * Enable `cols_align()` and `cols_label()` functions for gt_group objects (@shannonhaughton, #2005)
 
+* Enable remaining `cols_*` functions for gt_group objects (@shannonhaughton, #2012)
+
 * `tab_footnote()` + `md()` + docx is now processed correctly (@olivroy, #1892).
 
 # gt 1.0.0
