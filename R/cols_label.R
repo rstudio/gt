@@ -35,7 +35,7 @@
 #' we even have the option to use [md()] or [html()] for rendering column labels
 #' from Markdown or using HTML.
 #'
-#' @inheritParams cols_width
+#' @inheritParams cols_align
 #'
 #' @param ... *Column label assignments*
 #'
@@ -336,7 +336,13 @@ cols_label <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = .data)
+  stop_if_not_gt_tbl_or_group(data = .data)
+
+  # Handle gt_group
+  if(inherits(.data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(.data, arg_list))
+  }
 
   if (!is.null(.process_units) && .process_units) {
 
@@ -486,7 +492,7 @@ cols_label <- function(
 #' (with `.` representing the vector of column labels), or, an anonymous
 #' function (e.g., `function(x) tools::toTitleCase(x)`).
 #'
-#' @inheritParams fmt_number
+#' @inheritParams cols_align
 #'
 #' @param columns *Columns to target*
 #'
@@ -621,7 +627,13 @@ cols_label_with <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
+
+  # Handle gt_group
+  if(inherits(data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(data, arg_list))
+  }
 
   fn <- rlang::as_function(fn)
 

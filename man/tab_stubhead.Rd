@@ -16,11 +16,13 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \item{label}{\emph{Stubhead label text}
 
-\verb{scalar<character>} // \strong{required}
+\verb{vector<character>} // \strong{required}
 
-The text to be used as the stubhead label. We can optionally use \code{\link[=md]{md()}} or
-\code{\link[=html]{html()}} to style the text as Markdown or to retain HTML elements in the
-text.}
+The text to be used as the stubhead label(s). For tables with multi-column
+stubs, you can provide either a single label that spans all stub columns, or
+a vector of labels with one label for each stub column. We can optionally use
+\code{\link[=md]{md()}} or \code{\link[=html]{html()}} to style the text as Markdown or to retain HTML elements
+in the text.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -98,34 +100,50 @@ the \code{\link{peeps}} dataset.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_3.png" alt="This image of a table was generated from the third code example in the `tab_stubhead()` help file." style="width:100\%;">
 }}
 
-The stubhead cell and its text can be styled using \code{\link[=tab_style]{tab_style()}} with
-\code{\link[=cells_stubhead]{cells_stubhead()}}. In this example, using the \code{\link{reactions}} dataset, we
-style the stubhead label so that it is vertically centered with text that is
-highly emboldened.
+For tables with multi-column stubs (created by specifying multiple columns in
+\code{rowname_col}), you can provide either a single label that spans all stub
+columns, or a vector of labels with one label for each stub column. Here's an
+example using the \code{\link{countrypops}} dataset with a single spanning label:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{reactions |>
-  dplyr::filter(cmpd_type == "nitrophenol") |>
-  dplyr::select(cmpd_name, OH_k298, Cl_k298) |>
-  dplyr::filter(!(is.na(OH_k298) & is.na(Cl_k298))) |>
-  gt(rowname_col = "cmpd_name") |>
-  tab_spanner(
-    label = "Rate constant at 298 K, in \{\{cm^3 molecules^-1 s^-1\}\}",
-    columns = ends_with("k298")
-  ) |>
-  tab_stubhead(label = "Nitrophenol Compound") |>
-  fmt_scientific() |>
-  sub_missing() |>
-  cols_label_with(fn = function(x) sub("_k298", "", x)) |>
-  cols_width(everything() ~ px(200)) |>
-  tab_style(
-    style = cell_text(v_align = "middle", weight = "800"),
-    locations = cells_stubhead()
-  )
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name \%in\% c("China", "India", "United States", "Indonesia")) |>
+  dplyr::filter(year >= 2000) |>
+  dplyr::select(country_name, country_code_2, year, population) |>
+  gt(rowname_col = c("country_name", "country_code_2")) |>
+  tab_stubhead(label = "Country Information") |>
+  fmt_integer(columns = population)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_4.png" alt="This image of a table was generated from the fourth code example in the `tab_stubhead()` help file." style="width:100\%;">
-}}
+Alternatively, you can provide a vector of labels, one for each stub column.
+This allows for more descriptive and specific headers for each column:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name \%in\% c("China", "India", "United States", "Indonesia")) |>
+  dplyr::filter(year >= 2000) |>
+  dplyr::select(country_name, country_code_2, year, population) |>
+  gt(rowname_col = c("country_name", "country_code_2")) |>
+  tab_stubhead(label = c("Country", "Code")) |>
+  fmt_integer(columns = population)
+}\if{html}{\out{</div>}}
+
+You can also use this approach with three or more stub columns. Here's an
+example creating a hierarchical structure with region, country, and year:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name \%in\% c("China", "India", "United States", "Indonesia")) |>
+  dplyr::filter(year \%in\% c(2000, 2010, 2020)) |>
+  dplyr::mutate(
+    region = dplyr::case_when(
+      country_name \%in\% c("China", "India", "Indonesia") ~ "Asia",
+      country_name == "United States" ~ "North America",
+      TRUE ~ "Other"
+    )
+  ) |>
+  dplyr::select(region, country_name, year, population) |>
+  gt(rowname_col = c("region", "country_name", "year")) |>
+  tab_stubhead(label = c("Region", "Country", "Year")) |>
+  fmt_integer(columns = population)
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{

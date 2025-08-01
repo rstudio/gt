@@ -676,11 +676,27 @@ text_transform_at_location.cells_stub <- function(
 
   stub_df <- dt_stub_df_get(data = data)
 
-  stub_var <- dt_boxhead_get_var_stub(data = data)
+  stub_vars <- dt_boxhead_get_var_stub(data = data)
 
-  # FIXME: Check for zero-length stub_var before continuing.
-  body[[stub_var]][stub_df$rownum_i %in% loc$rows] <-
-    fn(body[[stub_var]][stub_df$rownum_i %in% loc$rows])
+  # Handle case where no stub exists
+  if (all(is.na(stub_vars))) {
+    return(data)
+  }
+
+  # Get resolved columns (if any were specified)
+  target_columns <- if (length(loc$columns) > 0) {
+    intersect(loc$columns, stub_vars)
+  } else {
+    stub_vars  # Apply to all stub columns if none specified
+  }
+
+  # Apply transformation to each specified stub column
+  for (stub_var in target_columns) {
+    if (stub_var %in% colnames(body)) {
+      body[[stub_var]][stub_df$rownum_i %in% loc$rows] <-
+        fn(body[[stub_var]][stub_df$rownum_i %in% loc$rows])
+    }
+  }
 
   dt_body_set(data = data, body = body)
 }

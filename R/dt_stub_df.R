@@ -61,18 +61,37 @@ dt_stub_df_init <- function(
   }
 
   #
-  # Handle column of data specified as the `rowname_col`
+  # Handle column(s) of data specified as the `rowname_col`
   #
-  if (!is.null(rowname_col) && rowname_col %in% colnames(data_tbl)) {
+  if (!is.null(rowname_col) && all(rowname_col %in% colnames(data_tbl))) {
 
-    data <- dt_boxhead_set_stub(data = data, var = rowname_col)
+    # For multiple columns, we need to handle them as a hierarchy
+    if (length(rowname_col) > 1) {
+      
+      # Set all columns as stub columns in the boxhead
+      for (col in rowname_col) {
+        data <- dt_boxhead_set_stub(data = data, var = col)
+      }
+      
+      # Use the rightmost column as the primary row ID
+      rightmost_col <- rowname_col[length(rowname_col)]
+      rownames <- data_tbl[[rightmost_col]]
+      row_id <- create_unique_id_vals(rownames, simplify = process_md)
+      
+      # Place the `row_id` values into `stub_df$row_id`
+      stub_df[["row_id"]] <- row_id
+      
+    } else {
+      # Original single column logic
+      data <- dt_boxhead_set_stub(data = data, var = rowname_col)
 
-    rownames <- data_tbl[[rowname_col]]
+      rownames <- data_tbl[[rowname_col]]
 
-    row_id <- create_unique_id_vals(rownames, simplify = process_md)
+      row_id <- create_unique_id_vals(rownames, simplify = process_md)
 
-    # Place the `row_id` values into `stub_df$row_id`
-    stub_df[["row_id"]] <- row_id
+      # Place the `row_id` values into `stub_df$row_id`
+      stub_df[["row_id"]] <- row_id
+    }
   }
 
   #

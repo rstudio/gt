@@ -7,12 +7,19 @@
 cols_label(.data, ..., .list = list2(...), .fn = NULL, .process_units = NULL)
 }
 \arguments{
-\item{.data}{\emph{The gt table data object}
+\item{.data}{\emph{The gt table or gt group data object}
 
 \verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
-\code{\link[=gt]{gt()}} function.}
+\code{\link[=gt]{gt()}} function.
+
+OR
+
+\verb{obj:<gt_group>} // \strong{required}
+
+This is the \strong{gt} group object that is commonly created through use of the
+\code{\link[=gt_group]{gt_group()}} function.}
 
 \item{...}{\emph{Column label assignments}
 
