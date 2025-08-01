@@ -1,3 +1,6 @@
+## Copied from https://github.com/phfaist/pylatexenc/blob/6dc2ce7fcd89b7cd1536c79c800f49f09535f5e9/pylatexenc/latexencode/_uni2latexmap.py
+
+
 c(
   "\U00A1"='\\textexclamdown',                      # character ¡",
   "\U00A2"='\\textcent',                            # character ¢",

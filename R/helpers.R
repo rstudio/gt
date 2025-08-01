@@ -3076,15 +3076,8 @@ latex_special_chars <- c(
   "}" = "\\}"
 )
 
-## Copied from https://github.com/phfaist/pylatexenc/blob/6dc2ce7fcd89b7cd1536c79c800f49f09535f5e9/pylatexenc/latexencode/_uni2latexmap.py
+latex_unicode_env <- new.env()
 
-if(getRversion() > package_version("4.1.3")){
-  latex_unicode_chars <- readLines(system.file("latex/latex_unicode_conversion.txt", package = "gt")) %>%
-    str2expression() %>%
-    eval()
-}else{
-  latex_unicode_chars <- c()
-}
 
 # escape_latex() ---------------------------------------------------------------
 #' Perform LaTeX escaping
@@ -3136,13 +3129,13 @@ escape_latex <- function(text) {
 
   if(getRversion() > package_version("4.1.3")){
 
-    m2 <- gregexpr(paste0("[",paste0(names(latex_unicode_chars), collapse = "|"),"]"), text[!na_text], perl = TRUE)
+    m2 <- gregexpr(paste0("[",paste0(names(latex_unicode_env$latex_unicode_chars), collapse = "|"),"]"), text[!na_text], perl = TRUE)
 
     unicode_chars <- regmatches(text[!na_text], m2)
 
     latex_unicode <-
       lapply(unicode_chars, function(x) {
-        new_var <- latex_unicode_chars[x]
+        new_var <- latex_unicode_env$latex_unicode_chars[x]
         if(length(new_var) > 0){
           x[!is.na(new_var)] <- new_var[!is.na(new_var)]
         }
