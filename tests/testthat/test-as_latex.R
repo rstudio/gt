@@ -359,6 +359,8 @@ test_that("Table can apply font sizes", {
 
 test_that("Tables with unicode characters were acceptable and updated to latex compliant code", {
 
+  testthat::skip_if(getRversion() <= package_version("4.1.3"))
+
   gt_tbl_unicode <- data.frame( unicode = c("ɑβΔ")) %>%
     gt() %>%
     tab_header(

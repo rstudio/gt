@@ -2998,6 +2998,9 @@ latex_special_chars <- c(
 )
 
 ## Copied from https://github.com/phfaist/pylatexenc/blob/6dc2ce7fcd89b7cd1536c79c800f49f09535f5e9/pylatexenc/latexencode/_uni2latexmap.py
+
+if(getRversion() > package_version("4.1.3")){
+
 latex_unicode_chars <- c(
     "\U00A1"='\\textexclamdown',                      # character ¡",
     "\U00A2"='\\textcent',                            # character ¢",
@@ -4075,12 +4078,10 @@ latex_unicode_chars <- c(
     # CJK Symbols Punktuation (!) U+3000 : for \langle/\rangle
     "\U3008"='\\ensuremath{\\langle}',
     "\U3009"='\\ensuremath{\\rangle}'
-) %>%
-  (function(x){
-    unicode_names <- names(x)
-    dupe_unicode_names <- unique(unicode_names[duplicated(unicode_names)])
-    x[!unicode_names %in% c(dupe_unicode_names, LETTERS, letters)]
-  })()
+  )
+}else{
+  latex_unicode_chars <- c()
+}
 
 # escape_latex() ---------------------------------------------------------------
 #' Perform LaTeX escaping
@@ -4130,22 +4131,25 @@ escape_latex <- function(text) {
 
   regmatches(text[!na_text], m) <- escaped_chars
 
-  m2 <- gregexpr(paste0("[",paste0(names(latex_unicode_chars), collapse = "|"),"]"), text[!na_text], perl = TRUE)
+  if(getRversion() > package_version("4.1.3")){
 
-  unicode_chars <- regmatches(text[!na_text], m2)
+    m2 <- gregexpr(paste0("[",paste0(names(latex_unicode_chars), collapse = "|"),"]"), text[!na_text], perl = TRUE)
 
-  # browser()
+    unicode_chars <- regmatches(text[!na_text], m2)
 
-  latex_unicode <-
-    lapply(unicode_chars, function(x) {
-      new_var <- latex_unicode_chars[x]
-      if(length(new_var) > 0){
-        x[!is.na(new_var)] <- new_var[!is.na(new_var)]
-      }
-      x
-    })
+    latex_unicode <-
+      lapply(unicode_chars, function(x) {
+        new_var <- latex_unicode_chars[x]
+        if(length(new_var) > 0){
+          x[!is.na(new_var)] <- new_var[!is.na(new_var)]
+        }
+        x
+      })
 
-  regmatches(text[!na_text], m2) <- latex_unicode
+    regmatches(text[!na_text], m2) <- latex_unicode
+
+  }
+
   text
 }
 

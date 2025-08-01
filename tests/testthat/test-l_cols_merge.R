@@ -178,7 +178,99 @@ test_that("cols_merge_uncert() works correctly", {
   )
 })
 
-test_that("cols_merge_range() works correctly", {
+test_that("cols_merge_range() works correctly - R less than 4.1.3", {
+
+  testthat::skip_if_not(getRversion() <= package_version("4.1.3"))
+
+  # Create a `tbl_latex` object with `gt()`; merge two columns
+  # with `cols_merge_range()`
+  tbl_latex <-
+    tbl %>%
+    gt() %>%
+    cols_merge_range(
+      col_begin = "col_1",
+      col_end = "col_2"
+    )
+
+  # Expect a characteristic pattern
+  expect_match(
+    as_latex(tbl_latex) %>% as.character(),
+    paste0(
+      ".*767.6–928.1 & 382.0 & 674.5",
+      ".*403.3–461.5 & 15.1 & 242.8",
+      ".*686.4–54.1 & 282.7 & 56.3",
+      ".*662.6–148.8 & 984.6 & 928.1",
+      ".*198.5–65.1 & 127.4 & 219.3",
+      ".*132.1–118.1 & 91.2 & 874.3",
+      ".*349.7–307.1 & 566.7 & 542.9",
+      ".*63.7–504.3 & 152.0 & 724.5",
+      ".*105.4–729.8 & 962.4 & 336.4",
+      ".*924.2–424.6 & 740.8 & 104.2.*"
+    )
+  )
+
+  # Create a `tbl_latex` object with `gt()`; merge two columns
+  # with `cols_merge_range()`
+  tbl_latex <-
+    tbl %>%
+    gt() %>%
+    cols_merge_range(
+      col_begin = col_1,
+      col_end = col_2
+    )
+
+  # Expect a characteristic pattern
+  expect_match(
+    as_latex(tbl_latex) %>% as.character(),
+    paste0(
+      ".*767.6–928.1 & 382.0 & 674.5",
+      ".*403.3–461.5 & 15.1 & 242.8",
+      ".*686.4–54.1 & 282.7 & 56.3",
+      ".*662.6–148.8 & 984.6 & 928.1",
+      ".*198.5–65.1 & 127.4 & 219.3",
+      ".*132.1–118.1 & 91.2 & 874.3",
+      ".*349.7–307.1 & 566.7 & 542.9",
+      ".*63.7–504.3 & 152.0 & 724.5",
+      ".*105.4–729.8 & 962.4 & 336.4",
+      ".*924.2–424.6 & 740.8 & 104.2.*"
+    )
+  )
+
+  # Create a `tbl_latex` object with `gt()`; merge two columns, twice,
+  # with `cols_merge_range()`
+  tbl_latex <-
+    tbl %>%
+    gt() %>%
+    cols_merge_range(
+      col_begin = col_1,
+      col_end = col_2
+    ) %>%
+    cols_merge_range(
+      col_begin = col_3,
+      col_end = col_4
+    )
+
+  # Expect a characteristic pattern
+  expect_match(
+    as_latex(tbl_latex) %>% as.character(),
+    paste0(
+      ".*767.6–928.1 & 382.0–674.5",
+      ".*403.3–461.5 & 15.1–242.8",
+      ".*686.4–54.1 & 282.7–56.3",
+      ".*662.6–148.8 & 984.6–928.1",
+      ".*198.5–65.1 & 127.4–219.3",
+      ".*132.1–118.1 & 91.2–874.3",
+      ".*349.7–307.1 & 566.7–542.9",
+      ".*63.7–504.3 & 152.0–724.5",
+      ".*105.4–729.8 & 962.4–336.4",
+      ".*924.2–424.6 & 740.8–104.2.*"
+    )
+  )
+})
+
+test_that("cols_merge_range() works correctly - R greater than 4.1.3", {
+
+  testthat::skip_if_not(getRversion() > package_version("4.1.3"))
 
   # Create a `tbl_latex` object with `gt()`; merge two columns
   # with `cols_merge_range()`
