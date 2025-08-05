@@ -3539,7 +3539,7 @@ default_fonts <- function() {
 #' ## Slab Serif (`"slab-serif"`)
 #'
 #' ```css
-#' font-family"=ockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
+#' font-family: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
 #' ```
 #'
 #' Slab Serif typefaces are distinguished by the thick, block-like serifs that
