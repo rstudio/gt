@@ -1575,21 +1575,21 @@ cells_group <- function(groups = everything()) {
 #'   The rows to which targeting operations are constrained. The default
 #'   [everything()] results in all rows in the stub being targeted.
 #'   Multiple targeting methods are supported:
-#'   
+#'
 #'   **Numeric indices:** A vector of row indices within `c()` (e.g., `c(1, 3, 5)`).
-#'   
+#'
 #'   **Content-based targeting:** A vector of content values within `c()` that match
-#'   values in any stub column (e.g., `c("Ford", "BMW")` to target all rows 
-#'   containing those manufacturer names). This is particularly useful for 
-#'   multi-column stubs where you want to target based on content rather than 
+#'   values in any stub column (e.g., `c("Ford", "BMW")` to target all rows
+#'   containing those manufacturer names). This is particularly useful for
+#'   multi-column stubs where you want to target based on content rather than
 #'   calculating row indices.
-#'   
-#'   **Select helpers:** Use functions like [starts_with()], [ends_with()], 
+#'
+#'   **Select helpers:** Use functions like [starts_with()], [ends_with()],
 #'   [contains()], [matches()], [num_range()], and [everything()].
-#'   
-#'   **Expressions:** Filter expressions to target specific rows 
+#'
+#'   **Expressions:** Filter expressions to target specific rows
 #'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
-#'   
+#'
 #'   When using content-based targeting with multi-column stubs, the function
 #'   will search all stub columns for matching values unless specific `columns`
 #'   are provided to constrain the search.
@@ -3076,6 +3076,9 @@ latex_special_chars <- c(
   "}" = "\\}"
 )
 
+latex_unicode_env <- new.env()
+
+
 # escape_latex() ---------------------------------------------------------------
 #' Perform LaTeX escaping
 #'
@@ -3123,6 +3126,26 @@ escape_latex <- function(text) {
     })
 
   regmatches(text[!na_text], m) <- escaped_chars
+
+  if(getRversion() > package_version("4.1.3")){
+
+    m2 <- gregexpr(paste0("[",paste0(names(latex_unicode_env$latex_unicode_chars), collapse = "|"),"]"), text[!na_text], perl = TRUE)
+
+    unicode_chars <- regmatches(text[!na_text], m2)
+
+    latex_unicode <-
+      lapply(unicode_chars, function(x) {
+        new_var <- latex_unicode_env$latex_unicode_chars[x]
+        if(length(new_var) > 0){
+          x[!is.na(new_var)] <- new_var[!is.na(new_var)]
+        }
+        x
+      })
+
+    regmatches(text[!na_text], m2) <- latex_unicode
+
+  }
+
   text
 }
 
