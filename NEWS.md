@@ -22,6 +22,8 @@
 
 * Added support for some unicode characters when going out to LaTeX (@thebioengineer)
 
+* Use stub alignment values for RTF output (@shannonhaughton, #2019)
+
 
 # gt 1.0.0
 
