@@ -137,3 +137,42 @@ test_that("A gt table contains the expected column spanner labels", {
     )
   )
 })
+
+test_that("A gt table retains its column alignment", {
+
+  gt_data <- exibble %>%
+    dplyr::select(group, row, num, char) %>%
+    dplyr::slice(1:2)
+
+  # Create a `tbl_rtf` object with `gt()`; this table
+  # contains specific column alignment including in the stub - l,l,r,l
+  tbl_rtf <-
+    gt_data %>%
+    gt(
+      rowname_col = "row",
+      groupname_col = "group",
+      row_group_as_column = TRUE
+    ) %>%
+    cols_align(columns = c(group, row),
+               align = "left")
+
+  # extract alignment codes
+  # 3 sets: 1 header, 2 data rows
+  rtf_lines <- as_rtf(tbl_rtf)
+  rtf_align <- regmatches(rtf_lines, gregexpr("\\\\q[rl]", rtf_lines)) %>% unlist()
+  expect_equal(rtf_align, rep(c("\\ql","\\ql","\\qr","\\ql"), 3))
+
+  # all right
+  tbl_rtf2 <-
+    gt_data %>%
+    gt() %>%
+    cols_align(columns = everything(),
+               align = "right")
+
+
+  # extract alignment codes
+  # 3 sets: 1 header, 2 data rows
+  rtf_lines2 <- as_rtf(tbl_rtf2)
+  rtf_align2 <- regmatches(rtf_lines2, gregexpr("\\\\q[rl]", rtf_lines2)) %>% unlist()
+  expect_equal(rtf_align2, rep("\\qr", 12))
+})

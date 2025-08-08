@@ -1245,7 +1245,7 @@ create_columns_component_rtf <- function(data) {
   # Get the column alignments
   col_alignment <-
     c(
-      rep("left", length(stub_layout)),
+      dt_boxhead_get_alignments_in_stub(data = data),
       dt_boxhead_get_vars_align_default(data = data)
     )
 
@@ -1456,7 +1456,7 @@ create_body_component_rtf <- function(data) {
   # Get the column alignments
   col_alignment <-
     c(
-      rep("right", length(stub_layout)),
+      dt_boxhead_get_alignments_in_stub(data = data),
       dt_boxhead_get_vars_align_default(data = data)
     )
 
