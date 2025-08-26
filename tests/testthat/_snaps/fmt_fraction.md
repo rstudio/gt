@@ -580,7 +580,6 @@
       <td headers="Not Numbers stub_1_59 hundredths" class="gt_row gt_right">-Inf</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1165,7 +1164,6 @@
       <td headers="Not Numbers stub_1_59 hundredths" class="gt_row gt_right">-Inf</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1749,7 +1747,6 @@
       <td headers="Not Numbers stub_1_59 sixteenths" class="gt_row gt_right">-Inf</td>
       <td headers="Not Numbers stub_1_59 hundredths" class="gt_row gt_right">-Inf</td></tr>
         </tbody>
-        
         
       </table>
 
