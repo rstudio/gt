@@ -880,3 +880,85 @@
       Caused by error in `cells_grand_summary()`:
       ! Grand summary row 15 does not exist in the data.
 
+# footnote consolidation works correctly (regression test for duplicate footnotes)
+
+    Code
+      cat(render_as_html(gt_tbl))
+    Output
+      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+        <thead>
+          <tr class="gt_col_headings">
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="name">name</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="csd_type">csd_type</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="population_2021">population_2021</th>
+          </tr>
+        </thead>
+        <tbody class="gt_table_body">
+          <tr><td headers="name" class="gt_row gt_left">Addington Highlands<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">2534</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Adelaide Metcalfe<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">3011</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Adjala-Tosorontio<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">10989</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Admaston/Bromley<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">2995</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Ajax<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">town</td>
+      <td headers="population_2021" class="gt_row gt_right">126666</td></tr>
+        </tbody>
+        
+        <tfoot class="gt_footnotes">
+          <tr>
+            <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> Part of the Greater Toronto Area.</td>
+          </tr>
+        </tfoot>
+      </table>
+
+---
+
+    Code
+      cat(render_as_html(gt_tbl))
+    Output
+      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+        <thead>
+          <tr class="gt_col_headings">
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="name">name</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="csd_type">csd_type</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="population_2021">population_2021</th>
+          </tr>
+        </thead>
+        <tbody class="gt_table_body">
+          <tr><td headers="name" class="gt_row gt_left">Addington Highlands<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">2534</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Adelaide Metcalfe<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">3011</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Adjala-Tosorontio<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">10989</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Admaston/Bromley<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">2995</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Ajax<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">town</td>
+      <td headers="population_2021" class="gt_row gt_right">126666</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Alberton<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">954</td></tr>
+        </tbody>
+        
+        <tfoot class="gt_footnotes">
+          <tr>
+            <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> Part of the Greater Toronto Area.</td>
+          </tr>
+          <tr>
+            <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> Different footnote text.</td>
+          </tr>
+        </tfoot>
+      </table>
+
