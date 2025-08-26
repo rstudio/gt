@@ -1213,9 +1213,9 @@ test_that("tab_footnote() errors well when it can't resolve location", {
 })
 
 test_that("footnote consolidation works correctly (regression test for duplicate footnotes)", {
-  
+
   check_suggests()
-  
+
   # Create a test table with duplicate footnote text applied to multiple cells
   # This should result in a single consolidated footnote, not multiple footnotes
   gt_consolidated_footnotes <-
@@ -1227,27 +1227,27 @@ test_that("footnote consolidation works correctly (regression test for duplicate
       footnote = "Part of the Greater Toronto Area.",
       locations = cells_body(columns = name, rows = c(1, 2, 3, 4, 5))
     )
-  
+
   # Check internal footnotes data frame structure
   footnotes_df <- dt_footnotes_get(data = gt_consolidated_footnotes)
-  
+
   # Should have 5 rows (one for each cell footnote was applied to)
   expect_equal(nrow(footnotes_df), 5)
-  
+
   # All footnotes should have the same text
   expect_true(all(footnotes_df$footnotes == "Part of the Greater Toronto Area."))
-  
-  # All should be applied to the "name" column in data cells  
+
+  # All should be applied to the "name" column in data cells
   expect_true(all(footnotes_df$locname == "data"))
   expect_true(all(footnotes_df$colname == "name"))
-  
+
   # Should be applied to rows 1-5
   expect_setequal(footnotes_df$rownum, 1:5)
-  
+
   # Test that the rendered output has consolidated footnotes
   # (same footnote number for all instances, single footnote in footer)
   expect_snapshot_html(gt_consolidated_footnotes)
-  
+
   # Test with mixed footnote text to ensure consolidation works correctly
   gt_mixed_footnotes <-
     towny %>%
@@ -1266,7 +1266,99 @@ test_that("footnote consolidation works correctly (regression test for duplicate
       footnote = "Part of the Greater Toronto Area.",  # Same as first footnote
       locations = cells_body(columns = name, rows = 6)
     )
-  
+
   # Test that mixed footnotes are handled correctly
   expect_snapshot_html(gt_mixed_footnotes)
+})
+
+test_that("footnote kitchen sink test - comprehensive location and consolidation scenarios", {
+
+  check_suggests()
+
+  # Create a minimal but comprehensive test table with footnotes in every possible location
+  # Uses a small 3x3 data subset for efficiency while testing all footnote scenarios
+  gt_kitchen_sink <-
+    exibble %>%
+    dplyr::slice_head(n = 3) %>%
+    dplyr::select(num, char, currency) %>%
+    gt(rownames_to_stub = TRUE) %>%
+    tab_header(
+      title = "Kitchen Sink Footnote Test",
+      subtitle = "Testing all footnote locations and consolidation"
+    ) %>%
+    tab_spanner(
+      label = "Data Columns",
+      columns = c(num, char, currency)
+    ) %>%
+    tab_source_note("Source: exibble dataset") %>%
+    tab_footnote(
+      footnote = "Shared footnote across locations.",
+      locations = list(
+        cells_title("title"),
+        cells_column_labels(columns = num),
+        cells_body(columns = char, rows = 1),
+        cells_stub(rows = 1)
+      )
+    ) %>%
+    tab_footnote(
+      footnote = "First footnote on subtitle.",
+      locations = cells_title("subtitle")
+    ) %>%
+    tab_footnote(
+      footnote = "Second footnote on subtitle.",
+      locations = cells_title("subtitle")
+    ) %>%
+    tab_footnote(
+      footnote = "Third footnote on subtitle.",
+      locations = cells_title("subtitle")
+    ) %>%
+    tab_footnote(
+      footnote = "Repeated in body cells.",
+      locations = cells_body(columns = currency, rows = c(1, 2, 3))
+    ) %>%
+    tab_footnote(
+      footnote = "Unique column spanner footnote.",
+      locations = cells_column_spanners("Data Columns")
+    ) %>%
+    tab_footnote(
+      footnote = "Shared footnote across locations.",
+      locations = cells_column_labels(columns = char)
+    ) %>%
+    tab_footnote(
+      footnote = "Repeated in body cells.",
+      locations = cells_body(columns = num, rows = 2)
+    )
+
+  # Verify the internal footnotes structure
+  footnotes_df <- dt_footnotes_get(data = gt_kitchen_sink)
+
+  # Should have multiple footnote entries
+  expect_gt(nrow(footnotes_df), 5)
+
+  # Check that we have the expected mix of footnote texts
+  unique_footnotes <- unique(footnotes_df$footnotes)
+  expected_footnotes <- c(
+    "Shared footnote across locations.",
+    "First footnote on subtitle.",
+    "Second footnote on subtitle.",
+    "Third footnote on subtitle.",
+    "Repeated in body cells.",
+    "Unique column spanner footnote."
+  )
+
+  # All expected footnotes should be present
+  expect_true(all(expected_footnotes %in% unique_footnotes))
+
+  # Test various location types are represented
+  location_types <- unique(footnotes_df$locname)
+  expected_locations <-
+    c(
+      "title", "subtitle", "columns_columns", "columns_groups",
+      "data", "stub"
+    )
+
+  # Key location types should be present
+  expect_gt(length(intersect(location_types, expected_locations)), 4)
+
+  expect_snapshot_html(gt_kitchen_sink)
 })
