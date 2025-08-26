@@ -43,15 +43,14 @@
       <td headers="fctr" class="gt_row gt_center">five</td>
       <td headers="x" class="gt_row gt_right">- 1</td></tr>
         </tbody>
-        
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> Not a problem</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> A problem because fctr is labelled with md</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>3</sup></span> <span data-qmd-base64="UHJvYmxlbSBiZWNhdXNlIG51bSByb3cgMSBpcyBgZm10X21hcmtkb3duKClgICsgYWxzbyB0aGUgZm9vdG5vdGUgaXMgd3JhcHBlZCBpbiBtZC4="><span class='gt_from_md'>Problem because num row 1 is <code>fmt_markdown()</code> + also the footnote is wrapped in md.</span></span></td>
           </tr>
         </tfoot>

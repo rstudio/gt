@@ -102,15 +102,14 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -562,15 +561,14 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -1019,15 +1017,14 @@
       <td headers="grp_b  currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b  row" class="gt_row gt_left">row_8</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -1457,15 +1454,14 @@
       <td headers="grp_b stub_2_8 currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b stub_2_8 row" class="gt_row gt_left">row_8</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -1917,15 +1913,14 @@
       <td headers="stub_1_8 currency" class="gt_row gt_right">0.440</td>
       <td headers="stub_1_8 group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -2377,15 +2372,14 @@
       <td headers="stub_1_8 currency" class="gt_row gt_right">0.440</td>
       <td headers="stub_1_8 group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -2834,15 +2828,14 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -3271,15 +3264,14 @@
       <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_2_8 currency" class="gt_row gt_right">0.440</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -3770,15 +3762,14 @@
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="10">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="10">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -4401,15 +4392,14 @@
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="10">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="10">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -5080,15 +5070,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9501.26</td>
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -5908,15 +5897,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9501.26</td>
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -6674,15 +6662,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9501.26</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -7254,15 +7241,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9501.26</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -7876,15 +7862,14 @@
       <td headers="grand_summary_stub_3 datetime" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9501.26</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -8637,15 +8622,14 @@
       <td headers="grand_summary_stub_3 datetime" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9501.26</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -9376,15 +9360,14 @@
       <td headers="row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_8</td>
       <td headers="group" class="gt_row gt_left" style="background-color: #737373;">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -9491,15 +9474,14 @@
       <td headers="row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_8</td>
       <td headers="group" class="gt_row gt_left" style="background-color: #737373;">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -9603,15 +9585,14 @@
       <td headers="grp_b  currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td>
       <td headers="grp_b  row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_8</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="8">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="8">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -9712,15 +9693,14 @@
       <td headers="grp_b stub_2_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td>
       <td headers="grp_b stub_2_8 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_8</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -9827,15 +9807,14 @@
       <td headers="stub_1_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td>
       <td headers="stub_1_8 group" class="gt_row gt_left" style="background-color: #737373;">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -9942,15 +9921,14 @@
       <td headers="stub_1_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td>
       <td headers="stub_1_8 group" class="gt_row gt_left" style="background-color: #737373;">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -10054,15 +10032,14 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="8">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="8">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -10162,15 +10139,14 @@
       <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
       <td headers="grp_b stub_2_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -10316,15 +10292,14 @@
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="10">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="10">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -10470,15 +10445,14 @@
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="10">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="10">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -10672,15 +10646,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row" style="background-color: #D3D3D3;">9501.26</td>
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -10862,15 +10835,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row" style="background-color: #D3D3D3;">9501.26</td>
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -11004,15 +10976,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row" style="background-color: #D3D3D3;">9501.26</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -11146,15 +11117,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row" style="background-color: #D3D3D3;">9501.26</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -11330,15 +11300,14 @@
       <td headers="grand_summary_stub_3 datetime" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row" style="background-color: #D3D3D3;">9501.26</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="8">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="8">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -11510,15 +11479,14 @@
       <td headers="grand_summary_stub_3 datetime" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row" style="background-color: #D3D3D3;">9501.26</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 # Group labels as a column work well in Latex with specified column widths

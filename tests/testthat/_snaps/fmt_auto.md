@@ -36,7 +36,6 @@
       <td headers="real_small" class="gt_row gt_right">263.8  </td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -76,7 +75,6 @@
       <td headers="real" class="gt_row gt_right">2.3M</td>
       <td headers="real_small" class="gt_row gt_right">263.8  </td></tr>
         </tbody>
-        
         
       </table>
 
@@ -123,7 +121,6 @@
       <td headers="real" class="gt_row gt_right">1.000&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup></td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -168,7 +165,6 @@
       <td headers="int_like" class="gt_row gt_right">1B</td>
       <td headers="real" class="gt_row gt_right">1B</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -268,7 +264,6 @@
       <td headers="W03 stub_1_10 adj_close" class="gt_row gt_right">2,019.42</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -367,7 +362,6 @@
       <td headers="W03 stub_1_10 adj_close" class="gt_row gt_right">2,019.42</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -402,7 +396,6 @@
           <tr><td headers="num" class="gt_row gt_right">1.000&nbsp;×&nbsp;10<sup style='font-size: 65%;'>18</sup></td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -436,7 +429,6 @@
           <tr><td headers="num" class="gt_row gt_right">1.000&nbsp;×&nbsp;10<sup style='font-size: 65%;'>17</sup></td></tr>
           <tr><td headers="num" class="gt_row gt_right">1.000&nbsp;×&nbsp;10<sup style='font-size: 65%;'>18</sup></td></tr>
         </tbody>
-        
         
       </table>
 
@@ -478,7 +470,6 @@
       <td headers="real_small" class="gt_row gt_right">263.800</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -512,7 +503,6 @@
           <tr><td headers="num" class="gt_row gt_right">1e+17</td></tr>
           <tr><td headers="num" class="gt_row gt_right">1e+18</td></tr>
         </tbody>
-        
         
       </table>
 

@@ -41,7 +41,6 @@
       <td headers="span_2.B.Y" class="gt_row gt_right">4</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -85,7 +84,6 @@
       <td headers="B.Y" class="gt_row gt_right">4</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -126,7 +124,6 @@
       <td headers="A" class="gt_row gt_right">3</td>
       <td headers="B.Y" class="gt_row gt_right">4</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -170,7 +167,6 @@
       <td headers="all.B.Z" class="gt_row gt_right">4</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -213,7 +209,6 @@
       <td headers="all.Z.B" class="gt_row gt_right">4</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -250,7 +245,6 @@
       <td headers="all.Y.A" class="gt_row gt_right">3</td>
       <td headers="all.Z.B" class="gt_row gt_right">4</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -292,7 +286,6 @@
       <td headers="all.Z.B" class="gt_row gt_right">4</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -335,7 +328,6 @@
       <td headers="all__1Z__1B" class="gt_row gt_right">4</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -377,7 +369,6 @@
       <td headers="all__1Y__1A" class="gt_row gt_right">3</td>
       <td headers="all__1Z__1B" class="gt_row gt_right">4</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -407,7 +398,6 @@
       <td headers="all__1Z__1B" class="gt_row gt_right">4</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -449,7 +439,6 @@
       <td headers="all__1Y__1A" class="gt_row gt_right">3</td>
       <td headers="all__1Z__1B" class="gt_row gt_right">4</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -488,7 +477,6 @@
       <td headers="all__1Z__1B" class="gt_row gt_right">4</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -531,7 +519,6 @@
       <td headers="all__1Z__1B" class="gt_row gt_right">4</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -583,7 +570,6 @@
       <td headers="all__1Z__1B" class="gt_row gt_right">4</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -634,7 +620,6 @@
       <td headers="all__1Y__1A" class="gt_row gt_right">3</td>
       <td headers="all__1Z__1B" class="gt_row gt_right">4</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -673,7 +658,6 @@
       <td headers="all__1Z__1B" class="gt_row gt_right">4</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -710,7 +694,6 @@
       <td headers="all__1Y__1A" class="gt_row gt_right">3</td>
       <td headers="all__1Z__1B" class="gt_row gt_right">4</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -756,7 +739,6 @@
       <td headers="all.Y.A" class="gt_row gt_right">3</td>
       <td headers="all.Z.B" class="gt_row gt_right">4</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -804,7 +786,6 @@
       <td headers="all.Y.A" class="gt_row gt_right">3</td>
       <td headers="all.Z.B" class="gt_row gt_right">4</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -855,7 +836,6 @@
       <td headers="all.Y.A" class="gt_row gt_right">3</td>
       <td headers="all.Z.B" class="gt_row gt_right">4</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -906,7 +886,6 @@
       <td headers="all.Y.A" class="gt_row gt_right">3</td>
       <td headers="all.Z.B" class="gt_row gt_right">4</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -963,7 +942,6 @@
       <td headers="all.Z.B" class="gt_row gt_right">4</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1014,7 +992,6 @@
       <td headers="span_2.B.Y" class="gt_row gt_right">4</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1064,7 +1041,6 @@
       <td headers="span_2.A.Y" class="gt_row gt_right">3</td>
       <td headers="span_2.B.Y" class="gt_row gt_right">4</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -1118,7 +1094,6 @@
       <td headers="span_2.A.Y" class="gt_row gt_right">3</td>
       <td headers="span_2.B.Y" class="gt_row gt_right">4</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -1185,7 +1160,6 @@
       <td headers="span_2.A.Y" class="gt_row gt_center">3</td>
       <td headers="span_2.B.Y" class="gt_row gt_center">4</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -1255,7 +1229,6 @@
       <td headers="span_1.B.X" class="gt_row gt_center">2</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1300,7 +1273,6 @@
       <td headers="span_2.A.Y" class="gt_row gt_right">3</td>
       <td headers="span_2.B.Y" class="gt_row gt_right">4</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -1347,7 +1319,6 @@
       <td headers="Y.B.span_2" class="gt_row gt_right">4</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1414,7 +1385,6 @@
       <td headers="A" class="gt_row gt_right">5</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1480,7 +1450,6 @@
       <td headers="A.B" class="gt_row gt_right">4</td>
       <td headers="A" class="gt_row gt_right">5</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -1529,7 +1498,6 @@
       <td headers="A.B" class="gt_row gt_right">4</td>
       <td headers="A" class="gt_row gt_right">5</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -1609,7 +1577,6 @@
       <td headers="A" class="gt_row gt_right">5</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1688,7 +1655,6 @@
       <td headers="A" class="gt_row gt_right">5</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1754,7 +1720,6 @@
       <td headers="A..B" class="gt_row gt_right">4</td>
       <td headers="A" class="gt_row gt_right">5</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -1822,7 +1787,6 @@
       <td headers=".A." class="gt_row gt_right">5</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1875,7 +1839,6 @@
       <td headers="A__B__" class="gt_row gt_right">4</td>
       <td headers="__A__" class="gt_row gt_right">5</td></tr>
         </tbody>
-        
         
       </table>
 

@@ -97,7 +97,6 @@
       <td headers="grand_summary_stub_3 close" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -490,7 +489,6 @@
       <td headers="W03 stub_1_10 close" class="gt_row gt_right">2019.42</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -583,7 +581,6 @@
       <td headers="W03 stub_2_10 low" class="gt_row gt_right">1988.12</td>
       <td headers="W03 stub_2_10 close" class="gt_row gt_right">2019.42</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -698,7 +695,6 @@
       <td headers="W03 summary_stub_W03_3 close" class="gt_row gt_right gt_summary_row gt_last_summary_row">2014.93</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -807,7 +803,6 @@
       <td headers="W03 summary_stub_W03_3 close" class="gt_row gt_right gt_summary_row gt_last_summary_row">2014.93</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -906,7 +901,6 @@
       <td headers="W03 stub_1_10 close" class="gt_row gt_right">2019.42</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1000,7 +994,6 @@
       <td headers="W03 stub_2_10 low" class="gt_row gt_right">1988.12</td>
       <td headers="W03 stub_2_10 close" class="gt_row gt_right">2019.42</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -1099,7 +1092,6 @@
       <td headers="W03 stub_1_10 low" class="gt_row gt_right">1988.12</td>
       <td headers="W03 stub_1_10 close" class="gt_row gt_right">2019.42</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -1492,7 +1484,6 @@
       <td headers="grand_summary_stub_3 low" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">18.34602</td>
       <td headers="grand_summary_stub_3 close" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">19.82022</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -1900,7 +1891,6 @@
       <td headers="W03 summary_stub_W03_3 low" class="gt_row gt_right gt_summary_row gt_last_summary_row">15.20847</td>
       <td headers="W03 summary_stub_W03_3 close" class="gt_row gt_right gt_summary_row gt_last_summary_row">13.8957</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -2366,7 +2356,6 @@
       <td headers="W03 summary_stub_W03_3 close" class="gt_row gt_right gt_summary_row gt_last_summary_row">$13.90</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -2831,7 +2820,6 @@
       <td headers="W03 summary_stub_W03_3 close" class="gt_row gt_right gt_summary_row gt_last_summary_row">$13.90</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -3281,7 +3269,6 @@
       <td headers="grand_summary_stub_3 close" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">19.820</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -3688,7 +3675,6 @@
       <td headers="W03 summary_stub_W03_3 low" class="gt_row gt_right gt_summary_row gt_last_summary_row">15.20847</td>
       <td headers="W03 summary_stub_W03_3 close" class="gt_row gt_right gt_summary_row gt_last_summary_row">13.8957</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -4154,7 +4140,6 @@
       <td headers="W03 summary_stub_W03_3 close" class="gt_row gt_right gt_summary_row gt_last_summary_row">[13.90]</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -4618,7 +4603,6 @@
       <td headers="W03 summary_stub_W03_3 low" class="gt_row gt_right gt_summary_row gt_last_summary_row">15.20847</td>
       <td headers="W03 summary_stub_W03_3 close" class="gt_row gt_right gt_summary_row gt_last_summary_row">13.8957</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -5084,7 +5068,6 @@
       <td headers="W03 summary_stub_W03_3 close" class="gt_row gt_right gt_summary_row gt_last_summary_row">13.8957</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -5548,7 +5531,6 @@
       <td headers="W03 summary_stub_W03_3 low" class="gt_row gt_right gt_summary_row gt_last_summary_row">15.20847</td>
       <td headers="W03 summary_stub_W03_3 close" class="gt_row gt_right gt_summary_row gt_last_summary_row">13.8957</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -6014,7 +5996,6 @@
       <td headers="W03 summary_stub_W03_3 close" class="gt_row gt_right gt_summary_row gt_last_summary_row">13.8957</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -6478,7 +6459,6 @@
       <td headers="W03 summary_stub_W03_3 low" class="gt_row gt_right gt_summary_row gt_last_summary_row">15.20847</td>
       <td headers="W03 summary_stub_W03_3 close" class="gt_row gt_right gt_summary_row gt_last_summary_row"><13.90></td></tr>
         </tbody>
-        
         
       </table>
 
@@ -6960,7 +6940,6 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9,501.26</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -7477,7 +7456,6 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9,501.26</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -8004,7 +7982,6 @@
       <td headers="grand_summary_stub_3 datetime" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9,501.26</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -8556,7 +8533,6 @@
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -9082,7 +9058,6 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9,501.26</td>
       <td headers="grand_summary_stub_3 rowname" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -9644,7 +9619,6 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9,501.26</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -10116,7 +10090,6 @@
       <td headers="1960s summary_stub_1960s_2 population" class="gt_row gt_right gt_summary_row gt_last_summary_row">102,219,000</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -10356,7 +10329,6 @@
       <td headers="grand_summary_stub_2 trq" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row" style="background-color: #DA291C; border-left-width: 4px; border-left-style: solid; border-left-color: #FFC72C; border-right-width: 4px; border-right-style: solid; border-right-color: #FFC72C; border-top-width: 4px; border-top-style: solid; border-top-color: #FFC72C; border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #FFC72C; color: #FFFFFF; font-weight: bold;">516</td></tr>
         </tbody>
         
-        
       </table>
 
 # Summary rows can use other columns' data
@@ -10475,7 +10447,6 @@
       <td headers="grand_summary_stub_3 close" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">83,649,260,000.00</td>
       <td headers="grand_summary_stub_3 volume" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        
         
       </table>
 

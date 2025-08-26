@@ -133,20 +133,18 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
-          </tr>
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
           </tr>
         </tfoot>
       </table>
@@ -292,20 +290,18 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
-          </tr>
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
           </tr>
         </tfoot>
       </table>
@@ -431,20 +427,18 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
-          </tr>
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
           </tr>
         </tfoot>
       </table>
@@ -587,20 +581,18 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
-          </tr>
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
           </tr>
         </tfoot>
       </table>
@@ -740,20 +732,18 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
-          </tr>
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
           </tr>
         </tfoot>
       </table>
@@ -896,20 +886,18 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
-          </tr>
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
           </tr>
         </tfoot>
       </table>
@@ -1049,20 +1037,18 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
-          </tr>
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
           </tr>
         </tfoot>
       </table>
@@ -1193,20 +1179,18 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
-          </tr>
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
           </tr>
         </tfoot>
       </table>
@@ -1337,20 +1321,18 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
-          </tr>
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
           </tr>
         </tfoot>
       </table>
@@ -1490,20 +1472,18 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
-          </tr>
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
           </tr>
         </tfoot>
       </table>
@@ -1629,20 +1609,18 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
-          </tr>
-          <tr>
-            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a source note.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
           </tr>
         </tfoot>
       </table>
@@ -1788,15 +1766,14 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">This is a source note.</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -1940,17 +1917,15 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">This is a source note.</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
-            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
           </tr>
         </tfoot>
       </table>
@@ -2096,17 +2071,15 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a second footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">This is a source note.</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
-            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a second footnote.</td>
           </tr>
         </tfoot>
       </table>
@@ -2252,15 +2225,14 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">This is a source note.</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -2404,12 +2376,11 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
           </tr>
         </tfoot>
@@ -2556,19 +2527,17 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
+          </tr>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">This is a source note.</td>
           </tr>
         </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
-            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
-          </tr>
-          <tr>
-            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
-          </tr>
-        </tfoot>
       </table>
 
 ---
@@ -2712,19 +2681,17 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
+          </tr>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
           </tr>
         </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
-            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
-          </tr>
-          <tr>
-            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
-          </tr>
-        </tfoot>
       </table>
 
 ---
@@ -2868,12 +2835,11 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
           </tr>
         </tfoot>
@@ -3019,20 +2985,18 @@
       <td headers="grand_summary_stub_1 datetime" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_1 currency" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">66,509</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
+          </tr>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">This is a source note.</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">This is a second source note.</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
-            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> This is a footnote.</td>
-          </tr>
-          <tr>
-            <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> This is a second footnote.</td>
           </tr>
         </tfoot>
       </table>

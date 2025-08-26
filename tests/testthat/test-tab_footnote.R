@@ -312,8 +312,8 @@ test_that("tab_footnote() adds footnote marks for in the summary stub (#1832)", 
     "Summary stub mean sum footnote."
   )
   # Make sure there is a footnote mark in the body (i.e. before the tfoot part)
-  expect_match_html(tab1, "gt_footnote_marks.+<tfoot class")
-  expect_match_html(tab2, "gt_footnote_marks.+<tfoot class")
+  expect_match_html(tab1, "gt_footnote_marks.+<tfoot")
+  expect_match_html(tab2, "gt_footnote_marks.+<tfoot")
 
 })
 
