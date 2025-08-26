@@ -583,7 +583,7 @@ create_columns_component_h <- function(data) {
     # Check if we have multiple labels for multi-column stub
     stub_vars <- dt_boxhead_get_var_stub(data = data)
     has_multi_column_stub <- length(stub_vars) > 1 && !any(is.na(stub_vars))
-    
+
     if (has_multi_column_stub && length(stubh$label) > 1) {
       # Multiple labels for multi-column stub - add each label individually
       headings_labels <- c(stubh$label, headings_labels)
@@ -620,7 +620,7 @@ create_columns_component_h <- function(data) {
       stub_vars <- dt_boxhead_get_var_stub(data = data)
       has_multi_column_stub <- length(stub_vars) > 1 && !any(is.na(stub_vars))
       has_multiple_labels <- has_multi_column_stub && length(stubh$label) > 1
-      
+
       if (has_multiple_labels) {
         # Create individual <th> elements for each stubhead label
         for (i in seq_along(stubh$label)) {
@@ -663,7 +663,7 @@ create_columns_component_h <- function(data) {
             id = headings_ids[1],
             htmltools::HTML(headings_labels[1])
           )
-        
+
         # Remove the single stubhead from the lists
         headings_vars <- headings_vars[-1]
         headings_ids <- headings_ids[-1]
@@ -742,7 +742,7 @@ create_columns_component_h <- function(data) {
       stub_vars <- dt_boxhead_get_var_stub(data = data)
       has_multi_column_stub <- length(stub_vars) > 1 && !any(is.na(stub_vars))
       has_multiple_labels <- has_multi_column_stub && length(stubh$label) > 1
-      
+
       if (has_multiple_labels) {
         # Create individual <th> elements for each stubhead label
         for (i in seq_along(stubh$label)) {
@@ -785,7 +785,7 @@ create_columns_component_h <- function(data) {
             id = headings_ids[1],
             htmltools::HTML(headings_labels[1])
           )
-        
+
         # Remove the single stubhead from the lists
         headings_ids <- headings_ids[-1]
         headings_vars <- headings_vars[-1]
@@ -1158,7 +1158,7 @@ create_body_component_h <- function(data) {
       # For multi-column stubs, apply the thick border to all stub columns
       # This creates a nice visual hierarchy with "boxes" for each level
       stub_vars <- dt_boxhead_get_var_stub(data = data)
-      
+
       if (length(stub_vars) > 1 && !any(is.na(stub_vars))) {
         # Multi-column stub: apply gt_stub class to all stub columns
         for (i in seq_len(length(stub_vars))) {
@@ -1352,16 +1352,16 @@ create_body_component_h <- function(data) {
     if (!is.null(hierarchical_stub_info)) {
       # Get stub variables and layout
       stub_vars <- dt_boxhead_get_var_stub(data = data)
-      
+
       if (!(length(stub_vars) == 1 && is.na(stub_vars))) {
         hierarchy_vars <- stub_vars[-length(stub_vars)]  # Exclude rightmost stub column
-        
+
         # Apply rowspan values for hierarchical stub columns
         for (var_idx in seq_along(hierarchy_vars)) {
           var_name <- hierarchy_vars[var_idx]
           if (var_name %in% names(hierarchical_stub_info)) {
             stub_info <- hierarchical_stub_info[[var_name]]
-            
+
             # Set rowspan for this column if > 1
             if (stub_info$rowspans[i] > 1) {
               row_span_vals_i[[var_idx]] <- stub_info$rowspans[i]
@@ -1419,7 +1419,7 @@ create_body_component_h <- function(data) {
         locname = c("data", "stub"),
         rownum = i
       )
-    
+
     # Get stub column styles separately
     stub_column_styles <-
       dt_styles_pluck(
@@ -1513,12 +1513,12 @@ create_body_component_h <- function(data) {
       stub_vars <- dt_boxhead_get_var_stub(data = data)
       if (!(length(stub_vars) == 1 && is.na(stub_vars))) {
         hierarchy_vars <- stub_vars[-length(stub_vars)]  # Exclude rightmost stub column
-        
+
         for (var_idx in seq_along(hierarchy_vars)) {
           var_name <- hierarchy_vars[var_idx]
           if (var_name %in% names(hierarchical_stub_info)) {
             stub_info <- hierarchical_stub_info[[var_name]]
-            
+
             # If this row should not display this column's value (it's part of a merge)
             if (!stub_info$display_mask[i]) {
               cols_to_remove <- c(cols_to_remove, var_idx)
@@ -1527,12 +1527,12 @@ create_body_component_h <- function(data) {
         }
       }
     }
-    
+
     # Remove the columns/elements that should be hidden
     if (length(cols_to_remove) > 0) {
       # Adjust indices if they are beyond the current vector length
       cols_to_remove <- cols_to_remove[cols_to_remove <= length(row_df)]
-      
+
       if (length(cols_to_remove) > 0) {
         row_df <- row_df[-cols_to_remove]
         # Also remove from other vectors to maintain synchronization
@@ -1594,7 +1594,7 @@ create_body_component_h <- function(data) {
         row_id_i <- character(length(col_id_i))
       }
     }
-    
+
     # In the situation where there is:
     # (1) a group summary to be situated at the top of the group, and,
     # (2) a two-column stub
@@ -1622,33 +1622,33 @@ create_body_component_h <- function(data) {
 
     # Ensure all vectors have the same length before adding to body_rows_data
     target_length <- length(row_df)
-    
+
     # Truncate or pad vectors to match row_df length
     col_id_i <- col_id_i[seq_len(min(length(col_id_i), target_length))]
     if (length(col_id_i) < target_length) {
       col_id_i <- c(col_id_i, rep(NA_character_, target_length - length(col_id_i)))
     }
-    
+
     row_id_i <- row_id_i[seq_len(min(length(row_id_i), target_length))]
     if (length(row_id_i) < target_length) {
       row_id_i <- c(row_id_i, rep(NA_character_, target_length - length(row_id_i)))
     }
-    
+
     row_span_vals_i <- row_span_vals_i[seq_len(min(length(row_span_vals_i), target_length))]
     if (length(row_span_vals_i) < target_length) {
       row_span_vals_i <- c(row_span_vals_i, rep(NA_integer_, target_length - length(row_span_vals_i)))
     }
-    
+
     alignment_classes_i <- alignment_classes_i[seq_len(min(length(alignment_classes_i), target_length))]
     if (length(alignment_classes_i) < target_length) {
       alignment_classes_i <- c(alignment_classes_i, rep("gt_left", target_length - length(alignment_classes_i)))
     }
-    
+
     has_rtl_i <- has_rtl_i[seq_len(min(length(has_rtl_i), target_length))]
     if (length(has_rtl_i) < target_length) {
       has_rtl_i <- c(has_rtl_i, rep(FALSE, target_length - length(has_rtl_i)))
     }
-    
+
     if (length(extra_classes) != target_length) {
       if (length(extra_classes) > target_length) {
         extra_classes <- extra_classes[seq_len(target_length)]
@@ -1657,7 +1657,7 @@ create_body_component_h <- function(data) {
         extra_classes <- c(extra_classes, replicate(target_length - length(extra_classes), list(character(0)), simplify = FALSE))
       }
     }
-    
+
     row_styles <- row_styles[seq_len(min(length(row_styles), target_length))]
     if (length(row_styles) < target_length) {
       row_styles <- c(row_styles, rep(NA_character_, target_length - length(row_styles)))
@@ -1850,222 +1850,208 @@ output_df_row_as_vec <- function(
   cell_matrix
 }
 
-#' Create the table source note component (HTML)
+#' Create the combined table footer component
 #'
 #' @noRd
-create_source_notes_component_h <- function(data) {
+create_footer_component_h <- function(data) {
 
   source_notes <- dt_source_notes_get(data = data)
+  footnotes_tbl <- dt_footnotes_get(data = data)
 
-  if (is.null(source_notes)) {
+  # If there are no source notes and no footnotes, return empty string
+  if (is.null(source_notes) && nrow(footnotes_tbl) == 0) {
     return("")
   }
 
   styles_tbl <- dt_styles_get(data = data)
-
-  # Get effective number of columns
   n_cols_total <- get_effective_number_of_columns(data = data)
 
-  # Get the style attrs for the source notes
-  if ("source_notes" %in% styles_tbl$locname) {
+  # Collect all footer rows
+  footer_rows <- list()
 
-    source_notes_style <-
-      vctrs::vec_slice(
-        styles_tbl$html_style,
-        !is.na(styles_tbl$locname) & styles_tbl$locname == "source_notes"
-        )
+  # Add footnote rows first (footnotes should appear above source notes)
+  if (nrow(footnotes_tbl) > 0) {
 
-    source_notes_styles <-
-      if (length(source_notes_style) > 0) {
-        paste(source_notes_style, collapse = " ")
-      } else {
-        NULL
-      }
+    # Ensure `fs_id` column exists (it should have been added by
+    # `resolve_footnotes_styles()`)
+    if (!"fs_id" %in% names(footnotes_tbl)) {
+      # Add a temporary fs_id based on row numbers as fallback
+      footnotes_tbl$fs_id <- as.character(seq_len(nrow(footnotes_tbl)))
+    }
 
-  } else {
-    source_notes_styles <- NULL
-  }
+    # Get the distinct set of `fs_id` & `footnotes` values
+    # in the `footnotes_tbl`
+    footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
-  # Get the source note multiline option
-  multiline <- dt_options_get_value(data = data, option = "source_notes_multiline")
+    # Get the style attrs for the footnotes
+    footnotes_styles <- NULL
+    if ("footnotes" %in% styles_tbl$locname) {
+      footnotes_style <- styles_tbl[styles_tbl$locname == "footnotes", ]
 
-  # Get the source note separator option
-  separator <- dt_options_get_value(data = data, option = "source_notes_sep")
+      footnotes_styles <-
+        if (nrow(footnotes_style) > 0) {
+          paste(footnotes_style$html_style, collapse = " ")
+        } else {
+          NULL
+        }
+    }
 
-  # Handle the multiline source notes case (each footnote takes up one line)
-  if (multiline) {
-    # Create the source notes component as a series of `<tr><td>` (one per
-    # source note) inside of a `<tfoot>`
-    return(
-      htmltools::tags$tfoot(
-        class = "gt_sourcenotes",
-        lapply(
-          source_notes,
-          function(x) {
-            htmltools::tags$tr(
-              htmltools::tags$td(
-                class = "gt_sourcenote",
-                style = source_notes_styles,
-                colspan = n_cols_total,
-                htmltools::HTML(x)
+    # Get the footnote multiline option
+    footnotes_multiline <-
+      dt_options_get_value(data = data, option = "footnotes_multiline")
+
+    # Get the footnote separator option
+    footnotes_separator <-
+      dt_options_get_value(data = data, option = "footnotes_sep")
+
+    # Obtain vectors of footnote ID values (prerendered glyphs) and
+    # the associated text
+    footnote_ids <- footnotes_tbl[["fs_id"]]
+    footnote_text <- footnotes_tbl[["footnotes"]]
+
+    # Create a vector of HTML footnotes
+    footnotes <-
+      unlist(
+        mapply(
+          SIMPLIFY = FALSE,
+          USE.NAMES = FALSE,
+          footnote_ids,
+          footnote_text,
+          FUN = function(x, footnote_text) {
+            as.character(
+              htmltools::tagList(
+                htmltools::HTML(
+                  paste0(
+                    footnote_mark_to_html(
+                      data = data,
+                      mark = x,
+                      location = "ftr"
+                    ),
+                    " ",
+                    process_text(footnote_text, context = "html")
+                  ),
+                  .noWS = c("after", "before")
+                )
               )
             )
           }
         )
       )
-    )
-  }
 
-  # Perform HTML escaping on the separator text and transform space
-  # characters to non-breaking spaces
-  separator <- gsub(" (?= )", "&nbsp;", separator, perl = TRUE)
-
-  # Create the source notes component as a single `<tr><td>` inside
-  # of a `<tfoot>`
-  htmltools::tags$tfoot(
-    htmltools::tags$tr(
-      class = "gt_sourcenotes",
-      style = source_notes_styles,
-      htmltools::tags$td(
-        class = "gt_sourcenote",
-        colspan = n_cols_total,
-        htmltools::tags$div(
-          style = htmltools::css(`padding-bottom` = "2px"),
-          htmltools::HTML(paste(source_notes, collapse = separator))
-        )
-      )
-    )
-  )
-}
-
-#' Create the table footnote component (HTML)
-#'
-#' @noRd
-create_footnotes_component_h <- function(data) {
-
-  footnotes_tbl <- dt_footnotes_get(data = data)
-
-  # If the `footnotes_resolved` object has no
-  # rows, then return an empty footnotes component
-  if (nrow(footnotes_tbl) == 0) {
-    return("")
-  }
-  
-  # Ensure fs_id column exists (it should be added by resolve_footnotes_styles)
-  if (!"fs_id" %in% names(footnotes_tbl)) {
-    # Add a temporary fs_id based on row numbers as fallback
-    footnotes_tbl$fs_id <- as.character(seq_len(nrow(footnotes_tbl)))
-  }
-
-  styles_tbl <- dt_styles_get(data = data)
-
-  # Get the effective number of columns
-  n_cols_total <- get_effective_number_of_columns(data = data)
-
-  # Get the distinct set of `fs_id` & `footnotes` values in the `footnotes_tbl`
-  footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
-
-  # Get the style attrs for the footnotes
-  if ("footnotes" %in% styles_tbl$locname) {
-
-    footnotes_style <- styles_tbl[styles_tbl$locname == "footnotes", ]
-
-    footnotes_styles <-
-      if (nrow(footnotes_style) > 0) {
-        paste(footnotes_style$html_style, collapse = " ")
-      } else {
-        NULL
+    if (footnotes_multiline) {
+      # Create one row per footnote
+      for (footnote in footnotes) {
+        footer_rows <- append(footer_rows, list(
+          htmltools::tags$tr(
+            class = "gt_footnotes",
+            htmltools::tags$td(
+              class = "gt_footnote",
+              style = footnotes_styles,
+              colspan = n_cols_total,
+              htmltools::HTML(footnote)
+            )
+          )
+        ))
       }
+    } else {
+      # Perform HTML escaping on the separator text and transform space
+      # characters to non-breaking spaces
+      footnotes_separator <-
+        gsub(" (?= )", "&nbsp;", footnotes_separator, perl = TRUE)
 
-  } else {
-    footnotes_styles <- NULL
+      # Create a single row with all footnotes
+      footer_rows <- append(footer_rows, list(
+        htmltools::tags$tr(
+          class = "gt_footnotes",
+          htmltools::tags$td(
+            class = "gt_footnote",
+            style = footnotes_styles,
+            colspan = n_cols_total,
+            htmltools::tags$div(
+              style = htmltools::css(`padding-bottom` = "2px"),
+              htmltools::HTML(paste(footnotes, collapse = footnotes_separator))
+            )
+          )
+        )
+      ))
+    }
   }
 
-  # Get the footnote multiline option
-  multiline <- dt_options_get_value(data = data, option = "footnotes_multiline")
+  # Add source note rows after footnotes
+  if (!is.null(source_notes)) {
 
-  # Get the footnote separator option
-  separator <- dt_options_get_value(data = data, option = "footnotes_sep")
+    # Get the style attrs for the source notes
+    source_notes_styles <- NULL
+    if ("source_notes" %in% styles_tbl$locname) {
+      source_notes_style <-
+        vctrs::vec_slice(
+          styles_tbl$html_style,
+          !is.na(styles_tbl$locname) & styles_tbl$locname == "source_notes"
+        )
 
-  # Obtain vectors of footnote ID values (prerendered glyphs) and
-  # the associated text
-  footnote_ids <- footnotes_tbl[["fs_id"]]
-  footnote_text <- footnotes_tbl[["footnotes"]]
+      source_notes_styles <-
+        if (length(source_notes_style) > 0) {
+          paste(source_notes_style, collapse = " ")
+        } else {
+          NULL
+        }
+    }
 
-  # Create a vector of HTML footnotes
-  footnotes <-
-    unlist(
-      mapply(
-        SIMPLIFY = FALSE,
-        USE.NAMES = FALSE,
-        footnote_ids,
-        footnote_text,
-        FUN = function(x, footnote_text) {
-          as.character(
-            htmltools::tagList(
+    # Get the source note multiline option
+    source_notes_multiline <-
+      dt_options_get_value(data = data, option = "source_notes_multiline")
+
+    # Get the source note separator option
+    source_notes_separator <-
+      dt_options_get_value(data = data, option = "source_notes_sep")
+
+    if (source_notes_multiline) {
+      # Create one row per source note
+      for (source_note in source_notes) {
+        footer_rows <- append(footer_rows, list(
+          htmltools::tags$tr(
+            class = "gt_sourcenotes",
+            htmltools::tags$td(
+              class = "gt_sourcenote",
+              style = source_notes_styles,
+              colspan = n_cols_total,
+              htmltools::HTML(source_note)
+            )
+          )
+        ))
+      }
+    } else {
+      # Perform HTML escaping on the separator text and transform space
+      # characters to non-breaking spaces
+      source_notes_separator <-
+        gsub(" (?= )", "&nbsp;", source_notes_separator, perl = TRUE)
+
+      # Create a single row with all source notes
+      footer_rows <- append(footer_rows, list(
+        htmltools::tags$tr(
+          class = "gt_sourcenotes",
+          htmltools::tags$td(
+            class = "gt_sourcenote",
+            style = source_notes_styles,
+            colspan = n_cols_total,
+            htmltools::tags$div(
+              style = htmltools::css(`padding-bottom` = "2px"),
               htmltools::HTML(
-                paste0(
-                  footnote_mark_to_html(
-                    data = data,
-                    mark = x,
-                    location = "ftr"
-                  ),
-                  " ",
-                  process_text(footnote_text, context = "html")
-                ),
-                .noWS = c("after", "before")
+                paste(source_notes, collapse = source_notes_separator)
               )
             )
           )
-        }
-      )
-    )
-
-  # Handle the multiline footnotes case (each footnote takes up one line)
-  if (multiline) {
-
-    # Create the footnotes component as a series of `<tr><td>` (one per
-    # footnote) inside of a `<tfoot>`
-    return(
-      htmltools::tags$tfoot(
-        class = "gt_footnotes",
-        lapply(
-          footnotes,
-          function(x) {
-            htmltools::tags$tr(
-              htmltools::tags$td(
-                class = "gt_footnote",
-                style = footnotes_styles,
-                colspan = n_cols_total,
-                htmltools::HTML(x)
-              )
-            )
-          }
         )
-      )
-    )
+      ))
+    }
   }
 
-  # Perform HTML escaping on the separator text and transform space
-  # characters to non-breaking spaces
-  separator <- gsub(" (?= )", "&nbsp;", separator, perl = TRUE)
-
-  # Create the footnotes component as a single `<tr><td>` inside
-  # of a `<tfoot>`
-  htmltools::tags$tfoot(
-    htmltools::tags$tr(
-      class = "gt_footnotes",
-      style = footnotes_styles,
-      htmltools::tags$td(
-        class = "gt_footnote",
-        colspan = n_cols_total,
-        htmltools::tags$div(
-          style = htmltools::css(`padding-bottom` = "2px"),
-          htmltools::HTML(paste(footnotes, collapse = separator))
-        )
-      )
-    )
-  )
+  # Return a single tfoot with all rows
+  if (length(footer_rows) > 0) {
+    htmltools::tags$tfoot(footer_rows)
+  } else {
+    ""
+  }
 }
 
 summary_rows_for_group_h <- function(
@@ -2095,7 +2081,8 @@ summary_rows_for_group_h <- function(
   # In the below conditions
   # - `grand_summary_col` is a global variable (`"::GRAND_SUMMARY"`, assigned
   #   in `dt_summary.R`)
-  # - `group_id` might be passed in as NA when there are unnamed groups (this can happen usually when using `tab_row_group()` to build these row groups)
+  # - `group_id` might be passed in as NA when there are unnamed groups (this
+  #   can happen usually when using `tab_row_group()` to build these row groups)
   #   and you cannot create summary rows for unnamed groups
   if (is.na(group_id)) {
     return(summary_row_lines)
@@ -2354,25 +2341,25 @@ build_row_styles_with_stub_columns <- function(
     n_cols,
     data
 ) {
-  
+
   # First, build normal row styles
   row_styles <- build_row_styles(
     styles_resolved_row = styles_resolved_row,
     include_stub = include_stub,
     n_cols = n_cols
   )
-  
+
   # If we have stub column styles and a stub exists, modify the stub styles
   if (include_stub && nrow(stub_column_styles) > 0) {
-    
+
     # Get stub variables to map column names to positions
     stub_vars <- dt_boxhead_get_var_stub(data = data)
-    
+
     if (!all(is.na(stub_vars))) {
       # Create mapping from column names to stub positions
       stub_positions <- seq_along(stub_vars)
       names(stub_positions) <- stub_vars
-      
+
       # Apply per-column stub styles
       for (j in seq_len(nrow(stub_column_styles))) {
         col_name <- stub_column_styles$colname[j]
@@ -2384,7 +2371,7 @@ build_row_styles_with_stub_columns <- function(
             # MERGE styles instead of overwriting
             existing_style <- row_styles[stub_pos]
             new_style <- stub_column_styles$html_style[j]
-            
+
             if (is.na(existing_style) || existing_style == "") {
               row_styles[stub_pos] <- new_style
             } else if (!is.na(new_style) && new_style != "") {
@@ -2396,18 +2383,18 @@ build_row_styles_with_stub_columns <- function(
       }
     }
   }
-  
+
   # For multi-column stubs, modify border widths for internal columns
   if (include_stub) {
     stub_vars <- dt_boxhead_get_var_stub(data = data)
-    
+
     if (length(stub_vars) > 1 && !all(is.na(stub_vars))) {
       # Multi-column stub: apply half-thickness borders to internal columns
       for (i in seq_along(stub_vars)) {
         if (i < length(stub_vars)) {
           # Internal stub columns: use half-thickness border (1px instead of 2px)
           border_override <- "border-right-width: 1px"
-          
+
           if (is.na(row_styles[i]) || row_styles[i] == "") {
             row_styles[i] <- border_override
           } else {
@@ -2423,7 +2410,7 @@ build_row_styles_with_stub_columns <- function(
       }
     }
   }
-  
+
   row_styles
 }
 
@@ -2455,61 +2442,61 @@ valid_html_id <- function(x) {
 
 # Function to calculate rowspan values for hierarchical stub columns
 calculate_hierarchical_stub_rowspans <- function(data) {
-  
+
   # Get stub layout and information
   stub_layout <- get_stub_layout(data = data)
   boxh <- dt_boxhead_get(data = data)
-  
+
   # Check if we have multiple stub columns
   stub_vars <- dt_boxhead_get_var_stub(data = data)
-  
+
   if (length(stub_vars) == 1 && is.na(stub_vars)) {
     # No stub columns
     return(NULL)
   }
-  
+
   if (length(stub_vars) <= 1) {
     # Single stub column or no stub - no hierarchical merging needed
     return(NULL)
   }
-  
+
   # Get the body data for stub columns using the original data (before footnotes)
   # This is crucial to avoid footnote markup interfering with hierarchical grouping
   original_body <- dt_data_get(data = data)
   n_rows <- nrow(original_body)
-  
+
   if (n_rows == 0) {
     return(NULL)
   }
-  
+
   # Create a matrix of stub values (excluding the rightmost column which is the row identifier)
   hierarchy_vars <- stub_vars[-length(stub_vars)]  # Remove rightmost stub column
   stub_matrix <- as.matrix(original_body[, hierarchy_vars, drop = FALSE])
-  
+
   # Initialize rowspan information
   rowspan_info <- list()
-  
+
   # For each hierarchical stub column (left to right, excluding rightmost)
   for (col_idx in seq_along(hierarchy_vars)) {
     var_name <- hierarchy_vars[col_idx]
     col_values <- stub_matrix[, col_idx]
-    
+
     # Calculate rowspans for this column based on consecutive identical values
     # and values in columns to the left
     rowspans <- rep(1L, n_rows)
     display_mask <- rep(TRUE, n_rows)  # TRUE = display value, FALSE = merge/hide
-    
+
     current_span_start <- 1
-    
+
     for (row_idx in 2:n_rows) {
       # Check if current row should continue the span from previous row
       should_continue_span <- TRUE
-      
+
       # Must match current column value
       if (col_values[row_idx] != col_values[row_idx - 1]) {
         should_continue_span <- FALSE
       }
-      
+
       # Must match all values in columns to the left
       if (col_idx > 1) {
         for (left_col_idx in 1:(col_idx - 1)) {
@@ -2519,7 +2506,7 @@ calculate_hierarchical_stub_rowspans <- function(data) {
           }
         }
       }
-      
+
       if (should_continue_span) {
         # Continue the current span
         display_mask[row_idx] <- FALSE
@@ -2532,18 +2519,18 @@ calculate_hierarchical_stub_rowspans <- function(data) {
         current_span_start <- row_idx
       }
     }
-    
+
     # Handle the last span
     span_length <- n_rows - current_span_start + 1
     if (span_length > 1) {
       rowspans[current_span_start] <- span_length
     }
-    
+
     rowspan_info[[var_name]] <- list(
       rowspans = rowspans,
       display_mask = display_mask
     )
   }
-  
+
   rowspan_info
 }
