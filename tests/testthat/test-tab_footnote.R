@@ -1211,3 +1211,62 @@ test_that("tab_footnote() errors well when it can't resolve location", {
     )
   })
 })
+
+test_that("footnote consolidation works correctly (regression test for duplicate footnotes)", {
+  
+  check_suggests()
+  
+  # Create a test table with duplicate footnote text applied to multiple cells
+  # This should result in a single consolidated footnote, not multiple footnotes
+  gt_consolidated_footnotes <-
+    towny %>%
+    dplyr::slice_head(n = 5) %>%
+    dplyr::select(name, csd_type, population_2021) %>%
+    gt() %>%
+    tab_footnote(
+      footnote = "Part of the Greater Toronto Area.",
+      locations = cells_body(columns = name, rows = c(1, 2, 3, 4, 5))
+    )
+  
+  # Check internal footnotes data frame structure
+  footnotes_df <- dt_footnotes_get(data = gt_consolidated_footnotes)
+  
+  # Should have 5 rows (one for each cell footnote was applied to)
+  expect_equal(nrow(footnotes_df), 5)
+  
+  # All footnotes should have the same text
+  expect_true(all(footnotes_df$footnotes == "Part of the Greater Toronto Area."))
+  
+  # All should be applied to the "name" column in data cells  
+  expect_true(all(footnotes_df$locname == "data"))
+  expect_true(all(footnotes_df$colname == "name"))
+  
+  # Should be applied to rows 1-5
+  expect_setequal(footnotes_df$rownum, 1:5)
+  
+  # Test that the rendered output has consolidated footnotes
+  # (same footnote number for all instances, single footnote in footer)
+  expect_snapshot_html(gt_consolidated_footnotes)
+  
+  # Test with mixed footnote text to ensure consolidation works correctly
+  gt_mixed_footnotes <-
+    towny %>%
+    dplyr::slice_head(n = 6) %>%
+    dplyr::select(name, csd_type, population_2021) %>%
+    gt() %>%
+    tab_footnote(
+      footnote = "Part of the Greater Toronto Area.",
+      locations = cells_body(columns = name, rows = c(1, 3, 5))
+    ) %>%
+    tab_footnote(
+      footnote = "Different footnote text.",
+      locations = cells_body(columns = name, rows = c(2, 4))
+    ) %>%
+    tab_footnote(
+      footnote = "Part of the Greater Toronto Area.",  # Same as first footnote
+      locations = cells_body(columns = name, rows = 6)
+    )
+  
+  # Test that mixed footnotes are handled correctly
+  expect_snapshot_html(gt_mixed_footnotes)
+})
