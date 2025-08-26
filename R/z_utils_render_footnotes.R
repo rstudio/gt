@@ -380,24 +380,20 @@ resolve_footnotes_styles <- function(data, tbl_type) {
       tbl <- tbl[order_of_tbl, , drop = FALSE]
     }
 
-    # Generate footnote marks based on the sorted table order
-    tbl_footnotes <- tbl[tbl$locname != "none", , drop = FALSE]
+    # Generate a lookup table with ID'd footnote
+    # text elements (that are distinct) but preserve the sorted order
+    footnotes_ordered <- tbl[tbl$locname != "none", "footnotes", drop = FALSE]
     
-    if (nrow(tbl_footnotes) > 0) {
-      # Assign fs_id sequentially based on the sorted order (1, 2, 3, ...)
-      tbl_footnotes$fs_id <- as.character(seq_len(nrow(tbl_footnotes)))
-      
-      # Handle footnotes with no location
-      tbl_none <- tbl[tbl$locname == "none", , drop = FALSE]
-      if (nrow(tbl_none) > 0) {
-        tbl_none$fs_id <- NA_character_
-      }
-      
-      # Combine the tables back together
-      tbl <- rbind(tbl_footnotes, tbl_none)
-    } else {
-      tbl$fs_id <- NA_character_
-    }
+    # Create a lookup table that preserves the order from the sorted table
+    # Use the order of first appearance in the sorted table
+    lookup_tbl <- footnotes_ordered[!duplicated(footnotes_ordered$footnotes), , drop = FALSE]
+    
+    # Assign fs_id based on the order in the sorted table (1, 2, 3, ...)
+    lookup_tbl$fs_id <- as.character(seq_len(nrow(lookup_tbl)))
+
+    # Join the lookup table to `tbl`
+    tbl <- dplyr::left_join(tbl, lookup_tbl, by = "footnotes")
+    tbl$fs_id <- ifelse(tbl$locname == "none", NA_character_, tbl$fs_id)
 
     if (nrow(tbl) > 0L) {
 
