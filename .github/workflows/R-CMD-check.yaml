@@ -6,9 +6,9 @@
 # usethis::use_github_action("check-standard") will install it.
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, xml_pptx]
   pull_request:
-    branches: [main, master]
+    branches: [main, master, xml_pptx]
 
 name: R-CMD-check.yaml
 
