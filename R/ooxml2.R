@@ -101,6 +101,77 @@ ooxml_pPr_impl <- function(tag) {
 ooxml_pPr.ooxml_word <- ooxml_pPr_impl("w:pPr")
 ooxml_pPr.ooxml_pptx <- ooxml_pPr_impl("a:pPr")
 
+
+# ooxml_cell_border -------------------------------------------------------
+
+ooxml_cell_border <- function(type, ..., location, color = "black", size = NULL, style = "solid") {
+  if (is.null(style)) {
+    return(NULL)
+  }
+
+  UseMethod("ooxml_cell_border")
+}
+
+ooxml_cell_border.ooxml_word <- function(type, ..., location, color = "black", size = NULL, style = "solid") {
+  rlang::check_dots_empty()
+
+  location <- arg_match_names(location, c("top" = "w:top", "left" = "w:start", "bottom" = "w:bottom", "right" = "w:end"))
+  color    <- as_hex_code(color)
+  size     <- check_between(size, min = .25, max = 12, default = 4)
+  style    <- arg_match_names(style, c("solid" = "single", "dashed" = "dashed", "dotted" = "dotted", "hidden" = "none", "double" = "double"))
+
+  ooxml_tag(location, tag_class = "ooxml_cell_border",
+    `w:color` = color,
+    `w:size`  = size * 8, # size is in 1/8 points
+    `w:val`   = style
+  )
+}
+
+ooxml_cell_border.ooxml_pptx <- function(type, ..., location, color = "black", size = NULL, style = "solid") {
+  rlang::check_dots_empty()
+
+  location <- arg_match_names(location, c("top"="a:lnT","left"="a:lnL","bottom"="a:lnB","right"="a:lnR"))
+  size     <- check_between(size, min = 0, max = 10, default = .5)
+  style    <- convert_border_style_pptx(style)
+
+  if (is.null(style$compound)) {
+    return(NULL)
+  }
+
+  dash <- if(!is.null(style$dash_style)) {
+    ooxml_tag("a:prstDash", `val` = style$dash_style)
+  }
+
+  ooxml_tag(location, tag_class = "ooxml_cell_border",
+    `w` = size*12700,
+    `cap` = "flat",
+    `cmpd` = style$compound,
+    `algn` = "ctr",
+
+    dash,
+    ooxml_fill(type, color = color)
+  )
+
+}
+
+border_style_pptx <- list(
+  "solid"  = c(compound = "single", dash_style = NULL),
+  "dashed" = c(compound = "single", dash_style = "dash"),
+  "dotted" = c(compound = "single", dash_style = "dot"),
+  "hidden" = c(compound = NULL,     dash_style = NULL),
+  "double" = c(compound = "dbl",    dash_style = NULL)
+)
+
+convert_border_style_pptx <- function(x, error_call = caller_env()){
+
+  if (x %in% names(border_style_pptx)) {
+    border_style_pptx[[x]]
+  } else {
+    cli::cli_warn("Invalid border style supplied: {x}", error_call = error_call)
+    border_style_pptx[["hidden"]]
+  }
+}
+
 # ooxml_tbl_cell ----------------------------------------------------------
 
 ooxml_tbl_cell <- function(type, x, ...) {
@@ -269,7 +340,7 @@ ooxml_tblPr <- function(type, ...) {
   UseMethod("ooxml_tblPr")
 }
 
-ooxml_tblPr.ooxml_word <- function(type, ..., layout = c("autofit", "fixed"), justify = c("center", "start","end"), width="100%", look = c("First Row","No Banded Columns"), tableStyle=NULL) {
+ooxml_tblPr.ooxml_word <- function(type, ..., layout = c("autofit", "fixed"), justify = c("center", "start","end"), width="100%", look = c("First Row"), tableStyle=NULL) {
   rlang::check_dots_empty()
 
   if (!rlang::is_character(width, n = 1)) {
@@ -413,7 +484,6 @@ ooxml_space_attr <- function(space = c("default", "preserve"), error_call = call
 }
 
 as_hex_code <- function(x) {
-
   tryCatch({
     ## if hex already, return the hex
     if (grepl("^(#)", x) || grepl("^(#)*[0-9A-Fa-f]{6}$", x, perl = TRUE)) {
@@ -427,5 +497,23 @@ as_hex_code <- function(x) {
   }, error = function(e) {
     ""
   })
-
 }
+
+arg_match_names <- function(arg, values = NULL, error_arg = caller_arg(arg), error_call = caller_env()) {
+  arg <- rlang::arg_match(arg, names(values), error_call = error_call, error_arg = error_arg)
+  values[[arg]]
+}
+
+check_between <- function(x = NULL, min, max, default, error_arg = caller_arg(x), error_call = caller_env()){
+  if (is.null(x)){
+    x <- default
+  }
+  if (!is.numeric(x) || length(x) != 1 || x < min || x > max) {
+    cli::cli_abort(call = error_call,
+      "{.arg {error_arg}} must be a single number between {min} and {max}."
+    )
+  }
+  x
+}
+
+
