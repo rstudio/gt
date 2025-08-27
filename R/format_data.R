@@ -7802,7 +7802,97 @@ fmt_image <- function(
         x
       },
       rtf = function(x) {
-        x
+
+        x_str <- character(length(x))
+
+        x_str_non_missing <- x[!is.na(x)]
+
+        if (!is.null(height)) {
+          if (is.character(height)) {
+              height <- convert_to_twips(height)
+            }
+          }
+
+        if (!is.null(width)) {
+          if (is.character(width)) {
+              width <- convert_to_twips(width)
+            }
+          }
+
+        x_str_non_missing <-
+          vapply(
+            seq_along(x_str_non_missing),
+            FUN.VALUE = character(1L),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+
+              if (grepl(",", x_str_non_missing[x], fixed = TRUE)) {
+                files <- unlist(strsplit(x_str_non_missing[x], ",\\s*"))
+              } else {
+                files <- x_str_non_missing[x]
+              }
+
+              out <- list()
+
+              for(file in files){
+
+                height_f <- height
+                width_f <- width
+
+                if (is.null(height_f) || is.null(width_f)) {
+
+                  hw_ratio <- get_image_hw_ratio(file)
+
+                  if (is.null(width_f)) {
+                    width_f <- round(height_f / hw_ratio, 0)
+                  } else {
+                    height_f <- round(width_f * hw_ratio, 0)
+                  }
+                }
+
+                extension <- tools::file_ext(file)
+
+                if(!(extension %in% c("emf", "png", "jpeg"))){
+                  cli::cli_abort("For RTF output, images must be of type emf, png or jpeg")
+                }
+
+                # Handle case where the image is online
+                if (
+                  (!is.null(path) && grepl("https?://", path)) ||
+                  grepl("https?://", file)
+                ) {
+
+                  if (!is.null(path)) {
+
+                    # Normalize ending of `path`
+                    path <- gsub("/\\s+$", "", path)
+                    uri <- paste0(path, "/", file)
+
+                  } else {
+                    uri <- file
+                  }
+
+                  file <- download_file(uri)
+
+                }
+
+                size <- file.info(file)$size
+                img_data <- readBin(file, what = "raw", n = size)
+                rtf_image <- sprintf(paste0("{\\pict\\", extension, "blip\\picwgoal%d\\pichgoal%d\n%s\n}"), width_f, height_f, paste0(img_data, collapse = ""))
+                out <- c(out, list(rtf_image))
+
+              }
+
+              rtf_images <- paste0(out, collapse = "")
+              rtf_images
+
+              })
+
+        x_str[!is.na(x)] <- x_str_non_missing
+        x_str[is.na(x)] <- NA_character_
+
+        x_str
+
       },
       word = function(x) {
 
@@ -7962,6 +8052,17 @@ convert_to_px <- function(x) {
     ))
   }
 }
+
+convert_to_twips <- function(x) {
+  # make use of convert_to_px function
+  # 15 twips are equivalent to 1 pixel https://www.unitconverters.net/typography/pixel-x-to-twip.htm
+
+  px <- convert_to_px(x)
+
+  px * 15
+
+}
+
 
 get_image_hw_ratio <- function(filepath) {
 
