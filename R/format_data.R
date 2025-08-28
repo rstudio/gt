@@ -7807,6 +7807,8 @@ fmt_image <- function(
 
         x_str_non_missing <- x[!is.na(x)]
 
+        # convert dimensions to twips - used for rtf images
+
         if (!is.null(height)) {
           if (is.character(height)) {
               height <- convert_to_twips(height)
@@ -7832,25 +7834,18 @@ fmt_image <- function(
                 files <- x_str_non_missing[x]
               }
 
+              # Handle formatting of `file_pattern`
+              files <-
+                apply_pattern_fmt_x(
+                  pattern = file_pattern,
+                  values = files
+                )
+
               out <- list()
 
-              for(file in files){
+              for(y in seq_along(files)){
 
-                height_f <- height
-                width_f <- width
-
-                if (is.null(height_f) || is.null(width_f)) {
-
-                  hw_ratio <- get_image_hw_ratio(file)
-
-                  if (is.null(width_f)) {
-                    width_f <- round(height_f / hw_ratio, 0)
-                  } else {
-                    height_f <- round(width_f * hw_ratio, 0)
-                  }
-                }
-
-                extension <- tools::file_ext(file)
+                extension <- tools::file_ext(files[y])
 
                 if(!(extension %in% c("emf", "png", "jpeg"))){
                   cli::cli_abort("For RTF output, images must be of type emf, png or jpeg")
@@ -7859,25 +7854,46 @@ fmt_image <- function(
                 # Handle case where the image is online
                 if (
                   (!is.null(path) && grepl("https?://", path)) ||
-                  grepl("https?://", file)
+                  grepl("https?://", files[y])
                 ) {
 
                   if (!is.null(path)) {
 
                     # Normalize ending of `path`
                     path <- gsub("/\\s+$", "", path)
-                    uri <- paste0(path, "/", file)
+                    uri <- paste0(path, "/", files[y])
 
                   } else {
-                    uri <- file
+                    uri <- files[y]
                   }
 
-                  file <- download_file(uri)
+                  filename <- download_file(uri)
+
+                }else{
+                  # Compose and normalize the local file path
+                  filename <- gtsave_filename(path = path, filename = files[y])
+                  filename <- path_expand(filename)
 
                 }
 
-                size <- file.info(file)$size
-                img_data <- readBin(file, what = "raw", n = size)
+                height_f <- height
+                width_f <- width
+
+                # if the heights or widths are missing find the ratio for each file
+                if (is.null(height_f) || is.null(width_f)) {
+
+                  hw_ratio <- get_image_hw_ratio(files[y])
+
+                  if (is.null(width_f)) {
+                    width_f <- round(height_f / hw_ratio, 0)
+                  } else {
+                    height_f <- round(width_f * hw_ratio, 0)
+                  }
+                }
+
+                # build rtf image string
+                size <- file.info(filename)$size
+                img_data <- readBin(filename, what = "raw", n = size)
                 rtf_image <- sprintf(paste0("{\\pict\\", extension, "blip\\picwgoal%d\\pichgoal%d\n%s\n}"), width_f, height_f, paste0(img_data, collapse = ""))
                 out <- c(out, list(rtf_image))
 
@@ -7890,7 +7906,6 @@ fmt_image <- function(
 
         x_str[!is.na(x)] <- x_str_non_missing
         x_str[is.na(x)] <- NA_character_
-
         x_str
 
       },
