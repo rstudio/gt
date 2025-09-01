@@ -13,15 +13,14 @@ An object of class \code{knit_asis}.
 When working with Rnw (Sweave) files or otherwise writing LaTeX code,
 including a \strong{gt} table can be problematic if we don't have knowledge
 of the LaTeX dependencies. For the most part, these dependencies are the
-LaTeX packages that are required for rendering a \strong{gt} table. The
-\code{gt_latex_dependencies()} function provides an object that can be
-used to provide the LaTeX in an Rnw file, allowing \strong{gt} tables to work
-and not yield errors due to missing packages.
+LaTeX packages that are required for rendering a \strong{gt} table.
+\code{gt_latex_dependencies()} provides an object that can be used to provide the
+LaTeX in an Rnw file, allowing \strong{gt} tables to work and not yield errors
+due to missing packages.
 }
 \details{
-Here is an example Rnw document that shows how the
-\code{gt_latex_dependencies()} can be used in conjunction with a \strong{gt}
-table:
+Here is an example Rnw document that shows how \code{gt_latex_dependencies()}
+can be used in conjunction with a \strong{gt} table:
 
 \preformatted{
 \%!sweave=knitr
@@ -39,7 +38,7 @@ gt_latex_dependencies()
 \begin{document}
 
 <<results='asis', echo=FALSE>>=
-exibble %>% gt()
+gt(exibble)
  @
 
 \end{document}
@@ -47,36 +46,35 @@ exibble %>% gt()
 }
 \section{Function ID}{
 
-7-25
+8-30
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_body}()},
-\code{\link{cells_column_labels}()},
-\code{\link{cells_column_spanners}()},
-\code{\link{cells_footnotes}()},
-\code{\link{cells_grand_summary}()},
-\code{\link{cells_row_groups}()},
-\code{\link{cells_source_notes}()},
-\code{\link{cells_stub_grand_summary}()},
-\code{\link{cells_stub_summary}()},
-\code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
-\code{\link{cells_summary}()},
-\code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{html}()},
+\code{\link{latex}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{row_group}()},
+\code{\link{stub}()},
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

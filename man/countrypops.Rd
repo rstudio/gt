@@ -3,15 +3,15 @@
 \docType{data}
 \name{countrypops}
 \alias{countrypops}
-\title{Yearly populations of countries from 1960 to 2017}
+\title{Yearly populations of countries from 1960 to 2023}
 \format{
-A tibble with 12470 rows and 5 variables:
+A tibble with 13,760 rows and 5 variables:
 \describe{
-\item{country_name}{Name of the country}
-\item{country_code_2}{The 2-letter ISO 3166-1 country code}
-\item{country_code_3}{The 3-letter ISO 3166-1 country code}
-\item{year}{The year for the population estimate}
-\item{population}{The population estimate, midway through the year}
+\item{country_name}{The name of the country.}
+\item{country_code_2, country_code_3}{The 2- and 3-letter ISO 3166-1 country
+codes.}
+\item{year}{The year for the population estimate.}
+\item{population}{The population estimate, midway through the year.}
 }
 }
 \source{
@@ -25,39 +25,43 @@ A dataset that presents yearly, total populations of countries. Total
 population is based on counts of all residents regardless of legal status or
 citizenship. Country identifiers include the English-language country names,
 and the 2- and 3-letter ISO 3166-1 country codes. Each row contains a
-\code{population} value for a given \code{year} (from 1960 to 2017). Any \code{NA} values
-for \code{populations} indicate the non-existence of the country during that year.
+\code{population} value for a given \code{year} (from 1960 to 2023). Any \code{NA} values
+within \code{population} indicate the non-existence of the entity during that
+year.
 }
-\section{Examples}{
+\section{Dataset ID and Badge}{
 
+DATA-1
 
-Here is a glimpse at the data available in \code{countrypops}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(countrypops)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Rows: 12,470
-## Columns: 5
-## $ country_name   <chr> "Aruba", "Aruba", "Aruba", "Aruba", "Aruba", "Aruba", "…
-## $ country_code_2 <chr> "AW", "AW", "AW", "AW", "AW", "AW", "AW", "AW", "AW", "…
-## $ country_code_3 <chr> "ABW", "ABW", "ABW", "ABW", "ABW", "ABW", "ABW", "ABW",…
-## $ year           <int> 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1…
-## $ population     <int> 54211, 55438, 56225, 56695, 57032, 57360, 57715, 58055,…
-}\if{html}{\out{</div>}}
+\if{html}{\out{
+<div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_countrypops.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
+}}
 }
 
-\section{Function ID}{
+\section{Dataset Introduced}{
 
-11-1
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
-Other Datasets: 
+Other datasets: 
+\code{\link{constants}},
 \code{\link{exibble}},
+\code{\link{films}},
+\code{\link{gibraltar}},
 \code{\link{gtcars}},
+\code{\link{illness}},
+\code{\link{metro}},
+\code{\link{nuclides}},
+\code{\link{peeps}},
+\code{\link{photolysis}},
 \code{\link{pizzaplace}},
+\code{\link{reactions}},
+\code{\link{rx_addv}},
+\code{\link{rx_adsl}},
 \code{\link{sp500}},
-\code{\link{sza}}
+\code{\link{sza}},
+\code{\link{towny}}
 }
-\concept{Datasets}
+\concept{datasets}
 \keyword{datasets}

@@ -6,49 +6,111 @@
 \usage{
 vec_fmt_time(
   x,
-  time_style = 2,
+  time_style = "iso",
   pattern = "{x}",
-  output = c("html", "latex", "rtf")
+  locale = NULL,
+  output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
 \arguments{
-\item{x}{A numeric vector.}
+\item{x}{\emph{The input vector}
 
-\item{time_style}{The time style to use. Supply a number (from \code{1} to \code{5})
-that corresponds to the preferred time style, or, provide a named time
-style (\code{"hms"}, \code{"hms_p"}, \code{"h_p"}, etc.). Use \code{\link[=info_time_style]{info_time_style()}} to see
-the different numbered and named time presets.}
+\code{vector(numeric|integer)} // \strong{required}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+This is the input vector that will undergo transformation to a character
+vector of the same length. Values within the vector will be formatted.}
 
-\item{output}{The output style of the resulting character vector. This can
-either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
+\item{time_style}{\emph{Predefined style for times}
+
+\verb{scalar<character>|scalar<numeric|integer>(1<=val<=25)} // \emph{default:} \code{"iso"}
+
+The time style to use. By default this is the short name \code{"iso"} which
+corresponds to how times are formatted within ISO 8601 datetime values.
+There are 25 time styles in total and their short names can be viewed using
+\code{\link[=info_time_style]{info_time_style()}}.}
+
+\item{pattern}{\emph{Specification of the formatting pattern}
+
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
+
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according to the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported.}
+
+\item{output}{\emph{Output format}
+
+\verb{singl-kw:[auto|plain|html|latex|rtf|word]} // \emph{default:} \code{"auto"}
+
+The output style of the resulting character vector. This can either be
+\code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or
+\code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the \code{"auto"}
+option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
 }
 \description{
-Format vector values to time values using one of five presets. Input can be
-in the form of \code{POSIXt} (i.e., date-times), \code{character} (must be in the ISO
-8601 forms of \code{HH:MM:SS} or \verb{YYYY-MM-DD HH:MM:SS}), or \code{Date} (which always
-results in the formatting of \code{00:00:00}).
+Format vector values to time values using one of 25 preset time styles. Input
+can be in the form of \code{POSIXt} (i.e., datetimes), \code{character} (must be in the
+ISO 8601 forms of \code{HH:MM:SS} or \verb{YYYY-MM-DD HH:MM:SS}), or \code{Date} (which
+always results in the formatting of \code{00:00:00}).
+}
+\section{Formatting with the \code{time_style} argument}{
 
-We can simply apply a preset time style to format the times. The following
-time styles are available for use (all using the input time of \code{14:35:00} in
-the example output times):
-\enumerate{
-\item \code{"hms"}: \code{14:35:00}
-\item \code{"hm"}: \code{14:35}
-\item \code{"hms_p"}: \verb{2:35:00 PM}
-\item \code{"hm_p"}: \verb{2:35 PM}
-\item \code{"h_p"}: \verb{2 PM}
+
+We need to supply a preset time style to the \code{time_style} argument. There are
+many time styles and all of them can handle localization to any supported
+locale. Many of the time styles are termed flexible time formats and this
+means that their output will adapt to any \code{locale} provided. That feature
+makes the flexible time formats a better option for locales other than \code{"en"}
+(the default locale).
+
+The following table provides a listing of all time styles and their output
+values (corresponding to an input time of \code{14:35:00}). It is noted which of
+these represent 12- or 24-hour time.\tabular{llll}{
+    \tab Time Style \tab Output \tab Notes \cr
+   1 \tab \code{"iso"} \tab \code{"14:35:00"} \tab ISO 8601, 24h \cr
+   2 \tab \code{"iso-short"} \tab \code{"14:35"} \tab ISO 8601, 24h \cr
+   3 \tab \code{"h_m_s_p"} \tab \code{"2:35:00 PM"} \tab 12h \cr
+   4 \tab \code{"h_m_p"} \tab \code{"2:35 PM"} \tab 12h \cr
+   5 \tab \code{"h_p"} \tab \code{"2 PM"} \tab 12h \cr
+   6 \tab \code{"Hms"} \tab \code{"14:35:00"} \tab flexible, 24h \cr
+   7 \tab \code{"Hm"} \tab \code{"14:35"} \tab flexible, 24h \cr
+   8 \tab \code{"H"} \tab \code{"14"} \tab flexible, 24h \cr
+   9 \tab \code{"EHm"} \tab \code{"Thu 14:35"} \tab flexible, 24h \cr
+   10 \tab \code{"EHms"} \tab \code{"Thu 14:35:00"} \tab flexible, 24h \cr
+   11 \tab \code{"Hmsv"} \tab \code{"14:35:00 GMT+00:00"} \tab flexible, 24h \cr
+   12 \tab \code{"Hmv"} \tab \code{"14:35 GMT+00:00"} \tab flexible, 24h \cr
+   13 \tab \code{"hms"} \tab \code{"2:35:00 PM"} \tab flexible, 12h \cr
+   14 \tab \code{"hm"} \tab \code{"2:35 PM"} \tab flexible, 12h \cr
+   15 \tab \code{"h"} \tab \code{"2 PM"} \tab flexible, 12h \cr
+   16 \tab \code{"Ehm"} \tab \code{"Thu 2:35 PM"} \tab flexible, 12h \cr
+   17 \tab \code{"Ehms"} \tab \code{"Thu 2:35:00 PM"} \tab flexible, 12h \cr
+   18 \tab \code{"EBhms"} \tab \code{"Thu 2:35:00 in the afternoon"} \tab flexible, 12h \cr
+   19 \tab \code{"Bhms"} \tab \code{"2:35:00 in the afternoon"} \tab flexible, 12h \cr
+   20 \tab \code{"EBhm"} \tab \code{"Thu 2:35 in the afternoon"} \tab flexible, 12h \cr
+   21 \tab \code{"Bhm"} \tab \code{"2:35 in the afternoon"} \tab flexible, 12h \cr
+   22 \tab \code{"Bh"} \tab \code{"2 in the afternoon"} \tab flexible, 12h \cr
+   23 \tab \code{"hmsv"} \tab \code{"2:35:00 PM GMT+00:00"} \tab flexible, 12h \cr
+   24 \tab \code{"hmv"} \tab \code{"2:35 PM GMT+00:00"} \tab flexible, 12h \cr
+   25 \tab \code{"ms"} \tab \code{"35:00"} \tab flexible \cr
 }
 
-We can use the \code{\link[=info_time_style]{info_time_style()}} function for a useful reference on all of
-the possible inputs to \code{time_style}.
+
+We can call \code{\link[=info_time_style]{info_time_style()}} in the console to view a similar table of
+time styles with example output.
 }
+
 \section{Examples}{
 
 
@@ -58,55 +120,85 @@ for the next few examples:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{str_vals <- c("2022-06-13 18:36", "2019-01-25 01:08", NA)
 }\if{html}{\out{</div>}}
 
-Using \code{vec_fmt_date()} with the default options will create a character vector of
-formatted dates. Any \code{NA} values remain as \code{NA} values. The rendering context
-is HTML unless specified in the \code{output} argument.
+Using \code{vec_fmt_time()} (here with the \code{"iso-short"} time style) will result
+in a character vector of formatted times. Any \code{NA} values remain as \code{NA}
+values. The rendering context will be autodetected unless specified in the
+\code{output} argument (here, it is of the \code{"plain"} output type).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_time(str_vals)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_time(str_vals, time_style = "iso-short")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "18:36" "01:08" NA
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "18:36" "01:08" NA
 }\if{html}{\out{</div>}}
 
-We can change the formatting style by choosing a number from \code{1} to \code{5}:
+We can choose from any of 25 different time formatting styles. Many of these
+styles are flexible, meaning that the structure of the format will adapt
+to different locales. Let's use the \code{"Bhms"} time style to demonstrate this
+(first in the default locale of \code{"en"}):
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_time(str_vals, time_style = 4)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_time(str_vals, time_style = "Bhms")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "6:36 PM" "1:08 AM" NA
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "6:36:00 in the evening" "1:08:00 at night" NA
+}\if{html}{\out{</div>}}
+
+Let's perform the same type of formatting in the German (\code{"de"}) locale:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_time(str_vals, time_style = "Bhms", locale = "de")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "6:36:00 abends" "1:08:00 nachts" NA
 }\if{html}{\out{</div>}}
 
 We can always use \code{\link[=info_time_style]{info_time_style()}} to call up an info table that serves as
-a handy reference to all of the time styles.
+a handy reference to all of the \code{time_style} options.
 
 As a last example, one can wrap the time values in a pattern with the
 \code{pattern} argument. Note here that \code{NA} values won't have the pattern
 applied.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_time(str_vals, time_style = 4, pattern = "Time: \{x\}")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_time(
+  str_vals,
+  time_style = "hm",
+  pattern = "temps: \{x\}",
+  locale = "fr-CA"
+)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Time: 6:36 PM" "Time: 1:08 AM" NA
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "temps: 6:36 PM" "temps: 1:08 AM" NA
 }\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{
 
-14-10
+15-14
+}
+
+\section{Function Introduced}{
+
+\code{v0.7.0} (Aug 25, 2022)
 }
 
 \seealso{
+The variant function intended for formatting \strong{gt} table data:
+\code{\link[=fmt_time]{fmt_time()}}.
+
 Other vector formatting functions: 
 \code{\link{vec_fmt_bytes}()},
 \code{\link{vec_fmt_currency}()},
-\code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_datetime}()},
+\code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},
+\code{\link{vec_fmt_index}()},
 \code{\link{vec_fmt_integer}()},
 \code{\link{vec_fmt_markdown}()},
 \code{\link{vec_fmt_number}()},
+\code{\link{vec_fmt_partsper}()},
 \code{\link{vec_fmt_percent}()},
-\code{\link{vec_fmt_scientific}()}
+\code{\link{vec_fmt_roman}()},
+\code{\link{vec_fmt_scientific}()},
+\code{\link{vec_fmt_spelled_num}()}
 }
 \concept{vector formatting functions}

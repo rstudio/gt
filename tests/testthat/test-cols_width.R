@@ -34,26 +34,9 @@ tbl_2 <-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
-
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
-}
-
-# Helper function to compare a contiguous set of HTML fragments with raw html
-html_fragment_within <- function(raw_html, ...) {
-  grepl(paste0("\\Q", c(...), "\\E", "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)
-}
-
-test_that("The `cols_width()` function stores values correctly", {
+test_that("cols_width() stores values correctly", {
 
   #
   # Using `tbl_1` which is a simple table (no stub or row groups)
@@ -70,7 +53,7 @@ test_that("The `cols_width()` function stores values correctly", {
       .$`_boxhead` %>%
       dplyr::select(var, column_width) %>%
       dplyr::mutate(column_width = unlist(column_width)),
-    dplyr::tibble(
+    vctrs::data_frame(
       var = paste0("col_", 1:4),
       column_width = paste0((1:4 * 100), "px")
     )
@@ -87,7 +70,7 @@ test_that("The `cols_width()` function stores values correctly", {
       .$`_boxhead` %>%
       dplyr::select(var, column_width) %>%
       dplyr::mutate(column_width = unlist(column_width)),
-    dplyr::tibble(
+    vctrs::data_frame(
       var = paste0("col_", 1:4),
       column_width = paste0((1:4 * 100), "px")
     )
@@ -103,7 +86,7 @@ test_that("The `cols_width()` function stores values correctly", {
       .$`_boxhead` %>%
       dplyr::select(var, column_width) %>%
       dplyr::mutate(column_width = unlist(column_width)),
-    dplyr::tibble(
+    vctrs::data_frame(
       var = paste0("col_", 1:4),
       column_width = c("100px", "200px", "", "400px")
     )
@@ -117,7 +100,7 @@ test_that("The `cols_width()` function stores values correctly", {
       .$`_boxhead` %>%
       dplyr::select(var, column_width) %>%
       dplyr::mutate(column_width = unlist(column_width)),
-    dplyr::tibble(
+    vctrs::data_frame(
       var = paste0("col_", 1:4),
       column_width = "100px"
     )
@@ -131,7 +114,7 @@ test_that("The `cols_width()` function stores values correctly", {
       .$`_boxhead` %>%
       dplyr::select(var, column_width) %>%
       dplyr::mutate(column_width = unlist(column_width)),
-    dplyr::tibble(
+    vctrs::data_frame(
       var = paste0("col_", 1:4),
       column_width = "100px"
     )
@@ -152,9 +135,9 @@ test_that("The `cols_width()` function stores values correctly", {
       .$`_boxhead` %>%
       dplyr::select(var, column_width) %>%
       dplyr::mutate(column_width = unlist(column_width)),
-    dplyr::tibble(
+    vctrs::data_frame(
       var = c(paste0("col_", 1:4), "row", "group"),
-      column_width = c(paste0((1:4 * 100), "px"), "400px", "")
+      column_width = c(paste0((1:4 * 100), "px"), "400px", "400px")
     )
   )
 
@@ -169,7 +152,7 @@ test_that("The `cols_width()` function stores values correctly", {
       .$`_boxhead` %>%
       dplyr::select(var, column_width) %>%
       dplyr::mutate(column_width = unlist(column_width)),
-    dplyr::tibble(
+    vctrs::data_frame(
       var = c(paste0("col_", 1:4), "row", "group"),
       column_width = c("100px", "200px", "", "400px", "50px", "")
     )
@@ -183,9 +166,9 @@ test_that("The `cols_width()` function stores values correctly", {
       .$`_boxhead` %>%
       dplyr::select(var, column_width) %>%
       dplyr::mutate(column_width = unlist(column_width)),
-    dplyr::tibble(
+    vctrs::data_frame(
       var = c(paste0("col_", 1:4), "row", "group"),
-      column_width = c(rep("100px", 5), "")
+      column_width = rep("100px", 6)
     )
   )
 
@@ -198,24 +181,61 @@ test_that("The `cols_width()` function stores values correctly", {
       .$`_boxhead` %>%
       dplyr::select(var, column_width) %>%
       dplyr::mutate(column_width = unlist(column_width)),
-    dplyr::tibble(
+    vctrs::data_frame(
       var = c(paste0("col_", 1:4), "row", "group"),
-      column_width = c(rep("100px", 5), "")
+      column_width = c(rep("100px", 5), "50px")
+    )
+  )
+
+  expect_equal(
+    gt(
+      tbl_2,
+      rowname_col = "row",
+      groupname_col = "group",
+      row_group_as_column = TRUE
+    ) %>%
+      cols_width(
+        group ~ px(20),
+        everything() ~ px(100)
+      ) %>%
+      .$`_boxhead` %>%
+      dplyr::select(var, column_width) %>%
+      dplyr::mutate(column_width = unlist(column_width)),
+    vctrs::data_frame(
+      var = c(paste0("col_", 1:4), "row", "group"),
+      column_width = c(rep("100px", 5), "20px")
+    )
+  )
+
+  expect_equal(
+    gt(
+      tbl_2,
+      groupname_col = "group",
+      row_group_as_column = TRUE
+    ) %>%
+      cols_width(
+        group ~ px(10),
+        row ~ px(30)
+      ) %>%
+      .$`_boxhead` %>%
+      dplyr::select(var, column_width) %>%
+      dplyr::mutate(column_width = unlist(column_width)),
+    vctrs::data_frame(
+      var = c(paste0("col_", 1:4), "row", "group"),
+      column_width = c(rep("", 4), "30px", "10px")
     )
   )
 
   # Don't expect an error or a warning if a `group` column
   # is included in a `cols_width()` call
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
       cols_width(
         group ~ px(50),
         everything() ~ px(100)
       )
   )
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
       cols_width(
         group ~ px(50),
@@ -223,8 +243,7 @@ test_that("The `cols_width()` function stores values correctly", {
       )
   )
 
-  # Expect an error if a column provided is not
-  # in the dataset
+  # Expect an error if a column provided is not in the dataset
   expect_error(
     gt(tbl) %>%
       cols_width(
@@ -243,7 +262,7 @@ test_that("The `cols_width()` function stores values correctly", {
   )
 })
 
-test_that("the function `cols_width()` works correctly with a simple table", {
+test_that("cols_width() works correctly with a simple table", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -553,8 +572,7 @@ test_that("the function `cols_width()` works correctly with a simple table", {
     expect_true()
 
   # Expect no partial matching issues with column names and arguments
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     dplyr::tribble(
       ~a , ~d,
       1, 4,
@@ -566,8 +584,7 @@ test_that("the function `cols_width()` works correctly with a simple table", {
         d ~ px(125)
       )
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     dplyr::tribble(
       ~a , ~dat,
       1, 4,
@@ -583,8 +600,7 @@ test_that("the function `cols_width()` works correctly with a simple table", {
   # Don't expect an error even in the unlikely case that a column
   # name is close enough to `.data` (this is due to the use of the
   # formula syntax)
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     dplyr::tribble(
       ~a , ~.dat,
       1, 4,
@@ -598,7 +614,7 @@ test_that("the function `cols_width()` works correctly with a simple table", {
   )
 })
 
-test_that("the function `cols_width()` works correctly with a complex table", {
+test_that("cols_width() works correctly with a complex table", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -901,4 +917,160 @@ test_that("the function `cols_width()` works correctly with a complex table", {
       "</colgroup>"
     ) %>%
     expect_true()
+})
+
+test_that("cols_width() correctly specifies LaTeX table when column widths are specified by user as percentages", {
+
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  # Create a `tbl_latex` object with `gt()` and size
+  # all columns in percentages
+  tbl_latex <-
+    gt(tbl) %>%
+    cols_width(
+      col_1 ~ pct(50),
+      col_2 ~ pct(30),
+      col_3 ~ pct(20),
+      col_4 ~ pct(10)
+    ) %>%
+    tab_options(latex.use_longtable = TRUE)
+
+  pct_string <- function(x, unit = '\\\\linewidth') {
+
+    prefix <- '>\\{\\\\(raggedright|raggedleft|centering)\\\\arraybackslash\\}'
+
+    sprintf(
+      '%sp\\{\\\\dimexpr %.2f%s -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}',
+      prefix,
+      x,
+      #format(x, scientific = FALSE, trim = TRUE),
+      unit
+    )
+
+  }
+
+  build_longtable_regex <- function(...) {
+
+    paste0(
+      c(
+        "\\\\begin\\{longtable\\}\\{",
+        "(@\\{\\\\extracolsep\\{\\\\fill\\}\\})*",
+        c(...),
+        "\\}\\n"
+      ),
+      collapse = ""
+    )
+
+  }
+
+  latex_col_regex <-
+    paste0(
+      c(
+        "\\\\begin\\{longtable\\}\\{",
+        "(@\\{\\\\extracolsep\\{\\\\fill\\}\\})*",
+        # '>\\{\\\\ragged[[:alpha:]]+\\\\arraybackslash'
+       sprintf(">\\{\\\\(raggedright|raggedleft|centering)\\\\arraybackslash\\}p\\{\\\\dimexpr 0\\.%d\\\\linewidth -2\\\\tabcolsep-1.5\\\\arrayrulewidth}",
+               c(50L, 30L, 20L, 10L)),
+        "\\}\\n"
+      ),
+      collapse = ""
+    )
+
+  # Expect that all column widths are expressed as percentage of \linewidth
+  longtable_s <- build_longtable_regex(
+    pct_string(c(0.5, 0.3, 0.2, 0.1))
+  )
+  expect_match(as_latex(tbl_latex), longtable_s)
+
+
+  # Check that LaTeX is correctly generated when only some
+  # column widths are specified as percentages
+  tbl_latex_partial <-
+    gt(tbl) %>%
+    cols_width(
+      col_1 ~ pct(30),
+      col_3 ~ pct(20)
+    ) %>%
+    tab_options(latex.use_longtable = TRUE)
+
+  c(
+    pct_string(0.3),
+    'r',
+    pct_string(0.2),
+    'r'
+  ) %>%
+    build_longtable_regex() %>%
+    grepl(as_latex(tbl_latex_partial)) %>%
+    expect_true()
+
+  # Check that LaTeX longtable command is correctly generated
+  # when table_width is specified by the user as a percentage
+  tbl_latex_tw_pct <-
+    tbl_latex %>%
+    tab_options(table.width = pct(70))
+
+  (0.7 * c(0.5, 0.3, 0.2, 0.1)) %>%
+    pct_string() %>%
+    build_longtable_regex() %>%
+    grepl(as_latex(tbl_latex_tw_pct)) %>%
+    expect_true()
+
+  # Check that LaTeX longtable command is correctly generated
+  # when table width is specified by user in pixels
+  tbl_latex_tw_px <-
+    tbl_latex %>%
+    tab_options(table.width = "400px")
+
+  (400 * 0.75 * c(0.5, 0.3, 0.2, 0.1)) %>%
+    pct_string(unit = "pt") %>%
+    build_longtable_regex() %>%
+    grepl(as_latex(tbl_latex_tw_px))
+
+
+})
+
+test_that("column widths are accurately reflected in Latex multicolumn statements", {
+
+  set.seed(1234)
+  tbl_random1 <- data.frame(x = c("a", "b", "c", "d", "e"),
+               y = runif(5),
+               z = runif(5),
+               m = runif(5),
+               n = runif(5),
+               w = runif(5))
+
+  gt_tbl <- gt(tbl_random1,
+     rowname_col = "x",
+     row_group_as_column = FALSE) %>%
+    fmt_number(decimals = 3) %>%
+    tab_row_group(label = "Only row group label",
+                  rows = 1:2) %>%
+    cols_width(everything() ~ "2cm") %>%
+    tab_spanner(label = "Spanner with a long title that should be wrapped", columns = c("y", "z")) %>%
+    tab_spanner(label = "Spanner2", columns = c("n", "w")) %>%
+    tab_spanner(label = "Another long spanner that needs to wrap even more than the other", columns = c("z", "m")) %>%
+    summary_rows(fns = list("mean"))
+
+  expect_snapshot(as_latex(gt_tbl))
+
+})
+
+test_that("check cols_width is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply width to table and group
+  width_gt_tbl <- gt_tbl %>%
+    cols_width(mpg ~ px(150))
+
+  width_gt_group <- gt_group %>%
+    cols_width(mpg ~ px(150))
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(width_gt_group, gt_group(width_gt_tbl, width_gt_tbl))
+
 })

@@ -1,20 +1,9 @@
-# Create a shorter version of `mtcars`
-mtcars_short <- mtcars[1:5, ]
-
-# Create a data frame based on the internal `sp500.csv`
-sp500 <-
-  read.csv(
-    system.file("extdata", "sp500.csv", package = "gt"),
-    stringsAsFactors = FALSE
-  )
-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
-test_that("the `cols_align()` function works correctly", {
+test_that("cols_align() works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -109,6 +98,13 @@ test_that("the `cols_align()` function works correctly", {
     rvest::html_text() %>%
     expect_equal(colnames(mtcars_short))
 
+  # Create a data frame based on the internal `sp500.csv`
+  sp500 <-
+    read.csv(
+      system.file("extdata", "sp500.csv", package = "gt"),
+      stringsAsFactors = FALSE
+    )
+
   # Create a `tbl_html` object with the `sp500` data
   # frame and `auto`-align all columns
   tbl_html <-
@@ -120,7 +116,123 @@ test_that("the `cols_align()` function works correctly", {
   # Expect that the `Date` column is left-formatted because
   # the column is of the `character` class
   tbl_html %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("Date", "Open", "High", "Low", "Close", "Volume"))
+})
+
+test_that("The stub gets its alignment set properly with `cols_align()`", {
+
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  # Create a new tibble for testing
+  tbl <-
+    dplyr::tibble(
+      stub = c("*one*", "**two**", "three"),
+      vals = 3:1
+    )
+
+  # Create a `tbl_html` object with `gt()`; don't align any columns
+  # with `cols_align()`
+  tbl_html <-
+    gt(tbl, rowname_col = "stub") %>%
+    tab_stubhead(label = "stub") %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect the stub is left aligned (because of the text content) and that the
+  # other column is right aligned (because of the numerical content
+  tbl_html %>%
+    rvest::html_nodes("[class='gt_row gt_left gt_stub']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("*one*", "**two**", "three"))
+  tbl_html %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
+    rvest::html_text() %>%
+    expect_equal("vals")
+
+  # Create a `tbl_html` object with `gt()`; center align all columns
+  tbl_html <-
+    gt(tbl, rowname_col = "stub") %>%
+    tab_stubhead(label = "stub") %>%
+    cols_align(align = "center") %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect both columns are center aligned
+  tbl_html %>%
+    rvest::html_nodes("[class='gt_row gt_center gt_stub']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("*one*", "**two**", "three"))
+  tbl_html %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_center']") %>%
+    rvest::html_text() %>%
+    expect_equal("vals")
+
+  # Create a `tbl_html` object with `gt()`; center align the stub column and
+  # left align the `vals` column
+  tbl_html <-
+    gt(tbl, rowname_col = "stub") %>%
+    tab_stubhead(label = "stub") %>%
+    cols_align(align = "center", columns = stub) %>%
+    cols_align(align = "left", columns = vals) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect the correct alignment for each column
+  tbl_html %>%
+    rvest::html_nodes("[class='gt_row gt_center gt_stub']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("*one*", "**two**", "three"))
+  tbl_html %>%
     rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
     rvest::html_text() %>%
-    expect_equal("Date")
+    expect_equal(c("stub", "vals"))
+
+  # Expect that the use of `stub()` produces the same result as providing the
+  # stub column name
+  tbl_html <-
+    gt(tbl, rowname_col = "stub") %>%
+    tab_stubhead(label = "stub") %>%
+    cols_align(align = "center", columns = stub()) %>%
+    cols_align(align = "left", columns = vals) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect the correct alignment for each column
+  tbl_html %>%
+    rvest::html_nodes("[class='gt_row gt_center gt_stub']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("*one*", "**two**", "three"))
+  tbl_html %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("stub", "vals"))
+
+  # Expect an error if using `stub()` when there is no stub
+  expect_error(
+    gt(tbl) %>%
+    cols_align(align = "center", columns = stub())
+  )
+})
+
+
+test_that("check cols_align is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply alignment to table and group
+  aligned_gt_tbl <- gt_tbl %>%
+    cols_align(align = "left", columns = c(mpg, cyl, drat))
+
+  aligned_gt_group <- gt_group %>%
+    cols_align(align = "left", columns = c(mpg, cyl, drat))
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(aligned_gt_group, gt_group(aligned_gt_tbl, aligned_gt_tbl))
+
 })

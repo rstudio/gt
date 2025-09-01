@@ -7,19 +7,17 @@
 \format{
 A tibble with 8 rows and 9 variables:
 \describe{
-\item{num}{a numeric column ordered with increasingly larger values}
-\item{char}{a character column composed of names of fruits from \code{a} to
-\code{h}}
-\item{fctr}{a factor column with numbers from 1 to 8, written out}
-\item{date, time, datetime}{character columns with dates, times, and
-datetimes}
-\item{currency}{a numeric column that is useful for testing currency-based
-formatting}
-\item{row}{a character column in the format \code{row_X} which can be
-useful for testing with row captions in a table stub}
-\item{group}{a character column with four \code{grp_a} values and four
-\code{grp_b} values which can be useful for testing tables that contain
-row groups}
+\item{num}{A numeric column ordered with increasingly larger values.}
+\item{char}{A character column composed of names of fruits from \code{a} to \code{h}.}
+\item{fctr}{A factor column with numbers from \code{1} to \code{8}, written out.}
+\item{date, time, datetime}{Character columns with dates, times, and
+datetimes.}
+\item{currency}{A numeric column that is useful for testing currency-based
+formatting.}
+\item{row}{A character column in the format \code{row_X} which can be useful for
+testing with row labels in a table stub.}
+\item{group}{A character column with four \code{grp_a} values and four \code{grp_b}
+values which can be useful for testing tables that contain row groups.}
 }
 }
 \usage{
@@ -36,40 +34,42 @@ character-based dates/times in the familiar ISO 8601 format. The \code{row} and
 \code{grp_b}) for experimenting with the \code{\link[=gt]{gt()}} function's \code{rowname_col} and
 \code{groupname_col} arguments.
 }
-\section{Examples}{
+\section{Dataset ID and Badge}{
 
+DATA-6
 
-Here is the \code{exibble}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 8 × 9
-##           num char       fctr  date       time  datetime    currency row   group
-##         <dbl> <chr>      <fct> <chr>      <chr> <chr>          <dbl> <chr> <chr>
-## 1       0.111 apricot    one   2015-01-15 13:35 2018-01-01…    50.0  row_1 grp_a
-## 2       2.22  banana     two   2015-02-15 14:40 2018-02-02…    18.0  row_2 grp_a
-## 3      33.3   coconut    three 2015-03-15 15:45 2018-03-03…     1.39 row_3 grp_a
-## 4     444.    durian     four  2015-04-15 16:50 2018-04-04… 65100    row_4 grp_a
-## 5    5550     <NA>       five  2015-05-15 17:55 2018-05-05…  1326.   row_5 grp_b
-## 6      NA     fig        six   2015-06-15 <NA>  2018-06-06…    13.3  row_6 grp_b
-## 7  777000     grapefruit seven <NA>       19:10 2018-07-07…    NA    row_7 grp_b
-## 8 8880000     honeydew   eight 2015-08-15 20:20 <NA>            0.44 row_8 grp_b
-}\if{html}{\out{</div>}}
+\if{html}{\out{
+<div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_exibble.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
+}}
 }
 
-\section{Function ID}{
+\section{Dataset Introduced}{
 
-11-6
+\code{v0.2.0.5} (March 31, 2020)
 }
 
+\examples{
+exibble
+}
 \seealso{
-Other Datasets: 
+Other datasets: 
+\code{\link{constants}},
 \code{\link{countrypops}},
+\code{\link{films}},
+\code{\link{gibraltar}},
 \code{\link{gtcars}},
+\code{\link{illness}},
+\code{\link{metro}},
+\code{\link{nuclides}},
+\code{\link{peeps}},
+\code{\link{photolysis}},
 \code{\link{pizzaplace}},
+\code{\link{reactions}},
+\code{\link{rx_addv}},
+\code{\link{rx_adsl}},
 \code{\link{sp500}},
-\code{\link{sza}}
+\code{\link{sza}},
+\code{\link{towny}}
 }
-\concept{Datasets}
+\concept{datasets}
 \keyword{datasets}

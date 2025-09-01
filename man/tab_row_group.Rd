@@ -7,17 +7,36 @@
 tab_row_group(data, label, rows, id = label, others_label = NULL, group = NULL)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{label}{The text to use for the row group label.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{rows}{The rows to be made components of the row group. Can either be a
-vector of row captions provided in \code{c()}, a vector of row indices, or a
-helper function focused on selections. The select helper functions are:
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and
-\code{\link[=everything]{everything()}}.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{id}{The ID for the row group. When accessing a row group through
+\item{label}{\emph{Row group label text}
+
+\verb{scalar<character>} // \strong{required}
+
+The text to use for the row group label. We can optionally use \code{\link[=md]{md()}} or
+\code{\link[=html]{html()}} to style the text as Markdown or to retain HTML elements in the
+text.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \strong{required}
+
+The rows to be made components of the row group. We can supply a vector of
+row ID values within \code{c()}, a vector of row indices, or use select helpers
+(e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{id}{\emph{Row group ID}
+
+\verb{scalar<character>} // \emph{default:} \code{label}
+
+The ID for the row group. When accessing a row group through
 \code{\link[=cells_row_groups]{cells_row_groups()}} (when using \code{\link[=tab_style]{tab_style()}} or \code{\link[=tab_footnote]{tab_footnote()}}) the
 \code{id} value is used as the reference (and not the \code{label}). If an \code{id} is
 not explicitly provided here, it will be taken from the \code{label} value. It
@@ -27,38 +46,47 @@ markup, is lengthy, or both). Finally, when providing an \code{id} value you
 must ensure that it is unique across all ID values set for row groups (the
 function will stop if \code{id} isn't unique).}
 
-\item{others_label}{This argument is deprecated. Instead use
+\item{others_label}{\emph{\link{Deprecated} Label for default row group}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+This argument is deprecated. Instead use
 \verb{tab_options(row_group.default_label = <label>)}.}
 
-\item{group}{This argument is deprecated. Instead use \code{label}.}
+\item{group}{\emph{\link{Deprecated} The group label}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+This argument is deprecated. Instead use \code{label}.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-Create a row group with a collection of rows. This requires specification of
-the rows to be included, either by supplying row labels, row indices, or
-through use of a select helper function like \code{\link[=starts_with]{starts_with()}}. To modify the
-order of row groups, use the \code{\link[=row_group_order]{row_group_order()}} function.
+We can create a row group from a collection of rows with \code{tab_row_group()}.
+This requires specification of the rows to be included, either by supplying
+row labels, row indices, or through use of a select helper function like
+\code{\link[=starts_with]{starts_with()}}. To modify the order of row groups, we can use
+\code{\link[=row_group_order]{row_group_order()}}.
 
 To set a default row group label for any rows not formally placed in a row
 group, we can use a separate call to \verb{tab_options(row_group.default_label = <label>)}. If this is not done and there are rows that haven't been placed
 into a row group (where one or more row groups already exist), those rows
-will be automatically placed into a row group without a label. To restore
-labels for row groups not explicitly assigned a group,
-\code{tab_options(row_group.default_label = "")} can be used.
+will be automatically placed into a row group without a label.
 }
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table and use \code{tab_row_group()} to add two
-row groups with the labels: \code{numbered} and \code{NA}. The row group with the \code{NA}
-label ends up being rendered without a label at all.
+Using a subset of the \code{\link{gtcars}} dataset, let's create a simple \strong{gt} table
+with row labels (from the \code{model} column) inside of a stub. This eight-row
+table begins with no row groups at all but with a single use of
+\code{tab_row_group()}, we can specify a row group that will contain any rows
+where the car model begins with a number.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(model, year, hp, trq) \%>\%
-  dplyr::slice(1:8) \%>\%
-  gt(rowname_col = "model") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(model, year, hp, trq) |>
+  dplyr::slice(1:8) |>
+  gt(rowname_col = "model") |>
   tab_row_group(
     label = "numbered",
     rows = matches("^[0-9]")
@@ -66,31 +94,124 @@ label ends up being rendered without a label at all.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_1.png" alt="This image of a table was generated from the first code example in the `tab_row_group()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add two row groups with the labels
-\code{powerful} and \verb{super powerful}. The distinction between the groups is
-whether \code{hp} is lesser or greater than \code{600} (governed by the expressions
-provided to the \code{rows} argument).
+This actually makes two row groups since there are row labels that don't
+begin with a number. That second row group is a catch-all \code{NA} group, and it
+doesn't display a label at all. Rather, it is set off from the other group
+with a double line. This may be a preferable way to display the arrangement
+of one distinct group and an 'others' or default group. If that's the case
+but you'd like the order reversed, you can use \code{\link[=row_group_order]{row_group_order()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(model, year, hp, trq) \%>\%
-  dplyr::slice(1:8) \%>\%
-  gt(rowname_col = "model") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(model, year, hp, trq) |>
+  dplyr::slice(1:8) |>
+  gt(rowname_col = "model") |>
   tab_row_group(
-    label = "powerful",
-    rows = hp <= 600
-  ) \%>\%
+    label = "numbered",
+    rows = matches("^[0-9]")
+  ) |>
+  row_group_order(groups = c(NA, "numbered"))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_2.png" alt="This image of a table was generated from the second code example in the `tab_row_group()` help file." style="width:100\%;">
+}}
+
+Two more options include: (1) setting a default label for the 'others' group
+(done through \code{\link[=tab_options]{tab_options()}}), and (2) creating row groups until there are
+no more unaccounted for rows. Let's try the first option in the next example:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(model, year, hp, trq) |>
+  dplyr::slice(1:8) |>
+  gt(rowname_col = "model") |>
   tab_row_group(
-    label = "super powerful",
-    rows = hp > 600
+    label = "numbered",
+    rows = matches("^[0-9]")
+  ) |>
+  row_group_order(groups = c(NA, "numbered")) |>
+  tab_options(row_group.default_label = "others")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_3.png" alt="This image of a table was generated from the third code example in the `tab_row_group()` help file." style="width:100\%;">
+}}
+
+The above use of the \code{row_group.default_label} in \code{\link[=tab_options]{tab_options()}} gets the
+job done and provides a default label. One drawback is that the default/\code{NA}
+group doesn't have an ID, so it can't as easily be styled with \code{\link[=tab_style]{tab_style()}};
+however, row groups have indices and the index for the \code{"others"} group here
+is \code{1}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(model, year, hp, trq) |>
+  dplyr::slice(1:8) |>
+  gt(rowname_col = "model") |>
+  tab_row_group(
+    label = "numbered",
+    rows = matches("^[0-9]")
+  ) |>
+  row_group_order(groups = c(NA, "numbered")) |>
+  tab_options(row_group.default_label = "others") |>
+  tab_style(
+    style = cell_fill(color = "bisque"),
+    locations = cells_row_groups(groups = 1)
+  ) |>
+  tab_style(
+    style = cell_fill(color = "lightgreen"),
+    locations = cells_row_groups(groups = "numbered")
   )
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_4.png" alt="This image of a table was generated from the fourth code example in the `tab_row_group()` help file." style="width:100\%;">
 }}
+
+Now let's try using \code{tab_row_group()} with our \code{\link{gtcars}}-based table such
+that all rows are formally assigned to different row groups. We'll define two
+row groups with the (Markdown-infused) labels \code{"**Powerful Cars**"} and
+\code{"**Super Powerful Cars**"}. The distinction between the groups is whether
+\code{hp} is lesser or greater than \code{600} (and this is governed by the expressions
+provided to the \code{rows} argument).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(model, year, hp, trq) |>
+  dplyr::slice(1:8) |>
+  gt(rowname_col = "model") |>
+  tab_row_group(
+    label = md("**Powerful Cars**"),
+    rows = hp < 600,
+    id = "powerful"
+  ) |>
+  tab_row_group(
+    label = md("**Super Powerful Cars**"),
+    rows = hp >= 600,
+    id = "v_powerful"
+  ) |>
+  tab_style(
+    style = cell_fill(color = "gray85"),
+    locations = cells_row_groups(groups = "powerful")
+  ) |>
+  tab_style(
+    style = list(
+      cell_fill(color = "gray95"),
+      cell_text(size = "larger")
+    ),
+    locations = cells_row_groups(groups = "v_powerful")
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_5.png" alt="This image of a table was generated from the fifth code example in the `tab_row_group()` help file." style="width:100\%;">
+}}
+
+Setting the \code{id} values for each of the row groups makes things easier since
+you will have clean, markup-free ID values to reference in later calls (as
+was done with the \code{\link[=tab_style]{tab_style()}} invocations in the example above). The use of
+the \code{\link[=md]{md()}} helper function makes it so that any Markdown provided for the
+\code{label} of a row group is faithfully rendered.
 }
 
 \section{Function ID}{
@@ -98,15 +219,24 @@ provided to the \code{rows} argument).
 2-4
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
-Other Create or Modify Parts: 
+Other part creation/modification functions: 
+\code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
+\code{\link{tab_info}()},
 \code{\link{tab_options}()},
 \code{\link{tab_source_note}()},
-\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_spanner_delim}()},
+\code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
-\code{\link{tab_style}()}
+\code{\link{tab_style}()},
+\code{\link{tab_style_body}()}
 }
-\concept{Create or Modify Parts}
+\concept{part creation/modification functions}

@@ -1,9 +1,38 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2025 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 # Build common table components from a `gt_tbl` object
-#' @import rlang
-#' @noRd
 build_data <- function(data, context) {
 
-  checkmate::assert_class(data, "gt_tbl")
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # For an empty table, ensure that some basic
+  # messaging is in place
+  if (is_gt_tbl_empty(data = data)) {
+    data <- adjust_gt_tbl_empty(data = data)
+  }
 
   # Create `body` with rendered values; move
   # input data cells to `body` that didn't have
@@ -11,14 +40,16 @@ build_data <- function(data, context) {
   # Reassemble the rows and columns of `body` in
   # the correct order
   data <- dt_body_build(data = data)
-  data <- render_formats(data = data, context = context)
+  data <- render_formats(data = data, skip_compat_check = FALSE, context = context)
+  data <- render_substitutions(data = data, context = context)
   data <- migrate_unformatted_to_output(data = data, context = context)
   data <- perform_col_merge(data = data, context = context)
-
   data <- dt_body_reassemble(data = data)
+
   data <- reorder_stub_df(data = data)
   data <- reorder_footnotes(data = data)
   data <- reorder_styles(data = data)
+
   data <- perform_text_transforms(data = data)
 
   # Use `dt_*_build()` methods
@@ -55,5 +86,18 @@ build_data <- function(data, context) {
   # Set the `_has_built` flag to `TRUE`
   data <- dt_has_built_set(data = data, value = TRUE)
 
+  data
+}
+
+
+# Faster implementation that avoids some operations
+# for vec_*() functions
+# only build the body correctly.
+build_data_body <- function(data, context) {
+  
+  data <- dt_body_build(data = data)
+  data <- render_formats(data = data, skip_compat_check = TRUE, context = context)
+  data <- migrate_unformatted_to_output(data = data, context = context)
+  
   data
 }

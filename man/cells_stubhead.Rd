@@ -10,67 +10,27 @@ cells_stubhead()
 A list object with the classes \code{cells_stubhead} and \code{location_cells}.
 }
 \description{
-The \code{cells_stubhead()} function is used to target the table stubhead location
+\code{cells_stubhead()} is used to target the table stubhead location
 when applying a footnote with \code{\link[=tab_footnote]{tab_footnote()}} or adding custom style with
 \code{\link[=tab_style]{tab_style()}}. The function is expressly used in each of those functions'
 \code{locations} argument. The 'stubhead' location is always present alongside the
 'stub' location.
 }
-\section{Overview of Location Helper Functions}{
-
-Location helper functions can be used to target cells with virtually any
-function that has a \code{locations} argument. Here is a listing of all of the
-location helper functions, with locations corresponding roughly from top to
-bottom of a table:
-\itemize{
-\item \code{\link[=cells_title]{cells_title()}}: targets the table title or the table subtitle depending on
-the value given to the \code{groups} argument (\code{"title"} or \code{"subtitle"}).
-\item \code{\link[=cells_stubhead]{cells_stubhead()}}: targets the stubhead location, a cell of which is only
-available when there is a stub; a label in that location can be created by
-using the \code{\link[=tab_stubhead]{tab_stubhead()}} function.
-\item \code{\link[=cells_column_spanners]{cells_column_spanners()}}: targets the spanner column labels with the
-\code{spanners} argument; spanner column labels appear above the column labels.
-\item \code{\link[=cells_column_labels]{cells_column_labels()}}: targets the column labels with its \code{columns}
-argument.
-\item \code{\link[=cells_row_groups]{cells_row_groups()}}: targets the row group labels in any available row
-groups using the \code{groups} argument.
-\item \code{\link[=cells_stub]{cells_stub()}}: targets row labels in the table stub using the \code{rows}
-argument.
-\item \code{\link[=cells_body]{cells_body()}}: targets data cells in the table body using intersections of
-\code{columns} and \code{rows}.
-\item \code{\link[=cells_summary]{cells_summary()}}: targets summary cells in the table body using the
-\code{groups} argument and intersections of \code{columns} and \code{rows}.
-\item \code{\link[=cells_grand_summary]{cells_grand_summary()}}: targets cells of the table's grand summary using
-intersections of \code{columns} and \code{rows}
-\item \code{\link[=cells_stub_summary]{cells_stub_summary()}}: targets summary row labels in the table stub using
-the \code{groups} and \code{rows} arguments.
-\item \code{\link[=cells_stub_grand_summary]{cells_stub_grand_summary()}}: targets grand summary row labels in the table
-stub using the \code{rows} argument.
-\item \code{\link[=cells_footnotes]{cells_footnotes()}}: targets all footnotes in the table footer (cannot be
-used with \code{\link[=tab_footnote]{tab_footnote()}}).
-\item \code{\link[=cells_source_notes]{cells_source_notes()}}: targets all source notes in the table footer
-(cannot be used with \code{\link[=tab_footnote]{tab_footnote()}}).
-}
-
-When using any of the location helper functions with an appropriate function
-that has a \code{locations} argument (e.g., \code{\link[=tab_style]{tab_style()}}), multiple locations
-can be targeted by enclosing several \verb{cells_*()} helper functions in a
-\code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
-}
-
 \section{Examples}{
 
 
-Use \code{\link{pizzaplace}} to create a \strong{gt} table. Add a stubhead label with
-\code{\link[=tab_stubhead]{tab_stubhead()}} and then style it with \code{\link[=tab_style]{tab_style()}} and \code{cells_stubhead()}.
+Using a summarized version of the \code{\link{pizzaplace}} dataset, let's create a
+\strong{gt} table. Add a stubhead label with \code{\link[=tab_stubhead]{tab_stubhead()}} and then style it
+with \code{\link[=tab_style]{tab_style()}} in conjunction with the use of \code{cells_stubhead()} in the
+\code{locations} argument.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
-  dplyr::mutate(month = as.numeric(substr(date, 6, 7))) \%>\%
-  dplyr::group_by(month, type) \%>\%
-  dplyr::summarize(sold = dplyr::n(), .groups = "drop") \%>\%
-  dplyr::filter(month \%in\% 1:2) \%>\%
-  gt(rowname_col = "type") \%>\%
-  tab_stubhead(label = "type") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::mutate(month = as.numeric(substr(date, 6, 7))) |>
+  dplyr::group_by(month, type) |>
+  dplyr::summarize(sold = dplyr::n(), .groups = "drop") |>
+  dplyr::filter(month \%in\% 1:2) |>
+  gt(rowname_col = "type") |>
+  tab_stubhead(label = "type") |>
   tab_style(
     style = cell_fill(color = "lightblue"),
     locations = cells_stubhead()
@@ -78,21 +38,22 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Add a stubhead label
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_stubhead_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_stubhead_1.png" alt="This image of a table was generated from the first code example in the `cells_stubhead()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-7-6
+8-13
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
-Other Helper Functions: 
-\code{\link{adjust_luminance}()},
-\code{\link{cell_borders}()},
-\code{\link{cell_fill}()},
-\code{\link{cell_text}()},
+Other location helper functions: 
 \code{\link{cells_body}()},
 \code{\link{cells_column_labels}()},
 \code{\link{cells_column_spanners}()},
@@ -100,20 +61,11 @@ Other Helper Functions:
 \code{\link{cells_grand_summary}()},
 \code{\link{cells_row_groups}()},
 \code{\link{cells_source_notes}()},
+\code{\link{cells_stub}()},
 \code{\link{cells_stub_grand_summary}()},
 \code{\link{cells_stub_summary}()},
-\code{\link{cells_stub}()},
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
-\code{\link{currency}()},
-\code{\link{default_fonts}()},
-\code{\link{escape_latex}()},
-\code{\link{google_font}()},
-\code{\link{gt_latex_dependencies}()},
-\code{\link{html}()},
-\code{\link{md}()},
-\code{\link{pct}()},
-\code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{location-helper}}
 }
-\concept{Helper Functions}
+\concept{location helper functions}

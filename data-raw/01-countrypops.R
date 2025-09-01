@@ -3,9 +3,82 @@ library(tidyverse)
 countrypops <-
   readr::read_csv(
     file = "data-raw/countrypops_wide.csv",
-    col_types = paste0("ccc", paste0(rep("i", 58), collapse = "")),
-    na = character()
-    ) %>%
-  tidyr::gather("year", "population", `1960`:`2017`) %>%
-  dplyr::arrange(country_code_3, year) %>%
-  dplyr::mutate(year = as.integer(year))
+    col_types = cols(
+        country_name = col_character(),
+        country_code_2 = col_character(),
+        country_code_3 = col_character(),
+        `1960` = col_integer(),
+        `1961` = col_integer(),
+        `1962` = col_integer(),
+        `1963` = col_integer(),
+        `1964` = col_integer(),
+        `1965` = col_integer(),
+        `1966` = col_integer(),
+        `1967` = col_integer(),
+        `1968` = col_integer(),
+        `1969` = col_integer(),
+        `1970` = col_integer(),
+        `1971` = col_integer(),
+        `1972` = col_integer(),
+        `1973` = col_integer(),
+        `1974` = col_integer(),
+        `1975` = col_integer(),
+        `1976` = col_integer(),
+        `1977` = col_integer(),
+        `1978` = col_integer(),
+        `1979` = col_integer(),
+        `1980` = col_integer(),
+        `1981` = col_integer(),
+        `1982` = col_integer(),
+        `1983` = col_integer(),
+        `1984` = col_integer(),
+        `1985` = col_integer(),
+        `1986` = col_integer(),
+        `1987` = col_integer(),
+        `1988` = col_integer(),
+        `1989` = col_integer(),
+        `1990` = col_integer(),
+        `1991` = col_integer(),
+        `1992` = col_integer(),
+        `1993` = col_integer(),
+        `1994` = col_integer(),
+        `1995` = col_integer(),
+        `1996` = col_integer(),
+        `1997` = col_integer(),
+        `1998` = col_integer(),
+        `1999` = col_integer(),
+        `2000` = col_integer(),
+        `2001` = col_integer(),
+        `2002` = col_integer(),
+        `2003` = col_integer(),
+        `2004` = col_integer(),
+        `2005` = col_integer(),
+        `2006` = col_integer(),
+        `2007` = col_integer(),
+        `2008` = col_integer(),
+        `2009` = col_integer(),
+        `2010` = col_integer(),
+        `2011` = col_integer(),
+        `2012` = col_integer(),
+        `2013` = col_integer(),
+        `2014` = col_integer(),
+        `2015` = col_integer(),
+        `2016` = col_integer(),
+        `2017` = col_integer(),
+        `2018` = col_integer(),
+        `2019` = col_integer(),
+        `2020` = col_integer(),
+        `2021` = col_integer(),
+        `2022` = col_integer(),
+        `2023` = col_integer()
+    ),
+    na = ""
+  ) %>%
+  tidyr::pivot_longer(
+    cols = `1960`:`2023`,
+    names_to = "year",
+    # transform year to integer
+    names_transform = as.integer,
+    values_to = "population"
+  ) %>%
+  dplyr::arrange(country_code_3, year)

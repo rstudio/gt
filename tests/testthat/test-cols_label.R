@@ -17,21 +17,9 @@ tbl <-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
-
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
-}
-
-test_that("the function `cols_label()` works correctly", {
+test_that("cols_label() correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -49,11 +37,10 @@ test_that("the function `cols_label()` works correctly", {
 
   # Expect that the values for the column labels are set
   # correctly in `col_labels`
-  tbl_html %>%
-    .$`_boxh` %>%
-    .$column_label %>%
-    unlist() %>%
-    expect_equal(c("col_a", "col_b", "col_c", "col_d"))
+  expect_equal(
+    unlist(tbl_html$`_boxhead`$column_label),
+    c("col_a", "col_b", "col_c", "col_d")
+  )
 
   # Expect that the column labels are set
   tbl_html %>%
@@ -70,18 +57,14 @@ test_that("the function `cols_label()` works correctly", {
 
   # Expect the original column names for `tbl` as values for
   # the column keys and for the column labels
-  tbl_html %>%
-    .$`_boxh` %>%
-    .$var %>%
-    unlist() %>%
-    expect_equal(colnames(tbl))
-
-  tbl_html %>%
-    .$`_boxh` %>%
-    .$column_label %>%
-    unlist() %>%
-    expect_equal(colnames(tbl))
-
+  expect_equal(
+    unlist(tbl_html$`_boxhead`$column_label),
+    colnames(tbl)
+  )
+  expect_equal(
+    unlist(tbl_html$`_boxhead`$var),
+    colnames(tbl)
+  )
   # Expect that the column labels are set as the column names
   tbl_html %>%
     render_as_html() %>%
@@ -104,11 +87,10 @@ test_that("the function `cols_label()` works correctly", {
 
   # Expect that the values for the column labels are set
   # correctly in `col_labels`
-  tbl_html %>%
-    .$`_boxh` %>%
-    .$column_label %>%
-    unlist() %>%
-    expect_equal(c("col_a", "col_b", "col_c", "col_d"))
+  expect_equal(
+    unlist(tbl_html$`_boxhead`$column_label),
+    c("col_a", "col_b", "col_c", "col_d")
+  )
 
   # Expect that the column labels are set
   tbl_html %>%
@@ -124,8 +106,7 @@ test_that("the function `cols_label()` works correctly", {
   expect_error(gt(tbl) %>% cols_label(col_a = "col_1"))
 
   # Expect no partial matching issues with column names and arguments
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     dplyr::tribble(
       ~a , ~d,
       1, 4,
@@ -137,8 +118,7 @@ test_that("the function `cols_label()` works correctly", {
         d = "label d"
       )
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     dplyr::tribble(
       ~a , ~dat,
       1, 4,
@@ -165,4 +145,41 @@ test_that("the function `cols_label()` works correctly", {
         .dat = "label dat"
       )
   )
+})
+
+test_that("cols_label() works with md()", {
+  tab <- gt(data.frame(x = 1, y = 2, z = 3)) %>%
+    cols_label(x = md("*x_1*"), y = md("Time Domain<br/>$\\small{f\\left( t \\right) = {\\mathcal{L}^{\\,\\, - 1}}\\left\\{ {F\\left( s \\right)} \\right\\}}$"))
+  expect_equal(
+    tab$`_boxhead`$column_label,
+    list(
+      structure( "*x_1*", class = "from_markdown"),
+      structure("Time Domain<br/>$\\small{f\\left( t \\right) = {\\mathcal{L}^{\\,\\, - 1}}\\left\\{ {F\\left( s \\right)} \\right\\}}$", class = "from_markdown"),
+      "z"
+    )
+  )
+
+})
+
+test_that("check cols_label is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply alignment to table and group
+  label_gt_tbl <- gt_tbl %>%
+    cols_label(
+      mpg = "Miles per gallon"
+    )
+
+  label_gt_group <- gt_group %>%
+    cols_label(
+      mpg = "Miles per gallon"
+    )
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(label_gt_group, gt_group(label_gt_tbl, label_gt_tbl))
+
 })

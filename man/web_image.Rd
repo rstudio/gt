@@ -7,27 +7,34 @@
 web_image(url, height = 30)
 }
 \arguments{
-\item{url}{A url that resolves to an image file.}
+\item{url}{\emph{An image URL}
 
-\item{height}{The absolute height (px) of the image in the table cell.}
+\verb{scalar<character>} // \strong{required}
+
+A url that resolves to an image file.}
+
+\item{height}{\emph{Height of image}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{30}
+
+The absolute height of the image in the table cell (in \code{"px"} units). By
+default, this is set to \code{"30px"}.}
 }
 \value{
 A character object with an HTML fragment that can be placed inside of
 a cell.
 }
 \description{
-We can flexibly add a web image inside of a table with \code{web_image()}
-function. The function provides a convenient way to generate an HTML fragment
-with an image URL. Because this function is currently HTML-based, it is only
-useful for HTML table output. To use this function inside of data cells, it
-is recommended that the \code{\link[=text_transform]{text_transform()}} function is used. With that
-function, we can specify which data cells to target and then include a
-\code{web_image()} call within the required user-defined function (for the \code{fn}
-argument). If we want to include an image in other places (e.g., in the
-header, within footnote text, etc.) we need to use \code{web_image()} within the
-\code{\link[=html]{html()}} helper function.
-}
-\details{
+We can flexibly add a web image inside of a table with \code{web_image()}.
+The function provides a convenient way to generate an HTML fragment with an
+image URL. Because this function is currently HTML-based, it is only useful
+for HTML table output. To use this function inside of data cells, it is
+recommended to use \code{\link[=text_transform]{text_transform()}}. With that function, we can specify
+which data cells to target and then include a \code{web_image()} call within the
+required user-defined function (for the \code{fn} argument). If we want to include
+an image in other places (e.g., in the header, within footnote text, etc.)
+we need to wrap \code{web_image()} inside \code{\link[=html]{html()}}.
+
 By itself, the function creates an HTML image tag, so, the call
 \code{web_image("http://example.com/image.png")} evaluates to:
 
@@ -45,15 +52,15 @@ Get the PNG-based logo for the R Project from an image URL.
 }\if{html}{\out{</div>}}
 
 Create a tibble that contains heights of an image in pixels (one column as a
-string, the other as numerical values), then, create a \strong{gt} table. Use the
-\code{\link[=text_transform]{text_transform()}} function to insert the R logo PNG image with the various
+string, the other as numerical values), then, create a \strong{gt} table. Use
+\code{\link[=text_transform]{text_transform()}} to insert the R logo PNG image with the various
 sizes.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   pixels = px(seq(10, 35, 5)),
   image = seq(10, 35, 5)
-) \%>\%
-  gt() \%>\%
+) |>
+  gt() |>
   text_transform(
     locations = cells_body(columns = image),
     fn = function(x) \{
@@ -66,7 +73,7 @@ sizes.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_web_image_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_web_image_1.png" alt="This image of a table was generated from the first code example in the `web_image()` help file." style="width:100\%;">
 }}
 
 Get the SVG-based logo for the R Project from an image URL.
@@ -75,15 +82,15 @@ Get the SVG-based logo for the R Project from an image URL.
 }\if{html}{\out{</div>}}
 
 Create a tibble that contains heights of an image in pixels (one column as a
-string, the other as numerical values), then, create a \strong{gt} table. Use the
-\code{\link[=tab_header]{tab_header()}} function to insert the \strong{R} logo SVG image once in the title
-and five times in the subtitle.
+string, the other as numerical values), then, create a \strong{gt} table. Use
+\code{\link[=tab_header]{tab_header()}} to insert the \strong{R} logo SVG image once in the title and five
+times in the subtitle.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   pixels = px(seq(10, 35, 5)),
   image = seq(10, 35, 5)
-) \%>\%
-  gt() \%>\%
+) |>
+  gt() |>
   tab_header(
     title = html(
       "<strong>R Logo</strong>",
@@ -96,26 +103,31 @@ and five times in the subtitle.
       web_image(
         url = r_svg_url,
         height = px(12)
-      ) \%>\%
+      ) |>
         rep(5)
     )
   )
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_web_image_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_web_image_2.png" alt="This image of a table was generated from the second code example in the `web_image()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-8-1
+9-1
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
-Other Image Addition Functions: 
+Other image addition functions: 
 \code{\link{ggplot_image}()},
 \code{\link{local_image}()},
 \code{\link{test_image}()}
 }
-\concept{Image Addition Functions}
+\concept{image addition functions}

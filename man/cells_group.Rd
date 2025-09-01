@@ -4,12 +4,24 @@
 \alias{cells_group}
 \title{Location helper for targeting row groups (deprecated)}
 \usage{
-cells_group(groups = TRUE)
+cells_group(groups = everything())
 }
 \arguments{
-\item{groups}{The names of the row groups that are to be targeted.}
+\item{groups}{\emph{Specification of row group IDs}
+
+\verb{<row-group-targeting expression>} // \emph{default:} \code{everything()}
+
+The row groups to which targeting operations are constrained. Can either be
+a series of row group ID values provided in \code{c()} or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
 }
 \description{
 Location helper for targeting row groups (deprecated)
 }
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \keyword{internal}

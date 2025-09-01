@@ -7,22 +7,24 @@
 gt_output(outputId)
 }
 \arguments{
-\item{outputId}{An output variable from which to read the table.}
+\item{outputId}{\emph{Shiny output ID}
+
+\verb{scalar<character>} // \strong{required}
+
+An output variable from which to read the table.}
+}
+\value{
+An object of class \code{shiny.tag}.
 }
 \description{
 Using \code{gt_output()} we can render a reactive \strong{gt} table, a process
-initiated by using the \code{\link[=render_gt]{render_gt()}} function in the \code{server} component of a
-Shiny app. The \code{gt_output()} call is to be used in the Shiny \code{ui} component,
-the position and context wherein this call is made determines the where the
-\strong{gt} table is rendered on the app page. It's important to note that the
-ID given during the \code{\link[=render_gt]{render_gt()}} call is needed as the \code{outputId} in
+initiated by using \code{\link[=render_gt]{render_gt()}} in the \code{server} component of a
+Shiny app. \code{gt_output()} is to be used in the \href{https://shiny.posit.co}{Shiny}
+\code{ui} component, the position and context wherein this call is made determines
+the where the \strong{gt} table is rendered on the app page. It's important to
+note that the ID given during \code{\link[=render_gt]{render_gt()}} is needed as the \code{outputId} in
 \code{gt_output()} (e.g., \strong{server}: \verb{output$<id> <- render_gt(...)}; \strong{ui}:
-\verb{gt_output(outputId = "<id>"}).
-}
-\details{
-We need to ensure that we have the \strong{shiny} package installed first. This
-is easily by using \code{install.packages("shiny")}. More information on creating
-Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
+\code{gt_output(outputId = "<id>")}).
 }
 \section{Examples}{
 
@@ -35,27 +37,29 @@ expression.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{library(shiny)
 
 gt_tbl <-
-  gtcars \%>\%
-  gt() \%>\%
-  cols_hide(contains("_"))
+  gtcars |>
+  gt() |>
+  fmt_currency(columns = msrp, decimals = 0) |>
+  cols_hide(columns = -c(mfr, model, year, mpg_c, msrp)) |>
+  cols_label_with(columns = everything(), fn = toupper) |>
+  data_color(columns = msrp, method = "numeric", palette = "viridis") |>
+  sub_missing() |>
+  opt_interactive(use_compact_mode = TRUE)
 
 ui <- fluidPage(
-
   gt_output(outputId = "table")
 )
 
-server <- function(input,
-                   output,
-                   session) \{
-
-  output$table <-
-    render_gt(
-      expr = gt_tbl,
-      height = px(600),
-      width = px(600)
-    )
+server <- function(input, output, session) \{
+  output$table <- render_gt(expr = gt_tbl)
 \}
+
+shinyApp(ui = ui, server = server)
 }\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_render_gt_1.png" alt="This image of a table was generated from the first code example in the `render_gt()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -63,8 +67,14 @@ server <- function(input,
 12-2
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other Shiny functions: 
+\code{\link{gt_update_select}()},
 \code{\link{render_gt}()}
 }
 \concept{Shiny functions}

@@ -7,10 +7,19 @@
 opt_align_table_header(data, align = c("left", "center", "right"))
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{align}{The alignment of the title and subtitle elements in the table
-header. Options are \code{"left"} (the default), \code{"center"}, or \code{"right"}.}
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{align}{\emph{Header alignment}
+
+\verb{singl-kw:[left|center|right]} // \emph{default:} \code{"left"}
+
+The alignment of the title and subtitle elements in the table header.
+Options are \code{"left"} (the default), \code{"center"}, or \code{"right"}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -20,61 +29,68 @@ By default, a table header added to a \strong{gt} table has center alignment
 for both the title and the subtitle elements. This function allows us to
 easily set the horizontal alignment of the title and subtitle to the left
 or right by using the \code{"align"} argument. This function serves as a
-convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(heading.align = <align>)}.
+convenient shortcut for \verb{<gt_tbl> |> tab_options(heading.align = <align>)}.
 }
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
-The header (consisting of the title and the subtitle) are to be aligned to
-the left with the \code{opt_align_table_header()} function.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table with a number of table
+parts added (using functions like \code{\link[=summary_rows]{summary_rows()}}, \code{\link[=grand_summary_rows]{grand_summary_rows()}},
+and more). Following that, we'll align the header contents (consisting of the
+title and the subtitle) to the left with the \code{opt_align_table_header()}
+function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt(rowname_col = "row", groupname_col = "group") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt(rowname_col = "row", groupname_col = "group") |>
   summary_rows(
     groups = "grp_a",
     columns = c(num, currency),
-    fns = list(
-      min = ~min(., na.rm = TRUE),
-      max = ~max(., na.rm = TRUE)
-    )) \%>\%
+    fns = c("min", "max")
+  ) |>
   grand_summary_rows(
     columns = currency,
-    fns = list(
-      total = ~sum(., na.rm = TRUE)
-    )) \%>\%
-  tab_source_note(source_note = "This is a source note.") \%>\%
+    fns = total ~ sum(., na.rm = TRUE)
+  ) |>
+  tab_source_note(source_note = "This is a source note.") |>
   tab_footnote(
     footnote = "This is a footnote.",
     locations = cells_body(columns = 1, rows = 1)
-  ) \%>\%
+  ) |>
   tab_header(
     title = "The title of the table",
     subtitle = "The table's subtitle"
-  ) \%>\%
+  ) |>
   opt_align_table_header(align = "left")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_align_table_header_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_align_table_header_1.png" alt="This image of a table was generated from the first code example in the `opt_align_table_header()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-9-3
+10-6
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
-Other Table Option Functions: 
+Other table option functions: 
 \code{\link{opt_all_caps}()},
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_footnote_spec}()},
 \code{\link{opt_horizontal_padding}()},
+\code{\link{opt_interactive}()},
 \code{\link{opt_row_striping}()},
+\code{\link{opt_stylize}()},
 \code{\link{opt_table_font}()},
 \code{\link{opt_table_lines}()},
 \code{\link{opt_table_outline}()},
 \code{\link{opt_vertical_padding}()}
 }
-\concept{Table Option Functions}
+\concept{table option functions}

@@ -1,4 +1,4 @@
-test_that("the `fmt_bytes()` function works correctly", {
+test_that("fmt_bytes() works correctly", {
 
   # Create an input data frame two columns: one
   # character-based and one that is numeric
@@ -38,8 +38,8 @@ test_that("the `fmt_bytes()` function works correctly", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  char <- (tab %>% dt_data_get())[["char"]]
-  num <- (tab %>% dt_data_get())[["num"]]
+  char <- dt_data_get(tab)[["char"]]
+  num <- dt_data_get(tab)[["num"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -60,7 +60,7 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 1) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1 kB", "1 kB",
+      paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1 kB", "1 kB",
       "1 kB", "1 MB", "1.1 GB", "1.1 TB", "1.1 PB", "1.2 EB", "1.2 ZB",
       "1.2 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB",
       "1 YB", "15 YB", "150 YB", "1,500 YB", "15,000 YB", "NA"
@@ -74,7 +74,7 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 4) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1.023 kB", "1.001 kB",
+      paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1.023 kB", "1.001 kB",
       "1.024 kB", "1.0486 MB", "1.0737 GB", "1.0995 TB", "1.1259 PB",
       "1.1529 EB", "1.1806 ZB", "1.2089 YB", "1 kB", "1 MB", "1 GB",
       "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1,500 YB",
@@ -93,7 +93,7 @@ test_that("the `fmt_bytes()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500.00 B", "0.00 B", "0.00 B", "0.00 B", "500.00 B",
+      paste0("\U02212", "500.00 B"), "0.00 B", "0.00 B", "0.00 B", "500.00 B",
       "1.02 kB", "1.00 kB", "1.02 kB", "1.05 MB", "1.07 GB", "1.10 TB",
       "1.13 PB", "1.15 EB", "1.18 ZB", "1.21 YB", "1.00 kB", "1.00 MB",
       "1.00 GB", "1.00 TB", "1.00 PB", "1.00 EB", "1.00 ZB", "1.00 YB",
@@ -112,7 +112,7 @@ test_that("the `fmt_bytes()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500.00 B", "0.00 B", "0.00 B", "0.00 B", "500.00 B",
+      paste0("\U02212", "500.00 B"), "0.00 B", "0.00 B", "0.00 B", "500.00 B",
       "1,023.00 B", "1,001.00 B", "1.00 KiB", "1.00 MiB", "1.00 GiB",
       "1.00 TiB", "1.00 PiB", "1.00 EiB", "1.00 ZiB", "1.00 YiB", "1,000.00 B",
       "976.56 KiB", "953.67 MiB", "931.32 GiB", "909.49 TiB", "888.18 PiB",
@@ -129,7 +129,7 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, use_seps = FALSE) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1 kB", "1 kB",
+      paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1 kB", "1 kB",
       "1 kB", "1 MB", "1.1 GB", "1.1 TB", "1.1 PB", "1.2 EB", "1.2 ZB",
       "1.2 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB",
       "1 YB", "15 YB", "150 YB", "1500 YB", "15000 YB", "NA"
@@ -144,7 +144,7 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 2, sep_mark = " ") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1.02 kB", "1 kB",
+      paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1.02 kB", "1 kB",
       "1.02 kB", "1.05 MB", "1.07 GB", "1.1 TB", "1.13 PB", "1.15 EB",
       "1.18 ZB", "1.21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
       "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1 500 YB", "15 000 YB",
@@ -160,7 +160,7 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 2, incl_space = FALSE) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500B", "0B", "0B", "0B", "500B", "1.02kB", "1kB", "1.02kB",
+      paste0("\U02212", "500B"), "0B", "0B", "0B", "500B", "1.02kB", "1kB", "1.02kB",
       "1.05MB", "1.07GB", "1.1TB", "1.13PB", "1.15EB", "1.18ZB", "1.21YB",
       "1kB", "1MB", "1GB", "1TB", "1PB", "1EB", "1ZB", "1YB", "15YB",
       "150YB", "1,500YB", "15,000YB", "NA"
@@ -177,7 +177,7 @@ test_that("the `fmt_bytes()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
+      paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
       "1,02 kB", "1,05 MB", "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB",
       "1,18 ZB", "1,21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
       "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1.500 YB", "15.000 YB",
@@ -193,7 +193,7 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 2, pattern = "a {x} b") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "a &minus;500 B b", "a 0 B b", "a 0 B b", "a 0 B b", "a 500 B b",
+      paste0("a ", "\U02212", "500 B b"), "a 0 B b", "a 0 B b", "a 0 B b", "a 500 B b",
       "a 1.02 kB b", "a 1 kB b", "a 1.02 kB b", "a 1.05 MB b", "a 1.07 GB b",
       "a 1.1 TB b", "a 1.13 PB b", "a 1.15 EB b", "a 1.18 ZB b", "a 1.21 YB b",
       "a 1 kB b", "a 1 MB b", "a 1 GB b", "a 1 TB b", "a 1 PB b", "a 1 EB b",
@@ -209,7 +209,7 @@ test_that("the `fmt_bytes()` function works correctly", {
          columns = num, decimals = 3, force_sign = TRUE) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "+500 B", "+1.023 kB",
+      paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "+500 B", "+1.023 kB",
       "+1.001 kB", "+1.024 kB", "+1.049 MB", "+1.074 GB", "+1.1 TB",
       "+1.126 PB", "+1.153 EB", "+1.181 ZB", "+1.209 YB", "+1 kB",
       "+1 MB", "+1 GB", "+1 TB", "+1 PB", "+1 EB", "+1 ZB", "+1 YB",
@@ -225,7 +225,7 @@ test_that("the `fmt_bytes()` function works correctly", {
          columns = num, pattern = "*{x}*", force_sign = TRUE) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "*&minus;500 B*", "*0 B*", "*0 B*", "*0 B*", "*+500 B*", "*+1 kB*",
+      paste0("*\U02212", "500 B*"), "*0 B*", "*0 B*", "*0 B*", "*+500 B*", "*+1 kB*",
       "*+1 kB*", "*+1 kB*", "*+1 MB*", "*+1.1 GB*", "*+1.1 TB*", "*+1.1 PB*",
       "*+1.2 EB*", "*+1.2 ZB*", "*+1.2 YB*", "*+1 kB*", "*+1 MB*",
       "*+1 GB*", "*+1 TB*", "*+1 PB*", "*+1 EB*", "*+1 ZB*", "*+1 YB*",
@@ -241,7 +241,7 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 2, locale = "en_US") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1.02 kB", "1 kB",
+      paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1.02 kB", "1 kB",
       "1.02 kB", "1.05 MB", "1.07 GB", "1.1 TB", "1.13 PB", "1.15 EB",
       "1.18 ZB", "1.21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
       "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1,500 YB", "15,000 YB",
@@ -257,7 +257,7 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 2, locale = "da_DK") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
+      paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
       "1,02 kB", "1,05 MB", "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB",
       "1,18 ZB", "1,21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
       "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1.500 YB", "15.000 YB",
@@ -273,7 +273,7 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 2, locale = "de_AT") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
+      paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
       "1,02 kB", "1,05 MB", "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB",
       "1,18 ZB", "1,21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
       "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1 500 YB", "15 000 YB",
@@ -289,7 +289,7 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 2, locale = "et_EE") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
+      paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
       "1,02 kB", "1,05 MB", "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB",
       "1,18 ZB", "1,21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
       "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1 500 YB", "15 000 YB",
@@ -305,7 +305,7 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 2, locale = "gl_ES") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
+      paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
       "1,02 kB", "1,05 MB", "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB",
       "1,18 ZB", "1,21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
       "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1.500 YB", "15.000 YB",
@@ -319,17 +319,14 @@ test_that("the `fmt_bytes()` function works correctly", {
 
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_bytes()`
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>% fmt_bytes(columns = a) %>% as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_bytes(columns = a, rows = 1:5) %>% as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_bytes(columns = a, pattern = "a{x}b", incl_space = FALSE) %>% as_raw_html()
   )
@@ -343,7 +340,7 @@ test_that("the `fmt_bytes()` function works correctly", {
   )
 })
 
-test_that("the `fmt_bytes()` function format to specified significant figures", {
+test_that("fmt_bytes() format to specified significant figures", {
 
   # These numbers will be used in tests of formatting
   # correctly to n significant figures
@@ -383,9 +380,15 @@ test_that("the `fmt_bytes()` function format to specified significant figures", 
        render_formats_test(context = "html"))[["num"]],
     c(
       "50.000 kB", "1.0000 kB", "10.000 B", "12.345 kB", "1.2340 kB",
-      "123.00 B", "1.0000 B", "0 B", "0 B", "&minus;50.000 kB", "&minus;1.0000 kB",
-      "&minus;10.000 B", "&minus;12.345 kB", "&minus;1.2340 kB", "&minus;123.00 B",
-      "&minus;1.0000 B", "0 B", "0 B"
+      "123.00 B", "1.0000 B", "0 B", "0 B",
+      paste0("\U02212", "50.000 kB"),
+      paste0("\U02212", "1.0000 kB"),
+      paste0("\U02212", "10.000 B"),
+      paste0("\U02212", "12.345 kB"),
+      paste0("\U02212", "1.2340 kB"),
+      paste0("\U02212", "123.00 B"),
+      paste0("\U02212", "1.0000 B"),
+      "0 B", "0 B"
     )
   )
 
@@ -395,10 +398,16 @@ test_that("the `fmt_bytes()` function format to specified significant figures", 
        fmt_bytes(columns = num, n_sigfig = 4) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "50.00 kB", "1.000 kB", "10.00 B", "12.34 kB", "1.234 kB",
-      "123.0 B", "1.000 B", "0 B", "0 B", "&minus;50.00 kB", "&minus;1.000 kB",
-      "&minus;10.00 B", "&minus;12.34 kB", "&minus;1.234 kB", "&minus;123.0 B",
-      "&minus;1.000 B", "0 B", "0 B"
+      "50.00 kB", "1.000 kB", "10.00 B", "12.34 kB",
+      "1.234 kB", "123.0 B", "1.000 B", "0 B", "0 B",
+      paste0("\U02212", "50.00 kB"),
+      paste0("\U02212", "1.000 kB"),
+      paste0("\U02212", "10.00 B"),
+      paste0("\U02212", "12.34 kB"),
+      paste0("\U02212", "1.234 kB"),
+      paste0("\U02212", "123.0 B"),
+      paste0("\U02212", "1.000 B"),
+      "0 B", "0 B"
     )
   )
 
@@ -409,8 +418,14 @@ test_that("the `fmt_bytes()` function format to specified significant figures", 
        render_formats_test(context = "html"))[["num"]],
     c(
       "50.0 kB", "1.00 kB", "10.0 B", "12.3 kB", "1.23 kB", "123 B",
-      "1.00 B", "0 B", "0 B", "&minus;50.0 kB", "&minus;1.00 kB", "&minus;10.0 B",
-      "&minus;12.3 kB", "&minus;1.23 kB", "&minus;123 B", "&minus;1.00 B",
+      "1.00 B", "0 B", "0 B",
+      paste0("\U02212", "50.0 kB"),
+      paste0("\U02212", "1.00 kB"),
+      paste0("\U02212", "10.0 B"),
+      paste0("\U02212", "12.3 kB"),
+      paste0("\U02212", "1.23 kB"),
+      paste0("\U02212", "123 B"),
+      paste0("\U02212", "1.00 B"),
       "0 B", "0 B"
     )
   )
@@ -421,9 +436,15 @@ test_that("the `fmt_bytes()` function format to specified significant figures", 
        fmt_bytes(columns = num, n_sigfig = 2) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "50 kB", "1.0 kB", "10 B", "12 kB", "1.2 kB", "120 B", "1.0 B",
-      "0 B", "0 B", "&minus;50 kB", "&minus;1.0 kB", "&minus;10 B",
-      "&minus;12 kB", "&minus;1.2 kB", "&minus;120 B", "&minus;1.0 B",
+      "50 kB", "1.0 kB", "10 B", "12 kB",
+      "1.2 kB", "120 B", "1.0 B", "0 B", "0 B",
+      paste0("\U02212", "50 kB"),
+      paste0("\U02212", "1.0 kB"),
+      paste0("\U02212", "10 B"),
+      paste0("\U02212", "12 kB"),
+      paste0("\U02212", "1.2 kB"),
+      paste0("\U02212", "120 B"),
+      paste0("\U02212", "1.0 B"),
       "0 B", "0 B"
     )
   )
@@ -434,14 +455,21 @@ test_that("the `fmt_bytes()` function format to specified significant figures", 
        fmt_bytes(columns = num, n_sigfig = 1) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "50 kB", "1 kB", "10 B", "10 kB", "1 kB", "100 B", "1 B", "0 B",
-      "0 B", "&minus;50 kB", "&minus;1 kB", "&minus;10 B", "&minus;10 kB",
-      "&minus;1 kB", "&minus;100 B", "&minus;1 B", "0 B", "0 B"
+      "50 kB", "1 kB", "10 B", "10 kB",
+      "1 kB", "100 B", "1 B", "0 B", "0 B",
+      paste0("\U02212", "50 kB"),
+      paste0("\U02212", "1 kB"),
+      paste0("\U02212", "10 B"),
+      paste0("\U02212", "10 kB"),
+      paste0("\U02212", "1 kB"),
+      paste0("\U02212", "100 B"),
+      paste0("\U02212", "1 B"),
+      "0 B", "0 B"
     )
   )
 
   # Expect an error if the length of `n_sigfig` is not 1
-  expect_error(fmt_bytes(columns = num, n_sigfig = c(1, 2)))
+  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = c(1, 2)))
 
   # Expect an error if `n_sigfig` is NA
   expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = NA))
@@ -455,8 +483,8 @@ test_that("the `fmt_bytes()` function format to specified significant figures", 
   expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = factor(3)))
 
   # Don't expect errors when using integers or doubles
-  expect_error(regexp = NA, tab %>% fmt_bytes(columns = num, n_sigfig = 2L))
-  expect_error(regexp = NA, tab %>% fmt_bytes(columns = num, n_sigfig = 2))
+  expect_no_error(tab %>% fmt_bytes(columns = num, n_sigfig = 2L))
+  expect_no_error(tab %>% fmt_bytes(columns = num, n_sigfig = 2))
 
   # Expect an error if `n_sigfig` is less than 1
   expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = 0L))

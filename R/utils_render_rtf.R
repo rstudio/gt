@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2025 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 rtf_paste0 <- function(..., collapse = NULL) {
 
   args <-
@@ -5,7 +29,7 @@ rtf_paste0 <- function(..., collapse = NULL) {
       if (is.null(x) || is_rtf(x)) {
         x
       } else {
-        rtf_escape(as.character(x))
+        escape_rtf(as.character(x))
       }
     })
 
@@ -20,6 +44,11 @@ twip_factors <-
     `in` = 1440, `pt` = 20, `px` = 15,
     `cm` = 566.9291, `mm` = 56.69291, `tw` = 1
   )
+
+twip_factors_df <- data.frame(
+  unit = names(twip_factors),
+  conv = unname(twip_factors)
+)
 
 rtf_key <- function(word, val = NULL, space = FALSE) {
   rtf_raw(paste0("\\", word, val %||% "", if (space) " "))
@@ -53,10 +82,10 @@ rtf_fonttbl <- function(
   fontinfo_values <-
     vapply(
       seq_along(fonts),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        fonts[x] %>% unlist() %>% gsub("{x}", font_sequence[x], ., fixed = TRUE)
+        gsub("{x}", font_sequence[x], unlist(fonts[x]), fixed = TRUE)
       }
     )
 
@@ -177,7 +206,7 @@ rtf_header <- function(
   ansi_code_page_key <- rtf_key("ansicpg", .ansi_code_page)
 
   # Get a vector of the different object types
-  object_types <- vapply(dots_list, class, FUN.VALUE = character(1), USE.NAMES = FALSE)
+  object_types <- vapply(dots_list, class, FUN.VALUE = character(1L), USE.NAMES = FALSE)
 
   # TODO: Validate the `object_types` vector
 
@@ -205,6 +234,7 @@ rtf_header <- function(
   rtf_header
 }
 
+# Generate an RTF file based on content in an RTF 'document'
 rtf_file <- function(
     data,
     document
@@ -215,11 +245,42 @@ rtf_file <- function(
   # (and also modify the document)
   #
 
-  # Scan for hexadecimal colors in the document; generate
-  # a <colortbl> object
-  matched_colors <-
-    unique(unlist(stringr::str_extract_all(document, "<<COLOR:#[0-9a-fA-F]{6}>>")))
+  # Scan for any font declarations within the document (they use
+  # a specialized notation with angle brackets)
+  matched_fonts <-
+    unique(
+      unlist(
+        str_complete_extract(document, "<<FONT:.*?>>")
+      )
+    )
 
+  # Generate a <fonttbl> object, which is required for every RTF file
+  if (length(matched_fonts) > 0) {
+
+    fonttbl <-
+      rtf_fonttbl(
+        .font_names = c("Times", gsub("<<FONT:|>>", "", matched_fonts)),
+        .default_n = 1
+      )
+
+    for (i in seq_along(matched_fonts)) {
+      document <- gsub(matched_fonts[i], as.character(i), document, fixed = TRUE)
+    }
+
+  } else {
+    fonttbl <- rtf_fonttbl()
+  }
+
+  # Scan for any hexadecimal colors within the document (they use
+  # a specialized notation with angle brackets)
+  matched_colors <-
+    unique(
+      unlist(
+        str_complete_extract(document, "<<COLOR:#[0-9a-fA-F]{6}>>")
+      )
+    )
+
+  # Generate a <colortbl> object
   if (length(matched_colors) > 0) {
 
     colortbl <-
@@ -232,23 +293,7 @@ rtf_file <- function(
     colortbl <- rtf_colortbl(.hexadecimal_colors = "#FFFFFF")
   }
 
-  # Scan for hexadecimal colors in the document; generate a <fonttbl> object
-  matched_fonts <- unique(unlist(stringr::str_extract_all(document, "<<FONT:.*?>>")))
-
-  if (length(matched_fonts) > 0) {
-
-    fonttbl <-
-      rtf_fonttbl(.font_names = c("Times", gsub("<<FONT:|>>", "", matched_fonts)), .default_n = 1)
-
-    for (i in seq_along(matched_fonts)) {
-      document <- gsub(matched_fonts[i], as.character(i), document, fixed = TRUE)
-    }
-
-  } else {
-    fonttbl <- rtf_fonttbl()
-  }
-
-  # Create the document header
+  # Create the RTF document header (an 'rtf_header' object)
   header <- rtf_header(fonttbl, colortbl)
 
   #
@@ -335,7 +380,7 @@ parse_length_str <- function(
     } else {
       NA_character_
     }
-  }, character(1))
+  }, character(1L))
 
   # Check for negative values and stop of `allow_negative = FALSE`
   non_na_vals <- vals[!is.na(vals)]
@@ -343,7 +388,7 @@ parse_length_str <- function(
   if (
     !allow_negative &&
     length(non_na_vals) > 0 &&
-    any(!is.na(non_na_vals)) &&
+    !all(is.na(non_na_vals)) &&
     is.numeric(non_na_vals) &&
     any(non_na_vals < 0)
   ) {
@@ -358,8 +403,7 @@ parse_length_str <- function(
 
     cli::cli_abort(c(
       "Some of the values supplied cannot be interpreted.",
-      "*" = "Problem values are:
-      {str_catalog(bad_values, surround = c('\"'))}.",
+      "*" = "Problem values are: {.str {bad_values}}",
       "*" = "Use either of: `px`, `pt`, `in`, `cm`, `mm`, or `tw`
       (e.g., \"12px\")"
     ))
@@ -370,16 +414,15 @@ parse_length_str <- function(
 
 abs_len_to_twips <- function(lengths_df) {
 
-  lengths_df %>%
-    dplyr::left_join(
-      tibble::enframe(twip_factors, name = "unit", value = "conv"),
+  res <- dplyr::left_join(
+      lengths_df,
+      twip_factors_df,
       by = c("unit" = "unit")
-    ) %>%
-    dplyr::mutate(
-      value = ifelse(!is.na(conv), value * conv, value),
-      unit = ifelse(!is.na(conv), "tw", unit)
-    ) %>%
-    dplyr::select(value, unit)
+    )
+  res$value[!is.na(res$conv)] <- res$value[!is.na(res$conv)] * res$conv[!is.na(res$conv)]
+  res$unit[!is.na(res$conv)] <- "tw"
+
+  dplyr::select(res, "value", "unit")
 }
 
 # The `col_width_resolver_rtf()` function returns a vector of
@@ -445,12 +488,12 @@ col_width_resolver_rtf <- function(
   # Avoid divide-by-zero
   if (pct_used != 0) {
     # Normalize pct to add up to 100
-    col_widths$value[is_pct] <- col_widths$value[is_pct] * (100 / pct_used)
+    col_widths$value[which(is_pct)] <- col_widths$value[which(is_pct)] * (100 / pct_used)
   }
 
   # Convert % to tw
-  col_widths$value[is_pct] <- twips_remaining * col_widths$value[is_pct] / 100
-  col_widths$unit[is_pct] <- "tw"
+  col_widths$value[which(is_pct)] <- twips_remaining * col_widths$value[which(is_pct)] / 100
+  col_widths$unit[which(is_pct)] <- "tw"
   is_abs <- is_abs | TRUE
   is_pct <- is_pct & FALSE
 
@@ -470,13 +513,13 @@ rtf_tbl_row <- function(
 
   cell_count <- length(x)
 
-  if (!is.null(widths)) {
-    widths_twips <- cumsum(widths)
-  } else {
+  if (is.null(widths)) {
     widths_twips <- cumsum(rep(page_body_width / cell_count, cell_count))
+  } else {
+    widths_twips <- cumsum(widths)
   }
 
-  if (is.null(height)) height <- 425
+  height <- height %||% 425
 
   # Set border values
   if (!is.null(borders)) {
@@ -486,54 +529,58 @@ rtf_tbl_row <- function(
     }
 
     tb_borders <-
-      borders %>%
-      lapply(
-        FUN = function(x) {
+      unlist(
+        lapply(
+          borders,
+          FUN = function(x) {
 
-          if (is.numeric(x$color)) {
-            border_color_value <- x$color
-          } else {
-            border_color_value <- rtf_paste0("<<COLOR:", rtf_raw(x$color), ">>")
+            if (is.numeric(x$color)) {
+              border_color_value <- x$color
+            } else {
+              border_color_value <- rtf_paste0("<<COLOR:", rtf_raw(x$color), ">>")
+            }
+
+            if (x$direction %in% c("top", "bottom")) {
+
+              rtf_paste0(
+                rtf_key("clbrdr", substr(x$direction, 1, 1)),
+                rtf_key("brdr", x$style),
+                rtf_key("brdrw", x$width),
+                rtf_key("brdrcf", border_color_value)
+              )
+            } else {
+              ""
+            }
           }
-
-          if (x$direction %in% c("top", "bottom")) {
-
-            rtf_paste0(
-              rtf_key("clbrdr", substr(x$direction, 1, 1)),
-              rtf_key("brdr", x$style),
-              rtf_key("brdrw", x$width),
-              rtf_key("brdrcf", border_color_value)
-            )
-          } else {
-            ""
-          }
-        }
-      ) %>% unlist()
+        )
+      )
 
     lr_borders <-
-      borders %>%
-      lapply(
-        FUN = function(x) {
+      unlist(
+        lapply(
+          borders,
+          FUN = function(x) {
 
-          if (is.numeric(x$color)) {
-            border_color_value <- x$color
-          } else {
-            border_color_value <- rtf_paste0("<<COLOR:", rtf_raw(x$color), ">>")
+            if (is.numeric(x$color)) {
+              border_color_value <- x$color
+            } else {
+              border_color_value <- rtf_paste0("<<COLOR:", rtf_raw(x$color), ">>")
+            }
+
+            if (x$direction %in% c("left", "right")) {
+
+              rtf_paste0(
+                rtf_key("clbrdr", substr(x$direction, 1, 1)),
+                rtf_key("brdr", x$style),
+                rtf_key("brdrw", x$width),
+                rtf_key("brdrcf", border_color_value)
+              )
+            } else {
+              ""
+            }
           }
-
-          if (x$direction %in% c("left", "right")) {
-
-            rtf_paste0(
-              rtf_key("clbrdr", substr(x$direction, 1, 1)),
-              rtf_key("brdr", x$style),
-              rtf_key("brdrw", x$width),
-              rtf_key("brdrcf", border_color_value)
-            )
-          } else {
-            ""
-          }
-        }
-      ) %>% unlist()
+        )
+      )
 
   } else {
     tb_borders <- ""
@@ -558,7 +605,7 @@ rtf_tbl_row <- function(
     x[[i]][1] <- rtf_paste0(rtf_raw(x[[i]][1]), rtf_raw(row_components[i]))
   }
 
-  x <- lapply(x, FUN = function(x) paste(x, collapse = "\n")) %>% unlist()
+  x <- unlist(lapply(x, FUN = function(x) paste(x, collapse = "\n")))
 
   # Return a complete row of RTF table cells (marked as `rtf_text`)
   rtf_paste0(
@@ -589,11 +636,11 @@ rtf_tbl_cell <- function(
 
   x <- paste(x, collapse = " ")
 
-  h_align <- substr(match.arg(h_align), 1, 1)
-  v_align <- substr(match.arg(v_align), 1, 1)
+  h_align <- substr(rlang::arg_match(h_align), 1, 1)
+  v_align <- substr(rlang::arg_match(v_align), 1, 1)
 
   # Set default padding values if `padding = NULL`
-  if (is.null(padding)) padding <- c(25, 85, 25, 85)
+  padding <- padding %||% c(25, 85, 25, 85)
 
   # Set padding in units of twips, in the order left, top, bottom, right
   padding_units <-
@@ -617,34 +664,37 @@ rtf_tbl_cell <- function(
     }
 
     cell_borders <-
-      vapply(
-        borders,
-        FUN.VALUE = character(1),
-        USE.NAMES = FALSE,
-        FUN = function(x) {
+      paste(
+        vapply(
+          borders,
+          FUN.VALUE = character(1L),
+          USE.NAMES = FALSE,
+          FUN = function(x) {
 
-          if (is.numeric(x$color)) {
-            border_color_value <- x$color
-          } else {
-            border_color_value <- rtf_raw(paste0("<<COLOR:", x$color, ">>"))
+            if (is.numeric(x$color)) {
+              border_color_value <- x$color
+            } else {
+              border_color_value <- rtf_raw(paste0("<<COLOR:", x$color, ">>"))
+            }
+
+            rtf_paste0(
+              rtf_key("clbrdr", substr(x$direction, 1, 1)),
+              rtf_key("brdr", x$style),
+              rtf_key("brdrw", x$width),
+              rtf_key("brdrcf", border_color_value)
+            )
           }
-
-          rtf_paste0(
-            rtf_key("clbrdr", substr(x$direction, 1, 1)),
-            rtf_key("brdr", x$style),
-            rtf_key("brdrw", x$width),
-            rtf_key("brdrcf", border_color_value)
-          )
-        }
-      ) %>%
-      paste(collapse = "")
+        ),
+        collapse = ""
+      )
   } else {
     cell_borders <- ""
   }
 
   # Set background color
   if (!is.null(cell_background_color)) {
-    cell_background_color <- rtf_key("clcbpat", paste0("<<COLOR:", cell_background_color, ">>"))
+    cell_background_color <-
+      rtf_key("clcbpat", paste0("<<COLOR:", cell_background_color, ">>"))
   } else {
     cell_background_color <- ""
   }
@@ -734,29 +784,65 @@ rtf_raw <- function(...) {
 }
 
 # Transform a footnote mark to an RTF representation as a superscript
-footnote_mark_to_rtf <- function(mark) {
-  stopifnot(length(mark) == 1)
+footnote_mark_to_rtf <- function(
+    data,
+    mark,
+    location = c("ref", "ftr")
+) {
 
-  if (is.na(mark)) {
-    ""
-  } else {
-    rtf_paste0(rtf_raw("{\\super \\i "), mark, rtf_raw("}"))
+  location <- match.arg(location)
+
+  if (length(mark) == 1 && is.na(mark)) {
+    return("")
   }
+
+  spec <- get_footnote_spec_by_location(data = data, location = location)
+  spec <- spec %||% "^i"
+
+  if (grepl("\\(|\\[", spec)) mark <- paste0("(", mark)
+  if (grepl("\\)|\\]", spec)) mark <- paste0(mark, ")")
+
+  rtf_paste0(
+    rtf_raw(
+      paste0(
+      "{",
+      if (grepl("^", spec, fixed = TRUE)) "\\super " else NULL,
+      if (grepl("i", spec, fixed = TRUE)) "\\i " else NULL,
+      if (grepl("b", spec, fixed = TRUE)) "\\b " else NULL
+      )
+    ),
+    mark,
+    rtf_raw("}")
+  )
 }
 
-rtf_escape <- function(x) {
+escape_rtf <- function(text) {
 
-  if (length(x) < 1) return(x)
+  if (length(text) < 1) return(text)
+
+  # If all text elements are `NA_character_` then return `text` unchanged
+  if (all(is.na(text))) {
+    return(text)
+  }
+
+  # Determine the elements of `text` that are `NA_character_`
+  na_text <- is.na(text)
+
+  x <- text[!na_text]
 
   x <- gsub("\\", "\\'5c", x, fixed = TRUE)
   x <- gsub("{", "\\'7b", x, fixed = TRUE)
   x <- gsub("}", "\\'7d", x, fixed = TRUE)
-  x <- vapply(x, FUN.VALUE = character(1), FUN = rtf_escape_unicode, USE.NAMES = FALSE)
-  class(x) <- "rtf_text"
-  x
+
+  x <- vapply(x, FUN.VALUE = character(1L), FUN = escape_rtf_unicode, USE.NAMES = FALSE)
+
+  text[!na_text] <- x
+
+  class(text) <- "rtf_text"
+  text
 }
 
-rtf_escape_unicode <- function(x) {
+escape_rtf_unicode <- function(x) {
 
   # Ensure that we encode non-UTF-8 strings to UTF-8 in a
   # two-step process: (1) to UTF-8, (2) to RTF's weird signed
@@ -765,7 +851,7 @@ rtf_escape_unicode <- function(x) {
     x <- enc2utf8(x)
   }
 
-  chars <- unlist(strsplit(x, ""))
+  chars <- unlist(strsplit(x, "", fixed = TRUE))
   codepoints <- utf8ToInt(x)
   needs_escape <- codepoints > 127
   codepoints_subset <- codepoints[needs_escape]
@@ -881,16 +967,23 @@ rtf_border <- function(
   rtf_border
 }
 
-as_rtf_string <- function(x) {
+as_rtf_string <- function(
+    x,
+    incl_open = TRUE,
+    incl_header = TRUE,
+    incl_page_info = TRUE,
+    incl_body = TRUE,
+    incl_close = TRUE
+) {
 
   rtf_paste0(
-    rtf_raw("{"),
-    rtf_raw(as.character(x$header)),
+    if (incl_open) rtf_raw("{") else NULL,
+    if (incl_header) rtf_raw(as.character(x$header)) else NULL,
     "\n",
-    rtf_raw(as.character(x$page_information)),
+    if (incl_page_info) rtf_raw(as.character(x$page_information)) else NULL,
     "\n",
-    rtf_raw(as.character(x$document)),
-    rtf_raw("}")
+    if (incl_body) rtf_raw(as.character(x$document)) else NULL,
+    if (incl_close) rtf_raw("}") else NULL
   )
 }
 
@@ -925,19 +1018,13 @@ create_heading_component_rtf <- function(data) {
 
   # Obtain widths for each visible column label
   col_widths <-
-    boxh %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>%
-    dplyr::pull(column_width) %>%
-    unlist()
+    vctrs::vec_slice(boxh, boxh$type %in% c("default", "stub"))
+  # arrange by descending type and grab the "column_width" column.
+  col_widths <- col_widths[order(col_widths$type, decreasing = TRUE), "column_width", drop = TRUE]
+  col_widths <- unlist(col_widths)
 
   if (is.null(col_widths)) {
-
-     n_cols <-
-       boxh %>%
-       dplyr::filter(type %in% c("default", "stub")) %>%
-       nrow()
-
+     n_cols <- sum(boxh$type %in% c("default", "stub"))
      col_widths <- rep("100%", n_cols)
   }
 
@@ -958,15 +1045,13 @@ create_heading_component_rtf <- function(data) {
   table_border_top_color <- dt_options_get_value(data, option = "table_border_top_color")
 
   if ("title" %in% footnotes_tbl$locname) {
-    footnote_title_marks <- footnotes_tbl %>% coalesce_marks(locname = "title")
-    footnote_title_marks <- footnote_title_marks$fs_id_c
+    footnote_title_marks <- coalesce_marks(fn_tbl = footnotes_tbl, locname = "title")
   } else {
     footnote_title_marks <- ""
   }
 
   if ("subtitle" %in% footnotes_tbl$locname) {
-    footnote_subtitle_marks <- footnotes_tbl %>% coalesce_marks(locname = "subtitle")
-    footnote_subtitle_marks <- footnote_subtitle_marks$fs_id_c
+    footnote_subtitle_marks <- coalesce_marks(fn_tbl = footnotes_tbl, locname = "subtitle")
   } else {
     footnote_subtitle_marks <- ""
   }
@@ -996,7 +1081,7 @@ create_heading_component_rtf <- function(data) {
   if (
     dt_heading_has_preheader(data = data) &&
     !dt_options_get_value(data, option = "page_numbering")
-    ) {
+  ) {
 
     # Case where one or more preheader lines are present
 
@@ -1104,8 +1189,10 @@ create_columns_component_rtf <- function(data) {
 
   stubh <- dt_stubhead_get(data = data)
 
+  boxh <- dt_boxhead_get(data = data)
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
+
 
   # Determine the finalized number of spanner rows
   spanner_row_count <-
@@ -1124,16 +1211,19 @@ create_columns_component_rtf <- function(data) {
   col_alignment <- dt_boxhead_get_vars_align_default(data = data)
 
   # Obtain widths for each visible column label in units of twips
+  col_widths <- vctrs::vec_slice(
+    boxh,
+    boxh$type %in% c("default", "stub")
+  )
+  # Sort the data frame by desc(type) and get the "column_width" column.
+  col_widths <- col_widths[order(col_widths$type, decreasing = TRUE), "column_width", drop = TRUE]
+  col_widths <- unlist(col_widths)
+
   col_widths <-
-    dt_boxhead_get(data = data) %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>%
-    dplyr::pull(column_width) %>%
-    unlist() %>%
     col_width_resolver_rtf(
       page_body_width = page_body_width,
       table_width = dt_options_get_value(data = data, option = "table_width"),
-      col_widths = .,
+      col_widths = col_widths,
       n_cols = get_effective_number_of_columns(data = data)
     )
 
@@ -1155,7 +1245,7 @@ create_columns_component_rtf <- function(data) {
   # Get the column alignments
   col_alignment <-
     c(
-      rep("left", length(stub_layout)),
+      dt_boxhead_get_alignments_in_stub(data = data),
       dt_boxhead_get_vars_align_default(data = data)
     )
 
@@ -1180,9 +1270,9 @@ create_columns_component_rtf <- function(data) {
           h_merge = merge_keys_cells[x],
           borders = list(
             rtf_border("bottom", color = column_labels_border_bottom_color, width = 20)#,
-          # rtf_border("top", color = column_labels_border_top_color, width = 40),
-          # rtf_border("left", color = column_labels_vlines_color),
-          # rtf_border("right", color = column_labels_vlines_color)
+            # rtf_border("top", color = column_labels_border_top_color, width = 40),
+            # rtf_border("left", color = column_labels_vlines_color),
+            # rtf_border("right", color = column_labels_vlines_color)
           )
         )
       }
@@ -1218,15 +1308,30 @@ create_columns_component_rtf <- function(data) {
       spanner_ids_row[is.na(spanner_ids_row)] <- ""
       spanners_row[is.na(spanners_row)] <- ""
 
-      spanners_lengths <- unclass(rle(spanner_ids[i, ]))
+      spanners_rle <- rle(unname(spanner_ids[i, ]))
+
+      spanners_lengths <- unclass(spanners_rle)
 
       merge_keys_spanners <- c()
-
       for (j in seq_along(spanners_lengths$lengths)) {
         if (spanners_lengths$lengths[j] == 1) {
           merge_keys_spanners <- c(merge_keys_spanners, 0)
         } else {
           merge_keys_spanners <- c(merge_keys_spanners, 1, rep(2, spanners_lengths$lengths[j] - 1))
+        }
+      }
+
+      # The `sig_cells` vector contains the indices of spanners' elements
+      # where the value is either NA, or, is different than the previous value;
+      # because NAs are distinct, every NA element will be present in `sig_cells`
+      sig_cells <- c(1, utils::head(cumsum(spanners_rle$lengths) + 1, -1))
+
+      # Replace repeating labels with an empty string, based on the
+      # vector `sig_cells`
+      for (k in seq_along(spanner_ids_row)) {
+        if (k %in% sig_cells) next
+        if (!(k %in% sig_cells)) {
+          spanners_row[k] <- ""
         }
       }
 
@@ -1337,6 +1442,11 @@ create_body_component_rtf <- function(data) {
   # column names for the table
   default_vars <- dt_boxhead_get_vars_labels_default(data = data)
 
+  boxh <- dt_boxhead_get(data)
+  # Create a named vector  https://github.com/rstudio/gt/issues/1233
+  default_vars_names <-  dt_boxhead_get_vars_default(data = data)
+  names(default_vars_names) <- default_vars
+
   # Get a matrix of all cell content for the body
   cell_matrix <- get_body_component_cell_matrix(data = data)
 
@@ -1346,19 +1456,17 @@ create_body_component_rtf <- function(data) {
   # Get the column alignments
   col_alignment <-
     c(
-      rep("right", length(stub_layout)),
+      dt_boxhead_get_alignments_in_stub(data = data),
       dt_boxhead_get_vars_align_default(data = data)
     )
 
   # Replace an NA group with an empty string
-  if (any(is.na(groups_rows_df$group_label))) {
+  if (anyNA(groups_rows_df$group_label)) {
 
-    groups_rows_df <-
-      groups_rows_df %>%
-      dplyr::mutate(group_label = ifelse(is.na(group_label), "", group_label))
+    groups_rows_df$group_label[is.na(groups_rows_df$label)] <- ""
   }
 
-  row_groups_present <- nrow(groups_rows_df) > 0
+  row_groups_present <- nrow(groups_rows_df) > 0L
   row_group_rows <- groups_rows_df$row_start
   row_group_labels <- groups_rows_df$group_label
 
@@ -1366,16 +1474,19 @@ create_body_component_rtf <- function(data) {
   n_rows <- nrow(cell_matrix)
 
   # Obtain widths for each visible column label in units of twips
+
+  # Obtain widths for each visible column label
   col_widths <-
-    dt_boxhead_get(data = data) %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>%
-    dplyr::pull(column_width) %>%
-    unlist() %>%
+    vctrs::vec_slice(boxh, boxh$type %in% c("default", "stub"))
+  # arrange by descending type and grab the "column_width" column.
+  col_widths <- col_widths[order(col_widths$type, decreasing = TRUE), "column_width", drop = TRUE]
+  col_widths <- unlist(col_widths)
+
+  col_widths <-
     col_width_resolver_rtf(
       page_body_width = page_body_width,
       table_width = table_width,
-      col_widths = .,
+      col_widths = col_widths,
       n_cols = n_cols
     )
 
@@ -1384,9 +1495,11 @@ create_body_component_rtf <- function(data) {
   for (i in seq_len(n_rows)) {
 
     group_info <- groups_rows_df[groups_rows_df$row_start == i, c("group_id", "group_label")]
+
     if (nrow(group_info) == 0) {
       group_info <- NULL
     }
+
     group_id <- group_info[["group_id"]]
     group_label <- group_info[["group_label"]]
 
@@ -1437,9 +1550,11 @@ create_body_component_rtf <- function(data) {
               rtf_border("top", color = table_body_hlines_color, width = 10),
               rtf_border("bottom", color = table_body_hlines_color, width = 10)
             )
+
           if ("group_label" %in% stub_layout && x == 1) {
 
             if (i %in% groups_rows_df$row_start) {
+              cell_matrix[[i, x]] <- group_label
               top_bottom_borders[[2]] <- NULL
             } else if (i %in% groups_rows_df$row_end) {
               top_bottom_borders[[1]] <- NULL
@@ -1452,10 +1567,8 @@ create_body_component_rtf <- function(data) {
           # stub case where summary rows follow
           if (x == 1) {
 
-            row_limits <-
-              groups_rows_df %>%
-              dplyr::filter(row_end == i) %>%
-              dplyr::select(group_id)
+            row_limits <- dplyr::filter(groups_rows_df, row_end == i)
+            row_limits <- row_limits[ , "group_id", drop = FALSE]
 
             if (nrow(row_limits) > 0) {
 
@@ -1495,6 +1608,7 @@ create_body_component_rtf <- function(data) {
           widths = col_widths,
           height = 0
         )
+
     } else {
 
       body_row <-
@@ -1512,20 +1626,21 @@ create_body_component_rtf <- function(data) {
     # Add groupwise summary rows
     #
 
-    if (summaries_present &&
-        i %in% groups_rows_df$row_end) {
+    if (summaries_present && i %in% groups_rows_df$row_end) {
 
       group_id <-
         groups_rows_df[
-          stats::na.omit(groups_rows_df$row_end == i),
+          omit_na(groups_rows_df$row_end == i),
           "group_id", drop = TRUE
         ]
 
       if (group_id %in% names(list_of_summaries$summary_df_display_list)) {
 
         summary_df <-
-          list_of_summaries$summary_df_display_list[[group_id]] %>%
-          dplyr::select(.env$rowname_col_private, .env$default_vars)
+          dplyr::select(
+            list_of_summaries$summary_df_display_list[[group_id]],
+            dplyr::all_of(c(rowname_col_private, default_vars_names)),
+          )
 
         n_summary_rows <- seq_len(nrow(summary_df))
 
@@ -1576,16 +1691,15 @@ create_body_component_rtf <- function(data) {
               }
             )
 
-          row_list_body <-
-            c(
-              row_list_body,
-              rtf_tbl_row(
-                cell_list,
-                page_body_width = page_body_width,
-                widths = col_widths,
-                height = 0
-              )
+          row_list_summary <-
+            rtf_tbl_row(
+              cell_list,
+              page_body_width = page_body_width,
+              widths = col_widths,
+              height = 0
             )
+
+          row_list_body <- c(row_list_body, row_list_summary)
         }
       }
     }
@@ -1595,12 +1709,16 @@ create_body_component_rtf <- function(data) {
   # Add grand summary rows
   #
 
-  if (summaries_present &&
-      grand_summary_col %in% names(list_of_summaries$summary_df_display_list)) {
+  if (
+    summaries_present &&
+    grand_summary_col %in% names(list_of_summaries$summary_df_display_list)
+  ) {
 
     grand_summary_df <-
-      list_of_summaries$summary_df_display_list[[grand_summary_col]] %>%
-      dplyr::select(.env$rowname_col_private, .env$default_vars)
+      dplyr::select(
+        list_of_summaries$summary_df_display_list[[grand_summary_col]],
+        dplyr::all_of(c(rowname_col_private, default_vars_names))
+      )
 
     for (j in seq_len(nrow(grand_summary_df))) {
 
@@ -1614,6 +1732,7 @@ create_body_component_rtf <- function(data) {
         merge_keys_cells <- c(1, 2, rep(0, length(grand_summary_row) - 2))
       }
 
+      # Generate a cell list containing grand summary rows
       cell_list <-
         lapply(
           seq_len(n_cols), FUN = function(x) {
@@ -1638,24 +1757,21 @@ create_body_component_rtf <- function(data) {
           }
         )
 
-      row_list_body <-
-        c(
-          row_list_body,
-          rtf_tbl_row(
-            cell_list,
-            page_body_width = page_body_width,
-            widths = col_widths,
-            height = 0#,
-            # borders = list(
-            #   rtf_border(
-            #     "top",
-            #     style = ifelse(j == 1, "db", "s"),
-            #     color = table_body_hlines_color,
-            #     width = ifelse(j == 1, 50, 10)
-            #   )
-            # )
-          )
+      side <- summary_row_side(data = data, group_id = grand_summary_col)
+
+      row_list_grand_summary <-
+        rtf_tbl_row(
+          cell_list,
+          page_body_width = page_body_width,
+          widths = col_widths,
+          height = 0
         )
+
+      if (side == "top") {
+        row_list_body <- c(row_list_grand_summary, row_list_body)
+      } else {
+        row_list_body <- c(row_list_body, row_list_grand_summary)
+      }
     }
   }
 
@@ -1696,14 +1812,14 @@ create_footer_component_rtf <- function(data) {
 
   # Obtain widths for each visible column label
   col_widths <-
-    dplyr::filter(boxh, type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>%
-    dplyr::pull(column_width) %>%
-    unlist()
+    vctrs::vec_slice(boxh, boxh$type %in% c("default", "stub"))
+  # arrange by descending type and grab the "column_width" column.
+  col_widths <- col_widths[order(col_widths$type, decreasing = TRUE), "column_width", drop = TRUE]
+  col_widths <- unlist(col_widths)
 
   if (is.null(col_widths)) {
 
-    n_cols <- nrow(dplyr::filter(boxh, type %in% c("default", "stub")))
+    n_cols <- sum(boxh$type %in% c("default", "stub"))
     col_widths <- rep("100%", n_cols)
   }
 
@@ -1726,6 +1842,7 @@ create_footer_component_rtf <- function(data) {
   # Generate a list containing formatted footnotes and source notes
   notes_list <-
     generate_notes_list(
+      data = data,
       footnotes_tbl = footnotes_tbl,
       source_notes_vec = source_notes_vec,
       footnotes_multiline = footnotes_multiline,
@@ -1796,6 +1913,7 @@ create_page_footer_component_rtf <- function(data) {
   # Generate a list containing formatted footnotes and source notes
   notes_list <-
     generate_notes_list(
+      data = data,
       footnotes_tbl = footnotes_tbl,
       source_notes_vec = source_notes_vec,
       footnotes_multiline = footnotes_multiline,
@@ -1814,6 +1932,7 @@ create_page_footer_component_rtf <- function(data) {
 }
 
 generate_notes_list <- function(
+    data,
     footnotes_tbl,
     source_notes_vec,
     footnotes_multiline,
@@ -1826,9 +1945,7 @@ generate_notes_list <- function(
   if (nrow(footnotes_tbl) > 0) {
 
     footnotes_tbl <-
-      footnotes_tbl %>%
-      dplyr::select(fs_id, footnotes) %>%
-      dplyr::distinct()
+      dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
     footnote_text <- footnotes_tbl[["footnotes"]]
     footnote_mark <- footnotes_tbl[["fs_id"]]
@@ -1836,7 +1953,7 @@ generate_notes_list <- function(
     footnote_text <-
       vapply(
         footnote_text,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = process_text,
         context = "rtf"
@@ -1850,7 +1967,12 @@ generate_notes_list <- function(
         c(
           footnotes,
           rtf_paste0(
-            footnote_mark_to_rtf(footnote_mark[i]),
+            footnote_mark_to_rtf(
+              data = data,
+              mark = footnote_mark[i],
+              location = "ftr"
+            ),
+            " ",
             rtf_raw(footnote_text[i])
           )
         )

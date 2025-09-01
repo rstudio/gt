@@ -7,47 +7,51 @@
 random_id(n = 10)
 }
 \arguments{
-\item{n}{The number of lowercase letters to use for the random ID.}
+\item{n}{\emph{Number of letters}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{10}
+
+The \code{n} argument defines the number of lowercase letters to use for the
+random ID.}
 }
 \value{
 A character vector containing a single, random ID.
 }
 \description{
-This helper function can be used to create a random, character-based ID
-value argument of variable length (the default is 10 letters).
+\code{random_id()} can be used to create a random, character-based ID value
+argument of variable length (the default is 10 letters).
 }
 \section{Function ID}{
 
-7-23
+8-28
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_body}()},
-\code{\link{cells_column_labels}()},
-\code{\link{cells_column_spanners}()},
-\code{\link{cells_footnotes}()},
-\code{\link{cells_grand_summary}()},
-\code{\link{cells_row_groups}()},
-\code{\link{cells_source_notes}()},
-\code{\link{cells_stub_grand_summary}()},
-\code{\link{cells_stub_summary}()},
-\code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
-\code{\link{cells_summary}()},
-\code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
+\code{\link{latex}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
-\code{\link{px}()}
+\code{\link{px}()},
+\code{\link{row_group}()},
+\code{\link{stub}()},
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

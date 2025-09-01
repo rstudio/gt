@@ -2,12 +2,17 @@
 % Please edit documentation in R/export.R
 \name{as_latex}
 \alias{as_latex}
-\title{Output a gt object as LaTeX}
+\title{Output a \strong{gt} object as LaTeX}
 \usage{
 as_latex(data)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 }
 \description{
 Get the LaTeX content from a \code{gt_tbl} object as a \code{knit_asis} object. This
@@ -16,21 +21,44 @@ dependencies (i.e., the LaTeX packages required for the table). Using
 \code{as.character()} on the created object will result in a single-element vector
 containing the LaTeX code.
 }
+\details{
+LaTeX packages required to generate tables are:
+booktabs, caption, longtable, colortbl, array, anyfontsize, multirow.
+
+In the event packages are not automatically added during the render phase
+of the document, please create and include a style file to load them.
+
+Inside the document's YAML metadata, please include:
+
+\preformatted{
+output:
+  pdf_document: # Change to appropriate LaTeX template
+    includes:
+      in_header: 'gt_packages.sty'
+}
+
+The \code{gt_packages.sty} file would then contain the listed dependencies above:
+
+\preformatted{
+  \usepackage{booktabs, caption, longtable, colortbl, array}
+}
+}
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as an
-object with LaTeX code.
+Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a header
+with \code{\link[=tab_header]{tab_header()}} and then export the table as LaTeX code using the
+\code{as_latex()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_latex <-
-  gtcars \%>\%
-  dplyr::select(mfr, model, msrp) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt() \%>\%
+  gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
   tab_header(
     title = md("Data listing from **gtcars**"),
     subtitle = md("`gtcars` is an R dataset")
-  ) \%>\%
+  ) |>
   as_latex()
 }\if{html}{\out{</div>}}
 
@@ -44,12 +72,20 @@ just the LaTeX code as a single-element vector.
 13-3
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
-Other Export Functions: 
+Other table export functions: 
+\code{\link{as_gtable}()},
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
 \code{\link{as_word}()},
+\code{\link{extract_body}()},
+\code{\link{extract_cells}()},
 \code{\link{extract_summary}()},
 \code{\link{gtsave}()}
 }
-\concept{Export Functions}
+\concept{table export functions}

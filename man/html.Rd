@@ -7,8 +7,19 @@
 html(text, ...)
 }
 \arguments{
-\item{text, ...}{The text that is understood to be HTML text, which is to be
-preserved.}
+\item{text}{\emph{HTML text}
+
+\verb{scalar<character>} // \strong{required}
+
+The text that is understood to be HTML text, which is to be preserved in
+the HTML output context.}
+
+\item{...}{\emph{Optional parameters for \code{htmltools::HTML()}}
+
+\verb{<multiple expressions>} // (\code{optional})
+
+The \code{htmltools::HTML()} function contains \code{...} and anything provided here
+will be passed to that internal function call.}
 }
 \value{
 A character object of class \code{html}. It's tagged as an HTML fragment
@@ -24,52 +35,52 @@ rendered... to HTML.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. When adding a title, use the
-\code{html()} helper to use HTML formatting.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. When adding a title
+through \code{\link[=tab_header]{tab_header()}}, we'll use the \code{html()} helper to signify to \strong{gt}
+that we're using HTML formatting.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(currency, char) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(currency, char) |>
+  gt() |>
   tab_header(title = html("<em>HTML</em>"))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_html_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_html_1.png" alt="This image of a table was generated from the first code example in the `html()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-7-2
+8-2
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_body}()},
-\code{\link{cells_column_labels}()},
-\code{\link{cells_column_spanners}()},
-\code{\link{cells_footnotes}()},
-\code{\link{cells_grand_summary}()},
-\code{\link{cells_row_groups}()},
-\code{\link{cells_source_notes}()},
-\code{\link{cells_stub_grand_summary}()},
-\code{\link{cells_stub_summary}()},
-\code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
-\code{\link{cells_summary}()},
-\code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
+\code{\link{latex}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{row_group}()},
+\code{\link{stub}()},
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

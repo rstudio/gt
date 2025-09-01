@@ -7,25 +7,25 @@
 \format{
 A tibble with 47 rows and 15 variables:
 \describe{
-\item{mfr}{The name of the car manufacturer}
-\item{model}{The car's model name}
-\item{year}{The car's model year}
-\item{trim}{A short description of the car model's trim}
+\item{mfr}{The name of the car manufacturer.}
+\item{model}{The car's model name.}
+\item{year}{The car's model year.}
+\item{trim}{A short description of the car model's trim.}
 \item{bdy_style}{An identifier of the car's body style, which is either
-\code{coupe}, \code{convertible}, \code{sedan}, or \code{hatchback}}
-\item{hp, hp_rpm}{The car's horsepower and the associated RPM level}
-\item{trq, trq_rpm}{The car's torque and the associated RPM level}
+\code{"coupe"}, \code{"convertible"}, \code{"sedan"}, or \code{"hatchback"}.}
+\item{hp, hp_rpm}{The car's horsepower and the associated RPM level.}
+\item{trq, trq_rpm}{The car's torque and the associated RPM level.}
 \item{mpg_c, mpg_h}{The miles per gallon fuel efficiency rating for city
-and highway driving}
-\item{drivetrain}{The car's drivetrain which, for this dataset is either
-\code{rwd} (Rear Wheel Drive) or \code{awd} (All Wheel Drive)}
-\item{trsmn}{The codified transmission type, where the number part is
-the number of gears; the car could have automatic transmission
-(\code{a}), manual transmission (\code{m}), an option to switch between
-both types (\code{am}), or, direct drive (\code{dd})}
+and highway driving.}
+\item{drivetrain}{The car's drivetrain which, for this dataset, is either
+\code{"rwd"} (Rear Wheel Drive) or \code{"awd"} (All Wheel Drive).}
+\item{trsmn}{An encoding of the transmission type, where the number part is
+the number of gears. The car could have automatic transmission (\code{"a"}),
+manual transmission (\code{"m"}), an option to switch between both types
+(\code{"am"}), or, direct drive (\code{"dd"})}
 \item{ctry_origin}{The country name for where the vehicle manufacturer
-is headquartered}
-\item{msrp}{Manufacturer's suggested retail price in U.S. dollars (USD)}
+is headquartered.}
+\item{msrp}{Manufacturer's suggested retail price in U.S. dollars (USD).}
 }
 }
 \usage{
@@ -47,46 +47,42 @@ these cars, comfort is emphasized over all-out performance. Nevertheless, the
 driving experience should also mean motoring at speed, doing so in style and
 safety.
 }
-\section{Examples}{
+\section{Dataset ID and Badge}{
 
+DATA-3
 
-Here is a glimpse at the data available in \code{gtcars}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(gtcars)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Rows: 47
-## Columns: 15
-## $ mfr         <chr> "Ford", "Ferrari", "Ferrari", "Ferrari", "Ferrari", "Ferra…
-## $ model       <chr> "GT", "458 Speciale", "458 Spider", "458 Italia", "488 GTB…
-## $ year        <dbl> 2017, 2015, 2015, 2014, 2016, 2015, 2017, 2015, 2015, 2015…
-## $ trim        <chr> "Base Coupe", "Base Coupe", "Base", "Base Coupe", "Base Co…
-## $ bdy_style   <chr> "coupe", "coupe", "convertible", "coupe", "coupe", "conver…
-## $ hp          <dbl> 647, 597, 562, 562, 661, 553, 680, 652, 731, 949, 573, 545…
-## $ hp_rpm      <dbl> 6250, 9000, 9000, 9000, 8000, 7500, 8250, 8000, 8250, 9000…
-## $ trq         <dbl> 550, 398, 398, 398, 561, 557, 514, 504, 509, 664, 476, 436…
-## $ trq_rpm     <dbl> 5900, 6000, 6000, 6000, 3000, 4750, 5750, 6000, 6000, 6750…
-## $ mpg_c       <dbl> 11, 13, 13, 13, 15, 16, 12, 11, 11, 12, 21, 16, 11, 16, 12…
-## $ mpg_h       <dbl> 18, 17, 17, 17, 22, 23, 17, 16, 16, 16, 22, 22, 18, 20, 20…
-## $ drivetrain  <chr> "rwd", "rwd", "rwd", "rwd", "rwd", "rwd", "awd", "awd", "r…
-## $ trsmn       <chr> "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a"…
-## $ ctry_origin <chr> "United States", "Italy", "Italy", "Italy", "Italy", "Ital…
-## $ msrp        <dbl> 447000, 291744, 263553, 233509, 245400, 198973, 298000, 29…
-}\if{html}{\out{</div>}}
+\if{html}{\out{
+<div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_gtcars.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
+}}
 }
 
-\section{Function ID}{
+\section{Dataset Introduced}{
 
-11-3
+\code{v0.2.0.5} (March 31, 2020)
 }
 
+\examples{
+dplyr::glimpse(gtcars)
+}
 \seealso{
-Other Datasets: 
+Other datasets: 
+\code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{films}},
+\code{\link{gibraltar}},
+\code{\link{illness}},
+\code{\link{metro}},
+\code{\link{nuclides}},
+\code{\link{peeps}},
+\code{\link{photolysis}},
 \code{\link{pizzaplace}},
+\code{\link{reactions}},
+\code{\link{rx_addv}},
+\code{\link{rx_adsl}},
 \code{\link{sp500}},
-\code{\link{sza}}
+\code{\link{sza}},
+\code{\link{towny}}
 }
-\concept{Datasets}
+\concept{datasets}
 \keyword{datasets}

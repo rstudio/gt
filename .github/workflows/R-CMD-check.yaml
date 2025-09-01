@@ -1,21 +1,63 @@
-# Workflow derived from https://github.com/rstudio/shiny-workflows
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 #
-# NOTE: This Shiny team GHA workflow is overkill for most R packages.
-# For most R packages it is better to use https://github.com/r-lib/actions
+# NOTE: This workflow is overkill for most R packages and
+# check-standard.yaml is likely a better choice.
+# usethis::use_github_action("check-standard") will install it.
 on:
   push:
-    branches: [main, master, rc-**]
+    branches: [main, master]
   pull_request:
     branches: [main, master]
-  schedule:
-    - cron: '0 2 * * 1' # every monday
 
-name: Package checks
+name: R-CMD-check.yaml
+
+permissions: read-all
 
 jobs:
-  website:
-    uses: rstudio/shiny-workflows/.github/workflows/website.yaml@v1
-  routine:
-    uses: rstudio/shiny-workflows/.github/workflows/routine.yaml@v1
   R-CMD-check:
-    uses: rstudio/shiny-workflows/.github/workflows/R-CMD-check.yaml@v1
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: macos-latest,   r: 'release'}
+
+          - {os: windows-latest, r: 'release'}
+          # use 4.0 or 4.1 to check with rtools40's older compiler
+          - {os: windows-latest, r: 'oldrel-4'}
+
+          - {os: ubuntu-latest,  r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-latest,  r: 'release'}
+          - {os: ubuntu-latest,  r: 'oldrel-1'}
+          - {os: ubuntu-latest,  r: 'oldrel-2'}
+          - {os: ubuntu-latest,  r: 'oldrel-3'}
+          - {os: ubuntu-latest,  r: 'oldrel-4'}
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true
+          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'

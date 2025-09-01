@@ -7,85 +7,308 @@
 grand_summary_rows(
   data,
   columns = everything(),
-  fns,
+  fns = NULL,
+  fmt = NULL,
+  side = c("bottom", "top"),
   missing_text = "---",
-  formatter = fmt_number,
+  formatter = NULL,
   ...
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns for which the summaries should be calculated.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{fns}{Functions used for aggregations. This can include base functions
-like \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or \code{sum} or any other
-user-defined aggregation function. The function(s) should be supplied
-within a \code{list()}. Within that list, we can specify the functions by use of
-function names in quotes (e.g., \code{"sum"}), as bare functions (e.g., \code{sum}),
-or as one-sided R formulas using a leading \code{~}. In the formula
-representation, a \code{.} serves as the data to be summarized (e.g., \code{sum(., na.rm = TRUE)}). The use of named arguments is recommended as the names
-will serve as summary row labels for the corresponding summary rows data
-(the labels can derived from the function names but only when not providing
-bare function names).}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{missing_text}{The text to be used in place of \code{NA} values in summary
-cells with no data outputs.}
+\item{columns}{\emph{Columns to target}
 
-\item{formatter}{A formatter function name. These can be any of the \verb{fmt_*()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+The columns for which the summaries should be calculated. Can either
+be a series of column names provided in \code{c()}, a vector of column indices,
+or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
+
+\item{fns}{\emph{Aggregation Expressions}
+
+\verb{<expression|list of expressions>}
+
+Functions used for aggregations. This can include base functions like
+\code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or \code{sum} or any other user-defined
+aggregation function. Multiple functions, each of which would generate a
+different row, are to be supplied within a \code{list()}. We can specify the
+functions by use of function names in quotes (e.g., \code{"sum"}), as bare
+functions (e.g., \code{sum}), or in formula form (e.g., \code{minimum ~ min(.)})
+where the LHS could be used to supply the summary row label and ID values.
+More information on this can be found in the
+\emph{Aggregation expressions for \code{fns}} section.}
+
+\item{fmt}{\emph{Formatting expressions}
+
+\verb{<expression|list of expressions>}
+
+Formatting expressions in formula form. The RHS of \code{~} should contain a
+formatting call (e.g., \verb{~ fmt_number(., decimals = 3, use_seps = FALSE}).
+Optionally, the LHS could contain a group-targeting expression (e.g.,
+\code{"group_a" ~ fmt_number(.)}). More information on this can be found in the
+\emph{Formatting expressions for \code{fmt}} section.}
+
+\item{side}{\emph{Side used for placement of grand summary rows}
+
+\verb{singl-kw:[bottom|top]} // \emph{default:} \code{"bottom"}
+
+Should the grand summary rows be placed at the \code{"bottom"} (the default) or
+the \code{"top"} of the table?}
+
+\item{missing_text}{\emph{Replacement text for \code{NA} values}
+
+\verb{scalar<character>} // \emph{default:} \code{"---"}
+
+The text to be used in place of \code{NA} values in summary cells with no data
+outputs.}
+
+\item{formatter}{\emph{\link{Deprecated} Formatting function}
+
+\verb{<expression>}
+
+Deprecated, please use \code{fmt} instead. This was previously used as a way to
+input a formatting function name, which could be any of the \verb{fmt_*()}
 functions available in the package (e.g., \code{\link[=fmt_number]{fmt_number()}}, \code{\link[=fmt_percent]{fmt_percent()}},
-etc.), or a custom function using \code{fmt()}. The default function is
-\code{\link[=fmt_number]{fmt_number()}} and its options can be accessed through \code{...}.}
+etc.), or a custom function using \code{\link[=fmt]{fmt()}}. The options of a formatter can
+be accessed through \code{...}.}
 
-\item{...}{Values passed to the \code{formatter} function, where the provided
-values are to be in the form of named vectors. For example, when using the
-default \code{formatter} function, \code{\link[=fmt_number]{fmt_number()}}, options such as \code{decimals},
-\code{use_seps}, and \code{locale} can be used.}
+\item{...}{\emph{\link{Deprecated} Formatting arguments}
+
+\verb{<Named arguments>}
+
+Deprecated (along with \code{formatter}) but otherwise used for argument values
+for a formatting function supplied in \code{formatter}. For example, if using
+\code{formatter = fmt_number}, options such as \code{decimals = 1}, \code{use_seps = FALSE}, and the like can be used here.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-Add grand summary rows to the \strong{gt} table by using applying aggregation
-functions to the table data. The summary rows incorporate all of the
-available data, regardless of whether some of the data are part of row
-groups. You choose how to format the values in the resulting summary cells by
-use of a \code{formatter} function (e.g, \code{fmt_number}) and any relevant options.
+Add grand summary rows by using the table data and any suitable aggregation
+functions. With grand summary rows, all of the available data in the \strong{gt}
+table is incorporated (regardless of whether some of the data are part of row
+groups). Multiple grand summary rows can be added via expressions given to
+\code{fns}. You can selectively format the values in the resulting grand summary
+cells by use of formatting expressions in \code{fmt}.
 }
-\details{
-Should we need to obtain the summary data for external purposes, the
-\code{\link[=extract_summary]{extract_summary()}} function can be used with a \code{gt_tbl} object where grand
-summary rows were added via \code{grand_summary_rows()}.
+\section{Using \code{columns} to target column data for aggregation}{
+
+
+Targeting of column data for which aggregates should be generated is done
+through the \code{columns} argument. We can declare column names in \code{c()} (with
+bare column names or names in quotes) or we can use
+\strong{tidyselect}-style expressions. This can be as basic as supplying a select
+helper like \code{starts_with()}, or, providing a more complex incantation like
+
+\code{where(~ is.numeric(.x) & max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
+
+By default all columns are selected (with the \code{everything()} default). This
+default may be not what's needed unless all columns can undergo useful
+aggregation by expressions supplied in \code{fns}.
 }
+
+\section{Aggregation expressions for \code{fns}}{
+
+
+There are a number of ways to express how an aggregation should work for
+each summary row. In addition to that, we have the ability to pass important
+information such as the summary row ID value and its label (the former
+necessary for targeting within \code{\link[=tab_style]{tab_style()}} or \code{\link[=tab_footnote]{tab_footnote()}} and the
+latter used for display in the rendered table). Here are a number of
+instructive examples for how to supply such expressions.
+\subsection{Double-sided formula with everything supplied}{
+
+We can be explicit and provide a double-sided formula (in the form
+\verb{<LHS> ~ <RHS>}) that expresses everything about a summary row. That is, it
+has an aggregation expression (where \code{.} represents the data in the
+focused column). Here's an example:
+
+\code{list(id = "minimum", label = "min") ~ min(., na.rm = TRUE)}
+
+The left side (the list) contains named elements that identify the \code{id} and
+\code{label} for the summary row. The right side has an expression for obtaining
+a minimum value (dropping \code{NA} values in the calculation).
+
+The \code{list()} can be replaced with \code{c()} but the advantage of a list is
+allowing the use of the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} helper functions. The above
+example can be written as:
+
+\code{list(id = "minimum", label = md("**Minimum**")) ~ min(., na.rm = TRUE)}
+
+and we can have that label value interpreted as Markdown text.
+}
+
+\subsection{Function names in quotes}{
+
+With \code{fns = "min"} we get the equivalent of the fuller expression:
+
+\code{list(id = "min", label = "min") ~ min(., na.rm = TRUE)}
+
+For sake of convenience, common aggregation functions with the \code{na.rm}
+argument will be rewritten with the \code{na.rm = TRUE} option. These functions
+are: \code{"min"}, \code{"max"}, \code{"mean"}, \code{"median"}, \code{"sd"}, and \code{"sum"}.
+
+Should you need to specify multiple aggregation functions in this way (giving
+you multiple summary rows), use \code{c()} or \code{list()}.
+}
+
+\subsection{RHS formula expressions}{
+
+With \code{fns = ~ min(.)} or \code{fns = list(~ min(.))}, \strong{gt} will use the function
+name as the \code{id} and \code{label}. The expansion of this shorthand to full form
+looks like this:
+
+\code{list(id = "min", label = "min") ~ min(.)}
+
+The RHS expression is kept as written and the name portion is both the \code{id}
+and the \code{label}.
+}
+
+\subsection{Named vector or list with RHS formula expression}{
+
+Using \code{fns = c(minimum = ~ min(.))} or \code{fns = list(minimum = ~ min(.))}
+expands to this:
+
+\code{list(id = "minimum", label = "minimum") ~ min(.)}
+}
+
+\subsection{Unnamed vector or list with RHS formula expression}{
+
+With \code{fns = c("minimum", "min") ~ min(.)} or
+\code{fns = list("minimum", "min") ~ min(.)} the LHS contains the \code{label} and \code{id}
+values and, importantly, the order is \code{label} first and \code{id} second. This can
+be rewritten as:
+
+\code{list(id = "min", label = "minimum") ~ min(.)}
+
+If the vector or list is partially named, \strong{gt} has enough to go on to
+disambiguate the unnamed element. So with
+\code{fns = c("minimum", label = "min") ~ min(.)}, \code{"min"} is indeed the \code{label}
+and \code{"minimum"} is taken as the \code{id} value.
+}
+
+\subsection{A fully named list with three specific elements}{
+
+We can avoid using a formula if we are satisfied with the default options of
+a function (except some of those functions with the \code{na.rm} options, see
+above). Instead, a list with the named elements \code{id}, \code{label}, and \code{fn} could
+be used. It can look like this:
+
+\code{fns = list(id = "mean_id", label = "average", fn = "mean")}
+
+which translates to
+
+\code{list(id = "mean_id", label = "average") ~ mean(., na.rm = TRUE)}
+}
+}
+
+\section{Formatting expressions for \code{fmt}}{
+
+
+Given that we are generating new data in a table, we might also want to
+take the opportunity to format those new values right away. We can do this
+in the \code{fmt} argument, either with a single expression or a number of them
+in a list.
+
+We can supply a one-sided (RHS only) expression to \code{fmt}, and, several can
+be provided in a list. The expression uses a formatting function (e.g.,
+\code{\link[=fmt_number]{fmt_number()}}, \code{\link[=fmt_currency]{fmt_currency()}}, etc.) and it must contain an initial \code{.}
+that stands for the data object. If performing numeric formatting on all
+columns in the new grand summary rows, it might look something like this:
+
+\code{fmt = ~ fmt_number(., decimals = 1, use_seps = FALSE)}
+
+We can use the \code{columns} and \code{rows} arguments that are available in every
+formatting function. This allows us to format only a subset of columns or
+rows. Summary rows can be targeted by using their ID values and these are
+settable within expressions given to \code{fns} (see the \emph{Aggregation expressions
+for \code{fns}} section for details on this). Here's an example with hypothetical
+column and row names:
+
+\code{fmt = ~ fmt_number(., columns = num, rows = "mean", decimals = 3)}
+}
+
+\section{Extraction of summary rows}{
+
+
+Should we need to obtain the summary data for external purposes,
+\code{\link[=extract_summary]{extract_summary()}} can be used with a \code{gt_tbl} object where summary rows
+were added via \code{grand_summary_rows()} or \code{\link[=summary_rows]{summary_rows()}}.
+}
+
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create the grand
-summary rows \code{min}, \code{max}, and \code{avg} for the table with the
-\code{grand_summary_rows()} function.
+Use a modified version of the \code{\link{sp500}} dataset to create a \strong{gt} table with
+row groups and row labels. Create the grand summary rows \code{min}, \code{max}, and
+\code{avg} for the table with \code{grand_summary_rows()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
-  dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") \%>\%
-  dplyr::arrange(date) \%>\%
-  dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) \%>\%
-  dplyr::select(-adj_close, -volume) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>
+  dplyr::arrange(date) |>
+  dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) |>
+  dplyr::select(-adj_close, -volume) |>
   gt(
     rowname_col = "date",
     groupname_col = "week"
-  ) \%>\%
+  ) |>
   grand_summary_rows(
     columns = c(open, high, low, close),
     fns = list(
-      min = ~min(.),
-      max = ~max(.),
-      avg = ~mean(.)),
-    formatter = fmt_number,
-    use_seps = FALSE
+      min ~ min(.),
+      max ~ max(.),
+      avg ~ mean(.)
+    ),
+    fmt = ~ fmt_number(., use_seps = FALSE)
   )
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_grand_summary_rows_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_grand_summary_rows_1.png" alt="This image of a table was generated from the first code example in the `grand_summary_rows()` help file." style="width:100\%;">
+}}
+
+Let's take the \code{\link{countrypops}} dataset and process that a bit before handing
+it off to \strong{gt}. We can create a single grand summary row with totals that
+appears at the top of the table body (with \code{side = "top"}). We can define the
+aggregation with a list that contains parameters for the grand summary row
+label (\code{"TOTALS"}), the ID value of that row (\code{"totals"}), and the
+aggregation function (expressed as \code{"sum"}, which \strong{gt} recognizes as the
+\code{sum()} function). Finally, we'll add a background fill to the grand summary
+row with \code{\link[=tab_style]{tab_style()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_code_2 \%in\% c("BE", "NL", "LU")) |>
+  dplyr::filter(year \%\% 10 == 0) |>
+  dplyr::select(country_name, year, population) |>
+  tidyr::pivot_wider(names_from = year, values_from = population) |>
+  gt(rowname_col = "country_name") |>
+  tab_header(title = "Populations of the Benelux Countries") |>
+  tab_spanner(columns = everything(), label = "Year") |>
+  fmt_integer() |>
+  grand_summary_rows(
+    fns =  list(label = "TOTALS", id = "totals", fn = "sum"),
+    fmt = ~ fmt_integer(.),
+    side = "top"
+  ) |>
+  tab_style(
+    locations = cells_grand_summary(),
+    style = cell_fill(color = "lightblue" |> adjust_luminance(steps = +1))
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_grand_summary_rows_2.png" alt="This image of a table was generated from the second code example in the `grand_summary_rows()` help file." style="width:100\%;">
 }}
 }
 
@@ -94,8 +317,15 @@ summary rows \code{min}, \code{max}, and \code{avg} for the table with the
 6-2
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
-Other Add Rows: 
+Other row addition/modification functions: 
+\code{\link{row_group_order}()},
+\code{\link{rows_add}()},
 \code{\link{summary_rows}()}
 }
-\concept{Add Rows}
+\concept{row addition/modification functions}

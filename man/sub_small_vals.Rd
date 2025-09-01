@@ -14,47 +14,70 @@ sub_small_vals(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{threshold}{The threshold value with which values should be considered
-small enough for replacement.}
+\item{columns}{\emph{Columns to target}
 
-\item{small_pattern}{The pattern text to be used in place of the suitably
-small values in the rendered table.}
+\code{\link[=rows-columns]{<column-targeting expression>}} // \emph{default:} \code{everything()}
 
-\item{sign}{The sign of the numbers to be considered in the replacement. By
-default, we only consider positive values (\code{"+"}). The other option (\code{"-"})
-can be used to consider only negative values.}
+The columns to which substitution operations are constrained. Can either
+be a series of column names provided in \code{c()}, a vector of column indices,
+or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
+
+\item{rows}{\emph{Rows to target}
+
+\code{\link[=rows-columns]{<row-targeting expression>}} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
+results in all rows in \code{columns} being formatted. Alternatively, we can
+supply a vector of row IDs within \code{c()}, a vector of row indices, or a
+select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use
+expressions to filter down to the rows we need
+(e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{threshold}{\emph{Threshold value}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{0.01}
+
+The threshold value with which values should be considered small enough for
+replacement.}
+
+\item{small_pattern}{\emph{Pattern specification for small values}
+
+\verb{scalar<character>} // \emph{default:} \code{if (sign == "+") "<{x}" else md("<*abs*(-{x})")}
+
+The pattern text to be used in place of the suitably small values in the
+rendered table.}
+
+\item{sign}{\emph{Consider positive or negative values?}
+
+\verb{scalar<character>} // \emph{default:} \code{"+"}
+
+The sign of the numbers to be considered in the replacement. By default, we
+only consider positive values (\code{"+"}). The other option (\code{"-"}) can be used
+to consider only negative values.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 Wherever there is numerical data that are very small in value, replacement
-text may be better for explanatory purposes. The \code{sub_small_vals()} function
-allows for this replacement through specification of a \code{threshold}, a
-\code{small_pattern}, and the sign of the values to be considered.
-}
-\details{
-Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+text may be better for explanatory purposes. \code{sub_small_vals()} allows for
+this replacement through specification of a \code{threshold}, a \code{small_pattern},
+and the sign of the values to be considered. The substitution will occur for
+those values found to be between \code{0} and the threshold value. This is
+possible for small positive and small negative values (this can be explicitly
+set by the \code{sign} option). Note that the interval does not include the \code{0} or
+the \code{threshold} value. Should you need to include zero values, use
+\code{\link[=sub_zero]{sub_zero()}}.
 }
 \section{Examples}{
 
@@ -65,49 +88,47 @@ values that could potentially undergo some substitution.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(num = c(10^(-4:2), 0, NA))
 
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 9 × 1
-##        num
-##      <dbl>
-## 1   0.0001
-## 2   0.001 
-## 3   0.01  
-## 4   0.1   
-## 5   1     
-## 6  10     
-## 7 100     
-## 8   0     
-## 9  NA
+#> # A tibble: 9 x 1
+#>        num
+#>      <dbl>
+#> 1   0.0001
+#> 2   0.001 
+#> 3   0.01  
+#> 4   0.1   
+#> 5   1     
+#> 6  10     
+#> 7 100     
+#> 8   0     
+#> 9  NA
 }\if{html}{\out{</div>}}
 
 The \code{tbl} contains a variety of smaller numbers and some might be small
 enough to reformat with a threshold value. With \code{sub_small_vals()} we can
 do just that:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt() \%>\%
-  fmt_number(columns = num) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt() |>
+  fmt_number(columns = num) |>
   sub_small_vals()
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_1.png" alt="This image of a table was generated from the first code example in the `sub_small_vals()` help file." style="width:100\%;">
 }}
 
 Small and negative values can also be handled but they are handled specially
 by the \code{sign} parameter. Setting that to \code{"-"} will format only the small,
 negative values.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  dplyr::mutate(num = -num) \%>\%
-  gt() \%>\%
-  fmt_number(columns = num) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  dplyr::mutate(num = -num) |>
+  gt() |>
+  fmt_number(columns = num) |>
   sub_small_vals(sign = "-")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_2.png" alt="This image of a table was generated from the second code example in the `sub_small_vals()` help file." style="width:100\%;">
 }}
 
 You don't have to settle with the default \code{threshold} value or the default
@@ -115,9 +136,9 @@ replacement pattern (in \code{small_pattern}). This can be changed and the
 \code{"{x}"} in \code{small_pattern} (which uses the \code{threshold} value) can even be
 omitted.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt() \%>\%
-  fmt_number(columns = num) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt() |>
+  fmt_number(columns = num) |>
   sub_small_vals(
     threshold = 0.0005,
     small_pattern = "smol"
@@ -125,37 +146,56 @@ omitted.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_3.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_3.png" alt="This image of a table was generated from the third code example in the `sub_small_vals()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-3-18
+3-33
+}
+
+\section{Function Introduced}{
+
+\code{v0.6.0} (May 24, 2022)
 }
 
 \seealso{
-Other Format Data: 
+Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt}()},
+\code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
+\code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_icon}()},
+\code{\link{fmt_image}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
+\code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
-\code{\link{fmt}()},
+\code{\link{fmt_units}()},
+\code{\link{fmt_url}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
-\code{\link{sub_zero}()},
-\code{\link{text_transform}()}
+\code{\link{sub_values}()},
+\code{\link{sub_zero}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}

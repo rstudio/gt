@@ -1,9 +1,11 @@
 expect_caption_eq <- function(caption, expected) {
+
   result <- create_caption_component_h(gt(exibble, caption = caption))
+
   expect_identical(
     result,
     htmltools::HTML(paste0(
-      "<!--/html_preserve--><caption>",
+      "<!--/html_preserve--><caption class='gt_caption'>",
       expected,
       "</caption><!--html_preserve-->"
     ))
@@ -16,12 +18,11 @@ test_that("captioning processes text correctly", {
   expect_null(create_caption_component_h(exibble %>% gt()))
 
   expect_caption_eq("**hello & goodbye**", "**hello &amp; goodbye**")
-  expect_caption_eq(md("**hello & goodbye**"), "<strong>hello &amp; goodbye</strong>")
+  expect_caption_eq(md("**hello & goodbye**"), "<span class='gt_from_md'><strong>hello &amp; goodbye</strong></span>")
   expect_caption_eq(I("**hello & goodbye**"), "**hello & goodbye**")
   expect_caption_eq(htmltools::strong("hello & goodbye"), "<strong>hello &amp; goodbye</strong>")
   expect_caption_eq(htmltools::HTML("<strong>hello &amp; goodbye</strong>"), "<strong>hello &amp; goodbye</strong>")
   expect_caption_eq(I("<strong>hello &amp; goodbye</strong>"), "<strong>hello &amp; goodbye</strong>")
-
   expect_caption_eq("", "")
 })
 

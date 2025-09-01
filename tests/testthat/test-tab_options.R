@@ -1,5 +1,3 @@
-skip_on_cran()
-
 # Create a table with rownames and four columns of values
 tbl <-
   dplyr::tribble(
@@ -13,7 +11,8 @@ tbl <-
     "2018-02-11",  "7",       349.7,  307.1,  566.7,  542.9,
     "2018-02-11",  "8",        63.7,  504.3,  152.0,  724.5,
     "2018-02-11",  "9",       105.4,  729.8,  962.4,  336.4,
-    "2018-02-11",  "10",      924.2,  424.6,  740.8,  104.2)
+    "2018-02-11",  "10",      924.2,  424.6,  740.8,  104.2
+  )
 
 # Create a table from `tbl` that has all the different components
 data <-
@@ -55,21 +54,9 @@ opts_df_1 <- dt_options_get(data = data)
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
-
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
-}
-
-test_that("the internal `opts_df` table can be correctly modified", {
+test_that("The internal `opts_df` table can be correctly modified", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -1441,10 +1428,29 @@ test_that("the internal `opts_df` table can be correctly modified", {
     expect_equal(c(" ", "  "))
 })
 
-test_that("the `opts_df` getter/setter functions properly", {
+test_that("ihtml.selection option can be modified", {
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  tbl_html_single <- tab_options(data, ihtml.selection_mode = "single")
+  tbl_html_multi <-  tab_options(data, ihtml.selection_mode = "multiple")
+
+  c(dt_options_get_value(data = data, option = "ihtml_selection_mode"),
+    dt_options_get_value(data = tbl_html_single, option = "ihtml_selection_mode"),
+    dt_options_get_value(data = tbl_html_multi, option = "ihtml_selection_mode")
+  ) %>%
+    expect_equal(c(NA_character_, "single", "multiple"))
+
+  expect_error(
+    tab_options(data, ihtml.selection_mode = "bad"),
+    "The chosen option for `ihtml\\.selection_mode"
+  )
+})
+
+test_that("The `opts_df` getter/setter functions properly", {
 
   # Obtain a local copy of the internal `_options` table
-  dt_options_get(data = data) %>% expect_s3_class("tbl_df")
+  expect_s3_class(dt_options_get(data = data), "tbl_df")
 
   # Get a value
   dt_options_get_value(data = data, option = "footnotes_font_size") %>%
@@ -1460,7 +1466,7 @@ test_that("the `opts_df` getter/setter functions properly", {
     expect_equal("60%")
 })
 
-test_that("all column labels can be entirely hidden from view", {
+test_that("All column labels can be entirely hidden from view", {
 
   # Expect that the option `column_labels.hidden = TRUE` will
   # remove the expected node with the classes of `gt_col_heading`
@@ -1473,7 +1479,8 @@ test_that("all column labels can be entirely hidden from view", {
       render_as_html() %>%
       xml2::read_html() %>%
       selection_text("[class='gt_col_heading gt_right']"),
-    0)
+    0
+  )
 
   # Expect that not hiding the column labels yields a length
   # four vector when using the same search
@@ -1484,10 +1491,11 @@ test_that("all column labels can be entirely hidden from view", {
       render_as_html() %>%
       xml2::read_html() %>%
       selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']"),
-    4)
+    4
+  )
 })
 
-test_that("the row striping options work correctly", {
+test_that("The row striping options work correctly", {
 
   # Expect that the option `row.striping.include_stub = FALSE`
   # will result in no CSS class combinations of `gt_stub` and
@@ -1499,7 +1507,8 @@ test_that("the row striping options work correctly", {
       render_as_html() %>%
       xml2::read_html() %>%
       selection_text("[class='gt_row gt_left gt_stub gt_striped']"),
-    0)
+    0
+  )
 
   # TODO: determine why this doesn't work as expected
 
@@ -1525,7 +1534,8 @@ test_that("the row striping options work correctly", {
       render_as_html() %>%
       xml2::read_html() %>%
       selection_text("[class='gt_row gt_right gt_striped']"),
-    20)
+    25
+  )
 
   # Expect that the options `row.striping.include_table_body = TRUE`
   # and `row.striping.include_stub = TRUE` will result in cells that
@@ -1541,7 +1551,7 @@ test_that("the row striping options work correctly", {
         ) %>%
         render_as_html() %>%
         xml2::read_html() %>%
-        selection_text("[class='gt_row gt_right gt_stub gt_striped']"),
+        selection_text("[class='gt_row gt_right gt_stub  gt_striped']"),
       tbl %>%
         gt() %>%
         tab_options(
@@ -1551,7 +1561,7 @@ test_that("the row striping options work correctly", {
         xml2::read_html() %>%
         selection_text("[class='gt_row gt_right gt_striped']")
     ),
-    25
+    30
   )
 
   # Expect that the options `row.striping.include_table_body = FALSE`
@@ -1581,7 +1591,7 @@ test_that("the row striping options work correctly", {
   )
 })
 
-test_that("certain X11 color names are replaced in HTML tables", {
+test_that("Certain X11 color names are replaced in HTML tables", {
 
   # Here, the `gray85` color supplied to `heading.background.color`
   # is transformed to the #D9D9D9 color and it appears in the rule:
@@ -1794,11 +1804,11 @@ test_that("certain X11 color names are replaced in HTML tables", {
   )
 })
 
-test_that("vertical padding across several table parts can be applied", {
+test_that("Vertical padding across several table parts can be applied", {
 
   snap_padded_tbl <- function(padding_px) {
 
-    mtcars[1:5, ] %>%
+    gt_tbl <- mtcars[1:5, ] %>%
       gt(rownames_to_stub = TRUE) %>%
       tab_header(title = "The mtcars Dataset", subtitle = "What a great dataset this is") %>%
       tab_spanner(label = "performance", columns = c(disp, hp, drat)) %>%
@@ -1810,9 +1820,8 @@ test_that("vertical padding across several table parts can be applied", {
         heading.padding = padding_px,
         footnotes.padding = padding_px,
         source_notes.padding = padding_px
-      ) %>%
-      render_as_html() %>%
-      expect_snapshot()
+      )
+    expect_snapshot_html(gt_tbl)
   }
 
   # Generate a few snapshots at different `padding_px` amounts

@@ -1,4 +1,4 @@
-test_that("the `fmt_engineering()` function works correctly", {
+test_that("fmt_engineering() works correctly", {
 
   # Create an input data frame with a single numeric column
   data_tbl <-
@@ -43,7 +43,7 @@ test_that("the `fmt_engineering()` function works correctly", {
 
   # Expect the extracted values to match those of the
   # original dataset
-  expect_equal(data_tbl$num, (tab %>% dt_data_get())[["num"]])
+  expect_equal(dt_data_get(tab)[["num"]], data_tbl$num)
 
   # Expect an error when attempting to format a column
   # that does not exist
@@ -64,28 +64,33 @@ test_that("the `fmt_engineering()` function works correctly", {
        fmt_engineering(columns = "num", decimals = 2) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "82.03 &times; 10<sup class='gt_super'>30</sup>",
-      "829.30 &times; 10<sup class='gt_super'>18</sup>",
-      "492.03 &times; 10<sup class='gt_super'>9</sup>",
-      "84.93 &times; 10<sup class='gt_super'>9</sup>",
-      "5.04 &times; 10<sup class='gt_super'>9</sup>",
-      "203.82 &times; 10<sup class='gt_super'>6</sup>",
-      "84.73 &times; 10<sup class='gt_super'>6</sup>",
-      "2.32 &times; 10<sup class='gt_super'>6</sup>",
-      "230.32 &times; 10<sup class='gt_super'>3</sup>",
-      "50.00 &times; 10<sup class='gt_super'>3</sup>",
-      "1.00 &times; 10<sup class='gt_super'>3</sup>",
-      "10.00", "12.35 &times; 10<sup class='gt_super'>3</sup>",
-      "1.23 &times; 10<sup class='gt_super'>3</sup>", "123.45", "1.23",
-      "123.45 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "12.35 &times; 10<sup class='gt_super'>&minus;6</sup>",
-      "&minus;50.00 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;1.00 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;10.00", "&minus;12.35 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;1.23 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;123.45", "&minus;1.23",
-      "&minus;123.45 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "&minus;12.35 &times; 10<sup class='gt_super'>&minus;6</sup>"
+      paste0("82.03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup>"),
+      paste0("829.30&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>18</sup>"),
+      paste0("492.03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("84.93&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("5.04&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("203.82&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("84.73&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("2.32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("230.32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("50.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "10.00",
+      paste0("12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "123.45",
+      "1.23",
+      paste0("123.45&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>"),
+      paste0("\U02212", "50.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "10.00"),
+      paste0("\U02212", "12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "123.45"),
+      paste0("\U02212", "1.23"),
+      paste0("\U02212", "123.45&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("\U02212", "12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>")
     )
   )
 
@@ -96,13 +101,33 @@ test_that("the `fmt_engineering()` function works correctly", {
        fmt_engineering(columns = "num", decimals = 2) %>%
        render_formats_test("default"))[["num"]],
     c(
-      "82.03 x 10(30)", "829.30 x 10(18)", "492.03 x 10(9)", "84.93 x 10(9)",
-      "5.04 x 10(9)", "203.82 x 10(6)", "84.73 x 10(6)", "2.32 x 10(6)",
-      "230.32 x 10(3)", "50.00 x 10(3)", "1.00 x 10(3)", "10.00",
-      "12.35 x 10(3)", "1.23 x 10(3)", "123.45", "1.23", "123.45 x 10(-3)",
-      "12.35 x 10(-6)", "-50.00 x 10(3)", "-1.00 x 10(3)", "-10.00",
-      "-12.35 x 10(3)", "-1.23 x 10(3)", "-123.45", "-1.23", "-123.45 x 10(-3)",
-      "-12.35 x 10(-6)"
+      "82.03 \U000D7 10^30",
+      "829.30 \U000D7 10^18",
+      "492.03 \U000D7 10^9",
+      "84.93 \U000D7 10^9",
+      "5.04 \U000D7 10^9",
+      "203.82 \U000D7 10^6",
+      "84.73 \U000D7 10^6",
+      "2.32 \U000D7 10^6",
+      "230.32 \U000D7 10^3",
+      "50.00 \U000D7 10^3",
+      "1.00 \U000D7 10^3",
+      "10.00",
+      "12.35 \U000D7 10^3",
+      "1.23 \U000D7 10^3",
+      "123.45",
+      "1.23",
+      "123.45 \U000D7 10^-3",
+      "12.35 \U000D7 10^-6",
+      "-50.00 \U000D7 10^3",
+      "-1.00 \U000D7 10^3",
+      "-10.00",
+      "-12.35 \U000D7 10^3",
+      "-1.23 \U000D7 10^3",
+      "-123.45",
+      "-1.23",
+      "-123.45 \U000D7 10^-3",
+      "-12.35 \U000D7 10^-6"
     )
   )
 
@@ -112,31 +137,33 @@ test_that("the `fmt_engineering()` function works correctly", {
        fmt_engineering(columns = "num", decimals = 5) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "82.03048 &times; 10<sup class='gt_super'>30</sup>",
-      "829.30023 &times; 10<sup class='gt_super'>18</sup>",
-      "492.03218 &times; 10<sup class='gt_super'>9</sup>",
-      "84.93028 &times; 10<sup class='gt_super'>9</sup>",
-      "5.04320 &times; 10<sup class='gt_super'>9</sup>",
-      "203.82093 &times; 10<sup class='gt_super'>6</sup>",
-      "84.72920 &times; 10<sup class='gt_super'>6</sup>",
-      "2.32344 &times; 10<sup class='gt_super'>6</sup>",
-      "230.32340 &times; 10<sup class='gt_super'>3</sup>",
-      "50.00001 &times; 10<sup class='gt_super'>3</sup>",
-      "1.00000 &times; 10<sup class='gt_super'>3</sup>",
+      paste0("82.03048&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup>"),
+      paste0("829.30023&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>18</sup>"),
+      paste0("492.03218&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("84.93028&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("5.04320&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("203.82093&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("84.72920&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("2.32344&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("230.32340&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("50.00001&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("1.00000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
       "10.00001",
-      "12.34500 &times; 10<sup class='gt_super'>3</sup>",
-      "1.23450 &times; 10<sup class='gt_super'>3</sup>",
-      "123.45000", "1.23450",
-      "123.45000 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "12.34560 &times; 10<sup class='gt_super'>&minus;6</sup>",
-      "&minus;50.00001 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;1.00000 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;10.00001",
-      "&minus;12.34500 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;1.23450 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;123.45000", "&minus;1.23450",
-      "&minus;123.45000 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "&minus;12.34560 &times; 10<sup class='gt_super'>&minus;6</sup>"
+      paste0("12.34500&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("1.23450&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "123.45000",
+      "1.23450",
+      paste0("123.45000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("12.34560&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>"),
+      paste0("\U02212", "50.00001&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "1.00000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "10.00001"),
+      paste0("\U02212", "12.34500&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "1.23450&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "123.45000"),
+      paste0("\U02212", "1.23450"),
+      paste0("\U02212", "123.45000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("\U02212", "12.34560&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>")
     )
   )
 
@@ -150,28 +177,33 @@ test_that("the `fmt_engineering()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "82,03 &times; 10<sup class='gt_super'>30</sup>",
-      "829,30 &times; 10<sup class='gt_super'>18</sup>",
-      "492,03 &times; 10<sup class='gt_super'>9</sup>",
-      "84,93 &times; 10<sup class='gt_super'>9</sup>",
-      "5,04 &times; 10<sup class='gt_super'>9</sup>",
-      "203,82 &times; 10<sup class='gt_super'>6</sup>",
-      "84,73 &times; 10<sup class='gt_super'>6</sup>",
-      "2,32 &times; 10<sup class='gt_super'>6</sup>",
-      "230,32 &times; 10<sup class='gt_super'>3</sup>",
-      "50,00 &times; 10<sup class='gt_super'>3</sup>",
-      "1,00 &times; 10<sup class='gt_super'>3</sup>",
-      "10,00", "12,35 &times; 10<sup class='gt_super'>3</sup>",
-      "1,23 &times; 10<sup class='gt_super'>3</sup>", "123,45", "1,23",
-      "123,45 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "12,35 &times; 10<sup class='gt_super'>&minus;6</sup>",
-      "&minus;50,00 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;1,00 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;10,00", "&minus;12,35 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;1,23 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;123,45", "&minus;1,23",
-      "&minus;123,45 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "&minus;12,35 &times; 10<sup class='gt_super'>&minus;6</sup>"
+      paste0("82,03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup>"),
+      paste0("829,30&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>18</sup>"),
+      paste0("492,03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("84,93&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("5,04&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("203,82&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("84,73&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("2,32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("230,32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("50,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("1,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "10,00",
+      paste0("12,35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("1,23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "123,45",
+      "1,23",
+      paste0("123,45&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("12,35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>"),
+      paste0("\U02212", "50,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "1,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "10,00"),
+      paste0("\U02212", "12,35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "1,23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "123,45"),
+      paste0("\U02212", "1,23"),
+      paste0("\U02212", "123,45&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("\U02212", "12,35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>")
     )
   )
 
@@ -182,29 +214,33 @@ test_that("the `fmt_engineering()` function works correctly", {
        fmt_engineering(columns = "num", decimals = 4, scale_by = 1/1000) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "82.0305 &times; 10<sup class='gt_super'>27</sup>",
-      "829.3002 &times; 10<sup class='gt_super'>15</sup>",
-      "492.0322 &times; 10<sup class='gt_super'>6</sup>",
-      "84.9303 &times; 10<sup class='gt_super'>6</sup>",
-      "5.0432 &times; 10<sup class='gt_super'>6</sup>",
-      "203.8209 &times; 10<sup class='gt_super'>3</sup>",
-      "84.7292 &times; 10<sup class='gt_super'>3</sup>",
-      "2.3234 &times; 10<sup class='gt_super'>3</sup>",
-      "230.3234", "50.0000", "1.0000",
-      "10.0000 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "12.3450", "1.2345",
-      "123.4500 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "1.2345 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "123.4500 &times; 10<sup class='gt_super'>&minus;6</sup>",
-      "12.3456 &times; 10<sup class='gt_super'>&minus;9</sup>",
-      "&minus;50.0000",
-      "&minus;1.0000",
-      "&minus;10.0000 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "&minus;12.3450", "&minus;1.2345",
-      "&minus;123.4500 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "&minus;1.2345 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "&minus;123.4500 &times; 10<sup class='gt_super'>&minus;6</sup>",
-      "&minus;12.3456 &times; 10<sup class='gt_super'>&minus;9</sup>"
+      paste0("82.0305&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>27</sup>"),
+      paste0("829.3002&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>15</sup>"),
+      paste0("492.0322&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("84.9303&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("5.0432&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("203.8209&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("84.7292&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("2.3234&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "230.3234",
+      "50.0000",
+      "1.0000",
+      paste0("10.0000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      "12.3450",
+      "1.2345",
+      paste0("123.4500&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("1.2345&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("123.4500&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>"),
+      paste0("12.3456&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "9</sup>"),
+      paste0("\U02212", "50.0000"),
+      paste0("\U02212", "1.0000"),
+      paste0("\U02212", "10.0000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("\U02212", "12.3450"),
+      paste0("\U02212", "1.2345"),
+      paste0("\U02212", "123.4500&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("\U02212", "1.2345&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("\U02212", "123.4500&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>"),
+      paste0("\U02212", "12.3456&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "9</sup>")
     )
   )
 
@@ -215,30 +251,33 @@ test_that("the `fmt_engineering()` function works correctly", {
        fmt_engineering(columns = "num", decimals = 2, pattern = "a {x} b") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "a 82.03 &times; 10<sup class='gt_super'>30</sup> b",
-      "a 829.30 &times; 10<sup class='gt_super'>18</sup> b",
-      "a 492.03 &times; 10<sup class='gt_super'>9</sup> b",
-      "a 84.93 &times; 10<sup class='gt_super'>9</sup> b",
-      "a 5.04 &times; 10<sup class='gt_super'>9</sup> b",
-      "a 203.82 &times; 10<sup class='gt_super'>6</sup> b",
-      "a 84.73 &times; 10<sup class='gt_super'>6</sup> b",
-      "a 2.32 &times; 10<sup class='gt_super'>6</sup> b",
-      "a 230.32 &times; 10<sup class='gt_super'>3</sup> b",
-      "a 50.00 &times; 10<sup class='gt_super'>3</sup> b",
-      "a 1.00 &times; 10<sup class='gt_super'>3</sup> b", "a 10.00 b",
-      "a 12.35 &times; 10<sup class='gt_super'>3</sup> b",
-      "a 1.23 &times; 10<sup class='gt_super'>3</sup> b",
-      "a 123.45 b", "a 1.23 b",
-      "a 123.45 &times; 10<sup class='gt_super'>&minus;3</sup> b",
-      "a 12.35 &times; 10<sup class='gt_super'>&minus;6</sup> b",
-      "a &minus;50.00 &times; 10<sup class='gt_super'>3</sup> b",
-      "a &minus;1.00 &times; 10<sup class='gt_super'>3</sup> b",
-      "a &minus;10.00 b",
-      "a &minus;12.35 &times; 10<sup class='gt_super'>3</sup> b",
-      "a &minus;1.23 &times; 10<sup class='gt_super'>3</sup> b",
-      "a &minus;123.45 b", "a &minus;1.23 b",
-      "a &minus;123.45 &times; 10<sup class='gt_super'>&minus;3</sup> b",
-      "a &minus;12.35 &times; 10<sup class='gt_super'>&minus;6</sup> b"
+      paste0("a 82.03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup> b"),
+      paste0("a 829.30&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>18</sup> b"),
+      paste0("a 492.03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup> b"),
+      paste0("a 84.93&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup> b"),
+      paste0("a 5.04&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup> b"),
+      paste0("a 203.82&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup> b"),
+      paste0("a 84.73&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup> b"),
+      paste0("a 2.32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup> b"),
+      paste0("a 230.32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup> b"),
+      paste0("a 50.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup> b"),
+      paste0("a 1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup> b"),
+      "a 10.00 b",
+      paste0("a 12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup> b"),
+      paste0("a 1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup> b"),
+      "a 123.45 b",
+      "a 1.23 b",
+      paste0("a 123.45&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup> b"),
+      paste0("a 12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup> b"),
+      paste0("a \U02212", "50.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup> b"),
+      paste0("a \U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup> b"),
+      paste0("a \U02212", "10.00 b"),
+      paste0("a \U02212", "12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup> b"),
+      paste0("a \U02212", "1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup> b"),
+      paste0("a \U02212", "123.45 b"),
+      paste0("a \U02212", "1.23 b"),
+      paste0("a \U02212", "123.45&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup> b"),
+      paste0("a \U02212", "12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup> b")
     )
   )
 
@@ -246,31 +285,36 @@ test_that("the `fmt_engineering()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_engineering(
-         columns = "num", decimals = 3, force_sign = TRUE) %>%
+         columns = "num", decimals = 3, force_sign_m = TRUE) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "+82.030 &times; 10<sup class='gt_super'>30</sup>",
-      "+829.300 &times; 10<sup class='gt_super'>18</sup>",
-      "+492.032 &times; 10<sup class='gt_super'>9</sup>",
-      "+84.930 &times; 10<sup class='gt_super'>9</sup>",
-      "+5.043 &times; 10<sup class='gt_super'>9</sup>",
-      "+203.821 &times; 10<sup class='gt_super'>6</sup>",
-      "+84.729 &times; 10<sup class='gt_super'>6</sup>",
-      "+2.323 &times; 10<sup class='gt_super'>6</sup>",
-      "+230.323 &times; 10<sup class='gt_super'>3</sup>",
-      "+50.000 &times; 10<sup class='gt_super'>3</sup>",
-      "+1.000 &times; 10<sup class='gt_super'>3</sup>", "+10.000",
-      "+12.345 &times; 10<sup class='gt_super'>3</sup>",
-      "+1.234 &times; 10<sup class='gt_super'>3</sup>", "+123.450", "+1.234",
-      "+123.450 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "+12.346 &times; 10<sup class='gt_super'>&minus;6</sup>",
-      "&minus;50.000 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;1.000 &times; 10<sup class='gt_super'>3</sup>", "&minus;10.000",
-      "&minus;12.345 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;1.234 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;123.450", "&minus;1.234",
-      "&minus;123.450 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "&minus;12.346 &times; 10<sup class='gt_super'>&minus;6</sup>"
+      paste0("+82.030&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup>"),
+      paste0("+829.300&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>18</sup>"),
+      paste0("+492.032&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("+84.930&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("+5.043&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("+203.821&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("+84.729&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("+2.323&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("+230.323&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("+50.000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("+1.000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "+10.000",
+      paste0("+12.345&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("+1.234&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "+123.450",
+      "+1.234",
+      paste0("+123.450&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("+12.346&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>"),
+      paste0("\U02212", "50.000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "1.000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "10.000"),
+      paste0("\U02212", "12.345&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "1.234&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "123.450"),
+      paste0("\U02212", "1.234"),
+      paste0("\U02212", "123.450&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("\U02212", "12.346&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>")
     )
   )
 
@@ -279,31 +323,221 @@ test_that("the `fmt_engineering()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_engineering(
-         columns = "num", pattern = "*{x}*", force_sign = TRUE) %>%
+         columns = "num", pattern = "*{x}*", force_sign_m = TRUE) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "*+82.03 &times; 10<sup class='gt_super'>30</sup>*",
-      "*+829.30 &times; 10<sup class='gt_super'>18</sup>*",
-      "*+492.03 &times; 10<sup class='gt_super'>9</sup>*",
-      "*+84.93 &times; 10<sup class='gt_super'>9</sup>*",
-      "*+5.04 &times; 10<sup class='gt_super'>9</sup>*",
-      "*+203.82 &times; 10<sup class='gt_super'>6</sup>*",
-      "*+84.73 &times; 10<sup class='gt_super'>6</sup>*",
-      "*+2.32 &times; 10<sup class='gt_super'>6</sup>*",
-      "*+230.32 &times; 10<sup class='gt_super'>3</sup>*",
-      "*+50.00 &times; 10<sup class='gt_super'>3</sup>*",
-      "*+1.00 &times; 10<sup class='gt_super'>3</sup>*", "*+10.00*",
-      "*+12.35 &times; 10<sup class='gt_super'>3</sup>*",
-      "*+1.23 &times; 10<sup class='gt_super'>3</sup>*", "*+123.45*", "*+1.23*",
-      "*+123.45 &times; 10<sup class='gt_super'>&minus;3</sup>*",
-      "*+12.35 &times; 10<sup class='gt_super'>&minus;6</sup>*",
-      "*&minus;50.00 &times; 10<sup class='gt_super'>3</sup>*",
-      "*&minus;1.00 &times; 10<sup class='gt_super'>3</sup>*", "*&minus;10.00*",
-      "*&minus;12.35 &times; 10<sup class='gt_super'>3</sup>*",
-      "*&minus;1.23 &times; 10<sup class='gt_super'>3</sup>*",
-      "*&minus;123.45*", "*&minus;1.23*",
-      "*&minus;123.45 &times; 10<sup class='gt_super'>&minus;3</sup>*",
-      "*&minus;12.35 &times; 10<sup class='gt_super'>&minus;6</sup>*"
+      paste0("*+82.03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup>*"),
+      paste0("*+829.30&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>18</sup>*"),
+      paste0("*+492.03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>*"),
+      paste0("*+84.93&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>*"),
+      paste0("*+5.04&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>*"),
+      paste0("*+203.82&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>*"),
+      paste0("*+84.73&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>*"),
+      paste0("*+2.32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>*"),
+      paste0("*+230.32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>*"),
+      paste0("*+50.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>*"),
+      paste0("*+1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>*"),
+      "*+10.00*",
+      paste0("*+12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>*"),
+      paste0("*+1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>*"),
+      "*+123.45*",
+      "*+1.23*",
+      paste0("*+123.45&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>*"),
+      paste0("*+12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>*"),
+      paste0("*\U02212", "50.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>*"),
+      paste0("*\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>*"),
+      paste0("*\U02212", "10.00*"),
+      paste0("*\U02212", "12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>*"),
+      paste0("*\U02212", "1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>*"),
+      paste0("*\U02212", "123.45*"),
+      paste0("*\U02212", "1.23*"),
+      paste0("*", "\U02212", "123.45&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>*"),
+      paste0("*", "\U02212", "12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>*")
+    )
+  )
+
+  # Create a gt table with a mix of small and large numbers, both
+  # positive and negative
+  tab_2 <-
+    dplyr::tibble(
+      num = c(-3.49E13, -3453, -0.000234, 0, 0.00007534, 82794, 7.16E14)
+    ) %>%
+    gt()
+
+  # Format the `num` column to exactly 4 decimal places
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", decimals = 4, exp_style = "E") %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.9000E12", "-3.4530E03", "-234.0000E-06", "0.0000E00",
+      "75.3400E-06", "82.7940E03", "716.0000E12"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' part of the
+  # notation; extract in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", force_sign_m = TRUE) %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.90 × 10^12", "-3.45 × 10^3", "-234.00 × 10^-6", "0.00",
+      "+75.34 × 10^-6", "+82.79 × 10^3", "+716.00 × 10^12"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' part of the
+  # notation; extract in the HTML context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", force_sign_m = TRUE) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "−34.90&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>12</sup>",
+      "−3.45&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>3</sup>",
+      "−234.00&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "0.00",
+      "+75.34&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "+82.79&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>3</sup>",
+      "+716.00&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>12</sup>"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'n' part of the
+  # notation; extract in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", force_sign_n = TRUE) %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.90 \U000D7 10^+12", "-3.45 \U000D7 10^+3", "-234.00 \U000D7 10^-6", "0.00",
+      "75.34 \U000D7 10^-6", "82.79 \U000D7 10^+3", "716.00 \U000D7 10^+12"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'n' part of the
+  # notation; extract in the HTML context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", force_sign_n = TRUE) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "−34.90&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+12</sup>",
+      "−3.45&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+3</sup>",
+      "−234.00&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "0.00",
+      "75.34&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "82.79&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+3</sup>",
+      "716.00&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+12</sup>"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' and 'n' parts of the
+  # notation; extract in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.90 \U000D7 10^+12", "-3.45 \U000D7 10^+3", "-234.00 \U000D7 10^-6", "0.00",
+      "+75.34 \U000D7 10^-6", "+82.79 \U000D7 10^+3", "+716.00 \U000D7 10^+12"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' and 'n' parts of the
+  # notation; extract in the HTML context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "−34.90&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+12</sup>",
+      "−3.45&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+3</sup>",
+      "−234.00&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "0.00",
+      "+75.34&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "+82.79&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+3</sup>",
+      "+716.00&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+12</sup>"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' and 'n' parts of the
+  # notation and choose a exponent style of `"E"`; extract in the default
+  # context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", exp_style = "E", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.90E+12", "-3.45E+03", "-234.00E-06", "0.00E+00", "+75.34E-06",
+      "+82.79E+03", "+716.00E+12"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' and 'n' parts of the
+  # notation and choose a exponent style of `"E"`; extract in the HTML
+  # context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", exp_style = "E", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "−34.90E+12", "−3.45E+03", "−234.00E−06", "0.00E+00",
+      "+75.34E−06", "+82.79E+03", "+716.00E+12"
+    )
+  )
+
+  # Format the `num` column and choose a exponent style of `"E"`; extract in
+  # the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", exp_style = "E") %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.90E12", "-3.45E03", "-234.00E-06", "0.00E00", "75.34E-06",
+      "82.79E03", "716.00E12"
+    )
+  )
+
+  # Format the `num` column and choose a exponent style of `"E1"`; extract
+  # in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", exp_style = "E1") %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.90E12", "-3.45E3", "-234.00E-6", "0.00E0", "75.34E-6",
+      "82.79E3", "716.00E12"
+    )
+  )
+
+  # Format the `num` column and choose a exponent style of `"low-ten"`; extract
+  # in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", exp_style = "low-ten") %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.90E12", "-3.45E03", "-234.00E-06", "0.00E00", "75.34E-06",
+      "82.79E03", "716.00E12"
+    )
+  )
+
+  # Format the `num` column and choose a exponent style of `"low-ten"`; extract
+  # in the HTML context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", exp_style = "low-ten") %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "−34.90<sub style='font−size: 65%;'>10</sub>12",
+      "−3.45<sub style='font−size: 65%;'>10</sub>03",
+      "−234.00<sub style='font−size: 65%;'>10</sub>−06",
+      "0.00<sub style='font−size: 65%;'>10</sub>00",
+      "75.34<sub style='font−size: 65%;'>10</sub>−06",
+      "82.79<sub style='font−size: 65%;'>10</sub>03",
+      "716.00<sub style='font−size: 65%;'>10</sub>12"
     )
   )
 
@@ -314,28 +548,33 @@ test_that("the `fmt_engineering()` function works correctly", {
        fmt_engineering(columns = "num", decimals = 2, locale = "en_US") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "82.03 &times; 10<sup class='gt_super'>30</sup>",
-      "829.30 &times; 10<sup class='gt_super'>18</sup>",
-      "492.03 &times; 10<sup class='gt_super'>9</sup>",
-      "84.93 &times; 10<sup class='gt_super'>9</sup>",
-      "5.04 &times; 10<sup class='gt_super'>9</sup>",
-      "203.82 &times; 10<sup class='gt_super'>6</sup>",
-      "84.73 &times; 10<sup class='gt_super'>6</sup>",
-      "2.32 &times; 10<sup class='gt_super'>6</sup>",
-      "230.32 &times; 10<sup class='gt_super'>3</sup>",
-      "50.00 &times; 10<sup class='gt_super'>3</sup>",
-      "1.00 &times; 10<sup class='gt_super'>3</sup>", "10.00",
-      "12.35 &times; 10<sup class='gt_super'>3</sup>",
-      "1.23 &times; 10<sup class='gt_super'>3</sup>", "123.45", "1.23",
-      "123.45 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "12.35 &times; 10<sup class='gt_super'>&minus;6</sup>",
-      "&minus;50.00 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;1.00 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;10.00", "&minus;12.35 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;1.23 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;123.45", "&minus;1.23",
-      "&minus;123.45 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "&minus;12.35 &times; 10<sup class='gt_super'>&minus;6</sup>"
+      paste0("82.03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup>"),
+      paste0("829.30&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>18</sup>"),
+      paste0("492.03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("84.93&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("5.04&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("203.82&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("84.73&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("2.32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("230.32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("50.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "10.00",
+      paste0("12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "123.45",
+      "1.23",
+      paste0("123.45&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>"),
+      paste0("\U02212", "50.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "10.00"),
+      paste0("\U02212", "12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "123.45"),
+      paste0("\U02212", "1.23"),
+      paste0("\U02212", "123.45&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("\U02212", "12.35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>")
     )
   )
 
@@ -346,33 +585,38 @@ test_that("the `fmt_engineering()` function works correctly", {
        fmt_engineering(columns = "num", decimals = 2, locale = "da_DK") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "82,03 &times; 10<sup class='gt_super'>30</sup>",
-      "829,30 &times; 10<sup class='gt_super'>18</sup>",
-      "492,03 &times; 10<sup class='gt_super'>9</sup>",
-      "84,93 &times; 10<sup class='gt_super'>9</sup>",
-      "5,04 &times; 10<sup class='gt_super'>9</sup>",
-      "203,82 &times; 10<sup class='gt_super'>6</sup>",
-      "84,73 &times; 10<sup class='gt_super'>6</sup>",
-      "2,32 &times; 10<sup class='gt_super'>6</sup>",
-      "230,32 &times; 10<sup class='gt_super'>3</sup>",
-      "50,00 &times; 10<sup class='gt_super'>3</sup>",
-      "1,00 &times; 10<sup class='gt_super'>3</sup>", "10,00",
-      "12,35 &times; 10<sup class='gt_super'>3</sup>",
-      "1,23 &times; 10<sup class='gt_super'>3</sup>", "123,45", "1,23",
-      "123,45 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "12,35 &times; 10<sup class='gt_super'>&minus;6</sup>",
-      "&minus;50,00 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;1,00 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;10,00", "&minus;12,35 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;1,23 &times; 10<sup class='gt_super'>3</sup>",
-      "&minus;123,45", "&minus;1,23",
-      "&minus;123,45 &times; 10<sup class='gt_super'>&minus;3</sup>",
-      "&minus;12,35 &times; 10<sup class='gt_super'>&minus;6</sup>"
+      paste0("82,03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup>"),
+      paste0("829,30&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>18</sup>"),
+      paste0("492,03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("84,93&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("5,04&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+      paste0("203,82&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("84,73&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("2,32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+      paste0("230,32&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("50,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("1,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "10,00",
+      paste0("12,35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("1,23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "123,45",
+      "1,23",
+      paste0("123,45&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("12,35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>"),
+      paste0("\U02212", "50,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "1,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "10,00"),
+      paste0("\U02212", "12,35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "1,23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "123,45"),
+      paste0("\U02212", "1,23"),
+      paste0("\U02212", "123,45&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+      paste0("\U02212", "12,35&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "6</sup>")
     )
   )
 })
 
-test_that("`fmt_engineering() can handle extremely large and small values", {
+test_that("fmt_engineering() can handle extremely large and small values", {
 
   # Create an input data frame with very large and very small numbers
   # (both positive and negative)
@@ -393,15 +637,16 @@ test_that("`fmt_engineering() can handle extremely large and small values", {
        fmt_engineering(columns = "num", decimals = 5) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;150.00000 &times; 10<sup class='gt_super'>198</sup>",
-      "&minus;15.00000 &times; 10<sup class='gt_super'>99</sup>",
-      "&minus;2.50000",
-      "&minus;350.00000 &times; 10<sup class='gt_super'>&minus;102</sup>",
-      "&minus;35.00000 &times; 10<sup class='gt_super'>&minus;201</sup>",
-      "15.00000 &times; 10<sup class='gt_super'>&minus;201</sup>",
-      "150.00000 &times; 10<sup class='gt_super'>&minus;102</sup>",
-      "2.50000", "35.00000 &times; 10<sup class='gt_super'>99</sup>",
-      "350.00000 &times; 10<sup class='gt_super'>198</sup>"
+      paste0("\U02212", "150.00000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>198</sup>"),
+      paste0("\U02212", "15.00000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>99</sup>"),
+      paste0("\U02212", "2.50000"),
+      paste0("\U02212", "350.00000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "102</sup>"),
+      paste0("\U02212", "35.00000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "201</sup>"),
+      paste0("15.00000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "201</sup>"),
+      paste0("150.00000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "102</sup>"),
+      "2.50000",
+      paste0("35.00000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>99</sup>"),
+      paste0("350.00000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>198</sup>")
     )
   )
 
@@ -414,10 +659,16 @@ test_that("`fmt_engineering() can handle extremely large and small values", {
        fmt_engineering(columns = "num", decimals = 5) %>%
        render_formats_test("default"))[["num"]],
     c(
-      "-150.00000 x 10(198)", "-15.00000 x 10(99)", "-2.50000",
-      "-350.00000 x 10(-102)", "-35.00000 x 10(-201)", "15.00000 x 10(-201)",
-      "150.00000 x 10(-102)", "2.50000", "35.00000 x 10(99)",
-      "350.00000 x 10(198)"
+      "-150.00000 \U000D7 10^198",
+      "-15.00000 \U000D7 10^99",
+      "-2.50000",
+      "-350.00000 \U000D7 10^-102",
+      "-35.00000 \U000D7 10^-201",
+      "15.00000 \U000D7 10^-201",
+      "150.00000 \U000D7 10^-102",
+      "2.50000",
+      "35.00000 \U000D7 10^99",
+      "350.00000 \U000D7 10^198"
     )
   )
 })

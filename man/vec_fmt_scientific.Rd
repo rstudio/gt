@@ -7,62 +7,153 @@
 vec_fmt_scientific(
   x,
   decimals = 2,
+  n_sigfig = NULL,
   drop_trailing_zeros = FALSE,
+  drop_trailing_dec_mark = TRUE,
   scale_by = 1,
+  exp_style = "x10n",
   pattern = "{x}",
   sep_mark = ",",
   dec_mark = ".",
-  force_sign = FALSE,
+  force_sign_m = FALSE,
+  force_sign_n = FALSE,
   locale = NULL,
-  output = c("html", "latex", "rtf")
+  output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
 \arguments{
-\item{x}{A numeric vector.}
+\item{x}{\emph{The input vector}
 
-\item{decimals}{An option to specify the exact number of decimal places to
-use. The default number of decimal places is \code{2}.}
+\code{vector(numeric|integer)} // \strong{required}
 
-\item{drop_trailing_zeros}{A logical value that allows for removal of
-trailing zeros (those redundant zeros after the decimal mark).}
+This is the input vector that will undergo transformation to a character
+vector of the same length. Values within the vector will be formatted.}
 
-\item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
-values will be multiplied by this value first before undergoing formatting.}
+\item{decimals}{\emph{Number of decimal places}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+\code{scalar<numeric|integer>(val>=0)} // \emph{default:} \code{2}
 
-\item{sep_mark}{The mark to use as a separator between groups of digits
-(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \verb{1,000}).}
+This corresponds to the exact number of decimal places to use. A value
+such as \code{2.34} can, for example, be formatted with \code{0} decimal places and
+it would result in \code{"2"}. With \code{4} decimal places, the formatted value
+becomes \code{"2.3400"}.}
 
-\item{dec_mark}{The character to use as a decimal mark (e.g., using
-\code{dec_mark = ","} with \code{0.152} would result in a formatted value of
-\verb{0,152}).}
+\item{n_sigfig}{\emph{Number of significant figures}
 
-\item{force_sign}{Should the positive sign be shown for positive values
-(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
-for this option. The default is \code{FALSE}, where only negative numbers will
-display a minus sign.}
+\code{scalar<numeric|integer>(val>=1)} // \emph{default:} \code{NULL} (\code{optional})
 
-\item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en_US"} for English
-(United States) and \code{"fr_FR"} for French (France). The use of a valid
-locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
-We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
-the locales that are supported.}
+A option to format numbers to \emph{n} significant figures. By default, this is
+\code{NULL} and thus number values will be formatted according to the number of
+decimal places set via \code{decimals}. If opting to format according to the
+rules of significant figures, \code{n_sigfig} must be a number greater than or
+equal to \code{1}. Any values passed to the \code{decimals} and \code{drop_trailing_zeros}
+arguments will be ignored.}
 
-\item{output}{The output style of the resulting character vector. This can
-either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
+\item{drop_trailing_zeros}{\emph{Drop any trailing zeros}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+A logical value that allows for removal of trailing zeros (those redundant
+zeros after the decimal mark).}
+
+\item{drop_trailing_dec_mark}{\emph{Drop the trailing decimal mark}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+A logical value that determines whether decimal marks should always appear
+even if there are no decimal digits to display after formatting (e.g., \code{23}
+becomes \code{23.} if \code{FALSE}). By default trailing decimal marks are not shown.}
+
+\item{scale_by}{\emph{Scale values by a fixed multiplier}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{1}
+
+All numeric values will be multiplied by the \code{scale_by} value before
+undergoing formatting. Since the \code{default} value is \code{1}, no values will be
+changed unless a different multiplier value is supplied.}
+
+\item{exp_style}{\emph{Style declaration for exponent formatting}
+
+\verb{scalar<character>} // \emph{default:} \code{"x10n"}
+
+Style of formatting to use for the scientific notation formatting. By
+default this is \code{"x10n"} but other options include using a single letter
+(e.g., \code{"e"}, \code{"E"}, etc.), a letter followed by a \code{"1"} to signal a
+minimum digit width of one, or \code{"low-ten"} for using a stylized \code{"10"}
+marker.}
+
+\item{pattern}{\emph{Specification of the formatting pattern}
+
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
+
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{sep_mark}{\emph{Separator mark for digit grouping}
+
+\verb{scalar<character>} // \emph{default:} \code{","}
+
+The string to use as a separator between groups of digits. For example,
+using \code{sep_mark = ","} with a value of \code{1000} would result in a formatted
+value of \code{"1,000"}. This argument is ignored if a \code{locale} is supplied
+(i.e., is not \code{NULL}).}
+
+\item{dec_mark}{\emph{Decimal mark}
+
+\verb{scalar<character>} // \emph{default:} \code{"."}
+
+The string to be used as the decimal mark. For example, using
+\code{dec_mark = ","} with the value \code{0.152} would result in a formatted value
+of \code{"0,152"}). This argument is ignored if a \code{locale} is supplied (i.e., is
+not \code{NULL}).}
+
+\item{force_sign_m, force_sign_n}{\emph{Forcing the display of a positive sign}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should the plus sign be shown for positive values of the mantissa (first
+component, \code{force_sign_m}) or the exponent (\code{force_sign_n})? This would
+effectively show a sign for all values except zero on either of those
+numeric components of the notation. If so, use \code{TRUE} for either one of
+these options. The default for both is \code{FALSE}, where only negative numbers
+will display a sign.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according to the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported.}
+
+\item{output}{\emph{Output format}
+
+\verb{singl-kw:[auto|plain|html|latex|rtf|word]} // \emph{default:} \code{"auto"}
+
+The output style of the resulting character vector. This can either be
+\code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or
+\code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the \code{"auto"}
+option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
 }
 \description{
-With numeric values in a vector, we can perform formatting so that the input
-values are rendered into scientific notation within the output character
-vector. The following major options are available:
+With numeric values in a vector, we can perform formatting so that the
+targeted values are rendered in scientific notation, where extremely large or
+very small numbers can be expressed in a more practical fashion. Here,
+numbers are written in the form of a mantissa (\code{m}) and an exponent (\code{n})
+with the construction \emph{m} x 10^\emph{n} or \emph{m}E\emph{n}. The mantissa component is a
+number between \code{1} and \code{10}. For instance, \verb{2.5 x 10^9} can be used to
+represent the value 2,500,000,000 in scientific notation. In a similar way,
+0.00000012 can be expressed as \verb{1.2 x 10^-7}. Due to its ability to describe
+numbers more succinctly and its ease of calculation, scientific notation is
+widely employed in scientific and technical domains.
+
+We have fine control over the formatting task, with the following options:
 \itemize{
 \item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol
@@ -83,17 +174,13 @@ Let's create a numeric vector for the next few examples:
 
 Using \code{vec_fmt_scientific()} with the default options will create a character
 vector with values in scientific notation. Any \code{NA} values remain as \code{NA}
-values. The rendering context is HTML unless specified in the \code{output}
-argument.
+values. The rendering context will be autodetected unless specified in the
+\code{output} argument (here, it is of the \code{"plain"} output type).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "3.24 &times; 10<sup class='gt_super'>&minus;4</sup>"
-## [2] "8.65"                                               
-## [3] "1.36 &times; 10<sup class='gt_super'>6</sup>"       
-## [4] "&minus;5.90 &times; 10<sup class='gt_super'>4</sup>"
-## [5] "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3.24 x 10^-4" "8.65" "1.36 x 10^6" "-5.90 x 10^4" "NA"
 }\if{html}{\out{</div>}}
 
 We can change the number of decimal places with the \code{decimals} option:
@@ -101,11 +188,7 @@ We can change the number of decimal places with the \code{decimals} option:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, decimals = 1)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "3.2 &times; 10<sup class='gt_super'>&minus;4</sup>"
-## [2] "8.7"                                               
-## [3] "1.4 &times; 10<sup class='gt_super'>6</sup>"       
-## [4] "&minus;5.9 &times; 10<sup class='gt_super'>4</sup>"
-## [5] "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3.2 x 10^-4" "8.7" "1.4 x 10^6" "-5.9 x 10^4" "NA"
 }\if{html}{\out{</div>}}
 
 If we are formatting for a different locale, we could supply the locale ID
@@ -114,24 +197,16 @@ and \strong{gt} will handle any locale-specific formatting options:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, locale = "es")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "3,24 &times; 10<sup class='gt_super'>&minus;4</sup>"
-## [2] "8,65"                                               
-## [3] "1,36 &times; 10<sup class='gt_super'>6</sup>"       
-## [4] "&minus;5,90 &times; 10<sup class='gt_super'>4</sup>"
-## [5] "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3,24 x 10^-4" "8,65" "1,36 x 10^6" "-5,90 x 10^4" "NA"
 }\if{html}{\out{</div>}}
 
-Should you need to have positive and negative signs on each of the output
-values, use \code{force_sign = TRUE}:
+Should you need to have positive and negative signs for the mantissa
+component of a given value, use \code{force_sign_m = TRUE}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, force_sign = TRUE)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, force_sign_m = TRUE)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "+3.24 &times; 10<sup class='gt_super'>&minus;4</sup>"
-## [2] "+8.65"                                               
-## [3] "+1.36 &times; 10<sup class='gt_super'>6</sup>"       
-## [4] "&minus;5.90 &times; 10<sup class='gt_super'>4</sup>" 
-## [5] "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "+3.24 x 10^-4" "+8.65" "+1.36 x 10^6" "-5.90 x 10^4" "NA"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
@@ -140,31 +215,40 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, pattern = "[\{x\}]")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "[3.24 &times; 10<sup class='gt_super'>&minus;4</sup>]"
-## [2] "[8.65]"                                               
-## [3] "[1.36 &times; 10<sup class='gt_super'>6</sup>]"       
-## [4] "[&minus;5.90 &times; 10<sup class='gt_super'>4</sup>]"
-## [5] "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "[3.24 x 10^-4]" "[8.65]" "[1.36 x 10^6]" "[-5.90 x 10^4]" "NA"
 }\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{
 
-14-3
+15-3
+}
+
+\section{Function Introduced}{
+
+\code{v0.7.0} (Aug 25, 2022)
 }
 
 \seealso{
+The variant function intended for formatting \strong{gt} table data:
+\code{\link[=fmt_scientific]{fmt_scientific()}}.
+
 Other vector formatting functions: 
 \code{\link{vec_fmt_bytes}()},
 \code{\link{vec_fmt_currency}()},
-\code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_datetime}()},
+\code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},
+\code{\link{vec_fmt_index}()},
 \code{\link{vec_fmt_integer}()},
 \code{\link{vec_fmt_markdown}()},
 \code{\link{vec_fmt_number}()},
+\code{\link{vec_fmt_partsper}()},
 \code{\link{vec_fmt_percent}()},
+\code{\link{vec_fmt_roman}()},
+\code{\link{vec_fmt_spelled_num}()},
 \code{\link{vec_fmt_time}()}
 }
 \concept{vector formatting functions}

@@ -7,68 +7,74 @@
 md(text)
 }
 \arguments{
-\item{text}{The text that is understood to contain Markdown formatting.}
+\item{text}{\emph{Markdown text}
+
+\verb{scalar<character>} // \strong{required}
+
+The text that is understood to contain Markdown formatting.}
 }
 \value{
 A character object of class \code{from_markdown}. It's tagged as being
-Markdown text and it will undergo conversion to HTML.
+Markdown text and it will undergo conversion to the desired output context.
 }
 \description{
-Markdown! It's a wonderful thing. We can use it in certain places (e.g.,
-footnotes, source notes, the table title, etc.) and expect it to render to
-HTML as Markdown does. There is the \code{\link[=html]{html()}} helper that allows you to ferry
-in HTML but this function \code{md()}... it's almost like a two-for-one deal (you
-get to use Markdown plus any HTML fragments \emph{at the same time}).
+Markdown text can be used in certain places in a \strong{gt} table, and this is
+wherever new text is defined (e.g., footnotes, source notes, the table title,
+etc.). Using Markdown is advantageous for styling text since it will be
+rendered correctly to the output format of the \strong{gt} table. There is
+also the \code{\link[=html]{html()}} helper that allows you use HTML exclusively (for tables
+expressly meant for HTML output) but \code{md()} allows for both; you get to use
+Markdown plus any HTML fragments at the same time.
 }
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. When adding a title, use the \code{md()}
-helper to use Markdown formatting.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. When adding a title
+through \code{\link[=tab_header]{tab_header()}}, we'll use the \code{md()} helper to signify to \strong{gt} that
+we're using Markdown formatting.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(currency, char) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(currency, char) |>
+  gt() |>
   tab_header(title = md("Using *Markdown*"))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_md_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_md_1.png" alt="This image of a table was generated from the first code example in the `md()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-7-1
+8-1
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_body}()},
-\code{\link{cells_column_labels}()},
-\code{\link{cells_column_spanners}()},
-\code{\link{cells_footnotes}()},
-\code{\link{cells_grand_summary}()},
-\code{\link{cells_row_groups}()},
-\code{\link{cells_source_notes}()},
-\code{\link{cells_stub_grand_summary}()},
-\code{\link{cells_stub_summary}()},
-\code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
-\code{\link{cells_summary}()},
-\code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
+\code{\link{latex}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{row_group}()},
+\code{\link{stub}()},
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

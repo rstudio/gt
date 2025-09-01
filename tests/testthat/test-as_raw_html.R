@@ -1,13 +1,12 @@
-skip_on_cran()
-
-test_that("`as_raw_html()` produces the same table every time", {
+test_that("as_raw_html() produces the same table every time", {
 
   gt_html_1 <-
     gt(exibble) %>%
-    as_raw_html(inline_css = TRUE)
+    as_raw_html(inline_css = TRUE) %>%
+    gsub("id=\"[a-z]*?\"", "", .)
 
-  gt_html_1_sha1 <- digest::sha1(gt_html_1)
-  expect_equal(gt_html_1_sha1, "45813e5281fb9f9cc616d55551efff7ccaa17cca")
+  gt_html_1_sha1 <- rlang::hash(gt_html_1)
+  expect_equal(gt_html_1_sha1, "55cc97cb6ff1ef50ee7cabda877d1104")
 
   gt_html_2 <-
     gt(
@@ -46,7 +45,9 @@ test_that("`as_raw_html()` produces the same table every time", {
       columns = c(hp, wt, qsec),
       fns = list(
         ~mean(., na.rm = TRUE),
-        ~sum(., na.rm = TRUE))
+        ~sum(., na.rm = TRUE)
+      ),
+      fmt = list(~ fmt_number(.))
     ) %>%
     tab_style(
       style = cell_fill(color = "lightgray"),
@@ -110,8 +111,30 @@ test_that("`as_raw_html()` produces the same table every time", {
         rows = "Mazda RX4"
       )
     ) %>%
-    as_raw_html(inline_css = TRUE)
+    as_raw_html(inline_css = TRUE) %>%
+    gsub("id=\"[a-z]*?\"", "", .)
 
-  gt_html_2_sha1 <- digest::sha1(gt_html_2)
-  expect_equal(gt_html_2_sha1, "b300b93826ffd2de48f2514aecfeab9f43a3695b")
+  gt_html_2_sha1 <- rlang::hash(gt_html_2)
+  expect_equal(gt_html_2_sha1, "dd200719319dc06c0c518df323938317")
+
+  # Expect that font family values with multiple words (i.e., have a space
+  # character) added with `tab_style()` preserve single-quote characters
+  expect_match_raw_html(
+    exibble[1, ] %>%
+      gt() %>%
+      tab_header(title = "Title") %>%
+      tab_style(style = cell_text(font = "Two Words"), locations = cells_title()),
+    "font-family: 'Two Words';"
+  )
+
+  expect_match_raw_html(
+    exibble[1, ] %>%
+      gt() %>%
+      tab_header(title = "Title") %>%
+      tab_style(
+        style = cell_text(font = c("Fira Sans", "Droid Sans", "Arial", "sans-serif")),
+        locations = cells_title()
+      ),
+    "font-family: 'Fira Sans', 'Droid Sans', Arial, sans-serif;"
+  )
 })

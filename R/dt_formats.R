@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2025 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 .dt_formats_key <- "_formats"
 
 dt_formats_get <- function(data) {
@@ -12,15 +36,11 @@ dt_formats_init <- function(data) {
   dt_formats_set(data = data, formats = list())
 }
 
-dt_formats_add <- function(data, formats, prepend) {
+dt_formats_add <- function(data, formats) {
 
   formats_list <- dt_formats_get(data = data)
 
-  if (prepend) {
-    formats <- prepend_vec(list(formats), values = formats_list)
-  } else {
-    formats <- append(list(formats), values = formats_list)
-  }
+  formats <- append(formats_list, values = list(formats))
 
   dt_formats_set(data = data, formats = formats)
 }

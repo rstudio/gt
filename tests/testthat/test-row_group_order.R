@@ -18,16 +18,9 @@ tbl <-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
-
-test_that("the `row_group_order()` function works correctly", {
+test_that("row_group_order() works correctly", {
 
   # Create a `tbl_html` that arranges the groups by the
   # latter calendar date first
@@ -57,14 +50,14 @@ test_that("the `row_group_order()` function works correctly", {
   )
 })
 
-test_that("styling at various locations is kept when using `row_group_order()`", {
+test_that("Styling at various locations is kept when using `row_group_order()`", {
 
   # Generate a summary table from `tbl`
   summary_tbl <-
     tbl %>%
     gt(rowname_col = "rows", groupname_col = "dates") %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = everything(),
       fns = list("sum")
     ) %>%
@@ -88,7 +81,7 @@ test_that("styling at various locations is kept when using `row_group_order()`",
     xml2::read_html()
 
   # Apply the same styling but additionally reverse the order of row groups
-  summary_tbl_styled_2 <-
+  expect_no_error(summary_tbl_styled_2 <-
     summary_tbl %>%
     tab_style(
       style = cell_text(style = "italic", weight = "bold"),
@@ -99,10 +92,11 @@ test_that("styling at various locations is kept when using `row_group_order()`",
     ) %>%
     row_group_order(groups = c("2018-02-11", "2018-02-10")) %>%
     render_as_html() %>%
-    xml2::read_html()
+    xml2::read_html())
 
   # Expect that all summary and grand summary cells (and their stub locations)
   # have the same styles applied regardless of the use of `row_group_order()`
+  check_suggests()
   summary_tbl_styled_1 %>%
     selection_value("style") %>%
     expect_equal(rep("font-style: italic; font-weight: bold;", 15))

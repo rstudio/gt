@@ -7,9 +7,18 @@
 local_image(filename, height = 30)
 }
 \arguments{
-\item{filename}{A path to an image file.}
+\item{filename}{\emph{Path to image file}
 
-\item{height}{The absolute height (px) of the image in the table cell.}
+\verb{scalar<character>} // \strong{required}
+
+A local path to an image file on disk.}
+
+\item{height}{\emph{Height of image}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{30}
+
+The absolute height of the image in the table cell (in \code{"px"} units). By
+default, this is set to \code{"30px"}.}
 }
 \value{
 A character object with an HTML fragment that can be placed inside of
@@ -20,14 +29,13 @@ We can flexibly add a local image (i.e., an image residing on disk) inside of
 a table with \code{local_image()} function. The function provides a convenient way
 to generate an HTML fragment using an on-disk PNG or SVG. Because this
 function is currently HTML-based, it is only useful for HTML table output. To
-use this function inside of data cells, it is recommended that the
-\code{\link[=text_transform]{text_transform()}} function is used. With that function, we can specify which
-data cells to target and then include a \code{local_image()} call within the
-required user-defined function (for the \code{fn} argument). If we want to include
-an image in other places (e.g., in the header, within footnote text, etc.) we
-need to use \code{local_image()} within the \code{\link[=html]{html()}} helper function.
-}
-\details{
+use this function inside of data cells, it is recommended to use
+\code{\link[=text_transform]{text_transform()}} first. With that function, we can specify which data cells
+to target and then include a \code{local_image()} call within the required
+user-defined function (for the \code{fn} argument). If we want to include an image
+in other places (e.g., in the header, within footnote text, etc.) we need to
+use \code{local_image()} within the \code{\link[=html]{html()}} helper function.
+
 By itself, the function creates an HTML image tag with an image URI embedded
 within. We can easily experiment with a local PNG or SVG image that's
 available in the \strong{gt} package using the \code{\link[=test_image]{test_image()}} function. Using
@@ -42,15 +50,15 @@ heights of most table rows.
 
 
 Create a tibble that contains heights of an image in pixels (one column as a
-string, the other as numerical values), then, create a \strong{gt} table. Use the
-\code{\link[=text_transform]{text_transform()}} function to insert a local test image (PNG) image with the
-various sizes.
+string, the other as numerical values), then, create a \strong{gt} table. Use
+\code{\link[=text_transform]{text_transform()}} to insert a local test image (PNG) image with the various
+sizes.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   pixels = px(seq(10, 35, 5)),
   image = seq(10, 35, 5)
-) \%>\%
-  gt() \%>\%
+) |>
+  gt() |>
   text_transform(
     locations = cells_body(columns = image),
     fn = function(x) \{
@@ -63,19 +71,24 @@ various sizes.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_local_image_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_local_image_1.png" alt="This image of a table was generated from the first code example in the `local_image()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-8-2
+9-2
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
-Other Image Addition Functions: 
+Other image addition functions: 
 \code{\link{ggplot_image}()},
 \code{\link{test_image}()},
 \code{\link{web_image}()}
 }
-\concept{Image Addition Functions}
+\concept{image addition functions}

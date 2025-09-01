@@ -1,6 +1,26 @@
-######
-# General String Formatters
-######
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2025 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
 
 #' Flexibly split a string into two pieces
 #'
@@ -20,19 +40,10 @@ split_string_2 <- function(
   # a `dir` option (for "before" or "after" splitting)
 
   # Stop function if `x` is not of class character
-  if (!inherits(x, "character")) {
+  if (!rlang::is_string(x)) {
     cli::cli_abort(c(
-      "Internal error in `gt:::paste_within()`.",
-      "*" = "The `x` object must be of class `character`."
-    ))
-  }
-
-  # Stop function if the length of `x` is not 1
-  if (length(x) != 1) {
-    cli::cli_abort(c(
-      "Internal error in `gt:::paste_within()`.",
-      "*" = "The length of the `x` must be exactly 1."
-    ))
+      "*" = "The `x` object must be a single string, not {.obj_type_friendly {x}}."
+    ), .internal = TRUE)
   }
 
   # Get the length of the string `x`
@@ -42,18 +53,16 @@ split_string_2 <- function(
   # stop the function
   if (is.null(before) && is.null(after)) {
     cli::cli_abort(c(
-      "Internal error in `gt:::split_string_2()`.",
       "*" = "Both `before` and `after` cannot be `NULL`."
-    ))
+    ), .internal = TRUE)
   }
 
   # If both `before` and `after` have values, stop
   # the function
   if (!is.null(before) && !is.null(after)) {
     cli::cli_abort(c(
-      "Internal error in `gt:::split_string_2()`.",
       "*" = "A value must be provided to either `before` or `after`, not both."
-    ))
+    ), .internal = TRUE)
   }
 
   # Collapse value for either `before` or `after`;
@@ -91,14 +100,13 @@ split_string_2 <- function(
     # Stop function if the index position is not valid
     if (input > x_length) {
       cli::cli_abort(c(
-        "Internal error in `gt:::split_string_2()`.",
         "*" = "The numeric value provided cannot be greater than {x_length}."
-      ))
+      ), .internal = TRUE)
     }
 
     # Define the start and stop positions as
     # the single `input` value
-    split_start <- split_stop <- input %>% as.numeric()
+    split_start <- split_stop <- as.numeric(input)
   }
 
   # Perform the split either before the matched characters
@@ -122,28 +130,18 @@ split_string_2 <- function(
 #' @noRd
 paste_between <- function(x, x_2) {
 
-  # Stop function if `x_2` is not of class character
-  if (!inherits(x_2, "character")) {
+  # Stop function if `x_2` is not of class character length 2
+  if (!inherits(x_2, "character") || length(x_2) != 2) {
     cli::cli_abort(c(
-      "Internal error in `gt:::paste_between()`.",
-      "*" = "The `x_2` object must be of class `character`."
-    ))
-  }
-
-  # Stop function if the length of `x_2` is not 2
-  if (length(x_2) != 2) {
-    cli::cli_abort(c(
-      "Internal error in `gt:::paste_between()`.",
-      "*" = "The length of the `x_2` must be exactly 2."
-    ))
+      "*" = "The `x_2` object must be of class `character` of length 2, not {.obj_type_friendly {x_2}}."
+    ), .internal = TRUE)
   }
 
   # Stop function if `x` is not of class character
-  if (!inherits(x, "character")) {
+  if (!is.character(x)) {
     cli::cli_abort(c(
-      "Internal error in `gt:::paste_between()`.",
       "*" = "The `x` object must be of class `character`."
-    ))
+    ), .internal = TRUE)
   }
 
   paste0(x_2[1], x, x_2[2])
@@ -167,17 +165,15 @@ paste_on_side <- function(
   # Stop function if `direction` is not valid
   if (!(direction %in% c("left", "right"))) {
     cli::cli_abort(c(
-      "Internal error in `gt:::paste_on_side()`.",
       "*" = "The `direction` must be either `left` or `right`."
-    ))
+    ), .internal = TRUE)
   }
 
   # Stop function if `x` and `x_side` are not both of class character
-  if (any(!inherits(x, "character"), !inherits(x_side, "character"))) {
+  if (!all(inherits(x, "character"), inherits(x_side, "character"))) {
     cli::cli_abort(c(
-      "Internal error in `gt:::paste_on_side()`.",
       "*" = "The `x` and `x_side` objects must be of class `character`."
-    ))
+    ), .internal = TRUE)
   }
 
   len <- length(x_side)
@@ -235,25 +231,24 @@ swap_adjacent_text_groups <- function(
   # Stop function if `x` is not of class character
   if (!inherits(x, "character")) {
     cli::cli_abort(c(
-      "Internal error in `gt:::paste_within()`.",
       "*" = "The `x` object must be of class `character`."
-    ))
+    ), .internal = TRUE)
   }
 
   vapply(
     x,
-    FUN.VALUE = character(1),
+    FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
     function(x) {
 
       # Return `x` as is if both patterns aren't present
-      if (is_false(grepl(pattern_1, x)) || is_false(grepl(pattern_2, x))) {
+      if (!grepl(pattern_1, x) || !grepl(pattern_2, x)) {
         return(x)
       }
 
       # Get the start and stop positions for the text groups
-      group_1 <- x %>% get_start_stop_positions(pattern = pattern_1)
-      group_2 <- x %>% get_start_stop_positions(pattern = pattern_2)
+      group_1 <- get_start_stop_positions(x, pattern = pattern_1)
+      group_2 <- get_start_stop_positions(x, pattern = pattern_2)
 
       # Return `x` as is if the patterns don't encompass text ranges
       # that aren't adjacent
@@ -304,7 +299,7 @@ get_start_stop_positions <- function(x, pattern) {
   regexpr_out <- regexpr(pattern, x)
 
   # Define the start position for the matched characters
-  start_pos <- regexpr_out %>% as.numeric()
+  start_pos <- as.numeric(regexpr_out)
 
   # Define the stop position for the matched characters
   stop_pos <- attr(regexpr_out, "match.length", exact = TRUE) + start_pos - 1
@@ -318,8 +313,7 @@ get_start_stop_positions <- function(x, pattern) {
 #' @param group_1,group_2 Vectors of length 2 with starting and stopping
 #'   positions in a text string.
 #' @noRd
-is_adjacent_separate <- function(group_1,
-                                 group_2) {
+is_adjacent_separate <- function(group_1, group_2) {
 
   group_1_expanded <- seq(group_1[1], group_1[2])
   group_2_expanded <- seq(group_2[1], group_2[2])
@@ -332,53 +326,238 @@ is_adjacent_separate <- function(group_1,
     return(FALSE)
   }
 
-  return(TRUE)
+  TRUE
 }
 
-str_catalog <- function(
-    item_vector,
-    conj = "and",
-    surround = c("\"", "`"),
-    sep = ",",
-    oxford = TRUE
+str_title_case <- function(x) {
+
+  title_case_i <- function(y) {
+
+    s <- strsplit(y, " ", fixed = TRUE)[[1]]
+
+    paste0(
+      toupper(substring(s, 1, 1)),
+      substring(s, 2),
+      collapse = " "
+    )
+  }
+
+  vapply(x, FUN.VALUE = character(1L), USE.NAMES = FALSE, FUN = title_case_i)
+}
+
+str_substitute <- function(string, start = 1L, end = -1L) {
+
+  if (is.matrix(start)) {
+    end <- start[, 2L]
+    start <- start[, 1L]
+  }
+  # Error if start or end is incorrect.
+  vec <- vctrs::vec_recycle_common(start = start, end = end, .size = length(string))
+  start <- vec$start
+  end <- vec$end
+  n <- nchar(string)
+  start <- ifelse(start < 0, start + n + 1, start)
+  end <- ifelse(end < 0, end + n + 1, end)
+
+  substr(string, start, end)
+}
+
+str_complete_locate <- function(string, pattern) {
+  out <- gregexpr(pattern, string, perl = TRUE)
+  lapply(out, location, all = TRUE)
+}
+
+str_single_locate <- function(string, pattern) {
+  out <- regexpr(pattern, string, perl = TRUE)
+  location(out)
+}
+
+location <- function(x, all = FALSE) {
+
+  start <- as.vector(x)
+  if (all && identical(start, -1L)) {
+    return(cbind(start = integer(), end = integer()))
+  }
+  end <- as.vector(x) + attr(x, "match.length") - 1
+
+  no_match <- start == -1L
+  start[no_match] <- NA
+  end[no_match] <- NA
+
+  cbind(start = start, end = end)
+}
+
+str_complete_extract <- function(string, pattern) {
+
+  loc <- str_complete_locate(string, pattern)
+  lapply(seq_along(string), function(i) {
+    loc <- loc[[i]]
+    str_substitute(rep(string[[i]], nrow(loc)), loc)
+  })
+}
+
+str_single_extract <- function(string, pattern) {
+  str_substitute(string, str_single_locate(string, pattern))
+}
+
+str_get_match <- function(string, pattern) {
+
+  loc <- regexec(pattern, string, perl = TRUE)
+  loc <- lapply(loc, location)
+
+  out <- lapply(seq_along(string), function(i) {
+    loc <- loc[[i]]
+    str_substitute(rep(string[[i]], nrow(loc)), loc)
+  })
+  do.call("rbind", out)
+}
+
+str_has_match <- function(string, pattern, negate = FALSE) {
+
+  out <- grepl(pattern, string, perl = TRUE)
+  out[is.na(string)] <- NA
+
+  if (negate) {
+    !out
+  } else {
+    out
+  }
+}
+
+str_trim_sides <- function(string) {
+  sub("\\s+$", "", sub("^\\s+", "", string))
+}
+
+alnum_id <- function(x, exclude = '[^[:alnum:]]+') {
+  tolower(gsub('^-+|-+$', '', gsub(exclude, '-', x, perl = TRUE)))
+}
+
+create_unique_id_vals <- function(
+    x,
+    simplify = TRUE,
+    exclude = "[^[:alnum:]]+",
+    na_is_index = TRUE,
+    sep = "__"
 ) {
 
-  item_count <- length(item_vector)
+  if (simplify) {
+    x <- tolower(gsub("^-+|-+$", "", gsub(exclude, "-", x, perl = TRUE)))
+  }
 
-  surround_str_1 <- rev(surround) %>% paste(collapse = "")
-  surround_str_2 <- surround %>% paste(collapse = "")
+  id_vals <- rep(NA_character_, length(x))
 
-  cat_str <- paste0(surround_str_1, item_vector, surround_str_2)
+  for (i in seq_along(x)) {
 
-  if (item_count == 1) {
-
-    return(cat_str)
-
-  } else if (item_count == 2) {
-
-    return(paste(cat_str[1], conj, cat_str[2]))
-
-  } else {
-
-    separators <- rep(paste_right(sep, " "), item_count - 1)
-
-    if (!oxford) {
-      separators[length(separators)] <- ""
+    if (is.na(x[i])) {
+      if (na_is_index) {
+        id_vals[i] <- as.character(i)
+      } else {
+        id_vals[i] <- random_id()
+      }
     }
 
-    separators[length(separators)] <-
-      separators[length(separators)] %>%
-      paste_right(conj) %>%
-      paste_right(" ")
+    if (!is.na(x[i])) {
+      id_vals[i] <- x[i]
+    }
 
-    separators[length(separators) + 1] <- ""
-
-    cat_str <- paste(paste0(cat_str, separators), collapse = "")
-
-    return(cat_str)
+    if (i > 1 && id_vals[i] %in% id_vals[1:(i - 1)]) {
+      id_vals[i] <- paste0(id_vals[i], sep, formatC(i, width = 3, flag = "0"))
+    }
   }
+
+  id_vals
 }
 
 glue_gt <- function(.x, ...) {
   glue::glue_data(.x, ..., .transformer = get, .envir = emptyenv())
 }
+
+regexec_gt <- function(pattern, text, perl = FALSE) {
+
+  if (is.factor(text) && nlevels(text) < length(text)) {
+
+    out <- regexec_gt(pattern, c(levels(text), NA_character_), perl)
+    outna <- out[length(out)]
+    out <- out[text]
+    out[is.na(text)] <- outna
+    return(out)
+  }
+
+  dat <- gregexpr(pattern = pattern, text = text, perl = perl)
+
+  if (perl) {
+
+    capt.attr <- c("capture.start", "capture.length", "capture.names")
+    process <- function(x) {
+
+      if (anyNA(x) || any(x < 0)) {
+
+        y <- x
+
+      } else {
+
+        y <- t(cbind(x, attr(x, "capture.start")))
+        attributes(y)[names(attributes(x))] <- attributes(x)
+        ml <- t(cbind(attr(x, "match.length"), attr(x, "capture.length")))
+        nm <- attr(x, "capture.names")
+        dimnames(ml) <- dimnames(y) <- if (any(nzchar(nm))) list(c("", nm), NULL)
+        attr(y, "match.length") <- ml
+        y
+      }
+      attributes(y)[capt.attr] <- NULL
+      y
+    }
+    lapply(dat, process)
+
+  } else {
+
+    m1 <- lapply(regmatches(text, dat), regexec, pattern = pattern, perl = perl)
+    mlen <- lengths(m1)
+    res <- vector("list", length(m1))
+    im <- mlen > 0
+    res[!im] <- dat[!im]
+    res[im] <-
+      Map(
+        function(outer, inner) {
+          tmp <- do.call(cbind, inner)
+          attributes(tmp)[names(attributes(inner))] <- attributes(inner)
+          attr(tmp, "match.length") <- do.call(cbind, lapply(inner, `attr`, "match.length"))
+          attr(tmp, "useBytes") <- attr(outer, "useBytes")
+          attr(tmp, "index.type") <- attr(outer, "index.type")
+          tmp + rep(outer - 1L, xeach <- nrow(tmp))
+        },
+        dat[im],
+        m1[im]
+      )
+    res
+  }
+}
+
+# The Hebrew Unicode character set (112 code points)
+hebrew_unicode_charset <- "[\U00590-\U005FF]"
+
+# The Arabic Unicode character set (256 code points)
+arabic_unicode_charset <- "[\U00600-\U006FF]"
+
+# The Syriac Unicode character set (80 code points)
+syriac_unicode_charset <- "[\U00700-\U0074F]"
+
+# The Thaana Unicode character set (64 code points)
+thaana_unicode_charset <- "[\U00780-\U007BF]"
+
+# The Samaritan Unicode character set (61 code points)
+samaritan_unicode_charset <- "[\U00800-\U0083F]"
+
+# The Mandaic Unicode character set (32 code points)
+mandaic_unicode_charset <- "[\U00840-\U0085F]"
+
+# The combination of these RTL character sets
+rtl_modern_unicode_charset <-
+  paste(
+    hebrew_unicode_charset,
+    arabic_unicode_charset,
+    syriac_unicode_charset,
+    thaana_unicode_charset,
+    samaritan_unicode_charset,
+    mandaic_unicode_charset, sep = "|"
+  )

@@ -7,40 +7,143 @@
 tab_stubhead(data, label)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{label}{The text to be used as the stubhead label We can optionally use
-the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as Markdown or to
-retain HTML elements in the text.}
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{label}{\emph{Stubhead label text}
+
+\verb{vector<character>} // \strong{required}
+
+The text to be used as the stubhead label(s). For tables with multi-column
+stubs, you can provide either a single label that spans all stub columns, or
+a vector of labels with one label for each stub column. We can optionally use
+\code{\link[=md]{md()}} or \code{\link[=html]{html()}} to style the text as Markdown or to retain HTML elements
+in the text.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-Add a label to the stubhead of a \strong{gt} table. The stubhead is the lone
-element that is positioned left of the column labels, and above the stub. If
-a stub does not exist, then there is no stubhead (so no change will be made
-when using this function in that case). We have the flexibility to use
-Markdown formatting for the stubhead label. Furthermore, if the table is
-intended for HTML output, we can use HTML for the stubhead label.
+We can add a label to the stubhead of a \strong{gt} table with \code{tab_stubhead()}.
+The stubhead is the lone part of the table that is positioned left of the
+column labels, and above the stub. If a stub does not exist, then there is no
+stubhead (so no visible change will be made when using this function in that
+case). We have the flexibility to use Markdown formatting for the stubhead
+label via the \code{\link[=md]{md()}} helper function. Furthermore, if the table is intended
+for HTML output, we can use HTML inside of \code{\link[=html]{html()}} for the stubhead label.
 }
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. With \code{tab_stubhead()} we can add a
-stubhead label. This appears in the top-left and can be used to describe what
-is in the stub.
+Using a small subset of the \code{\link{gtcars}} dataset, we can create a \strong{gt} table
+with row labels. Since we have row labels in the stub (via use of
+\code{rowname_col = "model"} in the \code{\link[=gt]{gt()}} function call) we have a stubhead, so,
+let's add a stubhead label (\code{"car"}) with \code{tab_stubhead()} to
+describe what's in the stub.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(model, year, hp, trq) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt(rowname_col = "model") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(model, year, hp, trq) |>
+  dplyr::slice(1:5) |>
+  gt(rowname_col = "model") |>
   tab_stubhead(label = "car")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_1.png" alt="This image of a table was generated from the first code example in the `tab_stubhead()` help file." style="width:100\%;">
 }}
+
+The stubhead can contain all sorts of interesting content. How about an icon
+for a car? We can make this happen with help from the \strong{fontawesome}
+package.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(model, year, hp, trq) |>
+  dplyr::slice(1:5) |>
+  gt(rowname_col = "model") |>
+  tab_stubhead(label = fontawesome::fa("car"))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_2.png" alt="This image of a table was generated from the second code example in the `tab_stubhead()` help file." style="width:100\%;">
+}}
+
+If the stub is two columns wide (made possible by using
+\code{row_group_as_column = TRUE} in the \code{\link[=gt]{gt()}} statement), the stubhead will be a
+merged cell atop those two stub columns representing the row group and the
+row label. Here's an example of that type of situation in a table that uses
+the \code{\link{peeps}} dataset.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{peeps |>
+  dplyr::filter(country \%in\% c("POL", "DEU")) |>
+  dplyr::group_by(country) |>
+  dplyr::filter(dplyr::row_number() \%in\% 1:5) |>
+  dplyr::ungroup() |>
+  dplyr::mutate(name = paste0(toupper(name_family), ", ", name_given)) |>
+  dplyr::select(name, address, city, postcode, country) |>
+  gt(
+    rowname_col = "name",
+    groupname_col = "country",
+    row_group_as_column = TRUE
+  ) |>
+  tab_stubhead(label = "Country Code / Person") |>
+  tab_style(
+    style = cell_text(transform = "capitalize"),
+    locations = cells_column_labels()
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_3.png" alt="This image of a table was generated from the third code example in the `tab_stubhead()` help file." style="width:100\%;">
+}}
+
+For tables with multi-column stubs (created by specifying multiple columns in
+\code{rowname_col}), you can provide either a single label that spans all stub
+columns, or a vector of labels with one label for each stub column. Here's an
+example using the \code{\link{countrypops}} dataset with a single spanning label:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name \%in\% c("China", "India", "United States", "Indonesia")) |>
+  dplyr::filter(year >= 2000) |>
+  dplyr::select(country_name, country_code_2, year, population) |>
+  gt(rowname_col = c("country_name", "country_code_2")) |>
+  tab_stubhead(label = "Country Information") |>
+  fmt_integer(columns = population)
+}\if{html}{\out{</div>}}
+
+Alternatively, you can provide a vector of labels, one for each stub column.
+This allows for more descriptive and specific headers for each column:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name \%in\% c("China", "India", "United States", "Indonesia")) |>
+  dplyr::filter(year >= 2000) |>
+  dplyr::select(country_name, country_code_2, year, population) |>
+  gt(rowname_col = c("country_name", "country_code_2")) |>
+  tab_stubhead(label = c("Country", "Code")) |>
+  fmt_integer(columns = population)
+}\if{html}{\out{</div>}}
+
+You can also use this approach with three or more stub columns. Here's an
+example creating a hierarchical structure with region, country, and year:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name \%in\% c("China", "India", "United States", "Indonesia")) |>
+  dplyr::filter(year \%in\% c(2000, 2010, 2020)) |>
+  dplyr::mutate(
+    region = dplyr::case_when(
+      country_name \%in\% c("China", "India", "Indonesia") ~ "Asia",
+      country_name == "United States" ~ "North America",
+      TRUE ~ "Other"
+    )
+  ) |>
+  dplyr::select(region, country_name, year, population) |>
+  gt(rowname_col = c("region", "country_name", "year")) |>
+  tab_stubhead(label = c("Region", "Country", "Year")) |>
+  fmt_integer(columns = population)
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{
@@ -48,15 +151,24 @@ is in the stub.
 2-5
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
-Other Create or Modify Parts: 
+Other part creation/modification functions: 
+\code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
+\code{\link{tab_info}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
-\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
-\code{\link{tab_style}()}
+\code{\link{tab_spanner_delim}()},
+\code{\link{tab_stub_indent}()},
+\code{\link{tab_style}()},
+\code{\link{tab_style_body}()}
 }
-\concept{Create or Modify Parts}
+\concept{part creation/modification functions}

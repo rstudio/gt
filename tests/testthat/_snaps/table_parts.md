@@ -1,28 +1,373 @@
-# a gt table contains the expected heading components
+# A gt table contains the expected heading components
 
     Code
-      .
+      cat(render_as_html(gt_tbl))
     Output
-      [1] "<table class=\"gt_table\">\n  <thead class=\"gt_header\">\n    <tr>\n      <td colspan=\"11\" class=\"gt_heading gt_title gt_font_normal gt_bottom_border\" style>test title</td>\n    </tr>\n    \n  </thead>\n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">mpg</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">cyl</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">disp</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">hp</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">drat</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">wt</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">qsec</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">vs</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">am</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">gear</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">carb</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_right\">21.0</td>\n<td class=\"gt_row gt_right\">6</td>\n<td class=\"gt_row gt_right\">160</td>\n<td class=\"gt_row gt_right\">110</td>\n<td class=\"gt_row gt_right\">3.90</td>\n<td class=\"gt_row gt_right\">2.620</td>\n<td class=\"gt_row gt_right\">16.46</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">4</td></tr>\n    <tr><td class=\"gt_row gt_right\">21.0</td>\n<td class=\"gt_row gt_right\">6</td>\n<td class=\"gt_row gt_right\">160</td>\n<td class=\"gt_row gt_right\">110</td>\n<td class=\"gt_row gt_right\">3.90</td>\n<td class=\"gt_row gt_right\">2.875</td>\n<td class=\"gt_row gt_right\">17.02</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">4</td></tr>\n    <tr><td class=\"gt_row gt_right\">22.8</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">108</td>\n<td class=\"gt_row gt_right\">93</td>\n<td class=\"gt_row gt_right\">3.85</td>\n<td class=\"gt_row gt_right\">2.320</td>\n<td class=\"gt_row gt_right\">18.61</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">1</td></tr>\n    <tr><td class=\"gt_row gt_right\">21.4</td>\n<td class=\"gt_row gt_right\">6</td>\n<td class=\"gt_row gt_right\">258</td>\n<td class=\"gt_row gt_right\">110</td>\n<td class=\"gt_row gt_right\">3.08</td>\n<td class=\"gt_row gt_right\">3.215</td>\n<td class=\"gt_row gt_right\">19.44</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">3</td>\n<td class=\"gt_row gt_right\">1</td></tr>\n    <tr><td class=\"gt_row gt_right\">18.7</td>\n<td class=\"gt_row gt_right\">8</td>\n<td class=\"gt_row gt_right\">360</td>\n<td class=\"gt_row gt_right\">175</td>\n<td class=\"gt_row gt_right\">3.15</td>\n<td class=\"gt_row gt_right\">3.440</td>\n<td class=\"gt_row gt_right\">17.02</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">3</td>\n<td class=\"gt_row gt_right\">2</td></tr>\n  </tbody>\n  \n  \n</table>"
+      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+        <thead>
+          <tr class="gt_heading">
+            <td colspan="11" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>test title</td>
+          </tr>
+          
+          <tr class="gt_col_headings">
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg">mpg</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cyl">cyl</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="disp">disp</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drat">drat</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="wt">wt</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="qsec">qsec</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="vs">vs</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="am">am</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="gear">gear</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="carb">carb</th>
+          </tr>
+        </thead>
+        <tbody class="gt_table_body">
+          <tr><td headers="mpg" class="gt_row gt_right">21.0</td>
+      <td headers="cyl" class="gt_row gt_right">6</td>
+      <td headers="disp" class="gt_row gt_right">160</td>
+      <td headers="hp" class="gt_row gt_right">110</td>
+      <td headers="drat" class="gt_row gt_right">3.90</td>
+      <td headers="wt" class="gt_row gt_right">2.620</td>
+      <td headers="qsec" class="gt_row gt_right">16.46</td>
+      <td headers="vs" class="gt_row gt_right">0</td>
+      <td headers="am" class="gt_row gt_right">1</td>
+      <td headers="gear" class="gt_row gt_right">4</td>
+      <td headers="carb" class="gt_row gt_right">4</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">21.0</td>
+      <td headers="cyl" class="gt_row gt_right">6</td>
+      <td headers="disp" class="gt_row gt_right">160</td>
+      <td headers="hp" class="gt_row gt_right">110</td>
+      <td headers="drat" class="gt_row gt_right">3.90</td>
+      <td headers="wt" class="gt_row gt_right">2.875</td>
+      <td headers="qsec" class="gt_row gt_right">17.02</td>
+      <td headers="vs" class="gt_row gt_right">0</td>
+      <td headers="am" class="gt_row gt_right">1</td>
+      <td headers="gear" class="gt_row gt_right">4</td>
+      <td headers="carb" class="gt_row gt_right">4</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">22.8</td>
+      <td headers="cyl" class="gt_row gt_right">4</td>
+      <td headers="disp" class="gt_row gt_right">108</td>
+      <td headers="hp" class="gt_row gt_right">93</td>
+      <td headers="drat" class="gt_row gt_right">3.85</td>
+      <td headers="wt" class="gt_row gt_right">2.320</td>
+      <td headers="qsec" class="gt_row gt_right">18.61</td>
+      <td headers="vs" class="gt_row gt_right">1</td>
+      <td headers="am" class="gt_row gt_right">1</td>
+      <td headers="gear" class="gt_row gt_right">4</td>
+      <td headers="carb" class="gt_row gt_right">1</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">21.4</td>
+      <td headers="cyl" class="gt_row gt_right">6</td>
+      <td headers="disp" class="gt_row gt_right">258</td>
+      <td headers="hp" class="gt_row gt_right">110</td>
+      <td headers="drat" class="gt_row gt_right">3.08</td>
+      <td headers="wt" class="gt_row gt_right">3.215</td>
+      <td headers="qsec" class="gt_row gt_right">19.44</td>
+      <td headers="vs" class="gt_row gt_right">1</td>
+      <td headers="am" class="gt_row gt_right">0</td>
+      <td headers="gear" class="gt_row gt_right">3</td>
+      <td headers="carb" class="gt_row gt_right">1</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">18.7</td>
+      <td headers="cyl" class="gt_row gt_right">8</td>
+      <td headers="disp" class="gt_row gt_right">360</td>
+      <td headers="hp" class="gt_row gt_right">175</td>
+      <td headers="drat" class="gt_row gt_right">3.15</td>
+      <td headers="wt" class="gt_row gt_right">3.440</td>
+      <td headers="qsec" class="gt_row gt_right">17.02</td>
+      <td headers="vs" class="gt_row gt_right">0</td>
+      <td headers="am" class="gt_row gt_right">0</td>
+      <td headers="gear" class="gt_row gt_right">3</td>
+      <td headers="carb" class="gt_row gt_right">2</td></tr>
+        </tbody>
+        
+      </table>
 
 ---
 
     Code
-      .
+      cat(render_as_html(gt_tbl))
     Output
-      [1] "<table class=\"gt_table\">\n  <thead class=\"gt_header\">\n    <tr>\n      <td colspan=\"11\" class=\"gt_heading gt_title gt_font_normal\" style>test title</td>\n    </tr>\n    <tr>\n      <td colspan=\"11\" class=\"gt_heading gt_subtitle gt_font_normal gt_bottom_border\" style>test subtitle</td>\n    </tr>\n  </thead>\n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">mpg</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">cyl</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">disp</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">hp</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">drat</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">wt</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">qsec</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">vs</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">am</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">gear</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">carb</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_right\">21.0</td>\n<td class=\"gt_row gt_right\">6</td>\n<td class=\"gt_row gt_right\">160</td>\n<td class=\"gt_row gt_right\">110</td>\n<td class=\"gt_row gt_right\">3.90</td>\n<td class=\"gt_row gt_right\">2.620</td>\n<td class=\"gt_row gt_right\">16.46</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">4</td></tr>\n    <tr><td class=\"gt_row gt_right\">21.0</td>\n<td class=\"gt_row gt_right\">6</td>\n<td class=\"gt_row gt_right\">160</td>\n<td class=\"gt_row gt_right\">110</td>\n<td class=\"gt_row gt_right\">3.90</td>\n<td class=\"gt_row gt_right\">2.875</td>\n<td class=\"gt_row gt_right\">17.02</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">4</td></tr>\n    <tr><td class=\"gt_row gt_right\">22.8</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">108</td>\n<td class=\"gt_row gt_right\">93</td>\n<td class=\"gt_row gt_right\">3.85</td>\n<td class=\"gt_row gt_right\">2.320</td>\n<td class=\"gt_row gt_right\">18.61</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">1</td></tr>\n    <tr><td class=\"gt_row gt_right\">21.4</td>\n<td class=\"gt_row gt_right\">6</td>\n<td class=\"gt_row gt_right\">258</td>\n<td class=\"gt_row gt_right\">110</td>\n<td class=\"gt_row gt_right\">3.08</td>\n<td class=\"gt_row gt_right\">3.215</td>\n<td class=\"gt_row gt_right\">19.44</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">3</td>\n<td class=\"gt_row gt_right\">1</td></tr>\n    <tr><td class=\"gt_row gt_right\">18.7</td>\n<td class=\"gt_row gt_right\">8</td>\n<td class=\"gt_row gt_right\">360</td>\n<td class=\"gt_row gt_right\">175</td>\n<td class=\"gt_row gt_right\">3.15</td>\n<td class=\"gt_row gt_right\">3.440</td>\n<td class=\"gt_row gt_right\">17.02</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">3</td>\n<td class=\"gt_row gt_right\">2</td></tr>\n  </tbody>\n  \n  \n</table>"
+      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+        <thead>
+          <tr class="gt_heading">
+            <td colspan="11" class="gt_heading gt_title gt_font_normal" style>test title</td>
+          </tr>
+          <tr class="gt_heading">
+            <td colspan="11" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>test subtitle</td>
+          </tr>
+          <tr class="gt_col_headings">
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg">mpg</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cyl">cyl</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="disp">disp</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drat">drat</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="wt">wt</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="qsec">qsec</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="vs">vs</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="am">am</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="gear">gear</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="carb">carb</th>
+          </tr>
+        </thead>
+        <tbody class="gt_table_body">
+          <tr><td headers="mpg" class="gt_row gt_right">21.0</td>
+      <td headers="cyl" class="gt_row gt_right">6</td>
+      <td headers="disp" class="gt_row gt_right">160</td>
+      <td headers="hp" class="gt_row gt_right">110</td>
+      <td headers="drat" class="gt_row gt_right">3.90</td>
+      <td headers="wt" class="gt_row gt_right">2.620</td>
+      <td headers="qsec" class="gt_row gt_right">16.46</td>
+      <td headers="vs" class="gt_row gt_right">0</td>
+      <td headers="am" class="gt_row gt_right">1</td>
+      <td headers="gear" class="gt_row gt_right">4</td>
+      <td headers="carb" class="gt_row gt_right">4</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">21.0</td>
+      <td headers="cyl" class="gt_row gt_right">6</td>
+      <td headers="disp" class="gt_row gt_right">160</td>
+      <td headers="hp" class="gt_row gt_right">110</td>
+      <td headers="drat" class="gt_row gt_right">3.90</td>
+      <td headers="wt" class="gt_row gt_right">2.875</td>
+      <td headers="qsec" class="gt_row gt_right">17.02</td>
+      <td headers="vs" class="gt_row gt_right">0</td>
+      <td headers="am" class="gt_row gt_right">1</td>
+      <td headers="gear" class="gt_row gt_right">4</td>
+      <td headers="carb" class="gt_row gt_right">4</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">22.8</td>
+      <td headers="cyl" class="gt_row gt_right">4</td>
+      <td headers="disp" class="gt_row gt_right">108</td>
+      <td headers="hp" class="gt_row gt_right">93</td>
+      <td headers="drat" class="gt_row gt_right">3.85</td>
+      <td headers="wt" class="gt_row gt_right">2.320</td>
+      <td headers="qsec" class="gt_row gt_right">18.61</td>
+      <td headers="vs" class="gt_row gt_right">1</td>
+      <td headers="am" class="gt_row gt_right">1</td>
+      <td headers="gear" class="gt_row gt_right">4</td>
+      <td headers="carb" class="gt_row gt_right">1</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">21.4</td>
+      <td headers="cyl" class="gt_row gt_right">6</td>
+      <td headers="disp" class="gt_row gt_right">258</td>
+      <td headers="hp" class="gt_row gt_right">110</td>
+      <td headers="drat" class="gt_row gt_right">3.08</td>
+      <td headers="wt" class="gt_row gt_right">3.215</td>
+      <td headers="qsec" class="gt_row gt_right">19.44</td>
+      <td headers="vs" class="gt_row gt_right">1</td>
+      <td headers="am" class="gt_row gt_right">0</td>
+      <td headers="gear" class="gt_row gt_right">3</td>
+      <td headers="carb" class="gt_row gt_right">1</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">18.7</td>
+      <td headers="cyl" class="gt_row gt_right">8</td>
+      <td headers="disp" class="gt_row gt_right">360</td>
+      <td headers="hp" class="gt_row gt_right">175</td>
+      <td headers="drat" class="gt_row gt_right">3.15</td>
+      <td headers="wt" class="gt_row gt_right">3.440</td>
+      <td headers="qsec" class="gt_row gt_right">17.02</td>
+      <td headers="vs" class="gt_row gt_right">0</td>
+      <td headers="am" class="gt_row gt_right">0</td>
+      <td headers="gear" class="gt_row gt_right">3</td>
+      <td headers="carb" class="gt_row gt_right">2</td></tr>
+        </tbody>
+        
+      </table>
 
 ---
 
     Code
-      .
+      cat(render_as_html(gt_tbl))
     Output
-      [1] "<table class=\"gt_table\">\n  <thead class=\"gt_header\">\n    <tr>\n      <td colspan=\"11\" class=\"gt_heading gt_title gt_font_normal gt_bottom_border\" style>test title</td>\n    </tr>\n    \n  </thead>\n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">mpg</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">cyl</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">disp</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">hp</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">drat</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">wt</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">qsec</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">vs</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">am</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">gear</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">carb</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_right\">21.0</td>\n<td class=\"gt_row gt_right\">6</td>\n<td class=\"gt_row gt_right\">160</td>\n<td class=\"gt_row gt_right\">110</td>\n<td class=\"gt_row gt_right\">3.90</td>\n<td class=\"gt_row gt_right\">2.620</td>\n<td class=\"gt_row gt_right\">16.46</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">4</td></tr>\n    <tr><td class=\"gt_row gt_right\">21.0</td>\n<td class=\"gt_row gt_right\">6</td>\n<td class=\"gt_row gt_right\">160</td>\n<td class=\"gt_row gt_right\">110</td>\n<td class=\"gt_row gt_right\">3.90</td>\n<td class=\"gt_row gt_right\">2.875</td>\n<td class=\"gt_row gt_right\">17.02</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">4</td></tr>\n    <tr><td class=\"gt_row gt_right\">22.8</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">108</td>\n<td class=\"gt_row gt_right\">93</td>\n<td class=\"gt_row gt_right\">3.85</td>\n<td class=\"gt_row gt_right\">2.320</td>\n<td class=\"gt_row gt_right\">18.61</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">1</td></tr>\n    <tr><td class=\"gt_row gt_right\">21.4</td>\n<td class=\"gt_row gt_right\">6</td>\n<td class=\"gt_row gt_right\">258</td>\n<td class=\"gt_row gt_right\">110</td>\n<td class=\"gt_row gt_right\">3.08</td>\n<td class=\"gt_row gt_right\">3.215</td>\n<td class=\"gt_row gt_right\">19.44</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">3</td>\n<td class=\"gt_row gt_right\">1</td></tr>\n    <tr><td class=\"gt_row gt_right\">18.7</td>\n<td class=\"gt_row gt_right\">8</td>\n<td class=\"gt_row gt_right\">360</td>\n<td class=\"gt_row gt_right\">175</td>\n<td class=\"gt_row gt_right\">3.15</td>\n<td class=\"gt_row gt_right\">3.440</td>\n<td class=\"gt_row gt_right\">17.02</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">3</td>\n<td class=\"gt_row gt_right\">2</td></tr>\n  </tbody>\n  \n  \n</table>"
+      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+        <thead>
+          <tr class="gt_heading">
+            <td colspan="11" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>test title</td>
+          </tr>
+          
+          <tr class="gt_col_headings">
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg">mpg</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cyl">cyl</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="disp">disp</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drat">drat</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="wt">wt</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="qsec">qsec</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="vs">vs</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="am">am</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="gear">gear</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="carb">carb</th>
+          </tr>
+        </thead>
+        <tbody class="gt_table_body">
+          <tr><td headers="mpg" class="gt_row gt_right">21.0</td>
+      <td headers="cyl" class="gt_row gt_right">6</td>
+      <td headers="disp" class="gt_row gt_right">160</td>
+      <td headers="hp" class="gt_row gt_right">110</td>
+      <td headers="drat" class="gt_row gt_right">3.90</td>
+      <td headers="wt" class="gt_row gt_right">2.620</td>
+      <td headers="qsec" class="gt_row gt_right">16.46</td>
+      <td headers="vs" class="gt_row gt_right">0</td>
+      <td headers="am" class="gt_row gt_right">1</td>
+      <td headers="gear" class="gt_row gt_right">4</td>
+      <td headers="carb" class="gt_row gt_right">4</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">21.0</td>
+      <td headers="cyl" class="gt_row gt_right">6</td>
+      <td headers="disp" class="gt_row gt_right">160</td>
+      <td headers="hp" class="gt_row gt_right">110</td>
+      <td headers="drat" class="gt_row gt_right">3.90</td>
+      <td headers="wt" class="gt_row gt_right">2.875</td>
+      <td headers="qsec" class="gt_row gt_right">17.02</td>
+      <td headers="vs" class="gt_row gt_right">0</td>
+      <td headers="am" class="gt_row gt_right">1</td>
+      <td headers="gear" class="gt_row gt_right">4</td>
+      <td headers="carb" class="gt_row gt_right">4</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">22.8</td>
+      <td headers="cyl" class="gt_row gt_right">4</td>
+      <td headers="disp" class="gt_row gt_right">108</td>
+      <td headers="hp" class="gt_row gt_right">93</td>
+      <td headers="drat" class="gt_row gt_right">3.85</td>
+      <td headers="wt" class="gt_row gt_right">2.320</td>
+      <td headers="qsec" class="gt_row gt_right">18.61</td>
+      <td headers="vs" class="gt_row gt_right">1</td>
+      <td headers="am" class="gt_row gt_right">1</td>
+      <td headers="gear" class="gt_row gt_right">4</td>
+      <td headers="carb" class="gt_row gt_right">1</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">21.4</td>
+      <td headers="cyl" class="gt_row gt_right">6</td>
+      <td headers="disp" class="gt_row gt_right">258</td>
+      <td headers="hp" class="gt_row gt_right">110</td>
+      <td headers="drat" class="gt_row gt_right">3.08</td>
+      <td headers="wt" class="gt_row gt_right">3.215</td>
+      <td headers="qsec" class="gt_row gt_right">19.44</td>
+      <td headers="vs" class="gt_row gt_right">1</td>
+      <td headers="am" class="gt_row gt_right">0</td>
+      <td headers="gear" class="gt_row gt_right">3</td>
+      <td headers="carb" class="gt_row gt_right">1</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">18.7</td>
+      <td headers="cyl" class="gt_row gt_right">8</td>
+      <td headers="disp" class="gt_row gt_right">360</td>
+      <td headers="hp" class="gt_row gt_right">175</td>
+      <td headers="drat" class="gt_row gt_right">3.15</td>
+      <td headers="wt" class="gt_row gt_right">3.440</td>
+      <td headers="qsec" class="gt_row gt_right">17.02</td>
+      <td headers="vs" class="gt_row gt_right">0</td>
+      <td headers="am" class="gt_row gt_right">0</td>
+      <td headers="gear" class="gt_row gt_right">3</td>
+      <td headers="carb" class="gt_row gt_right">2</td></tr>
+        </tbody>
+        
+      </table>
 
 ---
 
     Code
-      .
+      cat(render_as_html(gt_tbl))
     Output
-      [1] "<table class=\"gt_table\">\n  <thead class=\"gt_header\">\n    <tr>\n      <td colspan=\"11\" class=\"gt_heading gt_title gt_font_normal gt_bottom_border\" style>test title</td>\n    </tr>\n    \n  </thead>\n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">mpg</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">cyl</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">disp</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">hp</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">drat</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">wt</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">qsec</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">vs</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">am</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">gear</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">carb</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_right\">21.0</td>\n<td class=\"gt_row gt_right\">6</td>\n<td class=\"gt_row gt_right\">160</td>\n<td class=\"gt_row gt_right\">110</td>\n<td class=\"gt_row gt_right\">3.90</td>\n<td class=\"gt_row gt_right\">2.620</td>\n<td class=\"gt_row gt_right\">16.46</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">4</td></tr>\n    <tr><td class=\"gt_row gt_right\">21.0</td>\n<td class=\"gt_row gt_right\">6</td>\n<td class=\"gt_row gt_right\">160</td>\n<td class=\"gt_row gt_right\">110</td>\n<td class=\"gt_row gt_right\">3.90</td>\n<td class=\"gt_row gt_right\">2.875</td>\n<td class=\"gt_row gt_right\">17.02</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">4</td></tr>\n    <tr><td class=\"gt_row gt_right\">22.8</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">108</td>\n<td class=\"gt_row gt_right\">93</td>\n<td class=\"gt_row gt_right\">3.85</td>\n<td class=\"gt_row gt_right\">2.320</td>\n<td class=\"gt_row gt_right\">18.61</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">4</td>\n<td class=\"gt_row gt_right\">1</td></tr>\n    <tr><td class=\"gt_row gt_right\">21.4</td>\n<td class=\"gt_row gt_right\">6</td>\n<td class=\"gt_row gt_right\">258</td>\n<td class=\"gt_row gt_right\">110</td>\n<td class=\"gt_row gt_right\">3.08</td>\n<td class=\"gt_row gt_right\">3.215</td>\n<td class=\"gt_row gt_right\">19.44</td>\n<td class=\"gt_row gt_right\">1</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">3</td>\n<td class=\"gt_row gt_right\">1</td></tr>\n    <tr><td class=\"gt_row gt_right\">18.7</td>\n<td class=\"gt_row gt_right\">8</td>\n<td class=\"gt_row gt_right\">360</td>\n<td class=\"gt_row gt_right\">175</td>\n<td class=\"gt_row gt_right\">3.15</td>\n<td class=\"gt_row gt_right\">3.440</td>\n<td class=\"gt_row gt_right\">17.02</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">0</td>\n<td class=\"gt_row gt_right\">3</td>\n<td class=\"gt_row gt_right\">2</td></tr>\n  </tbody>\n  \n  \n</table>"
+      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+        <thead>
+          <tr class="gt_heading">
+            <td colspan="11" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>test title</td>
+          </tr>
+          
+          <tr class="gt_col_headings">
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg">mpg</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cyl">cyl</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="disp">disp</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drat">drat</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="wt">wt</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="qsec">qsec</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="vs">vs</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="am">am</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="gear">gear</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="carb">carb</th>
+          </tr>
+        </thead>
+        <tbody class="gt_table_body">
+          <tr><td headers="mpg" class="gt_row gt_right">21.0</td>
+      <td headers="cyl" class="gt_row gt_right">6</td>
+      <td headers="disp" class="gt_row gt_right">160</td>
+      <td headers="hp" class="gt_row gt_right">110</td>
+      <td headers="drat" class="gt_row gt_right">3.90</td>
+      <td headers="wt" class="gt_row gt_right">2.620</td>
+      <td headers="qsec" class="gt_row gt_right">16.46</td>
+      <td headers="vs" class="gt_row gt_right">0</td>
+      <td headers="am" class="gt_row gt_right">1</td>
+      <td headers="gear" class="gt_row gt_right">4</td>
+      <td headers="carb" class="gt_row gt_right">4</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">21.0</td>
+      <td headers="cyl" class="gt_row gt_right">6</td>
+      <td headers="disp" class="gt_row gt_right">160</td>
+      <td headers="hp" class="gt_row gt_right">110</td>
+      <td headers="drat" class="gt_row gt_right">3.90</td>
+      <td headers="wt" class="gt_row gt_right">2.875</td>
+      <td headers="qsec" class="gt_row gt_right">17.02</td>
+      <td headers="vs" class="gt_row gt_right">0</td>
+      <td headers="am" class="gt_row gt_right">1</td>
+      <td headers="gear" class="gt_row gt_right">4</td>
+      <td headers="carb" class="gt_row gt_right">4</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">22.8</td>
+      <td headers="cyl" class="gt_row gt_right">4</td>
+      <td headers="disp" class="gt_row gt_right">108</td>
+      <td headers="hp" class="gt_row gt_right">93</td>
+      <td headers="drat" class="gt_row gt_right">3.85</td>
+      <td headers="wt" class="gt_row gt_right">2.320</td>
+      <td headers="qsec" class="gt_row gt_right">18.61</td>
+      <td headers="vs" class="gt_row gt_right">1</td>
+      <td headers="am" class="gt_row gt_right">1</td>
+      <td headers="gear" class="gt_row gt_right">4</td>
+      <td headers="carb" class="gt_row gt_right">1</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">21.4</td>
+      <td headers="cyl" class="gt_row gt_right">6</td>
+      <td headers="disp" class="gt_row gt_right">258</td>
+      <td headers="hp" class="gt_row gt_right">110</td>
+      <td headers="drat" class="gt_row gt_right">3.08</td>
+      <td headers="wt" class="gt_row gt_right">3.215</td>
+      <td headers="qsec" class="gt_row gt_right">19.44</td>
+      <td headers="vs" class="gt_row gt_right">1</td>
+      <td headers="am" class="gt_row gt_right">0</td>
+      <td headers="gear" class="gt_row gt_right">3</td>
+      <td headers="carb" class="gt_row gt_right">1</td></tr>
+          <tr><td headers="mpg" class="gt_row gt_right">18.7</td>
+      <td headers="cyl" class="gt_row gt_right">8</td>
+      <td headers="disp" class="gt_row gt_right">360</td>
+      <td headers="hp" class="gt_row gt_right">175</td>
+      <td headers="drat" class="gt_row gt_right">3.15</td>
+      <td headers="wt" class="gt_row gt_right">3.440</td>
+      <td headers="qsec" class="gt_row gt_right">17.02</td>
+      <td headers="vs" class="gt_row gt_right">0</td>
+      <td headers="am" class="gt_row gt_right">0</td>
+      <td headers="gear" class="gt_row gt_right">3</td>
+      <td headers="carb" class="gt_row gt_right">2</td></tr>
+        </tbody>
+        
+      </table>
+
+# tab_row_group() warns for deprecated args, but respects output.
+
+    Code
+      gt_tbl <- gt(exibble, rowname_col = "row") %>% tab_row_group(label = "group_prioritized",
+        group = "group", rows = 1:3)
+    Condition
+      Warning:
+      Since gt v0.3.0 the `group` argument has been deprecated.
+      * Use the `label` argument to specify the group label.
+      This warning is displayed once every 8 hours.
+
+---
+
+    Code
+      gt_tbl <- (gt(exibble, rowname_col = "row") %>% tab_row_group(label = "one",
+        rows = 1:3) %>% tab_row_group(others_label = "foo"))
+    Condition
+      Warning:
+      Since gt v0.3.0 the `others_label` argument has been deprecated.
+      * Use `tab_options(row_group.default_label = <label>)` to set this label.
+      This warning is displayed once every 8 hours.
+
+# tab_row_group() errors when named rows are supplied (#1535)
+
+    Code
+      gt_tbl %>% tab_row_group("Mazda", c("Mazda RX4", "Mazda RX4 Wag"))
+    Condition
+      Error in `tab_row_group()`:
+      ! Can't find named rows in the table
+      i In gt() (`?gt::gt()`), use `rownames_to_stub = TRUE` or specify `rowname_col` to initialize row names in the table.
 

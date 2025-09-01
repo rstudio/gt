@@ -1,4 +1,4 @@
-test_that("the `fmt_integer()` function works correctly in the HTML context", {
+test_that("fmt_integer() works correctly in the HTML context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -21,10 +21,10 @@ test_that("the `fmt_integer()` function works correctly in the HTML context", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  char_1 <- (tab %>% dt_data_get())[["char_1"]]
-  char_2 <- (tab %>% dt_data_get())[["char_2"]]
-  num_1 <- (tab %>% dt_data_get())[["num_1"]]
-  num_2 <- (tab %>% dt_data_get())[["num_2"]]
+  char_1 <- dt_data_get(tab)[["char_1"]]
+  char_2 <- dt_data_get(tab)[["char_2"]]
+  num_1 <- dt_data_get(tab)[["num_1"]]
+  num_2 <- dt_data_get(tab)[["num_2"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -52,7 +52,7 @@ test_that("the `fmt_integer()` function works correctly in the HTML context", {
     (tab %>%
        fmt_integer(columns = num_1) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("1,836", "2,763", "937", "643", "212", "0", "&minus;23")
+    c("1,836", "2,763", "937", "643", "212", "0", paste0("\U02212", "23"))
   )
 
   # Format the `num_1` column, don't use digit
@@ -61,7 +61,7 @@ test_that("the `fmt_integer()` function works correctly in the HTML context", {
     (tab %>%
        fmt_integer(columns = num_1, use_seps = FALSE) %>%
        render_formats_test("html"))[["num_1"]],
-    c("1836", "2763", "937", "643", "212", "0", "&minus;23")
+    c("1836", "2763", "937", "643", "212", "0", paste0("\U02212", "23"))
   )
 
   # Format the `num_1` column, use a single space
@@ -70,7 +70,7 @@ test_that("the `fmt_integer()` function works correctly in the HTML context", {
     (tab %>%
        fmt_integer(columns = num_1, sep_mark = " ") %>%
        render_formats_test("html"))[["num_1"]],
-    c("1 836", "2 763", "937", "643", "212", "0", "&minus;23")
+    c("1 836", "2 763", "937", "643", "212", "0", paste0("\U02212", "23"))
   )
 
   # Format the `num_1` column, use a period for the
@@ -79,7 +79,7 @@ test_that("the `fmt_integer()` function works correctly in the HTML context", {
     (tab %>%
        fmt_integer(columns = num_1, sep_mark = ".") %>%
        render_formats_test("html"))[["num_1"]],
-    c("1.836", "2.763", "937", "643", "212", "0", "&minus;23")
+    c("1.836", "2.763", "937", "643", "212", "0", paste0("\U02212", "23"))
   )
 
   # Format the `num_1` column, scale all values by
@@ -97,8 +97,10 @@ test_that("the `fmt_integer()` function works correctly in the HTML context", {
     (tab %>%
        fmt_integer(columns = num_1, pattern = "a {x} b") %>%
        render_formats_test("html"))[["num_1"]],
-    c("a 1,836 b", "a 2,763 b", "a 937 b", "a 643 b", "a 212 b",
-      "a 0 b", "a &minus;23 b")
+    c(
+      "a 1,836 b", "a 2,763 b", "a 937 b", "a 643 b", "a 212 b",
+      "a 0 b", paste0("a \U02212", "23 b")
+    )
   )
 
   # Format the `num_1` column, scale all values
@@ -135,7 +137,7 @@ test_that("the `fmt_integer()` function works correctly in the HTML context", {
        fmt_integer(
          columns = num_1, force_sign = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
-    c("+1,836", "+2,763", "+937", "+643", "+212", "0", "&minus;23")
+    c("+1,836", "+2,763", "+937", "+643", "+212", "0", paste0("\U02212", "23"))
   )
 
   # Expect that using `force_sign = TRUE` with `accounting = TRUE`
@@ -158,7 +160,7 @@ test_that("the `fmt_integer()` function works correctly in the HTML context", {
        fmt_integer(
          columns = num_1, pattern = "*{x}*", force_sign = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
-    c("*+1,836*", "*+2,763*", "*+937*", "*+643*", "*+212*", "*0*", "*&minus;23*")
+    c("*+1,836*", "*+2,763*", "*+937*", "*+643*", "*+212*", "*0*", paste0("*\U02212", "23*"))
   )
 
   # Format the `num_1`, apply the `en_US`
@@ -167,7 +169,7 @@ test_that("the `fmt_integer()` function works correctly in the HTML context", {
     (tab %>%
        fmt_integer(columns = num_1, locale = "en_US") %>%
        render_formats_test("html"))[["num_1"]],
-    c("1,836", "2,763", "937", "643", "212", "0", "&minus;23")
+    c("1,836", "2,763", "937", "643", "212", "0", paste0("\U02212", "23"))
   )
 
   # Format the `num_1` column, apply the `da_DK`
@@ -176,7 +178,7 @@ test_that("the `fmt_integer()` function works correctly in the HTML context", {
     (tab %>%
        fmt_integer(columns = num_1, locale = "da_DK") %>%
        render_formats_test("html"))[["num_1"]],
-    c("1.836", "2.763", "937", "643", "212", "0", "&minus;23")
+    c("1.836", "2.763", "937", "643", "212", "0", paste0("\U02212", "23"))
   )
 
   # Expect that a column with NAs will work fine with `fmt_integer()`,
@@ -184,31 +186,26 @@ test_that("the `fmt_integer()` function works correctly in the HTML context", {
   na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) %>% gt()
 
   # Expect a returned object of class `gt_tbl` with various uses of `fmt_integer()`
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>% fmt_integer(columns = a) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_integer(columns = a, rows = 1:5) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_integer(columns = a, scale_by = 100) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_integer(columns = a, suffixing = TRUE) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_integer(columns = a, pattern = "a{x}b") %>%
       as_raw_html()
@@ -223,7 +220,7 @@ test_that("the `fmt_integer()` function works correctly in the HTML context", {
   )
 })
 
-test_that("the `fmt_integer()` function can scale/suffix larger numbers", {
+test_that("fmt_integer() function can scale/suffix larger numbers", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -247,9 +244,15 @@ test_that("the `fmt_integer()` function can scale/suffix larger numbers", {
        fmt_integer(columns = num, suffixing = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "&minus;1,800T", "&minus;17T", "&minus;16B", "&minus;150M",
-      "&minus;1M", "&minus;13K", "&minus;1K", "&minus;11", "0", "11",
-      "1K", "13K", "1M", "150M", "16B", "17T", "1,800T"
+      paste0("\U02212", "1,800T"),
+      paste0("\U02212", "17T"),
+      paste0("\U02212", "16B"),
+      paste0("\U02212", "150M"),
+      paste0("\U02212", "1M"),
+      paste0("\U02212", "13K"),
+      paste0("\U02212", "1K"),
+      paste0("\U02212", "11"),
+      "0", "11", "1K", "13K", "1M", "150M", "16B", "17T", "1,800T"
     )
   )
 
@@ -262,9 +265,15 @@ test_that("the `fmt_integer()` function can scale/suffix larger numbers", {
          suffixing = c("k", "Mn", "Bn", "Tr")) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "&minus;1,800Tr", "&minus;17Tr", "&minus;16Bn", "&minus;150Mn",
-      "&minus;1Mn", "&minus;13k", "&minus;1k", "&minus;11", "0", "11",
-      "1k", "13k", "1Mn", "150Mn", "16Bn", "17Tr", "1,800Tr"
+      paste0("\U02212", "1,800Tr"),
+      paste0("\U02212", "17Tr"),
+      paste0("\U02212", "16Bn"),
+      paste0("\U02212", "150Mn"),
+      paste0("\U02212", "1Mn"),
+      paste0("\U02212", "13k"),
+      paste0("\U02212", "1k"),
+      paste0("\U02212", "11"),
+      "0", "11", "1k", "13k", "1Mn", "150Mn", "16Bn", "17Tr", "1,800Tr"
     )
   )
 
@@ -277,9 +286,15 @@ test_that("the `fmt_integer()` function can scale/suffix larger numbers", {
          suffixing = c(NA, "Mio.", "Mia.", NA)) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "&minus;1,800,000Mia.", "&minus;17,000Mia.", "&minus;16Mia.",
-      "&minus;150Mio.", "&minus;1Mio.", "&minus;13,000", "&minus;1,200",
-      "&minus;11", "0", "11", "1,200", "13,000", "1Mio.", "150Mio.",
+      paste0("\U02212", "1,800,000Mia."),
+      paste0("\U02212", "17,000Mia."),
+      paste0("\U02212", "16Mia."),
+      paste0("\U02212", "150Mio."),
+      paste0("\U02212", "1Mio."),
+      paste0("\U02212", "13,000"),
+      paste0("\U02212", "1,200"),
+      paste0("\U02212", "11"),
+      "0", "11", "1,200", "13,000", "1Mio.", "150Mio.",
       "16Mia.", "17,000Mia.", "1,800,000Mia."
     )
   )
@@ -300,32 +315,35 @@ test_that("the `fmt_integer()` function can scale/suffix larger numbers", {
   )
 })
 
-test_that("rownames and groupnames aren't included in columns = TRUE", {
+test_that("Rownames and groupnames aren't included in `columns = TRUE`", {
 
   mtcars1 <- cbind(mtcars, chardata = row.names(mtcars))
 
-  # This fails; can't apply numeric formatting to the "chardata" col
-  expect_error(mtcars1 %>% gt() %>% fmt_integer(columns = everything()))
+  # This doesn't fail; it won't apply numeric formatting to the
+  # "chardata" column but the formatter will skip over it
+  expect_no_error(
+    mtcars1 %>%
+      gt() %>%
+      fmt_integer(columns = everything())
+  )
 
   # These succeed because the "chardata" col no longer counts as a
   # resolvable column if it's a rowname_col or groupname_col, yet, it's
   # still visible as a column in the `rows` expression
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     mtcars1 %>%
       gt(rowname_col = "chardata") %>%
       fmt_integer(columns = everything(), rows = chardata == "Mazda RX4")
   )
 
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     mtcars1 %>%
       gt(groupname_col = "chardata") %>%
       fmt_integer(columns = everything(), rows = chardata == "Mazda RX4")
   )
 })
 
-test_that("the `fmt_integer()` fn can render in the Indian numbering system", {
+test_that("fmt_integer() can render in the Indian numbering system", {
 
   # These numbers will be used in tests of formatting
   # values to the Indian numbering system
@@ -371,9 +389,15 @@ test_that("the `fmt_integer()` fn can render in the Indian numbering system", {
     c(
       "50,00,000", "1,000", "10", "12,345", "1,234", "123", "1",
       "0", "25,83,063", "1,53,56,74,223", "6,42,56,48,25,73,36,228",
-      "&minus;50,00,00,000", "&minus;1,000", "&minus;10", "&minus;12,345",
-      "&minus;1,234", "&minus;123", "&minus;1", "0", "0", "0", "NA",
-      " Inf", "&minus;Inf"
+      paste0("\U02212", "50,00,00,000"),
+      paste0("\U02212", "1,000"),
+      paste0("\U02212", "10"),
+      paste0("\U02212", "12,345"),
+      paste0("\U02212", "1,234"),
+      paste0("\U02212", "123"),
+      paste0("\U02212", "1"),
+      "0", "0", "0", "NA", " Inf",
+      paste0("\U02212", "Inf")
     )
   )
 
@@ -386,9 +410,15 @@ test_that("the `fmt_integer()` fn can render in the Indian numbering system", {
     c(
       "+50,00,000", "+1,000", "+10", "+12,345", "+1,234", "+123",
       "+1", "+0", "+25,83,063", "+1,53,56,74,223", "+6,42,56,48,25,73,36,228",
-      "&minus;50,00,00,000", "&minus;1,000", "&minus;10", "&minus;12,345",
-      "&minus;1,234", "&minus;123", "&minus;1", "0", "0", "0", "NA",
-      "+ Inf", "&minus;Inf"
+      paste0("\U02212", "50,00,00,000"),
+      paste0("\U02212", "1,000"),
+      paste0("\U02212", "10"),
+      paste0("\U02212", "12,345"),
+      paste0("\U02212", "1,234"),
+      paste0("\U02212", "123"),
+      paste0("\U02212", "1"),
+      "0", "0", "0", "NA", "+ Inf",
+      paste0("\U02212", "Inf")
     )
   )
 
@@ -399,9 +429,16 @@ test_that("the `fmt_integer()` fn can render in the Indian numbering system", {
        render_formats_test(context = "html"))[["num"]],
     c(
       "50 Lac", "1,000", "10", "12,345", "1,234", "123", "1", "0",
-      "26 Lac", "154 Cr", "64,25,64,826 Cr", "&minus;50 Cr", "&minus;1,000",
-      "&minus;10", "&minus;12,345", "&minus;1,234", "&minus;123", "&minus;1",
-      "0", "0", "0", "NA", " Inf Cr", "&minus;Inf Cr"
+      "26 Lac", "154 Cr", "64,25,64,826 Cr",
+      paste0("\U02212", "50 Cr"),
+      paste0("\U02212", "1,000"),
+      paste0("\U02212", "10"),
+      paste0("\U02212", "12,345"),
+      paste0("\U02212", "1,234"),
+      paste0("\U02212", "123"),
+      paste0("\U02212", "1"),
+      "0", "0", "0", "NA", " Inf Cr",
+      paste0("\U02212", "Inf Cr")
     )
   )
   expect_equal(
@@ -409,10 +446,17 @@ test_that("the `fmt_integer()` fn can render in the Indian numbering system", {
        fmt_integer(columns = num, suffixing = c("K", "Lacs", "Crores"), system = "ind") %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "50 Lacs", "1 K", "10", "12 K", "1 K", "123", "1", "0", "26 Lacs",
-      "154 Crores", "64,25,64,826 Crores", "&minus;50 Crores", "&minus;1 K",
-      "&minus;10", "&minus;12 K", "&minus;1 K", "&minus;123", "&minus;1",
-      "0", "0", "0", "NA", " Inf Crores", "&minus;Inf Crores"
+      "50 Lacs", "1 K", "10", "12 K", "1 K", "123", "1",
+      "0", "26 Lacs", "154 Crores", "64,25,64,826 Crores",
+      paste0("\U02212", "50 Crores"),
+      paste0("\U02212", "1 K"),
+      paste0("\U02212", "10"),
+      paste0("\U02212", "12 K"),
+      paste0("\U02212", "1 K"),
+      paste0("\U02212", "123"),
+      paste0("\U02212", "1"),
+      "0", "0", "0", "NA", " Inf Crores",
+      paste0("\U02212", "Inf Crores")
     )
   )
   expect_equal(
@@ -421,9 +465,16 @@ test_that("the `fmt_integer()` fn can render in the Indian numbering system", {
        render_formats_test(context = "html"))[["num"]],
     c(
       "50 Lacs", "1,000", "10", "12,345", "1,234", "123", "1", "0",
-      "26 Lacs", "15,357 Lacs", "64,25,64,82,573 Lacs", "&minus;5,000 Lacs",
-      "&minus;1,000", "&minus;10", "&minus;12,345", "&minus;1,234",
-      "&minus;123", "&minus;1", "0", "0", "0", "NA", " Inf Lacs", "&minus;Inf Lacs"
+      "26 Lacs", "15,357 Lacs", "64,25,64,82,573 Lacs",
+      paste0("\U02212", "5,000 Lacs"),
+      paste0("\U02212", "1,000"),
+      paste0("\U02212", "10"),
+      paste0("\U02212", "12,345"),
+      paste0("\U02212", "1,234"),
+      paste0("\U02212", "123"),
+      paste0("\U02212", "1"),
+      "0", "0", "0", "NA", " Inf Lacs",
+      paste0("\U02212", "Inf Lacs")
     )
   )
   expect_equal(
@@ -437,14 +488,17 @@ test_that("the `fmt_integer()` fn can render in the Indian numbering system", {
       "0", "NA", " Inf Cr", "(Inf Cr)"
     )
   )
-  expect_warning(
-    expect_equal(
-      (tab %>%
-         fmt_integer(columns = num, suffixing = TRUE, system = "ind") %>%
-         render_formats_test(context = "html"))[["num"]],
-      (tab %>%
-         fmt_integer(columns = num, suffixing = TRUE, scale_by = 200, system = "ind") %>%
-         render_formats_test(context = "html"))[["num"]]
-    )
+  expect_no_warning(
+    compared_tab <- tab %>%
+      fmt_integer(columns = num, suffixing = TRUE, system = "ind")
+  )
+  # scale_by warning
+  expect_snapshot(
+    expected_tab <- tab %>%
+      fmt_integer(columns = num, suffixing = TRUE, scale_by = 200, system = "ind")
+  )
+  expect_equal(
+    render_formats_test(compared_tab, context = "html")[["num"]],
+    render_formats_test(expected_tab, context = "html")[["num"]]
   )
 })

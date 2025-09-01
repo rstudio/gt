@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2025 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 .dt_styles_key <- "_styles"
 
 dt_styles_get <- function(data) {
@@ -11,13 +35,13 @@ dt_styles_set <- function(data, styles) {
 dt_styles_init <- function(data) {
 
   styles_tbl <-
-    dplyr::tibble(
-      locname = character(0),
-      grpname = character(0),
-      colname = character(0),
-      locnum = numeric(0),
-      rownum = integer(0),
-      colnum = integer(0),
+    vctrs::data_frame(
+      locname = character(0L),
+      grpname = character(0L),
+      colname = character(0L),
+      locnum = numeric(0L),
+      rownum = integer(0L),
+      colnum = integer(0L),
       styles = list()
     )
 
@@ -43,7 +67,7 @@ dt_styles_add <- function(
     )
 
   result <-
-    dplyr::tibble(
+    vctrs::data_frame(
       locname = locname,
       grpname = grid$grpname,
       colname = grid$colname,
@@ -55,7 +79,7 @@ dt_styles_add <- function(
 
   dt_styles_set(
     data = data,
-    styles = dplyr::bind_rows(dt_styles_get(data = data), result)
+    styles = vctrs::vec_rbind(dt_styles_get(data = data), result)
   )
 }
 
@@ -75,7 +99,11 @@ dt_styles_pluck <- function(
     )
   }
 
-  idx <- rep_len(TRUE, nrow(styles_tbl))
+  n <- nrow(styles_tbl)
+  if (n == 0) {
+    return(styles_tbl)
+  }
+  idx <- rep_len(TRUE, n)
 
   if (!is_missing(locname)) {
     idx <- idx & styles_tbl$locname %in% locname
@@ -96,5 +124,6 @@ dt_styles_pluck <- function(
     idx <- idx & round((styles_tbl$rownum %% 1) * 100) %in% grprow
   }
 
-  styles_tbl[idx, ]
+  # `vec_slice()` is much faster than `[`
+  vctrs::vec_slice(styles_tbl, idx)
 }

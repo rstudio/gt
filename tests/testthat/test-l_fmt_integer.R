@@ -1,4 +1,4 @@
-test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
+test_that("fmt_integer() works correctly in the LaTeX context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -21,10 +21,10 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  char_1 <- (tab %>% dt_data_get())[["char_1"]]
-  char_2 <- (tab %>% dt_data_get())[["char_2"]]
-  num_1 <- (tab %>% dt_data_get())[["num_1"]]
-  num_2 <- (tab %>% dt_data_get())[["num_2"]]
+  char_1 <- dt_data_get(tab)[["char_1"]]
+  char_2 <- dt_data_get(tab)[["char_2"]]
+  num_1 <- dt_data_get(tab)[["num_1"]]
+  num_2 <- dt_data_get(tab)[["num_2"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -52,7 +52,7 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
     (tab %>%
        fmt_integer(columns = num_1) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("$1,836$", "$2,763$", "$937$", "$643$", "$212$", "$0$", "$-23$")
+    c("1,836", "2,763", "937", "643", "212", "0", "-23")
   )
 
   # Format the `num_1` column, don't use digit
@@ -61,7 +61,7 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
     (tab %>%
        fmt_integer(columns = num_1, use_seps = FALSE) %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$1836$", "$2763$", "$937$", "$643$", "$212$", "$0$", "$-23$")
+    c("1836", "2763", "937", "643", "212", "0", "-23")
   )
 
   # Format the `num_1` column, use a single space
@@ -70,7 +70,7 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
     (tab %>%
        fmt_integer(columns = num_1, sep_mark = " ") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$1 836$", "$2 763$", "$937$", "$643$", "$212$", "$0$", "$-23$")
+    c("1 836", "2 763", "937", "643", "212", "0", "-23")
   )
 
   # Format the `num_1` column, use a period for the
@@ -79,7 +79,7 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
     (tab %>%
        fmt_integer(columns = num_1, sep_mark = ".") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$1.836$", "$2.763$", "$937$", "$643$", "$212$", "$0$", "$-23$")
+    c("1.836", "2.763", "937", "643", "212", "0", "-23")
   )
 
   # Format the `num_1` column, scale all values by
@@ -88,7 +88,7 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
     (tab %>%
        fmt_integer(columns = num_1, scale_by = 1/1000) %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$2$", "$3$", "$1$", "$1$", "$0$", "$0$", "$0$")
+    c("2", "3", "1", "1", "0", "0", "0")
   )
 
   # Format the `num_1` column, prepend and append
@@ -97,8 +97,8 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
     (tab %>%
        fmt_integer(columns = num_1, pattern = "a {x} b") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("a $1,836$ b", "a $2,763$ b", "a $937$ b", "a $643$ b", "a $212$ b",
-      "a $0$ b", "a $-23$ b")
+    c("a 1,836 b", "a 2,763 b", "a 937 b", "a 643 b", "a 212 b",
+      "a 0 b", "a -23 b")
   )
 
   # Format the `num_1` column, scale all values
@@ -108,7 +108,7 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
     (tab %>%
        fmt_integer(columns = num_1, scale_by = 1/1000, pattern = "{x}K") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$2$K", "$3$K", "$1$K", "$1$K", "$0$K", "$0$K", "$0$K")
+    c("2K", "3K", "1K", "1K", "0K", "0K", "0K")
   )
 
   # Format the `num_1` column, use accounting style
@@ -116,7 +116,7 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
     (tab %>%
        fmt_integer(columns = num_1, accounting = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$1,836$", "$2,763$", "$937$", "$643$", "$212$", "$0$", "$(23)$")
+    c("1,836", "2,763", "937", "643", "212", "0", "(23)")
   )
 
   # Format the `num_1` column, use accounting style
@@ -126,8 +126,8 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
        fmt_integer(
          columns = num_1, accounting = TRUE, pattern = "a{x}b") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("a$1,836$b", "a$2,763$b", "a$937$b", "a$643$b", "a$212$b",
-      "a$0$b", "a$(23)$b")
+    c("a1,836b", "a2,763b", "a937b", "a643b", "a212b",
+      "a0b", "a(23)b")
   )
 
   # Format the `num_1` column to 2 decimal places, force the sign
@@ -136,7 +136,7 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
        fmt_integer(
          columns = num_1, force_sign = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$+1,836$", "$+2,763$", "$+937$", "$+643$", "$+212$", "$0$", "$-23$")
+    c("+1,836", "+2,763", "+937", "+643", "+212", "0", "-23")
   )
 
   # Expect that using `force_sign = TRUE` with `accounting = TRUE`
@@ -160,8 +160,8 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
          columns = num_1, pattern = "*{x}*", force_sign = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "*$+1,836$*", "*$+2,763$*", "*$+937$*", "*$+643$*", "*$+212$*",
-      "*$0$*", "*$-23$*"
+      "*+1,836*", "*+2,763*", "*+937*", "*+643*", "*+212*",
+      "*0*", "*-23*"
     )
   )
 
@@ -171,7 +171,7 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
     (tab %>%
        fmt_integer(columns = num_1, locale = "en_US") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$1,836$", "$2,763$", "$937$", "$643$", "$212$", "$0$", "$-23$")
+    c("1,836", "2,763", "937", "643", "212", "0", "-23")
   )
 
   # Format the `num_1` column, apply the `da_DK`
@@ -180,11 +180,11 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
     (tab %>%
        fmt_integer(columns = num_1, locale = "da_DK") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$1.836$", "$2.763$", "$937$", "$643$", "$212$", "$0$", "$-23$")
+    c("1.836", "2.763", "937", "643", "212", "0", "-23")
   )
 })
 
-test_that("the `fmt_integer()` function can scale/suffix larger numbers", {
+test_that("fmt_integer() can scale/suffix larger numbers", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -208,9 +208,9 @@ test_that("the `fmt_integer()` function can scale/suffix larger numbers", {
        fmt_integer(columns = num, suffixing = TRUE) %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
-      "$-1,800T$", "$-17T$", "$-16B$", "$-150M$", "$-1M$", "$-13K$",
-      "$-1K$", "$-11$", "$0$", "$11$", "$1K$", "$13K$", "$1M$", "$150M$",
-      "$16B$", "$17T$", "$1,800T$"
+      "-1,800T", "-17T", "-16B", "-150M", "-1M", "-13K",
+      "-1K", "-11", "0", "11", "1K", "13K", "1M", "150M",
+      "16B", "17T", "1,800T"
     )
   )
 
@@ -223,9 +223,9 @@ test_that("the `fmt_integer()` function can scale/suffix larger numbers", {
          suffixing = c("k", "Mn", "Bn", "Tr")) %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
-      "$-1,800Tr$", "$-17Tr$", "$-16Bn$", "$-150Mn$", "$-1Mn$", "$-13k$",
-      "$-1k$", "$-11$", "$0$", "$11$", "$1k$", "$13k$", "$1Mn$", "$150Mn$",
-      "$16Bn$", "$17Tr$", "$1,800Tr$"
+      "-1,800Tr", "-17Tr", "-16Bn", "-150Mn", "-1Mn", "-13k",
+      "-1k", "-11", "0", "11", "1k", "13k", "1Mn", "150Mn",
+      "16Bn", "17Tr", "1,800Tr"
     )
   )
 
@@ -238,10 +238,10 @@ test_that("the `fmt_integer()` function can scale/suffix larger numbers", {
          suffixing = c(NA, "Mio.", "Mia.", NA)) %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
-      "$-1,800,000Mia.$", "$-17,000Mia.$", "$-16Mia.$", "$-150Mio.$",
-      "$-1Mio.$", "$-13,000$", "$-1,200$", "$-11$", "$0$", "$11$",
-      "$1,200$", "$13,000$", "$1Mio.$", "$150Mio.$", "$16Mia.$", "$17,000Mia.$",
-      "$1,800,000Mia.$"
+      "-1,800,000Mia.", "-17,000Mia.", "-16Mia.", "-150Mio.",
+      "-1Mio.", "-13,000", "-1,200", "-11", "0", "11",
+      "1,200", "13,000", "1Mio.", "150Mio.", "16Mia.", "17,000Mia.",
+      "1,800,000Mia."
     )
   )
 })

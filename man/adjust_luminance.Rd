@@ -7,23 +7,33 @@
 adjust_luminance(colors, steps)
 }
 \arguments{
-\item{colors}{A vector of colors that will undergo an adjustment in
-luminance. Each color value provided must either be a color name (in the
-set of colors provided by \code{grDevices::colors()}) or a hexadecimal string in
-the form of "#RRGGBB" or "#RRGGBBAA".}
+\item{colors}{\emph{Color vector}
 
-\item{steps}{A positive or negative factor by which the luminance will be
-adjusted. Must be a number between \code{-2.0} and \code{2.0}.}
+\verb{vector<character>} // \strong{required}
+
+This is the vector of colors that will undergo an adjustment in luminance.
+Each color value provided must either be a color name (in the set of colors
+provided by \code{grDevices::colors()}) or a hexadecimal string in the form of
+"#RRGGBB" or "#RRGGBBAA".}
+
+\item{steps}{\emph{Adjustment level}
+
+\verb{scalar<numeric|integer>(-2>=val>=2)} // \strong{required}
+
+A positive or negative factor by which the luminance of colors in the
+\code{colors} vector will be adjusted. Must be a number between \code{-2.0} and
+\code{2.0}.}
 }
 \value{
 A vector of color values.
 }
 \description{
-This function can brighten or darken a palette of colors by an arbitrary
-number of steps, which is defined by a real number between -2.0 and 2.0. The
-transformation of a palette by a fixed step in this function will tend to
-apply greater darkening or lightening for those colors in the midrange
-compared to any very dark or very light colors in the input palette.
+The \code{adjust_luminance()} function can brighten or darken a palette of colors
+by an arbitrary number of steps, which is defined by a real number between
+-2.0 and 2.0. The transformation of a palette by a fixed step in this
+function will tend to apply greater darkening or lightening for those colors
+in the midrange compared to any very dark or very light colors in the input
+palette.
 }
 \details{
 This function can be useful when combined with the \code{\link[=data_color]{data_color()}} function's
@@ -42,29 +52,29 @@ Get a palette of 8 pastel colors from the \strong{RColorBrewer} package.
 Create lighter and darker variants of the base palette (one step lower, one
 step higher).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{pal_darker  <- pal \%>\% adjust_luminance(-1.0)
-pal_lighter <- pal \%>\% adjust_luminance(+1.0)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pal_darker  <- pal |> adjust_luminance(-1.0)
+pal_lighter <- pal |> adjust_luminance(+1.0)
 }\if{html}{\out{</div>}}
 
 Create a tibble and make a \strong{gt} table from it. Color each column in order
 of increasingly darker palettes (with \code{\link[=data_color]{data_color()}}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) |>
+  gt() |>
   data_color(
     columns = a,
     colors = scales::col_numeric(
       palette = pal_lighter,
       domain = c(1, 8)
     )
-  ) \%>\%
+  ) |>
   data_color(
     columns = b,
     colors = scales::col_numeric(
       palette = pal,
       domain = c(1, 8)
     )
-  ) \%>\%
+  ) |>
   data_color(
     columns = c,
     colors = scales::col_numeric(
@@ -75,42 +85,41 @@ of increasingly darker palettes (with \code{\link[=data_color]{data_color()}}).
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_adjust_luminance_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_adjust_luminance_1.png" alt="This image of a table was generated from the first code example in the `adjust_luminance()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-7-22
+8-9
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_body}()},
-\code{\link{cells_column_labels}()},
-\code{\link{cells_column_spanners}()},
-\code{\link{cells_footnotes}()},
-\code{\link{cells_grand_summary}()},
-\code{\link{cells_row_groups}()},
-\code{\link{cells_source_notes}()},
-\code{\link{cells_stub_grand_summary}()},
-\code{\link{cells_stub_summary}()},
-\code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
-\code{\link{cells_summary}()},
-\code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
+\code{\link{latex}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{row_group}()},
+\code{\link{stub}()},
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

@@ -1,12 +1,335 @@
-md_rtf <- function(md, rtf) {
-  expect_equal(markdown_to_rtf(md), unclass(rtf_raw(rtf)))
-}
+test_that("Various `is_*()` utility functions work properly", {
 
-rtf_with <- function(open, text, close = paste0(open, "0")) {
-  paste0("\\", open, " ", text, "\\", close, " ")
-}
+  empty_tbl <- dplyr::tibble()
+  empty_df <- data.frame()
 
-test_that("basic markdown_to_rtf works", {
+  empty_w_cols_tbl <- dplyr::tibble(a = character(0L), b = numeric(0L))
+  empty_w_cols_df <- data.frame(a = character(0L), b = numeric(0L))
+
+  empty_w_rows_tbl <- dplyr::tibble(.rows = 5)
+  empty_w_rows_df <- as.data.frame(empty_w_rows_tbl)
+
+  # Expect that `is_gt_tbl()` is TRUE with a `gt_tbl` and FALSE in other cases
+  expect_true(is_gt_tbl(gt(exibble)))
+  expect_true(is_gt_tbl(gt_preview(gtcars)))
+  expect_false(is_gt_tbl(exibble))
+  expect_false(is_gt_tbl(gt_group(gt(exibble), gt(exibble))))
+  expect_false(is_gt_tbl(as_raw_html(gt(exibble))))
+
+  # Expect that `is_gt_group()` is TRUE with a `gt_group` and FALSE in other cases
+  expect_true(is_gt_group(gt_group(gt(exibble), gt(exibble))))
+  expect_false(is_gt_group(gt(exibble)))
+  expect_false(is_gt_group(gt_preview(gtcars)))
+  expect_false(is_gt_group(exibble))
+  expect_false(is_gt_group(as_raw_html(gt(exibble))))
+
+  # Expect that `is_gt_tbl_or_group()` is TRUE with a `gt_group` or a
+  # `gt_tbl` and FALSE in other cases
+  expect_true(is_gt_tbl_or_group(gt_group(gt(exibble), gt(exibble))))
+  expect_true(is_gt_tbl_or_group(gt(exibble)))
+  expect_true(is_gt_tbl_or_group(gt_preview(gtcars)))
+  expect_false(is_gt_tbl_or_group(exibble))
+  expect_false(is_gt_tbl_or_group(as_raw_html(gt(exibble))))
+
+  # Expect that a completely empty table *and* a table with rows but no
+  # columns in a gt object yields TRUE via `is_gt_tbl_empty()`
+  expect_true(is_gt_tbl_empty(gt(empty_tbl)))
+  expect_true(is_gt_tbl_empty(gt(empty_df)))
+  expect_false(is_gt_tbl_empty(gt(empty_w_cols_tbl)))
+  expect_false(is_gt_tbl_empty(gt(empty_w_cols_df)))
+  expect_true(is_gt_tbl_empty(gt(empty_w_rows_tbl)))
+  expect_true(is_gt_tbl_empty(gt(empty_w_rows_df)))
+
+  # Expect that a table with columns but no rows in a gt object yields
+  # TRUE via `is_gt_tbl_empty_w_cols()`
+  expect_true(is_gt_tbl_empty_w_cols(gt(empty_w_cols_tbl)))
+  expect_true(is_gt_tbl_empty_w_cols(gt(empty_w_cols_df)))
+  expect_false(is_gt_tbl_empty_w_cols(gt(empty_tbl)))
+  expect_false(is_gt_tbl_empty_w_cols(gt(empty_df)))
+  expect_false(is_gt_tbl_empty_w_cols(gt(empty_w_rows_tbl)))
+  expect_false(is_gt_tbl_empty_w_cols(gt(empty_w_rows_df)))
+
+  # Expect that `stop_if_not_gt_tbl()` yields an error for non-`gt_tbl` objects
+  expect_no_error(stop_if_not_gt_tbl(gt(exibble)))
+  expect_no_error(stop_if_not_gt_tbl(gt_preview(gtcars)))
+  expect_error(stop_if_not_gt_tbl(exibble))
+  expect_error(stop_if_not_gt_tbl(gt_group(gt(exibble), gt(exibble))))
+  expect_error(stop_if_not_gt_tbl(gt(exibble) %>% as_raw_html()))
+
+  # Expect that `stop_if_not_gt_group()` yields an error for non-`gt_group` objects
+  expect_no_error(stop_if_not_gt_group(gt_group(gt(exibble), gt(exibble))))
+  expect_error(stop_if_not_gt_group(gt(exibble)))
+  expect_error(stop_if_not_gt_group(gt_preview(gtcars)))
+  expect_error(stop_if_not_gt_group(exibble))
+  expect_error(stop_if_not_gt_group(gt(exibble) %>% as_raw_html()))
+
+  # Expect that `stop_if_not_gt_tbl_or_group()` yields an error if a `gt_tbl` or
+  # `gt_group` object isn't provided to it
+  expect_no_error(stop_if_not_gt_tbl_or_group(gt(exibble)))
+  expect_no_error(stop_if_not_gt_tbl_or_group(gt_preview(gtcars)))
+  expect_no_error(stop_if_not_gt_tbl_or_group(gt_group(gt(exibble), gt(exibble))))
+  expect_error(stop_if_not_gt_tbl_or_group(exibble))
+  expect_error(stop_if_not_gt_tbl_or_group(gt(exibble) %>% as_raw_html()))
+
+  skip_if_not_installed("shiny")
+
+  # Expect that `is_html()` returns TRUE only for objects with the `html` class
+  expect_true(is_html(html("This is <span>HTML</span>")))
+  expect_true(is_html(shiny::HTML("This is <span>HTML</span>")))
+  expect_true(is_html(htmltools::HTML("This is <span>HTML</span>")))
+  expect_false(is_html("This is <span>HTML</span>"))
+
+  # Expect that `is_html()` returns TRUE only for objects with the `rtf` class
+  expect_true(is_rtf(rtf_raw("This is RTF text")))
+  expect_false(is_rtf(shiny::HTML("This is RTF text")))
+  expect_false(is_rtf(htmltools::HTML("This is RTF text")))
+  expect_false(is_rtf("This is RTF text"))
+})
+
+test_that("is_nonempty_chr() works for detecting that a vector is non-empty", {
+  expect_true(is_nonempty_chr("asdf"))
+  expect_true(is_nonempty_chr(c("1", "2")))
+  expect_false(is_nonempty_chr(c("", "")))
+  expect_false(is_nonempty_chr(c("")))
+  expect_false(is_nonempty_chr(""))
+  expect_false(is_nonempty_chr(c()))
+  expect_false(is_nonempty_chr(NULL))
+  expect_true(is_nonempty_chr(c(1, 2)))
+  expect_true(is_nonempty_chr(1))
+})
+
+test_that("get_date_format() works properly", {
+
+  # Expect that integers (even in character form) work with `get_date_format()`
+  # so long as the values are within range
+  for (i in 1:41) {
+    expect_no_error(get_date_format(date_style = i))
+    expect_no_error(get_date_format(date_style = as.character(i)))
+  }
+
+  # Expect an error if going out of range or providing improper values
+  expect_error(get_date_format(date_style = 42))
+  expect_error(get_date_format(date_style = "42"))
+  expect_error(get_date_format(date_style = 0))
+  expect_error(get_date_format(date_style = "0"))
+  expect_error(get_date_format(date_style = -5))
+  expect_error(get_date_format(date_style = "-5"))
+  expect_error(get_date_format(date_style = NA))
+  expect_error(get_date_format(date_style = NULL))
+  expect_error(get_date_format(date_style = c(1, 2)))
+
+  # Expect that character-based keywords work with `get_date_format()` so long
+  # as the values are from the defined set
+  for (format_name in date_formats()[["format_name"]]) {
+    expect_no_error(get_date_format(date_style = format_name))
+  }
+
+  # Expect an error if providing an improper value
+  expect_error(get_date_format(date_style = "daym"))
+
+  # Expect that date formats 1-17 are not flexible
+  for (i in 1:17) {
+    date_fmt_i <- get_date_format(date_style = i)
+    expect_false(inherits(date_fmt_i, "flex_d"))
+    expect_false(inherits(date_fmt_i, "date_time_pattern"))
+  }
+
+  # Expect that date formats 18-41 are flexible
+  for (i in 18:41) {
+    date_fmt_i <- get_date_format(date_style = i)
+    expect_s3_class(date_fmt_i, "flex_d")
+    expect_s3_class(date_fmt_i, "date_time_pattern")
+  }
+})
+
+test_that("get_time_format() works properly", {
+
+  # Expect that integers (even in character form) work with `get_time_format()`
+  # so long as the values are within range
+  for (i in 1:25) {
+    expect_no_error(get_time_format(time_style = i))
+    expect_no_error(get_time_format(time_style = as.character(i)))
+  }
+
+  # Expect an error if going out of range or providing improper values
+  expect_error(get_time_format(time_style = 26))
+  expect_error(get_time_format(time_style = "26"))
+  expect_error(get_time_format(time_style = 0))
+  expect_error(get_time_format(time_style = "0"))
+  expect_error(get_time_format(time_style = -5))
+  expect_error(get_time_format(time_style = "-5"))
+  expect_error(get_time_format(time_style = NA))
+  expect_error(get_time_format(time_style = NULL))
+  expect_error(get_time_format(time_style = c(1, 2)))
+
+  # Expect that character-based keywords work with `get_time_format()` so long
+  # as the values are from the defined set
+  for (format_name in time_formats()[["format_name"]]) {
+    expect_no_error(get_time_format(time_style = format_name))
+  }
+
+  # Expect an error if providing an improper value
+  expect_error(get_time_format(time_style = "Hmsa"))
+
+  # Expect that time formats 1-5 are not flexible
+  for (i in 1:5) {
+    time_fmt_i <- get_time_format(time_style = i)
+    expect_false(inherits(time_fmt_i, "date_time_pattern"))
+  }
+
+  # Expect that time formats 6-12 are flexible 24-hour times
+  for (i in 6:12) {
+    time_fmt_i <- get_time_format(time_style = i)
+    expect_s3_class(time_fmt_i, "flex_t24")
+    expect_s3_class(time_fmt_i, "date_time_pattern")
+  }
+
+  # Expect that although time format 25 is not really 12- or 24-hour time (but
+  # floating, with no hours in format), it is still classed as `flex_t24`
+  expect_equal(as.character(get_time_format(time_style = 25)), "ms")
+  expect_s3_class(get_time_format(time_style = 25), "flex_t24")
+  expect_s3_class(get_time_format(time_style = 25), "date_time_pattern")
+})
+
+test_that("date_format and time_format are all single strings", {
+
+  # Ensure that all format codes work with `check_format_code()`
+  for (format_name in c(date_formats()[["format_name"]], time_formats()[["format_name"]])) {
+    expect_no_error(check_string(format_name))
+  }
+})
+
+test_that("unescape_html() works properly", {
+
+  # Expect that 'unescaping' certain escaped HTML tags is possible with `unescape_html()`
+  expect_equal(unescape_html("&lt;span&gt;Text&lt;/span&gt;"), "<span>Text</span>")
+  expect_equal(unescape_html("&lt;span&gt;T&amp;T&lt;/span&gt;"), "<span>T&T</span>")
+})
+
+test_that("process_footnote_marks() works properly", {
+
+  # With various types of `marks`, we expect correctly formatted marks
+  expect_equal(
+    process_footnote_marks(1:5, marks = "numbers"),
+    c("1", "2", "3", "4", "5")
+  )
+  expect_equal(
+    process_footnote_marks(1:5, marks = "letters"),
+    c("a", "b", "c", "d", "e")
+  )
+  expect_equal(
+    process_footnote_marks(1:5, marks = "letters"),
+    process_footnote_marks(1:5, marks = letters)
+  )
+  expect_equal(
+    process_footnote_marks(1:5, marks = "LETTERS"),
+    c("A", "B", "C", "D", "E")
+  )
+  expect_equal(
+    process_footnote_marks(1:5, marks = "LETTERS"),
+    process_footnote_marks(1:5, marks = LETTERS)
+  )
+  expect_equal(
+    process_footnote_marks(1:5, marks = "standard"),
+    c("\U0002A", "\U02020", "\U02021", "\U000A7", "\U0002A\U0002A")
+  )
+  expect_equal(
+    process_footnote_marks(1:6, marks = "extended"),
+    c("\U0002A", "\U02020", "\U02021", "\U000A7", "\U02016", "\U000B6")
+  )
+  expect_equal(
+    process_footnote_marks(1:12, marks = "extended"),
+    c(
+      "\U0002A", "\U02020", "\U02021", "\U000A7", "\U02016", "\U000B6",
+      "\U0002A\U0002A", "\U02020\U02020", "\U02021\U02021",
+      "\U000A7\U000A7", "\U02016\U02016", "\U000B6\U000B6"
+    )
+  )
+  expect_equal(
+    process_footnote_marks(1:4, marks = c("one", "two", "three", "four")),
+    c("one", "two", "three", "four")
+  )
+  expect_equal(
+    process_footnote_marks(4:1, marks = c("one", "two", "three", "four")),
+    c("four", "three", "two", "one")
+  )
+  expect_equal(
+    process_footnote_marks(1:4, marks = 10:13), c("10", "11", "12", "13")
+  )
+
+  # Expect spurious outputs for improper values of `x`
+  expect_equal(process_footnote_marks(c(0, -1), marks = "letters"), c("", ""))
+  expect_equal(process_footnote_marks(c(1.6, 2.9), marks = "letters"), c("a", "b"))
+  expect_equal(process_footnote_marks(numeric(0L), marks = "letters"), list())
+
+  # Expect an error if providing an improper inputs
+  expect_error(process_footnote_marks(as.character(1:12), marks = "extended"))
+  expect_error(process_footnote_marks(list(1, 2), marks = "letters"))
+  expect_error(process_footnote_marks(Inf, marks = "letters"))
+})
+
+test_that("resolve_border_side() works properly", {
+
+  expect_equal(resolve_border_side("l"), "left")
+  expect_equal(resolve_border_side("left"), "left")
+  expect_equal(resolve_border_side("r"), "right")
+  expect_equal(resolve_border_side("right"), "right")
+  expect_equal(resolve_border_side("t"), "top")
+  expect_equal(resolve_border_side("top"), "top")
+  expect_equal(resolve_border_side("b"), "bottom")
+  expect_equal(resolve_border_side("bottom"), "bottom")
+  expect_equal(resolve_border_side("a"), "all")
+  expect_equal(resolve_border_side("everything"), "all")
+  expect_equal(resolve_border_side("all"), "all")
+})
+
+test_that("validate_length_one() works for vectors", {
+
+  expect_no_error(validate_length_one("1", "vector"))
+  expect_no_error(validate_length_one(1, "vector"))
+  expect_no_error(validate_length_one(list(1), "vector"))
+  expect_error(validate_length_one(c(), "vector"))
+  expect_error(validate_length_one(c(1, 2), "vector"))
+  expect_error(validate_length_one(list(), "vector"))
+})
+
+test_that("Tables with labeled columns work with certain utility functions", {
+
+  df_df <- data.frame(a = 1:3, b = 6:8, d = c(TRUE, FALSE, TRUE), e = 10:12)
+  tbl_df <- dplyr::tibble(a = 1:3, b = 6:8, d = c(TRUE, FALSE, TRUE), e = 10:12)
+
+  attr(df_df$a, "label") <- attr(tbl_df$a, "label") <- "One to three"
+  attr(df_df$b, "label") <- attr(tbl_df$b, "label") <- "Six to Eight"
+  attr(df_df$d, "label") <- attr(tbl_df$d, "label") <- "True or False"
+
+  expect_true(gt(df_df) %>% any_labeled_columns_in_data_tbl())
+  expect_true(gt(tbl_df) %>% any_labeled_columns_in_data_tbl())
+  expect_false(gt(exibble) %>% any_labeled_columns_in_data_tbl())
+  expect_false(gt(dplyr::tibble()) %>% any_labeled_columns_in_data_tbl())
+  expect_false(gt(data.frame()) %>% any_labeled_columns_in_data_tbl())
+
+  expect_equal(
+    gt(df_df) %>% get_columns_labels_from_attrs(),
+    c("One to three", "Six to Eight", "True or False", "e")
+  )
+  expect_equal(
+    gt(tbl_df) %>% get_columns_labels_from_attrs(),
+    c("One to three", "Six to Eight", "True or False", "e")
+  )
+  expect_equal(
+    gt(dplyr::tibble()) %>% get_columns_labels_from_attrs(),
+    character(0L)
+  )
+  expect_equal(
+    gt(exibble) %>% get_columns_labels_from_attrs(),
+    c(
+      "num", "char", "fctr", "date", "time", "datetime",
+      "currency", "row", "group"
+    )
+  )
+})
+
+test_that("markdown_to_rtf() works", {
 
   # list
   md_rtf(
@@ -143,7 +466,57 @@ test_that("basic markdown_to_rtf works", {
   md_rtf("**_this &amp;** that_", "{\\b _this &} that_")
 })
 
-test_that("markdown_to_rtf escaping", {
+test_that("Escaping is working when using `markdown_to_rtf()`", {
+
   md_rtf("\\b{}", "\\'5cb\\'7b\\'7d")
   md_rtf("&lt;&amp;", "<&")
+})
+
+test_that("str_substitute() works well", {
+  expect_equal(
+    str_substitute(c("223", "223"), c(1, 2), 2),
+    c("22", "2")
+  )
+  expect_snapshot(error = TRUE, {
+    str_substitute(c("223", "223", "224"), c(1, 2), 2)
+    str_substitute(c("223", "223", "224"), c(1), c(2, 3))
+    str_substitute(c("223", "223", "224", "225"), c(1, 2, 3, 4), c(2, 3))
+  })
+})
+
+test_that("apply_to_grp works",{
+  # create gt group example
+  gt_tbl <- exibble %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # create arguments - invalid function
+  arg_list <- list("fake_function", data = "gt_group(gt_tbl, gt_tbl)", align = c("center"))
+  expect_error(apply_to_grp(gt_group, arg_list), '"fake_function" is not an exported gt function')
+
+  # create arguments - cols_align function
+  arg_list <- list("cols_align", data = "gt_group(gt_tbl, gt_tbl)", align = c("center"))
+
+  # aligned gt_tbl
+  aligned_tbl <- gt_tbl %>%
+    cols_align(
+      align = "center"
+    )
+
+  # aligned group 2 ways: one via apply_to_group one via individual aligned tables
+  aligned_group <- apply_to_grp(gt_group, arg_list)
+
+  expect_identical(aligned_group, gt_group(aligned_tbl, aligned_tbl))
+
+
+  # error in table 2
+  gt_tbl2 <- exibble %>%
+    dplyr::select(-num) %>%
+    gt()
+
+  gt_group_error <- gt_group(gt_tbl, gt_tbl2)
+
+  arg_list <- list("cols_align", data = "gt_group(gt_tbl, gt_tbl)", align = c("center"), columns = "num")
+
+  # captures error of individual table and table number
+ expect_snapshot(apply_to_grp(gt_group_error, arg_list), error=TRUE)
 })

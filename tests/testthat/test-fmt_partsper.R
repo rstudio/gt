@@ -1,6 +1,4 @@
-skip_on_cran()
-
-test_that("the `fmt_partsper()` function works correctly", {
+test_that("fmt_partsper() works correctly", {
 
   # Create an input data frame two columns: one
   # character-based and one that is numeric
@@ -17,8 +15,8 @@ test_that("the `fmt_partsper()` function works correctly", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  char <- (tab %>% dt_data_get())[["char"]]
-  num <- (tab %>% dt_data_get())[["num"]]
+  char <- dt_data_get(tab)[["char"]]
+  num <- dt_data_get(tab)[["num"]]
 
   # Expect the extracted values to match those of the original dataset
   expect_equal(data_tbl$char, char)
@@ -40,7 +38,7 @@ test_that("the `fmt_partsper()` function works correctly", {
       "1,000.00‰", "100.00‰", "10.00‰", "1.00‰", "0.10‰",
       "0.01‰", "0.00‰", "0.00‰", "0.00‰", "0.00‰", "0.00‰",
       "0.00‰", "0.00‰", "0.00‰", "0.00‰", "0.00‰", "0.00‰",
-      "0.00‰", "0.00‰", "NA", "Inf‰", "&minus;Inf‰"
+      "0.00‰", "0.00‰", "NA", "Inf‰", paste0("\U02212", "Inf‰")
     )
   )
 
@@ -50,17 +48,17 @@ test_that("the `fmt_partsper()` function works correctly", {
        fmt_partsper(columns = num, to_units = "per-mille") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
-      "$1,000.00$\\textperthousand", "$100.00$\\textperthousand",
-      "$10.00$\\textperthousand", "$1.00$\\textperthousand",
-      "$0.10$\\textperthousand", "$0.01$\\textperthousand",
-      "$0.00$\\textperthousand", "$0.00$\\textperthousand",
-      "$0.00$\\textperthousand", "$0.00$\\textperthousand",
-      "$0.00$\\textperthousand", "$0.00$\\textperthousand",
-      "$0.00$\\textperthousand", "$0.00$\\textperthousand",
-      "$0.00$\\textperthousand", "$0.00$\\textperthousand",
-      "$0.00$\\textperthousand", "$0.00$\\textperthousand",
-      "$0.00$\\textperthousand", "NA", "$Inf$\\textperthousand",
-      "$-Inf$\\textperthousand"
+      "1,000.00\\textperthousand", "100.00\\textperthousand",
+      "10.00\\textperthousand", "1.00\\textperthousand",
+      "0.10\\textperthousand", "0.01\\textperthousand",
+      "0.00\\textperthousand", "0.00\\textperthousand",
+      "0.00\\textperthousand", "0.00\\textperthousand",
+      "0.00\\textperthousand", "0.00\\textperthousand",
+      "0.00\\textperthousand", "0.00\\textperthousand",
+      "0.00\\textperthousand", "0.00\\textperthousand",
+      "0.00\\textperthousand", "0.00\\textperthousand",
+      "0.00\\textperthousand", "NA", "Inf\\textperthousand",
+      "-Inf\\textperthousand"
     )
   )
 
@@ -87,7 +85,7 @@ test_that("the `fmt_partsper()` function works correctly", {
       "10,000.00‱", "1,000.00‱", "100.00‱", "10.00‱", "1.00‱",
       "0.10‱", "0.01‱", "0.00‱", "0.00‱", "0.00‱", "0.00‱",
       "0.00‱", "0.00‱", "0.00‱", "0.00‱", "0.00‱", "0.00‱",
-      "0.00‱", "0.00‱", "NA", "Inf‱", "&minus;Inf‱"
+      "0.00‱", "0.00‱", "NA", "Inf‱", paste0("\U02212", "Inf‱")
     )
   )
 
@@ -97,17 +95,17 @@ test_that("the `fmt_partsper()` function works correctly", {
        fmt_partsper(columns = num, to_units = "per-myriad") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
-      "$10,000.00$\\textpertenthousand", "$1,000.00$\\textpertenthousand",
-      "$100.00$\\textpertenthousand", "$10.00$\\textpertenthousand",
-      "$1.00$\\textpertenthousand", "$0.10$\\textpertenthousand",
-      "$0.01$\\textpertenthousand", "$0.00$\\textpertenthousand",
-      "$0.00$\\textpertenthousand", "$0.00$\\textpertenthousand",
-      "$0.00$\\textpertenthousand", "$0.00$\\textpertenthousand",
-      "$0.00$\\textpertenthousand", "$0.00$\\textpertenthousand",
-      "$0.00$\\textpertenthousand", "$0.00$\\textpertenthousand",
-      "$0.00$\\textpertenthousand", "$0.00$\\textpertenthousand",
-      "$0.00$\\textpertenthousand", "NA", "$Inf$\\textpertenthousand",
-      "$-Inf$\\textpertenthousand"
+      "10,000.00\\textpertenthousand", "1,000.00\\textpertenthousand",
+      "100.00\\textpertenthousand", "10.00\\textpertenthousand",
+      "1.00\\textpertenthousand", "0.10\\textpertenthousand",
+      "0.01\\textpertenthousand", "0.00\\textpertenthousand",
+      "0.00\\textpertenthousand", "0.00\\textpertenthousand",
+      "0.00\\textpertenthousand", "0.00\\textpertenthousand",
+      "0.00\\textpertenthousand", "0.00\\textpertenthousand",
+      "0.00\\textpertenthousand", "0.00\\textpertenthousand",
+      "0.00\\textpertenthousand", "0.00\\textpertenthousand",
+      "0.00\\textpertenthousand", "NA", "Inf\\textpertenthousand",
+      "-Inf\\textpertenthousand"
     )
   )
 
@@ -137,7 +135,7 @@ test_that("the `fmt_partsper()` function works correctly", {
       "10.00 pcm", "1.00 pcm", "0.10 pcm", "0.01 pcm", "0.00 pcm",
       "0.00 pcm", "0.00 pcm", "0.00 pcm", "0.00 pcm", "0.00 pcm", "0.00 pcm",
       "0.00 pcm", "0.00 pcm", "0.00 pcm", "0.00 pcm", "NA", "Inf pcm",
-      "&minus;Inf pcm"
+      paste0("\U02212", "Inf pcm")
     )
   )
 
@@ -147,14 +145,14 @@ test_that("the `fmt_partsper()` function works correctly", {
        fmt_partsper(columns = num, to_units = "pcm") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
-      "$100,000.00 \\text{pcm}$", "$10,000.00 \\text{pcm}$",
-      "$1,000.00 \\text{pcm}$", "$100.00 \\text{pcm}$", "$10.00 \\text{pcm}$",
-      "$1.00 \\text{pcm}$", "$0.10 \\text{pcm}$", "$0.01 \\text{pcm}$",
-      "$0.00 \\text{pcm}$", "$0.00 \\text{pcm}$", "$0.00 \\text{pcm}$",
-      "$0.00 \\text{pcm}$", "$0.00 \\text{pcm}$", "$0.00 \\text{pcm}$",
-      "$0.00 \\text{pcm}$", "$0.00 \\text{pcm}$", "$0.00 \\text{pcm}$",
-      "$0.00 \\text{pcm}$", "$0.00 \\text{pcm}$", "NA",
-      "$Inf \\text{pcm}$", "$-Inf \\text{pcm}$"
+      "100,000.00 pcm", "10,000.00 pcm",
+      "1,000.00 pcm", "100.00 pcm", "10.00 pcm",
+      "1.00 pcm", "0.10 pcm", "0.01 pcm",
+      "0.00 pcm", "0.00 pcm", "0.00 pcm",
+      "0.00 pcm", "0.00 pcm", "0.00 pcm",
+      "0.00 pcm", "0.00 pcm", "0.00 pcm",
+      "0.00 pcm", "0.00 pcm", "NA",
+      "Inf pcm", "-Inf pcm"
     )
   )
 
@@ -182,7 +180,7 @@ test_that("the `fmt_partsper()` function works correctly", {
       "100.00 ppm", "10.00 ppm", "1.00 ppm", "0.10 ppm", "0.01 ppm",
       "0.00 ppm", "0.00 ppm", "0.00 ppm", "0.00 ppm", "0.00 ppm", "0.00 ppm",
       "0.00 ppm", "0.00 ppm", "0.00 ppm", "0.00 ppm", "NA", "Inf ppm",
-      "&minus;Inf ppm"
+      paste0("\U02212", "Inf ppm")
     )
   )
 
@@ -192,14 +190,14 @@ test_that("the `fmt_partsper()` function works correctly", {
        fmt_partsper(columns = num, to_units = "ppm") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
-      "$1,000,000.00 \\text{ppm}$", "$100,000.00 \\text{ppm}$",
-      "$10,000.00 \\text{ppm}$", "$1,000.00 \\text{ppm}$",
-      "$100.00 \\text{ppm}$", "$10.00 \\text{ppm}$",
-      "$1.00 \\text{ppm}$", "$0.10 \\text{ppm}$", "$0.01 \\text{ppm}$",
-      "$0.00 \\text{ppm}$", "$0.00 \\text{ppm}$", "$0.00 \\text{ppm}$",
-      "$0.00 \\text{ppm}$", "$0.00 \\text{ppm}$", "$0.00 \\text{ppm}$",
-      "$0.00 \\text{ppm}$", "$0.00 \\text{ppm}$", "$0.00 \\text{ppm}$",
-      "$0.00 \\text{ppm}$", "NA", "$Inf \\text{ppm}$", "$-Inf \\text{ppm}$"
+      "1,000,000.00 ppm", "100,000.00 ppm",
+      "10,000.00 ppm", "1,000.00 ppm",
+      "100.00 ppm", "10.00 ppm",
+      "1.00 ppm", "0.10 ppm", "0.01 ppm",
+      "0.00 ppm", "0.00 ppm", "0.00 ppm",
+      "0.00 ppm", "0.00 ppm", "0.00 ppm",
+      "0.00 ppm", "0.00 ppm", "0.00 ppm",
+      "0.00 ppm", "NA", "Inf ppm", "-Inf ppm"
     )
   )
 
@@ -227,7 +225,7 @@ test_that("the `fmt_partsper()` function works correctly", {
       "1,000,000.00 ppb", "100,000.00 ppb", "10,000.00 ppb", "1,000.00 ppb",
       "100.00 ppb", "10.00 ppb", "1.00 ppb", "0.10 ppb", "0.01 ppb",
       "0.00 ppb", "0.00 ppb", "0.00 ppb", "0.00 ppb", "0.00 ppb", "0.00 ppb",
-      "0.00 ppb", "NA", "Inf ppb", "&minus;Inf ppb"
+      "0.00 ppb", "NA", "Inf ppb", paste0("\U02212", "Inf ppb")
     )
   )
 
@@ -237,14 +235,14 @@ test_that("the `fmt_partsper()` function works correctly", {
        fmt_partsper(columns = num, to_units = "ppb") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
-      "$1,000,000,000.00 \\text{ppb}$", "$100,000,000.00 \\text{ppb}$",
-      "$10,000,000.00 \\text{ppb}$", "$1,000,000.00 \\text{ppb}$",
-      "$100,000.00 \\text{ppb}$", "$10,000.00 \\text{ppb}$", "$1,000.00 \\text{ppb}$",
-      "$100.00 \\text{ppb}$", "$10.00 \\text{ppb}$", "$1.00 \\text{ppb}$",
-      "$0.10 \\text{ppb}$", "$0.01 \\text{ppb}$", "$0.00 \\text{ppb}$",
-      "$0.00 \\text{ppb}$", "$0.00 \\text{ppb}$", "$0.00 \\text{ppb}$",
-      "$0.00 \\text{ppb}$", "$0.00 \\text{ppb}$", "$0.00 \\text{ppb}$",
-      "NA", "$Inf \\text{ppb}$", "$-Inf \\text{ppb}$"
+      "1,000,000,000.00 ppb", "100,000,000.00 ppb",
+      "10,000,000.00 ppb", "1,000,000.00 ppb",
+      "100,000.00 ppb", "10,000.00 ppb", "1,000.00 ppb",
+      "100.00 ppb", "10.00 ppb", "1.00 ppb",
+      "0.10 ppb", "0.01 ppb", "0.00 ppb",
+      "0.00 ppb", "0.00 ppb", "0.00 ppb",
+      "0.00 ppb", "0.00 ppb", "0.00 ppb",
+      "NA", "Inf ppb", "-Inf ppb"
     )
   )
 
@@ -273,7 +271,7 @@ test_that("the `fmt_partsper()` function works correctly", {
       "1,000,000.00 ppt", "100,000.00 ppt", "10,000.00 ppt", "1,000.00 ppt",
       "100.00 ppt", "10.00 ppt", "1.00 ppt", "0.10 ppt", "0.01 ppt",
       "0.00 ppt", "0.00 ppt", "0.00 ppt", "0.00 ppt", "NA", "Inf ppt",
-      "&minus;Inf ppt"
+      paste0("\U02212", "Inf ppt")
     )
   )
 
@@ -283,14 +281,14 @@ test_that("the `fmt_partsper()` function works correctly", {
        fmt_partsper(columns = num, to_units = "ppt") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
-      "$1,000,000,000,000.00 \\text{ppt}$", "$100,000,000,000.00 \\text{ppt}$",
-      "$10,000,000,000.00 \\text{ppt}$", "$1,000,000,000.00 \\text{ppt}$",
-      "$100,000,000.00 \\text{ppt}$", "$10,000,000.00 \\text{ppt}$",
-      "$1,000,000.00 \\text{ppt}$", "$100,000.00 \\text{ppt}$", "$10,000.00 \\text{ppt}$",
-      "$1,000.00 \\text{ppt}$", "$100.00 \\text{ppt}$", "$10.00 \\text{ppt}$",
-      "$1.00 \\text{ppt}$", "$0.10 \\text{ppt}$", "$0.01 \\text{ppt}$",
-      "$0.00 \\text{ppt}$", "$0.00 \\text{ppt}$", "$0.00 \\text{ppt}$",
-      "$0.00 \\text{ppt}$", "NA", "$Inf \\text{ppt}$", "$-Inf \\text{ppt}$"
+      "1,000,000,000,000.00 ppt", "100,000,000,000.00 ppt",
+      "10,000,000,000.00 ppt", "1,000,000,000.00 ppt",
+      "100,000,000.00 ppt", "10,000,000.00 ppt",
+      "1,000,000.00 ppt", "100,000.00 ppt", "10,000.00 ppt",
+      "1,000.00 ppt", "100.00 ppt", "10.00 ppt",
+      "1.00 ppt", "0.10 ppt", "0.01 ppt",
+      "0.00 ppt", "0.00 ppt", "0.00 ppt",
+      "0.00 ppt", "NA", "Inf ppt", "-Inf ppt"
     )
   )
 
@@ -320,7 +318,7 @@ test_that("the `fmt_partsper()` function works correctly", {
       "10,000,000,000.00 ppq", "1,000,000,000.00 ppq", "100,000,000.00 ppq",
       "10,000,000.00 ppq", "1,000,000.00 ppq", "100,000.00 ppq", "10,000.00 ppq",
       "1,000.00 ppq", "100.00 ppq", "10.00 ppq", "1.00 ppq", "0.10 ppq",
-      "0.01 ppq", "0.00 ppq", "NA", "Inf ppq", "&minus;Inf ppq"
+      "0.01 ppq", "0.00 ppq", "NA", "Inf ppq", paste0("\U02212", "Inf ppq")
     )
   )
 
@@ -330,15 +328,15 @@ test_that("the `fmt_partsper()` function works correctly", {
        fmt_partsper(columns = num, to_units = "ppq") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
-      "$1,000,000,000,000,000.00 \\text{ppq}$", "$100,000,000,000,000.00 \\text{ppq}$",
-      "$10,000,000,000,000.00 \\text{ppq}$", "$1,000,000,000,000.00 \\text{ppq}$",
-      "$100,000,000,000.00 \\text{ppq}$", "$10,000,000,000.00 \\text{ppq}$",
-      "$1,000,000,000.00 \\text{ppq}$", "$100,000,000.00 \\text{ppq}$",
-      "$10,000,000.00 \\text{ppq}$", "$1,000,000.00 \\text{ppq}$",
-      "$100,000.00 \\text{ppq}$", "$10,000.00 \\text{ppq}$", "$1,000.00 \\text{ppq}$",
-      "$100.00 \\text{ppq}$", "$10.00 \\text{ppq}$", "$1.00 \\text{ppq}$",
-      "$0.10 \\text{ppq}$", "$0.01 \\text{ppq}$", "$0.00 \\text{ppq}$",
-      "NA", "$Inf \\text{ppq}$", "$-Inf \\text{ppq}$"
+      "1,000,000,000,000,000.00 ppq", "100,000,000,000,000.00 ppq",
+      "10,000,000,000,000.00 ppq", "1,000,000,000,000.00 ppq",
+      "100,000,000,000.00 ppq", "10,000,000,000.00 ppq",
+      "1,000,000,000.00 ppq", "100,000,000.00 ppq",
+      "10,000,000.00 ppq", "1,000,000.00 ppq",
+      "100,000.00 ppq", "10,000.00 ppq", "1,000.00 ppq",
+      "100.00 ppq", "10.00 ppq", "1.00 ppq",
+      "0.10 ppq", "0.01 ppq", "0.00 ppq",
+      "NA", "Inf ppq", "-Inf ppq"
     )
   )
 
@@ -363,17 +361,14 @@ test_that("the `fmt_partsper()` function works correctly", {
 
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_partsper()`
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>% fmt_partsper(columns = a) %>% as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_partsper(columns = a, rows = 1:5) %>% as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_partsper(columns = a, pattern = "a{x}b") %>% as_raw_html()
   )

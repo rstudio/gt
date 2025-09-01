@@ -1,7 +1,7 @@
 ---
 output: 
   pdf_document:
-    extra_dependencies: ["longtable", "caption", "amsmath", "booktabs"]
+    extra_dependencies: ["booktabs", "caption", "longtable", "colortbl", "array"]
 ---
 
 ```{r setup, include=FALSE}

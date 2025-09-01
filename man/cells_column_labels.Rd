@@ -7,80 +7,61 @@
 cells_column_labels(columns = everything())
 }
 \arguments{
-\item{columns}{The names of the column labels that are to be targeted.}
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+The columns to which targeting operations are constrained. Can either
+be a series of column names provided in \code{c()}, a vector of column indices,
+or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}).}
 }
 \value{
 A list object with the classes \code{cells_column_labels} and
 \code{location_cells}.
 }
 \description{
-The \code{cells_column_labels()} function is used to target the table's column
+\code{cells_column_labels()} is used to target the table's column
 labels when applying a footnote with \code{\link[=tab_footnote]{tab_footnote()}} or adding custom style
 with \code{\link[=tab_style]{tab_style()}}. The function is expressly used in each of those
 functions' \code{locations} argument. The 'column_labels' location is present by
 default in every \strong{gt} table.
 }
-\section{Overview of Location Helper Functions}{
+\section{Targeting columns with the \code{columns} argument}{
 
-Location helper functions can be used to target cells with virtually any
-function that has a \code{locations} argument. Here is a listing of all of the
-location helper functions, with locations corresponding roughly from top to
-bottom of a table:
-\itemize{
-\item \code{\link[=cells_title]{cells_title()}}: targets the table title or the table subtitle depending on
-the value given to the \code{groups} argument (\code{"title"} or \code{"subtitle"}).
-\item \code{\link[=cells_stubhead]{cells_stubhead()}}: targets the stubhead location, a cell of which is only
-available when there is a stub; a label in that location can be created by
-using the \code{\link[=tab_stubhead]{tab_stubhead()}} function.
-\item \code{\link[=cells_column_spanners]{cells_column_spanners()}}: targets the spanner column labels with the
-\code{spanners} argument; spanner column labels appear above the column labels.
-\item \code{\link[=cells_column_labels]{cells_column_labels()}}: targets the column labels with its \code{columns}
-argument.
-\item \code{\link[=cells_row_groups]{cells_row_groups()}}: targets the row group labels in any available row
-groups using the \code{groups} argument.
-\item \code{\link[=cells_stub]{cells_stub()}}: targets row labels in the table stub using the \code{rows}
-argument.
-\item \code{\link[=cells_body]{cells_body()}}: targets data cells in the table body using intersections of
-\code{columns} and \code{rows}.
-\item \code{\link[=cells_summary]{cells_summary()}}: targets summary cells in the table body using the
-\code{groups} argument and intersections of \code{columns} and \code{rows}.
-\item \code{\link[=cells_grand_summary]{cells_grand_summary()}}: targets cells of the table's grand summary using
-intersections of \code{columns} and \code{rows}
-\item \code{\link[=cells_stub_summary]{cells_stub_summary()}}: targets summary row labels in the table stub using
-the \code{groups} and \code{rows} arguments.
-\item \code{\link[=cells_stub_grand_summary]{cells_stub_grand_summary()}}: targets grand summary row labels in the table
-stub using the \code{rows} argument.
-\item \code{\link[=cells_footnotes]{cells_footnotes()}}: targets all footnotes in the table footer (cannot be
-used with \code{\link[=tab_footnote]{tab_footnote()}}).
-\item \code{\link[=cells_source_notes]{cells_source_notes()}}: targets all source notes in the table footer
-(cannot be used with \code{\link[=tab_footnote]{tab_footnote()}}).
-}
 
-When using any of the location helper functions with an appropriate function
-that has a \code{locations} argument (e.g., \code{\link[=tab_style]{tab_style()}}), multiple locations
-can be targeted by enclosing several \verb{cells_*()} helper functions in a
-\code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
+The \code{columns} argument allows us to target a subset of columns contained in
+the table. We can declare column names in \code{c()} (with bare column names or
+names in quotes) or we can use \strong{tidyselect}-style expressions. This can be
+as basic as supplying a select helper like \code{starts_with()}, or, providing a
+more complex incantation like
+
+\code{where(~ is.numeric(.x) & max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 }
 
 \section{Examples}{
 
 
-Use \code{\link{sza}} to create a \strong{gt} table. Add footnotes to the column labels with
-\code{\link[=tab_footnote]{tab_footnote()}} and \code{cells_column_labels()} in \code{locations}.
+Let's use a small portion of the \code{\link{sza}} dataset to create a \strong{gt} table.
+Add footnotes to the column labels with \code{\link[=tab_footnote]{tab_footnote()}} and
+\code{cells_column_labels()} in \code{locations}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(
     latitude == 20 & month == "jan" &
       !is.na(sza)
-  ) \%>\%
-  dplyr::select(-latitude, -month) \%>\%
-  gt() \%>\%
+  ) |>
+  dplyr::select(-latitude, -month) |>
+  gt() |>
   tab_footnote(
     footnote = "True solar time.",
     locations = cells_column_labels(
       columns = tst
     )
-  ) \%>\%
+  ) |>
   tab_footnote(
     footnote = "Solar zenith angle.",
     locations = cells_column_labels(
@@ -90,42 +71,34 @@ Use \code{\link{sza}} to create a \strong{gt} table. Add footnotes to the column
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_column_labels_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_column_labels_1.png" alt="This image of a table was generated from the first code example in the `cells_column_labels()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-7-8
+8-15
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
-Other Helper Functions: 
-\code{\link{adjust_luminance}()},
-\code{\link{cell_borders}()},
-\code{\link{cell_fill}()},
-\code{\link{cell_text}()},
+Other location helper functions: 
 \code{\link{cells_body}()},
 \code{\link{cells_column_spanners}()},
 \code{\link{cells_footnotes}()},
 \code{\link{cells_grand_summary}()},
 \code{\link{cells_row_groups}()},
 \code{\link{cells_source_notes}()},
+\code{\link{cells_stub}()},
 \code{\link{cells_stub_grand_summary}()},
 \code{\link{cells_stub_summary}()},
 \code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
-\code{\link{currency}()},
-\code{\link{default_fonts}()},
-\code{\link{escape_latex}()},
-\code{\link{google_font}()},
-\code{\link{gt_latex_dependencies}()},
-\code{\link{html}()},
-\code{\link{md}()},
-\code{\link{pct}()},
-\code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{location-helper}}
 }
-\concept{Helper Functions}
+\concept{location helper functions}

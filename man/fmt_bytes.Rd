@@ -6,7 +6,7 @@
 \usage{
 fmt_bytes(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   standard = c("decimal", "binary"),
   decimals = 1,
@@ -23,80 +23,145 @@ fmt_bytes(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{standard}{The way to express large byte sizes.}
+\item{columns}{\emph{Columns to target}
 
-\item{decimals}{An option to specify the exact number of decimal places to
-use. The default number of decimal places is \code{1}.}
+\code{\link[=rows-columns]{<column-targeting expression>}} // \emph{default:} \code{everything()}
 
-\item{n_sigfig}{A option to format numbers to \emph{n} significant figures. By
-default, this is \code{NULL} and thus number values will be formatted according
-to the number of decimal places set via \code{decimals}. If opting to format
-according to the rules of significant figures, \code{n_sigfig} must be a number
-greater than or equal to \code{1}. Any values passed to the \code{decimals} and
-\code{drop_trailing_zeros} arguments will be ignored.}
+Can either be a series of column names provided in \code{c()}, a vector of
+column indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}} and \code{\link[=everything]{everything()}}).}
 
-\item{drop_trailing_zeros}{A logical value that allows for removal of
-trailing zeros (those redundant zeros after the decimal mark).}
+\item{rows}{\emph{Rows to target}
 
-\item{drop_trailing_dec_mark}{A logical value that determines whether decimal
-marks should always appear even if there are no decimal digits to display
-after formatting (e.g, \code{23} becomes \code{23.}). The default for this is \code{TRUE},
-which means that trailing decimal marks are not shown.}
+\code{\link[=rows-columns]{<row-targeting expression>}} // \emph{default:} \code{everything()}
 
-\item{use_seps}{An option to use digit group separators. The type of digit
-group separator is set by \code{sep_mark} and overridden if a locale ID is
-provided to \code{locale}. This setting is \code{TRUE} by default.}
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{c()}, a vector of row indices, or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+\item{standard}{\emph{Standard used to express byte sizes}
 
-\item{sep_mark}{The mark to use as a separator between groups of digits
-(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \verb{1,000}).}
+\verb{singl-kw:[decimal|binary]} // \emph{default:} \code{"decimal"}
 
-\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
+The form of expressing large byte sizes is divided between: (1) decimal
+units (powers of 1000; e.g., \code{"kB"} and \code{"MB"}), and (2) binary units
+(powers of 1024; e.g., \code{"KiB"} and \code{"MiB"}).}
 
-\item{force_sign}{Should the positive sign be shown for positive numbers
-(effectively showing a sign for all numbers except zero)? If so, use \code{TRUE}
-for this option. The default is \code{FALSE}, where only negative numbers will
-display a minus sign.}
+\item{decimals}{\emph{Number of decimal places}
 
-\item{incl_space}{An option for whether to include a space between the value
-and the units. The default of \code{TRUE} uses a space character for separation.}
+\code{scalar<numeric|integer>(val>=0)} // \emph{default:} \code{1}
 
-\item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en_US"} for English
-(United States) and \code{"fr_FR"} for French (France). The use of a valid
-locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
-We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
-the locales that are supported. Any \code{locale} value provided here will
-override any global locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale}
-argument.}
+This corresponds to the exact number of decimal places to use. A value
+such as \code{2.34} can, for example, be formatted with \code{0} decimal places and
+it would result in \code{"2"}. With \code{4} decimal places, the formatted value
+becomes \code{"2.3400"}. The trailing zeros can be removed with
+\code{drop_trailing_zeros = TRUE}.}
+
+\item{n_sigfig}{\emph{Number of significant figures}
+
+\code{scalar<numeric|integer>(val>=1)} // \emph{default:} \code{NULL} (\code{optional})
+
+A option to format numbers to \emph{n} significant figures. By default, this is
+\code{NULL} and thus number values will be formatted according to the number of
+decimal places set via \code{decimals}. If opting to format according to the
+rules of significant figures, \code{n_sigfig} must be a number greater than or
+equal to \code{1}. Any values passed to the \code{decimals} and \code{drop_trailing_zeros}
+arguments will be ignored.}
+
+\item{drop_trailing_zeros}{\emph{Drop any trailing zeros}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+A logical value that allows for removal of trailing zeros (those redundant
+zeros after the decimal mark).}
+
+\item{drop_trailing_dec_mark}{\emph{Drop the trailing decimal mark}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+A logical value that determines whether decimal marks should always appear
+even if there are no decimal digits to display after formatting (e.g., \code{23}
+becomes \code{23.} if \code{FALSE}). By default trailing decimal marks are not shown.}
+
+\item{use_seps}{\emph{Use digit group separators}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to use digit group separators. The type of digit group separator
+is set by \code{sep_mark} and overridden if a locale ID is provided to \code{locale}.
+This setting is \code{TRUE} by default.}
+
+\item{pattern}{\emph{Specification of the formatting pattern}
+
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
+
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{sep_mark}{\emph{Separator mark for digit grouping}
+
+\verb{scalar<character>} // \emph{default:} \code{","}
+
+The string to use as a separator between groups of digits. For example,
+using \code{sep_mark = ","} with a value of \code{1000} would result in a formatted
+value of \code{"1,000"}. This argument is ignored if a \code{locale} is supplied
+(i.e., is not \code{NULL}).}
+
+\item{dec_mark}{\emph{Decimal mark}
+
+\verb{scalar<character>} // \emph{default:} \code{"."}
+
+The string to be used as the decimal mark. For example, using
+\code{dec_mark = ","} with the value \code{0.152} would result in a formatted value
+of \code{"0,152"}). This argument is ignored if a \code{locale} is supplied (i.e., is
+not \code{NULL}).}
+
+\item{force_sign}{\emph{Forcing the display of a positive sign}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should the positive sign be shown for positive numbers (effectively showing
+a sign for all numbers except zero)? If so, use \code{TRUE} for this option. The
+default is \code{FALSE}, where only negative numbers will display a minus sign.}
+
+\item{incl_space}{\emph{Include a space between the value and the units}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option for whether to include a space between the value and the units.
+The default is to use a space character for separation.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according to the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported. A locale ID can
+be also set in the initial \code{\link[=gt]{gt()}} function call (where it would be used
+automatically by any function with a \code{locale} argument) but a \code{locale}
+value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \strong{gt} table, we can transform those to values of
-bytes with human readable units. The \code{fmt_bytes()} function allows for the
+bytes with human readable units. \code{fmt_bytes()} allows for the
 formatting of byte sizes to either of two common representations: (1) with
 decimal units (powers of 1000, examples being \code{"kB"} and \code{"MB"}), and (2)
 with binary units (powers of 1024, examples being \code{"KiB"} and \code{"MiB"}).
@@ -117,72 +182,142 @@ values
 formatting specific to the chosen locale
 }
 }
-\details{
-Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the \emph{Arguments} section for more information on this.
+\section{Compatibility of formatting function with data values}{
+
+
+\code{fmt_bytes()} is compatible with body cells that are of the \code{"numeric"} or
+\code{"integer"} types. Any other types of body cells are ignored during
+formatting. This is to say that cells of incompatible data types may be
+targeted, but there will be no attempt to format them.
 }
+
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+\code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{fmt_bytes()} to obtain
+varying parameter values from a specified column within the table. This means
+that each row could be formatted a little bit differently. These arguments
+provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{standard}
+\item \code{decimals}
+\item \code{n_sigfig}
+\item \code{drop_trailing_zeros}
+\item \code{drop_trailing_dec_mark}
+\item \code{use_seps}
+\item \code{pattern}
+\item \code{sep_mark}
+\item \code{dec_mark}
+\item \code{force_sign}
+\item \code{incl_space}
+\item \code{locale}
+}
+
+Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with \code{\link[=cols_add]{cols_add()}} (if not already present). Columns that contain
+parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+Finally, there is no limitation to how many arguments the \code{\link[=from_column]{from_column()}}
+helper is applied so long as the arguments belong to this closed set.
+}
+
+\section{Adapting output to a specific \code{locale}}{
+
+
+This formatting function can adapt outputs according to a provided \code{locale}
+value. Examples include \code{"en"} for English (United States) and \code{"fr"} for
+French (France). The use of a valid locale ID here means separator and
+decimal marks will be correct for the given locale. Should any values be
+provided in \code{sep_mark} or \code{dec_mark}, they will be overridden by the locale's
+preferred values.
+
+Note that a \code{locale} value provided here will override any global locale
+setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument (it is settable there as
+a value received by all other functions that have a \code{locale} argument). As a
+useful reference on which locales are supported, we can call \code{\link[=info_locales]{info_locales()}}
+to view an info table.
+}
+
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column to have
-byte sizes in the decimal standard.
+Use a single column from the \code{\link{exibble}} dataset and create a simple \strong{gt}
+table. We'll use \code{fmt_bytes()} to format the \code{num} column to display as byte
+sizes in the decimal standard.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num) \%>\%
-  gt() \%>\%
-  fmt_bytes(columns = num)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num) |>
+  gt() |>
+  fmt_bytes()
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_bytes_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_bytes_1.png" alt="This image of a table was generated from the first code example in the `fmt_bytes()` help file." style="width:100\%;">
 }}
 
-Create a similar table with the \code{fmt_bytes()} function, this time showing
-byte sizes as binary values.
+Let's create an analogous table again by using \code{fmt_bytes()},
+this time showing byte sizes as binary values by using \code{standard = "binary"}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num) \%>\%
-  gt() \%>\%
-  fmt_bytes(
-    columns = num,
-    standard = "binary"
-  )
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num) |>
+  gt() |>
+  fmt_bytes(standard = "binary")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_bytes_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_bytes_2.png" alt="This image of a table was generated from the second code example in the `fmt_bytes()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-3-9
+3-12
+}
+
+\section{Function Introduced}{
+
+\code{v0.3.0} (May 12, 2021)
 }
 
 \seealso{
-Other Format Data: 
+The vector-formatting version of this function: \code{\link[=vec_fmt_bytes]{vec_fmt_bytes()}}.
+
+Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt}()},
+\code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
+\code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_icon}()},
+\code{\link{fmt_image}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
+\code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
-\code{\link{fmt}()},
+\code{\link{fmt_units}()},
+\code{\link{fmt_url}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
-\code{\link{sub_zero}()},
-\code{\link{text_transform}()}
+\code{\link{sub_values}()},
+\code{\link{sub_zero}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}

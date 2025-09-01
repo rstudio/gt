@@ -10,58 +10,103 @@ as_word(
   caption_location = c("top", "bottom", "embed"),
   caption_align = "left",
   split = FALSE,
-  keep_with_next = TRUE
+  keep_with_next = TRUE,
+  autonum = TRUE
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{gt()} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{align}{left, center (default) or right.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{caption_location}{top (default), bottom, or embed Indicating if the
-title and subtitle should be listed above, below, or be embedded in the
-table}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{caption_align}{left (default), center, or right. Alignment of caption
-(title and subtitle). Used when \code{caption_location} is not "embed".}
+\item{align}{\emph{Table alignment}
 
-\item{split}{TRUE or FALSE (default) indicating whether activate Word option
-'Allow row to break across pages'.}
+\verb{scalar<character>} // \emph{default:} \code{"center"}
 
-\item{keep_with_next}{TRUE (default) or FALSE indicating whether a table
-should use Word option 'keep rows together' is activated when TRUEd}
+An option for table alignment. Can either be \code{"center"}, \code{"left"}, or
+\code{"right"}.}
+
+\item{caption_location}{\emph{Caption location}
+
+\verb{singl-kw:[top|bottom|embed]} // \emph{default:} \code{"top"}
+
+Determines where the caption should be positioned. This can either be
+\code{"top"}, \code{"bottom"}, or \code{"embed"}.}
+
+\item{caption_align}{\emph{Caption alignment}
+
+Determines the alignment of the caption. This is
+either \code{"left"} (the default), \code{"center"}, or \code{"right"}. This option is
+only used when \code{caption_location} is not set as \code{"embed"}.}
+
+\item{split}{\emph{Allow splitting of a table row across pages}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+A logical value that indicates whether to activate the Word option
+\verb{Allow row to break across pages}.}
+
+\item{keep_with_next}{\emph{Keeping rows together}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+A logical value that indicates whether a table should use Word option
+\verb{Keep rows together}.}
+
+\item{autonum}{Automatic Table Numbering
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+A logical value that indicates whether a table should use Words built-in
+auto table numbering option in the caption.
+\verb{Automatic Table Numbering}.}
 }
 \description{
-Get the Open Office XML table tag content from a \code{gt_tbl} object as as a
+Get the Open Office XML table tag content from a \code{gt_tbl} object as a
 single-element character vector.
 }
+\section{Examples}{
+
+
+Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a header
+with \code{\link[=tab_header]{tab_header()}} and then export the table as OOXML code for Word using
+\code{as_word()}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_rtf <-
+  gtcars |>
+  dplyr::select(mfr, model) |>
+  dplyr::slice(1:2) |>
+  gt() |>
+  tab_header(
+    title = md("Data listing from **gtcars**"),
+    subtitle = md("`gtcars` is an R dataset")
+  ) |>
+  as_word()
+}\if{html}{\out{</div>}}
+}
+
 \section{Function ID}{
 
 13-5
 }
 
-\examples{
-# Use `gtcars` to create a gt table;
-# add a header and then export as
-# OOXML code for Word
-tab_rtf <-
-  gtcars \%>\%
-  dplyr::select(mfr, model) \%>\%
-  dplyr::slice(1:2) \%>\%
-  gt() \%>\%
-  tab_header(
-    title = md("Data listing from **gtcars**"),
-    subtitle = md("`gtcars` is an R dataset")
-  ) \%>\%
-  as_word()
+\section{Function Introduced}{
 
+\code{v0.7.0} (August 25, 2022)
 }
+
 \seealso{
-Other Export Functions: 
+Other table export functions: 
+\code{\link{as_gtable}()},
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
+\code{\link{extract_body}()},
+\code{\link{extract_cells}()},
 \code{\link{extract_summary}()},
 \code{\link{gtsave}()}
 }
-\concept{Export Functions}
+\concept{table export functions}

@@ -7,11 +7,20 @@
 tab_source_note(data, source_note)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{source_note}{Text to be used in the source note. We can optionally use
-the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as Markdown or to
-retain HTML elements in the text.}
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{source_note}{\emph{Source note text}
+
+\verb{scalar<character>} // \strong{required}
+
+Text to be used in the source note. We can optionally use \code{\link[=md]{md()}} and
+\code{\link[=html]{html()}} to style the text as Markdown or to retain HTML elements
+in the text.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -26,35 +35,46 @@ or, if the table is intended for HTML output, we can include HTML formatting.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Use \code{tab_source_note()} to add a
-source note to the table footer that cites the data source.
+With three columns from the \code{\link{gtcars}} dataset, let's create a \strong{gt} table.
+We can use \code{tab_source_note()} to add a source note to the table
+footer. Here we are citing the data source but this function can be used for
+any text you'd prefer to display in the footer section.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(mfr, model, msrp) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
   tab_source_note(source_note = "From edmunds.com")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_source_note_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_source_note_1.png" alt="This image of a table was generated from the first code example in the `tab_source_note()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-2-7
+2-8
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
-Other Create or Modify Parts: 
+Other part creation/modification functions: 
+\code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
+\code{\link{tab_info}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
-\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_spanner_delim}()},
+\code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
-\code{\link{tab_style}()}
+\code{\link{tab_style}()},
+\code{\link{tab_style_body}()}
 }
-\concept{Create or Modify Parts}
+\concept{part creation/modification functions}

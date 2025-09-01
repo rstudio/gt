@@ -2,23 +2,38 @@
 % Please edit documentation in R/gt_preview.R
 \name{gt_preview}
 \alias{gt_preview}
-\title{Preview a \strong{gt} table object}
+\title{Generate a special \strong{gt} table for previewing a dataset}
 \usage{
 gt_preview(data, top_n = 5, bottom_n = 1, incl_rownums = TRUE)
 }
 \arguments{
-\item{data}{A \code{data.frame} object or a tibble.}
+\item{data}{\emph{Input data table}
 
-\item{top_n}{This value will be used as the number of rows from the top of
-the table to display. The default, \code{5}, will show the first five rows of
-the table.}
+\verb{obj:<data.frame>|obj:<tbl_df>} // \strong{required}
 
-\item{bottom_n}{The value will be used as the number of rows from the bottom
+A \code{data.frame} object or a tibble (\code{tbl_df}).}
+
+\item{top_n}{\emph{Top n rows to display}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{5}
+
+The \code{top_n} value will be used as the number of rows from the top of the
+table to display. The default, \code{5}, will show the first five rows of the
+table.}
+
+\item{bottom_n}{\emph{Bottom n rows to display}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{1}
+
+The \code{bottom_n} value will be used as the number of rows from the bottom
 of the table to display. The default, \code{1}, will show the final row of the
 table.}
 
-\item{incl_rownums}{An option to include the row numbers for \code{data} in the
-table stub. By default, this is \code{TRUE}.}
+\item{incl_rownums}{\emph{Display row numbers}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to include the row numbers for \code{data} in the table stub.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -32,25 +47,24 @@ modify the output of \code{gt_preview()}. Furthermore, you cannot pass a \strong
 object to \code{gt_preview()}.
 }
 \details{
-Any grouped data or magic columns such as \code{rowname} and \code{groupname} will be
-ignored by \code{gt_preview()} and, as such, one cannot add a stub or group rows
-in the output table. By default, the output table will include row numbers in
-a stub (including a range of row numbers for the omitted rows). This row
-numbering option can be deactivated by setting \code{incl_rownums} to \code{FALSE}.
+By default, the output table will include row numbers in a stub (including a
+range of row numbers for the omitted rows). This row numbering option can be
+deactivated by setting \code{incl_rownums} to \code{FALSE}.
 }
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table preview (with only a few of its
-columns). You'll see the first five rows and the last row.
+With three columns from the \code{\link{gtcars}} dataset, let's create a \strong{gt} table
+preview with the \code{gt_preview()} function. You'll get only the first five rows
+and the last row.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(mfr, model, year) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, model, year) |>
   gt_preview()
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_preview_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_preview_1.png" alt="This image of a table was generated from the first code example in the `gt_preview()` help file." style="width:100\%;">
 }}
 }
 
@@ -59,8 +73,13 @@ columns). You'll see the first five rows and the last row.
 1-2
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
-Other Create Table: 
+Other table creation functions: 
 \code{\link{gt}()}
 }
-\concept{Create Table}
+\concept{table creation functions}
