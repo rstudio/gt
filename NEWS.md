@@ -22,6 +22,8 @@
 
 * Added support for some unicode characters when going out to LaTeX (@thebioengineer)
 
+* Added support for rtf to fmt_image (@shannonhaughton, #2029)
+
 
 # gt 1.0.0
 
