@@ -28,9 +28,8 @@
       <td headers="row" class="gt_row gt_left">row_1</td>
       <td headers="group" class="gt_row gt_left">grp_a</td></tr>
         </tbody>
-        
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9"> A footnote.</td>
           </tr>
         </tfoot>
@@ -156,9 +155,8 @@
       <td headers="row" class="gt_row gt_left">row_1</td>
       <td headers="group" class="gt_row gt_left">grp_a</td></tr>
         </tbody>
-        
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9"> A footnote.</td>
           </tr>
         </tfoot>
@@ -284,12 +282,11 @@
       <td headers="row" class="gt_row gt_left">row_1</td>
       <td headers="group" class="gt_row gt_left">grp_a</td></tr>
         </tbody>
-        
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9"> A footnote.</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> A footnote.</td>
           </tr>
         </tfoot>
@@ -415,7 +412,6 @@
       <td headers="row" class="gt_row gt_left">row_1</td>
       <td headers="group" class="gt_row gt_left">grp_a</td></tr>
         </tbody>
-        
         <tfoot>
           <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9">
@@ -529,9 +525,8 @@
         <tbody class="gt_table_body">
           <tr><td headers="char" class="gt_row gt_left"><span class='gt_from_md'>apricot</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td></tr>
         </tbody>
-        
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="1"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> note</td>
           </tr>
         </tfoot>
@@ -551,9 +546,8 @@
         <tbody class="gt_table_body">
           <tr><td headers="char" class="gt_row gt_left"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> <span class='gt_from_md'>apricot</span></td></tr>
         </tbody>
-        
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="1"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> note</td>
           </tr>
         </tfoot>
@@ -573,9 +567,8 @@
         <tbody class="gt_table_body">
           <tr><td headers="char" class="gt_row gt_left"><span data-qmd-base64="YXByaWNvdA=="><span class='gt_from_md'>apricot</span></span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td></tr>
         </tbody>
-        
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="1"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> note</td>
           </tr>
         </tfoot>
@@ -595,9 +588,8 @@
         <tbody class="gt_table_body">
           <tr><td headers="char" class="gt_row gt_left"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> <span data-qmd-base64="YXByaWNvdA=="><span class='gt_from_md'>apricot</span></span></td></tr>
         </tbody>
-        
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="1"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> note</td>
           </tr>
         </tfoot>
@@ -635,9 +627,8 @@
           <tr><th id="summary_stub_soppressata_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row">sum</th>
       <td headers="soppressata summary_stub_soppressata_1 Pizzas Sold" class="gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row">961</td></tr>
         </tbody>
-        
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> The Pepper-Salami.</td>
           </tr>
         </tfoot>
@@ -677,10 +668,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
       \intbl {\f0 {\f0\fs20 peppr_salami{\super \i 1}}}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
       \intbl {\f0 {\f0\fs20 L}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
@@ -690,10 +681,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
       \intbl {\f0 {\f0\fs20 M}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
@@ -703,10 +694,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
       \intbl {\f0 {\f0\fs20 S}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
@@ -716,10 +707,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
       \intbl {\f0 {\f0\fs20 sum}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
@@ -729,10 +720,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
       \intbl {\f0 {\f0\fs20 soppressata}}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
       \intbl {\f0 {\f0\fs20 L}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
@@ -742,10 +733,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
       \intbl {\f0 {\f0\fs20 M}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
@@ -755,10 +746,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
       \intbl {\f0 {\f0\fs20 S}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
@@ -768,10 +759,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
       \intbl {\f0 {\f0\fs20 sum}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
@@ -879,4 +870,148 @@
       ! Can't add footnote "Grand summary cell footnote.".
       Caused by error in `cells_grand_summary()`:
       ! Grand summary row 15 does not exist in the data.
+
+# footnote consolidation works correctly (regression test for duplicate footnotes)
+
+    Code
+      cat(render_as_html(gt_tbl))
+    Output
+      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+        <thead>
+          <tr class="gt_col_headings">
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="name">name</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="csd_type">csd_type</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="population_2021">population_2021</th>
+          </tr>
+        </thead>
+        <tbody class="gt_table_body">
+          <tr><td headers="name" class="gt_row gt_left">Addington Highlands<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">2534</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Adelaide Metcalfe<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">3011</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Adjala-Tosorontio<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">10989</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Admaston/Bromley<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">2995</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Ajax<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">town</td>
+      <td headers="population_2021" class="gt_row gt_right">126666</td></tr>
+        </tbody>
+        <tfoot>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> Part of the Greater Toronto Area.</td>
+          </tr>
+        </tfoot>
+      </table>
+
+---
+
+    Code
+      cat(render_as_html(gt_tbl))
+    Output
+      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+        <thead>
+          <tr class="gt_col_headings">
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="name">name</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="csd_type">csd_type</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="population_2021">population_2021</th>
+          </tr>
+        </thead>
+        <tbody class="gt_table_body">
+          <tr><td headers="name" class="gt_row gt_left">Addington Highlands<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">2534</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Adelaide Metcalfe<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">3011</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Adjala-Tosorontio<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">10989</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Admaston/Bromley<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">2995</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Ajax<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">town</td>
+      <td headers="population_2021" class="gt_row gt_right">126666</td></tr>
+          <tr><td headers="name" class="gt_row gt_left">Alberton<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="csd_type" class="gt_row gt_left">township</td>
+      <td headers="population_2021" class="gt_row gt_right">954</td></tr>
+        </tbody>
+        <tfoot>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> Part of the Greater Toronto Area.</td>
+          </tr>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> Different footnote text.</td>
+          </tr>
+        </tfoot>
+      </table>
+
+# footnote kitchen sink test - comprehensive location and consolidation scenarios
+
+    Code
+      cat(render_as_html(gt_tbl))
+    Output
+      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+        <thead>
+          <tr class="gt_heading">
+            <td colspan="4" class="gt_heading gt_title gt_font_normal" style>Kitchen Sink Footnote Test<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+          </tr>
+          <tr class="gt_heading">
+            <td colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>Testing all footnote locations and consolidation<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2,3,4</sup></span></td>
+          </tr>
+          <tr class="gt_col_headings gt_spanner_row">
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="a::stub"></th>
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Data Columns">
+              <div class="gt_column_spanner">Data Columns<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>5</sup></span></div>
+            </th>
+          </tr>
+          <tr class="gt_col_headings">
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="num">num<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="char">char<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="currency">currency</th>
+          </tr>
+        </thead>
+        <tbody class="gt_table_body">
+          <tr><th id="stub_1_1" scope="row" class="gt_row gt_right gt_stub"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> 1</th>
+      <td headers="stub_1_1 num" class="gt_row gt_right">0.1111</td>
+      <td headers="stub_1_1 char" class="gt_row gt_left">apricot<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></td>
+      <td headers="stub_1_1 currency" class="gt_row gt_right"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>6</sup></span> 49.95</td></tr>
+          <tr><th id="stub_1_2" scope="row" class="gt_row gt_right gt_stub">2</th>
+      <td headers="stub_1_2 num" class="gt_row gt_right"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>6</sup></span> 2.2220</td>
+      <td headers="stub_1_2 char" class="gt_row gt_left">banana</td>
+      <td headers="stub_1_2 currency" class="gt_row gt_right"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>6</sup></span> 17.95</td></tr>
+          <tr><th id="stub_1_3" scope="row" class="gt_row gt_right gt_stub">3</th>
+      <td headers="stub_1_3 num" class="gt_row gt_right">33.3300</td>
+      <td headers="stub_1_3 char" class="gt_row gt_left">coconut</td>
+      <td headers="stub_1_3 currency" class="gt_row gt_right"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>6</sup></span> 1.39</td></tr>
+        </tbody>
+        <tfoot>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> Shared footnote across locations.</td>
+          </tr>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> First footnote on subtitle.</td>
+          </tr>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>3</sup></span> Second footnote on subtitle.</td>
+          </tr>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>4</sup></span> Third footnote on subtitle.</td>
+          </tr>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>5</sup></span> Unique column spanner footnote.</td>
+          </tr>
+          <tr class="gt_footnotes">
+            <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>6</sup></span> Repeated in body cells.</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="4">Source: exibble dataset</td>
+          </tr>
+        </tfoot>
+      </table>
 

@@ -512,7 +512,7 @@
 #' `original_title` column provides the title of the film in its spoken language
 #' (transliterated to Roman script where necessary).
 #'
-#' @format A tibble with 1,851 rows and 8 variables:
+#' @format A tibble with 1,873 rows and 8 variables:
 #' \describe{
 #' \item{year}{The year of the festival in which the film was in competition.}
 #' \item{title,original_title}{The `title` field provides the film title used
@@ -551,7 +551,7 @@
 #'
 #' @description
 #'
-#' A dataset with information on all 320 Paris Metro stations as of June 2024.
+#' A dataset with information on all 321 Paris Metro stations as of August 2025.
 #' Each record represents a station, describing which Metro lines are serviced
 #' by the station, which other connections are available, and annual passenger
 #' volumes. Basic location information is provided for each station in terms
@@ -572,7 +572,7 @@
 #' to the Transilien rail network, tramway stations, several major train
 #' stations (e.g., Gare du Nord, Gare de l'Est, etc.), and many bus lines.
 #'
-#' @format A tibble with 320 rows and 11 variables:
+#' @format A tibble with 321 rows and 11 variables:
 #' \describe{
 #' \item{name}{The name of the station.}
 #' \item{caption}{In some cases, a station will have a caption that might

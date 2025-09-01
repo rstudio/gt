@@ -81,7 +81,6 @@
       <td headers="carb" class="gt_row gt_right">2</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -169,7 +168,6 @@
       <td headers="carb" class="gt_row gt_right">2</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -255,7 +253,6 @@
       <td headers="carb" class="gt_row gt_right">2</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -340,7 +337,6 @@
       <td headers="gear" class="gt_row gt_right">3</td>
       <td headers="carb" class="gt_row gt_right">2</td></tr>
         </tbody>
-        
         
       </table>
 

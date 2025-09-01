@@ -1642,7 +1642,6 @@
       <td headers="zu" class="gt_row gt_left" style="font-size: smaller;">NA</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -3288,7 +3287,6 @@
       <td headers="zh" class="gt_row gt_left" style="font-size: smaller;">NA</td>
       <td headers="zu" class="gt_row gt_left" style="font-size: smaller;">NA</td></tr>
         </tbody>
-        
         
       </table>
 

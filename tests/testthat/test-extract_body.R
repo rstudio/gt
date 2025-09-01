@@ -373,7 +373,7 @@ test_that("Extraction of the table body works well", {
     tbl_body_1_8[["labels"]],
     c(
       "A",
-      "B<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;\"><sup>2</sup></span>",
+      "B<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;\"><sup>1</sup></span>",
       "C", "D", "E", "F", "G"
     )
   )
@@ -385,7 +385,7 @@ test_that("Extraction of the table body works well", {
     tbl_body_1_8[["num_2"]],
     c(
       "2.0", "5.0",
-      "2.0<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;\"><sup>3</sup></span>",
+      "2.0<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;\"><sup>2</sup></span>",
       "6.0", "2.6", "923.0", "-23.0"
     )
   )
@@ -440,7 +440,7 @@ test_that("Extraction of the table body works well", {
     tbl_body_1_8_b[["labels"]],
     c(
       "A",
-      "B<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;\"><sup>2</sup></span>",
+      "B<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;\"><sup>1</sup></span>",
       "C", "D", "E", "F", "G"
     )
   )
@@ -452,7 +452,7 @@ test_that("Extraction of the table body works well", {
     tbl_body_1_8_b[["num_2"]],
     c(
       "2.0", "5.0",
-      "2.0<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;\"><sup>3</sup></span>",
+      "2.0<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;\"><sup>2</sup></span>",
       "6.0", "2.6", "923.0", "-23.0"
     )
   )
