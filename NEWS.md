@@ -24,6 +24,7 @@
 
 * Use stub alignment values for RTF output (@shannonhaughton, #2019)
 
+* Added support for rtf to fmt_image (@shannonhaughton, #2029)
 
 # gt 1.0.0
 
