@@ -29,7 +29,8 @@ whether to apply the cell-specific colors to the cell background or the cell
 text
 text autocoloring: if colorizing the cell background, data_color() will
 automatically recolor the foreground text to provide the best contrast (can
-be deactivated with autocolor_text = FALSE)
+be deactivated with autocolor_text = FALSE; a light and dark color to be
+used can be specified with autocolor_light and autocolor_dark)
 
 
 data_color() won't fail with the default options used, but
@@ -65,7 +66,8 @@ whether to apply the cell-specific colors to the cell background or the cell
 text
 text autocoloring: if colorizing the cell background, data_color() will
 automatically recolor the foreground text to provide the best contrast (can
-be deactivated with autocolor_text = FALSE)
+be deactivated with autocolor_text = FALSE; a light and dark color to be
+used can be specified with autocolor_light and autocolor_dark)
 
 
 data_color() won't fail with the default options used, but
@@ -165,7 +167,8 @@ whether to apply the cell-specific colors to the cell background or the cell
 text</p></li>
 <li><p>text autocoloring: if colorizing the cell background, <code>data_color()</code> will
 automatically recolor the foreground text to provide the best contrast (can
-be deactivated with <code>autocolor_text = FALSE</code>)</p></li>
+be deactivated with <code>autocolor_text = FALSE</code>; a light and dark color to be
+used can be specified with <code>autocolor_light</code> and <code>autocolor_dark</code>)</p></li>
 </ul><p><code>data_color()</code> won't fail with the default options used, but
 that won't typically provide you the type of colorization you really need.
 You can however safely iterate through a collection of different options
@@ -194,6 +197,8 @@ without running into too many errors.</p>
 <span>  apply_to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fill"</span>, <span class="st">"text"</span><span class="op">)</span>,</span>
 <span>  autocolor_text <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  contrast_algo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"apca"</span>, <span class="st">"wcag"</span><span class="op">)</span>,</span>
+<span>  autocolor_light <span class="op">=</span> <span class="st">"#FFFFFF"</span>,</span>
+<span>  autocolor_dark <span class="op">=</span> <span class="st">"#000000"</span>,</span>
 <span>  colors <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -376,6 +381,22 @@ default this is <code>"apca"</code> (Accessible Perceptual Contrast Algorithm) a
 alternative to this is <code>"wcag"</code> (Web Content Accessibility Guidelines).</p></dd>
 
 
+<dt id="arg-autocolor-light">autocolor_light<a class="anchor" aria-label="anchor" href="#arg-autocolor-light"></a></dt>
+<dd><p><em>Automatically recolor text, light color</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"white"</code></p>
+<p>The light color to use when <code>autocolor_text = TRUE</code>. By default the color
+<code>"white"</code> will be used (<code>#FFFFFF"</code>). Alpha channel values will be set to
+1.0 (fully opaque).</p></dd>
+
+
+<dt id="arg-autocolor-dark">autocolor_dark<a class="anchor" aria-label="anchor" href="#arg-autocolor-dark"></a></dt>
+<dd><p><em>Automatically recolor text, dark color</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"black"</code></p>
+<p>The dark color to use when <code>autocolor_text = TRUE</code>. By default the color
+<code>"black"</code> will be used (<code>#000000"</code>). Alpha channel values will be set to
+1.0 (fully opaque).</p></dd>
+
+
 <dt id="arg-colors">colors<a class="anchor" aria-label="anchor" href="#arg-colors"></a></dt>
 <dd><p><em><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">Deprecated</a> Color mapping function</em></p>
 <p><code>function</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
@@ -490,7 +511,9 @@ when colorizing the background of data cells. This option can be disabled by
 setting <code>autocolor_text</code> to <code>FALSE</code>. The <code>contrast_algo</code> argument lets us
 choose between two color contrast algorithms: <code>"apca"</code> (<em>Accessible
 Perceptual Contrast Algorithm</em>, the default algo) and <code>"wcag"</code> (<em>Web Content
-Accessibility Guidelines</em>).</p>
+Accessibility Guidelines</em>). <code>autocolor_light</code> and <code>autocolor_dark</code> allow for
+further customization, however, should only be used if you are sure that
+accessibility criteria are guaranteed.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
