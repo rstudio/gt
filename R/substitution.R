@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -496,6 +496,16 @@ sub_small_vals <- function(
           context = "grid"
         )
       },
+      word = function(x) {
+
+        sub_replace_small_vals(
+          x,
+          threshold = threshold,
+          sign = sign,
+          small_pattern = small_pattern,
+          context = "word"
+        )
+      },
       default = function(x) {
 
         sub_replace_small_vals(
@@ -717,6 +727,16 @@ sub_large_vals <- function(
           sign = sign,
           large_pattern = large_pattern,
           context = "grid"
+        )
+      },
+      word = function(x) {
+
+        sub_replace_large_vals(
+          x,
+          threshold = threshold,
+          sign = sign,
+          large_pattern = large_pattern,
+          context = "word"
         )
       },
       default = function(x) {

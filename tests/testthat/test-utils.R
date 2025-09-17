@@ -474,12 +474,49 @@ test_that("Escaping is working when using `markdown_to_rtf()`", {
 
 test_that("str_substitute() works well", {
   expect_equal(
-    str_substitute(c("223", "223"), c(1,2), 2),
+    str_substitute(c("223", "223"), c(1, 2), 2),
     c("22", "2")
   )
   expect_snapshot(error = TRUE, {
-    str_substitute(c("223", "223", "224"), c(1,2), 2)
+    str_substitute(c("223", "223", "224"), c(1, 2), 2)
     str_substitute(c("223", "223", "224"), c(1), c(2, 3))
     str_substitute(c("223", "223", "224", "225"), c(1, 2, 3, 4), c(2, 3))
   })
+})
+
+test_that("apply_to_grp works",{
+  # create gt group example
+  gt_tbl <- exibble %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # create arguments - invalid function
+  arg_list <- list("fake_function", data = "gt_group(gt_tbl, gt_tbl)", align = c("center"))
+  expect_error(apply_to_grp(gt_group, arg_list), '"fake_function" is not an exported gt function')
+
+  # create arguments - cols_align function
+  arg_list <- list("cols_align", data = "gt_group(gt_tbl, gt_tbl)", align = c("center"))
+
+  # aligned gt_tbl
+  aligned_tbl <- gt_tbl %>%
+    cols_align(
+      align = "center"
+    )
+
+  # aligned group 2 ways: one via apply_to_group one via individual aligned tables
+  aligned_group <- apply_to_grp(gt_group, arg_list)
+
+  expect_identical(aligned_group, gt_group(aligned_tbl, aligned_tbl))
+
+
+  # error in table 2
+  gt_tbl2 <- exibble %>%
+    dplyr::select(-num) %>%
+    gt()
+
+  gt_group_error <- gt_group(gt_tbl, gt_tbl2)
+
+  arg_list <- list("cols_align", data = "gt_group(gt_tbl, gt_tbl)", align = c("center"), columns = "num")
+
+  # captures error of individual table and table number
+ expect_snapshot(apply_to_grp(gt_group_error, arg_list), error=TRUE)
 })

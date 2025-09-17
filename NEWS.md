@@ -1,20 +1,54 @@
 # gt (development version)
 
-* Fixed an issue where `fmt_markdown()` could create strange output in Quarto (html and Typst formats) (@olivroy, #1957, [quarto-dev/quarto-cli#11932](https://github.com/quarto-dev/quarto-cli/issues/11932), [quarto-dev/quarto-cli#11610](https://github.com/quarto-dev/quarto-cli/issues/11610)).
+## Minor improvements and bug fixes
+
+* `data_color()` now allows to specify which light/dark color to use when `autocolor_text = TRUE` (@xx02al, #1930).
+
+* Fixed an issue with a warning in Quarto (@olivroy, #1985)
+
+* `as_word()` now handles "<br>" line breaks for `md()` and `html()`, and no longer automatically adds "Table N" ahead of the caption. 
+
+* Improvements to options for LaTeX including repeating Headers, removing top and bottom lines, applying font sizes, and line breaks (@thebioengineer, #1630, #1061, #1767)
+
+* Add `latex()` function to let users write the LaTeX they wish to see in the table cell or text (@thebioengineer, #1912)
+
+* Fixed an issue where grand summary rows would not be saved properly to Word (@olivroy, #2000).
+
+* Fixed an encoding issue with docx output and `sub_small_vals()`/`sub_large_vals()` (@olivroy, #1997).
+
+* Enable `cols_align()` and `cols_label()` functions for gt_group objects (@shannonhaughton, #2005)
+
+* Enable remaining `cols_*` functions for gt_group objects (@shannonhaughton, #2012)
+
+* `tab_footnote()` + `md()` + docx is now processed correctly (@olivroy, #1892).
+
+* Added support for some unicode characters when going out to LaTeX (@thebioengineer)
+
+* Use stub alignment values for RTF output (@shannonhaughton, #2019)
+
+* Added support for rtf to fmt_image (@shannonhaughton, #2029)
+
+# gt 1.0.0
+
+## Minor improvements and bug fixes
+
+* Tables embedded in Shiny apps with `gt_output()` and `render_gt()` with `ihtml.selection_mode` enabled also act as inputs, reporting the row numbers that are selected (#354, #1368). (@jonthegeek, #1909)
+
+* Significantly faster rendering of certain large tables, by optimizing the internal `rownum_translation()` utility (#1924). (@magnusdv, #1925)
+
+* Fixed an issue in `fmt_number()` where `drop_trailing_dec_mark` would be ignored if `use_seps = FALSE` (#1961). (@olivroy, #1962).
+
+* Fixed an issue where `fmt_markdown()` could create strange output in Quarto (html and Typst formats) (#1957). (@olivroy, #1958, [quarto-dev/quarto-cli#11932](https://github.com/quarto-dev/quarto-cli/issues/11932), [quarto-dev/quarto-cli#11610](https://github.com/quarto-dev/quarto-cli/issues/11610)).
  
 * The default table position in LaTeX is now "t" instead of "!t" (@AaronGullickson, #1935).
 
 * Fixed an issue where cross-references would fail in bookdown::html_document2 (@olivroy, #1948)
 
-* Significantly faster rendering of certain large tables, by optimizing the internal `rownum_translation()` utility. (@magnusdv, #1924) 
-
-* Interactive tables can support selection through the `ihtml.selection_mode` option. (@jonthegeek, #1909)
-
-* Tables embedded in Shiny apps with `gt_output()` and `render_gt()` with `ihtml.selection_mode` enabled also act as inputs, reporting the row numbers that are selected (#354, #1368). (@jonthegeek, #1909)
-
 * Improved width calculations in `as_gtable()` (@teunbrand, #1923)
 
-* `data_color()` now allows to specify which light/dark color to use when `autocolor_text = TRUE` (@xx02al, #1930).
+* `gt(row_group_as_column = TRUE)` now works if multiple groups are supplied (#1552). (@olivroy, #1801).
+
+* Fixed many typos in the documentation. (#1910, thanks @MichaelChirico!)
 
 # gt 0.11.1
 
@@ -24,7 +58,7 @@
 
 ## Improvements to the LaTeX output format
 
-* PDF output now defaults to a full-width floating environment using `tabular*`. Float position can be controlled by the `latex.tbl.pos` argument in `tab_options`. Quarto users can alternatively use the `tbl-pos` argument to control positioning. To use a `longtable` environment instead, use `tab_option(latex.use_longtable = TRUE)`. (@AronGullickson, #1588)
+* PDF output now defaults to a full-width floating environment using `tabular*`. Float position can be controlled by the `latex.tbl.pos` argument in `tab_options`. Quarto users can alternatively use the `tbl-pos` argument to control positioning. To use a `longtable` environment instead, use `tab_options(latex.use_longtable = TRUE)`. (@AronGullickson, #1588)
 
 * Creating a caption with `tab_caption()` will now be preserved in LaTeX output with `as_latex()`. Cross-referencing a table using the internal cross-referencing system of **bookdown** is now enabled for PDF and HTML outputs (for HTML, set `options("htmltools.preserve.raw" = FALSE)`). Quarto users should use the `tbl-cap` and `label` cell options. (@nielsbock, #1800)
 

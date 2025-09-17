@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -97,19 +97,19 @@ dt_boxhead_edit <- function(data, var, ...) {
   check_names_dt_boxhead_expr(expr = val_list)
 
   check_vars_dt_boxhead(var = var, dt_boxhead = dt_boxhead)
-  
+
   col_row_num <- which(dt_boxhead$var == var_name)
-  
+
   if (is.list(dt_boxhead[[names(val_list)]])) {
     dt_boxhead[[col_row_num, names(val_list)]] <- unname(val_list)
     # Fixup md() in column_label column
     # if a problem occurs. (preserve "from_markdown" class)
-    if ("column_label" %in% names(val_list) && 
+    if ("column_label" %in% names(val_list) &&
         is.list(dt_boxhead$column_label[[col_row_num]])) {
       # Remove one level of nesting
       dt_boxhead$column_label[[col_row_num]] <- dt_boxhead$column_label[[col_row_num]][[1]]
     }
-    
+
   } else {
     dt_boxhead[[col_row_num, names(val_list)]] <- unlist(val_list)
   }
@@ -224,8 +224,8 @@ dt_boxhead_get_vars <- function(data) {
 }
 
 dt_boxhead_get_vars_default <- function(data) {
-  df <- dt_boxhead_get(data = data)
-  df$var[df$type == "default"]
+  dat <- dt_boxhead_get(data = data)
+  dat$var[dat$type == "default"]
 }
 
 dt_boxhead_get_var_stub <- function(data) {
@@ -264,6 +264,10 @@ dt_boxhead_get_alignments_in_stub <- function(data) {
           var = grp_vars
         )
 
+    if (length(grp_vars) > 1) {
+      grp_alignment <- grp_alignment[1]
+    }
+
     alignments <- c(alignments, grp_alignment)
   }
 
@@ -294,6 +298,13 @@ dt_boxhead_get_vars_align_default <- function(data) {
 
 dt_boxhead_get_alignment_by_var <- function(data, var) {
   boxhead <- dt_boxhead_get(data = data)
+  if (length(var) > 1L) {
+    # return multiple alignments in case of multiple variables
+    # requested. #1552
+    return(
+      boxhead$column_align[boxhead$var %in% var]
+    )
+  }
   boxhead$column_align[boxhead$var == var]
 }
 

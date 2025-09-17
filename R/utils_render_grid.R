@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -104,17 +104,17 @@ create_heading_component_g <- function(data) {
 
   title_styles <- NA_character_
   if ("title" %in% styles_tbl$locname) {
-    title_style_rows <- vctrs::vec_slice(styles_tbl, styles_tbl$locname == "title")
-    if (nrow(title_style_rows) > 0) {
-      title_styles <- title_style_rows$html_style
+    title_styles <- vctrs::vec_slice(styles_tbl$html_style, styles_tbl$locname == "title")
+    if (length(title_styles) == 0) {
+      title_styles <- NA_character_
     }
   }
 
   subtitle_styles <- NA_character_
   if (subtitle_defined && "subtitle" %in% styles_tbl$locname) {
-    subtitle_style_rows <- vctrs::vec_slice(styles_tbl, styles_tbl$locname == "subtitle")
-    if (nrow(subtitle_style_rows) > 0) {
-      subtitle_styles <- subtitle_style_rows$html_style
+    subtitle_styles <- vctrs::vec_slice(styles_tbl$html_style, styles_tbl$locname == "subtitle")
+    if (length(subtitle_styles) == 0) {
+      subtitle_styles <- NA_character_
     }
   }
 
@@ -152,10 +152,10 @@ create_heading_component_g <- function(data) {
   title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
   subtitle_classes <- sub("title", "subtitle", title_classes, fixed = TRUE)
 
-  if (!subtitle_defined) {
-    title_classes <- c("gt_bottom_border", title_classes)
-  } else {
+  if (subtitle_defined) {
     subtitle_classes <- c("gt_bottom_border", subtitle_classes)
+  } else {
+    title_classes <- c("gt_bottom_border", title_classes)
   }
 
   n_cols_total <- get_effective_number_of_columns(data = data)
@@ -1451,7 +1451,7 @@ parse_css <- function(data) {
 
   # Clean up whitespace and trailing semicolons
   css <- trimws(css)
-  css <- gsub(";", "", css)
+  css <- gsub(";", "", css, fixed = TRUE)
 
   # Split up key-value pairs
   split <- strsplit(css, ": ", fixed = TRUE)

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -842,18 +842,52 @@ set_style.cells_stub <- function(loc, data, style) {
   call <- call("cells_stub")
   resolved <- resolve_cells_stub(data = data, object = loc, call = call)
 
+  columns <- resolved$columns
   rows <- resolved$rows
 
-  data <-
-    dt_styles_add(
-      data = data,
-      locname = "stub",
-      grpname = NA_character_,
-      colname = NA_character_,
-      locnum = 5,
-      rownum = rows,
-      styles = style
-    )
+  # Get all stub variables for reference
+  stub_vars <- dt_boxhead_get_var_stub(data = data)
+  
+  # Check if this is traditional usage (no columns parameter) 
+  # vs. new usage (explicit columns parameter provided)
+  is_traditional_usage <- is.null(loc$columns)
+  
+  if (is_traditional_usage) {
+    # For backward compatibility: traditional cells_stub() usage without columns parameter
+    # Use the original "stub" locname for compatibility with existing code
+    data <-
+      dt_styles_add(
+        data = data,
+        locname = "stub",
+        grpname = NA_character_,
+        colname = NA_character_,
+        locnum = 4,
+        rownum = rows,
+        styles = style
+      )
+  } else {
+    # New usage: per-column stub styling
+    # If no stub columns are resolved, apply to all stub columns (backward compatibility)
+    if (length(columns) == 0) {
+      if (!all(is.na(stub_vars))) {
+        columns <- stub_vars
+      }
+    }
+    
+    # Apply styling to each specified stub column using stub_column locname
+    for (col in columns) {
+      data <-
+        dt_styles_add(
+          data = data,
+          locname = "stub_column",  # Special locname for individual stub columns
+          grpname = NA_character_,
+          colname = col,
+          locnum = 4,
+          rownum = rows,
+          styles = style
+        )
+    }
+  }
 
   data
 }

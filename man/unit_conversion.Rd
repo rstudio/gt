@@ -55,8 +55,7 @@ mile', however, the units to convert are in the denominator so the inverse
 of the conversion factor must be used.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
-  dplyr::arrange(desc(density_2021)) |>
-  dplyr::slice_head(n = 10) |>
+  dplyr::slice_max(density_2021, n = 10) |>
   dplyr::select(name, population_2021, density_2021, land_area_km2) |>
   gt(rowname_col = "name") |>
   fmt_integer(columns = population_2021) |>
@@ -168,6 +167,7 @@ Other helper functions:
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
+\code{\link{latex}()},
 \code{\link{md}()},
 \code{\link{nanoplot_options}()},
 \code{\link{pct}()},

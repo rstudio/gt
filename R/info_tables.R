@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -787,7 +787,7 @@ info_locales <- function(begins_with = NULL) {
       locale = from_column("locale")
     ) %>%
     text_transform(
-      fn = function(x) sub("space", "\U02420", x),
+      fn = function(x) sub("space", "\U02420", x, fixed = TRUE),
       locations = cells_body(columns = "group")
     ) %>%
     cols_merge(

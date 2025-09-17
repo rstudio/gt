@@ -208,6 +208,7 @@ reference:
     contents:
     - md
     - html
+    - latex
     - px
     - pct
     - from_column

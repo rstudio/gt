@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -35,7 +35,7 @@
 #' we even have the option to use [md()] or [html()] for rendering column labels
 #' from Markdown or using HTML.
 #'
-#' @inheritParams cols_width
+#' @inheritParams cols_align
 #'
 #' @param ... *Column label assignments*
 #'
@@ -226,8 +226,7 @@
 #'     name, ends_with("2001"), ends_with("2006"), matches("2001_2006")
 #'   ) |>
 #'   dplyr::filter(population_2001 > 100000) |>
-#'   dplyr::arrange(desc(pop_change_2001_2006_pct)) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(pop_change_2001_2006_pct, n = 10) |>
 #'   gt() |>
 #'   fmt_integer() |>
 #'   fmt_percent(columns = matches("change"), decimals = 1) |>
@@ -254,9 +253,7 @@
 #'   dplyr::select(
 #'     name, population_2021, density_2021, land_area_km2, latitude, longitude
 #'   ) |>
-#'   dplyr::filter(population_2021 > 100000) |>
-#'   dplyr::arrange(desc(population_2021)) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(population_2021, n = 10) |>
 #'   gt() |>
 #'   fmt_integer(columns = population_2021) |>
 #'   fmt_number(
@@ -339,7 +336,13 @@ cols_label <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = .data)
+  stop_if_not_gt_tbl_or_group(data = .data)
+
+  # Handle gt_group
+  if(inherits(.data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(.data, arg_list))
+  }
 
   if (!is.null(.process_units) && .process_units) {
 
@@ -489,7 +492,7 @@ cols_label <- function(
 #' (with `.` representing the vector of column labels), or, an anonymous
 #' function (e.g., `function(x) tools::toTitleCase(x)`).
 #'
-#' @inheritParams fmt_number
+#' @inheritParams cols_align
 #'
 #' @param columns *Columns to target*
 #'
@@ -624,7 +627,13 @@ cols_label_with <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
+
+  # Handle gt_group
+  if(inherits(data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(data, arg_list))
+  }
 
   fn <- rlang::as_function(fn)
 

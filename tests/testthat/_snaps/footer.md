@@ -28,20 +28,18 @@
       <td headers="row" class="gt_row gt_left">row_1</td>
       <td headers="group" class="gt_row gt_left">grp_a</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="9">Source note **bold** (#1, no `md()`)</td>
-          </tr>
-          <tr>
-            <td class="gt_sourcenote" colspan="9"><span class='gt_from_md'>Source note <strong>bold</strong> (#2, uses <code>md()</code>)</span></td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> footnote **bold** (#1, no `md()`)</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> <span class='gt_from_md'>footnote <strong>bold</strong> (#2, uses <code>md()</code>)</span></td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="9">Source note **bold** (#1, no `md()`)</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="9"><span class='gt_from_md'>Source note <strong>bold</strong> (#2, uses <code>md()</code>)</span></td>
           </tr>
         </tfoot>
       </table>
@@ -51,7 +49,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.4pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum\\textsuperscript{\\textit{1}} & char\\textsuperscript{\\textit{2}} & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}footnote **bold** (\\#1, no `md()`)\\\\\n\\textsuperscript{\\textit{2}}footnote \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\nSource note **bold** (\\#1, no `md()`)\\\\\nSource note \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum\\textsuperscript{\\textit{1}} & char\\textsuperscript{\\textit{2}} & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}footnote **bold** (\\#1, no `md()`)\\\\\n\\textsuperscript{\\textit{2}}footnote \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\nSource note **bold** (\\#1, no `md()`)\\\\\nSource note \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -174,16 +172,14 @@
       <td headers="group" class="gt_row gt_left">grp_a</td></tr>
         </tbody>
         <tfoot>
-          <tr class="gt_sourcenotes">
-            <td class="gt_sourcenote" colspan="9">
-              <div style="padding-bottom:2px;">Source note **bold** (#1, no `md()`)&nbsp; <span class='gt_from_md'>Source note <strong>bold</strong> (#2, uses <code>md()</code>)</span></div>
-            </td>
-          </tr>
-        </tfoot>
-        <tfoot>
           <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9">
               <div style="padding-bottom:2px;"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> footnote **bold** (#1, no `md()`)&nbsp; <span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> <span class='gt_from_md'>footnote <strong>bold</strong> (#2, uses <code>md()</code>)</span></div>
+            </td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="9">
+              <div style="padding-bottom:2px;">Source note **bold** (#1, no `md()`)&nbsp; <span class='gt_from_md'>Source note <strong>bold</strong> (#2, uses <code>md()</code>)</span></div>
             </td>
           </tr>
         </tfoot>
@@ -194,7 +190,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.4pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum\\textsuperscript{\\textit{1}} & char\\textsuperscript{\\textit{2}} & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}footnote **bold** (\\#1, no `md()`)  \\textsuperscript{\\textit{2}}footnote \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\nSource note **bold** (\\#1, no `md()`)  Source note \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum\\textsuperscript{\\textit{1}} & char\\textsuperscript{\\textit{2}} & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}footnote **bold** (\\#1, no `md()`)  \\textsuperscript{\\textit{2}}footnote \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\nSource note **bold** (\\#1, no `md()`)  Source note \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -317,16 +313,14 @@
       <td headers="group" class="gt_row gt_left">grp_a</td></tr>
         </tbody>
         <tfoot>
-          <tr class="gt_sourcenotes">
-            <td class="gt_sourcenote" colspan="9">
-              <div style="padding-bottom:2px;">Source note **bold** (#1, no `md()`) <em>|</em> <span class='gt_from_md'>Source note <strong>bold</strong> (#2, uses <code>md()</code>)</span></div>
-            </td>
-          </tr>
-        </tfoot>
-        <tfoot>
           <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9">
               <div style="padding-bottom:2px;"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> footnote **bold** (#1, no `md()`) <em>|</em> <span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> <span class='gt_from_md'>footnote <strong>bold</strong> (#2, uses <code>md()</code>)</span></div>
+            </td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="9">
+              <div style="padding-bottom:2px;">Source note **bold** (#1, no `md()`) <em>|</em> <span class='gt_from_md'>Source note <strong>bold</strong> (#2, uses <code>md()</code>)</span></div>
             </td>
           </tr>
         </tfoot>
@@ -337,7 +331,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.4pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum\\textsuperscript{\\textit{1}} & char\\textsuperscript{\\textit{2}} & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}footnote **bold** (\\#1, no `md()`) \\textit{|} \\textsuperscript{\\textit{2}}footnote \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\nSource note **bold** (\\#1, no `md()`) \\textit{|} Source note \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum\\textsuperscript{\\textit{1}} & char\\textsuperscript{\\textit{2}} & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}footnote **bold** (\\#1, no `md()`) \\textit{|} \\textsuperscript{\\textit{2}}footnote \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\nSource note **bold** (\\#1, no `md()`) \\textit{|} Source note \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 

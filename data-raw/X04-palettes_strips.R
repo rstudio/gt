@@ -62,9 +62,7 @@ get_d_palettes <- function(color_packages = c(
     pkg <- palettes[[i, "package"]]
     pal <- palettes[[i, "palette"]]
 
-    color_strip <-
-      palettes_d[[pkg]][[pal]] %>%
-      make_color_strip_svg()
+    color_strip <- make_color_strip_svg(palettes_d[[pkg]][[pal]])
 
     palettes[i, "colors"] <- color_strip
   }

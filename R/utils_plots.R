@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -1030,7 +1030,7 @@ generate_nanoplot <- function(
     add = TRUE,
     after = TRUE
   )
-  
+
   if (plot_type == "bar" && single_horizontal_bar) {
 
     # This type of display assumes there is only a single `y` value and there
@@ -2215,7 +2215,7 @@ format_number_compactly <- function(
   }
 
   # Format value accordingly
-  
+
   if (!is.null(currency)) {
 
     if (abs(val) >= 1e15) {

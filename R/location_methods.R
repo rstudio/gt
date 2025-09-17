@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -347,6 +347,7 @@ resolve_location.cells_stub <- function(loc, data) {
   call <- call("cells_stub")
   resolved <- resolve_cells_stub(data = data, object = loc, call = call)
 
+  loc$columns <- resolved$columns
   loc$rows <- resolved$rows
 
   class(loc) <- c("resolved", class(loc))

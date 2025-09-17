@@ -663,37 +663,33 @@ test_that("cell_fill() accepts colors of various types", {
 
   # Expect that using shorthand hexadecimal color values will result in the
   # same table output as with using standard hexadecimal colors
-  expect_equal(
+  expect_equal_gt(
     test_tbl %>%
       gt() %>%
       tab_style(
         style = cell_text(color = "#888"),
         locations = cells_body(columns = "month")
-      ) %>%
-      render_as_html(),
+      ),
     test_tbl %>%
       gt() %>%
       tab_style(
         style = cell_text(color = "#888888"),
         locations = cells_body(columns = "month")
-      ) %>%
-      render_as_html()
+      )
   )
 
-  expect_equal(
+  expect_equal_gt(
     test_tbl %>%
       gt() %>%
       tab_style(
         style = cell_text(color = "#888A"),
         locations = cells_body(columns = "month")
-      ) %>%
-      render_as_html(),
+      ),
     test_tbl %>%
       gt() %>%
       tab_style(
         style = cell_text(color = "#888888AA"),
         locations = cells_body(columns = "month")
-      ) %>%
-      render_as_html()
+      )
   )
 })

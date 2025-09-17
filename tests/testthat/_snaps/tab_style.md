@@ -151,6 +151,5 @@
       <td headers="indent" class="gt_row gt_right">10</td></tr>
         </tbody>
         
-        
       </table>
 

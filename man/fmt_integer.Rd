@@ -184,7 +184,7 @@ targeted, but there will be no attempt to format them.
 \section{Compatibility of arguments with the \code{from_column()} helper function}{
 
 
-\code{\link[=from_column]{from_column()}} can be used with certain arguments of  \code{fmt_integer()} to
+\code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{fmt_integer()} to
 obtain varying parameter values from a specified column within the table.
 This means that each row could be formatted a little bit differently. These
 arguments provide support for \code{\link[=from_column]{from_column()}}:
@@ -253,7 +253,7 @@ with an informative spanner label via \code{\link[=tab_spanner]{tab_spanner()}}.
   dplyr::select(country_code_3, year, population) |>
   dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) |>
   dplyr::filter(year > 1975 & year \%\% 5 == 0) |>
-  tidyr::spread(year, population) |>
+  tidyr::pivot_wider(names_from = year, values_from = population) |>
   dplyr::arrange(desc(`2015`)) |>
   gt(rowname_col = "country_code_3") |>
   fmt_integer(scale_by = 1 / 1E6) |>

@@ -98,7 +98,7 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # 1/1000, use all other defaults
   expect_equal(
     (tbl_latex %>%
-       fmt_number(columns = num_1, decimals = 4, scale_by = 1/1000) %>%
+       fmt_number(columns = num_1, decimals = 4, scale_by = 1 / 1000) %>%
        render_formats_test("latex"))[["num_1"]],
     c(
       "1.8362", "2.7634", "0.9373", "0.6430", "0.2122",

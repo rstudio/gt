@@ -33,13 +33,12 @@ Let's use a less common dataset that is available in the R **datasets** package:
 # Take the `islands` dataset and use some
 # dplyr functionality to obtain the ten
 # biggest islands in the world
-islands_tbl <- 
+islands_tbl <-
   tibble(
     name = names(islands),
     size = islands
   ) |>
-  arrange(desc(size)) |>
-  slice(1:10)
+  slice_max(size, n = 10)
 
 # Display the table
 islands_tbl
@@ -81,7 +80,7 @@ The way that we add parts like the **Table Header** and *footnotes* in the **Tab
 ```{r table_with_heading}
 # Make a display table with the `islands_tbl`
 # table; put a heading just above the column labels
-gt_tbl <- 
+gt_tbl <-
   gt_tbl |>
   tab_header(
     title = "Large Landmasses of the World",
@@ -97,7 +96,7 @@ The **Header** table part provides an opportunity to describe the data that's pr
 ```{r heading_w_markdown}
 # Use markdown for the heading's `title` and `subtitle` to
 # add bold and italicized characters
-gt(islands_tbl[1:2,]) |>
+gt(islands_tbl[1:2, ]) |>
   tab_header(
     title = md("**Large Landmasses of the World**"),
     subtitle = md("The *top two* largest are presented")
@@ -109,7 +108,7 @@ A **source note** can be added to the table's **footer** through use of `tab_sou
 ```{r}
 # Display the `islands_tbl` data with a heading and
 # two source notes
-gt_tbl <- 
+gt_tbl <-
   gt_tbl |>
   tab_source_note(
     source_note = "Source: The World Almanac and Book of Facts, 1975, page 406."
@@ -129,7 +128,7 @@ Here is a simple example on how a footnotes can be added to a table cell. Let's 
 ```{r table_footnote_simple}
 # Add footnotes (the same text) to two different
 # cell; data cells are targeted with `data_cells()`
-gt_tbl <- 
+gt_tbl <-
   gt_tbl |>
   tab_footnote(
     footnote = "The Americas.",
@@ -145,15 +144,14 @@ Here is a slightly more complex example of adding footnotes that use expressions
 ```{r}
 # Determine the row that contains the
 # largest landmass ('Asia')
-largest <- 
-  islands_tbl |> 
-  arrange(desc(size)) |>
-  slice(1) |>
+largest <-
+  islands_tbl |>
+  slice_max(size, n = 1) |>
   pull(name)
 
 # Create two additional footnotes, using the
 # `columns` and `where` arguments of `data_cells()`
-gt_tbl <- 
+gt_tbl <-
   gt_tbl |>
   tab_footnote(
     footnote = md("The **largest** by area."),
@@ -186,7 +184,7 @@ An easy way to generate a **Stub** part is by specifying a stub column in the `g
 # Create a gt table showing ten of the
 # largest islands in the world; this
 # time with a stub
-gt_tbl <- 
+gt_tbl <-
   islands_tbl |>
   gt(rowname_col = "name")
 
@@ -199,7 +197,7 @@ Notice that the landmass names are off the left in an unstriped area? That's the
 ```{r}
 # Generate a simple table with a stub
 # and add a stubhead label
-gt_tbl <- 
+gt_tbl <-
   gt_tbl |>
   tab_stubhead(label = "landmass")
 
@@ -214,7 +212,7 @@ To apply our table parts as before (up to and including the footnotes) we use th
 ```{r}
 # Display the `islands_tbl` data with a stub,
 # a heading, source notes, and footnotes
-gt_tbl <- 
+gt_tbl <-
   gt_tbl |>
   tab_header(
     title = "Large Landmasses of the World",
@@ -250,8 +248,8 @@ Here we will create three row groups (with row group labels `continent`, `countr
 ```{r}
 # Create three row groups with the
 # `tab_row_group()` function
-gt_tbl <- 
-  gt_tbl |> 
+gt_tbl <-
+  gt_tbl |>
   tab_row_group(
     label = "continent",
     rows = 1:6
@@ -294,14 +292,14 @@ Let's organize the time information under a `Time` *spanner column label*, and p
 ```{r}
 # Modify the `airquality` dataset by adding the year
 # of the measurements (1973) and limiting to 10 rows
-airquality_m <- 
+airquality_m <-
   airquality |>
   mutate(Year = 1973L) |>
   slice(1:10)
-  
+
 # Create a display table using the `airquality`
 # dataset; arrange columns into groups
-gt_tbl <- 
+gt_tbl <-
   gt(airquality_m) |>
   tab_header(
     title = "New York Air Quality Measurements",
@@ -331,7 +329,7 @@ Let's do both of these things in the next example.
 # Move the time-based columns to the start of
 # the column series; modify the column labels of
 # the measurement-based columns
-gt_tbl <- 
+gt_tbl <-
   gt_tbl |>
   cols_move_to_start(
     columns = c(Year, Month, Day)

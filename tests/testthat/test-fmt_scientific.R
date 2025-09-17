@@ -230,7 +230,7 @@ test_that("fmt_scientific() works correctly", {
   # context and compare to expected values
   expect_equal(
     (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 4, scale_by = 1/1000) %>%
+       fmt_scientific(columns = "num_1", decimals = 4, scale_by = 1 / 1000) %>%
        render_formats_test("html"))[["num_1"]],
     c(
       "1.8362", "2.7634",
@@ -247,7 +247,7 @@ test_that("fmt_scientific() works correctly", {
   # context and compare to expected values
   expect_equal(
     (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 4, scale_by = 1/1000) %>%
+       fmt_scientific(columns = "num_1", decimals = 4, scale_by = 1 / 1000) %>%
        render_formats_test("default"))[["num_1"]],
     c(
       "1.8362",

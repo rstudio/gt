@@ -5,7 +5,7 @@
 \alias{films}
 \title{Feature films in competition at the Cannes Film Festival}
 \format{
-A tibble with 1,851 rows and 8 variables:
+A tibble with 1,873 rows and 8 variables:
 \describe{
 \item{year}{The year of the festival in which the film was in competition.}
 \item{title,original_title}{The \code{title} field provides the film title used

@@ -842,8 +842,108 @@ test_that("cols_merge_n_pct() works correctly", {
 
 test_that("cols_merge() errors well when pattern is wrong", {
   expect_snapshot(error = TRUE, {
-    exibble %>% 
-      gt() %>% 
+    exibble %>%
+      gt() %>%
       cols_merge(num, pattern = "{2}")
   })
+})
+
+test_that("check cols_merge is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply merge to table and group
+  merged_gt_tbl <- gt_tbl %>%
+    cols_merge(
+      columns = c(mpg,cyl),
+      pattern = "<<{1} mpg<</{2} cyl>>>>"
+    )
+
+  merged_gt_group <- gt_group %>%
+    cols_merge(
+      columns = c(mpg,cyl),
+      pattern = "<<{1} mpg<</{2} cyl>>>>"
+    )
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(merged_gt_group, gt_group(merged_gt_tbl, merged_gt_tbl))
+
+})
+
+test_that("check cols_merge_uncert is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply merge to table and group
+  merged_gt_tbl <- gt_tbl %>%
+    cols_merge_uncert(
+      col_val = wt,
+      col_uncert = qsec
+    )
+
+  merged_gt_group <- gt_group %>%
+    cols_merge_uncert(
+      col_val = wt,
+      col_uncert = qsec
+    )
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(merged_gt_group, gt_group(merged_gt_tbl, merged_gt_tbl))
+
+})
+
+test_that("check cols_merge_range is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply merge to table and group
+  merged_gt_tbl <- gt_tbl %>%
+    cols_merge_range(
+      col_begin = wt,
+      col_end = qsec
+    )
+
+  merged_gt_group <- gt_group %>%
+    cols_merge_range(
+      col_begin = wt,
+      col_end = qsec
+    )
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(merged_gt_group, gt_group(merged_gt_tbl, merged_gt_tbl))
+
+})
+
+test_that("check cols_merge_n_pct is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply merge to table and group
+  merged_gt_tbl <- gt_tbl %>%
+    cols_merge_n_pct(
+      col_n = wt,
+      col_pct = qsec
+    )
+
+  merged_gt_group <- gt_group %>%
+    cols_merge_n_pct(
+      col_n = wt,
+      col_pct = qsec
+    )
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(merged_gt_group, gt_group(merged_gt_tbl, merged_gt_tbl))
+
 })

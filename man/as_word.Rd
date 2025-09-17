@@ -10,7 +10,8 @@ as_word(
   caption_location = c("top", "bottom", "embed"),
   caption_align = "left",
   split = FALSE,
-  keep_with_next = TRUE
+  keep_with_next = TRUE,
+  autonum = TRUE
 )
 }
 \arguments{
@@ -54,6 +55,14 @@ A logical value that indicates whether to activate the Word option
 
 A logical value that indicates whether a table should use Word option
 \verb{Keep rows together}.}
+
+\item{autonum}{Automatic Table Numbering
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+A logical value that indicates whether a table should use Words built-in
+auto table numbering option in the caption.
+\verb{Automatic Table Numbering}.}
 }
 \description{
 Get the Open Office XML table tag content from a \code{gt_tbl} object as a

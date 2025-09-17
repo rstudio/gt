@@ -241,3 +241,26 @@ test_that("cols_label_with() works correctly", {
   # Expect an error if any columns declared are not present
   expect_error(gt(tbl) %>% cols_label_with(columns = col_a, fn = function(x) "col_1"))
 })
+
+test_that("check cols_label_with is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- mtcars_short %>% gt()
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply label to table and group
+  label_gt_tbl <- gt_tbl %>%
+    cols_label_with(
+      fn = ~ gsub("a", "A", .)
+    )
+
+  label_gt_group <- gt_group %>%
+    cols_label_with(
+      fn = ~ gsub("a", "A", .)
+    )
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(label_gt_group, gt_group(label_gt_tbl, label_gt_tbl))
+
+})

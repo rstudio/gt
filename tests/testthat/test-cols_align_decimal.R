@@ -202,3 +202,33 @@ test_that("Decimal alignment works in the basic case", {
   # Perform snapshot test
   expect_snapshot_html(gt_tbl_13)
 })
+
+
+test_that("check cols_align_decimal is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- dplyr::tibble(
+    char = LETTERS[1:9],
+    num = c(1.2, -33.52, 9023.2, -283.527, NA, 0.401, -123.1, NA, 41)
+  ) %>%
+    gt() %>%
+    fmt_number(
+      columns = num,
+      decimals = 3,
+      drop_trailing_zeros = TRUE
+    )
+
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply alignment to table and group
+  aligned_gt_tbl <- gt_tbl %>%
+    cols_align_decimal()
+
+  aligned_gt_group <- gt_group %>%
+    cols_align_decimal()
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(aligned_gt_group, gt_group(aligned_gt_tbl, aligned_gt_tbl))
+
+})

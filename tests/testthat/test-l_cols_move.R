@@ -16,7 +16,7 @@ test_that("cols_move() works correctly", {
   # `cyl`, and `drat` columns placed after `drat` using vectors
   tbl_latex <-
     gt(mtcars_short) %>%
-    cols_move(columns = c("mpg", "cyl", "disp"), after = c("drat"))
+    cols_move(columns = c("mpg", "cyl", "disp"), after = "drat")
 
   # Expect a characteristic pattern
   expect_match(

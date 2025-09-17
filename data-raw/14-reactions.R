@@ -80,24 +80,30 @@ reactions <-
   ) %>%
   dplyr::mutate(across(starts_with("feat"), ~ tidyr::replace_na(.x, 0)))
 
+extract_pct <- function(x) {
+  as.numeric(sub("%", "", x, fixed = TRUE)) / 100
+}
+
 reactions <-
   reactions %>%
-  dplyr::mutate(OH_uncert = case_when(
-    !is.na(OH_unc) ~ as.numeric(sub("%", "", OH_unc)) / 100,
-    TRUE ~ NA_real_
-  )) %>%
-  dplyr::mutate(O3_uncert = case_when(
-    !is.na(O3_unc) ~ as.numeric(sub("%", "", O3_unc)) / 100,
-    TRUE ~ NA_real_
-  )) %>%
-  dplyr::mutate(NO3_uncert = case_when(
-    !is.na(NO3_unc) ~ as.numeric(sub("%", "", NO3_unc)) / 100,
-    TRUE ~ NA_real_
-  )) %>%
-  dplyr::mutate(Cl_uncert = case_when(
-    !is.na(Cl_unc) ~ as.numeric(sub("%", "", Cl_unc)) / 100,
-    TRUE ~ NA_real_
-  )) %>%
+  dplyr::mutate(
+    OH_uncert = case_when(
+      !is.na(OH_unc) ~ extract_pct(OH_unc),
+      .default = NA_real_
+    ),
+    O3_uncert = case_when(
+    !is.na(O3_unc) ~ extract_pct(O3_unc),
+    .default = NA_real_
+    ),
+    NO3_uncert = case_when(
+      !is.na(NO3_unc) ~ extract_pct(NO3_unc),
+      .default = NA_real_
+    ),
+    Cl_uncert = case_when(
+      !is.na(Cl_unc) ~ extract_pct(Cl_unc),
+      .default = NA_real_
+    )
+  ) %>%
   dplyr::select(-ends_with("unc"))
 
 compound_types <-

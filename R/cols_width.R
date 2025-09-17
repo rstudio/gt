@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -34,7 +34,7 @@
 #' left-hand side defines the target columns and the right-hand side is a single
 #' dimension.
 #'
-#' @inheritParams fmt_number
+#' @inheritParams cols_align
 #'
 #' @param ... *Column width assignments*
 #'
@@ -112,7 +112,13 @@ cols_width <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = .data)
+  stop_if_not_gt_tbl_or_group(data = .data)
+
+  # Handle gt_group
+  if(inherits(.data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(.data, arg_list))
+  }
 
   # Collect a named list of column widths
   widths_list <- .list
@@ -129,7 +135,7 @@ cols_width <- function(
     all(
       vapply(
         widths_list,
-        FUN = function(width) rlang::is_formula(width),
+        FUN = rlang::is_formula,
         FUN.VALUE = logical(1L)
       )
     )

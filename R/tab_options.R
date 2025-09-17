@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -534,14 +534,35 @@
 #'   use the `longtable` environment which will not float and may span multiple
 #'   pages.
 #'
+#'
+#' @param latex.header_repeat
+#'
+#'   * Specify if the header should repeat or not across pages*
+#'
+#'   For Long tables, it may be desirable to have the column headers repeat on
+#'   every page. Setting this parameter to `TRUE` will add a `\endhead` command
+#'   after the table headers so LaTeX knows where the headers end and will
+#'   repeat them on every page.
+#'
+#' @param latex.toprule,latex.bottomrule
+#'
+#'   * Specify if an hrule should be put in the table at the top (latex.toprule) or bottom (latex.bottomrule)*
+#'
+#'   By default the tables produced using latex code will include top and bottom
+#'   lines in the table via `\toprule` and `\bottomrule`. Setting these
+#'   parameters to `FALSE` will instead not have these commands added, which
+#'   lets the tables be produced without the top and bottom lines.
+#'
+#'
 #' @param latex.tbl.pos
 #'
 #'   *Specify latex floating position*
 #'
-#'   The latex position indicator for a floating environment (e.g., `"!t"`,
-#'   `"H"`). It should be specified without square brackets. Quarto users should
-#'   instead set the floating position within the code chunk argument `tbl-pos`.
-#'   The output table will only float if `latex.use_longtable = FALSE`.
+#'   The latex position indicator for a floating environment (e.g., `"tb"`,
+#'   `"h"`). If not specified, latex position will default to `"t"`. It should be
+#'   specified without square brackets. Quarto users should instead set the
+#'   floating position within the code chunk argument `tbl-pos`. The output
+#'   table will only float if `latex.use_longtable = FALSE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -863,6 +884,9 @@ tab_options <- function(
     quarto.use_bootstrap = NULL,
     quarto.disable_processing = NULL,
     latex.use_longtable = NULL,
+    latex.header_repeat = NULL,
+    latex.toprule = NULL,
+    latex.bottomrule = NULL,
     latex.tbl.pos = NULL
 ) {
 
@@ -906,7 +930,7 @@ tab_options <- function(
     dplyr::bind_rows(
       dplyr::inner_join(
         new_df,
-        dplyr::select(opts_df, -value),
+        dplyr::select(opts_df, -"value"),
         by = "parameter"
       ),
       dplyr::anti_join(opts_df, new_df, by = "parameter")
@@ -946,9 +970,7 @@ tab_options <- function(
 dt_options_get_default_value <- function(option) {
 
   # Validate the provided `option` value
-  if (length(option) != 1) {
-    cli::cli_abort("A character vector of length one must be provided.")
-  }
+  check_string(option)
   if (!(option %in% dt_options_tbl$parameter)) {
     cli::cli_abort("The `option` provided is invalid.")
   }
@@ -1046,12 +1068,7 @@ set_super_options <- function(arg_vals) {
 
   if ("ihtml.selection_mode" %in% names(arg_vals)) {
     ihtml_selection_mode_val <- arg_vals$ihtml.selection_mode
-    if (
-        !(
-          rlang::is_scalar_character(ihtml_selection_mode_val) &&
-          ihtml_selection_mode_val %in% c("single", "multiple")
-        )
-    ) {
+    if (!rlang::is_string(ihtml_selection_mode_val, c("single", "multiple"))) {
       cli::cli_abort(c(
         "The chosen option for `ihtml.selection_mode` (`{ihtml_selection_mode_val}`) is invalid.",
         "*" = "We can use either \"single\" or \"multiple\"."
@@ -1122,7 +1139,7 @@ create_option_value_list <- function(tab_options_args, values) {
 create_default_option_value_list <- function(tab_options_args) {
 
   lapply(
-    stats::setNames(, tab_options_args),
+    rlang::set_names(tab_options_args),
     FUN = function(x) {
       dt_options_get_default_value(gsub(".", "_", x, fixed = TRUE))
     }

@@ -989,7 +989,7 @@ test_that("sub_values() works correctly", {
   # Expect that a function given to `fn` will work
   expect_equal(
     gt(data_tbl) %>%
-      sub_values(fn = function(x) {x < 0}, replacement = "negative") %>%
+      sub_values(fn = function(x) x < 0, replacement = "negative") %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(

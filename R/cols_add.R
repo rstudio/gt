@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -39,7 +39,7 @@
 #' empty (i.e., all `NA`) columns need to be added, you can use any of the `NA`
 #' types (e.g., `NA`, `NA_character_`, `NA_real_`, etc.) for such columns.
 #'
-#' @inheritParams fmt_number
+#' @inheritParams cols_align
 #'
 #' @param ... *Cell data assignments*
 #'
@@ -226,7 +226,13 @@ cols_add <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = .data)
+  stop_if_not_gt_tbl_or_group(data = .data)
+
+  # Handle gt_group
+  if(inherits(.data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(.data, arg_list))
+  }
 
   # Get the table's boxhead
   boxh_df <- dt_boxhead_get(data = .data)
@@ -404,11 +410,11 @@ cols_add <- function(
       cli::cli_abort("The expression used for `.after` resolved multiple columns.")
     }
   }
-  
+
   if (length(resolved_column_after) == 1 && resolved_column_after == colnames(data_tbl)[NCOL(data_tbl)]) {
     # if requesting the last column to add after, use NULL instead.
     resolved_column_after <- NULL
-  } 
+  }
 
   # Stop function if expressions are given to both `.before` and `.after`
   if (!is.null(resolved_column_before) && !is.null(resolved_column_after)) {
@@ -441,7 +447,7 @@ cols_add <- function(
   } else if (!is.null(resolved_column_before) && is.null(resolved_column_after)) {
 
     before_colnum <- which(colnames(data_tbl) == resolved_column_before)
-    
+
     if (before_colnum <= 1) {
       # put new column first
       updated_data_tbl <-
@@ -480,7 +486,7 @@ cols_add <- function(
       )
 
     after_colnum <- which(boxh_df[["var"]] == resolved_column_after)
-      
+
     updated_boxh_df <-
       vctrs::vec_rbind(
         boxh_df[1:after_colnum, ],

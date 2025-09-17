@@ -4,7 +4,7 @@ check_suggests <- function() {
 }
 
 # returns the json-object of the reactable javascript-part
-reactive_table_to_json <- function(reactable_obj){
+reactive_table_to_json <- function(reactable_obj) {
   tmp_html_tag <- reactable_obj %>%
     htmltools::as.tags()  %>%
     htmltools::doRenderTags()  %>%
@@ -967,13 +967,12 @@ test_that("tab_spanner() is compatible with interactive tables", {
   expect_equal(
     sort(
       sapply(
-        
-      vctrs::vec_slice(
-      interactive_tbl_colgroups$columns,
-      interactive_tbl_colgroups$name == "spanner_datechar"
-    )[[1]],
-    "[[", 1
-    )
+        vctrs::vec_slice(
+          interactive_tbl_colgroups$columns,
+          interactive_tbl_colgroups$name == "spanner_datechar"
+         )[[1]],
+        "[[", 1
+      )
     ),
     c("char", "date")
   )

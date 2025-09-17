@@ -4,7 +4,7 @@
 \alias{cells_stub}
 \title{Location helper for targeting cells in the table stub}
 \usage{
-cells_stub(rows = everything())
+cells_stub(rows = everything(), columns = NULL)
 }
 \arguments{
 \item{rows}{\emph{Rows to target}
@@ -12,12 +12,39 @@ cells_stub(rows = everything())
 \verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 The rows to which targeting operations are constrained. The default
-\code{\link[=everything]{everything()}} results in all rows in \code{columns} being formatted.
-Alternatively, we can supply a vector of row IDs within \code{c()}, a vector of
-row indices, or a select helper function (e.g. \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}). We can also use expressions to filter down to the rows we
-need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+\code{\link[=everything]{everything()}} results in all rows in the stub being targeted.
+Multiple targeting methods are supported:
+
+\strong{Numeric indices:} A vector of row indices within \code{c()} (e.g., \code{c(1, 3, 5)}).
+
+\strong{Content-based targeting:} A vector of content values within \code{c()} that match
+values in any stub column (e.g., \code{c("Ford", "BMW")} to target all rows
+containing those manufacturer names). This is particularly useful for
+multi-column stubs where you want to target based on content rather than
+calculating row indices.
+
+\strong{Select helpers:} Use functions like \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
+
+\strong{Expressions:} Filter expressions to target specific rows
+(e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).
+
+When using content-based targeting with multi-column stubs, the function
+will search all stub columns for matching values unless specific \code{columns}
+are provided to constrain the search.}
+
+\item{columns}{\emph{Stub columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
+
+The stub columns to which targeting operations are constrained. By default
+(\code{NULL}), all stub columns are targeted for backward compatibility. For
+tables with multi-column stubs (created with \code{gt(rowname_col = c(...))} or
+when \code{row_group_as_column = TRUE}), you can target specific columns by
+providing a vector of column names within \code{c()}, a vector of column indices,
+or a select helper function. When \code{columns} is specified, only the
+intersection of the specified columns and rows will be targeted. For
+single-column stubs, this argument can be omitted for traditional behavior.}
 }
 \value{
 A list object with the classes \code{cells_stub} and \code{location_cells}.
@@ -36,15 +63,19 @@ true.
 \section{Examples}{
 
 
-Using a transformed version of the \code{\link{sza}} dataset, let's create a \strong{gt}
-table. Color all of the \code{month} values in the table stub with \code{\link[=tab_style]{tab_style()}},
-using \code{cells_stub()} in \code{locations}.
+Let's create a \strong{gt} table using a transformed version of the \code{\link{sza}}
+dataset. We'll color all of the \code{month} values in the table stub with
+\code{\link[=tab_style]{tab_style()}}, using \code{cells_stub()} in \code{locations}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(latitude == 20 & tst <= "1000") |>
   dplyr::select(-latitude) |>
   dplyr::filter(!is.na(sza)) |>
-  tidyr::spread(key = "tst", value = sza) |>
+  tidyr::pivot_wider(
+    names_from = "tst",
+    values_from = sza,
+    names_sort = TRUE
+  ) |>
   gt(rowname_col = "month") |>
   sub_missing(missing_text = "") |>
   tab_style(
@@ -59,6 +90,45 @@ using \code{cells_stub()} in \code{locations}.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_stub_1.png" alt="This image of a table was generated from the first code example in the `cells_stub()` help file." style="width:100\%;">
 }}
+
+For multi-column stubs, you can target specific columns. Here's an example
+with a table that has multiple stub columns:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Create a table with multi-column stub
+dplyr::tibble(
+  country = rep(c("USA", "Canada"), each = 3),
+  region = rep(c("North", "South", "West"), 2),
+  pop_2020 = c(5000, 3000, 2000, 4000, 3500, 1500),
+  pop_2021 = c(5100, 3100, 2100, 4100, 3600, 1600)
+) |>
+  gt(rowname_col = c("country", "region")) |>
+  tab_style(
+    style = cell_fill(color = "lightblue"),
+    locations = cells_stub(columns = "country", rows = 1:2)
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_stub(columns = "region", rows = c(1, 3, 5))
+  )
+}\if{html}{\out{</div>}}
+
+You can also use content-based targeting to target rows by their actual values
+rather than calculating row indices:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Content-based targeting example
+gtcars |>
+  dplyr::select(mfr, model, year, hp, msrp) |>
+  dplyr::slice(1:8) |>
+  gt(rowname_col = c("mfr", "model")) |>
+  tab_style(
+    style = cell_fill(color = "lightcoral"),
+    locations = cells_stub(rows = "Ford")  # Targets all Ford rows
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_stub(rows = c("BMW", "Audi"), columns = "mfr")
+  )
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{

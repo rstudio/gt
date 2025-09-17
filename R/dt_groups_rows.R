@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -54,7 +54,9 @@ dt_groups_rows_build <- function(data, context) {
 
     stub_var <- dt_boxhead_get_var_stub(data = data)
     table_body <- dt_data_get(data = data)
-    stub_df[["rowname"]] <- as.character(table_body[[stub_var]])
+    # For multiple stub columns, use the rightmost (primary) column for rowname
+    primary_stub_var <- stub_var[length(stub_var)]
+    stub_df[["rowname"]] <- as.character(table_body[[primary_stub_var]])
   }
   # what happens if dt_stub_df doesn't exist?
 
@@ -71,10 +73,10 @@ dt_groups_rows_build <- function(data, context) {
   # values), build the `groups_rows` table
   for (i in seq_along(ordering)) {
 
-    if (!all(is.na(ordering[i]))) {
-      rows_matched <- which(stub_df$group_id == ordering[i])
-    } else {
+    if (all(is.na(ordering[i]))) {
       rows_matched <- which(is.na(stub_df$group_id))
+    } else {
+      rows_matched <- which(stub_df$group_id == ordering[i])
     }
 
     # If `rows_matched` is NA then go to next iteration
@@ -105,6 +107,11 @@ dt_groups_rows_build <- function(data, context) {
 
     groups_rows[is.na(groups_rows[, "group_id"]), "group_label"] <-
       others_group
+    if (!is.null(stub_df$group_label)) {
+     # stub_df$group_label[is.null(stub_df$group_label[[1]])] <- others_group
+      #data <- dt_stub_df_set(data, stub_df)
+
+    }
 
   } else {
 
@@ -132,5 +139,6 @@ dt_groups_rows_build <- function(data, context) {
     }
   }
 
+  # print(groups_rows)
   dt_groups_rows_set(data = data, groups_rows = groups_rows)
 }

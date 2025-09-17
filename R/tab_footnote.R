@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -256,9 +256,8 @@
 #' ```r
 #' towny |>
 #'   dplyr::filter(csd_type == "city") |>
-#'   dplyr::arrange(desc(population_2021)) |>
 #'   dplyr::select(name, density_2021, population_2021) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(population_2021, n = 10) |>
 #'   gt(rowname_col = "name") |>
 #'   tab_header(
 #'     title = md("The 10 Largest Municipalities in `towny`"),
@@ -635,19 +634,112 @@ set_footnote.cells_stub <- function(
 
   resolved <- resolve_cells_stub(data = data, object = loc)
 
+  columns <- resolved$columns
   rows <- resolved$rows
 
-  data <-
-    dt_footnotes_add(
-      data = data,
-      locname = "stub",
-      grpname = NA_character_,
-      colname = NA_character_,
-      locnum = 5,
-      rownum = rows,
-      footnotes = footnote,
-      placement = placement
-    )
+  # Get all stub variables for fallback
+  stub_vars <- dt_boxhead_get_var_by_type(data = data, type = "stub")
+
+  # Validate that specified columns are actually stub columns
+  if (!is.null(loc$columns)) {
+    # Check if columns were specified but none were resolved; this happens
+    # when the user specifies non-stub columns
+    if (length(columns) == 0) {
+      # Try to extract the originally requested column names for error messaging
+      requested_cols_expr <- loc$columns
+      requested_cols_str <- if (rlang::is_quosure(requested_cols_expr)) {
+        tryCatch({
+          # Try to extract simple column names from the quosure
+          expr_str <- rlang::as_string(rlang::quo_get_expr(requested_cols_expr))
+          # Remove quotes if present
+          gsub('^"|"$', '', expr_str)
+        }, error = function(e) {
+          "specified column(s)"
+        })
+      } else {
+        "specified column(s)"
+      }
+
+      available_stub_cols <- if (length(stub_vars) > 0) {
+        paste0("Available stub columns: ", paste(stub_vars, collapse = ", "))
+      } else {
+        "This table has no stub columns."
+      }
+
+      cli::cli_abort(
+        c(
+          "The {requested_cols_str} column{?s} specified in `cells_stub()` {?is/are} not {?a/} stub column{?s}.",
+          "i" = "`cells_stub()` can only target columns that are part of the table stub.",
+          "i" = available_stub_cols,
+          "i" = "To target non-stub columns, use `cells_body()` instead."
+        )
+      )
+    }
+
+    # Also check if any resolved columns are not in stub
+    if (length(columns) > 0) {
+      non_stub_cols <- setdiff(columns, stub_vars)
+
+      if (length(non_stub_cols) > 0) {
+        available_stub_cols <- if (length(stub_vars) > 0) {
+          paste0("Available stub columns: ", paste(stub_vars, collapse = ", "))
+        } else {
+          "This table has no stub columns."
+        }
+
+        cli::cli_abort(
+          c(
+            "Column{?s} {.val {non_stub_cols}} {?is/are} not stub column{?s}.",
+            "i" = "cells_stub() can only target columns that are part of the table stub.",
+            "i" = available_stub_cols,
+            "i" = "To target non-stub columns, use cells_body() instead."
+          )
+        )
+      }
+    }
+  }
+
+  # Check if this is traditional usage (no columns parameter)
+  # vs. new usage (explicit columns parameter provided)
+  is_traditional_usage <- is.null(loc$columns)
+
+  if (is_traditional_usage) {
+    # For backward compatibility: traditional cells_stub() usage without columns parameter
+    # Use the original "stub" locname for compatibility with existing code
+    data <-
+      dt_footnotes_add(
+        data = data,
+        locname = "stub",
+        grpname = NA_character_,
+        colname = NA_character_,
+        locnum = 5,
+        rownum = rows,
+        footnotes = footnote,
+        placement = placement
+      )
+  } else {
+    # New usage: per-column stub footnotes
+    # If no stub columns are resolved, apply to all stub columns (backward compatibility)
+    if (length(columns) == 0) {
+      if (!all(is.na(stub_vars))) {
+        columns <- stub_vars
+      }
+    }
+
+    # For multi-column stub footnotes, we use "stub" locname for consolidation
+    # but pass the specific column names to ensure footnotes are targeted correctly
+    data <-
+      dt_footnotes_add(
+        data = data,
+        locname = "stub",
+        grpname = NA_character_,
+        colname = columns,
+        locnum = 5,
+        rownum = rows,
+        footnotes = footnote,
+        placement = placement
+      )
+  }
 
   data
 }
