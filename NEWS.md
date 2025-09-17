@@ -2,6 +2,8 @@
 
 ## Minor improvements and bug fixes
 
+* `data_color()` now allows to specify which light/dark color to use when `autocolor_text = TRUE` (@xx02al, #1930).
+
 * Fixed an issue with a warning in Quarto (@olivroy, #1985)
 
 * `as_word()` now handles "<br>" line breaks for `md()` and `html()`, and no longer automatically adds "Table N" ahead of the caption. 
