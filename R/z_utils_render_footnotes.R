@@ -377,14 +377,13 @@ resolve_footnotes_styles <- function(data, tbl_type) {
 
     # Don't sort if order is preserved
     if(footnote_order != "preserve_order"){
-
-    # Sort all footnotes by visual position: locnum, rownum, colnum
-    # This ensures left-to-right, top-to-bottom ordering of footnote marks
-    # since we've already set proper colnum values for stub footnotes
-    if (nrow(tbl) > 0L) {
-      order_of_tbl <- order(tbl$locnum, tbl$rownum, tbl$colnum, na.last = TRUE)
-      tbl <- tbl[order_of_tbl, , drop = FALSE]
-    }
+      # Sort all footnotes by visual position: locnum, rownum, colnum
+      # This ensures left-to-right, top-to-bottom ordering of footnote marks
+      # since we've already set proper colnum values for stub footnotes
+      if (nrow(tbl) > 0L) {
+        order_of_tbl <- order(tbl$locnum, tbl$rownum, tbl$colnum, na.last = TRUE)
+        tbl <- tbl[order_of_tbl, , drop = FALSE]
+      }
     }
 
     # Generate a lookup table with ID'd footnote
