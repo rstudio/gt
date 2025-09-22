@@ -28,6 +28,8 @@
 
 * Added support for rtf to fmt_image (@shannonhaughton, #2029)
 
+* Add option to control the order of footnotes (@shannonhaughton, #2023)
+
 # gt 1.0.0
 
 ## Minor improvements and bug fixes
