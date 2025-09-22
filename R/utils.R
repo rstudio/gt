@@ -2289,8 +2289,8 @@ validate_footnote_order <- function(order, call = rlang::caller_env()) {
       error_call = call
     )
   }
-  if (!is.character(order)) {
-    cli::cli_abort("The value for `order` must be a character vector. Acceptable values include: {.val {order_keywords}}", call = call)
+  if (!is.character(order) | length(order)>1) {
+    cli::cli_abort("The value for `order` must be a character string. Acceptable values include: {.val {order_keywords}}", call = call)
   }
 }
 

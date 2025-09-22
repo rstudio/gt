@@ -466,6 +466,7 @@ test_that("opt_footnote_order() sets the correct order", {
 
   expect_error(gt_tbl %>% opt_footnote_order(NULL))
   expect_error(gt_tbl %>% opt_footnote_order("set_1"))
+  expect_error(gt_tbl %>% opt_footnote_order(c("set_1","set_2")))
   expect_error(gt_tbl %>% opt_footnote_order(1:5))
   expect_error(gt_tbl %>% opt_footnote_order(character(0L)))
 })
