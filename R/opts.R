@@ -725,8 +725,9 @@ opt_footnote_spec <- function(
 #'
 #' The keywords are:
 #'
-#' - `"marks_first"`: marked footnotes should appear before unmarked in the table
 #' - `"marks_last"`: marked footnotes should appear beneath unmarked in the table (default)
+#' - `"marks_first"`: marked footnotes should appear before unmarked in the table
+#' - `"preserve_order"`: footnotes will appear in the order they were specified in tab_footnote
 #'
 #' @section Examples:
 #'

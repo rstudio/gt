@@ -2275,7 +2275,7 @@ validate_marks <- function(marks, call = rlang::caller_env()) {
 
 validate_footnote_order <- function(order, call = rlang::caller_env()) {
 
-  order_keywords <- c("marks_first", "marks_last")
+  order_keywords <- c("marks_first", "marks_last", "preserve_order")
 
 
   if (length(order) <= 1) {

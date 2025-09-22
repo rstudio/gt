@@ -37,7 +37,6 @@ resolve_footnotes_styles <- function(data, tbl_type) {
   # Get the `footnote_order` option from the options table
   footnote_order <- dt_options_get_value(data = data, option = "footnotes_order")
 
-
   rlang::arg_match0(tbl_type, c("footnotes", "styles"))
 
   if (tbl_type == "footnotes") {
@@ -376,12 +375,16 @@ resolve_footnotes_styles <- function(data, tbl_type) {
   # column with footnote marks
   if (tbl_type == "footnotes") {
 
+    # Don't sort if order is preserved
+    if(footnote_order != "preserve_order"){
+
     # Sort all footnotes by visual position: locnum, rownum, colnum
     # This ensures left-to-right, top-to-bottom ordering of footnote marks
     # since we've already set proper colnum values for stub footnotes
     if (nrow(tbl) > 0L) {
       order_of_tbl <- order(tbl$locnum, tbl$rownum, tbl$colnum, na.last = TRUE)
       tbl <- tbl[order_of_tbl, , drop = FALSE]
+    }
     }
 
     # Generate a lookup table with ID'd footnote
@@ -415,8 +418,20 @@ resolve_footnotes_styles <- function(data, tbl_type) {
 
       if(footnote_order == "marks_first"){
         tbl <- vctrs::vec_rbind(tbl, tbl_no_loc)
+      }else if(footnote_order == "preserve_order"){
+        footnotes_all <- vctrs::vec_rbind(tbl_no_loc, tbl)
+
+        # get original order from data
+        order <- data$`_footnotes` %>%
+          dplyr::select(locname, footnotes)
+
+        # sort by original order
+        tbl <- dplyr::left_join(order, footnotes_all, by = c("locname", "footnotes")) %>%
+          dplyr::select(names(footnotes_all))
+
       }else{
         tbl <- vctrs::vec_rbind(tbl_no_loc, tbl)
+
       }
 
     }

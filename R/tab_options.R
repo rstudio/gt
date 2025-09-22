@@ -334,7 +334,8 @@
 #'
 #'   The order in which footnotes are displayed in the output. By default
 #'   `"marks_last"` with marked footnotes below unmarked ones, or alternatively
-#'   `"marks_first"`.
+#'   `"marks_first"`. To preserve the order supplied by tab_footnote,
+#'   `"preserve_order"` can be used.
 #'
 #' @param source_notes.border.bottom.style,source_notes.border.bottom.width,source_notes.border.bottom.color
 #'   *Properties of the bottom border belonging to the source notes*

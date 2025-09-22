@@ -464,6 +464,10 @@ test_that("opt_footnote_order() sets the correct order", {
   tbl_opts_2 <- dt_options_get_values(gt_tbl_2)
   expect_equal(tbl_opts_2$footnotes_order, "marks_first")
 
+  gt_tbl_3 <- opt_footnote_order(gt_tbl, order = "preserve_order")
+  tbl_opts_3 <- dt_options_get_values(gt_tbl_3)
+  expect_equal(tbl_opts_3$footnotes_order, "preserve_order")
+
   expect_error(gt_tbl %>% opt_footnote_order(NULL))
   expect_error(gt_tbl %>% opt_footnote_order("set_1"))
   expect_error(gt_tbl %>% opt_footnote_order(c("set_1","set_2")))
