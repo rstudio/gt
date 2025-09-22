@@ -667,7 +667,7 @@
 #' *Task Group on Fundamental Constants* (TGFC) of the
 #' *Committee on Data of the International Science Council* (CODATA). These
 #' updated values became available on May 20, 2019. They are published at
-#' <http://physics.nist.gov/constants>, a website of the
+#' <https://physics.nist.gov/cuu/Constants/index.html>, a website of the
 #' *Fundamental Constants Data Center* of the
 #' *National Institute of Standards and Technology* (NIST), Gaithersburg,
 #' Maryland, USA.
