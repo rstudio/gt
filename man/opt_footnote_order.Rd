@@ -34,8 +34,9 @@ first or last in the table
 
 The keywords are:
 \itemize{
-\item \code{"marks_first"}: marked footnotes should appear before unmarked in the table
 \item \code{"marks_last"}: marked footnotes should appear beneath unmarked in the table (default)
+\item \code{"marks_first"}: marked footnotes should appear before unmarked in the table
+\item \code{"preserve_order"}: footnotes will appear in the order they were specified in tab_footnote
 }
 }
 

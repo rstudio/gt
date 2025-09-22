@@ -484,7 +484,8 @@ character (\code{" "}).}
 
 The order in which footnotes are displayed in the output. By default
 \code{"marks_last"} with marked footnotes below unmarked ones, or alternatively
-\code{"marks_first"}.}
+\code{"marks_first"}. To preserve the order supplied by tab_footnote,
+\code{"preserve_order"} can be used.}
 
 \item{source_notes.border.bottom.style, source_notes.border.bottom.width, source_notes.border.bottom.color}{\emph{Properties of the bottom border belonging to the source notes}
 
