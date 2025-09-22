@@ -415,7 +415,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
 
       if(footnote_order == "marks_first"){
         tbl <- vctrs::vec_rbind(tbl, tbl_no_loc)
-      }else if(footnote_order == "marks_last"){
+      }else{
         tbl <- vctrs::vec_rbind(tbl_no_loc, tbl)
       }
 
