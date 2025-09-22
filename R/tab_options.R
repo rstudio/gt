@@ -329,6 +329,13 @@
 #'   (when `footnotes.multiline == FALSE`). The default value is a single space
 #'   character (`" "`).
 #'
+#' @param footnotes.order
+#'   *Order footnotes are displayed in output*
+#'
+#'   The order in which footnotes are displayed in the output. By default
+#'   `"marks_last"` with marked footnotes below unmarked ones, or alternatively
+#'   `"marks_first"`.
+#'
 #' @param source_notes.border.bottom.style,source_notes.border.bottom.width,source_notes.border.bottom.color
 #'   *Properties of the bottom border belonging to the source notes*
 #'
@@ -832,6 +839,7 @@ tab_options <- function(
     footnotes.spec_ftr = NULL,
     footnotes.multiline = NULL,
     footnotes.sep = NULL,
+    footnotes.order = NULL,
     source_notes.background.color = NULL,
     source_notes.font.size = NULL,
     source_notes.padding = NULL,

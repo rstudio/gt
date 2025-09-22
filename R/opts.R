@@ -701,6 +701,112 @@ opt_footnote_spec <- function(
   data
 }
 
+# opt_footnote_order() ---------------------------------------------------------
+#' Option to modify the order of footnotes, marks first or last
+#'
+#' @description
+#'
+#' Alter the order the footnotes appear in the table.
+#' A character string can be passed specifying if marked footnotes should appear
+#' first or last in the table
+#'
+#' @inheritParams fmt_number
+#'
+#' @param order *Character vector specifying order of footnote marks*
+#'
+#'   `vector<character>` // *default:* `"marks_last"`
+#'
+#'   A character vector specifing `"marks_first"` for marked footnotes before
+#'   unmarked in the table, or by default `"marks_last"`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Specification of footnote order:
+#'
+#' The keywords are:
+#'
+#' - `"marks_first"`: marked footnotes should appear before unmarked in the table
+#' - `"marks_last"`: marked footnotes should appear beneath unmarked in the table (default)
+#'
+#' @section Examples:
+#'
+#' Use a summarized version of the [`sza`] dataset to create a **gt** table,
+#' adding three marked footnotes and one unmarked (with four calls of [tab_footnote()]). We can modify
+#' the order of footnotes  with the `opt_footnote_order()` function.
+#'
+#' ```r
+#' sza |>
+#'   dplyr::filter(latitude == 30) |>
+#'   dplyr::group_by(tst) |>
+#'   dplyr::summarize(
+#'     SZA.Max = if (
+#'       all(is.na(sza))) {
+#'       NA
+#'     } else {
+#'       max(sza, na.rm = TRUE)
+#'     },
+#'     SZA.Min = if (
+#'       all(is.na(sza))) {
+#'       NA
+#'     } else {
+#'       min(sza, na.rm = TRUE)
+#'     },
+#'     .groups = "drop"
+#'   ) |>
+#'   gt(rowname_col = "tst") |>
+#'   tab_spanner_delim(delim = ".") |>
+#'   sub_missing(
+#'     columns = everything(),
+#'     missing_text = "90+"
+#'   ) |>
+#'   tab_stubhead(label = "TST") |>
+#'   tab_footnote(
+#'     footnote = "True solar time.",
+#'     locations = cells_stubhead()
+#'   ) |>
+#'   tab_footnote(
+#'     footnote = "Solar zenith angle.",
+#'     locations = cells_column_spanners(
+#'       spanners = "spanner-SZA.Max"
+#'     )
+#'   ) |>
+#'   tab_footnote(
+#'     footnote = "The Lowest SZA.",
+#'     locations = cells_stub(rows = "1200")
+#'   ) |>
+#'   tab_footnote(
+#'     footnote = "This set of values is calculated on the first of every month for 4 different northern hemisphere latitudes."
+#'   ) |>
+#'   opt_footnote_order(order = "marks_first")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_footnote_order_1.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 10-3
+#'
+#' @section Function Introduced:
+#' `v0.1.0.9000` (September 22, 2025)
+#'
+#' @export
+opt_footnote_order <- function(
+    data,
+    order = "marks_last"
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Validate input for `order`
+  validate_footnote_order(order)
+
+  tab_options(data = data, footnotes.order = order)
+}
+
+
 # opt_row_striping() -----------------------------------------------------------
 #' Option to add or remove row striping
 #'

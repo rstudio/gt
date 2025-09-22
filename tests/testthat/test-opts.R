@@ -340,7 +340,7 @@ test_that("opt_table_font() sets the correct options", {
       "font-weight: bold;",
       "font-style: italic;"
     ) %>% expect_true()
-  
+
   # Expect that the `size` option is passed as a CSS value
   tbl %>%
     opt_table_font(size = px(32)) %>%
@@ -348,7 +348,7 @@ test_that("opt_table_font() sets the correct options", {
     as.character() %>%
     html_fragment_within("font-size: 32px;") %>%
     expect_true()
-  
+
   # Expect that the `color` option is passed as a CSS value
   tbl %>%
     opt_table_font(color = "#228B23") %>%
@@ -453,4 +453,19 @@ test_that("opt_table_font() sets the correct options", {
   expect_no_error(opt_table_font(tbl, font = c("Courier", "Comic Sans MS")))
   expect_no_error(opt_table_font(tbl, font = list("Courier", "Comic Sans MS")))
   expect_no_error(opt_table_font(tbl, font = LETTERS))
+})
+
+test_that("opt_footnote_order() sets the correct order", {
+
+  gt_tbl <- gt(exibble)
+  tbl_opts <- dt_options_get_values(gt_tbl)
+
+  gt_tbl_2 <- opt_footnote_order(gt_tbl, order = "marks_first")
+  tbl_opts_2 <- dt_options_get_values(gt_tbl_2)
+  expect_equal(tbl_opts_2$footnotes_order, "marks_first")
+
+  expect_error(gt_tbl %>% opt_footnote_order(NULL))
+  expect_error(gt_tbl %>% opt_footnote_order("set_1"))
+  expect_error(gt_tbl %>% opt_footnote_order(1:5))
+  expect_error(gt_tbl %>% opt_footnote_order(character(0L)))
 })
