@@ -95,7 +95,7 @@ Remove the table outline with the \code{style = "none"} option.
 
 \section{Function ID}{
 
-10-11
+10-12
 }
 
 \section{Function Introduced}{

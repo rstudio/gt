@@ -85,7 +85,7 @@ ID value of \code{"one"}, setting it in the \code{\link[=gt]{gt()}} function).
 
 \section{Function ID}{
 
-10-13
+10-14
 }
 
 \section{Function Introduced}{

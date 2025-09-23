@@ -84,7 +84,7 @@ the stub, and in all row groups is transformed to all caps using
 
 \section{Function ID}{
 
-10-9
+10-10
 }
 
 \section{Function Introduced}{
