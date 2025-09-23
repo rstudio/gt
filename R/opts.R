@@ -716,7 +716,8 @@ opt_footnote_spec <- function(
 #'
 #'   `vector<character>` // *default:* `"marks_last"`
 #'
-#'   A character vector specifing `"marks_first"` for marked footnotes before
+#'   A character vector specifying if you want to `"preserve_order"` of footnotes
+#'   as they were added in the code, set `"marks_first"` for marked footnotes before
 #'   unmarked in the table, or by default `"marks_last"`.
 #'
 #' @return An object of class `gt_tbl`.

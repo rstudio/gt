@@ -18,7 +18,8 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{vector<character>} // \emph{default:} \code{"marks_last"}
 
-A character vector specifing \code{"marks_first"} for marked footnotes before
+A character vector specifying if you want to \code{"preserve_order"} of footnotes
+as they were added in the code, set \code{"marks_first"} for marked footnotes before
 unmarked in the table, or by default \code{"marks_last"}.}
 }
 \value{
