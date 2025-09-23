@@ -2,7 +2,7 @@
 % Please edit documentation in R/opts.R
 \name{opt_footnote_order}
 \alias{opt_footnote_order}
-\title{Option to modify the order of footnotes, marks first or last}
+\title{Option to modify the order of footnotes}
 \usage{
 opt_footnote_order(data, order = "marks_last")
 }
@@ -28,7 +28,7 @@ An object of class \code{gt_tbl}.
 \description{
 Alter the order the footnotes appear in the table.
 A character string can be passed specifying if marked footnotes should appear
-first or last in the table
+first or last in the table, or if the original order should be preserved.
 }
 \section{Specification of footnote order}{
 

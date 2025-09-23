@@ -702,13 +702,13 @@ opt_footnote_spec <- function(
 }
 
 # opt_footnote_order() ---------------------------------------------------------
-#' Option to modify the order of footnotes, marks first or last
+#' Option to modify the order of footnotes
 #'
 #' @description
 #'
 #' Alter the order the footnotes appear in the table.
 #' A character string can be passed specifying if marked footnotes should appear
-#' first or last in the table
+#' first or last in the table, or if the original order should be preserved.
 #'
 #' @inheritParams fmt_number
 #'
