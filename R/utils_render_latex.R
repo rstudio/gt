@@ -464,7 +464,7 @@ create_columns_component_l <- function(data, colwidth_df) {
         dplyr::filter(
           styles_tbl,
           locname == "columns_columns",
-          colname == headings_labels[i]
+          colname == headings_vars[i]
         )
       )
 
@@ -1158,8 +1158,9 @@ create_footer_component_l <- function(data) {
 
   # Create the footer block
   paste0(
-    "\\begin{minipage}{\\linewidth}\n",
+    "\\begin{minipage}{\\linewidth}\n\\begin{tabular*}{\\linewidth}{@{\\extracolsep{\\fill}}l}\n",
     paste0(footnotes, source_notes),
+    "\\end{tabular*}\n",
     "\\end{minipage}\n",
     collapse = ""
   )
@@ -1528,19 +1529,22 @@ apply_cell_styles_l <- function(content, style_obj) {
     x <- .apply_style_fill_l(x, style_obj)
     x <- .apply_style_transform_l(x, style_obj)
     x <- .apply_style_decorate_l(x, style_obj)
+    x <- .apply_style_alignment_shortstack(x, style_obj)
 
     # Apply changes that can be made to the bracketed environment
-    out_text <- paste0(
-      "{",
-
-      .apply_style_style_l(style_obj),
-      .apply_style_weight_l(style_obj),
-      # Can generate "\small for example
-      .apply_style_fontsize_l(style_obj),
-      .apply_style_indentation_l(style_obj),
-      x,
-      "}"
-    )
+    out_text <- .apply_style_cell_alignment(
+        paste0(
+          "{",
+          .apply_style_style_l(style_obj),
+          .apply_style_weight_l(style_obj),
+          # Can generate "\small for example
+          .apply_style_fontsize_l(style_obj),
+          .apply_style_indentation_l(style_obj),
+          x,
+          "}"
+        ),
+        style_obj
+      )
   } else {
     out_text <- just_content
   }
@@ -1608,6 +1612,56 @@ apply_cell_styles_l <- function(content, style_obj) {
     x
   )
 
+}
+
+.apply_style_alignment_shortstack <- function(x, style_obj) {
+
+  if(!grepl("\\shortstack[l]", x, fixed = TRUE)){return(x)}
+
+  alignment <- style_obj[["cell_text"]][["align"]]
+
+  if(is.null(alignment) | identical(alignment, "left")){
+    return(x)
+  }
+
+  shortstack_alignment(x, alignment = alignment)
+}
+
+shortstack_alignment <- function(x, alignment){
+
+  shortstackalignment <- c(
+    "center" = "[c]",
+    "justify" = "[c]",
+    "left" = "[l]",
+    "right" = "[r]"
+  )[alignment]
+
+  gsub("\\shortstack[l]",paste0("\\shortstack",shortstackalignment), x, fixed = TRUE)
+}
+
+.apply_style_cell_alignment <- function(x, style_obj) {
+
+  if (is.null(style_obj[["cell_text"]][["align"]])) return(x)
+
+  alignment <- style_obj[["cell_text"]][["align"]]
+
+  if(is.null(alignment) | identical(alignment, "left")){
+    return(x)
+  }
+
+  latex_cell_alignment(x, alignment = alignment)
+}
+
+latex_cell_alignment <- function(x, alignment){
+
+  cellalignment <- c(
+    "center" = "c",
+    "justify" = "c",
+    "left" = "l",
+    "right" = "r"
+  )[alignment]
+
+  paste0("\\multicolumn{1}{",cellalignment,"}", x, "")
 }
 
 .apply_style_fontsize_l <- function(style_obj) {
