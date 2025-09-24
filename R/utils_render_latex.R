@@ -114,9 +114,9 @@ latex_group_row <- function(
   use_width <- if (is.na(tab_width)) "l" else sprintf(">{\\raggedright\\arraybackslash}m{%s}", tab_width)
 
   if (is.na(group_name)) {
-    row_txt <- paste0("\\multicolumn{", n_cols, "}{", use_width, "}{\\rule{0pt}{0pt}} \\\\[-3.2ex] \n")
+    row_txt <- paste0(latex_multicolumn_cell("\\rule{0pt}{0pt}", alignment = use_width, width = n_cols)," \\\\[-3.2ex] \n")
   } else {
-    row_txt <- paste0("\\multicolumn{", n_cols, "}{", use_width, "}{", group_name, "} \\\\[2.5pt] \n")
+    row_txt <- paste0(latex_multicolumn_cell(group_name, alignment = use_width, width = n_cols)," \\\\[2.5pt] \n")
   }
 
   paste0(
@@ -507,11 +507,10 @@ create_columns_component_l <- function(data, colwidth_df) {
       }
 
       stub_label <-
-        sprintf(
-          "\\multicolumn{%d}{%s}{%s}",
-          length(stub_layout),
-          width_txt,
-          stub_label
+        latex_multicolumn_cell(
+          stub_label,
+          alignment = width_txt,
+          width = length(stub_layout)
         )
     }
 
@@ -579,19 +578,28 @@ create_columns_component_l <- function(data, colwidth_df) {
           "c"
         )
 
-      multicol <-
-        ifelse(
-          is_spanner_na, "",
-          ifelse(
-            is_spanner_single, spanners_rle$labels,
-            sprintf(
-              "\\multicolumn{%d}{%s}{%s}",
-              spanners_rle$lengths,
-              tex_widths,
-              spanners_rle$labels
+      multicol <- sapply(seq_along(spanners_rle),function(spanner_idx){
+
+
+        if(is.na(spanners_rle$values[[spanner_idx]])){
+          ""
+        }else{
+          if(spanners_rle$lengths[[spanner_idx]] == 1){
+            spanners_rle$labels[[spanner_idx]]
+          }else{
+            latex_multicolumn_cell(
+              x = spanners_rle$labels[[spanner_idx]],
+              alignment = tex_widths[[spanner_idx]],
+              width = spanners_rle$lengths[[spanner_idx]],
+              override_width = TRUE,
+              override_alignment = FALSE
             )
-          )
-        )
+          }
+
+        }
+
+      })
+
 
       # If there is a stub we need to tweak the spanners row with a blank
       # multicolumn statement that's the same width as that in the columns
@@ -1011,7 +1019,20 @@ summary_rows_for_group_l <- function(
         row_splits_summary,
         function(x) {
           x <- c("", x)
-          x[1:2] <- paste0("\\multicolumn{1}{l|}{", x[1:2], "}")
+          x[1] <- latex_multicolumn_cell(
+            x = x[1],
+            alignment = "l|",
+            width = 1,
+            override_width = TRUE,
+            override_alignment = FALSE
+          )
+          x[2] <- latex_multicolumn_cell(
+            x = x[2],
+            alignment = "l|",
+            width = 1,
+            override_width = TRUE,
+            override_alignment = FALSE
+          )
           x
         }
       )
@@ -1366,8 +1387,9 @@ create_summary_rows_l <- function(
 
                   x <- c(rep("", stub_width - 1), x)
 
-                  x[seq_len(stub_width)] <-
-                    paste0("\\multicolumn{1}{l|}{", x[seq_len(stub_width)], "}")
+                  x[seq_len(stub_width)] <- sapply(x[seq_len(stub_width)], function(x) {
+                    latex_multicolumn_cell(x, width = 1, alignment = "l|", override_alignment = FALSE)
+                    })
 
                   x
                 }
@@ -1645,23 +1667,61 @@ shortstack_alignment <- function(x, alignment){
 
   alignment <- style_obj[["cell_text"]][["align"]]
 
-  if(is.null(alignment) | identical(alignment, "left")){
-    return(x)
-  }
-
-  latex_cell_alignment(x, alignment = alignment)
-}
-
-latex_cell_alignment <- function(x, alignment){
-
-  cellalignment <- c(
+  alignment <- c(
     "center" = "c",
     "justify" = "c",
     "left" = "l",
     "right" = "r"
   )[alignment]
 
-  paste0("\\multicolumn{1}{",cellalignment,"}", x, "")
+  latex_multicolumn_cell(x, alignment = alignment, width = 1)
+}
+
+latex_multicolumn_cell <- function(x,  width = NULL, alignment = NULL, override_width = TRUE, override_alignment = TRUE){
+
+  if (grepl("\\multicolumn", x, fixed = TRUE)) {
+    pre_existing <- TRUE
+    existing_width <- gsub(".*(\\multicolumn)\\{(\\d+)\\}\\{(.*?)\\}\\{.+\\}", "\\2", x)
+    if(existing_width == ""){
+      existing_width <- NULL
+    }
+    existing_alignment <- gsub(".*(\\multicolumn)\\{(\\d+)\\}\\{(.*?)\\}\\{.+\\}", "\\3", x)
+    if(existing_width == ""){
+      existing_width <- NULL
+    }
+  } else{
+    pre_existing <- FALSE
+    existing_width <- NULL
+    existing_alignment <- NULL
+  }
+
+  if(override_width){
+    width <- width %||% existing_width
+  }else{
+    width <- existing_width %||% width
+  }
+
+  if(override_alignment){
+    alignment <- alignment %||% existing_alignment
+  }else{
+    alignment <- existing_alignment %||% alignment
+  }
+
+  new_multicolumn_statement <- paste0("\\multicolumn{",width,"}{",alignment,"}")
+
+  if(pre_existing){
+    gsub(paste0("\\multicolumn{",existing_width,"}{",existing_alignment,"}"), new_multicolumn_statement, x, fixed = TRUE)
+  }else{
+    paste0(new_multicolumn_statement,"{",x,"}")
+  }
+}
+
+latex_cleanup_multicolumn <- function(x){
+  ## Fix missing alignment
+  x <- gsub("(\\multicolumn\\{(\\d+)\\})\\{\\}(\\{.+?\\})", "\\1{l}\\2", x)
+  ## Fix missing column width
+  x <- gsub("(\\multicolumn)\\{\\}(\\{.+?\\}\\{.+?\\})", "\\1{1}\\2", x)
+  x
 }
 
 .apply_style_fontsize_l <- function(style_obj) {
