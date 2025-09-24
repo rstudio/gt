@@ -220,6 +220,7 @@ dt_options_tbl <-
     "footnotes_spec_ftr",                FALSE,  "footnotes",        "values",  "^i",
     "footnotes_multiline",               FALSE,  "footnotes",        "logical", TRUE,
     "footnotes_sep",                     FALSE,  "footnotes",        "value",   " ",
+    "footnotes_order",                   FALSE,  "footnotes",        "value",   "marks_last",
     "source_notes_padding",               TRUE,  "source_notes",     "px",      "4px",
     "source_notes_padding_horizontal",    TRUE,  "source_notes",     "px",      "5px",
     "source_notes_background_color",      TRUE,  "source_notes",     "value",   NA_character_,

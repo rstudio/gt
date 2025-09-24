@@ -71,7 +71,7 @@ generate lines everywhere there can possibly be lines (the default for the
 
 \section{Function ID}{
 
-10-10
+10-11
 }
 
 \section{Function Introduced}{
@@ -85,6 +85,7 @@ Other table option functions:
 \code{\link{opt_all_caps}()},
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_footnote_order}()},
 \code{\link{opt_footnote_spec}()},
 \code{\link{opt_horizontal_padding}()},
 \code{\link{opt_interactive}()},

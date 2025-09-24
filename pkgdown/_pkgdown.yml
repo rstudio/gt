@@ -255,6 +255,7 @@ reference:
     - opt_interactive
     - opt_footnote_marks
     - opt_footnote_spec
+    - opt_footnote_order
     - opt_row_striping
     - opt_align_table_header
     - opt_vertical_padding

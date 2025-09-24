@@ -1409,6 +1409,15 @@ test_that("The internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c(" ", "  "))
 
+  # Modify the `footnotes.order` option
+  tbl_html <- data %>% tab_options(footnotes.order = "marks_first")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "footnotes_order"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_order")
+  ) %>%
+    expect_equal(c("marks_last", "marks_first"))
+
   # Modify the `source_notes.multiline` option
   tbl_html <- data %>% tab_options(source_notes.multiline = FALSE)
 
