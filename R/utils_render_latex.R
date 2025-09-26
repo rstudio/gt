@@ -1133,22 +1133,33 @@ create_footer_component_l <- function(data) {
 
     footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
+    footnote_marks <- footnote_mark_to_latex(
+      data = data,
+      mark = footnotes_tbl[["fs_id"]],
+      location = "ftr"
+    )
+
     # Create a vector of formatted footnotes
     footnotes <-
-      paste0(
-        footnote_mark_to_latex(
-          data = data,
-          mark = footnotes_tbl[["fs_id"]],
-          location = "ftr"
-        ),
-        vapply(
-          footnotes_tbl[["footnotes"]],
-          FUN.VALUE = character(1L),
-          #FUN = process_text,
-          FUN = function(x, context, styles_obj) apply_cell_styles_l(process_text(x, context = context), styles_obj, type = "footnote"),
-          context = "latex",
-          styles_obj = styles_footnote
-        )
+      vapply(
+        seq_along(footnotes_tbl[["footnotes"]]),
+        FUN.VALUE = character(1L),
+        #FUN = process_text,
+        FUN = function(idx,
+                       footnotes,
+                       footnote_marks,
+                       context,
+                       styles_obj) {
+          apply_cell_styles_l(
+             paste(footnote_marks[[idx]], process_text(footnotes[[idx]], context = context)),
+            styles_obj,
+            type = "footnote"
+            )
+        },
+        footnotes = footnotes_tbl[["footnotes"]],
+        footnote_marks = footnote_marks,
+        context = "latex",
+        styles_obj = styles_footnote
       )
 
 
