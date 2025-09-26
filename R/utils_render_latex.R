@@ -111,12 +111,12 @@ latex_group_row <- function(
 
   # The width of the group row should be that of the entire table
   tab_width <- colwidth_df$tbl_width[1L]
-  use_width <- if (is.na(tab_width)) "l" else sprintf(">{\\raggedright\\arraybackslash}m{%s}", tab_width)
+  use_width <- ifelse(is.na(tab_width), "l", sprintf(">{\\raggedright\\arraybackslash}m{%s}", tab_width))
 
   if (is.na(group_name)) {
-    row_txt <- paste0(latex_multicolumn_cell("\\rule{0pt}{0pt}", alignment = use_width, width = n_cols)," \\\\[-3.2ex] \n")
+    row_txt <- paste0(latex_multicolumn_cell("\\rule{0pt}{0pt}", alignment = use_width, width = n_cols, override_alignment = FALSE)," \\\\[-3.2ex] \n")
   } else {
-    row_txt <- paste0(latex_multicolumn_cell(group_name, alignment = use_width, width = n_cols)," \\\\[2.5pt] \n")
+    row_txt <- paste0(latex_multicolumn_cell(group_name, alignment = use_width, width = n_cols, override_alignment = FALSE)," \\\\[2.5pt] \n")
   }
 
   paste0(
@@ -510,7 +510,8 @@ create_columns_component_l <- function(data, colwidth_df) {
         latex_multicolumn_cell(
           stub_label,
           alignment = width_txt,
-          width = length(stub_layout)
+          width = length(stub_layout),
+          override_alignment = FALSE
         )
     }
 
@@ -578,26 +579,31 @@ create_columns_component_l <- function(data, colwidth_df) {
           "c"
         )
 
-      multicol <- sapply(seq_along(spanners_rle),function(spanner_idx){
+
+      multicol <- sapply(seq_along(spanners_rle$values),function(spanner_idx){
 
 
         if(is.na(spanners_rle$values[[spanner_idx]])){
           ""
         }else{
-          if(spanners_rle$lengths[[spanner_idx]] == 1){
-            spanners_rle$labels[[spanner_idx]]
-          }else{
-            latex_multicolumn_cell(
-              x = spanners_rle$labels[[spanner_idx]],
-              alignment = tex_widths[[spanner_idx]],
-              width = spanners_rle$lengths[[spanner_idx]],
-              override_width = TRUE,
-              override_alignment = FALSE
-            )
+
+          span_label <- spanners_rle$labels[[spanner_idx]]
+          span_length <- spanners_rle$lengths[[spanner_idx]]
+
+          if(grepl("\\shortstack",span_label, fixed = TRUE)){
+            if( tex_widths[[spanner_idx]] == "c"){
+              span_label <- shortstack_alignment(span_label, alignment = "center")
+            }
           }
 
+          latex_multicolumn_cell(
+            x = span_label,
+            alignment = tex_widths[[spanner_idx]],
+            width = span_length,
+            override_width = TRUE,
+            override_alignment = FALSE
+          )
         }
-
       })
 
 
@@ -1139,7 +1145,7 @@ create_footer_component_l <- function(data) {
           footnotes_tbl[["footnotes"]],
           FUN.VALUE = character(1L),
           #FUN = process_text,
-          FUN = function(x, context, styles_obj) apply_cell_styles_l(process_text(x, context = context), styles_obj),
+          FUN = function(x, context, styles_obj) apply_cell_styles_l(process_text(x, context = context), styles_obj, type = "footnote"),
           context = "latex",
           styles_obj = styles_footnote
         )
@@ -1171,7 +1177,7 @@ create_footer_component_l <- function(data) {
         dplyr::filter(dt_styles_get(data), locname == "source_notes")
       )
 
-    source_notes <- apply_cell_styles_l(source_notes, styles_source)
+    source_notes <- apply_cell_styles_l(source_notes, styles_source, type = "footnote")
 
   } else {
     source_notes <- ""
@@ -1179,9 +1185,8 @@ create_footer_component_l <- function(data) {
 
   # Create the footer block
   paste0(
-    "\\begin{minipage}{\\linewidth}\n\\begin{tabular*}{\\linewidth}{@{\\extracolsep{\\fill}}l}\n",
+    "\\begin{minipage}{\\linewidth}\n\\vspace{.05em}\n",
     paste0(footnotes, source_notes),
-    "\\end{tabular*}\n",
     "\\end{minipage}\n",
     collapse = ""
   )
@@ -1531,7 +1536,7 @@ consolidate_cell_styles_l <- function(styles_df) {
 #' a cell of text to be output in LaTeX.
 #'
 #' @noRd
-apply_cell_styles_l <- function(content, style_obj) {
+apply_cell_styles_l <- function(content, style_obj, type = "cell") {
 
   # Set default values for no footnote present
   just_content <- content
@@ -1565,7 +1570,8 @@ apply_cell_styles_l <- function(content, style_obj) {
           x,
           "}"
         ),
-        style_obj
+        style_obj,
+        type = type
       )
   } else {
     out_text <- just_content
@@ -1661,20 +1667,24 @@ shortstack_alignment <- function(x, alignment){
   gsub("\\shortstack[l]",paste0("\\shortstack",shortstackalignment), x, fixed = TRUE)
 }
 
-.apply_style_cell_alignment <- function(x, style_obj) {
+.apply_style_cell_alignment <- function(x, style_obj, type = "cell") {
 
   if (is.null(style_obj[["cell_text"]][["align"]])) return(x)
 
   alignment <- style_obj[["cell_text"]][["align"]]
 
-  alignment <- c(
-    "center" = "c",
-    "justify" = "c",
-    "left" = "l",
-    "right" = "r"
-  )[alignment]
+  if(type == "cell"){
+    alignment <- c(
+      "center" = "c",
+      "justify" = "c",
+      "left" = "l",
+      "right" = "r"
+    )[alignment]
 
-  latex_multicolumn_cell(x, alignment = alignment, width = 1)
+    latex_multicolumn_cell(x, alignment = alignment, width = 1)
+  }else if(type == "footnote"){
+    latex_align_text(x, alignment = alignment)
+  }
 }
 
 latex_multicolumn_cell <- function(x,  width = NULL, alignment = NULL, override_width = TRUE, override_alignment = TRUE){
@@ -1722,6 +1732,19 @@ latex_cleanup_multicolumn <- function(x){
   ## Fix missing column width
   x <- gsub("(\\multicolumn)\\{\\}(\\{.+?\\}\\{.+?\\})", "\\1{1}\\2", x)
   x
+}
+
+latex_align_text <- function(x, alignment){
+
+  alignment <- c(
+    "center" = "\\centering",
+    "justify" = "\\sloppy\\setlength\\parfillskip{0pt}",
+    "left" = "\\raggedright",
+    "right" = "\\raggedleft"
+  )[alignment]
+
+  paste0("\\parbox{\\linewidth}{",alignment," ",x,"}")
+
 }
 
 .apply_style_fontsize_l <- function(style_obj) {
