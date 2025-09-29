@@ -210,6 +210,7 @@ components, the subcomponents, and the element that can adjusted.</p>
 <span>  footnotes.spec_ftr <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  footnotes.multiline <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  footnotes.sep <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.order <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  source_notes.background.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  source_notes.font.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  source_notes.padding <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -589,6 +590,14 @@ default, or <code>TRUE</code>) or render them as a continuous line of text with
 their respective footer sections when rendered as a continuous line of text
 (when <code>footnotes.multiline == FALSE</code>). The default value is a single space
 character (<code>" "</code>).</p></dd>
+
+
+<dt id="arg-footnotes-order">footnotes.order<a class="anchor" aria-label="anchor" href="#arg-footnotes-order"></a></dt>
+<dd><p><em>Order footnotes are displayed in output</em></p>
+<p>The order in which footnotes are displayed in the output. By default
+<code>"marks_last"</code> with marked footnotes below unmarked ones, or alternatively
+<code>"marks_first"</code>. To preserve the order supplied by tab_footnote,
+<code>"preserve_order"</code> can be used.</p></dd>
 
 
 <dt id="arg-source-notes-border-bottom-style-source-notes-border-bottom-width-source-notes-border-bottom-color">source_notes.border.bottom.style, source_notes.border.bottom.width, source_notes.border.bottom.color<a class="anchor" aria-label="anchor" href="#arg-source-notes-border-bottom-style-source-notes-border-bottom-width-source-notes-border-bottom-color"></a></dt>
