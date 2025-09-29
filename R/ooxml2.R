@@ -1,7 +1,6 @@
 #' @importFrom grDevices col2rgb rgb
 NULL
 
-
 # ooxml types --------------------------------------------------------------
 
 ooxml_word <- function() {
@@ -12,6 +11,27 @@ ooxml_pptx <- function() {
   structure(list(), class = "ooxml_pptx")
 }
 
+# Tables ----------------------------------------------------------
+ooxml_tbl <- function(ooxml_type, properties, grid, ...) {
+  UseMethod("ooxml_tbl")
+}
+
+#' @export
+ooxml_tbl.ooxml_word <- function(ooxml_type, properties = NULL, grid = NULL, ...) {
+  rows <- ooxml_list(ooxml_type, "ooxml_tbl_row", ooxml_tbl_row, ...)
+  ooxml_tag("w:tbl", tag_class = "ooxml_tbl",
+    "xmlns:w" = "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    "xmlns:wp" = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing",
+    "xmlns:r" = "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+    "xmlns:w14" = "http://schemas.microsoft.com/office/word/2010/wordml",
+
+    properties,
+    grid,
+
+    !!!rows
+  )
+}
+
 # ooxml_tbl_cell ----------------------------------------------------------
 
 ooxml_tbl_cell <- function(ooxml_type, ..., properties = NULL) {
@@ -20,9 +40,10 @@ ooxml_tbl_cell <- function(ooxml_type, ..., properties = NULL) {
 
 #' @export
 ooxml_tbl_cell.ooxml_word <- function(ooxml_type, ..., properties = NULL) {
-  content <- lapply(list2(...), ooxml_paragraph, ooxml_type = ooxml_type)
+  content <- ooxml_list(ooxml_type, "ooxml_paragraph", ooxml_paragraph, ...)
+
   ooxml_tag(
-    "w:tc", tag_class = "ooxml_table_cell",
+    "w:tc", tag_class = "ooxml_tbl_cell",
     check_inherits(properties, "ooxml_tbl_cell_properties", accept_null = TRUE),
     !!!content
   )
@@ -30,14 +51,15 @@ ooxml_tbl_cell.ooxml_word <- function(ooxml_type, ..., properties = NULL) {
 
 #' @export
 ooxml_tbl_cell.ooxml_pptx <- function(ooxml_type, ..., properties = NULL) {
-  content <- lapply(list2(...), ooxml_paragraph, ooxml_type = ooxml_type)
+  content <- ooxml_list(ooxml_type, "ooxml_paragraph", ooxml_paragraph, ...)
+
   txBody  <- ooxml_tag("a:txBody", tag_class = "ooxml_text_body",
     ooxml_tag(tag = "a:bodyPr"),
     ooxml_tag(tag = "a:lstStyle"),
     !!!content
   )
 
-  ooxml_tag("a:tc", tag_class = "ooxml_table_cell",
+  ooxml_tag("a:tc", tag_class = "ooxml_tbl_cell",
     check_inherits(properties, "ooxml_tbl_cell_properties", accept_null = TRUE),
     txBody
   )
@@ -93,8 +115,18 @@ ooxml_run <- function(ooxml_type, x, ..., properties = NULL) {
 
 # ooxml_run_properties ----------------------------------------------------
 
-ooxml_run_properties <- function(ooxml_type, ..., font = NULL, style = NULL, size = NULL, color = NULL, weight = NULL) {
+ooxml_run_properties <- function(ooxml_type,
+  ...,
+  font   = cell_style[["cell_text"]][["font"]],
+  style  = cell_style[["cell_text"]][["style"]],
+  size   = cell_style[["cell_text"]][["size"]] %||% 5,
+  color  = cell_style[["cell_text"]][["color"]],
+  weight = NULL,
+  cell_style
+){
   tag <- switch_ooxml_type(ooxml_type, word = "w:rPr", pptx = "r:rPr")
+  rlang::check_dots_empty()
+
   ooxml_tag(tag, tag_class = "ooxml_run_properties",
     ooxml_font(ooxml_type, font),
     ooxml_size(ooxml_type, size),
@@ -114,7 +146,7 @@ ooxml_text <- function(ooxml_type, x, ..., space = c("default", "preserve")) {
   tag <- switch_ooxml_type(ooxml_type, word = "w:t", pptx = "a:t")
 
   ooxml_tag(tag, tag_class = "ooxml_text",
-    "xml:space" = rlang::arg_match(space),
+    ooxml_space_attr(space),
     htmltools::HTML(format(x))
   )
 }
@@ -214,21 +246,21 @@ ooxml_tbl_row <- function(ooxml_type, ..., is_header = FALSE) {
 
 #' @export
 ooxml_tbl_row.ooxml_word <- function(ooxml_type, ..., is_header = FALSE) {
-  content <- lapply(list2(...), ooxml_tbl_cell, ooxml_type = ooxml_type)
+  content <- ooxml_list(ooxml_type, "ooxml_tbl_cell", ooxml_tbl_cell, ...)
 
-  ooxml_tag("a:tr", tag_class = "ooxml_table_row",
-    ooxml_trPr(ooxml_type, is_header = is_header),
+  ooxml_tag("w:tr", tag_class = "ooxml_tbl_row",
+    ooxml_tbl_row_properties(ooxml_type, is_header = is_header),
     !!!content
   )
 }
 
 #' @export
 ooxml_tbl_row.ooxml_pptx <- function(ooxml_type, x, ..., is_header = FALSE, height = 0) {
-  content <- lapply(list2(...), ooxml_tbl_cell, ooxml_type = ooxml_type)
+  content <- ooxml_list(ooxml_type, "ooxml_tbl_cell", ooxml_tbl_cell, ...)
 
-  ooxml_tag("a:tr", tag_class = "ooxml_table_row",
+  ooxml_tag("a:tr", tag_class = "ooxml_tbl_row",
     h = height,
-    ooxml_trPr(ooxml_type, is_header = is_header),
+    ooxml_tbl_row_properties(ooxml_type, is_header = is_header),
     !!!content
   )
 }
@@ -256,7 +288,7 @@ ooxml_trHeight.ooxml_word <- function(ooxml_type, value, ..., error_call = curre
 
       return(
         ooxml_tag("w:trHeight",
-          "w:hRule" = match.arg(value, c("auto", "atLeast")),
+          "w:hRule" = hRule,
           "w:val"   = "10"
         )
       )
@@ -285,16 +317,16 @@ ooxml_trHeight.ooxml_pptx <- function(ooxml_type, value, ..., error_call = curre
   NULL
 }
 
-# ooxml_trPr --------------------------------------------------------------
+# ooxml_tbl_row_properties --------------------------------------------------------------
 
-ooxml_trPr <- function(ooxml_type, ...) {
-  UseMethod("ooxml_trPr")
+ooxml_tbl_row_properties <- function(ooxml_type, ...) {
+  UseMethod("ooxml_tbl_row_properties")
 }
 
 #' @export
-ooxml_trPr.ooxml_word <- function(ooxml_type, ..., is_header = FALSE, hidden = FALSE, height = "auto") {
+ooxml_tbl_row_properties.ooxml_word <- function(ooxml_type, ..., is_header = FALSE, hidden = FALSE, height = "auto") {
   rlang::check_dots_empty()
-  ooxml_tag("w:trPr",
+  ooxml_tag("w:trPr", tag_class = "ooxml_tbl_row_properties",
     if (is_header) ooxml_tbl_header(ooxml_type),
     if (hidden) ooxml_cantSplit(ooxml_type),
     ooxml_trHeight(ooxml_type, value = height)
@@ -302,7 +334,7 @@ ooxml_trPr.ooxml_word <- function(ooxml_type, ..., is_header = FALSE, hidden = F
 }
 
 #' @export
-ooxml_trPr.ooxml_pptx <- function(ooxml_type, ...) {
+ooxml_tbl_row_properties.ooxml_pptx <- function(ooxml_type, ...) {
   NULL
 }
 
@@ -317,12 +349,12 @@ ooxml_tbl_header <- function(ooxml_type) {
 
 # ooxml_tblPr -------------------------------------------------------------
 
-ooxml_tblPr <- function(ooxml_type, ...) {
-  UseMethod("ooxml_tblPr")
+ooxml_tbl_properties <- function(ooxml_type, ...) {
+  UseMethod("ooxml_tbl_properties")
 }
 
 #' @export
-ooxml_tblPr.ooxml_word <- function(ooxml_type, ..., layout = c("autofit", "fixed"), justify = c("center", "start","end"), width="100%", look = c("First Row"), tableStyle=NULL) {
+ooxml_tbl_properties.ooxml_word <- function(ooxml_type, ..., layout = c("autofit", "fixed"), justify = c("center", "start","end"), width="100%", look = c("First Row"), tableStyle=NULL) {
   rlang::check_dots_empty()
 
   if (!rlang::is_character(width, n = 1)) {
@@ -354,7 +386,7 @@ ooxml_tblPr.ooxml_word <- function(ooxml_type, ..., layout = c("autofit", "fixed
 }
 
 #' @export
-ooxml_tblPr.ooxml_pptx <- function(ooxml_type, ..., look = c("First Column","Banded Rows"), tableStyle = NA) {
+ooxml_tbl_properties.ooxml_pptx <- function(ooxml_type, ..., look = c("First Column","Banded Rows"), tableStyle = NA) {
 
   ooxml_tag("a:tblPr",
     "a:firstColumn" = as.numeric("first column" %in% look),
@@ -379,25 +411,21 @@ ooxml_tblGrid <- function(ooxml_type, ...) {
 
 # ooxml_gridCol -----------------------------------------------------------
 
-ooxml_gridCol <- function(ooxml_type, width = NA_integer_) {
-  if (!rlang::is_integerish(width, n = 1)){
-    cli::cli_abort("{.arg width} should be a length one integer.")
-  }
-
+ooxml_gridCol <- function(ooxml_type, width = NULL) {
   UseMethod("ooxml_gridCol")
 }
 
 #' @export
-ooxml_gridCol.ooxml_word <- function(ooxml_type, width = NA_integer_) {
-  gridWidth <- if (!is.na(width)) {
+ooxml_gridCol.ooxml_word <- function(ooxml_type, width = NULL) {
+  gridWidth <- if (!is.null(width)) {
     list("w:w" = width)
   }
   ooxml_tag("w:gridCol", !!!gridWidth)
 }
 
 #' @export
-ooxml_gridCol.ooxml_pptx <- function(ooxml_type, width = NA_integer_) {
-  gridWidth <- if (!is.na(width)) {
+ooxml_gridCol.ooxml_pptx <- function(ooxml_type, width = NULL) {
+  gridWidth <- if (!is.null(width)) {
     list("w" = width)
   }
   ooxml_tag("a:gridCol", !!!gridWidth)
@@ -755,5 +783,27 @@ switch_ooxml_type <- function(ooxml_type, word, pptx, error_call = caller_env())
     ooxml_pptx = pptx,
     default    = cli::cli_abort("Unknown ooxml type {.cls {class(ooxml_type)}}")
   )
+}
+
+list3 <- function(...) {
+  dots <- list2(...)
+  dots <- dots[!sapply(dots, is.null)]
+  dots
+}
+
+ooxml_list <- function(ooxml_type, tag_class, tag_fun, ...) {
+  dots <- list2(...)
+  dots <- dots[!sapply(dots, is.null)]
+  lapply(dots, \(x) {
+    if (!inherits(x, tag_class)) {
+      x <- tag_fun(ooxml_type, x)
+    }
+    x
+  })
+}
+
+ooxml_space_attr <- function(space = c("default", "preserve")) {
+  space <- rlang::arg_match(space)
+  if (identical(space, "preserve")) rlang:splice(list("xml:space" = "preserve"))
 }
 

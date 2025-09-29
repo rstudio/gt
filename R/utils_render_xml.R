@@ -1187,9 +1187,9 @@ create_table_props_component_xml <- function(data, align = c("center", "start", 
       xml_jc(val = c(center = "center", start = "start", end = "end", end = "right", start = "left")[[align]])
     )
 
-  # table_cols <- xml_tblGrid(
-  #     vapply(lapply(widths,xml_gridcol), as.character, as.character(0L))
-  # )
+  table_cols <- xml_tblGrid(
+      vapply(lapply(widths,xml_gridcol), as.character, as.character(0L))
+  )
 
   # htmltools::tagList(c(table_properties, table_cols))
 
