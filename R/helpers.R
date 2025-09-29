@@ -3094,6 +3094,14 @@ latex_unicode_env <- new.env()
 #'
 #'   A character vector containing the text that is to be LaTeX-escaped.
 #'
+#' @param unicode_conversion *Boolean*
+#'
+#'   `scalar<boolean>` // *default:* `TRUE`
+#'
+#'   A boolean value indicating whether unicode in text should be turned into
+#'    LaTeX.
+#'
+#'
 #' @return A character vector.
 #'
 #' @family helper functions
@@ -3104,7 +3112,7 @@ latex_unicode_env <- new.env()
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
-escape_latex <- function(text) {
+escape_latex <- function(text, unicode_conversion = getOption("gt.latex.unicode_convert",default = FALSE)) {
 
   if (length(text) < 1) return(text)
 
@@ -3127,7 +3135,7 @@ escape_latex <- function(text) {
 
   regmatches(text[!na_text], m) <- escaped_chars
 
-  if(getOption("gt.latex.unicode_convert",default = FALSE)){
+  if(unicode_conversion){
 
     if(getRversion() > package_version("4.1.3")){
 
