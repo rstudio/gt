@@ -340,7 +340,7 @@ test_that("opt_table_font() sets the correct options", {
       "font-weight: bold;",
       "font-style: italic;"
     ) %>% expect_true()
-  
+
   # Expect that the `size` option is passed as a CSS value
   tbl %>%
     opt_table_font(size = px(32)) %>%
@@ -348,7 +348,7 @@ test_that("opt_table_font() sets the correct options", {
     as.character() %>%
     html_fragment_within("font-size: 32px;") %>%
     expect_true()
-  
+
   # Expect that the `color` option is passed as a CSS value
   tbl %>%
     opt_table_font(color = "#228B23") %>%
@@ -453,4 +453,60 @@ test_that("opt_table_font() sets the correct options", {
   expect_no_error(opt_table_font(tbl, font = c("Courier", "Comic Sans MS")))
   expect_no_error(opt_table_font(tbl, font = list("Courier", "Comic Sans MS")))
   expect_no_error(opt_table_font(tbl, font = LETTERS))
+})
+
+test_that("opt_footnote_order() sets the correct order", {
+
+  df <- data.frame(x = 1:2, y = 3:4)
+  gt_tbl <- gt(df) %>%
+    tab_footnote("1 - unmarked")  %>%
+    tab_footnote("2- marked",locations = cells_column_labels(columns=y)) %>%
+    tab_footnote("3 - unmarked") %>%
+    tab_footnote("4 - marked",locations = cells_column_labels(columns=x))
+
+  #default
+  tbl_opts <- dt_options_get_values(gt_tbl)
+  expect_equal(tbl_opts$footnotes_order, "marks_last")
+
+  gt_tbl_2 <- opt_footnote_order(gt_tbl, order = "marks_first")
+  tbl_opts_2 <- dt_options_get_values(gt_tbl_2)
+  expect_equal(tbl_opts_2$footnotes_order, "marks_first")
+
+  gt_tbl_3 <- opt_footnote_order(gt_tbl, order = "preserve_order")
+  tbl_opts_3 <- dt_options_get_values(gt_tbl_3)
+  expect_equal(tbl_opts_3$footnotes_order, "preserve_order")
+
+  # invalid values
+  expect_error(gt_tbl %>% opt_footnote_order(NULL))
+  expect_error(gt_tbl %>% opt_footnote_order("set_1"))
+  expect_error(gt_tbl %>% opt_footnote_order(c("set_1","set_2")))
+  expect_error(gt_tbl %>% opt_footnote_order(1:5))
+  expect_error(gt_tbl %>% opt_footnote_order(character(0L)))
+
+  # check footnote order is rearranged
+
+  #default - marks last
+  default_ord <- gt_tbl %>%
+    render_as_html() %>%
+    stringr::str_extract_all("\\d+\\s*-\\s*(unmarked|marked)")
+
+  # marked last, x footnote before y
+  expect_equal(unlist(default_ord),c("1 - unmarked","3 - unmarked","4 - marked","2- marked"))
+
+  #marks first
+  marks_first <- gt_tbl_2 %>%
+    render_as_html() %>%
+    stringr::str_extract_all("\\d+\\s*-\\s*(unmarked|marked)")
+
+  # marked first, x footnote before y
+  expect_equal(unlist(marks_first),c("4 - marked","2- marked","1 - unmarked","3 - unmarked"))
+
+  # preserve order
+  preserve_order <- gt_tbl_3 %>%
+    render_as_html() %>%
+    stringr::str_extract_all("\\d+\\s*-\\s*(unmarked|marked)")
+
+  #1,2,3,4
+  expect_equal(unlist(preserve_order),c("1 - unmarked","2- marked","3 - unmarked","4 - marked"))
+
 })
