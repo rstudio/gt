@@ -185,6 +185,10 @@ as_latex <- function(data) {
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # Set option to apply latex conversion in escape_latex()
+  unicode_conversion <- dt_options_get_value(data = data, option = "latex_unicode_conversion")
+  withr::local_options(.new = list(gt.latex.unicode_convert = unicode_conversion))
+
   # Build all table data objects through a common pipeline
   data <- build_data(data = data, context = "latex")
 

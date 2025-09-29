@@ -3127,23 +3127,25 @@ escape_latex <- function(text) {
 
   regmatches(text[!na_text], m) <- escaped_chars
 
-  if(getRversion() > package_version("4.1.3")){
+  if(getOption("gt.latex.unicode_convert",default = FALSE)){
 
-    m2 <- gregexpr(paste0("[",paste0(names(latex_unicode_env$latex_unicode_chars), collapse = "|"),"]"), text[!na_text], perl = TRUE)
+    if(getRversion() > package_version("4.1.3")){
 
-    unicode_chars <- regmatches(text[!na_text], m2)
+      m2 <- gregexpr(paste0("[",paste0(names(latex_unicode_env$latex_unicode_chars), collapse = "|"),"]"), text[!na_text], perl = TRUE)
 
-    latex_unicode <-
-      lapply(unicode_chars, function(x) {
-        new_var <- latex_unicode_env$latex_unicode_chars[x]
-        if(length(new_var) > 0){
-          x[!is.na(new_var)] <- new_var[!is.na(new_var)]
-        }
-        x
-      })
+      unicode_chars <- regmatches(text[!na_text], m2)
 
-    regmatches(text[!na_text], m2) <- latex_unicode
+      latex_unicode <-
+        lapply(unicode_chars, function(x) {
+          new_var <- latex_unicode_env$latex_unicode_chars[x]
+          if(length(new_var) > 0){
+            x[!is.na(new_var)] <- new_var[!is.na(new_var)]
+          }
+          x
+        })
 
+      regmatches(text[!na_text], m2) <- latex_unicode
+    }
   }
 
   text

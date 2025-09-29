@@ -564,6 +564,15 @@
 #'   floating position within the code chunk argument `tbl-pos`. The output
 #'   table will only float if `latex.use_longtable = FALSE`.
 #'
+#' @param latex.unicode_conversion
+#'
+#'   *Specify where possible convert unicode to latex*
+#'
+#'   Not all latex converters can handle unicode. or there may be a unicode
+#'   value in the text that cannot be handled by the latex engine. In this case
+#'   turn on this option by setting `latex.unicode_conversion = TRUE` and it
+#'   will replace all unicode it can with equivalent latex calls.
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
@@ -887,7 +896,8 @@ tab_options <- function(
     latex.header_repeat = NULL,
     latex.toprule = NULL,
     latex.bottomrule = NULL,
-    latex.tbl.pos = NULL
+    latex.tbl.pos = NULL,
+    latex.unicode_conversion = NULL
 ) {
 
   # Perform input object validation

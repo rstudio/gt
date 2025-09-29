@@ -276,4 +276,5 @@ dt_options_tbl <-
     "latex_toprule",                     FALSE,  "latex",            "logical",  TRUE,
     "latex_bottomrule",                  FALSE,  "latex",            "logical",  TRUE,
     "latex_tbl_pos",                     FALSE,  "latex",            "value",   "t",
+    "latex_unicode_conversion",          FALSE,  "latex",            "value",   TRUE,
   )[-1, ]
