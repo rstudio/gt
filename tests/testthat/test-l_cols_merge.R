@@ -286,16 +286,16 @@ test_that("cols_merge_range() works correctly - R greater than 4.1.3", {
   expect_match(
     as_latex(tbl_latex) %>% as.character(),
     paste0(
-      ".*767.6\\\\textendash928.1 & 382.0 & 674.5",
-      ".*403.3\\\\textendash461.5 & 15.1 & 242.8",
-      ".*686.4\\\\textendash54.1 & 282.7 & 56.3",
-      ".*662.6\\\\textendash148.8 & 984.6 & 928.1",
-      ".*198.5\\\\textendash65.1 & 127.4 & 219.3",
-      ".*132.1\\\\textendash118.1 & 91.2 & 874.3",
-      ".*349.7\\\\textendash307.1 & 566.7 & 542.9",
-      ".*63.7\\\\textendash504.3 & 152.0 & 724.5",
-      ".*105.4\\\\textendash729.8 & 962.4 & 336.4",
-      ".*924.2\\\\textendash424.6 & 740.8 & 104.2.*"
+      ".*767.6{\\\\textendash}928.1 & 382.0 & 674.5",
+      ".*403.3{\\\\textendash}461.5 & 15.1 & 242.8",
+      ".*686.4{\\\\textendash}54.1 & 282.7 & 56.3",
+      ".*662.6{\\\\textendash}148.8 & 984.6 & 928.1",
+      ".*198.5{\\\\textendash}65.1 & 127.4 & 219.3",
+      ".*132.1{\\\\textendash}118.1 & 91.2 & 874.3",
+      ".*349.7{\\\\textendash}307.1 & 566.7 & 542.9",
+      ".*63.7{\\\\textendash}504.3 & 152.0 & 724.5",
+      ".*105.4{\\\\textendash}729.8 & 962.4 & 336.4",
+      ".*924.2{\\\\textendash}424.6 & 740.8 & 104.2.*"
     )
   )
 
@@ -313,16 +313,16 @@ test_that("cols_merge_range() works correctly - R greater than 4.1.3", {
   expect_match(
     as_latex(tbl_latex) %>% as.character(),
     paste0(
-      ".*767.6\\\\textendash928.1 & 382.0 & 674.5",
-      ".*403.3\\\\textendash461.5 & 15.1 & 242.8",
-      ".*686.4\\\\textendash54.1 & 282.7 & 56.3",
-      ".*662.6\\\\textendash148.8 & 984.6 & 928.1",
-      ".*198.5\\\\textendash65.1 & 127.4 & 219.3",
-      ".*132.1\\\\textendash118.1 & 91.2 & 874.3",
-      ".*349.7\\\\textendash307.1 & 566.7 & 542.9",
-      ".*63.7\\\\textendash504.3 & 152.0 & 724.5",
-      ".*105.4\\\\textendash729.8 & 962.4 & 336.4",
-      ".*924.2\\\\textendash424.6 & 740.8 & 104.2.*"
+      ".*767.6{\\\\textendash}928.1 & 382.0 & 674.5",
+      ".*403.3{\\\\textendash}461.5 & 15.1 & 242.8",
+      ".*686.4{\\\\textendash}54.1 & 282.7 & 56.3",
+      ".*662.6{\\\\textendash}148.8 & 984.6 & 928.1",
+      ".*198.5{\\\\textendash}65.1 & 127.4 & 219.3",
+      ".*132.1{\\\\textendash}118.1 & 91.2 & 874.3",
+      ".*349.7{\\\\textendash}307.1 & 566.7 & 542.9",
+      ".*63.7{\\\\textendash}504.3 & 152.0 & 724.5",
+      ".*105.4{\\\\textendash}729.8 & 962.4 & 336.4",
+      ".*924.2{\\\\textendash}424.6 & 740.8 & 104.2.*"
     )
   )
 
@@ -344,16 +344,16 @@ test_that("cols_merge_range() works correctly - R greater than 4.1.3", {
   expect_match(
     as_latex(tbl_latex) %>% as.character(),
     paste0(
-      ".*767.6\\\\textendash928.1 & 382.0\\\\textendash674.5",
-      ".*403.3\\\\textendash461.5 & 15.1\\\\textendash242.8",
-      ".*686.4\\\\textendash54.1 & 282.7\\\\textendash56.3",
-      ".*662.6\\\\textendash148.8 & 984.6\\\\textendash928.1",
-      ".*198.5\\\\textendash65.1 & 127.4\\\\textendash219.3",
-      ".*132.1\\\\textendash118.1 & 91.2\\\\textendash874.3",
-      ".*349.7\\\\textendash307.1 & 566.7\\\\textendash542.9",
-      ".*63.7\\\\textendash504.3 & 152.0\\\\textendash724.5",
-      ".*105.4\\\\textendash729.8 & 962.4\\\\textendash336.4",
-      ".*924.2\\\\textendash424.6 & 740.8\\\\textendash104.2.*"
+      ".*767.6{\\\\textendash}928.1 & 382.0{\\\\textendash}674.5",
+      ".*403.3{\\\\textendash}461.5 & 15.1{\\\\textendash}242.8",
+      ".*686.4{\\\\textendash}54.1 & 282.7{\\\\textendash}56.3",
+      ".*662.6{\\\\textendash}148.8 & 984.6{\\\\textendash}928.1",
+      ".*198.5{\\\\textendash}65.1 & 127.4{\\\\textendash}219.3",
+      ".*132.1{\\\\textendash}118.1 & 91.2{\\\\textendash}874.3",
+      ".*349.7{\\\\textendash}307.1 & 566.7{\\\\textendash}542.9",
+      ".*63.7{\\\\textendash}504.3 & 152.0{\\\\textendash}724.5",
+      ".*105.4{\\\\textendash}729.8 & 962.4{\\\\textendash}336.4",
+      ".*924.2{\\\\textendash}424.6 & 740.8{\\\\textendash}104.2.*"
     )
   )
 })
