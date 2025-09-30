@@ -1,7 +1,7 @@
 #' @importFrom grDevices col2rgb rgb
 NULL
 
-# Tables ----------------------------------------------------------
+# tbl ----------------------------------------------------------
 
 ooxml_tbl <- function(ooxml_type, properties = NULL, grid = NULL, ...) {
   rows <- ooxml_list(ooxml_type, "ooxml_tbl_row", ooxml_tbl_row, ...)
@@ -21,6 +21,79 @@ ooxml_tbl <- function(ooxml_type, properties = NULL, grid = NULL, ...) {
       )
     }
   )
+}
+
+# tbl_properties ---------------------------------------------------------
+
+ooxml_tbl_properties <- function(ooxml_type, ...) {
+  switch_ooxml(ooxml_type,
+    word = word_tbl_properties(...),
+    pptx = pptx_tbl_properties(...)
+  )
+}
+
+word_tbl_properties <- function(..., layout = c("autofit", "fixed"), justify = c("center", "start","end"), width="100%", look = c("First Row"), tableStyle=NULL) {
+  rlang::check_dots_empty()
+
+  if (!rlang::is_character(width, n = 1)) {
+    cli::cli_abort("{.arg width} must be a scalar character value.")
+  }
+  if (!rlang::is_character(look)) {
+    cli::cli_abort("{.arg look} must be a character vector.")
+  }
+
+  w_type <- "dxa"
+  if (grepl("%$", width)){
+    w_type <- "pct"
+    width <- gsub("%$", "", width)
+  }
+
+  ooxml_tag("w:tblPr", tag_class = "ooxml_tbl_properties",
+    ooxml_tag("w:tblLayout", "w:type" = rlang::arg_match(layout)),
+    ooxml_tag("w:jc", "w:val" = rlang::arg_match(justify)),
+    ooxml_tag("w:tblW", "w:type" = w_type, "w:w" = width),
+    ooxml_tag("w:tblLook",
+      "w:firstColumn" = as.numeric("first column" %in% look),
+      "w:firstRow"    = as.numeric("first row" %in% look),
+      "w:lastCol"     = as.numeric("last column" %in% look),
+      "w:lastRow"     = as.numeric("last row" %in% look),
+      "w:noVBand"     = as.numeric(!"banded columns" %in% look),
+      "w:noHBand"     = as.numeric(!"banded rows" %in% look)
+    )
+  )
+}
+
+pptx_tbl_properties <- function(..., look = c("First Column","Banded Rows"), tableStyle = NA) {
+  rlang::check_dots_empty()
+
+  ooxml_tag("a:tblPr", tag_class = "ooxml_tbl_properties",
+    "a:firstColumn" = as.numeric("first column" %in% look),
+    "a:firstRow"    = as.numeric("first row" %in% look),
+    "a:lastCol"     = as.numeric("last column" %in% look),
+    "a:lastRow"     = as.numeric("last row" %in% look),
+    "a:bandCol"     = as.numeric("banded columns" %in% look),
+    "a:bandRow"     = as.numeric("banded rows" %in% look),
+
+    ooxml_tag("a:tableStyleId", tableStyle)
+  )
+}
+
+# tbl_grid -----------------------------------------------------------
+
+ooxml_tbl_grid <- function(ooxml_type, ...) {
+  tblGrid_tag <- switch_ooxml_tag(ooxml_type, "tblGrid")
+  gridCol_tag <- switch_ooxml_tag(ooxml_type, "gridCol")
+
+  grid_cols <- lapply(list2(...), \(width) {
+    if (is.null(width)) {
+      ooxml_tag(gridCol_tag)
+    } else if (ooxml_type == "word") {
+      ooxml_tag(gridCol_tag, "w:w" = width)
+    } else {
+      ooxml_tag(gridCol_tag, "w" = width)
+    }
+  })
+  ooxml_tag(tblGrid_tag, tag_class = "ooxml_tbl_grid", !!!gridCols)
 }
 
 # ooxml_tbl_cell ----------------------------------------------------------
@@ -286,86 +359,6 @@ ooxml_trHeight <- function(ooxml_type, value, ..., error_call = current_env()) {
     word = word_trHeight(),
     pptx = pptx_trHeight(),
   )
-}
-
-
-# ooxml_tbl_properties ---------------------------------------------------------
-
-ooxml_tbl_properties <- function(ooxml_type, ...) {
-  switch_ooxml(ooxml_type,
-    word = word_tbl_properties(...),
-    pptx = pptx_tbl_properties(...)
-  )
-}
-
-word_tbl_properties <- function(..., layout = c("autofit", "fixed"), justify = c("center", "start","end"), width="100%", look = c("First Row"), tableStyle=NULL) {
-  rlang::check_dots_empty()
-
-  if (!rlang::is_character(width, n = 1)) {
-    cli::cli_abort("{.arg width} must be a scalar character value.")
-  }
-  if (!rlang::is_character(look)) {
-    cli::cli_abort("{.arg look} must be a character vector.")
-  }
-
-  w_type <- "dxa"
-  if (grepl("%$", width)){
-    w_type <- "pct"
-    width <- gsub("%$", "", width)
-  }
-
-  ooxml_tag("w:tblPr", tag_class = "ooxml_tbl_properties",
-    ooxml_tag("w:tblLayout", "w:type" = rlang::arg_match(layout)),
-    ooxml_tag("w:jc", "w:val" = rlang::arg_match(justify)),
-    ooxml_tag("w:tblW", "w:type" = w_type, "w:w" = width),
-    ooxml_tag("w:tblLook",
-      "w:firstColumn" = as.numeric("first column" %in% look),
-      "w:firstRow"    = as.numeric("first row" %in% look),
-      "w:lastCol"     = as.numeric("last column" %in% look),
-      "w:lastRow"     = as.numeric("last row" %in% look),
-      "w:noVBand"     = as.numeric(!"banded columns" %in% look),
-      "w:noHBand"     = as.numeric(!"banded rows" %in% look)
-    )
-  )
-}
-
-pptx_tbl_properties <- function(..., look = c("First Column","Banded Rows"), tableStyle = NA) {
-  rlang::check_dots_empty()
-
-  ooxml_tag("a:tblPr", tag_class = "ooxml_tbl_properties",
-    "a:firstColumn" = as.numeric("first column" %in% look),
-    "a:firstRow"    = as.numeric("first row" %in% look),
-    "a:lastCol"     = as.numeric("last column" %in% look),
-    "a:lastRow"     = as.numeric("last row" %in% look),
-    "a:bandCol"     = as.numeric("banded columns" %in% look),
-    "a:bandRow"     = as.numeric("banded rows" %in% look),
-
-    ooxml_tag("a:tableStyleId", tableStyle)
-  )
-}
-
-
-# ooxml_tblGrid -----------------------------------------------------------
-
-ooxml_tblGrid <- function(ooxml_type, ...) {
-  tag <- switch_ooxml_tag(ooxml_type, "tblGrid")
-  gridCols <- lapply(list2(...), ooxml_gridCol, ooxml_type = ooxml_type)
-  ooxml_tag(tag, tag_class = "ooxml_tbl_grid", !!!gridCols)
-}
-
-# ooxml_gridCol -----------------------------------------------------------
-
-ooxml_gridCol <- function(ooxml_type = c("word", "pptx"), width = NULL) {
-  tag <- switch_ooxml_tag(ooxml_type, "gridCol")
-  ooxml_type <- rlang::arg_match(ooxml_type)
-  att <- NULL
-  if (is.null(width)) {
-    ooxml_tag(tag)
-  } else if (ooxml_type == "word") {
-    ooxml_tag(tag, "w:w" = width)
-  } else {
-    ooxml_tag(tag, "w" = width)
-  }
 }
 
 # ooxml_fill --------------------------------------------------------------

@@ -52,7 +52,7 @@ create_table_grid_ooxml <- function(ooxml_type, data) {
   widths <- dplyr::arrange(widths, dplyr::desc(type))$column_width
 
   # widths may be NULL, pct(), px() ...
-  ooxml_tblGrid(ooxml_type, !!!widths)
+  ooxml_tbl_grid(ooxml_type, !!!widths)
 }
 
 # spanner rows ------------------------------------------------------------
