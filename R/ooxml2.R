@@ -279,8 +279,7 @@ ooxml_trHeight <- function(ooxml_type, value, ..., error_call = current_env()) {
 
   pptx_trHeight <- function() {
     # TODO: checks for row height in pptx
-    attrs <- list(h = value)
-    rlang::splice(attrs)
+    splice3(h = value)
   }
 
   switch_ooxml(ooxml_type,
@@ -422,7 +421,7 @@ ooxml_tbl_cell_margins <- function(ooxml_type, margins = NULL) {
   pptx_tbl_cell_margins <- function() {
     attrs_margins <- lapply(c("top", "bottom", "left", "right"), function(location) {
       if (is.null(margins[[location]])) {
-        return(NULL)
+        return (NULL)
       }
       margins[[location]]$width # TODO: should there be a multiplier here ?
     })
@@ -482,10 +481,11 @@ ooxml_gridSpan <- function(ooxml_type, col_span = NULL) {
   if (is.null(col_span)) {
     return(NULL)
   }
+  col_span <- as.integer(col_span)
 
   switch_ooxml(ooxml_type,
-    word = ooxml_tag("w:gridSpan", "w:val" = as.integer(col_span)),
-    pptx = rlang::splice(list("gridSpan" = as.integer(col_span)))
+    word = ooxml_tag("w:gridSpan", "w:val" = col_span),
+    pptx = splice3("gridSpan" = col_span)
   )
 }
 
@@ -511,7 +511,7 @@ ooxml_size <- function(ooxml_type, size = NULL) {
 
   switch_ooxml(ooxml_type,
     word = ooxml_tag("w:sz", "w:val" = check_scalar_integer(size) * 2),
-    pptx = rlang::splice(list("sz" = check_scalar_integer(size) * 100))
+    pptx = splice3("sz" = check_scalar_integer(size) * 100)
   )
 }
 
@@ -538,7 +538,7 @@ ooxml_style <- function(ooxml_type, style = NULL) {
 
   switch_ooxml(ooxml_type,
     word = ooxml_tag("w:i"),
-    pptx = rlang::splice(list(i = "1"))
+    pptx = splice3(i = "1")
   )
 }
 
@@ -551,7 +551,7 @@ ooxml_weight <- function(ooxml_type, weight = NULL) {
 
   switch_ooxml(ooxml_type,
     word = ooxml_tag("w:b"),
-    pptx = rlang::splice(list(b = "1"))
+    pptx = splice3(b = "1")
   )
 }
 
@@ -656,6 +656,11 @@ ooxml_list <- function(ooxml_type, tag_class, tag_fun, ...) {
 
 ooxml_space_attr <- function(space = c("default", "preserve")) {
   space <- rlang::arg_match(space)
-  if (identical(space, "preserve")) rlang::splice(list("xml:space" = "preserve"))
+  if (identical(space, "preserve")) {
+    splice3("xml:space" = "preserve")
+  }
 }
 
+splice3 <- function(...) {
+  rlang::splice(list3(...))
+}
