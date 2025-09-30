@@ -44,7 +44,7 @@ test_that("LaTeX escaping with `escape_latex()` works, optionally setting unicod
 
   expect_equal(
     c(escape_latex("Chloé Laplantine"),escape_latex("Chloé Laplantine",unicode_conversion = TRUE)),
-    c("Chloé Laplantine", "Chlo{\'e} Laplantine")
+    c("Chloé Laplantine", "Chlo{\\'e} Laplantine")
   )
 
 })
