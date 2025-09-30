@@ -257,10 +257,10 @@ create_group_heading_row_ooxml <- function(ooxml_type, data, i) {
         )
       ),
       properties = ooxml_tbl_cell_properties(ooxml_type,
-        borders  = borders,
+        borders  = NULL, # TODO: = borders
         fill     = cell_style[["cell_fill"]][["color"]],
         v_align  = cell_style[["cell_text"]][["v_align"]],
-        col_span = colspans[i],
+        col_span = NULL, # TODO: = colspans[i],
         margins  = list(top = list(width = 25))
       )
     )
@@ -268,6 +268,7 @@ create_group_heading_row_ooxml <- function(ooxml_type, data, i) {
 }
 
 create_summary_section_row_ooxml <- function(ooxml_type, data, i, side = c("top", "bottom")) {
+  styles_tbl <- dt_styles_get(data = data)
   summaries_present <- dt_summary_exists(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
 

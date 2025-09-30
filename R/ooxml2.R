@@ -656,6 +656,6 @@ ooxml_list <- function(ooxml_type, tag_class, tag_fun, ...) {
 
 ooxml_space_attr <- function(space = c("default", "preserve")) {
   space <- rlang::arg_match(space)
-  if (identical(space, "preserve")) rlang:splice(list("xml:space" = "preserve"))
+  if (identical(space, "preserve")) rlang::splice(list("xml:space" = "preserve"))
 }
 
