@@ -558,9 +558,7 @@ ooxml_weight <- function(ooxml_type, weight = NULL) {
 # ooxml_tag ---------------------------------------------------------------
 
 ooxml_tag <- function(tag, ..., tag_class = tag) {
-  varArgs <- list2(...)
-  varArgs <- varArgs[!sapply(varArgs, is.null)]
-  xml_tag <- htmltools::tag(`_tag_name` = tag, varArgs = varArgs)
+  xml_tag <- htmltools::tag(`_tag_name` = tag, varArgs = list3(...))
   class(xml_tag) <- c(tag_class, "ooxml_tag", class(xml_tag))
   xml_tag
 }
