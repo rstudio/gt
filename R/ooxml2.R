@@ -624,8 +624,8 @@ check_scalar_integer <- function(x, error_arg = caller_arg(x), error_call = call
 
 switch_ooxml <- function(
   ooxml_type = c("word", "pptx"),
-  word = rlang::cli_abort("Not available for word", call = error_call),
-  pptx = rlang::cli_abort("Not available for pptx", call = error_call),
+  word = cli::cli_abort("Not available for word", call = error_call),
+  pptx = cli::cli_abort("Not available for pptx", call = error_call),
   error_call = caller_env())
 {
   ooxml_type <- rlang::arg_match(ooxml_type, error_call = error_call)
