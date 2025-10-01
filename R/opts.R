@@ -706,19 +706,20 @@ opt_footnote_spec <- function(
 #'
 #' @description
 #'
-#' Alter the order the footnotes appear in the table.
-#' A character string can be passed specifying if marked footnotes should appear
-#' first or last in the table, or if the original order should be preserved.
+#' We can alter the order in which marked footnotes appear in relation to any
+#' unmarked footnotes in the footer section of the table. A single keyword is to
+#' be supplied and it will determine whether marked footnotes should appear:
+#' (1) before unmarked, (2) after unmarked, or (3) in call order.
 #'
 #' @inheritParams fmt_number
 #'
-#' @param order *Character vector specifying order of footnote marks*
+#' @param order *Method for ordering footnote marks*
 #'
-#'   `vector<character>` // *default:* `"marks_last"`
+#'   `scalar<character>` // *default:* `"marks_last"`
 #'
-#'   A character vector specifying if you want to `"preserve_order"` of footnotes
-#'   as they were added in the code, set `"marks_first"` for marked footnotes before
-#'   unmarked in the table, or by default `"marks_last"`.
+#'   A keyword provided here will determine how marked footnotes will be
+#'   arranged in relation to unmarked footnotes. Use either: `"marks_last"`,
+#'   `"marks_first"`, or `"preserve_order"`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -726,15 +727,19 @@ opt_footnote_spec <- function(
 #'
 #' The keywords are:
 #'
-#' - `"marks_last"`: marked footnotes should appear beneath unmarked in the table (default)
-#' - `"marks_first"`: marked footnotes should appear before unmarked in the table
-#' - `"preserve_order"`: footnotes will appear in the order they were specified in tab_footnote
+#' - `"marks_last"`: marked footnotes should appear beneath unmarked in the
+#' table (default)
+#' - `"marks_first"`: marked footnotes should appear before unmarked in the
+#' table
+#' - `"preserve_order"`: footnotes will appear in the order they were specified
+#' in [tab_footnote()]
 #'
 #' @section Examples:
 #'
 #' Use a summarized version of the [`sza`] dataset to create a **gt** table,
-#' adding three marked footnotes and one unmarked (with four calls of [tab_footnote()]). We can modify
-#' the order of footnotes  with the `opt_footnote_order()` function.
+#' adding three marked footnotes and one unmarked (with four calls of
+#' [tab_footnote()]). We can modify the order of footnotes with the
+#' `opt_footnote_order()` function.
 #'
 #' ```r
 #' sza |>
@@ -777,7 +782,7 @@ opt_footnote_spec <- function(
 #'     locations = cells_stub(rows = "1200")
 #'   ) |>
 #'   tab_footnote(
-#'     footnote = "This set of values is calculated on the first of every month for 4 different northern hemisphere latitudes."
+#'     footnote = "Values calculated on the first of every month."
 #'   ) |>
 #'   opt_footnote_order(order = "marks_first")
 #' ```
@@ -791,7 +796,7 @@ opt_footnote_spec <- function(
 #' 10-5
 #'
 #' @section Function Introduced:
-#' `v0.1.0.9000` (September 22, 2025)
+#' `v0.1.1.9000` (September 22, 2025)
 #'
 #' @export
 opt_footnote_order <- function(
