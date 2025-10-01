@@ -367,6 +367,7 @@ test_that("Tables with unicode characters were acceptable and updated to latex c
       title = "≥ unicode text",
       subtitle = "≠ not equal"
     ) %>%
+    tab_options(latex.unicode_conversion = TRUE) %>%
     as_latex()
 
   ##  title should be \\ensuremath{\\geq} unicode text
