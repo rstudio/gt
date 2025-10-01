@@ -85,7 +85,7 @@ ID value of \code{"one"}, setting it in the \code{\link[=gt]{gt()}} function).
 
 \section{Function ID}{
 
-10-13
+10-14
 }
 
 \section{Function Introduced}{
@@ -98,6 +98,7 @@ Other table option functions:
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_footnote_order}()},
 \code{\link{opt_footnote_spec}()},
 \code{\link{opt_horizontal_padding}()},
 \code{\link{opt_interactive}()},
