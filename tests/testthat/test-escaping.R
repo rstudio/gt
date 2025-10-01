@@ -39,7 +39,7 @@ test_that("LaTeX escaping with `escape_latex()` works, optionally setting unicod
 
   expect_equal(
     c(escape_latex("≥"),escape_latex("≥",unicode_conversion = TRUE)),
-    c("≥", "\\ensuremath{\\geq}")
+    c("≥", "{\\ensuremath{\\geq}}")
   )
 
   expect_equal(

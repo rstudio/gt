@@ -1,5 +1,7 @@
 # gt (development version)
 
+* Update latex Unicode conversions to be optional (default to TRUE) as well as make them work in-line(@thebioengineer, #2037, #2041)
+
 # gt 1.1.0
 
 ## New features
