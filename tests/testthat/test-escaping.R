@@ -31,4 +31,20 @@ test_that("LaTeX escaping with `escape_latex()` works well", {
       "\\&", "\\%", "\\$", "\\#", "\\_", "\\{", "\\}"
     )
   )
+
+})
+
+
+test_that("LaTeX escaping with `escape_latex()` works, optionally setting unicode_conversion", {
+
+  expect_equal(
+    c(escape_latex("≥"),escape_latex("≥",unicode_conversion = TRUE)),
+    c("≥", "\\ensuremath{\\geq}")
+  )
+
+  expect_equal(
+    c(escape_latex("Chloé Laplantine"),escape_latex("Chloé Laplantine",unicode_conversion = TRUE)),
+    c("Chloé Laplantine", "Chlo{\\'e} Laplantine")
+  )
+
 })
