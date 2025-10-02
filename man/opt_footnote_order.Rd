@@ -14,30 +14,34 @@ opt_footnote_order(data, order = "marks_last")
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{order}{\emph{Character vector specifying order of footnote marks}
+\item{order}{\emph{Method for ordering footnote marks}
 
-\verb{vector<character>} // \emph{default:} \code{"marks_last"}
+\verb{scalar<character>} // \emph{default:} \code{"marks_last"}
 
-A character vector specifying if you want to \code{"preserve_order"} of footnotes
-as they were added in the code, set \code{"marks_first"} for marked footnotes before
-unmarked in the table, or by default \code{"marks_last"}.}
+A keyword provided here will determine how marked footnotes will be
+arranged in relation to unmarked footnotes. Use either: \code{"marks_last"},
+\code{"marks_first"}, or \code{"preserve_order"}.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-Alter the order the footnotes appear in the table.
-A character string can be passed specifying if marked footnotes should appear
-first or last in the table, or if the original order should be preserved.
+We can alter the order in which marked footnotes appear in relation to any
+unmarked footnotes in the footer section of the table. A single keyword is to
+be supplied and it will determine whether marked footnotes should appear:
+(1) before unmarked, (2) after unmarked, or (3) in call order.
 }
 \section{Specification of footnote order}{
 
 
 The keywords are:
 \itemize{
-\item \code{"marks_last"}: marked footnotes should appear beneath unmarked in the table (default)
-\item \code{"marks_first"}: marked footnotes should appear before unmarked in the table
-\item \code{"preserve_order"}: footnotes will appear in the order they were specified in tab_footnote
+\item \code{"marks_last"}: marked footnotes should appear beneath unmarked in the
+table (default)
+\item \code{"marks_first"}: marked footnotes should appear before unmarked in the
+table
+\item \code{"preserve_order"}: footnotes will appear in the order they were specified
+in \code{\link[=tab_footnote]{tab_footnote()}}
 }
 }
 
@@ -45,8 +49,9 @@ The keywords are:
 
 
 Use a summarized version of the \code{\link{sza}} dataset to create a \strong{gt} table,
-adding three marked footnotes and one unmarked (with four calls of \code{\link[=tab_footnote]{tab_footnote()}}). We can modify
-the order of footnotes  with the \code{opt_footnote_order()} function.
+adding three marked footnotes and one unmarked (with four calls of
+\code{\link[=tab_footnote]{tab_footnote()}}). We can modify the order of footnotes with the
+\code{opt_footnote_order()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(latitude == 30) |>
@@ -88,7 +93,7 @@ the order of footnotes  with the \code{opt_footnote_order()} function.
     locations = cells_stub(rows = "1200")
   ) |>
   tab_footnote(
-    footnote = "This set of values is calculated on the first of every month for 4 different northern hemisphere latitudes."
+    footnote = "Values calculated on the first of every month."
   ) |>
   opt_footnote_order(order = "marks_first")
 }\if{html}{\out{</div>}}
@@ -105,7 +110,7 @@ the order of footnotes  with the \code{opt_footnote_order()} function.
 
 \section{Function Introduced}{
 
-\code{v0.1.0.9000} (September 22, 2025)
+\code{v0.1.1.9000} (September 22, 2025)
 }
 
 \seealso{
