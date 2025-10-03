@@ -1,30 +1,3 @@
-# Create a table with four columns of values
-tbl <-
-  dplyr::tribble(
-    ~col_1, ~col_2, ~col_3, ~col_4,
-     767.6,  928.1,  382.0,  674.5,
-     403.3,  461.5,   15.1,  242.8,
-     686.4,   54.1,  282.7,   56.3,
-     662.6,  148.8,  984.6,  928.1,
-     198.5,   65.1,  127.4,  219.3,
-     132.1,  118.1,   91.2,  874.3,
-     349.7,  307.1,  566.7,  542.9,
-      63.7,  504.3,  152.0,  724.5,
-     105.4,  729.8,  962.4,  336.4,
-     924.2,  424.6,  740.8,  104.2
-  )
-
-# Create a table with three columns, the last two having different
-# combinations of NA values
-tbl_na <-
-  dplyr::tibble(
-    a = 1:4,
-    b = c(1, NA, 3,  NA),
-    c = c(1, 2,  NA, NA),
-    d = c("1", "2", NA_character_, NA_character_),
-    e = c(TRUE, FALSE, NA, NA)
-  )
-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
@@ -154,12 +127,10 @@ test_that("cols_merge() works correctly", {
   expect_snapshot_html(gt_tbl_3)
 
   # Ensure that `group` columns don't get the same treatment
-  expect_equal(
+  expect_equal_gt(
+    gt(tbl, groupname_col = "row"),
     gt(tbl, groupname_col = "row") %>%
-      render_as_html(),
-    gt(tbl, groupname_col = "row") %>%
-      cols_merge(columns = c(row, a)) %>%
-      render_as_html()
+      cols_merge(columns = c(row, a))
   )
 
   # Use `cols_merge()` with a vector of `rows` which limits the rows
@@ -178,6 +149,17 @@ test_that("cols_merge() works correctly", {
 })
 
 test_that("The secondary pattern language works well in `cols_merge()`", {
+
+  # Create a table with three columns, the last two having different
+  # combinations of NA values
+  tbl_na <-
+    dplyr::tibble(
+      a = 1:4,
+      b = c(1, NA, 3,  NA),
+      c = c(1, 2,  NA, NA),
+      d = c("1", "2", NA_character_, NA_character_),
+      e = c(TRUE, FALSE, NA, NA)
+    )
 
   # Create a `tbl_html` object with `gt()`
   tbl_gt <- gt(tbl_na)
@@ -298,9 +280,44 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     (tbl_gt_13 %>% render_formats_test("html"))[["a"]],
     c("11TRUE", "2", "33X", "4")
   )
+  #1880
+  base_tab <- gt(data.frame(
+    x = c("dice-one", "dice-two", "dice-three"),
+    y = c("dice-one", NA, "dice-three")
+  ))
+
+  tbl_gt_14 <- base_tab %>%  fmt_icon() %>%
+    cols_merge(
+      columns = everything(),
+      pattern = "({1}<< {2}>>)"
+    )
+
+  expect_equal(
+    (tbl_gt_14 %>% render_formats_test("html"))[["x"]],
+    c(
+      '(<span style="white-space:nowrap;"><svg aria-label="Dice One" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><title>Dice One</title><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM224 224a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg></span> <span style="white-space:nowrap;"><svg aria-label="Dice One" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><title>Dice One</title><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM224 224a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg></span>)',
+      '(<span style="white-space:nowrap;"><svg aria-label="Dice Two" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><title>Dice Two</title><path d="M0 96C0 60.7 28.7 32 64 32H384c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM352 352a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM128 192a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/></svg></span>)',
+      '(<span style="white-space:nowrap;"><svg aria-label="Dice Three" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><title>Dice Three</title><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm64 96a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm64 128a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm128 64a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg></span> <span style="white-space:nowrap;"><svg aria-label="Dice Three" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><title>Dice Three</title><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm64 96a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm64 128a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm128 64a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg></span>)'
+    )
+    )
 })
 
 test_that("cols_merge_uncert() works correctly", {
+  # Create a table with four columns of values
+  tbl <-
+    dplyr::tribble(
+      ~col_1, ~col_2, ~col_3, ~col_4,
+      767.6,  928.1,  382.0,  674.5,
+      403.3,  461.5,   15.1,  242.8,
+      686.4,   54.1,  282.7,   56.3,
+      662.6,  148.8,  984.6,  928.1,
+      198.5,   65.1,  127.4,  219.3,
+      132.1,  118.1,   91.2,  874.3,
+      349.7,  307.1,  566.7,  542.9,
+      63.7,  504.3,  152.0,  724.5,
+      105.4,  729.8,  962.4,  336.4,
+      924.2,  424.6,  740.8,  104.2
+    )
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -509,6 +526,21 @@ test_that("cols_merge_uncert() works nicely with different error bounds", {
 })
 
 test_that("cols_merge_range() works correctly", {
+  # Create a table with four columns of values
+  tbl <-
+    dplyr::tribble(
+      ~col_1, ~col_2, ~col_3, ~col_4,
+      767.6,  928.1,  382.0,  674.5,
+      403.3,  461.5,   15.1,  242.8,
+      686.4,   54.1,  282.7,   56.3,
+      662.6,  148.8,  984.6,  928.1,
+      198.5,   65.1,  127.4,  219.3,
+      132.1,  118.1,   91.2,  874.3,
+      349.7,  307.1,  566.7,  542.9,
+      63.7,  504.3,  152.0,  724.5,
+      105.4,  729.8,  962.4,  336.4,
+      924.2,  424.6,  740.8,  104.2
+    )
 
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with `cols_merge_range()`
@@ -529,6 +561,21 @@ test_that("cols_merge_range() works correctly", {
 })
 
 test_that("cols_merge_range works 2", {
+  # Create a table with four columns of values
+  tbl <-
+    dplyr::tribble(
+      ~col_1, ~col_2, ~col_3, ~col_4,
+      767.6,  928.1,  382.0,  674.5,
+      403.3,  461.5,   15.1,  242.8,
+      686.4,   54.1,  282.7,   56.3,
+      662.6,  148.8,  984.6,  928.1,
+      198.5,   65.1,  127.4,  219.3,
+      132.1,  118.1,   91.2,  874.3,
+      349.7,  307.1,  566.7,  542.9,
+      63.7,  504.3,  152.0,  724.5,
+      105.4,  729.8,  962.4,  336.4,
+      924.2,  424.6,  740.8,  104.2
+    )
 
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with `cols_merge_range()`
@@ -549,6 +596,22 @@ test_that("cols_merge_range works 2", {
 })
 
 test_that("cols_merge_range() works with 2 statements", {
+  # Create a table with four columns of values
+  tbl <-
+    dplyr::tribble(
+      ~col_1, ~col_2, ~col_3, ~col_4,
+      767.6,  928.1,  382.0,  674.5,
+      403.3,  461.5,   15.1,  242.8,
+      686.4,   54.1,  282.7,   56.3,
+      662.6,  148.8,  984.6,  928.1,
+      198.5,   65.1,  127.4,  219.3,
+      132.1,  118.1,   91.2,  874.3,
+      349.7,  307.1,  566.7,  542.9,
+      63.7,  504.3,  152.0,  724.5,
+      105.4,  729.8,  962.4,  336.4,
+      924.2,  424.6,  740.8,  104.2
+    )
+
   # Create a `tbl_html` object with `gt()`; merge two columns, twice,
   # with `cols_merge_range()`
   tbl_html <-
@@ -594,6 +657,22 @@ test_that("cols_merge_range() respects locale for separators", {
 })
 
 test_that("cols_merge_range() works", {
+  # Create a table with four columns of values
+  tbl <-
+    dplyr::tribble(
+      ~col_1, ~col_2, ~col_3, ~col_4,
+      767.6,  928.1,  382.0,  674.5,
+      403.3,  461.5,   15.1,  242.8,
+      686.4,   54.1,  282.7,   56.3,
+      662.6,  148.8,  984.6,  928.1,
+      198.5,   65.1,  127.4,  219.3,
+      132.1,  118.1,   91.2,  874.3,
+      349.7,  307.1,  566.7,  542.9,
+      63.7,  504.3,  152.0,  724.5,
+      105.4,  729.8,  962.4,  336.4,
+      924.2,  424.6,  740.8,  104.2
+    )
+
   # Create a `tbl_html` object with `gt()`; merge two
   # columns with `cols_merge_range()` but use the `I()`
   # function to keep the `--` separator text as is
@@ -645,6 +724,22 @@ test_that("cols_merge_range() works", {
 })
 
 test_that("cols_merge_range() works well", {
+  # Create a table with four columns of values
+  tbl <-
+    dplyr::tribble(
+      ~col_1, ~col_2, ~col_3, ~col_4,
+      767.6,  928.1,  382.0,  674.5,
+      403.3,  461.5,   15.1,  242.8,
+      686.4,   54.1,  282.7,   56.3,
+      662.6,  148.8,  984.6,  928.1,
+      198.5,   65.1,  127.4,  219.3,
+      132.1,  118.1,   91.2,  874.3,
+      349.7,  307.1,  566.7,  542.9,
+      63.7,  504.3,  152.0,  724.5,
+      105.4,  729.8,  962.4,  336.4,
+      924.2,  424.6,  740.8,  104.2
+    )
+
   # Create two gt table objects; the first will be based
   # on `tbl` while the second will use a different column name
   # in `tbl` (`sep`) that collides with a pattern element name
