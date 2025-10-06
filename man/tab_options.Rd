@@ -198,7 +198,8 @@ tab_options(
   latex.header_repeat = NULL,
   latex.toprule = NULL,
   latex.bottomrule = NULL,
-  latex.tbl.pos = NULL
+  latex.tbl.pos = NULL,
+  latex.unicode_conversion = NULL
 )
 }
 \arguments{
@@ -697,6 +698,13 @@ The latex position indicator for a floating environment (e.g., \code{"tb"},
 specified without square brackets. Quarto users should instead set the
 floating position within the code chunk argument \code{tbl-pos}. The output
 table will only float if \code{latex.use_longtable = FALSE}.}
+
+\item{latex.unicode_conversion}{\emph{Specify where possible convert unicode to latex}
+
+Not all latex converters can handle unicode. or there may be a unicode
+value in the text that cannot be handled by the latex engine. In this case
+turn on this option by setting \code{latex.unicode_conversion = TRUE} and it
+will replace all unicode it can with equivalent latex calls.}
 }
 \value{
 An object of class \code{gt_tbl}.

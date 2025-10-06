@@ -367,26 +367,27 @@ test_that("Tables with unicode characters were acceptable and updated to latex c
       title = "≥ unicode text",
       subtitle = "≠ not equal"
     ) %>%
+    tab_options(latex.unicode_conversion = TRUE) %>%
     as_latex()
 
   ##  title should be \\ensuremath{\\geq} unicode text
   expect_match(
     gt_tbl_unicode %>% as.character(),
-    "\\ensuremath{\\geq} unicode text",
+    "{\\ensuremath{\\geq}} unicode text",
     fixed = TRUE
     )
 
   ##  subtitle should be \\ensuremath{\\neq} not equal
   expect_match(
     gt_tbl_unicode %>% as.character(),
-    "\\ensuremath{\\neq} not equal",
+    "{\\ensuremath{\\neq}} not equal",
     fixed = TRUE
   )
 
   ##  content should be \\\ensuremath{\\alpha}\\ensuremath{\\beta}\\ensuremath{\\Delta}
   expect_match(
     gt_tbl_unicode %>% as.character(),
-    "\n\\ensuremath{\\alpha}\\ensuremath{\\beta}\\ensuremath{\\Delta} \\\\",
+    "\n{\\ensuremath{\\alpha}}{\\ensuremath{\\beta}}{\\ensuremath{\\Delta}} \\\\",
     fixed = TRUE
   )
 
