@@ -190,21 +190,6 @@ as_latex <- function(data) {
   if(unicode_conversion){
     rlang::check_installed("withr","withr is needed to set the option that turns on the unicode conversion")
     withr::local_options(.new = list(gt.latex.unicode_convert = unicode_conversion))
-    ## load latex unicode symbols if the R version is greater than 4.1.3
-    if(getRversion() > package_version("4.1.3")){
-      if(is.null(latex_unicode_env$latex_unicode_chars)){
-        latex_unicode_env$latex_unicode_chars <- tryCatch(
-          eval(str2expression(
-            readLines(system.file("latex_unicode/latex_unicode_conversion.txt", package = "gt"))
-          )),
-          error = function(e){
-            cli::cli_warn("A problem was encountered loading the unicode conversion data.")
-            c()
-          })
-      }
-    }else{
-      latex_unicode_env$latex_unicode_chars <- c()
-    }
   }
 
   # Build all table data objects through a common pipeline

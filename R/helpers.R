@@ -3139,6 +3139,18 @@ escape_latex <- function(text, unicode_conversion = getOption("gt.latex.unicode_
 
     if(getRversion() > package_version("4.1.3")){
 
+      if(is.null(latex_unicode_env$latex_unicode_chars) & !isTRUE(latex_unicode_env$latex_unicode_char_load_fail)){
+          latex_unicode_env$latex_unicode_chars <- tryCatch(
+            eval(str2expression(
+              readLines(system.file("latex_unicode/latex_unicode_conversion.txt", package = "gt"))
+            )),
+            error = function(e){
+              latex_unicode_env$latex_unicode_char_load_fail <- TRUE
+              cli::cli_warn("A problem was encountered loading the unicode conversion data. Unicode values will not be converted into LaTeX.")
+              c()
+            })
+      }
+
       m2 <- gregexpr(paste0("[",paste0(names(latex_unicode_env$latex_unicode_chars), collapse = "|"),"]"), text[!na_text], perl = TRUE)
 
       unicode_chars <- regmatches(text[!na_text], m2)
