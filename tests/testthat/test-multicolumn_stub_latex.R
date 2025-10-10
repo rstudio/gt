@@ -564,3 +564,141 @@ test_that("LaTeX special characters in multicolumn stub", {
   # Special characters should be escaped
   expect_true(grepl("\\\\#", latex_output) || grepl("\\\\&", latex_output) || grepl("\\\\_", latex_output))
 })
+
+test_that("tab_stubhead() with multiple labels renders correctly in LaTeX", {
+
+  # Create table with three stub columns and three labels
+  gt_tbl <-
+    test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
+    tab_stubhead(label = c("Manufacturer", "Model", "Trim"))
+
+  # Should not error
+  expect_no_error(as_latex(gt_tbl))
+  
+  latex_output <- as.character(as_latex(gt_tbl))
+  
+  # Should contain all three labels in the header
+  expect_true(grepl("Manufacturer", latex_output))
+  expect_true(grepl("Model", latex_output))
+  expect_true(grepl("Trim", latex_output))
+  
+  # Labels should appear in order (not as a multicolumn)
+  # Extract the header line
+  header_match <- regexpr("Manufacturer.*Model.*Trim", latex_output)
+  expect_true(header_match > 0)
+})
+
+test_that("tab_stubhead() with two labels renders correctly in LaTeX", {
+
+  # Create table with two stub columns and two labels
+  gt_tbl <-
+    test_data |>
+    gt(rowname_col = c("mfr", "model")) |>
+    tab_stubhead(label = c("Manufacturer", "Model"))
+
+  # Should not error
+  expect_no_error(as_latex(gt_tbl))
+  
+  latex_output <- as.character(as_latex(gt_tbl))
+  
+  # Should contain both labels
+  expect_true(grepl("Manufacturer", latex_output))
+  expect_true(grepl("Model", latex_output))
+  
+  # Labels should appear before the data columns
+  mfr_pos <- regexpr("Manufacturer", latex_output)
+  model_pos <- regexpr("Model", latex_output)
+  year_pos <- regexpr("year", latex_output)
+  
+  expect_true(mfr_pos[1] < model_pos[1])
+  expect_true(model_pos[1] < year_pos[1])
+})
+
+test_that("tab_stubhead() with single label still works (regression)", {
+
+  # Create table with single stub column and single label
+  gt_tbl <-
+    test_data |>
+    gt(rowname_col = "mfr") |>
+    tab_stubhead(label = "Manufacturer")
+
+  # Should not error
+  expect_no_error(as_latex(gt_tbl))
+  
+  latex_output <- as.character(as_latex(gt_tbl))
+  
+  # Should contain the label
+  expect_true(grepl("Manufacturer", latex_output))
+})
+
+test_that("tab_stubhead() with fewer labels than columns uses only first label", {
+
+  # Create table with three stub columns but only one label
+  gt_tbl <-
+    test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
+    tab_stubhead(label = "Stub Header")
+
+  # Should not error
+  expect_no_error(as_latex(gt_tbl))
+  
+  latex_output <- as.character(as_latex(gt_tbl))
+  
+  # Should contain multicolumn spanning all stub columns
+  expect_true(grepl("\\\\multicolumn\\{3\\}", latex_output))
+  expect_true(grepl("Stub Header", latex_output))
+})
+
+test_that("tab_stubhead() labels maintain order in LaTeX", {
+
+  # Test with non-alphabetical column order
+  ordered_data <-
+    dplyr::tibble(
+      z_col = c("Z1", "Z2"),
+      a_col = c("A1", "A2"),
+      m_col = c("M1", "M2"),
+      value = c(1, 2)
+    )
+
+  gt_tbl <-
+    ordered_data |>
+    gt(rowname_col = c("z_col", "a_col", "m_col")) |>
+    tab_stubhead(label = c("Z Label", "A Label", "M Label"))
+
+  latex_output <- as.character(as_latex(gt_tbl))
+  
+  # Labels should appear in the specified order
+  z_pos <- regexpr("Z Label", latex_output)
+  a_pos <- regexpr("A Label", latex_output)
+  m_pos <- regexpr("M Label", latex_output)
+  
+  expect_true(z_pos[1] > 0)
+  expect_true(a_pos[1] > 0)
+  expect_true(m_pos[1] > 0)
+  expect_true(z_pos[1] < a_pos[1])
+  expect_true(a_pos[1] < m_pos[1])
+})
+
+test_that("tab_stubhead() with styles works in LaTeX multicolumn stub", {
+
+  # Create table with stubhead labels and styles
+  gt_tbl <-
+    test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
+    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) |>
+    tab_style(
+      style = cell_fill(color = "lightblue"),
+      locations = cells_stub(columns = "mfr")
+    )
+
+  # Should not error
+  expect_no_error(as_latex(gt_tbl))
+  
+  latex_output <- as.character(as_latex(gt_tbl))
+  
+  # Should contain all labels
+  expect_true(grepl("Manufacturer", latex_output))
+  expect_true(grepl("Model", latex_output))
+  expect_true(grepl("Trim", latex_output))
+})
