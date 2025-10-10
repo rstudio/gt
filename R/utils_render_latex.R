@@ -236,8 +236,21 @@ create_table_start_l <- function(data, colwidth_df) {
   # Add borders to the right of any columns in the stub
   if (length(stub_layout) > 0) {
 
-    col_defs[seq_along(stub_layout)] <-
-      paste0(col_defs[seq_along(stub_layout)], "|")
+    # Count the actual number of stub columns
+    # When we have both group_label and rowname, we have 2 columns
+    # When we have multiple rowname columns but no group_label, count all stub columns
+    if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
+      n_stub_cols <- 2  # group_label + one rowname column
+    } else if ("rowname" %in% stub_layout) {
+      n_stub_cols <- sum(colwidth_df_visible$type == "stub")
+    } else if ("group_label" %in% stub_layout) {
+      n_stub_cols <- 1
+    } else {
+      n_stub_cols <- length(stub_layout)
+    }
+    
+    col_defs[seq_len(n_stub_cols)] <-
+      paste0(col_defs[seq_len(n_stub_cols)], "|")
   }
 
   # If a table width is specified, add an extra column
@@ -490,9 +503,25 @@ create_columns_component_l <- function(data, colwidth_df) {
       ""
     )
 
-    if (length(stub_layout) > 1L) {
-      # If stub_layout == 1L, multicolumn is not needed and stub_label is already defined
+    # Get the actual number of stub columns for the header
+    # This determines how many columns the stub header should span
+    if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
+      n_stub_cols <- 2  # group_label + rowname
+      # Get stub_df for width calculations
       stub_df <- dplyr::filter(colwidth_df, type %in% c("stub", "row_group"))
+    } else if ("rowname" %in% stub_layout) {
+      stub_df <- dplyr::filter(colwidth_df, type == "stub")
+      n_stub_cols <- nrow(stub_df)
+    } else if ("group_label" %in% stub_layout) {
+      n_stub_cols <- 1
+      stub_df <- dplyr::filter(colwidth_df, type == "row_group")
+    } else {
+      n_stub_cols <- length(stub_layout)
+      stub_df <- dplyr::filter(colwidth_df, type %in% c("stub", "row_group"))
+    }
+    
+    if (n_stub_cols > 1L) {
+      # Use multicolumn to span all stub columns
       if (any(stub_df$unspec == 1L)) {
         width_txt <- "c"
       } else {
@@ -509,7 +538,7 @@ create_columns_component_l <- function(data, colwidth_df) {
       stub_label <-
         sprintf(
           "\\multicolumn{%d}{%s}{%s}",
-          length(stub_layout),
+          n_stub_cols,
           width_txt,
           stub_label
         )
@@ -544,7 +573,27 @@ create_columns_component_l <- function(data, colwidth_df) {
 
     if (length(stub_layout) > 0) {
 
-      stub_matrix <- matrix(nrow = nrow(spanners), ncol = length(stub_layout))
+      # Get the actual number of stub columns for spanners
+      if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
+
+        # group_label + rowname
+        n_stub_cols <- 2
+      
+      } else if ("rowname" %in% stub_layout) {
+        
+        stub_df_cols <- dplyr::filter(colwidth_df, type == "stub")
+        n_stub_cols <- nrow(stub_df_cols)
+      
+      } else if ("group_label" %in% stub_layout) {
+        
+        n_stub_cols <- 1
+      
+      } else {
+        
+        n_stub_cols <- length(stub_layout)
+      }
+      
+      stub_matrix <- matrix(nrow = nrow(spanners), ncol = n_stub_cols)
 
       spanners <- cbind(stub_matrix, spanners)
       spanner_ids <- cbind(stub_matrix, spanner_ids)
@@ -593,13 +642,33 @@ create_columns_component_l <- function(data, colwidth_df) {
           )
         )
 
-      # If there is a stub we need to tweak the spanners row with a blank
-      # multicolumn statement that's the same width as that in the columns
-      # row; this is to prevent the automatic vertical line that would otherwise
-      # appear here
-      if (length(stub_layout) > 1L) {
+      # If there is a stub we need to tweak the spanners row with a blank multicolumn
+      # statement that's the same width as that in the columns row; this is to
+      # prevent the automatic vertical line that would otherwise appear here
+      
+      # Get the actual number of stub columns
+      if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
+        
+        # group_label + rowname
+        n_stub_cols <- 2
 
-        tex_stub_width <- calculate_multicolumn_width_text_l(begins = 1, ends = 2, colwidth_df = colwidth_df)
+      } else if ("rowname" %in% stub_layout) {
+        
+        stub_df_cols <- dplyr::filter(colwidth_df, type == "stub")
+        n_stub_cols <- nrow(stub_df_cols)
+      
+      } else if ("group_label" %in% stub_layout) {
+        
+        n_stub_cols <- 1
+      
+      } else {
+        
+        n_stub_cols <- length(stub_layout)
+      }
+      
+      if (n_stub_cols > 1L) {
+
+        tex_stub_width <- calculate_multicolumn_width_text_l(begins = 1, ends = n_stub_cols, colwidth_df = colwidth_df)
         if (tex_stub_width == "") {
           mc_stub <- "l"
         } else {
@@ -608,8 +677,8 @@ create_columns_component_l <- function(data, colwidth_df) {
 
         multicol <-
           c(
-            sprintf("\\multicolumn{%d}{%s}{}", length(stub_layout), mc_stub),
-            multicol[-seq_along(stub_layout)]
+            sprintf("\\multicolumn{%d}{%s}{}", n_stub_cols, mc_stub),
+            multicol[-seq_len(n_stub_cols)]
           )
       }
 
@@ -660,6 +729,56 @@ create_body_component_l <- function(data, colwidth_df) {
 
   # Get the number of rows in the body
   n_rows <- nrow(cell_matrix)
+
+  # Apply hierarchical stub merging for multiple stub columns
+  # (hide repeated values in all columns except the rightmost)
+  if (has_stub_column) {
+    stub_vars <- dt_boxhead_get_var_stub(data = data)
+    
+    if (length(stub_vars) > 1 && !any(is.na(stub_vars))) {
+      
+      # Get original body data to check for consecutive repeating values
+      original_body <- dt_data_get(data = data)
+      
+      # Process all stub columns except the rightmost one
+      hierarchy_vars <- stub_vars[-length(stub_vars)]
+      stub_matrix <- as.matrix(original_body[, hierarchy_vars, drop = FALSE])
+      
+      # Determine which columns to hide based on hierarchical grouping
+      for (col_idx in seq_along(hierarchy_vars)) {
+
+        # Position in cell_matrix (accounting for group_label column if present)
+        matrix_col_idx <- col_idx
+        if ("group_label" %in% stub_layout) {
+          matrix_col_idx <- col_idx + 1
+        }
+        
+        for (row_idx in 2:n_rows) {
+          should_hide <- TRUE
+          
+          # Check if current value matches previous value
+          if (stub_matrix[row_idx, col_idx] != stub_matrix[row_idx - 1, col_idx]) {
+            should_hide <- FALSE
+          }
+          
+          # Also check that all columns to the left match
+          if (should_hide && col_idx > 1) {
+            for (left_col_idx in 1:(col_idx - 1)) {
+              if (stub_matrix[row_idx, left_col_idx] != stub_matrix[row_idx - 1, left_col_idx]) {
+                should_hide <- FALSE
+                break
+              }
+            }
+          }
+          
+          # Hide the value by making it empty if conditions are met
+          if (should_hide) {
+            row_splits_body[[row_idx]][matrix_col_idx] <- ""
+          }
+        }
+      }
+    }
+  }
 
   if ("group_label" %in% stub_layout) {
 
@@ -1182,14 +1301,21 @@ create_body_rows_l <- function(
 
   stub_is_2 <- length(stub_layout) > 1L
 
+  # Get the actual stub column variables to determine how many stub columns we have
+  stub_vars <- dt_boxhead_get_var_stub(data = data)
+  n_stub_cols <- if (length(stub_vars) == 1 && is.na(stub_vars)) 0 else length(stub_vars)
+
   if (is.null(stub_layout)) {
     vars <- default_vars
   } else if (!is.null(stub_layout) && !stub_is_2 && stub_layout == "rowname") {
-    vars <- c("::stub::", default_vars)
+    # Create a ::stub:: placeholder for each stub column
+    vars <- c(rep("::stub::", n_stub_cols), default_vars)
   } else if (!is.null(stub_layout) && !stub_is_2 && stub_layout == "group_label") {
     vars <- c("::group::", default_vars)
   } else if (!is.null(stub_layout) && stub_is_2) {
-    vars <- c("::group::", "::stub::", default_vars)
+    # When we have both group_label and rowname columns
+    # Create a ::stub:: placeholder for each stub column, plus the group column
+    vars <- c("::group::", rep("::stub::", n_stub_cols), default_vars)
   }
 
   if ("::group::" %in% vars) {
@@ -1219,6 +1345,7 @@ create_body_rows_l <- function(
               colname_i <- vars[i]
 
               if (
+                !is.na(colname_i) &&
                 colname_i == "::group::" &&
                 "row_groups" %in% styles_tbl_i[["locname"]]
               ) {
@@ -1227,6 +1354,7 @@ create_body_rows_l <- function(
                 #styles_i_col <- styles_tbl_i_col[["styles"]]
 
               } else if (
+                !is.na(colname_i) &&
                 colname_i == "::stub::" &&
                 "stub" %in% styles_tbl_i[["locname"]]
               ) {
@@ -1236,6 +1364,7 @@ create_body_rows_l <- function(
 
               } else if (
                 "data" %in% styles_tbl_i[["locname"]] &&
+                !is.na(colname_i) &&
                 colname_i %in% styles_tbl_i[["colname"]]
               ) {
 
@@ -1317,7 +1446,13 @@ create_summary_rows_l <- function(
 
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
-  stub_width <- length(stub_layout)
+  
+  # Get the actual number of stub columns (including multiple rowname columns)
+  stub_vars <- dt_boxhead_get_var_stub(data = data)
+  stub_width <- if (length(stub_vars) == 1 && is.na(stub_vars)) 0 else length(stub_vars)
+  if ("group_label" %in% stub_layout) {
+    stub_width <- stub_width + 1
+  }
 
   # Obtain all of the visible (`"default"`), non-stub
   # column names for the table
