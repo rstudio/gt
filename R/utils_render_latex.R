@@ -495,14 +495,6 @@ create_columns_component_l <- function(data, colwidth_df) {
         vctrs::vec_slice(styles_tbl, styles_tbl$locname == "stubhead")
       )
 
-    headings_vars <- prepend_vec(headings_vars, "::stub")
-
-    stub_label <- ifelse(
-      length(stubh$label) > 0,
-      apply_cell_styles_l(stubh$label, styles_stubhead),
-      ""
-    )
-
     # Get the actual number of stub columns for the header
     # This determines how many columns the stub header should span
     if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
@@ -520,31 +512,59 @@ create_columns_component_l <- function(data, colwidth_df) {
       stub_df <- dplyr::filter(colwidth_df, type %in% c("stub", "row_group"))
     }
     
-    if (n_stub_cols > 1L) {
-      # Use multicolumn to span all stub columns
-      if (any(stub_df$unspec == 1L)) {
-        width_txt <- "c"
-      } else {
-        width_txt <-
-          sprintf(
-            ">{\\centering\\arraybackslash}m{%s}",
-            create_singlecolumn_width_text_l(
-              pt = sum(stub_df$pt),
-              lw = sum(stub_df$lw)
+    # Check if we have multiple stubhead labels for multi-column stub
+    stub_vars <- dt_boxhead_get_var_stub(data = data)
+    has_multi_column_stub <- length(stub_vars) > 1 && !any(is.na(stub_vars))
+    has_multiple_labels <- has_multi_column_stub && length(stubh$label) > 1
+    
+    if (has_multiple_labels) {
+      # Create individual headers for each stub column
+      # Process in reverse order since prepend_vec adds to the front
+      for (i in rev(seq_along(stubh$label))) {
+        stub_label <- ifelse(
+          length(stubh$label[i]) > 0 && stubh$label[i] != "",
+          apply_cell_styles_l(stubh$label[i], styles_stubhead),
+          ""
+        )
+        headings_vars <- prepend_vec(headings_vars, sprintf("::stub%d", i))
+        headings_labels <- prepend_vec(headings_labels, stub_label)
+      }
+    } else {
+      # Single label spanning all stub columns (current behavior)
+      headings_vars <- prepend_vec(headings_vars, "::stub")
+      
+      stub_label <- ifelse(
+        length(stubh$label) > 0,
+        apply_cell_styles_l(stubh$label[1], styles_stubhead),
+        ""
+      )
+      
+      if (n_stub_cols > 1L) {
+        # Use multicolumn to span all stub columns
+        if (any(stub_df$unspec == 1L)) {
+          width_txt <- "c"
+        } else {
+          width_txt <-
+            sprintf(
+              ">{\\centering\\arraybackslash}m{%s}",
+              create_singlecolumn_width_text_l(
+                pt = sum(stub_df$pt),
+                lw = sum(stub_df$lw)
+              )
             )
+        }
+
+        stub_label <-
+          sprintf(
+            "\\multicolumn{%d}{%s}{%s}",
+            n_stub_cols,
+            width_txt,
+            stub_label
           )
       }
 
-      stub_label <-
-        sprintf(
-          "\\multicolumn{%d}{%s}{%s}",
-          n_stub_cols,
-          width_txt,
-          stub_label
-        )
+      headings_labels <- prepend_vec(headings_labels, stub_label)
     }
-
-    headings_labels <- prepend_vec(headings_labels, stub_label)
   }
 
   header_repeat <- dt_options_get_value(data, "latex_header_repeat")
@@ -736,7 +756,7 @@ create_body_component_l <- function(data, colwidth_df) {
     stub_vars <- dt_boxhead_get_var_stub(data = data)
     
     if (length(stub_vars) > 1 && !any(is.na(stub_vars))) {
-      
+
       # Get original body data to check for consecutive repeating values
       original_body <- dt_data_get(data = data)
       
