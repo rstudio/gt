@@ -40,8 +40,7 @@ test_that("cols_merge() works correctly", {
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with a `pattern`
   tbl_html <-
-    mtcars_short %>%
-    gt() %>%
+    gt(mtcars_short) |>
     cols_merge(
       columns = c("drat", "wt"),
       hide_columns = wt,
@@ -58,8 +57,7 @@ test_that("cols_merge() works correctly", {
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with a `pattern` and use `c()`
   tbl_html <-
-    mtcars_short %>%
-    gt() %>%
+    gt(mtcars_short) |>
     cols_merge(
       columns = c(drat, wt),
       hide_columns = wt,
@@ -76,13 +74,12 @@ test_that("cols_merge() works correctly", {
   # Create a `tbl_html` object with `gt()`; merge two columns, twice,
   # with two different `pattern`s; use `c()`
   tbl_html <-
-    mtcars_short %>%
-    gt() %>%
+    gt(mtcars_short) |>
     cols_merge(
       columns = c(drat, wt),
       hide_columns = wt,
       pattern = "{1} ({2})"
-    ) %>%
+    ) |>
     cols_merge(
       columns = c(gear, carb),
       hide_columns = carb,
@@ -107,8 +104,7 @@ test_that("cols_merge() works correctly", {
   # Expect a warning if additional, out of scope columns, are
   # included in `hide_columns`
   expect_warning(
-    mtcars_short %>%
-      gt() %>%
+    gt(mtcars_short) |>
       cols_merge(
         columns = c(drat, wt),
         hide_columns = c(wt, carb),
@@ -129,7 +125,7 @@ test_that("cols_merge() works correctly", {
 
   # Merge the stub column with column `a` (has integers)
   gt_tbl_1 <-
-    gt(tbl, rowname_col = "row") %>%
+    gt(tbl, rowname_col = "row") |>
     cols_merge(columns = c(row, a))
 
   # Perform snapshot test
@@ -137,7 +133,7 @@ test_that("cols_merge() works correctly", {
 
   # Merge the stub column with column `b` (has character values)
   gt_tbl_2 <-
-    gt(tbl, rowname_col = "row") %>%
+    gt(tbl, rowname_col = "row") |>
     cols_merge(columns = c(row, b))
 
   # Perform snapshot test
@@ -146,8 +142,8 @@ test_that("cols_merge() works correctly", {
   # Merge the stub column with a formatted column `a`
   # (has lowercase Roman numerals, transformed to character from integer)
   gt_tbl_3 <-
-    gt(tbl, rowname_col = "row") %>%
-    fmt_roman(columns = "a", case = "lower") %>%
+    gt(tbl, rowname_col = "row") |>
+    fmt_roman(columns = "a", case = "lower") |>
     cols_merge(columns = c(row, a))
 
   # Perform snapshot test
@@ -155,18 +151,17 @@ test_that("cols_merge() works correctly", {
 
   # Ensure that `group` columns don't get the same treatment
   expect_equal(
-    gt(tbl, groupname_col = "row") %>%
+    gt(tbl, groupname_col = "row") |>
       render_as_html(),
-    gt(tbl, groupname_col = "row") %>%
-      cols_merge(columns = c(row, a)) %>%
+    gt(tbl, groupname_col = "row") |>
+      cols_merge(columns = c(row, a)) |>
       render_as_html()
   )
 
   # Use `cols_merge()` with a vector of `rows` which limits the rows
   # that participate in the merging process
   gt_tbl_4 <-
-    mtcars_short %>%
-    gt() %>%
+    gt(mtcars_short) |>
     cols_merge(
       columns = c(drat, wt),
       rows = c(2, 4),
@@ -188,7 +183,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
   #
 
   tbl_gt_1 <-
-    tbl_gt %>%
+    tbl_gt |>
     cols_merge(columns = c(a, b, c), pattern = "{1}{2}<<{3}>>")
 
   expect_equal(
@@ -197,8 +192,8 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
   )
 
   tbl_gt_2 <-
-    tbl_gt %>%
-    cols_merge(columns = c(a, b, c), pattern = "{1}{2}<<{3}>>") %>%
+    tbl_gt |>
+    cols_merge(columns = c(a, b, c), pattern = "{1}{2}<<{3}>>") |>
     sub_missing(missing_text = "X")
 
   expect_equal(
@@ -207,7 +202,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
   )
 
   tbl_gt_3 <-
-    tbl_gt %>%
+    tbl_gt |>
     cols_merge(columns = c(a, b, c), pattern = "{1}<<{2}<<{3}>>>>")
 
   expect_equal(
@@ -216,7 +211,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
   )
 
   tbl_gt_4 <-
-    tbl_gt %>%
+    tbl_gt |>
     cols_merge(columns = c(a, b, c), pattern = "{1}<<{2}-{3}>>")
 
   expect_equal(
@@ -225,7 +220,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
   )
 
   tbl_gt_5 <-
-    tbl_gt %>%
+    tbl_gt |>
     cols_merge(columns = c(a, b, c), pattern = "<<{1}-{2}-{3}>>")
 
   expect_equal(
@@ -234,7 +229,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
   )
 
   tbl_gt_6 <-
-    tbl_gt %>%
+    tbl_gt |>
     cols_merge(columns = c(a, b, c), pattern = "<<{1}<<{2}<<{3}>>>>>>")
 
   expect_equal(
@@ -243,7 +238,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
   )
 
   tbl_gt_7 <-
-    tbl_gt %>%
+    tbl_gt |>
     cols_merge(columns = c(a, b, c), pattern = "<<<<<<X>>>>>>")
 
   expect_equal(
@@ -252,7 +247,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
   )
 
   tbl_gt_9 <-
-    tbl_gt %>%
+    tbl_gt |>
     cols_merge(columns = c(a, b, d), pattern = "{1}{2}<<{3}>>")
 
   expect_equal(
@@ -261,8 +256,8 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
   )
 
   tbl_gt_10 <-
-    tbl_gt %>%
-    sub_missing(missing_text = "X") %>%
+    tbl_gt |>
+    sub_missing(missing_text = "X") |>
     cols_merge(columns = c(a, b, d), pattern = "{1}{2}<<{3}>>")
 
   expect_equal(
@@ -271,7 +266,7 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
   )
 
   tbl_gt_11 <-
-    tbl_gt %>%
+    tbl_gt |>
     cols_merge(columns = c(a, b, e), pattern = "{1}{2}<<{3}>>")
 
   expect_equal(
@@ -280,22 +275,22 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
   )
 
   tbl_gt_12 <-
-    tbl_gt %>%
-    sub_missing(missing_text = "X") %>%
+    tbl_gt |>
+    sub_missing(missing_text = "X") |>
     cols_merge(columns = c(a, b, e), pattern = "{1}{2}<<{3}>>")
 
   expect_equal(
-    (tbl_gt_12 %>% render_formats_test("html"))[["a"]],
+    (tbl_gt_12 |> render_formats_test("html"))[["a"]],
     c("11TRUE", "2XFALSE", "33X", "4XX")
   )
 
   tbl_gt_13 <-
-    tbl_gt %>%
-    sub_missing(missing_text = "X") %>%
+    tbl_gt |>
+    sub_missing(missing_text = "X") |>
     cols_merge(columns = c(a, b, e), rows = c(1, 3), pattern = "{1}{2}<<{3}>>")
 
   expect_equal(
-    (tbl_gt_13 %>% render_formats_test("html"))[["a"]],
+    (tbl_gt_13 |> render_formats_test("html"))[["a"]],
     c("11TRUE", "2", "33X", "4")
   )
 })
@@ -308,8 +303,7 @@ test_that("cols_merge_uncert() works correctly", {
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with `cols_merge_uncert()`
   tbl_html <-
-    tbl %>%
-    gt() %>%
+    gt(tbl) |>
     cols_merge_uncert(
       col_val = "col_1",
       col_uncert = "col_2"
@@ -326,8 +320,7 @@ test_that("cols_merge_uncert() works correctly", {
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with `cols_merge_uncert()` and tidyselect
   tbl_html <-
-    tbl %>%
-    gt() %>%
+    gt(tbl) |>
     cols_merge_uncert(
       col_val = col_1,
       col_uncert = col_2
@@ -345,12 +338,11 @@ test_that("cols_merge_uncert() works correctly", {
   # Create a `tbl_html` object with `gt()`; merge two columns, twice,
   # with `cols_merge_uncert()`
   tbl_html <-
-    tbl %>%
-    gt() %>%
+    gt(tbl) |>
     cols_merge_uncert(
       col_val = col_1,
       col_uncert = col_2
-    ) %>%
+    ) |>
     cols_merge_uncert(
       col_val = col_3,
       col_uncert = col_4
@@ -378,8 +370,7 @@ test_that("cols_merge_uncert() works correctly", {
   # columns with `cols_merge_uncert()` but use the `I()`
   # function to keep the separator text as is
   tbl_html <-
-    tbl %>%
-    gt() %>%
+    gt(tbl) |>
     cols_merge_uncert(
       col_val = col_1,
       col_uncert = col_2,
@@ -402,6 +393,7 @@ test_that("cols_merge_uncert() works correctly", {
 })
 
 test_that("cols_merge_uncert() works with row groups", {
+
   # Expect that the column set as the row group can participate
   # in column merging through `cols_merge_uncert()`
 
@@ -414,7 +406,7 @@ test_that("cols_merge_uncert() works with row groups", {
 
   # Merge the stub column with column `a`
   gt_tbl_1 <-
-    gt(tbl, rowname_col = "row") %>%
+    gt(tbl, rowname_col = "row") |>
     cols_merge_uncert(col_val = row, col_uncert = a)
 
   # Perform snapshot test
@@ -423,8 +415,7 @@ test_that("cols_merge_uncert() works with row groups", {
   # Use `cols_merge_uncert()` with a vector of `rows` which limits the rows
   # that participate in the merging process
   gt_tbl_2 <-
-    tbl %>%
-    gt() %>%
+    gt(tbl) |>
     cols_merge_uncert(
       col_val = row,
       col_uncert = a,
@@ -451,15 +442,14 @@ test_that("cols_merge_uncert() works nicely with different error bounds", {
   # Create a `tbl_html` object with `gt()`; merge three columns together
   # with `cols_merge_uncert()`
   tbl_gt <-
-    tbl_uncert %>%
-    gt() %>%
+    gt(tbl_uncert) |>
     cols_merge_uncert(
       col_val = "value",
       col_uncert = c("lu", "uu")
     )
 
   expect_equal(
-    (tbl_gt %>% render_formats_test("html"))[["value"]],
+    (tbl_gt |> render_formats_test("html"))[["value"]],
     c(
       paste0("34.5<span style=\"display:inline-block;line-height:1em;text-align:right;font-size:60%;vertical-align:-0.25em;margin-left:0.1em;\">+1.8<br>", "\U02212", "2.1</span>"),
       paste0("29.2<span style=\"display:inline-block;line-height:1em;text-align:right;font-size:60%;vertical-align:-0.25em;margin-left:0.1em;\">+2.7<br>", "\U02212", "2.4</span>"),
@@ -475,7 +465,7 @@ test_that("cols_merge_uncert() works nicely with different error bounds", {
   )
 
   expect_equal(
-    (tbl_gt %>% render_formats_test("latex"))[["value"]],
+    (tbl_gt |> render_formats_test("latex"))[["value"]],
     c(
       "$34.5^{+1.8}_{-2.1}$", "$29.2^{+2.7}_{-2.4}$", "36.3 ± 2.6",
       "$31.6^{+NA}_{-1.8}$", "$28.5^{+1.6}_{-NA}$", "30.9", "NA", "NA",
@@ -485,7 +475,7 @@ test_that("cols_merge_uncert() works nicely with different error bounds", {
   )
 
   expect_equal(
-    (tbl_gt %>% render_formats_test("rtf"))[["value"]],
+    (tbl_gt |> render_formats_test("rtf"))[["value"]],
     c(
       "34.5(+1.8, -2.1)", "29.2(+2.7, -2.4)", "36.3 \\'b1 2.6", "31.6(+NA, -1.8)",
       "28.5(+1.6, -NA)", "30.9", "NA", "NA", "Inf", "30.0 \\'b1 0.0",
@@ -496,8 +486,7 @@ test_that("cols_merge_uncert() works nicely with different error bounds", {
   # Use `cols_merge_uncert()` with a vector of `rows` which limits the rows
   # that participate in the merging process
   gt_tbl_1 <-
-    tbl_uncert %>%
-    gt() %>%
+    gt(tbl_uncert) |>
     cols_merge_uncert(
       col_val = "value",
       col_uncert = c("lu", "uu"),
@@ -513,14 +502,14 @@ test_that("cols_merge_range() works correctly", {
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with `cols_merge_range()`
   tbl_html <-
-    tbl %>%
-    gt() %>%
+    gt(tbl) |>
     cols_merge_range(
       col_begin = "col_1",
       col_end = "col_2"
     )
 
   merged_range <- dt_col_merge_get(tbl_html)[[1]]
+
   # Expect that merging statements are stored in `col_merge`
   expect_equal(merged_range$pattern, "{1}{sep}{2}")
   expect_equal(merged_range$vars, c("col_1", "col_2"))
@@ -533,14 +522,14 @@ test_that("cols_merge_range works 2", {
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with `cols_merge_range()`
   tbl_html <-
-    tbl %>%
-    gt() %>%
+    gt(tbl) |>
     cols_merge_range(
       col_begin = col_1,
       col_end = col_2
     )
 
   merged_range <- dt_col_merge_get(data = tbl_html)[[1]]
+
   # Expect that merging statements are stored in `col_merge`
   expect_equal(merged_range$pattern, "{1}{sep}{2}")
   expect_equal(merged_range$vars, c("col_1", "col_2"))
@@ -549,15 +538,16 @@ test_that("cols_merge_range works 2", {
 })
 
 test_that("cols_merge_range() works with 2 statements", {
+
   # Create a `tbl_html` object with `gt()`; merge two columns, twice,
   # with `cols_merge_range()`
   tbl_html <-
-    tbl %>%
-    gt() %>%
-    cols_merge_range(col_begin = col_1, col_end = col_2) %>%
+    gt(tbl) |>
+    cols_merge_range(col_begin = col_1, col_end = col_2) |>
     cols_merge_range(col_begin = col_3, col_end = col_4)
 
   merged_range1 <- dt_col_merge_get(data = tbl_html)[[1]]
+
   # Expect that merging statements are stored in `col_merge`
   expect_equal(merged_range1$pattern, "{1}{sep}{2}")
   expect_equal(merged_range1$vars, c("col_1", "col_2"))
@@ -565,6 +555,7 @@ test_that("cols_merge_range() works with 2 statements", {
   expect_equal(merged_range1$sep, "\U2013")
 
   merged_range2 <- dt_col_merge_get(data = tbl_html)[[2]]
+
   expect_equal(merged_range2$pattern, "{1}{sep}{2}")
   expect_equal(merged_range2$vars, c("col_3", "col_4"))
   expect_equal(merged_range2$type, "merge_range")
@@ -572,6 +563,7 @@ test_that("cols_merge_range() works with 2 statements", {
 })
 
 test_that("cols_merge_range() respects locale for separators", {
+
   # only locale set in cols_merge
   expect_merge_locale_sep(locale = "en", expected_sep = "\U2013")
   expect_merge_locale_sep(locale = "es", expected_sep = "-")
@@ -594,12 +586,12 @@ test_that("cols_merge_range() respects locale for separators", {
 })
 
 test_that("cols_merge_range() works", {
+
   # Create a `tbl_html` object with `gt()`; merge two
   # columns with `cols_merge_range()` but use the `I()`
   # function to keep the `--` separator text as is
   tbl_html <-
-    tbl %>%
-    gt() %>%
+    gt(tbl) |>
     cols_merge_range(
       col_begin = col_1,
       col_end = col_2,
@@ -622,8 +614,7 @@ test_that("cols_merge_range() works", {
   # columns with `cols_merge_range()` but use the `I()`
   # function to keep the `---` separator text as is
   tbl_html <-
-    tbl %>%
-    gt() %>%
+    gt(tbl) |>
     cols_merge_range(
       col_begin = col_1,
       col_end = col_2,
@@ -645,21 +636,22 @@ test_that("cols_merge_range() works", {
 })
 
 test_that("cols_merge_range() works well", {
+
   # Create two gt table objects; the first will be based
   # on `tbl` while the second will use a different column name
   # in `tbl` (`sep`) that collides with a pattern element name
   tbl_html_1 <-
-    tbl %>%
-    gt() %>%
+    tbl |>
+    gt() |>
     cols_merge_range(
       col_begin = col_1,
       col_end = col_2
     )
 
   tbl_html_2 <-
-    tbl %>%
-    dplyr::rename(sep = col_2) %>%
-    gt() %>%
+    tbl |>
+    dplyr::rename(sep = col_2) |>
+    gt() |>
     cols_merge_range(
       col_begin = col_1,
       col_end = sep
@@ -671,9 +663,9 @@ test_that("cols_merge_range() works well", {
   # Create another variant that renames `col_2` as `1`, which
   # might be thought to interfere with the default pattern
   tbl_html_3 <-
-    tbl %>%
-    dplyr::rename(`1` = col_2) %>%
-    gt() %>%
+    tbl |>
+    dplyr::rename(`1` = col_2) |>
+    gt() |>
     cols_merge_range(
       col_begin = col_1,
       col_end = `1`
@@ -687,6 +679,7 @@ test_that("cols_merge_range() works well", {
 test_that("cols_merge_range() produces the correct output", {
 
   check_suggests()
+
   #
   # Expect that the column set as the row group can participate
   # in column merging through `col_merge_range()`
@@ -701,7 +694,7 @@ test_that("cols_merge_range() produces the correct output", {
 
   # Merge the stub column with column `a` (has integers)
   gt_tbl_1 <-
-    gt(tbl, rowname_col = "row") %>%
+    gt(tbl, rowname_col = "row") |>
     cols_merge_range(col_begin = row, col_end = a)
 
   # Perform snapshot test
@@ -709,7 +702,7 @@ test_that("cols_merge_range() produces the correct output", {
 
   # Merge the stub column with column `b` (has character values)
   gt_tbl_2 <-
-    gt(tbl, rowname_col = "row") %>%
+    gt(tbl, rowname_col = "row") |>
     cols_merge_range(col_begin = row, col_end = b)
 
   # Perform snapshot test
@@ -718,8 +711,8 @@ test_that("cols_merge_range() produces the correct output", {
   # Merge the stub column with a formatted column `a`
   # (has lowercase Roman numerals, transformed to character from integer)
   gt_tbl_3 <-
-    gt(tbl, rowname_col = "row") %>%
-    fmt_roman(columns = "a", case = "lower") %>%
+    gt(tbl, rowname_col = "row") |>
+    fmt_roman(columns = "a", case = "lower") |>
     cols_merge_range(col_begin = row, col_end = a)
 
   # Perform snapshot test
@@ -728,8 +721,8 @@ test_that("cols_merge_range() produces the correct output", {
   # Merge the formatted stub column with column `a`
   # (has lowercase Roman numerals, transformed to character from integer)
   gt_tbl_4 <-
-    gt(tbl, rowname_col = "row") %>%
-    fmt_roman(columns = "row", case = "lower") %>%
+    gt(tbl, rowname_col = "row") |>
+    fmt_roman(columns = "row", case = "lower") |>
     cols_merge_range(col_begin = row, col_end = a)
 
   # Perform snapshot test
@@ -738,7 +731,7 @@ test_that("cols_merge_range() produces the correct output", {
   # Use `cols_merge_range()` with a vector of `rows` which limits the rows
   # that participate in the merging process
   gt_tbl_5 <-
-    gt(tbl, rowname_col = "row") %>%
+    gt(tbl, rowname_col = "row") |>
     cols_merge_range(
       col_begin = a,
       col_end = b,
@@ -772,9 +765,8 @@ test_that("cols_merge_n_pct() works correctly", {
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with `cols_merge_uncert()`
   tbl_html <-
-    tbl_n_pct %>%
-    gt() %>%
-    cols_merge_n_pct(col_n = a, col_pct = b) %>%
+    gt(tbl_n_pct) |>
+    cols_merge_n_pct(col_n = a, col_pct = b) |>
     fmt_percent(columns = b, decimals = 1)
 
   # Expect that merging statements are stored in `col_merge`
@@ -817,8 +809,8 @@ test_that("cols_merge_n_pct() works correctly", {
 
   # Merge the stub column with column `a` (formatted as percentage values)
   gt_tbl_1 <-
-    gt(tbl, rowname_col = "row") %>%
-    fmt_percent(columns = a) %>%
+    gt(tbl, rowname_col = "row") |>
+    fmt_percent(columns = a) |>
     cols_merge_n_pct(col_n = row, col_pct = a)
 
   # Perform snapshot test
@@ -827,42 +819,36 @@ test_that("cols_merge_n_pct() works correctly", {
   # Use `cols_merge_n_pct()` with a vector of `rows` which limits the rows
   # that participate in the merging process
   gt_tbl_2 <-
-    tbl_n_pct %>%
-    gt() %>%
+    tbl_n_pct |>
+    gt() |>
     cols_merge_n_pct(
       col_n = a,
       col_pct = b,
       rows = c(1, 4)
-    ) %>%
+    ) |>
     fmt_percent(columns = b, decimals = 1)
 
   # Perform snapshot test
   expect_snapshot_html(gt_tbl_2)
 })
 
-test_that("cols_merge() errors well when pattern is wrong", {
-  expect_snapshot(error = TRUE, {
-    exibble %>%
-      gt() %>%
-      cols_merge(num, pattern = "{2}")
-  })
-})
-
-test_that("check cols_merge is applied gt_group", {
+test_that("check cols_merge is applied to gt_group objects", {
 
   # Create a `gt_group` object of two `gt_tbl`s
   # create gt group example
-  gt_tbl <- mtcars_short %>% gt()
+  gt_tbl <- gt(mtcars_short)
   gt_group <- gt_group(gt_tbl, gt_tbl)
 
   # apply merge to table and group
-  merged_gt_tbl <- gt_tbl %>%
+  merged_gt_tbl <-
+    gt_tbl |>
     cols_merge(
       columns = c(mpg,cyl),
       pattern = "<<{1} mpg<</{2} cyl>>>>"
     )
 
-  merged_gt_group <- gt_group %>%
+  merged_gt_group <-
+    gt_group |>
     cols_merge(
       columns = c(mpg,cyl),
       pattern = "<<{1} mpg<</{2} cyl>>>>"
@@ -870,24 +856,25 @@ test_that("check cols_merge is applied gt_group", {
 
   # Expect identical if function applied before or after group is constructed
   expect_identical(merged_gt_group, gt_group(merged_gt_tbl, merged_gt_tbl))
-
 })
 
-test_that("check cols_merge_uncert is applied gt_group", {
+test_that("check cols_merge_uncert is applied to gt_group objects", {
 
   # Create a `gt_group` object of two `gt_tbl`s
   # create gt group example
-  gt_tbl <- mtcars_short %>% gt()
+  gt_tbl <- gt(mtcars_short)
   gt_group <- gt_group(gt_tbl, gt_tbl)
 
   # apply merge to table and group
-  merged_gt_tbl <- gt_tbl %>%
+  merged_gt_tbl <-
+    gt_tbl |>
     cols_merge_uncert(
       col_val = wt,
       col_uncert = qsec
     )
 
-  merged_gt_group <- gt_group %>%
+  merged_gt_group <-
+    gt_group |>
     cols_merge_uncert(
       col_val = wt,
       col_uncert = qsec
@@ -895,24 +882,25 @@ test_that("check cols_merge_uncert is applied gt_group", {
 
   # Expect identical if function applied before or after group is constructed
   expect_identical(merged_gt_group, gt_group(merged_gt_tbl, merged_gt_tbl))
-
 })
 
-test_that("check cols_merge_range is applied gt_group", {
+test_that("check cols_merge_range is applied to gt_group objects", {
 
   # Create a `gt_group` object of two `gt_tbl`s
   # create gt group example
-  gt_tbl <- mtcars_short %>% gt()
+  gt_tbl <- gt(mtcars_short)
   gt_group <- gt_group(gt_tbl, gt_tbl)
 
   # apply merge to table and group
-  merged_gt_tbl <- gt_tbl %>%
+  merged_gt_tbl <-
+    gt_tbl |>
     cols_merge_range(
       col_begin = wt,
       col_end = qsec
     )
 
-  merged_gt_group <- gt_group %>%
+  merged_gt_group <-
+    gt_group |>
     cols_merge_range(
       col_begin = wt,
       col_end = qsec
@@ -920,24 +908,25 @@ test_that("check cols_merge_range is applied gt_group", {
 
   # Expect identical if function applied before or after group is constructed
   expect_identical(merged_gt_group, gt_group(merged_gt_tbl, merged_gt_tbl))
-
 })
 
-test_that("check cols_merge_n_pct is applied gt_group", {
+test_that("check cols_merge_n_pct is applied to gt_group objects", {
 
   # Create a `gt_group` object of two `gt_tbl`s
   # create gt group example
-  gt_tbl <- mtcars_short %>% gt()
+  gt_tbl <- gt(mtcars_short)
   gt_group <- gt_group(gt_tbl, gt_tbl)
 
   # apply merge to table and group
-  merged_gt_tbl <- gt_tbl %>%
+  merged_gt_tbl <-
+    gt_tbl |>
     cols_merge_n_pct(
       col_n = wt,
       col_pct = qsec
     )
 
-  merged_gt_group <- gt_group %>%
+  merged_gt_group <-
+    gt_group |>
     cols_merge_n_pct(
       col_n = wt,
       col_pct = qsec
@@ -945,5 +934,4 @@ test_that("check cols_merge_n_pct is applied gt_group", {
 
   # Expect identical if function applied before or after group is constructed
   expect_identical(merged_gt_group, gt_group(merged_gt_tbl, merged_gt_tbl))
-
 })
