@@ -1,8 +1,8 @@
 # Create a table that can be used for testing
 test_tbl <-
-  sza %>%
-  dplyr::filter(latitude == 50, !is.na(sza)) %>%
-  dplyr::group_by(month) %>%
+  sza |>
+  dplyr::filter(latitude == 50, !is.na(sza)) |>
+  dplyr::group_by(month) |>
   dplyr::summarize(min_sza = min(sza))
 
 test_that("The various color utility functions work correctly", {
@@ -23,8 +23,8 @@ test_that("The various color utility functions work correctly", {
       "rgba(255,170,0,0.5)", "rgba(255,187,52,1)", "rgba( 127, 46, 22, 0.523 )",
       "rgba(0,0,0,0)", "rgba(128,    20 , 94, 1.000)"
     )
-  ) %>%
-    all() %>%
+  ) |>
+    all() |>
     expect_true()
 
   # Expect that any other strings will return FALSE values
@@ -33,8 +33,8 @@ test_that("The various color utility functions work correctly", {
       "rgba (255,170,0,0.5)", "rgbc(255,187,52,1)", "rgb( 127, 46, 22, 0.523 )",
       "#FFFFFF", "rgba(128,    20 , 94, a)"
     )
-  ) %>%
-    any() %>%
+  ) |>
+    any() |>
     expect_false()
 
   # Expect that `expand_short_hex()` reliably transforms shorthand hexadecimal
@@ -128,10 +128,18 @@ test_that("The various color utility functions work correctly", {
 
   # Furthermore, expect that all alpha values in the 'rgba()' strings are of the
   # same value when `alpha` is non-NULL and less than `1`
-  html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, c_s_hex_a), alpha = 0.5) %>%
-    gsub("(?:^.*,|\\))", "", .) %>%
-    unique() %>%
-    expect_length(1)
+  expect_length(
+    unique(
+      gsub(
+        "(?:^.*,|\\))", "",
+        html_color(
+          colors = c(c_name, c_hex, c_hex_a, c_s_hex, c_s_hex_a),
+          alpha = 0.5
+        )
+      )
+    ),
+    1
+  )
 
   # Expect that CSS color names not present as an R/X11 color will still work
   expect_equal(
@@ -477,13 +485,13 @@ test_that("cell_fill() accepts colors of various types", {
   # Create a `tbl_html` object by using `tab_style` with
   # the `cell_fill()` helper function and a color name
   tbl_html_1 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     tab_style(
       style = cell_fill(color = "tomato"),
       locations = cells_body(columns = "month")
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect a single color to have been generated and used
@@ -503,13 +511,13 @@ test_that("cell_fill() accepts colors of various types", {
   # the `cell_fill()` helper function and a hexadecimal color
   # value in the #RRGGBB format
   tbl_html_2 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     tab_style(
       style = cell_fill(color = "#FFAA00"),
       locations = cells_body(columns = "month")
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect a single color to have been generated and used
@@ -529,13 +537,13 @@ test_that("cell_fill() accepts colors of various types", {
   # the `cell_fill()` helper function and a hexadecimal color
   # value in the #RRGGBBAA format
   tbl_html_3 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     tab_style(
       style = cell_fill(color = "#FF235D60"),
       locations = cells_body(columns = "month")
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect a single color to have been generated and used
@@ -556,13 +564,13 @@ test_that("cell_fill() accepts colors of various types", {
   # value in the #RRGGBB format, and, set `alpha` to `0.5`
   # inside `cell_fill()`
   tbl_html_4 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     tab_style(
       style = cell_fill(color = "#FF235D", alpha = 0.5),
       locations = cells_body(columns = "month")
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect a single color to have been generated and used
@@ -595,13 +603,13 @@ test_that("cell_fill() accepts colors of various types", {
   # inside `cell_fill()` (that is expected to override the
   # alpha value that is part of the supplied `color`)
   tbl_html_5 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     tab_style(
       style = cell_fill(color = "#F3F300EE", alpha = 0.5),
       locations = cells_body(columns = "month")
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect a single color to have been generated and used
@@ -632,13 +640,13 @@ test_that("cell_fill() accepts colors of various types", {
   # Create a `tbl_html` object by using `tab_style` with
   # the `cell_fill()` helper function and the 'transparent' color
   tbl_html_6 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     tab_style(
       style = cell_text(color = "transparent"),
       locations = cells_body(columns = "month")
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect a single color to have been generated and used
@@ -664,14 +672,14 @@ test_that("cell_fill() accepts colors of various types", {
   # Expect that using shorthand hexadecimal color values will result in the
   # same table output as with using standard hexadecimal colors
   expect_equal_gt(
-    test_tbl %>%
-      gt() %>%
+    test_tbl |>
+      gt() |>
       tab_style(
         style = cell_text(color = "#888"),
         locations = cells_body(columns = "month")
       ),
-    test_tbl %>%
-      gt() %>%
+    test_tbl |>
+      gt() |>
       tab_style(
         style = cell_text(color = "#888888"),
         locations = cells_body(columns = "month")
@@ -679,14 +687,14 @@ test_that("cell_fill() accepts colors of various types", {
   )
 
   expect_equal_gt(
-    test_tbl %>%
-      gt() %>%
+    test_tbl |>
+      gt() |>
       tab_style(
         style = cell_text(color = "#888A"),
         locations = cells_body(columns = "month")
       ),
-    test_tbl %>%
-      gt() %>%
+    test_tbl |>
+      gt() |>
       tab_style(
         style = cell_text(color = "#888888AA"),
         locations = cells_body(columns = "month")
