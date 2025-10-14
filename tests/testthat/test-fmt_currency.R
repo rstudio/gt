@@ -4,13 +4,16 @@ test_that("fmt_currency() works correctly", {
   # character-based and two that are numeric
   data_tbl <-
     data.frame(
-      char_1 = c("saturday", "sunday", "monday", "tuesday",
-                 "wednesday", "thursday", "friday"),
-      char_2 = c("june", "july", "august", "september",
-                 "october", "november", "december"),
+      char_1 = c(
+        "saturday", "sunday", "monday", "tuesday",
+        "wednesday", "thursday", "friday"
+      ),
+      char_2 = c(
+        "june", "july", "august", "september",
+        "october", "november", "december"
+      ),
       num_1 = c(1836.23, 2763.39, 937.29, 643.00, 212.232, 0, -23.24),
-      num_2 = c(34, 74, 23, 93, 35, 76, 57),
-      stringsAsFactors = FALSE
+      num_2 = c(34, 74, 23, 93, 35, 76, 57)
     )
 
   # Create a `gt_tbl` object with `gt()` and the
@@ -30,28 +33,31 @@ test_that("fmt_currency() works correctly", {
   # Expect the extracted values to match those of the
   # original dataset
   expect_equal(data_tbl$char_1, char_1)
+
   expect_equal(data_tbl$char_2, char_2)
+
   expect_equal(data_tbl$num_1, num_1)
+
   expect_equal(data_tbl$num_2, num_2)
 
   # Expect an error when attempting to format a column
   # that does not exist
   expect_error(
-    tab %>%
+    tab |>
       fmt_currency(columns = "num_3", currency = "USD")
   )
 
   # Expect an error when using a locale that does not exist
   expect_error(
-    tab %>%
+    tab |>
       fmt_currency(columns = "num_2", decimals = 2, locale = "aa_bb")
   )
 
   # Format the `num_1` column using defaults (currency of "USD");
   # extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_currency(columns = "num_1") %>%
+    (tab |>
+       fmt_currency(columns = "num_1") |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "$1,836.23", "$2,763.39", "$937.29", "$643.00", "$212.23",
@@ -62,8 +68,8 @@ test_that("fmt_currency() works correctly", {
   # Format the `num_1` column as USD, use all other defaults;
   # extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_currency(columns = "num_1", currency = "USD") %>%
+    (tab |>
+       fmt_currency(columns = "num_1", currency = "USD") |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "$1,836.23", "$2,763.39", "$937.29", "$643.00", "$212.23",
@@ -74,8 +80,8 @@ test_that("fmt_currency() works correctly", {
   # Format the `num_1` column as USD to 5 decimal places, use all
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_currency(columns = "num_1", currency = "USD", decimals = 5) %>%
+    (tab |>
+       fmt_currency(columns = "num_1", currency = "USD", decimals = 5) |>
        render_formats_test("html"))[["num_1"]],
     c(
       "$1,836.23000", "$2,763.39000", "$937.29000", "$643.00000",
@@ -87,8 +93,8 @@ test_that("fmt_currency() works correctly", {
   # use all other defaults; extract `output_df` and compare to
   # expected values
   expect_equal(
-    (tab %>%
-       fmt_currency(columns = "num_1", currency = "USD", use_subunits = FALSE) %>%
+    (tab |>
+       fmt_currency(columns = "num_1", currency = "USD", use_subunits = FALSE) |>
        render_formats_test("html"))[["num_1"]],
     c("$1,836", "$2,763", "$937", "$643", "$212", "$0", paste0("\U02212", "$23"))
   )
@@ -97,8 +103,8 @@ test_that("fmt_currency() works correctly", {
   # grouping separators, use all other defaults; extract `output_df`
   # and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_currency(columns = "num_1", currency = "USD", use_seps = FALSE) %>%
+    (tab |>
+       fmt_currency(columns = "num_1", currency = "USD", use_seps = FALSE) |>
        render_formats_test("html"))[["num_1"]],
     c(
       "$1836.23", "$2763.39", "$937.29", "$643.00", "$212.23",
@@ -110,8 +116,8 @@ test_that("fmt_currency() works correctly", {
   # character as digit grouping separators, use all other defaults;
   # extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_currency(columns = "num_1", currency = "USD", sep_mark = " ") %>%
+    (tab |>
+       fmt_currency(columns = "num_1", currency = "USD", sep_mark = " ") |>
        render_formats_test("html"))[["num_1"]],
     c(
       "$1 836.23", "$2 763.39", "$937.29", "$643.00", "$212.23",
@@ -123,11 +129,11 @@ test_that("fmt_currency() works correctly", {
   # separators and a comma for the decimal mark, use all other defaults;
   # extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_currency(
          columns = "num_1", currency = "USD",
          sep_mark = ".", dec_mark = ","
-       ) %>%
+       ) |>
        render_formats_test("html"))[["num_1"]],
     c(
       "$1.836,23", "$2.763,39", "$937,29", "$643,00", "$212,23",
@@ -139,10 +145,10 @@ test_that("fmt_currency() works correctly", {
   # values, use all other defaults; extract `output_df` and compare
   # to expected values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_currency(
          columns = "num_1", currency = "USD", accounting = TRUE
-       ) %>%
+       ) |>
        render_formats_test("html"))[["num_1"]],
     c(
       "$1,836.23", "$2,763.39", "$937.29", "$643.00",
@@ -154,10 +160,10 @@ test_that("fmt_currency() works correctly", {
   # values, use all other defaults; apply the default context, extract
   # `output_df`, and compare to expected values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_currency(
          columns = "num_1", currency = "USD", accounting = TRUE
-       ) %>%
+       ) |>
        render_formats_test("default"))[["num_1"]],
     c(
       "$1,836.23", "$2,763.39", "$937.29", "$643.00", "$212.23",
@@ -169,11 +175,11 @@ test_that("fmt_currency() works correctly", {
   # 1/1000, use all other defaults; extract `output_df` and compare
   # to expected values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_currency(
          columns = "num_1", currency = "USD",
          decimals = 4, scale_by = 1/1000
-       ) %>%
+       ) |>
        render_formats_test("html"))[["num_1"]],
     c(
       "$1.8362", "$2.7634", "$0.9373", "$0.6430", "$0.2122",
@@ -185,11 +191,11 @@ test_that("fmt_currency() works correctly", {
   # different literals, use all other defaults; extract `output_df` and
   # compare to expected values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_currency(
          columns = "num_1", currency = "USD",
          pattern = "a {x} b"
-       ) %>%
+       ) |>
        render_formats_test("html"))[["num_1"]],
     c(
       "a $1,836.23 b", "a $2,763.39 b", "a $937.29 b", "a $643.00 b",
@@ -201,11 +207,11 @@ test_that("fmt_currency() works correctly", {
   # by 1/1000 and append a `K` character to the resultant values, use
   # all other defaults; extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_currency(
          columns = "num_1", currency = "USD", decimals = 4,
          scale_by = 1 / 1000, pattern = "{x}K"
-       ) %>%
+       ) |>
        render_formats_test("html"))[["num_1"]],
     c(
       "$1.8362K", "$2.7634K", "$0.9373K", "$0.6430K",
@@ -216,10 +222,10 @@ test_that("fmt_currency() works correctly", {
   # Format the `num_1` column as USD, apply the `en_US` locale and use all
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_currency(
          columns = "num_1", currency = "USD", locale = "en_US"
-       ) %>%
+       ) |>
        render_formats_test("html"))[["num_1"]],
     c(
       "$1,836.23", "$2,763.39", "$937.29", "$643.00",
@@ -230,11 +236,11 @@ test_that("fmt_currency() works correctly", {
   # Format the `num_1` column as DKK, apply the `da_DK` locale and use all
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_currency(
          columns = "num_1", currency = "DKK", locale = "da_DK",
          placement = "right", incl_space = TRUE
-       ) %>%
+       ) |>
        render_formats_test("html"))[["num_1"]],
     c(
       "1.836,23 kr.", "2.763,39 kr.", "937,29 kr.", "643,00 kr.",
@@ -246,9 +252,9 @@ test_that("fmt_currency() works correctly", {
   # other defaults; use the default context, extract `output_df`, and
   # compare to expected values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_currency(
-         columns = "num_1", currency = "DKK", locale = "da_DK") %>%
+         columns = "num_1", currency = "DKK", locale = "da_DK") |>
        render_formats_test("default"))[["num_1"]],
     c(
       "kr.1.836,23", "kr.2.763,39", "kr.937,29", "kr.643,00",
@@ -259,9 +265,9 @@ test_that("fmt_currency() works correctly", {
   # Format the `num_1` column as EUR, apply the `de_AT` locale and use all
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_currency(
-         columns = "num_1", currency = "EUR", locale = "de_AT") %>%
+         columns = "num_1", currency = "EUR", locale = "de_AT") |>
        render_formats_test("html"))[["num_1"]],
     c(
       "&#8364;1 836,23", "&#8364;2 763,39", "&#8364;937,29", "&#8364;643,00",
@@ -273,10 +279,10 @@ test_that("fmt_currency() works correctly", {
   # other defaults; use the default context, extract `output_df`, and
   # compare to expected values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_currency(
          columns = "num_1", currency = "EUR", locale = "de_AT"
-       ) %>%
+       ) |>
        render_formats_test("default"))[["num_1"]],
     c(
       "EUR1 836,23", "EUR2 763,39", "EUR937,29", "EUR643,00",
@@ -288,10 +294,10 @@ test_that("fmt_currency() works correctly", {
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_currency(
          columns = "num_1", currency = "EUR", locale = "et_EE"
-       ) %>%
+       ) |>
        render_formats_test("html"))[["num_1"]],
     c(
       "&#8364;1 836,23", "&#8364;2 763,39", "&#8364;937,29", "&#8364;643,00",
@@ -309,8 +315,8 @@ test_that("fmt_currency() can scale/suffix larger numbers", {
       num = c(
         -1.8E15, -1.7E13, -1.6E10, -1.5E8, -1.4E6, -1.3E4, -1.2E3, -1.1E1,
         0,
-        1.1E1, 1.2E3, 1.3E4, 1.4E6, 1.5E8, 1.6E10, 1.7E13, 1.8E15),
-      stringsAsFactors = FALSE
+        1.1E1, 1.2E3, 1.3E4, 1.4E6, 1.5E8, 1.6E10, 1.7E13, 1.8E15
+      )
     )
 
   # Create a `gt_tbl` object with `gt()` and the
@@ -321,9 +327,11 @@ test_that("fmt_currency() can scale/suffix larger numbers", {
   # `suffixing` option set to TRUE (default labels, all
   # 4 ranges used)
   expect_equal(
-    (tab %>%
-       fmt_currency(columns = "num", decimals = 2, suffixing = TRUE) %>%
-       render_formats_test(context = "html"))[["num"]],
+    (
+      tab |>
+        fmt_currency(columns = "num", decimals = 2, suffixing = TRUE) |>
+        render_formats_test(context = "html")
+    )[["num"]],
     c(
       paste0("\U02212", "$1,800.00T"),
       paste0("\U02212", "$17.00T"),
@@ -342,9 +350,11 @@ test_that("fmt_currency() can scale/suffix larger numbers", {
   # `suffixing` option set to TRUE (default labels, all
   # 4 ranges used)
   expect_equal(
-    (tab %>%
-       fmt_currency(columns = "num", decimals = 0, suffixing = TRUE) %>%
-       render_formats_test(context = "html"))[["num"]],
+    (
+      tab |>
+        fmt_currency(columns = "num", decimals = 0, suffixing = TRUE) |>
+        render_formats_test(context = "html")
+    )[["num"]],
     c(
       paste0("\U02212", "$1,800T"),
       paste0("\U02212", "$17T"),
@@ -363,12 +373,14 @@ test_that("fmt_currency() can scale/suffix larger numbers", {
   # `suffixing` option set to use custom symbols across the
   # 4 different ranges
   expect_equal(
-    (tab %>%
-       fmt_currency(
-         columns = "num", decimals = 2,
-         suffixing = c("k", "Mn", "Bn", "Tr")
-       ) %>%
-       render_formats_test(context = "html"))[["num"]],
+    (
+      tab |>
+        fmt_currency(
+          columns = "num", decimals = 2,
+          suffixing = c("k", "Mn", "Bn", "Tr")
+        ) |>
+        render_formats_test(context = "html")
+    )[["num"]],
     c(
       paste0("\U02212", "$1,800.00Tr"),
       paste0("\U02212", "$17.00Tr"),
@@ -387,12 +399,14 @@ test_that("fmt_currency() can scale/suffix larger numbers", {
   # `suffixing` option set to use custom symbols for the middle
   # two ranges (millions and billions)
   expect_equal(
-    (tab %>%
-       fmt_currency(
-         columns = "num", decimals = 2, currency = "EUR", locale = "de_DE",
-         suffixing = c(NA, "Mio.", "Mia.", NA)
-       ) %>%
-       render_formats_test(context = "html"))[["num"]],
+    (
+      tab |>
+        fmt_currency(
+          columns = "num", decimals = 2, currency = "EUR", locale = "de_DE",
+          suffixing = c(NA, "Mio.", "Mia.", NA)
+        ) |>
+       render_formats_test(context = "html")
+    )[["num"]],
     c(
       paste0("\U02212", "&#8364;1.800.000,00Mia."),
       paste0("\U02212", "&#8364;17.000,00Mia."),
@@ -412,12 +426,14 @@ test_that("fmt_currency() can scale/suffix larger numbers", {
   # Format the `num` column to 2 decimal places, have the
   # `suffixing` option set to use custom symbols with some NAs
   expect_equal(
-    (tab %>%
-       fmt_currency(
-         columns = "num", decimals = 2,
-         suffixing = c("K", NA, "Bn", NA, "Qa", NA, NA)
-       ) %>%
-       render_formats_test(context = "html"))[["num"]],
+    (
+      tab |>
+        fmt_currency(
+          columns = "num", decimals = 2,
+          suffixing = c("K", NA, "Bn", NA, "Qa", NA, NA)
+        ) |>
+       render_formats_test(context = "html")
+    )[["num"]],
     c(
       paste0("\U02212", "$1.80Qa"),
       paste0("\U02212", "$17,000.00Bn"),
@@ -436,12 +452,14 @@ test_that("fmt_currency() can scale/suffix larger numbers", {
   # `suffixing` option set to FALSE (the default option, where
   # no scaling or suffixing is performed)
   expect_equal(
-    (tab %>%
-       fmt_currency(
-         columns = "num", decimals = 2,
-         suffixing = FALSE
-       ) %>%
-       render_formats_test(context = "html"))[["num"]],
+    (
+      tab |>
+        fmt_currency(
+          columns = "num", decimals = 2,
+          suffixing = FALSE
+        ) |>
+        render_formats_test(context = "html")
+    )[["num"]],
     c(
       paste0("\U02212", "$1,800,000,000,000,000.00"),
       paste0("\U02212", "$17,000,000,000,000.00"),
@@ -460,7 +478,7 @@ test_that("fmt_currency() can scale/suffix larger numbers", {
   # Expect an error if any vector length other than
   # four is used for `suffixing`
   expect_silent(
-    tab %>%
+    tab |>
       fmt_currency(
         columns = "num", decimals = 2,
         suffixing = c("k", "M", "Bn", "Tr", "Zn")
@@ -468,7 +486,7 @@ test_that("fmt_currency() can scale/suffix larger numbers", {
   )
 
   expect_silent(
-    tab %>%
+    tab |>
       fmt_currency(
         columns = "num", decimals = 2,
         suffixing = c("k", NA)
@@ -490,44 +508,64 @@ test_that("fmt_currency() can scale/suffix larger numbers", {
   #
 
   expect_equal(
-    (tab_2 %>%
-       fmt_currency(
-         columns = "num", decimals = 1,
-         suffixing = TRUE) %>%
-       render_formats_test(context = "html"))[["num"]],
-    "$1.0K")
+    (
+      tab_2 |>
+        fmt_currency(
+          columns = "num", decimals = 1,
+          suffixing = TRUE
+        ) |>
+        render_formats_test(context = "html")
+    )[["num"]],
+    "$1.0K"
+  )
 
   expect_equal(
-    (tab_2 %>%
-       fmt_currency(
-         columns = "num", decimals = 2,
-         suffixing = TRUE) %>%
-       render_formats_test(context = "html"))[["num"]],
-    "$1.00K")
+    (
+      tab_2 |>
+        fmt_currency(
+          columns = "num", decimals = 2,
+          suffixing = TRUE
+        ) |>
+        render_formats_test(context = "html")
+    )[["num"]],
+    "$1.00K"
+  )
 
   expect_equal(
-    (tab_2 %>%
-       fmt_currency(
-         columns = "num", decimals = 3,
-         suffixing = TRUE) %>%
-       render_formats_test(context = "html"))[["num"]],
-    "$1.000K")
+    (
+      tab_2 |>
+        fmt_currency(
+          columns = "num", decimals = 3,
+          suffixing = TRUE
+        ) |>
+        render_formats_test(context = "html")
+    )[["num"]],
+    "$1.000K"
+  )
 
   expect_equal(
-    (tab_2 %>%
-       fmt_currency(
-         columns = "num", decimals = 4,
-         suffixing = TRUE) %>%
-       render_formats_test(context = "html"))[["num"]],
-    "$999.9999")
+    (
+      tab_2 |>
+        fmt_currency(
+          columns = "num", decimals = 4,
+          suffixing = TRUE
+        ) |>
+        render_formats_test(context = "html")
+    )[["num"]],
+    "$999.9999"
+  )
 
   expect_equal(
-    (tab_2 %>%
-       fmt_currency(
-         columns = "num", decimals = 5,
-         suffixing = TRUE) %>%
-       render_formats_test(context = "html"))[["num"]],
-    "$999.99990")
+    (
+      tab_2 |>
+        fmt_currency(
+          columns = "num", decimals = 5,
+          suffixing = TRUE
+        ) |>
+       render_formats_test(context = "html")
+    )[["num"]],
+    "$999.99990"
+  )
 })
 
 test_that("The currency() helper works correctly", {
@@ -535,10 +573,15 @@ test_that("The currency() helper works correctly", {
   # Expect that the object produced by `currency()` is a
   # list with `gt_currency` class
   cur <- currency(html = "&#8383;", latex = "BTC", default = "BTC")
+
   expect_type(cur, "list")
+
   expect_s3_class(cur, "gt_currency")
+
   expect_length(cur, 3)
+
   expect_length(currency(html = "&#8383;", default = "BTC"), 2)
+
   expect_length(currency(default = "BTC"), 1)
 
   # Expect that a single, unnamed string will be upgraded
@@ -546,13 +589,18 @@ test_that("The currency() helper works correctly", {
   single_default_currency <- currency("BTC")
 
   expect_type(single_default_currency, "list")
+
   expect_s3_class(single_default_currency, "gt_currency")
+
   expect_length(single_default_currency, 1)
+
   expect_named(single_default_currency, "default")
+
   expect_equal(single_default_currency[[1]], "BTC")
 })
 
 test_that("currency() errors" , {
+
   # Expect an error if nothing is provided
   expect_error(currency())
 
@@ -571,17 +619,21 @@ test_that("currency() errors" , {
 })
 
 test_that("fmt_currency() works with the currency() helper", {
+
   # Create an input data frame four columns: two
   # character-based and two that are numeric
   data_tbl <-
     data.frame(
-      char_1 = c("saturday", "sunday", "monday", "tuesday",
-                 "wednesday", "thursday", "friday"),
-      char_2 = c("june", "july", "august", "september",
-                 "october", "november", "december"),
+      char_1 = c(
+        "saturday", "sunday", "monday", "tuesday",
+        "wednesday", "thursday", "friday"
+      ),
+      char_2 = c(
+        "june", "july", "august", "september",
+        "october", "november", "december"
+      ),
       num_1 = c(1836.23, 2763.39, 937.29, 643.00, 212.232, 0, -23.24),
-      num_2 = c(34, 74, 23, 93, 35, 76, 57),
-      stringsAsFactors = FALSE
+      num_2 = c(34, 74, 23, 93, 35, 76, 57)
     )
 
   # Create a `gt_tbl` object with `gt()` and the
@@ -591,13 +643,15 @@ test_that("fmt_currency() works with the currency() helper", {
   # Format the `num_1` column using the `currency()` helper function;
   # extract `output_df` in the HTML context and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_currency(
-         columns = "num_1",
-         currency = currency(html = "&#8383;", latex = "BTC", default = "BTC"),
-         decimals = 4
-       ) %>%
-       render_formats_test(context = "html"))[["num_1"]],
+    (
+      tab |>
+        fmt_currency(
+          columns = "num_1",
+          currency = currency(html = "&#8383;", latex = "BTC", default = "BTC"),
+          decimals = 4
+        ) |>
+        render_formats_test(context = "html")
+    )[["num_1"]],
     c(
       "&#8383;1,836.2300", "&#8383;2,763.3900", "&#8383;937.2900",
       "&#8383;643.0000", "&#8383;212.2320", "&#8383;0.0000",
@@ -609,14 +663,16 @@ test_that("fmt_currency() works with the currency() helper", {
   # supplying a value for `decimals`); extract `output_df` in the HTML
   # context and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_currency(
-         columns = "num_1",
-         currency = currency(
-           html = "&#8383;", latex = "BTC", default = "BTC"
-         )
-       ) %>%
-       render_formats_test(context = "html"))[["num_1"]],
+    (
+      tab |>
+        fmt_currency(
+          columns = "num_1",
+          currency = currency(
+            html = "&#8383;", latex = "BTC", default = "BTC"
+          )
+       ) |>
+       render_formats_test(context = "html")
+    )[["num_1"]],
     c(
       "&#8383;1,836.23", "&#8383;2,763.39", "&#8383;937.29",
       "&#8383;643.00", "&#8383;212.23", "&#8383;0.00",
@@ -627,13 +683,15 @@ test_that("fmt_currency() works with the currency() helper", {
   # Format the `num_1` column using the `currency()` helper function;
   # extract `output_df` in the LaTeX context and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_currency(
-         columns = "num_1",
-         currency = currency(html = "&#8383;", latex = "BTC", default = "BTC"),
-         decimals = 4
-       ) %>%
-       render_formats_test(context = "latex"))[["num_1"]],
+    (
+      tab |>
+        fmt_currency(
+          columns = "num_1",
+          currency = currency(html = "&#8383;", latex = "BTC", default = "BTC"),
+          decimals = 4
+        ) |>
+       render_formats_test(context = "latex")
+    )[["num_1"]],
     c(
       "BTC1,836.2300", "BTC2,763.3900",
       "BTC937.2900", "BTC643.0000",
@@ -645,13 +703,15 @@ test_that("fmt_currency() works with the currency() helper", {
   # Format the `num_1` column using the `currency()` helper function;
   # extract `output_df` in the HTML context and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_currency(
-         columns = "num_1",
-         currency = currency(latex = "BTC", default = "bt"),
-         decimals = 2
-       ) %>%
-       render_formats_test(context = "html"))[["num_1"]],
+    (
+      tab |>
+        fmt_currency(
+          columns = "num_1",
+          currency = currency(latex = "BTC", default = "bt"),
+          decimals = 2
+        ) |>
+        render_formats_test(context = "html")
+    )[["num_1"]],
     c(
       "bt1,836.23", "bt2,763.39", "bt937.29", "bt643.00",
       "bt212.23", "bt0.00", paste0("\U02212", "bt23.24")
@@ -662,13 +722,15 @@ test_that("fmt_currency() works with the currency() helper", {
   # extract `output_df` in the LaTeX context and compare to expected values
   # (we expect that values are escaped for LaTeX)
   expect_equal(
-    (tab %>%
-       fmt_currency(
-         columns = "num_1",
-         currency = currency(html = "HKD", latex = "HK$", default = "hkd"),
-         decimals = 2
-       ) %>%
-       render_formats_test(context = "latex"))[["num_1"]],
+    (
+      tab |>
+        fmt_currency(
+          columns = "num_1",
+          currency = currency(html = "HKD", latex = "HK$", default = "hkd"),
+          decimals = 2
+       ) |>
+       render_formats_test(context = "latex")
+    )[["num_1"]],
     c(
       "HK\\$1,836.23", "HK\\$2,763.39",
       "HK\\$937.29", "HK\\$643.00",
@@ -719,9 +781,11 @@ test_that("fmt_currency() can render in the Indian numbering system", {
   # Format the `num` column to 2 decimal places and use the Indian
   # numbering system
   expect_equal(
-    (tab %>%
-       fmt_currency(columns = num, currency = "INR", system = "ind") %>%
-       render_formats_test(context = "html"))[["num"]],
+    (
+      tab |>
+        fmt_currency(columns = num, currency = "INR", system = "ind") |>
+        render_formats_test(context = "html")
+    )[["num"]],
     c(
       "&#8377;50,00,000.01", "&#8377;1,000.00", "&#8377;10.00",
       "&#8377;12,345.00", "&#8377;1,234.50", "&#8377;123.45", "&#8377;1.23",
@@ -744,12 +808,14 @@ test_that("fmt_currency() can render in the Indian numbering system", {
   # Format the `num` column using the Indian numbering system; force
   # each number's sign to always be present
   expect_equal(
-    (tab %>%
-       fmt_currency(
-         columns = num, currency = "INR",
-         force_sign = TRUE, system = "ind"
-       ) %>%
-       render_formats_test(context = "html"))[["num"]],
+    (
+      tab |>
+        fmt_currency(
+          columns = num, currency = "INR",
+          force_sign = TRUE, system = "ind"
+        ) |>
+        render_formats_test(context = "html")
+    )[["num"]],
     c(
       "+&#8377;50,00,000.01", "+&#8377;1,000.00", "+&#8377;10.00",
       "+&#8377;12,345.00", "+&#8377;1,234.50", "+&#8377;123.45", "+&#8377;1.23",
@@ -771,12 +837,14 @@ test_that("fmt_currency() can render in the Indian numbering system", {
 
   # Format the `num` column and use appropriate suffixes
   expect_equal(
-    (tab %>%
-       fmt_currency(
-         columns = num, currency = "INR",
-         suffixing = TRUE, system = "ind"
-       ) %>%
-       render_formats_test(context = "html"))[["num"]],
+    (
+      tab |>
+        fmt_currency(
+          columns = num, currency = "INR",
+          suffixing = TRUE, system = "ind"
+        ) |>
+        render_formats_test(context = "html")
+    )[["num"]],
     c(
       "&#8377;50.00 Lac", "&#8377;1,000.00", "&#8377;10.00", "&#8377;12,345.00",
       "&#8377;1,234.50", "&#8377;123.45", "&#8377;1.23", "&#8377;0.12",
@@ -794,13 +862,16 @@ test_that("fmt_currency() can render in the Indian numbering system", {
       paste0("\U02212", "&#8377;Inf Cr")
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_currency(
-         columns = num, currency = "INR",
-         suffixing = c("K", "Lacs", "Crores"), system = "ind"
-       ) %>%
-       render_formats_test(context = "html"))[["num"]],
+    (
+      tab |>
+        fmt_currency(
+          columns = num, currency = "INR",
+          suffixing = c("K", "Lacs", "Crores"), system = "ind"
+        ) |>
+        render_formats_test(context = "html")
+    )[["num"]],
     c(
       "&#8377;50.00 Lacs", "&#8377;1.00 K", "&#8377;10.00", "&#8377;12.35 K",
       "&#8377;1.23 K", "&#8377;123.45", "&#8377;1.23", "&#8377;0.12",
@@ -820,12 +891,14 @@ test_that("fmt_currency() can render in the Indian numbering system", {
     )
   )
   expect_equal(
-    (tab %>%
-       fmt_currency(
-         columns = num, currency = "INR",
-         suffixing = c(NA, "Lacs", NA), system = "ind"
-       ) %>%
-       render_formats_test(context = "html"))[["num"]],
+    (
+      tab |>
+        fmt_currency(
+          columns = num, currency = "INR",
+          suffixing = c(NA, "Lacs", NA), system = "ind"
+        ) |>
+        render_formats_test(context = "html")
+    )[["num"]],
     c(
       "&#8377;50.00 Lacs", "&#8377;1,000.00", "&#8377;10.00",
       "&#8377;12,345.00", "&#8377;1,234.50", "&#8377;123.45", "&#8377;1.23",
@@ -844,13 +917,16 @@ test_that("fmt_currency() can render in the Indian numbering system", {
       paste0("\U02212", "&#8377;Inf Lacs")
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_currency(
-         columns = num, currency = "INR",
-         suffixing = TRUE, accounting = TRUE, system = "ind"
-       ) %>%
-       render_formats_test(context = "html"))[["num"]],
+    (
+      tab |>
+        fmt_currency(
+          columns = num, currency = "INR",
+          suffixing = TRUE, accounting = TRUE, system = "ind"
+        ) |>
+        render_formats_test(context = "html")
+    )[["num"]],
     c(
       "&#8377;50.00 Lac", "&#8377;1,000.00", "&#8377;10.00",
       "&#8377;12,345.00", "&#8377;1,234.50", "&#8377;123.45",
@@ -863,14 +939,16 @@ test_that("fmt_currency() can render in the Indian numbering system", {
   )
 
   expect_no_warning(
-    compared_tab <- tab %>%
+    compared_tab <- tab |>
       fmt_currency(columns = num, suffixing = TRUE, system = "ind")
   )
+
   # scale_by warning
   expect_snapshot(
-    expected_tab <- tab %>%
+    expected_tab <- tab |>
       fmt_currency(columns = num, suffixing = TRUE, scale_by = 200, system = "ind")
   )
+
   expect_equal(
     render_formats_test(compared_tab, context = "html")[["num"]],
     render_formats_test(expected_tab, context = "html")[["num"]]
