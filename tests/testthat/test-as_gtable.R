@@ -1,17 +1,18 @@
 test_that("gt_tbls can be rendered as a gtable", {
 
-  table <- pizzaplace %>%
-    dplyr::filter(type %in% c("classic", "veggie")) %>%
-    dplyr::group_by(type, size) %>%
+  table <-
+    pizzaplace |>
+    dplyr::filter(type %in% c("classic", "veggie")) |>
+    dplyr::group_by(type, size) |>
     dplyr::summarize(
       sold = dplyr::n(),
       income = sum(price),
       .groups = "drop"
-    ) %>%
-    gt(rowname_col = "size", groupname_col = "type") %>%
-    tab_header(title = "Pizzas Sold in 2015") %>%
-    fmt_integer(columns = sold) %>%
-    fmt_currency(columns = income) %>%
+    ) |>
+    gt(rowname_col = "size", groupname_col = "type") |>
+    tab_header(title = "Pizzas Sold in 2015") |>
+    fmt_integer(columns = sold) |>
+    fmt_currency(columns = income) |>
     summary_rows(
       fns = list(label = "All Sizes", fn = "sum"),
       side = c("top"),
@@ -19,27 +20,27 @@ test_that("gt_tbls can be rendered as a gtable", {
         ~ fmt_integer(., columns = sold),
         ~ fmt_currency(., columns = income)
       )
-    ) %>%
+    ) |>
     tab_options(
       summary_row.background.color = "gray95",
       row_group.as_column = TRUE
-    ) %>%
+    ) |>
     tab_stub_indent(
       rows = everything(),
       indent = 2
-    ) %>%
+    ) |>
     grand_summary_rows(
       columns = c("sold", "income"),
       fns = list(Sum ~ sum(.)),
       fmt = ~ fmt_number(.)
-    ) %>%
-    tab_caption("Here be caption text") %>%
+    ) |>
+    tab_caption("Here be caption text") |>
     tab_spanner(
       label = "Spanner",
       columns = c("sold", "income")
-    ) %>%
-    tab_stubhead("Stubhead label") %>%
-    tab_source_note("Source: the pizzaria") %>%
+    ) |>
+    tab_stubhead("Stubhead label") |>
+    tab_source_note("Source: the pizzaria") |>
     tab_footnote("Pineapples not included")
 
   gtable <- as_gtable(table)
@@ -47,6 +48,7 @@ test_that("gt_tbls can be rendered as a gtable", {
   expect_snapshot(gtable$layout)
 
   names <- unique(gsub("_[0-9]+$", "", gtable$layout$name))
+
   expect_in(
     names,
     c("caption", "title", "stubhead", "spanner", "column_label",
@@ -64,8 +66,9 @@ test_that("gtable widths are set appropriately", {
     grid::rectGrob(width = grid::unit(100, "pt"), height = grid::unit(100, "pt"))
   }
 
-  tbl <- data.frame(x = 1, y = 1) %>%
-    gt() %>%
+  tbl <-
+    data.frame(x = 1, y = 1) |>
+    gt() |>
     tab_options(
       data_row.padding = "0px",
       data_row.padding.horizontal = "0px",
@@ -87,16 +90,18 @@ test_that("gtable widths are set appropriately", {
   )
 
   # Percentage width divides cells into npc units
-  test <- tbl %>%
+  test <-
+    tbl |>
     tab_options(
       table.width = "80%"
-    ) %>%
+    ) |>
     as_gtable(tbl, text_grob = dummy_text)
 
-  cell_width <- grid::unit.pmax(
-    grid::unit(100, "pt"),
-    grid::unit(0.4, "npc")
-  )
+  cell_width <-
+    grid::unit.pmax(
+      grid::unit(100, "pt"),
+      grid::unit(0.4, "npc")
+    )
 
   expect_equal(
     test$widths,
@@ -109,11 +114,12 @@ test_that("gtable widths are set appropriately", {
   )
 
   # Left alignment should have 0 on left, and a null unit on right
-  test <- tbl %>%
+  test <-
+    tbl |>
     tab_options(
       table.width = "80%",
       table.align = "left"
-    ) %>%
+    ) |>
     as_gtable(tbl, text_grob = dummy_text)
 
   expect_equal(
@@ -127,11 +133,12 @@ test_that("gtable widths are set appropriately", {
   )
 
   # Relative margins on both sides
-  test <- tbl %>%
+  test <-
+    tbl |>
     tab_options(
       table.margin.left = "5%",
       table.margin.right = "15%"
-    ) %>%
+    ) |>
     as_gtable(tbl, text_grob = dummy_text)
 
   expect_equal(
@@ -141,17 +148,21 @@ test_that("gtable widths are set appropriately", {
 
   # Test relative columns
   # + absolute width
-  test <- tbl %>%
-    cols_width(y ~ pct(30)) %>%
-    tab_options(table.width = px(500)) %>%
+  test <-
+    tbl |>
+    cols_width(y ~ pct(30)) |>
+    tab_options(table.width = px(500)) |>
     as_gtable(text_grob = dummy_text)
+
   test <- as.numeric(test$widths[2:3])
+
   expect_equal(test / sum(test), c(0.7, 0.3), tolerance = 1e-6)
 
   # + relative width
-  test <- tbl %>%
-    cols_width(y ~ pct(30)) %>%
-    tab_options(table.width = pct(50)) %>%
+  test <-
+    tbl |>
+    cols_width(y ~ pct(30)) |>
+    tab_options(table.width = pct(50)) |>
     as_gtable(text_grob = dummy_text)
 
   expect_equal(
@@ -160,15 +171,20 @@ test_that("gtable widths are set appropriately", {
   )
 
   # + unspecified width
-  test <- tbl %>%
-    cols_width(y ~ pct(30)) %>%
+  test <-
+    tbl |>
+    cols_width(y ~ pct(30)) |>
     as_gtable(text_grob = dummy_text)
+
   test <- as.numeric(test$widths[2:3])
+
   expect_equal(test / sum(test), c(0.7, 0.3), tolerance = 1e-6)
+
   expect_equal(min(test), 100)
 
-  test <- tbl %>%
-    cols_width(x ~ pct(20), y ~ px(200)) %>%
+  test <-
+    tbl |>
+    cols_width(x ~ pct(20), y ~ px(200)) |>
     as_gtable(tbl, text_grob = dummy_text)
 
   expect_equal(
@@ -178,46 +194,56 @@ test_that("gtable widths are set appropriately", {
 })
 
 test_that("gtable works for cols_merge_n_cert()", {
-  tbl_cols_merge <- exibble %>%
-    dplyr::select(num, currency) %>%
-    dplyr::slice(1:7) %>%
-    gt() %>%
+
+  tbl_cols_merge <-
+    exibble |>
+    dplyr::select(num, currency) |>
+    dplyr::slice(1:7) |>
+    gt() |>
     fmt_number(
       columns = num,
       decimals = 3,
       use_seps = FALSE
-    ) %>%
+    ) |>
     cols_merge_uncert(
       col_val = currency,
       col_uncert = num
-    ) %>%
+    ) |>
     cols_label(currency = "value + uncert.")
 
   expect_no_error(as_gtable(tbl_cols_merge))
 })
 
 test_that("gtable outputs works well for currencies", {
-  tbl <- exibble %>%
-    dplyr::select(currency) %>%
-    gt() %>%
+
+  tbl <-
+    exibble |>
+    dplyr::select(currency) |>
+    gt() |>
     fmt_currency(currency = "GBP")
-  expect_no_error(
-    as_gtable(tbl)
-  )
+
+  expect_no_error(as_gtable(tbl))
 })
 
 test_that("gtable output works when row groups are unique (#1802).", {
   # using groupname_col = "row" to ensure uniqueness
-  tbl <- exibble %>%
+  tbl <-
+    exibble |>
     gt(groupname_col = "row")
+
   expect_no_error(test <- as_gtable(tbl))
+
   expect_equal(
     test$layout$name[8],
     "column_label_8"
   )
-  tbl <- exibble %>%
+
+  tbl <-
+    exibble |>
     gt(groupname_col = "row", row_group_as_column = TRUE)
+
   expect_no_error(test <- as_gtable(tbl))
+
   expect_equal(
     test$layout$name[8],
     "column_label_8"
