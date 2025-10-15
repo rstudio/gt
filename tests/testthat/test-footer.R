@@ -1,16 +1,15 @@
 test_that("The footer section formatting and options work well across all output formats", {
 
   exibble_footer <-
-    exibble[1, ] %>%
-    gt() %>%
-    tab_source_note("Source note **bold** (#1, no `md()`)") %>%
-    tab_source_note(md("Source note **bold** (#2, uses `md()`)")) %>%
-    tab_footnote("footnote **bold** (#1, no `md()`)", cells_column_labels(num)) %>%
+    gt(exibble[1, ]) |>
+    tab_source_note("Source note **bold** (#1, no `md()`)") |>
+    tab_source_note(md("Source note **bold** (#2, uses `md()`)")) |>
+    tab_footnote("footnote **bold** (#1, no `md()`)", cells_column_labels(num)) |>
     tab_footnote(md("footnote **bold** (#2, uses `md()`)"), cells_column_labels(char))
 
   # 1: Footer as multiline blocks
   exibble_multiline <-
-    exibble_footer %>%
+    exibble_footer |>
     tab_options(
       footnotes.multiline = TRUE, # default
       footnotes.sep = "  ",
@@ -21,12 +20,14 @@ test_that("The footer section formatting and options work well across all output
 
   # Take snapshots of `exibble_multiline`
   expect_snapshot_html(exibble_multiline)
+
   expect_snapshot_latex(exibble_multiline)
+
   expect_snapshot_rtf(exibble_multiline)
 
   # 2: Footer as single-line paragraphs with `sep` setting
   exibble_oneline <-
-    exibble_footer %>%
+    exibble_footer |>
     tab_options(
       footnotes.multiline = FALSE,
       footnotes.sep = "  ",
@@ -37,12 +38,14 @@ test_that("The footer section formatting and options work well across all output
 
   # Take snapshots of `exibble_oneline`
   expect_snapshot_html(exibble_oneline)
+
   expect_snapshot_latex(exibble_oneline)
+
   expect_snapshot_rtf(exibble_oneline)
 
   # 3: Preservation of raw `sep` value in HTML output
   exibble_sep_html <-
-    exibble_footer %>%
+    exibble_footer |>
     tab_options(
       footnotes.multiline = FALSE,
       footnotes.sep = " <em>|</em> ",
@@ -55,7 +58,7 @@ test_that("The footer section formatting and options work well across all output
 
   # 4: Preservation of raw `sep` value in LaTeX output
   exibble_sep_latex <-
-    exibble_footer %>%
+    exibble_footer |>
     tab_options(
       footnotes.multiline = FALSE,
       footnotes.sep = " \\textit{|} ",
@@ -69,7 +72,7 @@ test_that("The footer section formatting and options work well across all output
 
   # 5: Preservation of raw `sep` value in RTF output
   exibble_sep_rtf <-
-    exibble_footer %>%
+    exibble_footer |>
     tab_options(
       footnotes.multiline = FALSE,
       footnotes.sep = " \\line ",
