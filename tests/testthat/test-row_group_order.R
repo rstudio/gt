@@ -25,27 +25,27 @@ test_that("row_group_order() works correctly", {
   # Create a `tbl_html` that arranges the groups by the
   # latter calendar date first
   html_tbl <-
-    tbl %>%
-    gt(rowname_col = "rows", groupname_col = "dates") %>%
+    tbl |>
+    gt(rowname_col = "rows", groupname_col = "dates") |>
     row_group_order(groups = c("2018-02-11", "2018-02-10"))
 
   # Expect that the internal vector `arrange_groups` has the
   # groups in the order specified
-  dt_row_groups_get(data = html_tbl) %>%
+  dt_row_groups_get(data = html_tbl) |>
     expect_equal(c("2018-02-11", "2018-02-10"))
 
   # Expect an error if input for `groups` is not a character vector
   expect_error(
-    tbl %>%
-      gt(rowname_col = "rows", groupname_col = "dates") %>%
+    tbl |>
+      gt(rowname_col = "rows", groupname_col = "dates") |>
       row_group_order(groups = c(TRUE, FALSE))
   )
 
   # Expect that any value in `groups` that doesn't correspond
   # to a group name will result in an error
   expect_error(
-    tbl %>%
-      gt(rowname_col = "rows", groupname_col = "dates") %>%
+    tbl |>
+      gt(rowname_col = "rows", groupname_col = "dates") |>
       row_group_order(groups = c("2018-02-13", "2018-02-10"))
   )
 })
@@ -54,13 +54,13 @@ test_that("Styling at various locations is kept when using `row_group_order()`",
 
   # Generate a summary table from `tbl`
   summary_tbl <-
-    tbl %>%
-    gt(rowname_col = "rows", groupname_col = "dates") %>%
+    tbl |>
+    gt(rowname_col = "rows", groupname_col = "dates") |>
     summary_rows(
       groups = everything(),
       columns = everything(),
       fns = list("sum")
-    ) %>%
+    ) |>
     grand_summary_rows(
       columns = everything(),
       fns = list("sum")
@@ -69,39 +69,40 @@ test_that("Styling at various locations is kept when using `row_group_order()`",
   # Apply text styling to all summary and grand summary cells
   # (plus their labels in the stub)
   summary_tbl_styled_1 <-
-    summary_tbl %>%
+    summary_tbl |>
     tab_style(
       style = cell_text(style = "italic", weight = "bold"),
       locations = list(
         cells_summary(), cells_stub_summary(),
         cells_grand_summary(), cells_stub_grand_summary()
       )
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Apply the same styling but additionally reverse the order of row groups
   expect_no_error(summary_tbl_styled_2 <-
-    summary_tbl %>%
+    summary_tbl |>
     tab_style(
       style = cell_text(style = "italic", weight = "bold"),
       locations = list(
         cells_summary(), cells_stub_summary(),
         cells_grand_summary(), cells_stub_grand_summary()
       )
-    ) %>%
-    row_group_order(groups = c("2018-02-11", "2018-02-10")) %>%
-    render_as_html() %>%
+    ) |>
+    row_group_order(groups = c("2018-02-11", "2018-02-10")) |>
+    render_as_html() |>
     xml2::read_html())
 
   # Expect that all summary and grand summary cells (and their stub locations)
   # have the same styles applied regardless of the use of `row_group_order()`
   check_suggests()
-  summary_tbl_styled_1 %>%
-    selection_value("style") %>%
+
+  summary_tbl_styled_1 |>
+    selection_value("style") |>
     expect_equal(rep("font-style: italic; font-weight: bold;", 15))
 
-  summary_tbl_styled_2 %>%
-    selection_value("style") %>%
+  summary_tbl_styled_2 |>
+    selection_value("style") |>
     expect_equal(rep("font-style: italic; font-weight: bold;", 15))
 })
