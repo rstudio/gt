@@ -18,12 +18,12 @@ test_that("fmt_flag() works correctly", {
   expect_equal(data_tbl$a, a)
 
   # Expect an error when attempting to format a column that does not exist
-  expect_error(tab %>% fmt_flag(columns = b))
+  expect_error(tab |> fmt_flag(columns = b))
 
   # Format the `a` column to have flag icons
   expect_equal(
-    (tab %>%
-       fmt_flag(columns = a) %>%
+    (tab |>
+       fmt_flag(columns = a) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space:nowrap;\"><svg xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\" role=\"img\" width=\"512\" height=\"512\" viewBox=\"0 0 512 512\" style=\"vertical-align:-0.125em;image-rendering:optimizeQuality;height:1em;width:1em;\"><title>Germany</title><mask id=\"a\"><circle cx=\"256\" cy=\"256\" r=\"256\" fill=\"#fff\"/></mask><g mask=\"url(#a)\"><path fill=\"#ffda44\" d=\"m0 345 256.7-25.5L512 345v167H0z\"/><path fill=\"#d80027\" d=\"m0 167 255-23 257 23v178H0z\"/><path fill=\"#333\" d=\"M0 0h512v167H0z\"/></g></svg></span>",
@@ -34,8 +34,8 @@ test_that("fmt_flag() works correctly", {
     )
   )
   expect_equal(
-    (tab %>%
-       fmt_flag(columns = a, height = "2em") %>%
+    (tab |>
+       fmt_flag(columns = a, height = "2em") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space:nowrap;\"><svg xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\" role=\"img\" width=\"512\" height=\"512\" viewBox=\"0 0 512 512\" style=\"vertical-align:-0.125em;image-rendering:optimizeQuality;height:2em;width:2em;\"><title>Germany</title><mask id=\"a\"><circle cx=\"256\" cy=\"256\" r=\"256\" fill=\"#fff\"/></mask><g mask=\"url(#a)\"><path fill=\"#ffda44\" d=\"m0 345 256.7-25.5L512 345v167H0z\"/><path fill=\"#d80027\" d=\"m0 167 255-23 257 23v178H0z\"/><path fill=\"#333\" d=\"M0 0h512v167H0z\"/></g></svg></span>",
@@ -46,8 +46,8 @@ test_that("fmt_flag() works correctly", {
     )
   )
   expect_equal(
-    (tab %>%
-       fmt_flag(columns = a, height = 40) %>%
+    (tab |>
+       fmt_flag(columns = a, height = 40) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space:nowrap;\"><svg xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\" role=\"img\" width=\"512\" height=\"512\" viewBox=\"0 0 512 512\" style=\"vertical-align:-0.125em;image-rendering:optimizeQuality;height:40px;width:40px;\"><title>Germany</title><mask id=\"a\"><circle cx=\"256\" cy=\"256\" r=\"256\" fill=\"#fff\"/></mask><g mask=\"url(#a)\"><path fill=\"#ffda44\" d=\"m0 345 256.7-25.5L512 345v167H0z\"/><path fill=\"#d80027\" d=\"m0 167 255-23 257 23v178H0z\"/><path fill=\"#333\" d=\"M0 0h512v167H0z\"/></g></svg></span>",
@@ -60,15 +60,15 @@ test_that("fmt_flag() works correctly", {
 
   # Expect that a column with NAs will work fine with `fmt_flag()`,
   # it'll just produce NA values
-  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) %>% gt()
+  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) |> gt()
 
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_flag()`
   expect_no_error(
-    na_col_tbl %>% fmt_flag(columns = a) %>% as_raw_html()
+    na_col_tbl |> fmt_flag(columns = a) |> as_raw_html()
   )
   expect_no_error(
-    na_col_tbl %>%
-      fmt_flag(columns = a, rows = 1:5) %>% as_raw_html()
+    na_col_tbl |>
+      fmt_flag(columns = a, rows = 1:5) |> as_raw_html()
   )
 })
