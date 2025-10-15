@@ -1,4 +1,4 @@
-test_that("sub_missing() works correctly", {
+test_that("sub_missing() works correctly for LaTeX output tables", {
 
   # Create an input data frame with two columns, both numeric
   data_tbl <-
@@ -16,36 +16,36 @@ test_that("sub_missing() works correctly", {
   #
 
   expect_equal(
-    (tbl_latex %>%
-       sub_missing(columns = "num_1") %>%
+    (tbl_latex |>
+       sub_missing(columns = "num_1") |>
        render_formats_test(context = "latex"))[["num_1"]],
     c("—", "74", "—", "93", "—", "76", "—")
   )
 
   expect_equal(
-    (tbl_latex %>%
-       sub_missing(columns = "num_1", missing_text = "--") %>%
+    (tbl_latex |>
+       sub_missing(columns = "num_1", missing_text = "--") |>
        render_formats_test(context = "latex"))[["num_1"]],
     c("–", "74", "–", "93", "–", "76", "–")
   )
 
   expect_equal(
-    (tbl_latex %>%
-       sub_missing(columns = "num_1", missing_text = "a") %>%
+    (tbl_latex |>
+       sub_missing(columns = "num_1", missing_text = "a") |>
        render_formats_test(context = "latex"))[["num_1"]],
     c("a", "74", "a", "93", "a", "76", "a")
   )
 
   expect_equal(
-    (tbl_latex %>%
-       sub_missing(columns = "num_2") %>%
+    (tbl_latex |>
+       sub_missing(columns = "num_2") |>
        render_formats_test(context = "latex"))[["num_2"]],
     c("34", "74", "23", "93", "35", "76", "57")
   )
 
   expect_equal(
-    (tbl_latex %>%
-       sub_missing(columns = "num_1", rows = num_2 < 50) %>%
+    (tbl_latex |>
+       sub_missing(columns = "num_1", rows = num_2 < 50) |>
        render_formats_test(context = "latex"))[["num_1"]],
     c("—", "74", "—", "93", "—", "76", "NA")
   )
@@ -54,12 +54,12 @@ test_that("sub_missing() works correctly", {
   # `sub_missing()` on all columns (the two functions
   # shouldn't wipe out formatting on cells)
   expect_equal(
-    (tbl_latex %>%
+    (tbl_latex |>
        fmt_number(
          columns = everything(),
          decimals = 3
-       ) %>%
-       sub_missing(columns = everything()) %>%
+       ) |>
+       sub_missing(columns = everything()) |>
        render_formats_test(context = "latex"))[["num_1"]],
     c("—", "74.000", "—", "93.000", "—", "76.000", "—")
   )
@@ -67,12 +67,12 @@ test_that("sub_missing() works correctly", {
   # Reverse the ordering: use `sub_missing()` first
   # then `fmt_number()`; expect the same output as before
   expect_equal(
-    (tbl_latex %>%
-       sub_missing(columns = everything()) %>%
+    (tbl_latex |>
+       sub_missing(columns = everything()) |>
        fmt_number(
          columns = everything(),
          decimals = 3
-       ) %>%
+       ) |>
        render_formats_test(context = "latex"))[["num_1"]],
     c("—", "74.000", "—", "93.000", "—", "76.000", "—")
   )
