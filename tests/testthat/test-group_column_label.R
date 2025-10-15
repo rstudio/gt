@@ -1,36 +1,38 @@
 exibble_test <- function(
-    row_group_column = FALSE,
-    use_row_groups = FALSE,
-    use_row_labels = FALSE,
-    add_group_summaries = FALSE,
-    add_grand_summary = FALSE,
-    add_styles = FALSE,
-    add_footnotes = FALSE
+  row_group_column = FALSE,
+  use_row_groups = FALSE,
+  use_row_labels = FALSE,
+  add_group_summaries = FALSE,
+  add_grand_summary = FALSE,
+  add_styles = FALSE,
+  add_footnotes = FALSE
 ) {
 
   if (add_group_summaries) use_row_groups <- TRUE
 
   tbl <-
-    exibble %>%
+    exibble |>
     gt(
       rowname_col = if (use_row_labels) "row" else NULL,
       groupname_col = if (use_row_groups) "group" else NULL
-    ) %>%
-    tab_options(row_group.as_column = row_group_column,
-                latex.use_longtable = TRUE) %>%
+    ) |>
+    tab_options(
+      row_group.as_column = row_group_column,
+      latex.use_longtable = TRUE
+    ) |>
     tab_header(
       title = md("Data listing from **exibble**"),
       subtitle = md("`exibble` is an R dataset")
-    ) %>%
-    tab_stubhead("S.L.") %>%
-    tab_spanner(label = "timing", columns = c(date, time, datetime)) %>%
-    tab_source_note("Source note #1") %>%
+    ) |>
+    tab_stubhead("S.L.") |>
+    tab_spanner(label = "timing", columns = c(date, time, datetime)) |>
+    tab_source_note("Source note #1") |>
     tab_source_note("Source note #2")
 
   if (add_group_summaries) {
 
     tbl <-
-      tbl %>%
+      tbl |>
       summary_rows(
         groups = everything(),
         columns = c(num, currency),
@@ -46,7 +48,7 @@ exibble_test <- function(
   if (add_grand_summary) {
 
     tbl <-
-      tbl %>%
+      tbl |>
       grand_summary_rows(
         columns = c(num, currency),
         fns = list(
@@ -61,20 +63,20 @@ exibble_test <- function(
   if (add_styles) {
 
     tbl <-
-      tbl %>%
-      tab_style(style = cell_fill("lightblue"), cells_title("title")) %>%
-      tab_style(style = cell_fill("aqua"), cells_title("subtitle")) %>%
-      tab_style(style = cell_fill("aquamarine"), cells_column_labels()) %>%
-      tab_style(style = cell_fill("gainsboro"), cells_stubhead()) %>%
-      tab_style(style = cell_fill("gray85"), cells_body(columns = num)) %>%
-      tab_style(style = cell_fill("gray80"), cells_body(columns = char)) %>%
-      tab_style(style = cell_fill("gray75"), cells_body(columns = fctr)) %>%
-      tab_style(style = cell_fill("gray70"), cells_body(columns = date)) %>%
-      tab_style(style = cell_fill("gray65"), cells_body(columns = time)) %>%
-      tab_style(style = cell_fill("gray60"), cells_body(columns = datetime)) %>%
-      tab_style(style = cell_fill("gray55"), cells_body(columns = currency)) %>%
-      tab_style(style = cell_fill("peachpuff"), cells_stub()) %>%
-      tab_style(style = cell_fill("wheat"), cells_source_notes()) %>%
+      tbl |>
+      tab_style(style = cell_fill("lightblue"), cells_title("title")) |>
+      tab_style(style = cell_fill("aqua"), cells_title("subtitle")) |>
+      tab_style(style = cell_fill("aquamarine"), cells_column_labels()) |>
+      tab_style(style = cell_fill("gainsboro"), cells_stubhead()) |>
+      tab_style(style = cell_fill("gray85"), cells_body(columns = num)) |>
+      tab_style(style = cell_fill("gray80"), cells_body(columns = char)) |>
+      tab_style(style = cell_fill("gray75"), cells_body(columns = fctr)) |>
+      tab_style(style = cell_fill("gray70"), cells_body(columns = date)) |>
+      tab_style(style = cell_fill("gray65"), cells_body(columns = time)) |>
+      tab_style(style = cell_fill("gray60"), cells_body(columns = datetime)) |>
+      tab_style(style = cell_fill("gray55"), cells_body(columns = currency)) |>
+      tab_style(style = cell_fill("peachpuff"), cells_stub()) |>
+      tab_style(style = cell_fill("wheat"), cells_source_notes()) |>
       tab_style(style = cell_fill("yellow"), cells_column_spanners(spanners = "timing"))
 
     if (!use_row_labels) {
@@ -89,14 +91,14 @@ exibble_test <- function(
 
     if (add_group_summaries) {
       tbl <-
-        tbl %>%
+        tbl |>
         tab_style(
           style = cell_fill("darkseagreen"),
           locations = list(
             cells_summary(columns = "num"),
             cells_summary(columns = "currency")
           )
-        ) %>%
+        ) |>
         tab_style(
           style = cell_fill("orange"),
           locations = cells_stub_summary()
@@ -105,14 +107,14 @@ exibble_test <- function(
 
     if (add_grand_summary) {
       tbl <-
-        tbl %>%
+        tbl |>
         tab_style(
           style = cell_fill(),
           locations = list(
             cells_grand_summary(columns = "num"),
             cells_grand_summary(columns = "currency")
           )
-        ) %>%
+        ) |>
         tab_style(
           style = cell_fill("red"),
           locations = cells_stub_grand_summary()
@@ -668,7 +670,7 @@ test_that("Group labels as a column work well in Latex with specified column wid
       add_grand_summary = TRUE,
       add_styles = FALSE,
       add_footnotes = FALSE
-    ) %>%
+    ) |>
     cols_width(everything() ~ pct(10))
 
   # Take snapshots of `tbl_16`
@@ -683,11 +685,9 @@ test_that("Group labels as a column work well in Latex with specified column wid
       add_grand_summary = TRUE,
       add_styles = FALSE,
       add_footnotes = FALSE
-    ) %>%
+    ) |>
     cols_width(everything() ~ pct(10))
 
   # Take snapshots of `tbl_16`
   expect_snapshot_latex(tbl_18)
-
 })
-
