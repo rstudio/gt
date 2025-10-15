@@ -1,15 +1,15 @@
 test_that("Splitting a table into multiple works", {
 
   tbl_group_01 <-
-    gtcars %>%
-    dplyr::slice_head(n = 10) %>%
-    dplyr::select(mfr, model, year, msrp) %>%
-    gt() %>%
-    fmt_currency(columns = msrp) %>%
+    gtcars |>
+    dplyr::slice_head(n = 10) |>
+    dplyr::select(mfr, model, year, msrp) |>
+    gt() |>
+    fmt_currency(columns = msrp) |>
     cols_width(
       year ~ px(80),
       everything() ~ px(150)
-    ) %>%
+    ) |>
     gt_split(row_every_n = 5)
 
   expect_s3_class(tbl_group_01, "gt_group")
@@ -32,15 +32,15 @@ test_that("Splitting a table into multiple works", {
   capture_output(expect_s3_class(testthat::testthat_print(tbl_group_01), "list"))
 
   tbl_group_02 <-
-    gtcars %>%
-    dplyr::slice_head(n = 10) %>%
-    dplyr::select(mfr, model, year, msrp) %>%
-    gt() %>%
-    fmt_currency(columns = msrp) %>%
+    gtcars |>
+    dplyr::slice_head(n = 10) |>
+    dplyr::select(mfr, model, year, msrp) |>
+    gt() |>
+    fmt_currency(columns = msrp) |>
     cols_width(
       year ~ px(80),
       everything() ~ px(150)
-    ) %>%
+    ) |>
     gt_split(col_slice_at = "model")
 
   expect_s3_class(tbl_group_02, "gt_group")
@@ -64,15 +64,15 @@ test_that("Splitting a table into multiple works", {
   capture_output(expect_s3_class(testthat::testthat_print(tbl_group_02), "list"))
 
   tbl_group_03 <-
-    gtcars %>%
-    dplyr::slice_head(n = 10) %>%
-    dplyr::select(mfr, model, year, msrp) %>%
-    gt() %>%
-    fmt_currency(columns = msrp) %>%
+    gtcars |>
+    dplyr::slice_head(n = 10) |>
+    dplyr::select(mfr, model, year, msrp) |>
+    gt() |>
+    fmt_currency(columns = msrp) |>
     cols_width(
       year ~ px(80),
       everything() ~ px(150)
-    ) %>%
+    ) |>
     gt_split(row_every_n = 5, col_slice_at = "model")
 
   expect_s3_class(tbl_group_03, "gt_group")
@@ -103,15 +103,15 @@ test_that("Splitting a table into multiple works", {
   capture_output(expect_s3_class(testthat::testthat_print(tbl_group_03), "list"))
 
   tbl_group_04 <-
-    gtcars %>%
-    dplyr::slice_head(n = 10) %>%
-    dplyr::select(mfr, model, year, msrp) %>%
-    gt() %>%
-    fmt_currency(columns = msrp) %>%
+    gtcars |>
+    dplyr::slice_head(n = 10) |>
+    dplyr::select(mfr, model, year, msrp) |>
+    gt() |>
+    fmt_currency(columns = msrp) |>
     cols_width(
       year ~ px(80),
       everything() ~ px(150)
-    ) %>%
+    ) |>
     gt_split(row_slice_i = c(2, 8))
 
   expect_s3_class(tbl_group_04, "gt_group")
