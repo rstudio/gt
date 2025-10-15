@@ -1,4 +1,4 @@
-test_that("fmt_scientific() works correctly", {
+test_that("fmt_scientific() works correctly for LaTeX output tables", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -21,8 +21,8 @@ test_that("fmt_scientific() works correctly", {
   # other defaults; extract `output_df` in the HTML context
   # and compare to expected values
   expect_equal(
-    (tbl_latex %>%
-       fmt_scientific(columns = "num_1", decimals = 2) %>%
+    (tbl_latex |>
+       fmt_scientific(columns = "num_1", decimals = 2) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1.84 $\\times$ 10\\textsuperscript{3}", "2.76 $\\times$ 10\\textsuperscript{3}",
@@ -34,8 +34,8 @@ test_that("fmt_scientific() works correctly", {
   # other defaults; extract `output_df` in the HTML context
   # and compare to expected values
   expect_equal(
-    (tbl_latex %>%
-       fmt_scientific(columns = "num_1", decimals = 5) %>%
+    (tbl_latex |>
+       fmt_scientific(columns = "num_1", decimals = 5) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1.83623 $\\times$ 10\\textsuperscript{3}", "2.76339 $\\times$ 10\\textsuperscript{3}",
@@ -48,11 +48,11 @@ test_that("fmt_scientific() works correctly", {
   # all other defaults; extract `output_df` in the HTML context and
   # compare to expected values
   expect_equal(
-    (tbl_latex %>%
+    (tbl_latex |>
        fmt_scientific(
          columns = "num_1", decimals = 2,
          sep_mark = ".", dec_mark = ","
-       ) %>%
+       ) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1,84 $\\times$ 10\\textsuperscript{3}", "2,76 $\\times$ 10\\textsuperscript{3}",
@@ -64,8 +64,8 @@ test_that("fmt_scientific() works correctly", {
   # 1/1000, use all other defaults; extract `output_df` in the HTML
   # context and compare to expected values
   expect_equal(
-    (tbl_latex %>%
-       fmt_scientific(columns = "num_1", decimals = 4, scale_by = 1 / 1000) %>%
+    (tbl_latex |>
+       fmt_scientific(columns = "num_1", decimals = 4, scale_by = 1 / 1000) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1.8362", "2.7634",
@@ -77,8 +77,8 @@ test_that("fmt_scientific() works correctly", {
   # all values by 2 different literals, use all other defaults; extract
   # `output_df` in the HTML context and compare to expected values
   expect_equal(
-    (tbl_latex %>%
-       fmt_scientific(columns = "num_1", decimals = 2, pattern = "a {x} b") %>%
+    (tbl_latex |>
+       fmt_scientific(columns = "num_1", decimals = 2, pattern = "a {x} b") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "a 1.84 $\\times$ 10\\textsuperscript{3} b", "a 2.76 $\\times$ 10\\textsuperscript{3} b",
@@ -88,9 +88,9 @@ test_that("fmt_scientific() works correctly", {
 
   # Format the `num_1` column to 2 decimal places, force the sign
   expect_equal(
-    (tbl_latex %>%
+    (tbl_latex |>
        fmt_scientific(
-         columns = num_1, decimals = 3, force_sign_m = TRUE) %>%
+         columns = num_1, decimals = 3, force_sign_m = TRUE) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "+1.836 $\\times$ 10\\textsuperscript{3}", "+2.763 $\\times$ 10\\textsuperscript{3}",
@@ -102,9 +102,9 @@ test_that("fmt_scientific() works correctly", {
   # Format the `num_1` column to 2 decimal places, force the sign and
   # define a pattern for decorating values
   expect_equal(
-    (tbl_latex %>%
+    (tbl_latex |>
        fmt_scientific(
-         columns = num_1, pattern = "*{x}*", force_sign_m = TRUE) %>%
+         columns = num_1, pattern = "*{x}*", force_sign_m = TRUE) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "*+1.84 $\\times$ 10\\textsuperscript{3}*", "*+2.76 $\\times$ 10\\textsuperscript{3}*",
@@ -117,8 +117,8 @@ test_that("fmt_scientific() works correctly", {
   # locale and use all other defaults; extract `output_df` in the HTML
   # context and compare to expected values
   expect_equal(
-    (tbl_latex %>%
-       fmt_scientific(columns = "num_1", decimals = 2, locale = "en_US") %>%
+    (tbl_latex |>
+       fmt_scientific(columns = "num_1", decimals = 2, locale = "en_US") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1.84 $\\times$ 10\\textsuperscript{3}", "2.76 $\\times$ 10\\textsuperscript{3}",
@@ -130,8 +130,8 @@ test_that("fmt_scientific() works correctly", {
   # locale and use all other defaults; extract `output_df` in the HTML
   # context and compare to expected values
   expect_equal(
-    (tbl_latex %>%
-       fmt_scientific(columns = "num_1", decimals = 2, locale = "da_DK") %>%
+    (tbl_latex |>
+       fmt_scientific(columns = "num_1", decimals = 2, locale = "da_DK") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1,84 $\\times$ 10\\textsuperscript{3}", "2,76 $\\times$ 10\\textsuperscript{3}",
@@ -143,8 +143,8 @@ test_that("fmt_scientific() works correctly", {
   # locale and use all other defaults; extract `output_df` in the HTML
   # context and compare to expected values
   expect_equal(
-    (tbl_latex %>%
-       fmt_scientific(columns = "num_1", decimals = 2, locale = "de_AT") %>%
+    (tbl_latex |>
+       fmt_scientific(columns = "num_1", decimals = 2, locale = "de_AT") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1,84 $\\times$ 10\\textsuperscript{3}", "2,76 $\\times$ 10\\textsuperscript{3}",
@@ -156,8 +156,8 @@ test_that("fmt_scientific() works correctly", {
   # locale and use all other defaults; extract `output_df` in the HTML
   # context and compare to expected values
   expect_equal(
-    (tbl_latex %>%
-       fmt_scientific(columns = "num_1", decimals = 2, locale = "et_EE") %>%
+    (tbl_latex |>
+       fmt_scientific(columns = "num_1", decimals = 2, locale = "et_EE") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1,84 $\\times$ 10\\textsuperscript{3}", "2,76 $\\times$ 10\\textsuperscript{3}",
@@ -169,8 +169,8 @@ test_that("fmt_scientific() works correctly", {
   # locale and use all other defaults; extract `output_df` in the HTML
   # context and compare to expected values
   expect_equal(
-    (tbl_latex %>%
-       fmt_scientific(columns = "num_1", decimals = 2, locale = "gl_ES") %>%
+    (tbl_latex |>
+       fmt_scientific(columns = "num_1", decimals = 2, locale = "gl_ES") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1,84 $\\times$ 10\\textsuperscript{3}", "2,76 $\\times$ 10\\textsuperscript{3}",
