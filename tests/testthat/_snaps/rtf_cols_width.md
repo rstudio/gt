@@ -1,4 +1,4 @@
-# cols_width() works in making RTF tables
+# cols_width() works for RTF output tables
 
     Code
       as_rtf(gt_tbl)
