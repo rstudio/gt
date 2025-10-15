@@ -71,7 +71,7 @@ test_that("grp_pull() can be used to extract a table from a group", {
 
   # Set some group options on the entire grouping of tables
   gt_tbls_2 <-
-    gt_tbls_2 %>%
+    gt_tbls_2 |>
     grp_options(table.background.color = "lightgreen")
 
   # Pull the first table (based on `exibble`) from the group object and
@@ -106,13 +106,13 @@ test_that("grp_add() can be used to add a table to a group", {
 
   # Expect that adding nothing via `grp_add()` doesn't error but also
   # it doesn't change the `gt_tbls_1` object
-  expect_no_error(gt_tbls_1 %>% grp_add())
-  expect_equal(gt_tbls_1, gt_tbls_1 %>% grp_add())
+  expect_no_error(gt_tbls_1 |> grp_add())
+  expect_equal(gt_tbls_1, gt_tbls_1 |> grp_add())
 
   # Add a table to the empty table group; expect that the table group
   # contains a single gt table
   gt_tbls_1 <-
-    gt_tbls_1 %>%
+    gt_tbls_1 |>
     grp_add(gt_tbl_1)
 
   expect_equal(nrow(gt_tbls_1[["gt_tbls"]]), 1)
@@ -127,7 +127,7 @@ test_that("grp_add() can be used to add a table to a group", {
   # Add a second table to the table group; expect that the table group now
   # contains two gt tables
   gt_tbls_2 <-
-    gt_tbls_1 %>%
+    gt_tbls_1 |>
     grp_add(gt_tbl_2)
 
   expect_equal(nrow(gt_tbls_2[["gt_tbls"]]), 2)
@@ -147,7 +147,7 @@ test_that("grp_add() can be used to add a table to a group", {
   # insert it at the beginning; expect that the table group now contains
   # three gt tables
   gt_tbls_3 <-
-    gt_tbls_2 %>%
+    gt_tbls_2 |>
     grp_add(gt_tbl_3, .before = 1)
 
   expect_equal(nrow(gt_tbls_3[["gt_tbls"]]), 3)
@@ -173,7 +173,7 @@ test_that("grp_add() can be used to add a table to a group", {
   # insert it at second position; expect that the table group now contains
   # four gt tables
   gt_tbls_4 <-
-    gt_tbls_3 %>%
+    gt_tbls_3 |>
     grp_add(gt_tbl_4, .after = 1)
 
   expect_equal(nrow(gt_tbls_4[["gt_tbls"]]), 4)
@@ -202,28 +202,28 @@ test_that("grp_add() can be used to add a table to a group", {
 
   # Expect the `grp_add()` to stop if both the `.before`
   # and `.after` arguments contain an index
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2, .before = 3))
+  expect_error(gt_tbls_3 |> grp_add(gt_tbl_4, .after = 2, .before = 3))
 
   # Expect the `grp_add()` to stop if either the `.before`
   # or `.after` values are not valid indices
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 0))
-  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 1))
-  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2))
-  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 3))
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 4))
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = -1))
+  expect_error(gt_tbls_3 |> grp_add(gt_tbl_4, .after = 0))
+  expect_no_error(gt_tbls_3 |> grp_add(gt_tbl_4, .after = 1))
+  expect_no_error(gt_tbls_3 |> grp_add(gt_tbl_4, .after = 2))
+  expect_no_error(gt_tbls_3 |> grp_add(gt_tbl_4, .after = 3))
+  expect_error(gt_tbls_3 |> grp_add(gt_tbl_4, .after = 4))
+  expect_error(gt_tbls_3 |> grp_add(gt_tbl_4, .after = -1))
 
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 0))
-  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 1))
-  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 2))
-  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 3))
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 4))
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = -1))
+  expect_error(gt_tbls_3 |> grp_add(gt_tbl_4, .before = 0))
+  expect_no_error(gt_tbls_3 |> grp_add(gt_tbl_4, .before = 1))
+  expect_no_error(gt_tbls_3 |> grp_add(gt_tbl_4, .before = 2))
+  expect_no_error(gt_tbls_3 |> grp_add(gt_tbl_4, .before = 3))
+  expect_error(gt_tbls_3 |> grp_add(gt_tbl_4, .before = 4))
+  expect_error(gt_tbls_3 |> grp_add(gt_tbl_4, .before = -1))
 
   # Expect the `grp_add()` to stop if either the `.before`
   # or `.after` values are not integer-like
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2.01))
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 2.99))
+  expect_error(gt_tbls_3 |> grp_add(gt_tbl_4, .after = 2.01))
+  expect_error(gt_tbls_3 |> grp_add(gt_tbl_4, .before = 2.99))
 })
 
 test_that("grp_replace() can be used to add a table to a group", {
@@ -249,7 +249,7 @@ test_that("grp_replace() can be used to add a table to a group", {
 
   # Replace the first table with `gt_tbl_4`
   gt_tbls_2 <-
-    gt_tbls_1 %>%
+    gt_tbls_1 |>
     grp_replace(gt_tbl_4, .which = 1)
 
   gt_tbl_1_pulled <- grp_pull(gt_tbls_2, which = 1)
@@ -263,7 +263,7 @@ test_that("grp_replace() can be used to add a table to a group", {
 
   # Replace the second table with `gt_tbl_4`
   gt_tbls_3 <-
-    gt_tbls_2 %>%
+    gt_tbls_2 |>
     grp_replace(gt_tbl_4, .which = 2)
 
   gt_tbl_1_pulled <- grp_pull(gt_tbls_3, which = 1)
@@ -277,7 +277,7 @@ test_that("grp_replace() can be used to add a table to a group", {
 
   # Replace the third table with `gt_tbl_4`
   gt_tbls_4 <-
-    gt_tbls_3 %>%
+    gt_tbls_3 |>
     grp_replace(gt_tbl_4, .which = 3)
 
   gt_tbl_1_pulled <- grp_pull(gt_tbls_4, which = 1)
@@ -291,7 +291,7 @@ test_that("grp_replace() can be used to add a table to a group", {
 
   # Replace the all tables with `gt_tbl_1`
   gt_tbls_5 <-
-    gt_tbls_4 %>%
+    gt_tbls_4 |>
     grp_replace(gt_tbl_1, gt_tbl_1, gt_tbl_1, .which = 1:3)
 
   gt_tbl_1_pulled <- grp_pull(gt_tbls_5, which = 1)
@@ -304,17 +304,17 @@ test_that("grp_replace() can be used to add a table to a group", {
   expect_equal(gt_tbl_1, gt_tbl_3_pulled)
 
   # Expect function to stop if no data is supplied
-  expect_error(gt_tbls_5 %>% grp_replace())
+  expect_error(gt_tbls_5 |> grp_replace())
 
   # Expect function to stop if an invalid index is supplied
-  expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_1, .which = 4))
+  expect_error(gt_tbls_5 |> grp_replace(gt_tbl_1, .which = 4))
 
   # Expect function to stop if number of indices doesn't match the
   # number of tables to replace
-  expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_2, .which = 1:2))
-  expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_3, .which = 2:3))
-  expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_1, gt_tbl_2, .which = 1))
-  expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_1, gt_tbl_1, .which = 1:3))
+  expect_error(gt_tbls_5 |> grp_replace(gt_tbl_2, .which = 1:2))
+  expect_error(gt_tbls_5 |> grp_replace(gt_tbl_3, .which = 2:3))
+  expect_error(gt_tbls_5 |> grp_replace(gt_tbl_1, gt_tbl_2, .which = 1))
+  expect_error(gt_tbls_5 |> grp_replace(gt_tbl_1, gt_tbl_1, .which = 1:3))
 })
 
 test_that("grp_rm() can be used to remove a table from a group", {
@@ -340,7 +340,7 @@ test_that("grp_rm() can be used to remove a table from a group", {
   # Remove the second table from the group with `grp_rm()`; expect that the
   # table group now contains two gt tables
   gt_tbls_2 <-
-    gt_tbls_1 %>%
+    gt_tbls_1 |>
     grp_rm(which = 2)
 
   expect_equal(nrow(gt_tbls_2[["gt_tbls"]]), 2)
@@ -359,7 +359,7 @@ test_that("grp_rm() can be used to remove a table from a group", {
   # Remove the first table from the group with `grp_rm()`; expect that the
   # table group now contains a single gt table
   gt_tbls_3 <-
-    gt_tbls_2 %>%
+    gt_tbls_2 |>
     grp_rm(which = 1)
 
   expect_equal(nrow(gt_tbls_3[["gt_tbls"]]), 1)
@@ -385,7 +385,7 @@ test_that("grp_options() can be used to set options for a group", {
 
   # Set several group options that apply to the tables
   gt_tbls_2 <-
-    gt_tbls_1 %>%
+    gt_tbls_1 |>
     grp_options(
       table.width = px(1100),
       table.background.color = "gray95", table.font.color = "gray10"
@@ -401,8 +401,8 @@ test_that("grp_options() can be used to set options for a group", {
   )
 
   # Pull out the individual tables
-  gt_tbl_1_alt <- gt_tbls_2 %>% grp_pull(which = 1)
-  gt_tbl_2_alt <- gt_tbls_2 %>% grp_pull(which = 2)
+  gt_tbl_1_alt <- gt_tbls_2 |> grp_pull(which = 1)
+  gt_tbl_2_alt <- gt_tbls_2 |> grp_pull(which = 2)
 
   # Expect the changed text and background colors for the input gt tables
   # that were pulled from the group that had group options applied (and
