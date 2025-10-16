@@ -47,6 +47,7 @@ test_that("fmt_index() works correctly", {
 
   # Expect the extracted values to match those of the original dataset
   expect_equal(data_tbl$char, char)
+
   expect_equal(data_tbl$num, num)
 
   # Expect an error when attempting to format a column
@@ -55,8 +56,8 @@ test_that("fmt_index() works correctly", {
 
   # Format the `num` column to uppercase letters
   expect_equal(
-    (tab %>%
-       fmt_index(columns = num) %>%
+    (tab |>
+       fmt_index(columns = num) |>
        render_formats_test(context = "html"))[["num"]],
     c(
       "XX", "B", "A", "A", "", "", "", "", "", "", "", "A", "A",
@@ -70,8 +71,8 @@ test_that("fmt_index() works correctly", {
 
   # Format the `num` column to lowercase letters
   expect_equal(
-    (tab %>%
-       fmt_index(columns = num, case = "lower") %>%
+    (tab |>
+       fmt_index(columns = num, case = "lower") |>
        render_formats_test(context = "html"))[["num"]],
     c(
       "xx", "b", "a", "a", "", "", "", "", "", "", "", "a", "a",
@@ -86,8 +87,8 @@ test_that("fmt_index() works correctly", {
   # Format the `num` column to uppercase letters; use the alternative
   # indexing algorithm
   expect_equal(
-    (tab %>%
-       fmt_index(columns = num, index_algo = "excel") %>%
+    (tab |>
+       fmt_index(columns = num, index_algo = "excel") |>
        render_formats_test(context = "html"))[["num"]],
     c(
       "AX", "B", "A", "A", "", "", "", "", "", "", "", "A", "A",
@@ -100,8 +101,8 @@ test_that("fmt_index() works correctly", {
   # Format the `num` column to lowercase letters; use the alternative
   # indexing algorithm
   expect_equal(
-    (tab %>%
-       fmt_index(columns = num, case = "lower", index_algo = "excel") %>%
+    (tab |>
+       fmt_index(columns = num, case = "lower", index_algo = "excel") |>
        render_formats_test(context = "html"))[["num"]],
     c(
       "ax", "b", "a", "a", "", "", "", "", "", "", "", "a", "a",
@@ -113,8 +114,8 @@ test_that("fmt_index() works correctly", {
 
   # Expect that a pattern will work correctly
   expect_equal(
-    (tab %>%
-       fmt_index(columns = num, case = "lower", pattern = "..{x}..") %>%
+    (tab |>
+       fmt_index(columns = num, case = "lower", pattern = "..{x}..") |>
        render_formats_test(context = "html"))[["num"]],
     c(
       "..xx..", "..b..", "..a..", "..a..", "....", "....", "....",
@@ -131,27 +132,29 @@ test_that("fmt_index() works correctly", {
 
   # Expect that a column with NAs will work fine with `fmt_index()`,
   # it'll just produce NA values
-  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) %>% gt()
+  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) |> gt()
 
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_index()`
   expect_no_error(
-    na_col_tbl %>% fmt_index(columns = a) %>% as_raw_html()
+    na_col_tbl |> fmt_index(columns = a) |> as_raw_html()
   )
+
   expect_no_error(
-    na_col_tbl %>%
-      fmt_index(columns = a, rows = 1:5) %>% as_raw_html()
+    na_col_tbl |>
+      fmt_index(columns = a, rows = 1:5) |> as_raw_html()
   )
+
   expect_no_error(
-    na_col_tbl %>%
-      fmt_index(columns = a, pattern = "a{x}b") %>% as_raw_html()
+    na_col_tbl |>
+      fmt_index(columns = a, pattern = "a{x}b") |> as_raw_html()
   )
 
   # Expect that two columns being formatted (one entirely NA) will work
   expect_equal(
-    (na_col_tbl %>%
-       fmt_index(columns = a) %>%
-       fmt_index(columns = b) %>% render_formats_test("html"))[["b"]],
+    (na_col_tbl |>
+       fmt_index(columns = a) |>
+       fmt_index(columns = b) |> render_formats_test("html"))[["b"]],
     c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J")
   )
 })

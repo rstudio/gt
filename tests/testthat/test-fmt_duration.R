@@ -13,8 +13,8 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are days
   expect_equal(
-    (tab_1 %>%
-       fmt_duration(columns = "num_1", input_units = "days") %>%
+    (tab_1 |>
+       fmt_duration(columns = "num_1", input_units = "days") |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1d 4m 19s", "5,189w 7m 12s", "5d", paste0("\U02212", "4w 6d 12h"),
@@ -24,10 +24,10 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "wide" duration style
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "wide"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1 day 4 minutes 19 seconds", "5,189 weeks 7 minutes 12 seconds",
@@ -39,10 +39,10 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "colon-sep" duration style
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "colon-sep"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1/00:04:19", "36,323/00:07:12", "5/00:00:00",
@@ -53,10 +53,10 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "iso" duration style
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "iso"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT", paste0("\U02212", "P34DT12H"),
@@ -66,11 +66,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "narrow" duration style and don't trim any time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", trim_zero_units = FALSE
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "0w 1d 0h 4m 19s", "5,189w 0d 0h 7m 12s", "0w 5d 0h 0m 0s",
@@ -81,11 +81,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "wide" duration style and don't trim any time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", trim_zero_units = FALSE
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "0 weeks 1 day 0 hours 4 minutes 19 seconds",
@@ -101,11 +101,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "colon-sep" duration style and don't trim any time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", trim_zero_units = FALSE
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1/00:04:19", "36,323/00:07:12", "5/00:00:00",
@@ -117,11 +117,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "iso" duration style and don't trim any time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", trim_zero_units = FALSE
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT",
@@ -132,11 +132,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "narrow" duration style and trim leading time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", trim_zero_units = "leading"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1d 0h 4m 19s", "5,189w 0d 0h 7m 12s", "5d 0h 0m 0s",
@@ -147,11 +147,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "wide" duration style and trim leading time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", trim_zero_units = "leading"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1 day 0 hours 4 minutes 19 seconds",
@@ -167,11 +167,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "colon-sep" duration style and trim leading time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", trim_zero_units = "leading"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1/00:04:19", "36,323/00:07:12", "5/00:00:00",
@@ -183,11 +183,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "iso" duration style and trim leading time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", trim_zero_units = "leading"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT",
@@ -198,11 +198,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "narrow" duration style and trim trailing time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", trim_zero_units = "trailing"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "0w 1d 0h 4m 19s", "5,189w 0d 0h 7m 12s", "0w 5d",
@@ -213,11 +213,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "wide" duration style and trim trailing time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", trim_zero_units = "trailing"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "0 weeks 1 day 0 hours 4 minutes 19 seconds",
@@ -231,11 +231,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "colon-sep" duration style and trim trailing time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", trim_zero_units = "trailing"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1/00:04:19", "36,323/00:07:12", "5/00:00:00",
@@ -247,11 +247,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "iso" duration style and trim trailing time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", trim_zero_units = "trailing"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT",
@@ -262,11 +262,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "narrow" duration style and trim internal time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", trim_zero_units = "internal"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "0w 1d 4m 19s", "5,189w 7m 12s", "0w 5d 0h 0m 0s",
@@ -277,11 +277,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "wide" duration style and trim internal time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", trim_zero_units = "internal"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "0 weeks 1 day 4 minutes 19 seconds", "5,189 weeks 7 minutes 12 seconds",
@@ -296,11 +296,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "colon-sep" duration style and trim internal time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", trim_zero_units = "internal"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1/00:04:19", "36,323/00:07:12", "5/00:00:00",
@@ -312,11 +312,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "iso" duration style and trim internal time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", trim_zero_units = "internal"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT", paste0("\U02212", "P34DT12H"),
@@ -326,11 +326,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "narrow" duration style and trim leading and trailing time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", trim_zero_units = c("leading", "trailing")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1d 0h 4m 19s", "5,189w 0d 0h 7m 12s", "5d",
@@ -341,11 +341,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "wide" duration style and trim leading and trailing time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", trim_zero_units = c("leading", "trailing")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1 day 0 hours 4 minutes 19 seconds",
@@ -359,11 +359,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "colon-sep" duration style and trim leading and trailing time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", trim_zero_units = c("leading", "trailing")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1/00:04:19", "36,323/00:07:12", "5/00:00:00",
@@ -375,11 +375,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "iso" duration style and trim leading and trailing time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", trim_zero_units = c("leading", "trailing")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT", paste0("\U02212", "P34DT12H"),
@@ -389,11 +389,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "narrow" duration style and trim leading and internal time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", trim_zero_units = c("leading", "internal")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1d 4m 19s", "5,189w 7m 12s", "5d 0h 0m 0s",
@@ -404,11 +404,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "wide" duration style and trim leading and internal time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", trim_zero_units = c("leading", "internal")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1 day 4 minutes 19 seconds", "5,189 weeks 7 minutes 12 seconds",
@@ -422,11 +422,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "colon-sep" duration style and trim leading and internal time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", trim_zero_units = c("leading", "internal")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1/00:04:19", "36,323/00:07:12", "5/00:00:00",
@@ -438,11 +438,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "iso" duration style and trim leading and internal time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", trim_zero_units = c("leading", "internal")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT", paste0("\U02212", "P34DT12H"),
@@ -452,11 +452,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "narrow" duration style and trim trailing and internal time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", trim_zero_units = c("trailing", "internal")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "0w 1d 4m 19s", "5,189w 7m 12s", "0w 5d", paste0("\U02212", "4w 6d 12h"),
@@ -466,11 +466,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "wide" duration style and trim trailing and internal time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", trim_zero_units = c("trailing", "internal")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "0 weeks 1 day 4 minutes 19 seconds", "5,189 weeks 7 minutes 12 seconds",
@@ -482,11 +482,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "colon-sep" duration style and trim trailing and internal time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", trim_zero_units = c("trailing", "internal")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1/00:04:19", "36,323/00:07:12", "5/00:00:00",
@@ -498,11 +498,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "iso" duration style and trim trailing and internal time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", trim_zero_units = c("trailing", "internal")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT", paste0("\U02212", "P34DT12H"),
@@ -512,22 +512,22 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "narrow" duration style and keep a max of 2 time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", max_output_units = 2
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c("1d 4m", "5,189w 7m", "5d", paste0("\U02212", "4w 6d"), "4w 3d", "4w 12h", "NA")
   )
 
   # Use the "wide" duration style and keep a max of 2 time units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", max_output_units = 2
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1 day 4 minutes", "5,189 weeks 7 minutes", "5 days",
@@ -539,11 +539,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "colon-sep" duration style and keep a max of 2 time units
   # (`max_output_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", max_output_units = 2
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1/00:04:19", "36,323/00:07:12", "5/00:00:00",
@@ -555,11 +555,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "iso" duration style and keep a max of 2 time units
   # (`max_output_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", max_output_units = 2
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT", paste0("\U02212", "P34DT12H"),
@@ -569,21 +569,21 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Use the "narrow" duration style and keep a max of 1 time unit
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", max_output_units = 1
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c("1d", "5,189w", "5d", paste0("\U02212", "4w"), "4w", "4w", "NA")
   )
 
   # Use the "wide" duration style and keep a max of 1 time unit
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "wide", max_output_units = 1) %>%
+         duration_style = "wide", max_output_units = 1) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1 day", "5,189 weeks", "5 days", paste0("\U02212", "4 weeks"),
@@ -594,11 +594,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "colon-sep" duration style and keep a max of 1 time unit
   # (`max_output_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", max_output_units = 1
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1/00:04:19", "36,323/00:07:12", "5/00:00:00",
@@ -609,11 +609,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "iso" duration style and keep a max of 1 time unit
   # (`max_output_units` has no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", max_output_units = 1
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT", paste0("\U02212", "P34DT12H"),
@@ -624,12 +624,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "narrow" duration style and a set of custom output time units
   # (hours and minutes)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins"),
          duration_style = "narrow"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "24h 4m", "871,752h 7m", "120h", paste0("\U02212", "828h"),
@@ -640,12 +640,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "wide" duration style and a set of custom output time units
   # (hours and minutes)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins"),
          duration_style = "wide"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "24 hours 4 minutes", "871,752 hours 7 minutes", "120 hours",
@@ -656,12 +656,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "colon-sep" duration style and a set of custom output time units
   # (hours and minutes, has an effect on this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins"),
          duration_style = "colon-sep"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "00:04", "00:07", "00:00", paste0("\U02212", "12:00"),
@@ -672,12 +672,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "iso" duration style and a set of custom output time units
   # (hours and minutes, no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins"),
          duration_style = "iso"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT", paste0("\U02212", "P34DT12H"),
@@ -688,12 +688,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "narrow" duration style and a set of custom output time units
   # (minutes and seconds)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("mins", "secs"),
          duration_style = "narrow"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1,444m 19s", "52,305,127m 12s", "7,200m", paste0("\U02212", "49,680m"),
@@ -704,12 +704,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "wide" duration style and a set of custom output time units
   # (minutes and seconds)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("mins", "secs"),
          duration_style = "wide"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1,444 minutes 19 seconds", "52,305,127 minutes 12 seconds",
@@ -721,12 +721,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "colon-sep" duration style and a set of custom output time units
   # (minutes and seconds, has an effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("mins", "secs"),
          duration_style = "colon-sep"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c("04:19", "07:12", "00:00", paste0("\U02212", "00:00"), "24:00", "00:00", "NA")
   )
@@ -734,12 +734,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "iso" duration style and a set of custom output time units
   # (minutes and seconds, no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("mins", "secs"),
          duration_style = "iso"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT", paste0("\U02212", "P34DT12H"),
@@ -750,12 +750,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "narrow" duration style and a set of custom output time units
   # (minutes and seconds)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins", "secs"),
          duration_style = "narrow"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "24h 4m 19s", "871,752h 7m 12s", "120h",
@@ -766,12 +766,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "wide" duration style and a set of custom output time units
   # (minutes and seconds)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins", "secs"),
          duration_style = "wide"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "24 hours 4 minutes 19 seconds", "871,752 hours 7 minutes 12 seconds",
@@ -783,12 +783,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "colon-sep" duration style and a set of custom output time units
   # (minutes and seconds, has an effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins", "secs"),
          duration_style = "colon-sep"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "00:04:19", "00:07:12", "00:00:00", paste0("\U02212", "12:00:00"),
@@ -799,12 +799,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "iso" duration style and a set of custom output time units
   # (minutes and seconds, no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins", "secs"),
          duration_style = "iso"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT", paste0("\U02212", "P34DT12H"),
@@ -815,12 +815,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "narrow" duration style and a set of custom output time units
   # (weeks)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = "weeks",
          duration_style = "narrow"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c("<1w", "5,189w", "<1w", paste0("\U02212", "4w"), "4w", "4w", "NA")
   )
@@ -828,12 +828,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "wide" duration style and a set of custom output time units
   # (weeks)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = "weeks",
          duration_style = "wide"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "<1 week", "5,189 weeks", "<1 week", paste0("\U02212", "4 weeks"),
@@ -844,12 +844,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "colon-sep" duration style and a set of custom output time units
   # (weeks, no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = "weeks",
          duration_style = "colon-sep"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1/00:04:19", "36,323/00:07:12", "5/00:00:00",
@@ -860,12 +860,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "iso" duration style and a set of custom output time units
   # (weeks, no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = "weeks",
          duration_style = "iso"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT",
@@ -876,12 +876,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "narrow" duration style and a set of custom output time units
   # (days and minutes)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("days", "mins"),
          duration_style = "narrow"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1d 4m", "36,323d 7m", "5d", paste0("\U02212", "34d 720m"),
@@ -892,12 +892,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "wide" duration style and a set of custom output time units
   # (days and minutes)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("days", "mins"),
          duration_style = "wide"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1 day 4 minutes", "36,323 days 7 minutes", "5 days",
@@ -909,12 +909,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "colon-sep" duration style and a set of custom output time units
   # (days and minutes, no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("days", "mins"),
          duration_style = "colon-sep"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1/00:04:19", "36,323/00:07:12", "5/00:00:00",
@@ -925,12 +925,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "iso" duration style and a set of custom output time units
   # (days and minutes, no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("days", "mins"),
          duration_style = "iso"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT", paste0("\U02212", "P34DT12H"),
@@ -941,12 +941,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "narrow" duration style and a set of custom output time units
   # (weeks, hours, and seconds)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("weeks", "hours", "secs"),
          duration_style = "narrow"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "24h 259s", "5,189w 432s", "120h", paste0("\U02212", "4w 156h"),
@@ -957,12 +957,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "wide" duration style and a set of custom output time units
   # (weeks, hours, and seconds)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("weeks", "hours", "secs"),
          duration_style = "wide"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "24 hours 259 seconds", "5,189 weeks 432 seconds", "120 hours",
@@ -974,12 +974,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "colon-sep" duration style and a set of custom output time units
   # (weeks, hours, and seconds; no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("weeks", "hours", "secs"),
          duration_style = "colon-sep"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1/00:04:19", "36,323/00:07:12", "5/00:00:00",
@@ -991,12 +991,12 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Use the "iso" duration style and a set of custom output time units
   # (weeks, hours, and seconds; no effect with this duration style)
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("weeks", "hours", "secs"),
          duration_style = "iso"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "P1DT0H4M19S", "P36323DT0H7M12S", "P5DT", paste0("\U02212", "P34DT12H"),
@@ -1007,11 +1007,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the `use_seps = FALSE` option for
   # the "narrow" duration style
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", use_seps = FALSE
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1d 4m 19s", "5189w 7m 12s", "5d", paste0("\U02212", "4w 6d 12h"),
@@ -1022,11 +1022,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the `use_seps = FALSE` option for
   # the "wide" duration style
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", use_seps = FALSE
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1 day 4 minutes 19 seconds", "5189 weeks 7 minutes 12 seconds",
@@ -1038,11 +1038,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the `use_seps = FALSE` option for
   # the "colon-sep" duration style
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", use_seps = FALSE
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1/00:04:19", "36323/00:07:12", "5/00:00:00",
@@ -1054,28 +1054,28 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the `use_seps = FALSE` option for
   # the "iso" duration style and expect no change from `use_seps = TRUE`
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", use_seps = FALSE
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", use_seps = TRUE
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]]
   )
 
   # Format the `num_1` column using the `sep_mark = "."` option for
   # the "narrow" duration style
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", sep_mark = "."
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1d 4m 19s", "5.189w 7m 12s", "5d", paste0("\U02212", "4w 6d 12h"),
@@ -1086,11 +1086,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the `sep_mark = "."` option for
   # the "wide" duration style
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", sep_mark = "."
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1 day 4 minutes 19 seconds", "5.189 weeks 7 minutes 12 seconds",
@@ -1102,11 +1102,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the `sep_mark = "."` option for
   # the "colon-sep" duration style
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", sep_mark = "."
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1/00:04:19", "36.323/00:07:12", "5/00:00:00",
@@ -1118,28 +1118,28 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the `sep_mark = "."` option for
   # the "iso" duration style and expect no change from `sep_mark = ","`
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", sep_mark = "."
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", sep_mark = ","
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]]
   )
 
   # Format the `num_1` column using the `force_sign = TRUE` option for
   # the "narrow" duration style
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", force_sign = TRUE
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "+1d 4m 19s", "+5,189w 7m 12s", "+5d", paste0("\U02212", "4w 6d 12h"),
@@ -1150,11 +1150,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the `force_sign = TRUE` option for
   # the "wide" duration style
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", force_sign = TRUE
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "+1 day 4 minutes 19 seconds",
@@ -1168,11 +1168,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the `force_sign = TRUE` option for
   # the "colon-sep" duration style
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "hours",
          duration_style = "colon-sep", force_sign = TRUE
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "+01:00:10", "+1,513/11:00:17", "+05:00:00",
@@ -1183,11 +1183,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the `force_sign = TRUE` option for
   # the "colon-sep" duration style
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "hours",
          duration_style = "iso", force_sign = TRUE
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "+P1H0M10S", "+P1513DT11H0M17S", "+P5H",
@@ -1199,11 +1199,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the "narrow" duration style with
   # a `pattern`
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", pattern = "({x})"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "(1d 4m 19s)", "(5,189w 7m 12s)", "(5d)", paste0("(\U02212", "4w 6d 12h)"),
@@ -1214,11 +1214,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the "wide" duration style with
   # a `pattern`
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", pattern = "({x})"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "(1 day 4 minutes 19 seconds)", "(5,189 weeks 7 minutes 12 seconds)",
@@ -1230,11 +1230,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the "colon-sep" duration style with
   # a `pattern`
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "hours",
          duration_style = "colon-sep", pattern = "({x})"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "(01:00:10)", "(1,513/11:00:17)", "(05:00:00)",
@@ -1246,11 +1246,11 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the "iso" duration style with
   # a `pattern`
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "hours",
          duration_style = "iso", pattern = "({x})"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "(P1H0M10S)", "(P1513DT11H0M17S)", "(P5H)",
@@ -1272,8 +1272,8 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are seconds
   expect_equal(
-    (tab_2 %>%
-       fmt_duration(columns = "num_1", input_units = "seconds") %>%
+    (tab_2 |>
+       fmt_duration(columns = "num_1", input_units = "seconds") |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1h 31m 40s", paste0("\U02212", "58m 20s"), "<1s",
@@ -1283,20 +1283,19 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Expect that using `input_units = "secs"' produces the same results
   expect_equal(
-    (tab_2 %>%
-       fmt_duration(columns = "num_1", input_units = "secs") %>%
+    (tab_2 |>
+       fmt_duration(columns = "num_1", input_units = "secs") |>
        render_formats_test(context = "html"))[["num_1"]],
-    (tab_2 %>%
-       fmt_duration(columns = "num_1", input_units = "seconds") %>%
+    (tab_2 |>
+       fmt_duration(columns = "num_1", input_units = "seconds") |>
        render_formats_test(context = "html"))[["num_1"]]
   )
-
 
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are minutes
   expect_equal(
-    (tab_2 %>%
-       fmt_duration(columns = "num_1", input_units = "minutes") %>%
+    (tab_2 |>
+       fmt_duration(columns = "num_1", input_units = "minutes") |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "3d 19h 40m", paste0("\U02212", "2d 10h 20m"), "1s",
@@ -1306,20 +1305,19 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Expect that using `input_units = "mins"' produces the same results
   expect_equal(
-    (tab_2 %>%
-       fmt_duration(columns = "num_1", input_units = "mins") %>%
+    (tab_2 |>
+       fmt_duration(columns = "num_1", input_units = "mins") |>
        render_formats_test(context = "html"))[["num_1"]],
-    (tab_2 %>%
-       fmt_duration(columns = "num_1", input_units = "minutes") %>%
+    (tab_2 |>
+       fmt_duration(columns = "num_1", input_units = "minutes") |>
        render_formats_test(context = "html"))[["num_1"]]
   )
-
 
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are hours
   expect_equal(
-    (tab_2 %>%
-       fmt_duration(columns = "num_1", input_units = "hours") %>%
+    (tab_2 |>
+       fmt_duration(columns = "num_1", input_units = "hours") |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "32w 5d 4h", paste0("\U02212", "20w 5d 20h"), "1m 48s",
@@ -1330,8 +1328,8 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are days
   expect_equal(
-    (tab_2 %>%
-       fmt_duration(columns = "num_1", input_units = "days") %>%
+    (tab_2 |>
+       fmt_duration(columns = "num_1", input_units = "days") |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "785w 5d", paste0("\U02212", "500w"), "43m 12s",
@@ -1342,8 +1340,8 @@ test_that("fmt_duration() works correctly with numerical inputs", {
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are weeks
   expect_equal(
-    (tab_2 %>%
-       fmt_duration(columns = "num_1", input_units = "weeks") %>%
+    (tab_2 |>
+       fmt_duration(columns = "num_1", input_units = "weeks") |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "5,500w", paste0("\U02212", "3,500w"), "5h 2m 24s",
@@ -1364,8 +1362,8 @@ test_that("fmt_duration() works correctly with integer inputs", {
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are weeks
   expect_equal(
-    (tab_1 %>%
-       fmt_duration(columns = "int_1", input_units = "weeks") %>%
+    (tab_1 |>
+       fmt_duration(columns = "int_1", input_units = "weeks") |>
        render_formats_test(context = "html"))[["int_1"]],
     c(
       "90w", "91w", "92w", "93w"
@@ -1375,8 +1373,8 @@ test_that("fmt_duration() works correctly with integer inputs", {
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are days
   expect_equal(
-    (tab_1 %>%
-       fmt_duration(columns = "int_1", input_units = "days") %>%
+    (tab_1 |>
+       fmt_duration(columns = "int_1", input_units = "days") |>
        render_formats_test(context = "html"))[["int_1"]],
     c(
       "12w 6d", "13w", "13w 1d", "13w 2d"
@@ -1386,8 +1384,8 @@ test_that("fmt_duration() works correctly with integer inputs", {
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are hours
   expect_equal(
-    (tab_1 %>%
-       fmt_duration(columns = "int_1", input_units = "hours") %>%
+    (tab_1 |>
+       fmt_duration(columns = "int_1", input_units = "hours") |>
        render_formats_test(context = "html"))[["int_1"]],
     c(
       "3d 18h", "3d 19h", "3d 20h", "3d 21h"
@@ -1397,8 +1395,8 @@ test_that("fmt_duration() works correctly with integer inputs", {
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are minutes
   expect_equal(
-    (tab_1 %>%
-       fmt_duration(columns = "int_1", input_units = "minutes") %>%
+    (tab_1 |>
+       fmt_duration(columns = "int_1", input_units = "minutes") |>
        render_formats_test(context = "html"))[["int_1"]],
     c(
       "1h 30m", "1h 31m", "1h 32m", "1h 33m"
@@ -1408,8 +1406,8 @@ test_that("fmt_duration() works correctly with integer inputs", {
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are seconds
   expect_equal(
-    (tab_1 %>%
-       fmt_duration(columns = "int_1", input_units = "seconds") %>%
+    (tab_1 |>
+       fmt_duration(columns = "int_1", input_units = "seconds") |>
        render_formats_test(context = "html"))[["int_1"]],
     c(
       "1m 30s", "1m 31s", "1m 32s", "1m 33s"
@@ -1419,12 +1417,12 @@ test_that("fmt_duration() works correctly with integer inputs", {
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are seconds and the output is in seconds
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "int_1",
          input_units = "seconds",
          output_units = "seconds"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["int_1"]],
     c(
       "90s", "91s", "92s", "93s"
@@ -1434,12 +1432,12 @@ test_that("fmt_duration() works correctly with integer inputs", {
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are seconds and the output is in minutes
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "int_1",
          input_units = "seconds",
          output_units = "minutes"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["int_1"]],
     c(
       "1m", "1m", "1m", "1m"
@@ -1449,12 +1447,12 @@ test_that("fmt_duration() works correctly with integer inputs", {
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are seconds and the output is in hours
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "int_1",
          input_units = "seconds",
          output_units = "hours"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["int_1"]],
     c(
       "<1h", "<1h", "<1h", "<1h"
@@ -1464,12 +1462,12 @@ test_that("fmt_duration() works correctly with integer inputs", {
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are seconds and the output is in days
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "int_1",
          input_units = "seconds",
          output_units = "days"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["int_1"]],
     c(
       "<1d", "<1d", "<1d", "<1d"
@@ -1492,11 +1490,11 @@ test_that("Specialized handling of the `colon-sep` format works correctly", {
   # Using `output_units` of "minutes" and "seconds" will truncate duration
   # values to only display those units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "colon-sep",
          output_units = c("minutes", "seconds")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "04:19", "07:12", "00:00", paste0("\U02212", "00:00"),
@@ -1507,11 +1505,11 @@ test_that("Specialized handling of the `colon-sep` format works correctly", {
   # Using `output_units` of "hours" and "minutes" will truncate duration
   # values to only display those units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "colon-sep",
          output_units = c("hours", "minutes")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "00:04", "00:07", "00:00", paste0("\U02212", "12:00"),
@@ -1522,11 +1520,11 @@ test_that("Specialized handling of the `colon-sep` format works correctly", {
   # Using `output_units` of "hours",  "minutes", and "seconds" will truncate
   # duration values to only display those units
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "colon-sep",
          output_units = c("hours", "minutes", "seconds")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "00:04:19", "00:07:12", "00:00:00", paste0("\U02212", "12:00:00"),
@@ -1538,12 +1536,12 @@ test_that("Specialized handling of the `colon-sep` format works correctly", {
   # "minutes", and "seconds" will remove the "hours" unit only if that output
   # unit is zero
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "colon-sep",
          output_units = c("hours", "minutes", "seconds"),
          trim_zero_units = "leading"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "04:19", "07:12", "00:00", paste0("\U02212", "12:00:00"),
@@ -1554,90 +1552,96 @@ test_that("Specialized handling of the `colon-sep` format works correctly", {
   # Expect that any other valid variation of `trim_zero_units` won't remove
   # the zero-value "hours" unit
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "colon-sep",
          output_units = c("hours", "minutes", "seconds"),
          trim_zero_units = "trailing"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "00:04:19", "00:07:12", "00:00:00", paste0("\U02212", "12:00:00"),
       "14:24:00", "12:00:00", "NA"
     )
   )
+
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "colon-sep",
          output_units = c("hours", "minutes", "seconds"),
          trim_zero_units = "internal"
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "00:04:19", "00:07:12", "00:00:00", paste0("\U02212", "12:00:00"),
       "14:24:00", "12:00:00", "NA"
     )
   )
+
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "colon-sep",
          output_units = c("hours", "minutes", "seconds"),
          trim_zero_units = c("leading", "trailing")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "00:04:19", "00:07:12", "00:00:00", paste0("\U02212", "12:00:00"),
       "14:24:00", "12:00:00", "NA"
     )
   )
+
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "colon-sep",
          output_units = c("hours", "minutes", "seconds"),
          trim_zero_units = c("leading", "internal")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "00:04:19", "00:07:12", "00:00:00", paste0("\U02212", "12:00:00"),
       "14:24:00", "12:00:00", "NA"
     )
   )
+
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "colon-sep",
          output_units = c("hours", "minutes", "seconds"),
          trim_zero_units = c("internal", "trailing")
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "00:04:19", "00:07:12", "00:00:00", paste0("\U02212", "12:00:00"),
       "14:24:00", "12:00:00", "NA"
     )
   )
+
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "colon-sep",
          output_units = c("hours", "minutes", "seconds"),
          trim_zero_units = TRUE
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "00:04:19", "00:07:12", "00:00:00", paste0("\U02212", "12:00:00"),
       "14:24:00", "12:00:00", "NA"
     )
   )
+
   expect_equal(
-    (tab_1 %>%
+    (tab_1 |>
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "colon-sep",
          output_units = c("hours", "minutes", "seconds"),
          trim_zero_units = FALSE
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "00:04:19", "00:07:12", "00:00:00", paste0("\U02212", "12:00:00"),
@@ -1658,9 +1662,8 @@ test_that("fmt_duration() works correctly with difftime inputs", {
       hours = c(difftime(dt_1, dt_2, units = "hours")),
       minutes = c(difftime(dt_1, dt_2, units = "mins")),
       seconds = c(difftime(dt_1, dt_2, units = "secs"))
-    ) %>%
+    ) |>
     dplyr::add_row()
-
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl_3` dataset
@@ -1668,8 +1671,8 @@ test_that("fmt_duration() works correctly with difftime inputs", {
 
   # Format the `weeks` column using the defaults for `fmt_duration()`
   expect_equal(
-    (tab_3 %>%
-       fmt_duration(columns = "weeks") %>%
+    (tab_3 |>
+       fmt_duration(columns = "weeks") |>
        render_formats_test(context = "html"))[["weeks"]],
     c(
       paste0("\U02212", "2d 2h 24m 35s"),
@@ -1682,35 +1685,38 @@ test_that("fmt_duration() works correctly with difftime inputs", {
   # Expect that every other column produces the same cell data since they
   # are the same duration values, just expressed with different units
   expect_equal(
-    (tab_3 %>%
-       fmt_duration(columns = "weeks") %>%
+    (tab_3 |>
+       fmt_duration(columns = "weeks") |>
        render_formats_test(context = "html"))[["weeks"]],
-    (tab_3 %>%
-       fmt_duration(columns = "days") %>%
+    (tab_3 |>
+       fmt_duration(columns = "days") |>
        render_formats_test(context = "html"))[["days"]]
   )
+
   expect_equal(
-    (tab_3 %>%
-       fmt_duration(columns = "weeks") %>%
+    (tab_3 |>
+       fmt_duration(columns = "weeks") |>
        render_formats_test(context = "html"))[["weeks"]],
-    (tab_3 %>%
-       fmt_duration(columns = "hours") %>%
+    (tab_3 |>
+       fmt_duration(columns = "hours") |>
        render_formats_test(context = "html"))[["hours"]]
   )
+
   expect_equal(
-    (tab_3 %>%
-       fmt_duration(columns = "hours") %>%
+    (tab_3 |>
+       fmt_duration(columns = "hours") |>
        render_formats_test(context = "html"))[["hours"]],
-    (tab_3 %>%
-       fmt_duration(columns = "seconds") %>%
+    (tab_3 |>
+       fmt_duration(columns = "seconds") |>
        render_formats_test(context = "html"))[["seconds"]]
   )
+
   expect_equal(
-    (tab_3 %>%
-       fmt_duration(columns = "weeks") %>%
+    (tab_3 |>
+       fmt_duration(columns = "weeks") |>
        render_formats_test(context = "html"))[["weeks"]],
-    (tab_3 %>%
-       fmt_duration(columns = "seconds") %>%
+    (tab_3 |>
+       fmt_duration(columns = "seconds") |>
        render_formats_test(context = "html"))[["seconds"]]
   )
 })
@@ -1727,7 +1733,7 @@ test_that("fmt_duration() works well with mixed numeric/difftime inputs", {
       hours = c(difftime(dt_1, dt_2, units = "hours")),
       minutes = c(difftime(dt_1, dt_2, units = "mins")),
       seconds = c(difftime(dt_1, dt_2, units = "secs"))
-    ) %>%
+    ) |>
     dplyr::mutate(
       duration_hours = c(2.34, 6.23, 75.249)
     )
@@ -1740,8 +1746,8 @@ test_that("fmt_duration() works well with mixed numeric/difftime inputs", {
   # for `fmt_duration()`; expect correct duration values for in the
   # `duration_hours` column
   expect_equal(
-    (tab_4 %>%
-       fmt_duration(columns = c("weeks", "duration_hours"), input_units = "hours") %>%
+    (tab_4 |>
+       fmt_duration(columns = c("weeks", "duration_hours"), input_units = "hours") |>
        render_formats_test(context = "html"))[["duration_hours"]],
     c("2h 20m 24s", "6h 13m 48s", "3d 3h 14m 56s")
   )
@@ -1749,11 +1755,11 @@ test_that("fmt_duration() works well with mixed numeric/difftime inputs", {
   # Expect that, for the same expression, that the formatting of the
   # `weeks` column isn't tainted by the necessary addition of `input_units`
   expect_equal(
-    (tab_4 %>%
-       fmt_duration(columns = c("weeks", "duration_hours"), input_units = "hours") %>%
+    (tab_4 |>
+       fmt_duration(columns = c("weeks", "duration_hours"), input_units = "hours") |>
        render_formats_test(context = "html"))[["weeks"]],
-    (tab_4 %>%
-       fmt_duration(columns = "weeks") %>%
+    (tab_4 |>
+       fmt_duration(columns = "weeks") |>
        render_formats_test(context = "html"))[["weeks"]]
   )
 })
@@ -1804,14 +1810,14 @@ test_that("fmt_duration() can produce localized outputs", {
   for (i in seq_along(sample_locales)) {
 
     tab_narrow <-
-      tab_narrow %>%
+      tab_narrow |>
       fmt_duration(
         columns = sample_locales[i], input_units = "days",
         duration_style = "narrow", locale = sample_locales[i]
       )
 
     tab_wide <-
-      tab_wide %>%
+      tab_wide |>
       fmt_duration(
         columns = sample_locales[i], input_units = "days",
         duration_style = "wide", locale = sample_locales[i]
@@ -1820,18 +1826,20 @@ test_that("fmt_duration() can produce localized outputs", {
 
   # Add basic styling for better legibility
   tab_narrow <-
-    tab_narrow %>%
-    cols_width(everything() ~ px(175)) %>%
-    cols_align(align = "left", columns = everything()) %>%
+    tab_narrow |>
+    cols_width(everything() ~ px(175)) |>
+    cols_align(align = "left", columns = everything()) |>
     tab_style(style = cell_text(size = "smaller"), locations = cells_body())
+
   tab_wide <-
-    tab_wide %>%
-    cols_width(everything() ~ px(275)) %>%
-    cols_align(align = "left", columns = everything()) %>%
+    tab_wide |>
+    cols_width(everything() ~ px(275)) |>
+    cols_align(align = "left", columns = everything()) |>
     tab_style(style = cell_text(size = "smaller"), locations = cells_body())
 
   # Perform snapshot tests
   expect_snapshot_html(tab_narrow)
+
   expect_snapshot_html(tab_wide)
 })
 
@@ -1850,36 +1858,52 @@ test_that("fmt_duration() will error in specific cases", {
 
   # Expect an error if `input_units` not provided when numeric columns are
   # to be formatted
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1"))
-  expect_error(tab_6 %>% fmt_duration(columns = c("num_1", "dur_1")))
-  expect_no_error(tab_6 %>% fmt_duration(columns = "dur_1"))
+  expect_error(tab_6 |> fmt_duration(columns = "num_1"))
+
+  expect_error(tab_6 |> fmt_duration(columns = c("num_1", "dur_1")))
+
+  expect_no_error(tab_6 |> fmt_duration(columns = "dur_1"))
 
   # Expect an error if `input_units` is invalid
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "Stunden"))
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = c("hours", "minutes")))
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = character(0L)))
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = 1))
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "Stunden"))
+
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = c("hours", "minutes")))
+
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = character(0L)))
+
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = 1))
 
   # Expect an error if `output_units` is invalid
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = "Stunden"))
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = c("days", "weeks", "years")))
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = character(0L)))
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = 1))
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "hours", output_units = "Stunden"))
+
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "hours", output_units = c("days", "weeks", "years")))
+
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "hours", output_units = character(0L)))
+
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "hours", output_units = 1))
 
   # Expect an error if `duration_style` is invalid
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", duration_style = "style"))
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "hours", duration_style = "style"))
 
   # Expect an error if `trim_zero_units` is invalid
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", trim_zero_units = "infernal"))
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", trim_zero_units = 2))
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", trim_zero_units = NULL))
-  expect_no_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", trim_zero_units = c("leading", "leading")))
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "hours", trim_zero_units = "infernal"))
+
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "hours", trim_zero_units = 2))
+
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "hours", trim_zero_units = NULL))
+
+  expect_no_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "hours", trim_zero_units = c("leading", "leading")))
 
   # Expect an error if `max_output_units` is invalid
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = "max"))
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = 0))
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = -1))
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = c(2, 3)))
-  expect_no_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = NULL))
-  expect_no_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = Inf))
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "hours", max_output_units = "max"))
+
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "hours", max_output_units = 0))
+
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "hours", max_output_units = -1))
+
+  expect_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "hours", max_output_units = c(2, 3)))
+
+  expect_no_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "hours", max_output_units = NULL))
+
+  expect_no_error(tab_6 |> fmt_duration(columns = "num_1", input_units = "hours", max_output_units = Inf))
 })

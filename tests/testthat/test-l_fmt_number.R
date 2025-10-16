@@ -1,4 +1,4 @@
-test_that("fmt_number() works correctly in the LaTeX context", {
+test_that("fmt_number() works correctly for LaTeX output tables", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -19,8 +19,8 @@ test_that("fmt_number() works correctly in the LaTeX context", {
 
   # Format the `num_1` column to 2 decimal places, use all other defaults
   expect_equal(
-    (tbl_latex %>%
-       fmt_number(columns = num_1, decimals = 2) %>%
+    (tbl_latex |>
+       fmt_number(columns = num_1, decimals = 2) |>
        render_formats_test(context = "latex"))[["num_1"]],
     c(
       "1,836.23", "2,763.39", "937.29", "643.00",
@@ -30,8 +30,8 @@ test_that("fmt_number() works correctly in the LaTeX context", {
 
   # Format the `num_1` column to 5 decimal places, use all other defaults
   expect_equal(
-    (tbl_latex %>%
-       fmt_number(columns = num_1, decimals = 5) %>%
+    (tbl_latex |>
+       fmt_number(columns = num_1, decimals = 5) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1,836.23000", "2,763.39000", "937.29000",
@@ -42,11 +42,11 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # Format the `num_1` column to 2 decimal places, drop the trailing
   # zeros, use all other defaults
   expect_equal(
-    (tbl_latex %>%
+    (tbl_latex |>
        fmt_number(
          columns = num_1, decimals = 2,
          drop_trailing_zeros = TRUE
-       ) %>%
+       ) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1,836.23", "2,763.39", "937.29", "643",
@@ -57,8 +57,8 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # Format the `num_1` column to 2 decimal places, don't use digit
   # grouping separators, use all other defaults
   expect_equal(
-    (tbl_latex %>%
-       fmt_number(columns = num_1, decimals = 2, use_seps = FALSE) %>%
+    (tbl_latex |>
+       fmt_number(columns = num_1, decimals = 2, use_seps = FALSE) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1836.23", "2763.39", "937.29", "643.00",
@@ -69,8 +69,8 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # Format the `num_1` column to 2 decimal places, use a single space
   # character as digit grouping separators, use all other defaults
   expect_equal(
-    (tbl_latex %>%
-       fmt_number(columns = num_1, decimals = 2, sep_mark = " ") %>%
+    (tbl_latex |>
+       fmt_number(columns = num_1, decimals = 2, sep_mark = " ") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1 836.23", "2 763.39", "937.29", "643.00",
@@ -82,11 +82,11 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # digit grouping separators and a comma for the decimal mark, use
   # all other defaults
   expect_equal(
-    (tbl_latex %>%
+    (tbl_latex |>
        fmt_number(
          columns = num_1, decimals = 2,
          sep_mark = ".", dec_mark = ","
-       ) %>%
+       ) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1.836,23", "2.763,39", "937,29", "643,00",
@@ -97,8 +97,8 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # Format the `num_1` column to 4 decimal places, scale all values by
   # 1/1000, use all other defaults
   expect_equal(
-    (tbl_latex %>%
-       fmt_number(columns = num_1, decimals = 4, scale_by = 1 / 1000) %>%
+    (tbl_latex |>
+       fmt_number(columns = num_1, decimals = 4, scale_by = 1 / 1000) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1.8362", "2.7634", "0.9373", "0.6430", "0.2122",
@@ -109,8 +109,8 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # Format the `num_1` column to 2 decimal places, prepend and append
   # all values by 2 different literals, use all other defaults
   expect_equal(
-    (tbl_latex %>%
-       fmt_number(columns = num_1, decimals = 2, pattern = "a {x} b") %>%
+    (tbl_latex |>
+       fmt_number(columns = num_1, decimals = 2, pattern = "a {x} b") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "a 1,836.23 b", "a 2,763.39 b", "a 937.29 b", "a 643.00 b",
@@ -122,9 +122,9 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # by 1/1000 and append a `K` character to the resultant values, use
   # all other defaults
   expect_equal(
-    (tbl_latex %>%
+    (tbl_latex |>
        fmt_number(columns = num_1, decimals = 4,
-                  scale_by = 1/1000, pattern = "{x}K") %>%
+                  scale_by = 1/1000, pattern = "{x}K") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1.8362K", "2.7634K", "0.9373K", "0.6430K",
@@ -134,8 +134,8 @@ test_that("fmt_number() works correctly in the LaTeX context", {
 
   # Format the `num_1` column to 2 decimal places, use accounting style
   expect_equal(
-    (tbl_latex %>%
-       fmt_number(columns = num_1, accounting = TRUE) %>%
+    (tbl_latex |>
+       fmt_number(columns = num_1, accounting = TRUE) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1,836.23", "2,763.39", "937.29", "643.00", "212.23",
@@ -145,8 +145,8 @@ test_that("fmt_number() works correctly in the LaTeX context", {
 
   # Format the `num_1` column to 3 decimal places, use accounting style
   expect_equal(
-    (tbl_latex %>%
-       fmt_number(columns = num_1, decimals = 3, accounting = TRUE) %>%
+    (tbl_latex |>
+       fmt_number(columns = num_1, decimals = 3, accounting = TRUE) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1,836.230", "2,763.390", "937.290", "643.000", "212.232",
@@ -157,10 +157,10 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # Format the `num_1` column to 2 decimal places, use accounting style
   # and a pattern around the values
   expect_equal(
-    (tbl_latex %>%
+    (tbl_latex |>
        fmt_number(
          columns = num_1, decimals = 3,
-         accounting = TRUE, pattern = "a{x}b") %>%
+         accounting = TRUE, pattern = "a{x}b") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "a1,836.230b", "a2,763.390b", "a937.290b", "a643.000b",
@@ -171,10 +171,10 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # Format the `num_1` column to 2 decimal places, use accounting style
   # and drop all trailing zeros
   expect_equal(
-    (tbl_latex %>%
+    (tbl_latex |>
        fmt_number(
          columns = num_1, decimals = 3,
-         accounting = TRUE, drop_trailing_zeros = TRUE) %>%
+         accounting = TRUE, drop_trailing_zeros = TRUE) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1,836.23", "2,763.39", "937.29", "643", "212.232",
@@ -184,9 +184,9 @@ test_that("fmt_number() works correctly in the LaTeX context", {
 
   # Format the `num_1` column to 2 decimal places, force the sign
   expect_equal(
-    (tbl_latex %>%
+    (tbl_latex |>
        fmt_number(
-         columns = num_1, decimals = 3, force_sign = TRUE) %>%
+         columns = num_1, decimals = 3, force_sign = TRUE) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "+1,836.230", "+2,763.390", "+937.290", "+643.000",
@@ -197,22 +197,22 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # Expect that using `force_sign = TRUE` with `accounting = TRUE`
   # will render values in accounting format
   expect_equal(
-    (tbl_latex %>%
+    (tbl_latex |>
        fmt_number(
-         columns = num_1, decimals = 3, accounting = TRUE, force_sign = TRUE) %>%
+         columns = num_1, decimals = 3, accounting = TRUE, force_sign = TRUE) |>
        render_formats_test("latex"))[["num_1"]],
-    (tbl_latex %>%
+    (tbl_latex |>
        fmt_number(
-         columns = num_1, decimals = 3, accounting = TRUE) %>%
+         columns = num_1, decimals = 3, accounting = TRUE) |>
        render_formats_test("latex"))[["num_1"]]
   )
 
   # Format the `num_1` column to 2 decimal places, force the sign and
   # define a pattern for decorating values
   expect_equal(
-    (tbl_latex %>%
+    (tbl_latex |>
        fmt_number(
-         columns = num_1, pattern = "*{x}*", force_sign = TRUE) %>%
+         columns = num_1, pattern = "*{x}*", force_sign = TRUE) |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "*+1,836.23*", "*+2,763.39*", "*+937.29*", "*+643.00*",
@@ -223,8 +223,8 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # Format the `num_1` column to 2 decimal places, apply the `en_US`
   # locale and use all other defaults
   expect_equal(
-    (tbl_latex %>%
-       fmt_number(columns = num_1, decimals = 2, locale = "en_US") %>%
+    (tbl_latex |>
+       fmt_number(columns = num_1, decimals = 2, locale = "en_US") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1,836.23", "2,763.39", "937.29", "643.00",
@@ -235,8 +235,8 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # Format the `num_1` column to 2 decimal places, apply the `da_DK`
   # locale and use all other defaults
   expect_equal(
-    (tbl_latex %>%
-       fmt_number(columns = num_1, decimals = 2, locale = "da_DK") %>%
+    (tbl_latex |>
+       fmt_number(columns = num_1, decimals = 2, locale = "da_DK") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1.836,23", "2.763,39", "937,29", "643,00",
@@ -247,8 +247,8 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # Format the `num_1` column to 2 decimal places, apply the `de_AT`
   # locale and use all other defaults
   expect_equal(
-    (tbl_latex %>%
-       fmt_number(columns = num_1, decimals = 2, locale = "de_AT") %>%
+    (tbl_latex |>
+       fmt_number(columns = num_1, decimals = 2, locale = "de_AT") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1 836,23", "2 763,39", "937,29", "643,00",
@@ -259,8 +259,8 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # Format the `num_1` column to 2 decimal places, apply the `et_EE`
   # locale and use all other defaults
   expect_equal(
-    (tbl_latex %>%
-       fmt_number(columns = num_1, decimals = 2, locale = "et_EE") %>%
+    (tbl_latex |>
+       fmt_number(columns = num_1, decimals = 2, locale = "et_EE") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1 836,23", "2 763,39", "937,29", "643,00",
@@ -271,8 +271,8 @@ test_that("fmt_number() works correctly in the LaTeX context", {
   # Format the `num_1` column to 2 decimal places, apply the `gl_ES`
   # locale and use all other defaults
   expect_equal(
-    (tbl_latex %>%
-       fmt_number(columns = num_1, decimals = 2, locale = "gl_ES") %>%
+    (tbl_latex |>
+       fmt_number(columns = num_1, decimals = 2, locale = "gl_ES") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "1.836,23", "2.763,39", "937,29", "643,00",

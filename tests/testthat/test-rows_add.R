@@ -1,7 +1,7 @@
 test_that("rows can be added to a table with name-value pairs", {
 
   gt_tbl_a <-
-    exibble %>%
+    exibble |>
     gt(rowname_col = "row", groupname_col = "group")
 
   # Get the internal data table and the `stub_df` tbl
@@ -16,7 +16,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add a single row, using two values
   gt_tbl_a_01 <-
-    gt_tbl_a %>%
+    gt_tbl_a |>
     rows_add(
       num = 5.79,
       currency = 25.3
@@ -37,7 +37,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add a single row, this time with more values
   gt_tbl_a_02 <-
-    gt_tbl_a %>%
+    gt_tbl_a |>
     rows_add(
       num = 5.79,
       currency = 25.3,
@@ -63,7 +63,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add three rows, include repeating values
   gt_tbl_a_03 <-
-    gt_tbl_a %>%
+    gt_tbl_a |>
     rows_add(
       num = 5.79,
       currency = 25.3,
@@ -89,7 +89,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add one row, include a `rowname_col` value in 'row'
   gt_tbl_a_04 <-
-    gt_tbl_a %>%
+    gt_tbl_a |>
     rows_add(
       row = "row_9",
       num = 5.79,
@@ -117,7 +117,7 @@ test_that("rows can be added to a table with name-value pairs", {
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group'
   gt_tbl_a_05 <-
-    gt_tbl_a %>%
+    gt_tbl_a |>
     rows_add(
       row = "row_9",
       group = "grp_b",
@@ -146,7 +146,7 @@ test_that("rows can be added to a table with name-value pairs", {
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group' (this time using a new group name)
   gt_tbl_a_06 <-
-    gt_tbl_a %>%
+    gt_tbl_a |>
     rows_add(
       row = "row_9",
       group = "grp_c",
@@ -175,7 +175,7 @@ test_that("rows can be added to a table with name-value pairs", {
   # Add two rows, include two `rowname_col` values in 'row' and include
   # two different 'groupname_col' values in 'group'
   gt_tbl_a_07 <-
-    gt_tbl_a %>%
+    gt_tbl_a |>
     rows_add(
       row = c("row_4.5", "row_8.5"),
       group = c("grp_a", "grp_b"),
@@ -203,7 +203,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add two empty rows
   gt_tbl_a_08 <-
-    gt_tbl_a %>%
+    gt_tbl_a |>
     rows_add(.n_empty = 2)
 
   # Get the internal data table and the `stub_df` tbl
@@ -221,7 +221,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add no rows by supplying nothing to `rows_add()`
   gt_tbl_a_09 <-
-    gt_tbl_a %>%
+    gt_tbl_a |>
     rows_add()
 
   # Get the internal data table and the `stub_df` tbl
@@ -242,7 +242,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add no rows by supplying `0` to `.n_empty`
   gt_tbl_a_10 <-
-    gt_tbl_a %>%
+    gt_tbl_a |>
     rows_add(.n_empty = 0)
 
   # Get the internal data table and the `stub_df` tbl
@@ -266,7 +266,7 @@ test_that("rows can be added to a table with name-value pairs", {
   # Add two empty rows with `.n_empty` while attempting to add
   # rows with name-value pairs (which have no effect)
   gt_tbl_a_11 <-
-    gt_tbl_a %>%
+    gt_tbl_a |>
     rows_add(
       row = c("row_4.5", "row_8.5"),
       group = c("grp_a", "grp_b"),
@@ -296,7 +296,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_snapshot_html(gt_tbl_a_11)
 
   gt_tbl_b <-
-    exibble %>%
+    exibble |>
     gt(rowname_col = "row")
 
   # Get the internal data table and the `stub_df` tbl
@@ -311,7 +311,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add a single row, using two values
   gt_tbl_b_01 <-
-    gt_tbl_b %>%
+    gt_tbl_b |>
     rows_add(
       num = 5.79,
       currency = 25.3
@@ -332,7 +332,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add a single row, this time with more values
   gt_tbl_b_02 <-
-    gt_tbl_b %>%
+    gt_tbl_b |>
     rows_add(
       num = 5.79,
       currency = 25.3,
@@ -358,7 +358,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add three rows, include repeating values
   gt_tbl_b_03 <-
-    gt_tbl_b %>%
+    gt_tbl_b |>
     rows_add(
       num = 5.79,
       currency = 25.3,
@@ -384,7 +384,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add one row, include a `rowname_col` value in 'row'
   gt_tbl_b_04 <-
-    gt_tbl_b %>%
+    gt_tbl_b |>
     rows_add(
       row = "row_9",
       num = 5.79,
@@ -412,7 +412,7 @@ test_that("rows can be added to a table with name-value pairs", {
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group'
   gt_tbl_b_05 <-
-    gt_tbl_b %>%
+    gt_tbl_b |>
     rows_add(
       row = "row_9",
       group = "grp_b",
@@ -441,7 +441,7 @@ test_that("rows can be added to a table with name-value pairs", {
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group' (this time using a new group name)
   gt_tbl_b_06 <-
-    gt_tbl_b %>%
+    gt_tbl_b |>
     rows_add(
       row = "row_9",
       group = "grp_c",
@@ -470,7 +470,7 @@ test_that("rows can be added to a table with name-value pairs", {
   # Add two rows, include two `rowname_col` values in 'row' and include
   # two different 'groupname_col' values in 'group'
   gt_tbl_b_07 <-
-    gt_tbl_b %>%
+    gt_tbl_b |>
     rows_add(
       row = c("row_4.5", "row_8.5"),
       group = c("grp_a", "grp_b"),
@@ -498,7 +498,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add two empty rows
   gt_tbl_b_08 <-
-    gt_tbl_b %>%
+    gt_tbl_b |>
     rows_add(.n_empty = 2)
 
   # Get the internal data table and the `stub_df` tbl
@@ -515,7 +515,7 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_snapshot_html(gt_tbl_b_08)
 
   gt_tbl_c <-
-    exibble %>%
+    exibble |>
     gt()
 
   # Get the internal data table and the `stub_df` tbl
@@ -530,7 +530,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add a single row, using two values
   gt_tbl_c_01 <-
-    gt_tbl_c %>%
+    gt_tbl_c |>
     rows_add(
       num = 5.79,
       currency = 25.3
@@ -551,7 +551,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add a single row, this time with more values
   gt_tbl_c_02 <-
-    gt_tbl_c %>%
+    gt_tbl_c |>
     rows_add(
       num = 5.79,
       currency = 25.3,
@@ -577,7 +577,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add three rows, include repeating values
   gt_tbl_c_03 <-
-    gt_tbl_c %>%
+    gt_tbl_c |>
     rows_add(
       num = 5.79,
       currency = 25.3,
@@ -603,7 +603,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add one row, include a `rowname_col` value in 'row'
   gt_tbl_c_04 <-
-    gt_tbl_c %>%
+    gt_tbl_c |>
     rows_add(
       row = "row_9",
       num = 5.79,
@@ -631,7 +631,7 @@ test_that("rows can be added to a table with name-value pairs", {
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group'
   gt_tbl_c_05 <-
-    gt_tbl_c %>%
+    gt_tbl_c |>
     rows_add(
       row = "row_9",
       group = "grp_b",
@@ -660,7 +660,7 @@ test_that("rows can be added to a table with name-value pairs", {
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group' (this time using a new group name)
   gt_tbl_c_06 <-
-    gt_tbl_c %>%
+    gt_tbl_c |>
     rows_add(
       row = "row_9",
       group = "grp_c",
@@ -689,7 +689,7 @@ test_that("rows can be added to a table with name-value pairs", {
   # Add two rows, include two `rowname_col` values in 'row' and include
   # two different 'groupname_col' values in 'group'
   gt_tbl_c_07 <-
-    gt_tbl_c %>%
+    gt_tbl_c |>
     rows_add(
       row = c("row_4.5", "row_8.5"),
       group = c("grp_a", "grp_b"),
@@ -717,7 +717,7 @@ test_that("rows can be added to a table with name-value pairs", {
 
   # Add two empty rows
   gt_tbl_c_08 <-
-    gt_tbl_c %>%
+    gt_tbl_c |>
     rows_add(.n_empty = 2)
 
   # Get the internal data table and the `stub_df` tbl
@@ -734,359 +734,359 @@ test_that("rows can be added to a table with name-value pairs", {
   expect_snapshot_html(gt_tbl_c_08)
 
   # Expect an error if non-valid values given to `.n_empty`
-  expect_error(gt_tbl_c %>% rows_add(.n_empty = -1))
-  expect_error(gt_tbl_c %>% rows_add(.n_empty = 3.2))
-  expect_no_error(gt_tbl_c %>% rows_add(.n_empty = 3.0))
+  expect_error(gt_tbl_c |> rows_add(.n_empty = -1))
+  expect_error(gt_tbl_c |> rows_add(.n_empty = 3.2))
+  expect_no_error(gt_tbl_c |> rows_add(.n_empty = 3.0))
 
   gt_tbl_d <-
-    exibble %>%
+    exibble |>
     gt()
 
-  gt_tbl_d_add1_b1 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 1)
+  gt_tbl_d_add1_b1 <- gt_tbl_d |> rows_add(.n_empty = 1, .before = 1)
   expect_snapshot_html(gt_tbl_d_add1_b1)
-  gt_tbl_d_add1_b2 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 2)
+  gt_tbl_d_add1_b2 <- gt_tbl_d |> rows_add(.n_empty = 1, .before = 2)
   expect_snapshot_html(gt_tbl_d_add1_b2)
-  gt_tbl_d_add1_b3 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 3)
+  gt_tbl_d_add1_b3 <- gt_tbl_d |> rows_add(.n_empty = 1, .before = 3)
   expect_snapshot_html(gt_tbl_d_add1_b3)
-  gt_tbl_d_add1_b4 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 4)
+  gt_tbl_d_add1_b4 <- gt_tbl_d |> rows_add(.n_empty = 1, .before = 4)
   expect_snapshot_html(gt_tbl_d_add1_b4)
-  gt_tbl_d_add1_b5 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 5)
+  gt_tbl_d_add1_b5 <- gt_tbl_d |> rows_add(.n_empty = 1, .before = 5)
   expect_snapshot_html(gt_tbl_d_add1_b5)
-  gt_tbl_d_add1_b6 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 6)
+  gt_tbl_d_add1_b6 <- gt_tbl_d |> rows_add(.n_empty = 1, .before = 6)
   expect_snapshot_html(gt_tbl_d_add1_b6)
-  gt_tbl_d_add1_b7 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 7)
+  gt_tbl_d_add1_b7 <- gt_tbl_d |> rows_add(.n_empty = 1, .before = 7)
   expect_snapshot_html(gt_tbl_d_add1_b7)
-  gt_tbl_d_add1_b8 <- gt_tbl_d %>% rows_add(.n_empty = 1, .before = 8)
+  gt_tbl_d_add1_b8 <- gt_tbl_d |> rows_add(.n_empty = 1, .before = 8)
   expect_snapshot_html(gt_tbl_d_add1_b8)
-  expect_error(gt_tbl_d %>% rows_add(.n_empty = 1, .before = 9))
+  expect_error(gt_tbl_d |> rows_add(.n_empty = 1, .before = 9))
 
-  gt_tbl_d_add1_a1 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 1)
+  gt_tbl_d_add1_a1 <- gt_tbl_d |> rows_add(.n_empty = 1, .after = 1)
   expect_snapshot_html(gt_tbl_d_add1_a1)
-  gt_tbl_d_add1_a2 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 2)
+  gt_tbl_d_add1_a2 <- gt_tbl_d |> rows_add(.n_empty = 1, .after = 2)
   expect_snapshot_html(gt_tbl_d_add1_a2)
-  gt_tbl_d_add1_a3 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 3)
+  gt_tbl_d_add1_a3 <- gt_tbl_d |> rows_add(.n_empty = 1, .after = 3)
   expect_snapshot_html(gt_tbl_d_add1_a3)
-  gt_tbl_d_add1_a4 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 4)
+  gt_tbl_d_add1_a4 <- gt_tbl_d |> rows_add(.n_empty = 1, .after = 4)
   expect_snapshot_html(gt_tbl_d_add1_a4)
-  gt_tbl_d_add1_a5 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 5)
+  gt_tbl_d_add1_a5 <- gt_tbl_d |> rows_add(.n_empty = 1, .after = 5)
   expect_snapshot_html(gt_tbl_d_add1_a5)
-  gt_tbl_d_add1_a6 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 6)
+  gt_tbl_d_add1_a6 <- gt_tbl_d |> rows_add(.n_empty = 1, .after = 6)
   expect_snapshot_html(gt_tbl_d_add1_a6)
-  gt_tbl_d_add1_a7 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 7)
+  gt_tbl_d_add1_a7 <- gt_tbl_d |> rows_add(.n_empty = 1, .after = 7)
   expect_snapshot_html(gt_tbl_d_add1_a7)
-  gt_tbl_d_add1_a8 <- gt_tbl_d %>% rows_add(.n_empty = 1, .after = 8)
+  gt_tbl_d_add1_a8 <- gt_tbl_d |> rows_add(.n_empty = 1, .after = 8)
   expect_snapshot_html(gt_tbl_d_add1_a8)
-  expect_error(gt_tbl_d %>% rows_add(.n_empty = 1, .after = 9))
+  expect_error(gt_tbl_d |> rows_add(.n_empty = 1, .after = 9))
 
-  gt_tbl_d_add2_b1 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 1)
+  gt_tbl_d_add2_b1 <- gt_tbl_d |> rows_add(.n_empty = 2, .before = 1)
   expect_snapshot_html(gt_tbl_d_add2_b1)
-  gt_tbl_d_add2_b2 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 2)
+  gt_tbl_d_add2_b2 <- gt_tbl_d |> rows_add(.n_empty = 2, .before = 2)
   expect_snapshot_html(gt_tbl_d_add2_b2)
-  gt_tbl_d_add2_b3 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 3)
+  gt_tbl_d_add2_b3 <- gt_tbl_d |> rows_add(.n_empty = 2, .before = 3)
   expect_snapshot_html(gt_tbl_d_add2_b3)
-  gt_tbl_d_add2_b4 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 4)
+  gt_tbl_d_add2_b4 <- gt_tbl_d |> rows_add(.n_empty = 2, .before = 4)
   expect_snapshot_html(gt_tbl_d_add2_b4)
-  gt_tbl_d_add2_b5 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 5)
+  gt_tbl_d_add2_b5 <- gt_tbl_d |> rows_add(.n_empty = 2, .before = 5)
   expect_snapshot_html(gt_tbl_d_add2_b5)
-  gt_tbl_d_add2_b6 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 6)
+  gt_tbl_d_add2_b6 <- gt_tbl_d |> rows_add(.n_empty = 2, .before = 6)
   expect_snapshot_html(gt_tbl_d_add2_b6)
-  gt_tbl_d_add2_b7 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 7)
+  gt_tbl_d_add2_b7 <- gt_tbl_d |> rows_add(.n_empty = 2, .before = 7)
   expect_snapshot_html(gt_tbl_d_add2_b7)
-  gt_tbl_d_add2_b8 <- gt_tbl_d %>% rows_add(.n_empty = 2, .before = 8)
+  gt_tbl_d_add2_b8 <- gt_tbl_d |> rows_add(.n_empty = 2, .before = 8)
   expect_snapshot_html(gt_tbl_d_add2_b8)
-  expect_error(gt_tbl_d %>% rows_add(.n_empty = 2, .before = 9))
+  expect_error(gt_tbl_d |> rows_add(.n_empty = 2, .before = 9))
 
-  gt_tbl_d_add2_a1 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 1)
+  gt_tbl_d_add2_a1 <- gt_tbl_d |> rows_add(.n_empty = 2, .after = 1)
   expect_snapshot_html(gt_tbl_d_add2_a1)
-  gt_tbl_d_add2_a2 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 2)
+  gt_tbl_d_add2_a2 <- gt_tbl_d |> rows_add(.n_empty = 2, .after = 2)
   expect_snapshot_html(gt_tbl_d_add2_a2)
-  gt_tbl_d_add2_a3 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 3)
+  gt_tbl_d_add2_a3 <- gt_tbl_d |> rows_add(.n_empty = 2, .after = 3)
   expect_snapshot_html(gt_tbl_d_add2_a3)
-  gt_tbl_d_add2_a4 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 4)
+  gt_tbl_d_add2_a4 <- gt_tbl_d |> rows_add(.n_empty = 2, .after = 4)
   expect_snapshot_html(gt_tbl_d_add2_a4)
-  gt_tbl_d_add2_a5 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 5)
+  gt_tbl_d_add2_a5 <- gt_tbl_d |> rows_add(.n_empty = 2, .after = 5)
   expect_snapshot_html(gt_tbl_d_add2_a5)
-  gt_tbl_d_add2_a6 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 6)
+  gt_tbl_d_add2_a6 <- gt_tbl_d |> rows_add(.n_empty = 2, .after = 6)
   expect_snapshot_html(gt_tbl_d_add2_a6)
-  gt_tbl_d_add2_a7 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 7)
+  gt_tbl_d_add2_a7 <- gt_tbl_d |> rows_add(.n_empty = 2, .after = 7)
   expect_snapshot_html(gt_tbl_d_add2_a7)
-  gt_tbl_d_add2_a8 <- gt_tbl_d %>% rows_add(.n_empty = 2, .after = 8)
+  gt_tbl_d_add2_a8 <- gt_tbl_d |> rows_add(.n_empty = 2, .after = 8)
   expect_snapshot_html(gt_tbl_d_add2_a8)
-  expect_error(gt_tbl_d %>% rows_add(.n_empty = 2, .after = 9))
+  expect_error(gt_tbl_d |> rows_add(.n_empty = 2, .after = 9))
 
   gt_tbl_e <-
-    exibble %>%
+    exibble |>
     gt(rowname_col = "row")
 
-  gt_tbl_e_add1_b1 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 1)
+  gt_tbl_e_add1_b1 <- gt_tbl_e |> rows_add(.n_empty = 1, .before = 1)
   expect_snapshot_html(gt_tbl_e_add1_b1)
-  gt_tbl_e_add1_b2 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 2)
+  gt_tbl_e_add1_b2 <- gt_tbl_e |> rows_add(.n_empty = 1, .before = 2)
   expect_snapshot_html(gt_tbl_e_add1_b2)
-  gt_tbl_e_add1_b3 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 3)
+  gt_tbl_e_add1_b3 <- gt_tbl_e |> rows_add(.n_empty = 1, .before = 3)
   expect_snapshot_html(gt_tbl_e_add1_b3)
-  gt_tbl_e_add1_b4 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 4)
+  gt_tbl_e_add1_b4 <- gt_tbl_e |> rows_add(.n_empty = 1, .before = 4)
   expect_snapshot_html(gt_tbl_e_add1_b4)
-  gt_tbl_e_add1_b5 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 5)
+  gt_tbl_e_add1_b5 <- gt_tbl_e |> rows_add(.n_empty = 1, .before = 5)
   expect_snapshot_html(gt_tbl_e_add1_b5)
-  gt_tbl_e_add1_b6 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 6)
+  gt_tbl_e_add1_b6 <- gt_tbl_e |> rows_add(.n_empty = 1, .before = 6)
   expect_snapshot_html(gt_tbl_e_add1_b6)
-  gt_tbl_e_add1_b7 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 7)
+  gt_tbl_e_add1_b7 <- gt_tbl_e |> rows_add(.n_empty = 1, .before = 7)
   expect_snapshot_html(gt_tbl_e_add1_b7)
-  gt_tbl_e_add1_b8 <- gt_tbl_e %>% rows_add(.n_empty = 1, .before = 8)
+  gt_tbl_e_add1_b8 <- gt_tbl_e |> rows_add(.n_empty = 1, .before = 8)
   expect_snapshot_html(gt_tbl_e_add1_b8)
-  expect_error(gt_tbl_e %>% rows_add(.n_empty = 1, .before = 9))
+  expect_error(gt_tbl_e |> rows_add(.n_empty = 1, .before = 9))
 
-  gt_tbl_e_add1_a1 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 1)
+  gt_tbl_e_add1_a1 <- gt_tbl_e |> rows_add(.n_empty = 1, .after = 1)
   expect_snapshot_html(gt_tbl_e_add1_a1)
-  gt_tbl_e_add1_a2 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 2)
+  gt_tbl_e_add1_a2 <- gt_tbl_e |> rows_add(.n_empty = 1, .after = 2)
   expect_snapshot_html(gt_tbl_e_add1_a2)
-  gt_tbl_e_add1_a3 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 3)
+  gt_tbl_e_add1_a3 <- gt_tbl_e |> rows_add(.n_empty = 1, .after = 3)
   expect_snapshot_html(gt_tbl_e_add1_a3)
-  gt_tbl_e_add1_a4 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 4)
+  gt_tbl_e_add1_a4 <- gt_tbl_e |> rows_add(.n_empty = 1, .after = 4)
   expect_snapshot_html(gt_tbl_e_add1_a4)
-  gt_tbl_e_add1_a5 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 5)
+  gt_tbl_e_add1_a5 <- gt_tbl_e |> rows_add(.n_empty = 1, .after = 5)
   expect_snapshot_html(gt_tbl_e_add1_a5)
-  gt_tbl_e_add1_a6 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 6)
+  gt_tbl_e_add1_a6 <- gt_tbl_e |> rows_add(.n_empty = 1, .after = 6)
   expect_snapshot_html(gt_tbl_e_add1_a6)
-  gt_tbl_e_add1_a7 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 7)
+  gt_tbl_e_add1_a7 <- gt_tbl_e |> rows_add(.n_empty = 1, .after = 7)
   expect_snapshot_html(gt_tbl_e_add1_a7)
-  gt_tbl_e_add1_a8 <- gt_tbl_e %>% rows_add(.n_empty = 1, .after = 8)
+  gt_tbl_e_add1_a8 <- gt_tbl_e |> rows_add(.n_empty = 1, .after = 8)
   expect_snapshot_html(gt_tbl_e_add1_a8)
-  expect_error(gt_tbl_e %>% rows_add(.n_empty = 1, .after = 9))
+  expect_error(gt_tbl_e |> rows_add(.n_empty = 1, .after = 9))
 
-  gt_tbl_e_add2_b1 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 1)
+  gt_tbl_e_add2_b1 <- gt_tbl_e |> rows_add(.n_empty = 2, .before = 1)
   expect_snapshot_html(gt_tbl_e_add2_b1)
-  gt_tbl_e_add2_b2 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 2)
+  gt_tbl_e_add2_b2 <- gt_tbl_e |> rows_add(.n_empty = 2, .before = 2)
   expect_snapshot_html(gt_tbl_e_add2_b2)
-  gt_tbl_e_add2_b3 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 3)
+  gt_tbl_e_add2_b3 <- gt_tbl_e |> rows_add(.n_empty = 2, .before = 3)
   expect_snapshot_html(gt_tbl_e_add2_b3)
-  gt_tbl_e_add2_b4 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 4)
+  gt_tbl_e_add2_b4 <- gt_tbl_e |> rows_add(.n_empty = 2, .before = 4)
   expect_snapshot_html(gt_tbl_e_add2_b4)
-  gt_tbl_e_add2_b5 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 5)
+  gt_tbl_e_add2_b5 <- gt_tbl_e |> rows_add(.n_empty = 2, .before = 5)
   expect_snapshot_html(gt_tbl_e_add2_b5)
-  gt_tbl_e_add2_b6 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 6)
+  gt_tbl_e_add2_b6 <- gt_tbl_e |> rows_add(.n_empty = 2, .before = 6)
   expect_snapshot_html(gt_tbl_e_add2_b6)
-  gt_tbl_e_add2_b7 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 7)
+  gt_tbl_e_add2_b7 <- gt_tbl_e |> rows_add(.n_empty = 2, .before = 7)
   expect_snapshot_html(gt_tbl_e_add2_b7)
-  gt_tbl_e_add2_b8 <- gt_tbl_e %>% rows_add(.n_empty = 2, .before = 8)
+  gt_tbl_e_add2_b8 <- gt_tbl_e |> rows_add(.n_empty = 2, .before = 8)
   expect_snapshot_html(gt_tbl_e_add2_b8)
-  expect_error(gt_tbl_e %>% rows_add(.n_empty = 2, .before = 9))
+  expect_error(gt_tbl_e |> rows_add(.n_empty = 2, .before = 9))
 
-  gt_tbl_e_add2_a1 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 1)
+  gt_tbl_e_add2_a1 <- gt_tbl_e |> rows_add(.n_empty = 2, .after = 1)
   expect_snapshot_html(gt_tbl_e_add2_a1)
-  gt_tbl_e_add2_a2 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 2)
+  gt_tbl_e_add2_a2 <- gt_tbl_e |> rows_add(.n_empty = 2, .after = 2)
   expect_snapshot_html(gt_tbl_e_add2_a2)
-  gt_tbl_e_add2_a3 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 3)
+  gt_tbl_e_add2_a3 <- gt_tbl_e |> rows_add(.n_empty = 2, .after = 3)
   expect_snapshot_html(gt_tbl_e_add2_a3)
-  gt_tbl_e_add2_a4 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 4)
+  gt_tbl_e_add2_a4 <- gt_tbl_e |> rows_add(.n_empty = 2, .after = 4)
   expect_snapshot_html(gt_tbl_e_add2_a4)
-  gt_tbl_e_add2_a5 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 5)
+  gt_tbl_e_add2_a5 <- gt_tbl_e |> rows_add(.n_empty = 2, .after = 5)
   expect_snapshot_html(gt_tbl_e_add2_a5)
-  gt_tbl_e_add2_a6 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 6)
+  gt_tbl_e_add2_a6 <- gt_tbl_e |> rows_add(.n_empty = 2, .after = 6)
   expect_snapshot_html(gt_tbl_e_add2_a6)
-  gt_tbl_e_add2_a7 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 7)
+  gt_tbl_e_add2_a7 <- gt_tbl_e |> rows_add(.n_empty = 2, .after = 7)
   expect_snapshot_html(gt_tbl_e_add2_a7)
-  gt_tbl_e_add2_a8 <- gt_tbl_e %>% rows_add(.n_empty = 2, .after = 8)
+  gt_tbl_e_add2_a8 <- gt_tbl_e |> rows_add(.n_empty = 2, .after = 8)
   expect_snapshot_html(gt_tbl_e_add2_a8)
-  expect_error(gt_tbl_e %>% rows_add(.n_empty = 2, .after = 9))
+  expect_error(gt_tbl_e |> rows_add(.n_empty = 2, .after = 9))
 
   gt_tbl_f <-
-    exibble %>%
+    exibble |>
     gt(rowname_col = "row", groupname_col = "group")
 
-  gt_tbl_f_add1_b1 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 1)
+  gt_tbl_f_add1_b1 <- gt_tbl_f |> rows_add(.n_empty = 1, .before = 1)
   expect_snapshot_html(gt_tbl_f_add1_b1)
-  gt_tbl_f_add1_b2 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 2)
+  gt_tbl_f_add1_b2 <- gt_tbl_f |> rows_add(.n_empty = 1, .before = 2)
   expect_snapshot_html(gt_tbl_f_add1_b2)
-  gt_tbl_f_add1_b3 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 3)
+  gt_tbl_f_add1_b3 <- gt_tbl_f |> rows_add(.n_empty = 1, .before = 3)
   expect_snapshot_html(gt_tbl_f_add1_b3)
-  gt_tbl_f_add1_b4 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 4)
+  gt_tbl_f_add1_b4 <- gt_tbl_f |> rows_add(.n_empty = 1, .before = 4)
   expect_snapshot_html(gt_tbl_f_add1_b4)
-  gt_tbl_f_add1_b5 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 5)
+  gt_tbl_f_add1_b5 <- gt_tbl_f |> rows_add(.n_empty = 1, .before = 5)
   expect_snapshot_html(gt_tbl_f_add1_b5)
-  gt_tbl_f_add1_b6 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 6)
+  gt_tbl_f_add1_b6 <- gt_tbl_f |> rows_add(.n_empty = 1, .before = 6)
   expect_snapshot_html(gt_tbl_f_add1_b6)
-  gt_tbl_f_add1_b7 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 7)
+  gt_tbl_f_add1_b7 <- gt_tbl_f |> rows_add(.n_empty = 1, .before = 7)
   expect_snapshot_html(gt_tbl_f_add1_b7)
-  gt_tbl_f_add1_b8 <- gt_tbl_f %>% rows_add(.n_empty = 1, .before = 8)
+  gt_tbl_f_add1_b8 <- gt_tbl_f |> rows_add(.n_empty = 1, .before = 8)
   expect_snapshot_html(gt_tbl_f_add1_b8)
-  expect_error(gt_tbl_f %>% rows_add(.n_empty = 1, .before = 9))
+  expect_error(gt_tbl_f |> rows_add(.n_empty = 1, .before = 9))
 
-  gt_tbl_f_add1_a1 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 1)
+  gt_tbl_f_add1_a1 <- gt_tbl_f |> rows_add(.n_empty = 1, .after = 1)
   expect_snapshot_html(gt_tbl_f_add1_a1)
-  gt_tbl_f_add1_a2 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 2)
+  gt_tbl_f_add1_a2 <- gt_tbl_f |> rows_add(.n_empty = 1, .after = 2)
   expect_snapshot_html(gt_tbl_f_add1_a2)
-  gt_tbl_f_add1_a3 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 3)
+  gt_tbl_f_add1_a3 <- gt_tbl_f |> rows_add(.n_empty = 1, .after = 3)
   expect_snapshot_html(gt_tbl_f_add1_a3)
-  gt_tbl_f_add1_a4 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 4)
+  gt_tbl_f_add1_a4 <- gt_tbl_f |> rows_add(.n_empty = 1, .after = 4)
   expect_snapshot_html(gt_tbl_f_add1_a4)
-  gt_tbl_f_add1_a5 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 5)
+  gt_tbl_f_add1_a5 <- gt_tbl_f |> rows_add(.n_empty = 1, .after = 5)
   expect_snapshot_html(gt_tbl_f_add1_a5)
-  gt_tbl_f_add1_a6 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 6)
+  gt_tbl_f_add1_a6 <- gt_tbl_f |> rows_add(.n_empty = 1, .after = 6)
   expect_snapshot_html(gt_tbl_f_add1_a6)
-  gt_tbl_f_add1_a7 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 7)
+  gt_tbl_f_add1_a7 <- gt_tbl_f |> rows_add(.n_empty = 1, .after = 7)
   expect_snapshot_html(gt_tbl_f_add1_a7)
-  gt_tbl_f_add1_a8 <- gt_tbl_f %>% rows_add(.n_empty = 1, .after = 8)
+  gt_tbl_f_add1_a8 <- gt_tbl_f |> rows_add(.n_empty = 1, .after = 8)
   expect_snapshot_html(gt_tbl_f_add1_a8)
-  expect_error(gt_tbl_f %>% rows_add(.n_empty = 1, .after = 9))
+  expect_error(gt_tbl_f |> rows_add(.n_empty = 1, .after = 9))
 
-  gt_tbl_f_add2_b1 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 1)
+  gt_tbl_f_add2_b1 <- gt_tbl_f |> rows_add(.n_empty = 2, .before = 1)
   expect_snapshot_html(gt_tbl_f_add2_b1)
-  gt_tbl_f_add2_b2 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 2)
+  gt_tbl_f_add2_b2 <- gt_tbl_f |> rows_add(.n_empty = 2, .before = 2)
   expect_snapshot_html(gt_tbl_f_add2_b2)
-  gt_tbl_f_add2_b3 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 3)
+  gt_tbl_f_add2_b3 <- gt_tbl_f |> rows_add(.n_empty = 2, .before = 3)
   expect_snapshot_html(gt_tbl_f_add2_b3)
-  gt_tbl_f_add2_b4 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 4)
+  gt_tbl_f_add2_b4 <- gt_tbl_f |> rows_add(.n_empty = 2, .before = 4)
   expect_snapshot_html(gt_tbl_f_add2_b4)
-  gt_tbl_f_add2_b5 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 5)
+  gt_tbl_f_add2_b5 <- gt_tbl_f |> rows_add(.n_empty = 2, .before = 5)
   expect_snapshot_html(gt_tbl_f_add2_b5)
-  gt_tbl_f_add2_b6 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 6)
+  gt_tbl_f_add2_b6 <- gt_tbl_f |> rows_add(.n_empty = 2, .before = 6)
   expect_snapshot_html(gt_tbl_f_add2_b6)
-  gt_tbl_f_add2_b7 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 7)
+  gt_tbl_f_add2_b7 <- gt_tbl_f |> rows_add(.n_empty = 2, .before = 7)
   expect_snapshot_html(gt_tbl_f_add2_b7)
-  gt_tbl_f_add2_b8 <- gt_tbl_f %>% rows_add(.n_empty = 2, .before = 8)
+  gt_tbl_f_add2_b8 <- gt_tbl_f |> rows_add(.n_empty = 2, .before = 8)
   expect_snapshot_html(gt_tbl_f_add2_b8)
-  expect_error(gt_tbl_f %>% rows_add(.n_empty = 2, .before = 9))
+  expect_error(gt_tbl_f |> rows_add(.n_empty = 2, .before = 9))
 
-  gt_tbl_f_add2_a1 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 1)
+  gt_tbl_f_add2_a1 <- gt_tbl_f |> rows_add(.n_empty = 2, .after = 1)
   expect_snapshot_html(gt_tbl_f_add2_a1)
-  gt_tbl_f_add2_a2 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 2)
+  gt_tbl_f_add2_a2 <- gt_tbl_f |> rows_add(.n_empty = 2, .after = 2)
   expect_snapshot_html(gt_tbl_f_add2_a2)
-  gt_tbl_f_add2_a3 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 3)
+  gt_tbl_f_add2_a3 <- gt_tbl_f |> rows_add(.n_empty = 2, .after = 3)
   expect_snapshot_html(gt_tbl_f_add2_a3)
-  gt_tbl_f_add2_a4 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 4)
+  gt_tbl_f_add2_a4 <- gt_tbl_f |> rows_add(.n_empty = 2, .after = 4)
   expect_snapshot_html(gt_tbl_f_add2_a4)
-  gt_tbl_f_add2_a5 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 5)
+  gt_tbl_f_add2_a5 <- gt_tbl_f |> rows_add(.n_empty = 2, .after = 5)
   expect_snapshot_html(gt_tbl_f_add2_a5)
-  gt_tbl_f_add2_a6 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 6)
+  gt_tbl_f_add2_a6 <- gt_tbl_f |> rows_add(.n_empty = 2, .after = 6)
   expect_snapshot_html(gt_tbl_f_add2_a6)
-  gt_tbl_f_add2_a7 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 7)
+  gt_tbl_f_add2_a7 <- gt_tbl_f |> rows_add(.n_empty = 2, .after = 7)
   expect_snapshot_html(gt_tbl_f_add2_a7)
-  gt_tbl_f_add2_a8 <- gt_tbl_f %>% rows_add(.n_empty = 2, .after = 8)
+  gt_tbl_f_add2_a8 <- gt_tbl_f |> rows_add(.n_empty = 2, .after = 8)
   expect_snapshot_html(gt_tbl_f_add2_a8)
-  expect_error(gt_tbl_f %>% rows_add(.n_empty = 2, .after = 9))
+  expect_error(gt_tbl_f |> rows_add(.n_empty = 2, .after = 9))
 
   gt_tbl_g <-
-    exibble %>%
+    exibble |>
     gt(groupname_col = "group")
 
-  gt_tbl_g_add1_b1 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 1)
+  gt_tbl_g_add1_b1 <- gt_tbl_g |> rows_add(.n_empty = 1, .before = 1)
   expect_snapshot_html(gt_tbl_g_add1_b1)
-  gt_tbl_g_add1_b2 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 2)
+  gt_tbl_g_add1_b2 <- gt_tbl_g |> rows_add(.n_empty = 1, .before = 2)
   expect_snapshot_html(gt_tbl_g_add1_b2)
-  gt_tbl_g_add1_b3 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 3)
+  gt_tbl_g_add1_b3 <- gt_tbl_g |> rows_add(.n_empty = 1, .before = 3)
   expect_snapshot_html(gt_tbl_g_add1_b3)
-  gt_tbl_g_add1_b4 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 4)
+  gt_tbl_g_add1_b4 <- gt_tbl_g |> rows_add(.n_empty = 1, .before = 4)
   expect_snapshot_html(gt_tbl_g_add1_b4)
-  gt_tbl_g_add1_b5 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 5)
+  gt_tbl_g_add1_b5 <- gt_tbl_g |> rows_add(.n_empty = 1, .before = 5)
   expect_snapshot_html(gt_tbl_g_add1_b5)
-  gt_tbl_g_add1_b6 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 6)
+  gt_tbl_g_add1_b6 <- gt_tbl_g |> rows_add(.n_empty = 1, .before = 6)
   expect_snapshot_html(gt_tbl_g_add1_b6)
-  gt_tbl_g_add1_b7 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 7)
+  gt_tbl_g_add1_b7 <- gt_tbl_g |> rows_add(.n_empty = 1, .before = 7)
   expect_snapshot_html(gt_tbl_g_add1_b7)
-  gt_tbl_g_add1_b8 <- gt_tbl_g %>% rows_add(.n_empty = 1, .before = 8)
+  gt_tbl_g_add1_b8 <- gt_tbl_g |> rows_add(.n_empty = 1, .before = 8)
   expect_snapshot_html(gt_tbl_g_add1_b8)
-  expect_error(gt_tbl_g %>% rows_add(.n_empty = 1, .before = 9))
+  expect_error(gt_tbl_g |> rows_add(.n_empty = 1, .before = 9))
 
-  gt_tbl_g_add1_a1 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 1)
+  gt_tbl_g_add1_a1 <- gt_tbl_g |> rows_add(.n_empty = 1, .after = 1)
   expect_snapshot_html(gt_tbl_g_add1_a1)
-  gt_tbl_g_add1_a2 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 2)
+  gt_tbl_g_add1_a2 <- gt_tbl_g |> rows_add(.n_empty = 1, .after = 2)
   expect_snapshot_html(gt_tbl_g_add1_a2)
-  gt_tbl_g_add1_a3 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 3)
+  gt_tbl_g_add1_a3 <- gt_tbl_g |> rows_add(.n_empty = 1, .after = 3)
   expect_snapshot_html(gt_tbl_g_add1_a3)
-  gt_tbl_g_add1_a4 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 4)
+  gt_tbl_g_add1_a4 <- gt_tbl_g |> rows_add(.n_empty = 1, .after = 4)
   expect_snapshot_html(gt_tbl_g_add1_a4)
-  gt_tbl_g_add1_a5 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 5)
+  gt_tbl_g_add1_a5 <- gt_tbl_g |> rows_add(.n_empty = 1, .after = 5)
   expect_snapshot_html(gt_tbl_g_add1_a5)
-  gt_tbl_g_add1_a6 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 6)
+  gt_tbl_g_add1_a6 <- gt_tbl_g |> rows_add(.n_empty = 1, .after = 6)
   expect_snapshot_html(gt_tbl_g_add1_a6)
-  gt_tbl_g_add1_a7 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 7)
+  gt_tbl_g_add1_a7 <- gt_tbl_g |> rows_add(.n_empty = 1, .after = 7)
   expect_snapshot_html(gt_tbl_g_add1_a7)
-  gt_tbl_g_add1_a8 <- gt_tbl_g %>% rows_add(.n_empty = 1, .after = 8)
+  gt_tbl_g_add1_a8 <- gt_tbl_g |> rows_add(.n_empty = 1, .after = 8)
   expect_snapshot_html(gt_tbl_g_add1_a8)
-  expect_error(gt_tbl_g %>% rows_add(.n_empty = 1, .after = 9))
+  expect_error(gt_tbl_g |> rows_add(.n_empty = 1, .after = 9))
 
-  gt_tbl_g_add2_b1 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 1)
+  gt_tbl_g_add2_b1 <- gt_tbl_g |> rows_add(.n_empty = 2, .before = 1)
   expect_snapshot_html(gt_tbl_g_add2_b1)
-  gt_tbl_g_add2_b2 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 2)
+  gt_tbl_g_add2_b2 <- gt_tbl_g |> rows_add(.n_empty = 2, .before = 2)
   expect_snapshot_html(gt_tbl_g_add2_b2)
-  gt_tbl_g_add2_b3 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 3)
+  gt_tbl_g_add2_b3 <- gt_tbl_g |> rows_add(.n_empty = 2, .before = 3)
   expect_snapshot_html(gt_tbl_g_add2_b3)
-  gt_tbl_g_add2_b4 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 4)
+  gt_tbl_g_add2_b4 <- gt_tbl_g |> rows_add(.n_empty = 2, .before = 4)
   expect_snapshot_html(gt_tbl_g_add2_b4)
-  gt_tbl_g_add2_b5 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 5)
+  gt_tbl_g_add2_b5 <- gt_tbl_g |> rows_add(.n_empty = 2, .before = 5)
   expect_snapshot_html(gt_tbl_g_add2_b5)
-  gt_tbl_g_add2_b6 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 6)
+  gt_tbl_g_add2_b6 <- gt_tbl_g |> rows_add(.n_empty = 2, .before = 6)
   expect_snapshot_html(gt_tbl_g_add2_b6)
-  gt_tbl_g_add2_b7 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 7)
+  gt_tbl_g_add2_b7 <- gt_tbl_g |> rows_add(.n_empty = 2, .before = 7)
   expect_snapshot_html(gt_tbl_g_add2_b7)
-  gt_tbl_g_add2_b8 <- gt_tbl_g %>% rows_add(.n_empty = 2, .before = 8)
+  gt_tbl_g_add2_b8 <- gt_tbl_g |> rows_add(.n_empty = 2, .before = 8)
   expect_snapshot_html(gt_tbl_g_add2_b8)
-  expect_error(gt_tbl_g %>% rows_add(.n_empty = 2, .before = 9))
+  expect_error(gt_tbl_g |> rows_add(.n_empty = 2, .before = 9))
 
-  gt_tbl_g_add2_a1 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 1)
+  gt_tbl_g_add2_a1 <- gt_tbl_g |> rows_add(.n_empty = 2, .after = 1)
   expect_snapshot_html(gt_tbl_g_add2_a1)
-  gt_tbl_g_add2_a2 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 2)
+  gt_tbl_g_add2_a2 <- gt_tbl_g |> rows_add(.n_empty = 2, .after = 2)
   expect_snapshot_html(gt_tbl_g_add2_a2)
-  gt_tbl_g_add2_a3 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 3)
+  gt_tbl_g_add2_a3 <- gt_tbl_g |> rows_add(.n_empty = 2, .after = 3)
   expect_snapshot_html(gt_tbl_g_add2_a3)
-  gt_tbl_g_add2_a4 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 4)
+  gt_tbl_g_add2_a4 <- gt_tbl_g |> rows_add(.n_empty = 2, .after = 4)
   expect_snapshot_html(gt_tbl_g_add2_a4)
-  gt_tbl_g_add2_a5 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 5)
+  gt_tbl_g_add2_a5 <- gt_tbl_g |> rows_add(.n_empty = 2, .after = 5)
   expect_snapshot_html(gt_tbl_g_add2_a5)
-  gt_tbl_g_add2_a6 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 6)
+  gt_tbl_g_add2_a6 <- gt_tbl_g |> rows_add(.n_empty = 2, .after = 6)
   expect_snapshot_html(gt_tbl_g_add2_a6)
-  gt_tbl_g_add2_a7 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 7)
+  gt_tbl_g_add2_a7 <- gt_tbl_g |> rows_add(.n_empty = 2, .after = 7)
   expect_snapshot_html(gt_tbl_g_add2_a7)
-  gt_tbl_g_add2_a8 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 8)
+  gt_tbl_g_add2_a8 <- gt_tbl_g |> rows_add(.n_empty = 2, .after = 8)
   expect_snapshot_html(gt_tbl_g_add2_a8)
-  expect_error(gt_tbl_g %>% rows_add(.n_empty = 2, .after = 9))
+  expect_error(gt_tbl_g |> rows_add(.n_empty = 2, .after = 9))
 
   # Expect an error if using both `.before` and `.after`
   expect_error(
-    gt_tbl_e %>%
+    gt_tbl_e |>
       rows_add(.before = 2, .after = 5, .n_empty = 2)
   )
   expect_error(
-    gt_tbl_e %>%
+    gt_tbl_e |>
       rows_add(.before = 3, .after = 2, .n_empty = 2)
   )
 
   # Expect that targeting rows should only resolve to a single row
   expect_error(
-    gt_tbl_e %>%
+    gt_tbl_e |>
       rows_add(.before = c(2, 5), .n_empty = 2)
   )
   expect_error(
-    gt_tbl_e %>%
+    gt_tbl_e |>
       rows_add(.after = c(2, 5), .n_empty = 2)
   )
   expect_error(
-    gt_tbl_e %>%
+    gt_tbl_e |>
       rows_add(.before = c("row_2", "row_5"), .n_empty = 2)
   )
   expect_error(
-    gt_tbl_e %>%
+    gt_tbl_e |>
       rows_add(.after = c("row_2", "row_5"), .n_empty = 2)
   )
   expect_error(
-    gt_tbl_e %>%
+    gt_tbl_e |>
       rows_add(.before = matches("5|6"), .n_empty = 2)
   )
   expect_error(
-    gt_tbl_e %>%
+    gt_tbl_e |>
       rows_add(.after = matches("5|6"), .n_empty = 2)
   )
   expect_error(
-    gt_tbl_e %>%
+    gt_tbl_e |>
       rows_add(.after = matches("5|6"), .before = 3, .n_empty = 2)
   )
   expect_error(
-    gt_tbl_e %>%
+    gt_tbl_e |>
       rows_add(.before = matches("5|6"), .after = 3, .n_empty = 2)
   )
   expect_error(
-    gt_tbl_e %>%
+    gt_tbl_e |>
       rows_add(.before = matches("5"), .after = matches("6"), .n_empty = 2)
   )
 })
@@ -1094,12 +1094,12 @@ test_that("rows can be added to a table with name-value pairs", {
 test_that("adding rows can be done using formula-based expressions", {
 
   gt_tbl_h <-
-    exibble %>%
+    exibble |>
     gt(rowname_col = "row", groupname_col = "group")
 
   # Add a single row, using two values
   gt_tbl_h_01 <-
-    gt_tbl_h %>%
+    gt_tbl_h |>
     rows_add(
       num ~ 5.79,
       currency ~ 25.3
@@ -1120,7 +1120,7 @@ test_that("adding rows can be done using formula-based expressions", {
 
   # Add a single row, this time with more values
   gt_tbl_h_02 <-
-    gt_tbl_h %>%
+    gt_tbl_h |>
     rows_add(
       num ~ 5.79,
       currency ~ 25.3,
@@ -1146,7 +1146,7 @@ test_that("adding rows can be done using formula-based expressions", {
 
   # Add three rows, include repeating values
   gt_tbl_h_03 <-
-    gt_tbl_h %>%
+    gt_tbl_h |>
     rows_add(
       num ~ 5.79,
       currency ~ 25.3,
@@ -1172,7 +1172,7 @@ test_that("adding rows can be done using formula-based expressions", {
 
   # Add one row, include a `rowname_col` value in 'row'
   gt_tbl_h_04 <-
-    gt_tbl_h %>%
+    gt_tbl_h |>
     rows_add(
       row ~ "row_9",
       num ~ 5.79,
@@ -1200,7 +1200,7 @@ test_that("adding rows can be done using formula-based expressions", {
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group'
   gt_tbl_h_05 <-
-    gt_tbl_h %>%
+    gt_tbl_h |>
     rows_add(
       row ~ "row_9",
       group ~ "grp_b",
@@ -1229,7 +1229,7 @@ test_that("adding rows can be done using formula-based expressions", {
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group' (this time using a new group name)
   gt_tbl_h_06 <-
-    gt_tbl_h %>%
+    gt_tbl_h |>
     rows_add(
       row ~ "row_9",
       group ~ "grp_c",
@@ -1258,7 +1258,7 @@ test_that("adding rows can be done using formula-based expressions", {
   # Add two rows, include two `rowname_col` values in 'row' and include
   # two different 'groupname_col' values in 'group'
   gt_tbl_h_07 <-
-    gt_tbl_h %>%
+    gt_tbl_h |>
     rows_add(
       row ~ c("row_4.5", "row_8.5"),
       group ~ c("grp_a", "grp_b"),
@@ -1286,7 +1286,7 @@ test_that("adding rows can be done using formula-based expressions", {
 
   # Use a mix of name-value pairs and formula expressions
   gt_tbl_h_08 <-
-    gt_tbl_h %>%
+    gt_tbl_h |>
     rows_add(
       row = c("row_4.5", "row_8.5"),
       group ~ c("grp_a", "grp_b"),
@@ -1314,7 +1314,7 @@ test_that("adding rows can be done using formula-based expressions", {
 
   # Use Tidyselect-style expressions on the LHS
   gt_tbl_h_09 <-
-    gt_tbl_h %>%
+    gt_tbl_h |>
     rows_add(
       one_of("row") ~ c("row_4.5", "row_8.5"),
       starts_with("gr") ~ c("grp_a", "grp_b"),
@@ -1342,7 +1342,7 @@ test_that("adding rows can be done using formula-based expressions", {
 
   # Use mix of Tidyselect-style expressions and vectors on the LHS
   gt_tbl_h_10 <-
-    gt_tbl_h %>%
+    gt_tbl_h |>
     rows_add(
       one_of("row") ~ c("row_4.5", "row_8.5"),
       starts_with("gr") ~ c("grp_a", "grp_b"),
@@ -1375,8 +1375,8 @@ test_that("adding rows can be done using formula-based expressions", {
     dplyr::tibble(
       a = 1:10,
       b = 21:30
-    ) %>%
-    gt() %>%
+    ) |>
+    gt() |>
     rows_add(
       everything() ~ 99
     )
@@ -1389,8 +1389,8 @@ test_that("adding rows can be done using formula-based expressions", {
     dplyr::tibble(
       a = 1:10,
       b = 21:30
-    ) %>%
-      gt() %>%
+    ) |>
+      gt() |>
       rows_add(
         ~ 99
       )
@@ -1400,12 +1400,12 @@ test_that("adding rows can be done using formula-based expressions", {
 test_that("adding rows can be done through the `.list` argument", {
 
   gt_tbl_i <-
-    exibble %>%
+    exibble |>
     gt(rowname_col = "row", groupname_col = "group")
 
   # Add a single row, using two values
   gt_tbl_i_01 <-
-    gt_tbl_i %>%
+    gt_tbl_i |>
     rows_add(
       .list = list(
         num = 5.79,
@@ -1428,7 +1428,7 @@ test_that("adding rows can be done through the `.list` argument", {
 
   # Add a single row, this time with more values
   gt_tbl_i_02 <-
-    gt_tbl_i %>%
+    gt_tbl_i |>
     rows_add(
       .list = list(
         num ~ 5.79,
@@ -1456,7 +1456,7 @@ test_that("adding rows can be done through the `.list` argument", {
 
   # Add three rows, include repeating values
   gt_tbl_i_03 <-
-    gt_tbl_i %>%
+    gt_tbl_i |>
     rows_add(
       .list = list(
         num ~ 5.79,
@@ -1484,7 +1484,7 @@ test_that("adding rows can be done through the `.list` argument", {
 
   # Add one row, include a `rowname_col` value in 'row'
   gt_tbl_i_04 <-
-    gt_tbl_i %>%
+    gt_tbl_i |>
     rows_add(
       .list = list(
         row ~ "row_9",
@@ -1514,7 +1514,7 @@ test_that("adding rows can be done through the `.list` argument", {
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group'
   gt_tbl_i_05 <-
-    gt_tbl_i %>%
+    gt_tbl_i |>
     rows_add(
       .list = list(
         row ~ "row_9",
@@ -1545,7 +1545,7 @@ test_that("adding rows can be done through the `.list` argument", {
   # Add one row, include a `rowname_col` value in 'row' and include
   # a 'groupname_col' value in 'group' (this time using a new group name)
   gt_tbl_i_06 <-
-    gt_tbl_i %>%
+    gt_tbl_i |>
     rows_add(
       .list = list(
         row ~ "row_9",
@@ -1576,7 +1576,7 @@ test_that("adding rows can be done through the `.list` argument", {
   # Add two rows, include two `rowname_col` values in 'row' and include
   # two different 'groupname_col' values in 'group'
   gt_tbl_i_07 <-
-    gt_tbl_i %>%
+    gt_tbl_i |>
     rows_add(
       .list = list(
         row ~ c("row_4.5", "row_8.5"),
@@ -1606,7 +1606,7 @@ test_that("adding rows can be done through the `.list` argument", {
 
   # Use a mix of name-value pairs and formula expressions
   gt_tbl_i_08 <-
-    gt_tbl_i %>%
+    gt_tbl_i |>
     rows_add(
       .list = list(
         row = c("row_4.5", "row_8.5"),
@@ -1636,7 +1636,7 @@ test_that("adding rows can be done through the `.list` argument", {
 
   # Use Tidyselect-style expressions on the LHS
   gt_tbl_i_09 <-
-    gt_tbl_i %>%
+    gt_tbl_i |>
     rows_add(
       .list = list(
         one_of("row") ~ c("row_4.5", "row_8.5"),
@@ -1666,7 +1666,7 @@ test_that("adding rows can be done through the `.list` argument", {
 
   # Use mix of Tidyselect-style expressions and vectors on the LHS
   gt_tbl_i_10 <-
-    gt_tbl_i %>%
+    gt_tbl_i |>
     rows_add(
       .list = list(
         one_of("row") ~ c("row_4.5", "row_8.5"),
@@ -1701,8 +1701,8 @@ test_that("adding rows can be done through the `.list` argument", {
     dplyr::tibble(
       a = 1:10,
       b = 21:30
-    ) %>%
-    gt() %>%
+    ) |>
+    gt() |>
     rows_add(
       .list = list(
         everything() ~ 99
@@ -1717,43 +1717,43 @@ test_that("adding rows can only involve columns already present in the table", {
 
   gt_tbl <- gt(exibble)
 
-  expect_no_error(gt_tbl %>% rows_add())
-  expect_no_error(gt_tbl %>% rows_add(char = "elderberry"))
-  expect_error(gt_tbl %>% rows_add(char_none = "elderberry"))
-  expect_error(gt_tbl %>% rows_add(char = "elderberry", char_none = "watermelon"))
+  expect_no_error(gt_tbl |> rows_add())
+  expect_no_error(gt_tbl |> rows_add(char = "elderberry"))
+  expect_error(gt_tbl |> rows_add(char_none = "elderberry"))
+  expect_error(gt_tbl |> rows_add(char = "elderberry", char_none = "watermelon"))
 
   gt_tbl_2 <- gt(exibble, rowname_col = "row")
 
-  expect_no_error(gt_tbl_2 %>% rows_add())
-  expect_no_error(gt_tbl_2 %>% rows_add(char = "elderberry"))
-  expect_error(gt_tbl_2 %>% rows_add(char_none = "elderberry"))
-  expect_error(gt_tbl_2 %>% rows_add(char = "elderberry", char_none = "watermelon"))
+  expect_no_error(gt_tbl_2 |> rows_add())
+  expect_no_error(gt_tbl_2 |> rows_add(char = "elderberry"))
+  expect_error(gt_tbl_2 |> rows_add(char_none = "elderberry"))
+  expect_error(gt_tbl_2 |> rows_add(char = "elderberry", char_none = "watermelon"))
 
   gt_tbl_3 <- gt(exibble, rowname_col = "row", groupname_col = "group")
 
-  expect_no_error(gt_tbl_3 %>% rows_add())
-  expect_no_error(gt_tbl_3 %>% rows_add(char = "elderberry"))
-  expect_error(gt_tbl_3 %>% rows_add(char_none = "elderberry"))
-  expect_error(gt_tbl_3 %>% rows_add(char = "elderberry", char_none = "watermelon"))
+  expect_no_error(gt_tbl_3 |> rows_add())
+  expect_no_error(gt_tbl_3 |> rows_add(char = "elderberry"))
+  expect_error(gt_tbl_3 |> rows_add(char_none = "elderberry"))
+  expect_error(gt_tbl_3 |> rows_add(char = "elderberry", char_none = "watermelon"))
 
   gt_tbl_4 <- gt(exibble, groupname_col = "group")
 
-  expect_no_error(gt_tbl_4 %>% rows_add())
-  expect_no_error(gt_tbl_4 %>% rows_add(char = "elderberry"))
-  expect_error(gt_tbl_4 %>% rows_add(char_none = "elderberry"))
-  expect_error(gt_tbl_4 %>% rows_add(char = "elderberry", char_none = "watermelon"))
+  expect_no_error(gt_tbl_4 |> rows_add())
+  expect_no_error(gt_tbl_4 |> rows_add(char = "elderberry"))
+  expect_error(gt_tbl_4 |> rows_add(char_none = "elderberry"))
+  expect_error(gt_tbl_4 |> rows_add(char = "elderberry", char_none = "watermelon"))
 })
 
 test_that("adding rows can only be done with compatible data", {
 
   gt_tbl <- gt(exibble)
 
-  expect_no_error(gt_tbl %>% rows_add(char = "elderberry"))
-  expect_error(gt_tbl %>% rows_add(char = 2))
-  expect_error(gt_tbl %>% rows_add(char = list("two")))
-  expect_error(gt_tbl %>% rows_add(char = "elderberry", time = 600))
-  expect_no_error(gt_tbl %>% rows_add(fctr = "nine"))
-  expect_no_error(gt_tbl %>% rows_add(fctr = factor("nine")))
+  expect_no_error(gt_tbl |> rows_add(char = "elderberry"))
+  expect_error(gt_tbl |> rows_add(char = 2))
+  expect_error(gt_tbl |> rows_add(char = list("two")))
+  expect_error(gt_tbl |> rows_add(char = "elderberry", time = 600))
+  expect_no_error(gt_tbl |> rows_add(fctr = "nine"))
+  expect_no_error(gt_tbl |> rows_add(fctr = factor("nine")))
 })
 
 test_that("adding rows and styling the table has the intended behavior", {
@@ -1761,175 +1761,175 @@ test_that("adding rows and styling the table has the intended behavior", {
   gt_tbl <- gt(exibble, rowname_col = "row")
 
   gt_tbl_style_01 <-
-    gt_tbl %>%
-    rows_add(row = "row_9") %>%
+    gt_tbl |>
+    rows_add(row = "row_9") |>
     tab_style(
       style = cell_fill(),
       locations = cells_body(rows = 1:8)
     )
 
   gt_tbl_style_02 <-
-    gt_tbl %>%
+    gt_tbl |>
     tab_style(
       style = cell_fill(),
       locations = cells_body(rows = 1:8)
-    ) %>%
+    ) |>
     rows_add(row = "row_9")
 
   gt_tbl_style_03 <-
-    gt_tbl %>%
-    rows_add(row = "row_3.5", .after = 3) %>%
+    gt_tbl |>
+    rows_add(row = "row_3.5", .after = 3) |>
     tab_style(
       style = cell_fill(),
       locations = cells_body(rows = 1:8)
     )
 
   gt_tbl_style_04 <-
-    gt_tbl %>%
+    gt_tbl |>
     tab_style(
       style = cell_fill(),
       locations = cells_body(rows = 1:8)
-    ) %>%
+    ) |>
     rows_add(row = "row_3.5", .after = 3)
 
   gt_tbl_style_05 <-
-    gt_tbl %>%
-    rows_add(row = "row_3.5", .after = "row_3") %>%
+    gt_tbl |>
+    rows_add(row = "row_3.5", .after = "row_3") |>
     tab_style(
       style = cell_fill(),
       locations = cells_body(rows = 1:8)
     )
 
   gt_tbl_style_06 <-
-    gt_tbl %>%
+    gt_tbl |>
     tab_style(
       style = cell_fill(),
       locations = cells_body(rows = 1:8)
-    ) %>%
+    ) |>
     rows_add(row = "row_3.5", .after = "row_3")
 
   gt_tbl_style_07 <-
-    gt_tbl %>%
-    rows_add(row = "row_3.5", .after = "row_3") %>%
+    gt_tbl |>
+    rows_add(row = "row_3.5", .after = "row_3") |>
     tab_style(
       style = cell_fill(),
       locations = cells_body(rows = matches("\\."))
     )
 
   gt_tbl_style_08 <-
-    gt_tbl %>%
+    gt_tbl |>
     tab_style(
       style = cell_fill(),
       locations = cells_body(rows = matches("\\."))
-    ) %>%
+    ) |>
     rows_add(row = "row_3.5", .after = "row_3")
 
   gt_tbl_style_09 <-
-    gt_tbl %>%
-    rows_add(row = "row_3.5", .after = "row_3") %>%
+    gt_tbl |>
+    rows_add(row = "row_3.5", .after = "row_3") |>
     tab_style(
       style = cell_fill(),
       locations = cells_body()
     )
 
   gt_tbl_style_10 <-
-    gt_tbl %>%
+    gt_tbl |>
     tab_style(
       style = cell_fill(),
       locations = cells_body()
-    ) %>%
+    ) |>
     rows_add(row = "row_3.5", .after = "row_3")
 
   gt_tbl_style_11 <-
-    gt_tbl %>%
-    rows_add(row = "row_3.5", .after = "row_3") %>%
+    gt_tbl |>
+    rows_add(row = "row_3.5", .after = "row_3") |>
     tab_style(
       style = cell_fill(),
       locations = cells_body(rows = 9)
     )
 
   gt_tbl_style_12 <-
-    gt_tbl %>%
-    rows_add(row = "row_0", .before = 1) %>%
+    gt_tbl |>
+    rows_add(row = "row_0", .before = 1) |>
     tab_style(
       style = cell_fill(),
       locations = cells_body(rows = "row_0")
     )
 
   gt_tbl_style_13 <-
-    gt_tbl %>%
-    rows_add(num = 2343, .after = "row_3") %>%
+    gt_tbl |>
+    rows_add(num = 2343, .after = "row_3") |>
     tab_style(
       style = cell_fill(),
       locations = cells_body()
     )
 
   gt_tbl_style_14 <-
-    gt_tbl %>%
+    gt_tbl |>
     tab_style(
       style = cell_fill(),
       locations = cells_body()
-    ) %>%
+    ) |>
     rows_add(num = 2343, .after = "row_3")
 
   gt_tbl_style_15 <-
-    gt_tbl %>%
-    rows_add(num = 2343, .after = "row_3") %>%
+    gt_tbl |>
+    rows_add(num = 2343, .after = "row_3") |>
     data_color()
 
   gt_tbl_style_16 <-
-    gt_tbl %>%
-    data_color() %>%
+    gt_tbl |>
+    data_color() |>
     rows_add(num = 2343, .after = "row_3")
 
   gt_tbl_style_17 <-
-    gt_tbl %>%
-    data_color() %>%
-    rows_add(num = 2343, .after = "row_3") %>%
+    gt_tbl |>
+    data_color() |>
+    rows_add(num = 2343, .after = "row_3") |>
     data_color()
 
   gt_tbl_style_18 <-
-    gt_tbl %>%
+    gt_tbl |>
     tab_style(
       style = cell_fill(),
       locations = cells_body()
-    ) %>%
-    rows_add(num = 2343, .after = "row_3") %>%
+    ) |>
+    rows_add(num = 2343, .after = "row_3") |>
     tab_style(
       style = cell_fill(),
       locations = cells_body()
     )
 
   gt_tbl_style_19 <-
-    gt_tbl %>%
-    rows_add(num = 2343, .after = "row_3") %>%
+    gt_tbl |>
+    rows_add(num = 2343, .after = "row_3") |>
     tab_style(
       style = cell_fill(),
       locations = cells_body(rows = !is.na(row))
     )
 
   gt_tbl_style_20 <-
-    gt_tbl %>%
-    rows_add(num = 2343, .after = "row_3") %>%
+    gt_tbl |>
+    rows_add(num = 2343, .after = "row_3") |>
     tab_style(
       style = cell_fill(),
       locations = cells_body(rows = is.na(row))
     )
 
   gt_tbl_style_21 <-
-    gt_tbl %>%
+    gt_tbl |>
     tab_style(
       style = cell_fill(),
       locations = cells_body(rows = is.na(row))
-    ) %>%
+    ) |>
     rows_add(num = 2343, .after = "row_3")
 
   gt_tbl_style_22 <-
-    gt_tbl %>%
+    gt_tbl |>
     tab_style(
       style = cell_fill(),
       locations = cells_body(rows = !is.na(row))
-    ) %>%
+    ) |>
     rows_add(num = 2343, .after = "row_3")
 
   # Perform several snapshot tests
@@ -1959,20 +1959,20 @@ test_that("adding rows and styling the table has the intended behavior", {
   # Expect an error when trying to resolve indices that don't yet exist
   # (i.e., the order of `rows_add()` and `tab_style()` matters)
   expect_error(
-    gt_tbl %>%
+    gt_tbl |>
       tab_style(
         style = cell_fill(),
         locations = cells_body(rows = 9)
-      ) %>%
+      ) |>
       rows_add(row = "row_3.5", .after = "row_3")
   )
 
   expect_error(
-    gt_tbl %>%
+    gt_tbl |>
       tab_style(
         style = cell_fill(),
         locations = cells_body(rows = "row_0")
-      ) %>%
+      ) |>
       rows_add(row = "row_0", .before = 1)
   )
 })

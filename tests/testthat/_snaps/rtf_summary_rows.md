@@ -1,4 +1,4 @@
-# Using summary rows in RTF tables is correct
+# Using summary rows works in RTF output tables
 
     Code
       as_rtf(gt_tbl)

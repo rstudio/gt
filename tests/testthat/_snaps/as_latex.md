@@ -722,7 +722,7 @@
 # Latex() function lets users pass their own latex to titles
 
     Code
-      gt_tbl_inline_latex %>% as.character()
+      as.character(gt_tbl_inline_latex)
     Output
       [1] "\\begin{table}[t]\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  \\textbf{TABLE TITLE}\\fontsize{12}{15}\\selectfont } \\\\ \n{\\fontsize{14}{17}\\selectfont  \\textbackslash{}textbf\\{TABLE SUBTITLE\\}\\fontsize{12}{15}\\selectfont }\n} \n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{tabular*}{\\linewidth}{@{\\extracolsep{\\fill}}l}\n\\toprule\nx \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\textbf{x} \\\\ \n\\textbackslash{}textbf\\{y\\} \\\\ \n\\bottomrule\n\\end{tabular*}\n\\end{table}\n"
 

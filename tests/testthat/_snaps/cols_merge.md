@@ -425,13 +425,3 @@
         
       </table>
 
-# cols_merge() errors well when pattern is wrong
-
-    Code
-      exibble %>% gt() %>% cols_merge(num, pattern = "{2}")
-    Condition
-      Error in `perform_col_merge()`:
-      ! Can't perform column merging
-      Can't find reference 2.
-      i Review `pattern` provided to `cols_merge()`.
-

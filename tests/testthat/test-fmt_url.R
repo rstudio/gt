@@ -23,12 +23,12 @@ test_that("fmt_url() works correctly", {
   expect_equal(data_tbl$a, a)
 
   # Expect an error when attempting to format a column that does not exist
-  expect_error(tab %>% fmt_url(columns = b))
+  expect_error(tab |> fmt_url(columns = b))
 
   # Format the `a` column to have links
   expect_equal(
-    (tab %>%
-       fmt_url(columns = a) %>%
+    (tab |>
+       fmt_url(columns = a) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">http://www.example.com</a></span>",
@@ -37,9 +37,10 @@ test_that("fmt_url() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_url(columns = a, label = "static label") %>%
+    (tab |>
+       fmt_url(columns = a, label = "static label") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">static label</a></span>",
@@ -48,9 +49,10 @@ test_that("fmt_url() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_url(columns = a, as_button = TRUE) %>%
+    (tab |>
+       fmt_url(columns = a, as_button = TRUE) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:none;display: inline-block;background-color: #4682B4;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">http://www.example.com</a></span>",
@@ -59,9 +61,10 @@ test_that("fmt_url() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_url(columns = a, color = "forestgreen") %>%
+    (tab |>
+       fmt_url(columns = a, color = "forestgreen") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#228B22;text-decoration:underline;text-underline-position: under;display: inline-block;\">http://www.example.com</a></span>",
@@ -70,9 +73,10 @@ test_that("fmt_url() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_url(columns = a, show_underline = FALSE) %>%
+    (tab |>
+       fmt_url(columns = a, show_underline = FALSE) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:none;display: inline-block;\">http://www.example.com</a></span>",
@@ -81,9 +85,10 @@ test_that("fmt_url() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_url(columns = a, as_button = TRUE, show_underline = TRUE) %>%
+    (tab |>
+       fmt_url(columns = a, as_button = TRUE, show_underline = TRUE) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:underline;text-underline-position: under;display: inline-block;background-color: #4682B4;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">http://www.example.com</a></span>",
@@ -92,9 +97,10 @@ test_that("fmt_url() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_url(columns = a, as_button = TRUE, button_fill = "red") %>%
+    (tab |>
+       fmt_url(columns = a, as_button = TRUE, button_fill = "red") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:none;display: inline-block;background-color: #FF0000;padding: 8px 12px;outline-style: none; outline-color: #DFDFDF; outline-width: 2px;\">http://www.example.com</a></span>",
@@ -103,9 +109,10 @@ test_that("fmt_url() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_url(columns = a, as_button = TRUE, button_fill = "red", color = "black") %>%
+    (tab |>
+       fmt_url(columns = a, as_button = TRUE, button_fill = "red", color = "black") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">http://www.example.com</a></span>",
@@ -114,9 +121,10 @@ test_that("fmt_url() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_url(columns = a, as_button = TRUE, button_fill = "red", color = "black", button_width = px(500)) %>%
+    (tab |>
+       fmt_url(columns = a, as_button = TRUE, button_fill = "red", color = "black", button_width = px(500)) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;width: 500px; text-align: center;outline-style: solid; outline-color: auto; outline-width: 2px;\">http://www.example.com</a></span>",
@@ -125,9 +133,10 @@ test_that("fmt_url() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_url(columns = a, as_button = TRUE, button_fill = "red", color = "black", button_width = pct(80)) %>%
+    (tab |>
+       fmt_url(columns = a, as_button = TRUE, button_fill = "red", color = "black", button_width = pct(80)) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;width: 80%; text-align: center;outline-style: solid; outline-color: auto; outline-width: 2px;\">http://www.example.com</a></span>",
@@ -136,9 +145,10 @@ test_that("fmt_url() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_url(columns = a, as_button = TRUE, button_fill = "auto", color = "black") %>%
+    (tab |>
+       fmt_url(columns = a, as_button = TRUE, button_fill = "auto", color = "black") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: #ADD8E6;padding: 8px 12px;outline-style: none; outline-color: #BEBEBE; outline-width: 2px;\">http://www.example.com</a></span>",
@@ -147,9 +157,10 @@ test_that("fmt_url() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_url(columns = a, as_button = TRUE, button_fill = "auto", color = "#FFFADF") %>%
+    (tab |>
+       fmt_url(columns = a, as_button = TRUE, button_fill = "auto", color = "#FFFADF") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#FFFADF;text-decoration:none;display: inline-block;background-color: #00008B;padding: 8px 12px;outline-style: none; outline-color: #BEBEBE; outline-width: 2px;\">http://www.example.com</a></span>",
@@ -158,9 +169,10 @@ test_that("fmt_url() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_url(columns = a, as_button = TRUE, button_fill = "auto", color = "#FFFADF", button_outline = "pink") %>%
+    (tab |>
+       fmt_url(columns = a, as_button = TRUE, button_fill = "auto", color = "#FFFADF", button_outline = "pink") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#FFFADF;text-decoration:none;display: inline-block;background-color: #00008B;padding: 8px 12px;outline-style: solid; outline-color: pink; outline-width: 2px;\">http://www.example.com</a></span>",
@@ -169,9 +181,10 @@ test_that("fmt_url() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_url(columns = a, as_button = TRUE, button_fill = "#FFFFFF", button_outline = "auto") %>%
+    (tab |>
+       fmt_url(columns = a, as_button = TRUE, button_fill = "#FFFFFF", button_outline = "auto") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: #FFFFFF;padding: 8px 12px;outline-style: solid; outline-color: #DFDFDF; outline-width: 2px;\">http://www.example.com</a></span>",
@@ -180,9 +193,10 @@ test_that("fmt_url() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_url(columns = a, as_button = TRUE, button_fill = "#FAD5EF", button_outline = "auto") %>%
+    (tab |>
+       fmt_url(columns = a, as_button = TRUE, button_fill = "#FAD5EF", button_outline = "auto") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: #FAD5EF;padding: 8px 12px;outline-style: none; outline-color: #DFDFDF; outline-width: 2px;\">http://www.example.com</a></span>",
@@ -208,8 +222,8 @@ test_that("fmt_url() works correctly", {
 
   # Format the `a` column to have links
   expect_equal(
-    (tab_alt %>%
-       fmt_url(columns = a) %>%
+    (tab_alt |>
+       fmt_url(columns = a) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">Example Site</a></span>",
@@ -217,9 +231,10 @@ test_that("fmt_url() works correctly", {
       "<span style=\"white-space: pre;\"><a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">Search Mozilla</a></span>"
     )
   )
+
   expect_equal(
-    (tab_alt %>%
-       fmt_url(columns = a, label = "static label") %>%
+    (tab_alt |>
+       fmt_url(columns = a, label = "static label") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"[Example Site](http://www.example.com)\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">static label</a></span>",
@@ -227,9 +242,10 @@ test_that("fmt_url() works correctly", {
       "<span style=\"white-space: pre;\"><a href=\"[Search Mozilla](https://developer.mozilla.org/en-US/search?q=URL)\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">static label</a></span>"
     )
   )
+
   expect_equal(
-    (tab_alt %>%
-       fmt_url(columns = a, as_button = TRUE) %>%
+    (tab_alt |>
+       fmt_url(columns = a, as_button = TRUE) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:none;display: inline-block;background-color: #4682B4;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">Example Site</a></span>",
@@ -237,9 +253,10 @@ test_that("fmt_url() works correctly", {
       "<span style=\"white-space: pre;\"><a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:none;display: inline-block;background-color: #4682B4;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">Search Mozilla</a></span>"
     )
   )
+
   expect_equal(
-    (tab_alt %>%
-       fmt_url(columns = a, color = "forestgreen") %>%
+    (tab_alt |>
+       fmt_url(columns = a, color = "forestgreen") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#228B22;text-decoration:underline;text-underline-position: under;display: inline-block;\">Example Site</a></span>",
@@ -247,9 +264,10 @@ test_that("fmt_url() works correctly", {
       "<span style=\"white-space: pre;\"><a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#228B22;text-decoration:underline;text-underline-position: under;display: inline-block;\">Search Mozilla</a></span>"
     )
   )
+
   expect_equal(
-    (tab_alt %>%
-       fmt_url(columns = a, show_underline = FALSE) %>%
+    (tab_alt |>
+       fmt_url(columns = a, show_underline = FALSE) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:none;display: inline-block;\">Example Site</a></span>",
@@ -257,9 +275,10 @@ test_that("fmt_url() works correctly", {
       "<span style=\"white-space: pre;\"><a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#008B8B;text-decoration:none;display: inline-block;\">Search Mozilla</a></span>"
     )
   )
+
   expect_equal(
-    (tab_alt %>%
-       fmt_url(columns = a, as_button = TRUE, show_underline = TRUE) %>%
+    (tab_alt |>
+       fmt_url(columns = a, as_button = TRUE, show_underline = TRUE) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:underline;text-underline-position: under;display: inline-block;background-color: #4682B4;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">Example Site</a></span>",
@@ -267,9 +286,10 @@ test_that("fmt_url() works correctly", {
       "<span style=\"white-space: pre;\"><a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:underline;text-underline-position: under;display: inline-block;background-color: #4682B4;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">Search Mozilla</a></span>"
     )
   )
+
   expect_equal(
-    (tab_alt %>%
-       fmt_url(columns = a, as_button = TRUE, button_fill = "red") %>%
+    (tab_alt |>
+       fmt_url(columns = a, as_button = TRUE, button_fill = "red") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:none;display: inline-block;background-color: #FF0000;padding: 8px 12px;outline-style: none; outline-color: #DFDFDF; outline-width: 2px;\">Example Site</a></span>",
@@ -277,9 +297,10 @@ test_that("fmt_url() works correctly", {
       "<span style=\"white-space: pre;\"><a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:none;display: inline-block;background-color: #FF0000;padding: 8px 12px;outline-style: none; outline-color: #DFDFDF; outline-width: 2px;\">Search Mozilla</a></span>"
     )
   )
+
   expect_equal(
-    (tab_alt %>%
-       fmt_url(columns = a, as_button = TRUE, button_fill = "red", color = "black") %>%
+    (tab_alt |>
+       fmt_url(columns = a, as_button = TRUE, button_fill = "red", color = "black") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">Example Site</a></span>",
@@ -287,9 +308,10 @@ test_that("fmt_url() works correctly", {
       "<span style=\"white-space: pre;\"><a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">Search Mozilla</a></span>"
     )
   )
+
   expect_equal(
-    (tab_alt %>%
-       fmt_url(columns = a, as_button = TRUE, button_fill = "red", color = "black", button_width = px(500)) %>%
+    (tab_alt |>
+       fmt_url(columns = a, as_button = TRUE, button_fill = "red", color = "black", button_width = px(500)) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;width: 500px; text-align: center;outline-style: solid; outline-color: auto; outline-width: 2px;\">Example Site</a></span>",
@@ -297,9 +319,10 @@ test_that("fmt_url() works correctly", {
       "<span style=\"white-space: pre;\"><a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;width: 500px; text-align: center;outline-style: solid; outline-color: auto; outline-width: 2px;\">Search Mozilla</a></span>"
     )
   )
+
   expect_equal(
-    (tab_alt %>%
-       fmt_url(columns = a, as_button = TRUE, button_fill = "red", color = "black", button_width = pct(80)) %>%
+    (tab_alt |>
+       fmt_url(columns = a, as_button = TRUE, button_fill = "red", color = "black", button_width = pct(80)) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;width: 80%; text-align: center;outline-style: solid; outline-color: auto; outline-width: 2px;\">Example Site</a></span>",
@@ -307,9 +330,10 @@ test_that("fmt_url() works correctly", {
       "<span style=\"white-space: pre;\"><a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;width: 80%; text-align: center;outline-style: solid; outline-color: auto; outline-width: 2px;\">Search Mozilla</a></span>"
     )
   )
+
   expect_equal(
-    (tab_alt %>%
-       fmt_url(columns = a, hreflang = "en-GB", target = "_blank", rel = "external", referrerpolicy = "no-referrer") %>%
+    (tab_alt |>
+       fmt_url(columns = a, hreflang = "en-GB", target = "_blank", rel = "external", referrerpolicy = "no-referrer") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space: pre;\"><a href=\"http://www.example.com\" target=\"_blank\" rel=\"external\" referrerpolicy=\"no-referrer\" hreflang=\"en-GB\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">Example Site</a></span>",
@@ -320,15 +344,16 @@ test_that("fmt_url() works correctly", {
 
   # Expect that a column with NAs will work fine with `fmt_url()`,
   # it'll just produce NA values
-  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) %>% gt()
+  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) |> gt()
 
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_url()`
   expect_no_error(
-    na_col_tbl %>% fmt_url(columns = a) %>% as_raw_html()
+    na_col_tbl |> fmt_url(columns = a) |> as_raw_html()
   )
+
   expect_no_error(
-    na_col_tbl %>%
-      fmt_url(columns = a, rows = 1:5) %>% as_raw_html()
+    na_col_tbl |>
+      fmt_url(columns = a, rows = 1:5) |> as_raw_html()
   )
 })

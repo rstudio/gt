@@ -93,8 +93,8 @@ test_that("`get_stub_layout()` works with different stub configurations", {
 
   # Grouped data with row groups as columns
   group_as_col_stub <-
-    grouped_data %>%
-    gt(rowname_col = "mfr", groupname_col = "group") %>%
+    grouped_data |>
+    gt(rowname_col = "mfr", groupname_col = "group") |>
     tab_options(row_group.as_column = TRUE)
 
   # Basic validation that these tables can be created without error
@@ -157,7 +157,7 @@ test_that("Internal functions handle edge cases correctly", {
   expect_length(stub_vars, 0)
 
   # Single row, single column with stub
-  single_stub_gt <- single_cell %>% gt(rowname_col = "value")
+  single_stub_gt <- single_cell |> gt(rowname_col = "value")
   stub_vars_single <- gt:::dt_boxhead_get_var_by_type(single_stub_gt, type = "stub")
   expect_equal(stub_vars_single, "value")
 
@@ -192,8 +192,8 @@ test_that("`get_stub_layout()` works with summary rows", {
 
   # Test with summary rows and different stub configurations
   multi_stub_with_summary <-
-    test_data %>%
-    gt(rowname_col = c("mfr", "model")) %>%
+    test_data |>
+    gt(rowname_col = c("mfr", "model")) |>
     summary_rows(
       groups = TRUE,
       columns = c(hp, msrp),
@@ -218,14 +218,14 @@ test_that("Basic multicolumn stub footnotes render correctly", {
 
   # Create table with multicolumn stub and footnotes
   gt_tbl <-
-    test_data %>%
-    gt(rowname_col = c("mfr", "model", "trim"), id = "test") %>%
-    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) %>%
-    tab_header(title = "Three-Column Stub with Footnotes") %>%
+    test_data |>
+    gt(rowname_col = c("mfr", "model", "trim"), id = "test") |>
+    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) |>
+    tab_header(title = "Three-Column Stub with Footnotes") |>
     tab_footnote(
       footnote = "Target: GT",
       locations = cells_stub(rows = 1, columns = "model")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "Target: Ford",
       locations = cells_stub(rows = 1, columns = "mfr")
@@ -242,14 +242,14 @@ test_that("Multicolumn stub footnotes with visual order priority", {
 
   # Create table with footnotes in call order ('Ford' first, then 'GT')
   gt_tbl_1 <-
-    test_data %>%
-    gt(rowname_col = c("mfr", "model", "trim"), id = "test") %>%
-    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) %>%
-    tab_header(title = "Call Order: Ford First, GT Second") %>%
+    test_data |>
+    gt(rowname_col = c("mfr", "model", "trim"), id = "test") |>
+    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) |>
+    tab_header(title = "Call Order: Ford First, GT Second") |>
     tab_footnote(
       footnote = "Target: Ford",
       locations = cells_stub(rows = 1, columns = "mfr")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "Target: GT",
       locations = cells_stub(rows = 1, columns = "model")
@@ -257,14 +257,14 @@ test_that("Multicolumn stub footnotes with visual order priority", {
 
   # Create table with footnotes in reverse call order ('GT' first, then 'Ford')
   gt_tbl_2 <-
-    test_data %>%
-    gt(rowname_col = c("mfr", "model", "trim"), id = "test") %>%
-    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) %>%
-    tab_header(title = "Call Order: GT First, Ford Second") %>%
+    test_data |>
+    gt(rowname_col = c("mfr", "model", "trim"), id = "test") |>
+    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) |>
+    tab_header(title = "Call Order: GT First, Ford Second") |>
     tab_footnote(
       footnote = "Target: GT",
       locations = cells_stub(rows = 1, columns = "model")
-      ) %>%
+      ) |>
     tab_footnote(
       footnote = "Target: Ford",
       locations = cells_stub(rows = 1, columns = "mfr")
@@ -279,22 +279,22 @@ test_that("Multiple rows with multicolumn stub footnotes", {
 
   # Create table with footnotes on multiple rows
   gt_tbl <-
-    test_data %>%
-    gt(rowname_col = c("mfr", "model", "trim"), id = "test") %>%
-    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) %>%
-    tab_header(title = "Multiple Rows with Footnotes") %>%
+    test_data |>
+    gt(rowname_col = c("mfr", "model", "trim"), id = "test") |>
+    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) |>
+    tab_header(title = "Multiple Rows with Footnotes") |>
     tab_footnote(
       footnote = "Ford manufacturer",
       locations = cells_stub(rows = 1, columns = "mfr")
-      ) %>%
+      ) |>
     tab_footnote(
       footnote = "GT model",
       locations = cells_stub(rows = 1, columns = "model")
-      ) %>%
+      ) |>
     tab_footnote(
       footnote = "BMW manufacturer",
       locations = cells_stub(rows = 3, columns = "mfr")
-      ) %>%
+      ) |>
     tab_footnote(
       footnote = "X5 model",
       locations = cells_stub(rows = 3, columns = "model")
@@ -314,22 +314,22 @@ test_that("Multicolumn stub footnotes with row groups as conventional rows", {
 
   # Create table with row groups and footnotes
   gt_tbl <-
-    grouped_data %>%
+    grouped_data |>
     gt(
       rowname_col = c("mfr", "model", "trim"),
       groupname_col = "group",
       id = "test"
-    ) %>%
-    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) %>%
-    tab_header(title = "Multicolumn Stub with Row Groups") %>%
+    ) |>
+    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) |>
+    tab_header(title = "Multicolumn Stub with Row Groups") |>
     tab_footnote(
       footnote = "Ford note",
       locations = cells_stub(rows = 1, columns = "mfr")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "GT note",
       locations = cells_stub(rows = 1, columns = "model")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "BMW note",
       locations = cells_stub(rows = 3, columns = "mfr")
@@ -349,23 +349,23 @@ test_that("Multicolumn stub footnotes with row groups as columns", {
 
   # Create table with row groups as columns and footnotes
   gt_tbl <-
-    grouped_data %>%
+    grouped_data |>
     gt(
       rowname_col = c("mfr", "model", "trim"),
       groupname_col = "group",
       id = "test"
-    ) %>%
-    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) %>%
-    tab_header(title = "Multicolumn Stub with Row Groups as Columns") %>%
-    tab_options(row_group.as_column = TRUE) %>%
+    ) |>
+    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) |>
+    tab_header(title = "Multicolumn Stub with Row Groups as Columns") |>
+    tab_options(row_group.as_column = TRUE) |>
     tab_footnote(
       footnote = "Ford note",
       locations = cells_stub(rows = 1, columns = "mfr")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "GT note",
       locations = cells_stub(rows = 1, columns = "model")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "BMW note",
       locations = cells_stub(rows = 3, columns = "mfr")
@@ -378,18 +378,18 @@ test_that("All stub columns with footnotes", {
 
   # Create table with footnotes on all three stub columns
   gt_tbl <-
-    test_data %>%
-    gt(rowname_col = c("mfr", "model", "trim"), id = "test") %>%
-    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) %>%
-    tab_header(title = "All Stub Columns with Footnotes") %>%
+    test_data |>
+    gt(rowname_col = c("mfr", "model", "trim"), id = "test") |>
+    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) |>
+    tab_header(title = "All Stub Columns with Footnotes") |>
     tab_footnote(
       footnote = "Ford manufacturer",
       locations = cells_stub(rows = 1, columns = "mfr")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "GT model",
       locations = cells_stub(rows = 1, columns = "model")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "Base trim",
       locations = cells_stub(rows = 1, columns = "trim")
@@ -402,14 +402,14 @@ test_that("Footnotes on non-first row with multicolumn stub", {
 
   # Create table with footnotes on second row
   gt_tbl <-
-    test_data %>%
-    gt(rowname_col = c("mfr", "model", "trim"), id = "test") %>%
-    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) %>%
-    tab_header(title = "Footnotes on Second Row") %>%
+    test_data |>
+    gt(rowname_col = c("mfr", "model", "trim"), id = "test") |>
+    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) |>
+    tab_header(title = "Footnotes on Second Row") |>
     tab_footnote(
       footnote = "Ford manufacturer",
       locations = cells_stub(rows = 2, columns = "mfr")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "F-150 model",
       locations = cells_stub(rows = 2, columns = "model")
@@ -422,22 +422,22 @@ test_that("Mixed stub and data column footnotes", {
 
   # Create table with both stub and data column footnotes
   gt_tbl <-
-    test_data %>%
-    gt(rowname_col = c("mfr", "model", "trim"), id = "test") %>%
-    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) %>%
-    tab_header(title = "Mixed Stub and Data Footnotes") %>%
+    test_data |>
+    gt(rowname_col = c("mfr", "model", "trim"), id = "test") |>
+    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) |>
+    tab_header(title = "Mixed Stub and Data Footnotes") |>
     tab_footnote(
       footnote = "Ford manufacturer",
       locations = cells_stub(rows = 1, columns = "mfr")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "GT model",
       locations = cells_stub(rows = 1, columns = "model")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "High horsepower",
       locations = cells_body(columns = "hp", rows = 1)
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "Premium price",
       locations = cells_body(columns = "msrp", rows = 1)
@@ -450,14 +450,14 @@ test_that("Two-column stub footnotes", {
 
   # Create table with just two stub columns
   gt_tbl <-
-    test_data %>%
-    gt(rowname_col = c("mfr", "model"), id = "test") %>%
-    tab_stubhead(label = c("Manufacturer", "Model")) %>%
-    tab_header(title = "Two-Column Stub with Footnotes") %>%
+    test_data |>
+    gt(rowname_col = c("mfr", "model"), id = "test") |>
+    tab_stubhead(label = c("Manufacturer", "Model")) |>
+    tab_header(title = "Two-Column Stub with Footnotes") |>
     tab_footnote(
       footnote = "Ford manufacturer",
       locations = cells_stub(rows = 1, columns = "mfr")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "GT model",
       locations = cells_stub(rows = 1, columns = "model")
@@ -470,10 +470,10 @@ test_that("Single stub column footnotes (regression test)", {
 
   # Create table with single stub column (should still work)
   gt_tbl <-
-    test_data %>%
-    gt(rowname_col = "mfr", id = "test") %>%
-    tab_stubhead(label = "Manufacturer") %>%
-    tab_header(title = "Single Stub Column") %>%
+    test_data |>
+    gt(rowname_col = "mfr", id = "test") |>
+    tab_stubhead(label = "Manufacturer") |>
+    tab_header(title = "Single Stub Column") |>
     tab_footnote(
       footnote = "Ford manufacturer",
       locations = cells_stub(rows = 1)
@@ -486,14 +486,14 @@ test_that("Footnotes with specific row references", {
 
   # Create table using row indices instead of row names
   gt_tbl <-
-    test_data %>%
-    gt(rowname_col = c("mfr", "model", "trim"), id = "test") %>%
-    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) %>%
-    tab_header(title = "Specific Row References") %>%
+    test_data |>
+    gt(rowname_col = c("mfr", "model", "trim"), id = "test") |>
+    tab_stubhead(label = c("Manufacturer", "Model", "Trim")) |>
+    tab_header(title = "Specific Row References") |>
     tab_footnote(
       footnote = "Ford note",
       locations = cells_stub(rows = 1, columns = "mfr")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "BMW note",
       locations = cells_stub(rows = 3, columns = "mfr")
@@ -509,7 +509,7 @@ test_that("Error handling for invalid stub column references", {
 
   # Test error when targeting non-stub column
   expect_error(
-    gt_tbl %>%
+    gt_tbl |>
       tab_footnote(
         footnote = "Test",
         locations = cells_stub(rows = 1, columns = "year")
@@ -519,7 +519,7 @@ test_that("Error handling for invalid stub column references", {
 
   # Test error when targeting column that doesn't exist
   expect_error(
-    gt_tbl %>%
+    gt_tbl |>
       tab_footnote(
         footnote = "Test",
         locations = cells_stub(rows = 1, columns = "nonexistent")
@@ -532,8 +532,8 @@ test_that("Traditional cells_stub() usage still works", {
 
   # Test traditional usage without column specification
   gt_tbl <-
-    test_data %>%
-    gt(rowname_col = c("mfr", "model")) %>%
+    test_data |>
+    gt(rowname_col = c("mfr", "model")) |>
     tab_footnote(
       footnote = "Traditional footnote",
       locations = cells_stub(rows = 1)
@@ -689,16 +689,16 @@ test_that("Footnote functionality works correctly with multicolumn stubs", {
 
   # Create table with footnotes on stub columns
   footnote_table <-
-    footnote_data %>%
-    gt(rowname_col = c("manufacturer", "model")) %>%
+    footnote_data |>
+    gt(rowname_col = c("manufacturer", "model")) |>
     tab_footnote(
       footnote = "American manufacturer",
       locations = cells_stub(rows = 1, columns = "manufacturer")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "Sports car model",
       locations = cells_stub(rows = 1, columns = "model")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "German manufacturer",
       locations = cells_stub(rows = 2, columns = "manufacturer")
@@ -752,12 +752,12 @@ test_that("`tab_style()` works with multi-column stubs: basic per-column styling
 
   # Test per-column styling with two-column stub
   styled_table <-
-    test_data %>%
-    gt(rowname_col = c("region", "country")) %>%
+    test_data |>
+    gt(rowname_col = c("region", "country")) |>
     tab_style(
       style = cell_fill(color = "lightblue"),
       locations = cells_stub(columns = "region")
-    ) %>%
+    ) |>
     tab_style(
       style = cell_fill(color = "lightgreen"),
       locations = cells_stub(columns = "country")
@@ -794,12 +794,12 @@ test_that("`tab_style()` works with multi-column stubs: row-specific styling", {
 
   # Test row-specific styling within columns
   styled_table <-
-    test_data %>%
-    gt(rowname_col = c("region", "country", "code")) %>%
+    test_data |>
+    gt(rowname_col = c("region", "country", "code")) |>
     tab_style(
       style = cell_fill(color = "orange"),
       locations = cells_stub(columns = "country", rows = c(1, 3))
-    ) %>%
+    ) |>
     tab_style(
       style = cell_text(weight = "bold"),
       locations = cells_stub(columns = "region", rows = 2)
@@ -835,8 +835,8 @@ test_that("`tab_style()` error handling for multi-column stubs", {
 
   # Test invalid column reference
   expect_error(
-    test_data %>%
-      gt(rowname_col = c("region", "country")) %>%
+    test_data |>
+      gt(rowname_col = c("region", "country")) |>
       tab_style(
         style = cell_fill(color = "red"),
         locations = cells_stub(columns = "invalid_column")
@@ -846,8 +846,8 @@ test_that("`tab_style()` error handling for multi-column stubs", {
 
   # Test non-stub column reference
   expect_error(
-    test_data %>%
-      gt(rowname_col = c("region", "country")) %>%
+    test_data |>
+      gt(rowname_col = c("region", "country")) |>
       tab_style(
         style = cell_fill(color = "red"),
         locations = cells_stub(columns = "gdp")
@@ -868,8 +868,8 @@ test_that("`tab_style()` backward compatibility with single-column stubs", {
 
   # Test traditional usage (no columns parameter)
   traditional_table <-
-    test_data %>%
-    gt(rowname_col = "region") %>%
+    test_data |>
+    gt(rowname_col = "region") |>
     tab_style(
       style = cell_fill(color = "lightgray"),
       locations = cells_stub()  # No columns parameter
@@ -900,16 +900,16 @@ test_that("`tab_style()` can be combined with footnotes in multi-column stubs", 
 
   # Test combining styles with footnotes
   combined_table <-
-    test_data %>%
-    gt(rowname_col = c("region", "country", "code")) %>%
+    test_data |>
+    gt(rowname_col = c("region", "country", "code")) |>
     tab_style(
       style = cell_fill(color = "lightcoral"),
       locations = cells_stub(columns = "region")
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "Regional classification",
       locations = cells_stub(columns = "region", rows = 1)
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "Country name",
       locations = cells_stub(columns = "country", rows = 1)
@@ -945,22 +945,22 @@ test_that("`tab_style()` works with complex multi-column stub scenarios", {
 
   # Test complex styling with multiple style rules per column
   complex_table <-
-    test_data %>%
-    gt(rowname_col = c("region", "country", "code")) %>%
+    test_data |>
+    gt(rowname_col = c("region", "country", "code")) |>
     # Multiple styles for same column
     tab_style(
       style = cell_fill(color = "#E8F4F8"),
       locations = cells_stub(columns = "region")
-    ) %>%
+    ) |>
     tab_style(
       style = cell_text(weight = "bold"),
       locations = cells_stub(columns = "region")
-    ) %>%
+    ) |>
     # Row-specific styling
     tab_style(
       style = cell_fill(color = "#F0F8E8"),
       locations = cells_stub(columns = "country", rows = c(1, 3))
-    ) %>%
+    ) |>
     # Different styles for different rows
     tab_style(
       style = cell_text(style = "italic"),
@@ -998,7 +998,7 @@ test_that("`tab_style()` works with complex multi-column stub scenarios", {
 # Add comprehensive tests for the enhanced stub targeting system
 
 test_that("Enhanced stub targeting: content-based targeting works", {
-  
+
   # Test data
   test_data <- dplyr::tibble(
     mfr = c("Ford", "Ford", "BMW", "BMW", "Audi"),
@@ -1006,42 +1006,42 @@ test_that("Enhanced stub targeting: content-based targeting works", {
     trim = c("Base", "XLT", "xDrive35i", "sDrive28i", "Premium"),
     year = c(2017, 2018, 2019, 2020, 2021)
   )
-  
+
   # Test content-based targeting
-  styled_table <- test_data %>%
-    gt(rowname_col = c("mfr", "model", "trim")) %>%
+  styled_table <- test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
     tab_style(
       style = cell_fill(color = "lightgreen"),
       locations = cells_stub(rows = "Ford")
     )
-  
+
   # Check that styles are applied correctly
   styles <- gt:::dt_styles_get(styled_table)
   expect_equal(nrow(styles), 2)  # Should target 2 Ford rows
   expect_equal(unique(styles$rownum), c(1, 2))
   expect_equal(unique(styles$locname), "stub")
-  
+
   # Test table renders without error
   expect_no_error(as_raw_html(styled_table))
 })
 
 test_that("Enhanced stub targeting: multi-value targeting works", {
-  
+
   # Test data
   test_data <- dplyr::tibble(
     mfr = c("Ford", "Ford", "BMW", "BMW", "Audi"),
     model = c("GT", "F-150", "X5", "X3", "A4"),
     trim = c("Base", "XLT", "xDrive35i", "sDrive28i", "Premium")
   )
-  
+
   # Test multi-value targeting
-  styled_table <- test_data %>%
-    gt(rowname_col = c("mfr", "model", "trim")) %>%
+  styled_table <- test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
     tab_style(
       style = cell_fill(color = "lightblue"),
       locations = cells_stub(rows = c("Ford", "BMW"))
     )
-  
+
   # Check that styles are applied correctly
   styles <- gt:::dt_styles_get(styled_table)
   expect_equal(nrow(styles), 4)  # Should target 4 rows (2 Ford + 2 BMW)
@@ -1050,22 +1050,22 @@ test_that("Enhanced stub targeting: multi-value targeting works", {
 })
 
 test_that("Enhanced stub targeting: column-specific targeting works", {
-  
+
   # Test data
   test_data <- dplyr::tibble(
     mfr = c("Ford", "Ford", "BMW", "BMW", "Audi"),
     model = c("GT", "F-150", "X5", "X3", "A4"),
     trim = c("Base", "XLT", "xDrive35i", "sDrive28i", "Premium")
   )
-  
+
   # Test column-specific targeting
-  styled_table <- test_data %>%
-    gt(rowname_col = c("mfr", "model", "trim")) %>%
+  styled_table <- test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
     tab_style(
       style = cell_fill(color = "lightcoral"),
       locations = cells_stub(rows = "Ford", columns = "model")
     )
-  
+
   # Check that styles are applied correctly
   styles <- gt:::dt_styles_get(styled_table)
   expect_equal(nrow(styles), 2)  # Should target 2 Ford rows
@@ -1075,22 +1075,22 @@ test_that("Enhanced stub targeting: column-specific targeting works", {
 })
 
 test_that("Enhanced stub targeting: model-specific targeting works", {
-  
+
   # Test data
   test_data <- dplyr::tibble(
     mfr = c("Ford", "Ford", "BMW", "BMW", "Audi"),
     model = c("GT", "F-150", "X5", "X3", "A4"),
     trim = c("Base", "XLT", "xDrive35i", "sDrive28i", "Premium")
   )
-  
+
   # Test model-specific targeting
-  styled_table <- test_data %>%
-    gt(rowname_col = c("mfr", "model", "trim")) %>%
+  styled_table <- test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
     tab_style(
       style = cell_fill(color = "yellow"),
       locations = cells_stub(rows = c("GT", "A4"))
     )
-  
+
   # Check that styles are applied correctly
   styles <- gt:::dt_styles_get(styled_table)
   expect_equal(nrow(styles), 2)  # Should target 2 rows (GT and A4)
@@ -1099,22 +1099,22 @@ test_that("Enhanced stub targeting: model-specific targeting works", {
 })
 
 test_that("Enhanced stub targeting: backward compatibility with numeric indices", {
-  
+
   # Test data
   test_data <- dplyr::tibble(
     mfr = c("Ford", "Ford", "BMW", "BMW", "Audi"),
     model = c("GT", "F-150", "X5", "X3", "A4"),
     trim = c("Base", "XLT", "xDrive35i", "sDrive28i", "Premium")
   )
-  
+
   # Test numeric targeting (backward compatibility)
-  styled_table <- test_data %>%
-    gt(rowname_col = c("mfr", "model", "trim")) %>%
+  styled_table <- test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
     tab_style(
       style = cell_fill(color = "orange"),
       locations = cells_stub(rows = c(1, 3, 5))
     )
-  
+
   # Check that styles are applied correctly
   styles <- gt:::dt_styles_get(styled_table)
   expect_equal(nrow(styles), 3)  # Should target 3 rows
@@ -1123,18 +1123,18 @@ test_that("Enhanced stub targeting: backward compatibility with numeric indices"
 })
 
 test_that("Enhanced stub targeting: error handling for invalid targets", {
-  
+
   # Test data
   test_data <- dplyr::tibble(
     mfr = c("Ford", "Ford", "BMW"),
     model = c("GT", "F-150", "X5"),
     trim = c("Base", "XLT", "Premium")
   )
-  
+
   # Test error handling for invalid targets
   expect_error(
-    test_data %>%
-      gt(rowname_col = c("mfr", "model", "trim")) %>%
+    test_data |>
+      gt(rowname_col = c("mfr", "model", "trim")) |>
       tab_style(
         style = cell_fill(color = "red"),
         locations = cells_stub(rows = "InvalidBrand")
@@ -1144,49 +1144,49 @@ test_that("Enhanced stub targeting: error handling for invalid targets", {
 })
 
 test_that("Enhanced stub targeting: integration with footnotes", {
-  
+
   # Test data
   test_data <- dplyr::tibble(
     mfr = c("Ford", "Ford", "BMW"),
     model = c("GT", "F-150", "X5"),
     trim = c("Base", "XLT", "Premium")
   )
-  
+
   # Test footnote integration
-  footnoted_table <- test_data %>%
-    gt(rowname_col = c("mfr", "model", "trim")) %>%
+  footnoted_table <- test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
     tab_footnote(
       footnote = "American manufacturer",
       locations = cells_stub(rows = "Ford", columns = "mfr")
     )
-  
+
   # Check that footnotes are applied correctly
   footnotes <- gt:::dt_footnotes_get(footnoted_table)
   expect_equal(nrow(footnotes), 2)  # Should target 2 Ford rows
   expect_equal(unique(footnotes$rownum), c(1, 2))
   expect_equal(unique(footnotes$colname), "mfr")
-  
+
   # Test table renders without error
   expect_no_error(as_raw_html(footnoted_table))
 })
 
 test_that("Enhanced stub targeting: single column stub compatibility", {
-  
+
   # Test data
   test_data <- dplyr::tibble(
     mfr = c("Ford", "Ford", "BMW"),
     model = c("GT", "F-150", "X5"),
     trim = c("Base", "XLT", "Premium")
   )
-  
+
   # Test single column stub (regression test)
-  styled_table <- test_data %>%
-    gt(rowname_col = "mfr") %>%
+  styled_table <- test_data |>
+    gt(rowname_col = "mfr") |>
     tab_style(
       style = cell_fill(color = "lightpink"),
       locations = cells_stub(rows = "Ford")
     )
-  
+
   # Check that styles are applied correctly
   styles <- gt:::dt_styles_get(styled_table)
   expect_equal(nrow(styles), 2)  # Should target 2 Ford rows

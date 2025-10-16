@@ -38,7 +38,7 @@ test_that("resolve_rows_l() and resolve_rows_i() both work", {
   mtcars_gt <- gt(mtcars, rownames_to_stub = TRUE)
   iris_gt <- gt(iris, rownames_to_stub = TRUE)
 
-  exibble_gt_1 <- gt(exibble %>% dplyr::mutate(row = ifelse(row == "row_8", "", row)), rowname_col = "row")
+  exibble_gt_1 <- gt(exibble |> dplyr::mutate(row = ifelse(row == "row_8", "", row)), rowname_col = "row")
   row_names_1 <- c(paste0("row_", 1:7), "")
 
   exibble_gt_2 <- gt(dplyr::bind_rows(exibble, exibble), rowname_col = "char")

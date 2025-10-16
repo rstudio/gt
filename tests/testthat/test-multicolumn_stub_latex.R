@@ -22,10 +22,10 @@ test_that("Basic multicolumn stub renders in LaTeX", {
 
   # Test LaTeX output
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should contain proper column specification with multiple stub columns
   expect_true(grepl("l\\|l\\|l\\|", latex_output))
-  
+
   # Should not error
   expect_no_error(as_latex(gt_tbl))
 })
@@ -41,10 +41,10 @@ test_that("Two-column stub renders in LaTeX", {
 
   # Test LaTeX output
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should contain proper column specification
   expect_true(grepl("l\\|l\\|", latex_output))
-  
+
   # Should not error
   expect_no_error(as_latex(gt_tbl))
 })
@@ -60,10 +60,10 @@ test_that("Single stub column renders in LaTeX (regression test)", {
 
   # Test LaTeX output
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   # Should contain stub separator
   expect_true(grepl("l\\|", latex_output))
 })
@@ -87,10 +87,10 @@ test_that("Multicolumn stub with footnotes renders in LaTeX", {
 
   # Test LaTeX output
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   # Should contain footnote text
   expect_true(grepl("Target: Ford", latex_output))
   expect_true(grepl("Target: GT", latex_output))
@@ -123,10 +123,10 @@ test_that("Multiple rows with multicolumn stub footnotes in LaTeX", {
 
   # Test LaTeX output
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   # Should contain all footnote text
   expect_true(grepl("Ford manufacturer", latex_output))
   expect_true(grepl("GT model", latex_output))
@@ -167,10 +167,10 @@ test_that("Multicolumn stub footnotes with row groups as conventional rows in La
 
   # Test LaTeX output
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   # Should contain group names
   expect_true(grepl("American & German", latex_output) || grepl("American \\\\& German", latex_output))
 })
@@ -198,10 +198,10 @@ test_that("All stub columns with footnotes in LaTeX", {
 
   # Test LaTeX output
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   # Should contain all footnotes
   expect_true(grepl("Ford manufacturer", latex_output))
   expect_true(grepl("GT model", latex_output))
@@ -227,10 +227,10 @@ test_that("Footnotes on non-first row with multicolumn stub in LaTeX", {
 
   # Test LaTeX output
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   # Should contain footnotes
   expect_true(grepl("Ford manufacturer", latex_output))
   expect_true(grepl("F-150 model", latex_output))
@@ -263,10 +263,10 @@ test_that("Mixed stub and data column footnotes in LaTeX", {
 
   # Test LaTeX output
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   # Should contain all footnotes
   expect_true(grepl("Ford manufacturer", latex_output))
   expect_true(grepl("GT model", latex_output))
@@ -293,9 +293,9 @@ test_that("Multicolumn stub with styles renders in LaTeX", {
 
   # Test LaTeX output - this should not error (original issue)
   expect_no_error(as_latex(gt_tbl))
-  
+
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should contain proper column specification
   expect_true(grepl("l\\|l\\|l\\|", latex_output))
 })
@@ -325,9 +325,9 @@ test_that("Multicolumn stub with per-column styling in LaTeX", {
 
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should contain proper column specification
   expect_true(grepl("l\\|l\\|", latex_output))
 })
@@ -358,9 +358,9 @@ test_that("Multicolumn stub with row-specific styling in LaTeX", {
 
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should contain proper column specification
   expect_true(grepl("l\\|l\\|l\\|", latex_output))
 })
@@ -382,9 +382,9 @@ test_that("Multicolumn stub with summary rows in LaTeX", {
 
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should contain proper column specification
   expect_true(grepl("l\\|l\\|", latex_output))
 })
@@ -406,9 +406,9 @@ test_that("Multicolumn stub with spanners in LaTeX", {
 
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should contain spanner labels
   expect_true(grepl("Vehicle Info", latex_output))
   expect_true(grepl("Performance", latex_output))
@@ -451,9 +451,9 @@ test_that("Complex multicolumn stub scenario in LaTeX", {
 
   # This is the ultimate test - should handle everything without error
   expect_no_error(as_latex(gt_tbl))
-  
+
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should contain proper structure
   expect_true(grepl("l\\|l\\|l\\|", latex_output))
 })
@@ -475,13 +475,13 @@ test_that("Hierarchical stub merging in LaTeX output", {
 
   # Test LaTeX output
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   # Should contain proper column specification
   expect_true(grepl("l\\|l\\|l\\|", latex_output))
-  
+
   # Note: Hierarchical merging (hiding repeated values) should be visible
   # in the LaTeX output, but we're mainly testing that it doesn't error
 })
@@ -502,17 +502,17 @@ test_that("Multicolumn stub order is preserved in LaTeX", {
 
   # Check that rendering preserves order
   expect_no_error(as_latex(gt_tbl))
-  
+
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should contain proper column specification with 3 stub columns
   expect_true(grepl("l\\|l\\|l\\|", latex_output))
-  
+
   # Check that data values appear in order (Z1 before A1 before M1)
   z1_pos <- regexpr("Z1", latex_output)
   a1_pos <- regexpr("A1", latex_output)
   m1_pos <- regexpr("M1", latex_output)
-  
+
   # Order should be Z1, then A1, then M1 in the first data row
   expect_true(z1_pos[1] > 0)
   expect_true(a1_pos[1] > 0)
@@ -536,9 +536,9 @@ test_that("Empty multicolumn stub cells handled correctly in LaTeX", {
 
   # Should handle empty strings without error
   expect_no_error(as_latex(gt_tbl))
-  
+
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should contain proper column specification
   expect_true(grepl("l\\|l\\|l\\|", latex_output))
 })
@@ -558,9 +558,9 @@ test_that("LaTeX special characters in multicolumn stub", {
 
   # Should handle special characters properly
   expect_no_error(as_latex(gt_tbl))
-  
+
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Special characters should be escaped
   expect_true(grepl("\\\\#", latex_output) || grepl("\\\\&", latex_output) || grepl("\\\\_", latex_output))
 })
@@ -575,14 +575,14 @@ test_that("tab_stubhead() with multiple labels renders correctly in LaTeX", {
 
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should contain all three labels in the header
   expect_true(grepl("Manufacturer", latex_output))
   expect_true(grepl("Model", latex_output))
   expect_true(grepl("Trim", latex_output))
-  
+
   # Labels should appear in order (not as a multicolumn)
   # Extract the header line
   header_match <- regexpr("Manufacturer.*Model.*Trim", latex_output)
@@ -599,18 +599,18 @@ test_that("tab_stubhead() with two labels renders correctly in LaTeX", {
 
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should contain both labels
   expect_true(grepl("Manufacturer", latex_output))
   expect_true(grepl("Model", latex_output))
-  
+
   # Labels should appear before the data columns
   mfr_pos <- regexpr("Manufacturer", latex_output)
   model_pos <- regexpr("Model", latex_output)
   year_pos <- regexpr("year", latex_output)
-  
+
   expect_true(mfr_pos[1] < model_pos[1])
   expect_true(model_pos[1] < year_pos[1])
 })
@@ -625,9 +625,9 @@ test_that("tab_stubhead() with single label still works (regression)", {
 
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should contain the label
   expect_true(grepl("Manufacturer", latex_output))
 })
@@ -642,9 +642,9 @@ test_that("tab_stubhead() with fewer labels than columns uses only first label",
 
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should contain multicolumn spanning all stub columns
   expect_true(grepl("\\\\multicolumn\\{3\\}", latex_output))
   expect_true(grepl("Stub Header", latex_output))
@@ -667,12 +667,12 @@ test_that("tab_stubhead() labels maintain order in LaTeX", {
     tab_stubhead(label = c("Z Label", "A Label", "M Label"))
 
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Labels should appear in the specified order
   z_pos <- regexpr("Z Label", latex_output)
   a_pos <- regexpr("A Label", latex_output)
   m_pos <- regexpr("M Label", latex_output)
-  
+
   expect_true(z_pos[1] > 0)
   expect_true(a_pos[1] > 0)
   expect_true(m_pos[1] > 0)
@@ -694,9 +694,9 @@ test_that("tab_stubhead() with styles works in LaTeX multicolumn stub", {
 
   # Should not error
   expect_no_error(as_latex(gt_tbl))
-  
+
   latex_output <- as.character(as_latex(gt_tbl))
-  
+
   # Should contain all labels
   expect_true(grepl("Manufacturer", latex_output))
   expect_true(grepl("Model", latex_output))

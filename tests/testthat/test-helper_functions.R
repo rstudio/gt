@@ -39,7 +39,7 @@ test_that(" from_column() works correctly", {
 
   # Create a gt table based on `exibble` (with a few extra columns)
   tab <-
-    exibble %>%
+    exibble |>
     dplyr::mutate(
       i_integer = as.integer(1:8),
       i_real = as.numeric(1:8),
@@ -47,16 +47,16 @@ test_that(" from_column() works correctly", {
       locales = c("en", "de", "fr", "es", "it", "pt", "zh", "sv"),
       punct = c(rep(",", 4), rep(".", 4)),
       sys = c(rep("intl", 4), rep("ind", 4))
-    ) %>%
+    ) |>
     gt(rowname_col = "row", groupname_col = "group")
 
   # Use `from_column()` on the `decimals` arg of `fmt_number()`
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_number(
          columns = num,
          decimals = from_column(column = "i_integer")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["num"]],
     c(
@@ -67,12 +67,12 @@ test_that(" from_column() works correctly", {
 
   # This variation uses selected `rows` indices
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_number(
          columns = num,
          rows = c(2, 4, 6, 7),
          decimals = from_column(column = "i_integer")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["num"]],
     c(
@@ -83,13 +83,13 @@ test_that(" from_column() works correctly", {
 
   # Use `from_column()` with a newly created column (via `cols_add()`)
   expect_equal(
-    (tab %>%
-       cols_add(i_integer_2 = i_integer * 2) %>%
+    (tab |>
+       cols_add(i_integer_2 = i_integer * 2) |>
        fmt_number(
          columns = num,
          rows = c(2, 4, 6, 7),
          decimals = from_column(column = "i_integer_2")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["num"]],
     c(
@@ -100,12 +100,12 @@ test_that(" from_column() works correctly", {
 
   # Expect that the above won't work if `cols_add()` is invoked later
   expect_error(
-    tab %>%
+    tab |>
       fmt_number(
         columns = num,
         rows = c(2, 4, 6, 7),
         decimals = from_column(column = "i_integer_2")
-      ) %>%
+      ) |>
       cols_add(i_integer_2 = i_integer * 2)
   )
 
@@ -113,13 +113,13 @@ test_that(" from_column() works correctly", {
   # new column (`i_integer_2`) has NA values but they are handled in
   # `from_column()` with the `na_value` argument
   expect_equal(
-    (tab %>%
-       cols_add(i_integer_2 = c(2, NA, NA, NA, NA, 3, 2, 1)) %>%
+    (tab |>
+       cols_add(i_integer_2 = c(2, NA, NA, NA, NA, 3, 2, 1)) |>
        fmt_number(
          columns = num,
          rows = c(1, 2, 4, 6, 7),
          decimals = from_column(column = "i_integer_2", na_value = 5)
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["num"]],
     c(
@@ -131,8 +131,8 @@ test_that(" from_column() works correctly", {
   # Expect that the `fn` argument of `from_column` can modify values taken
   # from `i_integer_2`; the replacement of NA values is the same as before
   expect_equal(
-    (tab %>%
-       cols_add(i_integer_2 = c(2, NA, NA, NA, NA, 3, 2, 1)) %>%
+    (tab |>
+       cols_add(i_integer_2 = c(2, NA, NA, NA, NA, 3, 2, 1)) |>
        fmt_number(
          columns = num,
          rows = c(1, 2, 4, 6, 7),
@@ -141,7 +141,7 @@ test_that(" from_column() works correctly", {
            na_value = 5,
            fn = function(x) x * 2
          )
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["num"]],
     c(
@@ -154,8 +154,8 @@ test_that(" from_column() works correctly", {
   # values in `i_integer_2`; the replacement of NA values through `na_value`
   # does nothing here
   expect_equal(
-    (tab %>%
-       cols_add(i_integer_2 = c(2, NA, NA, NA, NA, 3, 2, 1)) %>%
+    (tab |>
+       cols_add(i_integer_2 = c(2, NA, NA, NA, NA, 3, 2, 1)) |>
        fmt_number(
          columns = num,
          decimals = from_column(
@@ -163,7 +163,7 @@ test_that(" from_column() works correctly", {
            na_value = 5,
            fn = function(x) ifelse(is.na(x), 8, x)
          )
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["num"]],
     c(
@@ -175,8 +175,8 @@ test_that(" from_column() works correctly", {
   # Check that `sub_missing()` can still replace missing values after the
   # combination of `cols_add()`, `fmt_number()`/`from_column`
   expect_equal(
-    (tab %>%
-       cols_add(i_integer_2 = c(2, NA, NA, NA, NA, 3, 2, 1)) %>%
+    (tab |>
+       cols_add(i_integer_2 = c(2, NA, NA, NA, NA, 3, 2, 1)) |>
        fmt_number(
          columns = num,
          rows = c(1, 2, 4, 6, 7),
@@ -185,8 +185,8 @@ test_that(" from_column() works correctly", {
            na_value = 5,
            fn = function(x) x * 2
          )
-       ) %>%
-       sub_missing(columns = num, missing_text = "5") %>%
+       ) |>
+       sub_missing(columns = num, missing_text = "5") |>
        render_formats_test("html")
     )[["num"]],
     c(
@@ -197,11 +197,11 @@ test_that(" from_column() works correctly", {
 
   # Use `from_column()` to reference the same column that is being formatted
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_number(
          columns = i_integer,
          decimals = from_column(column = "i_integer")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["i_integer"]],
     c(
@@ -212,11 +212,11 @@ test_that(" from_column() works correctly", {
 
   # Expect no difference when referencing a column with numeric values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_number(
          columns = i_integer,
          decimals = from_column(column = "i_real")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["i_integer"]],
     c(
@@ -227,14 +227,14 @@ test_that(" from_column() works correctly", {
 
   # Expect that multiple uses of `from_column()` will work without fail
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_number(
          columns = currency,
          decimals = from_column(column = "i_real"),
          use_seps = from_column(column = "tf"),
          scale_by = from_column(column = "i_integer"),
          force_sign = from_column(column = "tf")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["currency"]],
     c(
@@ -245,13 +245,13 @@ test_that(" from_column() works correctly", {
 
   # A variation on the previous with multiple uses of `from_column()`
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_number(
          columns = currency,
          decimals = from_column(column = "i_real"),
          scale_by = from_column(column = "i_integer"),
          locale = from_column(column = "locales")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["currency"]],
     c(
@@ -262,12 +262,12 @@ test_that(" from_column() works correctly", {
 
   # Expect that even single-keyword based parameters (i.e., `system`) work
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_number(
          columns = num,
          scale_by = from_column(column = "i_integer", fn = function(x) x * 1e4),
          system = from_column(column = "sys")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["num"]],
     c(
@@ -278,14 +278,14 @@ test_that(" from_column() works correctly", {
 
   # Expect that a combination of numbering systems with mark choices work well
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_number(
          columns = num,
          scale_by = from_column(column = "i_integer", fn = function(x) x * 1e4),
          system = from_column(column = "sys"),
          dec_mark = ".",
          sep_mark = "|"
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["num"]],
     c(
@@ -296,12 +296,12 @@ test_that(" from_column() works correctly", {
 
   # Perform a test with `fmt_integer()`
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_integer(
          columns = currency,
          scale_by = from_column(column = "i_integer"),
          force_sign = from_column(column = "tf")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["currency"]],
     c(
@@ -316,13 +316,13 @@ test_that(" from_column() works correctly", {
     value_sci <- "2.78 $\\times$ 10\\textsuperscript{9}"
   }
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_scientific(
          columns = num,
          scale_by = from_column(column = "i_integer", fn = function(x) x * 1e5),
          force_sign_m = from_column(column = "tf"),
          force_sign_n = from_column(column = "tf")
-       ) %>%
+       ) |>
        render_formats_test("latex")
     )[["num"]],
     c(
@@ -335,13 +335,13 @@ test_that(" from_column() works correctly", {
 
   # Perform a test with `fmt_engineering()`
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_engineering(
          columns = num,
          scale_by = from_column(column = "i_integer", fn = function(x) x * 1e5),
          force_sign_m = from_column(column = "tf"),
          force_sign_n = from_column(column = "tf")
-       ) %>%
+       ) |>
        render_formats_test("latex")
     )[["num"]],
     c(
@@ -354,14 +354,14 @@ test_that(" from_column() works correctly", {
 
   # Perform a test with `fmt_percent()`
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_percent(
          columns = currency,
          decimals = from_column(column = "i_real"),
          force_sign = from_column(column = "tf"),
          incl_space = from_column(column = "tf"),
          use_seps = from_column(column = "tf")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["currency"]],
     c(
@@ -372,8 +372,8 @@ test_that(" from_column() works correctly", {
 
   # Perform a test with `fmt_partsper()`
   expect_equal(
-    (tab %>%
-       cols_add(type = c("per-mille", "per-myriad", "pcm", "ppm", "ppb", "ppt", "ppq", "ppm")) %>%
+    (tab |>
+       cols_add(type = c("per-mille", "per-myriad", "pcm", "ppm", "ppb", "ppt", "ppq", "ppm")) |>
        fmt_partsper(
          columns = currency,
          to_units = from_column(column = "type"),
@@ -381,7 +381,7 @@ test_that(" from_column() works correctly", {
          force_sign = from_column(column = "tf"),
          incl_space = from_column(column = "tf"),
          use_seps = from_column(column = "tf")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["currency"]],
     c(
@@ -393,13 +393,13 @@ test_that(" from_column() works correctly", {
 
   # Perform a test with `fmt_fraction()`
   expect_equal(
-    (tab %>%
-       cols_add(frac = i_real / 10) %>%
+    (tab |>
+       cols_add(frac = i_real / 10) |>
        fmt_fraction(
          columns = frac,
          accuracy = from_column(column = "i_real"),
          layout = "inline"
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["frac"]],
     c(
@@ -409,12 +409,12 @@ test_that(" from_column() works correctly", {
 
   # Perform a test with `fmt_currency()`
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_currency(
          columns = currency,
          force_sign = from_column(column = "tf"),
          locale = from_column(column = "locales")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["currency"]],
     c(
@@ -425,12 +425,12 @@ test_that(" from_column() works correctly", {
 
   # Perform a test with `fmt_roman()`
   expect_equal(
-    (tab %>%
-       cols_add(case = c(rep("upper", 4), rep("lower", 4))) %>%
+    (tab |>
+       cols_add(case = c(rep("upper", 4), rep("lower", 4))) |>
        fmt_roman(
          columns = i_integer,
          case = from_column(column = "case")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["i_integer"]],
     c(
@@ -440,12 +440,12 @@ test_that(" from_column() works correctly", {
 
   # Perform a test with `fmt_index()`
   expect_equal(
-    (tab %>%
-       cols_add(case = c(rep("upper", 4), rep("lower", 4))) %>%
+    (tab |>
+       cols_add(case = c(rep("upper", 4), rep("lower", 4))) |>
        fmt_index(
          columns = i_integer,
          case = from_column(column = "case")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["i_integer"]],
     c(
@@ -455,12 +455,12 @@ test_that(" from_column() works correctly", {
 
   # Perform a test with `fmt_spelled_num()`
   expect_equal(
-    (tab %>%
-       cols_add(case = c(rep("upper", 4), rep("lower", 4))) %>%
+    (tab |>
+       cols_add(case = c(rep("upper", 4), rep("lower", 4))) |>
        fmt_spelled_num(
          columns = i_integer,
          locale = from_column(column = "locales")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["i_integer"]],
     c(
@@ -471,11 +471,11 @@ test_that(" from_column() works correctly", {
 
   # Perform a test with `fmt_bytes()`
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_bytes(
          columns = num,
          force_sign = from_column(column = "tf")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["num"]],
     c(
@@ -486,12 +486,12 @@ test_that(" from_column() works correctly", {
 
   # Perform a test with `fmt_date()`
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_date(
          columns = date,
          date_style = from_column(column = "i_real"),
          locale = from_column(column = "locales")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["date"]],
     c(
@@ -503,13 +503,13 @@ test_that(" from_column() works correctly", {
 
   # Perform a test with `fmt_time()`
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_time(
          columns = time,
          rows = 1:3,
          time_style = from_column(column = "i_real"),
          locale = from_column(column = "locales")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["time"]],
     c(
@@ -519,14 +519,14 @@ test_that(" from_column() works correctly", {
 
   # Perform a test with `fmt_datetime()`
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_datetime(
          columns = datetime,
          rows = 1:3,
          date_style = from_column(column = "i_integer"),
          time_style = from_column(column = "i_real"),
          locale = from_column(column = "locales")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["datetime"]],
     c(
@@ -538,12 +538,12 @@ test_that(" from_column() works correctly", {
 
   # Perform a test with `fmt_url()`
   expect_equal(
-    (tab %>%
-       cols_add(url = towny$website[1:8]) %>%
+    (tab |>
+       cols_add(url = towny$website[1:8]) |>
        fmt_url(
          columns = url,
          label = from_column(column = "char", na_value = "missing")
-       ) %>%
+       ) |>
        render_formats_test("html")
     )[["url"]],
     c(

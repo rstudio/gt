@@ -4,16 +4,16 @@ test_that("test_image() works correctly", {
 
   # Expect that the `test_image()` function returns paths for
   # either a PNG or SVG test image
-  test_image(type = "png") %>% expect_match(".*/test_image.png")
-  test_image(type = "svg") %>% expect_match(".*/test_image.svg")
+  test_image(type = "png") |> expect_match(".*/test_image.png")
+  test_image(type = "svg") |> expect_match(".*/test_image.svg")
 })
 
 test_that("get_mime_type() works correctly", {
 
   # Expect that `get_mime_type()` returns
   # a mime-type string for svg and jpg files
-  get_mime_type(file = "file.svg") %>% expect_equal("image/svg+xml")
-  get_mime_type(file = "file.jpg") %>% expect_equal("image/jpeg")
+  get_mime_type(file = "file.svg") |> expect_equal("image/svg+xml")
+  get_mime_type(file = "file.jpg") |> expect_equal("image/jpeg")
 })
 
 test_that("get_image_uri() works correctly", {
@@ -97,8 +97,6 @@ test_that("ggplot_image() works correctly", {
     geom_point(color = "blue") +
     theme(legend.position = "none")
 
-
-
   # Expect that a single plot object can be contained in a list
   expect_equal(
     ggplot_image(plot_object = gg),
@@ -107,10 +105,15 @@ test_that("ggplot_image() works correctly", {
 
   # Expect that `ggplot_image()` can return multiple image tags
   img_tags <- ggplot_image(plot_object = list(gg, gg))
+
   expect_length(img_tags, 2)
+
   expect_equal(img_tags[1], img_tags[2])
+
   expect_type(img_tags, "character")
+
   skip_on_os("windows") # FIXME Snapshot is different on Windows
+
   # Expect that the image tag generated for the ggplot is correctly formed
   expect_snapshot(ggplot_image(plot_object = gg))
 })

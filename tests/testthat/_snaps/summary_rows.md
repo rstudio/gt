@@ -1,8 +1,8 @@
 # summary_rows() informs to use grand_summary_rows() if no groups are present (#1292).
 
     Code
-      mtcars_short %>% dplyr::select(gear) %>% gt::gt(rownames_to_stub = TRUE) %>%
-        gt::summary_rows(fns = "sum")
+      gt::summary_rows(gt::gt(dplyr::select(mtcars_short, gear), rownames_to_stub = TRUE),
+      fns = "sum")
     Condition
       Error:
       ! Since gt v0.9.0, `groups = everything()` is deprecated in `summary_rows()` if no row groups are present.

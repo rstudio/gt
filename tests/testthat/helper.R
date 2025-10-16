@@ -27,14 +27,17 @@ html_fragment_within <- function(raw_html, ...) {
 }
 
 # shortcut for expect_match(render_as_html(object), regexp)
-expect_match_raw_html <- function(object,
-                                  regexp,
-                                  perl = FALSE,
-                                  fixed = FALSE,
-                                  ...,
-                                  all = TRUE,
-                                  info = NULL,
-                                  label = NULL) {
+expect_match_raw_html <- function(
+    object,
+    regexp,
+    perl = FALSE,
+    fixed = FALSE,
+    ...,
+    all = TRUE,
+    info = NULL,
+    label = NULL
+) {
+
   expect_match_html(
     object = object,
     regexp = regexp,
@@ -47,16 +50,20 @@ expect_match_raw_html <- function(object,
     label = NULL
   )
 }
-expect_match_html <- function(object,
-                              regexp,
-                              f = render_as_html,
-                              perl = FALSE,
-                              fixed = FALSE,
-                              ...,
-                              all = TRUE,
-                              info = NULL,
-                              label = NULL) {
+expect_match_html <- function(
+    object,
+    regexp,
+    f = render_as_html,
+    perl = FALSE,
+    fixed = FALSE,
+    ...,
+    all = TRUE,
+    info = NULL,
+    label = NULL
+  ) {
+
   rendered <- f(object)
+
   for (i in seq_along(regexp)) {
     testthat::expect_match(
       object = rendered,
@@ -71,19 +78,23 @@ expect_match_html <- function(object,
   }
 }
 
-
 # shortcut for expect_match(render_as_html(object), regexp)
-expect_no_match_html <- function(object,
-                                 regexp,
-                                 f = render_as_html,
-                                 perl = FALSE,
-                                 fixed = FALSE,
-                                 ...,
-                                 all = TRUE,
-                                 info = NULL,
-                                 label = NULL) {
+expect_no_match_html <- function(
+    object,
+    regexp,
+    f = render_as_html,
+    perl = FALSE,
+    fixed = FALSE,
+    ...,
+    all = TRUE,
+    info = NULL,
+    label = NULL
+) {
+
   rendered <- f(object)
+
   for (i in seq_along(regexp)) {
+
     testthat::expect_no_match(
       object = rendered,
       regexp = regexp[i],
@@ -97,21 +108,39 @@ expect_no_match_html <- function(object,
   }
 }
 
-expect_merge_locale_sep <- function(locale = NULL, global_locale = NULL, sep = NULL, expected_sep) {
+expect_merge_locale_sep <- function(
+    locale = NULL,
+    global_locale = NULL,
+    sep = NULL,
+    expected_sep
+) {
+
   tbl <- data.frame(
     col_1 = 1,
     col_2 = 2,
     col_3 = 3,
     col_4 = 4
   )
+
   gt_tbl <- gt(tbl, locale = global_locale)
-  merged_gt <- cols_merge_range(gt_tbl, col_begin = "col_1", col_end = "col_2", locale = locale, sep = sep)
+
+  merged_gt <-
+    cols_merge_range(
+      gt_tbl,
+      col_begin = "col_1",
+      col_end = "col_2",
+      locale = locale,
+      sep = sep
+    )
+
   actual_merge_sep <- dt_col_merge_get(merged_gt)[[1]]$sep
+
   expect_equal(actual_merge_sep, expected_sep, label = paste0("locale = ", locale))
 }
 
 # Gets the text from a row group label
 get_row_group_text <- function(tbl_html) {
+
   gsub(
     "\n\\s+",
     "",
@@ -120,10 +149,7 @@ get_row_group_text <- function(tbl_html) {
 }
 
 generate_html_units <- function(input) {
-  render_units(
-    define_units(input),
-    context = "html"
-  )
+  render_units(define_units(input), context = "html")
 }
 
 expect_snapshot_html <- function(gt_tbl, transform = NULL) {
@@ -150,13 +176,23 @@ expect_snapshot_rtf <- function(gt_tbl) {
 #' @param ... Additional parameters passed on to `expect_equal()`
 #'
 #' @noRd
-expect_equal_gt <- function(gt_tbl1, gt_tbl2, f = render_as_html, ignore_id = FALSE, ...) {
+expect_equal_gt <- function(
+    gt_tbl1,
+    gt_tbl2,
+    f = render_as_html,
+    ignore_id = FALSE,
+    ...
+) {
+
   gt_tbl1 <- f(gt_tbl1)
+
   gt_tbl2 <- f(gt_tbl2)
+
   if (ignore_id) {
     gt_tbl1 <- gsub("id=\"[a-z]*?\"", "", gt_tbl1)
     gt_tbl2 <- gsub("id=\"[a-z]*?\"", "", gt_tbl2)
   }
+
   expect_equal(
     gt_tbl1,
     gt_tbl2,
@@ -172,8 +208,11 @@ expect_equal_gt <- function(gt_tbl1, gt_tbl2, f = render_as_html, ignore_id = FA
 #'   `"grand_summary"`.
 #' @noRd
 expect_summary <- function(summary, length, type = "summary") {
+
   rlang::arg_match(type, c("summary", "grand_summary"), multiple = TRUE)
+
   vec <- vctrs::vec_recycle_common(type = type, .size = length)
+
   type <- vec$type
 
   # The summary object has the following fields
@@ -188,6 +227,7 @@ expect_summary <- function(summary, length, type = "summary") {
   expect_length(summary, length)
 
   for (i in seq_along(length)) {
+
     expect_named(summary[[i]], summary_names)
 
     # Expect that `summary[[1]]$missing_text` has a specific value
@@ -202,16 +242,17 @@ expect_summary <- function(summary, length, type = "summary") {
     expect_type(summary[[i]]$fns, "list")
 
     if (type[[i]] == "summary") {
+
       # Expect that `summary[[1]]$formatter_options` is
       # of length 0 if column not formatted
       expect_length(summary[[i]]$formatter_options, 0)
 
     } else if (type[[i]] == "grand_summary") {
+
       expect_equal(summary[[i]]$groups, ":GRAND_SUMMARY:")
     }
   }
 }
-
 
 # Create a shortened version of `mtcars`
 mtcars_short <- datasets::mtcars[1:5, ]

@@ -38,8 +38,8 @@ There's a quick reference [here](https://commonmark.org/help/).
       ~column_1, ~column_2,
       text_1a,   text_2a,
       text_1b,   text_2b
-    ) %>%
-    gt() %>%
+    ) |>
+    gt() |>
     fmt_markdown(columns = everything())
 
   # Expect that the object has the correct classes
@@ -47,14 +47,14 @@ There's a quick reference [here](https://commonmark.org/help/).
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% fmt_markdown(columns = "column_3"))
+  expect_error(tab |> fmt_markdown(columns = "column_3"))
 
   #
   # Compare output of each table cell to the expected
   # HTML output strings
   #
   expect_equal(
-    (tab %>%
+    (tab |>
        render_formats_test(context = "html"))[["column_1"]][[1]],
     paste0(
       "<span class='gt_from_md'>This is Markdown <em>text</em>",
@@ -66,7 +66,7 @@ There's a quick reference [here](https://commonmark.org/help/).
   )
 
   expect_equal(
-    (tab %>%
+    (tab |>
        render_formats_test(context = "html"))[["column_1"]][[2]],
     paste0(
       "<span class='gt_from_md'>Info on Markdown syntax can be ",
@@ -76,7 +76,7 @@ There's a quick reference [here](https://commonmark.org/help/).
   )
 
   expect_equal(
-    (tab %>%
+    (tab |>
        render_formats_test(context = "html"))[["column_2"]][[1]],
     paste0(
       "<span class='gt_from_md'>The <strong>gt</strong> package has ",
@@ -88,7 +88,7 @@ There's a quick reference [here](https://commonmark.org/help/).
   )
 
   expect_equal(
-    (tab %>%
+    (tab |>
        render_formats_test(context = "html"))[["column_2"]][[2]],
       "<span class='gt_from_md'>There’s a quick reference <a href=\"https://commonmark.org/help/\">here</a>.</span>"
   )
@@ -179,50 +179,50 @@ test_that("LaTeX formulas render correctly in HTML", {
           "${s^2}F\\left( s \\right) - sf\\left( 0 \\right) - f'\\left( 0 \\right)$",
           "${s^n}F\\left( s \\right) - {s^{n - 1}}f\\left( 0 \\right) - {s^{n - 2}}f'\\left( 0 \\right) \\cdots - s{f^{\\left( {n - 2} \\right)}}\\left( 0 \\right) - {f^{\\left( {n - 1} \\right)}}\\left( 0 \\right)$"
         )
-    ) %>%
-    gt(rowname_col = "idx") %>%
-    fmt_markdown() %>%
+    ) |>
+    gt(rowname_col = "idx") |>
+    fmt_markdown() |>
     cols_label(
       l_time_domain = md("Time Domain<br/>$\\small{f\\left( t \\right) = {\\mathcal{L}^{\\,\\, - 1}}\\left\\{ {F\\left( s \\right)} \\right\\}}$"),
       l_laplace_s_domain = md("$s$ Domain<br/>$\\small{F\\left( s \\right) = \\mathcal{L}\\left\\{ {f\\left( t \\right)} \\right\\}}$")
-    ) %>%
+    ) |>
     tab_header(
       title = md("A Table of Laplace Transforms &mdash; $\\small{{\\mathcal{L}}}$"),
       subtitle = md("The most commonly used Laplace transforms and formulas.<br/><br/>")
-    ) %>%
+    ) |>
     tab_source_note(
       source_note = md("The hyperbolic functions: $\\cosh \\left( t \\right) = \\frac{{{{\\bf{e}}^t} + {{\\bf{e}}^{ - t}}}}{2}$ , $\\sinh \\left( t \\right) = \\frac{{{{\\bf{e}}^t} - {{\\bf{e}}^{ - t}}}}{2}$")
-    ) %>%
-    cols_align(align = "center") %>%
-    opt_align_table_header(align = "left") %>%
+    ) |>
+    cols_align(align = "center") |>
+    opt_align_table_header(align = "left") |>
     tab_footnote(
       footnote = "The Heaviside Function.",
       locations = cells_body(
         columns = l_time_domain, rows = 25
       )
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = "The Dirac Delta Function.",
       locations = cells_body(
         columns = l_time_domain, rows = 26
       )
-    ) %>%
-    opt_footnote_spec(spec_ref = "b[x]") %>%
+    ) |>
+    opt_footnote_spec(spec_ref = "b[x]") |>
     cols_width(
       idx ~ px(50),
       l_time_domain ~ px(300),
       l_laplace_s_domain ~ px(600)
-    ) %>%
+    ) |>
     opt_stylize(
       style = 2,
       color = "gray",
       add_row_striping = FALSE
-    ) %>%
-    opt_table_outline(style = "invisible") %>%
+    ) |>
+    opt_table_outline(style = "invisible") |>
     tab_style(
       style = cell_fill(color = "gray95"),
       locations = cells_body(columns = l_time_domain)
-    ) %>%
+    ) |>
     tab_options(
       heading.title.font.size = px(32),
       heading.subtitle.font.size = px(18),
@@ -231,12 +231,15 @@ test_that("LaTeX formulas render correctly in HTML", {
       column_labels.border.lr.style = "solid",
       column_labels.border.lr.width = px(1)
     )
+
   expect_snapshot(gt_tbl$`_boxhead`$column_label)
 
   skip_if_not_installed("katex", "1.4.1")
+
   strip_katex_version <- function(x) {
     gsub("katex\\@[\\.\\d]+", "katex@<latest>", x, perl = TRUE)
   }
+
   # Take a snapshot of `gt_tbl`
   expect_snapshot_html(gt_tbl, transform = strip_katex_version)
 })
@@ -249,14 +252,13 @@ test_that("fmt_markdown() works correctly with factors", {
   # and a tibble; format all columns with
   # `fmt_markdown()`
   tab <-
-    dplyr::tibble(column_1 = factor(text)) %>%
-    gt() %>%
+    dplyr::tibble(column_1 = factor(text)) |>
+    gt() |>
     fmt_markdown(columns = everything())
 
   # Compare output of cell to the expected HTML output strings
   expect_equal(
-    (tab %>%
-       render_formats_test(context = "html"))[["column_1"]][[1]],
+    (tab |> render_formats_test(context = "html"))[["column_1"]][[1]],
     "<span class='gt_from_md'>This is Markdown <em>text</em>.</span>"
   )
 })

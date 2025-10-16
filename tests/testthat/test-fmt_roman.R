@@ -51,16 +51,17 @@ test_that("fmt_roman() works correctly", {
 
   # Expect the extracted values to match those of the original dataset
   expect_equal(data_tbl$char, char)
+
   expect_equal(data_tbl$num, num)
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% fmt_roman(columns = num_2))
+  expect_error(tab |> fmt_roman(columns = num_2))
 
   # Format the `num` column to uppercase Roman numerals
   expect_equal(
-    (tab %>%
-       fmt_roman(columns = num) %>%
+    (tab |>
+       fmt_roman(columns = num) |>
        render_formats_test(context = "html"))[["num"]],
     c(
       "L", "II", "I", "I", "N", "N", "N", "N", "N", "N", "N", "I",
@@ -74,8 +75,8 @@ test_that("fmt_roman() works correctly", {
 
   # Format the `num` column to lowercase Roman numerals
   expect_equal(
-    (tab %>%
-       fmt_roman(columns = num, case = "lower") %>%
+    (tab |>
+       fmt_roman(columns = num, case = "lower") |>
        render_formats_test(context = "html"))[["num"]],
     c(
       "l", "ii", "i", "i", "n", "n", "n", "n", "n", "n", "n", "i",
@@ -89,8 +90,8 @@ test_that("fmt_roman() works correctly", {
 
   # Expect that a pattern will work correctly
   expect_equal(
-    (tab %>%
-       fmt_roman(columns = num, case = "lower", pattern = "..{x}..") %>%
+    (tab |>
+       fmt_roman(columns = num, case = "lower", pattern = "..{x}..") |>
        render_formats_test(context = "html"))[["num"]],
     c(
       "..l..", "..ii..", "..i..", "..i..", "..n..", "..n..", "..n..",
@@ -106,27 +107,29 @@ test_that("fmt_roman() works correctly", {
 
   # Expect that a column with NAs will work fine with `fmt_roman()`,
   # it'll just produce NA values
-  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) %>% gt()
+  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) |> gt()
 
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_roman()`
   expect_no_error(
-    na_col_tbl %>% fmt_roman(columns = a) %>% as_raw_html()
+    na_col_tbl |> fmt_roman(columns = a) |> as_raw_html()
   )
+
   expect_no_error(
-    na_col_tbl %>%
-      fmt_roman(columns = a, rows = 1:5) %>% as_raw_html()
+    na_col_tbl |>
+      fmt_roman(columns = a, rows = 1:5) |> as_raw_html()
   )
+
   expect_no_error(
-    na_col_tbl %>%
-      fmt_roman(columns = a, pattern = "a{x}b") %>% as_raw_html()
+    na_col_tbl |>
+      fmt_roman(columns = a, pattern = "a{x}b") |> as_raw_html()
   )
 
   # Expect that two columns being formatted (one entirely NA) will work
   expect_equal(
-    (na_col_tbl %>%
-       fmt_roman(columns = a) %>%
-       fmt_roman(columns = b) %>% render_formats_test("html"))[["b"]],
+    (na_col_tbl |>
+       fmt_roman(columns = a) |>
+       fmt_roman(columns = b) |> render_formats_test("html"))[["b"]],
     c("I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X")
   )
 })
