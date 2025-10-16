@@ -5,13 +5,15 @@ check_suggests <- function() {
 
 # returns the json-object of the reactable javascript-part
 reactive_table_to_json <- function(reactable_obj) {
-  tmp_html_tag <- reactable_obj %>%
-    htmltools::as.tags()  %>%
-    htmltools::doRenderTags()  %>%
-    stringr::str_match(pattern = '<script type="application/json" data-for="[^>]+>(?<found>.+)</script>') %>%
-    dplyr::as_tibble(.name_repair = "minimal") %>%
-    .$found %>%
-    as.character() %>%
+  tmp_html_tag <-
+    (
+      reactable_obj |>
+        htmltools::as.tags()  |>
+        htmltools::doRenderTags()  |>
+        stringr::str_match(pattern = '<script type="application/json" data-for="[^>]+>(?<found>.+)</script>') |>
+        dplyr::as_tibble(.name_repair = "minimal")
+    )$found |>
+    as.character() |>
     jsonlite::parse_json()
 }
 
@@ -24,16 +26,18 @@ test_that("A gt table contains the expected spanner column labels", {
   # contains the spanner heading `perimeter` over the
   # `peri` and `shape` column labels
   tbl_html <-
-    gt(rock) %>%
+    gt(rock) |>
     tab_spanner(
       label = "perimeter",
-      columns = c("peri", "shape")) %>%
-    render_as_html() %>%
+      columns = c("peri", "shape")
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect that the content is the column heading spanning 2 columns
   # is `perimeter`
-  obj_colspan <- tbl_html %>% selection_text("[colspan='2']")
+  obj_colspan <- tbl_html |> selection_text("[colspan='2']")
+
   expect_length(obj_colspan, 1)
   expect_match(obj_colspan, "perimeter")
 
@@ -42,16 +46,17 @@ test_that("A gt table contains the expected spanner column labels", {
   # `peri` and `shape` column labels (this time, using
   # `c()` to define the columns)
   tbl_html <-
-    gt(rock) %>%
+    gt(rock) |>
     tab_spanner(
       label = "perimeter",
-      columns = c(peri, shape)) %>%
-    render_as_html() %>%
+      columns = c(peri, shape)
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect that the content is the column heading spanning 2 columns
   # is `perimeter`
-  obj_perimeter <- tbl_html %>%
+  obj_perimeter <- tbl_html |>
     selection_text("[class='gt_center gt_columns_top_border gt_column_spanner_outer']")
 
   expect_length(obj_perimeter, 1)
@@ -61,10 +66,10 @@ test_that("A gt table contains the expected spanner column labels", {
   # contains the spanner heading `perimeter` that is formatted
   # with Markdown via `md()`
   tbl_html <-
-    gt(rock) %>%
+    gt(rock) |>
     tab_spanner(
       label = md("*perimeter*"),
-      columns = c("peri", "shape")) %>%
+      columns = c("peri", "shape")) |>
     render_as_html()
 
   # Expect that the `perimeter` word is wrapped in `<em>` tags
@@ -75,10 +80,10 @@ test_that("A gt table contains the expected spanner column labels", {
   # contains the spanner heading `perimeter` that is formatted
   # with HTML via `html()`
   tbl_html <-
-    gt(rock) %>%
+    gt(rock) |>
     tab_spanner(
       label = html("<em>perimeter</em>"),
-      columns = c("peri", "shape")) %>%
+      columns = c("peri", "shape")) |>
     render_as_html()
 
   # Expect that the `perimeter` word is wrapped in `<em>` tags
@@ -88,7 +93,7 @@ test_that("A gt table contains the expected spanner column labels", {
   # Expect an error when using column labels
   # that don't exist
   expect_error(
-    gt(rock) %>%
+    gt(rock) |>
       tab_spanner(
         label = "perimeter",
         columns = c(peris, shapes))
@@ -96,8 +101,8 @@ test_that("A gt table contains the expected spanner column labels", {
 
   # Expect an error when using an ID twice
   expect_error(
-    gt(exibble) %>%
-      tab_spanner(label = "a", columns = num) %>%
+    gt(exibble) |>
+      tab_spanner(label = "a", columns = num) |>
       tab_spanner(label = "b", id = "a", columns = char)
   )
 })
@@ -105,107 +110,107 @@ test_that("A gt table contains the expected spanner column labels", {
 test_that("tab_spanner() exclusively uses IDs for arranging spanners", {
 
   tbl_html_1 <-
-    dplyr::tibble(A_X = c(1), B_X = c(2), A_Y = c(3), B_Y = c(4)) %>%
-    gt() %>%
-    tab_spanner(label = "A", id = "a", columns = ends_with("X"), gather = FALSE) %>%
-    tab_spanner(label = "A", id = "b", columns = ends_with("Y"), gather = FALSE) %>%
+    dplyr::tibble(A_X = c(1), B_X = c(2), A_Y = c(3), B_Y = c(4)) |>
+    gt() |>
+    tab_spanner(label = "A", id = "a", columns = ends_with("X"), gather = FALSE) |>
+    tab_spanner(label = "A", id = "b", columns = ends_with("Y"), gather = FALSE) |>
     tab_style(
       style = cell_fill("green"),
       locations = cells_column_spanners(spanners = "a")
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect that there are two spanners and both have the
   # label `"A"`, span 2 columns each, with one background
   # color set to green
-  tbl_html_1 %>%
-    selection_text("[class='gt_column_spanner']") %>%
+  tbl_html_1 |>
+    selection_text("[class='gt_column_spanner']") |>
     expect_equal(c("A", "A"))
 
-  tbl_html_1 %>%
-    selection_value("colspan") %>%
+  tbl_html_1 |>
+    selection_value("colspan") |>
     expect_equal(c("2", "2", "1", "1", "1", "1"))
 
-  tbl_html_1 %>%
-    selection_value("style") %>%
+  tbl_html_1 |>
+    selection_value("style") |>
     expect_equal("background-color: #00FF00;")
 
   tbl_html_2 <-
-    dplyr::tibble(A_X = c(1), B_X = c(2), A_Y = c(3), B_Y = c(4)) %>%
-    gt() %>%
-    tab_spanner(label = "Z", id = "a", columns = starts_with("A"), gather = FALSE) %>%
-    tab_spanner(label = "Z", id = "b", columns = starts_with("B"), gather = FALSE) %>%
+    dplyr::tibble(A_X = c(1), B_X = c(2), A_Y = c(3), B_Y = c(4)) |>
+    gt() |>
+    tab_spanner(label = "Z", id = "a", columns = starts_with("A"), gather = FALSE) |>
+    tab_spanner(label = "Z", id = "b", columns = starts_with("B"), gather = FALSE) |>
     tab_style(
       style = cell_fill("green"),
       locations = cells_column_spanners(spanners = "a")
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect that there are four spanners (with two IDs, both
   # discontinguous) and both have the label `"Z"`, with one background
   # color set to green (in the odd cells)
-  tbl_html_2 %>%
-    selection_text("[class='gt_column_spanner']") %>%
+  tbl_html_2 |>
+    selection_text("[class='gt_column_spanner']") |>
     expect_equal(c("Z", "Z", "Z", "Z"))
 
-  tbl_html_2 %>%
-    selection_value("colspan") %>%
+  tbl_html_2 |>
+    selection_value("colspan") |>
     expect_equal(rep("1", 8))
 
-  tbl_html_2 %>%
-    selection_value("style") %>%
+  tbl_html_2 |>
+    selection_value("style") |>
     expect_equal(rep("background-color: #00FF00;", 2))
 
   tbl_html_3 <-
-    dplyr::tibble(A_X = c(1), B_X = c(2), A_Y = c(3), B_Y = c(4)) %>%
-    gt() %>%
-    tab_spanner(label = "Z", id = "a", columns = starts_with("A"), gather = FALSE) %>%
-    tab_spanner(label = "Z", id = "b", columns = starts_with("B"), gather = FALSE) %>%
+    dplyr::tibble(A_X = c(1), B_X = c(2), A_Y = c(3), B_Y = c(4)) |>
+    gt() |>
+    tab_spanner(label = "Z", id = "a", columns = starts_with("A"), gather = FALSE) |>
+    tab_spanner(label = "Z", id = "b", columns = starts_with("B"), gather = FALSE) |>
     tab_style(
       style = cell_fill("green"),
       locations = cells_column_spanners(spanners = "b")
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect that there are four spanners (with two IDs, both
   # discontinguous) and both have the label `"Z"`, with one background
   # color set to green (in the even cells)
-  tbl_html_3 %>%
-    selection_text("[class='gt_column_spanner']") %>%
+  tbl_html_3 |>
+    selection_text("[class='gt_column_spanner']") |>
     expect_equal(c("Z", "Z", "Z", "Z"))
 
-  tbl_html_3 %>%
-    selection_value("colspan") %>%
+  tbl_html_3 |>
+    selection_value("colspan") |>
     expect_equal(rep("1", 8))
 
-  tbl_html_3 %>%
-    selection_value("style") %>%
+  tbl_html_3 |>
+    selection_value("style") |>
     expect_equal(rep("background-color: #00FF00;", 2))
 })
 
 test_that("tab_spanner() doesn't adversely affect column alignment", {
 
   tbl_html <-
-    gt(airquality) %>%
-    cols_move_to_start(columns = c(Month, Day)) %>%
-    cols_label(Solar.R = html("Solar<br>Radiation")) %>%
+    gt(airquality) |>
+    cols_move_to_start(columns = c(Month, Day)) |>
+    cols_label(Solar.R = html("Solar<br>Radiation")) |>
     tab_spanner(
       label = "Measurement Period",
       columns = c(Month, Day)
-    ) %>%
+    ) |>
     render_as_html()
 
   # Expect that all column labels (which are originally of the numeric
   # and integer classes) are aligned to the right (i.e., all have the
   # `gt_right` CSS class) even though a spanner is present above the
   # `Month` and `Day` columns
-  tbl_html %>%
-    xml2::read_html() %>%
-    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
-    rvest::html_text() %>%
+  tbl_html |>
+    xml2::read_html() |>
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_right']") |>
+    rvest::html_text() |>
     expect_equal(c("Ozone", "SolarRadiation", "Wind", "Temp", "Month", "Day"))
 })
 
@@ -215,36 +220,36 @@ test_that("tab_spanner() works even when columns are forcibly moved", {
   # to the beginning of the column sequence (splitting the `group_d`
   # column spanner into two parts)
   tbl_html <-
-    gt(mtcars[1, ]) %>%
+    gt(mtcars[1, ]) |>
     tab_spanner(
       label = md("*group_a*"),
       columns = c(cyl, hp)
-    ) %>%
+    ) |>
     tab_spanner(
       label = md("*group_b*"),
       columns = c(drat, wt)
-    ) %>%
+    ) |>
     tab_spanner(
       label = md("*group_c*"),
       columns = c(qsec, vs, am)
-    ) %>%
+    ) |>
     tab_spanner(
       label = md("*group_d*"),
       columns = c(gear, carb)
-    ) %>%
+    ) |>
     tab_spanner(
       label = md("*never*"),
       columns = ends_with("nothing")
-    ) %>%
-    cols_move_to_start(columns = carb) %>%
+    ) |>
+    cols_move_to_start(columns = carb) |>
     render_as_html()
 
 
   # Expect the sequence of `colspan` values across both
   # <tr>s in <thead> is correct
-  tbl_html %>%
-    xml2::read_html() %>%
-    selection_value("colspan") %>%
+  tbl_html |>
+    xml2::read_html() |>
+    selection_value("colspan") |>
     expect_equal(
       c("1", "1", "2", "1", "2", "3", "1",           # first <tr>
         "1", "1", "1", "1", "1", "1", "1", "1", "1"  # second <tr>
@@ -257,8 +262,8 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # Expect that a table with no spanners declared will generate
   # a spanner matrix that only has column names
   expect_equal(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       dt_spanners_print_matrix(),
     {
       mat <- matrix(colnames(exibble), nrow = 1)
@@ -270,8 +275,8 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # Expect that the `ids = TRUE` setting will have
   # no effect in this case
   expect_equal(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       dt_spanners_print_matrix(ids = TRUE),
     {
       mat <- matrix(colnames(exibble), nrow = 1)
@@ -283,9 +288,9 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # Hiding columns should have no effect on the spanner matrix (i.e., it
   # will show all vars regardless of visibility)
   expect_equal(
-    exibble %>%
-      gt() %>%
-      cols_hide(columns = char) %>%
+    exibble |>
+      gt() |>
+      cols_hide(columns = char) |>
       dt_spanners_print_matrix(),
     {
       mat <- matrix(colnames(exibble), nrow = 1)
@@ -297,9 +302,9 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # Hidden columns will affect the spanner matrix if `include_hidden`
   # is FALSE
   expect_equal(
-    exibble %>%
-      gt() %>%
-      cols_hide(columns = char) %>%
+    exibble |>
+      gt() |>
+      cols_hide(columns = char) |>
       dt_spanners_print_matrix(include_hidden = FALSE),
     {
       mat <- matrix(base::setdiff(colnames(exibble), "char"), nrow = 1)
@@ -311,7 +316,9 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # Using `omit_columns_rows = TRUE` on a table with no spanners
   # will return a 0-row matrix (with the correct number of columns)
   expect_equal(
-    exibble %>% gt() %>% dt_spanners_print_matrix(omit_columns_row = TRUE),
+    exibble |>
+      gt() |>
+      dt_spanners_print_matrix(omit_columns_row = TRUE),
     {
       mat <- matrix(colnames(exibble), nrow = 1)
       colnames(mat) <- colnames(exibble)
@@ -324,9 +331,9 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # here we hide a column and ask for `dt_spanners_print_matrix()` not
   # to show hidden columns
   expect_equal(
-    exibble %>%
-      gt() %>%
-      cols_hide(columns = char) %>%
+    exibble |>
+      gt() |>
+      cols_hide(columns = char) |>
       dt_spanners_print_matrix(omit_columns_row = TRUE, include_hidden = FALSE),
     {
       mat <- matrix(base::setdiff(colnames(exibble), "char"), nrow = 1)
@@ -346,10 +353,10 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # [2,] "num"     "char"    "fctr"    "date" "time" "datetime" "currency" "row" "group"
 
   expect_equal(
-    exibble %>%
-      gt() %>%
-      tab_spanner(label = "spanner", columns = c(num, char, fctr)) %>%
-      build_data(context = "html") %>%
+    exibble |>
+      gt() |>
+      tab_spanner(label = "spanner", columns = c(num, char, fctr)) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(),
     structure(
       c(
@@ -376,14 +383,14 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # [2,] "num"        "char"       "fctr"       "date" "time" "datetime" "currency" "row" "group"
 
   expect_equal(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = c(num, char, fctr),
         id = "spanner-id"
-      ) %>%
-      build_data(context = "html") %>%
+      ) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(ids = TRUE),
     structure(
       c(
@@ -411,15 +418,15 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # [2,] "num"     "fctr"    "date" "time" "datetime" "currency" "row" "group"
 
   expect_equal(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = c(num, char, fctr),
         id = "spanner-id"
-      ) %>%
-      cols_hide(columns = char) %>%
-      build_data(context = "html") %>%
+      ) |>
+      cols_hide(columns = char) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
     structure(
       c(
@@ -445,15 +452,15 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # [1,] "date" "time" "datetime" "currency" "row" "group"
 
   expect_equal(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = c(num, char, fctr),
         id = "spanner-id"
-      ) %>%
-      cols_hide(columns = c(num, char, fctr)) %>%
-      build_data(context = "html") %>%
+      ) |>
+      cols_hide(columns = c(num, char, fctr)) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
     structure(
       c("date", "time", "datetime", "currency", "row", "group"),
@@ -476,20 +483,20 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # [2,] "date"     "time"     "datetime" "currency" "row" "group"
 
   expect_equal(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = c(num, char, fctr),
         id = "spanner-id"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "spanner2",
         columns = c(num, char, fctr, date, time),
         id = "spanner-id-2"
-      ) %>%
-      cols_hide(columns = c(num, char, fctr)) %>%
-      build_data(context = "html") %>%
+      ) |>
+      cols_hide(columns = c(num, char, fctr)) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
     structure(
       c(
@@ -507,151 +514,151 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # Expect that variations that use combinations of `columns`
   # and `spanners` should having matching spanner matrices
   expect_equal(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = c(num, char, fctr),
         id = "spanner-id"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "spanner2",
         columns = c(date, time), # this combination reolves to
         spanners = "spanner-id", # c(num, char, fctr, date, time)
         id = "spanner-id-2"
-      ) %>%
-      cols_hide(columns = c(num, char, fctr)) %>%
-      build_data(context = "html") %>%
+      ) |>
+      cols_hide(columns = c(num, char, fctr)) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = c(num, char, fctr),
         id = "spanner-id"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "spanner2",
         columns = c(num, char, fctr, date, time),
         id = "spanner-id-2"
-      ) %>%
-      cols_hide(columns = c(num, char, fctr)) %>%
-      build_data(context = "html") %>%
+      ) |>
+      cols_hide(columns = c(num, char, fctr)) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE)
   )
 
   expect_equal(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = c(num, char, fctr),
         id = "spanner-id"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "spanner2",
         columns = c(date, time, num, char), # this combination reolves to
         spanners = "spanner-id",             # c(num, char, fctr, date, time)
         id = "spanner-id-2"
-      ) %>%
-      cols_hide(columns = c(num, char, fctr)) %>%
-      build_data(context = "html") %>%
+      ) |>
+      cols_hide(columns = c(num, char, fctr)) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = c(num, char, fctr),
         id = "spanner-id"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "spanner2",
         columns = c(num, char, fctr, date, time),
         id = "spanner-id-2"
-      ) %>%
-      cols_hide(columns = c(num, char, fctr)) %>%
-      build_data(context = "html") %>%
+      ) |>
+      cols_hide(columns = c(num, char, fctr)) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE)
   )
 
   expect_equal(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = c(num, char, fctr),
         id = "spanner-id"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "spanner2",
         columns = c(date, time, num, char, fctr), # this combination reolves to
         spanners = "spanner-id",                  # c(num, char, fctr, date, time)
         id = "spanner-id-2"
-      ) %>%
-      cols_hide(columns = c(num, char, fctr)) %>%
-      build_data(context = "html") %>%
+      ) |>
+      cols_hide(columns = c(num, char, fctr)) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = c(num, char, fctr),
         id = "spanner-id"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "spanner2",
         columns = c(num, char, fctr, date, time),
         id = "spanner-id-2"
-      ) %>%
-      cols_hide(columns = c(num, char, fctr)) %>%
-      build_data(context = "html") %>%
+      ) |>
+      cols_hide(columns = c(num, char, fctr)) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE)
   )
 
   # Specifying `level = 1` here is no different than not providing the level
   expect_equal(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = c(num, char, fctr),
         level = 1,
         id = "spanner-id"
-      ) %>%
-      build_data(context = "html") %>%
+      ) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = c(num, char, fctr),
         id = "spanner-id"
-      ) %>%
-      build_data(context = "html") %>%
+      ) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE)
   )
 
   # Specifying `level = 10` here is no different than not providing the level
   # because intervening levels that are empty will be removed
   expect_equal(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = c(num, char, fctr),
         level = 10,
         id = "spanner-id"
-      ) %>%
-      build_data(context = "html") %>%
+      ) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = c(num, char, fctr),
         id = "spanner-id"
-      ) %>%
-      build_data(context = "html") %>%
+      ) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE)
   )
 
@@ -665,24 +672,24 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # [4,] "num"       "char"      "fctr"      "date"
 
   expect_equal(
-    exibble[, 1:4] %>%
-      gt() %>%
+    exibble[, 1:4] |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = everything(),
         id = "spanner-id"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "spanner-2",
         spanners = "spanner-id",
         id = "spanner-id-2"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "spanner-3",
         spanners = "spanner-id-2",
         id = "spanner-id-3"
-      ) %>%
-      build_data(context = "html") %>%
+      ) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
     structure(
       c(
@@ -698,24 +705,24 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # Expect the spanner stacking in this case can be equivalently
   # performed by specifying columns (`everything()`)
   expect_equal(
-    exibble[, 1:4] %>%
-      gt() %>%
+    exibble[, 1:4] |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = everything(),
         id = "spanner-id"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "spanner-2",
         columns = everything(),
         id = "spanner-id-2"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "spanner-3",
         columns = everything(),
         id = "spanner-id-3"
-      ) %>%
-      build_data(context = "html") %>%
+      ) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
     structure(
       c(
@@ -738,31 +745,31 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # [4,] "num"       "char"      "fctr"      "date"
 
   expect_equal(
-    exibble[, 1:4] %>%
-      gt() %>%
+    exibble[, 1:4] |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = everything(),
         id = "spanner-id"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "spanner-2",
         columns = everything(),
         id = "spanner-id-2"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "spanner-3",
         columns = everything(),
         id = "spanner-id-3"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "2->",
         id = "spanner-id-2-b",
         columns = c(num, char),
         level = 2,
         replace = TRUE
-      ) %>%
-      build_data(context = "html") %>%
+      ) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
     structure(
       c(
@@ -785,31 +792,31 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # [4,] "num"         "char"        "fctr"        "date"
 
   expect_equal(
-    exibble[, 1:4] %>%
-      gt() %>%
+    exibble[, 1:4] |>
+      gt() |>
       tab_spanner(
         label = "spanner",
         columns = everything(),
         id = "spanner-id"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "spanner-2",
         columns = everything(),
         id = "spanner-id-2"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "spanner-3",
         columns = everything(),
         id = "spanner-id-3"
-      ) %>%
+      ) |>
       tab_spanner(
         label = "<-2->",
         id = "spanner-id-2-b",
         columns = everything(),
         level = 2,
         replace = TRUE
-      ) %>%
-      build_data(context = "html") %>%
+      ) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
     structure(
       c(
@@ -833,13 +840,13 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # [5,] "num" "char" "fctr" "date"
 
   expect_equal(
-    exibble[, 1:4] %>%
-      gt() %>%
-      tab_spanner(label = "A", columns = 1) %>%
-      tab_spanner(label = "B", columns = 2, level = 2) %>%
-      tab_spanner(label = "C", columns = 3, level = 3) %>%
-      tab_spanner(label = "D", columns = 4, level = 4) %>%
-      build_data(context = "html") %>%
+    exibble[, 1:4] |>
+      gt() |>
+      tab_spanner(label = "A", columns = 1) |>
+      tab_spanner(label = "B", columns = 2, level = 2) |>
+      tab_spanner(label = "C", columns = 3, level = 3) |>
+      tab_spanner(label = "D", columns = 4, level = 4) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
     structure(
       c(
@@ -854,21 +861,21 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # Expect that this can be in a different order when being
   # completely explicit about the `level`
   expect_equal(
-    exibble[, 1:4] %>%
-      gt() %>%
-      tab_spanner(label = "A", columns = 1) %>%
-      tab_spanner(label = "B", columns = 2, level = 2) %>%
-      tab_spanner(label = "C", columns = 3, level = 3) %>%
-      tab_spanner(label = "D", columns = 4, level = 4) %>%
-      build_data(context = "html") %>%
+    exibble[, 1:4] |>
+      gt() |>
+      tab_spanner(label = "A", columns = 1) |>
+      tab_spanner(label = "B", columns = 2, level = 2) |>
+      tab_spanner(label = "C", columns = 3, level = 3) |>
+      tab_spanner(label = "D", columns = 4, level = 4) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
-    exibble[, 1:4] %>%
-      gt() %>%
-      tab_spanner(label = "B", columns = 2, level = 2) %>%
-      tab_spanner(label = "C", columns = 3, level = 3) %>%
-      tab_spanner(label = "A", columns = 1, level = 1) %>%
-      tab_spanner(label = "D", columns = 4, level = 4) %>%
-      build_data(context = "html") %>%
+    exibble[, 1:4] |>
+      gt() |>
+      tab_spanner(label = "B", columns = 2, level = 2) |>
+      tab_spanner(label = "C", columns = 3, level = 3) |>
+      tab_spanner(label = "A", columns = 1, level = 1) |>
+      tab_spanner(label = "D", columns = 4, level = 4) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE)
   )
 
@@ -880,11 +887,11 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # [2,] "num_char" "num_char"  NA     NA
   # [3,] "num"      "char"      "fctr" "date"
   expect_equal(
-    exibble[, 1:4] %>%
-      gt() %>%
-      tab_spanner(label = "num_char", columns = c(num, char)) %>%
-      tab_spanner(label = "char_fctr", columns = c(char, date)) %>%
-      build_data(context = "html") %>%
+    exibble[, 1:4] |>
+      gt() |>
+      tab_spanner(label = "num_char", columns = c(num, char)) |>
+      tab_spanner(label = "char_fctr", columns = c(char, date)) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
     structure(
       c(
@@ -896,17 +903,17 @@ test_that("dt_spanners_print_matrix() works correctly", {
     )
   )
   expect_equal(
-    exibble[, 1:4] %>%
-      gt() %>%
-      tab_spanner(label = "num_char", columns = c(num, char)) %>%
-      tab_spanner(label = "char_fctr", columns = c(char, date), gather = TRUE) %>%
-      build_data(context = "html") %>%
+    exibble[, 1:4] |>
+      gt() |>
+      tab_spanner(label = "num_char", columns = c(num, char)) |>
+      tab_spanner(label = "char_fctr", columns = c(char, date), gather = TRUE) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
-    exibble[, 1:4] %>%
-      gt() %>%
-      tab_spanner(label = "num_char", columns = c(num, char)) %>%
-      tab_spanner(label = "char_fctr", columns = c(char, date), gather = FALSE) %>%
-      build_data(context = "html") %>%
+    exibble[, 1:4] |>
+      gt() |>
+      tab_spanner(label = "num_char", columns = c(num, char)) |>
+      tab_spanner(label = "char_fctr", columns = c(char, date), gather = FALSE) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE)
   )
 
@@ -918,12 +925,12 @@ test_that("dt_spanners_print_matrix() works correctly", {
   # [2,] "num_char" "num_char"  NA          NA
   # [3,] "num"      "char"      "date"      "fctr"
   expect_equal(
-    exibble[, 1:4] %>%
-      gt() %>%
-      tab_spanner(label = "num_char", columns = c(num, char)) %>%
-      tab_spanner(label = "char_fctr", columns = c(char, date)) %>%
-      cols_move(columns = date, after = char) %>%
-      build_data(context = "html") %>%
+    exibble[, 1:4] |>
+      gt() |>
+      tab_spanner(label = "num_char", columns = c(num, char)) |>
+      tab_spanner(label = "char_fctr", columns = c(char, date)) |>
+      cols_move(columns = date, after = char) |>
+      build_data(context = "html") |>
       dt_spanners_print_matrix(include_hidden = FALSE),
     structure(
       c(
@@ -937,6 +944,7 @@ test_that("dt_spanners_print_matrix() works correctly", {
 })
 
 test_that("tab_spanner() is compatible with interactive tables", {
+
   check_suggests()
   skip_if_not_installed("jsonlite")
   skip_if_not_installed("tibble")
@@ -947,19 +955,20 @@ test_that("tab_spanner() is compatible with interactive tables", {
 
   # reactable should have the expected spanners
   interactive_tbl <-
-    exibble[, 1:4] %>%
-    gt() %>%
-    tab_spanner(label = "spanner_datechar", columns = c(date, char)) %>%
-    opt_interactive() %>%
+    exibble[, 1:4] |>
+    gt() |>
+    tab_spanner(label = "spanner_datechar", columns = c(date, char)) |>
+    opt_interactive() |>
     reactive_table_to_json()
 
-  interactive_tbl_colgroups <- do.call(rbind, interactive_tbl$x$tag$attribs$columnGroups) %>%
-    dplyr::as_tibble() %>%
+  interactive_tbl_colgroups <- do.call(rbind, interactive_tbl$x$tag$attribs$columnGroups) |>
+    dplyr::as_tibble() |>
     dplyr::mutate(across(c(-columns), ~ sapply(.x, "[[", 1)))
 
   expect_equal(nrow(interactive_tbl_colgroups), 1)
+
   expect_equal(
-    interactive_tbl_colgroups$name %>% sort(),
+    interactive_tbl_colgroups$name |> sort(),
     c("spanner_datechar")
   )
 
@@ -982,31 +991,43 @@ test_that("tab_spanner() is compatible with interactive tables", {
   #
 
   interactive_tbl <-
-    exibble[, 1:4] %>%
-    gt() %>%
-    tab_spanner(label = "spanner_numchar", columns = c(num, char)) %>%
-    tab_spanner(label = "spanner_dat", columns = c(date)) %>%
-    opt_interactive() %>%
+    exibble[, 1:4] |>
+    gt() |>
+    tab_spanner(label = "spanner_numchar", columns = c(num, char)) |>
+    tab_spanner(label = "spanner_dat", columns = c(date)) |>
+    opt_interactive() |>
     reactive_table_to_json()
 
-  interactive_tbl_colgroups <- do.call(rbind, interactive_tbl$x$tag$attribs$columnGroups) %>%
-    dplyr::as_tibble() %>%
-    dplyr::mutate(across(c(-columns), ~ .x %>% sapply("[[", 1)))
+  interactive_tbl_colgroups <-
+    do.call(rbind, interactive_tbl$x$tag$attribs$columnGroups) |>
+    dplyr::as_tibble() |>
+    dplyr::mutate(across(c(-columns), ~ .x |> sapply("[[", 1)))
 
   expect_equal(nrow(interactive_tbl_colgroups), 2)
+
   expect_equal(
-    interactive_tbl_colgroups$name %>% sort(),
+    interactive_tbl_colgroups$name |> sort(),
     c("spanner_dat", "spanner_numchar")
   )
 
   # expected spanners should contain the expected cols
   expect_equal(
-    interactive_tbl_colgroups %>% dplyr::filter(name == "spanner_numchar") %>% .$columns %>% .[[1]] %>% sapply("[[", 1) %>% sort(),
+    (
+      interactive_tbl_colgroups |>
+        dplyr::filter(name == "spanner_numchar")
+      )$columns[[1]] |>
+      sapply("[[", 1) |>
+      sort(),
     c("char", "num")
   )
 
   expect_equal(
-    interactive_tbl_colgroups %>% dplyr::filter(name == "spanner_dat") %>% .$columns %>% .[[1]] %>% sapply("[[", 1) %>% sort(),
+    (
+      interactive_tbl_colgroups |>
+      dplyr::filter(name == "spanner_dat")
+    )$columns[[1]] |>
+      sapply("[[", 1) |>
+      sort(),
     c("date")
   )
 
@@ -1015,30 +1036,40 @@ test_that("tab_spanner() is compatible with interactive tables", {
   #
 
   interactive_tbl <-
-    exibble[, 1:4] %>%
-    gt() %>%
-    tab_spanner(label = md("*md spanner*"), columns = c(num)) %>%
-    tab_spanner(label = html("<u>html spanner</u>"), columns = c(date)) %>%
-    tab_spanner(label = "normal spanner with <u>tags</u> and *more*", columns = c(char)) %>%
-    opt_interactive() %>%
+    exibble[, 1:4] |>
+    gt() |>
+    tab_spanner(label = md("*md spanner*"), columns = c(num)) |>
+    tab_spanner(label = html("<u>html spanner</u>"), columns = c(date)) |>
+    tab_spanner(label = "normal spanner with <u>tags</u> and *more*", columns = c(char)) |>
+    opt_interactive() |>
     reactive_table_to_json()
 
-  interactive_tbl_colgroups <- do.call(rbind, interactive_tbl$x$tag$attribs$columnGroups) %>%
-    dplyr::as_tibble() %>%
-    dplyr::mutate(across(c(-columns), ~ .x %>% sapply("[[", 1)))
+  interactive_tbl_colgroups <-
+    do.call(rbind, interactive_tbl$x$tag$attribs$columnGroups) |>
+    dplyr::as_tibble() |>
+    dplyr::mutate(across(c(-columns), ~ .x |> sapply("[[", 1)))
 
   expect_match(
-    interactive_tbl_colgroups %>% dplyr::filter(name == "*md spanner*") %>% dplyr::select(header) %>% as.character(),
+    interactive_tbl_colgroups |>
+      dplyr::filter(name == "*md spanner*") |>
+      dplyr::select(header) |>
+      as.character(),
     "<span.+md spanner.+"
   )
 
   expect_match(
-    interactive_tbl_colgroups %>% dplyr::filter(name == "<u>html spanner</u>") %>% dplyr::select(header) %>% as.character(),
+    interactive_tbl_colgroups |>
+      dplyr::filter(name == "<u>html spanner</u>") |>
+      dplyr::select(header) |>
+      as.character(),
     regexp = "<u>html spanner</u>"
   )
 
   expect_match(
-    interactive_tbl_colgroups %>% dplyr::filter(name == "normal spanner with <u>tags</u> and *more*") %>% dplyr::select(header) %>% as.character(),
+    interactive_tbl_colgroups |>
+      dplyr::filter(name == "normal spanner with <u>tags</u> and *more*") |>
+      dplyr::select(header) |>
+      as.character(),
     regexp = "normal spanner with &lt;u&gt;.+"
   )
 
@@ -1047,79 +1078,100 @@ test_that("tab_spanner() is compatible with interactive tables", {
   #
 
   interactive_tbl <-
-    exibble[, 1:4] %>%
-    gt() %>%
-    tab_spanner(label = "spanner_label", columns = c(num), id = 1) %>%
-    tab_spanner(label = "spanner_label", columns = c(date, fctr), id = 2) %>%
-    tab_spanner(label = "another_label", columns = c(char), id = 3) %>%
-    opt_interactive() %>%
+    exibble[, 1:4] |>
+    gt() |>
+    tab_spanner(label = "spanner_label", columns = c(num), id = 1) |>
+    tab_spanner(label = "spanner_label", columns = c(date, fctr), id = 2) |>
+    tab_spanner(label = "another_label", columns = c(char), id = 3) |>
+    opt_interactive() |>
     reactive_table_to_json()
 
-  interactive_tbl_colgroups <- do.call(rbind, interactive_tbl$x$tag$attribs$columnGroups) %>%
-    dplyr::as_tibble() %>%
-    dplyr::mutate(across(c(-columns), ~ .x %>% sapply("[[", 1))) %>%
-    dplyr::rowwise() %>%
-    dplyr::mutate(size = length(columns)) %>%
+  interactive_tbl_colgroups <-
+    do.call(rbind, interactive_tbl$x$tag$attribs$columnGroups) |>
+    dplyr::as_tibble() |>
+    dplyr::mutate(across(c(-columns), ~ .x |> sapply("[[", 1))) |>
+    dplyr::rowwise() |>
+    dplyr::mutate(size = length(columns)) |>
     dplyr::arrange(size)
 
   testthat::expect_equal(
-    interactive_tbl_colgroups %>% dplyr::filter(name == "spanner_label") %>% .$columns %>% .[[1]] %>% sapply("[[", 1) %>% sort(),
+    (
+      interactive_tbl_colgroups |>
+      dplyr::filter(name == "spanner_label")
+      )$columns[[1]] |>
+      sapply("[[", 1) |>
+      sort(),
     "num"
   )
 
   testthat::expect_equal(
-    interactive_tbl_colgroups %>% dplyr::filter(name == "spanner_label") %>% .$columns %>% .[[2]] %>% sapply("[[", 1) %>% sort(),
+    (
+      interactive_tbl_colgroups |>
+      dplyr::filter(name == "spanner_label")
+    )$columns[[2]] |>
+      sapply("[[", 1) |>
+      sort(),
     c("date", "fctr")
   )
 })
 
 # spanners with multiple levels result in a warning message
 cli::test_that_cli("multiple levels of `tab_spanner()` are not compatible with interactive tables",
+
   configs = c("plain"), code = {
+
     check_suggests()
 
     expect_snapshot(local({
-      tmp <- exibble[, 1:4] %>%
-        gt() %>%
-        tab_spanner(label = "spanner_numdat", columns = c(num, date)) %>%
-        tab_spanner(label = "spanner_char", columns = c(char)) %>%
-        tab_spanner(label = "spanner_numdatchar", columns = c(num, date, char)) %>%
+      tmp <- exibble[, 1:4] |>
+        gt() |>
+        tab_spanner(label = "spanner_numdat", columns = c(num, date)) |>
+        tab_spanner(label = "spanner_char", columns = c(char)) |>
+        tab_spanner(label = "spanner_numdatchar", columns = c(num, date, char)) |>
         opt_interactive()
     }))
   }
 )
 
 test_that("tab_spanner() can't render multiple spanners in interactive tables and only use 1st level", {
+
   check_suggests()
   skip_if_not_installed("jsonlite")
 
   suppressWarnings({
     interactive_tbl <-
-      exibble[, 1:4] %>%
-      gt() %>%
-      tab_spanner(label = "spanner_numdat", columns = c(num, date)) %>%
-      tab_spanner(label = "spanner_char", columns = c(char)) %>%
-      tab_spanner(label = "spanner_numdatchar", columns = c(num, date, char)) %>%
-      opt_interactive() %>%
+      exibble[, 1:4] |>
+      gt() |>
+      tab_spanner(label = "spanner_numdat", columns = c(num, date)) |>
+      tab_spanner(label = "spanner_char", columns = c(char)) |>
+      tab_spanner(label = "spanner_numdatchar", columns = c(num, date, char)) |>
+      opt_interactive() |>
       reactive_table_to_json()
   })
 
 
-  interactive_tbl_colgroups <- do.call(rbind, interactive_tbl$x$tag$attribs$columnGroups) %>%
-    dplyr::as_tibble() %>%
-    dplyr::mutate(across(c(-columns), ~ .x %>% sapply("[[", 1))) %>%
-    dplyr::rowwise() %>%
-    dplyr::mutate(size = length(columns)) %>%
+  interactive_tbl_colgroups <-
+    do.call(rbind, interactive_tbl$x$tag$attribs$columnGroups) |>
+    dplyr::as_tibble() |>
+    dplyr::mutate(across(c(-columns), ~ .x |> sapply("[[", 1))) |>
+    dplyr::rowwise() |>
+    dplyr::mutate(size = length(columns)) |>
     dplyr::arrange(size)
 
   # expected spanners should contain the expected cols
   testthat::expect_equal(
-    interactive_tbl_colgroups %>% dplyr::filter(name == "spanner_char") %>% .$columns %>% .[[1]] %>% sapply("[[", 1) %>% sort(),
+    (
+      interactive_tbl_colgroups |>
+      dplyr::filter(name == "spanner_char")
+    )$columns[[1]] |> sapply("[[", 1) |> sort(),
     c("char")
   )
 
   expect_equal(
-    interactive_tbl_colgroups %>% dplyr::filter(name == "spanner_numdat") %>% .$columns %>% .[[1]] %>% sapply("[[", 1) %>% sort(),
+    (
+      interactive_tbl_colgroups |>
+      dplyr::filter(name == "spanner_numdat")
+    )$columns[[1]] |> sapply("[[", 1) |> sort(),
     c("date", "num")
   )
 })
