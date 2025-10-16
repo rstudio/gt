@@ -54,14 +54,14 @@ test_that("Various `is_*()` utility functions work properly", {
   expect_no_error(stop_if_not_gt_tbl(gt_preview(gtcars)))
   expect_error(stop_if_not_gt_tbl(exibble))
   expect_error(stop_if_not_gt_tbl(gt_group(gt(exibble), gt(exibble))))
-  expect_error(stop_if_not_gt_tbl(gt(exibble) %>% as_raw_html()))
+  expect_error(stop_if_not_gt_tbl(gt(exibble) |> as_raw_html()))
 
   # Expect that `stop_if_not_gt_group()` yields an error for non-`gt_group` objects
   expect_no_error(stop_if_not_gt_group(gt_group(gt(exibble), gt(exibble))))
   expect_error(stop_if_not_gt_group(gt(exibble)))
   expect_error(stop_if_not_gt_group(gt_preview(gtcars)))
   expect_error(stop_if_not_gt_group(exibble))
-  expect_error(stop_if_not_gt_group(gt(exibble) %>% as_raw_html()))
+  expect_error(stop_if_not_gt_group(gt(exibble) |> as_raw_html()))
 
   # Expect that `stop_if_not_gt_tbl_or_group()` yields an error if a `gt_tbl` or
   # `gt_group` object isn't provided to it
@@ -69,7 +69,7 @@ test_that("Various `is_*()` utility functions work properly", {
   expect_no_error(stop_if_not_gt_tbl_or_group(gt_preview(gtcars)))
   expect_no_error(stop_if_not_gt_tbl_or_group(gt_group(gt(exibble), gt(exibble))))
   expect_error(stop_if_not_gt_tbl_or_group(exibble))
-  expect_error(stop_if_not_gt_tbl_or_group(gt(exibble) %>% as_raw_html()))
+  expect_error(stop_if_not_gt_tbl_or_group(gt(exibble) |> as_raw_html()))
 
   skip_if_not_installed("shiny")
 
@@ -87,6 +87,7 @@ test_that("Various `is_*()` utility functions work properly", {
 })
 
 test_that("is_nonempty_chr() works for detecting that a vector is non-empty", {
+
   expect_true(is_nonempty_chr("asdf"))
   expect_true(is_nonempty_chr(c("1", "2")))
   expect_false(is_nonempty_chr(c("", "")))
@@ -213,30 +214,37 @@ test_that("process_footnote_marks() works properly", {
     process_footnote_marks(1:5, marks = "numbers"),
     c("1", "2", "3", "4", "5")
   )
+
   expect_equal(
     process_footnote_marks(1:5, marks = "letters"),
     c("a", "b", "c", "d", "e")
   )
+
   expect_equal(
     process_footnote_marks(1:5, marks = "letters"),
     process_footnote_marks(1:5, marks = letters)
   )
+
   expect_equal(
     process_footnote_marks(1:5, marks = "LETTERS"),
     c("A", "B", "C", "D", "E")
   )
+
   expect_equal(
     process_footnote_marks(1:5, marks = "LETTERS"),
     process_footnote_marks(1:5, marks = LETTERS)
   )
+
   expect_equal(
     process_footnote_marks(1:5, marks = "standard"),
     c("\U0002A", "\U02020", "\U02021", "\U000A7", "\U0002A\U0002A")
   )
+
   expect_equal(
     process_footnote_marks(1:6, marks = "extended"),
     c("\U0002A", "\U02020", "\U02021", "\U000A7", "\U02016", "\U000B6")
   )
+
   expect_equal(
     process_footnote_marks(1:12, marks = "extended"),
     c(
@@ -245,14 +253,17 @@ test_that("process_footnote_marks() works properly", {
       "\U000A7\U000A7", "\U02016\U02016", "\U000B6\U000B6"
     )
   )
+
   expect_equal(
     process_footnote_marks(1:4, marks = c("one", "two", "three", "four")),
     c("one", "two", "three", "four")
   )
+
   expect_equal(
     process_footnote_marks(4:1, marks = c("one", "two", "three", "four")),
     c("four", "three", "two", "one")
   )
+
   expect_equal(
     process_footnote_marks(1:4, marks = 10:13), c("10", "11", "12", "13")
   )
@@ -302,26 +313,29 @@ test_that("Tables with labeled columns work with certain utility functions", {
   attr(df_df$b, "label") <- attr(tbl_df$b, "label") <- "Six to Eight"
   attr(df_df$d, "label") <- attr(tbl_df$d, "label") <- "True or False"
 
-  expect_true(gt(df_df) %>% any_labeled_columns_in_data_tbl())
-  expect_true(gt(tbl_df) %>% any_labeled_columns_in_data_tbl())
-  expect_false(gt(exibble) %>% any_labeled_columns_in_data_tbl())
-  expect_false(gt(dplyr::tibble()) %>% any_labeled_columns_in_data_tbl())
-  expect_false(gt(data.frame()) %>% any_labeled_columns_in_data_tbl())
+  expect_true(gt(df_df) |> any_labeled_columns_in_data_tbl())
+  expect_true(gt(tbl_df) |> any_labeled_columns_in_data_tbl())
+  expect_false(gt(exibble) |> any_labeled_columns_in_data_tbl())
+  expect_false(gt(dplyr::tibble()) |> any_labeled_columns_in_data_tbl())
+  expect_false(gt(data.frame()) |> any_labeled_columns_in_data_tbl())
 
   expect_equal(
-    gt(df_df) %>% get_columns_labels_from_attrs(),
+    gt(df_df) |> get_columns_labels_from_attrs(),
     c("One to three", "Six to Eight", "True or False", "e")
   )
+
   expect_equal(
-    gt(tbl_df) %>% get_columns_labels_from_attrs(),
+    gt(tbl_df) |> get_columns_labels_from_attrs(),
     c("One to three", "Six to Eight", "True or False", "e")
   )
+
   expect_equal(
-    gt(dplyr::tibble()) %>% get_columns_labels_from_attrs(),
+    gt(dplyr::tibble()) |> get_columns_labels_from_attrs(),
     character(0L)
   )
+
   expect_equal(
-    gt(exibble) %>% get_columns_labels_from_attrs(),
+    gt(exibble) |> get_columns_labels_from_attrs(),
     c(
       "num", "char", "fctr", "date", "time", "datetime",
       "currency", "row", "group"
@@ -418,6 +432,7 @@ test_that("markdown_to_rtf() works", {
     "&nbsp; &amp; &copy; &AElig; &Dcaron;\n&frac34; &HilbertSpace; &DifferentialD;\n&ClockwiseContourIntegral; &ngE;",
     "\\u160  & \\u169  \\u198  \\u270 \n \\u190  \\u8459  \\u8518 \n \\u8754  \\u8807 \\u824 "
   )
+
   # TODO: <pre>, <blockquote>
 
   # custom_inline
@@ -484,9 +499,10 @@ test_that("str_substitute() works well", {
   })
 })
 
-test_that("apply_to_grp works",{
+test_that("apply_to_grp works", {
+
   # create gt group example
-  gt_tbl <- exibble %>% gt()
+  gt_tbl <- exibble |> gt()
   gt_group <- gt_group(gt_tbl, gt_tbl)
 
   # create arguments - invalid function
@@ -497,7 +513,8 @@ test_that("apply_to_grp works",{
   arg_list <- list("cols_align", data = "gt_group(gt_tbl, gt_tbl)", align = c("center"))
 
   # aligned gt_tbl
-  aligned_tbl <- gt_tbl %>%
+  aligned_tbl <-
+    gt_tbl |>
     cols_align(
       align = "center"
     )
@@ -507,16 +524,22 @@ test_that("apply_to_grp works",{
 
   expect_identical(aligned_group, gt_group(aligned_tbl, aligned_tbl))
 
-
   # error in table 2
-  gt_tbl2 <- exibble %>%
-    dplyr::select(-num) %>%
+  gt_tbl2 <-
+    exibble |>
+    dplyr::select(-num) |>
     gt()
 
   gt_group_error <- gt_group(gt_tbl, gt_tbl2)
 
-  arg_list <- list("cols_align", data = "gt_group(gt_tbl, gt_tbl)", align = c("center"), columns = "num")
+  arg_list <-
+    list(
+      "cols_align",
+      data = "gt_group(gt_tbl, gt_tbl)",
+      align = c("center"),
+      columns = "num"
+    )
 
   # captures error of individual table and table number
- expect_snapshot(apply_to_grp(gt_group_error, arg_list), error=TRUE)
+  expect_snapshot(apply_to_grp(gt_group_error, arg_list), error=TRUE)
 })
