@@ -1679,6 +1679,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with sp
       "", "My Span Label", "", "", "", "",
       "", "num", "fctr", "date", "time", "datetime", "currency", "row", "group")
   )
+
   expect_equal(
     lapply(docx_table_body_header, function(x) {
       x |> xml2::xml_find_all(".//w:tc") |> lapply(function(y) {
@@ -1690,6 +1691,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with sp
       list(character(0L), "00FF00", "00FF00", "00FF00", "00FF00", "00FF00", "00FF00", "00FF00", "00FF00")
       )
   )
+
   expect_equal(
     lapply(docx_table_body_header, function(x) {
       x |> xml2::xml_find_all(".//w:tc") |> lapply(function(y) {
@@ -1851,7 +1853,7 @@ test_that("footnotes styling gets applied to footer marks", {
       docx_table_meta_info[[2]],
       ".//w:tc")[[1]]
   style_bold <- as.character(
-    xml2::xml_find_all(style_bold, ".//w:rPr") [[1]]
+    xml2::xml_find_all(style_bold, ".//w:rPr")[[1]]
   )
 
   expect_equal(
@@ -1975,8 +1977,8 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
   ## the 1st col, 3rd value in the grand total is purple
   expect_equal(
     lapply(docx_table_body_contents, function(x) {
-      x %>% xml2::xml_find_all(".//w:tc") %>% sapply(function(y) {
-        val <- y %>% xml2::xml_find_all(".//w:color") %>% xml2::xml_attr(attr = "val")
+      x |> xml2::xml_find_all(".//w:tc") |> sapply(function(y) {
+        val <- y |> xml2::xml_find_all(".//w:color") |> xml2::xml_attr(attr = "val")
         if (identical(val, character())) {
           ""
         } else {
@@ -2008,8 +2010,8 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
   ## the grand total row names fill is is yellow
   expect_equal(
     lapply(docx_table_body_contents, function(x) {
-      x %>% xml2::xml_find_all(".//w:tc") %>% sapply(function(y) {
-        val <- y %>% xml2::xml_find_all(".//w:shd") %>% xml2::xml_attr(attr = "fill")
+      x |> xml2::xml_find_all(".//w:tc") |> sapply(function(y) {
+        val <- y |> xml2::xml_find_all(".//w:shd") |> xml2::xml_attr(attr = "fill")
         if (identical(val, character())) {
           ""
         } else {
@@ -2046,13 +2048,13 @@ test_that("tables preserves spaces in text & can be added to a word doc", {
 
   ## simple table
   gt_exibble <-
-    exibble[1, 1] %>%
+    exibble[1, 1] |>
     dplyr::mutate(
       `5 Spaces Before` = "     Preserve",
       `5 Spaces After` = "Preserve     ",
       `5 Spaces Before - preserve` = "     Preserve",
-      `5 Spaces After - preserve` = "Preserve     ") %>%
-    gt() %>%
+      `5 Spaces After - preserve` = "Preserve     ") |>
+    gt() |>
     tab_style(
       style = cell_text(whitespace = "pre"),
       locations = cells_body(columns = contains("preserve"))
@@ -2060,7 +2062,7 @@ test_that("tables preserves spaces in text & can be added to a word doc", {
 
   ## Add table to empty word document
   word_doc_normal <-
-    officer::read_docx() %>%
+    officer::read_docx() |>
     body_add_gt(gt_exibble, align = "center")
 
   ## save word doc to temporary file
@@ -2080,7 +2082,7 @@ test_that("tables preserves spaces in text & can be added to a word doc", {
 
   ## extract table contents
   docx_table_body_contents <-
-    docx_contents[1] %>%
+    docx_contents[1] |>
     xml2::xml_find_all(".//w:tr")
 
   ## text is preserved
@@ -2090,8 +2092,14 @@ test_that("tables preserves spaces in text & can be added to a word doc", {
       FUN = function(x) xml2::xml_text(xml2::xml_find_all(x, ".//w:p"))
     ),
     list(
-      c("num","5 Spaces Before","5 Spaces After","5 Spaces Before - preserve","5 Spaces After - preserve"),
-      c("0.1111"," Preserve","Preserve ","     Preserve","Preserve     ")
+      c(
+        "num",
+        "5 Spaces Before",
+        "5 Spaces After",
+        "5 Spaces Before - preserve",
+        "5 Spaces After - preserve"
+      ),
+      c("0.1111", " Preserve", "Preserve ", "     Preserve", "Preserve     ")
     )
   )
 
@@ -2115,28 +2123,28 @@ test_that("tables respects column and cell alignment and can be added to a word 
 
   ## simple table
   gt_exibble <-
-    exibble[1:2, 1:4] %>%
+    exibble[1:2, 1:4] |>
     `colnames<-`(c(
       "wide column number 1",
       "wide column number 2",
       "wide column number 3",
       "tcn4" #thin column number 4
-    )) %>%
-    gt() %>%
+    )) |>
+    gt() |>
     cols_align(
       "right", columns = `wide column number 1`
-    ) %>%
+    ) |>
     cols_align(
       "left", columns = c(`wide column number 2`, `wide column number 3`)
-    ) %>%
+    ) |>
     tab_style(
       style = cell_text(align = "right"),
       locations = cells_body(columns = c(`wide column number 2`, `wide column number 3`), rows = 2)
-    ) %>%
+    ) |>
     tab_style(
       style = cell_text(align = "left"),
       locations = cells_body(columns = c(`wide column number 1`), rows = 2)
-    ) %>%
+    ) |>
     tab_style(
       cell_text(align = "right"),
       locations = cells_column_labels(columns = c(tcn4))
@@ -2144,7 +2152,7 @@ test_that("tables respects column and cell alignment and can be added to a word 
 
   ## Add table to empty word document
   word_doc <-
-    officer::read_docx() %>%
+    officer::read_docx() |>
     body_add_gt(gt_exibble, align = "center")
 
   ## save word doc to temporary file
@@ -2164,7 +2172,7 @@ test_that("tables respects column and cell alignment and can be added to a word 
 
   ## extract table contents
   docx_table_body_contents <-
-    docx_contents[1] %>%
+    docx_contents[1] |>
     xml2::xml_find_all(".//w:tr")
 
   ## text is preserved
@@ -2190,8 +2198,8 @@ test_that("tables respects column and cell alignment and can be added to a word 
     lapply(
       docx_table_body_contents,
       FUN = function(x)
-        x %>%
-        xml2::xml_find_all(".//w:pPr") %>%
+        x |>
+        xml2::xml_find_all(".//w:pPr") |>
         lapply(FUN = function(y) xml2::xml_attr(xml2::xml_find_all(y,".//w:jc"),"val"))
     ),
     list(
@@ -2246,9 +2254,9 @@ There's a quick reference [here](https://commonmark.org/help/).
     ~Markdown, ~md,
     text_1a,   text_2a,
     text_1b,   text_2b
-  ) %>%
-    gt() %>%
-    fmt_markdown(columns = everything()) %>%
+  ) |>
+    gt() |>
+    fmt_markdown(columns = everything()) |>
     tab_footnote(
       "This is text",
       locations = cells_column_labels(columns = md)
@@ -2266,14 +2274,14 @@ There's a quick reference [here](https://commonmark.org/help/).
 
   ## extract table contents
   docx_table_body_contents <-
-    docx_contents[1] %>%
+    docx_contents[1] |>
     xml2::xml_find_all(".//w:tr")
 
   ## text is preserved
   expect_equal(
     lapply(
       docx_table_body_contents,
-      FUN = function(x) {xml2::xml_find_all(x, ".//w:tc") %>%
+      FUN = function(x) {xml2::xml_find_all(x, ".//w:tc") |>
         lapply(function(x) {xml2::xml_text(xml2::xml_find_all(x,".//w:p"))})
       }
     ),
@@ -2297,9 +2305,11 @@ There's a quick reference [here](https://commonmark.org/help/).
   )
 
   ## check styling in first row first column (Header)
-  styling_cell_text <- docx_table_body_contents[[2]] %>%
-    xml2::xml_find_all(".//w:tc") %>%
-    .[[1]] %>%
+  styling_cell_text <-
+    (
+      docx_table_body_contents[[2]] |>
+      xml2::xml_find_all(".//w:tc")
+    )[[1]] |>
     xml2::xml_find_all(".//w:rPr")
 
   expect_equal(
@@ -2321,9 +2331,10 @@ There's a quick reference [here](https://commonmark.org/help/).
 
   ## check styling in second row first column (bold, italics, code, and website url styling)
   styling_cell_text <-
-    docx_table_body_contents[[3]] %>%
-    xml2::xml_find_all(".//w:tc") %>%
-    .[[1]] %>%
+    (
+      docx_table_body_contents[[3]] |>
+      xml2::xml_find_all(".//w:tc")
+    )[[1]] |>
     xml2::xml_find_all(".//w:rPr")
 
   expect_equal(
@@ -2355,8 +2366,8 @@ test_that("markdown with urls work", {
     dplyr::tribble(
       ~url,
       text_sample
-    ) %>%
-    gt() %>%
+    ) |>
+    gt() |>
     fmt_markdown(columns = everything())
 
   temp_docx <- tempfile(fileext = ".docx")
@@ -2371,7 +2382,7 @@ test_that("markdown with urls work", {
 
   ## extract table hyperlinks
   docx_table_hyperlinks <-
-    docx_contents[1] %>%
+    docx_contents[1] |>
     xml2::xml_find_all(".//w:hyperlink")
 
   ## hyperlinks are preserved and updated to be rId
@@ -2409,8 +2420,8 @@ test_that("markdown with img refs work",{
     ~md,
     paste0(" ![test image from gt package](",temp_png,")"),
     paste0(" ![test image from gt package2](",temp_svg,")")
-    ) %>%
-    gt() %>%
+    ) |>
+    gt() |>
     fmt_markdown(columns = everything())
 
   temp_docx <- tempfile(fileext = ".docx")
@@ -2429,7 +2440,7 @@ test_that("markdown with img refs work",{
 
   ## extract table hyperlinks
   docx_table_image <-
-    docx_contents[1] %>%
+    docx_contents[1] |>
     xml2::xml_find_all(".//a:blip")
 
   ## hyperlinks are preserved and updated to be rId
@@ -2471,8 +2482,8 @@ test_that("table with image refs work - local only",{
     paste0(c(temp_png,temp_svg), collapse = ", "), ## two images next to each other
     temp_svg, # single image, square
     ref_wide_svg # a wide image is respected
-  ) %>%
-    gt() %>%
+  ) |>
+    gt() |>
     fmt_image(columns = everything(), sep = ",", height = "2in")
 
   temp_docx <- tempfile(fileext = ".docx")
@@ -2491,11 +2502,12 @@ test_that("table with image refs work - local only",{
 
   ## extract table hyperlinks
   docx_table_image <-
-    docx_contents[1] %>%
+    docx_contents[1] |>
     xml2::xml_find_all(".//a:blip")
 
   ## hyperlinks are preserved and updated to be rId
   expect_length(docx_table_image, 4)
+
   # Expect match has all = TRUE as a default
   expect_match(xml_attr(docx_table_image, "embed"), "^rId\\d+$")
 
@@ -2524,10 +2536,10 @@ test_that("table with image refs work - local only",{
   )
 
   ## Check that the image h/w ratios are preserved
-  docx$doc_obj$get() %>%
-    xml2::xml_find_all(".//wp:extent") %>%
-    xml2::xml_attrs() %>%
-    sapply(function(x) {as.numeric(x[["cy"]])/as.numeric(x[["cx"]])}) %>%
+  docx$doc_obj$get() |>
+    xml2::xml_find_all(".//wp:extent") |>
+    xml2::xml_attrs() |>
+    sapply(function(x) {as.numeric(x[["cy"]])/as.numeric(x[["cx"]])}) |>
     expect_equal(
       c(1,1,1,0.627451),
       tolerance = .0000001 ## check out to 6 decimals for the ratio
@@ -2543,8 +2555,8 @@ test_that("table with image refs work - https",{
     dplyr::tribble(
       ~https_image,
       "https://gt.rstudio.com/reference/figures/logo.svg"
-    ) %>%
-    gt() %>%
+    ) |>
+    gt() |>
     fmt_image(columns = everything(), sep = ",", height = "2in")
 
   temp_docx <- tempfile(fileext = ".docx")
@@ -2563,7 +2575,7 @@ test_that("table with image refs work - https",{
 
   ## extract table hyperlinks
   docx_table_image <-
-    docx_contents[1] %>%
+    docx_contents[1] |>
     xml2::xml_find_all(".//a:blip")
 
   ## hyperlinks are preserved and updated to be rId
@@ -2602,8 +2614,8 @@ test_that("table with image refs work - local only - setting image widths and he
       paste0(c(temp_png,temp_svg), collapse = ", "), ## two images next to each other
       temp_svg, # single image, square
       ref_wide_svg # a wide image is respected
-    ) %>%
-    gt() %>%
+    ) |>
+    gt() |>
     fmt_image(columns = everything(), sep = ",", height = "1in", width = "2in")
 
   image_gt_height <-
@@ -2612,8 +2624,8 @@ test_that("table with image refs work - local only - setting image widths and he
       paste0(c(temp_png,temp_svg), collapse = ", "), ## two images next to each other
       temp_svg, # single image, square
       ref_wide_svg # a wide image is respected
-    ) %>%
-    gt() %>%
+    ) |>
+    gt() |>
     fmt_image(columns = everything(), sep = ",", height = "2in")
 
   image_gt_width <-
@@ -2622,8 +2634,8 @@ test_that("table with image refs work - local only - setting image widths and he
       paste0(c(temp_png,temp_svg), collapse = ", "), ## two images next to each other
       temp_svg, # single image, square
       ref_wide_svg # a wide image is respected
-    ) %>%
-    gt() %>%
+    ) |>
+    gt() |>
     fmt_image(columns = everything(), sep = ",", width = "1in")
 
   temp_docx_1 <- tempfile(fileext = ".docx")
@@ -2643,10 +2655,10 @@ test_that("table with image refs work - local only - setting image widths and he
   ## Check that the image h/w ratios are overwritten when both height and width are set
   docx1 <- officer::read_docx(temp_docx_1)
 
-  docx1$doc_obj$get() %>%
-    xml2::xml_find_all(".//wp:extent") %>%
-    xml2::xml_attrs() %>%
-    lapply(function(x) {list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) %>%
+  docx1$doc_obj$get() |>
+    xml2::xml_find_all(".//wp:extent") |>
+    xml2::xml_attrs() |>
+    lapply(function(x) {list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) |>
     expect_equal(
       list(
         list(height = "914400", width = "1828800", ratio = 0.5),
@@ -2660,10 +2672,10 @@ test_that("table with image refs work - local only - setting image widths and he
   ## Check that the image h/w ratios are preserved
   docx2 <- officer::read_docx(temp_docx_2)
 
-  docx2$doc_obj$get() %>%
-    xml2::xml_find_all(".//wp:extent") %>%
-    xml2::xml_attrs() %>%
-    lapply(function(x) {list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) %>%
+  docx2$doc_obj$get() |>
+    xml2::xml_find_all(".//wp:extent") |>
+    xml2::xml_attrs() |>
+    lapply(function(x) {list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) |>
     expect_equal(
       list(
         list(height = "1828800", width = "1828800", ratio = 1),
