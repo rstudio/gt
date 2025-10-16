@@ -1,6 +1,3 @@
 expect_1_row <- function(object) {
-  expect_equal(
-    nrow(object),
-    1
-  )
+  expect_equal(nrow(object), 1)
 }
