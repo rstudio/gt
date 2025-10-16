@@ -11,25 +11,25 @@ exibble_minitest <- function(
   if (add_group_summaries) use_row_groups <- TRUE
 
   tbl <-
-    exibble %>%
+    exibble |>
     gt(
       rowname_col = if (use_row_labels) "row" else NULL,
       groupname_col = if (use_row_groups) "group" else NULL
-    ) %>%
-    tab_options(row_group.as_column = row_group_column) %>%
+    ) |>
+    tab_options(row_group.as_column = row_group_column) |>
     tab_header(
       title = md("Data listing from **exibble**"),
       subtitle = md("`exibble` is an R dataset")
-    ) %>%
-    tab_stubhead("S.L.") %>%
-    tab_spanner(label = "timing", columns = c(date, time, datetime)) %>%
-    tab_source_note("Source note #1") %>%
+    ) |>
+    tab_stubhead("S.L.") |>
+    tab_spanner(label = "timing", columns = c(date, time, datetime)) |>
+    tab_source_note("Source note #1") |>
     tab_source_note("Source note #2")
 
   if (add_group_summaries) {
 
     tbl <-
-      tbl %>%
+      tbl |>
       summary_rows(
         groups = everything(),
         columns = c(num, currency),
@@ -45,7 +45,7 @@ exibble_minitest <- function(
   if (add_grand_summary) {
 
     tbl <-
-      tbl %>%
+      tbl |>
       grand_summary_rows(
         columns = c(num, currency),
         fns = list(
