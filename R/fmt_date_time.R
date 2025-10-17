@@ -315,26 +315,42 @@ fmt_date <- function(
       use_latex_math_mode = FALSE,
       format_fn = function(x, context) {
 
-        # Convert incoming values to POSIXlt but provide a friendly error
-        # if the values cannot be parsed by `as.POSIXlt()`
-        date <-
-          withCallingHandlers(
-            as.POSIXlt(x, tz = "GMT"),
-            error = function(e) {
-              cli::cli_abort(
-                "One or more of the provided date/datetime values are invalid.",
-                call = call("fmt_date"),
-                parent = e
-              )
-            }
-          )
+        # Handle Inf values by preserving them as "Inf" strings
+        x_is_inf <- is.infinite(x)
+        x_is_finite <- !x_is_inf
+        
+        # Initialize result vector
+        x_formatted <- character(length(x))
+        
+        # Only process finite values
+        if (any(x_is_finite)) {
 
-        # Format the date string using `fdt()`
-        bigD::fdt(
-          input = as.character(date),
-          format = date_format_str,
-          locale = locale
-        )
+          # Convert finite values to POSIXlt but provide a friendly error
+          # if the values cannot be parsed by `as.POSIXlt()`
+          date <-
+            withCallingHandlers(
+              as.POSIXlt(x[x_is_finite], tz = "GMT"),
+              error = function(e) {
+                cli::cli_abort(
+                  "One or more of the provided date/datetime values are invalid.",
+                  call = call("fmt_date"),
+                  parent = e
+                )
+              }
+            )
+
+          # Format the date string using `fdt()`
+          x_formatted[x_is_finite] <- bigD::fdt(
+            input = as.character(date),
+            format = date_format_str,
+            locale = locale
+          )
+        }
+        
+        # Preserve Inf values as "Inf" in the result
+        x_formatted[x_is_inf] <- "Inf"
+        
+        x_formatted
       }
     )
   )
@@ -626,26 +642,42 @@ fmt_time <- function(
           x <- paste("1970-01-01", x)
         }
 
-        # Convert incoming values to POSIXlt but provide a friendly error
-        # if the values cannot be parsed by `as.POSIXlt()`
-        time <-
-          withCallingHandlers(
-            as.POSIXlt(x, tz = "GMT"),
-            error = function(e) {
-              cli::cli_abort(
-                "One or more of the provided date/time/datetime values are invalid.",
-                call = call("fmt_time"),
-                parent = e
-              )
-            }
-          )
+        # Handle Inf values by preserving them as "Inf" strings
+        x_is_inf <- is.infinite(x)
+        x_is_finite <- !x_is_inf
+        
+        # Initialize result vector
+        x_formatted <- character(length(x))
 
-        # Format the time string using `fdt()`
-        bigD::fdt(
-          input = as.character(time),
-          format = time_format_str,
-          locale = locale
-        )
+        # Only process finite values
+        if (any(x_is_finite)) {
+          
+          # Convert finite values to POSIXlt but provide a friendly error
+          # if the values cannot be parsed by `as.POSIXlt()`
+          time <-
+            withCallingHandlers(
+              as.POSIXlt(x[x_is_finite], tz = "GMT"),
+              error = function(e) {
+                cli::cli_abort(
+                  "One or more of the provided date/time/datetime values are invalid.",
+                  call = call("fmt_time"),
+                  parent = e
+                )
+              }
+            )
+
+          # Format the time string using `fdt()`
+          x_formatted[x_is_finite] <- bigD::fdt(
+            input = as.character(time),
+            format = time_format_str,
+            locale = locale
+          )
+        }
+        
+        # Preserve Inf values as "Inf" in the result
+        x_formatted[x_is_inf] <- "Inf"
+        
+        x_formatted
       }
     )
   )
@@ -1575,6 +1607,13 @@ fmt_datetime <- function(
       use_latex_math_mode = FALSE,
       format_fn = function(x, context) {
 
+        # Handle Inf values by preserving them as "Inf" strings
+        x_is_inf <- is.infinite(x)
+        x_is_finite <- !x_is_inf
+        
+        # Initialize result vector
+        x_formatted <- character(length(x))
+
         # If a format string is provided then use that to generate the
         # formatted date/time string
         if (!is.null(format)) {
@@ -1582,19 +1621,19 @@ fmt_datetime <- function(
           # If the incoming values are strings that adequately represent time
           # values, then prepend with the `1970-01-01` dummy date to create an
           # input that will works with `strftime()`
-          if (all(is_string_time(x))) {
-            x <- paste("1970-01-01", x)
+          if (all(is_string_time(x[x_is_finite]))) {
+            x[x_is_finite] <- paste("1970-01-01", x[x_is_finite])
           }
 
           if (grepl("%", format)) {
 
-            if (is.character(x)) {
+            if (is.character(x) && any(x_is_finite)) {
 
               tz <- tz %||% "GMT"
 
               datetime <-
                 withCallingHandlers(
-                  as.POSIXlt(x),
+                  as.POSIXlt(x[x_is_finite]),
                   error = function(e) {
                     cli::cli_abort(
                       "One or more of the provided date/datetime values are invalid.",
@@ -1608,32 +1647,40 @@ fmt_datetime <- function(
 
               datetime <- as.POSIXct(datetime)
 
-              return(strftime(datetime, format = format, tz = tz))
+              x_formatted[x_is_finite] <- strftime(datetime, format = format, tz = tz)
+              x_formatted[x_is_inf] <- "Inf"
+              return(x_formatted)
             }
 
             # Format the datetime values using `strftime()`
-            return(strftime(x, format = format, tz = tz))
+            if (any(x_is_finite)) {
+              x_formatted[x_is_finite] <- strftime(x[x_is_finite], format = format, tz = tz)
+            }
+            x_formatted[x_is_inf] <- "Inf"
+            return(x_formatted)
 
           } else {
 
             tz <- tz %||% "UTC"
 
-            dt_str <- strftime(x, format = "%Y-%m-%dT%H:%M:%S%z", tz = tz)
+            if (any(x_is_finite)) {
+              dt_str <- strftime(x[x_is_finite], format = "%Y-%m-%dT%H:%M:%S%z", tz = tz)
 
-            if ("tzone" %in% names(attributes(x))) {
-              tzone <- attr(x, which = "tzone", exact = TRUE)
-              dt_str <- paste0(dt_str, "(", tzone, ")")
-            }
+              if ("tzone" %in% names(attributes(x))) {
+                tzone <- attr(x, which = "tzone", exact = TRUE)
+                dt_str <- paste0(dt_str, "(", tzone, ")")
+              }
 
-            # Format the datetime values using `fdt()`
-            return(
-              bigD::fdt(
+              # Format the datetime values using `fdt()`
+              x_formatted[x_is_finite] <- bigD::fdt(
                 input = dt_str,
                 format = format,
                 locale = locale,
                 use_tz = tz
               )
-            )
+            }
+            x_formatted[x_is_inf] <- "Inf"
+            return(x_formatted)
           }
         }
 
@@ -1641,40 +1688,48 @@ fmt_datetime <- function(
         # Format the date and time portions of the datetime value
         #
 
-        # Convert incoming values to POSIXlt but provide a friendly error
-        # if the values cannot be parsed by `as.POSIXlt()`
-        datetime <-
-          withCallingHandlers(
-            as.POSIXlt(x),
-            error = function(e) {
-              cli::cli_abort(
-                # possibly Error in `fmt()` caused by error in `as.POSIXlt`
-                "One or more of the provided date/datetime values are invalid.",
-                call = call("fmt_datetime"),
-                parent = e
-              )
-            }
-          )
+        # Only process finite values
+        if (any(x_is_finite)) {
+          # Convert finite values to POSIXlt but provide a friendly error
+          # if the values cannot be parsed by `as.POSIXlt()`
+          datetime <-
+            withCallingHandlers(
+              as.POSIXlt(x[x_is_finite]),
+              error = function(e) {
+                cli::cli_abort(
+                  # possibly Error in `fmt()` caused by error in `as.POSIXlt`
+                  "One or more of the provided date/datetime values are invalid.",
+                  call = call("fmt_datetime"),
+                  parent = e
+                )
+              }
+            )
 
-        #
-        # Separately format the date and time portions using `fdt()`
-        #
+          #
+          # Separately format the date and time portions using `fdt()`
+          #
 
-        date_str <-
-          bigD::fdt(
-            input = as.character(datetime),
-            format = date_format_str,
-            locale = locale
-          )
+          date_str <-
+            bigD::fdt(
+              input = as.character(datetime),
+              format = date_format_str,
+              locale = locale
+            )
 
-        time_str <-
-          bigD::fdt(
-            input = as.character(datetime),
-            format = time_format_str,
-            locale = locale
-          )
+          time_str <-
+            bigD::fdt(
+              input = as.character(datetime),
+              format = time_format_str,
+              locale = locale
+            )
 
-        paste0(date_str, sep, time_str)
+          x_formatted[x_is_finite] <- paste0(date_str, sep, time_str)
+        }
+        
+        # Preserve Inf values as "Inf" in the result
+        x_formatted[x_is_inf] <- "Inf"
+        
+        x_formatted
       }
     )
   )
