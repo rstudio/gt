@@ -23,7 +23,7 @@ ooxml_tbl <- function(ooxml_type, properties = NULL, grid = NULL, ...) {
   )
 }
 
-# tbl_properties ---------------------------------------------------------
+## tbl_properties ---------------------------------------------------------
 
 ooxml_tbl_properties <- function(ooxml_type, ...) {
   switch_ooxml(ooxml_type,
@@ -78,7 +78,7 @@ pptx_tbl_properties <- function(..., look = c("First Column","Banded Rows"), tab
   )
 }
 
-# tbl_grid -----------------------------------------------------------
+## tbl_grid -----------------------------------------------------------
 
 ooxml_tbl_grid <- function(ooxml_type, ...) {
   tblGrid_tag <- switch_ooxml_tag(ooxml_type, "tblGrid")
@@ -95,6 +95,87 @@ ooxml_tbl_grid <- function(ooxml_type, ...) {
   })
   ooxml_tag(tblGrid_tag, tag_class = "ooxml_tbl_grid", !!!gridCols)
 }
+
+# tbl_row -----------------------------------------------------------
+
+ooxml_tbl_row <- function(ooxml_type, ..., is_header = FALSE, hidden = FALSE, height = 10) {
+  content <- ooxml_list(ooxml_type, "ooxml_tbl_cell", ooxml_tbl_cell, ...)
+
+  switch_ooxml(ooxml_type,
+    word = {
+      properties <- ooxml_tag("w:trPr", tag_class = "ooxml_tbl_row_properties",
+        if (is_header) ooxml_tag("w:tblHeader"),
+        if (hidden)    ooxml_tag("w:cantSplit"),
+        ooxml_tbl_row_height(ooxml_type, value = height)
+      )
+      ooxml_tag("w:tr", tag_class = "ooxml_tbl_row",
+        properties,
+        !!!content
+      )
+    },
+
+    pptx = {
+      ooxml_tag("a:tr", tag_class = "ooxml_tbl_row",
+        ooxml_tbl_row_height(ooxml_type, value = height),
+        !!!content
+      )
+    }
+  )
+}
+
+## tbl_row_height ----------------------------------------------------------
+
+ooxml_tbl_row_height <- function(ooxml_type, value, ..., error_call = current_env()) {
+  rlang::check_dots_empty()
+
+  word_trHeight <- function() {
+    bullets <- c(
+      "Invalid value for table row height: {.val {value}}.",
+      i = "{.arg {value}} must be a positive numeric value, or one of {.val auto} or {.val atLeast}."
+    )
+
+    if (is.character(value)) {
+      if (value %in% c("auto", "atLeast")) {
+        hRule <- match.arg(value, c("auto","atLeast"))
+        value <- "10"
+
+        return(
+          ooxml_tag("w:trHeight",
+            "w:hRule" = hRule,
+            "w:val"   = "10"
+          )
+        )
+
+      }
+      value <- tryCatch(
+        vctrs::vec_cast(value, numeric(), call = error_call),
+        error = function(e) {
+          cli::cli_abort(call = error_call, bullets, parent = e)
+        }
+      )
+    }
+
+    if (!is.numeric(value) || value <= 0) {
+      cli::cli_abort(call = error_call, bullets)
+    }
+
+    ooxml_tag("w:trHeight",
+      "w:hRule" = "exact",
+      "w:val"   = value
+    )
+  }
+
+  pptx_trHeight <- function() {
+    # TODO: checks for row height in pptx
+    splice3(h = value)
+  }
+
+  switch_ooxml(ooxml_type,
+    word = word_trHeight(),
+    pptx = pptx_trHeight(),
+  )
+}
+
 
 # ooxml_tbl_cell ----------------------------------------------------------
 
@@ -279,86 +360,6 @@ convert_border_style_pptx <- function(x, error_call = caller_env()){
     cli::cli_warn("Invalid border style supplied: {x}", error_call = error_call)
     border_style_pptx[["hidden"]]
   }
-}
-
-# ooxml_tbl_row -----------------------------------------------------------
-
-ooxml_tbl_row <- function(ooxml_type, ..., is_header = FALSE, hidden = FALSE, height = 10) {
-  content <- ooxml_list(ooxml_type, "ooxml_tbl_cell", ooxml_tbl_cell, ...)
-
-  switch_ooxml(ooxml_type,
-    word = {
-      properties <- ooxml_tag("w:trPr", tag_class = "ooxml_tbl_row_properties",
-        if (is_header) ooxml_tag("w:tblHeader"),
-        if (hidden)    ooxml_tag("w:cantSplit"),
-        ooxml_trHeight(ooxml_type, value = height)
-      )
-      ooxml_tag("w:tr", tag_class = "ooxml_tbl_row",
-        properties,
-        !!!content
-      )
-    },
-
-    pptx = {
-      ooxml_tag("a:tr", tag_class = "ooxml_tbl_row",
-        ooxml_trHeight(ooxml_type, value = height),
-        !!!content
-      )
-    }
-  )
-}
-
-# ooxml_trHeight ----------------------------------------------------------
-
-ooxml_trHeight <- function(ooxml_type, value, ..., error_call = current_env()) {
-  rlang::check_dots_empty()
-
-  word_trHeight <- function() {
-    bullets <- c(
-      "Invalid value for table row height: {.val {value}}.",
-      i = "{.arg {value}} must be a positive numeric value, or one of {.val auto} or {.val atLeast}."
-    )
-
-    if (is.character(value)) {
-      if (value %in% c("auto", "atLeast")) {
-        hRule <- match.arg(value, c("auto","atLeast"))
-        value <- "10"
-
-        return(
-          ooxml_tag("w:trHeight",
-            "w:hRule" = hRule,
-            "w:val"   = "10"
-          )
-        )
-
-      }
-      value <- tryCatch(
-        vctrs::vec_cast(value, numeric(), call = error_call),
-        error = function(e) {
-          cli::cli_abort(call = error_call, bullets, parent = e)
-        }
-      )
-    }
-
-    if (!is.numeric(value) || value <= 0) {
-      cli::cli_abort(call = error_call, bullets)
-    }
-
-    ooxml_tag("w:trHeight",
-      "w:hRule" = "exact",
-      "w:val"   = value
-    )
-  }
-
-  pptx_trHeight <- function() {
-    # TODO: checks for row height in pptx
-    splice3(h = value)
-  }
-
-  switch_ooxml(ooxml_type,
-    word = word_trHeight(),
-    pptx = pptx_trHeight(),
-  )
 }
 
 # ooxml_fill --------------------------------------------------------------
