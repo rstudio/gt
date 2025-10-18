@@ -11,8 +11,9 @@ exibble <-
          NA,        "fig",   "six", "2015-06-15",      NA, "2018-06-06 16:11",    13.255, "row_6", "grp_b",
      777000, "grapefruit", "seven",           NA, "19:10", "2018-07-07 05:22",        NA, "row_7", "grp_b",
     8880000,   "honeydew", "eight", "2015-08-15", "20:20",                 NA,      0.44, "row_8", "grp_b",
-  ) %>%
-  dplyr::mutate(fctr = factor(fctr, levels = c(
-    "one", "two", "three", "four", "five", "six", "seven", "eight"
-  ))
+  ) |>
+  dplyr::mutate(
+    fctr = factor(fctr, levels = c(
+      "one", "two", "three", "four", "five", "six", "seven", "eight"
+    ))
   )
