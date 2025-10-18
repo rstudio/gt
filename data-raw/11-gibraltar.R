@@ -18,7 +18,7 @@ gibraltar <-
         condition = col_character()
       )
   ) |>
-  dplyr::select(-precip) %>%
+  dplyr::select(-precip) |>
   dplyr::mutate(time = sub(":00$", "", as.character(time))) |>
   dplyr::mutate(temp = as.numeric(gsub("\\D", "", temp))) |>
   dplyr::mutate(dew_point = as.numeric(gsub("\\D", "", dew_point))) |>
