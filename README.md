@@ -24,12 +24,6 @@
 <br />
 </div>
 
-> [!IMPORTANT]
->
-> Consider submitting a beautiful table of your own making to the [**2025 Posit Table Contest**](https://github.com/rich-iannone/table-contest/discussions/2)! This is an annual celebration of beautiful display tables, aiming to highlight the creativity and technical prowess of our community. Entries will be judged and fabulous prizes will be doled out.
->
-> The deadline is Friday, October 17, 2025 at midnight ([anywhere on earth](https://time.is/Anywhere_on_Earth)). Submit using the [2025 Table Contest submission form](https://github.com/rich-iannone/contest-submissions/discussions/new?category=2025-table-contest).
-
 With the **gt** package, anyone can make wonderful-looking tables using
 the **R** programming language. The **gt** philosophy: we can construct
 a wide variety of useful tables with a cohesive set of table parts.
