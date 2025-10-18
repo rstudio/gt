@@ -30,16 +30,16 @@ towny <-
         pop_change_2011_2016_pct = col_double(),
         pop_change_2016_2021_pct = col_double()
       )
-  ) %>%
+  ) |>
   tidyr::separate(
     col = coordinates,
     into = c("latitude", "longitude"), sep = ", "
-  ) %>%
+  ) |>
   dplyr::mutate(
     latitude = as.numeric(latitude),
     longitude = as.numeric(longitude)
-  ) %>%
-  dplyr::rename(land_area_km2 = land_area_km) %>%
+  ) |>
+  dplyr::rename(land_area_km2 = land_area_km) |>
   dplyr::relocate(
     name, website, status, csd_type, census_div,
     latitude, longitude
