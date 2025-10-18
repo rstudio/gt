@@ -917,3 +917,61 @@ test_that("fmt_datetime() works correctly", {
     c("12:35:23 PM", "3:01:34 PM", "9:45:23 AM", "1:32:00 AM", "12:00:00 AM")
   )
 })
+
+test_that("fmt_date(), fmt_time(), and fmt_datetime() handle Inf values correctly", {
+
+  # Test fmt_date() with Inf values
+  tab_date_inf <-
+    dplyr::tibble(date = structure(c(18000, 20000, Inf, 19000, Inf), class = "Date")) |>
+    gt() |>
+    fmt_date(date)
+
+  expect_equal(
+    (tab_date_inf |> render_formats_test(context = "html"))[["date"]],
+    c("2019-04-14", "2024-10-04", "Inf", "2022-01-08", "Inf")
+  )
+
+  # Test fmt_date() with Inf at the start
+  tab_date_inf_first <-
+    dplyr::tibble(date = structure(c(Inf, 18000, 20000), class = "Date")) |>
+    gt() |>
+    fmt_date(date)
+
+  expect_equal(
+    (tab_date_inf_first |> render_formats_test(context = "html"))[["date"]],
+    c("Inf", "2019-04-14", "2024-10-04")
+  )
+
+  # Test fmt_date() with mix of NA and Inf
+  tab_date_mixed <-
+    dplyr::tibble(date = structure(c(18000, NA, Inf, 19000, Inf), class = "Date")) |>
+    gt() |>
+    fmt_date(date)
+
+  expect_equal(
+    (tab_date_mixed |> render_formats_test(context = "html"))[["date"]],
+    c("2019-04-14", NA, "Inf", "2022-01-08", "Inf")
+  )
+
+  # Test fmt_time() with Inf values
+  tab_time_inf <-
+    dplyr::tibble(time = structure(c(1000, Inf, 2000, Inf), class = c("POSIXct", "POSIXt"))) |>
+    gt() |>
+    fmt_time(time)
+
+  expect_equal(
+    (tab_time_inf |> render_formats_test(context = "html"))[["time"]],
+    c("00:16:40", "Inf", "00:33:20", "Inf")
+  )
+
+  # Test fmt_datetime() with Inf values
+  tab_datetime_inf <-
+    dplyr::tibble(datetime = structure(c(1000000, Inf, 2000000, Inf), class = c("POSIXct", "POSIXt"), tzone = "GMT")) |>
+    gt() |>
+    fmt_datetime(datetime, date_style = "iso", time_style = "iso")
+
+  expect_equal(
+    (tab_datetime_inf |> render_formats_test(context = "html"))[["datetime"]],
+    c("1970-01-12 13:46:40", "Inf", "1970-01-24 03:33:20", "Inf")
+  )
+})
