@@ -33,18 +33,18 @@ tbl <-
 Create a display table with summary rows.
 
 ```{r}
-gt(tbl, groupname_col = "group") %>%
+gt(tbl, groupname_col = "group") |>
   summary_rows(
     groups = c("A", "C"),
     columns = value,
     fns = list(
-      ~mean(., na.rm = TRUE),
-      ~sum(., na.rm = TRUE),
-      ~sd(., na.rm = TRUE))) %>%
+      ~ mean(., na.rm = TRUE),
+      ~ sum(., na.rm = TRUE),
+      ~ sd(., na.rm = TRUE))) |>
   summary_rows(
     groups = c("B"),
     columns = value_2,
     fns = list(
-      ~sum(., na.rm = TRUE))) %>%
+      ~sum(., na.rm = TRUE))) |>
   sub_missing(columns = c(value, value_2))
 ```

@@ -18,7 +18,7 @@ make_rects <- function(
   for (i in seq_along(colors)) {
 
     color_vec[i] <-
-      glue::glue('    <rect id="color_{i}" fill="{colors[i]}" x="{bound_vals[i]}" y="1" width="{width_each}" height="30"></rect>') %>%
+      glue::glue('    <rect id="color_{i}" fill="{colors[i]}" x="{bound_vals[i]}" y="1" width="{width_each}" height="30"></rect>') |>
       as.character()
   }
 
@@ -54,7 +54,7 @@ get_d_palettes <- function(color_packages = c(
   "Redmonder", "tidyquant", "wesanderson", "yarrr")) {
 
   palettes <-
-    dplyr::filter(palettes_d_names, package %in% color_packages) %>%
+    dplyr::filter(palettes_d_names, package %in% color_packages) |>
     mutate(colors = "NA_character_")
 
   for (i in seq_len(nrow(palettes))) {

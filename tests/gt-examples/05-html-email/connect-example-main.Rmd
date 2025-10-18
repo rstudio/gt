@@ -18,10 +18,10 @@ Here is some **R** code, which is contained within a code chunk:
 
 ```{r diamonds_plot}
 
-diamonds %>%
-  group_by(carat, cut) %>%
-  summarize(mean_price = mean(price)) %>%
-  filter(cut != "Fair", carat < 3) %>%
+diamonds |>
+  group_by(carat, cut) |>
+  summarize(mean_price = mean(price)) |>
+  filter(cut != "Fair", carat < 3) |>
   ggplot() +
   geom_point(aes(x = carat, y = mean_price)) +
   facet_wrap(facets = vars(cut)) +
@@ -38,33 +38,33 @@ The above created a plot. Below is code that generates a **gt** table with the d
 
 ```{r diamonds_table}
 
-diamonds %>%
-  arrange(desc(price)) %>%
-  filter(cut == "Ideal") %>%
-  head(20) %>%
-  gt() %>%
-  tab_header(title = "The finest diamonds") %>%
+diamonds |>
+  arrange(desc(price)) |>
+  filter(cut == "Ideal") |>
+  head(20) |>
+  gt() |>
+  tab_header(title = "The finest diamonds") |>
   tab_spanner(
     label = "Dimensions",
     columns = c(depth, table, x, y, z)
-  ) %>%
+  ) |>
   tab_spanner(
     label = "Attributes",
     columns = starts_with("c")
-  ) %>%
-  cols_move_to_end(columns = price) %>%
+  ) |>
+  cols_move_to_end(columns = price) |>
   fmt_currency(
     columns = price,
     currency = "USD",
     decimals = 0
-  ) %>%
+  ) |>
   as_raw_html()
 ```
 
 We can create an email using **Posit Connect**, one that aligns with the content from this report. We do this with the `render_connect_email()` and `attach_connect_email()` functions from the **blastula** package. The email subdocument (`"connect-example-email.Rmd"`) is used to craft the contents of the email, drawing upon results available in this document.
 
 ```{r connect_email, echo=FALSE}
-render_connect_email(input = "connect-example-email.Rmd") %>%
+render_connect_email(input = "connect-example-email.Rmd") |>
   attach_connect_email(
     subject = "Posit Connect HTML Email",
     attach_output = TRUE

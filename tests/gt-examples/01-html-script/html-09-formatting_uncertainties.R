@@ -13,19 +13,19 @@ tbl <-
 
 # Create a display table with uncertainties
 uncert_tbl <-
-  gt(tbl) %>%
+  gt(tbl) |>
   cols_merge_uncert(
     col_val = value_1,
     col_uncert = uncertainty
-  ) %>%
+  ) |>
   cols_merge_uncert(
     col_val = value_2,
     col_uncert = uncertainty_2
-  ) %>%
+  ) |>
   fmt_number(
     columns = c(value_1, value_2),
     decimals = 2
-  ) %>%
+  ) |>
   sub_missing(columns = c(value_1, value_2))
 
 uncert_tbl

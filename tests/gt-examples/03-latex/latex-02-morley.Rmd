@@ -3,7 +3,7 @@ title: "latex-02-morley"
 output: 
   - pdf_document
 ---
-  
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(gt)
@@ -12,11 +12,11 @@ library(gt)
 Create a display table based on `morley` Michelson Speed of Light Data
 
 ```{r}
-gt(morley %>% dplyr::mutate(Speed = as.numeric(Speed))) %>%
+gt(morley |> dplyr::mutate(Speed = as.numeric(Speed))) |>
   fmt_number(
     columns = Speed,
     decimals = 0,
     sep_mark = ","
-  ) %>%
+  ) |>
   cols_align(align = "left", columns = c(Run, Speed))
 ```

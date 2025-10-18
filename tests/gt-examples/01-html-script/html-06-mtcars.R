@@ -2,89 +2,89 @@ library(gt)
 
 # Create a display table based on `mtcars`
 mtcars_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) %>%
+  gt(mtcars, rownames_to_stub = TRUE) |>
   cols_align(
     align = "right",
     columns = c(disp, vs)
-  ) %>%
+  ) |>
   tab_spanner(
     label = md("*group_a*"),
     columns = c(mpg, cyl, disp, hp)
-  ) %>%
+  ) |>
   tab_spanner(
     label = md("*group_b*"),
     columns = c(drat, wt, qsec, vs, am, gear, carb)
-  ) %>%
-  cols_move_to_start(columns = hp) %>%
-  cols_move_to_end(columns = c(am, gear)) %>%
-  cols_hide(columns = carb) %>%
+  ) |>
+  cols_move_to_start(columns = hp) |>
+  cols_move_to_end(columns = c(am, gear)) |>
+  cols_hide(columns = carb) |>
   cols_move(
     columns = c(wt, qsec),
     after = c(gear)
-  ) %>%
+  ) |>
   tab_row_group(
     label = "Mercs",
     rows = c(
       "Merc 240D", "Merc 230", "Merc 280C", "Merc 280",
       "Merc 450SE", "Merc 450SL", "Merc 450SLC")
-  ) %>%
+  ) |>
   tab_row_group(
     label = "Supercars",
     rows = c("Ferrari Dino", "Maserati Bora", "Porsche 914-2", "Ford Pantera L")
-  ) %>%
-  row_group_order(groups = c("Supercars", "Mercs")) %>%
+  ) |>
+  row_group_order(groups = c("Supercars", "Mercs")) |>
   fmt_number(
     columns = c(disp, drat, wt),
     decimals = 2
-  ) %>%
+  ) |>
   fmt_number(
     columns = c(qsec, wt),
     decimals = 3,
     rows = starts_with("Merc")
-  ) %>%
+  ) |>
   fmt_number(
     columns = mpg,
     decimals = 1
-  ) %>%
+  ) |>
   tab_header(
     title = md("The **mtcars** dataset"),
     subtitle = md("[A rather famous *Motor Trend* table]")
-  ) %>%
+  ) |>
   tab_source_note(
     source_note = md("Main Source of Data: *Henderson and Velleman* (1981).")
-  ) %>%
+  ) |>
   tab_source_note(
     source_note = md("Original Data: *Motor Trend Magazine* (1974).")
-  ) %>%
-  tab_stubhead(label = md("*car*")) %>%
+  ) |>
+  tab_stubhead(label = md("*car*")) |>
   tab_footnote(
     footnote = md("*Really* fast quarter mile."),
     locations = cells_body(
       columns = qsec,
       rows = "Ford Pantera L"
     )
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = "Massive hp.",
     locations = cells_body(
       columns = hp,
       rows = "Maserati Bora"
     )
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = "Excellent gas mileage.",
     locations = cells_body(
       columns = mpg,
       rows = "Toyota Corolla"
     )
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = md("Worst speed *ever*."),
     locations = cells_body(
       columns = qsec,
       rows = "Merc 230"
     )
-  ) %>%
+  ) |>
   cols_label(
     hp = md("*HP*"),
     qsec = "QMT, seconds"

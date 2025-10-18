@@ -13,6 +13,6 @@ library(tidyverse)
 Create a table with an inserted image.
 
 ```{r}
-gt(tibble(a = paste0("\\includegraphics[width=0.5 in]{", test_image(), "}"))) %>%
+gt(tibble(a = paste0("\\includegraphics[width=0.5 in]{", test_image(), "}"))) |>
   fmt_passthrough(columns = "a", escape = FALSE)
 ```

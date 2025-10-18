@@ -32,7 +32,7 @@ tbl <-
 
 ```{r}
 # Create a display table
-tbl %>%
-  gt(groupname_col = "groups") %>%
+tbl |>
+  gt(groupname_col = "groups") |>
   tab_stubhead(label = "groups")
 ```

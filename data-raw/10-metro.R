@@ -18,5 +18,5 @@ metro <-
         location = col_character(),
         min_line = col_double()
       )
-  ) %>%
+  ) |>
   dplyr::select(-min_line)

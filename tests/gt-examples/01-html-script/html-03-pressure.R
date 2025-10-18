@@ -2,7 +2,7 @@ library(gt)
 
 # Create a display table based on `pressure`
 pressure_tbl <-
-  gt(pressure) %>%
+  gt(pressure) |>
   fmt_scientific(
     columns = pressure,
     decimals = 2

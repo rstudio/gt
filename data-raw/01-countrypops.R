@@ -73,12 +73,12 @@ countrypops <-
         `2023` = col_integer()
     ),
     na = ""
-  ) %>%
+  ) |>
   tidyr::pivot_longer(
     cols = `1960`:`2023`,
     names_to = "year",
     # transform year to integer
     names_transform = as.integer,
     values_to = "population"
-  ) %>%
+  ) |>
   dplyr::arrange(country_code_3, year)

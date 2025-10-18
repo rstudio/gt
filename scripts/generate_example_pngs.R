@@ -82,7 +82,7 @@ for (fn_name in fn_names) {
 
     # Save the image with a high `zoom` value for clarity,
     # but resized down to 50% of the original
-    gt:::gt_save_webshot(data = get(tab_obj[i]), filename = filename, zoom = 3) %>%
+    gt:::gt_save_webshot(data = get(tab_obj[i]), filename = filename, zoom = 3) |>
       webshot::resize(geometry = "50%")
 
     # Get the height and width of the image produced by webshot
