@@ -15,7 +15,7 @@ downloader::download(
 utils::untar(file.path(work_dir, "google_fonts.tar.gz"), exdir = work_dir)
 
 # Get the directory names for each of the fonts
-file_list <- fs::dir_ls(path = fs::path_expand(work_dir)) %>% as.character()
+file_list <- fs::dir_ls(path = fs::path_expand(work_dir)) |> as.character()
 ofl_dirs <- fs::dir_ls(file.path(file_list[!grepl("tar.gz", file_list)], "ofl"))
 apache_dirs <- fs::dir_ls(file.path(file_list[!grepl("tar.gz", file_list)], "apache"))
 ufl_dirs <- fs::dir_ls(file.path(file_list[!grepl("tar.gz", file_list)], "apache"))
@@ -76,23 +76,23 @@ for (file in all_files) {
   pb <- gsub("#.*?\n", "\n", readr::read_file(file))
 
   font_variants <-
-    unlist(stringr::str_extract_all(pb, pattern = "fonts \\{(\\n|.)*?\\}")) %>%
-    stringr::str_remove_all("(fonts \\{\n  |\\}$|\"|$)") %>%
-    stringr::str_replace_all("\n  ", "\n") %>%
-    trimws("right", "\n") %>%
+    unlist(stringr::str_extract_all(pb, pattern = "fonts \\{(\\n|.)*?\\}")) |>
+    stringr::str_remove_all("(fonts \\{\n  |\\}$|\"|$)") |>
+    stringr::str_replace_all("\n  ", "\n") |>
+    trimws("right", "\n") |>
     stringr::str_split("\n")
 
   font_info <-
-    stringr::str_replace_all(pb, pattern = "fonts \\{(\\n|.)*?\\}", "") %>%
-    stringr::str_remove_all("axes \\{.*") %>%
-    stringr::str_remove_all("subsets:.*") %>%
-    stringr::str_replace_all("\n{2,}", "\n") %>%
-    trimws("right", "\n") %>%
-    stringr::str_remove_all("\"") %>%
-    stringr::str_split("\n") %>%
+    stringr::str_replace_all(pb, pattern = "fonts \\{(\\n|.)*?\\}", "") |>
+    stringr::str_remove_all("axes \\{.*") |>
+    stringr::str_remove_all("subsets:.*") |>
+    stringr::str_replace_all("\n{2,}", "\n") |>
+    trimws("right", "\n") |>
+    stringr::str_remove_all("\"") |>
+    stringr::str_split("\n") |>
     unlist()
 
-  font_name <- read.dcf(textConnection(font_info))[1, 1] %>% unname()
+  font_name <- read.dcf(textConnection(font_info))[1, 1] |> unname()
 
   google_font_tbl <-
     dplyr::bind_rows(
@@ -111,17 +111,17 @@ for (file in all_files) {
   if (grepl("axes {", pb, fixed = TRUE)) {
 
     axes <-
-      unlist(stringr::str_extract_all(pb, pattern = "axes(\\n|.)*?\\}")) %>%
-      stringr::str_remove_all("(axes \\{\n  |\\}$|\"|$)") %>%
-      stringr::str_replace_all("\n  ", "\n") %>%
-      trimws("right", "\n") %>%
+      unlist(stringr::str_extract_all(pb, pattern = "axes(\\n|.)*?\\}")) |>
+      stringr::str_remove_all("(axes \\{\n  |\\}$|\"|$)") |>
+      stringr::str_replace_all("\n  ", "\n") |>
+      trimws("right", "\n") |>
       stringr::str_split("\n")
 
     for (i in seq_len(length(axes))) {
       google_axes_tbl <-
         dplyr::bind_rows(
           google_axes_tbl,
-          dplyr::as_tibble(read.dcf(textConnection(axes[[i]]))) %>%
+          dplyr::as_tibble(read.dcf(textConnection(axes[[i]]))) |>
             dplyr::mutate(name = font_name, .before = 0)
         )
     }
