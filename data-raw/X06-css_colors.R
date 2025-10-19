@@ -151,7 +151,7 @@ css_colors <-
     "DarkSlateGray", "#2F4F4F", "Greys",
     "DarkSlateGrey", "#2F4F4F", "Greys",
     "Black", "#000000", "Greys"
-  ) %>%
+  ) |>
   dplyr::mutate(
     is_x11_color = ifelse(
       tolower(color_name) %in% grDevices::colors(), TRUE, FALSE

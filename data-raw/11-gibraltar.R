@@ -17,18 +17,18 @@ gibraltar <-
         precip = col_character(),
         condition = col_character()
       )
-  ) %>%
-  dplyr::select(-precip) %>%
-  dplyr::mutate(time = sub(":00$", "", as.character(time))) %>%
-  dplyr::mutate(temp = as.numeric(gsub("\\D", "", temp))) %>%
-  dplyr::mutate(dew_point = as.numeric(gsub("\\D", "", dew_point))) %>%
-  dplyr::mutate(humidity = as.numeric(gsub("\\D", "", humidity))) %>%
-  dplyr::mutate(wind_speed = as.numeric(gsub("\\D", "", wind_speed))) %>%
-  dplyr::mutate(wind_gust = as.numeric(gsub("\\D", "", wind_gust))) %>%
-  dplyr::mutate(pressure = as.numeric(gsub("[^0-9\\.]", "", pressure))) %>%
-  dplyr::mutate(temp = round((temp - 32) * 5/9, 1)) %>%
-  dplyr::mutate(dew_point = round((dew_point - 32) * 5/9, 1)) %>%
-  dplyr::mutate(humidity = humidity / 100) %>%
-  dplyr::mutate(wind_speed = round(wind_speed * 0.44704, 1)) %>%
-  dplyr::mutate(wind_gust = round(wind_gust * 0.44704, 1)) %>%
+  ) |>
+  dplyr::select(-precip) |>
+  dplyr::mutate(time = sub(":00$", "", as.character(time))) |>
+  dplyr::mutate(temp = as.numeric(gsub("\\D", "", temp))) |>
+  dplyr::mutate(dew_point = as.numeric(gsub("\\D", "", dew_point))) |>
+  dplyr::mutate(humidity = as.numeric(gsub("\\D", "", humidity))) |>
+  dplyr::mutate(wind_speed = as.numeric(gsub("\\D", "", wind_speed))) |>
+  dplyr::mutate(wind_gust = as.numeric(gsub("\\D", "", wind_gust))) |>
+  dplyr::mutate(pressure = as.numeric(gsub("[^0-9\\.]", "", pressure))) |>
+  dplyr::mutate(temp = round((temp - 32) * 5/9, 1)) |>
+  dplyr::mutate(dew_point = round((dew_point - 32) * 5/9, 1)) |>
+  dplyr::mutate(humidity = humidity / 100) |>
+  dplyr::mutate(wind_speed = round(wind_speed * 0.44704, 1)) |>
+  dplyr::mutate(wind_gust = round(wind_gust * 0.44704, 1)) |>
   dplyr::mutate(pressure = round(pressure * 33.863889532610884, 1))

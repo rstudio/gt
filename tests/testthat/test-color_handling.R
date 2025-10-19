@@ -495,16 +495,16 @@ test_that("cell_fill() accepts colors of various types", {
     xml2::read_html()
 
   # Expect a single color to have been generated and used
-  tbl_html_1 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
-    unique() %>%
+  tbl_html_1 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
+    unique() |>
     expect_length(1)
 
   # Expect all color values to be of the #RRGGBB form
-  tbl_html_1 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
+  tbl_html_1 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
     expect_match("^#[0-9A-F]{6}$")
 
   # Create a `tbl_html` object by using `tab_style` with
@@ -521,16 +521,16 @@ test_that("cell_fill() accepts colors of various types", {
     xml2::read_html()
 
   # Expect a single color to have been generated and used
-  tbl_html_2 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
-    unique() %>%
+  tbl_html_2 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
+    unique() |>
     expect_length(1)
 
   # Expect all color values to be of the #RRGGBB form
-  tbl_html_2 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
+  tbl_html_2 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
     expect_match("^#[0-9A-F]{6}$")
 
   # Create a `tbl_html` object by using `tab_style` with
@@ -547,16 +547,16 @@ test_that("cell_fill() accepts colors of various types", {
     xml2::read_html()
 
   # Expect a single color to have been generated and used
-  tbl_html_3 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
-    unique() %>%
+  tbl_html_3 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
+    unique() |>
     expect_length(1)
 
   # Expect all color values to be of the 'rgba()' string format
-  tbl_html_3 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
+  tbl_html_3 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
     expect_match("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$")
 
   # Create a `tbl_html` object by using `tab_style` with
@@ -574,27 +574,25 @@ test_that("cell_fill() accepts colors of various types", {
     xml2::read_html()
 
   # Expect a single color to have been generated and used
-  tbl_html_4 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
-    unique() %>%
+  tbl_html_4 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
+    unique() |>
     expect_length(1)
 
   # Expect all color values to be of the 'rgba()' string format
-  tbl_html_4 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
+  tbl_html_4 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
     expect_match("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$")
 
   # Expect that all alpha values are 0.5 (or "80" as a hex value)
-  (
-    tbl_html_4 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*|;)", "", .)
-  ) %>%
-    rgba_to_hex() %>%
-    substring(8, 9) %>%
-    unique() %>%
+  tbl_html_4 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*|;)", "", x = _) |>
+    rgba_to_hex() |>
+    substring(8, 9) |>
+    unique() |>
     expect_equal("80")
 
   # Create a `tbl_html` object by using `tab_style` with
@@ -613,28 +611,26 @@ test_that("cell_fill() accepts colors of various types", {
     xml2::read_html()
 
   # Expect a single color to have been generated and used
-  tbl_html_5 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
-    unique() %>%
+  tbl_html_5 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
+    unique() |>
     expect_length(1)
 
   # Expect all color values to be of the 'rgba()' string format
-  tbl_html_5 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
+  tbl_html_5 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
     expect_match("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$")
 
   # Expect that all alpha values are 0.5 (or "80" as a hex value and
   # *not* "EE")
-  (
-    tbl_html_5 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*|;)", "", .)
-  ) %>%
-    rgba_to_hex() %>%
-    substring(8, 9) %>%
-    unique() %>%
+  tbl_html_5 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*|;)", "", x = _) |>
+    rgba_to_hex() |>
+    substring(8, 9) |>
+    unique() |>
     expect_equal("80")
 
   # Create a `tbl_html` object by using `tab_style` with
@@ -650,23 +646,23 @@ test_that("cell_fill() accepts colors of various types", {
     xml2::read_html()
 
   # Expect a single color to have been generated and used
-  tbl_html_6 %>%
-    selection_value("style") %>%
-    gsub("(?:color: |;)", "", .) %>%
-    unique() %>%
+  tbl_html_6 |>
+    selection_value("style") |>
+    gsub("(?:color: |;)", "", x = _) |>
+    unique() |>
     expect_length(1)
 
   # Expect all color values to be of the 'rgba()' string format
-  tbl_html_6 %>%
-    selection_value("style") %>%
-    gsub("(?:color: |;)", "", .) %>%
+  tbl_html_6 |>
+    selection_value("style") |>
+    gsub("(?:color: |;)", "", x = _) |>
     expect_match("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$")
 
   # Expect all color values to be "rgba(255,255,255,0)"
-  tbl_html_6 %>%
-    selection_value("style") %>%
-    gsub("(?:color: |;)", "", .) %>%
-    unique() %>%
+  tbl_html_6 |>
+    selection_value("style") |>
+    gsub("(?:color: |;)", "", x = _) |>
+    unique() |>
     expect_equal("rgba(255,255,255,0)")
 
   # Expect that using shorthand hexadecimal color values will result in the
