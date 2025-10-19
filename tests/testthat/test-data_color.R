@@ -484,22 +484,22 @@ test_that("The correct color values are obtained when defining a palette", {
       )
     )
 
-  # tbl |>
-  #   gt() |>
-  #   data_color(
-  #     columns = population,
-  #     palette = c("red", "orange", "green", "blue")
-  #   ) |>
-  #   render_as_html() |>
-  #   xml2::read_html() |>
-  #   selection_value("style") |>
-  #   gsub("(background-color: |; color: .*)", "", x = _) |>
-  #   expect_equal(
-  #     c(
-  #       "#808080", "#FF0000", "#FF5E00", "#FF8D00", "#EAB800",
-  #       "#ACDE00", "#0EFF00", "#7AAF8C", "#7368C9", "#0000FF"
-  #     )
-  #   )
+  tbl |>
+    gt() |>
+    data_color(
+      columns = population,
+      palette = c("red", "orange", "green", "blue")
+    ) |>
+    render_as_html() |>
+    xml2::read_html() |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
+    expect_equal(
+      c(
+        "#808080", "#FF0000", "#FF6200", "#FF9100", "#E8B900",
+        "#AFDC00", "#43FB00", "#77BA82", "#746BC7", "#0000FF"
+      )
+    )
 })
 
 test_that("data_color() works with classed colors (#1155)", {
