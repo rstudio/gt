@@ -3368,16 +3368,16 @@
         </thead>
         <tbody class="gt_table_body">
           <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">Mongolia</th>
-      <td headers="stub_1_1 2013" class="gt_row gt_right">2845153</td>
-      <td headers="stub_1_1 2014" class="gt_row gt_right">2902823</td>
-      <td headers="stub_1_1 2015" class="gt_row gt_right">2964749</td>
-      <td headers="stub_1_1 2016" class="gt_row gt_right">3029555</td>
-      <td headers="stub_1_1 2017" class="gt_row gt_right">3096030</td>
-      <td headers="stub_1_1 2018" class="gt_row gt_right">3163991</td>
-      <td headers="stub_1_1 2019" class="gt_row gt_right">3232430</td>
-      <td headers="stub_1_1 2020" class="gt_row gt_right">3294335</td>
-      <td headers="stub_1_1 2021" class="gt_row gt_right">3347782</td>
-      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #20C515; color: #000000;">3398366</td></tr>
+      <td headers="stub_1_1 2013" class="gt_row gt_right">2899011</td>
+      <td headers="stub_1_1 2014" class="gt_row gt_right">2963113</td>
+      <td headers="stub_1_1 2015" class="gt_row gt_right">3026864</td>
+      <td headers="stub_1_1 2016" class="gt_row gt_right">3088856</td>
+      <td headers="stub_1_1 2017" class="gt_row gt_right">3148917</td>
+      <td headers="stub_1_1 2018" class="gt_row gt_right">3208189</td>
+      <td headers="stub_1_1 2019" class="gt_row gt_right">3267673</td>
+      <td headers="stub_1_1 2020" class="gt_row gt_right">3327204</td>
+      <td headers="stub_1_1 2021" class="gt_row gt_right">3383741</td>
+      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #23B018; color: #FFFFFF;">3433748</td></tr>
         </tbody>
         
       </table>
@@ -3405,16 +3405,16 @@
         </thead>
         <tbody class="gt_table_body">
           <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">Mongolia</th>
-      <td headers="stub_1_1 2013" class="gt_row gt_right">2845153</td>
-      <td headers="stub_1_1 2014" class="gt_row gt_right">2902823</td>
-      <td headers="stub_1_1 2015" class="gt_row gt_right">2964749</td>
-      <td headers="stub_1_1 2016" class="gt_row gt_right">3029555</td>
-      <td headers="stub_1_1 2017" class="gt_row gt_right">3096030</td>
-      <td headers="stub_1_1 2018" class="gt_row gt_right">3163991</td>
-      <td headers="stub_1_1 2019" class="gt_row gt_right">3232430</td>
-      <td headers="stub_1_1 2020" class="gt_row gt_right" style="background-color: #20C515; color: #000000;">3294335</td>
-      <td headers="stub_1_1 2021" class="gt_row gt_right" style="background-color: #20C515; color: #000000;">3347782</td>
-      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #20C515; color: #000000;">3398366</td></tr>
+      <td headers="stub_1_1 2013" class="gt_row gt_right">2899011</td>
+      <td headers="stub_1_1 2014" class="gt_row gt_right">2963113</td>
+      <td headers="stub_1_1 2015" class="gt_row gt_right">3026864</td>
+      <td headers="stub_1_1 2016" class="gt_row gt_right">3088856</td>
+      <td headers="stub_1_1 2017" class="gt_row gt_right">3148917</td>
+      <td headers="stub_1_1 2018" class="gt_row gt_right">3208189</td>
+      <td headers="stub_1_1 2019" class="gt_row gt_right">3267673</td>
+      <td headers="stub_1_1 2020" class="gt_row gt_right" style="background-color: #23B018; color: #FFFFFF;">3327204</td>
+      <td headers="stub_1_1 2021" class="gt_row gt_right" style="background-color: #23B018; color: #FFFFFF;">3383741</td>
+      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #23B018; color: #FFFFFF;">3433748</td></tr>
         </tbody>
         
       </table>
@@ -3442,16 +3442,16 @@
         </thead>
         <tbody class="gt_table_body">
           <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">Mongolia</th>
-      <td headers="stub_1_1 2013" class="gt_row gt_right">2845153</td>
-      <td headers="stub_1_1 2014" class="gt_row gt_right">2902823</td>
-      <td headers="stub_1_1 2015" class="gt_row gt_right">2964749</td>
-      <td headers="stub_1_1 2016" class="gt_row gt_right">3029555</td>
-      <td headers="stub_1_1 2017" class="gt_row gt_right">3096030</td>
-      <td headers="stub_1_1 2018" class="gt_row gt_right">3163991</td>
-      <td headers="stub_1_1 2019" class="gt_row gt_right">3232430</td>
-      <td headers="stub_1_1 2020" class="gt_row gt_right" style="background-color: #20C515; color: #000000;">3294335</td>
-      <td headers="stub_1_1 2021" class="gt_row gt_right" style="background-color: #24AE18; color: #FFFFFF;">3347782</td>
-      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #259719; color: #FFFFFF;">3398366</td></tr>
+      <td headers="stub_1_1 2013" class="gt_row gt_right">2899011</td>
+      <td headers="stub_1_1 2014" class="gt_row gt_right">2963113</td>
+      <td headers="stub_1_1 2015" class="gt_row gt_right">3026864</td>
+      <td headers="stub_1_1 2016" class="gt_row gt_right">3088856</td>
+      <td headers="stub_1_1 2017" class="gt_row gt_right">3148917</td>
+      <td headers="stub_1_1 2018" class="gt_row gt_right">3208189</td>
+      <td headers="stub_1_1 2019" class="gt_row gt_right">3267673</td>
+      <td headers="stub_1_1 2020" class="gt_row gt_right" style="background-color: #23B018; color: #FFFFFF;">3327204</td>
+      <td headers="stub_1_1 2021" class="gt_row gt_right" style="background-color: #259719; color: #FFFFFF;">3383741</td>
+      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #248019; color: #FFFFFF;">3433748</td></tr>
         </tbody>
         
       </table>
@@ -3479,16 +3479,16 @@
         </thead>
         <tbody class="gt_table_body">
           <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">Mongolia</th>
-      <td headers="stub_1_1 2013" class="gt_row gt_right">2845153</td>
-      <td headers="stub_1_1 2014" class="gt_row gt_right">2902823</td>
-      <td headers="stub_1_1 2015" class="gt_row gt_right">2964749</td>
-      <td headers="stub_1_1 2016" class="gt_row gt_right">3029555</td>
-      <td headers="stub_1_1 2017" class="gt_row gt_right">3096030</td>
-      <td headers="stub_1_1 2018" class="gt_row gt_right">3163991</td>
-      <td headers="stub_1_1 2019" class="gt_row gt_right">3232430</td>
-      <td headers="stub_1_1 2020" class="gt_row gt_right" style="background-color: #183212; color: #FFFFFF;">3294335</td>
-      <td headers="stub_1_1 2021" class="gt_row gt_right" style="background-color: #1D4515; color: #FFFFFF;">3347782</td>
-      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #205A17; color: #FFFFFF;">3398366</td></tr>
+      <td headers="stub_1_1 2013" class="gt_row gt_right">2899011</td>
+      <td headers="stub_1_1 2014" class="gt_row gt_right">2963113</td>
+      <td headers="stub_1_1 2015" class="gt_row gt_right">3026864</td>
+      <td headers="stub_1_1 2016" class="gt_row gt_right">3088856</td>
+      <td headers="stub_1_1 2017" class="gt_row gt_right">3148917</td>
+      <td headers="stub_1_1 2018" class="gt_row gt_right">3208189</td>
+      <td headers="stub_1_1 2019" class="gt_row gt_right">3267673</td>
+      <td headers="stub_1_1 2020" class="gt_row gt_right" style="background-color: #1C4415; color: #FFFFFF;">3327204</td>
+      <td headers="stub_1_1 2021" class="gt_row gt_right" style="background-color: #205917; color: #FFFFFF;">3383741</td>
+      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #236F19; color: #FFFFFF;">3433748</td></tr>
         </tbody>
         
       </table>
