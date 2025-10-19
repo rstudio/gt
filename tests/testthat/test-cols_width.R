@@ -43,15 +43,16 @@ test_that("cols_width() stores values correctly", {
   #
 
   expect_equal(
-    gt(tbl) %>%
+    (
+      gt(tbl) |>
       cols_width(
         col_1 ~ px(100),
         col_2 ~ px(200),
         col_3 ~ px(300),
         col_4 ~ px(400)
-      ) %>%
-      .$`_boxhead` %>%
-      dplyr::select(var, column_width) %>%
+      )
+    )$`_boxhead` |>
+      dplyr::select(var, column_width) |>
       dplyr::mutate(column_width = unlist(column_width)),
     vctrs::data_frame(
       var = paste0("col_", 1:4),
@@ -60,15 +61,16 @@ test_that("cols_width() stores values correctly", {
   )
 
   expect_equal(
-    gt(tbl) %>%
+    (
+      gt(tbl) |>
       cols_width(
         col_1 ~ px(100),
         col_2 ~ px(200),
         col_3 ~ px(300),
         everything() ~ px(400)
-      ) %>%
-      .$`_boxhead` %>%
-      dplyr::select(var, column_width) %>%
+      )
+    )$`_boxhead` |>
+      dplyr::select(var, column_width) |>
       dplyr::mutate(column_width = unlist(column_width)),
     vctrs::data_frame(
       var = paste0("col_", 1:4),
@@ -77,14 +79,15 @@ test_that("cols_width() stores values correctly", {
   )
 
   expect_equal(
-    gt(tbl) %>%
+    (
+      gt(tbl) |>
       cols_width(
         col_1 ~ px(100),
         col_2 ~ px(200),
         col_4 ~ px(400)
-      ) %>%
-      .$`_boxhead` %>%
-      dplyr::select(var, column_width) %>%
+      )
+    )$`_boxhead` |>
+      dplyr::select(var, column_width) |>
       dplyr::mutate(column_width = unlist(column_width)),
     vctrs::data_frame(
       var = paste0("col_", 1:4),
@@ -93,12 +96,13 @@ test_that("cols_width() stores values correctly", {
   )
 
   expect_equal(
-    gt(tbl) %>%
+    (
+      gt(tbl) |>
       cols_width(
         starts_with("col") ~ px(100)
-      ) %>%
-      .$`_boxhead` %>%
-      dplyr::select(var, column_width) %>%
+      )
+    )$`_boxhead` |>
+      dplyr::select(var, column_width) |>
       dplyr::mutate(column_width = unlist(column_width)),
     vctrs::data_frame(
       var = paste0("col_", 1:4),
@@ -107,12 +111,13 @@ test_that("cols_width() stores values correctly", {
   )
 
   expect_equal(
-    gt(tbl) %>%
+    (
+      gt(tbl) |>
       cols_width(
         everything() ~ px(100)
-      ) %>%
-      .$`_boxhead` %>%
-      dplyr::select(var, column_width) %>%
+      )
+    )$`_boxhead` |>
+      dplyr::select(var, column_width) |>
       dplyr::mutate(column_width = unlist(column_width)),
     vctrs::data_frame(
       var = paste0("col_", 1:4),
@@ -125,15 +130,16 @@ test_that("cols_width() stores values correctly", {
   #
 
   expect_equal(
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    (
+      gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
       cols_width(
         col_1 ~ px(100),
         col_2 ~ px(200),
         col_3 ~ px(300),
         everything() ~ px(400)
-      ) %>%
-      .$`_boxhead` %>%
-      dplyr::select(var, column_width) %>%
+      )
+    )$`_boxhead` |>
+      dplyr::select(var, column_width) |>
       dplyr::mutate(column_width = unlist(column_width)),
     vctrs::data_frame(
       var = c(paste0("col_", 1:4), "row", "group"),
@@ -142,15 +148,16 @@ test_that("cols_width() stores values correctly", {
   )
 
   expect_equal(
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    (
+      gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
       cols_width(
         col_1 ~ px(100),
         col_2 ~ px(200),
         col_4 ~ px(400),
         row ~ px(50)
-      ) %>%
-      .$`_boxhead` %>%
-      dplyr::select(var, column_width) %>%
+      )
+    )$`_boxhead` |>
+      dplyr::select(var, column_width) |>
       dplyr::mutate(column_width = unlist(column_width)),
     vctrs::data_frame(
       var = c(paste0("col_", 1:4), "row", "group"),
@@ -159,12 +166,13 @@ test_that("cols_width() stores values correctly", {
   )
 
   expect_equal(
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    (
+      gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
       cols_width(
         everything() ~ px(100)
-      ) %>%
-      .$`_boxhead` %>%
-      dplyr::select(var, column_width) %>%
+      )
+    )$`_boxhead` |>
+      dplyr::select(var, column_width) |>
       dplyr::mutate(column_width = unlist(column_width)),
     vctrs::data_frame(
       var = c(paste0("col_", 1:4), "row", "group"),
@@ -173,13 +181,14 @@ test_that("cols_width() stores values correctly", {
   )
 
   expect_equal(
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    (
+      gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
       cols_width(
         group ~ px(50),
         everything() ~ px(100)
-      ) %>%
-      .$`_boxhead` %>%
-      dplyr::select(var, column_width) %>%
+      )
+    )$`_boxhead` |>
+      dplyr::select(var, column_width) |>
       dplyr::mutate(column_width = unlist(column_width)),
     vctrs::data_frame(
       var = c(paste0("col_", 1:4), "row", "group"),
@@ -188,18 +197,19 @@ test_that("cols_width() stores values correctly", {
   )
 
   expect_equal(
-    gt(
-      tbl_2,
-      rowname_col = "row",
-      groupname_col = "group",
-      row_group_as_column = TRUE
-    ) %>%
+    (
+      gt(
+        tbl_2,
+        rowname_col = "row",
+        groupname_col = "group",
+        row_group_as_column = TRUE
+      ) |>
       cols_width(
         group ~ px(20),
         everything() ~ px(100)
-      ) %>%
-      .$`_boxhead` %>%
-      dplyr::select(var, column_width) %>%
+      )
+    )$`_boxhead` |>
+      dplyr::select(var, column_width) |>
       dplyr::mutate(column_width = unlist(column_width)),
     vctrs::data_frame(
       var = c(paste0("col_", 1:4), "row", "group"),
@@ -208,17 +218,18 @@ test_that("cols_width() stores values correctly", {
   )
 
   expect_equal(
-    gt(
-      tbl_2,
-      groupname_col = "group",
-      row_group_as_column = TRUE
-    ) %>%
+    (
+      gt(
+        tbl_2,
+        groupname_col = "group",
+        row_group_as_column = TRUE
+      ) |>
       cols_width(
         group ~ px(10),
         row ~ px(30)
-      ) %>%
-      .$`_boxhead` %>%
-      dplyr::select(var, column_width) %>%
+      )
+    )$`_boxhead` |>
+      dplyr::select(var, column_width) |>
       dplyr::mutate(column_width = unlist(column_width)),
     vctrs::data_frame(
       var = c(paste0("col_", 1:4), "row", "group"),
@@ -229,14 +240,14 @@ test_that("cols_width() stores values correctly", {
   # Don't expect an error or a warning if a `group` column
   # is included in a `cols_width()` call
   expect_no_error(
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
       cols_width(
         group ~ px(50),
         everything() ~ px(100)
       )
   )
   expect_no_warning(
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
       cols_width(
         group ~ px(50),
         everything() ~ px(100)
@@ -245,7 +256,7 @@ test_that("cols_width() stores values correctly", {
 
   # Expect an error if a column provided is not in the dataset
   expect_error(
-    gt(tbl) %>%
+    gt(tbl) |>
       cols_width(
         col_10 ~ px(150),
         everything() ~ px(75)
@@ -253,7 +264,7 @@ test_that("cols_width() stores values correctly", {
   )
 
   # Expect an error if no expressions given to `...`
-  expect_error(gt(tbl) %>% cols_width())
+  expect_error(gt(tbl) |> cols_width())
 
   # Expect an error if an incorrect unit is present
   # in any vector element of CSS length values
@@ -270,7 +281,7 @@ test_that("cols_width() works correctly with a simple table", {
   # Create a `tbl_html` object with `gt()` and size
   # all columns to `100px`
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_width(
       col_1 ~ px(100),
       col_2 ~ px(100),
@@ -279,7 +290,8 @@ test_that("cols_width() works correctly with a simple table", {
     )
 
   # Expect that the all column widths are set to `100px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:100px;\"/>",
@@ -287,14 +299,14 @@ test_that("cols_width() works correctly with a simple table", {
       "<col style=\"width:100px;\"/>",
       "<col style=\"width:100px;\"/>",
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and size the
   # first two columns to `100px` and the remaining columns
   # to `70px`
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_width(
       col_1 ~ px(100),
       col_2 ~ px(100),
@@ -303,7 +315,8 @@ test_that("cols_width() works correctly with a simple table", {
 
   # Expect that the first two column widths are
   # set to `100px`, and the rest are `70px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:100px;\"/>",
@@ -311,13 +324,13 @@ test_that("cols_width() works correctly with a simple table", {
       "<col style=\"width:70px;\"/>",
       "<col style=\"width:70px;\"/>",
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and make
   # every column variable width
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_width(
       col_1 ~ "",
       col_2 ~ "",
@@ -326,7 +339,8 @@ test_that("cols_width() works correctly with a simple table", {
     )
 
   # Expect that the all column widths are unset
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col/>",
@@ -334,14 +348,14 @@ test_that("cols_width() works correctly with a simple table", {
       "<col/>",
       "<col/>",
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and a
   # combination of different, allowable length
   # dimensions
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_width(
       col_1 ~ px(100),
       col_2 ~ 200,
@@ -351,7 +365,8 @@ test_that("cols_width() works correctly with a simple table", {
 
   # Expect that the first three column widths are
   # all set and the fourth is not
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:100px;\"/>",
@@ -359,14 +374,14 @@ test_that("cols_width() works correctly with a simple table", {
       "<col style=\"width:20%;\"/>",
       "<col/>",
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and size the
   # first two columns to `100px`; the unset columns
   # will be variable widths
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_width(
       col_1 ~ px(150),
       col_2 ~ px(150)
@@ -374,7 +389,8 @@ test_that("cols_width() works correctly with a simple table", {
 
   # Expect that the first two column widths are
   # set to `150px`, and the rest are blank (variable width)
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:150px;\"/>",
@@ -382,20 +398,21 @@ test_that("cols_width() works correctly with a simple table", {
       "<col/>",
       "<col/>",
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and assign
   # a width of `150px` to all columns with the
   # `everything()` column select helper
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_width(
       everything() ~ px(150)
     )
 
   # Expect that the all column widths are set to `150px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:150px;\"/>",
@@ -403,20 +420,21 @@ test_that("cols_width() works correctly with a simple table", {
       "<col style=\"width:150px;\"/>",
       "<col style=\"width:150px;\"/>",
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and assign
   # a width of `150px` to all columns with the
   # `starts_with()` column select helper
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_width(
       starts_with("col") ~ px(150)
     )
 
   # Expect that the all column widths are set to `150px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:150px;\"/>",
@@ -424,14 +442,14 @@ test_that("cols_width() works correctly with a simple table", {
       "<col style=\"width:150px;\"/>",
       "<col style=\"width:150px;\"/>",
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and assign
   # a width of `150px` to the first column using the
   # `ends_with()` column select helper
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_width(
       ends_with("1") ~ px(150),
       everything() ~ px(100)
@@ -439,7 +457,8 @@ test_that("cols_width() works correctly with a simple table", {
 
   # Expect that the first column width is set to
   # `150px`, and the rest are `100px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:150px;\"/>",
@@ -447,20 +466,21 @@ test_that("cols_width() works correctly with a simple table", {
       "<col style=\"width:100px;\"/>",
       "<col style=\"width:100px;\"/>",
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and assign
   # a width of `150px` to all columns with the
   # `contains()` column select helper
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_width(
       contains("_") ~ px(150)
     )
 
   # Expect that the all column widths are set to `150px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:150px;\"/>",
@@ -468,20 +488,21 @@ test_that("cols_width() works correctly with a simple table", {
       "<col style=\"width:150px;\"/>",
       "<col style=\"width:150px;\"/>",
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and assign
   # a width of `150px` to all columns with the
   # `matches()` column select helper
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_width(
       matches("col_[0-9]") ~ px(150)
     )
 
   # Expect that the all column widths are set to `150px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:150px;\"/>",
@@ -489,14 +510,14 @@ test_that("cols_width() works correctly with a simple table", {
       "<col style=\"width:150px;\"/>",
       "<col style=\"width:150px;\"/>",
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and assign
   # a width of `150px` to the first two columns with the
   # `one_of()` column select helper
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_width(
       one_of(c("col_1", "col_2")) ~ px(150),
       everything() ~ px(100)
@@ -504,7 +525,8 @@ test_that("cols_width() works correctly with a simple table", {
 
   # Expect that the first two column widths are set to
   # `150px`, and the rest are `100px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:150px;\"/>",
@@ -512,7 +534,7 @@ test_that("cols_width() works correctly with a simple table", {
       "<col style=\"width:100px;\"/>",
       "<col style=\"width:100px;\"/>",
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and size the
@@ -521,7 +543,7 @@ test_that("cols_width() works correctly with a simple table", {
   # column in the RHS (the expectation is that the first
   # formula will give the resultant width value)
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_width(
       col_1 ~ px(175),
       col_1 ~ px(150),
@@ -531,7 +553,8 @@ test_that("cols_width() works correctly with a simple table", {
 
   # Expect that the first column width is set to
   # `175px`, and the rest are `75px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:175px;\"/>",
@@ -539,7 +562,7 @@ test_that("cols_width() works correctly with a simple table", {
       "<col style=\"width:75px;\"/>",
       "<col style=\"width:75px;\"/>",
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and size the
@@ -548,11 +571,11 @@ test_that("cols_width() works correctly with a simple table", {
   # a second call to `cols_width()` that sets the
   # first column to `250px`
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_width(
       col_1 ~ px(150),
       everything() ~ px(75)
-    ) %>%
+    ) |>
     cols_width(
       col_1 ~ px(250),
       everything() ~ px(75)
@@ -560,7 +583,8 @@ test_that("cols_width() works correctly with a simple table", {
 
   # Expect that the first column width is set to
   # `250px`, and the rest are `75px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:250px;\"/>",
@@ -568,7 +592,7 @@ test_that("cols_width() works correctly with a simple table", {
       "<col style=\"width:75px;\"/>",
       "<col style=\"width:75px;\"/>",
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Expect no partial matching issues with column names and arguments
@@ -577,8 +601,8 @@ test_that("cols_width() works correctly with a simple table", {
       ~a , ~d,
       1, 4,
       5, 8
-    ) %>%
-      gt() %>%
+    ) |>
+      gt() |>
       cols_width(
         a ~ px(100),
         d ~ px(125)
@@ -589,8 +613,8 @@ test_that("cols_width() works correctly with a simple table", {
       ~a , ~dat,
       1, 4,
       5, 8
-    ) %>%
-      gt() %>%
+    ) |>
+      gt() |>
       cols_width(
         a ~ px(100),
         dat ~ px(125)
@@ -605,8 +629,8 @@ test_that("cols_width() works correctly with a simple table", {
       ~a , ~.dat,
       1, 4,
       5, 8
-    ) %>%
-      gt() %>%
+    ) |>
+      gt() |>
       cols_width(
         a ~ px(100),
         .dat ~ px(125)
@@ -622,13 +646,14 @@ test_that("cols_width() works correctly with a complex table", {
   # Create a `tbl_html` object with `gt()` and size
   # all columns to `100px`
   tbl_html <-
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
     cols_width(
       everything() ~ px(100)
     )
 
   # Expect that the all column widths are set to `100px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:100px;\"/>", # stub column (`row`)
@@ -637,14 +662,14 @@ test_that("cols_width() works correctly with a complex table", {
       "<col style=\"width:100px;\"/>", # `col_3`
       "<col style=\"width:100px;\"/>", # `col_4`
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and size the
   # first two columns to `100px` and the remaining columns
   # to `70px`
   tbl_html <-
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
     cols_width(
       col_1 ~ px(100),
       col_2 ~ px(100),
@@ -653,7 +678,8 @@ test_that("cols_width() works correctly with a complex table", {
 
   # Expect that the first two column widths are
   # set to `100px`, and the rest are `70px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:70px;\"/>",  # stub column (`row`)
@@ -662,13 +688,13 @@ test_that("cols_width() works correctly with a complex table", {
       "<col style=\"width:70px;\"/>",  # `col_3`
       "<col style=\"width:70px;\"/>",  # `col_4`
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and make
   # every column variable width
   tbl_html <-
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
     cols_width(
       col_1 ~ "",
       col_2 ~ "",
@@ -678,7 +704,8 @@ test_that("cols_width() works correctly with a complex table", {
     )
 
   # Expect that the all column widths are unset
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col/>", # stub column (`row`)
@@ -687,14 +714,14 @@ test_that("cols_width() works correctly with a complex table", {
       "<col/>", # `col_3`
       "<col/>", # `col_4`
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and a
   # combination of different, allowable length
   # dimensions
   tbl_html <-
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
     cols_width(
       col_1 ~ px(100),
       col_2 ~ 200,
@@ -705,7 +732,8 @@ test_that("cols_width() works correctly with a complex table", {
 
   # Expect that the first three column widths are
   # all set and the fourth is not
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:300px;\"/>", # stub column (`row`)
@@ -714,14 +742,14 @@ test_that("cols_width() works correctly with a complex table", {
       "<col style=\"width:20%;\"/>",   # `col_3`
       "<col/>",                        # `col_4`
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and size the
   # first two columns to `100px`; the unset columns
   # will be variable widths
   tbl_html <-
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
     cols_width(
       col_1 ~ px(150),
       col_2 ~ px(150)
@@ -729,7 +757,8 @@ test_that("cols_width() works correctly with a complex table", {
 
   # Expect that the first two column widths are
   # set to `150px`, and the rest are blank (variable width)
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col/>",                        # stub column (`row`)
@@ -738,7 +767,7 @@ test_that("cols_width() works correctly with a complex table", {
       "<col/>",                        # `col_3`
       "<col/>",                        # `col_4`
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
 
@@ -749,14 +778,15 @@ test_that("cols_width() works correctly with a complex table", {
   # but, in the end, it's excluded from consideration
   # (with no error or warning)
   tbl_html <-
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
     cols_width(
       starts_with("col") ~ px(150),
       group ~ px(5000)
     )
 
   # Expect that the all column widths are set to `150px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col/>",                        # stub column (`row`)
@@ -765,14 +795,14 @@ test_that("cols_width() works correctly with a complex table", {
       "<col style=\"width:150px;\"/>", # `col_3`
       "<col style=\"width:150px;\"/>", # `col_4`
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and assign
   # a width of `150px` to the first column using the
   # `ends_with()` column select helper
   tbl_html <-
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
     cols_width(
       ends_with("1") ~ px(150),
       everything() ~ px(100)
@@ -780,7 +810,8 @@ test_that("cols_width() works correctly with a complex table", {
 
   # Expect that the first column width is set to
   # `150px`, and the rest are `100px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:100px;\"/>", # stub column (`row`)
@@ -789,20 +820,21 @@ test_that("cols_width() works correctly with a complex table", {
       "<col style=\"width:100px;\"/>", # `col_3`
       "<col style=\"width:100px;\"/>", # `col_4`
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and assign
   # a width of `150px` to all columns with the
   # `contains()` column select helper
   tbl_html <-
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
     cols_width(
       contains("_") ~ px(150)
     )
 
   # Expect that the all column widths are set to `150px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col/>",                        # stub column (`row`)
@@ -811,20 +843,21 @@ test_that("cols_width() works correctly with a complex table", {
       "<col style=\"width:150px;\"/>", # `col_3`
       "<col style=\"width:150px;\"/>", # `col_4`
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and assign
   # a width of `150px` to all columns with the
   # `matches()` column select helper
   tbl_html <-
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
     cols_width(
       matches("col_[0-9]") ~ px(150)
     )
 
   # Expect that the all column widths are set to `150px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col/>",                        # stub column (`row`)
@@ -833,14 +866,14 @@ test_that("cols_width() works correctly with a complex table", {
       "<col style=\"width:150px;\"/>", # `col_3`
       "<col style=\"width:150px;\"/>", # `col_4`
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and assign
   # a width of `150px` to the first two columns with the
   # `one_of()` column select helper
   tbl_html <-
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
     cols_width(
       one_of(c("col_1", "col_2")) ~ px(150),
       everything() ~ px(100)
@@ -848,7 +881,8 @@ test_that("cols_width() works correctly with a complex table", {
 
   # Expect that the first two column widths are set to
   # `150px`, and the rest are `100px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:100px;\"/>", # stub column (`row`)
@@ -857,7 +891,7 @@ test_that("cols_width() works correctly with a complex table", {
       "<col style=\"width:100px;\"/>", # `col_3`
       "<col style=\"width:100px;\"/>", # `col_4`
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and size the
@@ -866,7 +900,7 @@ test_that("cols_width() works correctly with a complex table", {
   # column in the RHS (the expectation is that the first
   # formula will give the resultant width value)
   tbl_html <-
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
     cols_width(
       col_1 ~ px(175),
       col_1 ~ px(150),
@@ -876,7 +910,8 @@ test_that("cols_width() works correctly with a complex table", {
 
   # Expect that the first column width is set to
   # `175px`, and the rest are `75px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:75px;\"/>",  # stub column (`row`)
@@ -885,7 +920,7 @@ test_that("cols_width() works correctly with a complex table", {
       "<col style=\"width:75px;\"/>",  # `col_3`
       "<col style=\"width:75px;\"/>",  # `col_4`
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and size the
@@ -894,11 +929,11 @@ test_that("cols_width() works correctly with a complex table", {
   # a second call to `cols_width()` that sets the
   # first column to `250px`
   tbl_html <-
-    gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
+    gt(tbl_2, rowname_col = "row", groupname_col = "group") |>
     cols_width(
       col_1 ~ px(150),
       everything() ~ px(75)
-    ) %>%
+    ) |>
     cols_width(
       col_1 ~ px(250),
       everything() ~ px(75)
@@ -906,7 +941,8 @@ test_that("cols_width() works correctly with a complex table", {
 
   # Expect that the first column width is set to
   # `250px`, and the rest are `75px`
-  tbl_html %>% render_as_html() %>%
+  tbl_html |>
+    render_as_html() |>
     html_fragment_within(
       "<colgroup>",
       "<col style=\"width:75px;\"/>",  # stub column (`row`)
@@ -915,7 +951,7 @@ test_that("cols_width() works correctly with a complex table", {
       "<col style=\"width:75px;\"/>",  # `col_3`
       "<col style=\"width:75px;\"/>",  # `col_4`
       "</colgroup>"
-    ) %>%
+    ) |>
     expect_true()
 })
 
@@ -927,13 +963,13 @@ test_that("cols_width() correctly specifies LaTeX table when column widths are s
   # Create a `tbl_latex` object with `gt()` and size
   # all columns in percentages
   tbl_latex <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_width(
       col_1 ~ pct(50),
       col_2 ~ pct(30),
       col_3 ~ pct(20),
       col_4 ~ pct(10)
-    ) %>%
+    ) |>
     tab_options(latex.use_longtable = TRUE)
 
   pct_string <- function(x, unit = '\\\\linewidth') {
@@ -987,11 +1023,11 @@ test_that("cols_width() correctly specifies LaTeX table when column widths are s
   # Check that LaTeX is correctly generated when only some
   # column widths are specified as percentages
   tbl_latex_partial <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_width(
       col_1 ~ pct(30),
       col_3 ~ pct(20)
-    ) %>%
+    ) |>
     tab_options(latex.use_longtable = TRUE)
 
   c(
@@ -999,32 +1035,32 @@ test_that("cols_width() correctly specifies LaTeX table when column widths are s
     'r',
     pct_string(0.2),
     'r'
-  ) %>%
-    build_longtable_regex() %>%
-    grepl(as_latex(tbl_latex_partial)) %>%
+  ) |>
+    build_longtable_regex() |>
+    grepl(as_latex(tbl_latex_partial)) |>
     expect_true()
 
   # Check that LaTeX longtable command is correctly generated
   # when table_width is specified by the user as a percentage
   tbl_latex_tw_pct <-
-    tbl_latex %>%
+    tbl_latex |>
     tab_options(table.width = pct(70))
 
-  (0.7 * c(0.5, 0.3, 0.2, 0.1)) %>%
-    pct_string() %>%
-    build_longtable_regex() %>%
-    grepl(as_latex(tbl_latex_tw_pct)) %>%
+  (0.7 * c(0.5, 0.3, 0.2, 0.1)) |>
+    pct_string() |>
+    build_longtable_regex() |>
+    grepl(as_latex(tbl_latex_tw_pct)) |>
     expect_true()
 
   # Check that LaTeX longtable command is correctly generated
   # when table width is specified by user in pixels
   tbl_latex_tw_px <-
-    tbl_latex %>%
+    tbl_latex |>
     tab_options(table.width = "400px")
 
-  (400 * 0.75 * c(0.5, 0.3, 0.2, 0.1)) %>%
-    pct_string(unit = "pt") %>%
-    build_longtable_regex() %>%
+  (400 * 0.75 * c(0.5, 0.3, 0.2, 0.1)) |>
+    pct_string(unit = "pt") |>
+    build_longtable_regex() |>
     grepl(as_latex(tbl_latex_tw_px))
 
 
@@ -1033,44 +1069,61 @@ test_that("cols_width() correctly specifies LaTeX table when column widths are s
 test_that("column widths are accurately reflected in Latex multicolumn statements", {
 
   set.seed(1234)
-  tbl_random1 <- data.frame(x = c("a", "b", "c", "d", "e"),
-               y = runif(5),
-               z = runif(5),
-               m = runif(5),
-               n = runif(5),
-               w = runif(5))
 
-  gt_tbl <- gt(tbl_random1,
-     rowname_col = "x",
-     row_group_as_column = FALSE) %>%
-    fmt_number(decimals = 3) %>%
-    tab_row_group(label = "Only row group label",
-                  rows = 1:2) %>%
-    cols_width(everything() ~ "2cm") %>%
-    tab_spanner(label = "Spanner with a long title that should be wrapped", columns = c("y", "z")) %>%
-    tab_spanner(label = "Spanner2", columns = c("n", "w")) %>%
-    tab_spanner(label = "Another long spanner that needs to wrap even more than the other", columns = c("z", "m")) %>%
+  tbl_random1 <-
+    data.frame(
+      x = c("a", "b", "c", "d", "e"),
+      y = runif(5),
+      z = runif(5),
+      m = runif(5),
+      n = runif(5),
+      w = runif(5)
+    )
+
+  gt_tbl <-
+    gt(
+      tbl_random1,
+      rowname_col = "x",
+      row_group_as_column = FALSE
+    ) |>
+    fmt_number(decimals = 3) |>
+    tab_row_group(
+      label = "Only row group label",
+      rows = 1:2
+    ) |>
+    cols_width(everything() ~ "2cm") |>
+    tab_spanner(
+      label = "Spanner with a long title that should be wrapped",
+      columns = c("y", "z")
+    ) |>
+    tab_spanner(
+      label = "Spanner2",
+      columns = c("n", "w")
+    ) |>
+    tab_spanner(
+      label = "Another long spanner that needs to wrap even more than the other",
+      columns = c("z", "m")
+    ) |>
     summary_rows(fns = list("mean"))
 
   expect_snapshot(as_latex(gt_tbl))
-
 })
 
 test_that("check cols_width is applied gt_group", {
 
-  # Create a `gt_group` object of two `gt_tbl`s
-  # create gt group example
-  gt_tbl <- mtcars_short %>% gt()
+  # Create a `gt_group` object with two `gt_tbl` objects
+  gt_tbl <- gt(mtcars_short)
   gt_group <- gt_group(gt_tbl, gt_tbl)
 
   # apply width to table and group
-  width_gt_tbl <- gt_tbl %>%
+  width_gt_tbl <-
+    gt_tbl |>
     cols_width(mpg ~ px(150))
 
-  width_gt_group <- gt_group %>%
+  width_gt_group <-
+    gt_group |>
     cols_width(mpg ~ px(150))
 
   # Expect identical if function applied before or after group is constructed
   expect_identical(width_gt_group, gt_group(width_gt_tbl, width_gt_tbl))
-
 })
