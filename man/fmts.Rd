@@ -20,13 +20,13 @@ gt_tbl <- gt(exibble)
 # By default, they apply styling to all compatible columns.
 
 # Will style all numeric columns
-gt_tbl \%>\% fmt_number()
+gt_tbl |> fmt_number()
 
 # will style the time column
-gt_tbl \%>\% fmt_time(columns = time)
+gt_tbl |> fmt_time(columns = time)
 
 # Will style nothing since is only compatible with logical values
-gt_tbl \%>\% fmt_tf()
+gt_tbl |> fmt_tf()
 
 #
 # Their order has importance as the last styling will have priority.
@@ -34,7 +34,7 @@ gt_tbl \%>\% fmt_tf()
 
 # Will style all numeric columns as integer
 # fmt_number() will have no effect
-gt_tbl \%>\% fmt_number() \%>\% fmt_integer()
+gt_tbl |> fmt_number() |> fmt_integer()
 
 #
 # Therefore, to apply different styling, it is important to specify columns or rows.
@@ -42,5 +42,5 @@ gt_tbl \%>\% fmt_number() \%>\% fmt_integer()
 
 # Will style all numeric columns as number and as currency the currency column.
 # fmt_number() will have no effect
-gt_tbl \%>\% fmt_number() \%>\% fmt_integer(currency)
+gt_tbl |> fmt_number() |> fmt_integer(currency)
 }

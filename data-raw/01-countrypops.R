@@ -70,12 +70,13 @@ countrypops <-
         `2020` = col_integer(),
         `2021` = col_integer(),
         `2022` = col_integer(),
-        `2023` = col_integer()
+        `2023` = col_integer(),
+        `2024` = col_integer(),
     ),
     na = ""
   ) |>
   tidyr::pivot_longer(
-    cols = `1960`:`2023`,
+    cols = `1960`:`2024`,
     names_to = "year",
     # transform year to integer
     names_transform = as.integer,
