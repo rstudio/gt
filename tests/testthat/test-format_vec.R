@@ -1329,6 +1329,113 @@ test_that("vec_fmt_engineering() works", {
     )
 })
 
+test_that("vec_fmt_number_si() works", {
+
+  # Test basic SI prefix formatting with default options
+  vec_fmt_number_si(c(1.5e9, 2.7e6, 4200, 0.3, 0.00012, 2.4e-8), output = "plain") |>
+    expect_equal(
+      c("1.50 G", "2.70 M", "4.20 k", "300.00 m", "120.00 µ", "24.00 n")
+    )
+
+  # Test with units
+  vec_fmt_number_si(c(1500, 2700000, 0.5), unit = "W", output = "plain") |>
+    expect_equal(
+      c("1.50 kW", "2.70 MW", "500.00 mW")
+    )
+
+  # Test incl_space = FALSE
+  vec_fmt_number_si(c(1500, 2700), unit = "Hz", incl_space = FALSE, output = "plain") |>
+    expect_equal(
+      c("1.50kHz", "2.70kHz")
+    )
+
+  # Test with different decimals
+  vec_fmt_number_si(c(1234567, 9876), unit = "g", decimals = 0, incl_space = FALSE, output = "plain") |>
+    expect_equal(
+      c("1Mg", "10kg")
+    )
+
+  # Test scale_by parameter
+  vec_fmt_number_si(c(0.5, 1.2), unit = "m", scale_by = 1000, decimals = 1, output = "plain") |>
+    expect_equal(
+      c("500.0 m", "1.2 km")
+    )
+
+  # Test decimal mode
+  vec_fmt_number_si(c(12.3, 0.123), unit = "m", prefix_mode = "decimal", decimals = 1, output = "plain") |>
+    expect_equal(
+      c("1.2 dam", "1.2 dm")
+    )
+
+  # Test force_sign with positive number
+  vec_fmt_number_si(1234, unit = "V", force_sign = TRUE, decimals = 1, output = "html") |>
+    expect_match("\\+1\\.2 kV")
+
+  # Test force_sign with negative number
+  vec_fmt_number_si(-5678, unit = "V", force_sign = TRUE, decimals = 1, output = "html") |>
+    expect_match("−5\\.7 kV")
+
+  # Test drop_trailing_zeros
+  vec_fmt_number_si(c(1200, 1230), decimals = 2, drop_trailing_zeros = TRUE, output = "plain") |>
+    expect_equal(
+      c("1.2 k", "1.23 k")
+    )
+
+  # Test with NA and Inf
+  vec_fmt_number_si(c(1500, NA, Inf, -Inf), unit = "W", output = "plain") |>
+    expect_equal(
+      c("1.50 kW", "NA", " Inf W", "-Inf W")
+    )
+
+  # Test HTML output
+  vec_fmt_number_si(c(1.5e9, 2.7e6), unit = "W", output = "html") |>
+    expect_equal(
+      c("1.50 GW", "2.70 MW")
+    )
+
+  # Test LaTeX output
+  vec_fmt_number_si(c(1.5e9), unit = "W", output = "latex") |>
+    expect_equal(
+      "1.50 GW"
+    )
+
+  # Test RTF output
+  vec_fmt_number_si(c(1.5e9), unit = "W", output = "rtf") |>
+    expect_equal(
+      "1.50 GW"
+    )
+
+  # Test pattern
+  vec_fmt_number_si(c(1500, 2700), unit = "Hz", pattern = "[{x}]", output = "plain") |>
+    expect_equal(
+      c("[1.50 kHz]", "[2.70 kHz]")
+    )
+
+  # Test locale-based formatting
+  vec_fmt_number_si(c(1500), unit = "W", locale = "fr", output = "plain") |>
+    expect_equal(
+      "1,50 kW"
+    )
+
+  # Test with zero
+  vec_fmt_number_si(c(0), unit = "W", output = "plain") |>
+    expect_equal(
+      "0.00 W"
+    )
+
+  # Test very large numbers (quetta and ronna)
+  vec_fmt_number_si(c(5e30, 5e27), decimals = 1, output = "plain") |>
+    expect_equal(
+      c("5.0 Q", "5.0 R")
+    )
+
+  # Test very small numbers (ronto and quecto)
+  vec_fmt_number_si(c(5e-27, 5e-30), decimals = 1, output = "plain") |>
+    expect_equal(
+      c("5.0 r", "5.0 q")
+    )
+})
+
 test_that("vec_fmt_percent() works", {
 
   vec_fmt_percent(vec_num_1, output = "plain") |>
