@@ -1246,8 +1246,8 @@ fmt_engineering <- function(
 #'   contexts.
 #'
 #' - `"decimal"`: Uses all SI prefixes including those for powers of 10 and 100:
-#'   - Additional prefixes for greater than 1 values: da (deca), h (hecto)
-#'   - Additional prefixes for less than 1 values: d (deci), c (centi)
+#'   - Additional prefixes for greater-than-1 values: da (deca), h (hecto)
+#'   - Additional prefixes for less-than-1 values: d (deci), c (centi)
 #'   - This mode is less commonly used but follows the complete SI standard.
 #'
 #' @section Compatibility of formatting function with data values:
@@ -1621,7 +1621,7 @@ get_si_labels <- function(prefix_mode) {
         3, 6, 9, 12, 15, 18, 21, 24, 27, 30
       ),
       symbols = c(
-        "q", "r", "y", "z", "a", "f", "p", "n", "µ", "m",
+        "q", "r", "y", "z", "a", "f", "p", "n", "\u00b5", "m",
         "k", "M", "G", "T", "P", "E", "Z", "Y", "R", "Q"
       )
     )
@@ -1633,7 +1633,7 @@ get_si_labels <- function(prefix_mode) {
         1, 2, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30
       ),
       symbols = c(
-        "q", "r", "y", "z", "a", "f", "p", "n", "µ", "m", "c", "d",
+        "q", "r", "y", "z", "a", "f", "p", "n", "\u00b5", "m", "c", "d",
         "da", "h", "k", "M", "G", "T", "P", "E", "Z", "Y", "R", "Q"
       )
     )
