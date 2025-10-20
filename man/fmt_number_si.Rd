@@ -188,7 +188,7 @@ The \code{prefix_mode} argument controls which SI prefixes are used:
 \itemize{
 \item greater than 1: k (kilo), M (mega), G (giga), T (tera), P (peta),
 E (exa), Z (zetta), Y (yotta), R (ronna), Q (quetta)
-\item less than 1: m (milli), µ (micro), n (nano), p (pico), f (femto),
+\item less than 1: m (milli), \u00b5 (micro), n (nano), p (pico), f (femto),
 a (atto), z (zepto), y (yocto), r (ronto), q (quecto)
 \item this is the most common convention in scientific and engineering
 contexts.
