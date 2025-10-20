@@ -21,6 +21,14 @@
 #
 #------------------------------------------------------------------------------#
 
+# The functions below are adapted from the knitr package
+# (https://github.com/yihui/knitr), which is licensed under GPL-2 or later.
+# Copyright (c) 2012-2025 Yihui Xie
+# Original source: https://github.com/yihui/knitr/blob/main/R/utils.R
+#
+# These functions are copies of unexported functions from knitr and are
+# included here under the terms of the GPL-2 license.
+
 
 kable_caption <- function(label, caption, format) {
   # create a label for bookdown if applicable
