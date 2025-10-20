@@ -231,7 +231,6 @@
 #' formatting. This is to say that cells of incompatible data types may be
 #' targeted, but there will be no attempt to format them.
 #'
-#'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
 #' [from_column()] can be used with certain arguments of `fmt_number()` to
