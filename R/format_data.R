@@ -1395,6 +1395,9 @@ fmt_engineering <- function(
 #' @section Function Introduced:
 #' **In development**
 #'
+#' @seealso The vector-formatting version of this function:
+#'   [vec_fmt_number_si()].
+#'
 #' @export
 fmt_number_si <- function(
     data,
