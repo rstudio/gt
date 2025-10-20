@@ -25,7 +25,7 @@ test_that("fmt_number_si() works with basic engineering prefixes", {
     (tab |>
        fmt_number_si(columns = value, decimals = 2) |>
        render_formats_test("html"))[["value"]],
-    c("1.23G", "9.88M", "12.35k", "123.45", "1.23", "12.35m", "12.34µ", "12.35n")  # 12.34µ due to floating point precision
+    c("1.23 G", "9.88 M", "12.35 k", "123.45", "1.23", "12.35 m", "12.34 µ", "12.35 n")  # 12.34µ due to floating point precision
   )
 })
 
@@ -110,12 +110,12 @@ test_that("fmt_number_si() correctly selects prefix boundaries", {
     render_formats_test("html"))[["value"]]
 
   expect_equal(result[1], "999")
-  expect_match(result[2], "1k")
-  expect_match(result[3], "1k")
-  expect_match(result[5], "1M")
-  expect_match(result[6], "1m")
-  expect_match(result[7], "999µ|1m")  # Could be either depending on rounding
-  expect_match(result[8], "1m")
+  expect_match(result[2], "1 k")
+  expect_match(result[3], "1 k")
+  expect_match(result[5], "1 M")
+  expect_match(result[6], "1 m")
+  expect_match(result[7], "999 µ|1 m")  # Could be either depending on rounding
+  expect_match(result[8], "1 m")
 })
 
 # Unit Handling Tests ==========================================================
@@ -130,7 +130,7 @@ test_that("fmt_number_si() works with units", {
   # Format with watts as unit
   expect_equal(
     (tab |>
-       fmt_number_si(columns = power, unit = "W", decimals = 1, sep = " ") |>
+       fmt_number_si(columns = power, unit = "W", decimals = 1) |>
        render_formats_test("html"))[["power"]],
     c("5.2 kW", "1.5 kW", "750.0 W", "100.0 W")
   )
@@ -150,7 +150,7 @@ test_that("fmt_number_si() works with various unit types", {
       fmt_number_si(columns = value, unit = data_tbl$expected_unit[i], decimals = 1) |>
       render_formats_test("html"))[["value"]]
 
-    expect_match(result, paste0("1\\.2k", data_tbl$expected_unit[i]))
+    expect_match(result, paste0("1\\.2 k", data_tbl$expected_unit[i]))
   }
 })
 
@@ -165,8 +165,8 @@ test_that("fmt_number_si() works with no unit", {
     fmt_number_si(columns = value, decimals = 2) |>
     render_formats_test("html"))[["value"]]
 
-  expect_equal(result[1], "1.23k")
-  expect_equal(result[2], "5.67m")
+  expect_equal(result[1], "1.23 k")
+  expect_equal(result[2], "5.67 m")
 })
 
 test_that("fmt_number_si() handles empty unit string", {
@@ -178,7 +178,7 @@ test_that("fmt_number_si() handles empty unit string", {
     fmt_number_si(columns = value, unit = "", decimals = 2) |>
     render_formats_test("html"))[["value"]]
 
-  expect_equal(result, "1.23k")
+  expect_equal(result, "1.23 k")
 })
 
 test_that("fmt_number_si() works with compound units", {
@@ -197,8 +197,8 @@ test_that("fmt_number_si() works with compound units", {
     fmt_number_si(columns = value, unit = "m/s", decimals = 1) |>
     render_formats_test("html"))[["value"]]
 
-  expect_match(result1, "9\\.8m/s²")
-  expect_match(result2, "300\\.0Mm/s")
+  expect_match(result1, "9\\.8 m/s²")
+  expect_match(result2, "300\\.0 Mm/s")
 })
 
 # Precision and Formatting Tests ===============================================
@@ -213,7 +213,7 @@ test_that("fmt_number_si() works with small values", {
   # Format with grams as unit
   expect_equal(
     (tab |>
-       fmt_number_si(columns = mass, unit = "g", n_sigfig = 2, sep = " ") |>
+       fmt_number_si(columns = mass, unit = "g", n_sigfig = 2) |>
        render_formats_test("html"))[["mass"]],
     c("5.1 mg", "75 µg", "200 µg", "1.2 ng")
   )
@@ -231,7 +231,7 @@ test_that("fmt_number_si() works with significant figures", {
     (tab |>
        fmt_number_si(columns = value, n_sigfig = 3) |>
        render_formats_test("html"))[["value"]],
-    c("1.23k", "12.3", "12.3m")
+    c("1.23 k", "12.3", "12.3 m")
   )
 
   # Format with 4 significant figures
@@ -239,7 +239,7 @@ test_that("fmt_number_si() works with significant figures", {
     fmt_number_si(columns = value, n_sigfig = 4) |>
     render_formats_test("html"))[["value"]]
 
-  expect_match(result_4sf[1], "1\\.23[45]k")
+  expect_match(result_4sf[1], "1\\.23[45] k")
   expect_match(result_4sf[2], "12\\.3[45]")
 })
 
@@ -262,13 +262,13 @@ test_that("fmt_number_si() works with varying decimal places", {
   expect_equal(
     (tab |> fmt_number_si(columns = value, decimals = 0) |>
       render_formats_test("html"))[["value"]][1],
-    "1k"
+    "1 k"
   )
 
   expect_equal(
     (tab |> fmt_number_si(columns = value, decimals = 2) |>
       render_formats_test("html"))[["value"]][1],
-    "1.23k"
+    "1.23 k"
   )
 })
 
@@ -288,7 +288,7 @@ test_that("fmt_number_si() respects drop_trailing_zeros", {
          drop_trailing_zeros = FALSE
        ) |>
        render_formats_test("html"))[["value"]],
-    c("1.20k", "1.23k", "1.23k")
+    c("1.20 k", "1.23 k", "1.23 k")
   )
 
   # With trailing zeros dropped
@@ -300,7 +300,7 @@ test_that("fmt_number_si() respects drop_trailing_zeros", {
          drop_trailing_zeros = TRUE
        ) |>
        render_formats_test("html"))[["value"]],
-    c("1.2k", "1.23k", "1.23k")
+    c("1.2 k", "1.23 k", "1.23 k")
   )
 })
 
@@ -321,7 +321,7 @@ test_that("fmt_number_si() respects drop_trailing_dec_mark", {
     ) |>
     render_formats_test("html"))[["value"]]
 
-  expect_equal(result_dropped, c("1k", "2k"))
+  expect_equal(result_dropped, c("1 k", "2 k"))
   expect_false(grepl("\\.$", result_dropped[1]))
 
   # With trailing decimal mark kept
@@ -335,7 +335,7 @@ test_that("fmt_number_si() respects drop_trailing_dec_mark", {
     render_formats_test("html"))[["value"]]
 
   # When drop_trailing_dec_mark=FALSE, decimal mark should be kept (matching fmt_number behavior)
-  expect_equal(result_kept, c("1.k", "2.k"))
+  expect_equal(result_kept, c("1. k", "2. k"))
 })
 
 test_that("fmt_number_si() works with use_seps", {
@@ -365,24 +365,18 @@ test_that("fmt_number_si() handles various separator specifications", {
   data_tbl <- data.frame(value = c(1234.5))
   tab <- gt(data_tbl)
 
-  # Test different sep values between number and unit
-  result_no_sep <- (tab |>
-    fmt_number_si(columns = value, unit = "W", sep = "", decimals = 2) |>
+  # Test different incl_space values between number and unit
+  result_no_space <- (tab |>
+    fmt_number_si(columns = value, unit = "W", incl_space = FALSE, decimals = 2) |>
     render_formats_test("html"))[["value"]]
 
-  expect_equal(result_no_sep, "1.23kW")
+  expect_equal(result_no_space, "1.23kW")
 
   result_space <- (tab |>
-    fmt_number_si(columns = value, unit = "W", sep = " ", decimals = 2) |>
+    fmt_number_si(columns = value, unit = "W", incl_space = TRUE, decimals = 2) |>
     render_formats_test("html"))[["value"]]
 
   expect_equal(result_space, "1.23 kW")
-
-  result_custom <- (tab |>
-    fmt_number_si(columns = value, unit = "W", sep = "_", decimals = 2) |>
-    render_formats_test("html"))[["value"]]
-
-  expect_equal(result_custom, "1.23_kW")
 })
 
 # Edge Cases and Special Values ================================================
@@ -404,8 +398,8 @@ test_that("fmt_number_si() handles edge cases", {
   expect_equal(result[2], "NA")     # NA
   expect_match(result[3], "Inf")    # Inf
   expect_match(result[4], "Inf")    # -Inf (with minus)
-  expect_equal(result[5], "1.00m")  # Regular value
-  expect_match(result[6], "1.00km") # Negative value with prefix
+  expect_equal(result[5], "1.00 m")  # Regular value
+  expect_match(result[6], "1.00 km") # Negative value with prefix
 })
 
 test_that("fmt_number_si() handles zero correctly", {
@@ -437,9 +431,9 @@ test_that("fmt_number_si() handles NA values in different positions", {
     render_formats_test("html"))[["value"]]
 
   expect_equal(result[1], "NA")
-  expect_match(result[2], "1\\.2kg")
+  expect_match(result[2], "1\\.2 kg")
   expect_equal(result[3], "NA")
-  expect_match(result[4], "5\\.6mg")
+  expect_match(result[4], "5\\.6 mg")
   expect_equal(result[5], "NA")
 })
 
@@ -590,8 +584,7 @@ test_that("fmt_number_si() works with from_column() for units", {
        fmt_number_si(
          columns = value,
          unit = from_column("unit"),
-         decimals = 1,
-         sep = " "
+         decimals = 1
        ) |>
        render_formats_test("html"))[["value"]],
     c("5.2 kW", "75.0 mg", "1.2 MHz")
@@ -614,9 +607,9 @@ test_that("fmt_number_si() works with from_column() for decimals", {
     ) |>
     render_formats_test("html"))[["value"]]
 
-  expect_match(result[1], "^1k$")
-  expect_match(result[2], "^1\\.23k$")
-  expect_match(result[3], "^1\\.2345k$")
+  expect_match(result[1], "^1 k$")
+  expect_match(result[2], "^1\\.23 k$")
+  expect_match(result[3], "^1\\.2345 k$")
 })
 
 test_that("fmt_number_si() works with from_column() for n_sigfig", {
@@ -635,16 +628,16 @@ test_that("fmt_number_si() works with from_column() for n_sigfig", {
     ) |>
     render_formats_test("html"))[["value"]]
 
-  expect_match(result[1], "1k")
-  expect_match(result[2], "1\\.23k")
-  expect_match(result[3], "1\\.2345k")
+  expect_match(result[1], "1 k")
+  expect_match(result[2], "1\\.23 k")
+  expect_match(result[3], "1\\.2345 k")
 })
 
-test_that("fmt_number_si() works with from_column() for sep", {
+test_that("fmt_number_si() works with from_column() for incl_space", {
 
   data_tbl <- data.frame(
-    value = c(1234, 1234, 1234),
-    separator = c("", " ", "_")
+    value = c(1234, 1234),
+    include_space = c(FALSE, TRUE)
   )
 
   tab <- gt(data_tbl)
@@ -653,14 +646,13 @@ test_that("fmt_number_si() works with from_column() for sep", {
     fmt_number_si(
       columns = value,
       unit = "W",
-      sep = from_column("separator"),
+      incl_space = from_column("include_space"),
       decimals = 1
     ) |>
     render_formats_test("html"))[["value"]]
 
   expect_equal(result[1], "1.2kW")
   expect_equal(result[2], "1.2 kW")
-  expect_equal(result[3], "1.2_kW")
 })
 
 test_that("fmt_number_si() works with from_column() for drop_trailing_zeros", {
@@ -680,8 +672,8 @@ test_that("fmt_number_si() works with from_column() for drop_trailing_zeros", {
     ) |>
     render_formats_test("html"))[["value"]]
 
-  expect_equal(result[1], "1.20k")
-  expect_equal(result[2], "1.2k")
+  expect_equal(result[1], "1.20 k")
+  expect_equal(result[2], "1.2 k")
 })
 
 test_that("fmt_number_si() works with from_column() for force_sign", {
@@ -701,8 +693,8 @@ test_that("fmt_number_si() works with from_column() for force_sign", {
     ) |>
     render_formats_test("html"))[["value"]]
 
-  expect_match(result[1], "^1\\.2k$")  # No sign
-  expect_match(result[2], "^\\+1\\.2k$")  # With sign
+  expect_match(result[1], "^1\\.2 k$")  # No sign
+  expect_match(result[2], "^\\+1\\.2 k$")  # With sign
 })
 
 test_that("fmt_number_si() works with multiple from_column() parameters", {
@@ -711,7 +703,7 @@ test_that("fmt_number_si() works with multiple from_column() parameters", {
     value = c(5200, 75000, 1200000),
     unit = c("W", "W", "Hz"),
     dec = c(1, 2, 0),
-    separator = c(" ", "", " ")
+    include_space = c(TRUE, FALSE, TRUE)
   )
 
   tab <- gt(data_tbl)
@@ -721,7 +713,7 @@ test_that("fmt_number_si() works with multiple from_column() parameters", {
       columns = value,
       unit = from_column("unit"),
       decimals = from_column("dec"),
-      sep = from_column("separator")
+      incl_space = from_column("include_space")
     ) |>
     render_formats_test("html"))[["value"]]
 
@@ -747,7 +739,7 @@ test_that("fmt_number_si() respects drop_trailing_zeros", {
          drop_trailing_zeros = FALSE
        ) |>
        render_formats_test("html"))[["value"]],
-    c("1.20k", "1.23k", "1.23k")
+    c("1.20 k", "1.23 k", "1.23 k")
   )
 
   # With trailing zeros dropped
@@ -759,7 +751,7 @@ test_that("fmt_number_si() respects drop_trailing_zeros", {
          drop_trailing_zeros = TRUE
        ) |>
        render_formats_test("html"))[["value"]],
-    c("1.2k", "1.23k", "1.23k")
+    c("1.2 k", "1.23 k", "1.23 k")
   )
 })
 
@@ -779,7 +771,7 @@ test_that("fmt_number_si() works with very large and very small numbers", {
     (tab |>
        fmt_number_si(columns = value, decimals = 1) |>
        render_formats_test("html"))[["value"]],
-    c("1.5Y", "3.7Z", "2.5z", "8.9y")
+    c("1.5 Y", "3.7 Z", "2.5 z", "8.9 y")
   )
 })
 
@@ -838,9 +830,9 @@ test_that("fmt_number_si() respects pattern argument", {
     fmt_number_si(columns = value, unit = "W", pattern = "Power: {x}", decimals = 1) |>
     render_formats_test("html"))[["value"]]
 
-  expect_equal(result1, "1.2kW")
-  expect_equal(result2, "(1.2kW)")
-  expect_equal(result3, "Power: 1.2kW")
+  expect_equal(result1, "1.2 kW")
+  expect_equal(result2, "(1.2 kW)")
+  expect_equal(result3, "Power: 1.2 kW")
 })
 
 test_that("fmt_number_si() works with custom sep_mark and dec_mark", {
@@ -874,8 +866,7 @@ test_that("fmt_number_si() pattern works with units and prefixes", {
       columns = value,
       unit = "W",
       pattern = "[{x}]",
-      decimals = 1,
-      sep = " "
+      decimals = 1
     ) |>
     render_formats_test("html"))[["value"]]
 
@@ -899,9 +890,9 @@ test_that("fmt_number_si() works with multiple columns", {
     fmt_number_si(columns = c(col1, col2, col3), decimals = 2) |>
     render_formats_test("html"))
 
-  expect_match(result$col1[1], "1\\.23k")
-  expect_match(result$col2[1], "1\\.20m")
-  expect_match(result$col3[1], "1\\.00G")
+  expect_match(result$col1[1], "1\\.23 k")
+  expect_match(result$col2[1], "1\\.20 m")
+  expect_match(result$col3[1], "1\\.00 G")
 })
 
 test_that("fmt_number_si() works with row targeting", {
@@ -917,9 +908,9 @@ test_that("fmt_number_si() works with row targeting", {
     render_formats_test("html"))[["value"]]
 
   # Rows 1 and 3 should be formatted, row 2 should not
-  expect_match(result[1], "1\\.2k")
+  expect_match(result[1], "1\\.2 k")
   expect_equal(result[2], "5678")  # Not formatted
-  expect_match(result[3], "9\\.0k")
+  expect_match(result[3], "9\\.0 k")
 })
 
 test_that("fmt_number_si() works with everything() column selector", {
@@ -936,9 +927,9 @@ test_that("fmt_number_si() works with everything() column selector", {
     fmt_number_si(columns = everything(), decimals = 1) |>
     render_formats_test("html"))
 
-  expect_match(result$a, "1\\.2k")
-  expect_match(result$b, "5\\.7k")
-  expect_match(result$c, "9\\.0k")
+  expect_match(result$a, "1\\.2 k")
+  expect_match(result$b, "5\\.7 k")
+  expect_match(result$c, "9\\.0 k")
 })
 
 # Prefix Mode Tests ============================================================
@@ -998,8 +989,7 @@ test_that("fmt_number_si() works for physics constants", {
     fmt_number_si(
       columns = value,
       unit = from_column("unit"),
-      n_sigfig = 4,
-      sep = " "
+      n_sigfig = 4
     ) |>
     render_formats_test("html"))[["value"]]
 
@@ -1022,8 +1012,7 @@ test_that("fmt_number_si() works for chemistry concentrations", {
     fmt_number_si(
       columns = concentration_g,
       unit = "g",
-      n_sigfig = 2,
-      sep = " "
+      n_sigfig = 2
     ) |>
     render_formats_test("html"))[["concentration_g"]]
 
@@ -1046,8 +1035,7 @@ test_that("fmt_number_si() works for electronic components", {
     fmt_number_si(
       columns = value,
       unit = from_column("unit"),
-      n_sigfig = 2,
-      sep = " "
+      n_sigfig = 2
     ) |>
     render_formats_test("html"))[["value"]]
 
@@ -1069,8 +1057,7 @@ test_that("fmt_number_si() works for power consumption data", {
     fmt_number_si(
       columns = watts,
       unit = "W",
-      n_sigfig = 2,
-      sep = " "
+      n_sigfig = 2
     ) |>
     render_formats_test("html"))[["watts"]]
 
@@ -1265,7 +1252,7 @@ test_that("fmt_number_si() handles single-row data", {
   tab <- gt(data_tbl)
 
   result <- (tab |>
-    fmt_number_si(columns = value, unit = "W", decimals = 1, sep = " ") |>
+    fmt_number_si(columns = value, unit = "W", decimals = 1) |>
     render_formats_test("html"))[["value"]]
 
   expect_equal(result, "1.2 kW")
