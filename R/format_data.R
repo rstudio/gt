@@ -1240,7 +1240,7 @@ fmt_engineering <- function(
 #' - `"engineering"`: Uses only prefixes for powers of 1000. This includes:
 #'   - greater than 1: k (kilo), M (mega), G (giga), T (tera), P (peta),
 #'     E (exa), Z (zetta), Y (yotta), R (ronna), Q (quetta)
-#'   - less than 1: m (milli), \u00b5 (micro), n (nano), p (pico), f (femto),
+#'   - less than 1: m (milli), u (micro), n (nano), p (pico), f (femto),
 #'     a (atto), z (zepto), y (yocto), r (ronto), q (quecto)
 #'   - this is the most common convention in scientific and engineering
 #'   contexts.
