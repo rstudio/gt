@@ -355,6 +355,7 @@ reference:
     - vec_fmt_integer
     - vec_fmt_scientific
     - vec_fmt_engineering
+    - vec_fmt_number_si
     - vec_fmt_percent
     - vec_fmt_partsper
     - vec_fmt_fraction
