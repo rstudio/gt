@@ -379,6 +379,72 @@ test_that("fmt_number_si() handles various separator specifications", {
   expect_equal(result_space, "1.23 kW")
 })
 
+test_that("fmt_number_si() incl_space works without unit", {
+
+  data_tbl <- data.frame(value = c(1234.5, 0.00123))
+  tab <- gt(data_tbl)
+
+  # Test incl_space = FALSE with no unit (just prefix)
+  result_no_space <- (tab |>
+    fmt_number_si(columns = value, incl_space = FALSE, decimals = 2) |>
+    render_formats_test("html"))[["value"]]
+
+  expect_equal(result_no_space, c("1.23k", "1.23m"))
+
+  # Test incl_space = TRUE with no unit (just prefix)
+  result_space <- (tab |>
+    fmt_number_si(columns = value, incl_space = TRUE, decimals = 2) |>
+    render_formats_test("html"))[["value"]]
+
+  expect_equal(result_space, c("1.23 k", "1.23 m"))
+})
+
+test_that("fmt_number_si() incl_space works with decimal mode", {
+
+  data_tbl <- data.frame(value = c(12.3, 0.123))
+  tab <- gt(data_tbl)
+
+  # Test incl_space = FALSE with decimal mode
+  result_no_space <- (tab |>
+    fmt_number_si(columns = value, unit = "m", incl_space = FALSE, 
+                  prefix_mode = "decimal", decimals = 1) |>
+    render_formats_test("html"))[["value"]]
+
+  expect_equal(result_no_space, c("1.2dam", "1.2dm"))
+
+  # Test incl_space = TRUE with decimal mode
+  result_space <- (tab |>
+    fmt_number_si(columns = value, unit = "m", incl_space = TRUE, 
+                  prefix_mode = "decimal", decimals = 1) |>
+    render_formats_test("html"))[["value"]]
+
+  expect_equal(result_space, c("1.2 dam", "1.2 dm"))
+})
+
+test_that("fmt_number_si() incl_space works with force_sign", {
+
+  data_tbl <- data.frame(value = c(1234, -5678))
+  tab <- gt(data_tbl)
+
+  # Test incl_space = FALSE with force_sign
+  result_no_space <- (tab |>
+    fmt_number_si(columns = value, unit = "V", incl_space = FALSE, 
+                  force_sign = TRUE, decimals = 1) |>
+    render_formats_test("html"))[["value"]]
+
+  expect_match(result_no_space[1], "^\\+1\\.2kV$")
+  expect_match(result_no_space[2], "^−5\\.7kV$")
+
+  # Test incl_space = TRUE with force_sign
+  result_space <- (tab |>
+    fmt_number_si(columns = value, unit = "V", incl_space = TRUE, 
+                  force_sign = TRUE, decimals = 1) |>
+    render_formats_test("html"))[["value"]]
+
+  expect_match(result_space[1], "^\\+1\\.2 kV$")
+  expect_match(result_space[2], "^−5\\.7 kV$")
+})
+
 # Edge Cases and Special Values ================================================
 
 test_that("fmt_number_si() handles edge cases", {
