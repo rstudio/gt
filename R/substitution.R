@@ -93,7 +93,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-31
+#' 3-32
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -236,7 +236,7 @@ fmt_missing <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-32
+#' 3-33
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -385,7 +385,7 @@ sub_zero <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-33
+#' 3-34
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -620,7 +620,7 @@ sub_small_vals <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-34
+#' 3-35
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -887,7 +887,7 @@ check_sub_fn_sign <- function(sign, call = rlang::caller_env()) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-35
+#' 3-36
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)

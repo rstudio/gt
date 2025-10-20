@@ -209,7 +209,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-13
+#' 3-14
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -318,10 +318,10 @@ fmt_date <- function(
         # Handle Inf values by preserving them as "Inf" strings
         x_is_inf <- is.infinite(x)
         x_is_finite <- !x_is_inf
-        
+
         # Initialize result vector
         x_formatted <- character(length(x))
-        
+
         # Only process finite values
         if (any(x_is_finite)) {
 
@@ -346,10 +346,10 @@ fmt_date <- function(
             locale = locale
           )
         }
-        
+
         # Preserve Inf values as "Inf" in the result
         x_formatted[x_is_inf] <- "Inf"
-        
+
         x_formatted
       }
     )
@@ -528,7 +528,7 @@ fmt_date <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-14
+#' 3-15
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -645,13 +645,13 @@ fmt_time <- function(
         # Handle Inf values by preserving them as "Inf" strings
         x_is_inf <- is.infinite(x)
         x_is_finite <- !x_is_inf
-        
+
         # Initialize result vector
         x_formatted <- character(length(x))
 
         # Only process finite values
         if (any(x_is_finite)) {
-          
+
           # Convert finite values to POSIXlt but provide a friendly error
           # if the values cannot be parsed by `as.POSIXlt()`
           time <-
@@ -673,10 +673,10 @@ fmt_time <- function(
             locale = locale
           )
         }
-        
+
         # Preserve Inf values as "Inf" in the result
         x_formatted[x_is_inf] <- "Inf"
-        
+
         x_formatted
       }
     )
@@ -1471,7 +1471,7 @@ fmt_time <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-15
+#' 3-16
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1610,7 +1610,7 @@ fmt_datetime <- function(
         # Handle Inf values by preserving them as "Inf" strings
         x_is_inf <- is.infinite(x)
         x_is_finite <- !x_is_inf
-        
+
         # Initialize result vector
         x_formatted <- character(length(x))
 
@@ -1725,10 +1725,10 @@ fmt_datetime <- function(
 
           x_formatted[x_is_finite] <- paste0(date_str, sep, time_str)
         }
-        
+
         # Preserve Inf values as "Inf" in the result
         x_formatted[x_is_inf] <- "Inf"
-        
+
         x_formatted
       }
     )

@@ -327,6 +327,7 @@ Other data formatting functions:
 \code{\link{fmt_index}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_number_si}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},

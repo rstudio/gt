@@ -480,7 +480,7 @@ column is referenced via \code{\link[=from_column]{from_column()}} in the \code{
 
 \section{Function ID}{
 
-3-8
+3-9
 }
 
 \section{Function Introduced}{
@@ -513,6 +513,7 @@ Other data formatting functions:
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_number_si}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
