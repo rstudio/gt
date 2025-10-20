@@ -697,3 +697,92 @@ test_that("fmt_scientific() can handle extremely large and small values", {
     )
   )
 })
+
+test_that("fmt_scientific() handles Inf values correctly", {
+
+  # Test fmt_scientific() with Inf values
+  tab_inf <-
+    data.frame(a = c(1234, Inf, -5678, Inf)) |>
+    gt() |>
+    fmt_scientific()
+
+  expect_equal(
+    (tab_inf |> render_formats_test(context = "html"))[["a"]],
+    c(
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "Inf",
+      paste0("\U02212", "5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "Inf"
+    )
+  )
+
+  # Test fmt_scientific() with Inf at the start
+  tab_inf_first <-
+    data.frame(a = c(Inf, 1234, 5678)) |>
+    gt() |>
+    fmt_scientific()
+
+  expect_equal(
+    (tab_inf_first |> render_formats_test(context = "html"))[["a"]],
+    c(
+      "Inf",
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>")
+    )
+  )
+
+  # Test fmt_scientific() with mix of NA and Inf
+  tab_mixed <-
+    data.frame(a = c(1234, NA, Inf, 5678, Inf)) |>
+    gt() |>
+    fmt_scientific()
+
+  expect_equal(
+    (tab_mixed |> render_formats_test(context = "html"))[["a"]],
+    c(
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "NA",
+      "Inf",
+      paste0("5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "Inf"
+    )
+  )
+
+  # Test fmt_scientific() with Inf and different exp_style
+  tab_inf_exp_style <-
+    data.frame(a = c(1234, Inf, 5678)) |>
+    gt() |>
+    fmt_scientific(exp_style = "E")
+
+  expect_equal(
+    (tab_inf_exp_style |> render_formats_test(context = "html"))[["a"]],
+    c(
+      "1.23E03",
+      "Inf",
+      "5.68E03"
+    )
+  )
+
+  # Test fmt_scientific() with negative Inf (-Inf)
+  tab_neg_inf <-
+    data.frame(a = c(1234, -Inf, 5678, Inf)) |>
+    gt() |>
+    fmt_scientific()
+
+  expect_equal(
+    (tab_neg_inf |> render_formats_test(context = "html"))[["a"]],
+    c(
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "Inf"),
+      paste0("5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "Inf"
+    )
+  )
+
+  # Test that the example from the issue works without error
+  expect_no_error({
+    data.frame(a = c(1234, Inf)) |>
+      gt() |>
+      fmt_scientific()
+  })
+})
