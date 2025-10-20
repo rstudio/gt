@@ -393,7 +393,14 @@ fmt_scientific <- function(
       pattern = pattern,
       format_fn = function(x, context) {
 
-        # Define the marks by context
+        # Handle Inf values by preserving them as "Inf" strings
+        x_is_inf <- is.infinite(x)
+        x_is_finite <- !x_is_inf
+        
+        # Initialize result vector
+        x_str <- character(length(x))
+        
+        # Define the marks by context (needed for both finite and Inf values)
         exp_marks <- context_exp_marks(context = context)
         minus_mark <- context_minus_mark(context = context)
 
@@ -401,167 +408,177 @@ fmt_scientific <- function(
         replace_minus <- function(x) {
            gsub("-", minus_mark, x, fixed = TRUE)
         }
+        
+        # Only process finite values
+        if (any(x_is_finite)) {
 
-        # Create the `suffix_df` object
-        suffix_df <-
-          create_suffix_df(
-            x,
-            decimals = decimals,
-            suffix_labels = suffix_labels,
-            scale_by = scale_by,
-            system = "intl"
-          )
+          # Create the `suffix_df` object
+          suffix_df <-
+            create_suffix_df(
+              x[x_is_finite],
+              decimals = decimals,
+              suffix_labels = suffix_labels,
+              scale_by = scale_by,
+              system = "intl"
+            )
 
-        # Determine whether `scale_by` is supplied as a function; if it isn't
-        # the only other pathway involves getting the vector of values produced
-        # by the `create_suffix_df()` function
-        if (rlang::is_function(scale_by)) {
-          to_scale_by <- scale_by
-        } else {
-          to_scale_by <- suffix_df$scale_by
-        }
-
-        # Scale the `x` values using `to_scale_by` (either a function or
-        # a numeric vector)
-        x <- scale_x_values(x, scale_by = suffix_df$scale_by)
-
-        x_str <-
-          format_num_to_str(
-            x,
-            context = context,
-            decimals = decimals,
-            n_sigfig = NULL,
-            sep_mark = sep_mark,
-            dec_mark = dec_mark,
-            drop_trailing_zeros = FALSE,
-            drop_trailing_dec_mark = FALSE,
-            format = "e",
-            replace_minus_mark = FALSE
-          )
-
-        if (exp_style == "x10n") {
-
-          # Determine which values don't require the (x 10^n)
-          # for scientific formatting since their order would be zero
-          small_pos <- has_order_zero(x)
-
-          # For any numbers that shouldn't have an exponent, remove
-          # that portion from the character version
-          x_str[small_pos] <- replace_minus(gsub("(e|E).*", "", x_str[small_pos]))
-
-          # For any non-NA numbers that do have an exponent, format
-          # those according to the output context
-          sci_parts <- split_scientific_notn(x_str = x_str[!small_pos])
-
-          m_part <- sci_parts[["num"]]
-          n_part <- sci_parts[["exp"]]
-
-          if (force_sign_n) {
-
-            n_part <-
-              vapply(
-                n_part,
-                FUN.VALUE = character(1),
-                USE.NAMES = FALSE,
-                FUN = function(x) {
-                  if (x > 0) gsub("^", "+", x) else as.character(x)
-                }
-              )
-          }
-
-          if (drop_trailing_zeros) {
-            m_part <- sub("0+$", "", m_part)
-            x_str[small_pos] <- sub("0+$", "", x_str[small_pos])
-          }
-
-          if (drop_trailing_dec_mark) {
-            m_part <- sub("\\.$", "", m_part)
-            x_str[small_pos] <- sub("\\.$", "", x_str[small_pos])
-          }
-
-          m_part <- replace_minus(m_part)
-          n_part <- replace_minus(n_part)
-
-          x_str[!small_pos] <-
-            paste0(m_part, exp_marks[1L], n_part, exp_marks[2L])
-
-        } else {
-
-          exp_str <- context_exp_str(exp_style = exp_style, context = context)
-
-          if (grepl("^[a-zA-Z]{1}1$", exp_style)) {
-            n_min_width <- 1
+          # Determine whether `scale_by` is supplied as a function; if it isn't
+          # the only other pathway involves getting the vector of values produced
+          # by the `create_suffix_df()` function
+          if (rlang::is_function(scale_by)) {
+            to_scale_by <- scale_by
           } else {
-            n_min_width <- 2
+            to_scale_by <- suffix_df$scale_by
           }
 
-          # The `n_part` will be extracted here and it must be padded to
-          # the defined minimum number of decimal places
-          n_part <-
-            vapply(
-              x_str,
-              FUN.VALUE = character(1L),
-              USE.NAMES = FALSE,
-              FUN = function(x) {
+          # Scale the `x` values using `to_scale_by` (either a function or
+          # a numeric vector)
+          x_finite <- scale_x_values(x[x_is_finite], scale_by = suffix_df$scale_by)
 
-                if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
-
-                x <- unlist(strsplit(x, "e", fixed = TRUE))[2L]
-
-                if (grepl("-", x, fixed = TRUE)) {
-                  x <- gsub("-", "", x, fixed = TRUE)
-                  x <- formatC(as.numeric(x), width = n_min_width, flag = "0")
-                  x <- paste0("-", x)
-                } else {
-                  x <- formatC(as.numeric(x), width = n_min_width, flag = "0")
-                }
-
-                x
-              }
+          x_str_finite <-
+            format_num_to_str(
+              x_finite,
+              context = context,
+              decimals = decimals,
+              n_sigfig = NULL,
+              sep_mark = sep_mark,
+              dec_mark = dec_mark,
+              drop_trailing_zeros = FALSE,
+              drop_trailing_dec_mark = FALSE,
+              format = "e",
+              replace_minus_mark = FALSE
             )
 
-          # Generate `x_str_left` using `x_str` here
-          x_str_left <-
-            vapply(
-              x_str,
-              FUN.VALUE = character(1L),
-              USE.NAMES = FALSE,
-              FUN = function(x) {
-                if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
-                unlist(strsplit(x, "e", fixed = TRUE))[1]
-              }
-            )
+          if (exp_style == "x10n") {
 
-          if (force_sign_n) {
+            # Determine which values don't require the (x 10^n)
+            # for scientific formatting since their order would be zero
+            small_pos <- has_order_zero(x_finite)
 
+            # For any numbers that shouldn't have an exponent, remove
+            # that portion from the character version
+            x_str_finite[small_pos] <- replace_minus(gsub("(e|E).*", "", x_str_finite[small_pos]))
+
+            # For any non-NA numbers that do have an exponent, format
+            # those according to the output context
+            sci_parts <- split_scientific_notn(x_str = x_str_finite[!small_pos])
+
+            m_part <- sci_parts[["num"]]
+            n_part <- sci_parts[["exp"]]
+
+            if (force_sign_n) {
+
+              n_part <-
+                vapply(
+                  n_part,
+                  FUN.VALUE = character(1),
+                  USE.NAMES = FALSE,
+                  FUN = function(x) {
+                    if (x > 0) gsub("^", "+", x) else as.character(x)
+                  }
+                )
+            }
+
+            if (drop_trailing_zeros) {
+              m_part <- sub("0+$", "", m_part)
+              x_str_finite[small_pos] <- sub("0+$", "", x_str_finite[small_pos])
+            }
+
+            if (drop_trailing_dec_mark) {
+              m_part <- sub("\\.$", "", m_part)
+              x_str_finite[small_pos] <- sub("\\.$", "", x_str_finite[small_pos])
+            }
+
+            m_part <- replace_minus(m_part)
+            n_part <- replace_minus(n_part)
+
+            x_str_finite[!small_pos] <-
+              paste0(m_part, exp_marks[1L], n_part, exp_marks[2L])
+
+          } else {
+
+            exp_str <- context_exp_str(exp_style = exp_style, context = context)
+
+            if (grepl("^[a-zA-Z]{1}1$", exp_style)) {
+              n_min_width <- 1
+            } else {
+              n_min_width <- 2
+            }
+
+            # The `n_part` will be extracted here and it must be padded to
+            # the defined minimum number of decimal places
             n_part <-
               vapply(
-                seq_along(n_part),
+                x_str_finite,
                 FUN.VALUE = character(1L),
                 USE.NAMES = FALSE,
-                FUN = function(i) {
-                  if (!grepl("-", n_part[i])) {
-                    out <- gsub("^", "+", n_part[i])
+                FUN = function(x) {
+
+                  if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
+
+                  x <- unlist(strsplit(x, "e", fixed = TRUE))[2L]
+
+                  if (grepl("-", x, fixed = TRUE)) {
+                    x <- gsub("-", "", x, fixed = TRUE)
+                    x <- formatC(as.numeric(x), width = n_min_width, flag = "0")
+                    x <- paste0("-", x)
                   } else {
-                    out <- n_part[i]
+                    x <- formatC(as.numeric(x), width = n_min_width, flag = "0")
                   }
-                  out
+
+                  x
                 }
               )
+
+            # Generate `x_str_left` using `x_str_finite` here
+            x_str_left <-
+              vapply(
+                x_str_finite,
+                FUN.VALUE = character(1L),
+                USE.NAMES = FALSE,
+                FUN = function(x) {
+                  if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
+                  unlist(strsplit(x, "e", fixed = TRUE))[1]
+                }
+              )
+
+            if (force_sign_n) {
+
+              n_part <-
+                vapply(
+                  seq_along(n_part),
+                  FUN.VALUE = character(1L),
+                  USE.NAMES = FALSE,
+                  FUN = function(i) {
+                    if (!grepl("-", n_part[i])) {
+                      out <- gsub("^", "+", n_part[i])
+                    } else {
+                      out <- n_part[i]
+                    }
+                    out
+                  }
+                )
+            }
+
+            x_str_finite <-
+              paste0(x_str_left, exp_str, replace_minus(n_part))
+
+            x_str_finite <- replace_minus(x_str_finite)
           }
 
-          x_str[!is.infinite(x)] <-
-            paste0(x_str_left[!is.infinite(x)], exp_str, replace_minus(n_part[!is.infinite(x)]))
+          # Force a positive sign on certain values if the option is taken
+          if (force_sign_m) {
 
-          x_str <- replace_minus(x_str)
+            positive_x <- !is.na(x_finite) & x_finite > 0
+            x_str_finite[positive_x] <- paste_left(x_str_finite[positive_x], x_left = "+")
+          }
+          
+          # Assign formatted finite values to their positions in result vector
+          x_str[x_is_finite] <- x_str_finite
         }
-
-        # Force a positive sign on certain values if the option is taken
-        if (force_sign_m) {
-
-          positive_x <- !is.na(x) & x > 0
-          x_str[positive_x] <- paste_left(x_str[positive_x], x_left = "+")
-        }
+        
+        # Preserve Inf values as "Inf" in the result (preserving sign and applying minus mark)
+        x_str[x_is_inf] <- replace_minus(as.character(x[x_is_inf]))
 
         x_str
       }
