@@ -195,8 +195,8 @@ contexts.
 }
 \item \code{"decimal"}: Uses all SI prefixes including those for powers of 10 and 100:
 \itemize{
-\item Additional prefixes for greater than 1 values: da (deca), h (hecto)
-\item Additional prefixes for less than 1 values: d (deci), c (centi)
+\item Additional prefixes for greater-than-1 values: da (deca), h (hecto)
+\item Additional prefixes for less-than-1 values: d (deci), c (centi)
 \item This mode is less commonly used but follows the complete SI standard.
 }
 }
