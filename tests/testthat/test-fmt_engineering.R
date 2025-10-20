@@ -672,3 +672,107 @@ test_that("fmt_engineering() can handle extremely large and small values", {
     )
   )
 })
+
+test_that("fmt_engineering() handles Inf values correctly", {
+
+  # Test fmt_engineering() with Inf values
+  tab_inf <-
+    data.frame(a = c(1234, Inf, -5678, Inf)) |>
+    gt() |>
+    fmt_engineering()
+
+  expect_equal(
+    (tab_inf |> render_formats_test(context = "html"))[["a"]],
+    c(
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "Inf",
+      paste0("\U02212", "5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "Inf"
+    )
+  )
+
+  # Test fmt_engineering() with Inf at the start
+  tab_inf_first <-
+    data.frame(a = c(Inf, 1234, 5678)) |>
+    gt() |>
+    fmt_engineering()
+
+  expect_equal(
+    (tab_inf_first |> render_formats_test(context = "html"))[["a"]],
+    c(
+      "Inf",
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>")
+    )
+  )
+
+  # Test fmt_engineering() with mix of NA and Inf
+  tab_mixed <-
+    data.frame(a = c(1234, NA, Inf, 5678, Inf)) |>
+    gt() |>
+    fmt_engineering()
+
+  expect_equal(
+    (tab_mixed |> render_formats_test(context = "html"))[["a"]],
+    c(
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "NA",
+      "Inf",
+      paste0("5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "Inf"
+    )
+  )
+
+  # Test fmt_engineering() with Inf and different exp_style
+  tab_inf_exp_style <-
+    data.frame(a = c(1234, Inf, 5678)) |>
+    gt() |>
+    fmt_engineering(exp_style = "E")
+
+  expect_equal(
+    (tab_inf_exp_style |> render_formats_test(context = "html"))[["a"]],
+    c(
+      "1.23E03",
+      "Inf",
+      "5.68E03"
+    )
+  )
+
+  # Test fmt_engineering() with negative Inf (-Inf)
+  tab_neg_inf <-
+    data.frame(a = c(1234, -Inf, 5678, Inf)) |>
+    gt() |>
+    fmt_engineering()
+
+  expect_equal(
+    (tab_neg_inf |> render_formats_test(context = "html"))[["a"]],
+    c(
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "Inf"),
+      paste0("5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      " Inf"  # Note: fmt_engineering adds a leading space to positive Inf
+    )
+  )
+
+  # Test that fmt_engineering() works without error with Inf values
+  expect_no_error({
+    data.frame(a = c(1234, Inf)) |>
+      gt() |>
+      fmt_engineering()
+  })
+
+  # Test fmt_engineering() with Inf in default context
+  tab_inf_default <-
+    data.frame(a = c(1234, Inf, -Inf)) |>
+    gt() |>
+    fmt_engineering()
+
+  expect_equal(
+    (tab_inf_default |> render_formats_test(context = "default"))[["a"]],
+    c(
+      "1.23 \U000D7 10^3",
+      " Inf",  # Note: fmt_engineering adds a leading space to positive Inf
+      "-Inf"
+    )
+  )
+})
