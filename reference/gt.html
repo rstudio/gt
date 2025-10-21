@@ -82,6 +82,7 @@ before rendering to a display table of various formats.</p>
 <span>  <span class="va">data</span>,</span>
 <span>  rowname_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  groupname_col <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_data.html" class="external-link">group_vars</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>,</span>
+<span>  omit_na_group <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  process_md <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  caption <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  rownames_to_stub <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -121,6 +122,17 @@ column name provided to <code>rowname_col</code> will be ignored.</p></dd>
 generation of row groups. If the input <code>data</code> table has the <code>grouped_df</code>
 class (through use of <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code> or associated <code>group_by*()</code>
 functions) then any input here is ignored.</p></dd>
+
+
+<dt id="arg-omit-na-group">omit_na_group<a class="anchor" aria-label="anchor" href="#arg-omit-na-group"></a></dt>
+<dd><p><em>Omit rows with NA in <code>groupname_col</code> from grouping</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
+<p>Should rows with <code>NA</code> values in the <code>groupname_col</code> be excluded from row
+group assignment? By default (<code>FALSE</code>), rows with <code>NA</code> in <code>groupname_col</code>
+will be assigned to a group called <code>"NA"</code>. When set to <code>TRUE</code>, rows with
+<code>NA</code> values will appear as ungrouped rows in the table body. This is useful
+when you want to include header or separator rows that shouldn't belong to
+any row group.</p></dd>
 
 
 <dt id="arg-process-md">process_md<a class="anchor" aria-label="anchor" href="#arg-process-md"></a></dt>
