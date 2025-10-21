@@ -59,10 +59,10 @@
 #'
 #'   `vector<character>` // *default:* `NULL` (`optional`)
 #'
-#'   The column name(s) in the input `data` table to use as row labels to be 
-#'   placed in the table stub. If multiple column names are provided, they will 
-#'   create a hierarchical stub layout where values from the leftmost column form 
-#'   the highest level of the hierarchy, proceeding to individual row identifiers 
+#'   The column name(s) in the input `data` table to use as row labels to be
+#'   placed in the table stub. If multiple column names are provided, they will
+#'   create a hierarchical stub layout where values from the leftmost column form
+#'   the highest level of the hierarchy, proceeding to individual row identifiers
 #'   in the rightmost column. If the `rownames_to_stub` option is `TRUE` then any
 #'   column name provided to `rowname_col` will be ignored.
 #'
@@ -74,6 +74,17 @@
 #'   generation of row groups. If the input `data` table has the `grouped_df`
 #'   class (through use of [dplyr::group_by()] or associated `group_by*()`
 #'   functions) then any input here is ignored.
+#'
+#' @param omit_na_group *Omit rows with NA in `groupname_col` from grouping*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   Should rows with `NA` values in the `groupname_col` be excluded from row
+#'   group assignment? By default (`FALSE`), rows with `NA` in `groupname_col`
+#'   will be assigned to a group called `"NA"`. When set to `TRUE`, rows with
+#'   `NA` values will appear as ungrouped rows in the table body. This is useful
+#'   when you want to include header or separator rows that shouldn't belong to
+#'   any row group.
 #'
 #' @param process_md *Process Markdown in `rowname_col` and `groupname_col`*
 #'
@@ -300,6 +311,7 @@ gt <- function(
     data,
     rowname_col = NULL,
     groupname_col = dplyr::group_vars(data),
+    omit_na_group = FALSE,
     process_md = FALSE,
     caption = NULL,
     rownames_to_stub = FALSE,
@@ -371,6 +383,7 @@ gt <- function(
       data = data,
       rowname_col = rowname_col,
       groupname_col = groupname_col,
+      omit_na_group = omit_na_group,
       row_group.sep = row_group.sep,
       process_md = process_md
     )
