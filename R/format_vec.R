@@ -170,6 +170,7 @@ vec_fmt_number <- function(
     sep_mark = ",",
     dec_mark = ".",
     force_sign = FALSE,
+    min_sep_threshold = 1,
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
@@ -201,6 +202,7 @@ vec_fmt_number <- function(
       sep_mark = sep_mark,
       dec_mark = dec_mark,
       force_sign = force_sign,
+      min_sep_threshold = min_sep_threshold,
       locale = locale
     ),
     output = output
@@ -312,6 +314,7 @@ vec_fmt_integer <- function(
     pattern = "{x}",
     sep_mark = ",",
     force_sign = FALSE,
+    min_sep_threshold = 1,
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
@@ -333,6 +336,7 @@ vec_fmt_integer <- function(
     sep_mark = sep_mark,
     dec_mark = "not used",
     force_sign = force_sign,
+    min_sep_threshold = min_sep_threshold,
     locale = locale,
     output = output
   )
@@ -968,6 +972,7 @@ vec_fmt_percent <- function(
     sep_mark = ",",
     dec_mark = ".",
     force_sign = FALSE,
+    min_sep_threshold = 1,
     incl_space = FALSE,
     placement = "right",
     locale = NULL,
@@ -999,6 +1004,7 @@ vec_fmt_percent <- function(
       sep_mark = sep_mark,
       dec_mark = dec_mark,
       force_sign = force_sign,
+      min_sep_threshold = min_sep_threshold,
       incl_space = incl_space,
       placement = placement,
       locale = locale
@@ -1484,6 +1490,7 @@ vec_fmt_currency <- function(
     sep_mark = ",",
     dec_mark = ".",
     force_sign = FALSE,
+    min_sep_threshold = 1,
     placement = "left",
     incl_space = FALSE,
     locale = NULL,
@@ -1517,6 +1524,7 @@ vec_fmt_currency <- function(
       sep_mark = sep_mark,
       dec_mark = dec_mark,
       force_sign = force_sign,
+      min_sep_threshold = min_sep_threshold,
       placement = placement,
       incl_space = incl_space,
       locale = locale
@@ -2008,6 +2016,7 @@ vec_fmt_bytes <- function(
     sep_mark = ",",
     dec_mark = ".",
     force_sign = FALSE,
+    min_sep_threshold = 1,
     incl_space = TRUE,
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
@@ -2039,6 +2048,7 @@ vec_fmt_bytes <- function(
       sep_mark = sep_mark,
       dec_mark = dec_mark,
       force_sign = force_sign,
+      min_sep_threshold = min_sep_threshold,
       incl_space = incl_space,
       locale = locale
     ),
