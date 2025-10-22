@@ -125,6 +125,7 @@ formatting specific to the chosen locale</p></li>
 <span>  sep_mark <span class="op">=</span> <span class="st">","</span>,</span>
 <span>  dec_mark <span class="op">=</span> <span class="st">"."</span>,</span>
 <span>  force_sign <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  min_sep_threshold <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  locale <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  output <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"auto"</span>, <span class="st">"plain"</span>, <span class="st">"html"</span>, <span class="st">"latex"</span>, <span class="st">"rtf"</span>, <span class="st">"word"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -264,6 +265,17 @@ a sign for all values except zero)? If so, use <code>TRUE</code> for this option
 default is <code>FALSE</code>, where only negative numbers will display a minus sign.
 This option is disregarded when using accounting notation with
 <code>accounting = TRUE</code>.</p></dd>
+
+
+<dt id="arg-min-sep-threshold">min_sep_threshold<a class="anchor" aria-label="anchor" href="#arg-min-sep-threshold"></a></dt>
+<dd><p><em>Minimum digit threshold for grouping separators</em></p>
+<p><code>scalar&lt;numeric|integer&gt;(val&gt;=1)</code> // <em>default:</em> <code>1</code></p>
+<p>The minimum number of digits required in the integer part of a number for
+grouping separators to be applied. This parameter determines when digit
+grouping begins based on the magnitude of values. The value <code>1</code> (the
+default) applies separators starting at 4-digit numbers (e.g., <code>1,000</code> and
+above). A value of <code>2</code> starts grouping at 5-digit numbers (<code>10,000</code> and
+above), while <code>3</code> begins at 6-digit numbers (<code>100,000</code> and above).</p></dd>
 
 
 <dt id="arg-locale">locale<a class="anchor" aria-label="anchor" href="#arg-locale"></a></dt>
