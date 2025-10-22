@@ -223,12 +223,14 @@ test_that("fmt_currency() works correctly in LaTeX output tables", {
   # Format the `num_1` column to 2 decimal places, apply the `et_EE`
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
+  # Note: Estonian (et) has minimum_grouping_digits=2 (CLDR), so only numbers
+  # with 5+ digits (10000+) get separators
   expect_equal(
     (tbl_latex |>
        fmt_currency(
          columns = "num_1", currency = "EUR", locale = "et_EE") |>
        render_formats_test("latex"))[["num_1"]],
-    c("EUR1 836,23", "EUR2 763,39", "EUR937,29",
+    c("EUR1836,23", "EUR2763,39", "EUR937,29",
       "EUR643,00", "EUR212,23", "EUR0,00",
       "-EUR23,24")
   )
