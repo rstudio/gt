@@ -202,16 +202,14 @@
 #'
 #' @param min_sep_threshold *Minimum digit threshold for grouping separators*
 #'
-#'   `scalar<numeric|integer>(val>=1,val<=3)` // *default:* `1`
+#'   `scalar<numeric|integer>(val>=1)` // *default:* `1`
 #'
 #'   The minimum number of digits required in the integer part of a number for
 #'   grouping separators to be applied. This parameter determines when digit
 #'   grouping begins based on the magnitude of values. The value `1` (the
 #'   default) applies separators starting at 4-digit numbers (e.g., `1,000` and
 #'   above). A value of `2` starts grouping at 5-digit numbers (`10,000` and
-#'   above), while `3` begins at 6-digit numbers (`100,000` and above). If a
-#'   `locale` is provided, the locale-specific minimum grouping digits value
-#'   from CLDR will be used, overriding this parameter.
+#'   above), while `3` begins at 6-digit numbers (`100,000` and above).
 #'
 #' @param system *Numbering system for grouping separators*
 #'
