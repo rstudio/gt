@@ -1716,6 +1716,7 @@ fmt_symbol <- function(
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark = TRUE,
     use_seps = TRUE,
+    min_sep_threshold = 1,
     scale_by = 1.0,
     suffixing = FALSE,
     pattern = "{x}",
@@ -1792,6 +1793,7 @@ fmt_symbol <- function(
               dec_mark = dec_mark,
               drop_trailing_zeros = drop_trailing_zeros,
               drop_trailing_dec_mark = drop_trailing_dec_mark,
+              min_sep_threshold = min_sep_threshold,
               system = system
             )
         }
@@ -1811,6 +1813,7 @@ fmt_symbol <- function(
               dec_mark = dec_mark,
               drop_trailing_zeros = drop_trailing_zeros,
               drop_trailing_dec_mark = drop_trailing_dec_mark,
+              min_sep_threshold = min_sep_threshold,
               system = system
             )
         }
@@ -2009,6 +2012,7 @@ fmt_percent <- function(
     drop_trailing_dec_mark = TRUE,
     scale_values = TRUE,
     use_seps = TRUE,
+    min_sep_threshold = 1,
     accounting = FALSE,
     pattern = "{x}",
     sep_mark = ",",
@@ -2034,6 +2038,7 @@ fmt_percent <- function(
   # - drop_trailing_dec_mark
   # - scale_values
   # - use_seps
+  # - min_sep_threshold
   # - accounting
   # - pattern
   # - sep_mark
@@ -2082,6 +2087,7 @@ fmt_percent <- function(
           drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
           scale_values = p_i$scale_values %||% scale_values,
           use_seps = p_i$use_seps %||% use_seps,
+          min_sep_threshold = p_i$min_sep_threshold %||% min_sep_threshold,
           accounting = p_i$accounting %||% accounting,
           pattern = p_i$pattern %||% pattern,
           sep_mark = p_i$sep_mark %||% sep_mark,
@@ -2119,6 +2125,9 @@ fmt_percent <- function(
     scale_by <- 1.0
   }
 
+  # Use locale-based min_sep_threshold if a locale ID is provided
+  min_sep_threshold <- get_locale_min_sep_threshold(locale, min_sep_threshold)
+
   # Pass `data`, `columns`, `rows`, and other options to `fmt_symbol()`
   fmt_symbol(
     data = data,
@@ -2130,6 +2139,7 @@ fmt_percent <- function(
     drop_trailing_zeros = drop_trailing_zeros,
     drop_trailing_dec_mark = drop_trailing_dec_mark,
     use_seps = use_seps,
+    min_sep_threshold = min_sep_threshold,
     scale_by = scale_by,
     suffixing = FALSE,
     pattern = pattern,
@@ -3402,6 +3412,7 @@ fmt_currency <- function(
     decimals = NULL,
     drop_trailing_dec_mark = TRUE,
     use_seps = TRUE,
+    min_sep_threshold = 1,
     accounting = FALSE,
     scale_by = 1.0,
     suffixing = FALSE,
@@ -3429,6 +3440,7 @@ fmt_currency <- function(
   # - decimals
   # - drop_trailing_dec_mark
   # - use_seps
+  # - min_sep_threshold
   # - accounting
   # - scale_by
   # - suffixing
@@ -3479,6 +3491,7 @@ fmt_currency <- function(
           decimals = p_i$decimals %||% decimals,
           drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
           use_seps = p_i$use_seps %||% use_seps,
+          min_sep_threshold = p_i$min_sep_threshold %||% min_sep_threshold,
           accounting = p_i$accounting %||% accounting,
           scale_by = p_i$scale_by %||% scale_by,
           suffixing = p_i$suffixing %||% suffixing,
@@ -3527,6 +3540,9 @@ fmt_currency <- function(
       use_subunits = use_subunits
     )
 
+  # Use locale-based min_sep_threshold if a locale ID is provided
+  min_sep_threshold <- get_locale_min_sep_threshold(locale, min_sep_threshold)
+
   # Pass `data`, `columns`, `rows`, and other options to `fmt_symbol()`
   fmt_symbol(
     data = data,
@@ -3538,6 +3554,7 @@ fmt_currency <- function(
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark = drop_trailing_dec_mark,
     use_seps = use_seps,
+    min_sep_threshold = min_sep_threshold,
     scale_by = scale_by,
     suffixing = suffixing,
     pattern = pattern,
@@ -4536,6 +4553,7 @@ fmt_bytes <- function(
     drop_trailing_zeros = TRUE,
     drop_trailing_dec_mark = TRUE,
     use_seps = TRUE,
+    min_sep_threshold = 1,
     pattern = "{x}",
     sep_mark = ",",
     dec_mark = ".",
@@ -4559,6 +4577,7 @@ fmt_bytes <- function(
   # - drop_trailing_zeros
   # - drop_trailing_dec_mark
   # - use_seps
+  # - min_sep_threshold
   # - pattern
   # - sep_mark
   # - dec_mark
@@ -4605,6 +4624,7 @@ fmt_bytes <- function(
           drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
           drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
           use_seps = p_i$use_seps %||% use_seps,
+          min_sep_threshold = p_i$min_sep_threshold %||% min_sep_threshold,
           pattern = p_i$pattern %||% pattern,
           sep_mark = p_i$sep_mark %||% sep_mark,
           dec_mark = p_i$dec_mark %||% dec_mark,
@@ -4636,6 +4656,7 @@ fmt_bytes <- function(
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
+  min_sep_threshold <- get_locale_min_sep_threshold(locale, min_sep_threshold)
 
   # Set the `formatC_format` option according to whether number
   # formatting with significant figures is to be performed
@@ -4692,6 +4713,7 @@ fmt_bytes <- function(
             dec_mark = dec_mark,
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = drop_trailing_dec_mark,
+            min_sep_threshold = min_sep_threshold,
             format = formatC_format
           )
 
