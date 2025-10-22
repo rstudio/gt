@@ -1,5 +1,7 @@
 # gt (development version)
 
+* Added the `omit_na_group` argument to the `gt()` function; when `TRUE`, rows with `NA` values in the `groupname_col` be excluded from row group assignment (the default of `FALSE` preserves the old behavior) (#1215). (#2062)
+
 * Update latex Unicode conversions to be optional (default to TRUE) as well as make them work in-line (@thebioengineer, #2037, #2041)
 
 # gt 1.1.0
