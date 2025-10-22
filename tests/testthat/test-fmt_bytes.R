@@ -285,6 +285,8 @@ test_that("fmt_bytes() works correctly", {
   # Format the `num` column to 2 decimal places, apply the `et_EE`
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
+  # Note: Estonian (et) has minimum_grouping_digits=2 (CLDR), so only numbers
+  # with 5+ digits (10000+) get separators. 1500 has 4 digits so no separator.
   expect_equal(
     (tab |>
        fmt_bytes(columns = num, decimals = 2, locale = "et_EE") |>
@@ -293,7 +295,7 @@ test_that("fmt_bytes() works correctly", {
       paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
       "1,02 kB", "1,05 MB", "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB",
       "1,18 ZB", "1,21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
-      "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1 500 YB", "15 000 YB",
+      "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1500 YB", "15 000 YB",
       "NA"
     )
   )
