@@ -293,6 +293,8 @@ test_that("fmt_currency() works correctly", {
   # Format the `num_1` column to 2 decimal places, apply the `et_EE`
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
+  # Note: Estonian (et) has minimum_grouping_digits=2 (CLDR), so only numbers
+  # with 5+ digits (10000+) get separators
   expect_equal(
     (tab |>
        fmt_currency(
@@ -300,7 +302,7 @@ test_that("fmt_currency() works correctly", {
        ) |>
        render_formats_test("html"))[["num_1"]],
     c(
-      "&#8364;1 836,23", "&#8364;2 763,39", "&#8364;937,29", "&#8364;643,00",
+      "&#8364;1836,23", "&#8364;2763,39", "&#8364;937,29", "&#8364;643,00",
       "&#8364;212,23", "&#8364;0,00", paste0("\U02212", "&#8364;23,24")
     )
   )
