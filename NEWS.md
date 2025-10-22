@@ -1,5 +1,7 @@
 # gt (development version)
 
+* The new `fmt_number_si()` function format numeric values with SI prefixes and an optional unit (could be obtained from a separate column), automatically selecting the appropriate prefix to keep the mantissa in a readable range (#1999). (#2060) 
+
 * Added the `omit_na_group` argument to the `gt()` function; when `TRUE`, rows with `NA` values in the `groupname_col` be excluded from row group assignment (the default of `FALSE` preserves the old behavior) (#1215). (#2062)
 
 * Update latex Unicode conversions to be optional (default to TRUE) as well as make them work in-line (@thebioengineer, #2037, #2041)
