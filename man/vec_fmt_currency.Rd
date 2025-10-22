@@ -18,6 +18,7 @@ vec_fmt_currency(
   sep_mark = ",",
   dec_mark = ".",
   force_sign = FALSE,
+  min_sep_threshold = 1,
   placement = "left",
   incl_space = FALSE,
   locale = NULL,
@@ -176,6 +177,19 @@ a sign for all values except zero)? If so, use \code{TRUE} for this option. The
 default is \code{FALSE}, where only negative numbers will display a minus sign.
 This option is disregarded when using accounting notation with
 \code{accounting = TRUE}.}
+
+\item{min_sep_threshold}{\emph{Minimum digit threshold for grouping separators}
+
+\verb{scalar<numeric|integer>(val>=1,val<=3)} // \emph{default:} \code{1}
+
+The minimum number of digits required in the integer part of a number for
+grouping separators to be applied. This parameter determines when digit
+grouping begins based on the magnitude of values. The value \code{1} (the
+default) applies separators starting at 4-digit numbers (e.g., \verb{1,000} and
+above). A value of \code{2} starts grouping at 5-digit numbers (\verb{10,000} and
+above), while \code{3} begins at 6-digit numbers (\verb{100,000} and above). If a
+\code{locale} is provided, the locale-specific minimum grouping digits value
+from CLDR will be used, overriding this parameter.}
 
 \item{placement}{\emph{Currency symbol placement}
 
