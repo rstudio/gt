@@ -289,6 +289,8 @@ test_that("fmt_percent() works correctly in the HTML context", {
 
   # Format the `num_1` column to 2 decimal places, apply the `et_EE`
   # locale and use all other defaults
+  # Note: Estonian (et) has minimum_grouping_digits=2 (CLDR), so only numbers
+  # with 5+ digits (10000+) get separators. 2324 has 4 digits so no separator.
   expect_equal(
     (tab |>
        fmt_percent(columns = num_1, decimals = 2, locale = "et_EE") |>
@@ -296,7 +298,7 @@ test_that("fmt_percent() works correctly in the HTML context", {
     c(
       "183 623,00%", "276 339,00%", "93 729,00%",
       "64 300,00%", "21 223,20%", "0,00%",
-      paste0("\U02212", "2 324,00%")
+      paste0("\U02212", "2324,00%")
     )
   )
 

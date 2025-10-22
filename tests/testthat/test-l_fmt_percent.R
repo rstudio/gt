@@ -284,13 +284,15 @@ test_that("fmt_percent() works correctly for LaTeX output tables", {
   # Format the `num_1` column to 2 decimal places, apply the `et_EE`
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
+  # Note: Estonian (et) has minimum_grouping_digits=2 (CLDR), so only numbers
+  # with 5+ digits (10000+) get separators. 2324 has 4 digits so no separator.
   expect_equal(
     (tbl_latex |>
        fmt_percent(columns = num_1, decimals = 2, locale = "et_EE") |>
        render_formats_test("latex"))[["num_1"]],
     c(
       "183 623,00\\%", "276 339,00\\%", "93 729,00\\%",
-      "64 300,00\\%", "21 223,20\\%", "0,00\\%", "-2 324,00\\%"
+      "64 300,00\\%", "21 223,20\\%", "0,00\\%", "-2324,00\\%"
     )
   )
 

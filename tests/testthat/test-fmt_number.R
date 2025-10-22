@@ -252,11 +252,13 @@ test_that("fmt_number() works correctly in the HTML context", {
 
   # Format the `num_1` column to 2 decimal places, apply the `et_EE`
   # locale and use all other defaults
+  # Note: Estonian (et) has minimum_grouping_digits=2 (CLDR), so only numbers
+  # with 5+ digits (10000+) get separators
   expect_equal(
     (tab |>
        fmt_number(columns = num_1, decimals = 2, locale = "et_EE") |>
        render_formats_test("html"))[["num_1"]],
-    c("1 836,23", "2 763,39", "937,29", "643,00", "212,23", "0,00", paste0("\U02212", "23,24"))
+    c("1836,23", "2763,39", "937,29", "643,00", "212,23", "0,00", paste0("\U02212", "23,24"))
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `gl_ES`
