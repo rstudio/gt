@@ -441,3 +441,122 @@ test_that("min_sep_threshold works with different sep_mark values", {
     c("999", "1000", "10_000", "100_000")
   )
 })
+
+# Vector formatting tests ------------------------------------------------------
+
+test_that("vec_fmt_number() respects min_sep_threshold parameter", {
+
+  x <- c(999, 1000, 9999, 10000, 99999, 100000)
+
+  # Test threshold=1 (default): separators start at 1,000
+  expect_equal(
+    vec_fmt_number(x, decimals = 0, min_sep_threshold = 1),
+    c("999", "1,000", "9,999", "10,000", "99,999", "100,000")
+  )
+
+  # Test threshold=2: separators start at 10,000
+  expect_equal(
+    vec_fmt_number(x, decimals = 0, min_sep_threshold = 2),
+    c("999", "1000", "9999", "10,000", "99,999", "100,000")
+  )
+
+  # Test threshold=3: separators start at 100,000
+  expect_equal(
+    vec_fmt_number(x, decimals = 0, min_sep_threshold = 3),
+    c("999", "1000", "9999", "10000", "99999", "100,000")
+  )
+})
+
+test_that("vec_fmt_integer() respects min_sep_threshold parameter", {
+
+  x <- c(999, 1000, 9999, 10000)
+
+  # Test threshold=1 (default)
+  expect_equal(
+    vec_fmt_integer(x, min_sep_threshold = 1),
+    c("999", "1,000", "9,999", "10,000")
+  )
+
+  # Test threshold=2
+  expect_equal(
+    vec_fmt_integer(x, min_sep_threshold = 2),
+    c("999", "1000", "9999", "10,000")
+  )
+})
+
+test_that("vec_fmt_percent() respects min_sep_threshold parameter", {
+
+  x <- c(9.99, 10.00, 99.99, 100.00)
+
+  # Test threshold=1 (default): 999% has no separator, 1,000% does
+  expect_equal(
+    vec_fmt_percent(x, decimals = 0, scale_values = TRUE, min_sep_threshold = 1),
+    c("999%", "1,000%", "9,999%", "10,000%")
+  )
+
+  # Test threshold=2: separators only for 10,000+
+  expect_equal(
+    vec_fmt_percent(x, decimals = 0, scale_values = TRUE, min_sep_threshold = 2),
+    c("999%", "1000%", "9999%", "10,000%")
+  )
+})
+
+test_that("vec_fmt_currency() respects min_sep_threshold parameter", {
+
+  x <- c(999, 1000, 9999, 10000)
+
+  # Test threshold=1 (default)
+  expect_equal(
+    vec_fmt_currency(x, currency = "USD", min_sep_threshold = 1),
+    c("$999.00", "$1,000.00", "$9,999.00", "$10,000.00")
+  )
+
+  # Test threshold=2
+  expect_equal(
+    vec_fmt_currency(x, currency = "USD", min_sep_threshold = 2),
+    c("$999.00", "$1000.00", "$9999.00", "$10,000.00")
+  )
+})
+
+test_that("vec_fmt_bytes() respects min_sep_threshold parameter", {
+
+  # Use very small byte values to avoid unit conversion to kB
+  x <- c(100, 500, 900, 950)
+
+  # Test that parameter is accepted and produces output without error
+  result_1 <- vec_fmt_bytes(x, decimals = 0, min_sep_threshold = 1)
+  expect_equal(result_1, c("100 B", "500 B", "900 B", "950 B"))
+  
+  result_2 <- vec_fmt_bytes(x, decimals = 0, min_sep_threshold = 2)
+  expect_equal(result_2, c("100 B", "500 B", "900 B", "950 B"))
+  
+  # Test with values that will show separators after conversion
+  # Use values in yottabyte range where we'll see separator effects
+  x_large <- c(1.5e24, 12.5e24)  # Will display as YB
+  result_large_1 <- vec_fmt_bytes(x_large, decimals = 0, min_sep_threshold = 1)
+  result_large_2 <- vec_fmt_bytes(x_large, decimals = 0, min_sep_threshold = 2)
+  
+  # At least verify the function runs without error with different thresholds
+  expect_type(result_large_1, "character")
+  expect_type(result_large_2, "character")
+  expect_length(result_large_1, 2)
+  expect_length(result_large_2, 2)
+})
+
+test_that("vec_fmt functions work with locale override", {
+
+  x <- c(1836, 2763, 10000)
+
+  # Estonian locale (et) has minimum_grouping_digits=2, so threshold becomes 2
+  # 1836 (4 digits) should NOT get separator, but 10000 (5 digits) should
+  expect_equal(
+    vec_fmt_number(x, decimals = 0, min_sep_threshold = 1, locale = "et"),
+    c("1836", "2763", "10 000")
+  )
+  
+  # With explicit threshold=1 and no locale, all should get separators at 1000+
+  expect_equal(
+    vec_fmt_integer(x, min_sep_threshold = 1),
+    c("1,836", "2,763", "10,000")
+  )
+})
