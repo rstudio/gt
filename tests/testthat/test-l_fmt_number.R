@@ -258,12 +258,14 @@ test_that("fmt_number() works correctly for LaTeX output tables", {
 
   # Format the `num_1` column to 2 decimal places, apply the `et_EE`
   # locale and use all other defaults
+  # Note: Estonian (et) has minimum_grouping_digits=2 (CLDR), so only numbers
+  # with 5+ digits (10000+) get separators
   expect_equal(
     (tbl_latex |>
        fmt_number(columns = num_1, decimals = 2, locale = "et_EE") |>
        render_formats_test("latex"))[["num_1"]],
     c(
-      "1 836,23", "2 763,39", "937,29", "643,00",
+      "1836,23", "2763,39", "937,29", "643,00",
       "212,23", "0,00", "-23,24"
     )
   )
