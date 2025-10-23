@@ -34,6 +34,10 @@ build_data <- function(data, context) {
     data <- adjust_gt_tbl_empty(data = data)
   }
 
+  # Build summary columns before building the body
+  # (summary columns modify the underlying data)
+  data <- dt_summary_cols_build(data = data, context = context)
+
   # Create `body` with rendered values; move
   # input data cells to `body` that didn't have
   # any rendering applied during `render_formats()`;
