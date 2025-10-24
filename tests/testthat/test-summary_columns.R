@@ -1087,3 +1087,140 @@ test_that("summary_columns() error messages are helpful", {
     "fns"
   )
 })
+
+test_that("summary_columns() automatically wraps single md() labels", {
+
+  # Single column with md() label (no list() needed)
+  gt_tbl <-
+    gtcars |>
+    dplyr::select(model, hp, trq) |>
+    dplyr::slice(1:3) |>
+    gt() |>
+    summary_columns(
+      columns = c(hp, trq),
+      fns = ~ sum(.),
+      new_col_names = "total",
+      new_col_labels = md("**Total**")
+    )
+
+  # Check that the label has the from_markdown class
+  boxhead <- gt:::dt_boxhead_get(data = gt_tbl)
+  total_col_idx <- which(boxhead$var == "total")
+  label <- boxhead$column_label[[total_col_idx]]
+
+  expect_s3_class(label, "from_markdown")
+  expect_equal(as.character(label), "**Total**")
+
+  # Verify it's stored correctly in metadata too
+  summary_cols <- gt:::dt_summary_cols_get(data = gt_tbl)
+
+  expect_s3_class(summary_cols[[1]]$new_col_labels, "from_markdown")
+})
+
+test_that("summary_columns() automatically wraps single html() labels", {
+
+  # Single column with html() label (no list() needed)
+  gt_tbl <-
+    gtcars |>
+    dplyr::select(model, hp, trq) |>
+    dplyr::slice(1:3) |>
+    gt() |>
+    summary_columns(
+      columns = c(hp, trq),
+      fns = ~ sum(.),
+      new_col_names = "total",
+      new_col_labels = html("<strong>Total</strong>")
+    )
+
+  # Check that the label has the html class
+  boxhead <- gt:::dt_boxhead_get(data = gt_tbl)
+  total_col_idx <- which(boxhead$var == "total")
+  label <- boxhead$column_label[[total_col_idx]]
+
+  expect_s3_class(label, "html")
+  expect_equal(as.character(label), "<strong>Total</strong>")
+
+  # Verify it's stored correctly in metadata too
+  summary_cols <- gt:::dt_summary_cols_get(data = gt_tbl)
+
+  expect_s3_class(summary_cols[[1]]$new_col_labels, "html")
+})
+
+test_that("summary_columns() handles multiple md() labels with list()", {
+
+  # Multiple columns with md() labels (list() required for multiple)
+  gt_tbl <-
+    gtcars |>
+    dplyr::select(model, hp, trq) |>
+    dplyr::slice(1:3) |>
+    gt() |>
+    summary_columns(
+      columns = c(hp, trq),
+      fns = list(~ sum(.), ~ mean(.)),
+      new_col_names = c("total", "average"),
+      new_col_labels = list(md("**Total**"), md("**Average**"))
+    )
+
+  # Check both labels have the from_markdown class
+  boxhead <- gt:::dt_boxhead_get(data = gt_tbl)
+
+  total_col_idx <- which(boxhead$var == "total")
+  total_label <- boxhead$column_label[[total_col_idx]]
+
+  expect_s3_class(total_label, "from_markdown")
+  expect_equal(as.character(total_label), "**Total**")
+
+  avg_col_idx <- which(boxhead$var == "average")
+  avg_label <- boxhead$column_label[[avg_col_idx]]
+
+  expect_s3_class(avg_label, "from_markdown")
+  expect_equal(as.character(avg_label), "**Average**")
+})
+
+test_that("summary_columns() preserves plain string labels", {
+
+  # Single column with plain string (should still work)
+  gt_tbl <-
+    gtcars |>
+    dplyr::select(model, hp, trq) |>
+    dplyr::slice(1:3) |>
+    gt() |>
+    summary_columns(
+      columns = c(hp, trq),
+      fns = ~ sum(.),
+      new_col_names = "total",
+      new_col_labels = "Total"
+    )
+
+  # Check that the label is a plain character string
+  boxhead <- gt:::dt_boxhead_get(data = gt_tbl)
+  total_col_idx <- which(boxhead$var == "total")
+  label <- boxhead$column_label[[total_col_idx]]
+
+  expect_type(label, "character")
+  expect_equal(label, "Total")
+})
+
+test_that("summary_columns() works with md() wrapped in list() (backward compatible)", {
+
+  # Single column with md() already wrapped in list() (old style)
+  gt_tbl <-
+    gtcars |>
+    dplyr::select(model, hp, trq) |>
+    dplyr::slice(1:3) |>
+    gt() |>
+    summary_columns(
+      columns = c(hp, trq),
+      fns = ~ sum(.),
+      new_col_names = "total",
+      new_col_labels = list(md("**Total**"))
+    )
+
+  # Should still work and preserve the class
+  boxhead <- gt:::dt_boxhead_get(data = gt_tbl)
+  total_col_idx <- which(boxhead$var == "total")
+  label <- boxhead$column_label[[total_col_idx]]
+
+  expect_s3_class(label, "from_markdown")
+  expect_equal(as.character(label), "**Total**")
+})
