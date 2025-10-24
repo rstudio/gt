@@ -32,12 +32,12 @@
 #' horizontal counterpart to [summary_rows()], which aggregates down columns to
 #' create summary rows. Common use cases include calculating row totals, row
 #' averages, or other row-wise statistics.
-#' 
+#'
 #' Summary columns are computed immediately when the function is called and are
 #' added to the table's data as regular columns. This means they can be
 #' referenced in subsequent **gt** operations like [cols_move()], [fmt_number()],
 #' [tab_style()], or even in other computed columns via [cols_add()].
-#' 
+#'
 #' You can create a single summary column or multiple columns at once by
 #' providing a list of aggregation functions. The functions can be any R
 #' expression that takes a vector of values and returns a single value (like
@@ -200,11 +200,15 @@ summary_columns <- function(
   # Determine if we're adding single or multiple columns
   # Convert single function to list for consistent processing
   if (rlang::is_formula(fns) || is.character(fns) || is.function(fns)) {
+
     fns_list <- list(fns)
     is_single <- TRUE
+
   } else if (is.list(fns)) {
+
     fns_list <- fns
     is_single <- FALSE
+
   } else {
     cli::cli_abort(c(
       "The `fns` argument must be a formula, function, character string, or list.",
@@ -222,13 +226,13 @@ summary_columns <- function(
     if (is.null(new_col_names)) {
 
       fn_name <- extract_fn_name(fns_list[[1]])
-      
+
       if (is.na(fn_name) || fn_name == "") {
-        
+
         existing_summary_cols <- dt_summary_cols_get(data = data)
         col_number <- length(existing_summary_cols) + 1
         col_names <- paste0("summary_", col_number)
-      
+
       } else {
         col_names <- fn_name
       }
@@ -238,13 +242,26 @@ summary_columns <- function(
 
     # Generate label if not provided
     if (is.null(new_col_labels)) {
+
       col_labels <- list(col_names)
+
     } else {
-      # Handle both list and vector input
-      if (is.list(new_col_labels)) {
+
+      # Auto-wrap single use of `md()`/`html()` objects to preserve their class
+      if (
+        inherits(new_col_labels, "from_markdown") ||
+        inherits(new_col_labels, "html")
+      ) {
+
+        col_labels <- list(new_col_labels)
+
+      } else if (is.list(new_col_labels)) {
+
         col_labels <- list(new_col_labels[[1]])
+
       } else {
-        col_labels <- list(new_col_labels[1])
+
+        col_labels <- list(new_col_labels[[1]])
       }
     }
 
@@ -256,14 +273,14 @@ summary_columns <- function(
     if (is.null(new_col_names)) {
 
       # Generate names from functions
-      col_names <- 
+      col_names <-
         vapply(
           seq_len(n_fns),
           FUN.VALUE = character(1),
           function(i) {
             fn <- fns_list[[i]]
             fn_name <- extract_fn_name(fn)
-            
+
             if (is.na(fn_name) || fn_name == "") {
               paste0("summary_", i)
             } else {
@@ -273,7 +290,7 @@ summary_columns <- function(
         )
 
     } else {
-      
+
       if (length(new_col_names) != n_fns) {
         cli::cli_abort(c(
           "The length of `new_col_names` must match the number of functions in `fns`.",
@@ -286,28 +303,34 @@ summary_columns <- function(
 
     # Generate or validate labels
     if (is.null(new_col_labels)) {
-      
+
       col_labels <- as.list(col_names)  # Convert to list for consistent handling
-    
+
     } else {
-      
+
+      # Auto-wrap single md()/html() objects in a list to preserve their class
+      if (n_fns == 1 && (inherits(new_col_labels, "from_markdown") || inherits(new_col_labels, "html"))) {
+        new_col_labels <- list(new_col_labels)
+      }
+
       if (length(new_col_labels) != n_fns) {
         cli::cli_abort(c(
           "The length of `new_col_labels` must match the number of functions in `fns`.",
           "*" = "Provided {length(new_col_labels)} label{?s} for {n_fns} function{?s}."
         ))
       }
-      
+
       # Ensure new_col_labels is a list (handles both list and vector input)
-      col_labels <- if (is.list(new_col_labels)) new_col_labels else as.list(new_col_labels)
+      # Use list() instead of as.list() to preserve S3 classes
+      col_labels <- if (is.list(new_col_labels)) new_col_labels else lapply(seq_along(new_col_labels), function(i) new_col_labels[[i]])
     }
   }
 
   # Check for duplicate or existing column names
   existing_cols <- colnames(dt_data_get(data = data))
-  
+
   for (col_name in col_names) {
-    
+
     if (col_name %in% existing_cols) {
       cli::cli_abort(c(
         "The column name {.val {col_name}} already exists in the table.",
@@ -325,7 +348,7 @@ summary_columns <- function(
   }
 
   # Normalize formatting expression if provided
-  fmt_fn <- 
+  fmt_fn <-
     if (!is.null(fmt)) {
       normalize_fmt_col_fn(fmt = fmt)
     } else {
@@ -338,10 +361,10 @@ summary_columns <- function(
 
   # Process each function and add its corresponding column
   for (i in seq_along(fns_list)) {
-    
+
     col_name <- col_names[i]
     col_label <- col_labels[[i]]  # Use [[i]] to extract element, not [i] which returns a list
-    
+
     fn <- fns_list[[i]]
 
     # Normalize the aggregation function
@@ -349,7 +372,7 @@ summary_columns <- function(
     fn_closure <- rlang::as_closure(summary_fn)
 
     # Compute summary values for each row
-    summary_values <- 
+    summary_values <-
       apply(
         col_data,
         MARGIN = 1,
@@ -365,30 +388,30 @@ summary_columns <- function(
 
     # Determine placement position
     if (side == "right") {
-      
+
       # Add after the last column (or after the previous summary column)
       current_cols <- colnames(dt_data_get(data = data))
       after_col <- current_cols[length(current_cols)]
-      
+
       data <-
         cols_add(
           .data = data,
           !!col_name := summary_values,
           .after = dplyr::all_of(after_col)
         )
-    
+
     } else {
-      
+
       # Add before the first column (or before the previous summary column)
       current_cols <- colnames(dt_data_get(data = data))
-      
-      before_col <- 
+
+      before_col <-
         if (i == 1) {
           current_cols[1]
         } else {
           col_names[i - 1]
         }
-      
+
       data <-
         cols_add(
           .data = data,
@@ -415,7 +438,7 @@ summary_columns <- function(
       side = side,
       missing_text = missing_text
     )
-    
+
     data <- dt_summary_cols_add(
       data = data,
       summary_col = summary_col_spec
@@ -424,7 +447,7 @@ summary_columns <- function(
 
   # Apply formatting if specified to all new columns
   if (!is.null(fmt_fn)) {
-    
+
     # Ensure that the expression is a closure
     fmt_closure <- rlang::as_closure(fmt_fn)
 
@@ -440,35 +463,35 @@ summary_columns <- function(
 
 # Extract function name from a formula or function for auto-naming
 extract_fn_name <- function(fn) {
-  
+
   if (rlang::is_formula(fn)) {
-    
+
     # Try to extract function name from formula RHS
     rhs <- rlang::f_rhs(fn)
-    
+
     if (is.call(rhs)) {
-      
+
       fn_name <- as.character(rhs[[1]])
-      
+
       # Remove namespace prefix if present (e.g., "stats::mean" -> "mean")
       if (grepl("::", fn_name)) {
         fn_name <- sub(".*::", "", fn_name)
       }
-      
+
       return(fn_name)
     }
 
   } else if (is.character(fn)) {
 
     return(fn)
-  
+
   } else if (is.function(fn)) {
-    
+
     # Try to get the function name from the calling environment
     # This is tricky, so we'll just return NA
     return(NA_character_)
   }
-  
+
   return(NA_character_)
 }
 
