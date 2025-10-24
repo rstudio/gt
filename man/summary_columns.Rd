@@ -8,9 +8,7 @@ summary_columns(
   data,
   columns = everything(),
   fns = NULL,
-  new_col_name = NULL,
   new_col_names = NULL,
-  new_col_label = NULL,
   new_col_labels = NULL,
   fmt = NULL,
   side = c("right", "left"),
@@ -46,45 +44,29 @@ summary columns, provide a list of formulas (e.g.,
 \code{max}, \code{median}, \code{sd}, and \code{sum} are supported, along with any
 user-defined aggregation functions.}
 
-\item{new_col_name}{\emph{Name for the new summary column (single)}
-
-\verb{scalar<character>} // \emph{default:} \code{NULL}
-
-An optional name for the new summary column when adding a single column.
-This name is used as the column identifier for targeting in other \strong{gt}
-functions (e.g., \code{\link[=fmt_number]{fmt_number()}}, \code{\link[=tab_style]{tab_style()}}). If \code{NULL}, a default
-name will be generated. For multiple columns, use \code{new_col_names} instead.}
-
-\item{new_col_names}{\emph{Names for new summary columns (multiple)}
+\item{new_col_names}{\emph{Names for new summary columns}
 
 \verb{vector<character>} // \emph{default:} \code{NULL}
 
-Optional names for the new summary columns when adding multiple columns.
-Must be the same length as \code{fns} if provided. These names are used as
-column identifiers for targeting. If \code{NULL}, names will be generated from
-the function expressions. For a single column, use \code{new_col_name} instead.}
+Optional names for the new summary columns. Can provide one name for a
+single summary column, or multiple names (must match the length of \code{fns})
+when adding multiple columns. These names are used as column identifiers
+for targeting in other \strong{gt} functions (e.g., \code{\link[=fmt_number]{fmt_number()}},
+\code{\link[=tab_style]{tab_style()}}). If \code{NULL}, names will be generated from the function
+expressions (e.g., \code{"sum"}, \code{"mean"}) or default to \code{"summary_1"},
+\code{"summary_2"}, etc.}
 
-\item{new_col_label}{\emph{Label for the new summary column (single)}
+\item{new_col_labels}{\emph{Labels for new summary columns}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL}
+\verb{list|vector<character>} // \emph{default:} \code{NULL}
 
-An optional label for the new summary column header when adding a single
-column. This is what will be displayed in the rendered table. Can be plain
-text or use helper functions like \code{\link[=md]{md()}} or \code{\link[=html]{html()}}. If \code{NULL} and
-\code{new_col_name} is provided, the \code{new_col_name} will be used as the label.
-For multiple columns, use \code{new_col_labels} instead.}
-
-\item{new_col_labels}{\emph{Labels for new summary columns (multiple)}
-
-\code{list} // \emph{default:} \code{NULL}
-
-Optional labels for the new summary column headers when adding multiple
-columns. Must be the same length as \code{fns} if provided. Can include plain
-text or use \code{\link[=md]{md()}} or \code{\link[=html]{html()}} helpers. If \code{NULL}, will use
-\code{new_col_names} as labels. \strong{Important}: Use \code{list()} instead of \code{c()}
-when mixing plain text with \code{\link[=md]{md()}} or \code{\link[=html]{html()}} objects to preserve their
-classes (e.g., \code{list("Total", md("**Average**"))}). For a single column,
-use \code{new_col_label} instead.}
+Optional labels for the new summary column headers. Can provide one label
+for a single column, or multiple labels (must match the length of \code{fns})
+when adding multiple columns. Can include plain text or use \code{\link[=md]{md()}} or
+\code{\link[=html]{html()}} helpers. If \code{NULL}, will use \code{new_col_names} as labels.
+\strong{Important}: Use \code{list()} instead of \code{c()} when mixing plain text with
+\code{\link[=md]{md()}} or \code{\link[=html]{html()}} objects to preserve their classes (e.g.,
+\code{list("Total", md("**Average**"))}).}
 
 \item{fmt}{\emph{Formatting expression}
 
@@ -142,8 +124,8 @@ gtcars |>
   summary_columns(
     columns = c(hp, trq, msrp),
     fns = ~ sum(.),
-    new_col_name = "total",
-    new_col_label = "Total",
+    new_col_names = "total",
+    new_col_labels = "Total",
     side = "right"
   ) |>
   fmt_number(columns = total, decimals = 0)
