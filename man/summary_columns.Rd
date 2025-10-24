@@ -76,13 +76,15 @@ For multiple columns, use \code{new_col_labels} instead.}
 
 \item{new_col_labels}{\emph{Labels for new summary columns (multiple)}
 
-\verb{vector<character>} // \emph{default:} \code{NULL}
+\code{list} // \emph{default:} \code{NULL}
 
 Optional labels for the new summary column headers when adding multiple
 columns. Must be the same length as \code{fns} if provided. Can include plain
 text or use \code{\link[=md]{md()}} or \code{\link[=html]{html()}} helpers. If \code{NULL}, will use
-\code{new_col_names} as labels. For a single column, use \code{new_col_label}
-instead.}
+\code{new_col_names} as labels. \strong{Important}: Use \code{list()} instead of \code{c()}
+when mixing plain text with \code{\link[=md]{md()}} or \code{\link[=html]{html()}} objects to preserve their
+classes (e.g., \code{list("Total", md("**Average**"))}). For a single column,
+use \code{new_col_label} instead.}
 
 \item{fmt}{\emph{Formatting expression}
 
@@ -108,10 +110,22 @@ The text to be used in place of \code{NA} values in the summary column cells.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Add one or more summary columns by aggregating data across columns for each
-row. This allows you to add computed columns like row totals, row averages,
-or other aggregations. The new summary columns can be placed on the left or
-right side of the table.
+The \code{summary_columns()} function adds one or more computed columns to a table
+by aggregating values across selected columns within each row. This is the
+horizontal counterpart to \code{\link[=summary_rows]{summary_rows()}}, which aggregates down columns to
+create summary rows. Common use cases include calculating row totals, row
+averages, or other row-wise statistics.
+
+Summary columns are computed immediately when the function is called and are
+added to the table's data as regular columns. This means they can be
+referenced in subsequent \strong{gt} operations like \code{\link[=cols_move]{cols_move()}}, \code{\link[=fmt_number]{fmt_number()}},
+\code{\link[=tab_style]{tab_style()}}, or even in other computed columns via \code{\link[=cols_add]{cols_add()}}.
+
+You can create a single summary column or multiple columns at once by
+providing a list of aggregation functions. The functions can be any R
+expression that takes a vector of values and returns a single value (like
+\code{sum()}, \code{mean()}, \code{max()}, \code{min()}, etc.). Column names and labels can be
+auto-generated from function names or explicitly specified.
 }
 \section{Examples}{
 
@@ -143,7 +157,7 @@ gtcars |>
     columns = c(hp, trq, msrp),
     fns = list(~ sum(.), ~ mean(.), ~ max(.)),
     new_col_names = c("total", "average", "maximum"),
-    new_col_labels = c("Total", "Average", "Maximum"),
+    new_col_labels = list("Total", md("**Average**"), "Maximum"),
     side = "right"
   ) |>
   fmt_number(columns = c(total, average, maximum), decimals = 0)
