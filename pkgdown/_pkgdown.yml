@@ -175,6 +175,7 @@ reference:
     - grand_summary_rows
     - row_group_order
     - rows_add
+    - summary_columns
 
   - title: Removing parts of a table
     desc: >
