@@ -115,46 +115,53 @@
 #'
 #' @section Examples:
 #'
-#' Use a subset of the [`gtcars`] dataset to create a **gt** table. Add a
-#' summary column that computes row totals across numeric columns using
+#' Use a subset of the [`countrypops`] dataset to create a **gt** table. Add a
+#' summary column that computes the average annual change using
 #' `summary_columns()`.
 #'
 #' ```r
-#' # Single summary column
-#' gtcars |>
-#'   dplyr::select(mfr, model, hp, trq, msrp) |>
-#'   dplyr::slice_head(n = 10) |>
-#'   gt(rowname_col = "model") |>
-#'   summary_columns(
-#'     columns = c(hp, trq, msrp),
-#'     fns = ~ sum(.),
-#'     new_col_names = "total",
-#'     new_col_labels = "Total",
-#'     side = "right"
+#' countrypops |>
+#'   arrange(country_name, year) |>
+#'   group_by(country_name, country_code_2) |>
+#'   summarize(
+#'     pop_1960 = first(population),
+#'     pop_2024 = last(population),
+#'     years = n(),
+#'     .groups = "drop"
 #'   ) |>
-#'   fmt_number(columns = total, decimals = 0)
-#'
-#' # Multiple summary columns at once
-#' gtcars |>
-#'   dplyr::select(mfr, model, hp, trq, msrp) |>
-#'   dplyr::slice_head(n = 10) |>
-#'   gt(rowname_col = "model") |>
+#'   filter(!is.na(pop_1960), !is.na(pop_2024)) |>
+#'   mutate(total_change = pop_2024 - pop_1960) |>
+#'   slice_max(total_change, n = 5) |>
+#'   select(country_name, country_code_2, pop_1960, pop_2024, years) |>
+#'   gt() |>
 #'   summary_columns(
-#'     columns = c(hp, trq, msrp),
-#'     fns = list(~ sum(.), ~ mean(.), ~ max(.)),
-#'     new_col_names = c("total", "average", "maximum"),
-#'     new_col_labels = list("Total", md("**Average**"), "Maximum"),
-#'     side = "right"
+#'     columns = c(pop_1960, pop_2024, years),
+#'     fns = ~ (.[2] - .[1]) / (.[3] - 1),
+#'     new_col_names = "avg_annual_change",
+#'     new_col_labels = md("**Avg. Annual Change**")  # No list() needed!
 #'   ) |>
-#'   fmt_number(columns = c(total, average, maximum), decimals = 0)
+#'   cols_hide(columns = c(pop_1960, pop_2024, years)) |>
+#'   fmt_integer() |>
+#'   cols_label(
+#'     country_name = "Country",
+#'     country_code_2 = "Code"
+#'   ) |>
+#'   tab_header(
+#'     title = "Top 5 Countries by Population Growth",
+#'     subtitle = "Average annual population change (1960-2024)"
+#'   )
 #' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_summary_columns_1.png")`
+#' }}
 #'
 #' @family row addition/modification functions
 #' @section Function ID:
-#' 6-3
+#' 6-4
 #'
 #' @section Function Introduced:
-#' `v0.12.0` (October 23, 2025)
+#' *In Development*
 #'
 #' @export
 summary_columns <- function(
