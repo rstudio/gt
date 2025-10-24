@@ -164,6 +164,8 @@ tests/testthat/test-substitution.R
 tests/testthat/test-summary_rows.R
 tests/testthat/_snaps/summary_rows.md
 
+tests/testthat/test-summary_columns.R
+
 tests/testthat/test-tab_footnote.R
 tests/testthat/_snaps/tab_footnote.md
 
