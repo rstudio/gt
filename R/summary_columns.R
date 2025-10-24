@@ -67,45 +67,29 @@
 #'   `max`, `median`, `sd`, and `sum` are supported, along with any
 #'   user-defined aggregation functions.
 #'
-#' @param new_col_name *Name for the new summary column (single)*
-#'
-#'   `scalar<character>` // *default:* `NULL`
-#'
-#'   An optional name for the new summary column when adding a single column.
-#'   This name is used as the column identifier for targeting in other **gt**
-#'   functions (e.g., [fmt_number()], [tab_style()]). If `NULL`, a default
-#'   name will be generated. For multiple columns, use `new_col_names` instead.
-#'
-#' @param new_col_names *Names for new summary columns (multiple)*
+#' @param new_col_names *Names for new summary columns*
 #'
 #'   `vector<character>` // *default:* `NULL`
 #'
-#'   Optional names for the new summary columns when adding multiple columns.
-#'   Must be the same length as `fns` if provided. These names are used as
-#'   column identifiers for targeting. If `NULL`, names will be generated from
-#'   the function expressions. For a single column, use `new_col_name` instead.
+#'   Optional names for the new summary columns. Can provide one name for a
+#'   single summary column, or multiple names (must match the length of `fns`)
+#'   when adding multiple columns. These names are used as column identifiers
+#'   for targeting in other **gt** functions (e.g., [fmt_number()],
+#'   [tab_style()]). If `NULL`, names will be generated from the function
+#'   expressions (e.g., `"sum"`, `"mean"`) or default to `"summary_1"`,
+#'   `"summary_2"`, etc.
 #'
-#' @param new_col_label *Label for the new summary column (single)*
+#' @param new_col_labels *Labels for new summary columns*
 #'
-#'   `scalar<character>` // *default:* `NULL`
+#'   `list|vector<character>` // *default:* `NULL`
 #'
-#'   An optional label for the new summary column header when adding a single
-#'   column. This is what will be displayed in the rendered table. Can be plain
-#'   text or use helper functions like [md()] or [html()]. If `NULL` and
-#'   `new_col_name` is provided, the `new_col_name` will be used as the label.
-#'   For multiple columns, use `new_col_labels` instead.
-#'
-#' @param new_col_labels *Labels for new summary columns (multiple)*
-#'
-#'   `list` // *default:* `NULL`
-#'
-#'   Optional labels for the new summary column headers when adding multiple
-#'   columns. Must be the same length as `fns` if provided. Can include plain
-#'   text or use [md()] or [html()] helpers. If `NULL`, will use
-#'   `new_col_names` as labels. **Important**: Use `list()` instead of `c()`
-#'   when mixing plain text with [md()] or [html()] objects to preserve their
-#'   classes (e.g., `list("Total", md("**Average**"))`). For a single column,
-#'   use `new_col_label` instead.
+#'   Optional labels for the new summary column headers. Can provide one label
+#'   for a single column, or multiple labels (must match the length of `fns`)
+#'   when adding multiple columns. Can include plain text or use [md()] or
+#'   [html()] helpers. If `NULL`, will use `new_col_names` as labels.
+#'   **Important**: Use `list()` instead of `c()` when mixing plain text with
+#'   [md()] or [html()] objects to preserve their classes (e.g.,
+#'   `list("Total", md("**Average**"))`).
 #'
 #' @param fmt *Formatting expression*
 #'
@@ -144,8 +128,8 @@
 #'   summary_columns(
 #'     columns = c(hp, trq, msrp),
 #'     fns = ~ sum(.),
-#'     new_col_name = "total",
-#'     new_col_label = "Total",
+#'     new_col_names = "total",
+#'     new_col_labels = "Total",
 #'     side = "right"
 #'   ) |>
 #'   fmt_number(columns = total, decimals = 0)
@@ -177,9 +161,7 @@ summary_columns <- function(
     data,
     columns = everything(),
     fns = NULL,
-    new_col_name = NULL,
     new_col_names = NULL,
-    new_col_label = NULL,
     new_col_labels = NULL,
     fmt = NULL,
     side = c("right", "left"),
@@ -236,32 +218,8 @@ summary_columns <- function(
   if (is_single) {
 
     # Single column case
-    if (!is.null(new_col_names)) {
-      
-      cli::cli_warn(c(
-        "Using `new_col_names` for a single function.",
-        "*" = "Use `new_col_name` instead for single column."
-      ))
-      
-      if (is.null(new_col_name)) {
-        new_col_name <- new_col_names[1]
-      }
-    }
-    
-    if (!is.null(new_col_labels)) {
-      
-      cli::cli_warn(c(
-        "Using `new_col_labels` for a single function.",
-        "*" = "Use `new_col_label` instead for single column."
-      ))
-      
-      if (is.null(new_col_label)) {
-        new_col_label <- new_col_labels[1]
-      }
-    }
-
     # Generate name if not provided
-    if (is.null(new_col_name)) {
+    if (is.null(new_col_names)) {
 
       fn_name <- extract_fn_name(fns_list[[1]])
       
@@ -269,25 +227,30 @@ summary_columns <- function(
         
         existing_summary_cols <- dt_summary_cols_get(data = data)
         col_number <- length(existing_summary_cols) + 1
-        new_col_name <- paste0("summary_", col_number)
+        col_names <- paste0("summary_", col_number)
       
       } else {
-        new_col_name <- fn_name
+        col_names <- fn_name
       }
+    } else {
+      col_names <- as.character(new_col_names[1])
     }
 
-    col_names <- new_col_name
-    col_labels <- list(if (is.null(new_col_label)) new_col_name else new_col_label)
+    # Generate label if not provided
+    if (is.null(new_col_labels)) {
+      col_labels <- list(col_names)
+    } else {
+      # Handle both list and vector input
+      if (is.list(new_col_labels)) {
+        col_labels <- list(new_col_labels[[1]])
+      } else {
+        col_labels <- list(new_col_labels[1])
+      }
+    }
 
   } else {
 
     # Multiple columns case
-    if (!is.null(new_col_name) || !is.null(new_col_label)) {
-      cli::cli_warn(c(
-        "Using `new_col_name` or `new_col_label` with multiple functions.",
-        "*" = "Use `new_col_names` and `new_col_labels` for multiple columns."
-      ))
-    }
 
     # Generate or validate names
     if (is.null(new_col_names)) {
@@ -444,8 +407,8 @@ summary_columns <- function(
 
     # Store summary column metadata
     summary_col_spec <- list(
-      new_col_name = col_name,
-      new_col_label = col_label,
+      new_col_names = col_name,
+      new_col_labels = col_label,
       columns = columns,
       fn = summary_fn,
       fmt = fmt_fn,
