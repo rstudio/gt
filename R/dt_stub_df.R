@@ -74,6 +74,24 @@ dt_stub_df_init <- function(
         data <- dt_boxhead_set_stub(data = data, var = col)
       }
       
+      # Reorder the boxhead to match the order specified in rowname_col
+      # This ensures stub columns appear in the order the user specified
+      dt_boxhead <- dt_boxhead_get(data = data)
+      
+      # Split boxhead into stub and non-stub rows
+      stub_rows <- dt_boxhead[dt_boxhead$var %in% rowname_col, ]
+      non_stub_rows <- dt_boxhead[!dt_boxhead$var %in% rowname_col, ]
+      
+      # Reorder stub rows to match rowname_col order
+      stub_rows <- stub_rows[match(rowname_col, stub_rows$var), ]
+      
+      # Combine: stub rows first (in specified order), then non-stub rows
+      dt_boxhead <- rbind(stub_rows, non_stub_rows)
+      rownames(dt_boxhead) <- NULL
+      
+      # Update the boxhead
+      data <- dt_boxhead_set(data = data, boxh = dt_boxhead)
+      
       # Use the rightmost column as the primary row ID
       rightmost_col <- rowname_col[length(rowname_col)]
       rownames <- data_tbl[[rightmost_col]]
