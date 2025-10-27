@@ -429,14 +429,48 @@ resolve_cols_i <- function(
     # If we use the gt-specific select helper `stub()` then we
     # will retrieve the stub var name and return the output in the
     # same format as the return value for `tidyselect::eval_select()`
-    if (rlang::as_label(quo) %in% c("stub()", "gt::stub()")) {
+    # Check if the expression is a stub() call (with or without arguments)
+    stub_label <- rlang::as_label(quo)
+    if (grepl("^(gt::)?stub\\(", stub_label)) {
 
       stub_var <- dt_boxhead_get_var_stub(data = data)
 
-      if (!is.null(stub_var)) {
-        stub_col <- 1
-        names(stub_col) <- stub_var
-        return(stub_col)
+      if (!is.null(stub_var) && !all(is.na(stub_var))) {
+        
+        # Evaluate the stub() expression to get the column parameter if any
+        stub_result <- rlang::eval_tidy(quo)
+        column_idx <- attr(stub_result, "column")
+        
+        # If column index is specified, select that specific stub column
+        # (1 = rightmost, 2 = second from right, etc.)
+        if (!is.null(column_idx)) {
+          # Validate the column index
+          if (!is.numeric(column_idx) || length(column_idx) != 1 || column_idx < 1) {
+            cli::cli_abort(
+              "The {.arg column} argument in {.fn stub} must be a single positive integer."
+            )
+          }
+          
+          # Check if the requested column exists
+          if (column_idx > length(stub_var)) {
+            cli::cli_abort(c(
+              "Cannot select stub column {column_idx}.",
+              "i" = "This table has {length(stub_var)} stub column{?s}."
+            ))
+          }
+          
+          # Select from right to left (1 = rightmost)
+          selected_stub_var <- stub_var[length(stub_var) - column_idx + 1]
+          stub_col <- 1
+          names(stub_col) <- selected_stub_var
+          return(stub_col)
+          
+        } else {
+          # No column specified, return all stub columns
+          stub_col <- seq_along(stub_var)
+          names(stub_col) <- stub_var
+          return(stub_col)
+        }
       } else {
         return(NULL)
       }

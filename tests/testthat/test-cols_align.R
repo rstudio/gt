@@ -247,8 +247,9 @@ test_that("The stub gets its alignment set properly with `cols_align()`", {
     c("stub", "vals")
   )
 
-  # Expect an error if using `stub()` when there is no stub
-  expect_error(
+  # When using `stub()` on a table with no stub, it should not error
+  # (consistent with tidyselect behavior where selecting nothing is valid)
+  expect_no_error(
     gt(tbl) |>
     cols_align(align = "center", columns = stub())
   )

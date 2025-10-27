@@ -776,15 +776,20 @@ create_body_component_l <- function(data, colwidth_df) {
         for (row_idx in 2:n_rows) {
           should_hide <- TRUE
           
-          # Check if current value matches previous value
-          if (stub_matrix[row_idx, col_idx] != stub_matrix[row_idx - 1, col_idx]) {
+          # Check if current value matches previous value (handle NAs properly)
+          curr_val <- stub_matrix[row_idx, col_idx]
+          prev_val <- stub_matrix[row_idx - 1, col_idx]
+          
+          if (!identical(curr_val, prev_val)) {
             should_hide <- FALSE
           }
           
           # Also check that all columns to the left match
           if (should_hide && col_idx > 1) {
             for (left_col_idx in 1:(col_idx - 1)) {
-              if (stub_matrix[row_idx, left_col_idx] != stub_matrix[row_idx - 1, left_col_idx]) {
+              curr_left <- stub_matrix[row_idx, left_col_idx]
+              prev_left <- stub_matrix[row_idx - 1, left_col_idx]
+              if (!identical(curr_left, prev_left)) {
                 should_hide <- FALSE
                 break
               }

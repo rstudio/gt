@@ -999,6 +999,14 @@ adjust_luminance <- function(
 #' operations, the `stub()` select helper can be used. This obviates the need
 #' to use the name of the column that was selected as the stub column.
 #'
+#' @param column *Stub column selection*
+#'
+#'   `scalar<integer>` // *default:* `NULL` (optional)
+#'
+#'   For tables with multi-column stubs, optionally specify which stub column to
+#'   target. Use `1` for the rightmost stub column, `2` for the second from
+#'   right, etc. If `NULL` (the default), all stub columns are selected.
+#'
 #' @return A character vector of class `"stub_column"`.
 #'
 #' @section Examples:
@@ -1031,6 +1039,40 @@ adjust_luminance <- function(
 #' `r man_get_image_tag(file = "man_stub_1.png")`
 #' }}
 #'
+#' For multi-column stubs, you can set widths for all stub columns together or
+#' target specific columns individually:
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(num, char, row, group) |>
+#'   gt(rowname_col = c("group", "row")) |>
+#'   cols_width(
+#'     stub() ~ px(200),        # All stub columns get 200px
+#'     everything() ~ px(100)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_stub_2.png")`
+#' }}
+#'
+#' Or target specific stub columns (1 = rightmost, 2 = second from right):
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(num, char, row, group) |>
+#'   gt(rowname_col = c("group", "row")) |>
+#'   cols_width(
+#'     stub(1) ~ px(70),        # Rightmost stub column (row)
+#'     stub(2) ~ px(200),       # Second stub column (group)
+#'     everything() ~ px(100)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_stub_3.png")`
+#' }}
+#'
 #' @family helper functions
 #' @section Function ID:
 #' 8-10
@@ -1039,9 +1081,10 @@ adjust_luminance <- function(
 #' `v0.8.0` (November 16, 2022)
 #'
 #' @export
-stub <- function() {
+stub <- function(column = NULL) {
   x <- "::stub::"
   class(x) <- "stub_column"
+  attr(x, "column") <- column
   x
 }
 
