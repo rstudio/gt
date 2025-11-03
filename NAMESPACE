@@ -256,12 +256,9 @@ export(web_image)
 export(where)
 import(rlang)
 importFrom(dplyr,vars)
-<<<<<<< HEAD
 importFrom(fs,path_expand)
-=======
 importFrom(grDevices,col2rgb)
 importFrom(grDevices,rgb)
->>>>>>> 90cfef22 (`ooxml_tbl_cell_properties()`  (#3))
 importFrom(htmltools,as.tags)
 importFrom(htmltools,css)
 importFrom(magrittr,"%>%")
