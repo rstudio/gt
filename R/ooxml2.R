@@ -275,7 +275,7 @@ ooxml_text <- function(ooxml_type, x, ..., space = c("default", "preserve")) {
 
   tag <- switch_ooxml_tag(ooxml_type, "t")
   ooxml_tag(tag, tag_class = "ooxml_text",
-    ooxml_space_attr(space),
+    "xml:space" = rlang::arg_match(space),
     htmltools::HTML(format(x))
   )
 }
@@ -649,13 +649,6 @@ ooxml_list <- function(ooxml_type, tag_class, tag_fun, ...) {
     }
     x
   })
-}
-
-ooxml_space_attr <- function(space = c("default", "preserve")) {
-  space <- rlang::arg_match(space)
-  if (identical(space, "preserve")) {
-    splice3("xml:space" = "preserve")
-  }
 }
 
 splice3 <- function(...) {
