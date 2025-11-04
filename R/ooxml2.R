@@ -98,15 +98,15 @@ ooxml_tbl_grid <- function(ooxml_type, ...) {
 
 # tbl_row -----------------------------------------------------------
 
-ooxml_tbl_row <- function(ooxml_type, ..., is_header = FALSE, hidden = FALSE, height = 10) {
+ooxml_tbl_row <- function(ooxml_type, ..., is_header = FALSE, split = FALSE, height = 10) {
   content <- ooxml_list(ooxml_type, "ooxml_tbl_cell", ooxml_tbl_cell, ...)
 
   switch_ooxml(ooxml_type,
     word = {
       properties <- ooxml_tag("w:trPr", tag_class = "ooxml_tbl_row_properties",
         if (is_header) ooxml_tag("w:tblHeader"),
-        if (hidden)    ooxml_tag("w:cantSplit"),
-        ooxml_tbl_row_height(ooxml_type, value = height)
+        if (!split)    ooxml_tag("w:cantSplit"),
+        # ooxml_tbl_row_height(ooxml_type, value = height)
       )
       ooxml_tag("w:tr", tag_class = "ooxml_tbl_row",
         properties,
@@ -212,8 +212,8 @@ ooxml_tbl_cell_properties <- function(ooxml_type, ..., borders = NULL, fill = NU
 
   tag <- switch_ooxml_tag(ooxml_type, "tcPr")
   ooxml_tag(tag, tag_class = "ooxml_tbl_cell_properties",
-    margins,
     borders,
+    margins,
     fill,
     v_merge,
     v_align,

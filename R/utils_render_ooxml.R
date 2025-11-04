@@ -10,15 +10,15 @@ as_ooxml_tbl <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  tbl_properties <- create_table_properties_ooxml(ooxml_type, data = data, align = align)
+  tbl_properties <- create_table_properties_ooxml(ooxml_type, data = data, align = align, split = split)
 
   # <a:tblGrid> is not optional in pptx, so create_table_grid must set it
   #
   # things are different in word where we can have w:tblLayoutType="autofit" and then
   # not have a <w:tblGrid> node
   tbl_grid         <- create_table_grid_ooxml(ooxml_type, data = data)
-  tbl_spanner_rows <- create_spanner_rows_ooxml(ooxml_type, data = data)
-  tbl_table_rows   <- create_table_rows_ooxml(ooxml_type, data = data)
+  tbl_spanner_rows <- create_spanner_rows_ooxml(ooxml_type, data = data, split = split)
+  tbl_table_rows   <- create_table_rows_ooxml(ooxml_type, data = data, split = split)
 
   ooxml_tbl(ooxml_type,
     properties = tbl_properties,
@@ -31,7 +31,7 @@ as_ooxml_tbl <- function(
 
 # table properties --------------------------------------------------------
 
-create_table_properties_ooxml <- function(ooxml_type, data , align = c("center", "start", "end"), look = c("first row")) {
+create_table_properties_ooxml <- function(ooxml_type, data, align = c("center", "start", "end"), look = c("first row")) {
   # TODO: set layout as autofit when dt_boxhead_get()$column_width
   #       are all NULL and figure out equivalent in pptx
   ooxml_tbl_properties(ooxml_type,
@@ -57,7 +57,7 @@ create_table_grid_ooxml <- function(ooxml_type, data) {
 
 # spanner rows ------------------------------------------------------------
 
-create_spanner_rows_ooxml <- function(ooxml_type, data) {
+create_spanner_rows_ooxml <- function(ooxml_type, data, split = FALSE) {
   if (dt_options_get_value(data = data, option = "column_labels_hidden")) {
     return(NULL)
   }
@@ -67,13 +67,13 @@ create_spanner_rows_ooxml <- function(ooxml_type, data) {
 
   spanner_rows <- lapply(seq_len(spanner_row_count),
     create_spanner_row_ooxml,
-    ooxml_type = ooxml_type, data = data
+    ooxml_type = ooxml_type, data = data, split = split
   )
 
   spanner_rows
 }
 
-create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx) {
+create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FALSE) {
   styles_tbl <- dt_styles_get(data = data)
   column_labels_vlines_color        <- dt_options_get_value(data = data, option = "column_labels_vlines_color")
   column_labels_border_top_color    <- dt_options_get_value(data = data, option = "column_labels_border_top_color")
@@ -145,7 +145,9 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx) {
 
   })
 
-  ooxml_tbl_row(ooxml_type, stub_cell, !!!cells, is_header = TRUE)
+  ooxml_tbl_row(ooxml_type, split = split, is_header = TRUE,
+    stub_cell, !!!cells
+  )
 }
 
 ## spanner stub cell ------------------------------------------------------------
@@ -208,16 +210,16 @@ create_spanner_row_stub_cell_ooxml <- function(ooxml_type, data, i = 1) {
 
 # table rows ---------------------------------------------------------------
 
-create_table_rows_ooxml <- function(ooxml_type, data) {
+create_table_rows_ooxml <- function(ooxml_type, data, split = FALSE) {
   body <- dt_body_get(data = data)
 
   out <- list()
   for (i in seq_len(nrow(body))) {
     rows <- list3(
-      create_group_heading_row_ooxml(ooxml_type, data, i),
-      create_summary_section_row_ooxml(ooxml_type, data, i, "top"),
-      create_body_row_ooxml(ooxml_type, data, i),
-      create_summary_section_row_ooxml(ooxml_type, data, i, "bottom")
+      create_group_heading_row_ooxml(ooxml_type, data, i, split = split),
+      create_summary_section_row_ooxml(ooxml_type, data, i, "top", split = split),
+      create_body_row_ooxml(ooxml_type, data, i, split = split),
+      create_summary_section_row_ooxml(ooxml_type, data, i, "bottom", split = split)
     )
     out <- append(out, rows)
   }
@@ -225,7 +227,7 @@ create_table_rows_ooxml <- function(ooxml_type, data) {
   out
 }
 
-create_group_heading_row_ooxml <- function(ooxml_type, data, i) {
+create_group_heading_row_ooxml <- function(ooxml_type, data, i, split = FALSE) {
   groups_rows_df <- dt_groups_rows_get(data = data)
   if (is.null(groups_rows_df) || !i %in% groups_rows_df$row_start) {
     return(NULL)
@@ -245,8 +247,7 @@ create_group_heading_row_ooxml <- function(ooxml_type, data, i) {
   )
   cell_style <- cell_style$styles[1][[1]]
 
-  ooxml_tbl_row(ooxml_type,
-    properties = ooxml_tbl_properties(ooxml_type, hidden = FALSE),
+  ooxml_tbl_row(ooxml_type, split = split,
     ooxml_tbl_cell(ooxml_type,
       ooxml_paragraph(ooxml_type,
         ooxml_run(ooxml_type,
@@ -315,13 +316,13 @@ create_summary_section_row_ooxml <- function(ooxml_type, data, i, side = c("top"
 
 # body row ----------------------------------------------------------------
 
-create_body_row_ooxml <- function(ooxml_type, data, i) {
+create_body_row_ooxml <- function(ooxml_type, data, i, split = FALSE) {
   vars <- dt_boxhead_get_vars_default(data = data)
   data_cells <- lapply(seq_along(vars), \(j) {
     create_body_row_data_cell_ooxml(ooxml_type, data, i = i, j = j)
   })
 
-  ooxml_tbl_row(ooxml_type,
+  ooxml_tbl_row(ooxml_type, split = split,
     create_body_row_stub_cell_ooxml(ooxml_type, data, i),
     !!!data_cells
   )
