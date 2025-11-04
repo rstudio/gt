@@ -262,12 +262,17 @@ create_group_heading_row_ooxml <- function(ooxml_type, data, i, split = FALSE) {
         fill     = cell_style[["cell_fill"]][["color"]],
         v_align  = cell_style[["cell_text"]][["v_align"]],
         col_span = NULL, # TODO: = colspans[i],
-        margins  = list(top = list(width = 25))
+        margins  = list(
+          top = list(width = 25)
+          # TODO: mark with cell_margin() as in the old xml variant
+          #       also should this come from somewhere or just be abritrary 25 as here
+        )
       )
     )
   )
 }
 
+# TODO
 create_summary_section_row_ooxml <- function(ooxml_type, data, i, side = c("top", "bottom")) {
   styles_tbl <- dt_styles_get(data = data)
   summaries_present <- dt_summary_exists(data = data)
@@ -391,9 +396,7 @@ create_body_row_cell_ooxml <- function(ooxml_type, data, cell_style, text) {
       ),
       fill     = cell_style[["cell_fill"]][["color"]],
       v_align  = cell_style[["cell_text"]][["v_align"]],
-      margins  = list(
-        top = list(width = 25)
-      )
+      margins  = NULL # TODO: is there something in cell_style for it ?
     )
   )
 }
