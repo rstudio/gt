@@ -309,19 +309,21 @@ ooxml_cell_border <- function(ooxml_type, ..., location, color = "black", size =
     word = {
       tag      <- arg_match_names(location, c("top" = "w:top", "left" = "w:start", "bottom" = "w:bottom", "right" = "w:end"))
       color    <- as_hex_code(color)
-      size     <- check_between(size, min = .25, max = 12, default = 4)
+      size     <- check_between(size, min = .25, max = 12, null_ok = TRUE)
       type     <- arg_match_names(type, c("solid" = "single", "dashed" = "dashed", "dotted" = "dotted", "hidden" = "none", "double" = "double"))
 
       ooxml_tag(tag, tag_class = "ooxml_cell_border",
+        `w:val`   = type,
+        `w:space` = 0,
         `w:color` = color,
-        `w:size`  = size * 8, # size is in 1/8 points
-        `w:val`   = type
+        `w:size`  = if (!is.null(size)) size * 8
       )
     },
     pptx = {
-      tag <- arg_match_names(location, c("top"="a:lnT","left"="a:lnL","bottom"="a:lnB","right"="a:lnR"))
-      size     <- check_between(size, min = 0, max = 10, default = .5)
-      style    <- convert_border_style_pptx(type)
+      tag   <- arg_match_names(location, c("top"="a:lnT","left"="a:lnL","bottom"="a:lnB","right"="a:lnR"))
+      # TODO: is null ok as in the word version ?
+      size  <- check_between(size, min = 0, max = 10, default = .5)
+      style <- convert_border_style_pptx(type)
 
       if (is.null(style[["compound"]])) {
         return(NULL)
@@ -580,8 +582,11 @@ arg_match_names <- function(arg, values = NULL, error_arg = caller_arg(arg), err
   values[[arg]]
 }
 
-check_between <- function(x = NULL, min, max, default, error_arg = caller_arg(x), error_call = caller_env()){
-  if (is.null(x)){
+check_between <- function(x = NULL, min, max, default, null_ok = FALSE, error_arg = caller_arg(x), error_call = caller_env()){
+  if (is.null(x)) {
+    if (isTRUE(null_ok)) {
+      return(NULL)
+    }
     x <- default
   }
   if (!is.numeric(x) || length(x) != 1 || x < min || x > max) {
