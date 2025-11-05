@@ -264,8 +264,8 @@ ooxml_run <- function(ooxml_type, x, ..., properties = NULL) {
 
   tag <- switch_ooxml_tag(ooxml_type, "r")
   ooxml_tag(tag, tag_class = "ooxml_run",
-    ooxml_text(ooxml_type, x),
-    check_inherits(properties, "ooxml_run_properties", accept_null = TRUE)
+    check_inherits(properties, "ooxml_run_properties", accept_null = TRUE),
+    ooxml_text(ooxml_type, x)
   )
 }
 
