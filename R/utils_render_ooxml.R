@@ -367,6 +367,14 @@ create_body_row_data_cell_ooxml <- function(ooxml_type, data, i, j) {
   )
   cell_style <- cell_style$styles[1][[1]]
 
+  if (is.null(cell_style)) {
+    cell_style <- list(cell_text = list(align = NULL))
+  }
+  if (is.null(cell_style[["cell_text"]][["align"]])) {
+    boxh  <- dt_boxhead_get(data = data)
+    cell_style[["cell_text"]][["align"]] <- vctrs::vec_slice(boxh$column_align, boxh$type == "default")[j]
+  }
+
   text <- as.character(body[i, j])
   create_body_row_cell_ooxml(ooxml_type, data, cell_style = cell_style, text = text)
 }
@@ -379,12 +387,11 @@ create_body_row_cell_ooxml <- function(ooxml_type, data, cell_style, text) {
   table_border_top_color    <- dt_options_get_value(data, option = "table_border_top_color")
 
   ooxml_tbl_cell(ooxml_type,
-    ooxml_paragraph(ooxml_type,
-      ooxml_run(ooxml_type,
+    ooxml_paragraph(ooxml_type, properties = ooxml_paragraph_properties(ooxml_type, cell_style = cell_style),
+      ooxml_run(ooxml_type, properties = ooxml_run_properties(ooxml_type, cell_style = cell_style),
         ooxml_text(ooxml_type, text,
           space = cell_style[["cell_text"]][["whitespace"]] %||% "default"
-        ),
-        properties = ooxml_run_properties(ooxml_type, cell_style = cell_style)
+        )
       )
     ),
     properties = ooxml_tbl_cell_properties(ooxml_type,

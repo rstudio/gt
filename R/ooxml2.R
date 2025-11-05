@@ -227,7 +227,34 @@ ooxml_paragraph <- function(ooxml_type, ..., properties = NULL) {
   runs <- ooxml_list(ooxml_type, "ooxml_run", ooxml_run, ...)
 
   tag <- switch_ooxml_tag(ooxml_type, "p")
-  ooxml_tag(tag, tag_class = "ooxml_paragraph", !!!runs)
+  ooxml_tag(tag, tag_class = "ooxml_paragraph",
+    check_inherits(properties, "ooxml_paragraph_properties", accept_null = TRUE),
+    !!!runs
+  )
+}
+
+# ooxml_paragraph_properties ---------------------------------------------------
+
+ooxml_paragraph_properties <- function(ooxml_type,
+  ...,
+  align = cell_style[["cell_text"]][["align"]] %||% "left",
+  cell_style = NULL
+) {
+  rlang::check_dots_empty()
+
+  switch_ooxml(ooxml_type,
+    word = ooxml_tag("w:pPr", tag_class = "ooxml_paragraph_properties",
+      ooxml_tag("w:spacing", "w:before" = "0", "w:after" = "60"),
+      ooxml_tag("w:keepNext"),
+      ooxml_tag("w:jc", "w:val" = arg_match_names(align, values = c(left = "start", right = "end", center = "center")))
+    ),
+    pptx = ooxml_tag("a:pPr", tag_class = "ooxml_paragraph_properties",
+      "algn" = arg_match_names(align, values = c(left = "l", right = "r", center = "ctr")),
+
+      ooxml_tag("a:spcBef", ooxml_tag("a:spcPts", val = "0")),
+      ooxml_tag("a:spcAft", ooxml_tag("a:spcPts", val = "300")),
+    )
+  )
 }
 
 # ooxml_run ---------------------------------------------------------------
@@ -246,9 +273,9 @@ ooxml_run <- function(ooxml_type, x, ..., properties = NULL) {
 
 ooxml_run_properties <- function(ooxml_type,
   ...,
-  font   = cell_style[["cell_text"]][["font"]],
+  font   = cell_style[["cell_text"]][["font"]] %||% "Calibri",
   style  = cell_style[["cell_text"]][["style"]],
-  size   = cell_style[["cell_text"]][["size"]] %||% 5,
+  size   = cell_style[["cell_text"]][["size"]] %||% 10,
   color  = cell_style[["cell_text"]][["color"]],
   weight = NULL,
   cell_style
@@ -631,7 +658,8 @@ switch_ooxml <- function(
 
 switch_ooxml_tag <- function(ooxml_type = c("word", "pptx"), tag, word = tag, pptx = tag, error_call = caller_env()) {
   suffix <- switch_ooxml(ooxml_type, word = word, pptx = pptx, error_call = error_call)
-  paste0("w:", suffix)
+  prefix <- switch(ooxml_type, word = "w", pptx = "a")
+  paste0(prefix, ":", suffix)
 }
 
 list3 <- function(...) {

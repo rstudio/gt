@@ -2680,7 +2680,6 @@ xml_table_cell <- function(
 # Table Cell content management/Processing ----
 
 process_cell_content <- function(x, ...) {
-
   processed <- parse_to_xml(x)
   processed <- process_cell_content_ooxml_t(processed, ...)
   processed <- process_cell_content_ooxml_r(processed, ...)
