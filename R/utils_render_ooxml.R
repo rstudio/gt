@@ -121,25 +121,31 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
     borders <- list(
       left = if (i == 1) { list(color = column_labels_vlines_color) },
       right = if (i == (length(spanner_row_values) + 1 - colspans[i] )) { list(color = column_labels_vlines_color) },
-      bottom = list(size = 8, color = column_labels_border_bottom_color),
-      top = if (span_row_idx == 1) { list(size = 8, color = column_labels_border_top_color) }
+      bottom = list(size = 2, color = column_labels_border_bottom_color),
+      top = if (span_row_idx == 1) { list(size = 2, color = column_labels_border_top_color) }
     )
 
-    ooxml_tbl_cell(ooxml_type,
-      ooxml_paragraph(ooxml_type,
-        ooxml_run(ooxml_type,
+    cell_properties <- ooxml_tbl_cell_properties(ooxml_type,
+      borders  = borders,
+      fill     = cell_style[["cell_fill"]][["color"]],
+      v_align  = cell_style[["cell_text"]][["v_align"]],
+      col_span = colspans[i]
+    )
+
+
+    paragraph_properties <- ooxml_paragraph_properties(ooxml_type,
+      align = cell_style[["cell_text"]][["align"]] %||% "center",
+      cell_style = cell_style
+    )
+
+    ooxml_tbl_cell(ooxml_type, properties = cell_properties,
+      ooxml_paragraph(ooxml_type, properties = paragraph_properties,
+        ooxml_run(ooxml_type, properties = ooxml_run_properties(ooxml_type, cell_style = cell_style),
           ooxml_text(ooxml_type,
             spanner_row_values[i],
             space = cell_style[["cell_text"]][["whitespace"]] %||% "default"
-          ),
-          properties = ooxml_run_properties(ooxml_type, cell_style = cell_style)
+          )
         )
-      ),
-      properties = ooxml_tbl_cell_properties(ooxml_type,
-        borders  = borders,
-        fill     = cell_style[["cell_fill"]][["color"]],
-        v_align  = cell_style[["cell_text"]][["v_align"]],
-        col_span = colspans[i]
       )
     )
 
@@ -367,27 +373,25 @@ create_body_row_data_cell_ooxml <- function(ooxml_type, data, i, j) {
   )
   cell_style <- cell_style$styles[1][[1]]
 
-  if (is.null(cell_style)) {
-    cell_style <- list(cell_text = list(align = NULL))
-  }
-  if (is.null(cell_style[["cell_text"]][["align"]])) {
-    boxh  <- dt_boxhead_get(data = data)
-    cell_style[["cell_text"]][["align"]] <- vctrs::vec_slice(boxh$column_align, boxh$type == "default")[j]
-  }
+  boxh  <- dt_boxhead_get(data = data)
 
   text <- as.character(body[i, j])
-  create_body_row_cell_ooxml(ooxml_type, data, cell_style = cell_style, text = text)
+  create_body_row_cell_ooxml(ooxml_type, data, text,
+    cell_style = cell_style,
+    align = cell_style[["cell_text"]][["align"]] %||% vctrs::vec_slice(boxh$column_align, boxh$type == "default")[j]
+  )
 }
 
 
-create_body_row_cell_ooxml <- function(ooxml_type, data, cell_style, text) {
+create_body_row_cell_ooxml <- function(ooxml_type, data, text, cell_style, align = cell_style[["cell_text"]][["align"]]) {
   table_body_hlines_color   <- dt_options_get_value(data = data, option = "table_body_hlines_color")
   table_body_vlines_color   <- dt_options_get_value(data = data, option = "table_body_vlines_color")
   table_border_bottom_color <- dt_options_get_value(data, option = "table_border_bottom_color")
   table_border_top_color    <- dt_options_get_value(data, option = "table_border_top_color")
 
+  paragraph_properties <- ooxml_paragraph_properties(ooxml_type, cell_style = cell_style)
   ooxml_tbl_cell(ooxml_type,
-    ooxml_paragraph(ooxml_type, properties = ooxml_paragraph_properties(ooxml_type, cell_style = cell_style),
+    ooxml_paragraph(ooxml_type, properties = paragraph_properties,
       ooxml_run(ooxml_type, properties = ooxml_run_properties(ooxml_type, cell_style = cell_style),
         ooxml_text(ooxml_type, text,
           space = cell_style[["cell_text"]][["whitespace"]] %||% "default"
