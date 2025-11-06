@@ -95,6 +95,8 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
 
   stub_cell <- create_spanner_row_stub_cell_ooxml(ooxml_type, data, i = span_row_idx)
 
+  col_alignment <- get_col_alignment(data)
+
   cells <- lapply(seq_along(spanner_row_values), \(i) {
     if (colspans[i] == 0) {
       return (NULL)
@@ -128,9 +130,16 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
       col_span = colspans[i]
     )
 
+    align <- cell_style[["cell_text"]][["align"]]
+    if (is.null(align)) {
+      if (span_row_idx == nrow(spanners)) {
+        align <- col_alignment[i]
+      } else {
+        align <- "center"
+      }
+    }
     paragraph_properties <- ooxml_paragraph_properties(ooxml_type,
-      align = cell_style[["cell_text"]][["align"]] %||% "center",
-      cell_style = cell_style
+      align = align, cell_style = cell_style
     )
 
     ooxml_tbl_cell(ooxml_type, properties = cell_properties,
@@ -339,7 +348,7 @@ create_summary_section_row_ooxml <- function(ooxml_type, data, i, side = c("top"
 }
 
 
-# body row ----------------------------------------------------------------
+## body row ----------------------------------------------------------------
 
 create_body_row_ooxml <- function(ooxml_type, data, i, split = FALSE) {
   vars <- dt_boxhead_get_vars_default(data = data)
@@ -352,8 +361,6 @@ create_body_row_ooxml <- function(ooxml_type, data, i, split = FALSE) {
     !!!data_cells
   )
 }
-
-## stub cell ---------------------------------------------------------------
 
 create_body_row_stub_cell_ooxml <- function(ooxml_type, data, i) {
   stub_components   <- dt_stub_components(data = data)
@@ -373,8 +380,6 @@ create_body_row_stub_cell_ooxml <- function(ooxml_type, data, i) {
     create_body_row_cell_ooxml(ooxml_type, data, cell_style = cell_style, text = text)
   }
 }
-
-## data cell ---------------------------------------------------------------
 
 create_body_row_data_cell_ooxml <- function(ooxml_type, data, i, j) {
   body <- dt_body_get(data = data)
@@ -426,5 +431,11 @@ create_body_row_cell_ooxml <- function(ooxml_type, data, text, cell_style, align
   )
 }
 
+# tools ------------------------------------------------------------------------
+
+get_col_alignment <- function(data) {
+  boxh <- dt_boxhead_get(data = data)
+  vctrs::vec_slice(boxh$column_align, boxh$type == "default")
+}
 
 
