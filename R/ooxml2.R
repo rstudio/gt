@@ -278,7 +278,7 @@ ooxml_run_properties <- function(ooxml_type,
   size   = cell_style[["cell_text"]][["size"]] %||% 10,
   color  = cell_style[["cell_text"]][["color"]],
   weight = NULL,
-  cell_style
+  cell_style = NULL
 ){
   rlang::check_dots_empty()
 
@@ -343,7 +343,7 @@ ooxml_cell_border <- function(ooxml_type, ..., location, color = "black", size =
         `w:val`   = type,
         `w:space` = 0,
         `w:color` = color,
-        `w:size`  = if (!is.null(size)) size * 8
+        `w:sz`    = if (!is.null(size)) size * 8
       )
     },
     pptx = {
