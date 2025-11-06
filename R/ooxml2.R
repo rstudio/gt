@@ -104,8 +104,8 @@ ooxml_tbl_row <- function(ooxml_type, ..., is_header = FALSE, split = FALSE, hei
   switch_ooxml(ooxml_type,
     word = {
       properties <- ooxml_tag("w:trPr", tag_class = "ooxml_tbl_row_properties",
-        if (is_header) ooxml_tag("w:tblHeader"),
         if (!split)    ooxml_tag("w:cantSplit"),
+        if (is_header) ooxml_tag("w:tblHeader"),
         # ooxml_tbl_row_height(ooxml_type, value = height)
       )
       ooxml_tag("w:tr", tag_class = "ooxml_tbl_row",
