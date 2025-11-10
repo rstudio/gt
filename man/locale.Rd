@@ -36,25 +36,26 @@ Will only affect the output of one specific function (or override global setting
 }
 
 \examples{
-# The Spanish locale uses `.` as thousands sep (English uses ,), and
-# uses , as the decimal mark
+# The Spanish locale uses `.` as thousands sep (English uses `,`) and uses
+# a `,` as the decimal mark
 
-# Using the locale in gt() will format automatically all output in subsequent
-# fmt_*() calls.
-exibble \%>\%
-  gt(locale = "es-AR") \%>\%
+# Using the locale in `gt()` will format automatically all output in
+# subsequent `fmt_*()` calls.
+exibble |>
+  gt(locale = "es-AR") |>
   fmt_number()
 
-# Only format currency as mexican peso
+# Only format currency as Mexican peso
 
-exibble \%>\%
-  gt(locale = "fr") \%>\%
+exibble |>
+  gt(locale = "fr") |>
   fmt_currency(currency, locale = "es-MX")
 
-# will use sep_mark provided
-exibble \%>\%
-  gt(locale = "fr") \%>\%
+# will use the provided `sep_mark`
+exibble |>
+  gt(locale = "fr") |>
   fmt_currency(currency, sep_mark = "", locale = "es-MX")
+
 # Use your imagination, and mix and match.
 
 }

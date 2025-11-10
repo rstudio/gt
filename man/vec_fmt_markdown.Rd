@@ -83,7 +83,7 @@ or LaTeX
 
 \section{Function ID}{
 
-15-17
+15-18
 }
 
 \section{Function Introduced}{
@@ -106,6 +106,7 @@ Other vector formatting functions:
 \code{\link{vec_fmt_index}()},
 \code{\link{vec_fmt_integer}()},
 \code{\link{vec_fmt_number}()},
+\code{\link{vec_fmt_number_si}()},
 \code{\link{vec_fmt_partsper}()},
 \code{\link{vec_fmt_percent}()},
 \code{\link{vec_fmt_roman}()},

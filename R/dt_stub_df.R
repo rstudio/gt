@@ -36,6 +36,7 @@ dt_stub_df_init <- function(
     data,
     rowname_col,
     groupname_col,
+    omit_na_group,
     row_group.sep,
     process_md
 ) {
@@ -72,6 +73,24 @@ dt_stub_df_init <- function(
       for (col in rowname_col) {
         data <- dt_boxhead_set_stub(data = data, var = col)
       }
+      
+      # Reorder the boxhead to match the order specified in rowname_col
+      # This ensures stub columns appear in the order the user specified
+      dt_boxhead <- dt_boxhead_get(data = data)
+      
+      # Split boxhead into stub and non-stub rows
+      stub_rows <- dt_boxhead[dt_boxhead$var %in% rowname_col, ]
+      non_stub_rows <- dt_boxhead[!dt_boxhead$var %in% rowname_col, ]
+      
+      # Reorder stub rows to match rowname_col order
+      stub_rows <- stub_rows[match(rowname_col, stub_rows$var), ]
+      
+      # Combine: stub rows first (in specified order), then non-stub rows
+      dt_boxhead <- rbind(stub_rows, non_stub_rows)
+      rownames(dt_boxhead) <- NULL
+      
+      # Update the boxhead
+      data <- dt_boxhead_set(data = data, boxh = dt_boxhead)
       
       # Use the rightmost column as the primary row ID
       rightmost_col <- rowname_col[length(rowname_col)]
@@ -132,6 +151,21 @@ dt_stub_df_init <- function(
       row_group_ids <- row_group_labels
     }
 
+    # If omit_na_group is TRUE, set group_id to NA_character_ for rows
+    # where groupname_col is NA
+    if (omit_na_group) {
+      # Check if the original groupname_col values are NA
+      na_rows <- is.na(data_tbl[[groupname_col[1]]])
+      if (length(groupname_col) > 1) {
+        # For multiple columns, check if all are NA
+        for (i in seq_along(groupname_col)) {
+          na_rows <- na_rows & is.na(data_tbl[[groupname_col[i]]])
+        }
+      }
+      row_group_ids[na_rows] <- NA_character_
+      row_group_labels[na_rows] <- NA_character_
+    }
+
     # Place the `row_group_ids` values into `stub_df$group_id`
     stub_df[["group_id"]] <- row_group_ids
 
@@ -140,11 +174,20 @@ dt_stub_df_init <- function(
       stub_df$group_label <-
         lapply(
           seq_along(row_group_labels),
-          FUN = function(x) md(row_group_labels[x])
+          FUN = function(x) {
+            if (is.na(row_group_labels[x])) {
+              NULL
+            } else {
+              md(row_group_labels[x])
+            }
+          }
         )
 
     } else {
-      stub_df[["group_label"]] <- as.list(row_group_labels)
+      stub_df[["group_label"]] <- lapply(
+        row_group_labels,
+        FUN = function(x) if (is.na(x)) NULL else x
+      )
     }
 
     data <- dt_boxhead_set_row_group(data = data, vars = groupname_col)

@@ -1,7 +1,7 @@
 Type: Package
 Package: gt
 Title: Easily Create Presentation-Ready Display Tables
-Version: 1.0.0.9000
+Version: 1.1.0.9000
 Authors@R: c(
     person("Richard", "Iannone", , "rich@posit.co", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3925-190X")),
@@ -80,4 +80,4 @@ Config/testthat/parallel: true
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3

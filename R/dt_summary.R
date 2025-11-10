@@ -469,10 +469,10 @@ dt_summary_build <- function(data, context) {
         .by = dplyr::all_of(rowname_col_private)
       )
 
-    summary_df_display_list[[i]] <-
-      summary_df_display_list[[i]][
-        match(arrangement, summary_df_display_list[[i]][[rowname_col_private]]), ] %>%
-      replace(is.na(.), missing_text)
+    temp_df <- summary_df_display_list[[i]][
+      match(arrangement, summary_df_display_list[[i]][[rowname_col_private]]), ]
+
+    summary_df_display_list[[i]] <- replace(temp_df, is.na(temp_df), missing_text)
   }
 
   # Return a list of lists, each of which have summary data frames for

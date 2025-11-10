@@ -17,13 +17,13 @@ tbl <-
 
 # Create a display table
 cell_styles_tbl <-
-  gt(tbl) %>%
+  gt(tbl) |>
   tab_style(
     style = cell_text(size = px(28)),
     locations = cells_column_labels(
       columns = c(value, value_2)
     )
-  ) %>%
+  ) |>
   tab_style(
     style = list(
       cell_fill(color = "orange"),

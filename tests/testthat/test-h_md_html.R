@@ -50,17 +50,16 @@ test_that("tab_spanner() works with `md()`/`html()`", {
    )
 })
 
-test_that(
-  "cols_label() works with `md()`/`html()`",
-  {
+test_that("cols_label() works with `md()`/`html()`", {
 
     # Expect the rendered column labels to be
     # exactly as provided
-    tab2 <- tab %>%
+    tab2 <-
+      tab |>
       tab_spanner(
         label = "date/time",
         columns = c(date, time, datetime)
-      ) %>%
+      ) |>
       cols_label(
         num  = "Number",
         char = "Character",
@@ -70,6 +69,7 @@ test_that(
         datetime = "Date-Time",
         currency = "Currency"
       )
+
     expect_match_html(
       tab2,
       c(">Number<", ">Character<", ">Factor<", ">Date<", ">Time<", ">Date-Time<", ">Currency<")
@@ -77,11 +77,12 @@ test_that(
 
     # Expect the rendered column labels to be in
     # HTML (through Markdown formatting)
-    tab3 <- tab %>%
+    tab3 <-
+      tab |>
       tab_spanner(
         label = "date/time",
         columns = c(date, time, datetime)
-      ) %>%
+      ) |>
       cols_label(
         num  = md("**Number**"),
         char = md("`Character`"),
@@ -91,6 +92,7 @@ test_that(
         datetime = md("*Date-Time*"),
         currency = md("**Currency**")
       )
+
     expect_match_html(
       tab3,
       c(
@@ -106,11 +108,12 @@ test_that(
 
     # Expect the rendered column labels to be in
     # HTML (through HTML formatting)
-    tab4 <- tab %>%
+    tab4 <-
+      tab |>
       tab_spanner(
         label = "date/time",
         columns = c(date, time, datetime)
-      ) %>%
+      ) |>
       cols_label(
         num  = html("<strong>Number</strong>"),
         char = html("<code>Character</code>"),
@@ -120,6 +123,7 @@ test_that(
         datetime = html("<em>Date-Time</em>"),
         currency = html("<strong>Currency</strong>")
       )
+
     expect_match_html(
       tab4,
       c(

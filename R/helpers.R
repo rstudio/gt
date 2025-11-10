@@ -999,6 +999,14 @@ adjust_luminance <- function(
 #' operations, the `stub()` select helper can be used. This obviates the need
 #' to use the name of the column that was selected as the stub column.
 #'
+#' @param column *Stub column selection*
+#'
+#'   `scalar<integer>` // *default:* `NULL` (optional)
+#'
+#'   For tables with multi-column stubs, optionally specify which stub column to
+#'   target. Use `1` for the rightmost stub column, `2` for the second from
+#'   right, etc. If `NULL` (the default), all stub columns are selected.
+#'
 #' @return A character vector of class `"stub_column"`.
 #'
 #' @section Examples:
@@ -1031,6 +1039,40 @@ adjust_luminance <- function(
 #' `r man_get_image_tag(file = "man_stub_1.png")`
 #' }}
 #'
+#' For multi-column stubs, you can set widths for all stub columns together or
+#' target specific columns individually:
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(num, char, row, group) |>
+#'   gt(rowname_col = c("group", "row")) |>
+#'   cols_width(
+#'     stub() ~ px(200),        # All stub columns get 200px
+#'     everything() ~ px(100)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_stub_2.png")`
+#' }}
+#'
+#' Or target specific stub columns (1 = rightmost, 2 = second from right):
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(num, char, row, group) |>
+#'   gt(rowname_col = c("group", "row")) |>
+#'   cols_width(
+#'     stub(1) ~ px(70),        # Rightmost stub column (row)
+#'     stub(2) ~ px(200),       # Second stub column (group)
+#'     everything() ~ px(100)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_stub_3.png")`
+#' }}
+#'
 #' @family helper functions
 #' @section Function ID:
 #' 8-10
@@ -1039,9 +1081,10 @@ adjust_luminance <- function(
 #' `v0.8.0` (November 16, 2022)
 #'
 #' @export
-stub <- function() {
+stub <- function(column = NULL) {
   x <- "::stub::"
   class(x) <- "stub_column"
+  attr(x, "column") <- column
   x
 }
 
@@ -3094,6 +3137,14 @@ latex_unicode_env <- new.env()
 #'
 #'   A character vector containing the text that is to be LaTeX-escaped.
 #'
+#' @param unicode_conversion *Boolean*
+#'
+#'   `scalar<boolean>` // *default:* `TRUE`
+#'
+#'   A boolean value indicating whether unicode in text should be turned into
+#'    LaTeX.
+#'
+#'
 #' @return A character vector.
 #'
 #' @family helper functions
@@ -3104,7 +3155,7 @@ latex_unicode_env <- new.env()
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
-escape_latex <- function(text) {
+escape_latex <- function(text, unicode_conversion = getOption("gt.latex.unicode_convert",default = FALSE)) {
 
   if (length(text) < 1) return(text)
 
@@ -3127,23 +3178,37 @@ escape_latex <- function(text) {
 
   regmatches(text[!na_text], m) <- escaped_chars
 
-  if(getRversion() > package_version("4.1.3")){
+  if(unicode_conversion){
 
-    m2 <- gregexpr(paste0("[",paste0(names(latex_unicode_env$latex_unicode_chars), collapse = "|"),"]"), text[!na_text], perl = TRUE)
+    if(getRversion() > package_version("4.1.3")){
 
-    unicode_chars <- regmatches(text[!na_text], m2)
+      if(is.null(latex_unicode_env$latex_unicode_chars) & !isTRUE(latex_unicode_env$latex_unicode_char_load_fail)){
+          latex_unicode_env$latex_unicode_chars <- tryCatch(
+            eval(str2expression(
+              readLines(system.file("latex_unicode/latex_unicode_conversion.txt", package = "gt"))
+            )),
+            error = function(e){
+              latex_unicode_env$latex_unicode_char_load_fail <- TRUE
+              cli::cli_warn("A problem was encountered loading the unicode conversion data. Unicode values will not be converted into LaTeX.")
+              c()
+            })
+      }
 
-    latex_unicode <-
-      lapply(unicode_chars, function(x) {
-        new_var <- latex_unicode_env$latex_unicode_chars[x]
-        if(length(new_var) > 0){
-          x[!is.na(new_var)] <- new_var[!is.na(new_var)]
-        }
-        x
-      })
+      m2 <- gregexpr(paste0("[",paste0(names(latex_unicode_env$latex_unicode_chars), collapse = "|"),"]"), text[!na_text], perl = TRUE)
 
-    regmatches(text[!na_text], m2) <- latex_unicode
+      unicode_chars <- regmatches(text[!na_text], m2)
 
+      latex_unicode <-
+        lapply(unicode_chars, function(x) {
+          new_var <- latex_unicode_env$latex_unicode_chars[x]
+          if(length(new_var) > 0){
+            x[!is.na(new_var)] <- new_var[!is.na(new_var)]
+          }
+          x
+        })
+
+      regmatches(text[!na_text], m2) <- latex_unicode
+    }
   }
 
   text

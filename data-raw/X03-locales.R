@@ -283,10 +283,10 @@ i18n_table_labels <-
 #
 
 locales <-
-  locale_metadata_tbl %>%
-  left_join(chr_index_tbl, by = "locale") %>%
-  left_join(numbers_metadata_tbl, by = "locale") %>%
-  left_join(regional_currencies_tbl, by = "territory_name") %>%
+  locale_metadata_tbl |>
+  left_join(chr_index_tbl, by = "locale") |>
+  left_join(numbers_metadata_tbl, by = "locale") |>
+  left_join(regional_currencies_tbl, by = "territory_name") |>
   left_join(i18n_table_labels, by = "lang_name")
 
 rm(parse_locale)

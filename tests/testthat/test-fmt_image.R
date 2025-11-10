@@ -26,12 +26,12 @@ test_that("fmt_image() works correctly", {
   expect_equal(data_tbl$a, a)
 
   # Expect an error when attempting to format a column that does not exist
-  expect_error(tab %>% fmt_image(columns = b))
+  expect_error(tab |> fmt_image(columns = b))
 
   # Format the `a` column to display images
   expect_equal(
-    (tab %>%
-       fmt_image(columns = a, path = image_path, file_pattern = "metro_{x}.svg") %>%
+    (tab |>
+       fmt_image(columns = a, path = image_path, file_pattern = "metro_{x}.svg") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space:nowrap;\"><img src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHJvbGU9ImltZyIgdmlld0JveD0iMCAwIDEwNTAgMTA1MCIgc3R5bGU9ImhlaWdodDoxZW07d2lkdGg6MS4xM2VtO3ZlcnRpY2FsLWFsaWduOi0wLjEyNWVtO21hcmdpbi1sZWZ0OmF1dG87bWFyZ2luLXJpZ2h0OmF1dG87Zm9udC1zaXplOmluaGVyaXQ7b3ZlcmZsb3c6dmlzaWJsZTtwb3NpdGlvbjpyZWxhdGl2ZTsiPjxjaXJjbGUgZmlsbD0iI0ZFQ0UwMCIgY3g9IjUwMCIgY3k9IjUwMCIgcj0iNTAwIi8+PHBhdGggZmlsbD0iIzIyMUUyMCIgZD0iTTU3Ny4wMjYgNzYzLjk4N1YyMzQuMDIyaC05Mi4zNTJjLTIzLjkzOCAxOC43MTQtODEuMDE3IDU0LjAyNi0xNDIuNTY1IDgzLjI2NWwtMzIuMjg3IDE1LjE0NyAzNi4wMTQgODEuMDQyIDI3Ljk0Ni0xNC4zOGMxOS4zNzgtOS42MTEgNzIuNjE3LTM3LjM1NyA5MC42OC01MS43djQxNi41OTFoMTEyLjU2NCIvPjwvc3ZnPg==\" style=\"height:2em;vertical-align:middle;\"> <img src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHJvbGU9ImltZyIgdmlld0JveD0iMCAwIDEwNTAgMTA1MCIgc3R5bGU9ImhlaWdodDoxZW07d2lkdGg6MS4xM2VtO3ZlcnRpY2FsLWFsaWduOi0wLjEyNWVtO21hcmdpbi1sZWZ0OmF1dG87bWFyZ2luLXJpZ2h0OmF1dG87Zm9udC1zaXplOmluaGVyaXQ7b3ZlcmZsb3c6dmlzaWJsZTtwb3NpdGlvbjpyZWxhdGl2ZTsiPjxjaXJjbGUgZmlsbD0iIzAwNjVBRSIgY3g9IjUwMCIgY3k9IjUwMCIgcj0iNTAwIi8+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTY3Ni40NCA3NDAuOTV2LTg4LjcwOUg0NTcuNzZjNi44ODgtMzAuNzEzIDYwLjEzMy03NS4wMzUgODcuMDg0LTk5Ljc1IDYzLjg1NS01Ny45OTcgMTIxLjYyLTk5LjE4OCAxMjEuNjItMTkwLjAxIDAtMTA4LjA1LTg3LjY3OC0xNjAuNjEtMTgwLjc2LTE2MC42MS03MS4zNjYgMC0xMTguNjIgMjAuOTkxLTE2OS43MiA2NS4zNzlsNTUuNzE3IDczLjU4NWMxMi42NTItMTQuMzM1IDQ0Ljk3NS00OC4xMTIgOTEuNDM0LTQ4LjExMiA1Ny43NiAwIDg3Ljc0MiAzNi43NzYgODcuNzQyIDgyLjQ4MiAwIDUxLjIwOS0zOC4wMjMgODcuODU0LTczLjM0NCAxMTguNjMtNzAuNzA5IDYxLjU5LTEzMS40NyAxMTUuNTctMTQ0Ljk0IDE3Ny4yOXY2OS44NjFoMzQzLjg1MSIvPjwvc3ZnPg==\" style=\"height:2em;vertical-align:middle;\"></span>",
@@ -40,9 +40,10 @@ test_that("fmt_image() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_image(columns = a, path = image_path, file_pattern = "metro_{x}.svg", sep = " / ") %>%
+    (tab |>
+       fmt_image(columns = a, path = image_path, file_pattern = "metro_{x}.svg", sep = " / ") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space:nowrap;\"><img src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHJvbGU9ImltZyIgdmlld0JveD0iMCAwIDEwNTAgMTA1MCIgc3R5bGU9ImhlaWdodDoxZW07d2lkdGg6MS4xM2VtO3ZlcnRpY2FsLWFsaWduOi0wLjEyNWVtO21hcmdpbi1sZWZ0OmF1dG87bWFyZ2luLXJpZ2h0OmF1dG87Zm9udC1zaXplOmluaGVyaXQ7b3ZlcmZsb3c6dmlzaWJsZTtwb3NpdGlvbjpyZWxhdGl2ZTsiPjxjaXJjbGUgZmlsbD0iI0ZFQ0UwMCIgY3g9IjUwMCIgY3k9IjUwMCIgcj0iNTAwIi8+PHBhdGggZmlsbD0iIzIyMUUyMCIgZD0iTTU3Ny4wMjYgNzYzLjk4N1YyMzQuMDIyaC05Mi4zNTJjLTIzLjkzOCAxOC43MTQtODEuMDE3IDU0LjAyNi0xNDIuNTY1IDgzLjI2NWwtMzIuMjg3IDE1LjE0NyAzNi4wMTQgODEuMDQyIDI3Ljk0Ni0xNC4zOGMxOS4zNzgtOS42MTEgNzIuNjE3LTM3LjM1NyA5MC42OC01MS43djQxNi41OTFoMTEyLjU2NCIvPjwvc3ZnPg==\" style=\"height:2em;vertical-align:middle;\"> / <img src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHJvbGU9ImltZyIgdmlld0JveD0iMCAwIDEwNTAgMTA1MCIgc3R5bGU9ImhlaWdodDoxZW07d2lkdGg6MS4xM2VtO3ZlcnRpY2FsLWFsaWduOi0wLjEyNWVtO21hcmdpbi1sZWZ0OmF1dG87bWFyZ2luLXJpZ2h0OmF1dG87Zm9udC1zaXplOmluaGVyaXQ7b3ZlcmZsb3c6dmlzaWJsZTtwb3NpdGlvbjpyZWxhdGl2ZTsiPjxjaXJjbGUgZmlsbD0iIzAwNjVBRSIgY3g9IjUwMCIgY3k9IjUwMCIgcj0iNTAwIi8+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTY3Ni40NCA3NDAuOTV2LTg4LjcwOUg0NTcuNzZjNi44ODgtMzAuNzEzIDYwLjEzMy03NS4wMzUgODcuMDg0LTk5Ljc1IDYzLjg1NS01Ny45OTcgMTIxLjYyLTk5LjE4OCAxMjEuNjItMTkwLjAxIDAtMTA4LjA1LTg3LjY3OC0xNjAuNjEtMTgwLjc2LTE2MC42MS03MS4zNjYgMC0xMTguNjIgMjAuOTkxLTE2OS43MiA2NS4zNzlsNTUuNzE3IDczLjU4NWMxMi42NTItMTQuMzM1IDQ0Ljk3NS00OC4xMTIgOTEuNDM0LTQ4LjExMiA1Ny43NiAwIDg3Ljc0MiAzNi43NzYgODcuNzQyIDgyLjQ4MiAwIDUxLjIwOS0zOC4wMjMgODcuODU0LTczLjM0NCAxMTguNjMtNzAuNzA5IDYxLjU5LTEzMS40NyAxMTUuNTctMTQ0Ljk0IDE3Ny4yOXY2OS44NjFoMzQzLjg1MSIvPjwvc3ZnPg==\" style=\"height:2em;vertical-align:middle;\"></span>",
@@ -51,9 +52,10 @@ test_that("fmt_image() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_image(columns = a, path = image_path, file_pattern = "metro_{x}.svg", height = "3em") %>%
+    (tab |>
+       fmt_image(columns = a, path = image_path, file_pattern = "metro_{x}.svg", height = "3em") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space:nowrap;\"><img src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHJvbGU9ImltZyIgdmlld0JveD0iMCAwIDEwNTAgMTA1MCIgc3R5bGU9ImhlaWdodDoxZW07d2lkdGg6MS4xM2VtO3ZlcnRpY2FsLWFsaWduOi0wLjEyNWVtO21hcmdpbi1sZWZ0OmF1dG87bWFyZ2luLXJpZ2h0OmF1dG87Zm9udC1zaXplOmluaGVyaXQ7b3ZlcmZsb3c6dmlzaWJsZTtwb3NpdGlvbjpyZWxhdGl2ZTsiPjxjaXJjbGUgZmlsbD0iI0ZFQ0UwMCIgY3g9IjUwMCIgY3k9IjUwMCIgcj0iNTAwIi8+PHBhdGggZmlsbD0iIzIyMUUyMCIgZD0iTTU3Ny4wMjYgNzYzLjk4N1YyMzQuMDIyaC05Mi4zNTJjLTIzLjkzOCAxOC43MTQtODEuMDE3IDU0LjAyNi0xNDIuNTY1IDgzLjI2NWwtMzIuMjg3IDE1LjE0NyAzNi4wMTQgODEuMDQyIDI3Ljk0Ni0xNC4zOGMxOS4zNzgtOS42MTEgNzIuNjE3LTM3LjM1NyA5MC42OC01MS43djQxNi41OTFoMTEyLjU2NCIvPjwvc3ZnPg==\" style=\"height:3em;vertical-align:middle;\"> <img src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHJvbGU9ImltZyIgdmlld0JveD0iMCAwIDEwNTAgMTA1MCIgc3R5bGU9ImhlaWdodDoxZW07d2lkdGg6MS4xM2VtO3ZlcnRpY2FsLWFsaWduOi0wLjEyNWVtO21hcmdpbi1sZWZ0OmF1dG87bWFyZ2luLXJpZ2h0OmF1dG87Zm9udC1zaXplOmluaGVyaXQ7b3ZlcmZsb3c6dmlzaWJsZTtwb3NpdGlvbjpyZWxhdGl2ZTsiPjxjaXJjbGUgZmlsbD0iIzAwNjVBRSIgY3g9IjUwMCIgY3k9IjUwMCIgcj0iNTAwIi8+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTY3Ni40NCA3NDAuOTV2LTg4LjcwOUg0NTcuNzZjNi44ODgtMzAuNzEzIDYwLjEzMy03NS4wMzUgODcuMDg0LTk5Ljc1IDYzLjg1NS01Ny45OTcgMTIxLjYyLTk5LjE4OCAxMjEuNjItMTkwLjAxIDAtMTA4LjA1LTg3LjY3OC0xNjAuNjEtMTgwLjc2LTE2MC42MS03MS4zNjYgMC0xMTguNjIgMjAuOTkxLTE2OS43MiA2NS4zNzlsNTUuNzE3IDczLjU4NWMxMi42NTItMTQuMzM1IDQ0Ljk3NS00OC4xMTIgOTEuNDM0LTQ4LjExMiA1Ny43NiAwIDg3Ljc0MiAzNi43NzYgODcuNzQyIDgyLjQ4MiAwIDUxLjIwOS0zOC4wMjMgODcuODU0LTczLjM0NCAxMTguNjMtNzAuNzA5IDYxLjU5LTEzMS40NyAxMTUuNTctMTQ0Ljk0IDE3Ny4yOXY2OS44NjFoMzQzLjg1MSIvPjwvc3ZnPg==\" style=\"height:3em;vertical-align:middle;\"></span>",
@@ -62,9 +64,10 @@ test_that("fmt_image() works correctly", {
       NA
     )
   )
+
   expect_equal(
-    (tab %>%
-       fmt_image(columns = a, path = image_path, file_pattern = "metro_{x}.svg", height = 40) %>%
+    (tab |>
+       fmt_image(columns = a, path = image_path, file_pattern = "metro_{x}.svg", height = 40) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space:nowrap;\"><img src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHJvbGU9ImltZyIgdmlld0JveD0iMCAwIDEwNTAgMTA1MCIgc3R5bGU9ImhlaWdodDoxZW07d2lkdGg6MS4xM2VtO3ZlcnRpY2FsLWFsaWduOi0wLjEyNWVtO21hcmdpbi1sZWZ0OmF1dG87bWFyZ2luLXJpZ2h0OmF1dG87Zm9udC1zaXplOmluaGVyaXQ7b3ZlcmZsb3c6dmlzaWJsZTtwb3NpdGlvbjpyZWxhdGl2ZTsiPjxjaXJjbGUgZmlsbD0iI0ZFQ0UwMCIgY3g9IjUwMCIgY3k9IjUwMCIgcj0iNTAwIi8+PHBhdGggZmlsbD0iIzIyMUUyMCIgZD0iTTU3Ny4wMjYgNzYzLjk4N1YyMzQuMDIyaC05Mi4zNTJjLTIzLjkzOCAxOC43MTQtODEuMDE3IDU0LjAyNi0xNDIuNTY1IDgzLjI2NWwtMzIuMjg3IDE1LjE0NyAzNi4wMTQgODEuMDQyIDI3Ljk0Ni0xNC4zOGMxOS4zNzgtOS42MTEgNzIuNjE3LTM3LjM1NyA5MC42OC01MS43djQxNi41OTFoMTEyLjU2NCIvPjwvc3ZnPg==\" style=\"height:40px;vertical-align:middle;\"> <img src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHJvbGU9ImltZyIgdmlld0JveD0iMCAwIDEwNTAgMTA1MCIgc3R5bGU9ImhlaWdodDoxZW07d2lkdGg6MS4xM2VtO3ZlcnRpY2FsLWFsaWduOi0wLjEyNWVtO21hcmdpbi1sZWZ0OmF1dG87bWFyZ2luLXJpZ2h0OmF1dG87Zm9udC1zaXplOmluaGVyaXQ7b3ZlcmZsb3c6dmlzaWJsZTtwb3NpdGlvbjpyZWxhdGl2ZTsiPjxjaXJjbGUgZmlsbD0iIzAwNjVBRSIgY3g9IjUwMCIgY3k9IjUwMCIgcj0iNTAwIi8+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTY3Ni40NCA3NDAuOTV2LTg4LjcwOUg0NTcuNzZjNi44ODgtMzAuNzEzIDYwLjEzMy03NS4wMzUgODcuMDg0LTk5Ljc1IDYzLjg1NS01Ny45OTcgMTIxLjYyLTk5LjE4OCAxMjEuNjItMTkwLjAxIDAtMTA4LjA1LTg3LjY3OC0xNjAuNjEtMTgwLjc2LTE2MC42MS03MS4zNjYgMC0xMTguNjIgMjAuOTkxLTE2OS43MiA2NS4zNzlsNTUuNzE3IDczLjU4NWMxMi42NTItMTQuMzM1IDQ0Ljk3NS00OC4xMTIgOTEuNDM0LTQ4LjExMiA1Ny43NiAwIDg3Ljc0MiAzNi43NzYgODcuNzQyIDgyLjQ4MiAwIDUxLjIwOS0zOC4wMjMgODcuODU0LTczLjM0NCAxMTguNjMtNzAuNzA5IDYxLjU5LTEzMS40NyAxMTUuNTctMTQ0Ljk0IDE3Ny4yOXY2OS44NjFoMzQzLjg1MSIvPjwvc3ZnPg==\" style=\"height:40px;vertical-align:middle;\"></span>",
@@ -89,26 +92,28 @@ test_that("fmt_image() works correctly", {
 
   # Format the `a` column to display images
   expect_equal(
-    (tab_alt %>%
-       fmt_image(columns = a) %>%
+    (tab_alt |>
+       fmt_image(columns = a) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space:nowrap;\"><img src=\"https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Gray.png\" style=\"height:2em;vertical-align:middle;\"> <img src=\"https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo.png\" style=\"height:2em;vertical-align:middle;\"></span>",
       "<span style=\"white-space:nowrap;\"><img src=\"https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-flat.svg\" style=\"height:2em;vertical-align:middle;\"></span>"
     )
   )
+
   expect_equal(
-    (tab_alt %>%
-       fmt_image(columns = a, sep = " / ") %>%
+    (tab_alt |>
+       fmt_image(columns = a, sep = " / ") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space:nowrap;\"><img src=\"https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Gray.png\" style=\"height:2em;vertical-align:middle;\"> / <img src=\"https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo.png\" style=\"height:2em;vertical-align:middle;\"></span>",
       "<span style=\"white-space:nowrap;\"><img src=\"https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-flat.svg\" style=\"height:2em;vertical-align:middle;\"></span>"
     )
   )
+
   expect_equal(
-    (tab_alt %>%
-       fmt_image(columns = a, height = "3em") %>%
+    (tab_alt |>
+       fmt_image(columns = a, height = "3em") |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space:nowrap;\"><img src=\"https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Gray.png\" style=\"height:3em;vertical-align:middle;\"> <img src=\"https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo.png\" style=\"height:3em;vertical-align:middle;\"></span>",
@@ -134,17 +139,18 @@ test_that("fmt_image() works correctly", {
 
   # Format the `a` column to display images
   expect_equal(
-    (tab_alt_2 %>%
-       fmt_image(columns = a, path = url_path_1) %>%
+    (tab_alt_2 |>
+       fmt_image(columns = a, path = url_path_1) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space:nowrap;\"><img src=\"https://www.rstudio.com/wp-content/uploads/2018/10//RStudio-Logo-Gray.png\" style=\"height:2em;vertical-align:middle;\"> <img src=\"https://www.rstudio.com/wp-content/uploads/2018/10//RStudio-Logo.png\" style=\"height:2em;vertical-align:middle;\"></span>",
       "<span style=\"white-space:nowrap;\"><img src=\"https://www.rstudio.com/wp-content/uploads/2018/10//RStudio-Logo-flat.svg\" style=\"height:2em;vertical-align:middle;\"></span>"
     )
   )
+
   expect_equal(
-    (tab_alt_2 %>%
-       fmt_image(columns = a, path = url_path_2) %>%
+    (tab_alt_2 |>
+       fmt_image(columns = a, path = url_path_2) |>
        render_formats_test(context = "html"))[["a"]],
     c(
       "<span style=\"white-space:nowrap;\"><img src=\"https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Gray.png\" style=\"height:2em;vertical-align:middle;\"> <img src=\"https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo.png\" style=\"height:2em;vertical-align:middle;\"></span>",
@@ -154,15 +160,16 @@ test_that("fmt_image() works correctly", {
 
   # Expect that a column with NAs will work fine with `fmt_image()`,
   # it'll just produce NA values
-  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) %>% gt()
+  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) |> gt()
 
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_image()`
   expect_no_error(
-    na_col_tbl %>% fmt_image(columns = a) %>% as_raw_html()
+    na_col_tbl |> fmt_image(columns = a) |> as_raw_html()
   )
+
   expect_no_error(
-    na_col_tbl %>%
-      fmt_image(columns = a, rows = 1:5) %>% as_raw_html()
+    na_col_tbl |>
+      fmt_image(columns = a, rows = 1:5) |> as_raw_html()
   )
 })

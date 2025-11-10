@@ -777,54 +777,54 @@ info_locales <- function(begins_with = NULL) {
   tab_1$display_name <- gsub(", NA)", ")", tab_1$display_name, fixed = TRUE)
   tab_1$value <- 11027
 
-  gt(tab_1) %>%
+  gt(tab_1) |>
     tab_header(
       title = md("Locales Supported in **gt**"),
       subtitle = md("Locale codes are used in several `fmt_*()` functions.<br><br>")
-    ) %>%
+    ) |>
     fmt_number(
       columns = "value",
       locale = from_column("locale")
-    ) %>%
+    ) |>
     text_transform(
       fn = function(x) sub("space", "\U02420", x, fixed = TRUE),
       locations = cells_body(columns = "group")
-    ) %>%
+    ) |>
     cols_merge(
       columns = c("locale", "display_name"),
       pattern = "<code>{1}</code><br><span style=font-size:11px>{2}</span>"
-    ) %>%
+    ) |>
     cols_label(
       locale = "Locale",
       group = "Group",
       decimal = "Decimal",
       value = html("Formatted<br>Value")
-    ) %>%
+    ) |>
     cols_align(
       align = "center",
       columns = c("group", "decimal")
-    ) %>%
+    ) |>
     tab_style(
       style = css(position = "sticky", top = "-1em", `z-index` = 10),
       locations = cells_column_labels()
-    ) %>%
+    ) |>
     tab_style(
       style = cell_text(size = px(24)),
       locations = cells_title(groups = "title")
-    ) %>%
+    ) |>
     tab_style(
       style = cell_text(size = px(18)),
       locations = cells_title(groups = "subtitle")
-    ) %>%
+    ) |>
     tab_style(
       style = cell_text(size = px(32)),
       locations = cells_body(columns = c(group, decimal))
-    ) %>%
-    opt_all_caps() %>%
-    opt_stylize(style = 6) %>%
-    opt_align_table_header(align = "left") %>%
-    opt_table_lines(extent = "none") %>%
-    opt_horizontal_padding(scale = 2) %>%
+    ) |>
+    opt_all_caps() |>
+    opt_stylize(style = 6) |>
+    opt_align_table_header(align = "left") |>
+    opt_table_lines(extent = "none") |>
+    opt_horizontal_padding(scale = 2) |>
     opt_css(
       css = "
       #unit_conversion .gt_group_heading {
@@ -834,7 +834,7 @@ info_locales <- function(begins_with = NULL) {
         text-decoration: underline;
         text-underline-offset: 2px;
       }"
-    ) %>%
+    ) |>
     tab_options(
       table.border.top.style = "hidden",
       column_labels.border.bottom.style = "hidden",
@@ -937,46 +937,46 @@ info_paletteer <- function(color_pkgs = NULL) {
 
   palettes_strips <- palettes_strips_df$colors
 
-  palettes_strips_df %>%
-    dplyr::select("package", "palette", "length") %>%
-    dplyr::mutate(`Color Count and Palette` = NA) %>%
-    gt(groupname_col = "package", rowname_col = "palette") %>%
+  palettes_strips_df |>
+    dplyr::select("package", "palette", "length") |>
+    dplyr::mutate(`Color Count and Palette` = NA) |>
+    gt(groupname_col = "package", rowname_col = "palette") |>
     text_transform(
       locations = cells_body("Color Count and Palette"),
       fn = function(x) {
         palettes_strips
       }
-    ) %>%
-    cols_label(length = "") %>%
-    tab_stubhead(label = "Package and Palette Name") %>%
+    ) |>
+    cols_label(length = "") |>
+    tab_stubhead(label = "Package and Palette Name") |>
     tab_header(
       title = md("Palettes Made Easily Available with **paletteer**"),
       subtitle = md("Palettes like these are useful with the `data_color()` function")
-    ) %>%
+    ) |>
     tab_style(
       style = cell_text(align = "left"),
       locations = list(
         cells_title(groups = "title"),
         cells_title(groups = "subtitle")
       )
-    ) %>%
+    ) |>
     tab_style(
       style = list(
         cell_fill(color = "#E3E3E3"),
         cell_text(font = "Courier", size = "smaller", weight = "bold")
       ),
       locations = cells_stub(rows = TRUE)
-    ) %>%
+    ) |>
     tab_style(
       style = cell_text(font = "Courier"),
       locations = cells_body(columns = "length")
-    ) %>%
+    ) |>
     tab_options(
       row_group.background.color = "#FFFFF0",
       column_labels.background.color = "#666660",
       row_group.font.weight = "600",
       row_group.font.size = "smaller"
-    ) %>%
+    ) |>
     tab_source_note(
       source_note = md(
         paste0(

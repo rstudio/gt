@@ -91,7 +91,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-30
+#' 3-31
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -276,6 +276,25 @@ get_locale_dec_mark <- function(locale = NULL, default) {
   # Get the correct `decimal` value from the `gt:::locales` lookup table
   val <- locales$decimal[locales$locale == locale]
   validate_length_one(val, "dec_mark")
+  val
+}
+
+#' Get the `min_sep_threshold` value based on a locale
+#'
+#' @param locale The user-supplied `locale` value, found in several `fmt_*()`
+#'   functions. This is expected as `NULL` if not supplied by the user.
+#' @param default The default value for the `min_sep_threshold`.
+#' @noRd
+get_locale_min_sep_threshold <- function(locale = NULL, default) {
+
+  # If `locale` is NULL then return the default `min_sep_threshold`
+  if (is.null(locale)) {
+    return(default)
+  }
+
+  # Get the correct `minimum_grouping_digits` value from the `gt:::locales` lookup table
+  val <- locales$minimum_grouping_digits[locales$locale == locale]
+  validate_length_one(val, "min_sep_threshold")
   val
 }
 
@@ -547,6 +566,7 @@ format_num_to_str <- function(
     drop_trailing_dec_mark,
     format = "f",
     replace_minus_mark = TRUE,
+    min_sep_threshold = 1,
     system = c("intl", "ind")
 ) {
 
@@ -588,17 +608,91 @@ format_num_to_str <- function(
     cli::cli_abort("validation for format should be in arg_match0", .internal = TRUE)
   }
 
-  x_str <-
-    formatC(
-      x = x,
-      format = format,
-      mode = mode,
-      digits = digits,
-      flag = flag,
-      drop0trailing = drop0trailing,
-      big.mark = sep_mark,
-      decimal.mark = dec_mark
-    )
+  # Apply min_sep_threshold logic
+  if (!is.null(min_sep_threshold) && min_sep_threshold > 0) {
+    # Calculate the minimum magnitude required to show separators
+    # threshold=1: 10^3 (1000, 4 digits)
+    # threshold=2: 10^4 (10000, 5 digits)
+    # threshold=3: 10^5 (100000, 6 digits)
+    magnitude_threshold <- 10^(min_sep_threshold + 2)
+    
+    # Format all values first to determine their rounded magnitudes
+    # We need to check rounded values because 999.5 with 0 decimals becomes "1000"
+    # Suppress warnings when both big.mark and decimal.mark are empty strings
+    x_str_test <-
+      suppressWarnings(
+        formatC(
+          x = x,
+          format = format,
+          mode = mode,
+          digits = digits,
+          flag = flag,
+          drop0trailing = drop0trailing,
+          big.mark = "",
+          decimal.mark = dec_mark
+        )
+      )
+    
+    # Parse formatted strings to get rounded magnitudes
+    # Handle both empty and non-empty dec_mark
+    if (nzchar(dec_mark)) {
+      x_rounded <- suppressWarnings(as.numeric(gsub(dec_mark, ".", x_str_test, fixed = TRUE)))
+    } else {
+      x_rounded <- suppressWarnings(as.numeric(x_str_test))
+    }
+    
+    # Determine which values should have separators based on rounded magnitude
+    should_use_sep <- abs(x_rounded) >= magnitude_threshold
+    
+    # Format values below threshold without separators (reuse test formatting)
+    if (any(!should_use_sep, na.rm = TRUE)) {
+      x_str_no_sep <- x_str_test[!should_use_sep]
+    }
+    
+    # Format values at or above threshold with separators
+    # Suppress warnings when both big.mark and decimal.mark are empty strings
+    if (any(should_use_sep, na.rm = TRUE)) {
+      x_str_sep <-
+        suppressWarnings(
+          formatC(
+            x = x[should_use_sep],
+            format = format,
+            mode = mode,
+            digits = digits,
+            flag = flag,
+            drop0trailing = drop0trailing,
+            big.mark = sep_mark,
+            decimal.mark = dec_mark
+          )
+        )
+    }
+    
+    # Combine the results
+    x_str <- character(length(x))
+    if (any(!should_use_sep, na.rm = TRUE)) {
+      x_str[!should_use_sep] <- x_str_no_sep
+    }
+    if (any(should_use_sep, na.rm = TRUE)) {
+      x_str[should_use_sep] <- x_str_sep
+    }
+    
+  } else {
+    # No min_sep_threshold, use original behavior with separators
+    # Suppress warnings when both big.mark and decimal.mark are empty strings
+    x_str <-
+      suppressWarnings(
+        formatC(
+          x = x,
+          format = format,
+          mode = mode,
+          digits = digits,
+          flag = flag,
+          drop0trailing = drop0trailing,
+          big.mark = sep_mark,
+          decimal.mark = dec_mark
+        )
+      )
+  }
 
   # Remove `-` for any signed zeros returned by `formatC()`
   x_str_signed_zero <- grepl("^(-0|-0\\.0*?)$", x_str)
@@ -610,9 +704,11 @@ format_num_to_str <- function(
   if (!drop_trailing_dec_mark) {
     x_str_no_dec <- !grepl(dec_mark, x_str, fixed = TRUE)
     x_str[x_str_no_dec] <- paste_right(x_str[x_str_no_dec], dec_mark)
-  } else if (nzchar(dec_mark) && !nzchar(sep_mark)) {
-    # drop the trailing dec mark if sep mark is the empty ""
-    # needed in some cases https://github.com/rstudio/gt/issues/1961
+  } else if (nzchar(dec_mark)) {
+    # Drop trailing decimal marks (happens with significant figures formatting)
+    # This is needed when sep_mark is empty OR when using min_sep_threshold
+    # (where some values may have separators and some may not)
+    # See https://github.com/rstudio/gt/issues/1961
     x_str[endsWith(x_str, dec_mark)] <- sub(dec_mark, "", x_str[endsWith(x_str, dec_mark)], fixed = TRUE)
   }
 
@@ -669,6 +765,7 @@ format_num_to_str_c <- function(
     dec_mark,
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark,
+    min_sep_threshold = 1,
     system = c("intl", "ind")
 ) {
 
@@ -683,6 +780,7 @@ format_num_to_str_c <- function(
     dec_mark = dec_mark,
     drop_trailing_zeros = drop_trailing_zeros,
     drop_trailing_dec_mark = drop_trailing_dec_mark,
+    min_sep_threshold = min_sep_threshold,
     format = "f",
     system = system
   )

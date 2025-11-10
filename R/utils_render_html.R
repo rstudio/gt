@@ -2492,15 +2492,21 @@ calculate_hierarchical_stub_rowspans <- function(data) {
       # Check if current row should continue the span from previous row
       should_continue_span <- TRUE
 
-      # Must match current column value
-      if (col_values[row_idx] != col_values[row_idx - 1]) {
+      # Must match current column value (handle NAs properly)
+      curr_val <- col_values[row_idx]
+      prev_val <- col_values[row_idx - 1]
+      
+      # Two values match if they're both identical or both NA
+      if (!identical(curr_val, prev_val)) {
         should_continue_span <- FALSE
       }
 
       # Must match all values in columns to the left
       if (col_idx > 1) {
         for (left_col_idx in 1:(col_idx - 1)) {
-          if (stub_matrix[row_idx, left_col_idx] != stub_matrix[row_idx - 1, left_col_idx]) {
+          curr_left <- stub_matrix[row_idx, left_col_idx]
+          prev_left <- stub_matrix[row_idx - 1, left_col_idx]
+          if (!identical(curr_left, prev_left)) {
             should_continue_span <- FALSE
             break
           }

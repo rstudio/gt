@@ -48,20 +48,20 @@ test_that("fmt_engineering() works correctly", {
   # Expect an error when attempting to format a column
   # that does not exist
   expect_error(
-    tab %>%
+    tab |>
       fmt_engineering(columns = "num_3", decimals = 2)
   )
 
   # Expect an error when using a locale that does not exist
   expect_error(
-    tab %>%
+    tab |>
       fmt_engineering(columns = "num", decimals = 2, locale = "aa_bb")
   )
 
   # Format the `num` column to 2 decimal places, use all other defaults
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 2) %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 2) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("82.03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup>"),
@@ -97,8 +97,8 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column to 2 decimal places, use all other defaults
   # (checking values in the `default` context)
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 2) %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 2) |>
        render_formats_test("default"))[["num"]],
     c(
       "82.03 \U000D7 10^30",
@@ -133,8 +133,8 @@ test_that("fmt_engineering() works correctly", {
 
   # Format the `num` column to 5 decimal places, use all other defaults
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 5) %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 5) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("82.03048&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup>"),
@@ -170,11 +170,11 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column to 2 decimal places, use a period for the
   # digit grouping separators
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_engineering(
          columns = "num", decimals = 2,
          sep_mark = ".", dec_mark = ","
-       ) %>%
+       ) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("82,03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup>"),
@@ -210,8 +210,8 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column to 4 decimal places, scale all values by
   # 1/1000, use all other defaults
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 4, scale_by = 1/1000) %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 4, scale_by = 1/1000) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("82.0305&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>27</sup>"),
@@ -247,8 +247,8 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column to 2 decimal places, prepend and append
   # all values by 2 different literals, use all other defaults
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 2, pattern = "a {x} b") %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 2, pattern = "a {x} b") |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("a 82.03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup> b"),
@@ -283,9 +283,9 @@ test_that("fmt_engineering() works correctly", {
 
   # Format the `num` column to 2 decimal places, force the sign
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_engineering(
-         columns = "num", decimals = 3, force_sign_m = TRUE) %>%
+         columns = "num", decimals = 3, force_sign_m = TRUE) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("+82.030&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup>"),
@@ -321,9 +321,9 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column to 2 decimal places, force the sign and
   # define a pattern for decorating values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_engineering(
-         columns = "num", pattern = "*{x}*", force_sign_m = TRUE) %>%
+         columns = "num", pattern = "*{x}*", force_sign_m = TRUE) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("*+82.03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup>*"),
@@ -361,13 +361,13 @@ test_that("fmt_engineering() works correctly", {
   tab_2 <-
     dplyr::tibble(
       num = c(-3.49E13, -3453, -0.000234, 0, 0.00007534, 82794, 7.16E14)
-    ) %>%
+    ) |>
     gt()
 
   # Format the `num` column to exactly 4 decimal places
   expect_equal(
-    (tab_2 %>%
-       fmt_engineering(columns = "num", decimals = 4, exp_style = "E") %>%
+    (tab_2 |>
+       fmt_engineering(columns = "num", decimals = 4, exp_style = "E") |>
        render_formats_test("default"))[["num"]],
     c(
       "-34.9000E12", "-3.4530E03", "-234.0000E-06", "0.0000E00",
@@ -378,8 +378,8 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column and force the sign on the 'm' part of the
   # notation; extract in the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_engineering(columns = "num", force_sign_m = TRUE) %>%
+    (tab_2 |>
+       fmt_engineering(columns = "num", force_sign_m = TRUE) |>
        render_formats_test("default"))[["num"]],
     c(
       "-34.90 × 10^12", "-3.45 × 10^3", "-234.00 × 10^-6", "0.00",
@@ -390,8 +390,8 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column and force the sign on the 'm' part of the
   # notation; extract in the HTML context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_engineering(columns = "num", force_sign_m = TRUE) %>%
+    (tab_2 |>
+       fmt_engineering(columns = "num", force_sign_m = TRUE) |>
        render_formats_test("html"))[["num"]],
     c(
       "−34.90&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>12</sup>",
@@ -407,8 +407,8 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column and force the sign on the 'n' part of the
   # notation; extract in the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_engineering(columns = "num", force_sign_n = TRUE) %>%
+    (tab_2 |>
+       fmt_engineering(columns = "num", force_sign_n = TRUE) |>
        render_formats_test("default"))[["num"]],
     c(
       "-34.90 \U000D7 10^+12", "-3.45 \U000D7 10^+3", "-234.00 \U000D7 10^-6", "0.00",
@@ -419,8 +419,8 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column and force the sign on the 'n' part of the
   # notation; extract in the HTML context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_engineering(columns = "num", force_sign_n = TRUE) %>%
+    (tab_2 |>
+       fmt_engineering(columns = "num", force_sign_n = TRUE) |>
        render_formats_test("html"))[["num"]],
     c(
       "−34.90&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+12</sup>",
@@ -436,8 +436,8 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column and force the sign on the 'm' and 'n' parts of the
   # notation; extract in the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_engineering(columns = "num", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+    (tab_2 |>
+       fmt_engineering(columns = "num", force_sign_m = TRUE, force_sign_n = TRUE) |>
        render_formats_test("default"))[["num"]],
     c(
       "-34.90 \U000D7 10^+12", "-3.45 \U000D7 10^+3", "-234.00 \U000D7 10^-6", "0.00",
@@ -448,8 +448,8 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column and force the sign on the 'm' and 'n' parts of the
   # notation; extract in the HTML context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_engineering(columns = "num", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+    (tab_2 |>
+       fmt_engineering(columns = "num", force_sign_m = TRUE, force_sign_n = TRUE) |>
        render_formats_test("html"))[["num"]],
     c(
       "−34.90&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+12</sup>",
@@ -466,8 +466,8 @@ test_that("fmt_engineering() works correctly", {
   # notation and choose a exponent style of `"E"`; extract in the default
   # context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_engineering(columns = "num", exp_style = "E", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+    (tab_2 |>
+       fmt_engineering(columns = "num", exp_style = "E", force_sign_m = TRUE, force_sign_n = TRUE) |>
        render_formats_test("default"))[["num"]],
     c(
       "-34.90E+12", "-3.45E+03", "-234.00E-06", "0.00E+00", "+75.34E-06",
@@ -479,8 +479,8 @@ test_that("fmt_engineering() works correctly", {
   # notation and choose a exponent style of `"E"`; extract in the HTML
   # context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_engineering(columns = "num", exp_style = "E", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+    (tab_2 |>
+       fmt_engineering(columns = "num", exp_style = "E", force_sign_m = TRUE, force_sign_n = TRUE) |>
        render_formats_test("html"))[["num"]],
     c(
       "−34.90E+12", "−3.45E+03", "−234.00E−06", "0.00E+00",
@@ -491,8 +491,8 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column and choose a exponent style of `"E"`; extract in
   # the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_engineering(columns = "num", exp_style = "E") %>%
+    (tab_2 |>
+       fmt_engineering(columns = "num", exp_style = "E") |>
        render_formats_test("default"))[["num"]],
     c(
       "-34.90E12", "-3.45E03", "-234.00E-06", "0.00E00", "75.34E-06",
@@ -503,8 +503,8 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column and choose a exponent style of `"E1"`; extract
   # in the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_engineering(columns = "num", exp_style = "E1") %>%
+    (tab_2 |>
+       fmt_engineering(columns = "num", exp_style = "E1") |>
        render_formats_test("default"))[["num"]],
     c(
       "-34.90E12", "-3.45E3", "-234.00E-6", "0.00E0", "75.34E-6",
@@ -515,8 +515,8 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column and choose a exponent style of `"low-ten"`; extract
   # in the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_engineering(columns = "num", exp_style = "low-ten") %>%
+    (tab_2 |>
+       fmt_engineering(columns = "num", exp_style = "low-ten") |>
        render_formats_test("default"))[["num"]],
     c(
       "-34.90E12", "-3.45E03", "-234.00E-06", "0.00E00", "75.34E-06",
@@ -527,8 +527,8 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column and choose a exponent style of `"low-ten"`; extract
   # in the HTML context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_engineering(columns = "num", exp_style = "low-ten") %>%
+    (tab_2 |>
+       fmt_engineering(columns = "num", exp_style = "low-ten") |>
        render_formats_test("html"))[["num"]],
     c(
       "−34.90<sub style='font−size: 65%;'>10</sub>12",
@@ -544,8 +544,8 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column to 2 decimal places, apply the `en_US`
   # locale and use all other defaults
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 2, locale = "en_US") %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 2, locale = "en_US") |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("82.03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup>"),
@@ -581,8 +581,8 @@ test_that("fmt_engineering() works correctly", {
   # Format the `num` column to 2 decimal places, apply the `da_DK`
   # locale and use all other defaults
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 2, locale = "da_DK") %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 2, locale = "da_DK") |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("82,03&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>30</sup>"),
@@ -633,8 +633,8 @@ test_that("fmt_engineering() can handle extremely large and small values", {
 
   # Format the `num` column to 5 decimal places, use all other defaults
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 5) %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 5) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("\U02212", "150.00000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>198</sup>"),
@@ -655,8 +655,8 @@ test_that("fmt_engineering() can handle extremely large and small values", {
   # and compare to expected values
   # (checking values in the `default` context)
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 5) %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 5) |>
        render_formats_test("default"))[["num"]],
     c(
       "-150.00000 \U000D7 10^198",
@@ -669,6 +669,110 @@ test_that("fmt_engineering() can handle extremely large and small values", {
       "2.50000",
       "35.00000 \U000D7 10^99",
       "350.00000 \U000D7 10^198"
+    )
+  )
+})
+
+test_that("fmt_engineering() handles Inf values correctly", {
+
+  # Test fmt_engineering() with Inf values
+  tab_inf <-
+    data.frame(a = c(1234, Inf, -5678, Inf)) |>
+    gt() |>
+    fmt_engineering()
+
+  expect_equal(
+    (tab_inf |> render_formats_test(context = "html"))[["a"]],
+    c(
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "Inf",
+      paste0("\U02212", "5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "Inf"
+    )
+  )
+
+  # Test fmt_engineering() with Inf at the start
+  tab_inf_first <-
+    data.frame(a = c(Inf, 1234, 5678)) |>
+    gt() |>
+    fmt_engineering()
+
+  expect_equal(
+    (tab_inf_first |> render_formats_test(context = "html"))[["a"]],
+    c(
+      "Inf",
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>")
+    )
+  )
+
+  # Test fmt_engineering() with mix of NA and Inf
+  tab_mixed <-
+    data.frame(a = c(1234, NA, Inf, 5678, Inf)) |>
+    gt() |>
+    fmt_engineering()
+
+  expect_equal(
+    (tab_mixed |> render_formats_test(context = "html"))[["a"]],
+    c(
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "NA",
+      "Inf",
+      paste0("5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "Inf"
+    )
+  )
+
+  # Test fmt_engineering() with Inf and different exp_style
+  tab_inf_exp_style <-
+    data.frame(a = c(1234, Inf, 5678)) |>
+    gt() |>
+    fmt_engineering(exp_style = "E")
+
+  expect_equal(
+    (tab_inf_exp_style |> render_formats_test(context = "html"))[["a"]],
+    c(
+      "1.23E03",
+      "Inf",
+      "5.68E03"
+    )
+  )
+
+  # Test fmt_engineering() with negative Inf (-Inf)
+  tab_neg_inf <-
+    data.frame(a = c(1234, -Inf, 5678, Inf)) |>
+    gt() |>
+    fmt_engineering()
+
+  expect_equal(
+    (tab_neg_inf |> render_formats_test(context = "html"))[["a"]],
+    c(
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "Inf"),
+      paste0("5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      " Inf"  # Note: fmt_engineering adds a leading space to positive Inf
+    )
+  )
+
+  # Test that fmt_engineering() works without error with Inf values
+  expect_no_error({
+    data.frame(a = c(1234, Inf)) |>
+      gt() |>
+      fmt_engineering()
+  })
+
+  # Test fmt_engineering() with Inf in default context
+  tab_inf_default <-
+    data.frame(a = c(1234, Inf, -Inf)) |>
+    gt() |>
+    fmt_engineering()
+
+  expect_equal(
+    (tab_inf_default |> render_formats_test(context = "default"))[["a"]],
+    c(
+      "1.23 \U000D7 10^3",
+      " Inf",  # Note: fmt_engineering adds a leading space to positive Inf
+      "-Inf"
     )
   )
 })

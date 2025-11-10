@@ -84,7 +84,7 @@ the stub, and in all row groups is transformed to all caps using
 
 \section{Function ID}{
 
-10-9
+10-10
 }
 
 \section{Function Introduced}{
@@ -97,6 +97,7 @@ Other table option functions:
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_footnote_order}()},
 \code{\link{opt_footnote_spec}()},
 \code{\link{opt_horizontal_padding}()},
 \code{\link{opt_interactive}()},

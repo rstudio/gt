@@ -19,46 +19,46 @@ tbl <-
 
 # Create a display table
 many_options_tbl <-
-  tbl %>%
-  gt(groupname_col = "date") %>%
+  tbl |>
+  gt(groupname_col = "date") |>
   tab_header(
     title = "The Title",
     subtitle = "The Subtitle"
-  ) %>%
-  tab_stubhead(label = "Stubhead Label") %>%
+  ) |>
+  tab_stubhead(label = "Stubhead Label") |>
   tab_spanner(
     label = "Group 1",
     columns = c(col_1, col_2)
-  ) %>%
+  ) |>
   tab_spanner(
     label = "Group 2",
     columns = c(col_3, col_4)
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = "Footnote #1",
     locations = cells_body(
       columns = col_1, rows = 1
     )
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = "Footnote #2",
     locations = cells_body(
       columns = col_2, rows = 2
     )
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = "Footnote #3",
     locations = cells_body(
       columns = col_3, rows = 3
     )
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = "Footnote #4",
     locations = cells_body(
       columns = col_4, rows = 4
     )
-  ) %>%
-  tab_source_note("A source note for the table.") %>%
+  ) |>
+  tab_source_note("A source note for the table.") |>
   tab_options(
     table.font.size = px(14),            # Entire table's font size
     table.background.color = "aliceblue",# Entire table's background color

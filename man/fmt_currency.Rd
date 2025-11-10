@@ -13,6 +13,7 @@ fmt_currency(
   decimals = NULL,
   drop_trailing_dec_mark = TRUE,
   use_seps = TRUE,
+  min_sep_threshold = 1,
   accounting = FALSE,
   scale_by = 1,
   suffixing = FALSE,
@@ -120,6 +121,17 @@ such as \code{"$23"} can be fashioned as \code{"$23."} by setting
 An option to use digit group separators. The type of digit group separator
 is set by \code{sep_mark} and overridden if a locale ID is provided to \code{locale}.
 This setting is \code{TRUE} by default.}
+
+\item{min_sep_threshold}{\emph{Minimum digit threshold for grouping separators}
+
+\code{scalar<numeric|integer>(val>=1)} // \emph{default:} \code{1}
+
+The minimum number of digits required in the integer part of a number for
+grouping separators to be applied. This parameter determines when digit
+grouping begins based on the magnitude of values. The value \code{1} (the
+default) applies separators starting at 4-digit numbers (e.g., \verb{1,000} and
+above). A value of \code{2} starts grouping at 5-digit numbers (\verb{10,000} and
+above), while \code{3} begins at 6-digit numbers (\verb{100,000} and above).}
 
 \item{accounting}{\emph{Use accounting style}
 
@@ -480,7 +492,7 @@ column is referenced via \code{\link[=from_column]{from_column()}} in the \code{
 
 \section{Function ID}{
 
-3-8
+3-9
 }
 
 \section{Function Introduced}{
@@ -513,6 +525,7 @@ Other data formatting functions:
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_number_si}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},

@@ -28,7 +28,7 @@ calculations. Such work has been carried out under the authority of the
 \emph{Task Group on Fundamental Constants} (TGFC) of the
 \emph{Committee on Data of the International Science Council} (CODATA). These
 updated values became available on May 20, 2019. They are published at
-\url{http://physics.nist.gov/constants}, a website of the
+\url{https://physics.nist.gov/cuu/Constants/index.html}, a website of the
 \emph{Fundamental Constants Data Center} of the
 \emph{National Institute of Standards and Technology} (NIST), Gaithersburg,
 Maryland, USA.

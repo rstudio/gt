@@ -142,6 +142,7 @@ tab_options(
   footnotes.spec_ftr = NULL,
   footnotes.multiline = NULL,
   footnotes.sep = NULL,
+  footnotes.order = NULL,
   source_notes.background.color = NULL,
   source_notes.font.size = NULL,
   source_notes.padding = NULL,
@@ -197,7 +198,8 @@ tab_options(
   latex.header_repeat = NULL,
   latex.toprule = NULL,
   latex.bottomrule = NULL,
-  latex.tbl.pos = NULL
+  latex.tbl.pos = NULL,
+  latex.unicode_conversion = NULL
 )
 }
 \arguments{
@@ -479,6 +481,13 @@ their respective footer sections when rendered as a continuous line of text
 (when \code{footnotes.multiline == FALSE}). The default value is a single space
 character (\code{" "}).}
 
+\item{footnotes.order}{\emph{Order footnotes are displayed in output}
+
+The order in which footnotes are displayed in the output. By default
+\code{"marks_last"} with marked footnotes below unmarked ones, or alternatively
+\code{"marks_first"}. To preserve the order supplied by tab_footnote,
+\code{"preserve_order"} can be used.}
+
 \item{source_notes.border.bottom.style, source_notes.border.bottom.width, source_notes.border.bottom.color}{\emph{Properties of the bottom border belonging to the source notes}
 
 The style, width, and color properties for the bottom border of the
@@ -689,6 +698,13 @@ The latex position indicator for a floating environment (e.g., \code{"tb"},
 specified without square brackets. Quarto users should instead set the
 floating position within the code chunk argument \code{tbl-pos}. The output
 table will only float if \code{latex.use_longtable = FALSE}.}
+
+\item{latex.unicode_conversion}{\emph{Specify where possible convert unicode to latex}
+
+Not all latex converters can handle unicode. or there may be a unicode
+value in the text that cannot be handled by the latex engine. In this case
+turn on this option by setting \code{latex.unicode_conversion = TRUE} and it
+will replace all unicode it can with equivalent latex calls.}
 }
 \value{
 An object of class \code{gt_tbl}.

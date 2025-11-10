@@ -177,14 +177,6 @@ gt_default_options <-
   # Only register S3 method once package is loaded
   vctrs::s3_register("gtable::as.gtable", "gt_tbl")
 
-  ## load latex unicode symbols if the R version is greater than 4.1.3
-  if(getRversion() > package_version("4.1.3")){
-    latex_unicode_env$latex_unicode_chars <- eval(str2expression(
-      readLines(system.file("latex_unicode/latex_unicode_conversion.txt", package = "gt"))
-    ))
-  }else{
-    latex_unicode_env$latex_unicode_chars <- c()
-  }
 
   invisible()
 }

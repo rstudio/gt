@@ -2,9 +2,8 @@
 
     Code
       local({
-        tmp <- exibble[, 1:4] %>% gt() %>% tab_spanner(label = "spanner_numdat",
-          columns = c(num, date)) %>% tab_spanner(label = "spanner_char", columns = c(
-          char)) %>% tab_spanner(label = "spanner_numdatchar", columns = c(num, date,
-          char)) %>% opt_interactive()
+        tmp <- opt_interactive(tab_spanner(tab_spanner(tab_spanner(gt(exibble[, 1:4]),
+        label = "spanner_numdat", columns = c(num, date)), label = "spanner_char",
+        columns = c(char)), label = "spanner_numdatchar", columns = c(num, date, char)))
       })
 

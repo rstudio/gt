@@ -8,6 +8,9 @@ home:
 template:
   bootstrap: 5
   light-switch: true
+  includes:
+    in_header: |
+      <script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js"></script>
   assets: pkgdown/assets
 
 authors:
@@ -85,6 +88,7 @@ reference:
     - fmt_integer
     - fmt_scientific
     - fmt_engineering
+    - fmt_number_si
     - fmt_percent
     - fmt_partsper
     - fmt_fraction
@@ -171,6 +175,7 @@ reference:
     - grand_summary_rows
     - row_group_order
     - rows_add
+    - summary_columns
 
   - title: Removing parts of a table
     desc: >
@@ -255,6 +260,7 @@ reference:
     - opt_interactive
     - opt_footnote_marks
     - opt_footnote_spec
+    - opt_footnote_order
     - opt_row_striping
     - opt_align_table_header
     - opt_vertical_padding
@@ -350,6 +356,7 @@ reference:
     - vec_fmt_integer
     - vec_fmt_scientific
     - vec_fmt_engineering
+    - vec_fmt_number_si
     - vec_fmt_percent
     - vec_fmt_partsper
     - vec_fmt_fraction

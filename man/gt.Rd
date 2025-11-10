@@ -8,6 +8,7 @@ gt(
   data,
   rowname_col = NULL,
   groupname_col = dplyr::group_vars(data),
+  omit_na_group = FALSE,
   process_md = FALSE,
   caption = NULL,
   rownames_to_stub = FALSE,
@@ -44,6 +45,17 @@ The column name in the input \code{data} table to use as group labels for
 generation of row groups. If the input \code{data} table has the \code{grouped_df}
 class (through use of \code{\link[dplyr:group_by]{dplyr::group_by()}} or associated \verb{group_by*()}
 functions) then any input here is ignored.}
+
+\item{omit_na_group}{\emph{Omit rows with NA in \code{groupname_col} from grouping}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should rows with \code{NA} values in the \code{groupname_col} be excluded from row
+group assignment? By default (\code{FALSE}), rows with \code{NA} in \code{groupname_col}
+will be assigned to a group called \code{"NA"}. When set to \code{TRUE}, rows with
+\code{NA} values will appear as ungrouped rows in the table body. This is useful
+when you want to include header or separator rows that shouldn't belong to
+any row group.}
 
 \item{process_md}{\emph{Process Markdown in \code{rowname_col} and \code{groupname_col}}
 

@@ -5,8 +5,8 @@ test_that("info_date_style() works correctly", {
 
   # Expect the internal source data frame to be of specific dimensions
   expect_equal(
-    info_date_style() %>%
-      dt_data_get() %>%
+    info_date_style() |>
+      dt_data_get() |>
       dim(),
     c(41, 5)
   )
@@ -19,8 +19,8 @@ test_that("info_time_style() works correctly", {
 
   # Expect the internal source data frame to be of specific dimensions
   expect_equal(
-    info_time_style() %>%
-      dt_data_get() %>%
+    info_time_style() |>
+      dt_data_get() |>
       dim(),
     c(25, 6)
   )
@@ -35,8 +35,8 @@ test_that("info_currencies() works correctly", {
   # Expect the internal source data frame to be of
   # specific dimensions
   expect_equal(
-    info_currencies() %>%
-      dt_data_get() %>%
+    info_currencies() |>
+      dt_data_get() |>
       dim(),
     c(172, 5)
   )
@@ -50,8 +50,8 @@ test_that("info_locales() works correctly", {
 
   # Expect the internal source data frame to be of specific dimensions
   expect_equal(
-    info_locales() %>%
-      dt_data_get() %>%
+    info_locales() |>
+      dt_data_get() |>
       dim(),
     c(574, 5)
   )
@@ -65,8 +65,8 @@ test_that("info_paletteer() works correctly", {
 
   # Expect the internal source data frame to be of specific dimensions
   expect_equal(
-    info_paletteer() %>%
-      dt_data_get() %>%
+    info_paletteer() |>
+      dt_data_get() |>
       dim(),
     c(840, 4)
   )
@@ -79,8 +79,8 @@ test_that("info_google_fonts() works correctly", {
 
   # Expect the internal source data frame to be of specific dimensions
   expect_equal(
-    info_google_fonts() %>%
-      dt_data_get() %>%
+    info_google_fonts() |>
+      dt_data_get() |>
       dim(),
     c(38, 4)
   )

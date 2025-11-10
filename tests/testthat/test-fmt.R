@@ -31,21 +31,21 @@ tab_time <- gt(time_tbl)
 test_that("fmt_number() works with conditional `rows`", {
 
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_number(
          columns = num_1,
          decimals = 4,
-         rows = num_1 < 1000) %>%
+         rows = num_1 < 1000) |>
        render_formats_test(context = "html"))[["num_1"]],
     c("1836.23", "2763.39", "937.2900", "643.0000",
       "212.2320", "0.0000", paste0("\U02212", "23.2400")))
 
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_number(
          columns = c(num_1, num_2),
          decimals = 4,
-         rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
+         rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) |>
        render_formats_test(context = "html"))[["num_2"]],
     c("34.0000", "74", "23", "NA", "35", "NA", "NA"))
 })
@@ -53,11 +53,11 @@ test_that("fmt_number() works with conditional `rows`", {
 test_that("fmt_scientific() works with conditional `rows`", {
 
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_scientific(
          columns = num_1,
          decimals = 4,
-         rows = num_1 < 1000) %>%
+         rows = num_1 < 1000) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1836.23", "2763.39",
@@ -70,11 +70,11 @@ test_that("fmt_scientific() works with conditional `rows`", {
   )
 
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_scientific(
          columns = c(num_1, num_2),
          decimals = 4,
-         rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
+         rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) |>
        render_formats_test(context = "html"))[["num_2"]],
     c(
       paste0("3.4000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>"),
@@ -86,12 +86,12 @@ test_that("fmt_scientific() works with conditional `rows`", {
 test_that("fmt_percent() works with conditional `rows`", {
 
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_percent(
          columns = num_1,
          decimals = 2,
          rows = num_1 < 1000
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1836.23", "2763.39", "93,729.00%", "64,300.00%",
@@ -100,11 +100,11 @@ test_that("fmt_percent() works with conditional `rows`", {
   )
 
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_percent(
          columns = c(num_1, num_2),
          decimals = 2,
-         rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
+         rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) |>
        render_formats_test(context = "html"))[["num_2"]],
     c("3,400.00%", "74", "23", "NA", "35", "NA", "NA")
   )
@@ -113,11 +113,11 @@ test_that("fmt_percent() works with conditional `rows`", {
 test_that("fmt_currency() works with conditional `rows`", {
 
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_currency(
          columns = num_1,
          currency = "USD",
-         rows = num_1 < 1000) %>%
+         rows = num_1 < 1000) |>
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1836.23", "2763.39", "$937.29", "$643.00", "$212.23",
@@ -126,11 +126,11 @@ test_that("fmt_currency() works with conditional `rows`", {
   )
 
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_currency(
          columns = c(num_1, num_2),
          currency = "USD",
-         rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
+         rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) |>
        render_formats_test(context = "html"))[["num_2"]],
     c("$34.00", "74", "23", "NA", "35", "NA", "NA")
   )
@@ -139,21 +139,21 @@ test_that("fmt_currency() works with conditional `rows`", {
 test_that("fmt_date() works with conditional `rows`", {
 
   expect_equal(
-    (tab_time %>%
+    (tab_time |>
        fmt_date(
          columns = date,
          date_style = 2,
-         rows = time == "16:45") %>%
+         rows = time == "16:45") |>
        render_formats_test(context = "html"))[["date"]],
     c("Sunday, October 15, 2017", "2013-02-22", "2014-09-22", "2018-01-10")
   )
 
   expect_equal(
-    (tab_time %>%
+    (tab_time |>
        fmt_date(
          columns = date,
          date_style = 2,
-         rows = date %in% c("2017-10-15", "2014-09-22") & grepl("^1", time)) %>%
+         rows = date %in% c("2017-10-15", "2014-09-22") & grepl("^1", time)) |>
        render_formats_test(context = "html"))[["date"]],
     c("Sunday, October 15, 2017", "2013-02-22", "2014-09-22", "2018-01-10")
   )
@@ -162,21 +162,21 @@ test_that("fmt_date() works with conditional `rows`", {
 test_that("fmt_time() works with conditional `rows`", {
 
   expect_equal(
-    (tab_time %>%
+    (tab_time |>
        fmt_time(
          columns = time,
          time_style = 2,
-         rows = time == "16:45") %>%
+         rows = time == "16:45") |>
        render_formats_test(context = "html"))[["time"]],
     c("16:45", "19:23", "01:30", "08:00")
   )
 
   expect_equal(
-    (tab_time %>%
+    (tab_time |>
        fmt_time(
          columns = time,
          time_style = 2,
-         rows = date %in% c("2017-10-15", "2014-09-22") & grepl("^1", time)) %>%
+         rows = date %in% c("2017-10-15", "2014-09-22") & grepl("^1", time)) |>
        render_formats_test(context = "html"))[["time"]],
     c("16:45", "19:23", "01:30", "08:00")
   )
@@ -185,24 +185,24 @@ test_that("fmt_time() works with conditional `rows`", {
 test_that("fmt_datetime() works with conditional `rows`", {
 
   expect_equal(
-    (tab_time %>%
+    (tab_time |>
        fmt_datetime(
          columns = datetime,
          date_style = 2,
          time_style = 2,
-         rows = time == "16:45") %>%
+         rows = time == "16:45") |>
        render_formats_test(context = "html"))[["datetime"]],
     c("Thursday, March 25, 2010 19:45", "2015-06-12 09:25",
       "2016-01-15 14:38", "2012-08-07 12:31")
   )
 
   expect_equal(
-    (tab_time %>%
+    (tab_time |>
        fmt_datetime(
          columns = datetime,
          date_style = 2,
          time_style = 2,
-         rows = date %in% c("2017-10-15", "2014-09-22") & grepl("^1", time)) %>%
+         rows = date %in% c("2017-10-15", "2014-09-22") & grepl("^1", time)) |>
        render_formats_test(context = "html"))[["datetime"]],
     c("Thursday, March 25, 2010 19:45", "2015-06-12 09:25",
       "2016-01-15 14:38", "2012-08-07 12:31")
@@ -212,20 +212,20 @@ test_that("fmt_datetime() works with conditional `rows`", {
 test_that("fmt_passthrough() works with conditional `rows`", {
 
   expect_equal(
-    (tab_time %>%
+    (tab_time |>
        fmt_passthrough(
          columns = datetime,
-         rows = time == "16:45") %>%
+         rows = time == "16:45") |>
        render_formats_test(context = "html"))[["datetime"]],
     c("2010-03-25 19:45", "2015-06-12 09:25",
       "2016-01-15 14:38", "2012-08-07 12:31")
   )
 
   expect_equal(
-    (tab_time %>%
+    (tab_time |>
        fmt_passthrough(
          columns = datetime,
-         rows = date %in% c("2017-10-15", "2014-09-22") & grepl("^1", time)) %>%
+         rows = date %in% c("2017-10-15", "2014-09-22") & grepl("^1", time)) |>
        render_formats_test(context = "html"))[["datetime"]],
     c("2010-03-25 19:45", "2015-06-12 09:25",
       "2016-01-15 14:38", "2012-08-07 12:31")
@@ -235,11 +235,11 @@ test_that("fmt_passthrough() works with conditional `rows`", {
 test_that("sub_missing() works with conditional `rows`", {
 
   expect_equal(
-    (tab %>%
+    (tab |>
        sub_missing(
          columns = num_2,
          rows = num_1 <= 0
-       ) %>%
+       ) |>
        render_formats_test(context = "html"))[["num_2"]],
     c("34", "74", "23", "NA", "35", rep("\U02014", 2))
   )
@@ -248,13 +248,13 @@ test_that("sub_missing() works with conditional `rows`", {
 test_that("fmt() works with conditional `rows`", {
 
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt(
          columns = num_1,
          rows = num_1 > 1000,
          fns = function(x) {
            x * 1000
-         }) %>%
+         }) |>
        render_formats_test(context = "html"))[["num_1"]],
     c("1836230", "2763390", "937.290", "643.000",
       "212.232", "0.000", "-23.240")
@@ -262,11 +262,12 @@ test_that("fmt() works with conditional `rows`", {
 })
 
 test_that("fmt() works when providing a purrr formula (#1762)", {
+
   # Function has a different class, so that will differ
   # - but makes sense since the passed function is actually different
   expect_equal(
-    {v1 <- mtcars %>% gt() %>% fmt(mpg, fns = ~.x + 1); v1$`_formats`[[1]]$func$default <- NULL; v1},
-    {v2 <- mtcars %>% gt() %>% fmt(mpg, fns = function(x) x + 1); v2$`_formats`[[1]]$func$default <- NULL; v2}
+    {v1 <- mtcars |> gt() |> fmt(mpg, fns = ~.x + 1); v1$`_formats`[[1]]$func$default <- NULL; v1},
+    {v2 <- mtcars |> gt() |> fmt(mpg, fns = function(x) x + 1); v2$`_formats`[[1]]$func$default <- NULL; v2}
     )
 })
 
@@ -363,9 +364,11 @@ test_that("has_order_zero() works correctly", {
   # length logical vector (for vectors that have
   # and don't have NA values)
   expect_length(has_order_zero(x), length(x))
+
   expect_type(has_order_zero(x), "logical")
 
   expect_length(has_order_zero(x_has_NA), length(x_has_NA))
+
   expect_type(has_order_zero(x_has_NA), "logical")
 
   # Expect the correct logical values for
@@ -374,6 +377,7 @@ test_that("has_order_zero() works correctly", {
     has_order_zero(x),
     c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE)
   )
+
   expect_equal(
     has_order_zero(x_has_NA),
     c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE)
@@ -494,10 +498,12 @@ test_that("paste_left() works correctly", {
     paste_left(x = "center", "left-"),
     "left-center"
   )
+
   expect_equal(
     paste_left(x = c("a", "b", "c"), "left-"),
     c("left-a", "left-b", "left-c")
   )
+
   expect_equal(
     paste_left(x = c("c1", "c2", "c3"), c("l1-", "l2-", "l3-")),
     c("l1-c1", "l2-c2", "l3-c3")
@@ -511,6 +517,7 @@ test_that("paste_left() works correctly", {
 
   # Expect an error if the length of `x_left` is not 1 of the length of `x`
   expect_error(paste_left(x = "center", x_left = c("l1", "l2", "l3")))
+
   expect_error(paste_left(x = c("c1", "c2", "c3"), x_left = c("l1", "l2")))
 })
 
@@ -521,10 +528,12 @@ test_that("paste_right() works correctly", {
     paste_right(x = "center", "-right"),
     "center-right"
   )
+
   expect_equal(
     paste_right(x = c("a", "b", "c"), "-right"),
     c("a-right", "b-right", "c-right")
   )
+
   expect_equal(
     paste_right(x = c("c1", "c2", "c3"), c("-r1", "-r2", "-r3")),
     c("c1-r1", "c2-r2", "c3-r3")
@@ -538,5 +547,6 @@ test_that("paste_right() works correctly", {
 
   # Expect an error if the length of `x_right` is not 1 of the length of `x`
   expect_error(paste_left(x = "center", x_right = c("r1", "r2", "r3")))
+
   expect_error(paste_left(x = c("c1", "c2", "c3"), x_right = c("r1", "r2")))
 })

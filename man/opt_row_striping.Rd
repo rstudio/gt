@@ -68,7 +68,7 @@ and more). Following that, we'll add row striping to every second row with
 
 \section{Function ID}{
 
-10-5
+10-6
 }
 
 \section{Function Introduced}{
@@ -82,6 +82,7 @@ Other table option functions:
 \code{\link{opt_all_caps}()},
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_footnote_order}()},
 \code{\link{opt_footnote_spec}()},
 \code{\link{opt_horizontal_padding}()},
 \code{\link{opt_interactive}()},

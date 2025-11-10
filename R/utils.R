@@ -2273,6 +2273,27 @@ validate_marks <- function(marks, call = rlang::caller_env()) {
   }
 }
 
+validate_footnote_order <- function(order, call = rlang::caller_env()) {
+
+  order_keywords <- c("marks_first", "marks_last", "preserve_order")
+
+
+  if (length(order) <= 1) {
+    # make sure not length 0.
+    check_string(order, allow_empty = FALSE, allow_null = FALSE, call = call)
+    # only check keywords for length 1
+
+    rlang::arg_match0(
+      order,
+      order_keywords,
+      error_call = call
+    )
+  }
+  if (!is.character(order) | length(order)>1) {
+    cli::cli_abort("The value for `order` must be a character string. Acceptable values include: {.val {order_keywords}}", call = call)
+  }
+}
+
 validate_style_in <- function(
     style_vals,
     style_names,

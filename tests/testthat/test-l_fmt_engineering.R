@@ -1,4 +1,4 @@
-test_that("fmt_engineering() works correctly in the LaTeX context", {
+test_that("fmt_engineering() works correctly in LaTeX output tables", {
 
   # Create an input data frame with a single numeric column
   data_tbl <-
@@ -48,20 +48,18 @@ test_that("fmt_engineering() works correctly in the LaTeX context", {
   # Expect an error when attempting to format a column
   # that does not exist
   expect_error(
-    tab %>%
-      fmt_engineering(columns = "num_3", decimals = 2)
+    tab |> fmt_engineering(columns = "num_3", decimals = 2)
   )
 
   # Expect an error when using a locale that does not exist
   expect_error(
-    tab %>%
-      fmt_engineering(columns = "num", decimals = 2, locale = "aa_bb")
+    tab |> fmt_engineering(columns = "num", decimals = 2, locale = "aa_bb")
   )
 
   # Format the `num` column to 2 decimal places, use all other defaults
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 2) %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 2) |>
        render_formats_test("latex"))[["num"]],
     c(
       "82.03 $\\times$ 10\\textsuperscript{30}", "829.30 $\\times$ 10\\textsuperscript{18}",
@@ -80,8 +78,8 @@ test_that("fmt_engineering() works correctly in the LaTeX context", {
 
   # Format the `num` column to 5 decimal places, use all other defaults
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 5) %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 5) |>
        render_formats_test("latex"))[["num"]],
     c(
       "82.03048 $\\times$ 10\\textsuperscript{30}", "829.30023 $\\times$ 10\\textsuperscript{18}",
@@ -101,11 +99,11 @@ test_that("fmt_engineering() works correctly in the LaTeX context", {
   # Format the `num` column to 2 decimal places, use a period for the
   # digit grouping separators
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_engineering(
          columns = "num", decimals = 2,
          sep_mark = ".", dec_mark = ","
-       ) %>%
+       ) |>
        render_formats_test("latex"))[["num"]],
     c(
       "82,03 $\\times$ 10\\textsuperscript{30}", "829,30 $\\times$ 10\\textsuperscript{18}",
@@ -125,8 +123,8 @@ test_that("fmt_engineering() works correctly in the LaTeX context", {
   # Format the `num` column to 4 decimal places, scale all values by
   # 1/1000, use all other defaults
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 4, scale_by = 1/1000) %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 4, scale_by = 1/1000) |>
        render_formats_test("latex"))[["num"]],
     c(
       "82.0305 $\\times$ 10\\textsuperscript{27}", "829.3002 $\\times$ 10\\textsuperscript{15}",
@@ -146,8 +144,8 @@ test_that("fmt_engineering() works correctly in the LaTeX context", {
   # Format the `num` column to 2 decimal places, prepend and append
   # all values by 2 different literals, use all other defaults
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 2, pattern = "a {x} b") %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 2, pattern = "a {x} b") |>
        render_formats_test("latex"))[["num"]],
     c(
       "a 82.03 $\\times$ 10\\textsuperscript{30} b", "a 829.30 $\\times$ 10\\textsuperscript{18} b",
@@ -167,9 +165,9 @@ test_that("fmt_engineering() works correctly in the LaTeX context", {
 
   # Format the `num` column to 2 decimal places, force the sign
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_engineering(
-         columns = "num", decimals = 3, force_sign_m = TRUE) %>%
+         columns = "num", decimals = 3, force_sign_m = TRUE) |>
        render_formats_test("latex"))[["num"]],
     c(
       "+82.030 $\\times$ 10\\textsuperscript{30}", "+829.300 $\\times$ 10\\textsuperscript{18}",
@@ -189,9 +187,9 @@ test_that("fmt_engineering() works correctly in the LaTeX context", {
   # Format the `num` column to 2 decimal places, force the sign and
   # define a pattern for decorating values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_engineering(
-         columns = "num", pattern = "*{x}*", force_sign_m = TRUE) %>%
+         columns = "num", pattern = "*{x}*", force_sign_m = TRUE) |>
        render_formats_test("latex"))[["num"]],
     c(
       "*+82.03 $\\times$ 10\\textsuperscript{30}*", "*+829.30 $\\times$ 10\\textsuperscript{18}*",
@@ -211,8 +209,8 @@ test_that("fmt_engineering() works correctly in the LaTeX context", {
   # Format the `num` column to 2 decimal places, apply the `en_US`
   # locale and use all other defaults
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 2, locale = "en_US") %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 2, locale = "en_US") |>
        render_formats_test("latex"))[["num"]],
     c(
       "82.03 $\\times$ 10\\textsuperscript{30}", "829.30 $\\times$ 10\\textsuperscript{18}",
@@ -232,8 +230,8 @@ test_that("fmt_engineering() works correctly in the LaTeX context", {
   # Format the `num` column to 2 decimal places, apply the `da_DK`
   # locale and use all other defaults
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 2, locale = "da_DK") %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 2, locale = "da_DK") |>
        render_formats_test("latex"))[["num"]],
     c(
       "82,03 $\\times$ 10\\textsuperscript{30}", "829,30 $\\times$ 10\\textsuperscript{18}",
@@ -268,8 +266,8 @@ test_that("fmt_engineering() can handle extremely large and small values", {
 
   # Format the `num` column to 5 decimal places, use all other defaults
   expect_equal(
-    (tab %>%
-       fmt_engineering(columns = "num", decimals = 5) %>%
+    (tab |>
+       fmt_engineering(columns = "num", decimals = 5) |>
        render_formats_test("latex"))[["num"]],
     c(
       "-150.00000 $\\times$ 10\\textsuperscript{198}", "-15.00000 $\\times$ 10\\textsuperscript{99}",

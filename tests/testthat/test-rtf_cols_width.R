@@ -1,15 +1,15 @@
-test_that("cols_width() works in making RTF tables", {
+test_that("cols_width() works for RTF output tables", {
 
   # Test matrix for setting of column widths; broadly there are 21 cases with
   # different combinations of setting dimensions (or not) on table columns with
   # px and %, and, setting the table width (or not) in px and %
 
   gt_tbl <-
-    exibble %>%
-    dplyr::select(num, char, datetime, row, group) %>%
-    gt(rowname_col = "row", groupname_col = "group") %>%
-    tab_header(title = "Table Title", subtitle = "Table Subtitle") %>%
-    tab_source_note(source_note = "Table Source Note") %>%
+    exibble |>
+    dplyr::select(num, char, datetime, row, group) |>
+    gt(rowname_col = "row", groupname_col = "group") |>
+    tab_header(title = "Table Title", subtitle = "Table Subtitle") |>
+    tab_source_note(source_note = "Table Source Note") |>
     tab_footnote(footnote = "Table Footnote", locations = cells_title("title"))
 
 
@@ -20,10 +20,11 @@ test_that("cols_width() works in making RTF tables", {
   # (1) UNDEF
   # All columns are variable (equal widths unless
   # content in some columns causes width expansion)
-  gt_tbl_1 <- gt_tbl %>%
+  gt_tbl_1 <-
+    gt_tbl |>
     tab_options(table.width = px(400))
-  expect_snapshot_rtf(gt_tbl_1)
 
+  expect_snapshot_rtf(gt_tbl_1)
 
   # (2) PX
   # Define all columns in terms of px values;
@@ -31,51 +32,55 @@ test_that("cols_width() works in making RTF tables", {
   # (of px values will act as proportions of width,
   # as long as their sum isn't greater than the
   # overall table width)
-  gt_tbl_2 <- gt_tbl %>%
+  gt_tbl_2 <-
+    gt_tbl |>
     cols_width(
       everything() ~ px(100)
-    ) %>%
+    ) |>
     tab_options(table.width = px(400))
-  expect_snapshot_rtf(gt_tbl_2)
 
+  expect_snapshot_rtf(gt_tbl_2)
 
   # (3) PX + UNDEF
   # Define some columns in terms of px values;
   # undefined widths will be variable (based on content,
   # filling the remaining width)
-  gt_tbl_3 <- gt_tbl %>%
+  gt_tbl_3 <-
+    gt_tbl |>
     cols_width(
       num ~ px(120),
       char ~ px(140)
-    ) %>%
+    ) |>
     tab_options(table.width = px(400))
-  expect_snapshot_rtf(gt_tbl_3)
 
+  expect_snapshot_rtf(gt_tbl_3)
 
   # (4) PCT
   # If everything is in terms of percentages, the
   # proportional widths are normalized, overall
   # table width is honored
-  gt_tbl_4 <- gt_tbl %>%
+  gt_tbl_4 <-
+    gt_tbl |>
     cols_width(
       everything() ~ pct(30)
-    ) %>%
+    ) |>
     tab_options(table.width = px(400))
-  expect_snapshot_rtf(gt_tbl_4)
 
+  expect_snapshot_rtf(gt_tbl_4)
 
   # (5) PCT + UNDEF
   # Define some columns in terms of % values;
   # undefined widths will be variable (based on content,
   # filling the remaining width)
-  gt_tbl_5 <- gt_tbl %>%
+  gt_tbl_5 <-
+    gt_tbl |>
     cols_width(
       row ~ pct(5), # this is the stub column
       char ~ pct(10)
-    ) %>%
+    ) |>
     tab_options(table.width = px(400))
-  expect_snapshot_rtf(gt_tbl_5)
 
+  expect_snapshot_rtf(gt_tbl_5)
 
   # (6) PX + PCT
   # Define all columns in terms of either px or %;
@@ -83,16 +88,17 @@ test_that("cols_width() works in making RTF tables", {
   # exact routine is not intuitive; table.width seems
   # to be constant no matter what values are given
   # for the column widths
-  gt_tbl_6 <- gt_tbl %>%
+  gt_tbl_6 <-
+    gt_tbl |>
     cols_width(
       row ~ px(100),
       num ~ px(100),
       char ~ pct(10),
       datetime ~ pct(10)
-    ) %>%
+    ) |>
     tab_options(table.width = px(400))
-  expect_snapshot_rtf(gt_tbl_6)
 
+  expect_snapshot_rtf(gt_tbl_6)
 
   # (7) PX + PCT + UNDEF
   # Define some columns in terms of px and % values;
@@ -100,14 +106,15 @@ test_that("cols_width() works in making RTF tables", {
   # columns are fixed, other columns take up the remaining
   # space (if any); table.width seems to be constant no
   # matter what values are given for the column widths
-  gt_tbl_7 <- gt_tbl %>%
+  gt_tbl_7 <-
+    gt_tbl |>
     cols_width(
       num ~ px(100),
       char ~ pct(50)
-    ) %>%
+    ) |>
     tab_options(table.width = px(400))
-  expect_snapshot_rtf(gt_tbl_7)
 
+  expect_snapshot_rtf(gt_tbl_7)
 
   #
   # II. Defining an absolute table width as a percentage
@@ -117,8 +124,8 @@ test_that("cols_width() works in making RTF tables", {
   # All columns are variable (equal widths unless
   # content in some columns causes width expansion)
   expect_snapshot_rtf(tab_options(gt_tbl, table.width = pct(100)))
-  expect_snapshot_rtf(tab_options(gt_tbl, table.width = pct(60)))
 
+  expect_snapshot_rtf(tab_options(gt_tbl, table.width = pct(60)))
 
   # (2) PX
   # Define all columns in terms of px values;
@@ -126,55 +133,59 @@ test_that("cols_width() works in making RTF tables", {
   # (of px values will act as proportions of width,
   # as long as their sum isn't greater than the
   # overall table width)
-  gt_tbl_2 <- gt_tbl %>%
+  gt_tbl_2 <-
+    gt_tbl |>
     cols_width(
       everything() ~ px(120)
     )
 
   expect_snapshot_rtf(tab_options(gt_tbl_2, table.width = pct(100)))
-  expect_snapshot_rtf(tab_options(gt_tbl_2, table.width = pct(80)))
 
+  expect_snapshot_rtf(tab_options(gt_tbl_2, table.width = pct(80)))
 
   # (3) PX + UNDEF
   # Define some columns in terms of px values;
   # undefined widths will be variable (based on content,
   # filling the remaining width)
-  gt_tbl_3 <- gt_tbl %>%
+  gt_tbl_3 <-
+    gt_tbl |>
     cols_width(
       num ~ px(120),
       char ~ px(140)
     )
 
   expect_snapshot_rtf(tab_options(gt_tbl_3, table.width = pct(100)))
-  expect_snapshot_rtf(tab_options(gt_tbl_3, table.width = pct(80)))
 
+  expect_snapshot_rtf(tab_options(gt_tbl_3, table.width = pct(80)))
 
   # (4) PCT
   # If everything is in terms of percentages, the
   # proportional widths are normalized, overall
   # table width is honored
-  gt_tbl_4 <- gt_tbl %>%
+  gt_tbl_4 <-
+    gt_tbl |>
     cols_width(
       everything() ~ pct(30)
     )
 
   expect_snapshot_rtf(tab_options(gt_tbl_4, table.width = pct(100)))
-  expect_snapshot_rtf(tab_options(gt_tbl_4, table.width = pct(80)))
 
+  expect_snapshot_rtf(tab_options(gt_tbl_4, table.width = pct(80)))
 
   # (5) PCT + UNDEF
   # Define some columns in terms of % values;
   # undefined widths will be variable (based on content,
   # filling the remaining width)
-  gt_tbl_5 <- gt_tbl %>%
+  gt_tbl_5 <-
+    gt_tbl |>
     cols_width(
       row ~ pct(5), # this is the stub column
       char ~ pct(10)
     )
 
   expect_snapshot_rtf(tab_options(gt_tbl_5, table.width = pct(100)))
-  expect_snapshot_rtf(tab_options(gt_tbl_5, table.width = pct(80)))
 
+  expect_snapshot_rtf(tab_options(gt_tbl_5, table.width = pct(80)))
 
   # (6) PX + PCT
   # Define all columns in terms of either px or %;
@@ -182,7 +193,8 @@ test_that("cols_width() works in making RTF tables", {
   # exact routine is not intuitive; table.width seems
   # to be constant no matter what values are given
   # for the column widths
-  gt_tbl_6 <- gt_tbl %>%
+  gt_tbl_6 <-
+    gt_tbl |>
     cols_width(
       row ~ px(100),
       num ~ px(100),
@@ -191,6 +203,7 @@ test_that("cols_width() works in making RTF tables", {
     )
 
   expect_snapshot_rtf(tab_options(gt_tbl_6, table.width = pct(100)))
+
   expect_snapshot_rtf(tab_options(gt_tbl_6, table.width = pct(80)))
 
   # (7) PX + PCT + UNDEF
@@ -199,13 +212,15 @@ test_that("cols_width() works in making RTF tables", {
   # columns are fixed, other columns take up the remaining
   # space (if any); table.width seems to be constant no
   # matter what values are given for the column widths
-  gt_tbl_7 <- gt_tbl %>%
+  gt_tbl_7 <-
+    gt_tbl |>
     cols_width(
       num ~ px(100),
       char ~ pct(50)
     )
 
   expect_snapshot_rtf(tab_options(gt_tbl_7, table.width = pct(100)))
+
   expect_snapshot_rtf(tab_options(gt_tbl_7, table.width = pct(80)))
 
   #
@@ -217,90 +232,94 @@ test_that("cols_width() works in making RTF tables", {
   # content in some columns causes width expansion)
   expect_snapshot_rtf(gt_tbl)
 
-
   # (2) PX
   # Define all columns in terms of px values;
   # each px is exactly as specified
   # NOTE: we intervene and set the table width to 0px
-  gt_tbl_2 <- gt_tbl %>%
+  gt_tbl_2 <-
+    gt_tbl |>
     cols_width(
       everything() ~ px(20)
     )
-  expect_snapshot_rtf(gt_tbl_2)
 
+  expect_snapshot_rtf(gt_tbl_2)
 
   # (3) PX + UNDEF
   # Define some columns in terms of px values;
   # undefined widths will be variable (based on content,
   # filling the remaining width)
-  gt_tbl_3 <- gt_tbl %>%
+  gt_tbl_3 <-
+    gt_tbl |>
     cols_width(
       num ~ px(120),
       char ~ px(140)
     )
-  expect_snapshot_rtf(gt_tbl_3)
 
+  expect_snapshot_rtf(gt_tbl_3)
 
   # (4) PCT
   # If everything is in terms of percentages, the
   # proportional widths are normalized
   # NOTE: we intervene and set the table width to 100%
-  gt_tbl_4 <- gt_tbl %>%
+  gt_tbl_4 <-
+    gt_tbl |>
     cols_width(
       row ~ pct(30),
       num ~ pct(30),
       char ~ pct(10),
       datetime ~ pct(10)
     )
-  expect_snapshot_rtf(gt_tbl_4)
 
+  expect_snapshot_rtf(gt_tbl_4)
 
   # (5) PCT + UNDEF
   # Define some columns in terms of % values;
   # undefined widths will be variable (based on content,
   # filling the remaining width); automatically, w/o
   # intervention, the table width goes to 100%
-  gt_tbl_5 <- gt_tbl %>%
+  gt_tbl_5 <-
+    gt_tbl |>
     cols_width(
       row ~ pct(10), # this is the stub column
       char ~ pct(10)
     )
-  expect_snapshot_rtf(gt_tbl_5)
 
+  expect_snapshot_rtf(gt_tbl_5)
 
   # (6) PX + PCT
   # Define all columns in terms of either px or %;
   # these are all converted to proportions but the
   # exact routine is not intuitive; automatically, w/o
   # intervention, the table width goes to 100%
-  gt_tbl_6 <- gt_tbl %>%
+  gt_tbl_6 <-
+    gt_tbl |>
     cols_width(
       row ~ px(100),
       num ~ px(100),
       char ~ pct(10),
       datetime ~ pct(10)
     )
-  expect_snapshot_rtf(gt_tbl_6)
 
+  expect_snapshot_rtf(gt_tbl_6)
 
   # (7) PX + PCT + UNDEF
   # Define some columns in terms of px and % values;
   # looks as though % columns are scaled and fixed, px
   # columns are fixed, other columns expand to fit their
   # content
-  gt_tbl_7 <- gt_tbl %>%
+  gt_tbl_7 <-
+    gt_tbl |>
     cols_width(
       num ~ px(100),
       char ~ pct(50)
     )
+
   expect_snapshot_rtf(gt_tbl_7)
 })
 
 test_that("col_width_resolver_rtf() works correctly", {
 
-  tw <- function(x) {
-    paste0(x, "tw")
-  }
+  tw <- function(x) paste0(x, "tw")
 
   page_body_width_portrait <- 12240L - 1440L - 1440L
 
@@ -502,34 +521,35 @@ test_that("parse_length_str() works correctly", {
     )
   )
 
-  parse_length_str(
-    lengths_vec = "-6px",
-    allow_negative = TRUE
-  ) %>%
-    {
-      expect_equal(.[["value"]], -6)
-      expect_equal(.[["unit"]], "px")
-    }
+  parsed_length_1 <-
+    parse_length_str(
+      lengths_vec = "-6px",
+      allow_negative = TRUE
+  )
 
-  parse_length_str(
-    lengths_vec = character(0L),
-    allow_negative = TRUE
-  ) %>%
-    {
-      expect_type(., "list")
-      expect_s3_class(., "data.frame")
-      expect_equal(nrow(.), 0)
-    }
+  expect_equal(parsed_length_1[["value"]], -6)
+
+  expect_equal(parsed_length_1[["unit"]], "px")
+
+  parsed_length_2 <-
+    parse_length_str(
+      lengths_vec = character(0L),
+      allow_negative = TRUE
+    )
+
+  expect_type(parsed_length_2, "list")
+
+  expect_s3_class(parsed_length_2, "data.frame")
+
+  expect_equal(nrow(parsed_length_2), 0)
 
   # `parse_length_str()` doesn't check for valid units
   # so anything that fits the `(%|[a-z]+)` will work
-  parse_length_str(
-    lengths_vec = "6.234points"
-  ) %>%
-    {
-      expect_equal(.[["value"]], 6.234)
-      expect_equal(.[["unit"]], "points")
-    }
+  parsed_length_3 <- parse_length_str(lengths_vec = "6.234points")
+
+  expect_equal(parsed_length_3[["value"]], 6.234)
+
+  expect_equal(parsed_length_3[["unit"]], "points")
 
   # NA values cannot be used
   expect_error(
@@ -584,8 +604,11 @@ test_that("abs_len_to_twips() works correctly", {
       abs_len_to_twips(parse_length_str(lengths_vec_list[[i]]))
 
     expect_type(lengths_tbl, "list")
+
     expect_s3_class(lengths_tbl, "data.frame")
+
     expect_equal(lengths_tbl[["value"]], value_vec_list[[i]], tolerance = 0.1)
+
     expect_equal(lengths_tbl[["unit"]], unit_vec_list[[i]])
   }
 })

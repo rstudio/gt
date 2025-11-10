@@ -120,7 +120,7 @@ scientific notation. This is done by using the \code{lg_num_pref = "suf"} option
 
 \section{Function ID}{
 
-3-29
+3-30
 }
 
 \section{Function Introduced}{
@@ -150,6 +150,7 @@ Other data formatting functions:
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_number_si}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},

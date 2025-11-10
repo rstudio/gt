@@ -77,7 +77,7 @@ expect_tab <- function(tab, df) {
   expect_length(dt_substitutions_get(data = tab), 0)
   expect_equal(dim(dt_styles_get(data = tab)), c(0, 7))
   # If adding a new option to tab_options(), update here
-  expect_equal(dim(dt_options_get(data = tab)), c(197, 5))
+  expect_equal(dim(dt_options_get(data = tab)), c(199, 5))
   expect_length(dt_transforms_get(data = tab), 0)
 
   # Expect that extracted df has the same column
@@ -118,7 +118,8 @@ gt_attr_names <- function() {
     "_stub_df", "_row_groups",
     "_heading", "_spanners", "_stubhead",
     "_footnotes", "_source_notes", "_formats", "_substitutions", "_styles",
-    "_summary", "_options", "_transforms", "_locale", "_has_built"
+    "_summary", "_summary_cols", "_summary_cols_build",
+    "_options", "_transforms", "_locale", "_has_built"
   )
 }
 

@@ -82,8 +82,12 @@ tests/testthat/_snaps/fmt_integer.md
 tests/testthat/test-fmt_markdown.R
 tests/testthat/_snaps/fmt_markdown.md
 
+tests/testthat/test-fmt_min_sep_threshold.R
+
 tests/testthat/test-fmt_number.R
 tests/testthat/_snaps/fmt_number.md
+
+tests/testthat/test-fmt_number_si.R
 
 tests/testthat/test-fmt_partsper.R
 tests/testthat/test-fmt_passthrough.R
@@ -133,6 +137,7 @@ tests/testthat/_snaps/location_cells.md
 tests/testthat/test-multicolumn_stub.R
 tests/testthat/_snaps/multicolumn_stub.md
 
+tests/testthat/test-omit_na_group.R
 tests/testthat/test-opts.R
 
 tests/testthat/test-quarto.R
@@ -158,6 +163,8 @@ tests/testthat/test-substitution.R
 
 tests/testthat/test-summary_rows.R
 tests/testthat/_snaps/summary_rows.md
+
+tests/testthat/test-summary_columns.R
 
 tests/testthat/test-tab_footnote.R
 tests/testthat/_snaps/tab_footnote.md
