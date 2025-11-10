@@ -558,7 +558,7 @@ create_columns_component_l <- function(data, colwidth_df) {
           latex_multicolumn_cell(
             stub_label,
             alignment = width_txt,
-            width = length(stub_layout),
+            width = n_stub_cols,
             override_alignment = FALSE
           )
       }
