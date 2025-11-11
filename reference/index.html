@@ -66,8 +66,7 @@
 
       <div class="section-desc"><p>All <strong>gt</strong> tables begin with a call to <code><a href="../reference/gt.html">gt()</a></code>, where we would supply the input data table (data frame or tibble) and some basic options for creating a stub (<code>rowname_col</code>) and row groups (<code>groupname_col</code>). We can also introduce a grouped tibble (via <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code>) for more precise divisions of rows into row groups. <code><a href="../reference/gt_preview.html">gt_preview()</a></code> is great for getting a nicely-formatted preview of a data table (defaulting to the first 5 rows and the last row).</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -78,7 +77,8 @@
 
         </dt>
         <dd>Create a <strong>gt</strong> table object</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="gt_preview.html">gt_preview()</a></code>
 
@@ -89,8 +89,7 @@
 
       <div class="section-desc"><p>A <strong>gt</strong> table can contain a few useful parts for conveying additional information. These include a header (with a titles and subtitle), a footer (with footnotes and source notes), and additional areas for labels (row group labels, column spanner labels, the stubhead label). We can modify the look of table parts more generally with <code><a href="../reference/tab_options.html">tab_options()</a></code> and perform styling on targeted table locations with <code><a href="../reference/tab_style.html">tab_style()</a></code>.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -101,73 +100,85 @@
 
         </dt>
         <dd>Add a table header</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="tab_spanner.html">tab_spanner()</a></code>
 
         </dt>
         <dd>Add a spanner label</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="tab_spanner_delim.html">tab_spanner_delim()</a></code>
 
         </dt>
         <dd>Create column labels and spanners via delimited column names</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="tab_row_group.html">tab_row_group()</a></code>
 
         </dt>
         <dd>Add a row group to a <strong>gt</strong> table</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="tab_stubhead.html">tab_stubhead()</a></code>
 
         </dt>
         <dd>Add label text to the stubhead</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="tab_stub_indent.html">tab_stub_indent()</a></code>
 
         </dt>
         <dd>Control indentation of row labels in the stub</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="tab_footnote.html">tab_footnote()</a></code>
 
         </dt>
         <dd>Add a table footnote</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="tab_source_note.html">tab_source_note()</a></code>
 
         </dt>
         <dd>Add a source note citation</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="tab_caption.html">tab_caption()</a></code>
 
         </dt>
         <dd>Add a table caption</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="tab_style.html">tab_style()</a></code>
 
         </dt>
         <dd>Add custom styles to one or more cells</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="tab_style_body.html">tab_style_body()</a></code>
 
         </dt>
         <dd>Target cells in the table body and style accordingly</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="tab_options.html">tab_options()</a></code>
 
         </dt>
         <dd>Modify the table output options</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="tab_info.html">tab_info()</a></code>
 
@@ -178,8 +189,7 @@
 
       <div class="section-desc"><p>Columns of data can be formatted with the <code>fmt_*()</code> functions. We can specify the rows of these columns quite precisely with the <code>rows</code> argument. We get to apply these functions exactly once to each data cell (last call wins). Need to do custom formatting? Use the <code><a href="../reference/fmt.html">fmt()</a></code> function and define your own formatter within (or, create a wrapper with <code><a href="../reference/fmt.html">fmt()</a></code> if you prefer). The <code>sub_*()</code> functions allow you to perform substitution operations and <code><a href="../reference/data_color.html">data_color()</a></code> provides a lot of power for colorizing body cells based on their data values.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -190,217 +200,253 @@
 
         </dt>
         <dd>Format numeric values</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_integer.html">fmt_integer()</a></code>
 
         </dt>
         <dd>Format values as integers</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_scientific.html">fmt_scientific()</a></code>
 
         </dt>
         <dd>Format values to scientific notation</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_engineering.html">fmt_engineering()</a></code>
 
         </dt>
         <dd>Format values to engineering notation</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_number_si.html">fmt_number_si()</a></code>
 
         </dt>
         <dd>Format numbers with SI prefixes</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_percent.html">fmt_percent()</a></code>
 
         </dt>
         <dd>Format values as a percentage</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_partsper.html">fmt_partsper()</a></code>
 
         </dt>
         <dd>Format values as parts-per quantities</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_fraction.html">fmt_fraction()</a></code>
 
         </dt>
         <dd>Format values as mixed fractions</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_currency.html">fmt_currency()</a></code>
 
         </dt>
         <dd>Format values as currencies</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_roman.html">fmt_roman()</a></code>
 
         </dt>
         <dd>Format values as Roman numerals</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_index.html">fmt_index()</a></code>
 
         </dt>
         <dd>Format values to indexed characters</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_spelled_num.html">fmt_spelled_num()</a></code>
 
         </dt>
         <dd>Format values to spelled-out numbers</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_bytes.html">fmt_bytes()</a></code>
 
         </dt>
         <dd>Format values as bytes</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_date.html">fmt_date()</a></code>
 
         </dt>
         <dd>Format values as dates</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_time.html">fmt_time()</a></code>
 
         </dt>
         <dd>Format values as times</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_datetime.html">fmt_datetime()</a></code>
 
         </dt>
         <dd>Format values as datetimes</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_duration.html">fmt_duration()</a></code>
 
         </dt>
         <dd>Format numeric or duration values as styled time duration strings</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_bins.html">fmt_bins()</a></code>
 
         </dt>
         <dd>Format column data containing bin/interval information</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_tf.html">fmt_tf()</a></code>
 
         </dt>
         <dd>Format <code>TRUE</code> and <code>FALSE</code> values</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_markdown.html">fmt_markdown()</a></code>
 
         </dt>
         <dd>Format Markdown text</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_units.html">fmt_units()</a></code>
 
         </dt>
         <dd>Format measurement units</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_chem.html">fmt_chem()</a></code>
 
         </dt>
         <dd>Format chemical formulas</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_url.html">fmt_url()</a></code>
 
         </dt>
         <dd>Format URLs to generate links</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_email.html">fmt_email()</a></code>
 
         </dt>
         <dd>Format email addresses to generate 'mailto:' links</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_image.html">fmt_image()</a></code>
 
         </dt>
         <dd>Format image paths to generate images in cells</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_flag.html">fmt_flag()</a></code>
 
         </dt>
         <dd>Generate flag icons for countries from their country codes</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_country.html">fmt_country()</a></code>
 
         </dt>
         <dd>Generate country names from their corresponding country codes</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_icon.html">fmt_icon()</a></code>
 
         </dt>
         <dd>Use icons within a table's body cells</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_passthrough.html">fmt_passthrough()</a></code>
 
         </dt>
         <dd>Format by simply passing data through</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt_auto.html">fmt_auto()</a></code>
 
         </dt>
         <dd>Automatically format column data according to their values</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmt.html">fmt()</a></code>
 
         </dt>
         <dd>Set a column format with a formatter function</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="sub_missing.html">sub_missing()</a></code>
 
         </dt>
         <dd>Substitute missing values in the table body</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="sub_zero.html">sub_zero()</a></code>
 
         </dt>
         <dd>Substitute zero values in the table body</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="sub_small_vals.html">sub_small_vals()</a></code>
 
         </dt>
         <dd>Substitute small values in the table body</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="sub_large_vals.html">sub_large_vals()</a></code>
 
         </dt>
         <dd>Substitute large values in the table body</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="sub_values.html">sub_values()</a></code>
 
         </dt>
         <dd>Substitute targeted values in the table body</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="data_color.html">data_color()</a></code>
 
@@ -411,8 +457,7 @@
 
       <div class="section-desc"><p>The <code>text_*()</code> functions take cell data that are solidified into strings and allow for flexible transformations of those string values. Whereas the <code>fmt_*()</code> and <code>sub_*()</code> are phases 1 and 2 of cell data metamorphoses, the text transformation functions are the final phase, acting on strings generated by formatting and substitution functions with no reference to the source values.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -423,19 +468,22 @@
 
         </dt>
         <dd>Perform highly targeted text replacement with a regex pattern</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="text_case_when.html">text_case_when()</a></code>
 
         </dt>
         <dd>Perform whole text replacements using a 'case-when'-expression approach</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="text_case_match.html">text_case_match()</a></code>
 
         </dt>
         <dd>Perform whole or partial text replacements with a 'switch'-like approach</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="text_transform.html">text_transform()</a></code>
 
@@ -446,8 +494,7 @@
 
       <div class="section-desc"><p>The <code>cols_*()</code> functions allow for modifications that act on entire columns. This includes alignment of the data in columns (<code><a href="../reference/cols_align.html">cols_align()</a></code>), hiding columns from view (<code><a href="../reference/cols_hide.html">cols_hide()</a></code>), re-labeling the column labels (<code><a href="../reference/cols_label.html">cols_label()</a></code>), merging two columns together (the <code>cols_merge*()</code> functions), and moving columns around (the <code>cols_move*()</code> functions).</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -458,97 +505,113 @@
 
         </dt>
         <dd>Set the alignment of columns</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_align_decimal.html">cols_align_decimal()</a></code>
 
         </dt>
         <dd>Align all numeric values in a column along the decimal mark</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_width.html">cols_width()</a></code>
 
         </dt>
         <dd>Set the widths of columns</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_label.html">cols_label()</a></code>
 
         </dt>
         <dd>Relabel one or more columns</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_label_with.html">cols_label_with()</a></code>
 
         </dt>
         <dd>Relabel columns with a function</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_units.html">cols_units()</a></code>
 
         </dt>
         <dd>Define units for one or more columns</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_add.html">cols_add()</a></code>
 
         </dt>
         <dd>Add one or more columns to a <strong>gt</strong> table</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_nanoplot.html">cols_nanoplot()</a></code>
 
         </dt>
         <dd>Add a new column of nanoplots, taking input data from selected columns</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_move.html">cols_move()</a></code>
 
         </dt>
         <dd>Move one or more columns</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_move_to_start.html">cols_move_to_start()</a></code>
 
         </dt>
         <dd>Move one or more columns to the start</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_move_to_end.html">cols_move_to_end()</a></code>
 
         </dt>
         <dd>Move one or more columns to the end</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_hide.html">cols_hide()</a></code>
 
         </dt>
         <dd>Hide one or more columns</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_unhide.html">cols_unhide()</a></code>
 
         </dt>
         <dd>Unhide one or more columns</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_merge.html">cols_merge()</a></code>
 
         </dt>
         <dd>Merge data from two or more columns to a single column</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_merge_uncert.html">cols_merge_uncert()</a></code>
 
         </dt>
         <dd>Merge columns to a value-with-uncertainty column</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_merge_range.html">cols_merge_range()</a></code>
 
         </dt>
         <dd>Merge two columns to a value range column</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cols_merge_n_pct.html">cols_merge_n_pct()</a></code>
 
@@ -559,8 +622,7 @@
 
       <div class="section-desc"><p>There are two functions that will add rows to a <strong>gt</strong> table: <code><a href="../reference/summary_rows.html">summary_rows()</a></code> and <code><a href="../reference/grand_summary_rows.html">grand_summary_rows()</a></code>. These functions will both add summary rows but one will do it in a groupwise fashion while the other will create grand summary rows. The <code><a href="../reference/row_group_order.html">row_group_order()</a></code> function lets us modify the ordering of any row groups in the table.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -571,25 +633,29 @@
 
         </dt>
         <dd>Add group-wise summary rows using aggregation functions</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="grand_summary_rows.html">grand_summary_rows()</a></code>
 
         </dt>
         <dd>Add grand summary rows using aggregation functions</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="row_group_order.html">row_group_order()</a></code>
 
         </dt>
         <dd>Modify the ordering of any row groups</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="rows_add.html">rows_add()</a></code>
 
         </dt>
         <dd>Add one or more rows to a <strong>gt</strong> table</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="summary_columns.html">summary_columns()</a></code>
 
@@ -600,8 +666,7 @@
 
       <div class="section-desc"><p>The <code>rm_*()</code> functions let us safely remove parts of a <strong>gt</strong> table. This can be advantageous in those instances where you would obtain a <strong>gt</strong> table but prefer to excise some parts of it.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -612,31 +677,36 @@
 
         </dt>
         <dd>Remove the table header</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="rm_stubhead.html">rm_stubhead()</a></code>
 
         </dt>
         <dd>Remove the stubhead label</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="rm_spanners.html">rm_spanners()</a></code>
 
         </dt>
         <dd>Remove column spanner labels</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="rm_footnotes.html">rm_footnotes()</a></code>
 
         </dt>
         <dd>Remove table footnotes</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="rm_source_notes.html">rm_source_notes()</a></code>
 
         </dt>
         <dd>Remove table source notes</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="rm_caption.html">rm_caption()</a></code>
 
@@ -647,8 +717,7 @@
 
       <div class="section-desc"><p>Many gt functions share parameters that behave more or less the same way. These topics explain the design principles of some of them.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -659,19 +728,22 @@
 
         </dt>
         <dd>Apply conditional formatting to cells with <code>rows</code> and <code>columns</code></dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="locale.html">locale</a></code>
 
         </dt>
         <dd>Localize formatting and symbols</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="location-helper.html">location-helper</a></code>
 
         </dt>
         <dd>Helper to target cells at <code>locations</code></dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="fmts.html">fmts</a></code>
 
@@ -682,8 +754,7 @@
 
       <div class="section-desc"><p>An assortment of helper functions is available in the <strong>gt</strong> package. The various <code>cells_*()</code> functions are used for targeting cells with the <code>locations</code> argument of <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code>, <code><a href="../reference/tab_style.html">tab_style()</a></code>, and <code><a href="../reference/text_transform.html">text_transform()</a></code>, <code><a href="../reference/text_case_match.html">text_case_match()</a></code>, and <code><a href="../reference/text_case_when.html">text_case_when()</a></code>. The <code>cell_*()</code> functions are used exclusively with <code><a href="../reference/tab_style.html">tab_style()</a></code>’s <code>style</code> argument. <code><a href="../reference/px.html">px()</a></code> &amp; <code><a href="../reference/pct.html">pct()</a></code> are useful there for specifying units in pixels or percentages. The <code><a href="../reference/md.html">md()</a></code> and <code><a href="../reference/html.html">html()</a></code> helpers can used be during label creation with <code><a href="../reference/tab_header.html">tab_header()</a></code>, <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code>, <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code>, <code><a href="../reference/tab_stubhead.html">tab_stubhead()</a></code>, and <code><a href="../reference/tab_source_note.html">tab_source_note()</a></code>.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -694,199 +765,232 @@
 
         </dt>
         <dd>Interpret input text as Markdown-formatted text</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="html.html">html()</a></code>
 
         </dt>
         <dd>Interpret input text as HTML-formatted text</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="latex.html">latex()</a></code>
 
         </dt>
         <dd>Interpret input text as LaTeX-formatted text</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="px.html">px()</a></code>
 
         </dt>
         <dd>Helper for providing a numeric value as pixels value</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="pct.html">pct()</a></code>
 
         </dt>
         <dd>Helper for providing a numeric value as percentage</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="from_column.html">from_column()</a></code>
 
         </dt>
         <dd>Reference a column of values for certain parameters</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="currency.html">currency()</a></code>
 
         </dt>
         <dd>Supply a custom currency symbol to <code><a href="../reference/fmt_currency.html">fmt_currency()</a></code></dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="unit_conversion.html">unit_conversion()</a></code>
 
         </dt>
         <dd>Get a conversion factor across two measurement units of a given class</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="nanoplot_options.html">nanoplot_options()</a></code>
 
         </dt>
         <dd>Supply nanoplot options to <code><a href="../reference/cols_nanoplot.html">cols_nanoplot()</a></code></dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="adjust_luminance.html">adjust_luminance()</a></code>
 
         </dt>
         <dd>Adjust the luminance for a palette of colors</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="stub.html">stub()</a></code>
 
         </dt>
         <dd>Select helper for targeting the stub column</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="row_group.html">row_group()</a></code>
 
         </dt>
         <dd>Select helper for targeting the row group column</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cells_body.html">cells_body()</a></code>
 
         </dt>
         <dd>Location helper for targeting data cells in the table body</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cells_column_labels.html">cells_column_labels()</a></code>
 
         </dt>
         <dd>Location helper for targeting the column labels</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cells_column_spanners.html">cells_column_spanners()</a></code>
 
         </dt>
         <dd>Location helper for targeting the column spanners</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cells_footnotes.html">cells_footnotes()</a></code>
 
         </dt>
         <dd>Location helper for targeting the footnotes</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cells_grand_summary.html">cells_grand_summary()</a></code>
 
         </dt>
         <dd>Location helper for targeting cells in a grand summary</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cells_row_groups.html">cells_row_groups()</a></code>
 
         </dt>
         <dd>Location helper for targeting row groups</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cells_source_notes.html">cells_source_notes()</a></code>
 
         </dt>
         <dd>Location helper for targeting the source notes</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cells_stub.html">cells_stub()</a></code>
 
         </dt>
         <dd>Location helper for targeting cells in the table stub</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cells_stub_grand_summary.html">cells_stub_grand_summary()</a></code>
 
         </dt>
         <dd>Location helper for targeting the stub cells in a grand summary</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cells_stub_summary.html">cells_stub_summary()</a></code>
 
         </dt>
         <dd>Location helper for targeting the stub cells in a summary</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cells_stubhead.html">cells_stubhead()</a></code>
 
         </dt>
         <dd>Location helper for targeting the table stubhead cell</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cells_summary.html">cells_summary()</a></code>
 
         </dt>
         <dd>Location helper for targeting group summary cells</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cells_title.html">cells_title()</a></code>
 
         </dt>
         <dd>Location helper for targeting the table title and subtitle</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cell_text.html">cell_text()</a></code>
 
         </dt>
         <dd>Helper for defining custom text styles for table cells</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cell_fill.html">cell_fill()</a></code>
 
         </dt>
         <dd>Helper for defining custom fills for table cells</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="cell_borders.html">cell_borders()</a></code>
 
         </dt>
         <dd>Helper for defining custom borders for table cells</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="random_id.html">random_id()</a></code>
 
         </dt>
         <dd>Helper for creating a random <code>id</code> for a <strong>gt</strong> table</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="escape_latex.html">escape_latex()</a></code>
 
         </dt>
         <dd>Perform LaTeX escaping</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="gt_latex_dependencies.html">gt_latex_dependencies()</a></code>
 
         </dt>
         <dd>Get the LaTeX dependencies required for a <strong>gt</strong> table</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="google_font.html">google_font()</a></code>
 
         </dt>
         <dd>Helper function for specifying a font from the <em>Google Fonts</em> service</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="default_fonts.html">default_fonts()</a></code>
 
         </dt>
         <dd>Provide a vector of sensible system fonts for use with <strong>gt</strong> tables</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="system_fonts.html">system_fonts()</a></code>
 
@@ -897,8 +1001,7 @@
 
       <div class="section-desc"><p>We can add images into a <strong>gt</strong> table with the help of the <code>*_image()</code> functions. Two common ways to do this: (1) use <code><a href="../reference/text_transform.html">text_transform()</a></code> to insert images into data cells, (2) use any function that creates new labels (e.g., <code><a href="../reference/tab_header.html">tab_header()</a></code>) and use a <code>*_image()</code> function within the <code><a href="../reference/html.html">html()</a></code> helper.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -909,19 +1012,22 @@
 
         </dt>
         <dd>Helper function for adding an image from the web</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="local_image.html">local_image()</a></code>
 
         </dt>
         <dd>Helper function for adding a local image</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="ggplot_image.html">ggplot_image()</a></code>
 
         </dt>
         <dd>Helper function for adding a ggplot</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="test_image.html">test_image()</a></code>
 
@@ -932,8 +1038,7 @@
 
       <div class="section-desc"><p>With the <code>opt_*()</code> functions, we have an easy way to set commonly-used table options without having to use <code><a href="../reference/tab_options.html">tab_options()</a></code> directly. Like, we can quickly add a stylizing theme with <code><a href="../reference/opt_stylize.html">opt_stylize()</a></code>, get an interactive HTML table with <code><a href="../reference/opt_interactive.html">opt_interactive()</a></code>, modify the appearance of footnote marks with <code><a href="../reference/opt_footnote_marks.html">opt_footnote_marks()</a></code> and <code><a href="../reference/opt_footnote_spec.html">opt_footnote_spec()</a></code>, turn on row striping, change the alignment of the table header, and so much more.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -944,79 +1049,92 @@
 
         </dt>
         <dd>Stylize your table with a colorful look</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="opt_interactive.html">opt_interactive()</a></code>
 
         </dt>
         <dd>Option to put interactive elements in an HTML table</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="opt_footnote_marks.html">opt_footnote_marks()</a></code>
 
         </dt>
         <dd>Option to modify the set of footnote marks</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="opt_footnote_spec.html">opt_footnote_spec()</a></code>
 
         </dt>
         <dd>Option to specify the formatting of footnote marks</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="opt_footnote_order.html">opt_footnote_order()</a></code>
 
         </dt>
         <dd>Option to modify the order of footnotes</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="opt_row_striping.html">opt_row_striping()</a></code>
 
         </dt>
         <dd>Option to add or remove row striping</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="opt_align_table_header.html">opt_align_table_header()</a></code>
 
         </dt>
         <dd>Option to align the table header</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="opt_vertical_padding.html">opt_vertical_padding()</a></code>
 
         </dt>
         <dd>Option to expand or contract vertical padding</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="opt_horizontal_padding.html">opt_horizontal_padding()</a></code>
 
         </dt>
         <dd>Option to expand or contract horizontal padding</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="opt_all_caps.html">opt_all_caps()</a></code>
 
         </dt>
         <dd>Option to use all caps in select table locations</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="opt_table_lines.html">opt_table_lines()</a></code>
 
         </dt>
         <dd>Option to set table lines to different extents</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="opt_table_outline.html">opt_table_outline()</a></code>
 
         </dt>
         <dd>Option to wrap an outline around the entire table</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="opt_table_font.html">opt_table_font()</a></code>
 
         </dt>
         <dd>Options to define font choices for the entire table</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="opt_css.html">opt_css()</a></code>
 
@@ -1027,8 +1145,7 @@
 
       <div class="section-desc"><p>These <code>info_*()</code> functions present us with <strong>gt</strong> tables containing useful information. So far, we can get reference information on date styles (<code><a href="../reference/info_date_style.html">info_date_style()</a></code>), on time styles (<code><a href="../reference/info_time_style.html">info_time_style()</a></code>), on a huge number of color palettes (<code><a href="../reference/info_paletteer.html">info_paletteer()</a></code>), on currencies (<code><a href="../reference/info_currencies.html">info_currencies()</a></code>), on all of the different locales supported in the formatter functions (<code><a href="../reference/info_locales.html">info_locales()</a></code>), and on our recommendations for which Google Fonts to try in your tables (<code><a href="../reference/info_google_fonts.html">info_google_fonts()</a></code>).</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -1039,49 +1156,57 @@
 
         </dt>
         <dd>View a table with info on date styles</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="info_time_style.html">info_time_style()</a></code>
 
         </dt>
         <dd>View a table with info on time styles</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="info_currencies.html">info_currencies()</a></code>
 
         </dt>
         <dd>View a table with info on supported currencies</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="info_locales.html">info_locales()</a></code>
 
         </dt>
         <dd>View a table with info on supported locales</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="info_paletteer.html">info_paletteer()</a></code>
 
         </dt>
         <dd>View a table with info on color palettes</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="info_google_fonts.html">info_google_fonts()</a></code>
 
         </dt>
         <dd>View a table on recommended Google Fonts</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="info_flags.html">info_flags()</a></code>
 
         </dt>
         <dd>View a table with all available flags for <code><a href="../reference/fmt_flag.html">fmt_flag()</a></code></dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="info_icons.html">info_icons()</a></code>
 
         </dt>
         <dd>View a table with all available Font Awesome icons for <code><a href="../reference/fmt_icon.html">fmt_icon()</a></code></dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="info_unit_conversions.html">info_unit_conversions()</a></code>
 
@@ -1092,8 +1217,7 @@
 
       <div class="section-desc"><p>Shiny is great for building interactive web apps with R. There’s really nothing quite like it. The <strong>gt</strong> package includes two functions that work nicely with Shiny: a table render function <code><a href="../reference/render_gt.html">render_gt()</a></code> (for the <code>server</code>) and a table output element <code><a href="../reference/gt_output.html">gt_output()</a></code> (for the <code>ui</code>).</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -1104,13 +1228,15 @@
 
         </dt>
         <dd>A <strong>gt</strong> display table render function for use in Shiny</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="gt_output.html">gt_output()</a></code>
 
         </dt>
         <dd>Create a <strong>gt</strong> display table output element for Shiny</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="gt_update_select.html">gt_update_select()</a></code>
 
@@ -1121,8 +1247,7 @@
 
       <div class="section-desc"><p>There may come a day when you need to export a <strong>gt</strong> table to some specific format. A great function for that is <code><a href="../reference/gtsave.html">gtsave()</a></code>, which allows us to save the table as a standalone HTML, LaTeX, RTF, .docx, or even an image file. Some other functions give us table code as a character vector (e.g., <code><a href="../reference/as_raw_html.html">as_raw_html()</a></code> and more). Did you use the <code><a href="../reference/summary_rows.html">summary_rows()</a></code> function and wish you had that summary data in a tibble? You can get it out with <code><a href="../reference/extract_summary.html">extract_summary()</a></code>. Want to extract already-formatted cells from the table into a vector? Do it with <code><a href="../reference/extract_cells.html">extract_cells()</a></code>! It’s even possible to extract the body of a table as a data frame during various ‘build’ stages (do this with <code><a href="../reference/extract_body.html">extract_body()</a></code>).</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -1133,49 +1258,57 @@
 
         </dt>
         <dd>Save a <strong>gt</strong> table as a file</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="as_raw_html.html">as_raw_html()</a></code>
 
         </dt>
         <dd>Get the HTML content of a <strong>gt</strong> table</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="as_latex.html">as_latex()</a></code>
 
         </dt>
         <dd>Output a <strong>gt</strong> object as LaTeX</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="as_rtf.html">as_rtf()</a></code>
 
         </dt>
         <dd>Output a <strong>gt</strong> object as RTF</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="as_word.html">as_word()</a></code>
 
         </dt>
         <dd>Output a <strong>gt</strong> object as Word</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="as_gtable.html">as_gtable()</a></code>
 
         </dt>
         <dd>Transform a <strong>gt</strong> table to a <code>gtable</code> object</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="extract_body.html">extract_body()</a></code>
 
         </dt>
         <dd>Extract the table body from a <strong>gt</strong> object</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="extract_summary.html">extract_summary()</a></code>
 
         </dt>
         <dd>Extract a summary list from a <strong>gt</strong> object</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="extract_cells.html">extract_cells()</a></code>
 
@@ -1186,8 +1319,7 @@
 
       <div class="section-desc"><p>Sometimes you want to deal with a multitude of <strong>gt</strong> tables, all at once. There are some advantages to having a group of tables bundled together in a <code>gt_group</code> object. You could apply options that pertain to all tables yet still access the individual tables to give them their own specialized modifications. They all print altogether at once too! For HTML, each table will be separated by a line break whereas in paginated formats the tables are separated by page breaks.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -1198,43 +1330,50 @@
 
         </dt>
         <dd>Create a <code>gt_group</code> container for holding multiple <strong>gt</strong> table objects</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="gt_split.html">gt_split()</a></code>
 
         </dt>
         <dd>Split a table into a group of tables (a <code>gt_group</code>)</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="grp_pull.html">grp_pull()</a></code>
 
         </dt>
         <dd>Pull out a <strong>gt</strong> table from a <code>gt_group</code> container object</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="grp_add.html">grp_add()</a></code>
 
         </dt>
         <dd>Add one or more <strong>gt</strong> tables to a <code>gt_group</code> container object</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="grp_clone.html">grp_clone()</a></code>
 
         </dt>
         <dd>Clone one or more <strong>gt</strong> tables in a <code>gt_group</code> container object</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="grp_replace.html">grp_replace()</a></code>
 
         </dt>
         <dd>Replace one or more <strong>gt</strong> tables in a <code>gt_group</code> container object</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="grp_rm.html">grp_rm()</a></code>
 
         </dt>
         <dd>Remove one or more <strong>gt</strong> tables from a <code>gt_group</code> container object</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="grp_options.html">grp_options()</a></code>
 
@@ -1245,8 +1384,7 @@
 
       <div class="section-desc"><p>Why should columns have all the formatting fun? If you have vectors in need of formatting, we have a set of <code>vec_fmt_*()</code> functions that have been adapted from the corresponding <code>fmt_*()</code> functions.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -1257,103 +1395,120 @@
 
         </dt>
         <dd>Format a vector as numeric values</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_integer.html">vec_fmt_integer()</a></code>
 
         </dt>
         <dd>Format a vector as integer values</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_scientific.html">vec_fmt_scientific()</a></code>
 
         </dt>
         <dd>Format a vector as values in scientific notation</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_engineering.html">vec_fmt_engineering()</a></code>
 
         </dt>
         <dd>Format a vector as values in engineering notation</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_number_si.html">vec_fmt_number_si()</a></code>
 
         </dt>
         <dd>Format a vector as numbers with SI prefixes</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_percent.html">vec_fmt_percent()</a></code>
 
         </dt>
         <dd>Format a vector as percentage values</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_partsper.html">vec_fmt_partsper()</a></code>
 
         </dt>
         <dd>Format a vector as parts-per quantities</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_fraction.html">vec_fmt_fraction()</a></code>
 
         </dt>
         <dd>Format a vector as mixed fractions</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_currency.html">vec_fmt_currency()</a></code>
 
         </dt>
         <dd>Format a vector as currency values</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_roman.html">vec_fmt_roman()</a></code>
 
         </dt>
         <dd>Format a vector as Roman numerals</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_index.html">vec_fmt_index()</a></code>
 
         </dt>
         <dd>Format a vector as indexed characters</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_spelled_num.html">vec_fmt_spelled_num()</a></code>
 
         </dt>
         <dd>Format a vector as spelled-out numbers</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_bytes.html">vec_fmt_bytes()</a></code>
 
         </dt>
         <dd>Format a vector as values in terms of bytes</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_date.html">vec_fmt_date()</a></code>
 
         </dt>
         <dd>Format a vector as date values</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_time.html">vec_fmt_time()</a></code>
 
         </dt>
         <dd>Format a vector as time values</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_datetime.html">vec_fmt_datetime()</a></code>
 
         </dt>
         <dd>Format a vector as datetime values</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_duration.html">vec_fmt_duration()</a></code>
 
         </dt>
         <dd>Format a vector of numeric or duration values as styled time duration strings</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="vec_fmt_markdown.html">vec_fmt_markdown()</a></code>
 
@@ -1364,8 +1519,7 @@
 
       <div class="section-desc"><p>The <strong>gt</strong> package is equipped with 18 datasets that come in all shapes and sizes. Use them to experiment with the package! Many examples in the documentation use these datasets to demonstrate the awesome features of <strong>gt</strong>.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -1376,103 +1530,120 @@
 
         </dt>
         <dd>Yearly populations of countries from 1960 to 2024</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="sza.html">sza</a></code>
 
         </dt>
         <dd>Twice hourly solar zenith angles by month &amp; latitude</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="gtcars.html">gtcars</a></code>
 
         </dt>
         <dd>Deluxe automobiles from the 2014-2017 period</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="sp500.html">sp500</a></code>
 
         </dt>
         <dd>Daily S&amp;P 500 Index data from 1950 to 2015</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="pizzaplace.html">pizzaplace</a></code>
 
         </dt>
         <dd>A year of pizza sales from a pizza place</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="exibble.html">exibble</a></code>
 
         </dt>
         <dd>A toy example tibble for testing with gt: exibble</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="towny.html">towny</a></code>
 
         </dt>
         <dd>Populations of all municipalities in Ontario from 1996 to 2021</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="peeps.html">peeps</a></code>
 
         </dt>
         <dd>A table of personal information for people all over the world</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="films.html">films</a></code>
 
         </dt>
         <dd>Feature films in competition at the Cannes Film Festival</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="metro.html">metro</a></code>
 
         </dt>
         <dd>The stations of the Paris Metro</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="gibraltar.html">gibraltar</a></code>
 
         </dt>
         <dd>Weather conditions in Gibraltar, May 2023</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="constants.html">constants</a></code>
 
         </dt>
         <dd>The fundamental physical constants</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="illness.html">illness</a></code>
 
         </dt>
         <dd>Lab tests for one suffering from an illness</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="reactions.html">reactions</a></code>
 
         </dt>
         <dd>Reaction rates for gas-phase atmospheric reactions of organic compounds</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="photolysis.html">photolysis</a></code>
 
         </dt>
         <dd>Data on photolysis rates for gas-phase organic compounds</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="nuclides.html">nuclides</a></code>
 
         </dt>
         <dd>Nuclide data</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="rx_adsl.html">rx_adsl</a></code>
 
         </dt>
         <dd>An ADSL-flavored clinical trial toy dataset</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="rx_addv.html">rx_addv</a></code>
 
@@ -1484,11 +1655,11 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, Alexandra Lauer, <a href="https://jooyoungseo.github.io/" class="external-link">JooYoung Seo</a>, Ken Brevoort, Olivier Roy, Posit Software, PBC.</p>
+  <p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Shannon Haughton, Ellis Hughes, Alexandra Lauer, <a href="https://jooyoungseo.github.io/" class="external-link">JooYoung Seo</a>, Ken Brevoort, Olivier Roy, Posit Software, PBC.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
