@@ -1371,16 +1371,8 @@ create_heading_component_xml <- function(
 
   # Obtain the number of visible columns in the built table
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
-
-  # Determine whether the stub is available
-  stub_available <- dt_stub_components_has_rowname(stub_components)
-
-  # If a stub is present then the effective number of columns increases by 1
-  if (stub_available) {
-    n_cols <- n_data_cols + 1
-  } else {
-    n_cols <- n_data_cols
-  }
+  n_stub_cols <- length(dt_boxhead_get_var_stub(data = data))
+  n_cols <- n_data_cols + n_stub_cols
 
   # Get table options
   table_font_color <- dt_options_get_value(data, option = "table_font_color")
