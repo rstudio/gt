@@ -12,6 +12,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0003-0637-4436")),
     person("Alexandra", "Lauer", , "alexandralauer1@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0002-4191-6301")),
+    person("Romain", "François", , "romain@tada.science", role = "aut"),
     person("JooYoung", "Seo", , "jseo1005@illinois.edu", role = "aut",
            comment = c(ORCID = "0000-0002-4064-6012")),
     person("Ken", "Brevoort", , "ken@brevoort.com", role = "aut",
