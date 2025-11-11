@@ -6,6 +6,8 @@
 
 * Update latex Unicode conversions to be optional (default to TRUE) as well as make them work in-line (@thebioengineer, #2037, #2041)
 
+* update latex to allow for horizontal alignment using \multicolumn (@thebioengineer)
+
 # gt 1.1.0
 
 ## New features
