@@ -1371,7 +1371,7 @@ create_heading_component_xml <- function(
 
   # Obtain the number of visible columns in the built table
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
-  n_stub_cols <- length(dt_boxhead_get_var_stub(data = data))
+  n_stub_cols <- length(dt_boxhead_get_var_by_type(data, type = "stub"))
   n_cols <- n_data_cols + n_stub_cols
 
   # Get table options
@@ -1518,7 +1518,6 @@ create_columns_component_xml <- function(
     split = FALSE,
     keep_with_next = TRUE
 ) {
-
   boxh <- dt_boxhead_get(data = data)
   stubh <- dt_stubhead_get(data = data)
   body <- dt_body_get(data = data)
@@ -1559,7 +1558,7 @@ create_columns_component_xml <- function(
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   # label(?s) or nothing
-  n_stub_cols <- length(dt_boxhead_get_var_stub(data = data))
+  n_stub_cols <- length(dt_boxhead_get_var_by_type(data, type = "stub"))
   n_stubh_label <- length(stubh$label)
   if (isTRUE(stub_available) && n_stubh_label > 0L) {
     if (n_stubh_label != n_stub_cols) {
@@ -1884,7 +1883,7 @@ create_body_component_xml <- function(
   # Determine whether the stub is available through analysis
   # of the `stub_components`
   stub_available <- dt_stub_components_has_rowname(stub_components) || summaries_present
-  n_stub_cols <- length(dt_boxhead_get_var_stub(data = data))
+  n_stub_cols <- length(dt_boxhead_get_var_by_type(data, type = "stub"))
 
   # Obtain all of the visible (`"default"`), non-stub
   # column names for the table
