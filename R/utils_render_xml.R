@@ -1884,6 +1884,7 @@ create_body_component_xml <- function(
   # Determine whether the stub is available through analysis
   # of the `stub_components`
   stub_available <- dt_stub_components_has_rowname(stub_components) || summaries_present
+  n_stub_cols <- length(dt_boxhead_get_var_stub(data = data))
 
   # Obtain all of the visible (`"default"`), non-stub
   # column names for the table
@@ -1894,10 +1895,8 @@ create_body_component_xml <- function(
   alignment <- col_alignment
 
   if (stub_available) {
-
-    n_cols <- n_data_cols + 1
-
-    alignment <- c("left", alignment)
+    n_cols <- n_data_cols + n_stub_cols
+    alignment <- c(rep("left", n_stub_cols), alignment)
 
     stub_var <- dt_boxhead_get_var_stub(data = data)
     all_stub_vals <- as.matrix(body[, stub_var])
@@ -1913,7 +1912,7 @@ create_body_component_xml <- function(
     default_vals <- all_default_vals[i, ]
 
     if (stub_available) {
-      default_vals <- c(all_stub_vals[i], default_vals)
+      default_vals <- c(all_stub_vals[i, ], default_vals)
     }
 
     default_vals
