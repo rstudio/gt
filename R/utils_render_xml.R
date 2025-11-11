@@ -1558,19 +1558,23 @@ create_columns_component_xml <- function(
   column_labels_vlines_color <- dt_options_get_value(data = data, option = "column_labels_vlines_color")
 
   # If `stub_available` == TRUE, then replace with a set stubhead
-  # label or nothing
-  if (isTRUE(stub_available) && length(stubh$label) > 0L) {
-
-    headings_labels <- prepend_vec(headings_labels, stubh$label)
-    headings_vars <- prepend_vec(headings_vars, "::stub")
-
+  # label(?s) or nothing
+  n_stub_cols <- length(dt_boxhead_get_var_stub(data = data))
+  n_stubh_label <- length(stubh$label)
+  if (isTRUE(stub_available) && n_stubh_label > 0L) {
+    if (n_stubh_label != n_stub_cols) {
+      stub_labels <- c(stubh$label, rep("", n_stub_cols - 1L))
+    } else (
+      stub_labels <- stubh$label
+    )
+    headings_labels <- prepend_vec(headings_labels, stub_labels)
+    headings_vars <- prepend_vec(headings_vars, rep("::stub", n_stub_cols))
   } else if (isTRUE(stub_available)) {
-
-    headings_labels <- prepend_vec(headings_labels, "")
-    headings_vars <- prepend_vec(headings_vars, "::stub")
+    headings_labels <- prepend_vec(headings_labels, rep("", n_stub_cols))
+    headings_vars <- prepend_vec(headings_vars, rep("::stub", n_stub_cols))
   }
 
-  stubhead_label_alignment <- "left"
+  stubhead_label_alignment <- rep("left", n_stub_cols)
 
   table_col_headings_list <- list()
 
@@ -1580,50 +1584,55 @@ create_columns_component_xml <- function(
   # Create the cell for the stubhead label
   if (stub_available) {
 
-    # If there are spanners, make the first row an empty cell that continues merge
+    # If there are spanners, make the first row
+    # empty cells that continues merge
     if (spanner_row_count < 1) {
 
       cell_style <-
         styles_tbl[styles_tbl$locname %in% "stubhead", "styles", drop = TRUE]
       cell_style <- cell_style[1][[1]]
 
-      table_cell_vals[[length(table_cell_vals) + 1]] <-
-        xml_table_cell(
-          content = headings_labels[1],
-          font = cell_style[["cell_text"]][["font"]],
-          size = cell_style[["cell_text"]][["size"]] %||% 20,
-          color = cell_style[["cell_text"]][["color"]],
-          style = cell_style[["cell_text"]][["style"]],
-          stretch = cell_style[["cell_text"]][["stretch"]],
-          whitespace = cell_style[["cell_text"]][["whitespace"]],
-          align = cell_style[["cell_text"]][["align"]] %||% stubhead_label_alignment,
-          v_align = cell_style[["cell_text"]][["v_align"]],
-          fill = cell_style[["cell_fill"]][["color"]],
-          border = list(
-            top = cell_border(size = 16, color = column_labels_border_top_color),
-            bottom = cell_border(size = 16, color = column_labels_border_bottom_color),
-            left = cell_border(color = column_labels_vlines_color),
-            right = cell_border(color = column_labels_vlines_color)
-          ),
-          keep_with_next = keep_with_next
-        )
+      for (stub_id in seq_len(n_stub_cols)) {
+        table_cell_vals[[length(table_cell_vals) + 1]] <-
+          xml_table_cell(
+            content = headings_labels[stub_id],
+            font = cell_style[["cell_text"]][["font"]],
+            size = cell_style[["cell_text"]][["size"]] %||% 20,
+            color = cell_style[["cell_text"]][["color"]],
+            style = cell_style[["cell_text"]][["style"]],
+            stretch = cell_style[["cell_text"]][["stretch"]],
+            whitespace = cell_style[["cell_text"]][["whitespace"]],
+            align = cell_style[["cell_text"]][["align"]] %||% stubhead_label_alignment[stub_id],
+            v_align = cell_style[["cell_text"]][["v_align"]],
+            fill = cell_style[["cell_fill"]][["color"]],
+            border = list(
+              top = cell_border(size = 16, color = column_labels_border_top_color),
+              bottom = cell_border(size = 16, color = column_labels_border_bottom_color),
+              left = cell_border(color = column_labels_vlines_color),
+              right = cell_border(color = column_labels_vlines_color)
+            ),
+            keep_with_next = keep_with_next
+          )
+      }
 
     } else {
 
-      table_cell_vals[[length(table_cell_vals) + 1]] <-
-        xml_table_cell(
-          row_span = "continue",
-          border = list(
-            left = cell_border(color = column_labels_vlines_color),
-            right = cell_border(color = column_labels_vlines_color),
-            bottom = cell_border(size = 16, color = column_labels_border_bottom_color)
-          ),
-          keep_with_next = TRUE
-        )
+      for (stub_id in seq_len(n_stub_cols)) {
+        table_cell_vals[[length(table_cell_vals) + 1]] <-
+          xml_table_cell(
+            row_span = "continue",
+            border = list(
+              left = cell_border(color = column_labels_vlines_color),
+              right = cell_border(color = column_labels_vlines_color),
+              bottom = cell_border(size = 16, color = column_labels_border_bottom_color)
+            ),
+            keep_with_next = TRUE
+          )
+      }
     }
   }
 
-  for (i in seq_len(length(headings_vars) - stub_available)) {
+  for (i in seq_len(length(headings_vars) - n_stub_cols)) {
 
     cell_style <-
       vctrs::vec_slice(
@@ -1636,7 +1645,7 @@ create_columns_component_xml <- function(
 
     table_cell_vals[[length(table_cell_vals) + 1]] <-
       xml_table_cell(
-        content = headings_labels[i + stub_available],
+        content = headings_labels[i + n_stub_cols],
         font = cell_style[["cell_text"]][["font"]],
         size = cell_style[["cell_text"]][["size"]] %||% 20,
         color = cell_style[["cell_text"]][["color"]],
@@ -1650,7 +1659,7 @@ create_columns_component_xml <- function(
           top = if (!spanners_present) { cell_border(size = 16, color = column_labels_border_top_color) },
           bottom = cell_border(size = 16, color = column_labels_border_bottom_color),
           left = if (i == 1L) { cell_border(color = column_labels_vlines_color) },
-          right = if (i == length(headings_vars) - stub_available) { cell_border(color = column_labels_vlines_color) }
+          right = if (i == length(headings_vars) - n_stub_cols) { cell_border(color = column_labels_vlines_color) }
         ),
         keep_with_next = keep_with_next
       )
@@ -1694,7 +1703,7 @@ create_columns_component_xml <- function(
 
       spanner_cell_vals <- list()
 
-      # Create the cell for the stubhead label
+      # Create the cell for the stubhead labels
 
       if (stub_available) {
 
@@ -1704,40 +1713,44 @@ create_columns_component_xml <- function(
             styles_tbl[styles_tbl$locname %in% "stubhead", "styles", drop = TRUE]
           cell_style <- cell_style[1][[1]]
 
-          spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
-            xml_table_cell(
-              content = headings_labels[1],
-              font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
-              size = cell_style[["cell_text"]][["size"]] %||% 20,
-              color = cell_style[["cell_text"]][["color"]],
-              style = cell_style[["cell_text"]][["style"]],
-              weight = cell_style[["cell_text"]][["weight"]],
-              stretch = cell_style[["cell_text"]][["stretch"]],
-              whitespace = cell_style[["cell_text"]][["whitespace"]],
-              align = cell_style[["cell_text"]][["align"]] %||% stubhead_label_alignment,
-              v_align = cell_style[["cell_text"]][["v_align"]] %||% "bottom",
-              fill = cell_style[["cell_fill"]][["color"]],
-              row_span = "start",
-              border = list(
-                top = cell_border(size = 16, color = column_labels_border_top_color),
-                left = cell_border(color = column_labels_vlines_color),
-                right = cell_border(color = column_labels_vlines_color)
-              ),
-              keep_with_next = TRUE
-            )
+          for (stub_id in seq_len(n_stub_cols)) {
+            spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
+              xml_table_cell(
+                content = headings_labels[stub_id],
+                font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
+                size = cell_style[["cell_text"]][["size"]] %||% 20,
+                color = cell_style[["cell_text"]][["color"]],
+                style = cell_style[["cell_text"]][["style"]],
+                weight = cell_style[["cell_text"]][["weight"]],
+                stretch = cell_style[["cell_text"]][["stretch"]],
+                whitespace = cell_style[["cell_text"]][["whitespace"]],
+                align = cell_style[["cell_text"]][["align"]] %||% stubhead_label_alignment[stub_id],
+                v_align = cell_style[["cell_text"]][["v_align"]] %||% "bottom",
+                fill = cell_style[["cell_fill"]][["color"]],
+                row_span = "start",
+                border = list(
+                  top = cell_border(size = 16, color = column_labels_border_top_color),
+                  left = cell_border(color = column_labels_vlines_color),
+                  right = cell_border(color = column_labels_vlines_color)
+                ),
+                keep_with_next = TRUE
+              )
+          }
 
         } else {
 
-          spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
-            xml_table_cell(
-              row_span = "continue",
-              border = list(
-                left = cell_border(color = column_labels_vlines_color),
-                right = cell_border(color = column_labels_vlines_color),
-                bottom = if (span_row_idx == nrow(spanners)) { cell_border(size = 16, color = column_labels_border_bottom_color) }
-              ),
-              keep_with_next = TRUE
-            )
+          for (stub_id in seq_len(n_stub_cols)) {
+            spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
+              xml_table_cell(
+                row_span = "continue",
+                border = list(
+                  left = cell_border(color = column_labels_vlines_color),
+                  right = cell_border(color = column_labels_vlines_color),
+                  bottom = if (span_row_idx == nrow(spanners)) { cell_border(size = 16, color = column_labels_border_bottom_color) }
+                ),
+                keep_with_next = TRUE
+              )
+          }
         }
       }
 
