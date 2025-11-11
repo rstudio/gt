@@ -243,37 +243,41 @@ as_latex <- function(data) {
   # Compose the LaTeX table
   if (dt_options_get_value(data = data, option = "latex_use_longtable")) {
     knitr::asis_output(
-      paste0(
-        wrap_start_statement,
-        table_width_statement,
-        fontsize_statement,
-        table_start,
-        caption_component,
-        heading_component,
-        columns_component,
-        body_component,
-        table_end,
-        footer_component,
-        wrap_end_statement,
-        collapse = ""
+      latex_cleanup_multicolumn(
+        paste0(
+          wrap_start_statement,
+          table_width_statement,
+          fontsize_statement,
+          table_start,
+          caption_component,
+          heading_component,
+          columns_component,
+          body_component,
+          table_end,
+          footer_component,
+          wrap_end_statement,
+          collapse = ""
+        )
       ),
       meta = latex_packages
     )
   } else {
     knitr::asis_output(
-      paste0(
-        wrap_start_statement,
-        caption_component,
-        heading_component,
-        table_width_statement,
-        fontsize_statement,
-        table_start,
-        columns_component,
-        body_component,
-        table_end,
-        footer_component,
-        wrap_end_statement,
-        collapse = ""
+      latex_cleanup_multicolumn(
+        paste0(
+          wrap_start_statement,
+          caption_component,
+          heading_component,
+          table_width_statement,
+          fontsize_statement,
+          table_start,
+          columns_component,
+          body_component,
+          table_end,
+          footer_component,
+          wrap_end_statement,
+          collapse = ""
+        )
       ),
       meta = latex_packages
     )

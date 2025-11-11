@@ -111,12 +111,12 @@ latex_group_row <- function(
 
   # The width of the group row should be that of the entire table
   tab_width <- colwidth_df$tbl_width[1L]
-  use_width <- if (is.na(tab_width)) "l" else sprintf(">{\\raggedright\\arraybackslash}m{%s}", tab_width)
+  use_width <- ifelse(is.na(tab_width), "l", sprintf(">{\\raggedright\\arraybackslash}m{%s}", tab_width))
 
   if (is.na(group_name)) {
-    row_txt <- paste0("\\multicolumn{", n_cols, "}{", use_width, "}{\\rule{0pt}{0pt}} \\\\[-3.2ex] \n")
+    row_txt <- paste0(latex_multicolumn_cell("\\rule{0pt}{0pt}", alignment = use_width, width = n_cols, override_alignment = FALSE)," \\\\[-3.2ex] \n")
   } else {
-    row_txt <- paste0("\\multicolumn{", n_cols, "}{", use_width, "}{", group_name, "} \\\\[2.5pt] \n")
+    row_txt <- paste0(latex_multicolumn_cell(group_name, alignment = use_width, width = n_cols, override_alignment = FALSE)," \\\\[2.5pt] \n")
   }
 
   paste0(
@@ -248,7 +248,7 @@ create_table_start_l <- function(data, colwidth_df) {
     } else {
       n_stub_cols <- length(stub_layout)
     }
-    
+
     col_defs[seq_len(n_stub_cols)] <-
       paste0(col_defs[seq_len(n_stub_cols)], "|")
   }
@@ -477,7 +477,7 @@ create_columns_component_l <- function(data, colwidth_df) {
         dplyr::filter(
           styles_tbl,
           locname == "columns_columns",
-          colname == headings_labels[i]
+          colname == headings_vars[i]
         )
       )
 
@@ -511,12 +511,12 @@ create_columns_component_l <- function(data, colwidth_df) {
       n_stub_cols <- length(stub_layout)
       stub_df <- dplyr::filter(colwidth_df, type %in% c("stub", "row_group"))
     }
-    
+
     # Check if we have multiple stubhead labels for multi-column stub
     stub_vars <- dt_boxhead_get_var_stub(data = data)
     has_multi_column_stub <- length(stub_vars) > 1 && !any(is.na(stub_vars))
     has_multiple_labels <- has_multi_column_stub && length(stubh$label) > 1
-    
+
     if (has_multiple_labels) {
       # Create individual headers for each stub column
       # Process in reverse order since prepend_vec adds to the front
@@ -532,13 +532,13 @@ create_columns_component_l <- function(data, colwidth_df) {
     } else {
       # Single label spanning all stub columns (current behavior)
       headings_vars <- prepend_vec(headings_vars, "::stub")
-      
+
       stub_label <- ifelse(
         length(stubh$label) > 0,
         apply_cell_styles_l(stubh$label[1], styles_stubhead),
         ""
       )
-      
+
       if (n_stub_cols > 1L) {
         # Use multicolumn to span all stub columns
         if (any(stub_df$unspec == 1L)) {
@@ -555,15 +555,16 @@ create_columns_component_l <- function(data, colwidth_df) {
         }
 
         stub_label <-
-          sprintf(
-            "\\multicolumn{%d}{%s}{%s}",
-            n_stub_cols,
-            width_txt,
-            stub_label
+          latex_multicolumn_cell(
+            stub_label,
+            alignment = width_txt,
+            width = n_stub_cols,
+            override_alignment = FALSE
           )
       }
 
       headings_labels <- prepend_vec(headings_labels, stub_label)
+
     }
   }
 
@@ -598,21 +599,21 @@ create_columns_component_l <- function(data, colwidth_df) {
 
         # group_label + rowname
         n_stub_cols <- 2
-      
+
       } else if ("rowname" %in% stub_layout) {
-        
+
         stub_df_cols <- dplyr::filter(colwidth_df, type == "stub")
         n_stub_cols <- nrow(stub_df_cols)
-      
+
       } else if ("group_label" %in% stub_layout) {
-        
+
         n_stub_cols <- 1
-      
+
       } else {
-        
+
         n_stub_cols <- length(stub_layout)
       }
-      
+
       stub_matrix <- matrix(nrow = nrow(spanners), ncol = n_stub_cols)
 
       spanners <- cbind(stub_matrix, spanners)
@@ -648,44 +649,58 @@ create_columns_component_l <- function(data, colwidth_df) {
           "c"
         )
 
-      multicol <-
-        ifelse(
-          is_spanner_na, "",
-          ifelse(
-            is_spanner_single, spanners_rle$labels,
-            sprintf(
-              "\\multicolumn{%d}{%s}{%s}",
-              spanners_rle$lengths,
-              tex_widths,
-              spanners_rle$labels
-            )
+
+      multicol <- sapply(seq_along(spanners_rle$values),function(spanner_idx){
+
+
+        if(is.na(spanners_rle$values[[spanner_idx]])){
+          ""
+        }else{
+
+          span_label <- spanners_rle$labels[[spanner_idx]]
+          span_length <- spanners_rle$lengths[[spanner_idx]]
+
+          if(grepl("\\shortstack",span_label, fixed = TRUE)){
+            if( tex_widths[[spanner_idx]] == "c"){
+              span_label <- shortstack_alignment(span_label, alignment = "center")
+            }
+          }
+
+          latex_multicolumn_cell(
+            x = span_label,
+            alignment = tex_widths[[spanner_idx]],
+            width = span_length,
+            override_width = TRUE,
+            override_alignment = FALSE
           )
-        )
+        }
+      })
+
 
       # If there is a stub we need to tweak the spanners row with a blank multicolumn
       # statement that's the same width as that in the columns row; this is to
       # prevent the automatic vertical line that would otherwise appear here
-      
+
       # Get the actual number of stub columns
       if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
-        
+
         # group_label + rowname
         n_stub_cols <- 2
 
       } else if ("rowname" %in% stub_layout) {
-        
+
         stub_df_cols <- dplyr::filter(colwidth_df, type == "stub")
         n_stub_cols <- nrow(stub_df_cols)
-      
+
       } else if ("group_label" %in% stub_layout) {
-        
+
         n_stub_cols <- 1
-      
+
       } else {
-        
+
         n_stub_cols <- length(stub_layout)
       }
-      
+
       if (n_stub_cols > 1L) {
 
         tex_stub_width <- calculate_multicolumn_width_text_l(begins = 1, ends = n_stub_cols, colwidth_df = colwidth_df)
@@ -754,16 +769,16 @@ create_body_component_l <- function(data, colwidth_df) {
   # (hide repeated values in all columns except the rightmost)
   if (has_stub_column) {
     stub_vars <- dt_boxhead_get_var_stub(data = data)
-    
+
     if (length(stub_vars) > 1 && !any(is.na(stub_vars))) {
 
       # Get original body data to check for consecutive repeating values
       original_body <- dt_data_get(data = data)
-      
+
       # Process all stub columns except the rightmost one
       hierarchy_vars <- stub_vars[-length(stub_vars)]
       stub_matrix <- as.matrix(original_body[, hierarchy_vars, drop = FALSE])
-      
+
       # Determine which columns to hide based on hierarchical grouping
       for (col_idx in seq_along(hierarchy_vars)) {
 
@@ -772,18 +787,18 @@ create_body_component_l <- function(data, colwidth_df) {
         if ("group_label" %in% stub_layout) {
           matrix_col_idx <- col_idx + 1
         }
-        
+
         for (row_idx in 2:n_rows) {
           should_hide <- TRUE
-          
+
           # Check if current value matches previous value (handle NAs properly)
           curr_val <- stub_matrix[row_idx, col_idx]
           prev_val <- stub_matrix[row_idx - 1, col_idx]
-          
+
           if (!identical(curr_val, prev_val)) {
             should_hide <- FALSE
           }
-          
+
           # Also check that all columns to the left match
           if (should_hide && col_idx > 1) {
             for (left_col_idx in 1:(col_idx - 1)) {
@@ -795,7 +810,7 @@ create_body_component_l <- function(data, colwidth_df) {
               }
             }
           }
-          
+
           # Hide the value by making it empty if conditions are met
           if (should_hide) {
             row_splits_body[[row_idx]][matrix_col_idx] <- ""
@@ -1155,7 +1170,20 @@ summary_rows_for_group_l <- function(
         row_splits_summary,
         function(x) {
           x <- c("", x)
-          x[1:2] <- paste0("\\multicolumn{1}{l|}{", x[1:2], "}")
+          x[1] <- latex_multicolumn_cell(
+            x = x[1],
+            alignment = "l|",
+            width = 1,
+            override_width = TRUE,
+            override_alignment = FALSE
+          )
+          x[2] <- latex_multicolumn_cell(
+            x = x[2],
+            alignment = "l|",
+            width = 1,
+            override_width = TRUE,
+            override_alignment = FALSE
+          )
           x
         }
       )
@@ -1250,22 +1278,33 @@ create_footer_component_l <- function(data) {
 
     footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
+    footnote_marks <- footnote_mark_to_latex(
+      data = data,
+      mark = footnotes_tbl[["fs_id"]],
+      location = "ftr"
+    )
+
     # Create a vector of formatted footnotes
     footnotes <-
-      paste0(
-        footnote_mark_to_latex(
-          data = data,
-          mark = footnotes_tbl[["fs_id"]],
-          location = "ftr"
-        ),
-        vapply(
-          footnotes_tbl[["footnotes"]],
-          FUN.VALUE = character(1L),
-          #FUN = process_text,
-          FUN = function(x, context, styles_obj) apply_cell_styles_l(process_text(x, context = context), styles_obj),
-          context = "latex",
-          styles_obj = styles_footnote
-        )
+      vapply(
+        seq_along(footnotes_tbl[["footnotes"]]),
+        FUN.VALUE = character(1L),
+        #FUN = process_text,
+        FUN = function(idx,
+                       footnotes,
+                       footnote_marks,
+                       context,
+                       styles_obj) {
+          apply_cell_styles_l(
+             paste(footnote_marks[[idx]], process_text(footnotes[[idx]], context = context)),
+            styles_obj,
+            type = "footnote"
+            )
+        },
+        footnotes = footnotes_tbl[["footnotes"]],
+        footnote_marks = footnote_marks,
+        context = "latex",
+        styles_obj = styles_footnote
       )
 
 
@@ -1294,7 +1333,7 @@ create_footer_component_l <- function(data) {
         dplyr::filter(dt_styles_get(data), locname == "source_notes")
       )
 
-    source_notes <- apply_cell_styles_l(source_notes, styles_source)
+    source_notes <- apply_cell_styles_l(source_notes, styles_source, type = "footnote")
 
   } else {
     source_notes <- ""
@@ -1302,7 +1341,7 @@ create_footer_component_l <- function(data) {
 
   # Create the footer block
   paste0(
-    "\\begin{minipage}{\\linewidth}\n",
+    "\\begin{minipage}{\\linewidth}\n\\vspace{.05em}\n",
     paste0(footnotes, source_notes),
     "\\end{minipage}\n",
     collapse = ""
@@ -1471,7 +1510,7 @@ create_summary_rows_l <- function(
 
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
-  
+
   # Get the actual number of stub columns (including multiple rowname columns)
   stub_vars <- dt_boxhead_get_var_stub(data = data)
   stub_width <- if (length(stub_vars) == 1 && is.na(stub_vars)) 0 else length(stub_vars)
@@ -1525,8 +1564,9 @@ create_summary_rows_l <- function(
 
                   x <- c(rep("", stub_width - 1), x)
 
-                  x[seq_len(stub_width)] <-
-                    paste0("\\multicolumn{1}{l|}{", x[seq_len(stub_width)], "}")
+                  x[seq_len(stub_width)] <- sapply(x[seq_len(stub_width)], function(x) {
+                    latex_multicolumn_cell(x, width = 1, alignment = "l|", override_alignment = FALSE)
+                    })
 
                   x
                 }
@@ -1668,7 +1708,7 @@ consolidate_cell_styles_l <- function(styles_df) {
 #' a cell of text to be output in LaTeX.
 #'
 #' @noRd
-apply_cell_styles_l <- function(content, style_obj) {
+apply_cell_styles_l <- function(content, style_obj, type = "cell") {
 
   # Set default values for no footnote present
   just_content <- content
@@ -1688,19 +1728,23 @@ apply_cell_styles_l <- function(content, style_obj) {
     x <- .apply_style_fill_l(x, style_obj)
     x <- .apply_style_transform_l(x, style_obj)
     x <- .apply_style_decorate_l(x, style_obj)
+    x <- .apply_style_alignment_shortstack(x, style_obj)
 
     # Apply changes that can be made to the bracketed environment
-    out_text <- paste0(
-      "{",
-
-      .apply_style_style_l(style_obj),
-      .apply_style_weight_l(style_obj),
-      # Can generate "\small for example
-      .apply_style_fontsize_l(style_obj),
-      .apply_style_indentation_l(style_obj),
-      x,
-      "}"
-    )
+    out_text <- .apply_style_cell_alignment(
+        paste0(
+          "{",
+          .apply_style_style_l(style_obj),
+          .apply_style_weight_l(style_obj),
+          # Can generate "\small for example
+          .apply_style_fontsize_l(style_obj),
+          .apply_style_indentation_l(style_obj),
+          x,
+          "}"
+        ),
+        style_obj,
+        type = type
+      )
   } else {
     out_text <- just_content
   }
@@ -1767,6 +1811,111 @@ apply_cell_styles_l <- function(content, style_obj) {
     strikeout = x,  # Not implemented
     x
   )
+
+}
+
+.apply_style_alignment_shortstack <- function(x, style_obj) {
+
+  if(!grepl("\\shortstack[l]", x, fixed = TRUE)){return(x)}
+
+  alignment <- style_obj[["cell_text"]][["align"]]
+
+  if(is.null(alignment) | identical(alignment, "left")){
+    return(x)
+  }
+
+  shortstack_alignment(x, alignment = alignment)
+}
+
+shortstack_alignment <- function(x, alignment){
+
+  shortstackalignment <- c(
+    "center" = "[c]",
+    "justify" = "[c]",
+    "left" = "[l]",
+    "right" = "[r]"
+  )[alignment]
+
+  gsub("\\shortstack[l]",paste0("\\shortstack",shortstackalignment), x, fixed = TRUE)
+}
+
+.apply_style_cell_alignment <- function(x, style_obj, type = "cell") {
+
+  if (is.null(style_obj[["cell_text"]][["align"]])) return(x)
+
+  alignment <- style_obj[["cell_text"]][["align"]]
+
+  if(type == "cell"){
+    alignment <- c(
+      "center" = "c",
+      "justify" = "c",
+      "left" = "l",
+      "right" = "r"
+    )[alignment]
+
+    latex_multicolumn_cell(x, alignment = alignment, width = 1)
+  }else if(type == "footnote"){
+    latex_align_text(x, alignment = alignment)
+  }
+}
+
+latex_multicolumn_cell <- function(x,  width = NULL, alignment = NULL, override_width = TRUE, override_alignment = TRUE){
+
+  if (grepl("\\multicolumn", x, fixed = TRUE)) {
+    pre_existing <- TRUE
+    existing_width <- gsub(".*(\\multicolumn)\\{(\\d+)\\}\\{(.*?)\\}\\{.+\\}", "\\2", x)
+    if(existing_width == ""){
+      existing_width <- NULL
+    }
+    existing_alignment <- gsub(".*(\\multicolumn)\\{(\\d+)\\}\\{(.*?)\\}\\{.+\\}", "\\3", x)
+    if(existing_width == ""){
+      existing_width <- NULL
+    }
+  } else{
+    pre_existing <- FALSE
+    existing_width <- NULL
+    existing_alignment <- NULL
+  }
+
+  if(override_width){
+    width <- width %||% existing_width
+  }else{
+    width <- existing_width %||% width
+  }
+
+  if(override_alignment){
+    alignment <- alignment %||% existing_alignment
+  }else{
+    alignment <- existing_alignment %||% alignment
+  }
+
+  new_multicolumn_statement <- paste0("\\multicolumn{",width,"}{",alignment,"}")
+
+  if(pre_existing){
+    gsub(paste0("\\multicolumn{",existing_width,"}{",existing_alignment,"}"), new_multicolumn_statement, x, fixed = TRUE)
+  }else{
+    paste0(new_multicolumn_statement,"{",x,"}")
+  }
+}
+
+latex_cleanup_multicolumn <- function(x){
+  ## Fix missing alignment
+  x <- gsub("(\\multicolumn\\{(\\d+)\\})\\{\\}(\\{.+?\\})", "\\1{l}\\2", x)
+  ## Fix missing column width
+  x <- gsub("(\\multicolumn)\\{\\}(\\{.+?\\}\\{.+?\\})", "\\1{1}\\2", x)
+  x
+}
+
+latex_align_text <- function(x, alignment){
+
+  alignment <- c(
+    "center" = "\\centering",
+    "justify" = "\\sloppy\\setlength\\parfillskip{0pt}",
+    "left" = "\\raggedright",
+    "right" = "\\raggedleft"
+  )[alignment]
+
+  paste0("\\parbox{\\linewidth}{",alignment," ",x,"}")
 
 }
 
