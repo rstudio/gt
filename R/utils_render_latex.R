@@ -455,26 +455,31 @@ create_heading_component_l <- function(data) {
 #' @noRd
 create_columns_component_l <- function(data, colwidth_df) {
 
+
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
   n_stub_cols <- 0
 
   # if exists, get the length of the stub
   if(length(stub_layout)>0){
+    stub_vars <- dt_boxhead_get_var_stub(data = data)
     # Get the actual number of stub columns for the header
     # This determines how many columns the stub header should span
-
-    # stub columns
-    stub_df <- dplyr::filter(colwidth_df, type == "stub")
-    n_stub_cols <- nrow(stub_df)
-
-    # group column in stub?
-    if("group_label" %in% stub_layout){
-      group_df <- dplyr::filter(colwidth_df, type == "row_group")
-      stub_df <- rbind(group_df, stub_df)
-      n_stub_cols <- n_stub_cols + 1
+    if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
+      n_stub_cols <- length(stub_vars) + 1  # group_label + all rowname columns
+      # Get stub_df for width calculations
+      stub_df <- dplyr::filter(colwidth_df, type %in% c("row_group","stub")) %>%
+        dplyr::arrange(type)
+    } else if ("rowname" %in% stub_layout) {
+      stub_df <- dplyr::filter(colwidth_df, type == "stub")
+      n_stub_cols <- nrow(stub_df)
+    } else if ("group_label" %in% stub_layout) { # stub columns can exist in the dataset with only groups in the stub-layout.
+      n_stub_cols <- 1
+      stub_df <- dplyr::filter(colwidth_df, type == "row_group")
+    } else {
+      n_stub_cols <- length(stub_layout)
+      stub_df <- dplyr::filter(colwidth_df, type %in% c("stub", "row_group"))
     }
-
   }
 
   styles_tbl <- dt_styles_get(data = data)
