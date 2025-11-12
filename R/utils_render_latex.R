@@ -248,7 +248,7 @@ create_table_start_l <- function(data, colwidth_df) {
     } else {
       n_stub_cols <- length(stub_layout)
     }
-    
+
     col_defs[seq_len(n_stub_cols)] <-
       paste0(col_defs[seq_len(n_stub_cols)], "|")
   }
@@ -457,6 +457,29 @@ create_columns_component_l <- function(data, colwidth_df) {
 
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
+  n_stub_cols <- 0
+
+  # if exists, get the length of the stub
+  if(length(stub_layout)>0){
+    stub_vars <- dt_boxhead_get_var_stub(data = data)
+    # Get the actual number of stub columns for the header
+    # This determines how many columns the stub header should span
+    if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
+      n_stub_cols <- length(stub_vars) + 1  # group_label + all rowname columns
+      # Get stub_df for width calculations
+      stub_df <- dplyr::filter(colwidth_df, type %in% c("row_group","stub")) %>%
+        dplyr::arrange(type)
+    } else if ("rowname" %in% stub_layout) {
+      stub_df <- dplyr::filter(colwidth_df, type == "stub")
+      n_stub_cols <- nrow(stub_df)
+    } else if ("group_label" %in% stub_layout) {
+      n_stub_cols <- 1
+      stub_df <- dplyr::filter(colwidth_df, type == "row_group")
+    } else {
+      n_stub_cols <- length(stub_layout)
+      stub_df <- dplyr::filter(colwidth_df, type %in% c("stub", "row_group"))
+    }
+  }
 
   styles_tbl <- dt_styles_get(data = data)
 
@@ -495,28 +518,11 @@ create_columns_component_l <- function(data, colwidth_df) {
         vctrs::vec_slice(styles_tbl, styles_tbl$locname == "stubhead")
       )
 
-    # Get the actual number of stub columns for the header
-    # This determines how many columns the stub header should span
-    if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
-      n_stub_cols <- 2  # group_label + rowname
-      # Get stub_df for width calculations
-      stub_df <- dplyr::filter(colwidth_df, type %in% c("stub", "row_group"))
-    } else if ("rowname" %in% stub_layout) {
-      stub_df <- dplyr::filter(colwidth_df, type == "stub")
-      n_stub_cols <- nrow(stub_df)
-    } else if ("group_label" %in% stub_layout) {
-      n_stub_cols <- 1
-      stub_df <- dplyr::filter(colwidth_df, type == "row_group")
-    } else {
-      n_stub_cols <- length(stub_layout)
-      stub_df <- dplyr::filter(colwidth_df, type %in% c("stub", "row_group"))
-    }
-    
     # Check if we have multiple stubhead labels for multi-column stub
     stub_vars <- dt_boxhead_get_var_stub(data = data)
     has_multi_column_stub <- length(stub_vars) > 1 && !any(is.na(stub_vars))
     has_multiple_labels <- has_multi_column_stub && length(stubh$label) > 1
-    
+
     if (has_multiple_labels) {
       # Create individual headers for each stub column
       # Process in reverse order since prepend_vec adds to the front
@@ -532,13 +538,13 @@ create_columns_component_l <- function(data, colwidth_df) {
     } else {
       # Single label spanning all stub columns (current behavior)
       headings_vars <- prepend_vec(headings_vars, "::stub")
-      
+
       stub_label <- ifelse(
         length(stubh$label) > 0,
         apply_cell_styles_l(stubh$label[1], styles_stubhead),
         ""
       )
-      
+
       if (n_stub_cols > 1L) {
         # Use multicolumn to span all stub columns
         if (any(stub_df$unspec == 1L)) {
@@ -592,28 +598,10 @@ create_columns_component_l <- function(data, colwidth_df) {
       )
 
     if (length(stub_layout) > 0) {
-
       # Get the actual number of stub columns for spanners
-      if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
-
-        # group_label + rowname
-        n_stub_cols <- 2
-      
-      } else if ("rowname" %in% stub_layout) {
-        
-        stub_df_cols <- dplyr::filter(colwidth_df, type == "stub")
-        n_stub_cols <- nrow(stub_df_cols)
-      
-      } else if ("group_label" %in% stub_layout) {
-        
-        n_stub_cols <- 1
-      
-      } else {
-        
-        n_stub_cols <- length(stub_layout)
-      }
-      
       stub_matrix <- matrix(nrow = nrow(spanners), ncol = n_stub_cols)
+      # retain stub names
+      colnames(stub_matrix) <- stub_df$var
 
       spanners <- cbind(stub_matrix, spanners)
       spanner_ids <- cbind(stub_matrix, spanner_ids)
@@ -629,6 +617,7 @@ create_columns_component_l <- function(data, colwidth_df) {
       # We need a parallel vector of spanner labels and this could
       # be part of the `spanners_rle` list
       spanners_rle$labels <- spanners_i[cumsum(spanners_rle$lengths)]
+      col_order  <- data.frame(var = colnames(spanner_ids))
       spanners_rle <- apply_spanner_styles_l(spanners_rle, styles_tbl)
 
       begins <- (cumsum(utils::head(c(0, spanners_rle$lengths), -1)) + 1)[!is.na(spanners_rle$values)]
@@ -637,10 +626,9 @@ create_columns_component_l <- function(data, colwidth_df) {
 
       is_spanner_na <- is.na(spanners_rle$values)
       is_spanner_single <- spanners_rle$lengths == 1
-
       firsts <- utils::head(cumsum(c(1L, spanners_rle$lengths)), -1L)
       lasts <- cumsum(spanners_rle$lengths)
-      span_widths <- calculate_multicolumn_width_text_l(begins = firsts, ends = lasts, colwidth_df = colwidth_df)
+      span_widths <- calculate_multicolumn_width_text_l(begins = firsts, ends = lasts, col_order = col_order ,colwidth_df = colwidth_df)
       tex_widths <-
         ifelse(
           nzchar(span_widths),
@@ -665,30 +653,10 @@ create_columns_component_l <- function(data, colwidth_df) {
       # If there is a stub we need to tweak the spanners row with a blank multicolumn
       # statement that's the same width as that in the columns row; this is to
       # prevent the automatic vertical line that would otherwise appear here
-      
-      # Get the actual number of stub columns
-      if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
-        
-        # group_label + rowname
-        n_stub_cols <- 2
 
-      } else if ("rowname" %in% stub_layout) {
-        
-        stub_df_cols <- dplyr::filter(colwidth_df, type == "stub")
-        n_stub_cols <- nrow(stub_df_cols)
-      
-      } else if ("group_label" %in% stub_layout) {
-        
-        n_stub_cols <- 1
-      
-      } else {
-        
-        n_stub_cols <- length(stub_layout)
-      }
-      
       if (n_stub_cols > 1L) {
 
-        tex_stub_width <- calculate_multicolumn_width_text_l(begins = 1, ends = n_stub_cols, colwidth_df = colwidth_df)
+        tex_stub_width <- calculate_multicolumn_width_text_l(begins = 1, ends = n_stub_cols,  col_order = col_order, colwidth_df = colwidth_df)
         if (tex_stub_width == "") {
           mc_stub <- "l"
         } else {
@@ -754,16 +722,16 @@ create_body_component_l <- function(data, colwidth_df) {
   # (hide repeated values in all columns except the rightmost)
   if (has_stub_column) {
     stub_vars <- dt_boxhead_get_var_stub(data = data)
-    
+
     if (length(stub_vars) > 1 && !any(is.na(stub_vars))) {
 
       # Get original body data to check for consecutive repeating values
       original_body <- dt_data_get(data = data)
-      
+
       # Process all stub columns except the rightmost one
       hierarchy_vars <- stub_vars[-length(stub_vars)]
       stub_matrix <- as.matrix(original_body[, hierarchy_vars, drop = FALSE])
-      
+
       # Determine which columns to hide based on hierarchical grouping
       for (col_idx in seq_along(hierarchy_vars)) {
 
@@ -772,18 +740,18 @@ create_body_component_l <- function(data, colwidth_df) {
         if ("group_label" %in% stub_layout) {
           matrix_col_idx <- col_idx + 1
         }
-        
+
         for (row_idx in 2:n_rows) {
           should_hide <- TRUE
-          
+
           # Check if current value matches previous value (handle NAs properly)
           curr_val <- stub_matrix[row_idx, col_idx]
           prev_val <- stub_matrix[row_idx - 1, col_idx]
-          
+
           if (!identical(curr_val, prev_val)) {
             should_hide <- FALSE
           }
-          
+
           # Also check that all columns to the left match
           if (should_hide && col_idx > 1) {
             for (left_col_idx in 1:(col_idx - 1)) {
@@ -795,7 +763,7 @@ create_body_component_l <- function(data, colwidth_df) {
               }
             }
           }
-          
+
           # Hide the value by making it empty if conditions are met
           if (should_hide) {
             row_splits_body[[row_idx]][matrix_col_idx] <- ""
@@ -1471,7 +1439,7 @@ create_summary_rows_l <- function(
 
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
-  
+
   # Get the actual number of stub columns (including multiple rowname columns)
   stub_vars <- dt_boxhead_get_var_stub(data = data)
   stub_width <- if (length(stub_vars) == 1 && is.na(stub_vars)) 0 else length(stub_vars)
@@ -1902,6 +1870,7 @@ create_colwidth_df_l <- function(data) {
 
   n <- dim(boxhead)[1L]
   width_df <- data.frame(
+    var = boxhead$var,
     type = boxhead$type,
     unspec = rep.int(0L, n),
     lw = rep.int(0L, n),
@@ -1975,9 +1944,13 @@ create_colwidth_df_l <- function(data) {
   width_df
 }
 
-calculate_multicolumn_width_text_l <- function(begins, ends, colwidth_df) {
-
+calculate_multicolumn_width_text_l <- function(begins, ends, col_order, colwidth_df) {
   out_text <- rep("", times = length(begins))
+
+  # order by column order to ensure correct columns are used
+  # this is important if data order has changed, or there are hidden columns etc
+  colwidth_df <- col_order %>%
+    dplyr::left_join(colwidth_df, by = "var")
 
   for (i in seq_along(begins)) {
     ind <- seq(from = begins[i], to = ends[i])
