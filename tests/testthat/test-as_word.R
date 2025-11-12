@@ -2743,7 +2743,7 @@ test_that("multicolumn stub are supported", {
   expect_equal(xml_length(xml_find_all(nodes_Audi[[1]], "../../..//w:vMerge")), 0)
 
   # no other merge cells
-  expect_equal(xml_length(xml_find_all(xml, ".//w:vMerge")), 4)
+  expect_equal(length(xml_find_all(xml, ".//w:vMerge")), 4)
 })
 
 
