@@ -1859,6 +1859,7 @@ create_body_component_xml <- function(
   list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
   stub_components <- dt_stub_components(data = data)
+  hierarchical_stub_info <- calculate_hierarchical_stub_rowspans(data)
 
   # Get table styles
   styles_tbl <- dt_styles_get(data = data)
@@ -2002,8 +2003,16 @@ create_body_component_xml <- function(
         row_vec <- output_df_row_as_vec(i)
 
         for (y in seq_along(row_vec)) {
+          row_span <- if (!is.null(hierarchical_stub_info) && y <= length(hierarchical_stub_info)) {
+            info <- hierarchical_stub_info[[y]]
+            if (info$rowspans[row_idx] > 1) {
+              "start"
+            } else if (!info$display_mask[i]){
+              "continue"
+            }
+          }
 
-          style_col_idx <- ifelse(stub_available, y - 1, y)
+          style_col_idx <- ifelse(stub_available, y - n_stub_cols, y)
 
           cell_style <-
             vctrs::vec_slice(
@@ -2033,7 +2042,8 @@ create_body_component_xml <- function(
                 right = cell_border(color = table_body_vlines_color)
               ),
               fill = cell_style[["cell_fill"]][["color"]],
-              keep_with_next = keep_with_next
+              keep_with_next = keep_with_next,
+              row_span = row_span
             )
         }
 
