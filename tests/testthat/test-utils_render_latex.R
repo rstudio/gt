@@ -1,7 +1,9 @@
-# no stub with spanner
-no_stub <- gtcars %>%
+test_data <- gtcars %>%
   dplyr::select(model, year, trim, mfr) %>%
-  dplyr::slice(1:10) %>%
+  dplyr::slice(1:10)
+
+# no stub with spanner
+no_stub <- test_data %>%
   gt() %>%
   cols_width(
     mfr ~ pct(63),
@@ -15,9 +17,7 @@ no_stub <- gtcars %>%
   )
 
 # single rowname stub with spanner
-single_stub <- gtcars %>%
-  dplyr::select(model, year, trim, mfr) %>%
-  dplyr::slice(1:10) %>%
+single_stub <- test_data %>%
   gt(rowname_col = "mfr") %>%
   cols_width(
     mfr ~ pct(63),
@@ -31,9 +31,7 @@ single_stub <- gtcars %>%
   )
 
 # multiple rowname stubs with spanner
-multi_stub <- gtcars %>%
-  dplyr::select(model, year, trim, mfr) %>%
-  dplyr::slice(1:10) %>%
+multi_stub <- test_data %>%
   gt(rowname_col = c("mfr", "model")) %>%
   cols_width(
     mfr ~ pct(63),
@@ -47,9 +45,7 @@ multi_stub <- gtcars %>%
   )
 
 # group and multiple rowname stubs
-group_and_stub <- gtcars %>%
-  dplyr::select(model, year, trim, mfr) %>%
-  dplyr::slice(1:10) %>%
+group_and_stub <- test_data %>%
   dplyr::mutate(group = "group") %>%
   gt(groupname_col = "group", rowname_col = c("mfr", "model")) %>%
   cols_width(
@@ -65,9 +61,7 @@ group_and_stub <- gtcars %>%
 
 # group as column and multiple rowname stubs
 
-group_in_stub <- gtcars %>%
-  dplyr::select(model, year, trim, mfr) %>%
-  dplyr::slice(1:10) %>%
+group_in_stub <- test_data %>%
   dplyr::mutate(group = "group") %>%
   gt(groupname_col = "group", rowname_col = c("mfr", "model"), row_group_as_column = TRUE) %>%
   cols_width(
@@ -82,6 +76,22 @@ group_in_stub <- gtcars %>%
     columns = c(year, trim)
   )
 
+# hidden columns
+hidden_columns <- test_data %>%
+  gt() %>%
+  cols_width(
+    mfr ~ pct(63),
+    model ~ pct(15),
+    year ~ pct(7),
+    trim ~ pct(15)
+  ) %>%
+  cols_hide(columns = "year") %>%
+  tab_spanner(
+    label = "a spanner",
+    columns = c(model, trim)
+  )
+
+exibble
 
 test_that("spanner widths are calculated correctly",{
   # all spanner widths should be year + trim = 22
@@ -96,5 +106,9 @@ test_that("spanner widths are calculated correctly",{
   expect_true(grepl(pattern, as.character(group_and_stub %>% as_latex())))
   # group as column and multiple rowname stubs
   expect_true(grepl(pattern, as.character(group_in_stub %>% as_latex())))
+
+  # hidden columns should add to model + trim = 30
+  pattern2 <- "\\{\\\\dimexpr\\s*0\\.30.*?\\}\\{a spanner\\}"
+  expect_true(grepl(pattern2, as.character(hidden_columns %>% as_latex())))
 
 })
