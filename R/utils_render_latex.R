@@ -461,24 +461,20 @@ create_columns_component_l <- function(data, colwidth_df) {
 
   # if exists, get the length of the stub
   if(length(stub_layout)>0){
-    stub_vars <- dt_boxhead_get_var_stub(data = data)
     # Get the actual number of stub columns for the header
     # This determines how many columns the stub header should span
-    if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
-      n_stub_cols <- length(stub_vars) + 1  # group_label + all rowname columns
-      # Get stub_df for width calculations
-      stub_df <- dplyr::filter(colwidth_df, type %in% c("row_group","stub")) %>%
-        dplyr::arrange(type)
-    } else if ("rowname" %in% stub_layout) {
-      stub_df <- dplyr::filter(colwidth_df, type == "stub")
-      n_stub_cols <- nrow(stub_df)
-    } else if ("group_label" %in% stub_layout) {
-      n_stub_cols <- 1
-      stub_df <- dplyr::filter(colwidth_df, type == "row_group")
-    } else {
-      n_stub_cols <- length(stub_layout)
-      stub_df <- dplyr::filter(colwidth_df, type %in% c("stub", "row_group"))
+
+    # stub columns
+    stub_df <- dplyr::filter(colwidth_df, type == "stub")
+    n_stub_cols <- nrow(stub_df)
+
+    # group column in stub?
+    if("group_label" %in% stub_layout){
+      group_df <- dplyr::filter(colwidth_df, type == "row_group")
+      stub_df <- rbind(group_df, stub_df)
+      n_stub_cols <- n_stub_cols + 1
     }
+
   }
 
   styles_tbl <- dt_styles_get(data = data)
@@ -1950,7 +1946,10 @@ calculate_multicolumn_width_text_l <- function(begins, ends, col_order, colwidth
   # order by column order to ensure correct columns are used
   # this is important if data order has changed, or there are hidden columns etc
   colwidth_df <- col_order %>%
-    dplyr::left_join(colwidth_df, by = "var")
+    dplyr::left_join(colwidth_df, by = "var") %>%
+    dplyr::filter(type != "hidden" )
+
+
 
   for (i in seq_along(begins)) {
     ind <- seq(from = begins[i], to = ends[i])

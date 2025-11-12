@@ -91,7 +91,21 @@ hidden_columns <- test_data %>%
     columns = c(model, trim)
   )
 
-exibble
+
+# hidden stub columns
+hidden_stub <- test_data %>%
+  gt(rowname_col = c("mfr", "year")) %>%
+  cols_width(
+    mfr ~ pct(63),
+    model ~ pct(15),
+    year ~ pct(7),
+    trim ~ pct(15)
+  ) %>%
+  cols_hide(columns = "year") %>%
+  tab_spanner(
+    label = "a spanner",
+    columns = c(model, trim)
+  )
 
 test_that("spanner widths are calculated correctly",{
   # all spanner widths should be year + trim = 22
@@ -109,6 +123,10 @@ test_that("spanner widths are calculated correctly",{
 
   # hidden columns should add to model + trim = 30
   pattern2 <- "\\{\\\\dimexpr\\s*0\\.30.*?\\}\\{a spanner\\}"
+  # hidden columns
   expect_true(grepl(pattern2, as.character(hidden_columns %>% as_latex())))
+  # hidden stub columns
+  expect_true(grepl(pattern2, as.character(hidden_stub %>% as_latex())))
+
 
 })
