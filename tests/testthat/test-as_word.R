@@ -2715,3 +2715,35 @@ test_that("sub_small_vals() and sub_large_vals() are properly encoded", {
 
   expect_snapshot_word(tbl)
 })
+
+test_that("multicolumn stub are supported", {
+  test_data <- dplyr::tibble(
+    mfr = c("Ford", "Ford", "BMW", "BMW", "Audi"),
+    model = c("GT", "F-150", "X5", "X3", "A4"),
+    trim = c("Base", "XLT", "xDrive35i", "sDrive28i", "Premium"),
+    year = c(2017, 2018, 2019, 2020, 2021),
+    hp = c(647, 450, 300, 228, 261),
+    msrp = c(447000, 28000, 57000, 34000, 37000)
+  )
+
+  # Three-column stub
+  triple_stub <- gt(test_data, rowname_col = c("mfr", "model", "trim"))
+
+  # The merge cells on the first column
+  xml <- read_xml(as_word(triple_stub))
+  nodes_Ford <- xml_find_all(xml, ".//w:t[. = 'Ford']")
+  expect_equal(xml_attr(xml_find_all(nodes_Ford[[1]], "../../..//w:vMerge"), "val"), "restart")
+  expect_equal(xml_attr(xml_find_all(nodes_Ford[[2]], "../../..//w:vMerge"), "val"), "continue")
+
+  nodes_BMW <- xml_find_all(xml, ".//w:t[. = 'BMW']")
+  expect_equal(xml_attr(xml_find_all(nodes_BMW[[1]], "../../..//w:vMerge"), "val"), "restart")
+  expect_equal(xml_attr(xml_find_all(nodes_BMW[[2]], "../../..//w:vMerge"), "val"), "continue")
+
+  nodes_Audi <- xml_find_all(xml, ".//w:t[. = 'Audi']")
+  expect_equal(xml_length(xml_find_all(nodes_Audi[[1]], "../../..//w:vMerge")), 0)
+
+  # no other merge cells
+  expect_equal(xml_length(xml_find_all(xml, ".//w:vMerge")), 4)
+})
+
+
