@@ -2740,7 +2740,7 @@ test_that("multicolumn stub are supported", {
   expect_equal(xml_attr(xml_find_all(nodes_BMW[[2]], "../../..//w:vMerge"), "val"), "continue")
 
   nodes_Audi <- xml_find_all(xml, ".//w:t[. = 'Audi']")
-  expect_equal(xml2::xml_length(xml_find_all(nodes_Audi[[1]], "../../..//w:vMerge")), 0)
+  expect_equal(xml_length(xml_find_all(nodes_Audi[[1]], "../../..//w:vMerge")), 0)
 
   # no other merge cells
   expect_equal(length(xml_find_all(xml, ".//w:vMerge")), 4)
@@ -2775,8 +2775,29 @@ test_that("multicolumn stub are supported", {
     c("one", "two", "three", "year", "hp", "msrp")
   )
 
+  # add spanner
+  xml <- test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
+    tab_stubhead(c("one", "two", "three")) |>
+    tab_spanner(label = "span", columns = c(hp, msrp)) |>
+    as_word() %>%
+    read_xml()
 
+  expect_equal(
+    xml_text(xml_find_all(xml, "(.//w:tr)[1]//w:t")),
+    c("one", "two", "three", "", "span")
+  )
+  # first row
+  tcPr <- xml_find_all(xml, "(.//w:tr)[1]/w:tc/w:tcPr")
+  for (i in 1:3) {
+    expect_equal(xml_attr(xml_find_all(tcPr[[i]], ".//w:vMerge"), "val"), "restart")
+  }
+  expect_equal(xml_attr(xml_find_first(tcPr[[5]], ".//w:gridSpan"), "val"), "2")
+
+  # second row
+  tcPr <- xml_find_all(xml, "(.//w:tr)[2]/w:tc/w:tcPr")
+  for (i in 1:3) {
+    expect_equal(xml_attr(xml_find_all(tcPr[[i]], ".//w:vMerge"), "val"), "continue")
+  }
 
 })
-
-
