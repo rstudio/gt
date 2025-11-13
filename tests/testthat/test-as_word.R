@@ -2740,7 +2740,7 @@ test_that("multicolumn stub are supported", {
   expect_equal(xml_attr(xml_find_all(nodes_BMW[[2]], "../../..//w:vMerge"), "val"), "continue")
 
   nodes_Audi <- xml_find_all(xml, ".//w:t[. = 'Audi']")
-  expect_equal(xml_length(xml_find_all(nodes_Audi[[1]], "../../..//w:vMerge")), 0)
+  expect_equal(xml2::xml_length(xml_find_all(nodes_Audi[[1]], "../../..//w:vMerge")), 0)
 
   # no other merge cells
   expect_equal(length(xml_find_all(xml, ".//w:vMerge")), 4)
