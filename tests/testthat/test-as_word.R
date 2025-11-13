@@ -2748,19 +2748,29 @@ test_that("multicolumn stub are supported", {
   # no stub head, i.e. empty text
   expect_equal(
     xml_text(xml_find_all(xml, "(.//w:tr)[1]//w:t")),
-    c("", "", "", "year", "hp", "msrp")
+    c("", "year", "hp", "msrp")
   )
+  tcPr <- xml_find_all(xml, "(.//w:tr)[1]/w:tc/w:tcPr")
+  expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:gridSpan"), "val"), "3")
+  for (i in 2:4) {
+    expect_equal(length(xml_find_all(tcPr[[i]], ".//w:gridSpan")), 0)
+  }
 
-  # one label: right most position
+  # one label: merged
   xml <- test_data |>
     gt(rowname_col = c("mfr", "model", "trim")) |>
     tab_stubhead("one") |>
     as_word() %>%
     read_xml()
+  tcPr <- xml_find_all(xml, "(.//w:tr)[1]/w:tc/w:tcPr")
+  expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:gridSpan"), "val"), "3")
+  for (i in 2:4) {
+    expect_equal(length(xml_find_all(tcPr[[i]], ".//w:gridSpan")), 0)
+  }
 
   expect_equal(
     xml_text(xml_find_all(xml, "(.//w:tr)[1]//w:t")),
-    c("", "", "one", "year", "hp", "msrp")
+    c("one", "year", "hp", "msrp")
   )
 
   # 3 labels
@@ -2799,5 +2809,29 @@ test_that("multicolumn stub are supported", {
   for (i in 1:3) {
     expect_equal(xml_attr(xml_find_all(tcPr[[i]], ".//w:vMerge"), "val"), "continue")
   }
+
+  # spanner - one label
+  xml <- test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
+    tab_stubhead(c("one")) |>
+    tab_spanner(label = "span", columns = c(hp, msrp)) |>
+    as_word() %>%
+    read_xml()
+
+  expect_equal(
+    xml_text(xml_find_all(xml, "(.//w:tr)[1]//w:t")),
+    c("one", "", "span")
+  )
+
+  # first row
+  tcPr <- xml_find_all(xml, "(.//w:tr)[1]/w:tc/w:tcPr")
+  expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:vMerge"), "val"), "restart")
+  expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:gridSpan"), "val"), "3")
+  expect_equal(xml_attr(xml_find_first(tcPr[[3]], ".//w:gridSpan"), "val"), "2")
+
+  # second row
+  tcPr <- xml_find_all(xml, "(.//w:tr)[2]/w:tc/w:tcPr")
+  expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:vMerge"), "val"), "continue")
+  expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:gridSpan"), "val"), "3")
 
 })
