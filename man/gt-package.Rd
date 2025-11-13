@@ -26,6 +26,7 @@ Authors:
   \item Shannon Haughton \email{shannon.l.haughton@gsk.com}
   \item Ellis Hughes \email{ellis.h.hughes@gsk.com} (\href{https://orcid.org/0000-0003-0637-4436}{ORCID})
   \item Alexandra Lauer \email{alexandralauer1@gmail.com} (\href{https://orcid.org/0000-0002-4191-6301}{ORCID})
+  \item Romain François \email{romain@tada.science}
   \item JooYoung Seo \email{jseo1005@illinois.edu} (\href{https://orcid.org/0000-0002-4064-6012}{ORCID})
   \item Ken Brevoort \email{ken@brevoort.com} (\href{https://orcid.org/0000-0002-4001-8358}{ORCID})
   \item Olivier Roy

@@ -27,7 +27,7 @@
 
 ## usethis namespace: start
 #' @import rlang
-#' @importFrom xml2 as_xml_document read_xml xml_contents xml_name xml_type
+#' @importFrom xml2 as_xml_document read_xml xml_contents xml_name xml_type xml_length
 #'   xml_text xml_attr `xml_attr<-` `xml_text<-` xml_find_all xml_find_first
 #'   xml_children xml_child xml_add_child xml_add_sibling xml_ns xml_remove
 ## usethis namespace: end
