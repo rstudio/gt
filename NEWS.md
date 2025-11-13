@@ -6,6 +6,8 @@
 
 * Update latex Unicode conversions to be optional (default to TRUE) as well as make them work in-line (@thebioengineer, #2037, #2041)
 
+* Fix bug where latex spanner widths were based on incorrect column widths (@shannonhaughton, #2016, #2024)
+
 # gt 1.1.0
 
 ## New features
