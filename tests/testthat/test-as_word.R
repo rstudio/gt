@@ -2744,6 +2744,39 @@ test_that("multicolumn stub are supported", {
 
   # no other merge cells
   expect_equal(length(xml_find_all(xml, ".//w:vMerge")), 4)
+
+  # no stub head, i.e. empty text
+  expect_equal(
+    xml_text(xml_find_all(xml, "(.//w:tr)[1]//w:t")),
+    c("", "", "", "year", "hp", "msrp")
+  )
+
+  # one label: right most position
+  xml <- test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
+    tab_stubhead("one") |>
+    as_word() %>%
+    read_xml()
+
+  expect_equal(
+    xml_text(xml_find_all(xml, "(.//w:tr)[1]//w:t")),
+    c("", "", "one", "year", "hp", "msrp")
+  )
+
+  # 3 labels
+  xml <- test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
+    tab_stubhead(c("one", "two", "three")) |>
+    as_word() %>%
+    read_xml()
+
+  expect_equal(
+    xml_text(xml_find_all(xml, "(.//w:tr)[1]//w:t")),
+    c("one", "two", "three", "year", "hp", "msrp")
+  )
+
+
+
 })
 
 

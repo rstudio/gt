@@ -1560,21 +1560,23 @@ create_columns_component_xml <- function(
   # label(?s) or nothing
   n_stub_cols <- length(dt_boxhead_get_var_by_type(data, type = "stub"))
   n_stubh_label <- length(stubh$label)
-  if (isTRUE(stub_available) && n_stubh_label > 0L) {
-    if (n_stubh_label != n_stub_cols) {
-      stub_labels <- c(stubh$label, rep("", n_stub_cols - 1L))
-    } else (
-      stub_labels <- stubh$label
-    )
-    headings_labels <- prepend_vec(headings_labels, stub_labels)
-    headings_vars <- prepend_vec(headings_vars, rep("::stub", n_stub_cols))
-  } else if (isTRUE(stub_available)) {
-    headings_labels <- prepend_vec(headings_labels, rep("", n_stub_cols))
+  if (isTRUE(stub_available)) {
+    if (n_stub_cols > 1) {
+      if (n_stubh_label <= 1) {
+        # multi stub column and only one label
+        # place the label on the right most stub column
+        label <- if (n_stubh_label == 1) stubh$label else ""
+        headings_labels <- prepend_vec(headings_labels, c(rep("", n_stub_cols - 1), label))
+      } else if (n_stub_cols == n_stubh_label) {
+        headings_labels <- prepend_vec(headings_labels, stubh$label)
+      }
+    } else if (n_stub_cols == 1) {
+      label <- if (n_stubh_label == 1) stubh$label else ""
+      headings_labels <- prepend_vec(headings_labels, label)
+    }
     headings_vars <- prepend_vec(headings_vars, rep("::stub", n_stub_cols))
   }
-
   stubhead_label_alignment <- rep("left", n_stub_cols)
-
   table_col_headings_list <- list()
 
   # Create first row of table column headings
