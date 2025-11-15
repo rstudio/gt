@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -113,7 +113,13 @@ cols_align_decimal <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
+
+  # Handle gt_group
+  if(inherits(data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(data, arg_list))
+  }
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -255,3 +261,4 @@ align_to_char <- function(x, align_at = ".") {
 
   x_str
 }
+

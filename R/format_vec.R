@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -170,6 +170,7 @@ vec_fmt_number <- function(
     sep_mark = ",",
     dec_mark = ".",
     force_sign = FALSE,
+    min_sep_threshold = 1,
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
@@ -201,6 +202,7 @@ vec_fmt_number <- function(
       sep_mark = sep_mark,
       dec_mark = dec_mark,
       force_sign = force_sign,
+      min_sep_threshold = min_sep_threshold,
       locale = locale
     ),
     output = output
@@ -312,6 +314,7 @@ vec_fmt_integer <- function(
     pattern = "{x}",
     sep_mark = ",",
     force_sign = FALSE,
+    min_sep_threshold = 1,
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
@@ -333,6 +336,7 @@ vec_fmt_integer <- function(
     sep_mark = sep_mark,
     dec_mark = "not used",
     force_sign = force_sign,
+    min_sep_threshold = min_sep_threshold,
     locale = locale,
     output = output
   )
@@ -654,6 +658,186 @@ vec_fmt_engineering <- function(
   )
 }
 
+# vec_fmt_number_si() ----------------------------------------------------------
+#' Format a vector as numbers with SI prefixes
+#'
+#' @description
+#'
+#' With numeric values in a vector, we can format the values with SI (International
+#' System of Units) prefixes. These prefixes like k (kilo), M (mega), G (giga),
+#' and m (milli) scale numbers in either powers of 1000 (engineering mode) or
+#' powers of 10 and 100 (decimal mode).
+#'
+#' We have control over the formatting with the following options:
+#'
+#' - decimals: choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' - scaling: we can choose to scale targeted values by a multiplier value
+#' (useful for unit conversions)
+#' - SI prefix mode: choose between engineering prefixes (powers of 1000) or
+#' decimal prefixes (all SI prefixes)
+#' - units: an optional unit designation for the values
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' - locale-based formatting: providing a locale ID will result in
+#' formatting specific to the chosen locale
+#'
+#' @inheritParams fmt_number_si
+#'
+#' @inheritParams vec_fmt_number
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according to the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
+#'
+#' @return A character vector.
+#'
+#' @section Examples:
+#'
+#' Let's create a numeric vector for the next few examples:
+#'
+#' ```r
+#' num_vals <- c(1.5e9, 2.7e6, 4200, 0.3, 0.00012, 2.4e-8)
+#' ```
+#'
+#' Using `vec_fmt_number_si()` with the default options will create a
+#' character vector with values formatted with SI prefixes. Any `NA` values
+#' remain as `NA` values. The rendering context will be autodetected unless
+#' specified in the `output` argument (here, it is of the `"plain"` output
+#' type).
+#'
+#' ```r
+#' vec_fmt_number_si(num_vals)
+#' ```
+#' ```
+#' #> [1] "1.50 G" "2.70 M" "4.20 k" "300.00 m" "120.00 u" "24.00 n"
+#' ```
+#'
+#' We can add a unit designation to all values with the `unit` option:
+#'
+#' ```r
+#' vec_fmt_number_si(num_vals, unit = "W")
+#' ```
+#' ```
+#' #> [1] "1.50 GW" "2.70 MW" "4.20 kW" "300.00 mW" "120.00 uW" "24.00 nW"
+#' ```
+#'
+#' We can change the number of decimal places with the `decimals` option:
+#'
+#' ```r
+#' vec_fmt_number_si(num_vals, unit = "g", decimals = 0)
+#' ```
+#' ```
+#' #> [1] "2 Gg" "3 Mg" "4 kg" "0 g" "0 g" "0 g"
+#' ```
+#'
+#' If we are formatting for a different locale, we could supply the locale ID
+#' and **gt** will handle any locale-specific formatting options:
+#'
+#' ```r
+#' vec_fmt_number_si(num_vals, unit = "m", locale = "fr")
+#' ```
+#' ```
+#' #> [1] "1,50 Gm" "2,70 Mm" "4,20 km" "300,00 mm" "120,00 um" "24,00 nm"
+#' ```
+#'
+#' The `scale_by` option is useful for unit conversions. For instance, to
+#' convert meters to millimeters:
+#'
+#' ```r
+#' vec_fmt_number_si(c(0.5, 1.2, 3.8), unit = "m", scale_by = 1000)
+#' ```
+#' ```
+#' #> [1] "500.00 mm" "1.20 km" "3.80 km"
+#' ```
+#'
+#' We can control the space between the number and unit with `incl_space`:
+#'
+#' ```r
+#' vec_fmt_number_si(num_vals, unit = "Hz", incl_space = FALSE, decimals = 1)
+#' ```
+#' ```
+#' #> [1] "1.5GHz" "2.7MHz" "4.2kHz" "300.0mHz" "120.0uHz" "24.0nHz"
+#' ```
+#'
+#' As a last example, one can wrap the values in a pattern with the `pattern`
+#' argument. Note here that `NA` values won't have the pattern applied.
+#'
+#' ```r
+#' vec_fmt_number_si(num_vals, pattern = "[{x}]")
+#' ```
+#' ```
+#' #> [1] "[1.50 G]" "[2.70 M]" "[4.20 k]" "[300.00 m]" "[120.00 u]" "[24.00 n]"
+#' ```
+#'
+#' @family vector formatting functions
+#' @section Function ID:
+#' 15-5
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_number_si()].
+#'
+#' @export
+vec_fmt_number_si <- function(
+    x,
+    unit = NULL,
+    decimals = 2,
+    drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
+    scale_by = 1.0,
+    prefix_mode = c("engineering", "decimal"),
+    pattern = "{x}",
+    sep_mark = ",",
+    dec_mark = ".",
+    force_sign = FALSE,
+    incl_space = TRUE,
+    locale = NULL,
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
+) {
+
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match0(output, values = output_types)
+
+  # Ensure that `prefix_mode` is matched correctly to one option
+  prefix_mode <- rlang::arg_match0(prefix_mode, values = c("engineering", "decimal"))
+
+  if (output == "auto") {
+    output <- determine_output_format()
+  }
+
+  render_as_vector(
+    fmt_number_si(
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
+      unit = unit,
+      decimals = decimals,
+      drop_trailing_zeros = drop_trailing_zeros,
+      drop_trailing_dec_mark = drop_trailing_dec_mark,
+      scale_by = scale_by,
+      prefix_mode = prefix_mode,
+      pattern = pattern,
+      sep_mark = sep_mark,
+      dec_mark = dec_mark,
+      force_sign = force_sign,
+      incl_space = incl_space,
+      locale = locale
+    ),
+    output = output
+  )
+}
+
 # vec_fmt_percent() ------------------------------------------------------------
 #' Format a vector as percentage values
 #'
@@ -767,7 +951,7 @@ vec_fmt_engineering <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 15-5
+#' 15-6
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -788,6 +972,7 @@ vec_fmt_percent <- function(
     sep_mark = ",",
     dec_mark = ".",
     force_sign = FALSE,
+    min_sep_threshold = 1,
     incl_space = FALSE,
     placement = "right",
     locale = NULL,
@@ -819,6 +1004,7 @@ vec_fmt_percent <- function(
       sep_mark = sep_mark,
       dec_mark = dec_mark,
       force_sign = force_sign,
+      min_sep_threshold = min_sep_threshold,
       incl_space = incl_space,
       placement = placement,
       locale = locale
@@ -946,7 +1132,7 @@ vec_fmt_percent <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 15-6
+#' 15-7
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -977,7 +1163,7 @@ vec_fmt_partsper <- function(
   check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
   # Ensure that `to_units` is matched correctly to one option
-  to_units <- 
+  to_units <-
     rlang::arg_match0(
       to_units,
       values = c("per-mille", "per-myriad", "pcm", "ppm", "ppb", "ppt", "ppq")
@@ -1095,7 +1281,7 @@ vec_fmt_partsper <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 15-7
+#' 15-8
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -1281,7 +1467,7 @@ vec_fmt_fraction <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 15-8
+#' 15-9
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -1304,6 +1490,7 @@ vec_fmt_currency <- function(
     sep_mark = ",",
     dec_mark = ".",
     force_sign = FALSE,
+    min_sep_threshold = 1,
     placement = "left",
     incl_space = FALSE,
     locale = NULL,
@@ -1337,6 +1524,7 @@ vec_fmt_currency <- function(
       sep_mark = sep_mark,
       dec_mark = dec_mark,
       force_sign = force_sign,
+      min_sep_threshold = min_sep_threshold,
       placement = placement,
       incl_space = incl_space,
       locale = locale
@@ -1406,7 +1594,7 @@ vec_fmt_currency <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 15-9
+#' 15-10
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -1526,7 +1714,7 @@ vec_fmt_roman <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 15-10
+#' 15-11
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -1667,7 +1855,7 @@ vec_fmt_index <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 15-11
+#' 15-12
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -1807,7 +1995,7 @@ vec_fmt_spelled_num <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 15-12
+#' 15-13
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -1828,6 +2016,7 @@ vec_fmt_bytes <- function(
     sep_mark = ",",
     dec_mark = ".",
     force_sign = FALSE,
+    min_sep_threshold = 1,
     incl_space = TRUE,
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
@@ -1859,6 +2048,7 @@ vec_fmt_bytes <- function(
       sep_mark = sep_mark,
       dec_mark = dec_mark,
       force_sign = force_sign,
+      min_sep_threshold = min_sep_threshold,
       incl_space = incl_space,
       locale = locale
     ),
@@ -2009,7 +2199,7 @@ vec_fmt_bytes <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 15-13
+#' 15-14
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -2181,7 +2371,7 @@ vec_fmt_date <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 15-14
+#' 15-15
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -2998,7 +3188,7 @@ vec_fmt_time <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 15-15
+#' 15-16
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -3192,7 +3382,7 @@ vec_fmt_datetime <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 15-16
+#' 15-17
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -3220,7 +3410,7 @@ vec_fmt_duration <- function(
   check_vector_valid(x, valid_classes = c("numeric", "integer", "difftime"))
 
   # Ensure that `duration_style` and `output` are matched correctly to one option
-  duration_style <- 
+  duration_style <-
     rlang::arg_match0(
       duration_style,
       values = c("narrow", "wide", "colon-sep", "iso")
@@ -3300,7 +3490,7 @@ vec_fmt_duration <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 15-17
+#' 15-18
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -3319,7 +3509,7 @@ vec_fmt_markdown <- function(
   check_vector_valid(x)
 
   # Ensure that arguments are matched
-  md_engine <- 
+  md_engine <-
     rlang::arg_match0(
       md_engine,
       values = c("markdown", "commonmark")
@@ -3331,7 +3521,7 @@ vec_fmt_markdown <- function(
   }
   # Avoid modifying the output to base64enc in Quarto
   if (check_quarto() && output == "html") {
-    # Similar to withr::local_envvar 
+    # Similar to withr::local_envvar
     current_envvar <- Sys.getenv("QUARTO_BIN_PATH")
     Sys.unsetenv("QUARTO_BIN_PATH")
     on.exit(

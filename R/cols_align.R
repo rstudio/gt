@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -33,12 +33,19 @@
 #' allow **gt** to automatically choose the alignment of each column based on
 #' the data type (with the `auto` option).
 #'
-#' @param data *The gt table data object*
+#' @param data *The gt table or gt group data object*
 #'
 #'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
+#'
+#'   OR
+#'
+#'   `obj:<gt_group>` // **required**
+#'
+#'   This is the **gt** group object that is commonly created through use of the
+#'   [gt_group()] function.
 #'
 #' @param align *Alignment type*
 #'
@@ -111,10 +118,16 @@ cols_align <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
+
+  # Handle gt_group
+  if(inherits(data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(data, arg_list))
+  }
 
   # Get the `align` value, this stops the function if there is no match
-  align <- 
+  align <-
     rlang::arg_match0(
       align,
       values = c("auto", "left", "center", "right")

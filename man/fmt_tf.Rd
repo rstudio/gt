@@ -402,7 +402,7 @@ pointed toward values in the \code{code} column by using \code{\link[=from_colum
 
 \section{Function ID}{
 
-3-18
+3-19
 }
 
 \section{Function Introduced}{
@@ -433,6 +433,7 @@ Other data formatting functions:
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_number_si}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},

@@ -107,6 +107,7 @@ Other helper functions:
 \code{\link{from_column}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
+\code{\link{latex}()},
 \code{\link{md}()},
 \code{\link{nanoplot_options}()},
 \code{\link{pct}()},

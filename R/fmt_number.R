@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -200,6 +200,17 @@
 #'   This option is disregarded when using accounting notation with
 #'   `accounting = TRUE`.
 #'
+#' @param min_sep_threshold *Minimum digit threshold for grouping separators*
+#'
+#'   `scalar<numeric|integer>(val>=1)` // *default:* `1`
+#'
+#'   The minimum number of digits required in the integer part of a number for
+#'   grouping separators to be applied. This parameter determines when digit
+#'   grouping begins based on the magnitude of values. The value `1` (the
+#'   default) applies separators starting at 4-digit numbers (e.g., `1,000` and
+#'   above). A value of `2` starts grouping at 5-digit numbers (`10,000` and
+#'   above), while `3` begins at 6-digit numbers (`100,000` and above).
+#'
 #' @param system *Numbering system for grouping separators*
 #'
 #'   `singl-kw:[intl|ind]` // *default:* `"intl"`
@@ -231,7 +242,6 @@
 #' formatting. This is to say that cells of incompatible data types may be
 #' targeted, but there will be no attempt to format them.
 #'
-#'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
 #' [from_column()] can be used with certain arguments of `fmt_number()` to
@@ -251,6 +261,7 @@
 #' - `sep_mark`
 #' - `dec_mark`
 #' - `force_sign`
+#' - `min_sep_threshold`
 #' - `system`
 #' - `locale`
 #'
@@ -308,7 +319,7 @@
 #'   dplyr::select(country_code_3, year, population) |>
 #'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
 #'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
-#'   tidyr::spread(year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
 #'   dplyr::arrange(desc(`2015`)) |>
 #'   gt(rowname_col = "country_code_3") |>
 #'   fmt_number(suffixing = TRUE)
@@ -327,7 +338,7 @@
 #'   dplyr::select(country_code_3, year, population) |>
 #'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
 #'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
-#'   tidyr::spread(year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
 #'   dplyr::arrange(desc(`2015`)) |>
 #'   gt(rowname_col = "country_code_3") |>
 #'   fmt_number(suffixing = TRUE, n_sigfig = 3)
@@ -416,6 +427,7 @@ fmt_number <- function(
     sep_mark = ",",
     dec_mark = ".",
     force_sign = FALSE,
+    min_sep_threshold = 1,
     system = c("intl", "ind"),
     locale = NULL
 ) {
@@ -441,6 +453,7 @@ fmt_number <- function(
   # - sep_mark
   # - dec_mark
   # - force_sign
+  # - min_sep_threshold
   # - system
   # - locale
 
@@ -496,6 +509,7 @@ fmt_number <- function(
           sep_mark = p_i$sep_mark %||% sep_mark,
           dec_mark = p_i$dec_mark %||% dec_mark,
           force_sign = p_i$force_sign %||% force_sign,
+          min_sep_threshold = p_i$min_sep_threshold %||% min_sep_threshold,
           system = p_i$system %||% system,
           locale = p_i$locale %||% locale
         )
@@ -520,6 +534,7 @@ fmt_number <- function(
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
+  min_sep_threshold <- get_locale_min_sep_threshold(locale, min_sep_threshold)
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
@@ -586,6 +601,7 @@ fmt_number <- function(
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = drop_trailing_dec_mark,
             format = formatC_format,
+            min_sep_threshold = min_sep_threshold,
             system = system
           )
 
@@ -676,7 +692,7 @@ fmt_number <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' [from_column()] can be used with certain arguments of  `fmt_integer()` to
+#' [from_column()] can be used with certain arguments of `fmt_integer()` to
 #' obtain varying parameter values from a specified column within the table.
 #' This means that each row could be formatted a little bit differently. These
 #' arguments provide support for [from_column()]:
@@ -688,6 +704,7 @@ fmt_number <- function(
 #' - `pattern`
 #' - `sep_mark`
 #' - `force_sign`
+#' - `min_sep_threshold`
 #' - `system`
 #' - `locale`
 #'
@@ -742,7 +759,7 @@ fmt_number <- function(
 #'   dplyr::select(country_code_3, year, population) |>
 #'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
 #'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
-#'   tidyr::spread(year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
 #'   dplyr::arrange(desc(`2015`)) |>
 #'   gt(rowname_col = "country_code_3") |>
 #'   fmt_integer(scale_by = 1 / 1E6) |>
@@ -804,6 +821,7 @@ fmt_integer <- function(
     pattern = "{x}",
     sep_mark = ",",
     force_sign = FALSE,
+    min_sep_threshold = 1,
     system = c("intl", "ind"),
     locale = NULL
 ) {
@@ -824,6 +842,7 @@ fmt_integer <- function(
   # - pattern
   # - sep_mark
   # - force_sign
+  # - min_sep_threshold
   # - system
   # - locale
 
@@ -867,6 +886,7 @@ fmt_integer <- function(
           pattern = p_i$pattern %||% pattern,
           sep_mark = p_i$sep_mark %||% sep_mark,
           force_sign = p_i$force_sign %||% force_sign,
+          min_sep_threshold = p_i$min_sep_threshold %||% min_sep_threshold,
           system = p_i$system %||% system,
           locale = p_i$locale %||% locale
         )
@@ -895,6 +915,7 @@ fmt_integer <- function(
     sep_mark = sep_mark,
     dec_mark = "not used",
     force_sign = force_sign,
+    min_sep_threshold = min_sep_threshold,
     system = system,
     locale = locale
   )

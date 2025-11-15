@@ -24,6 +24,8 @@ data_color(
   apply_to = c("fill", "text"),
   autocolor_text = TRUE,
   contrast_algo = c("apca", "wcag"),
+  autocolor_light = "#FFFFFF",
+  autocolor_dark = "#000000",
   colors = NULL
 )
 }
@@ -202,6 +204,22 @@ The color contrast algorithm to use when \code{autocolor_text = TRUE}. By
 default this is \code{"apca"} (Accessible Perceptual Contrast Algorithm) and the
 alternative to this is \code{"wcag"} (Web Content Accessibility Guidelines).}
 
+\item{autocolor_light}{\emph{Automatically recolor text, light color}
+
+\verb{scalar<character>} // \emph{default:} \code{"white"}
+
+The light color to use when \code{autocolor_text = TRUE}. By default the color
+\code{"white"} will be used (\verb{#FFFFFF"}). Alpha channel values will be set to
+1.0 (fully opaque).}
+
+\item{autocolor_dark}{\emph{Automatically recolor text, dark color}
+
+\verb{scalar<character>} // \emph{default:} \code{"black"}
+
+The dark color to use when \code{autocolor_text = TRUE}. By default the color
+\code{"black"} will be used (\verb{#000000"}). Alpha channel values will be set to
+1.0 (fully opaque).}
+
 \item{colors}{\emph{\link{Deprecated} Color mapping function}
 
 \code{function} // \emph{default:} \code{NULL} (\code{optional})
@@ -245,7 +263,8 @@ whether to apply the cell-specific colors to the cell background or the cell
 text
 \item text autocoloring: if colorizing the cell background, \code{data_color()} will
 automatically recolor the foreground text to provide the best contrast (can
-be deactivated with \code{autocolor_text = FALSE})
+be deactivated with \code{autocolor_text = FALSE}; a light and dark color to be
+used can be specified with \code{autocolor_light} and \code{autocolor_dark})
 }
 
 \code{data_color()} won't fail with the default options used, but
@@ -383,7 +402,9 @@ when colorizing the background of data cells. This option can be disabled by
 setting \code{autocolor_text} to \code{FALSE}. The \code{contrast_algo} argument lets us
 choose between two color contrast algorithms: \code{"apca"} (\emph{Accessible
 Perceptual Contrast Algorithm}, the default algo) and \code{"wcag"} (\emph{Web Content
-Accessibility Guidelines}).
+Accessibility Guidelines}). \code{autocolor_light} and \code{autocolor_dark} allow for
+further customization, however, should only be used if you are sure that
+accessibility criteria are guaranteed.
 }
 
 \section{Examples}{
@@ -636,7 +657,11 @@ here is required).
   dplyr::filter(latitude == 20 & tst <= "1200") |>
   dplyr::select(-latitude) |>
   dplyr::filter(!is.na(sza)) |>
-  tidyr::spread(key = "tst", value = sza) |>
+  tidyr::pivot_wider(
+    names_from = tst,
+    values_from = sza,
+    names_sort = TRUE
+  ) |>
   gt(rowname_col = "month") |>
   sub_missing(missing_text = "") |>
   data_color(
@@ -657,7 +682,7 @@ gray cells for the missing values (we also removed the \code{"NA"} text with
 
 \section{Function ID}{
 
-3-36
+3-37
 }
 
 \section{Function Introduced}{
@@ -687,6 +712,7 @@ Other data formatting functions:
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_number_si}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},

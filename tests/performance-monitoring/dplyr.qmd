@@ -129,14 +129,13 @@ format_pvalue <- function(p) glue::glue("{scales::pvalue(p)} {gtools::stars.pval
 get_cell_dim <- function(x) {
   dim <- NULL
   if (is.list(x) || is.vector(x)) dim <- length(x)
-  if (length(dim(x)) > 1) dim <- glue::glue('{dim(x)[1]} x {dim(x)[2]}')
+  if (length(dim(x)) > 1) dim <- glue::glue("{dim(x)[1]} x {dim(x)[2]}")
   return(dim)
 }
 
 summarize_nested_col <- \(x) lapply(x, \(r) glue::glue("<{class(r)[[1]]} [{get_cell_dim(r)}]>"))
 
 format_gt <- function(gt_tbl) {
-  
   gt_tbl <- gt::fmt(
     gt_tbl,
     columns = select(gt_tbl[["_data"]], where(is.list)) |> colnames(),
@@ -154,16 +153,14 @@ format_gt <- function(gt_tbl) {
     columns = select(gt_tbl[["_data"]], where(\(v) is.numeric(v))) |> colnames(),
     decimals = 3, sep_mark = " ", drop_trailing_zeros = TRUE # n_sigfig = 2
   )
-  
+
   return(gt_tbl)
 }
 
 gt_style_light <- function(gt_tbl) {
-  gt_tbl <- (gt_tbl 
-    |> format_gt()
-    |> gt::tab_options(
-        
-    )
+  gt_tbl <- (gt_tbl
+  |> format_gt()
+    |> gt::tab_options()
     |> gt::tab_style(
       style = list(
         cell_fill(color = bg_color_light, alpha = 1),
@@ -171,7 +168,7 @@ gt_style_light <- function(gt_tbl) {
         cell_borders(sides = c("top", "bottom"), color = secondary_color_light, style = "solid", weight = px(2))
       ),
       locations = list(cells_title(), cells_column_labels())
-    ) 
+    )
     |> gt::tab_style(
       style = list(
         cell_fill(color = bg_color_light, alpha = 1),
@@ -185,16 +182,17 @@ gt_style_light <- function(gt_tbl) {
     )
     |> gt::tab_options(container.width = pct(100), table.width = pct(100))
   )
-  
-  if (nrow(gt_tbl[["_data"]]) > 2) 
+
+  if (nrow(gt_tbl[["_data"]]) > 2) {
     gt_tbl <- gt_tbl |> gtExtras::gt_highlight_rows(rows = seq(2, nrow(gt_tbl[["_data"]]), by = 2), fill = "#E9E9E9", font_weight = "normal")
-  
+  }
+
   return(gt_tbl)
 }
 
 gt_style_dark <- function(gt_tbl) {
-  gt_tbl <- (gt_tbl 
-    |> format_gt()
+  gt_tbl <- (gt_tbl
+  |> format_gt()
     |> gt::tab_style(
       style = list(
         cell_fill(color = bg_color_dark, alpha = 1),
@@ -202,7 +200,7 @@ gt_style_dark <- function(gt_tbl) {
         cell_borders(sides = c("top", "bottom"), color = secondary_color_dark, style = "solid", weight = px(2))
       ),
       locations = list(cells_title(), cells_column_labels())
-    ) 
+    )
     |> gt::tab_style(
       style = list(
         cell_fill(color = bg_color_dark, alpha = 1),
@@ -216,21 +214,22 @@ gt_style_dark <- function(gt_tbl) {
     )
     |> gt::tab_options(container.width = pct(100), table.width = pct(100))
   )
-  
-  if (nrow(gt_tbl[["_data"]]) > 2) 
+
+  if (nrow(gt_tbl[["_data"]]) > 2) {
     gt_tbl <- gt_tbl |> gtExtras::gt_highlight_rows(rows = seq(2, nrow(gt_tbl[["_data"]]), by = 2), fill = "#1e1e1e", font_weight = "normal")
-  
+  }
+
   return(gt_tbl)
 }
 
 style_table <- function(data, theme = "light", nrow_max = 15) {
-  #return(gt::gt(data |> head(nrow_max)))
-  
+  # return(gt::gt(data |> head(nrow_max)))
+
   if (theme == "light") tbl <- gt::gt(data |> head(nrow_max)) |> gt_style_light()
   if (theme == "dark") tbl <- gt::gt(data |> head(nrow_max)) |> gt_style_dark()
-  
+
   if (nrow(data) > nrow_max) tbl <- tbl |> tab_source_note(md(glue::glue("*[ omitted {nrow(data) - nrow_max} entries ]*")))
-  
+
   return(tbl)
 }
 
@@ -261,7 +260,7 @@ knit_print.grouped_df <- function(x, options, ...) {
 registerS3method("knit_print", "grouped_df", knit_print.grouped_df)
 knit_print.data.frame <- function(x, options, ...) {
   cl <- intersect(class(x), c("data.table", "data.frame"))[1]
-  
+
   cat("```{=html}\n")
   cat("\n<details>\n")
   cat("<summary>\n")
@@ -275,7 +274,6 @@ knit_print.data.frame <- function(x, options, ...) {
   cat("</div>")
   cat("</details>\n\n")
   cat("```\n\n")
-
 }
 registerS3method("knit_print", "data.frame", knit_print.data.frame)
 ```

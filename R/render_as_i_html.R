@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -160,8 +160,8 @@ render_as_ihtml <- function(data, id) {
         FUN.VALUE = integer(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
-          if (grepl("px", x)) {
-            x <- as.integer(gsub("px", "", x))
+          if (grepl("px", x, fixed = TRUE)) {
+            x <- as.integer(gsub("px", "", x, fixed = TRUE))
           } else {
             x <- NA_integer_
           }
@@ -397,7 +397,7 @@ render_as_ihtml <- function(data, id) {
     # for defaultExpanded = TRUE
     expand_groupname_col <- TRUE
     # modify data_tbl to include
-    data_tbl <- dplyr::bind_cols(
+    data_tbl <- vctrs::vec_cbind(
       data_tbl,
       data_tbl0[ , groupname_col, drop = FALSE]
     )
@@ -437,7 +437,7 @@ render_as_ihtml <- function(data, id) {
 
         paste0(
           "if (colInfo.id === '", colname, "' & rowIndex === ", rownum, ") {\n",
-          "  return { ", html_style , " }\n",
+          "  return { ", html_style, " }\n",
           "}\n\n"
         )
       }

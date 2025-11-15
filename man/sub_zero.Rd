@@ -91,7 +91,7 @@ single call of \code{sub_zero()}.
 
 \section{Function ID}{
 
-3-32
+3-33
 }
 
 \section{Function Introduced}{
@@ -122,6 +122,7 @@ Other data formatting functions:
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_number_si}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},

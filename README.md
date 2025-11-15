@@ -13,7 +13,7 @@
 [![Monthly Downloads](https://cranlogs.r-pkg.org/badges/gt)](https://CRAN.R-project.org/package=gt)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/gt)](https://CRAN.R-project.org/package=gt)
 
-[![Twitter Follow](https://img.shields.io/twitter/follow/gt_package?style=social)](https://twitter.com/gt_package)
+[![Follow on Bluesky](https://img.shields.io/badge/Bluesky-0285FF?logo=bluesky&logoColor=0285FF&label=Follow%20on&color=0285FF)](https://bsky.app/profile/gt-package.bsky.social)
 [![Posit Cloud](https://img.shields.io/badge/Posit%20Cloud-gt%20Test%20Drive-blue?style=social&logo=rstudio&logoColor=75AADB)](https://rstudio.cloud/project/779965)
 
 [![Discord](https://img.shields.io/discord/1086103944280952992?color=%237289da&label=Discord)](https://discord.com/invite/Ux7nrcXHVV)
@@ -137,9 +137,9 @@ Another fine venue for discussion is in the [`gt_package` *Discord server*](http
 
 [![Discord Server](https://img.shields.io/badge/Discord-Chat%20with%20us-blue?style=social&logo=discord&logoColor=purple)](https://discord.com/invite/Ux7nrcXHVV)
 
-Finally, there is the [`gt_package` *X/Twitter account*](https://twitter.com/gt_package). There you'll find tweets about **gt** (including sneak previews about in-development features) and other table-generation packages.
+Finally, there is the [`gt-package` *Bluesky account*](https://bsky.app/profile/gt-package.bsky.social). There you'll find posts about **gt** (including sneak previews about in-development features) and other table-generation packages.
 
-[![Twitter Follow](https://img.shields.io/twitter/follow/gt_package?style=social)](https://twitter.com/gt_package)
+[![Follow on Bluesky](https://img.shields.io/badge/Bluesky-0285FF?logo=bluesky&logoColor=0285FF&label=Follow%20on&color=0285FF)](https://bsky.app/profile/gt-package.bsky.social)
 
 These are all great places to ask questions about how to use the package, discuss
 some ideas, engage with others, and much more!
@@ -192,7 +192,7 @@ participating in this project you agree to abide by its terms.
 
 ## 🏛️ Governance
 
-This project is primarily maintained by [Rich Iannone](https://twitter.com/riannone). Other authors may occasionally assist with some of these duties.
+This project is primarily maintained by [Rich Iannone](https://bsky.app/profile/richmeister.bsky.social). Other authors may occasionally assist with some of these duties.
 
 <hr>
 

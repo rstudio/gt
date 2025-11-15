@@ -92,7 +92,6 @@
       <td headers="group" class="gt_row gt_left" style="background-color: #FFCDD2; color: #000000;">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 # Some color palettes from the viridis package can be used
@@ -188,7 +187,6 @@
       <td headers="row" class="gt_row gt_left" style="background-color: #FDE725; color: #000000;">row_8</td>
       <td headers="group" class="gt_row gt_left" style="background-color: #FDE725; color: #000000;">grp_b</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -286,7 +284,6 @@
       <td headers="group" class="gt_row gt_left" style="background-color: #FCFDBF; color: #000000;">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -382,7 +379,6 @@
       <td headers="row" class="gt_row gt_left" style="background-color: #F0F921; color: #000000;">row_8</td>
       <td headers="group" class="gt_row gt_left" style="background-color: #F0F921; color: #000000;">grp_b</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -480,7 +476,6 @@
       <td headers="group" class="gt_row gt_left" style="background-color: #FCFFA4; color: #000000;">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 # Different combinations of methods and column types work well
@@ -577,7 +572,6 @@
       <td headers="group" class="gt_row gt_left" style="background-color: #DF536B; color: #FFFFFF;">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -618,7 +612,6 @@
           <tr><td headers="month" class="gt_row gt_center">dec</td>
       <td headers="min_sza" class="gt_row gt_right">71.8</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -715,7 +708,6 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -813,7 +805,6 @@
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -909,7 +900,6 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -1007,6 +997,101 @@
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
         
+      </table>
+
+---
+
+    Code
+      cat(render_as_html(gt_tbl))
+    Output
+      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+        <thead>
+          <tr class="gt_col_headings">
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="num">num</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="char">char</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="fctr">fctr</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="date">date</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="time">time</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="datetime">datetime</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="currency">currency</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="row">row</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="group">group</th>
+          </tr>
+        </thead>
+        <tbody class="gt_table_body">
+          <tr><td headers="num" class="gt_row gt_right">1.111e-01</td>
+      <td headers="char" class="gt_row gt_left">apricot</td>
+      <td headers="fctr" class="gt_row gt_center">one</td>
+      <td headers="date" class="gt_row gt_right">2015-01-15</td>
+      <td headers="time" class="gt_row gt_right">13:35</td>
+      <td headers="datetime" class="gt_row gt_right">2018-01-01 02:22</td>
+      <td headers="currency" class="gt_row gt_right">49.950</td>
+      <td headers="row" class="gt_row gt_left">row_1</td>
+      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
+          <tr><td headers="num" class="gt_row gt_right">2.222e+00</td>
+      <td headers="char" class="gt_row gt_left">banana</td>
+      <td headers="fctr" class="gt_row gt_center">two</td>
+      <td headers="date" class="gt_row gt_right">2015-02-15</td>
+      <td headers="time" class="gt_row gt_right">14:40</td>
+      <td headers="datetime" class="gt_row gt_right">2018-02-02 14:33</td>
+      <td headers="currency" class="gt_row gt_right">17.950</td>
+      <td headers="row" class="gt_row gt_left">row_2</td>
+      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
+          <tr><td headers="num" class="gt_row gt_right">3.333e+01</td>
+      <td headers="char" class="gt_row gt_left">coconut</td>
+      <td headers="fctr" class="gt_row gt_center">three</td>
+      <td headers="date" class="gt_row gt_right">2015-03-15</td>
+      <td headers="time" class="gt_row gt_right">15:45</td>
+      <td headers="datetime" class="gt_row gt_right">2018-03-03 03:44</td>
+      <td headers="currency" class="gt_row gt_right">1.390</td>
+      <td headers="row" class="gt_row gt_left">row_3</td>
+      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
+          <tr><td headers="num" class="gt_row gt_right">4.444e+02</td>
+      <td headers="char" class="gt_row gt_left">durian</td>
+      <td headers="fctr" class="gt_row gt_center">four</td>
+      <td headers="date" class="gt_row gt_right">2015-04-15</td>
+      <td headers="time" class="gt_row gt_right">16:50</td>
+      <td headers="datetime" class="gt_row gt_right">2018-04-04 15:55</td>
+      <td headers="currency" class="gt_row gt_right">65100.000</td>
+      <td headers="row" class="gt_row gt_left">row_4</td>
+      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
+          <tr><td headers="num" class="gt_row gt_right">5.550e+03</td>
+      <td headers="char" class="gt_row gt_left">NA</td>
+      <td headers="fctr" class="gt_row gt_center">five</td>
+      <td headers="date" class="gt_row gt_right">2015-05-15</td>
+      <td headers="time" class="gt_row gt_right">17:55</td>
+      <td headers="datetime" class="gt_row gt_right">2018-05-05 04:00</td>
+      <td headers="currency" class="gt_row gt_right">1325.810</td>
+      <td headers="row" class="gt_row gt_left">row_5</td>
+      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
+          <tr><td headers="num" class="gt_row gt_right">NA</td>
+      <td headers="char" class="gt_row gt_left">fig</td>
+      <td headers="fctr" class="gt_row gt_center">six</td>
+      <td headers="date" class="gt_row gt_right">2015-06-15</td>
+      <td headers="time" class="gt_row gt_right">NA</td>
+      <td headers="datetime" class="gt_row gt_right">2018-06-06 16:11</td>
+      <td headers="currency" class="gt_row gt_right">13.255</td>
+      <td headers="row" class="gt_row gt_left">row_6</td>
+      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
+          <tr><td headers="num" class="gt_row gt_right">7.770e+05</td>
+      <td headers="char" class="gt_row gt_left">grapefruit</td>
+      <td headers="fctr" class="gt_row gt_center">seven</td>
+      <td headers="date" class="gt_row gt_right">NA</td>
+      <td headers="time" class="gt_row gt_right">19:10</td>
+      <td headers="datetime" class="gt_row gt_right">2018-07-07 05:22</td>
+      <td headers="currency" class="gt_row gt_right">NA</td>
+      <td headers="row" class="gt_row gt_left">row_7</td>
+      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
+          <tr><td headers="num" class="gt_row gt_right">8.880e+06</td>
+      <td headers="char" class="gt_row gt_left">honeydew</td>
+      <td headers="fctr" class="gt_row gt_center">eight</td>
+      <td headers="date" class="gt_row gt_right">2015-08-15</td>
+      <td headers="time" class="gt_row gt_right">20:20</td>
+      <td headers="datetime" class="gt_row gt_right">NA</td>
+      <td headers="currency" class="gt_row gt_right">0.440</td>
+      <td headers="row" class="gt_row gt_left">row_8</td>
+      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
+        </tbody>
         
       </table>
 
@@ -1104,7 +1189,6 @@
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1200,104 +1284,6 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        
-        
-      </table>
-
----
-
-    Code
-      cat(render_as_html(gt_tbl))
-    Output
-      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-        <thead>
-          <tr class="gt_col_headings">
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="num">num</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="char">char</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="fctr">fctr</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="date">date</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="time">time</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="datetime">datetime</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="currency">currency</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="row">row</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="group">group</th>
-          </tr>
-        </thead>
-        <tbody class="gt_table_body">
-          <tr><td headers="num" class="gt_row gt_right">1.111e-01</td>
-      <td headers="char" class="gt_row gt_left">apricot</td>
-      <td headers="fctr" class="gt_row gt_center">one</td>
-      <td headers="date" class="gt_row gt_right">2015-01-15</td>
-      <td headers="time" class="gt_row gt_right">13:35</td>
-      <td headers="datetime" class="gt_row gt_right">2018-01-01 02:22</td>
-      <td headers="currency" class="gt_row gt_right">49.950</td>
-      <td headers="row" class="gt_row gt_left">row_1</td>
-      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
-          <tr><td headers="num" class="gt_row gt_right">2.222e+00</td>
-      <td headers="char" class="gt_row gt_left">banana</td>
-      <td headers="fctr" class="gt_row gt_center">two</td>
-      <td headers="date" class="gt_row gt_right">2015-02-15</td>
-      <td headers="time" class="gt_row gt_right">14:40</td>
-      <td headers="datetime" class="gt_row gt_right">2018-02-02 14:33</td>
-      <td headers="currency" class="gt_row gt_right">17.950</td>
-      <td headers="row" class="gt_row gt_left">row_2</td>
-      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
-          <tr><td headers="num" class="gt_row gt_right">3.333e+01</td>
-      <td headers="char" class="gt_row gt_left">coconut</td>
-      <td headers="fctr" class="gt_row gt_center">three</td>
-      <td headers="date" class="gt_row gt_right">2015-03-15</td>
-      <td headers="time" class="gt_row gt_right">15:45</td>
-      <td headers="datetime" class="gt_row gt_right">2018-03-03 03:44</td>
-      <td headers="currency" class="gt_row gt_right">1.390</td>
-      <td headers="row" class="gt_row gt_left">row_3</td>
-      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
-          <tr><td headers="num" class="gt_row gt_right">4.444e+02</td>
-      <td headers="char" class="gt_row gt_left">durian</td>
-      <td headers="fctr" class="gt_row gt_center">four</td>
-      <td headers="date" class="gt_row gt_right">2015-04-15</td>
-      <td headers="time" class="gt_row gt_right">16:50</td>
-      <td headers="datetime" class="gt_row gt_right">2018-04-04 15:55</td>
-      <td headers="currency" class="gt_row gt_right">65100.000</td>
-      <td headers="row" class="gt_row gt_left">row_4</td>
-      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
-          <tr><td headers="num" class="gt_row gt_right">5.550e+03</td>
-      <td headers="char" class="gt_row gt_left">NA</td>
-      <td headers="fctr" class="gt_row gt_center">five</td>
-      <td headers="date" class="gt_row gt_right">2015-05-15</td>
-      <td headers="time" class="gt_row gt_right">17:55</td>
-      <td headers="datetime" class="gt_row gt_right">2018-05-05 04:00</td>
-      <td headers="currency" class="gt_row gt_right">1325.810</td>
-      <td headers="row" class="gt_row gt_left">row_5</td>
-      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
-          <tr><td headers="num" class="gt_row gt_right">NA</td>
-      <td headers="char" class="gt_row gt_left">fig</td>
-      <td headers="fctr" class="gt_row gt_center">six</td>
-      <td headers="date" class="gt_row gt_right">2015-06-15</td>
-      <td headers="time" class="gt_row gt_right">NA</td>
-      <td headers="datetime" class="gt_row gt_right">2018-06-06 16:11</td>
-      <td headers="currency" class="gt_row gt_right">13.255</td>
-      <td headers="row" class="gt_row gt_left">row_6</td>
-      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
-          <tr><td headers="num" class="gt_row gt_right">7.770e+05</td>
-      <td headers="char" class="gt_row gt_left">grapefruit</td>
-      <td headers="fctr" class="gt_row gt_center">seven</td>
-      <td headers="date" class="gt_row gt_right">NA</td>
-      <td headers="time" class="gt_row gt_right">19:10</td>
-      <td headers="datetime" class="gt_row gt_right">2018-07-07 05:22</td>
-      <td headers="currency" class="gt_row gt_right">NA</td>
-      <td headers="row" class="gt_row gt_left">row_7</td>
-      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
-          <tr><td headers="num" class="gt_row gt_right">8.880e+06</td>
-      <td headers="char" class="gt_row gt_left">honeydew</td>
-      <td headers="fctr" class="gt_row gt_center">eight</td>
-      <td headers="date" class="gt_row gt_right">2015-08-15</td>
-      <td headers="time" class="gt_row gt_right">20:20</td>
-      <td headers="datetime" class="gt_row gt_right">NA</td>
-      <td headers="currency" class="gt_row gt_right">0.440</td>
-      <td headers="row" class="gt_row gt_left">row_8</td>
-      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
-        </tbody>
-        
         
       </table>
 
@@ -1395,6 +1381,101 @@
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
         
+      </table>
+
+---
+
+    Code
+      cat(render_as_html(gt_tbl))
+    Output
+      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+        <thead>
+          <tr class="gt_col_headings">
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="num">num</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="char">char</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="fctr">fctr</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="date">date</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="time">time</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="datetime">datetime</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="currency">currency</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="row">row</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="group">group</th>
+          </tr>
+        </thead>
+        <tbody class="gt_table_body">
+          <tr><td headers="num" class="gt_row gt_right">1.111e-01</td>
+      <td headers="char" class="gt_row gt_left">apricot</td>
+      <td headers="fctr" class="gt_row gt_center">one</td>
+      <td headers="date" class="gt_row gt_right">2015-01-15</td>
+      <td headers="time" class="gt_row gt_right">13:35</td>
+      <td headers="datetime" class="gt_row gt_right">2018-01-01 02:22</td>
+      <td headers="currency" class="gt_row gt_right">49.950</td>
+      <td headers="row" class="gt_row gt_left">row_1</td>
+      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
+          <tr><td headers="num" class="gt_row gt_right">2.222e+00</td>
+      <td headers="char" class="gt_row gt_left">banana</td>
+      <td headers="fctr" class="gt_row gt_center">two</td>
+      <td headers="date" class="gt_row gt_right">2015-02-15</td>
+      <td headers="time" class="gt_row gt_right">14:40</td>
+      <td headers="datetime" class="gt_row gt_right">2018-02-02 14:33</td>
+      <td headers="currency" class="gt_row gt_right">17.950</td>
+      <td headers="row" class="gt_row gt_left">row_2</td>
+      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
+          <tr><td headers="num" class="gt_row gt_right">3.333e+01</td>
+      <td headers="char" class="gt_row gt_left">coconut</td>
+      <td headers="fctr" class="gt_row gt_center">three</td>
+      <td headers="date" class="gt_row gt_right">2015-03-15</td>
+      <td headers="time" class="gt_row gt_right">15:45</td>
+      <td headers="datetime" class="gt_row gt_right">2018-03-03 03:44</td>
+      <td headers="currency" class="gt_row gt_right">1.390</td>
+      <td headers="row" class="gt_row gt_left">row_3</td>
+      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
+          <tr><td headers="num" class="gt_row gt_right">4.444e+02</td>
+      <td headers="char" class="gt_row gt_left">durian</td>
+      <td headers="fctr" class="gt_row gt_center">four</td>
+      <td headers="date" class="gt_row gt_right">2015-04-15</td>
+      <td headers="time" class="gt_row gt_right">16:50</td>
+      <td headers="datetime" class="gt_row gt_right">2018-04-04 15:55</td>
+      <td headers="currency" class="gt_row gt_right">65100.000</td>
+      <td headers="row" class="gt_row gt_left">row_4</td>
+      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
+          <tr><td headers="num" class="gt_row gt_right">5.550e+03</td>
+      <td headers="char" class="gt_row gt_left">NA</td>
+      <td headers="fctr" class="gt_row gt_center">five</td>
+      <td headers="date" class="gt_row gt_right">2015-05-15</td>
+      <td headers="time" class="gt_row gt_right">17:55</td>
+      <td headers="datetime" class="gt_row gt_right">2018-05-05 04:00</td>
+      <td headers="currency" class="gt_row gt_right">1325.810</td>
+      <td headers="row" class="gt_row gt_left">row_5</td>
+      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
+          <tr><td headers="num" class="gt_row gt_right">NA</td>
+      <td headers="char" class="gt_row gt_left">fig</td>
+      <td headers="fctr" class="gt_row gt_center">six</td>
+      <td headers="date" class="gt_row gt_right">2015-06-15</td>
+      <td headers="time" class="gt_row gt_right">NA</td>
+      <td headers="datetime" class="gt_row gt_right">2018-06-06 16:11</td>
+      <td headers="currency" class="gt_row gt_right">13.255</td>
+      <td headers="row" class="gt_row gt_left">row_6</td>
+      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
+          <tr><td headers="num" class="gt_row gt_right">7.770e+05</td>
+      <td headers="char" class="gt_row gt_left">grapefruit</td>
+      <td headers="fctr" class="gt_row gt_center">seven</td>
+      <td headers="date" class="gt_row gt_right">NA</td>
+      <td headers="time" class="gt_row gt_right">19:10</td>
+      <td headers="datetime" class="gt_row gt_right">2018-07-07 05:22</td>
+      <td headers="currency" class="gt_row gt_right">NA</td>
+      <td headers="row" class="gt_row gt_left">row_7</td>
+      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
+          <tr><td headers="num" class="gt_row gt_right">8.880e+06</td>
+      <td headers="char" class="gt_row gt_left">honeydew</td>
+      <td headers="fctr" class="gt_row gt_center">eight</td>
+      <td headers="date" class="gt_row gt_right">2015-08-15</td>
+      <td headers="time" class="gt_row gt_right">20:20</td>
+      <td headers="datetime" class="gt_row gt_right">NA</td>
+      <td headers="currency" class="gt_row gt_right">0.440</td>
+      <td headers="row" class="gt_row gt_left">row_8</td>
+      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
+        </tbody>
         
       </table>
 
@@ -1492,7 +1573,6 @@
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1588,104 +1668,6 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        
-        
-      </table>
-
----
-
-    Code
-      cat(render_as_html(gt_tbl))
-    Output
-      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-        <thead>
-          <tr class="gt_col_headings">
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="num">num</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="char">char</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="fctr">fctr</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="date">date</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="time">time</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="datetime">datetime</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="currency">currency</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="row">row</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="group">group</th>
-          </tr>
-        </thead>
-        <tbody class="gt_table_body">
-          <tr><td headers="num" class="gt_row gt_right">1.111e-01</td>
-      <td headers="char" class="gt_row gt_left">apricot</td>
-      <td headers="fctr" class="gt_row gt_center">one</td>
-      <td headers="date" class="gt_row gt_right">2015-01-15</td>
-      <td headers="time" class="gt_row gt_right">13:35</td>
-      <td headers="datetime" class="gt_row gt_right">2018-01-01 02:22</td>
-      <td headers="currency" class="gt_row gt_right">49.950</td>
-      <td headers="row" class="gt_row gt_left">row_1</td>
-      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
-          <tr><td headers="num" class="gt_row gt_right">2.222e+00</td>
-      <td headers="char" class="gt_row gt_left">banana</td>
-      <td headers="fctr" class="gt_row gt_center">two</td>
-      <td headers="date" class="gt_row gt_right">2015-02-15</td>
-      <td headers="time" class="gt_row gt_right">14:40</td>
-      <td headers="datetime" class="gt_row gt_right">2018-02-02 14:33</td>
-      <td headers="currency" class="gt_row gt_right">17.950</td>
-      <td headers="row" class="gt_row gt_left">row_2</td>
-      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
-          <tr><td headers="num" class="gt_row gt_right">3.333e+01</td>
-      <td headers="char" class="gt_row gt_left">coconut</td>
-      <td headers="fctr" class="gt_row gt_center">three</td>
-      <td headers="date" class="gt_row gt_right">2015-03-15</td>
-      <td headers="time" class="gt_row gt_right">15:45</td>
-      <td headers="datetime" class="gt_row gt_right">2018-03-03 03:44</td>
-      <td headers="currency" class="gt_row gt_right">1.390</td>
-      <td headers="row" class="gt_row gt_left">row_3</td>
-      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
-          <tr><td headers="num" class="gt_row gt_right">4.444e+02</td>
-      <td headers="char" class="gt_row gt_left">durian</td>
-      <td headers="fctr" class="gt_row gt_center">four</td>
-      <td headers="date" class="gt_row gt_right">2015-04-15</td>
-      <td headers="time" class="gt_row gt_right">16:50</td>
-      <td headers="datetime" class="gt_row gt_right">2018-04-04 15:55</td>
-      <td headers="currency" class="gt_row gt_right">65100.000</td>
-      <td headers="row" class="gt_row gt_left">row_4</td>
-      <td headers="group" class="gt_row gt_left">grp_a</td></tr>
-          <tr><td headers="num" class="gt_row gt_right">5.550e+03</td>
-      <td headers="char" class="gt_row gt_left">NA</td>
-      <td headers="fctr" class="gt_row gt_center">five</td>
-      <td headers="date" class="gt_row gt_right">2015-05-15</td>
-      <td headers="time" class="gt_row gt_right">17:55</td>
-      <td headers="datetime" class="gt_row gt_right">2018-05-05 04:00</td>
-      <td headers="currency" class="gt_row gt_right">1325.810</td>
-      <td headers="row" class="gt_row gt_left">row_5</td>
-      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
-          <tr><td headers="num" class="gt_row gt_right">NA</td>
-      <td headers="char" class="gt_row gt_left">fig</td>
-      <td headers="fctr" class="gt_row gt_center">six</td>
-      <td headers="date" class="gt_row gt_right">2015-06-15</td>
-      <td headers="time" class="gt_row gt_right">NA</td>
-      <td headers="datetime" class="gt_row gt_right">2018-06-06 16:11</td>
-      <td headers="currency" class="gt_row gt_right">13.255</td>
-      <td headers="row" class="gt_row gt_left">row_6</td>
-      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
-          <tr><td headers="num" class="gt_row gt_right">7.770e+05</td>
-      <td headers="char" class="gt_row gt_left">grapefruit</td>
-      <td headers="fctr" class="gt_row gt_center">seven</td>
-      <td headers="date" class="gt_row gt_right">NA</td>
-      <td headers="time" class="gt_row gt_right">19:10</td>
-      <td headers="datetime" class="gt_row gt_right">2018-07-07 05:22</td>
-      <td headers="currency" class="gt_row gt_right">NA</td>
-      <td headers="row" class="gt_row gt_left">row_7</td>
-      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
-          <tr><td headers="num" class="gt_row gt_right">8.880e+06</td>
-      <td headers="char" class="gt_row gt_left">honeydew</td>
-      <td headers="fctr" class="gt_row gt_center">eight</td>
-      <td headers="date" class="gt_row gt_right">2015-08-15</td>
-      <td headers="time" class="gt_row gt_right">20:20</td>
-      <td headers="datetime" class="gt_row gt_right">NA</td>
-      <td headers="currency" class="gt_row gt_right">0.440</td>
-      <td headers="row" class="gt_row gt_left">row_8</td>
-      <td headers="group" class="gt_row gt_left">grp_b</td></tr>
-        </tbody>
-        
         
       </table>
 
@@ -1783,7 +1765,6 @@
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1879,7 +1860,6 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -1977,7 +1957,6 @@
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -2073,7 +2052,6 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -2171,7 +2149,6 @@
       <td headers="group" class="gt_row gt_left" style="background-color: #DF536B; color: #FFFFFF;">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -2208,7 +2185,6 @@
           <tr><td headers="a" class="gt_row gt_right" style="background-color: #FDE725; color: #000000;">20</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -2245,7 +2221,6 @@
           <tr><td headers="a" class="gt_row gt_right" style="background-color: #FDE725; color: #000000;">20</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -2281,7 +2256,6 @@
           <tr><td headers="a" class="gt_row gt_right" style="background-color: #FDE725; color: #000000;">19</td></tr>
           <tr><td headers="a" class="gt_row gt_right" style="background-color: #FDE725; color: #000000;">20</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -2318,7 +2292,6 @@
           <tr><td headers="a" class="gt_row gt_right" style="background-color: #FDE725; color: #000000;">19</td></tr>
           <tr><td headers="a" class="gt_row gt_right" style="background-color: #FDE725; color: #000000;">20</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -2530,7 +2503,6 @@
       <td headers="stub_1_12 1200" class="gt_row gt_right" style="background-color: #504B57; color: #FFFFFF;">41.8</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -2740,7 +2712,6 @@
       <td headers="stub_1_12 1130" class="gt_row gt_right" style="background-color: #FDA11C; color: #000000;">42.4</td>
       <td headers="stub_1_12 1200" class="gt_row gt_right" style="background-color: #FFA500; color: #000000;">41.8</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -2952,7 +2923,6 @@
       <td headers="stub_1_12 1200" class="gt_row gt_right" style="background-color: #FFA500; color: #000000;">41.8</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -3162,7 +3132,6 @@
       <td headers="stub_1_12 1130" class="gt_row gt_right" style="background-color: #FFA500; color: #000000;">42.4</td>
       <td headers="stub_1_12 1200" class="gt_row gt_right" style="background-color: #FFA500; color: #000000;">41.8</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -3374,7 +3343,6 @@
       <td headers="stub_1_12 1200" class="gt_row gt_right" style="background-color: #FFA500; color: #000000;">41.8</td></tr>
         </tbody>
         
-        
       </table>
 
 # Columns can indirectly apply coloring to other columns
@@ -3400,18 +3368,17 @@
         </thead>
         <tbody class="gt_table_body">
           <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">Mongolia</th>
-      <td headers="stub_1_1 2013" class="gt_row gt_right">2845153</td>
-      <td headers="stub_1_1 2014" class="gt_row gt_right">2902823</td>
-      <td headers="stub_1_1 2015" class="gt_row gt_right">2964749</td>
-      <td headers="stub_1_1 2016" class="gt_row gt_right">3029555</td>
-      <td headers="stub_1_1 2017" class="gt_row gt_right">3096030</td>
-      <td headers="stub_1_1 2018" class="gt_row gt_right">3163991</td>
-      <td headers="stub_1_1 2019" class="gt_row gt_right">3232430</td>
-      <td headers="stub_1_1 2020" class="gt_row gt_right">3294335</td>
-      <td headers="stub_1_1 2021" class="gt_row gt_right">3347782</td>
-      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #20C515; color: #000000;">3398366</td></tr>
+      <td headers="stub_1_1 2013" class="gt_row gt_right">2899011</td>
+      <td headers="stub_1_1 2014" class="gt_row gt_right">2963113</td>
+      <td headers="stub_1_1 2015" class="gt_row gt_right">3026864</td>
+      <td headers="stub_1_1 2016" class="gt_row gt_right">3088856</td>
+      <td headers="stub_1_1 2017" class="gt_row gt_right">3148917</td>
+      <td headers="stub_1_1 2018" class="gt_row gt_right">3208189</td>
+      <td headers="stub_1_1 2019" class="gt_row gt_right">3267673</td>
+      <td headers="stub_1_1 2020" class="gt_row gt_right">3327204</td>
+      <td headers="stub_1_1 2021" class="gt_row gt_right">3383741</td>
+      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #23B018; color: #FFFFFF;">3433748</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -3438,18 +3405,17 @@
         </thead>
         <tbody class="gt_table_body">
           <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">Mongolia</th>
-      <td headers="stub_1_1 2013" class="gt_row gt_right">2845153</td>
-      <td headers="stub_1_1 2014" class="gt_row gt_right">2902823</td>
-      <td headers="stub_1_1 2015" class="gt_row gt_right">2964749</td>
-      <td headers="stub_1_1 2016" class="gt_row gt_right">3029555</td>
-      <td headers="stub_1_1 2017" class="gt_row gt_right">3096030</td>
-      <td headers="stub_1_1 2018" class="gt_row gt_right">3163991</td>
-      <td headers="stub_1_1 2019" class="gt_row gt_right">3232430</td>
-      <td headers="stub_1_1 2020" class="gt_row gt_right" style="background-color: #20C515; color: #000000;">3294335</td>
-      <td headers="stub_1_1 2021" class="gt_row gt_right" style="background-color: #20C515; color: #000000;">3347782</td>
-      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #20C515; color: #000000;">3398366</td></tr>
+      <td headers="stub_1_1 2013" class="gt_row gt_right">2899011</td>
+      <td headers="stub_1_1 2014" class="gt_row gt_right">2963113</td>
+      <td headers="stub_1_1 2015" class="gt_row gt_right">3026864</td>
+      <td headers="stub_1_1 2016" class="gt_row gt_right">3088856</td>
+      <td headers="stub_1_1 2017" class="gt_row gt_right">3148917</td>
+      <td headers="stub_1_1 2018" class="gt_row gt_right">3208189</td>
+      <td headers="stub_1_1 2019" class="gt_row gt_right">3267673</td>
+      <td headers="stub_1_1 2020" class="gt_row gt_right" style="background-color: #23B018; color: #FFFFFF;">3327204</td>
+      <td headers="stub_1_1 2021" class="gt_row gt_right" style="background-color: #23B018; color: #FFFFFF;">3383741</td>
+      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #23B018; color: #FFFFFF;">3433748</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -3476,18 +3442,17 @@
         </thead>
         <tbody class="gt_table_body">
           <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">Mongolia</th>
-      <td headers="stub_1_1 2013" class="gt_row gt_right">2845153</td>
-      <td headers="stub_1_1 2014" class="gt_row gt_right">2902823</td>
-      <td headers="stub_1_1 2015" class="gt_row gt_right">2964749</td>
-      <td headers="stub_1_1 2016" class="gt_row gt_right">3029555</td>
-      <td headers="stub_1_1 2017" class="gt_row gt_right">3096030</td>
-      <td headers="stub_1_1 2018" class="gt_row gt_right">3163991</td>
-      <td headers="stub_1_1 2019" class="gt_row gt_right">3232430</td>
-      <td headers="stub_1_1 2020" class="gt_row gt_right" style="background-color: #20C515; color: #000000;">3294335</td>
-      <td headers="stub_1_1 2021" class="gt_row gt_right" style="background-color: #24AE18; color: #FFFFFF;">3347782</td>
-      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #259719; color: #FFFFFF;">3398366</td></tr>
+      <td headers="stub_1_1 2013" class="gt_row gt_right">2899011</td>
+      <td headers="stub_1_1 2014" class="gt_row gt_right">2963113</td>
+      <td headers="stub_1_1 2015" class="gt_row gt_right">3026864</td>
+      <td headers="stub_1_1 2016" class="gt_row gt_right">3088856</td>
+      <td headers="stub_1_1 2017" class="gt_row gt_right">3148917</td>
+      <td headers="stub_1_1 2018" class="gt_row gt_right">3208189</td>
+      <td headers="stub_1_1 2019" class="gt_row gt_right">3267673</td>
+      <td headers="stub_1_1 2020" class="gt_row gt_right" style="background-color: #23B018; color: #FFFFFF;">3327204</td>
+      <td headers="stub_1_1 2021" class="gt_row gt_right" style="background-color: #259719; color: #FFFFFF;">3383741</td>
+      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #248019; color: #FFFFFF;">3433748</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -3514,18 +3479,17 @@
         </thead>
         <tbody class="gt_table_body">
           <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">Mongolia</th>
-      <td headers="stub_1_1 2013" class="gt_row gt_right">2845153</td>
-      <td headers="stub_1_1 2014" class="gt_row gt_right">2902823</td>
-      <td headers="stub_1_1 2015" class="gt_row gt_right">2964749</td>
-      <td headers="stub_1_1 2016" class="gt_row gt_right">3029555</td>
-      <td headers="stub_1_1 2017" class="gt_row gt_right">3096030</td>
-      <td headers="stub_1_1 2018" class="gt_row gt_right">3163991</td>
-      <td headers="stub_1_1 2019" class="gt_row gt_right">3232430</td>
-      <td headers="stub_1_1 2020" class="gt_row gt_right" style="background-color: #183212; color: #FFFFFF;">3294335</td>
-      <td headers="stub_1_1 2021" class="gt_row gt_right" style="background-color: #1D4515; color: #FFFFFF;">3347782</td>
-      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #205A17; color: #FFFFFF;">3398366</td></tr>
+      <td headers="stub_1_1 2013" class="gt_row gt_right">2899011</td>
+      <td headers="stub_1_1 2014" class="gt_row gt_right">2963113</td>
+      <td headers="stub_1_1 2015" class="gt_row gt_right">3026864</td>
+      <td headers="stub_1_1 2016" class="gt_row gt_right">3088856</td>
+      <td headers="stub_1_1 2017" class="gt_row gt_right">3148917</td>
+      <td headers="stub_1_1 2018" class="gt_row gt_right">3208189</td>
+      <td headers="stub_1_1 2019" class="gt_row gt_right">3267673</td>
+      <td headers="stub_1_1 2020" class="gt_row gt_right" style="background-color: #1C4415; color: #FFFFFF;">3327204</td>
+      <td headers="stub_1_1 2021" class="gt_row gt_right" style="background-color: #205917; color: #FFFFFF;">3383741</td>
+      <td headers="stub_1_1 2022" class="gt_row gt_right" style="background-color: #236F19; color: #FFFFFF;">3433748</td></tr>
         </tbody>
-        
         
       </table>
 

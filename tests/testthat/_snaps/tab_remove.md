@@ -98,7 +98,6 @@
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -194,7 +193,6 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -292,7 +290,6 @@
       <td headers="stub_1_8 group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -388,7 +385,6 @@
       <td headers="stub_1_8 currency" class="gt_row gt_right">0.440</td>
       <td headers="stub_1_8 group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -514,7 +510,6 @@
       <td headers="stub_1_8 msrp" class="gt_row gt_right">295000</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -619,7 +614,6 @@
       <td headers="stub_1_8 mpg_h" class="gt_row gt_right">16</td>
       <td headers="stub_1_8 msrp" class="gt_row gt_right">295000</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -742,7 +736,6 @@
       <td headers="stub_1_8 msrp" class="gt_row gt_right">295000</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -863,7 +856,6 @@
       <td headers="stub_1_8 mpg_h" class="gt_row gt_right">16</td>
       <td headers="stub_1_8 msrp" class="gt_row gt_right">295000</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -986,6 +978,446 @@
       <td headers="stub_1_8 msrp" class="gt_row gt_right">295000</td></tr>
         </tbody>
         
+      </table>
+
+---
+
+    Code
+      cat(render_as_html(gt_tbl))
+    Output
+      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+        <thead>
+          <tr class="gt_col_headings gt_spanner_row">
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="a::stub"></th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="year">year</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="bdy_style">bdy_style</th>
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="HP">
+              <div class="gt_column_spanner">HP</div>
+            </th>
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Torque">
+              <div class="gt_column_spanner">Torque</div>
+            </th>
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="MPG">
+              <div class="gt_column_spanner">MPG</div>
+            </th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="msrp">msrp</th>
+          </tr>
+          <tr class="gt_col_headings">
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp_rpm">hp_rpm</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq">trq</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq_rpm">trq_rpm</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_c">mpg_c</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_h">mpg_h</th>
+          </tr>
+        </thead>
+        <tbody class="gt_table_body">
+          <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">GT</th>
+      <td headers="stub_1_1 year" class="gt_row gt_right">2017</td>
+      <td headers="stub_1_1 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_1 hp" class="gt_row gt_right">647</td>
+      <td headers="stub_1_1 hp_rpm" class="gt_row gt_right">6250</td>
+      <td headers="stub_1_1 trq" class="gt_row gt_right">550</td>
+      <td headers="stub_1_1 trq_rpm" class="gt_row gt_right">5900</td>
+      <td headers="stub_1_1 mpg_c" class="gt_row gt_right">11</td>
+      <td headers="stub_1_1 mpg_h" class="gt_row gt_right">18</td>
+      <td headers="stub_1_1 msrp" class="gt_row gt_right">447000</td></tr>
+          <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub">458 Speciale</th>
+      <td headers="stub_1_2 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_2 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_2 hp" class="gt_row gt_right">597</td>
+      <td headers="stub_1_2 hp_rpm" class="gt_row gt_right">9000</td>
+      <td headers="stub_1_2 trq" class="gt_row gt_right">398</td>
+      <td headers="stub_1_2 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_2 mpg_c" class="gt_row gt_right">13</td>
+      <td headers="stub_1_2 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_2 msrp" class="gt_row gt_right">291744</td></tr>
+          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub">458 Spider</th>
+      <td headers="stub_1_3 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_3 bdy_style" class="gt_row gt_left">convertible</td>
+      <td headers="stub_1_3 hp" class="gt_row gt_right">562</td>
+      <td headers="stub_1_3 hp_rpm" class="gt_row gt_right">9000</td>
+      <td headers="stub_1_3 trq" class="gt_row gt_right">398</td>
+      <td headers="stub_1_3 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_3 mpg_c" class="gt_row gt_right">13</td>
+      <td headers="stub_1_3 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_3 msrp" class="gt_row gt_right">263553</td></tr>
+          <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub">458 Italia</th>
+      <td headers="stub_1_4 year" class="gt_row gt_right">2014</td>
+      <td headers="stub_1_4 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_4 hp" class="gt_row gt_right">562</td>
+      <td headers="stub_1_4 hp_rpm" class="gt_row gt_right">9000</td>
+      <td headers="stub_1_4 trq" class="gt_row gt_right">398</td>
+      <td headers="stub_1_4 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_4 mpg_c" class="gt_row gt_right">13</td>
+      <td headers="stub_1_4 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_4 msrp" class="gt_row gt_right">233509</td></tr>
+          <tr><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub">488 GTB</th>
+      <td headers="stub_1_5 year" class="gt_row gt_right">2016</td>
+      <td headers="stub_1_5 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_5 hp" class="gt_row gt_right">661</td>
+      <td headers="stub_1_5 hp_rpm" class="gt_row gt_right">8000</td>
+      <td headers="stub_1_5 trq" class="gt_row gt_right">561</td>
+      <td headers="stub_1_5 trq_rpm" class="gt_row gt_right">3000</td>
+      <td headers="stub_1_5 mpg_c" class="gt_row gt_right">15</td>
+      <td headers="stub_1_5 mpg_h" class="gt_row gt_right">22</td>
+      <td headers="stub_1_5 msrp" class="gt_row gt_right">245400</td></tr>
+          <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub">California</th>
+      <td headers="stub_1_6 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_6 bdy_style" class="gt_row gt_left">convertible</td>
+      <td headers="stub_1_6 hp" class="gt_row gt_right">553</td>
+      <td headers="stub_1_6 hp_rpm" class="gt_row gt_right">7500</td>
+      <td headers="stub_1_6 trq" class="gt_row gt_right">557</td>
+      <td headers="stub_1_6 trq_rpm" class="gt_row gt_right">4750</td>
+      <td headers="stub_1_6 mpg_c" class="gt_row gt_right">16</td>
+      <td headers="stub_1_6 mpg_h" class="gt_row gt_right">23</td>
+      <td headers="stub_1_6 msrp" class="gt_row gt_right">198973</td></tr>
+          <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub">GTC4Lusso</th>
+      <td headers="stub_1_7 year" class="gt_row gt_right">2017</td>
+      <td headers="stub_1_7 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_7 hp" class="gt_row gt_right">680</td>
+      <td headers="stub_1_7 hp_rpm" class="gt_row gt_right">8250</td>
+      <td headers="stub_1_7 trq" class="gt_row gt_right">514</td>
+      <td headers="stub_1_7 trq_rpm" class="gt_row gt_right">5750</td>
+      <td headers="stub_1_7 mpg_c" class="gt_row gt_right">12</td>
+      <td headers="stub_1_7 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_7 msrp" class="gt_row gt_right">298000</td></tr>
+          <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub">FF</th>
+      <td headers="stub_1_8 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_8 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_8 hp" class="gt_row gt_right">652</td>
+      <td headers="stub_1_8 hp_rpm" class="gt_row gt_right">8000</td>
+      <td headers="stub_1_8 trq" class="gt_row gt_right">504</td>
+      <td headers="stub_1_8 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_8 mpg_c" class="gt_row gt_right">11</td>
+      <td headers="stub_1_8 mpg_h" class="gt_row gt_right">16</td>
+      <td headers="stub_1_8 msrp" class="gt_row gt_right">295000</td></tr>
+        </tbody>
+        
+      </table>
+
+---
+
+    Code
+      cat(render_as_html(gt_tbl))
+    Output
+      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+        <thead>
+          <tr class="gt_col_headings gt_spanner_row">
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="a::stub"></th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="year">year</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="bdy_style">bdy_style</th>
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="6" scope="colgroup" id="Performance">
+              <div class="gt_column_spanner">Performance</div>
+            </th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="msrp">msrp</th>
+          </tr>
+          <tr class="gt_col_headings">
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp_rpm">hp_rpm</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq">trq</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq_rpm">trq_rpm</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_c">mpg_c</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_h">mpg_h</th>
+          </tr>
+        </thead>
+        <tbody class="gt_table_body">
+          <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">GT</th>
+      <td headers="stub_1_1 year" class="gt_row gt_right">2017</td>
+      <td headers="stub_1_1 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_1 hp" class="gt_row gt_right">647</td>
+      <td headers="stub_1_1 hp_rpm" class="gt_row gt_right">6250</td>
+      <td headers="stub_1_1 trq" class="gt_row gt_right">550</td>
+      <td headers="stub_1_1 trq_rpm" class="gt_row gt_right">5900</td>
+      <td headers="stub_1_1 mpg_c" class="gt_row gt_right">11</td>
+      <td headers="stub_1_1 mpg_h" class="gt_row gt_right">18</td>
+      <td headers="stub_1_1 msrp" class="gt_row gt_right">447000</td></tr>
+          <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub">458 Speciale</th>
+      <td headers="stub_1_2 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_2 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_2 hp" class="gt_row gt_right">597</td>
+      <td headers="stub_1_2 hp_rpm" class="gt_row gt_right">9000</td>
+      <td headers="stub_1_2 trq" class="gt_row gt_right">398</td>
+      <td headers="stub_1_2 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_2 mpg_c" class="gt_row gt_right">13</td>
+      <td headers="stub_1_2 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_2 msrp" class="gt_row gt_right">291744</td></tr>
+          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub">458 Spider</th>
+      <td headers="stub_1_3 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_3 bdy_style" class="gt_row gt_left">convertible</td>
+      <td headers="stub_1_3 hp" class="gt_row gt_right">562</td>
+      <td headers="stub_1_3 hp_rpm" class="gt_row gt_right">9000</td>
+      <td headers="stub_1_3 trq" class="gt_row gt_right">398</td>
+      <td headers="stub_1_3 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_3 mpg_c" class="gt_row gt_right">13</td>
+      <td headers="stub_1_3 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_3 msrp" class="gt_row gt_right">263553</td></tr>
+          <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub">458 Italia</th>
+      <td headers="stub_1_4 year" class="gt_row gt_right">2014</td>
+      <td headers="stub_1_4 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_4 hp" class="gt_row gt_right">562</td>
+      <td headers="stub_1_4 hp_rpm" class="gt_row gt_right">9000</td>
+      <td headers="stub_1_4 trq" class="gt_row gt_right">398</td>
+      <td headers="stub_1_4 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_4 mpg_c" class="gt_row gt_right">13</td>
+      <td headers="stub_1_4 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_4 msrp" class="gt_row gt_right">233509</td></tr>
+          <tr><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub">488 GTB</th>
+      <td headers="stub_1_5 year" class="gt_row gt_right">2016</td>
+      <td headers="stub_1_5 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_5 hp" class="gt_row gt_right">661</td>
+      <td headers="stub_1_5 hp_rpm" class="gt_row gt_right">8000</td>
+      <td headers="stub_1_5 trq" class="gt_row gt_right">561</td>
+      <td headers="stub_1_5 trq_rpm" class="gt_row gt_right">3000</td>
+      <td headers="stub_1_5 mpg_c" class="gt_row gt_right">15</td>
+      <td headers="stub_1_5 mpg_h" class="gt_row gt_right">22</td>
+      <td headers="stub_1_5 msrp" class="gt_row gt_right">245400</td></tr>
+          <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub">California</th>
+      <td headers="stub_1_6 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_6 bdy_style" class="gt_row gt_left">convertible</td>
+      <td headers="stub_1_6 hp" class="gt_row gt_right">553</td>
+      <td headers="stub_1_6 hp_rpm" class="gt_row gt_right">7500</td>
+      <td headers="stub_1_6 trq" class="gt_row gt_right">557</td>
+      <td headers="stub_1_6 trq_rpm" class="gt_row gt_right">4750</td>
+      <td headers="stub_1_6 mpg_c" class="gt_row gt_right">16</td>
+      <td headers="stub_1_6 mpg_h" class="gt_row gt_right">23</td>
+      <td headers="stub_1_6 msrp" class="gt_row gt_right">198973</td></tr>
+          <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub">GTC4Lusso</th>
+      <td headers="stub_1_7 year" class="gt_row gt_right">2017</td>
+      <td headers="stub_1_7 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_7 hp" class="gt_row gt_right">680</td>
+      <td headers="stub_1_7 hp_rpm" class="gt_row gt_right">8250</td>
+      <td headers="stub_1_7 trq" class="gt_row gt_right">514</td>
+      <td headers="stub_1_7 trq_rpm" class="gt_row gt_right">5750</td>
+      <td headers="stub_1_7 mpg_c" class="gt_row gt_right">12</td>
+      <td headers="stub_1_7 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_7 msrp" class="gt_row gt_right">298000</td></tr>
+          <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub">FF</th>
+      <td headers="stub_1_8 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_8 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_8 hp" class="gt_row gt_right">652</td>
+      <td headers="stub_1_8 hp_rpm" class="gt_row gt_right">8000</td>
+      <td headers="stub_1_8 trq" class="gt_row gt_right">504</td>
+      <td headers="stub_1_8 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_8 mpg_c" class="gt_row gt_right">11</td>
+      <td headers="stub_1_8 mpg_h" class="gt_row gt_right">16</td>
+      <td headers="stub_1_8 msrp" class="gt_row gt_right">295000</td></tr>
+        </tbody>
+        
+      </table>
+
+---
+
+    Code
+      cat(render_as_html(gt_tbl))
+    Output
+      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+        <thead>
+          <tr class="gt_col_headings">
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="a::stub"></th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">year</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="bdy_style">bdy_style</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp_rpm">hp_rpm</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq">trq</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq_rpm">trq_rpm</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_c">mpg_c</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_h">mpg_h</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="msrp">msrp</th>
+          </tr>
+        </thead>
+        <tbody class="gt_table_body">
+          <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">GT</th>
+      <td headers="stub_1_1 year" class="gt_row gt_right">2017</td>
+      <td headers="stub_1_1 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_1 hp" class="gt_row gt_right">647</td>
+      <td headers="stub_1_1 hp_rpm" class="gt_row gt_right">6250</td>
+      <td headers="stub_1_1 trq" class="gt_row gt_right">550</td>
+      <td headers="stub_1_1 trq_rpm" class="gt_row gt_right">5900</td>
+      <td headers="stub_1_1 mpg_c" class="gt_row gt_right">11</td>
+      <td headers="stub_1_1 mpg_h" class="gt_row gt_right">18</td>
+      <td headers="stub_1_1 msrp" class="gt_row gt_right">447000</td></tr>
+          <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub">458 Speciale</th>
+      <td headers="stub_1_2 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_2 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_2 hp" class="gt_row gt_right">597</td>
+      <td headers="stub_1_2 hp_rpm" class="gt_row gt_right">9000</td>
+      <td headers="stub_1_2 trq" class="gt_row gt_right">398</td>
+      <td headers="stub_1_2 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_2 mpg_c" class="gt_row gt_right">13</td>
+      <td headers="stub_1_2 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_2 msrp" class="gt_row gt_right">291744</td></tr>
+          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub">458 Spider</th>
+      <td headers="stub_1_3 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_3 bdy_style" class="gt_row gt_left">convertible</td>
+      <td headers="stub_1_3 hp" class="gt_row gt_right">562</td>
+      <td headers="stub_1_3 hp_rpm" class="gt_row gt_right">9000</td>
+      <td headers="stub_1_3 trq" class="gt_row gt_right">398</td>
+      <td headers="stub_1_3 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_3 mpg_c" class="gt_row gt_right">13</td>
+      <td headers="stub_1_3 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_3 msrp" class="gt_row gt_right">263553</td></tr>
+          <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub">458 Italia</th>
+      <td headers="stub_1_4 year" class="gt_row gt_right">2014</td>
+      <td headers="stub_1_4 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_4 hp" class="gt_row gt_right">562</td>
+      <td headers="stub_1_4 hp_rpm" class="gt_row gt_right">9000</td>
+      <td headers="stub_1_4 trq" class="gt_row gt_right">398</td>
+      <td headers="stub_1_4 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_4 mpg_c" class="gt_row gt_right">13</td>
+      <td headers="stub_1_4 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_4 msrp" class="gt_row gt_right">233509</td></tr>
+          <tr><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub">488 GTB</th>
+      <td headers="stub_1_5 year" class="gt_row gt_right">2016</td>
+      <td headers="stub_1_5 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_5 hp" class="gt_row gt_right">661</td>
+      <td headers="stub_1_5 hp_rpm" class="gt_row gt_right">8000</td>
+      <td headers="stub_1_5 trq" class="gt_row gt_right">561</td>
+      <td headers="stub_1_5 trq_rpm" class="gt_row gt_right">3000</td>
+      <td headers="stub_1_5 mpg_c" class="gt_row gt_right">15</td>
+      <td headers="stub_1_5 mpg_h" class="gt_row gt_right">22</td>
+      <td headers="stub_1_5 msrp" class="gt_row gt_right">245400</td></tr>
+          <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub">California</th>
+      <td headers="stub_1_6 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_6 bdy_style" class="gt_row gt_left">convertible</td>
+      <td headers="stub_1_6 hp" class="gt_row gt_right">553</td>
+      <td headers="stub_1_6 hp_rpm" class="gt_row gt_right">7500</td>
+      <td headers="stub_1_6 trq" class="gt_row gt_right">557</td>
+      <td headers="stub_1_6 trq_rpm" class="gt_row gt_right">4750</td>
+      <td headers="stub_1_6 mpg_c" class="gt_row gt_right">16</td>
+      <td headers="stub_1_6 mpg_h" class="gt_row gt_right">23</td>
+      <td headers="stub_1_6 msrp" class="gt_row gt_right">198973</td></tr>
+          <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub">GTC4Lusso</th>
+      <td headers="stub_1_7 year" class="gt_row gt_right">2017</td>
+      <td headers="stub_1_7 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_7 hp" class="gt_row gt_right">680</td>
+      <td headers="stub_1_7 hp_rpm" class="gt_row gt_right">8250</td>
+      <td headers="stub_1_7 trq" class="gt_row gt_right">514</td>
+      <td headers="stub_1_7 trq_rpm" class="gt_row gt_right">5750</td>
+      <td headers="stub_1_7 mpg_c" class="gt_row gt_right">12</td>
+      <td headers="stub_1_7 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_7 msrp" class="gt_row gt_right">298000</td></tr>
+          <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub">FF</th>
+      <td headers="stub_1_8 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_8 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_8 hp" class="gt_row gt_right">652</td>
+      <td headers="stub_1_8 hp_rpm" class="gt_row gt_right">8000</td>
+      <td headers="stub_1_8 trq" class="gt_row gt_right">504</td>
+      <td headers="stub_1_8 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_8 mpg_c" class="gt_row gt_right">11</td>
+      <td headers="stub_1_8 mpg_h" class="gt_row gt_right">16</td>
+      <td headers="stub_1_8 msrp" class="gt_row gt_right">295000</td></tr>
+        </tbody>
+        
+      </table>
+
+---
+
+    Code
+      cat(render_as_html(gt_tbl))
+    Output
+      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+        <thead>
+          <tr class="gt_col_headings gt_spanner_row">
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="a::stub"></th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="year">year</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="bdy_style">bdy_style</th>
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="6" scope="colgroup" id="Performance">
+              <div class="gt_column_spanner">Performance</div>
+            </th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="msrp">msrp</th>
+          </tr>
+          <tr class="gt_col_headings">
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp_rpm">hp_rpm</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq">trq</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq_rpm">trq_rpm</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_c">mpg_c</th>
+            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_h">mpg_h</th>
+          </tr>
+        </thead>
+        <tbody class="gt_table_body">
+          <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">GT</th>
+      <td headers="stub_1_1 year" class="gt_row gt_right">2017</td>
+      <td headers="stub_1_1 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_1 hp" class="gt_row gt_right">647</td>
+      <td headers="stub_1_1 hp_rpm" class="gt_row gt_right">6250</td>
+      <td headers="stub_1_1 trq" class="gt_row gt_right">550</td>
+      <td headers="stub_1_1 trq_rpm" class="gt_row gt_right">5900</td>
+      <td headers="stub_1_1 mpg_c" class="gt_row gt_right">11</td>
+      <td headers="stub_1_1 mpg_h" class="gt_row gt_right">18</td>
+      <td headers="stub_1_1 msrp" class="gt_row gt_right">447000</td></tr>
+          <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub">458 Speciale</th>
+      <td headers="stub_1_2 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_2 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_2 hp" class="gt_row gt_right">597</td>
+      <td headers="stub_1_2 hp_rpm" class="gt_row gt_right">9000</td>
+      <td headers="stub_1_2 trq" class="gt_row gt_right">398</td>
+      <td headers="stub_1_2 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_2 mpg_c" class="gt_row gt_right">13</td>
+      <td headers="stub_1_2 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_2 msrp" class="gt_row gt_right">291744</td></tr>
+          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub">458 Spider</th>
+      <td headers="stub_1_3 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_3 bdy_style" class="gt_row gt_left">convertible</td>
+      <td headers="stub_1_3 hp" class="gt_row gt_right">562</td>
+      <td headers="stub_1_3 hp_rpm" class="gt_row gt_right">9000</td>
+      <td headers="stub_1_3 trq" class="gt_row gt_right">398</td>
+      <td headers="stub_1_3 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_3 mpg_c" class="gt_row gt_right">13</td>
+      <td headers="stub_1_3 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_3 msrp" class="gt_row gt_right">263553</td></tr>
+          <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub">458 Italia</th>
+      <td headers="stub_1_4 year" class="gt_row gt_right">2014</td>
+      <td headers="stub_1_4 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_4 hp" class="gt_row gt_right">562</td>
+      <td headers="stub_1_4 hp_rpm" class="gt_row gt_right">9000</td>
+      <td headers="stub_1_4 trq" class="gt_row gt_right">398</td>
+      <td headers="stub_1_4 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_4 mpg_c" class="gt_row gt_right">13</td>
+      <td headers="stub_1_4 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_4 msrp" class="gt_row gt_right">233509</td></tr>
+          <tr><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub">488 GTB</th>
+      <td headers="stub_1_5 year" class="gt_row gt_right">2016</td>
+      <td headers="stub_1_5 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_5 hp" class="gt_row gt_right">661</td>
+      <td headers="stub_1_5 hp_rpm" class="gt_row gt_right">8000</td>
+      <td headers="stub_1_5 trq" class="gt_row gt_right">561</td>
+      <td headers="stub_1_5 trq_rpm" class="gt_row gt_right">3000</td>
+      <td headers="stub_1_5 mpg_c" class="gt_row gt_right">15</td>
+      <td headers="stub_1_5 mpg_h" class="gt_row gt_right">22</td>
+      <td headers="stub_1_5 msrp" class="gt_row gt_right">245400</td></tr>
+          <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub">California</th>
+      <td headers="stub_1_6 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_6 bdy_style" class="gt_row gt_left">convertible</td>
+      <td headers="stub_1_6 hp" class="gt_row gt_right">553</td>
+      <td headers="stub_1_6 hp_rpm" class="gt_row gt_right">7500</td>
+      <td headers="stub_1_6 trq" class="gt_row gt_right">557</td>
+      <td headers="stub_1_6 trq_rpm" class="gt_row gt_right">4750</td>
+      <td headers="stub_1_6 mpg_c" class="gt_row gt_right">16</td>
+      <td headers="stub_1_6 mpg_h" class="gt_row gt_right">23</td>
+      <td headers="stub_1_6 msrp" class="gt_row gt_right">198973</td></tr>
+          <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub">GTC4Lusso</th>
+      <td headers="stub_1_7 year" class="gt_row gt_right">2017</td>
+      <td headers="stub_1_7 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_7 hp" class="gt_row gt_right">680</td>
+      <td headers="stub_1_7 hp_rpm" class="gt_row gt_right">8250</td>
+      <td headers="stub_1_7 trq" class="gt_row gt_right">514</td>
+      <td headers="stub_1_7 trq_rpm" class="gt_row gt_right">5750</td>
+      <td headers="stub_1_7 mpg_c" class="gt_row gt_right">12</td>
+      <td headers="stub_1_7 mpg_h" class="gt_row gt_right">17</td>
+      <td headers="stub_1_7 msrp" class="gt_row gt_right">298000</td></tr>
+          <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub">FF</th>
+      <td headers="stub_1_8 year" class="gt_row gt_right">2015</td>
+      <td headers="stub_1_8 bdy_style" class="gt_row gt_left">coupe</td>
+      <td headers="stub_1_8 hp" class="gt_row gt_right">652</td>
+      <td headers="stub_1_8 hp_rpm" class="gt_row gt_right">8000</td>
+      <td headers="stub_1_8 trq" class="gt_row gt_right">504</td>
+      <td headers="stub_1_8 trq_rpm" class="gt_row gt_right">6000</td>
+      <td headers="stub_1_8 mpg_c" class="gt_row gt_right">11</td>
+      <td headers="stub_1_8 mpg_h" class="gt_row gt_right">16</td>
+      <td headers="stub_1_8 msrp" class="gt_row gt_right">295000</td></tr>
+        </tbody>
         
       </table>
 
@@ -1103,118 +1535,6 @@
       <td headers="stub_1_8 msrp" class="gt_row gt_right">295000</td></tr>
         </tbody>
         
-        
-      </table>
-
----
-
-    Code
-      cat(render_as_html(gt_tbl))
-    Output
-      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-        <thead>
-          <tr class="gt_col_headings gt_spanner_row">
-            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="a::stub"></th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="year">year</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="bdy_style">bdy_style</th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="6" scope="colgroup" id="Performance">
-              <div class="gt_column_spanner">Performance</div>
-            </th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="msrp">msrp</th>
-          </tr>
-          <tr class="gt_col_headings">
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp_rpm">hp_rpm</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq">trq</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq_rpm">trq_rpm</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_c">mpg_c</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_h">mpg_h</th>
-          </tr>
-        </thead>
-        <tbody class="gt_table_body">
-          <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">GT</th>
-      <td headers="stub_1_1 year" class="gt_row gt_right">2017</td>
-      <td headers="stub_1_1 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_1 hp" class="gt_row gt_right">647</td>
-      <td headers="stub_1_1 hp_rpm" class="gt_row gt_right">6250</td>
-      <td headers="stub_1_1 trq" class="gt_row gt_right">550</td>
-      <td headers="stub_1_1 trq_rpm" class="gt_row gt_right">5900</td>
-      <td headers="stub_1_1 mpg_c" class="gt_row gt_right">11</td>
-      <td headers="stub_1_1 mpg_h" class="gt_row gt_right">18</td>
-      <td headers="stub_1_1 msrp" class="gt_row gt_right">447000</td></tr>
-          <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub">458 Speciale</th>
-      <td headers="stub_1_2 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_2 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_2 hp" class="gt_row gt_right">597</td>
-      <td headers="stub_1_2 hp_rpm" class="gt_row gt_right">9000</td>
-      <td headers="stub_1_2 trq" class="gt_row gt_right">398</td>
-      <td headers="stub_1_2 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_2 mpg_c" class="gt_row gt_right">13</td>
-      <td headers="stub_1_2 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_2 msrp" class="gt_row gt_right">291744</td></tr>
-          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub">458 Spider</th>
-      <td headers="stub_1_3 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_3 bdy_style" class="gt_row gt_left">convertible</td>
-      <td headers="stub_1_3 hp" class="gt_row gt_right">562</td>
-      <td headers="stub_1_3 hp_rpm" class="gt_row gt_right">9000</td>
-      <td headers="stub_1_3 trq" class="gt_row gt_right">398</td>
-      <td headers="stub_1_3 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_3 mpg_c" class="gt_row gt_right">13</td>
-      <td headers="stub_1_3 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_3 msrp" class="gt_row gt_right">263553</td></tr>
-          <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub">458 Italia</th>
-      <td headers="stub_1_4 year" class="gt_row gt_right">2014</td>
-      <td headers="stub_1_4 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_4 hp" class="gt_row gt_right">562</td>
-      <td headers="stub_1_4 hp_rpm" class="gt_row gt_right">9000</td>
-      <td headers="stub_1_4 trq" class="gt_row gt_right">398</td>
-      <td headers="stub_1_4 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_4 mpg_c" class="gt_row gt_right">13</td>
-      <td headers="stub_1_4 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_4 msrp" class="gt_row gt_right">233509</td></tr>
-          <tr><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub">488 GTB</th>
-      <td headers="stub_1_5 year" class="gt_row gt_right">2016</td>
-      <td headers="stub_1_5 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_5 hp" class="gt_row gt_right">661</td>
-      <td headers="stub_1_5 hp_rpm" class="gt_row gt_right">8000</td>
-      <td headers="stub_1_5 trq" class="gt_row gt_right">561</td>
-      <td headers="stub_1_5 trq_rpm" class="gt_row gt_right">3000</td>
-      <td headers="stub_1_5 mpg_c" class="gt_row gt_right">15</td>
-      <td headers="stub_1_5 mpg_h" class="gt_row gt_right">22</td>
-      <td headers="stub_1_5 msrp" class="gt_row gt_right">245400</td></tr>
-          <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub">California</th>
-      <td headers="stub_1_6 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_6 bdy_style" class="gt_row gt_left">convertible</td>
-      <td headers="stub_1_6 hp" class="gt_row gt_right">553</td>
-      <td headers="stub_1_6 hp_rpm" class="gt_row gt_right">7500</td>
-      <td headers="stub_1_6 trq" class="gt_row gt_right">557</td>
-      <td headers="stub_1_6 trq_rpm" class="gt_row gt_right">4750</td>
-      <td headers="stub_1_6 mpg_c" class="gt_row gt_right">16</td>
-      <td headers="stub_1_6 mpg_h" class="gt_row gt_right">23</td>
-      <td headers="stub_1_6 msrp" class="gt_row gt_right">198973</td></tr>
-          <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub">GTC4Lusso</th>
-      <td headers="stub_1_7 year" class="gt_row gt_right">2017</td>
-      <td headers="stub_1_7 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_7 hp" class="gt_row gt_right">680</td>
-      <td headers="stub_1_7 hp_rpm" class="gt_row gt_right">8250</td>
-      <td headers="stub_1_7 trq" class="gt_row gt_right">514</td>
-      <td headers="stub_1_7 trq_rpm" class="gt_row gt_right">5750</td>
-      <td headers="stub_1_7 mpg_c" class="gt_row gt_right">12</td>
-      <td headers="stub_1_7 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_7 msrp" class="gt_row gt_right">298000</td></tr>
-          <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub">FF</th>
-      <td headers="stub_1_8 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_8 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_8 hp" class="gt_row gt_right">652</td>
-      <td headers="stub_1_8 hp_rpm" class="gt_row gt_right">8000</td>
-      <td headers="stub_1_8 trq" class="gt_row gt_right">504</td>
-      <td headers="stub_1_8 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_8 mpg_c" class="gt_row gt_right">11</td>
-      <td headers="stub_1_8 mpg_h" class="gt_row gt_right">16</td>
-      <td headers="stub_1_8 msrp" class="gt_row gt_right">295000</td></tr>
-        </tbody>
-        
-        
       </table>
 
 ---
@@ -1320,347 +1640,12 @@
       <td headers="stub_1_8 msrp" class="gt_row gt_right">295000</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
 
     Code
-      cat(render_as_html(gt_tbl))
-    Output
-      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-        <thead>
-          <tr class="gt_col_headings gt_spanner_row">
-            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="a::stub"></th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="year">year</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="bdy_style">bdy_style</th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="6" scope="colgroup" id="Performance">
-              <div class="gt_column_spanner">Performance</div>
-            </th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="msrp">msrp</th>
-          </tr>
-          <tr class="gt_col_headings">
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp_rpm">hp_rpm</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq">trq</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq_rpm">trq_rpm</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_c">mpg_c</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_h">mpg_h</th>
-          </tr>
-        </thead>
-        <tbody class="gt_table_body">
-          <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">GT</th>
-      <td headers="stub_1_1 year" class="gt_row gt_right">2017</td>
-      <td headers="stub_1_1 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_1 hp" class="gt_row gt_right">647</td>
-      <td headers="stub_1_1 hp_rpm" class="gt_row gt_right">6250</td>
-      <td headers="stub_1_1 trq" class="gt_row gt_right">550</td>
-      <td headers="stub_1_1 trq_rpm" class="gt_row gt_right">5900</td>
-      <td headers="stub_1_1 mpg_c" class="gt_row gt_right">11</td>
-      <td headers="stub_1_1 mpg_h" class="gt_row gt_right">18</td>
-      <td headers="stub_1_1 msrp" class="gt_row gt_right">447000</td></tr>
-          <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub">458 Speciale</th>
-      <td headers="stub_1_2 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_2 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_2 hp" class="gt_row gt_right">597</td>
-      <td headers="stub_1_2 hp_rpm" class="gt_row gt_right">9000</td>
-      <td headers="stub_1_2 trq" class="gt_row gt_right">398</td>
-      <td headers="stub_1_2 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_2 mpg_c" class="gt_row gt_right">13</td>
-      <td headers="stub_1_2 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_2 msrp" class="gt_row gt_right">291744</td></tr>
-          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub">458 Spider</th>
-      <td headers="stub_1_3 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_3 bdy_style" class="gt_row gt_left">convertible</td>
-      <td headers="stub_1_3 hp" class="gt_row gt_right">562</td>
-      <td headers="stub_1_3 hp_rpm" class="gt_row gt_right">9000</td>
-      <td headers="stub_1_3 trq" class="gt_row gt_right">398</td>
-      <td headers="stub_1_3 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_3 mpg_c" class="gt_row gt_right">13</td>
-      <td headers="stub_1_3 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_3 msrp" class="gt_row gt_right">263553</td></tr>
-          <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub">458 Italia</th>
-      <td headers="stub_1_4 year" class="gt_row gt_right">2014</td>
-      <td headers="stub_1_4 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_4 hp" class="gt_row gt_right">562</td>
-      <td headers="stub_1_4 hp_rpm" class="gt_row gt_right">9000</td>
-      <td headers="stub_1_4 trq" class="gt_row gt_right">398</td>
-      <td headers="stub_1_4 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_4 mpg_c" class="gt_row gt_right">13</td>
-      <td headers="stub_1_4 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_4 msrp" class="gt_row gt_right">233509</td></tr>
-          <tr><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub">488 GTB</th>
-      <td headers="stub_1_5 year" class="gt_row gt_right">2016</td>
-      <td headers="stub_1_5 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_5 hp" class="gt_row gt_right">661</td>
-      <td headers="stub_1_5 hp_rpm" class="gt_row gt_right">8000</td>
-      <td headers="stub_1_5 trq" class="gt_row gt_right">561</td>
-      <td headers="stub_1_5 trq_rpm" class="gt_row gt_right">3000</td>
-      <td headers="stub_1_5 mpg_c" class="gt_row gt_right">15</td>
-      <td headers="stub_1_5 mpg_h" class="gt_row gt_right">22</td>
-      <td headers="stub_1_5 msrp" class="gt_row gt_right">245400</td></tr>
-          <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub">California</th>
-      <td headers="stub_1_6 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_6 bdy_style" class="gt_row gt_left">convertible</td>
-      <td headers="stub_1_6 hp" class="gt_row gt_right">553</td>
-      <td headers="stub_1_6 hp_rpm" class="gt_row gt_right">7500</td>
-      <td headers="stub_1_6 trq" class="gt_row gt_right">557</td>
-      <td headers="stub_1_6 trq_rpm" class="gt_row gt_right">4750</td>
-      <td headers="stub_1_6 mpg_c" class="gt_row gt_right">16</td>
-      <td headers="stub_1_6 mpg_h" class="gt_row gt_right">23</td>
-      <td headers="stub_1_6 msrp" class="gt_row gt_right">198973</td></tr>
-          <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub">GTC4Lusso</th>
-      <td headers="stub_1_7 year" class="gt_row gt_right">2017</td>
-      <td headers="stub_1_7 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_7 hp" class="gt_row gt_right">680</td>
-      <td headers="stub_1_7 hp_rpm" class="gt_row gt_right">8250</td>
-      <td headers="stub_1_7 trq" class="gt_row gt_right">514</td>
-      <td headers="stub_1_7 trq_rpm" class="gt_row gt_right">5750</td>
-      <td headers="stub_1_7 mpg_c" class="gt_row gt_right">12</td>
-      <td headers="stub_1_7 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_7 msrp" class="gt_row gt_right">298000</td></tr>
-          <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub">FF</th>
-      <td headers="stub_1_8 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_8 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_8 hp" class="gt_row gt_right">652</td>
-      <td headers="stub_1_8 hp_rpm" class="gt_row gt_right">8000</td>
-      <td headers="stub_1_8 trq" class="gt_row gt_right">504</td>
-      <td headers="stub_1_8 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_8 mpg_c" class="gt_row gt_right">11</td>
-      <td headers="stub_1_8 mpg_h" class="gt_row gt_right">16</td>
-      <td headers="stub_1_8 msrp" class="gt_row gt_right">295000</td></tr>
-        </tbody>
-        
-        
-      </table>
-
----
-
-    Code
-      cat(render_as_html(gt_tbl))
-    Output
-      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-        <thead>
-          <tr class="gt_col_headings gt_spanner_row">
-            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="a::stub"></th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="year">year</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="bdy_style">bdy_style</th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="HP">
-              <div class="gt_column_spanner">HP</div>
-            </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Torque">
-              <div class="gt_column_spanner">Torque</div>
-            </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="MPG">
-              <div class="gt_column_spanner">MPG</div>
-            </th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="msrp">msrp</th>
-          </tr>
-          <tr class="gt_col_headings">
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp_rpm">hp_rpm</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq">trq</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq_rpm">trq_rpm</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_c">mpg_c</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_h">mpg_h</th>
-          </tr>
-        </thead>
-        <tbody class="gt_table_body">
-          <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">GT</th>
-      <td headers="stub_1_1 year" class="gt_row gt_right">2017</td>
-      <td headers="stub_1_1 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_1 hp" class="gt_row gt_right">647</td>
-      <td headers="stub_1_1 hp_rpm" class="gt_row gt_right">6250</td>
-      <td headers="stub_1_1 trq" class="gt_row gt_right">550</td>
-      <td headers="stub_1_1 trq_rpm" class="gt_row gt_right">5900</td>
-      <td headers="stub_1_1 mpg_c" class="gt_row gt_right">11</td>
-      <td headers="stub_1_1 mpg_h" class="gt_row gt_right">18</td>
-      <td headers="stub_1_1 msrp" class="gt_row gt_right">447000</td></tr>
-          <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub">458 Speciale</th>
-      <td headers="stub_1_2 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_2 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_2 hp" class="gt_row gt_right">597</td>
-      <td headers="stub_1_2 hp_rpm" class="gt_row gt_right">9000</td>
-      <td headers="stub_1_2 trq" class="gt_row gt_right">398</td>
-      <td headers="stub_1_2 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_2 mpg_c" class="gt_row gt_right">13</td>
-      <td headers="stub_1_2 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_2 msrp" class="gt_row gt_right">291744</td></tr>
-          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub">458 Spider</th>
-      <td headers="stub_1_3 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_3 bdy_style" class="gt_row gt_left">convertible</td>
-      <td headers="stub_1_3 hp" class="gt_row gt_right">562</td>
-      <td headers="stub_1_3 hp_rpm" class="gt_row gt_right">9000</td>
-      <td headers="stub_1_3 trq" class="gt_row gt_right">398</td>
-      <td headers="stub_1_3 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_3 mpg_c" class="gt_row gt_right">13</td>
-      <td headers="stub_1_3 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_3 msrp" class="gt_row gt_right">263553</td></tr>
-          <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub">458 Italia</th>
-      <td headers="stub_1_4 year" class="gt_row gt_right">2014</td>
-      <td headers="stub_1_4 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_4 hp" class="gt_row gt_right">562</td>
-      <td headers="stub_1_4 hp_rpm" class="gt_row gt_right">9000</td>
-      <td headers="stub_1_4 trq" class="gt_row gt_right">398</td>
-      <td headers="stub_1_4 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_4 mpg_c" class="gt_row gt_right">13</td>
-      <td headers="stub_1_4 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_4 msrp" class="gt_row gt_right">233509</td></tr>
-          <tr><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub">488 GTB</th>
-      <td headers="stub_1_5 year" class="gt_row gt_right">2016</td>
-      <td headers="stub_1_5 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_5 hp" class="gt_row gt_right">661</td>
-      <td headers="stub_1_5 hp_rpm" class="gt_row gt_right">8000</td>
-      <td headers="stub_1_5 trq" class="gt_row gt_right">561</td>
-      <td headers="stub_1_5 trq_rpm" class="gt_row gt_right">3000</td>
-      <td headers="stub_1_5 mpg_c" class="gt_row gt_right">15</td>
-      <td headers="stub_1_5 mpg_h" class="gt_row gt_right">22</td>
-      <td headers="stub_1_5 msrp" class="gt_row gt_right">245400</td></tr>
-          <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub">California</th>
-      <td headers="stub_1_6 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_6 bdy_style" class="gt_row gt_left">convertible</td>
-      <td headers="stub_1_6 hp" class="gt_row gt_right">553</td>
-      <td headers="stub_1_6 hp_rpm" class="gt_row gt_right">7500</td>
-      <td headers="stub_1_6 trq" class="gt_row gt_right">557</td>
-      <td headers="stub_1_6 trq_rpm" class="gt_row gt_right">4750</td>
-      <td headers="stub_1_6 mpg_c" class="gt_row gt_right">16</td>
-      <td headers="stub_1_6 mpg_h" class="gt_row gt_right">23</td>
-      <td headers="stub_1_6 msrp" class="gt_row gt_right">198973</td></tr>
-          <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub">GTC4Lusso</th>
-      <td headers="stub_1_7 year" class="gt_row gt_right">2017</td>
-      <td headers="stub_1_7 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_7 hp" class="gt_row gt_right">680</td>
-      <td headers="stub_1_7 hp_rpm" class="gt_row gt_right">8250</td>
-      <td headers="stub_1_7 trq" class="gt_row gt_right">514</td>
-      <td headers="stub_1_7 trq_rpm" class="gt_row gt_right">5750</td>
-      <td headers="stub_1_7 mpg_c" class="gt_row gt_right">12</td>
-      <td headers="stub_1_7 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_7 msrp" class="gt_row gt_right">298000</td></tr>
-          <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub">FF</th>
-      <td headers="stub_1_8 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_8 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_8 hp" class="gt_row gt_right">652</td>
-      <td headers="stub_1_8 hp_rpm" class="gt_row gt_right">8000</td>
-      <td headers="stub_1_8 trq" class="gt_row gt_right">504</td>
-      <td headers="stub_1_8 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_8 mpg_c" class="gt_row gt_right">11</td>
-      <td headers="stub_1_8 mpg_h" class="gt_row gt_right">16</td>
-      <td headers="stub_1_8 msrp" class="gt_row gt_right">295000</td></tr>
-        </tbody>
-        
-        
-      </table>
-
----
-
-    Code
-      cat(render_as_html(gt_tbl))
-    Output
-      <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-        <thead>
-          <tr class="gt_col_headings">
-            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="a::stub"></th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">year</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="bdy_style">bdy_style</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp_rpm">hp_rpm</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq">trq</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq_rpm">trq_rpm</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_c">mpg_c</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_h">mpg_h</th>
-            <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="msrp">msrp</th>
-          </tr>
-        </thead>
-        <tbody class="gt_table_body">
-          <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">GT</th>
-      <td headers="stub_1_1 year" class="gt_row gt_right">2017</td>
-      <td headers="stub_1_1 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_1 hp" class="gt_row gt_right">647</td>
-      <td headers="stub_1_1 hp_rpm" class="gt_row gt_right">6250</td>
-      <td headers="stub_1_1 trq" class="gt_row gt_right">550</td>
-      <td headers="stub_1_1 trq_rpm" class="gt_row gt_right">5900</td>
-      <td headers="stub_1_1 mpg_c" class="gt_row gt_right">11</td>
-      <td headers="stub_1_1 mpg_h" class="gt_row gt_right">18</td>
-      <td headers="stub_1_1 msrp" class="gt_row gt_right">447000</td></tr>
-          <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub">458 Speciale</th>
-      <td headers="stub_1_2 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_2 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_2 hp" class="gt_row gt_right">597</td>
-      <td headers="stub_1_2 hp_rpm" class="gt_row gt_right">9000</td>
-      <td headers="stub_1_2 trq" class="gt_row gt_right">398</td>
-      <td headers="stub_1_2 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_2 mpg_c" class="gt_row gt_right">13</td>
-      <td headers="stub_1_2 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_2 msrp" class="gt_row gt_right">291744</td></tr>
-          <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub">458 Spider</th>
-      <td headers="stub_1_3 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_3 bdy_style" class="gt_row gt_left">convertible</td>
-      <td headers="stub_1_3 hp" class="gt_row gt_right">562</td>
-      <td headers="stub_1_3 hp_rpm" class="gt_row gt_right">9000</td>
-      <td headers="stub_1_3 trq" class="gt_row gt_right">398</td>
-      <td headers="stub_1_3 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_3 mpg_c" class="gt_row gt_right">13</td>
-      <td headers="stub_1_3 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_3 msrp" class="gt_row gt_right">263553</td></tr>
-          <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub">458 Italia</th>
-      <td headers="stub_1_4 year" class="gt_row gt_right">2014</td>
-      <td headers="stub_1_4 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_4 hp" class="gt_row gt_right">562</td>
-      <td headers="stub_1_4 hp_rpm" class="gt_row gt_right">9000</td>
-      <td headers="stub_1_4 trq" class="gt_row gt_right">398</td>
-      <td headers="stub_1_4 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_4 mpg_c" class="gt_row gt_right">13</td>
-      <td headers="stub_1_4 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_4 msrp" class="gt_row gt_right">233509</td></tr>
-          <tr><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub">488 GTB</th>
-      <td headers="stub_1_5 year" class="gt_row gt_right">2016</td>
-      <td headers="stub_1_5 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_5 hp" class="gt_row gt_right">661</td>
-      <td headers="stub_1_5 hp_rpm" class="gt_row gt_right">8000</td>
-      <td headers="stub_1_5 trq" class="gt_row gt_right">561</td>
-      <td headers="stub_1_5 trq_rpm" class="gt_row gt_right">3000</td>
-      <td headers="stub_1_5 mpg_c" class="gt_row gt_right">15</td>
-      <td headers="stub_1_5 mpg_h" class="gt_row gt_right">22</td>
-      <td headers="stub_1_5 msrp" class="gt_row gt_right">245400</td></tr>
-          <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub">California</th>
-      <td headers="stub_1_6 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_6 bdy_style" class="gt_row gt_left">convertible</td>
-      <td headers="stub_1_6 hp" class="gt_row gt_right">553</td>
-      <td headers="stub_1_6 hp_rpm" class="gt_row gt_right">7500</td>
-      <td headers="stub_1_6 trq" class="gt_row gt_right">557</td>
-      <td headers="stub_1_6 trq_rpm" class="gt_row gt_right">4750</td>
-      <td headers="stub_1_6 mpg_c" class="gt_row gt_right">16</td>
-      <td headers="stub_1_6 mpg_h" class="gt_row gt_right">23</td>
-      <td headers="stub_1_6 msrp" class="gt_row gt_right">198973</td></tr>
-          <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub">GTC4Lusso</th>
-      <td headers="stub_1_7 year" class="gt_row gt_right">2017</td>
-      <td headers="stub_1_7 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_7 hp" class="gt_row gt_right">680</td>
-      <td headers="stub_1_7 hp_rpm" class="gt_row gt_right">8250</td>
-      <td headers="stub_1_7 trq" class="gt_row gt_right">514</td>
-      <td headers="stub_1_7 trq_rpm" class="gt_row gt_right">5750</td>
-      <td headers="stub_1_7 mpg_c" class="gt_row gt_right">12</td>
-      <td headers="stub_1_7 mpg_h" class="gt_row gt_right">17</td>
-      <td headers="stub_1_7 msrp" class="gt_row gt_right">298000</td></tr>
-          <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub">FF</th>
-      <td headers="stub_1_8 year" class="gt_row gt_right">2015</td>
-      <td headers="stub_1_8 bdy_style" class="gt_row gt_left">coupe</td>
-      <td headers="stub_1_8 hp" class="gt_row gt_right">652</td>
-      <td headers="stub_1_8 hp_rpm" class="gt_row gt_right">8000</td>
-      <td headers="stub_1_8 trq" class="gt_row gt_right">504</td>
-      <td headers="stub_1_8 trq_rpm" class="gt_row gt_right">6000</td>
-      <td headers="stub_1_8 mpg_c" class="gt_row gt_right">11</td>
-      <td headers="stub_1_8 mpg_h" class="gt_row gt_right">16</td>
-      <td headers="stub_1_8 msrp" class="gt_row gt_right">295000</td></tr>
-        </tbody>
-        
-        
-      </table>
-
----
-
-    Code
-      t_sp <- exibble %>% gt() %>% tab_spanner("span1", columns = c(char, fctr))
+      t_sp <- tab_spanner(gt(exibble), "span1", columns = c(char, fctr))
       rm_spanners(t_sp, "span2")
     Condition
       Error in `rm_spanners()`:
@@ -1764,12 +1749,11 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> Footnote 1</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> Footnote 2</td>
           </tr>
         </tfoot>
@@ -1869,7 +1853,6 @@
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1965,9 +1948,8 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> Footnote 2</td>
           </tr>
         </tfoot>
@@ -2066,9 +2048,8 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> Footnote 1</td>
           </tr>
         </tfoot>
@@ -2077,19 +2058,20 @@
 ---
 
     Code
-      t_ft <- exibble %>% gt() %>% tab_footnote(footnote = "Footnote 1", locations = cells_body(
-        1, 1)) %>% tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2))
-      t_ft %>% rm_footnotes(footnotes = 0:1)
+      t_ft <- tab_footnote(tab_footnote(gt(exibble), footnote = "Footnote 1",
+      locations = cells_body(1, 1)), footnote = "Footnote 2", locations = cells_body(
+        1, 2))
+      rm_footnotes(t_ft, footnotes = 0:1)
     Condition
       Error in `rm_footnotes()`:
       ! Footnote 0 does not exist in the data.
     Code
-      t_ft %>% rm_footnotes(footnotes = 2:3)
+      rm_footnotes(t_ft, footnotes = 2:3)
     Condition
       Error in `rm_footnotes()`:
       ! Footnote 3 does not exist in the data.
     Code
-      t_ft %>% rm_footnotes(footnotes = 3)
+      rm_footnotes(t_ft, footnotes = 3)
     Condition
       Error in `rm_footnotes()`:
       ! Footnote 3 does not exist in the data.
@@ -2187,15 +2169,14 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source Note 1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source Note 2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -2292,7 +2273,6 @@
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -2388,12 +2368,11 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source Note 2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -2489,30 +2468,29 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source Note 1</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
 
     Code
-      t_sn <- exibble %>% gt() %>% tab_source_note(source_note = "Source Note 1") %>%
-        tab_source_note(source_note = "Source Note 2")
-      t_sn %>% rm_source_notes(source_notes = 0:1)
+      t_sn <- tab_source_note(tab_source_note(gt(exibble), source_note = "Source Note 1"),
+      source_note = "Source Note 2")
+      rm_source_notes(t_sn, source_notes = 0:1)
     Condition
       Error in `rm_source_notes()`:
       ! Source note 0 does not exist in the data.
     Code
-      t_sn %>% rm_source_notes(2:3)
+      rm_source_notes(t_sn, 2:3)
     Condition
       Error in `rm_source_notes()`:
       ! Source note 3 does not exist in the data.
     Code
-      t_sn %>% rm_source_notes(3)
+      rm_source_notes(t_sn, 3)
     Condition
       Error in `rm_source_notes()`:
       ! Source note 3 does not exist in the data.

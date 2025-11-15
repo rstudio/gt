@@ -27,7 +27,7 @@ test_that("cols_label() correctly", {
   # Create a `tbl_html` object with `gt()` and label all
   # of the columns
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_label(
       col_1 = "col_a",
       col_2 = "col_b",
@@ -43,16 +43,18 @@ test_that("cols_label() correctly", {
   )
 
   # Expect that the column labels are set
-  tbl_html %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
-    selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
-    expect_equal(c("col_a", "col_b", "col_c", "col_d"))
+  expect_equal(
+    tbl_html |>
+      render_as_html() |>
+      xml2::read_html() |>
+      selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']"),
+    c("col_a", "col_b", "col_c", "col_d")
+  )
 
   # Create a `tbl_html` object with `gt()` and label none
   # of the columns
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_label()
 
   # Expect the original column names for `tbl` as values for
@@ -61,21 +63,25 @@ test_that("cols_label() correctly", {
     unlist(tbl_html$`_boxhead`$column_label),
     colnames(tbl)
   )
+
   expect_equal(
     unlist(tbl_html$`_boxhead`$var),
     colnames(tbl)
   )
+
   # Expect that the column labels are set as the column names
-  tbl_html %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
-    selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
-    expect_equal(c("col_1", "col_2", "col_3", "col_4"))
+  expect_equal(
+    tbl_html |>
+      render_as_html() |>
+      xml2::read_html() |>
+      selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']"),
+    c("col_1", "col_2", "col_3", "col_4")
+  )
 
   # Create a `tbl_html` object with `gt()` and label all
   # of the columns using a named list passed to `.list`
   tbl_html <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_label(
       .list = list(
         col_1 = "col_a",
@@ -93,17 +99,17 @@ test_that("cols_label() correctly", {
   )
 
   # Expect that the column labels are set
-  tbl_html %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
-    selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
+  tbl_html |>
+    render_as_html() |>
+    xml2::read_html() |>
+    selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']") |>
     expect_equal(c("col_a", "col_b", "col_c", "col_d"))
 
   # Expect an error if any names are missing
-  expect_error(gt(tbl) %>% cols_label("col_a"))
+  expect_error(gt(tbl) |> cols_label("col_a"))
 
   # Expect an error if any columns are not part of the original dataset
-  expect_error(gt(tbl) %>% cols_label(col_a = "col_1"))
+  expect_error(gt(tbl) |> cols_label(col_a = "col_1"))
 
   # Expect no partial matching issues with column names and arguments
   expect_no_error(
@@ -111,8 +117,8 @@ test_that("cols_label() correctly", {
       ~a , ~d,
       1, 4,
       5, 8
-    ) %>%
-      gt() %>%
+    ) |>
+      gt() |>
       cols_label(
         a = "label a",
         d = "label d"
@@ -123,8 +129,8 @@ test_that("cols_label() correctly", {
       ~a , ~dat,
       1, 4,
       5, 8
-    ) %>%
-      gt() %>%
+    ) |>
+      gt() |>
       cols_label(
         a = "label a",
         dat = "label dat"
@@ -138,8 +144,8 @@ test_that("cols_label() correctly", {
       ~a , ~.dat,
       1, 4,
       5, 8
-    ) %>%
-      gt() %>%
+    ) |>
+      gt() |>
       cols_label(
         a = "label a",
         .dat = "label dat"
@@ -148,15 +154,44 @@ test_that("cols_label() correctly", {
 })
 
 test_that("cols_label() works with md()", {
-  tab <- gt(data.frame(x = 1, y = 2, z = 3)) %>% 
-    cols_label(x = md("*x_1*"), y = md("Time Domain<br/>$\\small{f\\left( t \\right) = {\\mathcal{L}^{\\,\\, - 1}}\\left\\{ {F\\left( s \\right)} \\right\\}}$"))
+
+  tab <-
+    gt(data.frame(x = 1, y = 2, z = 3)) |>
+    cols_label(
+      x = md("*x_1*"),
+      y = md("Time Domain<br/>$\\small{f\\left( t \\right) = {\\mathcal{L}^{\\,\\, - 1}}\\left\\{ {F\\left( s \\right)} \\right\\}}$")
+    )
+
   expect_equal(
     tab$`_boxhead`$column_label,
     list(
-      structure( "*x_1*", class = "from_markdown"),
+      structure("*x_1*", class = "from_markdown"),
       structure("Time Domain<br/>$\\small{f\\left( t \\right) = {\\mathcal{L}^{\\,\\, - 1}}\\left\\{ {F\\left( s \\right)} \\right\\}}$", class = "from_markdown"),
       "z"
     )
   )
-  
+})
+
+test_that("check cols_label is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- gt(mtcars_short)
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply alignment to table and group
+  label_gt_tbl <-
+    gt_tbl |>
+    cols_label(
+      mpg = "Miles per gallon"
+    )
+
+  label_gt_group <-
+    gt_group |>
+    cols_label(
+      mpg = "Miles per gallon"
+    )
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(label_gt_group, gt_group(label_gt_tbl, label_gt_tbl))
 })

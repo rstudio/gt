@@ -14,6 +14,7 @@ fmt_bytes(
   drop_trailing_zeros = TRUE,
   drop_trailing_dec_mark = TRUE,
   use_seps = TRUE,
+  min_sep_threshold = 1,
   pattern = "{x}",
   sep_mark = ",",
   dec_mark = ".",
@@ -101,6 +102,17 @@ becomes \code{23.} if \code{FALSE}). By default trailing decimal marks are not s
 An option to use digit group separators. The type of digit group separator
 is set by \code{sep_mark} and overridden if a locale ID is provided to \code{locale}.
 This setting is \code{TRUE} by default.}
+
+\item{min_sep_threshold}{\emph{Minimum digit threshold for grouping separators}
+
+\code{scalar<numeric|integer>(val>=1)} // \emph{default:} \code{1}
+
+The minimum number of digits required in the integer part of a number for
+grouping separators to be applied. This parameter determines when digit
+grouping begins based on the magnitude of values. The value \code{1} (the
+default) applies separators starting at 4-digit numbers (e.g., \verb{1,000} and
+above). A value of \code{2} starts grouping at 5-digit numbers (\verb{10,000} and
+above), while \code{3} begins at 6-digit numbers (\verb{100,000} and above).}
 
 \item{pattern}{\emph{Specification of the formatting pattern}
 
@@ -272,7 +284,7 @@ this time showing byte sizes as binary values by using \code{standard = "binary"
 
 \section{Function ID}{
 
-3-12
+3-13
 }
 
 \section{Function Introduced}{
@@ -304,6 +316,7 @@ Other data formatting functions:
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_number_si}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},

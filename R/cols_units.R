@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -40,7 +40,7 @@
 #' pertaining to the units notation can be found in the section entitled
 #' *How to use **gt**'s units notation*.
 #'
-#' @inheritParams fmt_number
+#' @inheritParams cols_align
 #'
 #' @param ... *Column units definitions*
 #'
@@ -272,7 +272,13 @@ cols_units <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = .data)
+  stop_if_not_gt_tbl_or_group(data = .data)
+
+  # Handle gt_group
+  if(inherits(.data, "gt_group")){
+    arg_list <- as.list(match.call())
+    return(apply_to_grp(.data, arg_list))
+  }
 
   # Collect a list of column units
   units_list <- .list

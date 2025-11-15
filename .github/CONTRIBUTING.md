@@ -10,7 +10,7 @@ If you believe you found a bug, create a minimal [reprex](https://reprex.tidyver
 
 A great way to help is by simply answering questions. It's amazing how a little conversation could lead to better insights on a problem. Don't quite know the answer? That's okay too. We're all in this together.
 
-Where might you answer user questions? Some of the forums for Q&A on **gt** include the [Posit community](https://community.rstudio.com), on Twitter (a good search term is `gt #rstats`), and on [Stack Overflow](https://stackoverflow.com). Good etiquette is key during these interactions: be a good person to all who ask questions.
+Where might you answer user questions? Some of the forums for Q&A on **gt** include the [Posit community](https://forum.posit.co), on Bluesky (a good search term is `gt #rstats`), and on [Stack Overflow](https://stackoverflow.com). Good etiquette is key during these interactions: be a good person to all who ask questions.
 
 ### Making Pull Requests
 

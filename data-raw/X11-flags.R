@@ -20,8 +20,8 @@ if (length(base::setdiff(flag_file_countries, flag_file_two_lett)) > 0) {
   if (length(files_to_delete) > 0) {
 
     files_to_delete <-
-      files_to_delete %>%
-      tolower() %>%
+      files_to_delete |>
+      tolower() |>
       paste0(".svg")
 
     file.remove(paste0("data-raw/flags_svg/", files_to_delete))
@@ -39,8 +39,8 @@ flag_tbl <-
   )
 
 countrypops_country_lookup <-
-  countrypops %>%
-  dplyr::select(starts_with("country")) %>%
+  countrypops |>
+  dplyr::select(starts_with("country")) |>
   dplyr::distinct()
 
 for (i in seq_along(flag_files)) {
@@ -109,7 +109,7 @@ extra_flags <-
   )
 
 extra_flags <-
-  extra_flags %>%
+  extra_flags |>
   dplyr::mutate(country_flag = NA_character_)
 
 # This needs to obtain the SVG lines from the associated files
@@ -119,7 +119,7 @@ flag_files_short <- list.files(flags_dir)
 for (i in seq_len(nrow(extra_flags))) {
 
   file_name <-
-    tolower(extra_flags[i, ][["country_code_2"]]) %>%
+    tolower(extra_flags[i, ][["country_code_2"]]) |>
     paste0(".svg")
 
   if (!(file_name %in% flag_files_short)) next
@@ -133,7 +133,7 @@ for (i in seq_len(nrow(extra_flags))) {
 }
 
 flag_tbl <-
-  dplyr::bind_rows(flag_tbl, extra_flags) %>%
+  dplyr::bind_rows(flag_tbl, extra_flags) |>
   dplyr::arrange(country_code_2)
 
 rm(

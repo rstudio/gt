@@ -1,14 +1,72 @@
 # gt (development version)
 
-* Significantly faster rendering of certain large tables, by optimizing the internal `rownum_translation()` utility. (@magnusdv, #1924) 
+* The new `fmt_number_si()` function format numeric values with SI prefixes and an optional unit (could be obtained from a separate column), automatically selecting the appropriate prefix to keep the mantissa in a readable range (#1999). (#2060) 
 
-* Interactive tables can support selection through the `ihtml.selection_mode` option. (@jonthegeek, #1909)
+* Added the `omit_na_group` argument to the `gt()` function; when `TRUE`, rows with `NA` values in the `groupname_col` be excluded from row group assignment (the default of `FALSE` preserves the old behavior) (#1215). (#2062)
+
+* Update latex Unicode conversions to be optional (default to TRUE) as well as make them work in-line (@thebioengineer, #2037, #2041)
+
+* Tables output to HTML and LaTeX now respect the document/browser default font sizes, only changing the size if the user sets the `table.font.size` option. (@capnrefsmmat, #1937)
+
+# gt 1.1.0
+
+## New features
+
+* We can now have multiple columns be a part of the stub by using the enhanced `rowname_col` argument in `gt()`; it can take a vector of one or more column names (#601, #918, #1406, #1408). (#2008)
+
+* `data_color()` now allows for specification which light/dark colors to use when `autocolor_text = TRUE`. (@xx02al, #1930)
+
+* Added the `latex()` helper function to allow the insertion of raw LaTeX strings. (@thebioengineer, #1912)
+
+* You can now use several `cols_*()` functions with `gt_group` objects (#2005, #2012). (@shannonhaughton, #2010, #2013)
+
+## Minor improvements and bug fixes
+
+* Improvements to options for LaTeX including repeating headers, removal of top and bottom lines, font sizes, and line breaks (#1630, #1061, #1767, #1912). (@thebioengineer, #1995)
+
+* Added support for some Unicode characters when writing tables as LaTeX. (@thebioengineer, #1996)
+
+* `as_word()` now handles `"<br>"` line breaks for `md()` and `html()`, and no longer automatically adds `"Table N"` ahead of the caption (#1966). (@thebioengineer, #1983)
+
+* Corrected text processing in instances where `md()` is used with `tab_footnote()` for Word output tables (#1892, #1983). (@olivroy, #1892)
+
+* Fixed an issue where grand summary rows would not work properly with Word output tables (#2000). (@olivroy, #2007)
+
+* Fixed an encoding issue with Word output tables when using the `sub_small_vals()` and `sub_large_vals()` functions (#1997). (@olivroy, #2014)
+
+* Stub alignment values for RTF output tables are now honored (#2019). (@shannonhaughton, #2021)
+
+* Added support for use of `fmt_image()` with RTF output tables (#2029). (@shannonhaughton, #2030)
+
+* HTML output tables no longer have multiple instances of `<tfoot>` tags (#1296). (#2025)
+
+* Fixed a length recycling issue when using gt with Quarto (#1985). (@olivroy, #1986)
+
+* The `metro` and `films` datasets have been updated. (#2026, #2027)
+
+* Add option to control the order of footnotes (@shannonhaughton, #2023)
+
+# gt 1.0.0
+
+## Minor improvements and bug fixes
 
 * Tables embedded in Shiny apps with `gt_output()` and `render_gt()` with `ihtml.selection_mode` enabled also act as inputs, reporting the row numbers that are selected (#354, #1368). (@jonthegeek, #1909)
 
+* Significantly faster rendering of certain large tables, by optimizing the internal `rownum_translation()` utility (#1924). (@magnusdv, #1925)
+
+* Fixed an issue in `fmt_number()` where `drop_trailing_dec_mark` would be ignored if `use_seps = FALSE` (#1961). (@olivroy, #1962).
+
+* Fixed an issue where `fmt_markdown()` could create strange output in Quarto (html and Typst formats) (#1957). (@olivroy, #1958, [quarto-dev/quarto-cli#11932](https://github.com/quarto-dev/quarto-cli/issues/11932), [quarto-dev/quarto-cli#11610](https://github.com/quarto-dev/quarto-cli/issues/11610)).
+ 
+* The default table position in LaTeX is now "t" instead of "!t" (@AaronGullickson, #1935).
+
+* Fixed an issue where cross-references would fail in bookdown::html_document2 (@olivroy, #1948)
+
 * Improved width calculations in `as_gtable()` (@teunbrand, #1923)
 
-* Tables output to HTML and LaTeX now respect the document/browser default font sizes, only changing the size if the user sets the `table.font.size` option. (@capnrefsmmat, #1937)
+* `gt(row_group_as_column = TRUE)` now works if multiple groups are supplied (#1552). (@olivroy, #1801).
+
+* Fixed many typos in the documentation. (#1910, thanks @MichaelChirico!)
 
 # gt 0.11.1
 
@@ -18,7 +76,7 @@
 
 ## Improvements to the LaTeX output format
 
-* PDF output now defaults to a full-width floating environment using `tabular*`. Float position can be controlled by the `latex.tbl.pos` argument in `tab_options`. Quarto users can alternatively use the `tbl-pos` argument to control positioning. To use a `longtable` environment instead, use `tab_option(latex.use_longtable = TRUE)`. (@AronGullickson, #1588)
+* PDF output now defaults to a full-width floating environment using `tabular*`. Float position can be controlled by the `latex.tbl.pos` argument in `tab_options`. Quarto users can alternatively use the `tbl-pos` argument to control positioning. To use a `longtable` environment instead, use `tab_options(latex.use_longtable = TRUE)`. (@AronGullickson, #1588)
 
 * Creating a caption with `tab_caption()` will now be preserved in LaTeX output with `as_latex()`. Cross-referencing a table using the internal cross-referencing system of **bookdown** is now enabled for PDF and HTML outputs (for HTML, set `options("htmltools.preserve.raw" = FALSE)`). Quarto users should use the `tbl-cap` and `label` cell options. (@nielsbock, #1800)
 

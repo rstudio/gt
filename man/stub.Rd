@@ -4,7 +4,16 @@
 \alias{stub}
 \title{Select helper for targeting the stub column}
 \usage{
-stub()
+stub(column = NULL)
+}
+\arguments{
+\item{column}{\emph{Stub column selection}
+
+\verb{scalar<integer>} // \emph{default:} \code{NULL} (optional)
+
+For tables with multi-column stubs, optionally specify which stub column to
+target. Use \code{1} for the rightmost stub column, \code{2} for the second from
+right, etc. If \code{NULL} (the default), all stub columns are selected.}
 }
 \value{
 A character vector of class \code{"stub_column"}.
@@ -42,6 +51,38 @@ column here with the \code{stub()} select helper.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_stub_1.png" alt="This image of a table was generated from the first code example in the `stub()` help file." style="width:100\%;">
 }}
+
+For multi-column stubs, you can set widths for all stub columns together or
+target specific columns individually:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num, char, row, group) |>
+  gt(rowname_col = c("group", "row")) |>
+  cols_width(
+    stub() ~ px(200),        # All stub columns get 200px
+    everything() ~ px(100)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_stub_2.png" alt="This image of a table was generated from the second code example in the `stub()` help file." style="width:100\%;">
+}}
+
+Or target specific stub columns (1 = rightmost, 2 = second from right):
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num, char, row, group) |>
+  gt(rowname_col = c("group", "row")) |>
+  cols_width(
+    stub(1) ~ px(70),        # Rightmost stub column (row)
+    stub(2) ~ px(200),       # Second stub column (group)
+    everything() ~ px(100)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_stub_3.png" alt="This image of a table was generated from the third code example in the `stub()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -67,6 +108,7 @@ Other helper functions:
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
+\code{\link{latex}()},
 \code{\link{md}()},
 \code{\link{nanoplot_options}()},
 \code{\link{pct}()},

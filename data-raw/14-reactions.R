@@ -77,27 +77,33 @@ reactions <-
         Cl_t_low = col_double(),
         Cl_t_high = col_double()
       )
-  ) %>%
+  ) |>
   dplyr::mutate(across(starts_with("feat"), ~ tidyr::replace_na(.x, 0)))
 
+extract_pct <- function(x) {
+  as.numeric(sub("%", "", x, fixed = TRUE)) / 100
+}
+
 reactions <-
-  reactions %>%
-  dplyr::mutate(OH_uncert = case_when(
-    !is.na(OH_unc) ~ as.numeric(sub("%", "", OH_unc)) / 100,
-    TRUE ~ NA_real_
-  )) %>%
-  dplyr::mutate(O3_uncert = case_when(
-    !is.na(O3_unc) ~ as.numeric(sub("%", "", O3_unc)) / 100,
-    TRUE ~ NA_real_
-  )) %>%
-  dplyr::mutate(NO3_uncert = case_when(
-    !is.na(NO3_unc) ~ as.numeric(sub("%", "", NO3_unc)) / 100,
-    TRUE ~ NA_real_
-  )) %>%
-  dplyr::mutate(Cl_uncert = case_when(
-    !is.na(Cl_unc) ~ as.numeric(sub("%", "", Cl_unc)) / 100,
-    TRUE ~ NA_real_
-  )) %>%
+  reactions |>
+  dplyr::mutate(
+    OH_uncert = case_when(
+      !is.na(OH_unc) ~ extract_pct(OH_unc),
+      .default = NA_real_
+    ),
+    O3_uncert = case_when(
+    !is.na(O3_unc) ~ extract_pct(O3_unc),
+    .default = NA_real_
+    ),
+    NO3_uncert = case_when(
+      !is.na(NO3_unc) ~ extract_pct(NO3_unc),
+      .default = NA_real_
+    ),
+    Cl_uncert = case_when(
+      !is.na(Cl_unc) ~ extract_pct(Cl_unc),
+      .default = NA_real_
+    )
+  ) |>
   dplyr::select(-ends_with("unc"))
 
 compound_types <-
@@ -192,15 +198,15 @@ compound_types <-
   )
 
 reactions <-
-  reactions %>%
-  dplyr::inner_join(compound_types, by = c("cmpd_type" = "cmpd_type")) %>%
-  dplyr::relocate(cmpd_desc, .after = cmpd_struct_fml) %>%
-  dplyr::relocate(OH_uncert, .before = OH_u_fac) %>%
-  dplyr::relocate(O3_uncert, .before = O3_u_fac) %>%
-  dplyr::relocate(NO3_uncert, .before = NO3_u_fac) %>%
-  dplyr::relocate(Cl_uncert, .before = Cl_u_fac) %>%
-  dplyr::select(-cmpd_type, -cmpd_no, -cmpd_struct_fml, -starts_with("feat")) %>%
-  dplyr::rename(cmpd_name = cmpd_primary_name) %>%
-  dplyr::rename(cmpd_formula = cmpd_atomic_fml) %>%
-  dplyr::rename(cmpd_type = cmpd_desc) %>%
+  reactions |>
+  dplyr::inner_join(compound_types, by = c("cmpd_type" = "cmpd_type")) |>
+  dplyr::relocate(cmpd_desc, .after = cmpd_struct_fml) |>
+  dplyr::relocate(OH_uncert, .before = OH_u_fac) |>
+  dplyr::relocate(O3_uncert, .before = O3_u_fac) |>
+  dplyr::relocate(NO3_uncert, .before = NO3_u_fac) |>
+  dplyr::relocate(Cl_uncert, .before = Cl_u_fac) |>
+  dplyr::select(-cmpd_type, -cmpd_no, -cmpd_struct_fml, -starts_with("feat")) |>
+  dplyr::rename(cmpd_name = cmpd_primary_name) |>
+  dplyr::rename(cmpd_formula = cmpd_atomic_fml) |>
+  dplyr::rename(cmpd_type = cmpd_desc) |>
   dplyr::relocate(cmpd_mwt, cmpd_formula, cmpd_type, .after = cmpd_name)

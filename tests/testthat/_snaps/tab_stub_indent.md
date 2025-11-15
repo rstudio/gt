@@ -92,7 +92,6 @@
       <td headers="stub_1_8 group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -196,7 +195,6 @@
       <td headers="stub_1_8 group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -254,7 +252,6 @@
       <td headers="stub_1_8 currency" class="gt_row gt_right">NA</td>
       <td headers="stub_1_8 rank" class="gt_row gt_right">NA</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -320,7 +317,6 @@
       <td headers="grp_b stub_1_8 rank" class="gt_row gt_right">NA</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -384,7 +380,6 @@
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 rank" class="gt_row gt_right">NA</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -450,7 +445,6 @@
       <td headers="grp_b stub_1_8 rank" class="gt_row gt_right">NA</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -515,7 +509,6 @@
       <td headers="grp_b stub_1_8 rank" class="gt_row gt_right">NA</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -573,7 +566,6 @@
       <td headers="stub_1_8 currency" class="gt_row gt_right">NA</td>
       <td headers="stub_1_8 rank" class="gt_row gt_right">NA</td></tr>
         </tbody>
-        
         
       </table>
 

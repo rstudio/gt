@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -615,7 +615,7 @@ tab_header <- function(
 #'   fmt_percent(columns = matches("change"), decimals = 1) |>
 #'   tab_spanner(
 #'     label = "Population",
-#'     columns = starts_with("population")
+#'     columns = starts_with("pop")
 #'   ) |>
 #'   tab_spanner(
 #'     label = "Density, {{*persons* km^-2}}",
@@ -1772,11 +1772,13 @@ tab_row_group <- function(
 #'
 #' @param label *Stubhead label text*
 #'
-#'   `scalar<character>` // **required**
+#'   `vector<character>` // **required**
 #'
-#'   The text to be used as the stubhead label. We can optionally use [md()] or
-#'   [html()] to style the text as Markdown or to retain HTML elements in the
-#'   text.
+#'   The text to be used as the stubhead label(s). For tables with multi-column 
+#'   stubs, you can provide either a single label that spans all stub columns, or 
+#'   a vector of labels with one label for each stub column. We can optionally use 
+#'   [md()] or [html()] to style the text as Markdown or to retain HTML elements 
+#'   in the text.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1846,35 +1848,53 @@ tab_row_group <- function(
 #' `r man_get_image_tag(file = "man_tab_stubhead_3.png")`
 #' }}
 #'
-#' The stubhead cell and its text can be styled using [tab_style()] with
-#' [cells_stubhead()]. In this example, using the [`reactions`] dataset, we
-#' style the stubhead label so that it is vertically centered with text that is
-#' highly emboldened.
+#' For tables with multi-column stubs (created by specifying multiple columns in
+#' `rowname_col`), you can provide either a single label that spans all stub
+#' columns, or a vector of labels with one label for each stub column. Here's an
+#' example using the [`countrypops`] dataset with a single spanning label:
 #'
 #' ```r
-#' reactions |>
-#'   dplyr::filter(cmpd_type == "nitrophenol") |>
-#'   dplyr::select(cmpd_name, OH_k298, Cl_k298) |>
-#'   dplyr::filter(!(is.na(OH_k298) & is.na(Cl_k298))) |>
-#'   gt(rowname_col = "cmpd_name") |>
-#'   tab_spanner(
-#'     label = "Rate constant at 298 K, in {{cm^3 molecules^-1 s^-1}}",
-#'     columns = ends_with("k298")
-#'   ) |>
-#'   tab_stubhead(label = "Nitrophenol Compound") |>
-#'   fmt_scientific() |>
-#'   sub_missing() |>
-#'   cols_label_with(fn = function(x) sub("_k298", "", x)) |>
-#'   cols_width(everything() ~ px(200)) |>
-#'   tab_style(
-#'     style = cell_text(v_align = "middle", weight = "800"),
-#'     locations = cells_stubhead()
-#'   )
+#' countrypops |>
+#'   dplyr::filter(country_name %in% c("China", "India", "United States", "Indonesia")) |>
+#'   dplyr::filter(year >= 2000) |>
+#'   dplyr::select(country_name, country_code_2, year, population) |>
+#'   gt(rowname_col = c("country_name", "country_code_2")) |>
+#'   tab_stubhead(label = "Country Information") |>
+#'   fmt_integer(columns = population)
 #' ```
 #'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_tab_stubhead_4.png")`
-#' }}
+#' Alternatively, you can provide a vector of labels, one for each stub column.
+#' This allows for more descriptive and specific headers for each column:
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(country_name %in% c("China", "India", "United States", "Indonesia")) |>
+#'   dplyr::filter(year >= 2000) |>
+#'   dplyr::select(country_name, country_code_2, year, population) |>
+#'   gt(rowname_col = c("country_name", "country_code_2")) |>
+#'   tab_stubhead(label = c("Country", "Code")) |>
+#'   fmt_integer(columns = population)
+#' ```
+#'
+#' You can also use this approach with three or more stub columns. Here's an
+#' example creating a hierarchical structure with region, country, and year:
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(country_name %in% c("China", "India", "United States", "Indonesia")) |>
+#'   dplyr::filter(year %in% c(2000, 2010, 2020)) |>
+#'   dplyr::mutate(
+#'     region = dplyr::case_when(
+#'       country_name %in% c("China", "India", "Indonesia") ~ "Asia",
+#'       country_name == "United States" ~ "North America",
+#'       TRUE ~ "Other"
+#'     )
+#'   ) |>
+#'   dplyr::select(region, country_name, year, population) |>
+#'   gt(rowname_col = c("region", "country_name", "year")) |>
+#'   tab_stubhead(label = c("Region", "Country", "Year")) |>
+#'   fmt_integer(columns = population)
+#' ```
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
@@ -1891,6 +1911,24 @@ tab_stubhead <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  # Validate the label parameter for multi-column stubs
+  stub_vars <- dt_boxhead_get_var_stub(data = data)
+  
+  if (length(stub_vars) > 1 && !any(is.na(stub_vars))) {
+    # Multi-column stub case
+    if (length(label) > 1) {
+      # Multiple labels provided - must match the number of stub columns
+      if (length(label) != length(stub_vars)) {
+        cli::cli_abort(c(
+          "For multi-column stubs, the number of labels must match the number of stub columns.",
+          "*" = "Found {length(stub_vars)} stub columns but {length(label)} labels.",
+          "*" = "Provide either a single label to span all columns, or {length(stub_vars)} labels (one per column)."
+        ))
+      }
+    }
+    # Single label provided - will span all columns (no validation needed)
+  }
 
   dt_stubhead_label(data = data, label = label)
 }

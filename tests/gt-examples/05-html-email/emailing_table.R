@@ -16,21 +16,18 @@ initial_months <-
 # Get the total pizzaplace sales in the
 # 2015 year; format as a currency value
 total_sales_2015 <-
-  pizzaplace$price %>%
-  sum() %>%
-  comma_format(
-    big.mark = ",",
-    prefix = "$"
-  )(.)
+  pizzaplace$price |>
+  sum() |>
+  vec_fmt_currency(decimals = 0)
 
 # Create a plot using the `pizzaplace` dataset
 pizza_plot <-
-  pizzaplace %>%
-  mutate(type = str_to_title(type)) %>%
-  mutate(date = as.Date(date)) %>%
-  group_by(date, type) %>%
-  summarize(Pizzas = n(), Income = sum(price)) %>%
-  ungroup() %>%
+  pizzaplace |>
+  mutate(type = str_to_title(type)) |>
+  mutate(date = as.Date(date)) |>
+  group_by(date, type) |>
+  summarize(Pizzas = n(), Income = sum(price)) |>
+  ungroup() |>
   ggplot() +
   geom_point(aes(x = date, y = Income), color = "steelblue") +
   facet_wrap(~type) +
@@ -73,39 +70,39 @@ types_order <- c("Classic", "Chicken", "Supreme", "Veggie")
 # (that gets us an HTML fragement with inlined
 # CSS styles)
 pizza_tab_email <-
-  pizzaplace %>%
-  dplyr::mutate(type = stringr::str_to_title(type)) %>%
-  dplyr::mutate(size = factor(size, levels = sizes_order)) %>%
-  dplyr::mutate(type = factor(type, levels = types_order)) %>%
-  dplyr::group_by(type, size) %>%
+  pizzaplace |>
+  dplyr::mutate(type = stringr::str_to_title(type)) |>
+  dplyr::mutate(size = factor(size, levels = sizes_order)) |>
+  dplyr::mutate(type = factor(type, levels = types_order)) |>
+  dplyr::group_by(type, size) |>
   summarize(
     pies = n(),
     income = sum(price)
-  ) %>%
-  dplyr::arrange(type, size) %>%
-  gt(rowname_col = "size") %>%
+  ) |>
+  dplyr::arrange(type, size) |>
+  gt(rowname_col = "size") |>
   fmt_currency(
     columns = income,
     currency = "USD"
-  ) %>%
+  ) |>
   fmt_number(
     columns = pies,
     use_seps = TRUE,
     decimals = 0
-  ) %>%
+  ) |>
   summary_rows(
     columns = "pies",
     fns = list(TOTAL = "sum"),
     formatter = fmt_number,
     use_seps = TRUE,
     decimals = 0
-  ) %>%
+  ) |>
   summary_rows(
     columns = "income",
     fns = list(TOTAL = "sum"),
     formatter = fmt_currency,
     currency = "USD"
-  ) %>%
+  ) |>
   tab_options(
     table.width = px(300),
     summary_row.background.color = "#FFFEEE",
@@ -116,15 +113,15 @@ pizza_tab_email <-
     row_group.font.size = "small",
     column_labels.font.size = "small",
     data_row.padding = "5px"
-  ) %>%
+  ) |>
   cols_label(
     pies = "Pizzas",
     income = "Income"
-  ) %>%
+  ) |>
   tab_header(
     title = paste0("My pizza sales in 2015"),
     subtitle = "Split by the type of pizza and the size"
-  ) %>%
+  ) |>
   as_raw_html()
 
 message_body <-

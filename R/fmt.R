@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -91,7 +91,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-30
+#' 3-31
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -184,7 +184,7 @@ validate_locale <- function(locale, call = rlang::caller_env()) {
   if (locale %in% c(locales[["locale"]], default_locales[["default_locale"]])) {
     return(locale)
   }
-  
+
   # Stop function if the `locale` provided is invalid
   cli::cli_abort(c(
     "The supplied `locale` is not available in the list of supported locales.",
@@ -252,7 +252,7 @@ get_locale_sep_mark <- function(
 
   # Get the correct `group_sep` value from the `gt:::locales` lookup table
   sep_mark <- locales$group[locales$locale == locale]
-  validate_length_one(sep_mark)
+  validate_length_one(sep_mark, "sep_mark")
   # Replace any `""` or "\u00a0" with `" "` since an empty string actually
   # signifies a space character, and, we want to normalize to a simple space
   if (sep_mark == "" || sep_mark == "\u00a0") sep_mark <- " "
@@ -279,6 +279,25 @@ get_locale_dec_mark <- function(locale = NULL, default) {
   val
 }
 
+#' Get the `min_sep_threshold` value based on a locale
+#'
+#' @param locale The user-supplied `locale` value, found in several `fmt_*()`
+#'   functions. This is expected as `NULL` if not supplied by the user.
+#' @param default The default value for the `min_sep_threshold`.
+#' @noRd
+get_locale_min_sep_threshold <- function(locale = NULL, default) {
+
+  # If `locale` is NULL then return the default `min_sep_threshold`
+  if (is.null(locale)) {
+    return(default)
+  }
+
+  # Get the correct `minimum_grouping_digits` value from the `gt:::locales` lookup table
+  val <- locales$minimum_grouping_digits[locales$locale == locale]
+  validate_length_one(val, "min_sep_threshold")
+  val
+}
+
 #' Get the range pattern based on a locale
 #'
 #' @param locale The user-supplied `locale` value, found in several `fmt_*()`
@@ -291,7 +310,7 @@ get_locale_range_pattern <- function(locale = NULL) {
 
   # Get the correct `range_pattern` value from the `gt:::locales` lookup table
   range_pattern <- locales$range_pattern[locales$locale == locale]
-  validate_length_one(range_pattern)
+  validate_length_one(range_pattern, "range_pattern")
 
   range_pattern <- gsub("1", "2", range_pattern, fixed = TRUE)
   range_pattern <- gsub("0", "1", range_pattern, fixed = TRUE)
@@ -332,7 +351,7 @@ get_locale_idx_set <- function(locale = NULL) {
   }
 
   val <- locales$chr_index[locales$locale == locale]
-  validate_length_one(val)
+  validate_length_one(val, "locale")
   val
 }
 
@@ -388,7 +407,7 @@ get_locale_no_table_data_text <- function(locale = NULL) {
   # Get the correct `no_table_data_text` value from the
   # `gt:::locales` lookup table
   val <- locales$no_table_data_text[locales$locale == locale]
-  validate_length_one(val)
+  validate_length_one(val, "locale")
   val
 }
 
@@ -470,12 +489,10 @@ get_currency_decimals <- function(
       # that most currencies present two decimal places
       return(2)
 
-    } else if (!use_subunits) {
-
-      return(0)
-
-    } else {
+    } else if (use_subunits) {
       return(decimals)
+    } else {
+      return(0)
     }
   }
 
@@ -549,6 +566,7 @@ format_num_to_str <- function(
     drop_trailing_dec_mark,
     format = "f",
     replace_minus_mark = TRUE,
+    min_sep_threshold = 1,
     system = c("intl", "ind")
 ) {
 
@@ -590,17 +608,91 @@ format_num_to_str <- function(
     cli::cli_abort("validation for format should be in arg_match0", .internal = TRUE)
   }
 
-  x_str <-
-    formatC(
-      x = x,
-      format = format,
-      mode = mode,
-      digits = digits,
-      flag = flag,
-      drop0trailing = drop0trailing,
-      big.mark = sep_mark,
-      decimal.mark = dec_mark
-    )
+  # Apply min_sep_threshold logic
+  if (!is.null(min_sep_threshold) && min_sep_threshold > 0) {
+    # Calculate the minimum magnitude required to show separators
+    # threshold=1: 10^3 (1000, 4 digits)
+    # threshold=2: 10^4 (10000, 5 digits)
+    # threshold=3: 10^5 (100000, 6 digits)
+    magnitude_threshold <- 10^(min_sep_threshold + 2)
+    
+    # Format all values first to determine their rounded magnitudes
+    # We need to check rounded values because 999.5 with 0 decimals becomes "1000"
+    # Suppress warnings when both big.mark and decimal.mark are empty strings
+    x_str_test <-
+      suppressWarnings(
+        formatC(
+          x = x,
+          format = format,
+          mode = mode,
+          digits = digits,
+          flag = flag,
+          drop0trailing = drop0trailing,
+          big.mark = "",
+          decimal.mark = dec_mark
+        )
+      )
+    
+    # Parse formatted strings to get rounded magnitudes
+    # Handle both empty and non-empty dec_mark
+    if (nzchar(dec_mark)) {
+      x_rounded <- suppressWarnings(as.numeric(gsub(dec_mark, ".", x_str_test, fixed = TRUE)))
+    } else {
+      x_rounded <- suppressWarnings(as.numeric(x_str_test))
+    }
+    
+    # Determine which values should have separators based on rounded magnitude
+    should_use_sep <- abs(x_rounded) >= magnitude_threshold
+    
+    # Format values below threshold without separators (reuse test formatting)
+    if (any(!should_use_sep, na.rm = TRUE)) {
+      x_str_no_sep <- x_str_test[!should_use_sep]
+    }
+    
+    # Format values at or above threshold with separators
+    # Suppress warnings when both big.mark and decimal.mark are empty strings
+    if (any(should_use_sep, na.rm = TRUE)) {
+      x_str_sep <-
+        suppressWarnings(
+          formatC(
+            x = x[should_use_sep],
+            format = format,
+            mode = mode,
+            digits = digits,
+            flag = flag,
+            drop0trailing = drop0trailing,
+            big.mark = sep_mark,
+            decimal.mark = dec_mark
+          )
+        )
+    }
+    
+    # Combine the results
+    x_str <- character(length(x))
+    if (any(!should_use_sep, na.rm = TRUE)) {
+      x_str[!should_use_sep] <- x_str_no_sep
+    }
+    if (any(should_use_sep, na.rm = TRUE)) {
+      x_str[should_use_sep] <- x_str_sep
+    }
+    
+  } else {
+    # No min_sep_threshold, use original behavior with separators
+    # Suppress warnings when both big.mark and decimal.mark are empty strings
+    x_str <-
+      suppressWarnings(
+        formatC(
+          x = x,
+          format = format,
+          mode = mode,
+          digits = digits,
+          flag = flag,
+          drop0trailing = drop0trailing,
+          big.mark = sep_mark,
+          decimal.mark = dec_mark
+        )
+      )
+  }
 
   # Remove `-` for any signed zeros returned by `formatC()`
   x_str_signed_zero <- grepl("^(-0|-0\\.0*?)$", x_str)
@@ -612,6 +704,12 @@ format_num_to_str <- function(
   if (!drop_trailing_dec_mark) {
     x_str_no_dec <- !grepl(dec_mark, x_str, fixed = TRUE)
     x_str[x_str_no_dec] <- paste_right(x_str[x_str_no_dec], dec_mark)
+  } else if (nzchar(dec_mark)) {
+    # Drop trailing decimal marks (happens with significant figures formatting)
+    # This is needed when sep_mark is empty OR when using min_sep_threshold
+    # (where some values may have separators and some may not)
+    # See https://github.com/rstudio/gt/issues/1961
+    x_str[endsWith(x_str, dec_mark)] <- sub(dec_mark, "", x_str[endsWith(x_str, dec_mark)], fixed = TRUE)
   }
 
   # Perform modifications to `x_str` values if formatting values to
@@ -667,6 +765,7 @@ format_num_to_str_c <- function(
     dec_mark,
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark,
+    min_sep_threshold = 1,
     system = c("intl", "ind")
 ) {
 
@@ -681,6 +780,7 @@ format_num_to_str_c <- function(
     dec_mark = dec_mark,
     drop_trailing_zeros = drop_trailing_zeros,
     drop_trailing_dec_mark = drop_trailing_dec_mark,
+    min_sep_threshold = min_sep_threshold,
     format = "f",
     system = system
   )
@@ -884,7 +984,8 @@ context_lte_mark <- function(context) {
 
   switch(
     context,
-    grid =,
+    grid = ,
+    word = ,
     html = "\U02264",
     latex = "$\\leq$",
     "<="
@@ -899,7 +1000,8 @@ context_gte_mark <- function(context) {
 
   switch(
     context,
-    grid =,
+    grid = ,
+    word = ,
     html = "\U02265",
     latex = "$\\geq$",
     ">="
@@ -1007,10 +1109,10 @@ context_exp_str <- function(context, exp_style) {
     exp_str <-
       switch(
         context,
-        html = c("<sub style='font-size: 65%;'>10</sub>"),
-        latex = c("{}_10"),
-        rtf = c("{\\sub 10}"),
-        word = c("10^"),
+        html = "<sub style='font-size: 65%;'>10</sub>",
+        latex = "{}_10",
+        rtf = "{\\sub 10}",
+        word = "10^",
         "E"
       )
   }
@@ -1067,7 +1169,9 @@ context_symbol_str <- function(context, symbol) {
       },
       html = get_currency_str(currency = symbol, fallback_to_code = FALSE),
       latex = {
-        if (!inherits(symbol, "AsIs")) {
+        if (inherits(symbol, "AsIs")) {
+          symbol
+        } else {
           #paste_between(
           markdown_to_latex(
             get_currency_str(currency = symbol, fallback_to_code = TRUE),
@@ -1075,8 +1179,6 @@ context_symbol_str <- function(context, symbol) {
           )#,
           #  c("\\text{", "}")
           #)
-        } else {
-          symbol
         }
       },
       get_currency_str(currency = symbol, fallback_to_code = TRUE)
@@ -1379,7 +1481,7 @@ get_arg_names <- function(
 ) {
 
   if (!is.null(in_args) && !is.null(all_args_except)) {
-    stop("The `in_args` and `all_args_except` args should not both be used.")
+    cli::cli_abort("The `in_args` and `all_args_except` args should not both be used.")
   }
 
   if (is.null(in_args) && is.null(all_args_except)) {

@@ -66,6 +66,7 @@ Other helper functions:
 \code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{html}()},
+\code{\link{latex}()},
 \code{\link{md}()},
 \code{\link{nanoplot_options}()},
 \code{\link{pct}()},

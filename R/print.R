@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -142,7 +142,7 @@ knit_print.gt_group <- function(x, ...) {
     seq_tbls <- seq_len(nrow(x$gt_tbls))
 
     for (i in seq_tbls) {
-      word_tbl_i <- as_word(grp_pull(x, which = i))
+      word_tbl_i <- as_word(grp_pull(x, which = i), ...)
       word_tbls <- c(word_tbls, word_tbl_i)
     }
 

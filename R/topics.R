@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -131,7 +131,8 @@ NULL
 #'
 #' @examples
 #' gt_tbl <- gt(exibble)
-#' gt_tbl %>%
+#'
+#' gt_tbl |>
 #'   fmt_time(
 #'     columns = contains("time") & !starts_with("date"),
 #'      rows = num > 100 & group == "grp_b"
@@ -139,17 +140,17 @@ NULL
 #'
 #' # Styling numeric columns based on range
 #'
-#' gt_tbl %>% tab_style(
-#'   style = cell_text(weight = "bold"),
-#'   locations = cells_body(
-#'   columns =  where(is.factor)
+#' gt_tbl |>
+#'   tab_style(
+#'     style = cell_text(weight = "bold"),
+#'     locations = cells_body(columns =  where(is.factor))
 #'   )
-#' )
 #'
 #' # Naming rows
 #'
 #' gt_tbl_rows <- gt(exibble, rowname_col = "row")
-#' gt_tbl_rows %>%
+#'
+#' gt_tbl_rows |>
 #'   fmt_datetime(
 #'     columns = datetime,
 #'     rows = c("row_1", "row_8")
@@ -175,13 +176,13 @@ NULL
 #' # By default, they apply styling to all compatible columns.
 #'
 #' # Will style all numeric columns
-#' gt_tbl %>% fmt_number()
+#' gt_tbl |> fmt_number()
 #'
 #' # will style the time column
-#' gt_tbl %>% fmt_time(columns = time)
+#' gt_tbl |> fmt_time(columns = time)
 #'
 #' # Will style nothing since is only compatible with logical values
-#' gt_tbl %>% fmt_tf()
+#' gt_tbl |> fmt_tf()
 #'
 #' #
 #' # Their order has importance as the last styling will have priority.
@@ -189,7 +190,7 @@ NULL
 #'
 #' # Will style all numeric columns as integer
 #' # fmt_number() will have no effect
-#' gt_tbl %>% fmt_number() %>% fmt_integer()
+#' gt_tbl |> fmt_number() |> fmt_integer()
 #'
 #' #
 #' # Therefore, to apply different styling, it is important to specify columns or rows.
@@ -197,7 +198,7 @@ NULL
 #'
 #' # Will style all numeric columns as number and as currency the currency column.
 #' # fmt_number() will have no effect
-#' gt_tbl %>% fmt_number() %>% fmt_integer(currency)
+#' gt_tbl |> fmt_number() |> fmt_integer(currency)
 NULL
 
 # locale -----------------------------------------------------------------------
@@ -234,25 +235,26 @@ NULL
 #' `sep_mark`, `dec_mark`, `incl_space`, they will be override `locale`.
 #'
 #' @examples
-#' # The Spanish locale uses `.` as thousands sep (English uses ,), and
-#' # uses , as the decimal mark
+#' # The Spanish locale uses `.` as thousands sep (English uses `,`) and uses
+#' # a `,` as the decimal mark
 #'
-#' # Using the locale in gt() will format automatically all output in subsequent
-#' # fmt_*() calls.
-#' exibble %>%
-#'   gt(locale = "es-AR") %>%
+#' # Using the locale in `gt()` will format automatically all output in
+#' # subsequent `fmt_*()` calls.
+#' exibble |>
+#'   gt(locale = "es-AR") |>
 #'   fmt_number()
 #'
-#' # Only format currency as mexican peso
+#' # Only format currency as Mexican peso
 #'
-#' exibble %>%
-#'   gt(locale = "fr") %>%
+#' exibble |>
+#'   gt(locale = "fr") |>
 #'   fmt_currency(currency, locale = "es-MX")
 #'
-#' # will use sep_mark provided
-#' exibble %>%
-#'   gt(locale = "fr") %>%
+#' # will use the provided `sep_mark`
+#' exibble |>
+#'   gt(locale = "fr") |>
 #'   fmt_currency(currency, sep_mark = "", locale = "es-MX")
+#'
 #' # Use your imagination, and mix and match.
 #'
 #' @seealso [info_locales()], [info_flags()]

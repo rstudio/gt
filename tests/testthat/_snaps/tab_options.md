@@ -93,14 +93,12 @@
       <td headers="stub_1_5 gear" class="gt_row gt_right">3</td>
       <td headers="stub_1_5 carb" class="gt_row gt_right">2</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="12">Dataset is generally available in R</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="12"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> A table footnote</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="12">Dataset is generally available in R</td>
           </tr>
         </tfoot>
       </table>
@@ -200,14 +198,12 @@
       <td headers="stub_1_5 gear" class="gt_row gt_right">3</td>
       <td headers="stub_1_5 carb" class="gt_row gt_right">2</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="12">Dataset is generally available in R</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="12"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> A table footnote</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="12">Dataset is generally available in R</td>
           </tr>
         </tfoot>
       </table>
@@ -307,14 +303,12 @@
       <td headers="stub_1_5 gear" class="gt_row gt_right">3</td>
       <td headers="stub_1_5 carb" class="gt_row gt_right">2</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="12">Dataset is generally available in R</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="12"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> A table footnote</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="12">Dataset is generally available in R</td>
           </tr>
         </tfoot>
       </table>
@@ -414,14 +408,12 @@
       <td headers="stub_1_5 gear" class="gt_row gt_right">3</td>
       <td headers="stub_1_5 carb" class="gt_row gt_right">2</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="12">Dataset is generally available in R</td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="12"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> A table footnote</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="12">Dataset is generally available in R</td>
           </tr>
         </tfoot>
       </table>

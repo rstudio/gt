@@ -81,7 +81,6 @@
       <td headers="carb" class="gt_row gt_right">2</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -169,7 +168,6 @@
       <td headers="carb" class="gt_row gt_right">2</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -255,7 +253,6 @@
       <td headers="carb" class="gt_row gt_right">2</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -340,15 +337,14 @@
       <td headers="gear" class="gt_row gt_right">3</td>
       <td headers="carb" class="gt_row gt_right">2</td></tr>
         </tbody>
-        
         
       </table>
 
 # tab_row_group() warns for deprecated args, but respects output.
 
     Code
-      gt_tbl <- gt(exibble, rowname_col = "row") %>% tab_row_group(label = "group_prioritized",
-        group = "group", rows = 1:3)
+      gt_tbl <- tab_row_group(gt(exibble, rowname_col = "row"), label = "group_prioritized",
+      group = "group", rows = 1:3)
     Condition
       Warning:
       Since gt v0.3.0 the `group` argument has been deprecated.
@@ -358,8 +354,8 @@
 ---
 
     Code
-      gt_tbl <- (gt(exibble, rowname_col = "row") %>% tab_row_group(label = "one",
-        rows = 1:3) %>% tab_row_group(others_label = "foo"))
+      gt_tbl <- (tab_row_group(tab_row_group(gt(exibble, rowname_col = "row"), label = "one",
+      rows = 1:3), others_label = "foo"))
     Condition
       Warning:
       Since gt v0.3.0 the `others_label` argument has been deprecated.
@@ -369,7 +365,7 @@
 # tab_row_group() errors when named rows are supplied (#1535)
 
     Code
-      gt_tbl %>% tab_row_group("Mazda", c("Mazda RX4", "Mazda RX4 Wag"))
+      tab_row_group(gt_tbl, "Mazda", c("Mazda RX4", "Mazda RX4 Wag"))
     Condition
       Error in `tab_row_group()`:
       ! Can't find named rows in the table

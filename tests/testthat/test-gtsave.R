@@ -1,7 +1,10 @@
 test_that("gtsave() errors with bad filename input", {
+
   expect_snapshot(error = TRUE, {
+
     # file extension doesn't correspond to a saving function
     gtsave(gt(exibble), filename = "exibble.bat")
+
     # no file extension is provided
     gtsave(gt(exibble), filename = "exibble")
   })
@@ -9,7 +12,9 @@ test_that("gtsave() errors with bad filename input", {
 
 # gtsave inline css handling ----------------------
 test_that("gtsave() creates an HTML file based on the extension", {
+
   gt_tbl <- gt(exibble)
+
   # filename with .html extension
   path_html <- tempfile(fileext = ".html")
   path_htm <- tempfile(fileext = ".htm")
@@ -30,6 +35,7 @@ test_that("gtsave() creates an HTML file based on the extension", {
   gtsave(gt_tbl, filename = path_html)
   gtsave(gt_tbl, filename = path_htm)
   gtsave(gt_tbl, filename = path_html_inline_css1, inline_css = TRUE)
+
   # Should produce the same output as the above
   gtsave(
     gt_tbl,
@@ -37,12 +43,14 @@ test_that("gtsave() creates an HTML file based on the extension", {
     path = dirname(path_html_inline_css2),
     inline_css = TRUE
   )
+
   file_exist <- file.exists(c(
     path_html,
     path_htm,
     path_html_inline_css1,
     path_html_inline_css2
   ))
+
   expect_setequal(file_exist, TRUE)
   skip_if_not(all(file_exist), "Some files failed to save")
 
@@ -75,6 +83,7 @@ test_that("gtsave() creates an HTML file based on the extension", {
 
 # gtsave path handling with HTML ------------------------
 test_that("gtsave() works for HTML with relative filename, default path", {
+
   skip_on_ci()
   skip_on_covr()
 
@@ -101,6 +110,7 @@ test_that("gtsave() works for HTML with relative filename, default path", {
 })
 
 test_that("gt_save_html() works with relative filename, default path", {
+
   # the test is the same as above, but only change gtsave() with gt_save_html()
   skip_on_ci()
   skip_on_covr()
@@ -129,6 +139,7 @@ test_that("gt_save_html() works with relative filename, default path", {
 })
 
 test_that("gtsave() works for HTML with relative filename, relative path", {
+
   skip_on_ci()
   skip_on_covr()
 
@@ -157,6 +168,7 @@ test_that("gtsave() works for HTML with relative filename, relative path", {
 })
 
 test_that("gt_save_html() works with relative filename, relative path", {
+
   # the test is the same as above, but only change gtsave() with gt_save_html()
   skip_on_ci()
   skip_on_covr()
@@ -186,6 +198,7 @@ test_that("gt_save_html() works with relative filename, relative path", {
 })
 
 test_that("gtsave() works for HTML with absolute filename, absolute path (expect that `path` is ignored)", {
+
   skip_on_ci()
   skip_on_covr()
 
@@ -200,6 +213,7 @@ test_that("gtsave() works for HTML with absolute filename, absolute path (expect
 })
 
 test_that("gt_save_html() works with absolute filename, absolute path (expect that `path` is ignored)", {
+
   # the test is the same as above, but only change gtsave() with gt_save_html()
   skip_on_ci()
   skip_on_covr()
@@ -215,6 +229,7 @@ test_that("gt_save_html() works with absolute filename, absolute path (expect th
 })
 
 test_that("gtsave() works for HTML with filename starting with ~/, absolute path (expect that path is ignored)", {
+
   skip_on_ci()
   skip_on_covr()
   skip_on_os("windows")
@@ -229,6 +244,7 @@ test_that("gtsave() works for HTML with filename starting with ~/, absolute path
 })
 
 test_that("gt_save_html() works with filename starting with ~/, absolute path (expect that path is ignored)", {
+
   # the test is the same as above, but only change gtsave() with gt_save_html()
   skip_on_ci()
   skip_on_covr()
@@ -244,6 +260,7 @@ test_that("gt_save_html() works with filename starting with ~/, absolute path (e
 })
 
 test_that("gtsave() works for HTML using ~", {
+
   skip_on_ci()
   skip_on_covr()
   skip_on_os("windows")
@@ -258,6 +275,7 @@ test_that("gtsave() works for HTML using ~", {
 })
 
 test_that("gt_save_html() works using ~", {
+
   skip_on_ci()
   skip_on_covr()
   skip_on_os("windows")
@@ -274,8 +292,10 @@ test_that("gt_save_html() works using ~", {
 # gtsave() and LaTeX -----------------------------------------------------------
 
 test_that("gtsave() creates a LaTeX file for .tex files", {
+
   skip()
   skip_on_ci()
+
   # Create a filename with path, having the
   # .tex extension
   path_1 <- tempfile(fileext = ".tex")
@@ -298,9 +318,11 @@ test_that("gtsave() creates a LaTeX file for .tex files", {
 })
 
 test_that("gtsave() creates LaTeX file for .ltx files", {
+
   # TODO delete this test if outdated or fix it and unskip
   skip()
   skip_on_ci()
+
   # Create a filename with path, having the
   # .ltx extension
   path_2 <- tempfile(fileext = ".ltx")
@@ -336,13 +358,14 @@ test_that("gtsave() creates docx files as expected", {
   expect_false(file.exists(temp_docx))
 
   gtsave(gt_exibble, filename = "test.docx", path = tempdir())
+
   expect_true(file.exists(temp_docx))
 
   temp_docx_xml <- xml2::read_xml(unz(temp_docx, "word/document.xml"))
 
-  temp_docx_xml %>%
-    xml2::xml_find_first(".//w:tbl") %>%
-    as.character() %>%
+  temp_docx_xml |>
+    xml2::xml_find_first(".//w:tbl") |>
+    as.character() |>
     expect_snapshot()
 })
 
@@ -359,6 +382,7 @@ test_that("gtsave() creates docx files when a table has special characters (#121
   tbl <- gt(data.frame(a = c("<", "b"), b = 1:2, stringsAsFactors = FALSE))
 
   gtsave(tbl, filename = "test.docx", path = tempdir())
+
   expect_true(file.exists(temp_docx))
 
   temp_docx_xml <- xml2::read_xml(unz(temp_docx, "word/document.xml"))

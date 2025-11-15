@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -154,20 +154,20 @@ generate_gt_examples_tbl <- function() {
   dplyr::tibble(
     name = topic_names,
     examples = topic_examples
-  ) %>%
-    dplyr::mutate(name = paste0("`", name, "()`")) %>%
-    gt(id = "gt-examples") %>%
-    fmt_markdown() %>%
+  ) |>
+    dplyr::mutate(name = paste0("`", name, "()`")) |>
+    gt(id = "gt-examples") |>
+    fmt_markdown() |>
     text_transform(
       fn = function(x) paste0("<details><summary>EXAMPLES</summary><br>", x, "</details"),
       locations = cells_body(columns = examples)
-    ) %>%
-    cols_width(name ~ px(275), examples ~ px(800)) %>%
+    ) |>
+    cols_width(name ~ px(275), examples ~ px(800)) |>
     tab_style(
       style = cell_text(v_align = "top"),
       locations = cells_body(columns = name)
-    ) %>%
-    tab_options(column_labels.hidden = TRUE) %>%
+    ) |>
+    tab_options(column_labels.hidden = TRUE) |>
     opt_css(
       "
     #gt-examples details > div {
@@ -272,8 +272,8 @@ write_gt_examples_qmd_files <- function(
     }
 
     index_tbl_gt <-
-      index_tbl %>%
-      dplyr::arrange(family, number) %>%
+      index_tbl |>
+      dplyr::arrange(family, number) |>
       dplyr::mutate(
         name = dplyr::case_when(
           type == "function" ~ paste0(
@@ -281,7 +281,7 @@ write_gt_examples_qmd_files <- function(
           ),
           .default = name
         )
-      ) %>%
+      ) |>
       dplyr::mutate(
         group = dplyr::case_match(family,
           1 ~ "Table creation",
@@ -301,18 +301,18 @@ write_gt_examples_qmd_files <- function(
           15 ~ "Vector formatting",
           99 ~ "Built in datasets"
         )
-      ) %>%
-      gt(groupname_col = "group", process_md = TRUE) %>%
-      fmt_markdown() %>%
-      fmt_url(columns = name, color = "#045AA2", target = "_self") %>%
-      cols_hide(columns = c(type, family, number)) %>%
+      ) |>
+      gt(groupname_col = "group", process_md = TRUE) |>
+      fmt_markdown() |>
+      fmt_url(columns = name, color = "#045AA2", target = "_self") |>
+      cols_hide(columns = c(type, family, number)) |>
       tab_style(
         style = cell_text(
           font = system_fonts("monospace-code"),
           weight = 500
         ),
         locations = cells_body(columns = name)
-      ) %>%
+      ) |>
       tab_options(column_labels.hidden = TRUE)
 
     writeLines(

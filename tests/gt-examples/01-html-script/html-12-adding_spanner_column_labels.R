@@ -12,15 +12,15 @@ tbl <-
 
 # Create a display table
 gt_tbl <-
-  gt(tbl) %>%
+  gt(tbl) |>
   tab_spanner(
     label = "v_1_2",
     columns =  c(v_1, v_2)
-  ) %>%
+  ) |>
   tab_spanner(
     label = "v_4_5",
     columns = c(v_4, v_5)
-  ) %>%
+  ) |>
   cols_move_to_start(columns = v_3)
 
 gt_tbl

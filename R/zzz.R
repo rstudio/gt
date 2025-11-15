@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -138,7 +138,7 @@ utils::globalVariables(
 #'
 #' **gt** uses the following [options()] to configure behavior:
 #'
-#' - `gt.locale`: A [locale][info_locales()] to yse by default in
+#' - `gt.locale`: A [locale][info_locales()] to use by default in
 #'  the [gt()] function.
 #' - `gt.row_group.sep`: A separator between groups for the row group label. By
 #' default this is `" - "`.
@@ -151,7 +151,7 @@ utils::globalVariables(
 #' - `gt.latex_packages`: A vector of LaTeX package names to use when generating
 #' tables in the LaTeX output context. The set of packages loaded is controlled
 #' by this default vector:
-#' `c("booktabs", "caption", "longtable", "colortbl", "array")`.
+#' `c("booktabs", "caption", "longtable", "colortbl", "array", "anyfontsize", "multirow")`.
 #'
 #' @keywords internal
 #' @name gt-options
@@ -173,6 +173,10 @@ gt_default_options <-
   op <- options()
   toset <- !(names(gt_default_options) %in% names(op))
   if (any(toset)) options(gt_default_options[toset])
+
+  # Only register S3 method once package is loaded
+  vctrs::s3_register("gtable::as.gtable", "gt_tbl")
+
 
   invisible()
 }

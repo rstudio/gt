@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -135,6 +135,58 @@ html <- function(text, ...) {
   }
 
   htmltools::HTML(text, ...)
+}
+
+# latex() -----------------------------------------------------------------------
+#' Interpret input text as LaTeX-formatted text
+#'
+#' @description
+#'
+#' For certain pieces of text (like in column labels or table headings) we may
+#' want to express them as raw LaTeX. In fact, with LaTeX, so much more can be done for formatting.
+#' The `latex()` function will guard the input LaTeX from being escaped.
+#'
+#' @param text *LaTeX text*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   The text that is understood to be LaTeX text, which is to be preserved in
+#'   the LaTeX output context.
+#'
+#'
+#' @return A character object of class `latex`. It's tagged as an latex fragment
+#'   that is not to be sanitized.
+#'
+#' @section Examples:
+#'
+#' Use the [`exibble`] dataset to create a **gt** table. When adding a title
+#' through [tab_header()], we'll use the `latex()` helper to signify to **gt**
+#' that we're using LaTeX formatting.
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(currency, char) |>
+#'   gt() |>
+#'   tab_header(title = latex("\\emph{LaTeX}"))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_latex_1.png")`
+#' }}
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-2
+#'
+#' @section Function Introduced:
+#' `v1.0.1` (May 10, 2025)
+#'
+#' @export
+latex <- function(text) {
+
+  # Apply the `from_latex` class
+  class(text) <- "from_latex"
+  text
 }
 
 # px() -------------------------------------------------------------------------
@@ -582,8 +634,7 @@ currency <- function(
 #'
 #' ```r
 #' towny |>
-#'   dplyr::arrange(desc(density_2021)) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(density_2021, n = 10) |>
 #'   dplyr::select(name, population_2021, density_2021, land_area_km2) |>
 #'   gt(rowname_col = "name") |>
 #'   fmt_integer(columns = population_2021) |>
@@ -714,7 +765,7 @@ unit_conversion <- function(from, to) {
   # In the case where units are valid and available in the internal dataset,
   # they may be across categories; such pairings do not allow for a conversion
   # to take place
-  if (nrow(row_conversion) < 1) {
+  if (nrow(row_conversion) == 0L) {
     cli::cli_abort("The conversion specified cannot be performed.")
   }
 
@@ -754,29 +805,29 @@ normalize_temp_keyword <- function(keyword) {
 
   switch(
     keyword,
-    temperature.celsius =,
-    temp.celsius =,
-    celsius =,
-    temperature.C =,
-    temp.C =,
+    temperature.celsius = ,
+    temp.celsius = ,
+    celsius = ,
+    temperature.C = ,
+    temp.C = ,
     C = "C",
-    temperature.fahrenheit =,
-    temp.fahrenheit =,
-    fahrenheit =,
-    temperature.F =,
-    temp.F =,
+    temperature.fahrenheit = ,
+    temp.fahrenheit = ,
+    fahrenheit = ,
+    temperature.F = ,
+    temp.F = ,
     `F` = "F",
-    temperature.kelvin =,
-    temp.kelvin =,
-    kelvin =,
-    temperature.K =,
-    temp.K =,
+    temperature.kelvin = ,
+    temp.kelvin = ,
+    kelvin = ,
+    temperature.K = ,
+    temp.K = ,
     K = "K",
-    temperature.rankine =,
-    temp.rankine =,
-    rankine =,
-    temperature.R =,
-    temp.R =,
+    temperature.rankine = ,
+    temp.rankine = ,
+    rankine = ,
+    temperature.R = ,
+    temp.R = ,
     R = "R"
   )
 }
@@ -948,6 +999,14 @@ adjust_luminance <- function(
 #' operations, the `stub()` select helper can be used. This obviates the need
 #' to use the name of the column that was selected as the stub column.
 #'
+#' @param column *Stub column selection*
+#'
+#'   `scalar<integer>` // *default:* `NULL` (optional)
+#'
+#'   For tables with multi-column stubs, optionally specify which stub column to
+#'   target. Use `1` for the rightmost stub column, `2` for the second from
+#'   right, etc. If `NULL` (the default), all stub columns are selected.
+#'
 #' @return A character vector of class `"stub_column"`.
 #'
 #' @section Examples:
@@ -980,6 +1039,40 @@ adjust_luminance <- function(
 #' `r man_get_image_tag(file = "man_stub_1.png")`
 #' }}
 #'
+#' For multi-column stubs, you can set widths for all stub columns together or
+#' target specific columns individually:
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(num, char, row, group) |>
+#'   gt(rowname_col = c("group", "row")) |>
+#'   cols_width(
+#'     stub() ~ px(200),        # All stub columns get 200px
+#'     everything() ~ px(100)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_stub_2.png")`
+#' }}
+#'
+#' Or target specific stub columns (1 = rightmost, 2 = second from right):
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(num, char, row, group) |>
+#'   gt(rowname_col = c("group", "row")) |>
+#'   cols_width(
+#'     stub(1) ~ px(70),        # Rightmost stub column (row)
+#'     stub(2) ~ px(200),       # Second stub column (group)
+#'     everything() ~ px(100)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_stub_3.png")`
+#' }}
+#'
 #' @family helper functions
 #' @section Function ID:
 #' 8-10
@@ -988,9 +1081,10 @@ adjust_luminance <- function(
 #' `v0.8.0` (November 16, 2022)
 #'
 #' @export
-stub <- function() {
+stub <- function(column = NULL) {
   x <- "::stub::"
   class(x) <- "stub_column"
+  attr(x, "column") <- column
   x
 }
 
@@ -1312,7 +1406,7 @@ cells_column_spanners <- function(spanners = everything(), levels = NULL) {
   class(cells) <- c("cells_column_spanners", "location_cells")
 
   # Save what spanner_levels are in scope of the location selection
-  attr(cells,"spanner_levels") <- levels
+  attr(cells, "spanner_levels") <- levels
 
   cells
 }
@@ -1522,27 +1616,58 @@ cells_group <- function(groups = everything()) {
 #'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   The rows to which targeting operations are constrained. The default
-#'   [everything()] results in all rows in `columns` being formatted.
-#'   Alternatively, we can supply a vector of row IDs within `c()`, a vector of
-#'   row indices, or a select helper function (e.g. [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [num_range()], and
-#'   [everything()]). We can also use expressions to filter down to the rows we
-#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   [everything()] results in all rows in the stub being targeted.
+#'   Multiple targeting methods are supported:
+#'
+#'   **Numeric indices:** A vector of row indices within `c()` (e.g., `c(1, 3, 5)`).
+#'
+#'   **Content-based targeting:** A vector of content values within `c()` that match
+#'   values in any stub column (e.g., `c("Ford", "BMW")` to target all rows
+#'   containing those manufacturer names). This is particularly useful for
+#'   multi-column stubs where you want to target based on content rather than
+#'   calculating row indices.
+#'
+#'   **Select helpers:** Use functions like [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()].
+#'
+#'   **Expressions:** Filter expressions to target specific rows
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#'   When using content-based targeting with multi-column stubs, the function
+#'   will search all stub columns for matching values unless specific `columns`
+#'   are provided to constrain the search.
+#'
+#' @param columns *Stub columns to target*
+#'
+#'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
+#'
+#'   The stub columns to which targeting operations are constrained. By default
+#'   (`NULL`), all stub columns are targeted for backward compatibility. For
+#'   tables with multi-column stubs (created with `gt(rowname_col = c(...))` or
+#'   when `row_group_as_column = TRUE`), you can target specific columns by
+#'   providing a vector of column names within `c()`, a vector of column indices,
+#'   or a select helper function. When `columns` is specified, only the
+#'   intersection of the specified columns and rows will be targeted. For
+#'   single-column stubs, this argument can be omitted for traditional behavior.
 #'
 #' @return A list object with the classes `cells_stub` and `location_cells`.
 #'
 #' @section Examples:
 #'
-#' Using a transformed version of the [`sza`] dataset, let's create a **gt**
-#' table. Color all of the `month` values in the table stub with [tab_style()],
-#' using `cells_stub()` in `locations`.
+#' Let's create a **gt** table using a transformed version of the [`sza`]
+#' dataset. We'll color all of the `month` values in the table stub with
+#' [tab_style()], using `cells_stub()` in `locations`.
 #'
 #' ```r
 #' sza |>
 #'   dplyr::filter(latitude == 20 & tst <= "1000") |>
 #'   dplyr::select(-latitude) |>
 #'   dplyr::filter(!is.na(sza)) |>
-#'   tidyr::spread(key = "tst", value = sza) |>
+#'   tidyr::pivot_wider(
+#'     names_from = "tst",
+#'     values_from = sza,
+#'     names_sort = TRUE
+#'   ) |>
 #'   gt(rowname_col = "month") |>
 #'   sub_missing(missing_text = "") |>
 #'   tab_style(
@@ -1558,6 +1683,47 @@ cells_group <- function(groups = everything()) {
 #' `r man_get_image_tag(file = "man_cells_stub_1.png")`
 #' }}
 #'
+#' For multi-column stubs, you can target specific columns. Here's an example
+#' with a table that has multiple stub columns:
+#'
+#' ```r
+#' # Create a table with multi-column stub
+#' dplyr::tibble(
+#'   country = rep(c("USA", "Canada"), each = 3),
+#'   region = rep(c("North", "South", "West"), 2),
+#'   pop_2020 = c(5000, 3000, 2000, 4000, 3500, 1500),
+#'   pop_2021 = c(5100, 3100, 2100, 4100, 3600, 1600)
+#' ) |>
+#'   gt(rowname_col = c("country", "region")) |>
+#'   tab_style(
+#'     style = cell_fill(color = "lightblue"),
+#'     locations = cells_stub(columns = "country", rows = 1:2)
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(weight = "bold"),
+#'     locations = cells_stub(columns = "region", rows = c(1, 3, 5))
+#'   )
+#' ```
+#'
+#' You can also use content-based targeting to target rows by their actual values
+#' rather than calculating row indices:
+#'
+#' ```r
+#' # Content-based targeting example
+#' gtcars |>
+#'   dplyr::select(mfr, model, year, hp, msrp) |>
+#'   dplyr::slice(1:8) |>
+#'   gt(rowname_col = c("mfr", "model")) |>
+#'   tab_style(
+#'     style = cell_fill(color = "lightcoral"),
+#'     locations = cells_stub(rows = "Ford")  # Targets all Ford rows
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(weight = "bold"),
+#'     locations = cells_stub(rows = c("BMW", "Audi"), columns = "mfr")
+#'   )
+#' ```
+#'
 #' @family location helper functions
 #' @section Function ID:
 #' 8-17
@@ -1566,13 +1732,24 @@ cells_group <- function(groups = everything()) {
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
-cells_stub <- function(rows = everything()) {
+cells_stub <- function(rows = everything(), columns = NULL) {
 
   # Capture expression for the `rows` argument
   rows_expr <- rlang::enquo(rows)
 
-  # Create the `cells` object
-  cells <- list(rows = rows_expr)
+  # Check if columns parameter was explicitly provided
+  # For backward compatibility, only include columns if it was explicitly set
+  columns_provided <- !is.null(columns)
+
+  # Create the `cells` object based on backward compatibility needs
+  if (columns_provided) {
+    # New behavior: both columns and rows
+    columns_expr <- rlang::enquo(columns)
+    cells <- list(columns = columns_expr, rows = rows_expr)
+  } else {
+    # Legacy behavior: only rows (for backward compatibility)
+    cells <- list(rows = rows_expr)
+  }
 
   # Apply the `cells_stub` and `location_cells` classes
   class(cells) <- c("cells_stub", "location_cells")
@@ -2942,6 +3119,9 @@ latex_special_chars <- c(
   "}" = "\\}"
 )
 
+latex_unicode_env <- new.env()
+
+
 # escape_latex() ---------------------------------------------------------------
 #' Perform LaTeX escaping
 #'
@@ -2957,6 +3137,14 @@ latex_special_chars <- c(
 #'
 #'   A character vector containing the text that is to be LaTeX-escaped.
 #'
+#' @param unicode_conversion *Boolean*
+#'
+#'   `scalar<boolean>` // *default:* `TRUE`
+#'
+#'   A boolean value indicating whether unicode in text should be turned into
+#'    LaTeX.
+#'
+#'
 #' @return A character vector.
 #'
 #' @family helper functions
@@ -2967,7 +3155,7 @@ latex_special_chars <- c(
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
-escape_latex <- function(text) {
+escape_latex <- function(text, unicode_conversion = getOption("gt.latex.unicode_convert",default = FALSE)) {
 
   if (length(text) < 1) return(text)
 
@@ -2989,6 +3177,40 @@ escape_latex <- function(text) {
     })
 
   regmatches(text[!na_text], m) <- escaped_chars
+
+  if(unicode_conversion){
+
+    if(getRversion() > package_version("4.1.3")){
+
+      if(is.null(latex_unicode_env$latex_unicode_chars) & !isTRUE(latex_unicode_env$latex_unicode_char_load_fail)){
+          latex_unicode_env$latex_unicode_chars <- tryCatch(
+            eval(str2expression(
+              readLines(system.file("latex_unicode/latex_unicode_conversion.txt", package = "gt"))
+            )),
+            error = function(e){
+              latex_unicode_env$latex_unicode_char_load_fail <- TRUE
+              cli::cli_warn("A problem was encountered loading the unicode conversion data. Unicode values will not be converted into LaTeX.")
+              c()
+            })
+      }
+
+      m2 <- gregexpr(paste0("[",paste0(names(latex_unicode_env$latex_unicode_chars), collapse = "|"),"]"), text[!na_text], perl = TRUE)
+
+      unicode_chars <- regmatches(text[!na_text], m2)
+
+      latex_unicode <-
+        lapply(unicode_chars, function(x) {
+          new_var <- latex_unicode_env$latex_unicode_chars[x]
+          if(length(new_var) > 0){
+            x[!is.na(new_var)] <- new_var[!is.na(new_var)]
+          }
+          x
+        })
+
+      regmatches(text[!na_text], m2) <- latex_unicode
+    }
+  }
+
   text
 }
 

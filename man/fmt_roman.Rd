@@ -136,7 +136,7 @@ formatted by way of \code{\link[=fmt_units]{fmt_units()}}):
 
 \section{Function ID}{
 
-3-9
+3-10
 }
 
 \section{Function Introduced}{
@@ -169,6 +169,7 @@ Other data formatting functions:
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_number_si}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},

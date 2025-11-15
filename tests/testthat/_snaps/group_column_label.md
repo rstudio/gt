@@ -102,15 +102,14 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -118,7 +117,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  & \\multicolumn{3}{c}{timing} &  &  &  \\\\ \n\\cmidrule(lr){4-6}\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 & grp\\_a \\\\ \n2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 & grp\\_a \\\\ \n3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 & grp\\_a \\\\ \n4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 & grp\\_a \\\\ \n5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 & grp\\_b \\\\ \nNA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 & grp\\_b \\\\ \n7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 & grp\\_b \\\\ \n8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 & grp\\_b \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  & \\multicolumn{3}{c}{timing} &  &  &  \\\\ \n\\cmidrule(lr){4-6}\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 & grp\\_a \\\\ \n2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 & grp\\_a \\\\ \n3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 & grp\\_a \\\\ \n4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 & grp\\_a \\\\ \n5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 & grp\\_b \\\\ \nNA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 & grp\\_b \\\\ \n7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 & grp\\_b \\\\ \n8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 & grp\\_b \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -562,15 +561,14 @@
       <td headers="row" class="gt_row gt_left">row_8</td>
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -578,7 +576,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  & \\multicolumn{3}{c}{timing} &  &  &  \\\\ \n\\cmidrule(lr){4-6}\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 & grp\\_a \\\\ \n2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 & grp\\_a \\\\ \n3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 & grp\\_a \\\\ \n4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 & grp\\_a \\\\ \n5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 & grp\\_b \\\\ \nNA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 & grp\\_b \\\\ \n7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 & grp\\_b \\\\ \n8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 & grp\\_b \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  & \\multicolumn{3}{c}{timing} &  &  &  \\\\ \n\\cmidrule(lr){4-6}\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 & grp\\_a \\\\ \n2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 & grp\\_a \\\\ \n3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 & grp\\_a \\\\ \n4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 & grp\\_a \\\\ \n5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 & grp\\_b \\\\ \nNA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 & grp\\_b \\\\ \n7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 & grp\\_b \\\\ \n8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 & grp\\_b \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -1019,15 +1017,14 @@
       <td headers="grp_b  currency" class="gt_row gt_right">0.440</td>
       <td headers="grp_b  row" class="gt_row gt_left">row_8</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -1035,7 +1032,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrl}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){4-6}\nnum & char & fctr & date & time & datetime & currency & row \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{l}{grp\\_a} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 \\\\ \n2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 \\\\ \n3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 \\\\ \n4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{l}{grp\\_b} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 \\\\ \nNA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 \\\\ \n7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 \\\\ \n8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrl}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){4-6}\nnum & char & fctr & date & time & datetime & currency & row \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{l}{grp\\_a} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 \\\\ \n2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 \\\\ \n3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 \\\\ \n4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{l}{grp\\_b} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 \\\\ \nNA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 \\\\ \n7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 \\\\ \n8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -1390,82 +1387,81 @@
           </tr>
         </thead>
         <tbody class="gt_table_body">
-          <tr class="gt_row_group_first"><td headers="grp_a stub_1_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_a</td>
-      <td headers="grp_a stub_1_1 num" class="gt_row gt_right">1.111e-01</td>
-      <td headers="grp_a stub_1_1 char" class="gt_row gt_left">apricot</td>
-      <td headers="grp_a stub_1_1 fctr" class="gt_row gt_center">one</td>
-      <td headers="grp_a stub_1_1 date" class="gt_row gt_right">2015-01-15</td>
-      <td headers="grp_a stub_1_1 time" class="gt_row gt_right">13:35</td>
-      <td headers="grp_a stub_1_1 datetime" class="gt_row gt_right">2018-01-01 02:22</td>
-      <td headers="grp_a stub_1_1 currency" class="gt_row gt_right">49.950</td>
-      <td headers="grp_a stub_1_1 row" class="gt_row gt_left">row_1</td></tr>
-          <tr><td headers="grp_a num_2 num" class="gt_row gt_right">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right">17.950</td>
-      <td headers="grp_a num_2 row" class="gt_row gt_left">row_2</td></tr>
-          <tr><td headers="grp_a num_3 num" class="gt_row gt_right">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right">1.390</td>
-      <td headers="grp_a num_3 row" class="gt_row gt_left">row_3</td></tr>
-          <tr><td headers="grp_a num_4 num" class="gt_row gt_right">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right">65100.000</td>
-      <td headers="grp_a num_4 row" class="gt_row gt_left">row_4</td></tr>
-          <tr class="gt_row_group_first"><td headers="grp_b stub_1_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_b</td>
-      <td headers="grp_b stub_1_5 num" class="gt_row gt_right">5.550e+03</td>
-      <td headers="grp_b stub_1_5 char" class="gt_row gt_left">NA</td>
-      <td headers="grp_b stub_1_5 fctr" class="gt_row gt_center">five</td>
-      <td headers="grp_b stub_1_5 date" class="gt_row gt_right">2015-05-15</td>
-      <td headers="grp_b stub_1_5 time" class="gt_row gt_right">17:55</td>
-      <td headers="grp_b stub_1_5 datetime" class="gt_row gt_right">2018-05-05 04:00</td>
-      <td headers="grp_b stub_1_5 currency" class="gt_row gt_right">1325.810</td>
-      <td headers="grp_b stub_1_5 row" class="gt_row gt_left">row_5</td></tr>
-          <tr><td headers="grp_b num_6 num" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right">13.255</td>
-      <td headers="grp_b num_6 row" class="gt_row gt_left">row_6</td></tr>
-          <tr><td headers="grp_b num_7 num" class="gt_row gt_right">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_7 row" class="gt_row gt_left">row_7</td></tr>
-          <tr><td headers="grp_b num_8 num" class="gt_row gt_right">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right">0.440</td>
-      <td headers="grp_b num_8 row" class="gt_row gt_left">row_8</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_a stub_2_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_a</td>
+      <td headers="grp_a stub_2_1 num" class="gt_row gt_right">1.111e-01</td>
+      <td headers="grp_a stub_2_1 char" class="gt_row gt_left">apricot</td>
+      <td headers="grp_a stub_2_1 fctr" class="gt_row gt_center">one</td>
+      <td headers="grp_a stub_2_1 date" class="gt_row gt_right">2015-01-15</td>
+      <td headers="grp_a stub_2_1 time" class="gt_row gt_right">13:35</td>
+      <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right">2018-01-01 02:22</td>
+      <td headers="grp_a stub_2_1 currency" class="gt_row gt_right">49.950</td>
+      <td headers="grp_a stub_2_1 row" class="gt_row gt_left">row_1</td></tr>
+          <tr><td headers="grp_a stub_2_2 num" class="gt_row gt_right">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right">17.950</td>
+      <td headers="grp_a stub_2_2 row" class="gt_row gt_left">row_2</td></tr>
+          <tr><td headers="grp_a stub_2_3 num" class="gt_row gt_right">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right">1.390</td>
+      <td headers="grp_a stub_2_3 row" class="gt_row gt_left">row_3</td></tr>
+          <tr><td headers="grp_a stub_2_4 num" class="gt_row gt_right">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right">65100.000</td>
+      <td headers="grp_a stub_2_4 row" class="gt_row gt_left">row_4</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_b stub_2_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_b</td>
+      <td headers="grp_b stub_2_5 num" class="gt_row gt_right">5.550e+03</td>
+      <td headers="grp_b stub_2_5 char" class="gt_row gt_left">NA</td>
+      <td headers="grp_b stub_2_5 fctr" class="gt_row gt_center">five</td>
+      <td headers="grp_b stub_2_5 date" class="gt_row gt_right">2015-05-15</td>
+      <td headers="grp_b stub_2_5 time" class="gt_row gt_right">17:55</td>
+      <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right">2018-05-05 04:00</td>
+      <td headers="grp_b stub_2_5 currency" class="gt_row gt_right">1325.810</td>
+      <td headers="grp_b stub_2_5 row" class="gt_row gt_left">row_5</td></tr>
+          <tr><td headers="grp_b stub_2_6 num" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right">13.255</td>
+      <td headers="grp_b stub_2_6 row" class="gt_row gt_left">row_6</td></tr>
+          <tr><td headers="grp_b stub_2_7 num" class="gt_row gt_right">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_7 row" class="gt_row gt_left">row_7</td></tr>
+          <tr><td headers="grp_b stub_2_8 num" class="gt_row gt_right">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right">0.440</td>
+      <td headers="grp_b stub_2_8 row" class="gt_row gt_left">row_8</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -1473,7 +1469,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrl}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & row \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{4}{*}{grp\\_a} & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 \\\\ \n & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 \\\\ \n & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 \\\\ \n & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{4}{*}{grp\\_b} & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 \\\\ \n & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 \\\\ \n & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 \\\\ \n & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrl}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & row \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{4}{*}{grp\\_a} & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 \\\\ \n & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 \\\\ \n & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 \\\\ \n & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{4}{*}{grp\\_b} & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 \\\\ \n & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 \\\\ \n & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 \\\\ \n & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -1558,7 +1554,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 grp_a}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -1589,7 +1585,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -1620,7 +1616,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -1651,7 +1647,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -1682,7 +1678,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 grp_b}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -1713,7 +1709,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -1744,7 +1740,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -1775,7 +1771,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -1917,15 +1913,14 @@
       <td headers="stub_1_8 currency" class="gt_row gt_right">0.440</td>
       <td headers="stub_1_8 group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -1933,7 +1928,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrl}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & group \\\\ \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & grp\\_a \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & grp\\_a \\\\ \nrow\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & grp\\_a \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & grp\\_a \\\\ \nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & grp\\_b \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & grp\\_b \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & grp\\_b \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & grp\\_b \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrl}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & group \\\\ \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & grp\\_a \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & grp\\_a \\\\ \nrow\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & grp\\_a \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & grp\\_a \\\\ \nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & grp\\_b \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & grp\\_b \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & grp\\_b \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & grp\\_b \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -2018,7 +2013,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2049,7 +2044,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2080,7 +2075,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2111,7 +2106,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_4}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2142,7 +2137,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_5}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2173,7 +2168,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_6}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2204,7 +2199,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_7}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2235,7 +2230,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_8}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2377,15 +2372,14 @@
       <td headers="stub_1_8 currency" class="gt_row gt_right">0.440</td>
       <td headers="stub_1_8 group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -2393,7 +2387,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrl}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & group \\\\ \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & grp\\_a \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & grp\\_a \\\\ \nrow\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & grp\\_a \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & grp\\_a \\\\ \nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & grp\\_b \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & grp\\_b \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & grp\\_b \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & grp\\_b \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrl}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & group \\\\ \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & grp\\_a \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & grp\\_a \\\\ \nrow\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & grp\\_a \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & grp\\_a \\\\ \nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & grp\\_b \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & grp\\_b \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & grp\\_b \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & grp\\_b \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -2478,7 +2472,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2509,7 +2503,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2540,7 +2534,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2571,7 +2565,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_4}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2602,7 +2596,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_5}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2633,7 +2627,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_6}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2664,7 +2658,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_7}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2695,7 +2689,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_8}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -2834,15 +2828,14 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -2850,7 +2843,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrr}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{l}{grp\\_a} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \nrow\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{l}{grp\\_b} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrr}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{l}{grp\\_a} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \nrow\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{l}{grp\\_b} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -2936,7 +2929,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -2964,7 +2957,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -2992,7 +2985,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -3020,7 +3013,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_4}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -3055,7 +3048,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_5}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -3083,7 +3076,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_6}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -3111,7 +3104,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_7}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -3139,7 +3132,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_8}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -3213,30 +3206,30 @@
       <td headers="grp_a stub_2_1 time" class="gt_row gt_right">13:35</td>
       <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right">2018-01-01 02:22</td>
       <td headers="grp_a stub_2_1 currency" class="gt_row gt_right">49.950</td></tr>
-          <tr><th id="num_2" scope="row" class="gt_row gt_left gt_stub">row_2</th>
-      <td headers="grp_a num_2 num" class="gt_row gt_right">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right">17.950</td></tr>
-          <tr><th id="num_3" scope="row" class="gt_row gt_left gt_stub">row_3</th>
-      <td headers="grp_a num_3 num" class="gt_row gt_right">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right">1.390</td></tr>
-          <tr><th id="num_4" scope="row" class="gt_row gt_left gt_stub">row_4</th>
-      <td headers="grp_a num_4 num" class="gt_row gt_right">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right">65100.000</td></tr>
+          <tr><th id="stub_2_2" scope="row" class="gt_row gt_left gt_stub">row_2</th>
+      <td headers="grp_a stub_2_2 num" class="gt_row gt_right">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right">17.950</td></tr>
+          <tr><th id="stub_2_3" scope="row" class="gt_row gt_left gt_stub">row_3</th>
+      <td headers="grp_a stub_2_3 num" class="gt_row gt_right">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right">1.390</td></tr>
+          <tr><th id="stub_2_4" scope="row" class="gt_row gt_left gt_stub">row_4</th>
+      <td headers="grp_a stub_2_4 num" class="gt_row gt_right">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right">65100.000</td></tr>
           <tr class="gt_row_group_first"><td headers="grp_b stub_2_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_b</td>
       <th id="stub_2_5" scope="row" class="gt_row gt_left gt_stub">row_5</th>
       <td headers="grp_b stub_2_5 num" class="gt_row gt_right">5.550e+03</td>
@@ -3246,40 +3239,39 @@
       <td headers="grp_b stub_2_5 time" class="gt_row gt_right">17:55</td>
       <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right">2018-05-05 04:00</td>
       <td headers="grp_b stub_2_5 currency" class="gt_row gt_right">1325.810</td></tr>
-          <tr><th id="num_6" scope="row" class="gt_row gt_left gt_stub">row_6</th>
-      <td headers="grp_b num_6 num" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right">13.255</td></tr>
-          <tr><th id="num_7" scope="row" class="gt_row gt_left gt_stub">row_7</th>
-      <td headers="grp_b num_7 num" class="gt_row gt_right">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right">NA</td></tr>
-          <tr><th id="num_8" scope="row" class="gt_row gt_left gt_stub">row_8</th>
-      <td headers="grp_b num_8 num" class="gt_row gt_right">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right">0.440</td></tr>
+          <tr><th id="stub_2_6" scope="row" class="gt_row gt_left gt_stub">row_6</th>
+      <td headers="grp_b stub_2_6 num" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right">13.255</td></tr>
+          <tr><th id="stub_2_7" scope="row" class="gt_row gt_left gt_stub">row_7</th>
+      <td headers="grp_b stub_2_7 num" class="gt_row gt_right">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right">NA</td></tr>
+          <tr><th id="stub_2_8" scope="row" class="gt_row gt_left gt_stub">row_8</th>
+      <td headers="grp_b stub_2_8 num" class="gt_row gt_right">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right">0.440</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -3287,7 +3279,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|l|rlcrrrr}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n\\multicolumn{2}{l}{} &  &  &  & \\multicolumn{3}{c}{timing} &  \\\\ \n\\cmidrule(lr){6-8}\n\\multicolumn{2}{c}{S.L.} & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{4}{*}{grp\\_a} & row\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \n & row\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \n & row\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \n & row\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{4}{*}{grp\\_b} & row\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \n & row\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \n & row\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \n & row\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|l|rlcrrrr}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n\\multicolumn{2}{l}{} &  &  &  & \\multicolumn{3}{c}{timing} &  \\\\ \n\\cmidrule(lr){6-8}\n\\multicolumn{2}{c}{S.L.} & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{4}{*}{grp\\_a} & row\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \n & row\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \n & row\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \n & row\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{4}{*}{grp\\_b} & row\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \n & row\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \n & row\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \n & row\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -3372,10 +3364,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 grp_a}}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -3403,10 +3395,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -3434,10 +3426,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -3465,10 +3457,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_4}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -3496,10 +3488,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 grp_b}}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_5}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -3527,10 +3519,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_6}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -3558,10 +3550,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_7}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -3589,10 +3581,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_8}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -3770,15 +3762,14 @@
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="10">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="10">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -3786,7 +3777,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrll}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 & grp\\_a \\\\ \n & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 & grp\\_a \\\\ \n & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 & grp\\_a \\\\ \n & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 & grp\\_a \\\\ \n & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 & grp\\_b \\\\ \n & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 & grp\\_b \\\\ \n & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 & grp\\_b \\\\ \n & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 & grp\\_b \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 & — & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 & — & — \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 & — & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrll}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 & grp\\_a \\\\ \n & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 & grp\\_a \\\\ \n & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 & grp\\_a \\\\ \n & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 & grp\\_a \\\\ \n & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 & grp\\_b \\\\ \n & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 & grp\\_b \\\\ \n & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 & grp\\_b \\\\ \n & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 & grp\\_b \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 & — & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 & — & — \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 & — & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -3877,7 +3868,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -3911,7 +3902,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -3945,7 +3936,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -3979,7 +3970,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4013,7 +4004,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4047,7 +4038,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4081,7 +4072,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4115,7 +4106,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4149,7 +4140,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 min}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4183,7 +4174,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 max}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4217,7 +4208,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4401,15 +4392,14 @@
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="10">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="10">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -4417,7 +4407,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrll}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 & grp\\_a \\\\ \n & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 & grp\\_a \\\\ \n & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 & grp\\_a \\\\ \n & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 & grp\\_a \\\\ \n & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 & grp\\_b \\\\ \n & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 & grp\\_b \\\\ \n & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 & grp\\_b \\\\ \n & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 & grp\\_b \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 & — & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 & — & — \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 & — & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrll}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 & grp\\_a \\\\ \n & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 & grp\\_a \\\\ \n & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 & grp\\_a \\\\ \n & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 & grp\\_a \\\\ \n & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 & grp\\_b \\\\ \n & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 & grp\\_b \\\\ \n & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 & grp\\_b \\\\ \n & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 & grp\\_b \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 & — & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 & — & — \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 & — & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -4508,7 +4498,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4542,7 +4532,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4576,7 +4566,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4610,7 +4600,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4644,7 +4634,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4678,7 +4668,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4712,7 +4702,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4746,7 +4736,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4780,7 +4770,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 min}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4814,7 +4804,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 max}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -4848,7 +4838,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx936
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
@@ -5080,15 +5070,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9501.26</td>
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -5096,7 +5085,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrl}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & row \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{9}{l}{grp\\_a} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 \\\\ \n & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 \\\\ \n & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 \\\\ \n & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 \\\\ \n\\midrule \nmin & 0.11 & — & — & — & — & — & 1.39 & — \\\\ \nmax & 444.40 & — & — & — & — & — & 65100.00 & — \\\\ \navg & 120.02 & — & — & — & — & — & 16292.32 & — \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{9}{l}{grp\\_b} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 \\\\ \n & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 \\\\ \n & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 \\\\ \n & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 \\\\ \n\\midrule \nmin & 5550.00 & — & — & — & — & — & 0.44 & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 1325.81 & — \\\\ \navg & 3220850.00 & — & — & — & — & — & 446.50 & — \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 & — \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrl}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & row \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{9}{l}{grp\\_a} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 \\\\ \n & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 \\\\ \n & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 \\\\ \n & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 \\\\ \n\\midrule \nmin & 0.11 & — & — & — & — & — & 1.39 & — \\\\ \nmax & 444.40 & — & — & — & — & — & 65100.00 & — \\\\ \navg & 120.02 & — & — & — & — & — & 16292.32 & — \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{9}{l}{grp\\_b} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 \\\\ \n & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 \\\\ \n & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 \\\\ \n & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 \\\\ \n\\midrule \nmin & 5550.00 & — & — & — & — & — & 0.44 & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 1325.81 & — \\\\ \navg & 3220850.00 & — & — & — & — & — & 446.50 & — \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 & — \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -5188,7 +5177,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5219,7 +5208,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5250,7 +5239,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5281,7 +5270,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5312,7 +5301,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 min}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5343,7 +5332,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 max}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5374,7 +5363,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5412,7 +5401,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5443,7 +5432,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5474,7 +5463,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5505,7 +5494,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5536,7 +5525,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 min}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5567,7 +5556,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 max}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5598,7 +5587,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5629,7 +5618,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 min}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5660,7 +5649,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 max}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5691,7 +5680,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -5760,39 +5749,39 @@
           </tr>
         </thead>
         <tbody class="gt_table_body">
-          <tr class="gt_row_group_first"><td headers="grp_a stub_1_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_a</td>
-      <td headers="grp_a stub_1_1 num" class="gt_row gt_right">1.111e-01</td>
-      <td headers="grp_a stub_1_1 char" class="gt_row gt_left">apricot</td>
-      <td headers="grp_a stub_1_1 fctr" class="gt_row gt_center">one</td>
-      <td headers="grp_a stub_1_1 date" class="gt_row gt_right">2015-01-15</td>
-      <td headers="grp_a stub_1_1 time" class="gt_row gt_right">13:35</td>
-      <td headers="grp_a stub_1_1 datetime" class="gt_row gt_right">2018-01-01 02:22</td>
-      <td headers="grp_a stub_1_1 currency" class="gt_row gt_right">49.950</td>
-      <td headers="grp_a stub_1_1 row" class="gt_row gt_left">row_1</td></tr>
-          <tr><td headers="grp_a num_2 num" class="gt_row gt_right">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right">17.950</td>
-      <td headers="grp_a num_2 row" class="gt_row gt_left">row_2</td></tr>
-          <tr><td headers="grp_a num_3 num" class="gt_row gt_right">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right">1.390</td>
-      <td headers="grp_a num_3 row" class="gt_row gt_left">row_3</td></tr>
-          <tr><td headers="grp_a num_4 num" class="gt_row gt_right">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right">65100.000</td>
-      <td headers="grp_a num_4 row" class="gt_row gt_left">row_4</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_a stub_2_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_a</td>
+      <td headers="grp_a stub_2_1 num" class="gt_row gt_right">1.111e-01</td>
+      <td headers="grp_a stub_2_1 char" class="gt_row gt_left">apricot</td>
+      <td headers="grp_a stub_2_1 fctr" class="gt_row gt_center">one</td>
+      <td headers="grp_a stub_2_1 date" class="gt_row gt_right">2015-01-15</td>
+      <td headers="grp_a stub_2_1 time" class="gt_row gt_right">13:35</td>
+      <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right">2018-01-01 02:22</td>
+      <td headers="grp_a stub_2_1 currency" class="gt_row gt_right">49.950</td>
+      <td headers="grp_a stub_2_1 row" class="gt_row gt_left">row_1</td></tr>
+          <tr><td headers="grp_a stub_2_2 num" class="gt_row gt_right">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right">17.950</td>
+      <td headers="grp_a stub_2_2 row" class="gt_row gt_left">row_2</td></tr>
+          <tr><td headers="grp_a stub_2_3 num" class="gt_row gt_right">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right">1.390</td>
+      <td headers="grp_a stub_2_3 row" class="gt_row gt_left">row_3</td></tr>
+          <tr><td headers="grp_a stub_2_4 num" class="gt_row gt_right">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right">65100.000</td>
+      <td headers="grp_a stub_2_4 row" class="gt_row gt_left">row_4</td></tr>
           <tr><th id="summary_stub_grp_a_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row">min</th>
       <td headers="grp_a summary_stub_grp_a_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row">0.11</td>
       <td headers="grp_a summary_stub_grp_a_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row">—</td>
@@ -5820,39 +5809,39 @@
       <td headers="grp_a summary_stub_grp_a_3 datetime" class="gt_row gt_right gt_summary_row gt_last_summary_row">—</td>
       <td headers="grp_a summary_stub_grp_a_3 currency" class="gt_row gt_right gt_summary_row gt_last_summary_row">16292.32</td>
       <td headers="grp_a summary_stub_grp_a_3 row" class="gt_row gt_left gt_summary_row gt_last_summary_row">—</td></tr>
-          <tr class="gt_row_group_first"><td headers="grp_b stub_1_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_b</td>
-      <td headers="grp_b stub_1_5 num" class="gt_row gt_right">5.550e+03</td>
-      <td headers="grp_b stub_1_5 char" class="gt_row gt_left">NA</td>
-      <td headers="grp_b stub_1_5 fctr" class="gt_row gt_center">five</td>
-      <td headers="grp_b stub_1_5 date" class="gt_row gt_right">2015-05-15</td>
-      <td headers="grp_b stub_1_5 time" class="gt_row gt_right">17:55</td>
-      <td headers="grp_b stub_1_5 datetime" class="gt_row gt_right">2018-05-05 04:00</td>
-      <td headers="grp_b stub_1_5 currency" class="gt_row gt_right">1325.810</td>
-      <td headers="grp_b stub_1_5 row" class="gt_row gt_left">row_5</td></tr>
-          <tr><td headers="grp_b num_6 num" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right">13.255</td>
-      <td headers="grp_b num_6 row" class="gt_row gt_left">row_6</td></tr>
-          <tr><td headers="grp_b num_7 num" class="gt_row gt_right">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_7 row" class="gt_row gt_left">row_7</td></tr>
-          <tr><td headers="grp_b num_8 num" class="gt_row gt_right">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right">0.440</td>
-      <td headers="grp_b num_8 row" class="gt_row gt_left">row_8</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_b stub_2_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group">grp_b</td>
+      <td headers="grp_b stub_2_5 num" class="gt_row gt_right">5.550e+03</td>
+      <td headers="grp_b stub_2_5 char" class="gt_row gt_left">NA</td>
+      <td headers="grp_b stub_2_5 fctr" class="gt_row gt_center">five</td>
+      <td headers="grp_b stub_2_5 date" class="gt_row gt_right">2015-05-15</td>
+      <td headers="grp_b stub_2_5 time" class="gt_row gt_right">17:55</td>
+      <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right">2018-05-05 04:00</td>
+      <td headers="grp_b stub_2_5 currency" class="gt_row gt_right">1325.810</td>
+      <td headers="grp_b stub_2_5 row" class="gt_row gt_left">row_5</td></tr>
+          <tr><td headers="grp_b stub_2_6 num" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right">13.255</td>
+      <td headers="grp_b stub_2_6 row" class="gt_row gt_left">row_6</td></tr>
+          <tr><td headers="grp_b stub_2_7 num" class="gt_row gt_right">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_7 row" class="gt_row gt_left">row_7</td></tr>
+          <tr><td headers="grp_b stub_2_8 num" class="gt_row gt_right">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right">0.440</td>
+      <td headers="grp_b stub_2_8 row" class="gt_row gt_left">row_8</td></tr>
           <tr><th id="summary_stub_grp_b_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row">min</th>
       <td headers="grp_b summary_stub_grp_b_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row">5550.00</td>
       <td headers="grp_b summary_stub_grp_b_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row">—</td>
@@ -5908,15 +5897,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9501.26</td>
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -5924,7 +5912,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrl}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & row \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{7}{*}{grp\\_a} & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 \\\\ \n & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 \\\\ \n & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 \\\\ \n & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 \\\\ \n\\midrule \nmin & 0.11 & — & — & — & — & — & 1.39 & — \\\\ \nmax & 444.40 & — & — & — & — & — & 65100.00 & — \\\\ \navg & 120.02 & — & — & — & — & — & 16292.32 & — \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{7}{*}{grp\\_b} & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 \\\\ \n & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 \\\\ \n & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 \\\\ \n & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 \\\\ \n\\midrule \nmin & 5550.00 & — & — & — & — & — & 0.44 & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 1325.81 & — \\\\ \navg & 3220850.00 & — & — & — & — & — & 446.50 & — \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 & — \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrl}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & row \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{7}{*}{grp\\_a} & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 \\\\ \n & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 \\\\ \n & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 \\\\ \n & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 \\\\ \n\\midrule \nmin & 0.11 & — & — & — & — & — & 1.39 & — \\\\ \nmax & 444.40 & — & — & — & — & — & 65100.00 & — \\\\ \navg & 120.02 & — & — & — & — & — & 16292.32 & — \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{7}{*}{grp\\_b} & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 \\\\ \n & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 \\\\ \n & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 \\\\ \n & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 \\\\ \n\\midrule \nmin & 5550.00 & — & — & — & — & — & 0.44 & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 1325.81 & — \\\\ \navg & 3220850.00 & — & — & — & — & — & 446.50 & — \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 & — \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -6009,7 +5997,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 grp_a}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6040,7 +6028,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6071,7 +6059,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6102,7 +6090,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6133,7 +6121,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 min}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6164,7 +6152,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 max}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6195,7 +6183,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6226,7 +6214,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 grp_b}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6257,7 +6245,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6288,7 +6276,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6319,7 +6307,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6350,7 +6338,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 min}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6381,7 +6369,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 max}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6412,7 +6400,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6443,7 +6431,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 min}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6474,7 +6462,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 max}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6505,7 +6493,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6674,15 +6662,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9501.26</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -6690,7 +6677,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrl}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & group \\\\ \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & grp\\_a \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & grp\\_a \\\\ \nrow\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & grp\\_a \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & grp\\_a \\\\ \nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & grp\\_b \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & grp\\_b \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & grp\\_b \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & grp\\_b \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 & — \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrl}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & group \\\\ \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & grp\\_a \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & grp\\_a \\\\ \nrow\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & grp\\_a \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & grp\\_a \\\\ \nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & grp\\_b \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & grp\\_b \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & grp\\_b \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & grp\\_b \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 & — \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -6775,7 +6762,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6806,7 +6793,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6837,7 +6824,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6868,7 +6855,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_4}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6899,7 +6886,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_5}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6930,7 +6917,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_6}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6961,7 +6948,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_7}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -6992,7 +6979,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_8}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -7023,7 +7010,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 min}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -7054,7 +7041,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 max}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -7085,7 +7072,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -7254,15 +7241,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9501.26</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -7270,7 +7256,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrl}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & group \\\\ \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & grp\\_a \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & grp\\_a \\\\ \nrow\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & grp\\_a \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & grp\\_a \\\\ \nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & grp\\_b \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & grp\\_b \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & grp\\_b \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & grp\\_b \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 & — \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrrl}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & group \\\\ \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & grp\\_a \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & grp\\_a \\\\ \nrow\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & grp\\_a \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & grp\\_a \\\\ \nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & grp\\_b \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & grp\\_b \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & grp\\_b \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & grp\\_b \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 & — \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 & — \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -7355,7 +7341,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -7386,7 +7372,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -7417,7 +7403,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -7448,7 +7434,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_4}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -7479,7 +7465,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_5}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -7510,7 +7496,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_6}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -7541,7 +7527,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_7}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -7572,7 +7558,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 row_8}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -7603,7 +7589,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 min}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -7634,7 +7620,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 max}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -7665,7 +7651,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
@@ -7876,15 +7862,14 @@
       <td headers="grand_summary_stub_3 datetime" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9501.26</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="8">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -7892,7 +7877,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrr}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{l}{grp\\_a} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \nrow\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \n\\midrule \nmin & 0.11 & — & — & — & — & — & 1.39 \\\\ \nmax & 444.40 & — & — & — & — & — & 65100.00 \\\\ \navg & 120.02 & — & — & — & — & — & 16292.32 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{l}{grp\\_b} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\midrule \nmin & 5550.00 & — & — & — & — & — & 0.44 \\\\ \nmax & 8880000.00 & — & — & — & — & — & 1325.81 \\\\ \navg & 3220850.00 & — & — & — & — & — & 446.50 \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|rlcrrrr}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{l}{grp\\_a} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \nrow\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \n\\midrule \nmin & 0.11 & — & — & — & — & — & 1.39 \\\\ \nmax & 444.40 & — & — & — & — & — & 65100.00 \\\\ \navg & 120.02 & — & — & — & — & — & 16292.32 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{l}{grp\\_b} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\midrule \nmin & 5550.00 & — & — & — & — & — & 0.44 \\\\ \nmax & 8880000.00 & — & — & — & — & — & 1325.81 \\\\ \navg & 3220850.00 & — & — & — & — & — & 446.50 \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -7978,7 +7963,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8006,7 +7991,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8034,7 +8019,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8062,7 +8047,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_4}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8090,7 +8075,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 min}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8118,7 +8103,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 max}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8146,7 +8131,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8181,7 +8166,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_5}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8209,7 +8194,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_6}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8237,7 +8222,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_7}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8265,7 +8250,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 row_8}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8293,7 +8278,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 min}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8321,7 +8306,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 max}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8349,7 +8334,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8377,7 +8362,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 min}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8405,7 +8390,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 max}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8433,7 +8418,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1170
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
@@ -8507,30 +8492,30 @@
       <td headers="grp_a stub_2_1 time" class="gt_row gt_right">13:35</td>
       <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right">2018-01-01 02:22</td>
       <td headers="grp_a stub_2_1 currency" class="gt_row gt_right">49.950</td></tr>
-          <tr><th id="num_2" scope="row" class="gt_row gt_left gt_stub">row_2</th>
-      <td headers="grp_a num_2 num" class="gt_row gt_right">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right">17.950</td></tr>
-          <tr><th id="num_3" scope="row" class="gt_row gt_left gt_stub">row_3</th>
-      <td headers="grp_a num_3 num" class="gt_row gt_right">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right">1.390</td></tr>
-          <tr><th id="num_4" scope="row" class="gt_row gt_left gt_stub">row_4</th>
-      <td headers="grp_a num_4 num" class="gt_row gt_right">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right">65100.000</td></tr>
+          <tr><th id="stub_2_2" scope="row" class="gt_row gt_left gt_stub">row_2</th>
+      <td headers="grp_a stub_2_2 num" class="gt_row gt_right">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right">17.950</td></tr>
+          <tr><th id="stub_2_3" scope="row" class="gt_row gt_left gt_stub">row_3</th>
+      <td headers="grp_a stub_2_3 num" class="gt_row gt_right">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right">1.390</td></tr>
+          <tr><th id="stub_2_4" scope="row" class="gt_row gt_left gt_stub">row_4</th>
+      <td headers="grp_a stub_2_4 num" class="gt_row gt_right">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right">65100.000</td></tr>
           <tr><th id="summary_stub_grp_a_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick">min</th>
       <td headers="grp_a summary_stub_grp_a_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row thick">0.11</td>
       <td headers="grp_a summary_stub_grp_a_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row thick">—</td>
@@ -8564,30 +8549,30 @@
       <td headers="grp_b stub_2_5 time" class="gt_row gt_right">17:55</td>
       <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right">2018-05-05 04:00</td>
       <td headers="grp_b stub_2_5 currency" class="gt_row gt_right">1325.810</td></tr>
-          <tr><th id="num_6" scope="row" class="gt_row gt_left gt_stub">row_6</th>
-      <td headers="grp_b num_6 num" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right">13.255</td></tr>
-          <tr><th id="num_7" scope="row" class="gt_row gt_left gt_stub">row_7</th>
-      <td headers="grp_b num_7 num" class="gt_row gt_right">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right">NA</td></tr>
-          <tr><th id="num_8" scope="row" class="gt_row gt_left gt_stub">row_8</th>
-      <td headers="grp_b num_8 num" class="gt_row gt_right">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right">0.440</td></tr>
+          <tr><th id="stub_2_6" scope="row" class="gt_row gt_left gt_stub">row_6</th>
+      <td headers="grp_b stub_2_6 num" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right">13.255</td></tr>
+          <tr><th id="stub_2_7" scope="row" class="gt_row gt_left gt_stub">row_7</th>
+      <td headers="grp_b stub_2_7 num" class="gt_row gt_right">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right">NA</td></tr>
+          <tr><th id="stub_2_8" scope="row" class="gt_row gt_left gt_stub">row_8</th>
+      <td headers="grp_b stub_2_8 num" class="gt_row gt_right">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right">0.440</td></tr>
           <tr><th id="summary_stub_grp_b_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick">min</th>
       <td headers="grp_b summary_stub_grp_b_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row thick">5550.00</td>
       <td headers="grp_b summary_stub_grp_b_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row thick">—</td>
@@ -8637,15 +8622,14 @@
       <td headers="grand_summary_stub_3 datetime" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">9501.26</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -8653,7 +8637,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|l|rlcrrrr}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n\\multicolumn{2}{l}{} &  &  &  & \\multicolumn{3}{c}{timing} &  \\\\ \n\\cmidrule(lr){6-8}\n\\multicolumn{2}{c}{S.L.} & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{7}{*}{grp\\_a} & row\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \n & row\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \n & row\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \n & row\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \n\\cmidrule(l{-0.05em}r){2-9}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 0.11 & — & — & — & — & — & 1.39 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 444.40 & — & — & — & — & — & 65100.00 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 120.02 & — & — & — & — & — & 16292.32 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{7}{*}{grp\\_b} & row\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \n & row\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \n & row\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \n & row\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\cmidrule(l{-0.05em}r){2-9}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 5550.00 & — & — & — & — & — & 0.44 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 8880000.00 & — & — & — & — & — & 1325.81 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 3220850.00 & — & — & — & — & — & 446.50 \\\\ \n\\midrule \n\\midrule \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 0.11 & — & — & — & — & — & 0.44 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 8880000.00 & — & — & — & — & — & 65100.00 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 1380432.87 & — & — & — & — & — & 9501.26 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|l|rlcrrrr}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n\\multicolumn{2}{l}{} &  &  &  & \\multicolumn{3}{c}{timing} &  \\\\ \n\\cmidrule(lr){6-8}\n\\multicolumn{2}{c}{S.L.} & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{7}{*}{grp\\_a} & row\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \n & row\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \n & row\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \n & row\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \n\\cmidrule(l{-0.05em}r){2-9}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 0.11 & — & — & — & — & — & 1.39 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 444.40 & — & — & — & — & — & 65100.00 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 120.02 & — & — & — & — & — & 16292.32 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{7}{*}{grp\\_b} & row\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \n & row\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \n & row\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \n & row\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\cmidrule(l{-0.05em}r){2-9}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 5550.00 & — & — & — & — & — & 0.44 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 8880000.00 & — & — & — & — & — & 1325.81 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 3220850.00 & — & — & — & — & — & 446.50 \\\\ \n\\midrule \n\\midrule \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 0.11 & — & — & — & — & — & 0.44 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 8880000.00 & — & — & — & — & — & 65100.00 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 1380432.87 & — & — & — & — & — & 9501.26 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -8738,10 +8722,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 grp_a}}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -8769,10 +8753,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -8800,10 +8784,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -8831,10 +8815,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_4}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -8862,10 +8846,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 min}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -8893,10 +8877,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 max}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -8924,10 +8908,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -8955,10 +8939,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 grp_b}}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_5}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -8986,10 +8970,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_6}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -9017,10 +9001,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_7}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -9048,10 +9032,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 row_8}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -9079,10 +9063,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 min}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -9110,10 +9094,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 max}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -9141,10 +9125,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1040
       \intbl {\f0 {\f0\fs20 }}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2080
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -9172,10 +9156,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clmgf \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clmgf \cellx1040
       \intbl {\f0 {\f0\fs20 min}}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clmrg \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clmrg \cellx2080
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -9203,10 +9187,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clmgf \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clmgf \cellx1040
       \intbl {\f0 {\f0\fs20 max}}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clmrg \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clmrg \cellx2080
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -9234,10 +9218,10 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clmgf \cellx1040
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clmgf \cellx1040
       \intbl {\f0 {\f0\fs20 avg}}\cell
       
-      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clmrg \cellx2080
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clmrg \cellx2080
       \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
@@ -9376,15 +9360,14 @@
       <td headers="row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_8</td>
       <td headers="group" class="gt_row gt_left" style="background-color: #737373;">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -9491,15 +9474,14 @@
       <td headers="row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_8</td>
       <td headers="group" class="gt_row gt_left" style="background-color: #737373;">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -9603,15 +9585,14 @@
       <td headers="grp_b  currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td>
       <td headers="grp_b  row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_8</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="8">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="8">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -9645,82 +9626,81 @@
           </tr>
         </thead>
         <tbody class="gt_table_body">
-          <tr class="gt_row_group_first"><td headers="grp_a stub_1_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_a</td>
-      <td headers="grp_a stub_1_1 num" class="gt_row gt_right" style="background-color: #D9D9D9;">1.111e-01</td>
-      <td headers="grp_a stub_1_1 char" class="gt_row gt_left" style="background-color: #CCCCCC;">apricot</td>
-      <td headers="grp_a stub_1_1 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">one</td>
-      <td headers="grp_a stub_1_1 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-01-15</td>
-      <td headers="grp_a stub_1_1 time" class="gt_row gt_right" style="background-color: #A6A6A6;">13:35</td>
-      <td headers="grp_a stub_1_1 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-01-01 02:22</td>
-      <td headers="grp_a stub_1_1 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">49.950</td>
-      <td headers="grp_a stub_1_1 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_1</td></tr>
-          <tr><td headers="grp_a num_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td>
-      <td headers="grp_a num_2 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_2</td></tr>
-          <tr><td headers="grp_a num_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td>
-      <td headers="grp_a num_3 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_3</td></tr>
-          <tr><td headers="grp_a num_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td>
-      <td headers="grp_a num_4 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_4</td></tr>
-          <tr class="gt_row_group_first"><td headers="grp_b stub_1_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_b</td>
-      <td headers="grp_b stub_1_5 num" class="gt_row gt_right" style="background-color: #D9D9D9;">5.550e+03</td>
-      <td headers="grp_b stub_1_5 char" class="gt_row gt_left" style="background-color: #CCCCCC;">NA</td>
-      <td headers="grp_b stub_1_5 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">five</td>
-      <td headers="grp_b stub_1_5 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-05-15</td>
-      <td headers="grp_b stub_1_5 time" class="gt_row gt_right" style="background-color: #A6A6A6;">17:55</td>
-      <td headers="grp_b stub_1_5 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-05-05 04:00</td>
-      <td headers="grp_b stub_1_5 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1325.810</td>
-      <td headers="grp_b stub_1_5 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_5</td></tr>
-          <tr><td headers="grp_b num_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td>
-      <td headers="grp_b num_6 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_6</td></tr>
-          <tr><td headers="grp_b num_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td>
-      <td headers="grp_b num_7 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_7</td></tr>
-          <tr><td headers="grp_b num_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td>
-      <td headers="grp_b num_8 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_8</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_a stub_2_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_a</td>
+      <td headers="grp_a stub_2_1 num" class="gt_row gt_right" style="background-color: #D9D9D9;">1.111e-01</td>
+      <td headers="grp_a stub_2_1 char" class="gt_row gt_left" style="background-color: #CCCCCC;">apricot</td>
+      <td headers="grp_a stub_2_1 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">one</td>
+      <td headers="grp_a stub_2_1 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-01-15</td>
+      <td headers="grp_a stub_2_1 time" class="gt_row gt_right" style="background-color: #A6A6A6;">13:35</td>
+      <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-01-01 02:22</td>
+      <td headers="grp_a stub_2_1 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">49.950</td>
+      <td headers="grp_a stub_2_1 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_1</td></tr>
+          <tr><td headers="grp_a stub_2_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td>
+      <td headers="grp_a stub_2_2 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_2</td></tr>
+          <tr><td headers="grp_a stub_2_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td>
+      <td headers="grp_a stub_2_3 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_3</td></tr>
+          <tr><td headers="grp_a stub_2_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td>
+      <td headers="grp_a stub_2_4 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_4</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_b stub_2_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_b</td>
+      <td headers="grp_b stub_2_5 num" class="gt_row gt_right" style="background-color: #D9D9D9;">5.550e+03</td>
+      <td headers="grp_b stub_2_5 char" class="gt_row gt_left" style="background-color: #CCCCCC;">NA</td>
+      <td headers="grp_b stub_2_5 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">five</td>
+      <td headers="grp_b stub_2_5 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-05-15</td>
+      <td headers="grp_b stub_2_5 time" class="gt_row gt_right" style="background-color: #A6A6A6;">17:55</td>
+      <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-05-05 04:00</td>
+      <td headers="grp_b stub_2_5 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1325.810</td>
+      <td headers="grp_b stub_2_5 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_5</td></tr>
+          <tr><td headers="grp_b stub_2_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td>
+      <td headers="grp_b stub_2_6 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_6</td></tr>
+          <tr><td headers="grp_b stub_2_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td>
+      <td headers="grp_b stub_2_7 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_7</td></tr>
+          <tr><td headers="grp_b stub_2_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td>
+      <td headers="grp_b stub_2_8 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_8</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -9827,15 +9807,14 @@
       <td headers="stub_1_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td>
       <td headers="stub_1_8 group" class="gt_row gt_left" style="background-color: #737373;">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -9942,15 +9921,14 @@
       <td headers="stub_1_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td>
       <td headers="stub_1_8 group" class="gt_row gt_left" style="background-color: #737373;">grp_b</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -10054,15 +10032,14 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="8">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="8">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -10104,30 +10081,30 @@
       <td headers="grp_a stub_2_1 time" class="gt_row gt_right" style="background-color: #A6A6A6;">13:35</td>
       <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-01-01 02:22</td>
       <td headers="grp_a stub_2_1 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">49.950</td></tr>
-          <tr><th id="num_2" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_2</th>
-      <td headers="grp_a num_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td></tr>
-          <tr><th id="num_3" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_3</th>
-      <td headers="grp_a num_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td></tr>
-          <tr><th id="num_4" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_4</th>
-      <td headers="grp_a num_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td></tr>
+          <tr><th id="stub_2_2" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_2</th>
+      <td headers="grp_a stub_2_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td></tr>
+          <tr><th id="stub_2_3" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_3</th>
+      <td headers="grp_a stub_2_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td></tr>
+          <tr><th id="stub_2_4" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_4</th>
+      <td headers="grp_a stub_2_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td></tr>
           <tr class="gt_row_group_first"><td headers="grp_b stub_2_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_b</td>
       <th id="stub_2_5" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_5</th>
       <td headers="grp_b stub_2_5 num" class="gt_row gt_right" style="background-color: #D9D9D9;">5.550e+03</td>
@@ -10137,40 +10114,39 @@
       <td headers="grp_b stub_2_5 time" class="gt_row gt_right" style="background-color: #A6A6A6;">17:55</td>
       <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-05-05 04:00</td>
       <td headers="grp_b stub_2_5 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1325.810</td></tr>
-          <tr><th id="num_6" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_6</th>
-      <td headers="grp_b num_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td></tr>
-          <tr><th id="num_7" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_7</th>
-      <td headers="grp_b num_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td></tr>
-          <tr><th id="num_8" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_8</th>
-      <td headers="grp_b num_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td></tr>
+          <tr><th id="stub_2_6" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_6</th>
+      <td headers="grp_b stub_2_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td></tr>
+          <tr><th id="stub_2_7" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_7</th>
+      <td headers="grp_b stub_2_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td></tr>
+          <tr><th id="stub_2_8" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_8</th>
+      <td headers="grp_b stub_2_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -10316,15 +10292,14 @@
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="10">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="10">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -10470,15 +10445,14 @@
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="10">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="10">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -10672,15 +10646,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row" style="background-color: #D3D3D3;">9501.26</td>
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -10714,39 +10687,39 @@
           </tr>
         </thead>
         <tbody class="gt_table_body">
-          <tr class="gt_row_group_first"><td headers="grp_a stub_1_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_a</td>
-      <td headers="grp_a stub_1_1 num" class="gt_row gt_right" style="background-color: #D9D9D9;">1.111e-01</td>
-      <td headers="grp_a stub_1_1 char" class="gt_row gt_left" style="background-color: #CCCCCC;">apricot</td>
-      <td headers="grp_a stub_1_1 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">one</td>
-      <td headers="grp_a stub_1_1 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-01-15</td>
-      <td headers="grp_a stub_1_1 time" class="gt_row gt_right" style="background-color: #A6A6A6;">13:35</td>
-      <td headers="grp_a stub_1_1 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-01-01 02:22</td>
-      <td headers="grp_a stub_1_1 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">49.950</td>
-      <td headers="grp_a stub_1_1 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_1</td></tr>
-          <tr><td headers="grp_a num_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td>
-      <td headers="grp_a num_2 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_2</td></tr>
-          <tr><td headers="grp_a num_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td>
-      <td headers="grp_a num_3 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_3</td></tr>
-          <tr><td headers="grp_a num_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td>
-      <td headers="grp_a num_4 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_4</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_a stub_2_1 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_a</td>
+      <td headers="grp_a stub_2_1 num" class="gt_row gt_right" style="background-color: #D9D9D9;">1.111e-01</td>
+      <td headers="grp_a stub_2_1 char" class="gt_row gt_left" style="background-color: #CCCCCC;">apricot</td>
+      <td headers="grp_a stub_2_1 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">one</td>
+      <td headers="grp_a stub_2_1 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-01-15</td>
+      <td headers="grp_a stub_2_1 time" class="gt_row gt_right" style="background-color: #A6A6A6;">13:35</td>
+      <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-01-01 02:22</td>
+      <td headers="grp_a stub_2_1 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">49.950</td>
+      <td headers="grp_a stub_2_1 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_1</td></tr>
+          <tr><td headers="grp_a stub_2_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td>
+      <td headers="grp_a stub_2_2 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_2</td></tr>
+          <tr><td headers="grp_a stub_2_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td>
+      <td headers="grp_a stub_2_3 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_3</td></tr>
+          <tr><td headers="grp_a stub_2_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td>
+      <td headers="grp_a stub_2_4 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_4</td></tr>
           <tr><th id="summary_stub_grp_a_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row" style="background-color: #FFA500;">min</th>
       <td headers="grp_a summary_stub_grp_a_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row" style="background-color: #8FBC8F;">0.11</td>
       <td headers="grp_a summary_stub_grp_a_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row">—</td>
@@ -10774,39 +10747,39 @@
       <td headers="grp_a summary_stub_grp_a_3 datetime" class="gt_row gt_right gt_summary_row gt_last_summary_row">—</td>
       <td headers="grp_a summary_stub_grp_a_3 currency" class="gt_row gt_right gt_summary_row gt_last_summary_row" style="background-color: #8FBC8F;">16292.32</td>
       <td headers="grp_a summary_stub_grp_a_3 row" class="gt_row gt_left gt_summary_row gt_last_summary_row">—</td></tr>
-          <tr class="gt_row_group_first"><td headers="grp_b stub_1_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_b</td>
-      <td headers="grp_b stub_1_5 num" class="gt_row gt_right" style="background-color: #D9D9D9;">5.550e+03</td>
-      <td headers="grp_b stub_1_5 char" class="gt_row gt_left" style="background-color: #CCCCCC;">NA</td>
-      <td headers="grp_b stub_1_5 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">five</td>
-      <td headers="grp_b stub_1_5 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-05-15</td>
-      <td headers="grp_b stub_1_5 time" class="gt_row gt_right" style="background-color: #A6A6A6;">17:55</td>
-      <td headers="grp_b stub_1_5 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-05-05 04:00</td>
-      <td headers="grp_b stub_1_5 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1325.810</td>
-      <td headers="grp_b stub_1_5 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_5</td></tr>
-          <tr><td headers="grp_b num_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td>
-      <td headers="grp_b num_6 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_6</td></tr>
-          <tr><td headers="grp_b num_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td>
-      <td headers="grp_b num_7 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_7</td></tr>
-          <tr><td headers="grp_b num_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td>
-      <td headers="grp_b num_8 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_8</td></tr>
+          <tr class="gt_row_group_first"><td headers="grp_b stub_2_5 stub_1" rowspan="4" class="gt_row gt_left gt_stub_row_group" style="background-color: #E0FFFF;">grp_b</td>
+      <td headers="grp_b stub_2_5 num" class="gt_row gt_right" style="background-color: #D9D9D9;">5.550e+03</td>
+      <td headers="grp_b stub_2_5 char" class="gt_row gt_left" style="background-color: #CCCCCC;">NA</td>
+      <td headers="grp_b stub_2_5 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">five</td>
+      <td headers="grp_b stub_2_5 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-05-15</td>
+      <td headers="grp_b stub_2_5 time" class="gt_row gt_right" style="background-color: #A6A6A6;">17:55</td>
+      <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-05-05 04:00</td>
+      <td headers="grp_b stub_2_5 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1325.810</td>
+      <td headers="grp_b stub_2_5 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_5</td></tr>
+          <tr><td headers="grp_b stub_2_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td>
+      <td headers="grp_b stub_2_6 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_6</td></tr>
+          <tr><td headers="grp_b stub_2_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td>
+      <td headers="grp_b stub_2_7 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_7</td></tr>
+          <tr><td headers="grp_b stub_2_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td>
+      <td headers="grp_b stub_2_8 row" class="gt_row gt_left" style="background-color: #7F7F7F;">row_8</td></tr>
           <tr><th id="summary_stub_grp_b_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row" style="background-color: #FFA500;">min</th>
       <td headers="grp_b summary_stub_grp_b_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row" style="background-color: #8FBC8F;">5550.00</td>
       <td headers="grp_b summary_stub_grp_b_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row">—</td>
@@ -10862,15 +10835,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row" style="background-color: #D3D3D3;">9501.26</td>
       <td headers="grand_summary_stub_3 row" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -11004,15 +10976,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row" style="background-color: #D3D3D3;">9501.26</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -11146,15 +11117,14 @@
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row" style="background-color: #D3D3D3;">9501.26</td>
       <td headers="grand_summary_stub_3 group" class="gt_row gt_left gt_grand_summary_row gt_last_summary_row">—</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -11330,15 +11300,14 @@
       <td headers="grand_summary_stub_3 datetime" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row" style="background-color: #D3D3D3;">9501.26</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="8">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="8">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 ---
@@ -11380,30 +11349,30 @@
       <td headers="grp_a stub_2_1 time" class="gt_row gt_right" style="background-color: #A6A6A6;">13:35</td>
       <td headers="grp_a stub_2_1 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-01-01 02:22</td>
       <td headers="grp_a stub_2_1 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">49.950</td></tr>
-          <tr><th id="num_2" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_2</th>
-      <td headers="grp_a num_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
-      <td headers="grp_a num_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
-      <td headers="grp_a num_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
-      <td headers="grp_a num_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
-      <td headers="grp_a num_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
-      <td headers="grp_a num_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
-      <td headers="grp_a num_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td></tr>
-          <tr><th id="num_3" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_3</th>
-      <td headers="grp_a num_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
-      <td headers="grp_a num_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
-      <td headers="grp_a num_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
-      <td headers="grp_a num_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
-      <td headers="grp_a num_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
-      <td headers="grp_a num_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
-      <td headers="grp_a num_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td></tr>
-          <tr><th id="num_4" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_4</th>
-      <td headers="grp_a num_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
-      <td headers="grp_a num_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
-      <td headers="grp_a num_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
-      <td headers="grp_a num_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
-      <td headers="grp_a num_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
-      <td headers="grp_a num_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
-      <td headers="grp_a num_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td></tr>
+          <tr><th id="stub_2_2" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_2</th>
+      <td headers="grp_a stub_2_2 num" class="gt_row gt_right" style="background-color: #D9D9D9;">2.222e+00</td>
+      <td headers="grp_a stub_2_2 char" class="gt_row gt_left" style="background-color: #CCCCCC;">banana</td>
+      <td headers="grp_a stub_2_2 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">two</td>
+      <td headers="grp_a stub_2_2 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-02-15</td>
+      <td headers="grp_a stub_2_2 time" class="gt_row gt_right" style="background-color: #A6A6A6;">14:40</td>
+      <td headers="grp_a stub_2_2 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-02-02 14:33</td>
+      <td headers="grp_a stub_2_2 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">17.950</td></tr>
+          <tr><th id="stub_2_3" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_3</th>
+      <td headers="grp_a stub_2_3 num" class="gt_row gt_right" style="background-color: #D9D9D9;">3.333e+01</td>
+      <td headers="grp_a stub_2_3 char" class="gt_row gt_left" style="background-color: #CCCCCC;">coconut</td>
+      <td headers="grp_a stub_2_3 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">three</td>
+      <td headers="grp_a stub_2_3 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-03-15</td>
+      <td headers="grp_a stub_2_3 time" class="gt_row gt_right" style="background-color: #A6A6A6;">15:45</td>
+      <td headers="grp_a stub_2_3 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-03-03 03:44</td>
+      <td headers="grp_a stub_2_3 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1.390</td></tr>
+          <tr><th id="stub_2_4" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_4</th>
+      <td headers="grp_a stub_2_4 num" class="gt_row gt_right" style="background-color: #D9D9D9;">4.444e+02</td>
+      <td headers="grp_a stub_2_4 char" class="gt_row gt_left" style="background-color: #CCCCCC;">durian</td>
+      <td headers="grp_a stub_2_4 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">four</td>
+      <td headers="grp_a stub_2_4 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-04-15</td>
+      <td headers="grp_a stub_2_4 time" class="gt_row gt_right" style="background-color: #A6A6A6;">16:50</td>
+      <td headers="grp_a stub_2_4 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-04-04 15:55</td>
+      <td headers="grp_a stub_2_4 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">65100.000</td></tr>
           <tr><th id="summary_stub_grp_a_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick" style="background-color: #FFA500;">min</th>
       <td headers="grp_a summary_stub_grp_a_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row thick" style="background-color: #8FBC8F;">0.11</td>
       <td headers="grp_a summary_stub_grp_a_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row thick">—</td>
@@ -11437,30 +11406,30 @@
       <td headers="grp_b stub_2_5 time" class="gt_row gt_right" style="background-color: #A6A6A6;">17:55</td>
       <td headers="grp_b stub_2_5 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-05-05 04:00</td>
       <td headers="grp_b stub_2_5 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">1325.810</td></tr>
-          <tr><th id="num_6" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_6</th>
-      <td headers="grp_b num_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
-      <td headers="grp_b num_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
-      <td headers="grp_b num_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
-      <td headers="grp_b num_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
-      <td headers="grp_b num_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
-      <td headers="grp_b num_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
-      <td headers="grp_b num_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td></tr>
-          <tr><th id="num_7" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_7</th>
-      <td headers="grp_b num_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
-      <td headers="grp_b num_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
-      <td headers="grp_b num_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
-      <td headers="grp_b num_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
-      <td headers="grp_b num_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
-      <td headers="grp_b num_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
-      <td headers="grp_b num_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td></tr>
-          <tr><th id="num_8" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_8</th>
-      <td headers="grp_b num_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
-      <td headers="grp_b num_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
-      <td headers="grp_b num_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
-      <td headers="grp_b num_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
-      <td headers="grp_b num_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
-      <td headers="grp_b num_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
-      <td headers="grp_b num_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td></tr>
+          <tr><th id="stub_2_6" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_6</th>
+      <td headers="grp_b stub_2_6 num" class="gt_row gt_right" style="background-color: #D9D9D9;">NA</td>
+      <td headers="grp_b stub_2_6 char" class="gt_row gt_left" style="background-color: #CCCCCC;">fig</td>
+      <td headers="grp_b stub_2_6 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">six</td>
+      <td headers="grp_b stub_2_6 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-06-15</td>
+      <td headers="grp_b stub_2_6 time" class="gt_row gt_right" style="background-color: #A6A6A6;">NA</td>
+      <td headers="grp_b stub_2_6 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-06-06 16:11</td>
+      <td headers="grp_b stub_2_6 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">13.255</td></tr>
+          <tr><th id="stub_2_7" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_7</th>
+      <td headers="grp_b stub_2_7 num" class="gt_row gt_right" style="background-color: #D9D9D9;">7.770e+05</td>
+      <td headers="grp_b stub_2_7 char" class="gt_row gt_left" style="background-color: #CCCCCC;">grapefruit</td>
+      <td headers="grp_b stub_2_7 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">seven</td>
+      <td headers="grp_b stub_2_7 date" class="gt_row gt_right" style="background-color: #B3B3B3;">NA</td>
+      <td headers="grp_b stub_2_7 time" class="gt_row gt_right" style="background-color: #A6A6A6;">19:10</td>
+      <td headers="grp_b stub_2_7 datetime" class="gt_row gt_right" style="background-color: #999999;">2018-07-07 05:22</td>
+      <td headers="grp_b stub_2_7 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">NA</td></tr>
+          <tr><th id="stub_2_8" scope="row" class="gt_row gt_left gt_stub" style="background-color: #FFDAB9;">row_8</th>
+      <td headers="grp_b stub_2_8 num" class="gt_row gt_right" style="background-color: #D9D9D9;">8.880e+06</td>
+      <td headers="grp_b stub_2_8 char" class="gt_row gt_left" style="background-color: #CCCCCC;">honeydew</td>
+      <td headers="grp_b stub_2_8 fctr" class="gt_row gt_center" style="background-color: #BFBFBF;">eight</td>
+      <td headers="grp_b stub_2_8 date" class="gt_row gt_right" style="background-color: #B3B3B3;">2015-08-15</td>
+      <td headers="grp_b stub_2_8 time" class="gt_row gt_right" style="background-color: #A6A6A6;">20:20</td>
+      <td headers="grp_b stub_2_8 datetime" class="gt_row gt_right" style="background-color: #999999;">NA</td>
+      <td headers="grp_b stub_2_8 currency" class="gt_row gt_right" style="background-color: #8C8C8C;">0.440</td></tr>
           <tr><th id="summary_stub_grp_b_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick" style="background-color: #FFA500;">min</th>
       <td headers="grp_b summary_stub_grp_b_1 num" class="gt_row gt_right gt_summary_row gt_first_summary_row thick" style="background-color: #8FBC8F;">5550.00</td>
       <td headers="grp_b summary_stub_grp_b_1 char" class="gt_row gt_left gt_summary_row gt_first_summary_row thick">—</td>
@@ -11510,15 +11479,14 @@
       <td headers="grand_summary_stub_3 datetime" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row">—</td>
       <td headers="grand_summary_stub_3 currency" class="gt_row gt_right gt_grand_summary_row gt_last_summary_row" style="background-color: #D3D3D3;">9501.26</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #1</td>
           </tr>
-          <tr>
+          <tr class="gt_sourcenotes">
             <td class="gt_sourcenote" style="background-color: #F5DEB3;" colspan="9">Source note #2</td>
           </tr>
         </tfoot>
-        
       </table>
 
 # Group labels as a column work well in Latex with specified column widths
@@ -11526,12 +11494,12 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{>{\\raggedright\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}|>{\\raggedright\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}|>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedright\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\centering\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n\\multicolumn{2}{>{\\raggedright\\arraybackslash}m{\\dimexpr 0.20\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{} &  &  &  & \\multicolumn{3}{>{\\centering\\arraybackslash}m{\\dimexpr 0.30\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{timing} &  \\\\ \n\\cmidrule(lr){6-8}\n\\multicolumn{2}{>{\\centering\\arraybackslash}m{\\dimexpr 0.20\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{S.L.} & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{7}{=}{grp\\_a} & row\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \n & row\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \n & row\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \n & row\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \n\\cmidrule(l{-0.05em}r){2-9}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 0.11 & — & — & — & — & — & 1.39 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 444.40 & — & — & — & — & — & 65100.00 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 120.02 & — & — & — & — & — & 16292.32 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow{7}{=}{grp\\_b} & row\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \n & row\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \n & row\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \n & row\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\cmidrule(l{-0.05em}r){2-9}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 5550.00 & — & — & — & — & — & 0.44 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 8880000.00 & — & — & — & — & — & 1325.81 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 3220850.00 & — & — & — & — & — & 446.50 \\\\ \n\\midrule \n\\midrule \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 0.11 & — & — & — & — & — & 0.44 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 8880000.00 & — & — & — & — & — & 65100.00 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 1380432.87 & — & — & — & — & — & 9501.26 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{>{\\raggedright\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}|>{\\raggedright\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}|>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedright\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\centering\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n\\multicolumn{2}{>{\\raggedright\\arraybackslash}m{\\dimexpr 0.20\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{} &  &  &  & \\multicolumn{3}{>{\\centering\\arraybackslash}m{\\dimexpr 0.30\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{timing} &  \\\\ \n\\cmidrule(lr){6-8}\n\\multicolumn{2}{>{\\centering\\arraybackslash}m{\\dimexpr 0.20\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{S.L.} & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{7}{=}{grp\\_a} & row\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \n & row\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \n & row\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \n & row\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \n\\cmidrule(l{-0.05em}r){2-9}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 0.11 & — & — & — & — & — & 1.39 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 444.40 & — & — & — & — & — & 65100.00 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 120.02 & — & — & — & — & — & 16292.32 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{7}{=}{grp\\_b} & row\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \n & row\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \n & row\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \n & row\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\cmidrule(l{-0.05em}r){2-9}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 5550.00 & — & — & — & — & — & 0.44 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 8880000.00 & — & — & — & — & — & 1325.81 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 3220850.00 & — & — & — & — & — & 446.50 \\\\ \n\\midrule \n\\midrule \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 0.11 & — & — & — & — & — & 0.44 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 8880000.00 & — & — & — & — & — & 65100.00 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 1380432.87 & — & — & — & — & — & 9501.26 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{>{\\raggedright\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}|>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedright\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\centering\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{>{\\centering\\arraybackslash}m{\\dimexpr 0.30\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{timing} &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{>{\\raggedright\\arraybackslash}m{0.9\\linewidth}}{grp\\_a} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \nrow\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \n\\midrule \nmin & 0.11 & — & — & — & — & — & 1.39 \\\\ \nmax & 444.40 & — & — & — & — & — & 65100.00 \\\\ \navg & 120.02 & — & — & — & — & — & 16292.32 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{>{\\raggedright\\arraybackslash}m{0.9\\linewidth}}{grp\\_b} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\midrule \nmin & 5550.00 & — & — & — & — & — & 0.44 \\\\ \nmax & 8880000.00 & — & — & — & — & — & 1325.81 \\\\ \navg & 3220850.00 & — & — & — & — & — & 446.50 \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{>{\\raggedright\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}|>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedright\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\centering\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}>{\\raggedleft\\arraybackslash}p{\\dimexpr 0.10\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  Data listing from \\textbf{exibble}} \\\\ \n{\\fontsize{14}{17}\\selectfont  \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{>{\\centering\\arraybackslash}m{\\dimexpr 0.30\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{timing} &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{>{\\raggedright\\arraybackslash}m{0.9\\linewidth}}{grp\\_a} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \nrow\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \n\\midrule \nmin & 0.11 & — & — & — & — & — & 1.39 \\\\ \nmax & 444.40 & — & — & — & — & — & 65100.00 \\\\ \navg & 120.02 & — & — & — & — & — & 16292.32 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{8}{>{\\raggedright\\arraybackslash}m{0.9\\linewidth}}{grp\\_b} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\midrule \nmin & 5550.00 & — & — & — & — & — & 0.44 \\\\ \nmax & 8880000.00 & — & — & — & — & — & 1325.81 \\\\ \navg & 3220850.00 & — & — & — & — & — & 446.50 \\\\ \n\\midrule \n\\midrule \nmin & 0.11 & — & — & — & — & — & 0.44 \\\\ \nmax & 8880000.00 & — & — & — & — & — & 65100.00 \\\\ \navg & 1380432.87 & — & — & — & — & — & 9501.26 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\\nSource note \\#2\\\\\n\\end{minipage}\n\\endgroup\n"
 

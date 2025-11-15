@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -1208,7 +1208,8 @@ create_table_props_component_xml <- function(data, align = c("center", "start", 
 create_table_caption_component_xml <- function(
     data,
     align = "center",
-    keep_with_next = TRUE
+    keep_with_next = TRUE,
+    autonum = TRUE
 ) {
 
   # If there is no title or heading component, then return an empty string
@@ -1267,17 +1268,21 @@ create_table_caption_component_xml <- function(
       align = header_title_style[["cell_text"]][["align"]] %||% align,
       keep_with_next = keep_with_next
     )
+
   title_caption_xml <- as_xml_node(title_caption_xml)
 
-  autonum_node_xml <-
-    xml_table_autonum(
-      font = xml_r_font(header_title_style[["cell_text"]][["font"]] %||% "Calibri"),
-      size = xml_sz(val = header_title_style[["cell_text"]][["size"]] %||% 24)
-    )
-  autonum_node_xml <- as_xml_node(autonum_node_xml)
+  if (autonum) {
+    autonum_node_xml <-
+      xml_table_autonum(
+        font = xml_r_font(header_title_style[["cell_text"]][["font"]] %||% "Calibri"),
+        size = xml_sz(val = header_title_style[["cell_text"]][["size"]] %||% 24)
+      )
 
-  for (autonum_node in rev(autonum_node_xml)) {
-    xml_add_child(title_caption_xml, autonum_node, .where = 1)
+    autonum_node_xml <- as_xml_node(autonum_node_xml)
+
+    for (autonum_node in rev(autonum_node_xml)) {
+      xml_add_child(title_caption_xml[1], autonum_node, .where = 1)
+    }
   }
 
   title_caption <- as.character(title_caption_xml)
@@ -1917,10 +1922,10 @@ create_body_component_xml <- function(
     # Replace an NA group with an empty string
     groups_rows_df$group_label[is.na(groups_rows_df$group_label)] <- ""
     # Change NA at beginning into unicode?
-    group_rows_df$group_label <-
+    groups_rows_df$group_label <-
       gsub(
         "^NA", "\u2014",
-        group_rows_df$group_label
+        groups_rows_df$group_label
     )
   }
 
@@ -2055,7 +2060,8 @@ create_body_component_xml <- function(
             i >= groups_rows_df$row_start & i <= groups_rows_df$row_end, ]
 
           group_summary_row_side <- unique(group_info[, "summary_row_side"])[[1]]
-
+          # https://github.com/rstudio/gt/issues/2000
+          group_summary_row_side <- ifelse(is.na(group_summary_row_side), "bottom", group_summary_row_side)
           group_row_add_row_loc <- group_info[,ifelse(group_summary_row_side == "top", "row_start","row_end")][[1]]
 
           if (i == group_row_add_row_loc) {
@@ -2262,12 +2268,13 @@ create_footnotes_component_xml <- function(
     lapply(
       seq_along(footnote_ids),
       function(x) {
-
-        footnote_text_xml <- parse_to_xml(footnote_text[[x]])
+        # in the build stage, we don't process markdown for footnote text
+        # So, we process it now https://github.com/rstudio/gt/issues/1892
+        footnote_text_xml <- parse_to_xml(process_text(footnote_text[[x]], context = "word"))
 
         # Get the footnote marks for the subtitle. Don't write
         # marks when footnote value is NA or ""
-        if (!is.na(footnote_ids[x]) & !identical(footnote_ids[x], "")) {
+        if (!is.na(footnote_ids[x]) && !identical(footnote_ids[x], "")) {
 
           footnote_id_xml <- footnote_mark_to_xml(
             data = data,

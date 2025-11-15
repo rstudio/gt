@@ -1,4 +1,4 @@
-test_that("row_group_order() works correctly", {
+test_that("row_group_order() works correctly for LaTeX output tables", {
 
   # Create a table with group names, rownames, and four columns of values
   tbl <-
@@ -19,13 +19,13 @@ test_that("row_group_order() works correctly", {
   # Create a `tbl_latex` object that arranges the groups by the
   # latter calendar date first
   tbl_latex <-
-    tbl %>%
-    gt(groupname_col = "dates") %>%
+    tbl |>
+    gt(groupname_col = "dates") |>
     row_group_order(groups = c("2018-02-11", "2018-02-10"))
 
   # Expect a characteristic pattern
   expect_match(
-    as_latex(tbl_latex) %>% as.character(),
+    as_latex(tbl_latex) |> as.character(),
     paste0(
       ".*multicolumn\\{5\\}\\{l\\}\\{2018-02-11\\}",
       ".*multicolumn\\{5\\}\\{l\\}\\{2018-02-10\\}.*"

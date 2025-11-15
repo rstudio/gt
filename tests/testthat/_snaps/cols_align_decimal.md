@@ -31,7 +31,6 @@
       <td headers="num" class="gt_row gt_right">   41    </td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -66,7 +65,6 @@
           <tr><td headers="char" class="gt_row gt_left">I</td>
       <td headers="num" class="gt_row gt_right">   41.   </td></tr>
         </tbody>
-        
         
       </table>
 
@@ -103,7 +101,6 @@
       <td headers="num" class="gt_row gt_right">  41 %   </td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -138,7 +135,6 @@
           <tr><td headers="char" class="gt_row gt_left">I</td>
       <td headers="num" class="gt_row gt_right">   41.%   </td></tr>
         </tbody>
-        
         
       </table>
 
@@ -175,7 +171,6 @@
       <td headers="num" class="gt_row gt_right">  41 ‰   </td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -210,7 +205,6 @@
           <tr><td headers="char" class="gt_row gt_left">I</td>
       <td headers="num" class="gt_row gt_right">   41.‰   </td></tr>
         </tbody>
-        
         
       </table>
 
@@ -247,7 +241,6 @@
       <td headers="num" class="gt_row gt_right">41  ppm   </td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -282,7 +275,6 @@
           <tr><td headers="char" class="gt_row gt_left">I</td>
       <td headers="num" class="gt_row gt_right">   41. ppm   </td></tr>
         </tbody>
-        
         
       </table>
 
@@ -380,7 +372,6 @@
       <td headers="group" class="gt_row gt_left">grp_b</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -415,7 +406,6 @@
           <tr><td headers="char" class="gt_row gt_left">I</td>
       <td headers="num" class="gt_row gt_right">   abc41.%def   </td></tr>
         </tbody>
-        
         
       </table>
 
@@ -452,7 +442,6 @@
       <td headers="num" class="gt_row gt_right">   41.    </td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -487,7 +476,6 @@
           <tr><td headers="char" class="gt_row gt_left">I</td>
       <td headers="num" class="gt_row gt_right">   $41 </td></tr>
         </tbody>
-        
         
       </table>
 

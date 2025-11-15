@@ -15,7 +15,7 @@ expect_caption_eq <- function(caption, expected) {
 test_that("captioning processes text correctly", {
 
   # No caption if not specified
-  expect_null(create_caption_component_h(exibble %>% gt()))
+  expect_null(create_caption_component_h(exibble |> gt()))
 
   expect_caption_eq("**hello & goodbye**", "**hello &amp; goodbye**")
   expect_caption_eq(md("**hello & goodbye**"), "<span class='gt_from_md'><strong>hello &amp; goodbye</strong></span>")
@@ -27,11 +27,15 @@ test_that("captioning processes text correctly", {
 })
 
 test_that("bookdown-style crossrefs are added when appropriate", {
+
   op <- options(knitr.in.progress = TRUE)
+
   on.exit(options(op), add = TRUE)
 
   stopifnot(is.null(knitr::opts_current$get("label")))
+
   stopifnot(is.null(knitr::opts_knit$get("bookdown.internal.label")))
+
   on.exit({
     knitr::opts_current$set(label = NULL)
     knitr::opts_knit$set(bookdown.internal.label = NULL)
@@ -41,11 +45,13 @@ test_that("bookdown-style crossrefs are added when appropriate", {
 
   # If bookdown, then ref is generated
   knitr::opts_knit$set(bookdown.internal.label = TRUE)
-  expect_caption_eq("test", "(\\#tab:foo)test")
 
-  expect_null(create_caption_component_h(exibble %>% gt()))
+  expect_caption_eq("test", "(#tab:foo)test")
+
+  expect_null(create_caption_component_h(exibble |> gt()))
 
   # If bookdown.internal.label is unset, ref is not generated
   knitr::opts_knit$set(bookdown.internal.label = NULL)
+
   expect_caption_eq("test", "test")
 })

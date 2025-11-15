@@ -23,7 +23,6 @@
       <td headers="stub_1_5 b" class="gt_row gt_left">five</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -51,7 +50,6 @@
       <td headers="stub_1_5 a" class="gt_row gt_right">5</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -78,7 +76,6 @@
           <tr><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub">Part v</th>
       <td headers="stub_1_5 b" class="gt_row gt_left">five</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -155,7 +152,6 @@
       <td headers="carb" class="gt_row gt_right">2</td></tr>
         </tbody>
         
-        
       </table>
 
 # cols_merge_uncert() works with row groups
@@ -183,7 +179,6 @@
       <td headers="stub_1_5 b" class="gt_row gt_left">E</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -210,7 +205,6 @@
           <tr><td headers="row" class="gt_row gt_right">6.5</td>
       <td headers="b" class="gt_row gt_left">E</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -241,7 +235,6 @@
           <tr><td headers="value" class="gt_row gt_right">NaN</td></tr>
         </tbody>
         
-        
       </table>
 
 # cols_merge_range() produces the correct output
@@ -268,7 +261,6 @@
           <tr><th id="stub_1_5" scope="row" class="gt_row gt_right gt_stub">5–10</th>
       <td headers="stub_1_5 b" class="gt_row gt_left">five</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -297,7 +289,6 @@
       <td headers="stub_1_5 a" class="gt_row gt_right">10</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -324,7 +315,6 @@
           <tr><th id="stub_1_5" scope="row" class="gt_row gt_right gt_stub">5–x</th>
       <td headers="stub_1_5 b" class="gt_row gt_left">five</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -353,7 +343,6 @@
       <td headers="stub_1_5 b" class="gt_row gt_left">five</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -380,7 +369,6 @@
           <tr><th id="stub_1_5" scope="row" class="gt_row gt_right gt_stub">5</th>
       <td headers="stub_1_5 a" class="gt_row gt_right">10</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -409,7 +397,6 @@
       <td headers="stub_1_5 b" class="gt_row gt_left">E</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -436,16 +423,5 @@
           <tr><td headers="a" class="gt_row gt_right">NA</td></tr>
         </tbody>
         
-        
       </table>
-
-# cols_merge() errors well when pattern is wrong
-
-    Code
-      exibble %>% gt() %>% cols_merge(num, pattern = "{2}")
-    Condition
-      Error in `perform_col_merge()`:
-      ! Can't perform column merging
-      Can't find reference 2.
-      i Review `pattern` provided to `cols_merge()`.
 

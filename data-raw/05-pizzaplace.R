@@ -1,5 +1,4 @@
 library(tidyverse)
-library(lubridate)
 library(progress)
 
 # Define the pizza names, types, available sizes, and prices for each;
@@ -156,27 +155,24 @@ full_closures <-
 # Function to make changes to days based on exceptional circumstances
 apply_exceptional_days <- function(orders_year_df, exceptional_df) {
 
-  for (i in seq(nrow(exceptional_df))) {
+  for (i in seq_len(nrow(exceptional_df))) {
 
     day_changes <-
-      exceptional_df[i, ] %>%
-      as.list()
+      as.list(exceptional_df[i, ])
 
     orders_year_df <-
-      orders_year_df %>%
+      orders_year_df |>
       dplyr::mutate(n = ifelse(
         date == day_changes$date &
           order_type == "daily_lunch_orders",
         floor(n * day_changes$l_idx),
-        n)
-      ) %>%
-      dplyr::mutate(n = ifelse(
+        n),
+        n = ifelse(
         date == day_changes$date &
           order_type == "daily_dinner_orders",
         floor(n * day_changes$d_idx),
-        n)
-      ) %>%
-      dplyr::mutate(n = ifelse(
+        n),
+        n = ifelse(
         date == day_changes$date &
           order_type == "daily_random_orders",
         floor(n * day_changes$r_idx),
@@ -196,12 +192,12 @@ randomly_choose_pizzas <- function(
 ) {
 
   pizza_list <-
-    pizzas %>%
-    dplyr::arrange(type) %>%
-    dplyr::select(name, popularity) %>%
+    pizzas |>
+    dplyr::arrange(type) |>
+    dplyr::select(name, popularity) |>
     dplyr::distinct()
 
-  seq(n) %>%
+  seq(n) |>
     purrr::map_df(.f = function(x) {
 
       pizza_gotten <-
@@ -212,8 +208,8 @@ randomly_choose_pizzas <- function(
         )
 
       size_list <-
-        pizzas %>%
-        dplyr::filter(name == pizza_gotten) %>%
+        pizzas |>
+        dplyr::filter(name == pizza_gotten) |>
         dplyr::select(size, size_p)
 
       size_gotten <-
@@ -287,11 +283,11 @@ dinner_orders <- function(
     next_random <- next_random_factory(23.1, 18, 2)
   }
 
-  seq(n) %>%
+  seq(n) |>
     purrr::map_df(.f = function(x) {
 
       time <-
-        next_random() %>%
+        next_random() |>
         convert_time()
 
       p_count <- 1 + extra_pizzas(when = "dinner")
@@ -319,11 +315,11 @@ lunch_orders <- function(
     hours <- hours[hours > 11.5]
   }
 
-  seq(n) %>%
+  seq(n) |>
     purrr::map_df(.f = function(x) {
 
       time <-
-        sample(hours, 1) %>%
+        sample(hours, 1) |>
         convert_time()
 
       p_count <- 1 + extra_pizzas(when = "lunch")
@@ -340,11 +336,11 @@ lunch_orders <- function(
 # throughout the day
 daily_random_orders <- function(date, n) {
 
-  seq(n) %>%
+  seq(n) |>
     purrr::map_df(.f = function(x) {
 
       time <-
-        runif(1, min = 13, max = 22.5) %>%
+        runif(1, min = 13, max = 22.5) |>
         convert_time()
 
       p_count <- 1 + extra_pizzas(when = "whenever")
@@ -364,14 +360,14 @@ group_orders <- function(date, n) {
   hours <- rnorm(100, mean = 13.0, sd = 1.0)
   hours <- hours[hours > 11.75]
 
-  seq(n) %>%
+  seq(n) |>
     purrr::map_df(.f = function(x) {
 
       time <-
-        sample(hours, 1) %>%
+        sample(hours, 1) |>
         convert_time()
 
-      p_count <- sample(c(5:15), 1)
+      p_count <- sample(5:15, 1)
 
       randomly_choose_pizzas(
         date = date,
@@ -424,7 +420,7 @@ orders_for_year <- function(orders_year_df) {
   dates <- unique(orders_year_df$date)
 
   orders_year_df <-
-    orders_year_df %>%
+    orders_year_df |>
     dplyr::arrange(date, order_type)
 
   pr <- progress::progress_bar$new(
@@ -432,26 +428,26 @@ orders_for_year <- function(orders_year_df) {
     total = length(dates)
   )
 
-  dates %>%
+  dates |>
     purrr::map_df(.f = function(x) {
       pr$tick()
 
       filtered_df <-
-        orders_year_df %>%
+        orders_year_df |>
         dplyr::filter(date == x)
 
       busy_day <-
-        filtered_df %>%
-        dplyr::pull(busy_day) %>%
+        filtered_df |>
+        dplyr::pull(busy_day) |>
         unique()
 
       busy_night <-
-        filtered_df %>%
-        dplyr::pull(busy_night) %>%
+        filtered_df |>
+        dplyr::pull(busy_night) |>
         unique()
 
       n_counts <-
-        filtered_df %>%
+        filtered_df |>
         dplyr::pull(n)
 
       orders_for_day(
@@ -462,7 +458,7 @@ orders_for_year <- function(orders_year_df) {
         n_group = n_counts[4],
         busy_day = busy_day,
         busy_night = busy_night
-      ) %>%
+      ) |>
         dplyr::arrange(time)
     })
 }
@@ -475,37 +471,35 @@ origin <- as.Date(paste0(2015, "-01-01"), tz = "UTC") - lubridate::days(1)
 
 # Create a table with order numbers for the entire 2015 year
 orders_year <-
-  dplyr::tibble(date = as.Date(1:365, origin = origin, tz = "UTC")) %>%
-  dplyr::mutate(dow = wday(date, label = TRUE)) %>%
-  dplyr::mutate(busy_day = ifelse(!(dow %in% c("Sat", "Sun")), TRUE, FALSE)) %>%
-  dplyr::mutate(busy_night = ifelse(dow %in% c("Fri", "Sat"), TRUE, FALSE)) %>%
+  dplyr::tibble(date = as.Date(1:365, origin = origin, tz = "UTC")) |>
   dplyr::mutate(
+    dow = wday(date, label = TRUE),
+    busy_day = ifelse(!(dow %in% c("Sat", "Sun")), TRUE, FALSE),
+    busy_night = ifelse(dow %in% c("Fri", "Sat"), TRUE, FALSE),
     grp_ord_n =
-      sample(c(0, 1, 2), n(), prob = c(0.8, 0.3, 0.1), replace = TRUE)
-  ) %>%
-  dplyr::mutate(
+      sample(c(0, 1, 2), n(), prob = c(0.8, 0.3, 0.1), replace = TRUE),
     daily_lunch_orders =
       ifelse(
         busy_day,
         sample(floor(rnorm(100, mean = 20, sd = 3)), n(), replace = TRUE),
         sample(floor(rnorm(100, mean = 10, sd = 2)), n(), replace = TRUE)
-      )
-  ) %>%
-  dplyr::mutate(
+      ),
     daily_dinner_orders =
       ifelse(
         busy_night,
         sample(floor(rnorm(100, mean = 35, sd = 3)), n(), replace = TRUE),
         sample(floor(rnorm(100, mean = 25, sd = 2)), n(), replace = TRUE)
-      )
-  ) %>%
-  dplyr::mutate(
+      ),
     daily_random_orders =
       sample(floor(rnorm(100, mean = 15, sd = 4)), n(), replace = TRUE)
-  ) %>%
-  tidyr::gather("order_type", "n", grp_ord_n:daily_random_orders) %>%
-  dplyr::arrange(date, order_type) %>%
-  dplyr::filter(!(date %in% full_closures)) %>%
+  ) |>
+  tidyr::pivot_longer(
+    cols = grp_ord_n:daily_random_orders,
+    names_to = "order_type",
+    values_to = "n"
+  ) |>
+  dplyr::arrange(date, order_type) |>
+  dplyr::filter(!(date %in% full_closures)) |>
   apply_exceptional_days(exceptional_df = exceptional_tbl)
 
 # Get a tibble of orders for the entire 2015 year
@@ -515,18 +509,18 @@ pizzaplace <- orders_for_year(orders_year_df = orders_year)
 pizzaplace <-
   dplyr::inner_join(
     pizzaplace,
-    pizzas %>% dplyr::select(name, size, type, price),
+    pizzas |> dplyr::select(name, size, type, price),
     by = c("name", "size")
   )
 
 # Add in an `id` field (`YYYY-XXXXXX`)
 pizzaplace <-
-  pizzaplace %>%
-  group_by(date, time) %>%
-  tidyr::nest() %>%
-  mutate(id = seq_len(n())) %>%
-  tidyr::unnest() %>%
-  select(id, date, time, everything()) %>%
+  pizzaplace |>
+  group_by(date, time) |>
+  tidyr::nest() |>
+  mutate(id = seq_len(n())) |>
+  tidyr::unnest() |>
+  select(id, date, time, everything()) |>
   mutate(id = paste0(
     substr(date, 1, 4), "-",
     formatC(id, width = 6, format = "d", flag = "0"))

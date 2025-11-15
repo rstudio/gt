@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -701,6 +701,119 @@ opt_footnote_spec <- function(
   data
 }
 
+# opt_footnote_order() ---------------------------------------------------------
+#' Option to modify the order of footnotes
+#'
+#' @description
+#'
+#' We can alter the order in which marked footnotes appear in relation to any
+#' unmarked footnotes in the footer section of the table. A single keyword is to
+#' be supplied and it will determine whether marked footnotes should appear:
+#' (1) before unmarked, (2) after unmarked, or (3) in call order.
+#'
+#' @inheritParams fmt_number
+#'
+#' @param order *Method for ordering footnote marks*
+#'
+#'   `scalar<character>` // *default:* `"marks_last"`
+#'
+#'   A keyword provided here will determine how marked footnotes will be
+#'   arranged in relation to unmarked footnotes. Use either: `"marks_last"`,
+#'   `"marks_first"`, or `"preserve_order"`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Specification of footnote order:
+#'
+#' The keywords are:
+#'
+#' - `"marks_last"`: marked footnotes should appear beneath unmarked in the
+#' table (default)
+#' - `"marks_first"`: marked footnotes should appear before unmarked in the
+#' table
+#' - `"preserve_order"`: footnotes will appear in the order they were specified
+#' in [tab_footnote()]
+#'
+#' @section Examples:
+#'
+#' Use a summarized version of the [`sza`] dataset to create a **gt** table,
+#' adding three marked footnotes and one unmarked (with four calls of
+#' [tab_footnote()]). We can modify the order of footnotes with the
+#' `opt_footnote_order()` function.
+#'
+#' ```r
+#' sza |>
+#'   dplyr::filter(latitude == 30) |>
+#'   dplyr::group_by(tst) |>
+#'   dplyr::summarize(
+#'     SZA.Max = if (
+#'       all(is.na(sza))) {
+#'       NA
+#'     } else {
+#'       max(sza, na.rm = TRUE)
+#'     },
+#'     SZA.Min = if (
+#'       all(is.na(sza))) {
+#'       NA
+#'     } else {
+#'       min(sza, na.rm = TRUE)
+#'     },
+#'     .groups = "drop"
+#'   ) |>
+#'   gt(rowname_col = "tst") |>
+#'   tab_spanner_delim(delim = ".") |>
+#'   sub_missing(
+#'     columns = everything(),
+#'     missing_text = "90+"
+#'   ) |>
+#'   tab_stubhead(label = "TST") |>
+#'   tab_footnote(
+#'     footnote = "True solar time.",
+#'     locations = cells_stubhead()
+#'   ) |>
+#'   tab_footnote(
+#'     footnote = "Solar zenith angle.",
+#'     locations = cells_column_spanners(
+#'       spanners = "spanner-SZA.Max"
+#'     )
+#'   ) |>
+#'   tab_footnote(
+#'     footnote = "The Lowest SZA.",
+#'     locations = cells_stub(rows = "1200")
+#'   ) |>
+#'   tab_footnote(
+#'     footnote = "Values calculated on the first of every month."
+#'   ) |>
+#'   opt_footnote_order(order = "marks_first")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_footnote_order_1.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 10-5
+#'
+#' @section Function Introduced:
+#' `v0.1.1.9000` (September 22, 2025)
+#'
+#' @export
+opt_footnote_order <- function(
+    data,
+    order = "marks_last"
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Validate input for `order`
+  validate_footnote_order(order)
+
+  tab_options(data = data, footnotes.order = order)
+}
+
+
 # opt_row_striping() -----------------------------------------------------------
 #' Option to add or remove row striping
 #'
@@ -759,7 +872,7 @@ opt_footnote_spec <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-5
+#' 10-6
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -839,7 +952,7 @@ opt_row_striping <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-6
+#' 10-7
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -931,7 +1044,7 @@ opt_align_table_header <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-7
+#' 10-8
 #'
 #' @section Function Introduced:
 #' `v0.4.0` (February 15, 2022)
@@ -1023,7 +1136,7 @@ opt_vertical_padding <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-8
+#' 10-9
 #'
 #' @section Function Introduced:
 #' `v0.4.0` (February 15, 2022)
@@ -1152,7 +1265,7 @@ get_padding_option_value_list <- function(scale, type) {
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-9
+#' 10-10
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1265,7 +1378,7 @@ opt_all_caps <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-10
+#' 10-11
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1387,7 +1500,7 @@ opt_table_lines <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-11
+#' 10-12
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1604,7 +1717,7 @@ opt_table_outline <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-12
+#' 10-13
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -1792,7 +1905,7 @@ opt_table_font <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-13
+#' 10-14
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)

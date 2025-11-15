@@ -20,6 +20,7 @@ fmt_number(
   sep_mark = ",",
   dec_mark = ".",
   force_sign = FALSE,
+  min_sep_threshold = 1,
   system = c("intl", "ind"),
   locale = NULL
 )
@@ -181,6 +182,17 @@ default is \code{FALSE}, where only negative numbers will display a minus sign.
 This option is disregarded when using accounting notation with
 \code{accounting = TRUE}.}
 
+\item{min_sep_threshold}{\emph{Minimum digit threshold for grouping separators}
+
+\code{scalar<numeric|integer>(val>=1)} // \emph{default:} \code{1}
+
+The minimum number of digits required in the integer part of a number for
+grouping separators to be applied. This parameter determines when digit
+grouping begins based on the magnitude of values. The value \code{1} (the
+default) applies separators starting at 4-digit numbers (e.g., \verb{1,000} and
+above). A value of \code{2} starts grouping at 5-digit numbers (\verb{10,000} and
+above), while \code{3} begins at 6-digit numbers (\verb{100,000} and above).}
+
 \item{system}{\emph{Numbering system for grouping separators}
 
 \verb{singl-kw:[intl|ind]} // \emph{default:} \code{"intl"}
@@ -254,6 +266,7 @@ arguments provide support for \code{\link[=from_column]{from_column()}}:
 \item \code{sep_mark}
 \item \code{dec_mark}
 \item \code{force_sign}
+\item \code{min_sep_threshold}
 \item \code{system}
 \item \code{locale}
 }
@@ -314,7 +327,7 @@ option.
   dplyr::select(country_code_3, year, population) |>
   dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) |>
   dplyr::filter(year > 1975 & year \%\% 5 == 0) |>
-  tidyr::spread(year, population) |>
+  tidyr::pivot_wider(names_from = year, values_from = population) |>
   dplyr::arrange(desc(`2015`)) |>
   gt(rowname_col = "country_code_3") |>
   fmt_number(suffixing = TRUE)
@@ -332,7 +345,7 @@ like population figures, \code{n_sigfig = 3} is a very good option.
   dplyr::select(country_code_3, year, population) |>
   dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) |>
   dplyr::filter(year > 1975 & year \%\% 5 == 0) |>
-  tidyr::spread(year, population) |>
+  tidyr::pivot_wider(names_from = year, values_from = population) |>
   dplyr::arrange(desc(`2015`)) |>
   gt(rowname_col = "country_code_3") |>
   fmt_number(suffixing = TRUE, n_sigfig = 3)
@@ -427,6 +440,7 @@ Other data formatting functions:
 \code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
+\code{\link{fmt_number_si}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},

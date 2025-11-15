@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -22,7 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
-#' Yearly populations of countries from 1960 to 2023
+#' Yearly populations of countries from 1960 to 2024
 #'
 #' @description
 #'
@@ -30,11 +30,11 @@
 #' population is based on counts of all residents regardless of legal status or
 #' citizenship. Country identifiers include the English-language country names,
 #' and the 2- and 3-letter ISO 3166-1 country codes. Each row contains a
-#' `population` value for a given `year` (from 1960 to 2023). Any `NA` values
+#' `population` value for a given `year` (from 1960 to 2024). Any `NA` values
 #' within `population` indicate the non-existence of the entity during that
 #' year.
 #'
-#' @format A tibble with 13,760 rows and 5 variables:
+#' @format A tibble with 13,975 rows and 5 variables:
 #' \describe{
 #' \item{country_name}{The name of the country.}
 #' \item{country_code_2, country_code_3}{The 2- and 3-letter ISO 3166-1 country
@@ -512,7 +512,7 @@
 #' `original_title` column provides the title of the film in its spoken language
 #' (transliterated to Roman script where necessary).
 #'
-#' @format A tibble with 1,851 rows and 8 variables:
+#' @format A tibble with 1,873 rows and 8 variables:
 #' \describe{
 #' \item{year}{The year of the festival in which the film was in competition.}
 #' \item{title,original_title}{The `title` field provides the film title used
@@ -551,7 +551,7 @@
 #'
 #' @description
 #'
-#' A dataset with information on all 320 Paris Metro stations as of June 2024.
+#' A dataset with information on all 321 Paris Metro stations as of August 2025.
 #' Each record represents a station, describing which Metro lines are serviced
 #' by the station, which other connections are available, and annual passenger
 #' volumes. Basic location information is provided for each station in terms
@@ -572,7 +572,7 @@
 #' to the Transilien rail network, tramway stations, several major train
 #' stations (e.g., Gare du Nord, Gare de l'Est, etc.), and many bus lines.
 #'
-#' @format A tibble with 320 rows and 11 variables:
+#' @format A tibble with 321 rows and 11 variables:
 #' \describe{
 #' \item{name}{The name of the station.}
 #' \item{caption}{In some cases, a station will have a caption that might
@@ -667,7 +667,7 @@
 #' *Task Group on Fundamental Constants* (TGFC) of the
 #' *Committee on Data of the International Science Council* (CODATA). These
 #' updated values became available on May 20, 2019. They are published at
-#' <http://physics.nist.gov/constants>, a website of the
+#' <https://physics.nist.gov/cuu/Constants/index.html>, a website of the
 #' *Fundamental Constants Data Center* of the
 #' *National Institute of Standards and Technology* (NIST), Gaithersburg,
 #' Maryland, USA.

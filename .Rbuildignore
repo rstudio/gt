@@ -18,6 +18,13 @@ pkgdown/assets/gt-latex.qmd
 man/figures/
 tests/gt-examples
 tests/performance-monitoring
+
+tests/testthat/test-as_gtable.R
+tests/testthat/_snaps/as_gtable.md
+
+tests/testthat/test-as_latex.R
+tests/testthat/_snaps/as_latex.md
+
 tests/testthat/test-as_raw_html.R
 
 tests/testthat/test-as_word.R
@@ -75,8 +82,12 @@ tests/testthat/_snaps/fmt_integer.md
 tests/testthat/test-fmt_markdown.R
 tests/testthat/_snaps/fmt_markdown.md
 
+tests/testthat/test-fmt_min_sep_threshold.R
+
 tests/testthat/test-fmt_number.R
 tests/testthat/_snaps/fmt_number.md
+
+tests/testthat/test-fmt_number_si.R
 
 tests/testthat/test-fmt_partsper.R
 tests/testthat/test-fmt_passthrough.R
@@ -86,11 +97,11 @@ tests/testthat/test-fmt_scientific.R
 tests/testthat/test-fmt_spelled_num.R
 tests/testthat/test-fmt_url.R
 
-tests/testthat/test-format_vec.R
-tests/testthat/_snaps/format_vec.md
-
 tests/testthat/test-footer.R
 tests/testthat/_snaps/footer.md
+
+tests/testthat/test-format_vec.R
+tests/testthat/_snaps/format_vec.md
 
 tests/testthat/test-group_column_label.R
 tests/testthat/_snaps/group_column_label.md
@@ -112,15 +123,21 @@ tests/testthat/_snaps/image.md
 tests/testthat/test-info_tables.R
 tests/testthat/test-input_data_validation.R
 
+tests/testthat/test-l_fmt_date_time.R
+
 tests/testthat/test-l_summary_rows.R
 tests/testthat/_snaps/l_summary_rows.md
 
 tests/testthat/test-l_table_parts.R
 tests/testthat/_snaps/l_table_parts.md
 
-tests/testthat/_snaps/location_cells.md
 tests/testthat/test-location_cells.R
+tests/testthat/_snaps/location_cells.md
 
+tests/testthat/test-multicolumn_stub.R
+tests/testthat/_snaps/multicolumn_stub.md
+
+tests/testthat/test-omit_na_group.R
 tests/testthat/test-opts.R
 
 tests/testthat/test-quarto.R
@@ -147,6 +164,8 @@ tests/testthat/test-substitution.R
 tests/testthat/test-summary_rows.R
 tests/testthat/_snaps/summary_rows.md
 
+tests/testthat/test-summary_columns.R
+
 tests/testthat/test-tab_footnote.R
 tests/testthat/_snaps/tab_footnote.md
 
@@ -167,11 +186,11 @@ tests/testthat/_snaps/tab_spanner.md
 tests/testthat/test-tab_stub_indent.R
 tests/testthat/_snaps/tab_stub_indent.md
 
-tests/testthat/test-tab_style.R
-tests/testthat/_snaps/tab_style.md
-
 tests/testthat/test-tab_style_body.R
 tests/testthat/_snaps/tab_style_body.md
+
+tests/testthat/test-tab_style.R
+tests/testthat/_snaps/tab_style.md
 
 tests/testthat/test-table_parts.R
 tests/testthat/_snaps/table_parts.md
@@ -181,8 +200,13 @@ tests/testthat/_snaps/text_transform.md
 
 tests/testthat/test-util_functions.R
 tests/testthat/test-utils_plots.R
+
+tests/testthat/test-utils_render_grid.R
+tests/testthat/_snaps/utils_render_grid.md
+
 tests/testthat/test-utils_render_html.R
+tests/testthat/test-utils_render_rtf.R
 tests/testthat/test-utils_units.R
 
-tests/testthat/_snaps/utils.md
 tests/testthat/test-utils.R
+tests/testthat/_snaps/utils.md

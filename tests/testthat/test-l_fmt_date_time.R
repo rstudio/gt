@@ -34,6 +34,7 @@ test_that("fmt_date() works correctly with character input for all date formats"
     render_formats_test(d01, context = "latex")[["date"]],
     c("2017-10-15", "2013-02-22", "2014-09-22", "2018-01-10")
   )
+
   expect_equal(
     render_formats_test(d02, context = "latex")[["date"]],
     c(
@@ -41,6 +42,7 @@ test_that("fmt_date() works correctly with character input for all date formats"
       "Monday, September 22, 2014", "Wednesday, January 10, 2018"
     )
   )
+
   expect_equal(
     render_formats_test(d03, context = "latex")[["date"]],
     c(
@@ -48,6 +50,7 @@ test_that("fmt_date() works correctly with character input for all date formats"
       "Mon, Sep 22, 2014", "Wed, Jan 10, 2018"
     )
   )
+
   expect_equal(
     render_formats_test(d04, context = "latex")[["date"]],
     c(
@@ -55,6 +58,7 @@ test_that("fmt_date() works correctly with character input for all date formats"
       "Monday 22 September 2014", "Wednesday 10 January 2018"
     )
   )
+
   expect_equal(
     render_formats_test(d05, context = "latex")[["date"]],
     c(
@@ -62,14 +66,17 @@ test_that("fmt_date() works correctly with character input for all date formats"
       "September 22, 2014", "January 10, 2018"
     )
   )
+
   expect_equal(
     render_formats_test(d06, context = "latex")[["date"]],
     c("Oct 15, 2017", "Feb 22, 2013", "Sep 22, 2014", "Jan 10, 2018")
   )
+
   expect_equal(
     render_formats_test(d07, context = "latex")[["date"]],
     c("15 Oct 2017", "22 Feb 2013", "22 Sep 2014", "10 Jan 2018")
   )
+
   expect_equal(
     render_formats_test(d08, context = "latex")[["date"]],
     c(
@@ -77,30 +84,37 @@ test_that("fmt_date() works correctly with character input for all date formats"
       "22 September 2014", "10 January 2018"
     )
   )
+
   expect_equal(
     render_formats_test(d09, context = "latex")[["date"]],
     c("15 October", "22 February", "22 September", "10 January")
   )
+
   expect_equal(
     render_formats_test(d10, context = "latex")[["date"]],
     c("15 Oct", "22 Feb", "22 Sep", "10 Jan")
   )
+
   expect_equal(
     render_formats_test(d11, context = "latex")[["date"]],
     c("2017", "2013", "2014", "2018")
   )
+
   expect_equal(
     render_formats_test(d12, context = "latex")[["date"]],
     c("October", "February", "September", "January")
   )
+
   expect_equal(
     render_formats_test(d13, context = "latex")[["date"]],
     c("15", "22", "22", "10")
   )
+
   expect_equal(
     render_formats_test(d14, context = "latex")[["date"]],
     c("2017/10/15", "2013/02/22", "2014/09/22", "2018/01/10")
   )
+
   expect_equal(
     render_formats_test(d15, context = "latex")[["date"]],
     c("17/10/15", "13/02/22", "14/09/22", "18/01/10")
@@ -141,6 +155,7 @@ test_that("fmt_date() works correctly with Date input.", {
     render_formats_test(d01, context = "latex")[["date"]],
     c("2017-10-15", "2013-02-22", "2014-09-22", "2018-01-10")
   )
+
   expect_equal(
     render_formats_test(d02, context = "latex")[["date"]],
     c(
@@ -148,10 +163,12 @@ test_that("fmt_date() works correctly with Date input.", {
       "Monday, September 22, 2014", "Wednesday, January 10, 2018"
     )
   )
+
   expect_equal(
     render_formats_test(d03, context = "latex")[["date"]],
     c("Sun, Oct 15, 2017", "Fri, Feb 22, 2013", "Mon, Sep 22, 2014", "Wed, Jan 10, 2018")
   )
+
   expect_equal(
     render_formats_test(d04, context = "latex")[["date"]],
     c(
@@ -159,6 +176,7 @@ test_that("fmt_date() works correctly with Date input.", {
       "Monday 22 September 2014", "Wednesday 10 January 2018"
     )
   )
+
   expect_equal(
     render_formats_test(d05, context = "latex")[["date"]],
     c(
@@ -166,14 +184,17 @@ test_that("fmt_date() works correctly with Date input.", {
       "September 22, 2014", "January 10, 2018"
     )
   )
+
   expect_equal(
     render_formats_test(d06, context = "latex")[["date"]],
     c("Oct 15, 2017", "Feb 22, 2013", "Sep 22, 2014", "Jan 10, 2018")
   )
+
   expect_equal(
     render_formats_test(d07, context = "latex")[["date"]],
     c("15 Oct 2017", "22 Feb 2013", "22 Sep 2014", "10 Jan 2018")
   )
+
   expect_equal(
     render_formats_test(d08, context = "latex")[["date"]],
     c(
@@ -181,30 +202,37 @@ test_that("fmt_date() works correctly with Date input.", {
       "22 September 2014", "10 January 2018"
     )
   )
+
   expect_equal(
     render_formats_test(d09, context = "latex")[["date"]],
     c("15 October", "22 February", "22 September", "10 January")
   )
+
   expect_equal(
     render_formats_test(d10, context = "latex")[["date"]],
     c("15 Oct", "22 Feb", "22 Sep", "10 Jan")
   )
+
   expect_equal(
     render_formats_test(d11, context = "latex")[["date"]],
     c("2017", "2013", "2014", "2018")
   )
+
   expect_equal(
     render_formats_test(d12, context = "latex")[["date"]],
     c("October", "February", "September", "January")
   )
+
   expect_equal(
     render_formats_test(d13, context = "latex")[["date"]],
     c("15", "22", "22", "10")
   )
+
   expect_equal(
     render_formats_test(d14, context = "latex")[["date"]],
     c("2017/10/15", "2013/02/22", "2014/09/22", "2018/01/10")
   )
+
   expect_equal(
     render_formats_test(d15, context = "latex")[["date"]],
     c("17/10/15", "13/02/22", "14/09/22", "18/01/10")
@@ -238,19 +266,23 @@ test_that("fmt_time() works correctly", {
     render_formats_test(t1, context = "latex")[["time"]],
     c("12:35:23", "15:01:34", "09:45:23", "01:32:00")
   )
+
   expect_equal(
     render_formats_test(t2, context = "latex")[["time"]],
     c("12:35", "15:01", "09:45", "01:32")
   )
+
   # FIXME #1481
   expect_equal(
     render_formats_test(t3, context = "latex")[["time"]],
     c("12:35:23 PM", "3:01:34 PM", "9:45:23 AM", "1:32:00 AM")
   )
+
   expect_equal(
     render_formats_test(t4, context = "latex")[["time"]],
     c("12:35 PM", "3:01 PM", "9:45 AM", "1:32 AM")
   )
+
   expect_equal(
     render_formats_test(t5, context = "latex")[["time"]],
     c("12 PM", "3 PM", "9 AM", "1 AM")
@@ -288,6 +320,7 @@ test_that("fmt_datetime() works correctly", {
       "2017-08-05 09:45:23", "2017-10-23 01:32:00"
     )
   )
+
   expect_equal(
     render_formats_test(dt2, context = "latex")[["datetime"]],
     c(
@@ -295,6 +328,7 @@ test_that("fmt_datetime() works correctly", {
       "Saturday, August 5, 2017 09:45", "Monday, October 23, 2017 01:32"
     )
   )
+
   # FIXME #1481
   expect_equal(
     render_formats_test(dt3, context = "latex")[["datetime"]],
@@ -303,6 +337,7 @@ test_that("fmt_datetime() works correctly", {
       "Sat, Aug 5, 2017 9:45:23 AM", "Mon, Oct 23, 2017 1:32:00 AM"
     )
   )
+
   expect_equal(
     render_formats_test(dt4, context = "latex")[["datetime"]],
     c(
@@ -310,6 +345,7 @@ test_that("fmt_datetime() works correctly", {
       "Saturday 5 August 2017 9:45 AM", "Monday 23 October 2017 1:32 AM"
     )
   )
+
   expect_equal(
     render_formats_test(dt5, context = "latex")[["datetime"]],
     c(
@@ -320,8 +356,11 @@ test_that("fmt_datetime() works correctly", {
 })
 
 test_that("A gt table will properly output a date to LaTeX out of the box", {
+
   skip("Needs fmt_date() to work.")
+
   tab <- gt(dplyr::tibble(date = as.Date("2015-12-31"), open = 2060.5901))
+
   expect_match(
     as_latex(tab),
     "2015-12-31"

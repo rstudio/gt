@@ -30,20 +30,23 @@ test_that("fmt_scientific() works correctly", {
   # Expect the extracted values to match those of the
   # original dataset
   expect_equal(data_tbl$char_1, char_1)
+
   expect_equal(data_tbl$char_2, char_2)
+
   expect_equal(data_tbl$num_1, num_1)
+
   expect_equal(data_tbl$num_2, num_2)
 
   # Expect an error when attempting to format a column
   # that does not exist
   expect_error(
-    tab %>%
+    tab |>
       fmt_scientific(columns = "num_3", decimals = 2)
   )
 
   # Expect an error when using a locale that does not exist
   expect_error(
-    tab %>%
+    tab |>
       fmt_scientific(columns = "num_2", decimals = 2, locale = "aa_bb")
   )
 
@@ -51,8 +54,8 @@ test_that("fmt_scientific() works correctly", {
   # other defaults; extract `output_df` in the HTML context
   # and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 2) %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 2) |>
        render_formats_test("html"))[["num_1"]],
     c(
       paste0("1.84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
@@ -68,8 +71,8 @@ test_that("fmt_scientific() works correctly", {
   # other defaults; extract `output_df` in the HTML context
   # and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_2", decimals = 2) %>%
+    (tab |>
+       fmt_scientific(columns = "num_2", decimals = 2) |>
        render_formats_test("html"))[["num_2"]],
     c(
       paste0("3.40&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>1</sup>"),
@@ -86,8 +89,8 @@ test_that("fmt_scientific() works correctly", {
   # other defaults; extract `output_df` in the default context
   # and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 2) %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 2) |>
        render_formats_test("default"))[["num_1"]],
     c(
       "1.84 \U000D7 10^3",
@@ -103,8 +106,8 @@ test_that("fmt_scientific() works correctly", {
   # other defaults; extract `output_df` in the HTML context
   # and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 5) %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 5) |>
        render_formats_test("html"))[["num_1"]],
     c(
       paste0("1.83623&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
@@ -120,8 +123,8 @@ test_that("fmt_scientific() works correctly", {
   # other defaults; extract `output_df` in the default context
   # and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 5) %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 5) |>
        render_formats_test("default"))[["num_1"]],
     c(
       "1.83623 \U000D7 10^3",
@@ -135,8 +138,8 @@ test_that("fmt_scientific() works correctly", {
 
   # Format the `num` column to exactly 4 decimal places
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 4, exp_style = "E") %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 4, exp_style = "E") |>
        render_formats_test("default"))[["num_1"]],
     c(
       "1.8362E03", "2.7634E03", "9.3729E02", "6.4300E02",
@@ -146,8 +149,8 @@ test_that("fmt_scientific() works correctly", {
 
   # Format the `num` column to exactly 6 significant figures
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", n_sigfig = 6, exp_style = "E") %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", n_sigfig = 6, exp_style = "E") |>
        render_formats_test("default"))[["num_1"]],
     c(
       "1.83623E03", "2.76339E03", "9.37290E02", "6.43000E02", "2.23200E00",
@@ -158,13 +161,13 @@ test_that("fmt_scientific() works correctly", {
   # Verify that setting `drop_trailing_zeros` to TRUE has no effect when
   # using significant figures
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_scientific(
          columns = "num_1",
          n_sigfig = 6,
          drop_trailing_zeros = TRUE,
          exp_style = "E"
-       ) %>%
+       ) |>
        render_formats_test("default"))[["num_1"]],
     c(
       "1.83623E03", "2.76339E03", "9.37290E02", "6.43000E02", "2.23200E00",
@@ -175,13 +178,13 @@ test_that("fmt_scientific() works correctly", {
   # Should `n_sigfig` be set to `NA` then significant figures cannot be
   # used and any value for `decimals` is no longer ignored
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_scientific(
          columns = "num_1",
          decimals = 8,
          n_sigfig = NA,
          exp_style = "E"
-       ) %>%
+       ) |>
        render_formats_test("default"))[["num_1"]],
     c(
       "1.83623000E03", "2.76339000E03", "9.37290000E02", "6.43000000E02",
@@ -194,8 +197,8 @@ test_that("fmt_scientific() works correctly", {
   # all other defaults; extract `output_df` in the HTML context and
   # compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 2, sep_mark = ".", dec_mark = ",") %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 2, sep_mark = ".", dec_mark = ",") |>
        render_formats_test("html"))[["num_1"]],
     c(
       paste0("1,84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
@@ -212,8 +215,8 @@ test_that("fmt_scientific() works correctly", {
   # all other defaults; extract `output_df` in the default context and
   # compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 2, sep_mark = ".", dec_mark = ",") %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 2, sep_mark = ".", dec_mark = ",") |>
        render_formats_test("default"))[["num_1"]],
     c(
       "1,84 \U000D7 10^3",
@@ -229,8 +232,8 @@ test_that("fmt_scientific() works correctly", {
   # 1/1000, use all other defaults; extract `output_df` in the HTML
   # context and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 4, scale_by = 1/1000) %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 4, scale_by = 1 / 1000) |>
        render_formats_test("html"))[["num_1"]],
     c(
       "1.8362", "2.7634",
@@ -246,8 +249,8 @@ test_that("fmt_scientific() works correctly", {
   # 1/1000, use all other defaults; extract `output_df` in the default
   # context and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 4, scale_by = 1/1000) %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 4, scale_by = 1 / 1000) |>
        render_formats_test("default"))[["num_1"]],
     c(
       "1.8362",
@@ -265,14 +268,14 @@ test_that("fmt_scientific() works correctly", {
   tab_2 <-
     dplyr::tibble(
       num = c(-3.49E13, -3453, -0.000234, 0, 0.00007534, 82794, 7.16E14)
-    ) %>%
+    ) |>
     gt()
 
   # Format the `num` column and force the sign on the 'm' part of the
   # notation; extract in the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", force_sign_m = TRUE) %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", force_sign_m = TRUE) |>
        render_formats_test("default"))[["num"]],
     c(
       "-3.49 \U000D7 10^13", "-3.45 \U000D7 10^3", "-2.34 \U000D7 10^-4", "0.00",
@@ -283,8 +286,8 @@ test_that("fmt_scientific() works correctly", {
   # Format the `num` column and force the sign on the 'm' part of the
   # notation; extract in the HTML context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", force_sign_m = TRUE) %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", force_sign_m = TRUE) |>
        render_formats_test("html"))[["num"]],
     c(
       "−3.49&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>13</sup>",
@@ -300,8 +303,8 @@ test_that("fmt_scientific() works correctly", {
   # Format the `num` column and force the sign on the 'n' part of the
   # notation; extract in the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", force_sign_n = TRUE) %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", force_sign_n = TRUE) |>
        render_formats_test("default"))[["num"]],
     c(
       "-3.49 \U000D7 10^+13", "-3.45 \U000D7 10^+3", "-2.34 \U000D7 10^-4", "0.00",
@@ -312,8 +315,8 @@ test_that("fmt_scientific() works correctly", {
   # Format the `num` column and force the sign on the 'n' part of the
   # notation; extract in the HTML context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", force_sign_n = TRUE) %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", force_sign_n = TRUE) |>
        render_formats_test("html"))[["num"]],
     c(
       "−3.49&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+13</sup>",
@@ -329,8 +332,8 @@ test_that("fmt_scientific() works correctly", {
   # Format the `num` column and force the sign on the 'm' and 'n' parts of the
   # notation; extract in the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", force_sign_m = TRUE, force_sign_n = TRUE) |>
        render_formats_test("default"))[["num"]],
     c(
       "-3.49 \U000D7 10^+13", "-3.45 \U000D7 10^+3", "-2.34 \U000D7 10^-4", "0.00",
@@ -341,8 +344,8 @@ test_that("fmt_scientific() works correctly", {
   # Format the `num` column and force the sign on the 'm' and 'n' parts of the
   # notation; extract in the HTML context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", force_sign_m = TRUE, force_sign_n = TRUE) |>
        render_formats_test("html"))[["num"]],
     c(
       "−3.49&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>+13</sup>",
@@ -359,8 +362,8 @@ test_that("fmt_scientific() works correctly", {
   # notation and choose a exponent style of `"E"`; extract in the default
   # context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", exp_style = "E", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", exp_style = "E", force_sign_m = TRUE, force_sign_n = TRUE) |>
        render_formats_test("default"))[["num"]],
     c(
       "-3.49E+13", "-3.45E+03", "-2.34E-04", "0.00E+00",
@@ -372,8 +375,8 @@ test_that("fmt_scientific() works correctly", {
   # notation and choose a exponent style of `"E"`; extract in the HTML
   # context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", exp_style = "E", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", exp_style = "E", force_sign_m = TRUE, force_sign_n = TRUE) |>
        render_formats_test("html"))[["num"]],
     c(
       "−3.49E+13", "−3.45E+03", "−2.34E−04", "0.00E+00",
@@ -384,8 +387,8 @@ test_that("fmt_scientific() works correctly", {
   # Format the `num` column and choose a exponent style of `"E"`; extract in
   # the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", exp_style = "E") %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", exp_style = "E") |>
        render_formats_test("default"))[["num"]],
     c(
       "-3.49E13", "-3.45E03", "-2.34E-04", "0.00E00", "7.53E-05",
@@ -396,8 +399,8 @@ test_that("fmt_scientific() works correctly", {
   # Format the `num` column and choose a exponent style of `"E1"`; extract
   # in the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", exp_style = "E1") %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", exp_style = "E1") |>
        render_formats_test("default"))[["num"]],
     c(
       "-3.49E13", "-3.45E3", "-2.34E-4", "0.00E0", "7.53E-5",
@@ -408,8 +411,8 @@ test_that("fmt_scientific() works correctly", {
   # Format the `num` column and choose a exponent style of `"D3"`; extract
   # in the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", exp_style = "D3") %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", exp_style = "D3") |>
        render_formats_test("default"))[["num"]],
     c(
       "-3.49E13", "-3.45E03", "-2.34E-04", "0.00E00", "7.53E-05",
@@ -420,8 +423,8 @@ test_that("fmt_scientific() works correctly", {
   # Format the `num` column and choose a exponent style of `"e1"`; extract
   # in the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", exp_style = "e1") %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", exp_style = "e1") |>
        render_formats_test("default"))[["num"]],
     c(
       "-3.49e13", "-3.45e3", "-2.34e-4", "0.00e0", "7.53e-5",
@@ -432,8 +435,8 @@ test_that("fmt_scientific() works correctly", {
   # Format the `num` column and choose a exponent style of `"e2"`; extract
   # in the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", exp_style = "e2") %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", exp_style = "e2") |>
        render_formats_test("default"))[["num"]],
     c(
       "-3.49E13", "-3.45E03", "-2.34E-04", "0.00E00", "7.53E-05",
@@ -444,8 +447,8 @@ test_that("fmt_scientific() works correctly", {
   # Format the `num` column and choose a exponent style of `"E2"`; extract
   # in the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", exp_style = "E2") %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", exp_style = "E2") |>
        render_formats_test("default"))[["num"]],
     c(
       "-3.49E13", "-3.45E03", "-2.34E-04", "0.00E00", "7.53E-05",
@@ -456,8 +459,8 @@ test_that("fmt_scientific() works correctly", {
   # Format the `num` column and choose a exponent style of `"low-ten"`; extract
   # in the default context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", exp_style = "low-ten") %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", exp_style = "low-ten") |>
        render_formats_test("default"))[["num"]],
     c(
       "-3.49E13", "-3.45E03", "-2.34E-04", "0.00E00", "7.53E-05",
@@ -468,8 +471,8 @@ test_that("fmt_scientific() works correctly", {
   # Format the `num` column and choose a exponent style of `"low-ten"`; extract
   # in the HTML context and compare to expected values
   expect_equal(
-    (tab_2 %>%
-       fmt_scientific(columns = "num", exp_style = "low-ten") %>%
+    (tab_2 |>
+       fmt_scientific(columns = "num", exp_style = "low-ten") |>
        render_formats_test("html"))[["num"]],
     c(
       "−3.49<sub style='font−size: 65%;'>10</sub>13",
@@ -486,8 +489,8 @@ test_that("fmt_scientific() works correctly", {
   # all values by 2 different literals, use all other defaults; extract
   # `output_df` in the HTML context and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 2, pattern = "a {x} b") %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 2, pattern = "a {x} b") |>
        render_formats_test("html"))[["num_1"]],
     c(
       paste0("a 1.84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup> b"),
@@ -503,8 +506,8 @@ test_that("fmt_scientific() works correctly", {
   # all values by 2 different literals, use all other defaults; extract
   # `output_df` in the default context and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 2, pattern = "a {x} b") %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 2, pattern = "a {x} b") |>
        render_formats_test("default"))[["num_1"]],
     c(
       "a 1.84 \U000D7 10^3 b",
@@ -518,9 +521,9 @@ test_that("fmt_scientific() works correctly", {
 
   # Format the `num_1` column to 2 decimal places, force the sign
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_scientific(
-         columns = num_1, decimals = 3, force_sign_m = TRUE) %>%
+         columns = num_1, decimals = 3, force_sign_m = TRUE) |>
        render_formats_test("html"))[["num_1"]],
     c(
       paste0("+1.836&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
@@ -535,9 +538,9 @@ test_that("fmt_scientific() works correctly", {
   # Format the `num_1` column to 2 decimal places, force the sign and
   # define a pattern for decorating values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_scientific(
-         columns = num_1, pattern = "*{x}*", force_sign_m = TRUE) %>%
+         columns = num_1, pattern = "*{x}*", force_sign_m = TRUE) |>
        render_formats_test("html"))[["num_1"]],
     c(
       paste0("*+1.84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>*"),
@@ -553,8 +556,8 @@ test_that("fmt_scientific() works correctly", {
   # locale and use all other defaults; extract `output_df` in the HTML
   # context and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 2, locale = "en_US") %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 2, locale = "en_US") |>
        render_formats_test("html"))[["num_1"]],
     c(
       paste0("1.84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
@@ -570,8 +573,8 @@ test_that("fmt_scientific() works correctly", {
   # locale and use all other defaults; extract `output_df` in the HTML
   # context and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 2, locale = "da_DK") %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 2, locale = "da_DK") |>
        render_formats_test("html"))[["num_1"]],
     c(
       paste0("1,84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
@@ -587,8 +590,8 @@ test_that("fmt_scientific() works correctly", {
   # locale and use all other defaults; extract `output_df` in the HTML
   # context and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 2, locale = "de_AT") %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 2, locale = "de_AT") |>
        render_formats_test("html"))[["num_1"]],
     c(
       paste0("1,84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
@@ -604,8 +607,8 @@ test_that("fmt_scientific() works correctly", {
   # locale and use all other defaults; extract `output_df` in the HTML
   # context and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 2, locale = "et_EE") %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 2, locale = "et_EE") |>
        render_formats_test("html"))[["num_1"]],
     c(
       paste0("1,84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
@@ -621,8 +624,8 @@ test_that("fmt_scientific() works correctly", {
   # locale and use all other defaults; extract `output_df` in the HTML
   # context and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 2, locale = "gl_ES") %>%
+    (tab |>
+       fmt_scientific(columns = "num_1", decimals = 2, locale = "gl_ES") |>
        render_formats_test("html"))[["num_1"]],
     c(
       paste0("1,84&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
@@ -656,8 +659,8 @@ test_that("fmt_scientific() can handle extremely large and small values", {
   # other defaults; extract values in the default context
   # and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num", decimals = 5) %>%
+    (tab |>
+       fmt_scientific(columns = "num", decimals = 5) |>
        render_formats_test("default"))[["num"]],
     c(
       "-1.50000 \U000D7 10^200",
@@ -677,8 +680,8 @@ test_that("fmt_scientific() can handle extremely large and small values", {
   # other defaults; extract values in the HTML context
   # and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_scientific(columns = "num", decimals = 5) %>%
+    (tab |>
+       fmt_scientific(columns = "num", decimals = 5) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("\U02212", "1.50000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>200</sup>"),
@@ -693,4 +696,93 @@ test_that("fmt_scientific() can handle extremely large and small values", {
       paste0("3.50000&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>200</sup>")
     )
   )
+})
+
+test_that("fmt_scientific() handles Inf values correctly", {
+
+  # Test fmt_scientific() with Inf values
+  tab_inf <-
+    data.frame(a = c(1234, Inf, -5678, Inf)) |>
+    gt() |>
+    fmt_scientific()
+
+  expect_equal(
+    (tab_inf |> render_formats_test(context = "html"))[["a"]],
+    c(
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "Inf",
+      paste0("\U02212", "5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "Inf"
+    )
+  )
+
+  # Test fmt_scientific() with Inf at the start
+  tab_inf_first <-
+    data.frame(a = c(Inf, 1234, 5678)) |>
+    gt() |>
+    fmt_scientific()
+
+  expect_equal(
+    (tab_inf_first |> render_formats_test(context = "html"))[["a"]],
+    c(
+      "Inf",
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>")
+    )
+  )
+
+  # Test fmt_scientific() with mix of NA and Inf
+  tab_mixed <-
+    data.frame(a = c(1234, NA, Inf, 5678, Inf)) |>
+    gt() |>
+    fmt_scientific()
+
+  expect_equal(
+    (tab_mixed |> render_formats_test(context = "html"))[["a"]],
+    c(
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "NA",
+      "Inf",
+      paste0("5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "Inf"
+    )
+  )
+
+  # Test fmt_scientific() with Inf and different exp_style
+  tab_inf_exp_style <-
+    data.frame(a = c(1234, Inf, 5678)) |>
+    gt() |>
+    fmt_scientific(exp_style = "E")
+
+  expect_equal(
+    (tab_inf_exp_style |> render_formats_test(context = "html"))[["a"]],
+    c(
+      "1.23E03",
+      "Inf",
+      "5.68E03"
+    )
+  )
+
+  # Test fmt_scientific() with negative Inf (-Inf)
+  tab_neg_inf <-
+    data.frame(a = c(1234, -Inf, 5678, Inf)) |>
+    gt() |>
+    fmt_scientific()
+
+  expect_equal(
+    (tab_neg_inf |> render_formats_test(context = "html"))[["a"]],
+    c(
+      paste0("1.23&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      paste0("\U02212", "Inf"),
+      paste0("5.68&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+      "Inf"
+    )
+  )
+
+  # Test that the example from the issue works without error
+  expect_no_error({
+    data.frame(a = c(1234, Inf)) |>
+      gt() |>
+      fmt_scientific()
+  })
 })

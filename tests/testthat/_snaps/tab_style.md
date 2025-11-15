@@ -40,7 +40,7 @@
 # tab style works with grand_summary
 
     Code
-      data %>% tab_style(style = list(cell_fill(color = "red"), cell_text(color = "white")),
+      tab_style(data, style = list(cell_fill(color = "red"), cell_text(color = "white")),
       locations = cells_grand_summary(columns = starts_with("x"), rows = 2))
     Condition
       Error in `tab_style()`:
@@ -52,7 +52,7 @@
 ---
 
     Code
-      data %>% tab_style(style = list(cell_fill(color = "red"), cell_text(color = "white")),
+      tab_style(data, style = list(cell_fill(color = "red"), cell_text(color = "white")),
       locations = cells_grand_summary(columns = starts_with("m"), rows = starts_with(
         "x")))
     Condition
@@ -65,7 +65,7 @@
 # tab_style() works with a single cell
 
     Code
-      data %>% tab_style(style = cell_fill(color = "yellow"), locations = cells_body(
+      tab_style(data, style = cell_fill(color = "yellow"), locations = cells_body(
         columns = "disp", rows = "Mazda RX7"))
     Condition
       Error in `tab_style()`:
@@ -150,7 +150,6 @@
       <td headers="whitespace" class="gt_row gt_left">pre-wrap</td>
       <td headers="indent" class="gt_row gt_right">10</td></tr>
         </tbody>
-        
         
       </table>
 

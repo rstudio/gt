@@ -1,7 +1,7 @@
 # Extraction of the table body works with variation in arguments
 
     Code
-      .
+      extract_body(gt(exibble))
     Output
       # A tibble: 8 x 9
         num       char       fctr  date       time  datetime      currency row   group
@@ -18,7 +18,7 @@
 ---
 
     Code
-      .
+      extract_body(gt(exibble, rowname_col = "row", groupname_col = "group"))
     Output
       # A tibble: 8 x 9
         `::group_id::` `::rowname::` num     char  fctr  date  time  datetime currency
@@ -35,7 +35,7 @@
 ---
 
     Code
-      .
+      extract_body(gt(exibble, rowname_col = "row"))
     Output
       # A tibble: 8 x 9
         `::rowname::` num       char       fctr  date    time  datetime currency group
@@ -52,7 +52,7 @@
 ---
 
     Code
-      .
+      extract_body(gt(exibble, groupname_col = "group"))
     Output
       # A tibble: 8 x 9
         `::group_id::` num       char       fctr  date   time  datetime currency row  
@@ -69,7 +69,7 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble), columns = matches("date")))
     Output
       # A tibble: 8 x 7
         num       char       fctr  time  currency  row   group
@@ -86,7 +86,8 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble, rowname_col = "row", groupname_col = "group"),
+      columns = matches("date")))
     Output
       # A tibble: 8 x 7
         `::group_id::` `::rowname::` num       char       fctr  time  currency 
@@ -103,7 +104,8 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble, rowname_col = "row"), columns = matches(
+        "date")))
     Output
       # A tibble: 8 x 7
         `::rowname::` num       char       fctr  time  currency  group
@@ -120,7 +122,8 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble, groupname_col = "group"), columns = matches(
+        "date")))
     Output
       # A tibble: 8 x 7
         `::group_id::` num       char       fctr  time  currency  row  
@@ -137,7 +140,7 @@
 ---
 
     Code
-      .
+      extract_body(gt(exibble), incl_stub_cols = FALSE)
     Output
       # A tibble: 8 x 9
         num       char       fctr  date       time  datetime      currency row   group
@@ -154,7 +157,8 @@
 ---
 
     Code
-      .
+      extract_body(gt(exibble, rowname_col = "row", groupname_col = "group"),
+      incl_stub_cols = FALSE)
     Output
       # A tibble: 8 x 7
         num       char       fctr  date       time  datetime         currency 
@@ -171,7 +175,7 @@
 ---
 
     Code
-      .
+      extract_body(gt(exibble, rowname_col = "row"), incl_stub_cols = FALSE)
     Output
       # A tibble: 8 x 8
         num       char       fctr  date       time  datetime         currency  group
@@ -188,7 +192,7 @@
 ---
 
     Code
-      .
+      extract_body(gt(exibble, groupname_col = "group"), incl_stub_cols = FALSE)
     Output
       # A tibble: 8 x 8
         num       char       fctr  date       time  datetime         currency  row  
@@ -205,7 +209,7 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble), columns = matches("date")), incl_stub_cols = FALSE)
     Output
       # A tibble: 8 x 7
         num       char       fctr  time  currency  row   group
@@ -222,7 +226,8 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble, rowname_col = "row", groupname_col = "group"),
+      columns = matches("date")), incl_stub_cols = FALSE)
     Output
       # A tibble: 8 x 5
         num       char       fctr  time  currency 
@@ -239,7 +244,8 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble, rowname_col = "row"), columns = matches(
+        "date")), incl_stub_cols = FALSE)
     Output
       # A tibble: 8 x 6
         num       char       fctr  time  currency  group
@@ -256,7 +262,8 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble, groupname_col = "group"), columns = matches(
+        "date")), incl_stub_cols = FALSE)
     Output
       # A tibble: 8 x 6
         num       char       fctr  time  currency  row  
@@ -273,7 +280,7 @@
 ---
 
     Code
-      .
+      extract_body(gt(exibble), incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 9
         num       char       fctr  date       time  datetime      currency row   group
@@ -290,7 +297,8 @@
 ---
 
     Code
-      .
+      extract_body(gt(exibble, rowname_col = "row", groupname_col = "group"),
+      incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 9
         `::group_id::` `::rowname::` num     char  fctr  date  time  datetime currency
@@ -307,7 +315,7 @@
 ---
 
     Code
-      .
+      extract_body(gt(exibble, rowname_col = "row"), incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 9
         `::rowname::` num       char       fctr  date    time  datetime currency group
@@ -324,7 +332,7 @@
 ---
 
     Code
-      .
+      extract_body(gt(exibble, groupname_col = "group"), incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 9
         `::group_id::` num       char       fctr  date   time  datetime currency row  
@@ -341,7 +349,8 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble), columns = matches("date")),
+      incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 9
         num       char       fctr  date       time  datetime      currency row   group
@@ -358,7 +367,8 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble, rowname_col = "row", groupname_col = "group"),
+      columns = matches("date")), incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 9
         `::group_id::` `::rowname::` num     char  fctr  date  time  datetime currency
@@ -375,7 +385,8 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble, rowname_col = "row"), columns = matches(
+        "date")), incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 9
         `::rowname::` num       char       fctr  date    time  datetime currency group
@@ -392,7 +403,8 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble, groupname_col = "group"), columns = matches(
+        "date")), incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 9
         `::group_id::` num       char       fctr  date   time  datetime currency row  
@@ -409,7 +421,7 @@
 ---
 
     Code
-      .
+      extract_body(gt(exibble), incl_stub_cols = FALSE, incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 9
         num       char       fctr  date       time  datetime      currency row   group
@@ -426,7 +438,8 @@
 ---
 
     Code
-      .
+      extract_body(gt(exibble, rowname_col = "row", groupname_col = "group"),
+      incl_stub_cols = FALSE, incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 7
         num       char       fctr  date       time  datetime         currency 
@@ -443,7 +456,8 @@
 ---
 
     Code
-      .
+      extract_body(gt(exibble, rowname_col = "row"), incl_stub_cols = FALSE,
+      incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 8
         num       char       fctr  date       time  datetime         currency  group
@@ -460,7 +474,8 @@
 ---
 
     Code
-      .
+      extract_body(gt(exibble, groupname_col = "group"), incl_stub_cols = FALSE,
+      incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 8
         num       char       fctr  date       time  datetime         currency  row  
@@ -477,7 +492,8 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble), columns = matches("date")), incl_stub_cols = FALSE,
+      incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 9
         num       char       fctr  date       time  datetime      currency row   group
@@ -494,7 +510,8 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble, rowname_col = "row", groupname_col = "group"),
+      columns = matches("date")), incl_stub_cols = FALSE, incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 7
         num       char       fctr  date       time  datetime         currency 
@@ -511,7 +528,8 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble, rowname_col = "row"), columns = matches(
+        "date")), incl_stub_cols = FALSE, incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 8
         num       char       fctr  date       time  datetime         currency  group
@@ -528,7 +546,8 @@
 ---
 
     Code
-      .
+      extract_body(cols_hide(gt(exibble, groupname_col = "group"), columns = matches(
+        "date")), incl_stub_cols = FALSE, incl_hidden_cols = TRUE)
     Output
       # A tibble: 8 x 8
         num       char       fctr  date       time  datetime         currency  row  

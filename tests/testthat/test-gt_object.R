@@ -6,7 +6,7 @@ check_suggests <- function() {
 test_that("A gt table object contains the correct components", {
 
   # Create a `gt_tbl` object with `gt()`
-  tab <- iris %>% gt()
+  tab <- gt(iris)
 
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
@@ -24,23 +24,19 @@ test_that("A gt table object contains the correct components", {
 
   # Create a `gt_tbl` object with `gt()` and a
   # grouped version of the `iris` dataset
-  tab <-
-    iris %>% dplyr::group_by(Species) %>%
-    gt()
+  tab <- gt(dplyr::group_by(iris, Species))
 
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
   # expected dimensions and features
-  #expect_tab(tab, df = iris %>% dplyr::group_by(Species))
+  #expect_tab(tab, df = iris |> dplyr::group_by(Species))
 })
 
 test_that("A gt table can be made to use the rownames of a data frame", {
 
   # Create a `gt_tbl` object with `gt()` and use the
   # data frame's row names as row names in the stub
-  tab <-
-    mtcars %>%
-    gt(rownames_to_stub = TRUE)
+  tab <- gt(mtcars, rownames_to_stub = TRUE)
 
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
@@ -70,7 +66,7 @@ test_that("A gt table can be made with the stub partially or fully populated", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_r` dataset
-  tab <- data_r %>% gt()
+  tab <- data_r |> gt()
 
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
@@ -80,7 +76,8 @@ test_that("A gt table can be made with the stub partially or fully populated", {
   # Expect that the `stub_df` data frame is correctly
   # formed given the input rownames and groupnames
   expect_tab_colnames(
-    tab, df = data_r,
+    tab,
+    df = data_r,
     rowname = "col",
     groupname_is_na = TRUE
   )
@@ -97,7 +94,7 @@ test_that("A gt table can be made with the stub partially or fully populated", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_rg` dataset
-  tab <- data_rg %>% gt(groupname_col = "groups")
+  tab <- gt(data_rg, groupname_col = "groups")
 
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
@@ -118,11 +115,11 @@ test_that("A gt table can be made from a table with no rows", {
 
   # Create an input data frame based on the exibble
   # dataset, except with no rows
-  data_e <- exibble %>% head(0)
+  data_e <- head(exibble, 0)
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_e` dataset
-  tab <- data_e %>% gt()
+  tab <- gt(data_e)
 
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
@@ -131,19 +128,17 @@ test_that("A gt table can be made from a table with no rows", {
 
   # Expect that the `stub_df` data frame is empty
   n_rows <- nrow(dt_stub_df_get(data = tab))
+
   expect_equal(n_rows, 0)
 
   # Create a `gt_tbl` object with `gt()` and a
   # grouped version of the `data_e` dataset
-  tab <-
-    data_e %>%
-    dplyr::group_by(group) %>%
-    gt()
+  tab <- gt(dplyr::group_by(data_e, group))
 
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
   # expected dimensions and features
-  expect_tab(tab = tab, df = data_e %>% dplyr::group_by(group))
+  expect_tab(tab = tab, df = data_e |> dplyr::group_by(group))
 })
 
 test_that("A gt table can use UTF-8 chars in any system locale", {
@@ -202,21 +197,20 @@ test_that("A gt table can use UTF-8 chars in any system locale", {
     # Expect that UTF-8 characters are retained in the
     # gt object after rendering
     expect_identical(
-       sort(expected_vec),
-      (df %>% gt() %>% render_formats_test("html")) %>%
-        unlist() %>% unname() %>% sort()
+      sort(expected_vec),
+      (gt(df) |> render_formats_test("html")) |>
+        unlist() |> unname() |> sort()
     )
 
     # Expect that UTF-8 characters are retained in the
     # rendered HTML table
     expect_identical(
-      expected_vec %>% sort(),
-      df %>%
-        gt() %>%
-        tab_options(row.striping.include_table_body = FALSE) %>%
-        render_as_html() %>%
-        xml2::read_html() %>%
-        selection_text("[class='gt_row gt_left']") %>%
+      expected_vec |> sort(),
+      gt(df) |>
+        tab_options(row.striping.include_table_body = FALSE) |>
+        render_as_html() |>
+        xml2::read_html() |>
+        selection_text("[class='gt_row gt_left']") |>
         sort()
     )
   }
@@ -238,13 +232,13 @@ test_that("A gt table can be made with grouped data -- one group", {
   # incoming table; create the gt object and build
   # its data under an `html` context
   built_tbl <-
-    exibble %>%
-    dplyr::group_by(group) %>%
-    gt() %>%
+    exibble |>
+    dplyr::group_by(group) |>
+    gt() |>
     build_data(context = "html")
 
   # Expect that groups are available in the gt object
-  built_tbl$`_row_groups` %>% expect_equal(c("grp_a", "grp_b"))
+  built_tbl$`_row_groups` |> expect_equal(c("grp_a", "grp_b"))
 
   # Expect the `_groups_rows` component to have a specific
   # set of values within that data frame
@@ -263,7 +257,7 @@ test_that("A gt table can be made with grouped data -- one group", {
   )
 
   expect_equal(
-    built_tbl$`_boxhead` %>% .[, 1:2],
+    built_tbl$`_boxhead`[, 1:2],
     vctrs::data_frame(
       var = colnames(exibble),
       type = c(rep("default", 8), "row_group")
@@ -277,29 +271,30 @@ test_that("A gt table can be made with grouped data -- one group", {
 
   # Render the HTML table and read the HTML with the `xml2::read_html()` fn
   html_tbl <-
-    exibble %>%
-    dplyr::group_by(group) %>%
-    gt(auto_align = FALSE) %>%
-    render_as_html() %>%
+    exibble |>
+    dplyr::group_by(group) |>
+    gt(auto_align = FALSE) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 8 column labels in the rendered HTML table
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_center']") %>%
-    rvest::html_text() %>%
-    expect_equal(colnames(exibble) %>% setdiff("group"))
+  html_tbl |>
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_center']") |>
+    rvest::html_text() |>
+    expect_equal(colnames(exibble) |> setdiff("group"))
 
   # Expect two labels in group heading rows (above each row group)
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_group_heading']") %>%
-    rvest::html_text() %>%
+  html_tbl |>
+    rvest::html_nodes("[class='gt_group_heading']") |>
+    rvest::html_text() |>
     expect_equal(c("grp_a", "grp_b"))
 
   # Expect the first row of data to match that which is expected
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_row gt_center']") %>%
-    rvest::html_text() %>%
-    .[1:8] %>%
+  (
+    html_tbl |>
+    rvest::html_nodes("[class='gt_row gt_center']") |>
+    rvest::html_text()
+  )[1:8] |>
     expect_equal(
       c(
         "1.111e-01", "apricot", "one", "2015-01-15", "13:35",
@@ -314,17 +309,17 @@ test_that("A gt table can be made with grouped data - two groups", {
   # incoming table; create the gt object and build
   # its data under an `html` context
   built_tbl <-
-    exibble %>%
-    dplyr::mutate(group_2 = rep(paste0("grp_", 1:4), 2) %>% sort()) %>%
-    dplyr::group_by(group, group_2) %>%
-    gt() %>%
+    exibble |>
+    dplyr::mutate(group_2 = rep(paste0("grp_", 1:4), 2) |> sort()) |>
+    dplyr::group_by(group, group_2) |>
+    gt() |>
     build_data(context = "html")
 
   table_groups <-
     c("grp_a - grp_1", "grp_a - grp_2", "grp_b - grp_3", "grp_b - grp_4")
 
   # Expect that groups are available in the gt object
-  built_tbl$`_row_groups` %>%
+  built_tbl$`_row_groups` |>
     expect_equal(table_groups)
 
   # Expect the `_groups_rows` component to have a specific
@@ -342,12 +337,12 @@ test_that("A gt table can be made with grouped data - two groups", {
     ignore_attr = TRUE
   )
 
-  built_tbl$`_boxhead` %>% .[, 1:2] %>%
+  built_tbl$`_boxhead`[, 1:2] |>
     expect_equal(
       vctrs::data_frame(
         var = colnames(
-          exibble %>%
-            dplyr::mutate(group_2 = rep(paste0("grp_", 1:4), 2) %>% sort())
+          exibble |>
+            dplyr::mutate(group_2 = rep(paste0("grp_", 1:4), 2) |> sort())
           ),
         type = c(rep("default", 8), rep("row_group", 2))
       )
@@ -365,23 +360,23 @@ test_that("A gt table can be made with grouped data - two groups", {
 
   # Render the HTML table and read the HTML with the `xml2::read_html()` fn
   html_tbl <-
-    exibble %>%
-    dplyr::mutate(group_2 = rep(paste0("grp_", 1:4), 2) %>% sort()) %>%
-    dplyr::group_by(group, group_2) %>%
-    gt(auto_align = FALSE) %>%
-    render_as_html() %>%
+    exibble |>
+    dplyr::mutate(group_2 = rep(paste0("grp_", 1:4), 2) |> sort()) |>
+    dplyr::group_by(group, group_2) |>
+    gt(auto_align = FALSE) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 8 column labels in the rendered HTML table
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_center']") %>%
-    rvest::html_text() %>%
-    expect_equal(colnames(exibble) %>% setdiff("group"))
+  html_tbl |>
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_center']") |>
+    rvest::html_text() |>
+    expect_equal(colnames(exibble) |> setdiff("group"))
 
   # Expect four labels in group heading rows (above each row group)
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_group_heading']") %>%
-    rvest::html_text() %>%
+  html_tbl |>
+    rvest::html_nodes("[class='gt_group_heading']") |>
+    rvest::html_text() |>
     expect_equal(
       c(
         "grp_a - grp_1", "grp_a - grp_2", "grp_b - grp_3", "grp_b - grp_4"
@@ -389,10 +384,11 @@ test_that("A gt table can be made with grouped data - two groups", {
     )
 
   # Expect the first row of data to match that which is expected
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_row gt_center']") %>%
-    rvest::html_text() %>%
-    .[1:8] %>%
+  (
+    html_tbl |>
+    rvest::html_nodes("[class='gt_row gt_center']") |>
+    rvest::html_text()
+  )[1:8] |>
     expect_equal(
       c(
         "1.111e-01", "apricot", "one", "2015-01-15",
@@ -408,13 +404,13 @@ test_that("`groupname_col` in gt() will override any grouped data", {
   # a value for the `groupname_col` arg (which we
   # expect will be used over tbl groups)
   built_tbl <-
-    exibble %>%
-    dplyr::group_by(group) %>%
-    gt(groupname_col = "date") %>%
+    exibble |>
+    dplyr::group_by(group) |>
+    gt(groupname_col = "date") |>
     build_data(context = "html")
 
   # Expect that groups are available in the gt object
-  built_tbl$`_row_groups` %>%
+  built_tbl$`_row_groups` |>
     expect_equal(
       c(
         "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
@@ -442,7 +438,7 @@ test_that("`groupname_col` in gt() will override any grouped data", {
     ignore_attr = TRUE
   )
 
-  built_tbl$`_boxhead` %>% .[, 1:2] %>%
+  built_tbl$`_boxhead`[, 1:2] |>
     expect_equal(
       vctrs::data_frame(
         var = colnames(exibble),
@@ -481,29 +477,30 @@ test_that("`groupname_col` in gt() will override any grouped data", {
 
   # Render the HTML table and read the HTML with the `xml2::read_html()` fn
   html_tbl <-
-    exibble %>%
-    dplyr::group_by(group) %>%
-    gt(auto_align = FALSE) %>%
-    render_as_html() %>%
+    exibble |>
+    dplyr::group_by(group) |>
+    gt(auto_align = FALSE) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 8 column labels in the rendered HTML table
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_center']") %>%
-    rvest::html_text() %>%
-    expect_equal(colnames(exibble) %>% setdiff("group"))
+  html_tbl |>
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_center']") |>
+    rvest::html_text() |>
+    expect_equal(colnames(exibble) |> setdiff("group"))
 
   # Expect two labels in group heading rows (above each row group)
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_group_heading']") %>%
-    rvest::html_text() %>%
+  html_tbl |>
+    rvest::html_nodes("[class='gt_group_heading']") |>
+    rvest::html_text() |>
     expect_equal(c("grp_a", "grp_b"))
 
   # Expect the first row of data to match that which is expected
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_row gt_center']") %>%
-    rvest::html_text() %>%
-    .[1:8] %>%
+  (
+    html_tbl |>
+    rvest::html_nodes("[class='gt_row gt_center']") |>
+    rvest::html_text()
+  )[1:8] |>
     expect_equal(
       c(
         "1.111e-01", "apricot", "one", "2015-01-15", "13:35",
@@ -533,12 +530,13 @@ test_that("rowname_col in gt() will be overridden by `rownames_to_stub = TRUE`",
   # arg (which we expect will be ignored in favor of the
   # table's row names)
   built_tbl <-
-    mtcars[1:10, ] %>%
-    gt(rownames_to_stub = TRUE, rowname_col = "disp") %>%
+    mtcars[1:10, ] |>
+    gt(rownames_to_stub = TRUE, rowname_col = "disp") |>
     build_data(context = "html")
 
   # Expect that no groups are available in the gt object
   expect_equal(built_tbl$`_row_groups`, character(0L))
+
   # Expect no rows in `_groups_rows`
   expect_equal(nrow(built_tbl$`_groups_rows`), 0L)
 
@@ -565,28 +563,29 @@ test_that("rowname_col in gt() will be overridden by `rownames_to_stub = TRUE`",
 
   # Render the HTML table and read the HTML with the `xml2::read_html()` fn
   html_tbl <-
-    mtcars[1:10, ] %>%
-    gt(rownames_to_stub = TRUE, rowname_col = "disp", auto_align = FALSE) %>%
-    render_as_html() %>%
+    mtcars[1:10, ] |>
+    gt(rownames_to_stub = TRUE, rowname_col = "disp", auto_align = FALSE) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 11 column labels in the rendered HTML table
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_center']") %>%
-    rvest::html_text() %>%
+  html_tbl |>
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_center']") |>
+    rvest::html_text() |>
     expect_equal(colnames(mtcars))
 
   # Expect no labels in group heading rows (above each row group)
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_group_heading']") %>%
-    rvest::html_text() %>%
+  html_tbl |>
+    rvest::html_nodes("[class='gt_group_heading']") |>
+    rvest::html_text() |>
     expect_equal(character(0L))
 
   # Expect the first row of data to match that which is expected
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_row gt_center']") %>%
-    rvest::html_text() %>%
-    .[1:11] %>%
+  (
+    html_tbl |>
+    rvest::html_nodes("[class='gt_row gt_center']") |>
+    rvest::html_text()
+  )[1:11] |>
     expect_equal(
       c(
         "21.0", "6", "160.0", "110", "3.90",
@@ -601,20 +600,20 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
   # stub labels, provide a column named `rowname`, and
   # use `rownames_to_stub = FALSE`
   built_tbl <-
-    exibble %>%
-    dplyr::mutate(rowname = "test") %>%
-    gt(rownames_to_stub = TRUE) %>%
+    exibble |>
+    dplyr::mutate(rowname = "test") |>
+    gt(rownames_to_stub = TRUE) |>
     build_data(context = "html")
 
   # Expect that no groups are available in the gt object
-  built_tbl$`_row_groups` %>% expect_equal(character(0L))
+  built_tbl$`_row_groups` |> expect_equal(character(0L))
 
   # Expect no rows in `_groups_rows`
-  built_tbl$`_groups_rows` %>%
-    nrow() %>%
+  built_tbl$`_groups_rows` |>
+    nrow() |>
     expect_equal(0)
 
-  built_tbl$`_boxhead` %>% .[, 1:2] %>%
+  built_tbl$`_boxhead`[, 1:2] |>
     expect_equal(
       vctrs::data_frame(
         var = c("__GT_ROWNAME_PRIVATE__", colnames(exibble), "rowname"),
@@ -622,7 +621,7 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
       )
     )
 
-  built_tbl$`_stub_df` %>%
+  built_tbl$`_stub_df` |>
     expect_equal(
       dplyr::tibble(
         rownum_i = 1:8,
@@ -634,34 +633,35 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
       ),
       ignore_attr = TRUE
     )
-  
+
   check_suggests()
-  
+
   # Render the HTML table and read the HTML with the `xml2::read_html()` fn
   html_tbl <-
-    exibble %>%
-    dplyr::mutate(rowname = "test") %>%
-    gt(rownames_to_stub = TRUE, auto_align = FALSE) %>%
-    render_as_html() %>%
+    exibble |>
+    dplyr::mutate(rowname = "test") |>
+    gt(rownames_to_stub = TRUE, auto_align = FALSE) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 10 column labels in the rendered HTML table
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_center']") %>%
-    rvest::html_text() %>%
+  html_tbl |>
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_center']") |>
+    rvest::html_text() |>
     expect_equal(c(colnames(exibble), "rowname"))
 
   # Expect no labels in group heading rows (above each row group)
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_group_heading']") %>%
-    rvest::html_text() %>%
+  html_tbl |>
+    rvest::html_nodes("[class='gt_group_heading']") |>
+    rvest::html_text() |>
     expect_equal(character(0L))
 
   # Expect the first row of data to match that which is expected
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_row gt_center']") %>%
-    rvest::html_text() %>%
-    .[1:10] %>%
+  (
+    html_tbl |>
+    rvest::html_nodes("[class='gt_row gt_center']") |>
+    rvest::html_text()
+  )[1:10] |>
     expect_equal(
       c(
         "1.111e-01", "apricot", "one", "2015-01-15", "13:35",
@@ -675,25 +675,29 @@ test_that("Any shared names in `rowname_col` and `groupname_col` will be disallo
   # Expect an error if there are any shared names across `rowname_col`
   # and `groupname_col`
   expect_error(
-    exibble %>%
+    exibble |>
       gt(rowname_col = "row", groupname_col = "row")
   )
+
   expect_error(
-    exibble %>%
+    exibble |>
       gt(rowname_col = "group", groupname_col = "group")
   )
+
   expect_error(
-    exibble %>%
+    exibble |>
       gt(rowname_col = "rowname", groupname_col = "rowname")
   )
+
   expect_error(
-    exibble %>%
-      dplyr::group_by(group) %>%
+    exibble |>
+      dplyr::group_by(group) |>
       gt(rowname_col = "group")
   )
+
   expect_error(
-    exibble %>%
-      dplyr::group_by(date, row) %>%
+    exibble |>
+      dplyr::group_by(date, row) |>
       gt(rowname_col = "row")
   )
 })
@@ -718,11 +722,13 @@ test_that("Escapable characters in rownames are handled correctly in each output
     "<tr><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">&lt;em&gt;row_html&lt;/em&gt;</th>",
     fixed = TRUE
   )
+
   expect_match_html( # `column_1`
     gt(tbl, rownames_to_stub = TRUE),
     "<td headers=\"stub_1_1 column_1\" class=\"gt_row gt_left\">&lt;em&gt;html&lt;/em&gt;</td>",
     fixed = TRUE
   )
+
   expect_match_html( # `column_2`
     gt(tbl, rownames_to_stub = TRUE),
     "<td headers=\"stub_1_1 column_2\" class=\"gt_row gt_left\">html</td>",
@@ -735,6 +741,7 @@ test_that("Escapable characters in rownames are handled correctly in each output
     "<tr><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">&lt;em&gt;html&lt;/em&gt;</th>",
     fixed = TRUE
   )
+
   expect_match_html( # `column_2`
     gt(dplyr::as_tibble(tbl), rowname_col = "column_1"),
     "<td headers=\"stub_1_1 column_2\" class=\"gt_row gt_left\">html</td>",
@@ -747,16 +754,16 @@ test_that("Escapable characters in rownames are handled correctly in each output
   # Expect that the stub and body rows are escaped correctly
   # when rendered as LaTeX
   expect_match(
-    gt(tbl, rownames_to_stub = TRUE) %>%
-      as_latex() %>% as.character(),
+    gt(tbl, rownames_to_stub = TRUE) |>
+      as_latex() |> as.character(),
     "\\$row\\_latex & \\$latex & latex \\\\ ",
     fixed = TRUE
   )
 
   # Using a tibble (removes row names) and setting `column_1` as the stub
   expect_match(
-    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
-      as_latex() %>% as.character(),
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") |>
+      as_latex() |> as.character(),
     "\\$latex & latex \\\\ ",
     fixed = TRUE
   )
@@ -766,20 +773,22 @@ test_that("Escapable characters in rownames are handled correctly in each output
 
   # Using the data frame and setting its rownames to be the stub
   expect_match( # stub from data frame's row names
-    gt(tbl, rownames_to_stub = TRUE) %>%
-      as_rtf() %>% as.character(),
+    gt(tbl, rownames_to_stub = TRUE) |>
+      as_rtf() |> as.character(),
     "\\intbl {\\f0 {\\f0\\fs20 \\'7brow_rtf\\'7d}}\\cell",
     fixed = TRUE
   )
+
   expect_match( # `column_1`
-    gt(tbl, rownames_to_stub = TRUE) %>%
-      as_rtf() %>% as.character(),
+    gt(tbl, rownames_to_stub = TRUE) |>
+      as_rtf() |> as.character(),
     "\\intbl {\\f0 {\\f0\\fs20 \\'7brtf\\'7d}}\\cell",
     fixed = TRUE
   )
+
   expect_match( # `column_2`
-    gt(tbl, rownames_to_stub = TRUE) %>%
-      as_rtf() %>% as.character(),
+    gt(tbl, rownames_to_stub = TRUE) |>
+      as_rtf() |> as.character(),
     "\\intbl {\\f0 {\\f0\\fs20 rtf}}\\cell",
     fixed = TRUE
   )
@@ -787,14 +796,15 @@ test_that("Escapable characters in rownames are handled correctly in each output
 
   # Using a tibble (removes row names) and setting `column_1` as the stub
   expect_match( # stub from `column_1`
-    gt(tib, rowname_col = "column_1") %>%
-      as_rtf() %>% as.character(),
+    gt(tib, rowname_col = "column_1") |>
+      as_rtf() |> as.character(),
     "\\intbl {\\f0 {\\f0\\fs20 \\'7brtf\\'7d}}\\cell",
     fixed = TRUE
   )
+
   expect_match( # `column_2`
-    gt(tib, rowname_col = "column_1") %>%
-      as_rtf() %>% as.character(),
+    gt(tib, rowname_col = "column_1") |>
+      as_rtf() |> as.character(),
     "\\intbl {\\f0 {\\f0\\fs20 rtf}}\\cell",
     fixed = TRUE
   )
@@ -805,85 +815,109 @@ test_that("Default locale settings are honored by formatting functions", {
   exibble_1 <- exibble[7, 1]
 
   # `fmt_number()`
-  (exibble_1 %>% gt() %>% fmt_number(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+  (exibble_1 |> gt() |> fmt_number(num) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777,000.00")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_number(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_number(num) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777 000,00")
-  (exibble_1 %>% gt(locale = "en") %>% fmt_number(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "en") |> fmt_number(num, locale = "fr") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777 000,00")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_number(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_number(num, locale = "de") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777.000,00")
 
   # `fmt_integer()`
-  (exibble_1 %>% gt() %>% fmt_integer(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+  (exibble_1 |> gt() |> fmt_integer(num) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777,000")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_integer(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_integer(num) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777 000")
-  (exibble_1 %>% gt(locale = "en") %>% fmt_integer(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "en") |> fmt_integer(num, locale = "fr") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777 000")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_integer(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_integer(num, locale = "de") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777.000")
 
   # `fmt_scientific()`
-  (exibble_1 %>% gt() %>% fmt_scientific(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+  (exibble_1 |> gt() |> fmt_scientific(num) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("7.77 \U000D7 10^5")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_scientific(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_scientific(num) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("7,77 \U000D7 10^5")
-  (exibble_1 %>% gt(locale = "en") %>% fmt_scientific(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "en") |> fmt_scientific(num, locale = "fr") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("7,77 \U000D7 10^5")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_scientific(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_scientific(num, locale = "de") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("7,77 \U000D7 10^5")
 
   # `fmt_engineering()`
-  (exibble_1 %>% gt() %>% fmt_engineering(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+  (exibble_1 |> gt() |> fmt_engineering(num) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777.00 \U000D7 10^3")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_engineering(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_engineering(num) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777,00 \U000D7 10^3")
-  (exibble_1 %>% gt(locale = "en") %>% fmt_engineering(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "en") |> fmt_engineering(num, locale = "fr") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777,00 \U000D7 10^3")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_engineering(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_engineering(num, locale = "de") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777,00 \U000D7 10^3")
 
   # `fmt_percent()`
-  (exibble_1 %>% gt() %>% fmt_percent(num, scale_values = FALSE) %>% render_formats_test(context = "plain"))[["num"]] %>%
+  (exibble_1 |> gt() |> fmt_percent(num, scale_values = FALSE) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777,000.00%")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_percent(num, scale_values = FALSE) %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_percent(num, scale_values = FALSE) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777 000,00%")
-  (exibble_1 %>% gt(locale = "en") %>% fmt_percent(num, scale_values = FALSE, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "en") |> fmt_percent(num, scale_values = FALSE, locale = "fr") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777 000,00%")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_percent(num, scale_values = FALSE, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_percent(num, scale_values = FALSE, locale = "de") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777.000,00%")
 
   # `fmt_partsper()`
-  (exibble_1 %>% gt() %>% fmt_partsper(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+  (exibble_1 |> gt() |> fmt_partsper(num) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777,000,000.00‰")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_partsper(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_partsper(num) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777 000 000,00‰")
-  (exibble_1 %>% gt(locale = "en") %>% fmt_partsper(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "en") |> fmt_partsper(num, locale = "fr") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777 000 000,00‰")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_partsper(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_partsper(num, locale = "de") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("777.000.000,00‰")
 
   # `fmt_currency()`
-  (exibble_1 %>% gt() %>% fmt_currency(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+  (exibble_1 |> gt() |> fmt_currency(num) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("$777,000.00")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_currency(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_currency(num) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("EUR777 000,00")
-  (exibble_1 %>% gt(locale = "en") %>% fmt_currency(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "en") |> fmt_currency(num, locale = "fr") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("EUR777 000,00")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_currency(num, locale = "da") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_currency(num, locale = "da") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("kr.777.000,00")
 
   exibble_1 <- exibble[8, 1]
 
   # `fmt_bytes()`
-  (exibble_1 %>% gt() %>% fmt_bytes(num, ) %>% render_formats_test(context = "plain"))[["num"]] %>%
+  (exibble_1 |> gt() |> fmt_bytes(num) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("8.9 MB")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_bytes(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_bytes(num) |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("8,9 MB")
-  (exibble_1 %>% gt(locale = "en") %>% fmt_bytes(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "en") |> fmt_bytes(num, locale = "fr") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("8,9 MB")
-  (exibble_1 %>% gt(locale = "fr") %>% fmt_bytes(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
+
+  (exibble_1 |> gt(locale = "fr") |> fmt_bytes(num, locale = "de") |> render_formats_test(context = "plain"))[["num"]] |>
     expect_equal("8,9 MB")
 })
 
@@ -893,10 +927,10 @@ test_that("Default locale settings are honored when generating summary rows", {
   # `exibble` dataset; set a default locale of "de" and format the
   # `num` column using that locale, and, generate summary rows
   tbl_gt <-
-    exibble %>%
-    dplyr::select(num, row, group) %>%
-    gt(rowname_col = "row", groupname_col = "group", locale = "de") %>%
-    fmt_number(columns = num, decimals = 2) %>%
+    exibble |>
+    dplyr::select(num, row, group) |>
+    gt(rowname_col = "row", groupname_col = "group", locale = "de") |>
+    fmt_number(columns = num, decimals = 2) |>
     summary_rows(
       groups = c("grp_a", "grp_b"),
       columns = num,
@@ -906,31 +940,31 @@ test_that("Default locale settings are honored when generating summary rows", {
 
   # Expect that the default formatter for `summary_rows()` (`fmt_number`)
   # will honor the locale setting of "de" in it's formatting
-  tbl_gt %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
+  tbl_gt |>
+    render_as_html() |>
+    xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") |>
     expect_equal(c("120,02", "3.220.850,00"))
 })
 
 test_that("Formatting functions operate with a 'last-one-wins' approach", {
 
   check_suggests()
-  
+
   # Make a gt table from the first column of the exibble table and apply
   # two `fmt_*()` functions to the same column
   tbl_gt <-
-    exibble[, 1] %>%
-    gt() %>%
-    fmt_number(columns = num, decimals = 5) %>%
+    exibble[, 1] |>
+    gt() |>
+    fmt_number(columns = num, decimals = 5) |>
     fmt_number(columns = num, rows = 2, decimals = 4, pattern = "a{x}b")
 
   # Expect that the second invocation of `fmt_number()` will affect the
   # second row of the column
-  tbl_gt %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right']") %>%
+  tbl_gt |>
+    render_as_html() |>
+    xml2::read_html() |>
+    selection_text("[class='gt_row gt_right']") |>
     expect_equal(
       c(
         "0.11110", "a2.2220b", "33.33000", "444.40000", "5,550.00000",
@@ -940,17 +974,17 @@ test_that("Formatting functions operate with a 'last-one-wins' approach", {
 
   # Make a similar gt table but reverse the order of the `fmt_number()` calls
   tbl_gt <-
-    exibble[, 1] %>%
-    gt() %>%
-    fmt_number(columns = num, rows = 2, decimals = 4, pattern = "a{x}b") %>%
+    exibble[, 1] |>
+    gt() |>
+    fmt_number(columns = num, rows = 2, decimals = 4, pattern = "a{x}b") |>
     fmt_number(columns = num, decimals = 5)
 
   # Expect that the first invocation of `fmt_number()` is completely ignored
   # in favor of the second one (i.e., no special formatting to row 2 results)
-  tbl_gt %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right']") %>%
+  tbl_gt |>
+    render_as_html() |>
+    xml2::read_html() |>
+    selection_text("[class='gt_row gt_right']") |>
     expect_equal(
       c(
         "0.11110", "2.22200", "33.33000", "444.40000", "5,550.00000",

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -57,7 +57,8 @@
 #' text
 #' - text autocoloring: if colorizing the cell background, `data_color()` will
 #' automatically recolor the foreground text to provide the best contrast (can
-#' be deactivated with `autocolor_text = FALSE`)
+#' be deactivated with `autocolor_text = FALSE`; a light and dark color to be
+#' used can be specified with `autocolor_light` and `autocolor_dark`)
 #'
 #' `data_color()` won't fail with the default options used, but
 #' that won't typically provide you the type of colorization you really need.
@@ -233,6 +234,22 @@
 #'   default this is `"apca"` (Accessible Perceptual Contrast Algorithm) and the
 #'   alternative to this is `"wcag"` (Web Content Accessibility Guidelines).
 #'
+#' @param autocolor_light *Automatically recolor text, light color*
+#'
+#'   `scalar<character>` // *default:* `"white"`
+#'
+#'   The light color to use when `autocolor_text = TRUE`. By default the color
+#'   `"white"` will be used (`#FFFFFF"`). Alpha channel values will be set to
+#'   1.0 (fully opaque).
+#'
+#' @param autocolor_dark *Automatically recolor text, dark color*
+#'
+#'   `scalar<character>` // *default:* `"black"`
+#'
+#'   The dark color to use when `autocolor_text = TRUE`. By default the color
+#'   `"black"` will be used (`#000000"`). Alpha channel values will be set to
+#'   1.0 (fully opaque).
+#'
 #' @param colors *[Deprecated] Color mapping function*
 #'
 #'   `function` // *default:* `NULL` (`optional`)
@@ -363,7 +380,9 @@
 #' setting `autocolor_text` to `FALSE`. The `contrast_algo` argument lets us
 #' choose between two color contrast algorithms: `"apca"` (*Accessible
 #' Perceptual Contrast Algorithm*, the default algo) and `"wcag"` (*Web Content
-#' Accessibility Guidelines*).
+#' Accessibility Guidelines*). `autocolor_light` and `autocolor_dark` allow for
+#' further customization, however, should only be used if you are sure that
+#' accessibility criteria are guaranteed.
 #'
 #' @section Examples:
 #'
@@ -623,7 +642,11 @@
 #'   dplyr::filter(latitude == 20 & tst <= "1200") |>
 #'   dplyr::select(-latitude) |>
 #'   dplyr::filter(!is.na(sza)) |>
-#'   tidyr::spread(key = "tst", value = sza) |>
+#'   tidyr::pivot_wider(
+#'     names_from = tst,
+#'     values_from = sza,
+#'     names_sort = TRUE
+#'   ) |>
 #'   gt(rowname_col = "month") |>
 #'   sub_missing(missing_text = "") |>
 #'   data_color(
@@ -643,7 +666,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-36
+#' 3-37
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -669,6 +692,8 @@ data_color <- function(
     apply_to = c("fill", "text"),
     autocolor_text = TRUE,
     contrast_algo = c("apca", "wcag"),
+    autocolor_light = "#FFFFFF",
+    autocolor_dark = "#000000",
     colors = NULL
 ) {
 
@@ -679,7 +704,7 @@ data_color <- function(
   direction <- rlang::arg_match0(direction, values = c("column", "row"))
 
   # Get the correct `method` value
-  method <- 
+  method <-
     rlang::arg_match0(
       method,
       values = c("auto", "numeric", "bin", "quantile", "factor")
@@ -690,6 +715,21 @@ data_color <- function(
 
   # Get the correct `contrast_algo` value
   contrast_algo <- rlang::arg_match0(contrast_algo, values = c("apca", "wcag"))
+
+  # When using non-default `autocolor_light` or `autocolor_dark`, check if
+  # {farver} is installed and stop if not (we would error in `ideal_fgnd_color()`,
+  # check here to get out early)
+  if (rlang::is_true(autocolor_text) && !autocolor_light %in% c("white", "#FFFFFF", "#FFF")) {
+    rlang::check_installed(
+      "farver", reason = "to use non-default `autocolor_light`."
+      )
+  }
+
+  if (rlang::is_true(autocolor_text) && !autocolor_dark %in% c("black", "#000000", "#000")) {
+    rlang::check_installed(
+      "farver", reason = "to use non-default `autocolor_dark`."
+      )
+  }
 
   # If no color is provided to `na_color`, use gray as a default
   na_color <- na_color %||% "#808080"
@@ -1122,6 +1162,8 @@ data_color <- function(
       color_vals <-
         ideal_fgnd_color(
           bgnd_color = color_vals,
+          light = autocolor_light,
+          dark = autocolor_dark,
           algo = contrast_algo
         )
 
@@ -1268,8 +1310,10 @@ expand_short_hex <- function(colors) {
 
 #' For a background color, which foreground color provides better contrast?
 #'
-#' The input for this function is a single color value in 'rgba()' format. The
-#' output is a single color value in #RRGGBB hexadecimal format
+#' The `bgnd_color` input for this function is a single color value in 'rgba()'
+#' format. The output is a single color value in #RRGGBB hexadecimal format.
+#' `light` and `dark` accepts every color(specification) that can be handled by
+#' {farver}.
 #'
 #' @noRd
 ideal_fgnd_color <- function(
@@ -1282,6 +1326,9 @@ ideal_fgnd_color <- function(
   # Get the correct `algo` value
   algo <- rlang::arg_match0(algo, values = c("apca", "wcag"))
 
+  light_color <- farver::encode_colour(farver::decode_colour(light))
+  dark_color <- farver::encode_colour(farver::decode_colour(dark))
+
   # Normalize color to hexadecimal color if it is in the 'rgba()' string format
   bgnd_color <- rgba_to_hex(colors = bgnd_color)
 
@@ -1291,17 +1338,17 @@ ideal_fgnd_color <- function(
   if (algo == "apca") {
 
     # Determine the ideal color for the chosen background color with APCA
-    contrast_dark <- get_contrast_ratio(color_1 = dark, color_2 = bgnd_color, algo = "apca")[, 1]
-    contrast_light <- get_contrast_ratio(color_1 = light, color_2 = bgnd_color, algo = "apca")[, 1]
+    contrast_dark <- get_contrast_ratio(color_1 = dark_color, color_2 = bgnd_color, algo = "apca")[, 1]
+    contrast_light <- get_contrast_ratio(color_1 = light_color, color_2 = bgnd_color, algo = "apca")[, 1]
 
   } else {
 
     # Determine the ideal color for the chosen background color with WCAG
-    contrast_dark <- get_contrast_ratio(color_1 = dark, color_2 = bgnd_color, algo = "wcag")
-    contrast_light <- get_contrast_ratio(color_1 = light, color_2 = bgnd_color, algo = "wcag")
+    contrast_dark <- get_contrast_ratio(color_1 = dark_color, color_2 = bgnd_color, algo = "wcag")
+    contrast_light <- get_contrast_ratio(color_1 = light_color, color_2 = bgnd_color, algo = "wcag")
   }
 
-  ifelse(abs(contrast_dark) >= abs(contrast_light), dark, light)
+  ifelse(abs(contrast_dark) >= abs(contrast_light), dark_color, light_color)
 }
 
 #' Convert colors in mixed formats (incl. rgba() strings) format to hexadecimal

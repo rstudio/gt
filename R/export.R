@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -184,6 +184,13 @@ as_latex <- function(data) {
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  # Set option to apply latex conversion in escape_latex()
+  unicode_conversion <- dt_options_get_value(data = data, option = "latex_unicode_conversion")
+  if(unicode_conversion){
+    rlang::check_installed("withr","withr is needed to set the option that turns on the unicode conversion")
+    withr::local_options(.new = list(gt.latex.unicode_convert = unicode_conversion))
+  }
 
   # Build all table data objects through a common pipeline
   data <- build_data(data = data, context = "latex")
@@ -409,7 +416,7 @@ as_rtf <- function(
       incl_close = incl_close
     )
 
-  if (isTRUE(getOption('knitr.in.progress'))) {
+  if (isTRUE(getOption("knitr.in.progress"))) {
     rtf_table <- knitr::raw_output(rtf_table)
   }
 
@@ -460,6 +467,13 @@ as_rtf <- function(
 #'   A logical value that indicates whether a table should use Word option
 #'   `Keep rows together`.
 #'
+#' @param autonum Automatic Table Numbering
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   A logical value that indicates whether a table should use Words built-in
+#'   auto table numbering option in the caption.
+#'   `Automatic Table Numbering`.
 #' @section Examples:
 #'
 #' Use a subset of the [`gtcars`] dataset to create a **gt** table. Add a header
@@ -493,13 +507,14 @@ as_word <- function(
     caption_location = c("top", "bottom", "embed"),
     caption_align = "left",
     split = FALSE,
-    keep_with_next = TRUE
+    keep_with_next = TRUE,
+    autonum = TRUE
 ) {
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  caption_location <- 
+  caption_location <-
     rlang::arg_match0(
       caption_location,
       values = c("top", "bottom", "embed")
@@ -513,17 +528,17 @@ as_word <- function(
   #
   # Composition of Word table OOXML
   #
-
-  if (caption_location == "top") {
-
-    header_xml <-
+  #
+  header_xml <-
       as_word_tbl_header_caption(
         data = value,
         align = caption_align,
         split = split,
-        keep_with_next = keep_with_next
+        keep_with_next = ifelse(caption_location == "bottom", FALSE, keep_with_next),
+        autonum = autonum
       )
 
+  if (caption_location == "top") {
     gt_xml <- c(gt_xml, header_xml)
   }
 
@@ -539,17 +554,6 @@ as_word <- function(
   gt_xml <- c(gt_xml, tbl_xml)
 
   if (caption_location == "bottom") {
-
-    # Set `keep_with_next` to FALSE here to prevent it trying to keep
-    # with non-table content
-    header_xml <-
-      as_word_tbl_header_caption(
-        data = value,
-        align = caption_align,
-        split = split,
-        keep_with_next = FALSE
-      )
-
     gt_xml <- c(gt_xml, header_xml)
   }
 
@@ -567,13 +571,16 @@ as_word <- function(
 #' 'Allow row to break across pages'.
 #' @param keep_with_next  TRUE (default) or FALSE indicating whether a table
 #' should use Word option 'keep rows together' is activated when TRUE.
+#' @param autonum TRUE (default) of FALSE indicating whether a table should usee
+#' Word's automatic table numbering in the caption
 #'
 #' @noRd
 as_word_tbl_header_caption <- function(
     data,
     align = "left",
     split = FALSE,
-    keep_with_next = TRUE
+    keep_with_next = TRUE,
+    autonum = TRUE
 ) {
 
   # Perform input object validation
@@ -586,7 +593,8 @@ as_word_tbl_header_caption <- function(
     create_table_caption_component_xml(
       data = data,
       align = align,
-      keep_with_next = keep_with_next
+      keep_with_next = keep_with_next,
+      autonum = autonum
     )
 
   caption_xml
@@ -759,6 +767,8 @@ as_gtable <- function(data, plot = FALSE, text_grob = grid::textGrob) {
 
   gtable
 }
+
+as.gtable.gt_tbl <- function(x, ...) as_gtable(x, ...)
 
 combine_components <- function(
     caption = NULL,

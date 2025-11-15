@@ -7,12 +7,19 @@
 cols_label(.data, ..., .list = list2(...), .fn = NULL, .process_units = NULL)
 }
 \arguments{
-\item{.data}{\emph{The gt table data object}
+\item{.data}{\emph{The gt table or gt group data object}
 
 \verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
-\code{\link[=gt]{gt()}} function.}
+\code{\link[=gt]{gt()}} function.
+
+OR
+
+\verb{obj:<gt_group>} // \strong{required}
+
+This is the \strong{gt} group object that is commonly created through use of the
+\code{\link[=gt_group]{gt_group()}} function.}
 
 \item{...}{\emph{Column label assignments}
 
@@ -216,8 +223,7 @@ single column name, we must use formula syntax (i.e., with the \code{~}).
     name, ends_with("2001"), ends_with("2006"), matches("2001_2006")
   ) |>
   dplyr::filter(population_2001 > 100000) |>
-  dplyr::arrange(desc(pop_change_2001_2006_pct)) |>
-  dplyr::slice_head(n = 10) |>
+  dplyr::slice_max(pop_change_2001_2006_pct, n = 10) |>
   gt() |>
   fmt_integer() |>
   fmt_percent(columns = matches("change"), decimals = 1) |>
@@ -243,9 +249,7 @@ incorporates unit notation text (within \code{"{{"}/\code{"}}"}).
   dplyr::select(
     name, population_2021, density_2021, land_area_km2, latitude, longitude
   ) |>
-  dplyr::filter(population_2021 > 100000) |>
-  dplyr::arrange(desc(population_2021)) |>
-  dplyr::slice_head(n = 10) |>
+  dplyr::slice_max(population_2021, n = 10) |>
   gt() |>
   fmt_integer(columns = population_2021) |>
   fmt_number(

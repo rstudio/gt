@@ -107,7 +107,7 @@ scientific notation. This is done by using the \code{lg_num_pref = "suf"} option
   dplyr::select(country_code_3, year, population) |>
   dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) |>
   dplyr::filter(year > 1975 & year \%\% 5 == 0) |>
-  tidyr::spread(year, population) |>
+  tidyr::pivot_wider(names_from = year, values_from = population) |>
   dplyr::arrange(desc(`2020`)) |>
   gt(rowname_col = "country_code_3") |>
   fmt_auto(lg_num_pref = "suf")
@@ -120,7 +120,7 @@ scientific notation. This is done by using the \code{lg_num_pref = "suf"} option
 
 \section{Function ID}{
 
-3-29
+3-30
 }
 
 \section{Function Introduced}{
@@ -150,6 +150,7 @@ Other data formatting functions:
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_number_si}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},

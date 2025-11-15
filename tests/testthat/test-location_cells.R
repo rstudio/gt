@@ -5,6 +5,7 @@ check_suggests <- function() {
 
 # Validate individual `cells_*()` functions ------------------------------------
 test_that("cells_title() works for title", {
+
   helper_cells_title <- cells_title(groups = "title")
 
   # Expect this has the `cells_title` and `location_cells` classes
@@ -17,6 +18,7 @@ test_that("cells_title() works for title", {
 })
 
 test_that("cells_title() works for subtitle", {
+
   helper_cells_title <- cells_title(groups = "subtitle")
 
   # Expect this has the `cells_title` and `location_cells` classes
@@ -29,6 +31,7 @@ test_that("cells_title() works for subtitle", {
 })
 
 test_that("cells_title() errors if groups is invalid", {
+
   expect_error(cells_title(groups = NULL))
   expect_error(cells_title(groups = 1:2))
   expect_error(cells_title(groups = vars(title)))
@@ -44,6 +47,7 @@ test_that("cells_title() errors if groups is invalid", {
 })
 
 test_that("cells_column_labels() works correctly", {
+
   helper_cells_column_labels <-
     cells_column_labels(columns = c("col_1", "col_2"))
 
@@ -64,6 +68,7 @@ test_that("cells_column_labels() works correctly", {
 })
 
 test_that("cells_column_spanner() works correctly", {
+
   helper_cells_column_spanners <-
     cells_column_spanners(spanners = c("group_1", "group_2"))
 
@@ -88,6 +93,7 @@ test_that("cells_column_spanner() works correctly", {
 })
 
 test_that("cells_row_groups() works correctly", {
+
   helper_cells_row_groups <- cells_row_groups(groups = c("group_1", "group_2"))
 
   # Expect this has the `cells_row_groups` and `location_cells` classes
@@ -106,6 +112,7 @@ test_that("cells_row_groups() works correctly", {
 })
 
 test_that("cells_stub() works correctly", {
+
   # Create a `cells_stub` object with names provided to `rows`
   helper_cells_stub <- cells_stub(rows = c("row_1", "row_2"))
 
@@ -123,6 +130,7 @@ test_that("cells_stub() works correctly", {
 })
 
 test_that("cells_body() works correctly with names provided to columns", {
+
   helper_cells_body <- cells_body(columns = c("col_1", "col_2"))
 
   expect_s3_class(helper_cells_body, c("cells_body", "location_cells"))
@@ -136,6 +144,7 @@ test_that("cells_body() works correctly with names provided to columns", {
 })
 
 test_that("cells_body() works with names provided to `columns` and `rows`", {
+
   helper_cells_body <-
     cells_body(
       columns = c("col_1", "col_2"),
@@ -148,6 +157,7 @@ test_that("cells_body() works with names provided to `columns` and `rows`", {
 
   # Expect the first list component to have the `quosure` and `formula` classes
   expect_s3_class(helper_cells_body[[1]] , c("quosure", "formula"))
+
   # Expect the RHS of the first component formula to contain columns
   expect_equal(rlang::eval_tidy(helper_cells_body[[1]]), c("col_1", "col_2"))
 
@@ -184,6 +194,7 @@ test_that("cells_summary() works correctly", {
 })
 
 test_that("cells_grand_summary() works correctly", {
+
   helper_cells_grand_summary <-
     cells_grand_summary(columns = c("col_1", "col_2"))
 
@@ -229,9 +240,9 @@ test_that("tab_style() works with cells_title()", {
 
   # Create a gt table with styling applied to the title
   gt_tbl_cells_title_1 <-
-    tbl %>%
-    gt(rowname_col = "row", groupname_col = "group") %>%
-    tab_header(title = "The Title", subtitle = "The Subtitle") %>%
+    tbl |>
+    gt(rowname_col = "row", groupname_col = "group") |>
+    tab_header(title = "The Title", subtitle = "The Subtitle") |>
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -251,9 +262,9 @@ test_that("tab_style() works with cells_title()", {
 
   # Create a gt table with styling applied to the subtitle
   gt_tbl_cells_title_2 <-
-    tbl %>%
-    gt(rowname_col = "row", groupname_col = "group") %>%
-    tab_header(title = "The Title", subtitle = "The Subtitle") %>%
+    tbl |>
+    gt(rowname_col = "row", groupname_col = "group") |>
+    tab_header(title = "The Title", subtitle = "The Subtitle") |>
     tab_style(
       style = list(
         cell_text(size = px(10), color = "white"),
@@ -273,17 +284,17 @@ test_that("tab_style() works with cells_title()", {
 
   # Create a gt table with styling applied to the title and the subtitle
   gt_tbl_cells_title_3 <-
-    tbl %>%
-    gt(rowname_col = "row", groupname_col = "group") %>%
-    tab_header(title = "The Title", subtitle = "The Subtitle") %>%
+    tbl |>
+    gt(rowname_col = "row", groupname_col = "group") |>
+    tab_header(title = "The Title", subtitle = "The Subtitle") |>
     tab_style(
       style = list(
         cell_text(size = px(10), color = "white"),
         cell_fill(color = "#FFA500")
       ),
       locations = cells_title(groups = "title")
-    ) %>%
-    tab_header(title = "The Title", subtitle = "The Subtitle") %>%
+    ) |>
+    tab_header(title = "The Title", subtitle = "The Subtitle") |>
     tab_style(
       style = list(
         cell_text(size = px(10), color = "white"),
@@ -303,6 +314,7 @@ test_that("tab_style() works with cells_title()", {
 })
 
 test_that("tab_style() works with cells_column_spanners()", {
+
   tbl <- data.frame(
     group = c("A", "B"),
     row = c("1", "2"),
@@ -313,10 +325,10 @@ test_that("tab_style() works with cells_column_spanners()", {
   )
   # Create a gt table with styling applied to the column spanner label
   gt_tbl_cells_column_spanners <-
-    tbl %>%
-    gt(rowname_col = "row", groupname_col = "group") %>%
-    cols_move_to_end(columns = value_1) %>%
-    tab_spanner(label = "spanner", columns = c(value_1, value_3)) %>%
+    tbl |>
+    gt(rowname_col = "row", groupname_col = "group") |>
+    cols_move_to_end(columns = value_1) |>
+    tab_spanner(label = "spanner", columns = c(value_1, value_3)) |>
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -337,9 +349,7 @@ test_that("tab_style() works with cells_column_spanners()", {
   )
 })
 
-test_that(
-  "tab_style() works with cells_column_spanners(), level argument",
-  {
+test_that("tab_style() works with cells_column_spanners(), level argument", {
 
     tbl <- data.frame(
       group = c("A", "B"),
@@ -424,7 +434,6 @@ test_that(
     )
 
     # selecting a level should work for spanners (one level)
-
     gt_tbl_cells_column_spanners <- tbl |>
       gt(rowname_col = "row", groupname_col = "group") |>
       tab_spanner(label = "spanner_small", columns = c(value_1, value_3)) |>
@@ -501,9 +510,8 @@ test_that(
   }
 )
 
-test_that(
-  "tab_style() works with cells_column_labels()",
-  {
+test_that("tab_style() works with cells_column_labels()", {
+
     tbl <- data.frame(
       group = c("A", "B"),
       row = c("1", "2"),
@@ -515,9 +523,9 @@ test_that(
 
     # Create a gt table with styling applied to two column labels
     gt_tbl_cells_column_labels <-
-      tbl %>%
-      gt(rowname_col = "row", groupname_col = "group") %>%
-      cols_move_to_end(columns = "value_1") %>%
+      tbl |>
+      gt(rowname_col = "row", groupname_col = "group") |>
+      cols_move_to_end(columns = "value_1") |>
       tab_style(
         style = list(
           cell_text(size = px(20), color = "white"),
@@ -540,6 +548,7 @@ test_that(
 })
 
 test_that("tab_style() works with cells_row_groups()", {
+
   tbl <- data.frame(
     group = c("A", "B"),
     row = c("1", "2"),
@@ -551,8 +560,8 @@ test_that("tab_style() works with cells_row_groups()", {
 
   # Create a gt table with styling applied to first row group
   gt_tbl_cells_row_group_1 <-
-    tbl %>%
-    gt(rowname_col = "row", groupname_col = "group") %>%
+    tbl |>
+    gt(rowname_col = "row", groupname_col = "group") |>
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -572,8 +581,8 @@ test_that("tab_style() works with cells_row_groups()", {
 
   # Create a gt table with styling applied to second row group
   gt_tbl_cells_row_group_2 <-
-    tbl %>%
-    gt(rowname_col = "row", groupname_col = "group") %>%
+    tbl |>
+    gt(rowname_col = "row", groupname_col = "group") |>
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -593,8 +602,8 @@ test_that("tab_style() works with cells_row_groups()", {
 
   # Create a gt table with styling applied to all row groups (with `TRUE`)
   gt_tbl_cells_row_group_3 <-
-    tbl %>%
-    gt(rowname_col = "row", groupname_col = "group") %>%
+    tbl |>
+    gt(rowname_col = "row", groupname_col = "group") |>
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -614,6 +623,7 @@ test_that("tab_style() works with cells_row_groups()", {
 })
 
 test_that("tab_style() works with cells_stub()", {
+
   tbl <- data.frame(
     group = c("A", "B"),
     row = c("1", "2"),
@@ -625,8 +635,8 @@ test_that("tab_style() works with cells_stub()", {
 
   # Create a gt table with styling applied to first stub row
   gt_tbl_cells_stub_1 <-
-    tbl %>%
-    gt(rowname_col = "row", groupname_col = "group") %>%
+    tbl |>
+    gt(rowname_col = "row", groupname_col = "group") |>
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -646,8 +656,8 @@ test_that("tab_style() works with cells_stub()", {
 
   # Create a gt table with styling applied to first stub row (using the row name)
   gt_tbl_cells_stub_1b <-
-    tbl %>%
-    gt(rowname_col = "row", groupname_col = "group") %>%
+    tbl |>
+    gt(rowname_col = "row", groupname_col = "group") |>
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -667,8 +677,8 @@ test_that("tab_style() works with cells_stub()", {
 
   # Create a gt table with styling applied to second stub row
   gt_tbl_cells_stub_2 <-
-    tbl %>%
-    gt(rowname_col = "row", groupname_col = "group") %>%
+    tbl |>
+    gt(rowname_col = "row", groupname_col = "group") |>
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -688,8 +698,8 @@ test_that("tab_style() works with cells_stub()", {
 
   # Create a gt table with styling applied to second stub row (using the row name)
   gt_tbl_cells_stub_2b <-
-    tbl %>%
-    gt(rowname_col = "row", groupname_col = "group") %>%
+    tbl |>
+    gt(rowname_col = "row", groupname_col = "group") |>
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -709,8 +719,8 @@ test_that("tab_style() works with cells_stub()", {
 
   # Create a gt table with styling applied to all stub rows
   gt_tbl_cells_stub_3 <-
-    tbl %>%
-    gt(rowname_col = "row", groupname_col = "group") %>%
+    tbl |>
+    gt(rowname_col = "row", groupname_col = "group") |>
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -730,6 +740,7 @@ test_that("tab_style() works with cells_stub()", {
 })
 
 test_that("tab_style() works with cells_body()", {
+
   tbl <- data.frame(
     group = c("A", "B"),
     row = c("1", "2"),
@@ -738,21 +749,22 @@ test_that("tab_style() works with cells_body()", {
     value_3 = c(3.8, 2.4),
     stringsAsFactors = FALSE
   )
+
   check_suggests()
 
   # Expect that styling to all cells is performed
   # by default with `cells_body()`
-  styling <- tbl %>%
-    gt(rowname_col = "row", groupname_col = "group") %>%
+  styling <- tbl |>
+    gt(rowname_col = "row", groupname_col = "group") |>
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
         cell_fill(color = "#FFA500")
       ),
       locations = cells_body(columns = everything(), rows = everything())
-    ) %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
+    ) |>
+    render_as_html() |>
+    xml2::read_html() |>
     selection_value("style")
 
     expect_equal(
@@ -762,13 +774,14 @@ test_that("tab_style() works with cells_body()", {
 })
 
 test_that("Styles are correctly applied to tables with summary functions", {
+
   # Create a table with a summary to test HTML output in summary locations
   tbl_summary <-
     gt(
       exibble,
       rowname_col = "row",
       groupname_col = "group"
-    ) %>%
+    ) |>
     summary_rows(
       groups = "grp_a",
       columns = num,
@@ -778,7 +791,7 @@ test_that("Styles are correctly applied to tables with summary functions", {
         avg = ~mean(.)
       ),
       fmt = list(~ fmt_number(., use_seps = FALSE))
-    ) %>%
+    ) |>
     grand_summary_rows(
       columns = currency,
       fns = list(
@@ -867,7 +880,7 @@ test_that("Styles are correctly applied to tables with summary functions", {
   )
 
   gt_tbl_cells_grand_summary_2 <-
-    tbl_summary %>%
+    tbl_summary |>
     tab_style(
       style = cell_fill(color = "red"),
       locations = cells_grand_summary(rows = "max")
@@ -890,7 +903,7 @@ test_that("Styles are correctly applied to tables with summary functions", {
   ## cells_stub_grand_summary() ------------------------------------------------
 
   gt_tbl_cells_stub_grand_summary_1 <-
-    tbl_summary %>%
+    tbl_summary |>
     tab_style(
       style = cell_fill(color = "red"),
       locations = cells_stub_grand_summary(rows = 1)
@@ -902,7 +915,7 @@ test_that("Styles are correctly applied to tables with summary functions", {
   )
 
   gt_tbl_cells_stub_grand_summary_2 <-
-    tbl_summary %>%
+    tbl_summary |>
     tab_style(
       style = cell_fill(color = "red"),
       locations = cells_stub_grand_summary(rows = "max")
@@ -915,6 +928,7 @@ test_that("Styles are correctly applied to tables with summary functions", {
 })
 
 test_that("tab_style() works with cells_source_notes() and cells_footnotes()", {
+
   tbl <- data.frame(
     group = c("A", "B"),
     row = c("1", "2"),
@@ -923,10 +937,12 @@ test_that("tab_style() works with cells_source_notes() and cells_footnotes()", {
     value_3 = c(3.8, 2.4),
     stringsAsFactors = FALSE
   )
+
   style <- cell_fill(color = "red")
+
   gt_tbl_cells_footnotes_1 <-
-    gt(tbl) %>%
-    tab_footnote("This is a footnote", locations = cells_body(1, 1)) %>%
+    gt(tbl) |>
+    tab_footnote("This is a footnote", locations = cells_body(1, 1)) |>
     tab_style(style, cells_footnotes())
 
   expect_match_html(
@@ -935,8 +951,8 @@ test_that("tab_style() works with cells_source_notes() and cells_footnotes()", {
   )
 
   gt_tbl_cells_source_notes_1 <-
-    gt(tbl) %>%
-    tab_source_note(source_note = "This is a source note") %>%
+    gt(tbl) |>
+    tab_source_note(source_note = "This is a source note") |>
     tab_style(style, cells_source_notes())
 
   expect_match_html(
@@ -946,9 +962,10 @@ test_that("tab_style() works with cells_source_notes() and cells_footnotes()", {
 })
 
 test_that("tab_footnote() errors if `locations = cells_source_notes()`", {
+
   expect_snapshot(error = TRUE, {
-    gt(mtcars_short) %>%
-      tab_source_note(source_note = "This is a source note") %>%
+    gt(mtcars_short) |>
+      tab_source_note(source_note = "This is a source note") |>
       tab_footnote(
         footnote = "Illegal footnote",
         locations = cells_source_notes()
@@ -957,9 +974,10 @@ test_that("tab_footnote() errors if `locations = cells_source_notes()`", {
 })
 
 test_that("tab_footnote() errors if `locations = cells_footnotes()`", {
+
   expect_snapshot(error = TRUE, {
-    gt(mtcars_short) %>%
-      tab_source_note(source_note = "This is a source note") %>%
+    gt(mtcars_short) |>
+      tab_source_note(source_note = "This is a source note") |>
       tab_footnote(
         footnote = "Illegal footnote",
         locations = cells_footnotes()

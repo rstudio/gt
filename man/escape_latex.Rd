@@ -4,7 +4,10 @@
 \alias{escape_latex}
 \title{Perform LaTeX escaping}
 \usage{
-escape_latex(text)
+escape_latex(
+  text,
+  unicode_conversion = getOption("gt.latex.unicode_convert", default = FALSE)
+)
 }
 \arguments{
 \item{text}{\emph{LaTeX text}
@@ -12,6 +15,13 @@ escape_latex(text)
 \verb{vector<character>} // \strong{required}
 
 A character vector containing the text that is to be LaTeX-escaped.}
+
+\item{unicode_conversion}{\emph{Boolean}
+
+\verb{scalar<boolean>} // \emph{default:} \code{TRUE}
+
+A boolean value indicating whether unicode in text should be turned into
+LaTeX.}
 }
 \value{
 A character vector.
@@ -43,6 +53,7 @@ Other helper functions:
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
+\code{\link{latex}()},
 \code{\link{md}()},
 \code{\link{nanoplot_options}()},
 \code{\link{pct}()},

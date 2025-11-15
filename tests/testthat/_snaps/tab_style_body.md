@@ -72,7 +72,6 @@
       <td headers="W03 stub_1_10 close" class="gt_row gt_right">2019.42</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -148,7 +147,6 @@
       <td headers="W03 stub_1_10 low" class="gt_row gt_right" style="color: #FFFFFF; font-family: Inter; background-color: #FF0000; border-left-width: 4px; border-left-style: solid; border-left-color: steelblue; border-right-width: 4px; border-right-style: solid; border-right-color: steelblue;">1988.12</td>
       <td headers="W03 stub_1_10 close" class="gt_row gt_right">2019.42</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -226,7 +224,6 @@
       <td headers="W03 stub_1_10 close" class="gt_row gt_right" style="background-color: #FFA500;">2019.42</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -302,7 +299,6 @@
       <td headers="W03 stub_1_10 low" class="gt_row gt_right" style="background-color: #FFA500;">1988.12</td>
       <td headers="W03 stub_1_10 close" class="gt_row gt_right">2019.42</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -380,7 +376,6 @@
       <td headers="W03 stub_1_10 close" class="gt_row gt_right" style="background-color: #ADD8E6;">2019.42</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -457,7 +452,6 @@
       <td headers="W03 stub_1_10 close" class="gt_row gt_right" style="background-color: #ADD8E6;">2019.42</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -533,7 +527,6 @@
       <td headers="W03 stub_1_10 low" class="gt_row gt_right" style="background-color: #FFFF00;">1988.12</td>
       <td headers="W03 stub_1_10 close" class="gt_row gt_right">2019.42</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -611,7 +604,6 @@
       <td headers="W03 stub_1_10 close" class="gt_row gt_right">2019.42</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -688,7 +680,6 @@
       <td headers="W03 stub_1_10 close" class="gt_row gt_right" style="background-color: #FFFF00;">2019.42</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -765,7 +756,6 @@
       <td headers="W03 stub_1_10 close" class="gt_row gt_right" style="background-color: #FFFF00;">2019.42</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -841,7 +831,6 @@
       <td headers="W03 stub_1_10 low" class="gt_row gt_right" style="background-color: #FFFF00;">1988.12</td>
       <td headers="W03 stub_1_10 close" class="gt_row gt_right">2019.42</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -936,7 +925,6 @@
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1029,7 +1017,6 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
         </tbody>
-        
         
       </table>
 
@@ -1124,7 +1111,6 @@
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right">0.440</td></tr>
         </tbody>
         
-        
       </table>
 
 ---
@@ -1217,7 +1203,6 @@
       <td headers="grp_b stub_1_8 datetime" class="gt_row gt_right">NA</td>
       <td headers="grp_b stub_1_8 currency" class="gt_row gt_right" style="background-color: #FF8AF3;">0.440</td></tr>
         </tbody>
-        
         
       </table>
 

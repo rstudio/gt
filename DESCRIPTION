@@ -1,13 +1,14 @@
 Type: Package
 Package: gt
 Title: Easily Create Presentation-Ready Display Tables
-Version: 0.11.1.9000
+Version: 1.1.0.9000
 Authors@R: c(
     person("Richard", "Iannone", , "rich@posit.co", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3925-190X")),
     person("Joe", "Cheng", , "joe@posit.co", role = "aut"),
     person("Barret", "Schloerke", , "barret@posit.co", role = "aut",
            comment = c(ORCID = "0000-0001-9986-114X")),
+    person("Shannon", "Haughton", , "shannon.l.haughton@gsk.com", role = "aut"),
     person("Ellis", "Hughes", , "ellis.h.hughes@gsk.com", role = "aut",
            comment = c(ORCID = "0000-0003-0637-4436")),
     person("Alexandra", "Lauer", , "alexandralauer1@gmail.com", role = "aut",
@@ -53,11 +54,11 @@ Imports:
     vctrs,
     xml2 (>= 1.3.6)
 Suggests:
-    digest (>= 0.6.31),
+    farver,
     fontawesome (>= 0.5.2),
     ggplot2,
     grid,
-    gtable,
+    gtable (>= 0.3.6),
     katex (>= 1.4.1),
     knitr,
     lubridate,
@@ -69,7 +70,7 @@ Suggests:
     rvest,
     shiny (>= 1.9.1),
     testthat (>= 3.1.9),
-    tidyr,
+    tidyr (>= 1.0.0),
     webshot2 (>= 0.1.0),
     withr
 Config/Needs/coverage: officer
@@ -80,4 +81,4 @@ Config/testthat/parallel: true
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3

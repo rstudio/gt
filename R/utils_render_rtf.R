@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -1232,29 +1232,48 @@ create_columns_component_rtf <- function(data) {
 
   if (length(stub_layout) > 0) {
 
-    headings_labels <-
-      prepend_vec(
-        headings_labels,
-        c(
-          if (length(stubh$label) > 0) stubh$label else "",
-          rep("", length(stub_layout) - 1)
+    # Check if we have multiple stubhead labels for multi-column stub
+    stub_vars <- dt_boxhead_get_var_stub(data = data)
+    has_multi_column_stub <- length(stub_vars) > 1 && !any(is.na(stub_vars))
+    has_multiple_labels <- has_multi_column_stub && length(stubh$label) > 1
+    
+    if (has_multiple_labels) {
+      # Add individual headers for each stub column
+      headings_labels <- prepend_vec(headings_labels, stubh$label)
+    } else {
+      # Single label (original behavior)
+      headings_labels <-
+        prepend_vec(
+          headings_labels,
+          c(
+            if (length(stubh$label) > 0) stubh$label else "",
+            rep("", length(stub_layout) - 1)
+          )
         )
-      )
+    }
   }
 
   # Get the column alignments
   col_alignment <-
     c(
-      rep("left", length(stub_layout)),
+      dt_boxhead_get_alignments_in_stub(data = data),
       dt_boxhead_get_vars_align_default(data = data)
     )
 
   merge_keys_cells <- rep(0, get_effective_number_of_columns(data = data))
 
-  if (length(stub_layout) == 2) {
-
-    merge_keys_cells <-
-      c(1, 2, rep(0, get_effective_number_of_columns(data = data) - 2))
+  # Handle merging for stub columns
+  if (length(stub_layout) > 0) {
+    stub_vars <- dt_boxhead_get_var_stub(data = data)
+    has_multi_column_stub <- length(stub_vars) > 1 && !any(is.na(stub_vars))
+    has_multiple_labels <- has_multi_column_stub && length(stubh$label) > 1
+    
+    # Only merge if we have a single label spanning multiple columns
+    if (!has_multiple_labels && length(stub_layout) > 1) {
+      # Create merge keys for the stub columns
+      stub_merge_keys <- c(1, rep(2:(length(stub_layout)), each = 1))
+      merge_keys_cells <- c(stub_merge_keys, rep(0, get_effective_number_of_columns(data = data) - length(stub_layout)))
+    }
   }
 
   cell_list <-
@@ -1456,7 +1475,7 @@ create_body_component_rtf <- function(data) {
   # Get the column alignments
   col_alignment <-
     c(
-      rep("right", length(stub_layout)),
+      dt_boxhead_get_alignments_in_stub(data = data),
       dt_boxhead_get_vars_align_default(data = data)
     )
 
@@ -1472,6 +1491,58 @@ create_body_component_rtf <- function(data) {
 
   n_cols <- ncol(cell_matrix)
   n_rows <- nrow(cell_matrix)
+
+  # Apply hierarchical stub merging for multiple stub columns
+  # (hide repeated values in all columns except the rightmost)
+  has_stub_column <- "rowname" %in% stub_layout
+  
+  if (has_stub_column) {
+    stub_vars <- dt_boxhead_get_var_stub(data = data)
+    
+    if (length(stub_vars) > 1 && !any(is.na(stub_vars))) {
+
+      # Get original body data to check for consecutive repeating values
+      original_body <- dt_data_get(data = data)
+      
+      # Process all stub columns except the rightmost one
+      hierarchy_vars <- stub_vars[-length(stub_vars)]
+      stub_matrix <- as.matrix(original_body[, hierarchy_vars, drop = FALSE])
+      
+      # Determine which columns to hide based on hierarchical grouping
+      for (col_idx in seq_along(hierarchy_vars)) {
+
+        # Position in cell_matrix (accounting for group_label column if present)
+        matrix_col_idx <- col_idx
+        if ("group_label" %in% stub_layout) {
+          matrix_col_idx <- col_idx + 1
+        }
+        
+        for (row_idx in 2:n_rows) {
+          should_hide <- TRUE
+          
+          # Check if current value matches previous value
+          if (stub_matrix[row_idx, col_idx] != stub_matrix[row_idx - 1, col_idx]) {
+            should_hide <- FALSE
+          }
+          
+          # Also check that all columns to the left match
+          if (should_hide && col_idx > 1) {
+            for (left_col_idx in 1:(col_idx - 1)) {
+              if (stub_matrix[row_idx, left_col_idx] != stub_matrix[row_idx - 1, left_col_idx]) {
+                should_hide <- FALSE
+                break
+              }
+            }
+          }
+          
+          # Hide the value by making it empty if conditions are met
+          if (should_hide) {
+            cell_matrix[[row_idx, matrix_col_idx]] <- ""
+          }
+        }
+      }
+    }
+  }
 
   # Obtain widths for each visible column label in units of twips
 

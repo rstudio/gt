@@ -1,8 +1,8 @@
 # Create a table that can be used for testing
 test_tbl <-
-  sza %>%
-  dplyr::filter(latitude == 50, !is.na(sza)) %>%
-  dplyr::group_by(month) %>%
+  sza |>
+  dplyr::filter(latitude == 50, !is.na(sza)) |>
+  dplyr::group_by(month) |>
   dplyr::summarize(min_sza = min(sza))
 
 # Function to skip tests if Suggested packages not available on system
@@ -15,6 +15,7 @@ check_suggests()
 test_that("The correct color values are obtained when defining a palette", {
 
   skip_if_not_installed("paletteer")
+  skip_if_not_installed("farver") # For non-default `autocolor_light|dark`
 
   # Obtain a palette of 12 colors in #RRGGBB format
   pal_12 <-
@@ -27,124 +28,110 @@ test_that("The correct color values are obtained when defining a palette", {
   # Create a `tbl_html` object by using `data_color` with the #RRGGBB
   # colors on the month column (which is of the `character` class)
   tbl_html_1 <-
-    test_tbl %>%
-    dplyr::mutate(month = as.character(month)) %>%
-    gt() %>%
+    test_tbl |>
+    dplyr::mutate(month = as.character(month)) |>
+    gt() |>
     data_color(
       columns = "month",
       palette = pal_12,
       autocolor_text = TRUE
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect that the background colors are in the same form as
   # those supplied (`pal_12`) though not necessarily in the same
   # order as in the `pal_12` vector
-  tbl_html_1 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_1, "style")) |>
     expect_in(pal_12)
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
-  tbl_html_1 %>%
-    selection_value("style") %>%
-    gsub("(.*: |;$)", "", .) %>%
+  gsub("(.*: |;$)", "", selection_value(tbl_html_1, "style")) |>
     expect_in(c("#000000", "#FFFFFF"))
 
   # When using `autocolor_text = FALSE` expect to not see the
   # `color` attribute in any of the colored cells of the `month` column
-  test_tbl %>%
-    dplyr::mutate(month = as.character(month)) %>%
-    gt() %>%
+  test_tbl |>
+    dplyr::mutate(month = as.character(month)) |>
+    gt() |>
     data_color(
       columns = month,
       palette = pal_12,
       autocolor_text = FALSE
-    ) %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
-    selection_value("style") %>%
+    ) |>
+    render_as_html() |>
+    xml2::read_html() |>
+    selection_value("style") |>
     expect_no_match("[^-]color:")
 
   # Create a `tbl_html_2` object by using `data_color` with the #RRGGBB
   # colors on the month column (which is of the `factor` class)
   tbl_html_2 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     data_color(
       columns = month,
       palette = pal_12,
       autocolor_text = TRUE
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect that the background colors are in the same form as
   # those supplied (`pal_12`) and the order is identical as well
   expect_equal(
-    tbl_html_2 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .),
+    gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_2, "style")),
     pal_12
   )
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
-  tbl_html_2 %>%
-    selection_value("style") %>%
-    gsub("(.*: |;$)", "", .) %>%
+  gsub("(.*: |;$)", "", selection_value(tbl_html_2, "style")) |>
     expect_in(c("#000000", "#FFFFFF"))
 
   # When using `autocolor_text = FALSE` expect to not see the
   # `color` attribute in any of the colored cells of the `month`
   # column
-  test_tbl %>%
-    gt() %>%
+  test_tbl |>
+    gt() |>
     data_color(
       columns = month,
       palette = pal_12,
       autocolor_text = FALSE
-    ) %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
-    selection_value("style") %>%
+    ) |>
+    render_as_html() |>
+    xml2::read_html() |>
+    selection_value("style") |>
     expect_no_match("[^-]color:")
 
   # Create a `tbl_html_3` object by using `data_color` with the color names
   # (arranged from 'hot' to 'cold' in the vector) on the `min_sza` column
   # (which is of the `numeric` class)
   tbl_html_3 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     data_color(
       columns = min_sza,
       palette = c("red", "orange", "green", "blue"),
       autocolor_text = TRUE
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 12 unique color values to have been generated and
   # used (because this relates to a numeric mapping)
-  tbl_html_3 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    unique() %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_3, "style")) |>
+    unique() |>
     expect_length(12)
 
   # Expect all color values to be of the #RRGGBB form
-  tbl_html_3 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_3, "style")) |>
     expect_match("^#[0-9A-F]{6}$")
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
-  tbl_html_3 %>%
-    selection_value("style") %>%
-    gsub("(.*: |;$)", "", .) %>%
+  gsub("(.*: |;$)", "", selection_value(tbl_html_3, "style")) |>
     expect_in(c("#000000", "#FFFFFF"))
 
   # Create a `tbl_html_rrggbb` object by using `data_color` with color values
@@ -153,45 +140,35 @@ test_that("The correct color values are obtained when defining a palette", {
   rgb_hex_colors <- c("#FF0000", "#FFA500", "#00FF00", "#0000FF")
 
   tbl_html_rrggbb <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     data_color(
       columns = min_sza,
       palette = rgb_hex_colors,
       autocolor_text = TRUE
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 12 unique color values to have been generated and used
-  tbl_html_rrggbb %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    unique() %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_rrggbb, "style")) |>
+    unique() |>
     expect_length(12)
 
   # Expect all color values to be of the #RRGGBB form
-  tbl_html_rrggbb %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_rrggbb, "style")) |>
     expect_match("^#[0-9A-F]{6}$")
 
   # Expect all color values to be identical to those from
   # the table that was generated from color names
   expect_identical(
-    tbl_html_3 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .),
-    tbl_html_rrggbb %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .)
+    gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_3, "style")),
+    gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_rrggbb, "style"))
   )
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
-  tbl_html_rrggbb %>%
-    selection_value("style") %>%
-    gsub("(.*: |;$)", "", .) %>%
+  gsub("(.*: |;$)", "", selection_value(tbl_html_rrggbb, "style")) |>
     expect_in(c("#000000", "#FFFFFF"))
 
   # Create a `tbl_html_rrggbbaa` object by using `data_color` with color values
@@ -200,48 +177,38 @@ test_that("The correct color values are obtained when defining a palette", {
   rgba_hex_colors <- c("#FF000060", "#FFA500FF", "#00FF0090", "#0000BB")
 
   tbl_html_rrggbbaa <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     data_color(
       columns = min_sza,
       palette = rgba_hex_colors,
       autocolor_text = TRUE
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 12 unique color values to have been generated and used
-  tbl_html_rrggbbaa %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    unique() %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_rrggbbaa, "style")) |>
+    unique() |>
     expect_length(12)
 
   # Expect color values to be of either the #RRGGBB or the
   # 'rgba()' CSS value form
-  tbl_html_rrggbbaa %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_rrggbbaa, "style")) |>
     expect_match("(?:^#[0-9A-F]{6}$|^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$)")
 
   # Expect the alpha values to have interpolation, yielding
   # several different values between 0 and 1
-  (
-    tbl_html_rrggbbaa %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .)
-  )[-1] %>%
-    rgba_to_hex() %>%
-    substring(8, 9) %>%
-    unique() %>%
-    length() %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_rrggbbaa, "style"))[-1] |>
+    rgba_to_hex() |>
+    substring(8, 9) |>
+    unique() |>
+    length() |>
     expect_gt(6)
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
-  tbl_html_rrggbbaa %>%
-    selection_value("style") %>%
-    gsub("(.*: |;$)", "", .) %>%
+  gsub("(.*: |;$)", "", selection_value(tbl_html_rrggbbaa, "style")) |>
     expect_in(c("#000000", "#FFFFFF"))
 
   # Create a `tbl_html_rrggbbaa_mixed` object by using `data_color` with
@@ -250,50 +217,45 @@ test_that("The correct color values are obtained when defining a palette", {
   rgba_hex_colors_mixed <- c("#FF0000", "#FFA50060", "#00FF00", "#0000BB90")
 
   tbl_html_rrggbbaa_mixed <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     data_color(
       columns = min_sza,
       palette = rgba_hex_colors_mixed,
       autocolor_text = TRUE
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 12 unique color values to have been generated and used
-  tbl_html_rrggbbaa_mixed %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    unique() %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_rrggbbaa_mixed, "style")) |>
+    unique() |>
     expect_length(12)
 
   # Expect color values to be of either the #RRGGBB or the
   # 'rgba()' CSS value form
-  tbl_html_rrggbbaa_mixed %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_rrggbbaa_mixed, "style")) |>
     expect_match("(?:^#[0-9A-F]{6}$|^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$)")
 
   # Expect the alpha values to have interpolation, yielding
   # several different values between 0 and 1
-  (
-    tbl_html_rrggbbaa_mixed %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .)
-  ) %>%
-    sort() %>%
-    .[3:length(.)] %>%
-    rgba_to_hex() %>%
-    substring(8, 9) %>%
-    unique() %>%
-    length() %>%
+  sorted <-
+    sort(
+      gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_rrggbbaa_mixed, "style"))
+    )
+
+  sorted_length <- length(sorted)
+
+  sorted[3:sorted_length] |>
+    rgba_to_hex() |>
+    substring(8, 9) |>
+    unique() |>
+    length() |>
     expect_gt(6)
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
-  tbl_html_rrggbbaa_mixed %>%
-    selection_value("style") %>%
-    gsub("(.*: |;$)", "", .) %>%
+  gsub("(.*: |;$)", "", selection_value(tbl_html_rrggbbaa_mixed, "style")) |>
     expect_in(c("#000000", "#FFFFFF"))
 
   # Create a `rgba_hex_colors_mixed_2` object by using `data_color` with
@@ -301,203 +263,220 @@ test_that("The correct color values are obtained when defining a palette", {
   rgba_hex_colors_mixed_2 <- c("red", "#FFA50060", "#00FF00", "#0000BB90")
 
   tbl_html_rrggbbaa_mixed_2 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     data_color(
       columns = min_sza,
       palette = rgba_hex_colors_mixed_2,
       autocolor_text = TRUE
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 12 unique color values to have been generated and used
-  tbl_html_rrggbbaa_mixed_2 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    unique() %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_rrggbbaa_mixed_2, "style")) |>
+    unique() |>
     expect_length(12)
 
   # Expect color values to be of either the #RRGGBB or the
   # 'rgba()' CSS value form
-  tbl_html_rrggbbaa_mixed_2 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_rrggbbaa_mixed_2, "style")) |>
     expect_match("(?:^#[0-9A-F]{6}$|^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$)")
 
   # Expect all color values to be identical to those from
   # the previous table
   expect_identical(
-    tbl_html_rrggbbaa_mixed %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .),
-    tbl_html_rrggbbaa_mixed_2 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .)
+    gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_rrggbbaa_mixed, "style")),
+    gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_rrggbbaa_mixed_2, "style"))
   )
 
   # Expect the alpha values to have interpolation, yielding
   # several different values between 0 and 1
-  (
-    tbl_html_rrggbbaa_mixed_2 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .)
-  ) %>%
-    sort() %>%
-    .[3:length(.)] %>%
-    rgba_to_hex() %>%
-    substring(8, 9) %>%
-    unique() %>%
-    length() %>%
+  sorted <- sort(
+    gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_rrggbbaa_mixed_2, "style"))
+  )
+
+  sorted_length <- length(sorted)
+
+  sorted[3:sorted_length] |>
+    rgba_to_hex() |>
+    substring(8, 9) |>
+    unique() |>
+    length() |>
     expect_gt(6)
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
-  tbl_html_rrggbbaa_mixed_2 %>%
-    selection_value("style") %>%
-    gsub("(.*: |;$)", "", .) %>%
+  gsub("(.*: |;$)", "", selection_value(tbl_html_rrggbbaa_mixed_2, "style")) |>
     expect_in(c("#000000", "#FFFFFF"))
 
   # Create a `tbl_html_4` object by using `data_color` with the #RRGGBB
   # colors on the month column (which is of the `character` class);
   # this time, set `alpha` equal to 1
   tbl_html_4 <-
-    test_tbl %>%
-    dplyr::mutate(month = as.character(month)) %>%
-    gt() %>%
+    test_tbl |>
+    dplyr::mutate(month = as.character(month)) |>
+    gt() |>
     data_color(
       columns = month,
       palette = pal_12,
       autocolor_text = TRUE,
       alpha = 1
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect that the background colors are in the same form as
   # those supplied (`pal_12`) though not necessarily in the same
   # order as in the `pal_12` vector
-  tbl_html_4 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_4, "style")) |>
     expect_in(pal_12)
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
-  tbl_html_4 %>%
-    selection_value("style") %>%
-    gsub("(.*: |;$)", "", .) %>%
+  gsub("(.*: |;$)", "", selection_value(tbl_html_4, "style")) |>
     expect_in(c("#000000", "#FFFFFF"))
 
   # When using `autocolor_text = FALSE` expect to not see the
   # `color` attribute in any of the colored cells of the `month` column
-  test_tbl %>%
-    dplyr::mutate(month = as.character(month)) %>%
-    gt() %>%
+  test_tbl |>
+    dplyr::mutate(month = as.character(month)) |>
+    gt() |>
     data_color(
       columns = month,
       palette = pal_12,
       autocolor_text = FALSE,
       alpha = 1
-    ) %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
-    selection_value("style") %>%
+    ) |>
+    render_as_html() |>
+    xml2::read_html() |>
+    selection_value("style") |>
     expect_no_match("[^-]color:")
 
   # Expect all color values to be identical to those from
   # `tbl_html_1`
   expect_identical(
-    tbl_html_4 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .),
-    tbl_html_1 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .)
+    gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_4, "style")),
+    gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_1, "style"))
   )
 
   # Create a `tbl_html_5` object by using `data_color` with the #RRGGBB
   # colors on the month column (which is of the `character` class);
   # this time, set `alpha` equal to 0.5
   tbl_html_5 <-
-    test_tbl %>%
-    dplyr::mutate(month = as.character(month)) %>%
-    gt() %>%
+    test_tbl |>
+    dplyr::mutate(month = as.character(month)) |>
+    gt() |>
     data_color(
       columns = month,
       palette = pal_12,
       autocolor_text = TRUE,
       alpha = 0.5
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect color values to be entirely in the 'rgba()' CSS value form
-  tbl_html_5 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_5, "style")) |>
     expect_match("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$")
 
   # Expect the same test result by using `is_rgba_col()`
-  tbl_html_5 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    is_rgba_col() %>%
-    all() %>%
+  tbl_html_5 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
+    is_rgba_col() |>
+    all() |>
     expect_true()
 
   # Expect that all alpha values are 0.5 (or "80" as a hex value)
-  (
-    tbl_html_5 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .)
-  ) %>%
-    rgba_to_hex() %>%
-    substring(8, 9) %>%
-    unique() %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_5, "style")) |>
+    rgba_to_hex() |>
+    substring(8, 9) |>
+    unique() |>
     expect_equal("80")
 
   # Converting the 'rgba()' values back into hexadecimal form and
   # removing the alpha channel (by use of `html_color()`) is expected
   # to give us color values in the `pal_12` #RRGGBB color vector
-  tbl_html_5 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    rgba_to_hex() %>%
-    html_color(alpha = 1) %>%
+  gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_5, "style")) |>
+    rgba_to_hex() |>
+    html_color(alpha = 1) |>
     expect_in(pal_12)
+
+  # Create a `tbl_html_6` object by using `data_color` with color names (random
+  # selection) on the `min_sza` column (which is of the `numeric` class); this
+  # time use non-default `autocolor_light` and `autocolor_dark` with #RRGGBB
+  # format
+  tbl_html_6 <-
+    test_tbl |>
+    gt() |>
+    data_color(
+      columns = min_sza,
+      palette = c("red", "white", "blue"),
+      autocolor_text = TRUE,
+      autocolor_light = "#EEE9E9",
+      autocolor_dark = "#0D0D0D"
+    ) |>
+    render_as_html() |>
+    xml2::read_html()
+
+  # Expect that the text colors vary between #0D0D0D and #EEE9E9
+  # since the `autocolor_text` option is TRUE and these colors are used
+  gsub("(.*: |;$)", "", selection_value(tbl_html_6, "style")) |>
+    expect_in(c("#0D0D0D", "#EEE9E9"))
+
+  # Create a `tbl_html_7` object by using `data_color` with color names (random
+  # selection) on the `min_sza` column (which is of the `numeric` class); this
+  # time use non-default `autocolor_light` and `autocolor_dark` with color names
+  tbl_html_7 <-
+    test_tbl |>
+    gt() |>
+    data_color(
+      columns = min_sza,
+      palette = c("red", "white", "blue"),
+      autocolor_text = TRUE,
+      autocolor_light = "snow2",
+      autocolor_dark = "gray5"
+    ) |>
+    render_as_html() |>
+    xml2::read_html()
+
+  # Expect that the text colors vary between #0D0D0D and #EEE9E9
+  # since the `autocolor_text` option is TRUE and these colors are used
+  gsub("(.*: |;$)", "", selection_value(tbl_html_7, "style")) |>
+    expect_in(c("#0D0D0D", "#EEE9E9"))
 
   # Expect that NAs in column values will result in default colors
   tbl <-
-    countrypops %>%
-    dplyr::filter(country_name == "Mongolia") %>%
-    dplyr::filter(year >= 2013 & year <= 2022) %>%
+    countrypops |>
+    dplyr::filter(country_name == "Mongolia") |>
+    dplyr::filter(year >= 2013, year <= 2022) |>
     dplyr::select(-contains("code"))
 
   tbl[1, ] <- NA
 
-  tbl %>%
-    gt() %>%
+  tbl |>
+    gt() |>
     data_color(
       columns = country_name,
       palette = c("red", "orange", "green", "blue")
-    ) %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+    ) |>
+    render_as_html() |>
+    xml2::read_html() |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
     expect_equal(c("#808080", rep("#FF0000", 9)))
 
-  tbl %>%
-    gt() %>%
+  tbl |>
+    gt() |>
     data_color(
       columns = year,
       palette = c("red", "orange", "green", "blue")
-    ) %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+    ) |>
+    render_as_html() |>
+    xml2::read_html() |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
     expect_equal(
       c(
         "#808080", "#FF0000", "#FF5E00", "#FF8B00", "#F0B300", "#BAD700",
@@ -505,25 +484,26 @@ test_that("The correct color values are obtained when defining a palette", {
       )
     )
 
-  tbl %>%
-    gt() %>%
+  tbl |>
+    gt() |>
     data_color(
       columns = population,
       palette = c("red", "orange", "green", "blue")
-    ) %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+    ) |>
+    render_as_html() |>
+    xml2::read_html() |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
     expect_equal(
       c(
-        "#808080", "#FF0000", "#FF5E00", "#FF8D00", "#EAB800",
-        "#ACDE00", "#0EFF00", "#7AAF8C", "#7368C9", "#0000FF"
+        "#808080", "#FF0000", "#FF6200", "#FF9100", "#E8B900",
+        "#AFDC00", "#43FB00", "#77BA82", "#746BC7", "#0000FF"
       )
     )
 })
 
 test_that("data_color() works with classed colors (#1155)", {
+
   # Create a `rgba_hex_colors_mixed_classed` object by using `data_color` with
   # classed color values written with mixed #RRGGBB, #RRGGBBAA, and named forms
   rgba_hex_colors_mixed_classed <- structure(
@@ -532,65 +512,66 @@ test_that("data_color() works with classed colors (#1155)", {
   )
 
   tbl_html_hex_colors_mixed_classed <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     data_color(
       columns = min_sza,
       palette = rgba_hex_colors_mixed_classed,
       autocolor_text = TRUE
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 12 unique color values to have been generated and used
-  tbl_html_hex_colors_mixed_classed %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    unique() %>%
+  tbl_html_hex_colors_mixed_classed |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
+    unique() |>
     expect_length(12)
 
   # Expect color values to be of either the #RRGGBB or the
   # 'rgba()' CSS value form
-  tbl_html_hex_colors_mixed_classed %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  tbl_html_hex_colors_mixed_classed |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
     expect_match("(?:^#[0-9A-F]{6}$|^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$)")
 
   # Expect all color values to be identical to those from
   # the previous table
   expect_identical(
-    tbl_html_hex_colors_mixed_classed %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .),
-    tbl_html_hex_colors_mixed_classed %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .)
+    tbl_html_hex_colors_mixed_classed |>
+      selection_value("style") |>
+      gsub("(background-color: |; color: .*)", "", x = _),
+    tbl_html_hex_colors_mixed_classed |>
+      selection_value("style") |>
+      gsub("(background-color: |; color: .*)", "", x = _)
   )
 
   # Expect the alpha values to have interpolation, yielding
   # several different values between 0 and 1
-  (
-    tbl_html_hex_colors_mixed_classed %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .)
-  ) %>%
-    sort() %>%
-    .[3:length(.)] %>%
-    rgba_to_hex() %>%
-    substring(8, 9) %>%
-    unique() %>%
-    length() %>%
+  sorted <-
+    sort(
+      gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_hex_colors_mixed_classed, "style"))
+    )
+
+  sorted_length <- length(sorted)
+
+  sorted[3:sorted_length] |>
+    rgba_to_hex() |>
+    substring(8, 9) |>
+    unique() |>
+    length() |>
     expect_gt(6)
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
   (
-    (tbl_html_hex_colors_mixed_classed %>%
-       selection_value("style") %>%
-       gsub("(.*: |;$)", "", .)) %in%
+    (tbl_html_hex_colors_mixed_classed |>
+       selection_value("style") |>
+       gsub("(.*: |;$)", "", x = _)) %in%
       c("#000000", "#FFFFFF")
-  ) %>%
-    all() %>%
+  ) |>
+    all() |>
     expect_true()
 })
 
@@ -601,8 +582,8 @@ test_that("Color palettes can be obtained from the paletteer package", {
   # Use `data_color()` with all defaults and a palette obtain from
   # the paletteer package
   tbl_gt_1 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(palette = "ggsci::red_material")
 
   # Perform snapshot test
@@ -613,8 +594,8 @@ test_that("Some color palettes from the viridis package can be used", {
 
   # Use `data_color()` with all defaults and the "viridis" palette
   tbl_gt_1 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(palette = "viridis")
 
   # Perform snapshot test
@@ -622,8 +603,8 @@ test_that("Some color palettes from the viridis package can be used", {
 
   # Use `data_color()` with all defaults and the "magma" palette
   tbl_gt_2 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(palette = "magma")
 
   # Perform snapshot test
@@ -631,8 +612,8 @@ test_that("Some color palettes from the viridis package can be used", {
 
   # Use `data_color()` with all defaults and the "plasma" palette
   tbl_gt_3 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(palette = "plasma")
 
   # Perform snapshot test
@@ -640,8 +621,8 @@ test_that("Some color palettes from the viridis package can be used", {
 
   # Use `data_color()` with all defaults and the "inferno" palette
   tbl_gt_4 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(palette = "inferno")
 
   # Perform snapshot test
@@ -662,8 +643,8 @@ test_that("Some color palettes from the RColorBrewer package can be used", {
       pal_names,
       FUN = function(x) {
         expect_no_error(
-          exibble %>%
-            gt() %>%
+          exibble |>
+            gt() |>
             data_color(palette = x)
         )
       }
@@ -674,8 +655,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Use `data_color()` with all defaults
   tbl_gt_1 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color()
 
   # Perform snapshot test
@@ -683,8 +664,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Use `data_color()` with a subset of rows targeted
   tbl_gt_2 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     data_color(rows = c(3:5, 8:10))
 
   # Perform snapshot test
@@ -692,8 +673,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Target the `num` column and use the `data_color()` "numeric" method
   tbl_gt_3 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(columns = num, method = "numeric")
 
   # Perform snapshot test
@@ -701,8 +682,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Target the `num` column and use the `data_color()` "bin" method
   tbl_gt_4 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(columns = num, method = "bin")
 
   # Perform snapshot test
@@ -710,8 +691,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Target the `num` column and use the `data_color()` "quantile" method
   tbl_gt_5 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(columns = num, method = "quantile")
 
   # Perform snapshot test
@@ -719,8 +700,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Target the `num` column and use the `data_color()` "factor" method
   tbl_gt_6 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(columns = num, method = "factor")
 
   # Perform snapshot test
@@ -728,8 +709,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Target the `char` column and use the `data_color()` "numeric" method
   tbl_gt_7 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(columns = char, method = "numeric")
 
   # Perform snapshot test
@@ -737,8 +718,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Target the `char` column and use the `data_color()` "bin" method
   tbl_gt_8 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(columns = char, method = "bin")
 
   # Perform snapshot test
@@ -746,8 +727,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Target the `char` column and use the `data_color()` "quantile" method
   tbl_gt_9 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(columns = char, method = "quantile")
 
   # Perform snapshot test
@@ -755,8 +736,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Target the `char` column and use the `data_color()` "factor" method
   tbl_gt_10 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(columns = char, method = "factor")
 
   # Perform snapshot test
@@ -764,8 +745,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Target the `fctr` column and use the `data_color()` "numeric" method
   tbl_gt_11 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(columns = fctr, method = "numeric")
 
   # Perform snapshot test
@@ -773,8 +754,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Target the `fctr` column and use the `data_color()` "bin" method
   tbl_gt_12 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(columns = fctr, method = "bin")
 
   # Perform snapshot test
@@ -782,8 +763,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Target the `fctr` column and use the `data_color()` "quantile" method
   tbl_gt_13 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(columns = fctr, method = "quantile")
 
   # Perform snapshot test
@@ -791,8 +772,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Target the `fctr` column and use the `data_color()` "factor" method
   tbl_gt_14 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(columns = fctr, method = "factor")
 
   # Perform snapshot test
@@ -800,8 +781,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # With all columns, use the `data_color()` "numeric" method
   tbl_gt_15 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(method = "numeric")
 
   # Perform snapshot test
@@ -809,8 +790,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # With all columns, use the `data_color()` "bin" method
   tbl_gt_16 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(method = "bin")
 
   # Perform snapshot test
@@ -818,8 +799,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # With all columns, use the `data_color()` "quantile" method
   tbl_gt_17 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(method = "quantile")
 
   # Perform snapshot test
@@ -827,8 +808,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # With all columns, use the `data_color()` "factor" method
   tbl_gt_18 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     data_color(method = "factor")
 
   # Perform snapshot test
@@ -840,8 +821,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Using `bins = 4`
   tbl_gt_19 <-
-    dplyr::tibble(a = 1:20) %>%
-    gt() %>%
+    dplyr::tibble(a = 1:20) |>
+    gt() |>
     data_color(
       columns = a,
       method = "bin",
@@ -854,8 +835,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Using `bins = 5`
   tbl_gt_20 <-
-    dplyr::tibble(a = 1:20) %>%
-    gt() %>%
+    dplyr::tibble(a = 1:20) |>
+    gt() |>
     data_color(
       columns = a,
       method = "bin",
@@ -872,8 +853,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Using `quantiles = 5`
   tbl_gt_21 <-
-    dplyr::tibble(a = 1:20) %>%
-    gt() %>%
+    dplyr::tibble(a = 1:20) |>
+    gt() |>
     data_color(
       columns = a,
       method = "quantile",
@@ -886,8 +867,8 @@ test_that("Different combinations of methods and column types work well", {
 
   # Using `quantiles = 10`
   tbl_gt_22 <-
-    dplyr::tibble(a = 1:20) %>%
-    gt() %>%
+    dplyr::tibble(a = 1:20) |>
+    gt() |>
     data_color(
       columns = a,
       method = "quantile",
@@ -903,18 +884,18 @@ test_that("The direction of coloring can be column-wise or row-wise", {
 
   # Generate a gt table based on the `sza` dataset
   sza_gt_tbl <-
-    sza %>%
-    dplyr::filter(latitude == 20, tst <= "1200") %>%
-    dplyr::select(-latitude) %>%
-    dplyr::filter(!is.na(sza)) %>%
-    tidyr::spread(key = "tst", value = sza) %>%
-    gt(rowname_col = "month") %>%
+    sza |>
+    dplyr::filter(latitude == 20, tst <= "1200") |>
+    dplyr::select(-latitude) |>
+    dplyr::filter(!is.na(sza)) |>
+    tidyr::pivot_wider(names_from = "tst", values_from = sza, names_sort = TRUE) |>
+    gt(rowname_col = "month") |>
     sub_missing(missing_text = "")
 
   # Use `data_color()` with `direction = "column"` (the default) and
   # a palette of three colors
   tbl_gt_1 <-
-    sza_gt_tbl %>%
+    sza_gt_tbl |>
     data_color(
       direction = "column",
       method = "auto",
@@ -927,7 +908,7 @@ test_that("The direction of coloring can be column-wise or row-wise", {
 
   # Use `data_color()` with `direction = "row"`
   tbl_gt_2 <-
-    sza_gt_tbl %>%
+    sza_gt_tbl |>
     data_color(
       direction = "row",
       method = "auto",
@@ -941,23 +922,23 @@ test_that("The direction of coloring can be column-wise or row-wise", {
   # Using a fixed domain should not result in any difference
   # between coloring that is applied column-wise or row-wise
   expect_equal(
-    sza_gt_tbl %>%
+    sza_gt_tbl |>
       data_color(
         direction = "column",
         domain = c(0, 90),
         method = "auto",
         palette = c("orange", "blue", "gray30"),
         na_color = "white"
-      ) %>%
+      ) |>
       render_as_html(),
-    sza_gt_tbl %>%
+    sza_gt_tbl |>
       data_color(
         direction = "row",
         domain = c(0, 90),
         method = "auto",
         palette = c("orange", "blue", "gray30"),
         na_color = "white"
-      ) %>%
+      ) |>
       render_as_html()
   )
 
@@ -965,27 +946,27 @@ test_that("The direction of coloring can be column-wise or row-wise", {
   # either of the "auto" or "numeric" methods since all
   # columns are of the numeric class
   expect_equal(
-    sza_gt_tbl %>%
+    sza_gt_tbl |>
       data_color(
         direction = "row",
         method = "numeric",
         palette = c("orange", "blue", "gray30"),
         na_color = "white"
-      ) %>%
+      ) |>
       render_as_html(),
-    sza_gt_tbl %>%
+    sza_gt_tbl |>
       data_color(
         direction = "row",
         method = "auto",
         palette = c("orange", "blue", "gray30"),
         na_color = "white"
-      ) %>%
+      ) |>
       render_as_html()
   )
 
   # Use `data_color()` with `direction = "row"` and `method = "bin"`
   tbl_gt_3 <-
-    sza_gt_tbl %>%
+    sza_gt_tbl |>
     data_color(
       direction = "row",
       method = "bin",
@@ -998,7 +979,7 @@ test_that("The direction of coloring can be column-wise or row-wise", {
 
   # Use `data_color()` with `direction = "row"` and `method = "quantile"`
   tbl_gt_4 <-
-    sza_gt_tbl %>%
+    sza_gt_tbl |>
     data_color(
       direction = "row",
       method = "quantile",
@@ -1011,7 +992,7 @@ test_that("The direction of coloring can be column-wise or row-wise", {
 
   # Use `data_color()` with `direction = "row"` and `method = "factor"`
   tbl_gt_5 <-
-    sza_gt_tbl %>%
+    sza_gt_tbl |>
     data_color(
       direction = "row",
       method = "factor",
@@ -1027,16 +1008,16 @@ test_that("Columns can indirectly apply coloring to other columns", {
 
   # Generate a gt table based on the `countrypops` dataset
   cp_gt_tbl <-
-    countrypops %>%
-    dplyr::filter(country_name == "Mongolia") %>%
-    dplyr::select(-contains("code")) %>%
-    dplyr::filter(year >= 2013 & year <= 2022) %>%
-    tidyr::pivot_wider(names_from = "year", values_from = "population") %>%
+    countrypops |>
+    dplyr::filter(country_name == "Mongolia") |>
+    dplyr::select(-contains("code")) |>
+    dplyr::filter(year >= 2013, year <= 2022) |>
+    tidyr::pivot_wider(names_from = "year", values_from = "population") |>
     gt(rowname_col = "country_name")
 
   # Apply coloring from one column to another
   tbl_gt_1 <-
-    cp_gt_tbl %>%
+    cp_gt_tbl |>
     data_color(
       columns = `2013`,
       target_columns = `2022`,
@@ -1049,7 +1030,7 @@ test_that("Columns can indirectly apply coloring to other columns", {
 
   # Apply coloring from one column to several different columns
   tbl_gt_2 <-
-    cp_gt_tbl %>%
+    cp_gt_tbl |>
     data_color(
       columns = `2013`,
       target_columns = c(`2020`, `2021`, `2022`),
@@ -1063,7 +1044,7 @@ test_that("Columns can indirectly apply coloring to other columns", {
   # Apply coloring from multiple columns to several columns
   # of the same multiple
   tbl_gt_3 <-
-    cp_gt_tbl %>%
+    cp_gt_tbl |>
     data_color(
       columns = c(`2013`, `2014`, `2015`),
       target_columns = c(`2020`, `2021`, `2022`),
@@ -1077,7 +1058,7 @@ test_that("Columns can indirectly apply coloring to other columns", {
   # Apply coloring from multiple columns to several columns
   # of the same multiple, this time reversing the palette
   tbl_gt_4 <-
-    cp_gt_tbl %>%
+    cp_gt_tbl |>
     data_color(
       columns = c(`2013`, `2014`, `2015`),
       target_columns = c(`2020`, `2021`, `2022`),
@@ -1092,10 +1073,12 @@ test_that("Columns can indirectly apply coloring to other columns", {
 
 test_that("data_color() validates its input related to color", {
 
+  skip_if_not_installed("farver") # For non-default `autocolor_light|dark`
+
   # Expect an error when using an invalid color name in `palette`
   expect_error(
-    test_tbl %>%
-      gt() %>%
+    test_tbl |>
+      gt() |>
       data_color(
         columns = min_sza,
         palette = c("red", "blau"),
@@ -1105,8 +1088,8 @@ test_that("data_color() validates its input related to color", {
 
   # Do not expect an error when providing `NULL` to `palette`
   expect_no_error(
-    test_tbl %>%
-      gt() %>%
+    test_tbl |>
+      gt() |>
       data_color(
         columns = min_sza,
         palette = NULL,
@@ -1116,8 +1099,8 @@ test_that("data_color() validates its input related to color", {
 
   # Expect an error when providing an `NA` to `palette`
   expect_error(
-    test_tbl %>%
-      gt() %>%
+    test_tbl |>
+      gt() |>
       data_color(
         columns = min_sza,
         palette = NA,
@@ -1127,8 +1110,8 @@ test_that("data_color() validates its input related to color", {
 
   # Expect an error when providing a numeric vector to `palette`
   expect_error(
-    test_tbl %>%
-      gt() %>%
+    test_tbl |>
+      gt() |>
       data_color(
         columns = min_sza,
         palette = 1:6,
@@ -1139,8 +1122,8 @@ test_that("data_color() validates its input related to color", {
   # Expect an error if there is a malformed
   # hexadecimal color value given to `palette`
   expect_error(
-    test_tbl %>%
-      gt() %>%
+    test_tbl |>
+      gt() |>
       data_color(
         columns = min_sza,
         palette = c("#EEFFAA", "##45AA22"),
@@ -1151,8 +1134,8 @@ test_that("data_color() validates its input related to color", {
   # Expect an error if using `direction = "row"` with a numeric method
   # when there are non-numeric cells
   expect_error(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       data_color(
         direction = "row",
         method = "numeric"
@@ -1162,8 +1145,8 @@ test_that("data_color() validates its input related to color", {
   # Expect an error if using `direction = "row"` when specifying
   # `target_columns`
   expect_error(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       data_color(
         columns = num,
         target_columns = row,
@@ -1174,22 +1157,72 @@ test_that("data_color() validates its input related to color", {
   # Expect an error with length of `target_columns` doesn't match that
   # of `columns` (when length of `columns` is greater than one)
   expect_error(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       data_color(
         columns = c(num, currency),
-        target_columns = row,
+        target_columns = row
       )
   )
 
   # Don't expect an error if the greater-than-one lengths of
   # `target_columns` and `columns` match
   expect_no_error(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       data_color(
         columns = c(num, currency),
-        target_columns = c(row, group),
+        target_columns = c(row, group)
+      )
+  )
+
+  # Expect an error if there is a malformed hexadecimal color value given
+  # to `autocolor_light`
+  expect_error(
+    test_tbl |>
+      gt() |>
+      data_color(
+        columns = min_sza,
+        palette = c("#EEFFAA", "#45AA22"),
+        autocolor_text = TRUE,
+        autocolor_light = "##EEE9E9"
+      )
+  )
+
+  # Expect an error if there is a malformed hexadecimal color value given
+  # to `autocolor_dark`
+  expect_error(
+    test_tbl |>
+      gt() |>
+      data_color(
+        columns = min_sza,
+        palette = c("#EEFFAA", "#45AA22"),
+        autocolor_text = TRUE,
+        autocolor_dark = "#0D0D0DF"
+      )
+  )
+
+  # Expect an error if there is a invalid color name given to `autocolor_light`
+  expect_error(
+    test_tbl |>
+      gt() |>
+      data_color(
+        columns = min_sza,
+        palette = c("#EEFFAA", "#45AA22"),
+        autocolor_text = TRUE,
+        autocolor_light = "snoow2"
+      )
+  )
+
+  # Expect an error if there is a invalid color name given to `autocolor_dark`
+  expect_error(
+    test_tbl |>
+      gt() |>
+      data_color(
+        columns = min_sza,
+        palette = c("#EEFFAA", "#45AA22"),
+        autocolor_text = TRUE,
+        autocolor_dark = "ggrreey5"
       )
   )
 })
@@ -1200,8 +1233,8 @@ test_that("Certain warnings can be expected when using deprecated arguments", {
 
   # Expect a warning if a palette is provided to `colors`
   expect_warning(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       data_color(
         method = "numeric",
         colors = c("red", "green")
@@ -1210,8 +1243,8 @@ test_that("Certain warnings can be expected when using deprecated arguments", {
 
   # Expect a warning if a function is provided to `colors`
   expect_warning(
-    exibble %>%
-      gt() %>%
+    exibble |>
+      gt() |>
       data_color(
         columns = num,
         method = "numeric",
@@ -1226,9 +1259,9 @@ test_that("The correct color values are obtained when using a color fn", {
   # `scales::col_factor()` fn on the month column
   # (which is of the `character` class)
   tbl_html_1 <-
-    test_tbl %>%
-    dplyr::mutate(month = as.character(month)) %>%
-    gt() %>%
+    test_tbl |>
+    dplyr::mutate(month = as.character(month)) |>
+    gt() |>
     data_color(
       columns = month,
       fn = scales::col_factor(
@@ -1237,30 +1270,30 @@ test_that("The correct color values are obtained when using a color fn", {
         domain = levels(test_tbl$month)
       ),
       autocolor_text = TRUE
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 12 unique color values to have been generated and
   # used (because this relates to a numeric mapping)
-  tbl_html_1 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    unique() %>%
+  tbl_html_1 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
+    unique() |>
     expect_length(12)
 
   # Expect all color values to be of the #RRGGBB form
-  tbl_html_1 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  tbl_html_1 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
     expect_match("^#[0-9A-F]{6}$")
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
   expect_in(
-    tbl_html_1 %>%
-      selection_value("style") %>%
-       gsub("(.*: |;$)", "", .),
+    tbl_html_1 |>
+      selection_value("style") |>
+       gsub("(.*: |;$)", "", x = _),
     c("#000000", "#FFFFFF")
   )
 
@@ -1269,9 +1302,9 @@ test_that("The correct color values are obtained when using a color fn", {
   # (which is of the `character` class); this time, set `alpha`
   # to `0.5`
   tbl_html_2 <-
-    test_tbl %>%
-    dplyr::mutate(month = as.character(month)) %>%
-    gt() %>%
+    test_tbl |>
+    dplyr::mutate(month = as.character(month)) |>
+    gt() |>
     data_color(
       columns = month,
       fn = scales::col_factor(
@@ -1280,42 +1313,42 @@ test_that("The correct color values are obtained when using a color fn", {
       ),
       autocolor_text = TRUE,
       alpha = 0.5
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect color values to be entirely in the 'rgba()' CSS value form
-  tbl_html_2 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  tbl_html_2 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
     expect_match("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$")
 
   # Expect the same test result by using `is_rgba_col()`
-  tbl_html_2 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    is_rgba_col() %>%
-    all() %>%
+  tbl_html_2 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
+    is_rgba_col() |>
+    all() |>
     expect_true()
 
   # Expect that all alpha values are 0.5 (or "80" as a hex value)
   (
-    tbl_html_2 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .)
-  ) %>%
-    rgba_to_hex() %>%
-    substring(8, 9) %>%
-    unique() %>%
+    tbl_html_2 |>
+      selection_value("style") |>
+      gsub("(background-color: |; color: .*)", "", x = _)
+  ) |>
+    rgba_to_hex() |>
+    substring(8, 9) |>
+    unique() |>
     expect_equal("80")
 
   # Create a `tbl_html` object by using `data_color` with the
   # `scales::col_factor()` fn on the month column (which is of
   # the `character` class); this time, set `alpha` to `1.0`
   tbl_html_3 <-
-    test_tbl %>%
-    dplyr::mutate(month = as.character(month)) %>%
-    gt() %>%
+    test_tbl |>
+    dplyr::mutate(month = as.character(month)) |>
+    gt() |>
     data_color(
       columns = month,
       fn = scales::col_factor(
@@ -1324,48 +1357,48 @@ test_that("The correct color values are obtained when using a color fn", {
       ),
       autocolor_text = TRUE,
       alpha = 1
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 12 unique color values to have been generated and
   # used (because this relates to a numeric mapping)
-  tbl_html_3 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    unique() %>%
+  tbl_html_3 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
+    unique() |>
     expect_length(12)
 
   # Expect all color values to be of the #RRGGBB form
-  tbl_html_3 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  tbl_html_3 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
     expect_match("^#[0-9A-F]{6}$")
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
-  tbl_html_3 %>%
-    selection_value("style") %>%
-    gsub("(.*: |;$)", "", .) %>%
+  tbl_html_3 |>
+    selection_value("style") |>
+    gsub("(.*: |;$)", "", x = _) |>
     expect_in(c("#000000", "#FFFFFF"))
 
   # Expect all color values to be identical to those from
   # `tbl_html_1`
   expect_identical(
-    tbl_html_3 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .),
-    tbl_html_1 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .)
+    tbl_html_3 |>
+      selection_value("style") |>
+      gsub("(background-color: |; color: .*)", "", x = _),
+    tbl_html_1 |>
+      selection_value("style") |>
+      gsub("(background-color: |; color: .*)", "", x = _)
   )
 
   # Create a `tbl_html` object by using `data_color` with the
   # `scales::col_factor()` fn on the month column
   # (which is of the `factor` class)
   tbl_html_4 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     data_color(
       columns = month,
       fn = scales::col_factor(
@@ -1374,48 +1407,48 @@ test_that("The correct color values are obtained when using a color fn", {
       ),
       autocolor_text = TRUE,
       alpha = 1
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 12 unique color values to have been generated and
   # used (because this relates to a numeric mapping)
-  tbl_html_4 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    unique() %>%
+  tbl_html_4 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
+    unique() |>
     expect_length(12)
 
   # Expect all color values to be of the #RRGGBB form
-  tbl_html_4 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  tbl_html_4 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
     expect_match("^#[0-9A-F]{6}$")
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
-  tbl_html_4 %>%
-    selection_value("style") %>%
-    gsub("(.*: |;$)", "", .) %>%
+  tbl_html_4 |>
+    selection_value("style") |>
+    gsub("(.*: |;$)", "", x = _) |>
     expect_in(c("#000000", "#FFFFFF"))
 
   # Expect all color values to be identical to those from
   # `tbl_html_1`
   expect_identical(
-    tbl_html_4 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .),
-    tbl_html_1 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .)
+    tbl_html_4 |>
+      selection_value("style") |>
+      gsub("(background-color: |; color: .*)", "", x = _),
+    tbl_html_1 |>
+      selection_value("style") |>
+      gsub("(background-color: |; color: .*)", "", x = _)
   )
 
   # Create a `tbl_html` object by using `data_color` with the
   # `scales::col_numeric()` fn on the `min_sza` column
   # (which is of the `numeric` class)
   tbl_html_5 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     data_color(
       columns = min_sza,
       fn = scales::col_numeric(
@@ -1424,29 +1457,29 @@ test_that("The correct color values are obtained when using a color fn", {
       ),
       autocolor_text = TRUE,
       alpha = 1
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 12 unique color values to have been generated and
   # used (because this relates to a numeric mapping)
-  tbl_html_5 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    unique() %>%
+  tbl_html_5 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
+    unique() |>
     expect_length(12)
 
   # Expect all color values to be of the #RRGGBB form
-  tbl_html_5 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  tbl_html_5 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
     expect_match("^#[0-9A-F]{6}$")
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
-  tbl_html_5 %>%
-    selection_value("style") %>%
-    gsub("(.*: |;$)", "", .) %>%
+  tbl_html_5 |>
+    selection_value("style") |>
+    gsub("(.*: |;$)", "", x = _) |>
     expect_in(c("#000000", "#FFFFFF"))
 
   # Create a `tbl_html` object by using `data_color` with the
@@ -1454,8 +1487,8 @@ test_that("The correct color values are obtained when using a color fn", {
   # (which is of the `numeric` class); this time, use an
   # alpha value of `0.5`
   tbl_html_6 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     data_color(
       columns = min_sza,
       fn = scales::col_numeric(
@@ -1464,41 +1497,41 @@ test_that("The correct color values are obtained when using a color fn", {
       ),
       autocolor_text = TRUE,
       alpha = 0.5
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect color values to be entirely in the 'rgba()' CSS value form
-  tbl_html_6 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  tbl_html_6 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
     expect_match("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$")
 
   # Expect the same test result by using `is_rgba_col()`
-  tbl_html_6 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    is_rgba_col() %>%
-    all() %>%
+  tbl_html_6 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
+    is_rgba_col() |>
+    all() |>
     expect_true()
 
   # Expect that all alpha values are 0.5 (or "80" as a hex value)
   (
-    tbl_html_6 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .)
-  ) %>%
-    rgba_to_hex() %>%
-    substring(8, 9) %>%
-    unique() %>%
+    tbl_html_6 |>
+      selection_value("style") |>
+      gsub("(background-color: |; color: .*)", "", x = _)
+  ) |>
+    rgba_to_hex() |>
+    substring(8, 9) |>
+    unique() |>
     expect_equal("80")
 
   # Create a `tbl_html` object by using `data_color` with the
   # `scales::col_quantile()` fn on the `min_sza` column
   # (which is of the `numeric` class)
   tbl_html_7 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     data_color(
       columns = min_sza,
       fn = scales::col_quantile(
@@ -1506,37 +1539,37 @@ test_that("The correct color values are obtained when using a color fn", {
         domain = c(0, 90)
       ),
       autocolor_text = TRUE
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 3 unique color values to have been generated and
   # used (because this relates to a numeric mapping on quantiles)
-  tbl_html_7 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    unique() %>%
+  tbl_html_7 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
+    unique() |>
     expect_length(3)
 
   # Expect all color values to be of the #RRGGBB form
-  tbl_html_7 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  tbl_html_7 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
     expect_match("^#[0-9A-F]{6}$")
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
-  tbl_html_7 %>%
-    selection_value("style") %>%
-    gsub("(.*: |;$)", "", .) %>%
+  tbl_html_7 |>
+    selection_value("style") |>
+    gsub("(.*: |;$)", "", x = _) |>
     expect_in(c("#000000", "#FFFFFF"))
 
   # Create a `tbl_html` object by using `data_color` with the
   # `scales::col_bin()` fn on the `min_sza` column
   # (which is of the `numeric` class)
   tbl_html_8 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     data_color(
       columns = min_sza,
       fn = scales::col_bin(
@@ -1545,29 +1578,29 @@ test_that("The correct color values are obtained when using a color fn", {
         bins = 4
       ),
       autocolor_text = TRUE
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect 3 unique color values to have been generated and
   # used (because this relates to a numeric mapping on quantiles)
-  tbl_html_8 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
-    unique() %>%
+  tbl_html_8 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
+    unique() |>
     expect_length(3)
 
   # Expect all color values to be of the #RRGGBB form
-  tbl_html_8 %>%
-    selection_value("style") %>%
-    gsub("(background-color: |; color: .*)", "", .) %>%
+  tbl_html_8 |>
+    selection_value("style") |>
+    gsub("(background-color: |; color: .*)", "", x = _) |>
     expect_match("^#[0-9A-F]{6}$")
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
-  tbl_html_8 %>%
-    selection_value("style") %>%
-    gsub("(.*: |;$)", "", .) %>%
+  tbl_html_8 |>
+    selection_value("style") |>
+    gsub("(.*: |;$)", "", x = _) |>
     expect_in(c("#000000", "#FFFFFF"))
 })
 
@@ -1587,8 +1620,8 @@ test_that("The various color utility functions work correctly", {
       "rgba(255,170,0,0.5)", "rgba(255,187,52,1)", "rgba( 127, 46, 22, 0.523 )",
       "rgba(0,0,0,0)", "rgba(128,    20 , 94, 1.000)"
       )
-  ) %>%
-    all() %>%
+    ) |>
+    all() |>
     expect_true()
 
   # Expect that any other strings will return FALSE values
@@ -1597,8 +1630,8 @@ test_that("The various color utility functions work correctly", {
       "rgba (255,170,0,0.5)", "rgbc(255,187,52,1)", "rgb( 127, 46, 22, 0.523 )",
       "#FFFFFF", "rgba(128,    20 , 94, a)"
     )
-  ) %>%
-    any() %>%
+    ) |>
+    any() |>
     expect_false()
 
   # Expect that the `rgba_to_hex()` function reliably returns
@@ -1666,9 +1699,9 @@ test_that("The various color utility functions work correctly", {
 
   # Furthermore, expect that all alpha values in the 'rgba()' strings are of the
   # same value when `alpha` is non-NULL and less than `1`
-  html_color(colors = c(c_name, c_hex, c_hex_a), alpha = 0.5) %>%
-    gsub("(?:^.*,|\\))", "", .) %>%
-    unique() %>%
+  html_color(colors = c(c_name, c_hex, c_hex_a), alpha = 0.5) |>
+    gsub("(?:^.*,|\\))", "", x = _) |>
+    unique() |>
     expect_length(1)
 
   # Expect that CSS color names not present as an R/X11 color will still work
@@ -1787,14 +1820,31 @@ test_that("The various color utility functions work correctly", {
 
   # Expect that the `ideal_fgnd_color()` function returns a vector containing
   # either a light color ("#FFFFFF") or a dark color ("#000000") based on the
-  # input colors; this should work with all of the color formats that
-  # `html_color()` produces
+  # `bgnd_color` input colors; this should work with all of the color formats
+  # that `html_color()` produces
   expect_equal(
     ideal_fgnd_color(bgnd_color = c(c_name, c_hex, c_hex_a, c_rgba)),
     c(
       "#FFFFFF", "#FFFFFF", "#FFFFFF", "#000000", "#000000", "#FFFFFF",
       "#000000", "#000000", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF",
       "#000000", "#000000", "#000000", "#000000", "#000000"
+    )
+  )
+
+  # Expect that the `ideal_fgnd_color()` function returns a vector containing
+  # either a light color or a dark color based on the `bgnd_color` input colors;
+  # this should work with all of the color formats that `html_color()`
+  # produces; this time using non-default `light` and `dark`
+  expect_equal(
+    ideal_fgnd_color(
+      bgnd_color = c(c_name, c_hex, c_hex_a, c_rgba),
+      light = "snow2",
+      dark = "#0D0D0D"
+      ),
+    c(
+      "#EEE9E9", "#0D0D0D", "#EEE9E9", "#0D0D0D", "#0D0D0D", "#EEE9E9",
+      "#0D0D0D", "#0D0D0D", "#EEE9E9", "#EEE9E9", "#EEE9E9", "#EEE9E9",
+      "#0D0D0D", "#0D0D0D", "#0D0D0D", "#0D0D0D", "#0D0D0D"
     )
   )
 
@@ -1831,6 +1881,26 @@ test_that("The various color utility functions work correctly", {
   )
   expect_error(
     ideal_fgnd_color(bgnd_color = c(c_hex, c_hex_a, "#FF0033100"))
+  )
+  expect_error(
+    ideal_fgnd_color(
+      bgnd_color = c(c_name, c_hex, c_hex_a, c_rgba), light = "##EEE9E9"
+    )
+  )
+  expect_error(
+    ideal_fgnd_color(
+      bgnd_color = c(c_name, c_hex, c_hex_a, c_rgba), dark = "#0D0D0DF"
+    )
+  )
+  expect_error(
+    ideal_fgnd_color(
+      bgnd_color = c(c_name, c_hex, c_hex_a, c_rgba), light = "snoow2"
+    )
+  )
+  expect_error(
+    ideal_fgnd_color(
+      bgnd_color = c(c_name, c_hex, c_hex_a, c_rgba), dark = "ggrreey5"
+    )
   )
 
   # Expect specific and reproducible output color values in the #RRGGBBAA
@@ -1967,78 +2037,78 @@ test_that("tab_style() + cell_fill() accepts colors of various types", {
   # Create a `tbl_html` object by using `tab_style` with
   # the `cell_fill()` helper function and a color name
   tbl_html_1 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     tab_style(
       style = cell_fill(color = "tomato"),
       locations = cells_body(columns = "month")
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect a single color to have been generated and used
-  tbl_html_1 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
-    unique() %>%
+  tbl_html_1 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
+    unique() |>
     expect_length(1)
 
   # Expect all color values to be of the #RRGGBB form
-  tbl_html_1 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
+  tbl_html_1 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
     expect_match("^#[0-9A-F]{6}$")
 
   # Create a `tbl_html` object by using `tab_style` with
   # the `cell_fill()` helper function and a hexadecimal color
   # value in the #RRGGBB format
   tbl_html_2 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     tab_style(
       style = cell_fill(color = "#FFAA00"),
       locations = cells_body(columns = "month")
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect a single color to have been generated and used
-  tbl_html_2 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
-    unique() %>%
+  tbl_html_2 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
+    unique() |>
     expect_length(1)
 
   # Expect all color values to be of the #RRGGBB form
-  tbl_html_2 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
+  tbl_html_2 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
     expect_match("^#[0-9A-F]{6}$")
 
   # Create a `tbl_html` object by using `tab_style` with
   # the `cell_fill()` helper function and a hexadecimal color
   # value in the #RRGGBBAA format
   tbl_html_3 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     tab_style(
       style = cell_fill(color = "#FF235D60"),
       locations = cells_body(columns = "month")
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect a single color to have been generated and used
-  tbl_html_3 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
-    unique() %>%
+  tbl_html_3 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
+    unique() |>
     expect_length(1)
 
   # Expect all color values to be of the 'rgba()' string format
-  tbl_html_3 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
+  tbl_html_3 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
     expect_match("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$")
 
   # Create a `tbl_html` object by using `tab_style` with
@@ -2046,37 +2116,37 @@ test_that("tab_style() + cell_fill() accepts colors of various types", {
   # value in the #RRGGBB format, and, set `alpha` to `0.5`
   # inside `cell_fill()`
   tbl_html_4 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     tab_style(
       style = cell_fill(color = "#FF235D", alpha = 0.5),
       locations = cells_body(columns = "month")
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect a single color to have been generated and used
-  tbl_html_4 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
-    unique() %>%
+  tbl_html_4 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
+    unique() |>
     expect_length(1)
 
   # Expect all color values to be of the 'rgba()' string format
-  tbl_html_4 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
+  tbl_html_4 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
     expect_match("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$")
 
   # Expect that all alpha values are 0.5 (or "80" as a hex value)
   (
-    tbl_html_4 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*|;)", "", .)
-  ) %>%
-    rgba_to_hex() %>%
-    substring(8, 9) %>%
-    unique() %>%
+    tbl_html_4 |>
+      selection_value("style") |>
+      gsub("(background-color: |; color: .*|;)", "", x = _)
+  ) |>
+    rgba_to_hex() |>
+    substring(8, 9) |>
+    unique() |>
     expect_equal("80")
 
   # Create a `tbl_html` object by using `tab_style` with
@@ -2085,38 +2155,38 @@ test_that("tab_style() + cell_fill() accepts colors of various types", {
   # inside `cell_fill()` (that is expected to override the
   # alpha value that is part of the supplied `color`)
   tbl_html_5 <-
-    test_tbl %>%
-    gt() %>%
+    test_tbl |>
+    gt() |>
     tab_style(
       style = cell_fill(color = "#F3F300EE", alpha = 0.5),
       locations = cells_body(columns = "month")
-    ) %>%
-    render_as_html() %>%
+    ) |>
+    render_as_html() |>
     xml2::read_html()
 
   # Expect a single color to have been generated and used
-  tbl_html_5 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
-    unique() %>%
+  tbl_html_5 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
+    unique() |>
     expect_length(1)
 
   # Expect all color values to be of the 'rgba()' string format
-  tbl_html_5 %>%
-    selection_value("style") %>%
-    gsub("(?:background-color: |;)", "", .) %>%
+  tbl_html_5 |>
+    selection_value("style") |>
+    gsub("(?:background-color: |;)", "", x = _) |>
     expect_match("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$")
 
   # Expect that all alpha values are 0.5 (or "80" as a hex value and
   # *not* "EE")
   (
-    tbl_html_5 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*|;)", "", .)
-  ) %>%
-    rgba_to_hex() %>%
-    substring(8, 9) %>%
-    unique() %>%
+    tbl_html_5 |>
+      selection_value("style") |>
+      gsub("(background-color: |; color: .*|;)", "", x = _)
+  ) |>
+    rgba_to_hex() |>
+    substring(8, 9) |>
+    unique() |>
     expect_equal("80")
 })
 

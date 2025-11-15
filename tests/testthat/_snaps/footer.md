@@ -28,20 +28,18 @@
       <td headers="row" class="gt_row gt_left">row_1</td>
       <td headers="group" class="gt_row gt_left">grp_a</td></tr>
         </tbody>
-        <tfoot class="gt_sourcenotes">
-          <tr>
-            <td class="gt_sourcenote" colspan="9">Source note **bold** (#1, no `md()`)</td>
-          </tr>
-          <tr>
-            <td class="gt_sourcenote" colspan="9"><span class='gt_from_md'>Source note <strong>bold</strong> (#2, uses <code>md()</code>)</span></td>
-          </tr>
-        </tfoot>
-        <tfoot class="gt_footnotes">
-          <tr>
+        <tfoot>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> footnote **bold** (#1, no `md()`)</td>
           </tr>
-          <tr>
+          <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> <span class='gt_from_md'>footnote <strong>bold</strong> (#2, uses <code>md()</code>)</span></td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="9">Source note **bold** (#1, no `md()`)</td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="9"><span class='gt_from_md'>Source note <strong>bold</strong> (#2, uses <code>md()</code>)</span></td>
           </tr>
         </tfoot>
       </table>
@@ -174,16 +172,14 @@
       <td headers="group" class="gt_row gt_left">grp_a</td></tr>
         </tbody>
         <tfoot>
-          <tr class="gt_sourcenotes">
-            <td class="gt_sourcenote" colspan="9">
-              <div style="padding-bottom:2px;">Source note **bold** (#1, no `md()`)&nbsp; <span class='gt_from_md'>Source note <strong>bold</strong> (#2, uses <code>md()</code>)</span></div>
-            </td>
-          </tr>
-        </tfoot>
-        <tfoot>
           <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9">
               <div style="padding-bottom:2px;"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> footnote **bold** (#1, no `md()`)&nbsp; <span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> <span class='gt_from_md'>footnote <strong>bold</strong> (#2, uses <code>md()</code>)</span></div>
+            </td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="9">
+              <div style="padding-bottom:2px;">Source note **bold** (#1, no `md()`)&nbsp; <span class='gt_from_md'>Source note <strong>bold</strong> (#2, uses <code>md()</code>)</span></div>
             </td>
           </tr>
         </tfoot>
@@ -317,16 +313,14 @@
       <td headers="group" class="gt_row gt_left">grp_a</td></tr>
         </tbody>
         <tfoot>
-          <tr class="gt_sourcenotes">
-            <td class="gt_sourcenote" colspan="9">
-              <div style="padding-bottom:2px;">Source note **bold** (#1, no `md()`) <em>|</em> <span class='gt_from_md'>Source note <strong>bold</strong> (#2, uses <code>md()</code>)</span></div>
-            </td>
-          </tr>
-        </tfoot>
-        <tfoot>
           <tr class="gt_footnotes">
             <td class="gt_footnote" colspan="9">
               <div style="padding-bottom:2px;"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> footnote **bold** (#1, no `md()`) <em>|</em> <span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> <span class='gt_from_md'>footnote <strong>bold</strong> (#2, uses <code>md()</code>)</span></div>
+            </td>
+          </tr>
+          <tr class="gt_sourcenotes">
+            <td class="gt_sourcenote" colspan="9">
+              <div style="padding-bottom:2px;">Source note **bold** (#1, no `md()`) <em>|</em> <span class='gt_from_md'>Source note <strong>bold</strong> (#2, uses <code>md()</code>)</span></div>
             </td>
           </tr>
         </tfoot>

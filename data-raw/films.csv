@@ -371,7 +371,7 @@ year,title,original_title,director,languages,countries_of_origin,run_time,imdb_u
 1958,"The Long, Hot Summer",,Martin Ritt,en,US,1h 55m,https://www.imdb.com/title/tt0051878/
 1958,A Matter of Dignity,To teleftaio psemma,Michael Cacoyannis,el,GR,1h 52m,https://www.imdb.com/title/tt0051065/
 1958,Iron Flower,Vasvirág,János Herskó,hu,HU,1h 41m,https://www.imdb.com/title/tt0052349/
-1958,Visages de bronze,,Bernard Taisant,fr,CH,30m,https://www.imdb.com/title/tt0170770
+1958,Visages de bronze,,Bernard Taisant,fr,CH,30m,https://www.imdb.com/title/tt0170770/
 1958,Snow Country,Yukiguni,Shirô Toyoda,ja,JP,2h 13m,https://www.imdb.com/title/tt0051217/
 1958,Suburban Romance,Zizkovská romance,Zbynek Brynych,cs,CS,1h 40m,https://www.imdb.com/title/tt0124221/
 1959,Araya,,Margot Benacerraf,es,"VE,FR",1h 30m,https://www.imdb.com/title/tt0051372/
@@ -1812,7 +1812,7 @@ year,title,original_title,director,languages,countries_of_origin,run_time,imdb_u
 2023,Banel & Adama,Banel e Adama,Ramata-Toulaye Sy,fuf,"FR,SN,ML,QA",1h 27m,https://www.imdb.com/title/tt26256406/
 2023,Asphalt City,,Jean-Stéphane Sauvaire,en,US,2h 5m,https://www.imdb.com/title/tt9663896/
 2023,Club Zero,,Jessica Hausner,"en,fr,zh","AT,GB,DE,FR,DK,TR,US,QA,BA",1h 50m,https://www.imdb.com/title/tt18235146/
-2023,Firebrand,,Karim Aïnouz,en,"GB,US",2h,https://www.imdb.com/title/tt15000156/
+2023,Firebrand,,Karim Aïnouz,en,"GB,US",2h 1m,https://www.imdb.com/title/tt15000156/
 2023,A Brighter Tomorrow,Il sol dell'avvenire,Nanni Moretti,"it,fr,en,ko,el,hu","IT,FR",1h 35m,https://www.imdb.com/title/tt16731908/
 2023,Monster,Kaibutsu,Kore-eda Hirokazu,"ja,en",JP,2h 7m,https://www.imdb.com/title/tt23736044/
 2023,Fallen Leaves,Kuolleet lehdet,Aki Kaurismäki,"fi,ar","FI,DE",1h 21m,https://www.imdb.com/title/tt21027780/
@@ -1842,11 +1842,33 @@ year,title,original_title,director,languages,countries_of_origin,run_time,imdb_u
 2024,Marcello Mio,,Christophe Honoré,"fr,it,en","FR,IT",2h,https://www.imdb.com/title/tt32086069/
 2024,Megalopolis,,Francis Ford Coppola,en,US,2h 18m,https://www.imdb.com/title/tt10128846/
 2024,Motel Destino,,Karim Aïnouz,pt,"BR,FR,DE,GB",1h 55m,https://www.imdb.com/title/tt28608358/
-2024,Oh Canada,,Paul Schrader,en,US,1h 31m,https://www.imdb.com/title/tt29994753/
+2024,"Oh, Canada",,Paul Schrader,en,US,1h 31m,https://www.imdb.com/title/tt29994753/
 2024,Parthenope,,Paolo Sorrentino,it,"IT,FR",2h 16m,https://www.imdb.com/title/tt23853982/
 2024,The Girl with the Needle,Pigen med nålen,Magnus von Horn,da,"DK,PL,SE",1h 55m,https://www.imdb.com/title/tt10236164/
 2024,The Apprentice,,Ali Abbasi,en,"CA,DK,IE",2h,https://www.imdb.com/title/tt8368368/
-2024,The Seed of the Sacred Fig,,Mohammad Rasoulof,fa,"IR,FR,DE",2h 48m,https://www.imdb.com/title/tt32178949/
+2024,The Seed of the Sacred Fig,Dane-ye anjir-e ma'abed,Mohammad Rasoulof,fa,"IR,FR,DE",2h 48m,https://www.imdb.com/title/tt32178949/
 2024,The Shrouds,,David Cronenberg,en,"CA,FR",1h 59m,https://www.imdb.com/title/tt20212786/
 2024,The Substance,,Coralie Fargeat,en,"GB,US,FR",2h 20m,https://www.imdb.com/title/tt17526714/
 2024,Three Kilometres to the End of the World,Trei kilometri până la capătul lumii,Emanuel Parvu,ro,RO,1h 45m,https://www.imdb.com/title/tt32186523/
+2025,Sentimental Value,Affeksjonsverdi,Joachim Trier,"no,en","NO,FR,DE,DK,SE,GB",2h 15m,https://www.imdb.com/title/tt27714581/
+2025,Alpha,,Julia Ducournau,fr,"FR,BE",2h 8m,https://www.imdb.com/title/tt32275943/
+2025,Die My Love,,Lynne Ramsay,en,US,1h 58m,https://www.imdb.com/title/tt9362736/
+2025,Case 137,Dossier 137,Dominik Moll,fr,FR,1h 55m,https://www.imdb.com/title/tt34794183/
+2025,Eagles of the Republic,,Tarik Saleh,ar,"SE,FR,DK,FI,DE",2h 9m,https://www.imdb.com/title/tt30781967/
+2025,Eddington,,Ari Aster,en,"US,FI",2h 28m,https://www.imdb.com/title/tt31176520/
+2025,Fuori,,Mario Martone,it,"IT,FR",1h 57m,https://www.imdb.com/title/tt34768402/
+2025,The Young Mother's Home,Jeunes mères,"Jean-Pierre Dardenne, Luc Dardenne",fr,"FR,BE",1h 45m,https://www.imdb.com/title/tt32909489/
+2025,Resurrection,Kuang ye shi dai,Bi Gan,zh,"CN,FR,US",2h 40m,https://www.imdb.com/title/tt29002950/
+2025,The Little Sister,La Petite Dernière,Hafsia Herzi,"fr,ar","FR,DE",1h 46m,https://www.imdb.com/title/tt28326501/
+2025,Nouvelle Vague,,Richard Linklater,"en,fr","FR,US",1h 46m,https://www.imdb.com/title/tt31688586/
+2025,The Secret Agent,O Agente Secreto,Kleber Mendonça Filho,pt,"BR,FR,DE,NL",2h 38m,https://www.imdb.com/title/tt27847051/
+2025,Renoir,,Chie Hayakawa,"ja,en","JP,FR,SG,PH,ID,QA",2h,https://www.imdb.com/title/tt30220107/
+2025,Romería,,Carla Simón,"es,ca,fr,gl","ES,DE",1h 54m,https://www.imdb.com/title/tt32538648/
+2025,Sirât,,Oliver Laxe,"es,fr,en,ar","FR,ES",1h 55m,https://www.imdb.com/title/tt32298285/
+2025,Sound of Falling,In die Sonne schauen,Mascha Schilinski,de,DE,2h 29m,https://www.imdb.com/title/tt28690468/
+2025,The History of Sound,,Oliver Hermanus,en,"GB,SE,US",2h 7m,https://www.imdb.com/title/tt15799524/
+2025,The Mastermind,,Kelly Reichardt,en,US,1h 50m,https://www.imdb.com/title/tt33455099/
+2025,The Phoenician Scheme,,Wes Anderson,"en,fr","DE,US",1h 41m,https://www.imdb.com/title/tt30840798/
+2025,Two Prosecutors,Zwei Staatsanwälte,Sergei Loznitsa,"ru,uk","FR,DE,NL,LV,RO,LT,UA",1h 57m,https://www.imdb.com/title/tt35521200/
+2025,It Was Just an Accident,Yek tasadef sadeh,Jafar Panahi,fa,"IR,FR,LU",1h 45m,https://www.imdb.com/title/tt36491653/
+2025,Woman and Child,Zan va bache,Saeed Roustayi,fa,"IR,FR",2h 11m,https://www.imdb.com/title/tt36631507/

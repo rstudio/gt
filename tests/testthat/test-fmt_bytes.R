@@ -44,20 +44,21 @@ test_that("fmt_bytes() works correctly", {
   # Expect the extracted values to match those of the
   # original dataset
   expect_equal(data_tbl$char, char)
+
   expect_equal(data_tbl$num, num)
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% fmt_bytes(columns = num_2, decimals = 2))
+  expect_error(tab |> fmt_bytes(columns = num_2, decimals = 2))
 
   # Expect an error when using a locale that does not exist
-  expect_error(tab %>% fmt_bytes(columns = num_2, decimals = 2, locale = "aa_bb"))
+  expect_error(tab |> fmt_bytes(columns = num_2, decimals = 2, locale = "aa_bb"))
 
   # Format the `num` column to 1 decimal place, use all
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, decimals = 1) %>%
+    (tab |>
+       fmt_bytes(columns = num, decimals = 1) |>
        render_formats_test(context = "html"))[["num"]],
     c(
       paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1 kB", "1 kB",
@@ -70,8 +71,8 @@ test_that("fmt_bytes() works correctly", {
   # Format the `num` column to 4 decimal places, use all
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, decimals = 4) %>%
+    (tab |>
+       fmt_bytes(columns = num, decimals = 4) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1.023 kB", "1.001 kB",
@@ -86,11 +87,11 @@ test_that("fmt_bytes() works correctly", {
   # zeros, use all other defaults; extract `output_df` and compare to
   # expected values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_bytes(
          columns = num, decimals = 2,
          drop_trailing_zeros = FALSE
-       ) %>%
+       ) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("\U02212", "500.00 B"), "0.00 B", "0.00 B", "0.00 B", "500.00 B",
@@ -105,11 +106,11 @@ test_that("fmt_bytes() works correctly", {
   # zeros, express byte sizes in the binary standard; extract `output_df`
   # and compare to expected values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_bytes(
          columns = num, standard = "binary", decimals = 2,
          drop_trailing_zeros = FALSE
-       ) %>%
+       ) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("\U02212", "500.00 B"), "0.00 B", "0.00 B", "0.00 B", "500.00 B",
@@ -125,8 +126,8 @@ test_that("fmt_bytes() works correctly", {
   # grouping separators, use all other defaults; extract `output_df`
   # and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, use_seps = FALSE) %>%
+    (tab |>
+       fmt_bytes(columns = num, use_seps = FALSE) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1 kB", "1 kB",
@@ -140,8 +141,8 @@ test_that("fmt_bytes() works correctly", {
   # character as digit grouping separators, use all other defaults;
   # extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, decimals = 2, sep_mark = " ") %>%
+    (tab |>
+       fmt_bytes(columns = num, decimals = 2, sep_mark = " ") |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1.02 kB", "1 kB",
@@ -156,8 +157,8 @@ test_that("fmt_bytes() works correctly", {
   # the numeric value and the units, use all other defaults;
   # extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, decimals = 2, incl_space = FALSE) %>%
+    (tab |>
+       fmt_bytes(columns = num, decimals = 2, incl_space = FALSE) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("\U02212", "500B"), "0B", "0B", "0B", "500B", "1.02kB", "1kB", "1.02kB",
@@ -171,10 +172,10 @@ test_that("fmt_bytes() works correctly", {
   # digit grouping separators and a comma for the decimal mark, use
   # all other defaults; extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_bytes(
          columns = num, decimals = 2, sep_mark = ".", dec_mark = ","
-       ) %>%
+       ) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
@@ -189,8 +190,8 @@ test_that("fmt_bytes() works correctly", {
   # all values by 2 different literals, use all other defaults; extract
   # `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, decimals = 2, pattern = "a {x} b") %>%
+    (tab |>
+       fmt_bytes(columns = num, decimals = 2, pattern = "a {x} b") |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("a ", "\U02212", "500 B b"), "a 0 B b", "a 0 B b", "a 0 B b", "a 500 B b",
@@ -204,9 +205,9 @@ test_that("fmt_bytes() works correctly", {
 
   # Format the `num` column to 3 decimal places, force the sign
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_bytes(
-         columns = num, decimals = 3, force_sign = TRUE) %>%
+         columns = num, decimals = 3, force_sign = TRUE) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "+500 B", "+1.023 kB",
@@ -220,9 +221,9 @@ test_that("fmt_bytes() works correctly", {
   # Format the `num` column, force the sign and
   # define a pattern for decorating values
   expect_equal(
-    (tab %>%
+    (tab |>
        fmt_bytes(
-         columns = num, pattern = "*{x}*", force_sign = TRUE) %>%
+         columns = num, pattern = "*{x}*", force_sign = TRUE) |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("*\U02212", "500 B*"), "*0 B*", "*0 B*", "*0 B*", "*+500 B*", "*+1 kB*",
@@ -237,8 +238,8 @@ test_that("fmt_bytes() works correctly", {
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, decimals = 2, locale = "en_US") %>%
+    (tab |>
+       fmt_bytes(columns = num, decimals = 2, locale = "en_US") |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1.02 kB", "1 kB",
@@ -253,8 +254,8 @@ test_that("fmt_bytes() works correctly", {
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, decimals = 2, locale = "da_DK") %>%
+    (tab |>
+       fmt_bytes(columns = num, decimals = 2, locale = "da_DK") |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
@@ -269,8 +270,8 @@ test_that("fmt_bytes() works correctly", {
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, decimals = 2, locale = "de_AT") %>%
+    (tab |>
+       fmt_bytes(columns = num, decimals = 2, locale = "de_AT") |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
@@ -284,15 +285,17 @@ test_that("fmt_bytes() works correctly", {
   # Format the `num` column to 2 decimal places, apply the `et_EE`
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
+  # Note: Estonian (et) has minimum_grouping_digits=2 (CLDR), so only numbers
+  # with 5+ digits (10000+) get separators. 1500 has 4 digits so no separator.
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, decimals = 2, locale = "et_EE") %>%
+    (tab |>
+       fmt_bytes(columns = num, decimals = 2, locale = "et_EE") |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
       "1,02 kB", "1,05 MB", "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB",
       "1,18 ZB", "1,21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
-      "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1 500 YB", "15 000 YB",
+      "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1500 YB", "15 000 YB",
       "NA"
     )
   )
@@ -301,8 +304,8 @@ test_that("fmt_bytes() works correctly", {
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, decimals = 2, locale = "gl_ES") %>%
+    (tab |>
+       fmt_bytes(columns = num, decimals = 2, locale = "gl_ES") |>
        render_formats_test("html"))[["num"]],
     c(
       paste0("\U02212", "500 B"), "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
@@ -315,27 +318,29 @@ test_that("fmt_bytes() works correctly", {
 
   # Expect that a column with NAs will work fine with `fmt_bytes()`,
   # it'll just produce NA values
-  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) %>% gt()
+  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) |> gt()
 
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_bytes()`
   expect_no_error(
-    na_col_tbl %>% fmt_bytes(columns = a) %>% as_raw_html()
+    na_col_tbl |> fmt_bytes(columns = a) |> as_raw_html()
   )
+
   expect_no_error(
-    na_col_tbl %>%
-      fmt_bytes(columns = a, rows = 1:5) %>% as_raw_html()
+    na_col_tbl |>
+      fmt_bytes(columns = a, rows = 1:5) |> as_raw_html()
   )
+
   expect_no_error(
-    na_col_tbl %>%
-      fmt_bytes(columns = a, pattern = "a{x}b", incl_space = FALSE) %>% as_raw_html()
+    na_col_tbl |>
+      fmt_bytes(columns = a, pattern = "a{x}b", incl_space = FALSE) |> as_raw_html()
   )
 
   # Expect that two columns being formatted (one entirely NA) will work
   expect_equal(
-    (na_col_tbl %>%
-       fmt_bytes(columns = a) %>%
-       fmt_bytes(columns = b) %>% render_formats_test("html"))[["b"]],
+    (na_col_tbl |>
+       fmt_bytes(columns = a) |>
+       fmt_bytes(columns = b) |> render_formats_test("html"))[["b"]],
     c("1 B", "2 B", "3 B", "4 B", "5 B", "6 B", "7 B", "8 B", "9 B", "10 B")
   )
 })
@@ -366,17 +371,13 @@ test_that("fmt_bytes() format to specified significant figures", {
       -0.0000123456   #18
     )
 
-  # Create a single-column tibble with these values in `num`
-  numbers_tbl <- dplyr::tibble(num = numbers)
-
-  # Create a `gt_tbl` object with `gt()` and the
-  # `numbers_tbl` dataset
-  tab <- gt(numbers_tbl)
+  # Create a `gt_tbl` object with `gt()` and the `numbers` data
+  tab <- gt(dplyr::tibble(num = numbers))
 
   # Format the `num` column to 5 significant figures
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, n_sigfig = 5) %>%
+    (tab |>
+       fmt_bytes(columns = num, n_sigfig = 5) |>
        render_formats_test(context = "html"))[["num"]],
     c(
       "50.000 kB", "1.0000 kB", "10.000 B", "12.345 kB", "1.2340 kB",
@@ -394,8 +395,8 @@ test_that("fmt_bytes() format to specified significant figures", {
 
   # Format the `num` column to 4 significant figures
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, n_sigfig = 4) %>%
+    (tab |>
+       fmt_bytes(columns = num, n_sigfig = 4) |>
        render_formats_test(context = "html"))[["num"]],
     c(
       "50.00 kB", "1.000 kB", "10.00 B", "12.34 kB",
@@ -413,8 +414,8 @@ test_that("fmt_bytes() format to specified significant figures", {
 
   # Format the `num` column to 3 significant figures
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, n_sigfig = 3) %>%
+    (tab |>
+       fmt_bytes(columns = num, n_sigfig = 3) |>
        render_formats_test(context = "html"))[["num"]],
     c(
       "50.0 kB", "1.00 kB", "10.0 B", "12.3 kB", "1.23 kB", "123 B",
@@ -432,8 +433,8 @@ test_that("fmt_bytes() format to specified significant figures", {
 
   # Format the `num` column to 2 significant figures
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, n_sigfig = 2) %>%
+    (tab |>
+       fmt_bytes(columns = num, n_sigfig = 2) |>
        render_formats_test(context = "html"))[["num"]],
     c(
       "50 kB", "1.0 kB", "10 B", "12 kB",
@@ -451,8 +452,8 @@ test_that("fmt_bytes() format to specified significant figures", {
 
   # Format the `num` column to 1 significant figure
   expect_equal(
-    (tab %>%
-       fmt_bytes(columns = num, n_sigfig = 1) %>%
+    (tab |>
+       fmt_bytes(columns = num, n_sigfig = 1) |>
        render_formats_test(context = "html"))[["num"]],
     c(
       "50 kB", "1 kB", "10 B", "10 kB",
@@ -469,24 +470,31 @@ test_that("fmt_bytes() format to specified significant figures", {
   )
 
   # Expect an error if the length of `n_sigfig` is not 1
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = c(1, 2)))
+  expect_error(tab |> fmt_bytes(columns = num, n_sigfig = c(1, 2)))
 
   # Expect an error if `n_sigfig` is NA
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = NA))
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = NA_integer_))
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = NA_real_))
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = NA_integer_))
+  expect_error(tab |> fmt_bytes(columns = num, n_sigfig = NA))
+
+  expect_error(tab |> fmt_bytes(columns = num, n_sigfig = NA_integer_))
+
+  expect_error(tab |> fmt_bytes(columns = num, n_sigfig = NA_real_))
+
+  expect_error(tab |> fmt_bytes(columns = num, n_sigfig = NA_integer_))
 
   # Expect an error if `n_sigfig` is not numeric
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = "3"))
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = TRUE))
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = factor(3)))
+  expect_error(tab |> fmt_bytes(columns = num, n_sigfig = "3"))
+
+  expect_error(tab |> fmt_bytes(columns = num, n_sigfig = TRUE))
+
+  expect_error(tab |> fmt_bytes(columns = num, n_sigfig = factor(3)))
 
   # Don't expect errors when using integers or doubles
-  expect_no_error(tab %>% fmt_bytes(columns = num, n_sigfig = 2L))
-  expect_no_error(tab %>% fmt_bytes(columns = num, n_sigfig = 2))
+  expect_no_error(tab |> fmt_bytes(columns = num, n_sigfig = 2L))
+
+  expect_no_error(tab |> fmt_bytes(columns = num, n_sigfig = 2))
 
   # Expect an error if `n_sigfig` is less than 1
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = 0L))
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = -1L))
+  expect_error(tab |> fmt_bytes(columns = num, n_sigfig = 0L))
+
+  expect_error(tab |> fmt_bytes(columns = num, n_sigfig = -1L))
 })

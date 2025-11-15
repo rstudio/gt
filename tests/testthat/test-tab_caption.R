@@ -16,8 +16,8 @@ test_that("A caption can be added/removed with `tab_caption()`/`rm_caption()`", 
 
   # Create a table and add a caption
   tbl_1 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     tab_caption(caption = "A caption.")
 
   # Determine that the caption is internally present
@@ -34,8 +34,8 @@ test_that("A caption can be added/removed with `tab_caption()`/`rm_caption()`", 
 
   # Create a table and add a caption using Markdown
   tbl_2 <-
-    exibble %>%
-    gt() %>%
+    exibble |>
+    gt() |>
     tab_caption(caption = md("A *caption*."))
 
   # Determine that the caption is internally present
@@ -52,8 +52,8 @@ test_that("A caption can be added/removed with `tab_caption()`/`rm_caption()`", 
 
   # Create a table, add a caption in `gt()`, overwrite with `tab_caption()`
   tbl_3 <-
-    exibble %>%
-    gt(caption = "gt caption.") %>%
+    exibble |>
+    gt(caption = "gt caption.") |>
     tab_caption(caption = "Final caption.")
 
   # Determine that the caption set through `tab_caption()` is present
@@ -65,9 +65,9 @@ test_that("A caption can be added/removed with `tab_caption()`/`rm_caption()`", 
   # Create a table, add a caption in `gt()`, overwrite that
   # twice with `tab_caption()`
   tbl_4 <-
-    exibble %>%
-    gt(caption = "gt caption.") %>%
-    tab_caption(caption = "Second caption.") %>%
+    exibble |>
+    gt(caption = "gt caption.") |>
+    tab_caption(caption = "Second caption.") |>
     tab_caption(caption = "Final caption.")
 
   # Determine that the caption set through `tab_caption()` is present
@@ -80,72 +80,76 @@ test_that("A caption can be added/removed with `tab_caption()`/`rm_caption()`", 
   # Expect any caption set can be removed with `rm_caption()`
   #
 
-  exibble %>%
-    gt(caption = "gt caption.") %>%
-    rm_caption() %>%
-    dt_options_get_value(option = "table_caption") %>%
+  exibble |>
+    gt(caption = "gt caption.") |>
+    rm_caption() |>
+    dt_options_get_value(option = "table_caption") |>
     expect_equal(NA_character_)
 
-  exibble %>%
-    gt(caption = "gt caption.") %>%
-    tab_caption(caption = "Final caption.") %>%
-    rm_caption() %>%
-    dt_options_get_value(option = "table_caption") %>%
+  exibble |>
+    gt(caption = "gt caption.") |>
+    tab_caption(caption = "Final caption.") |>
+    rm_caption() |>
+    dt_options_get_value(option = "table_caption") |>
     expect_equal(NA_character_)
 
-  exibble %>%
-    gt() %>%
-    tab_caption(caption = "A caption.") %>%
-    tab_caption(caption = "Another caption.") %>%
-    rm_caption() %>%
-    dt_options_get_value(option = "table_caption") %>%
+  exibble |>
+    gt() |>
+    tab_caption(caption = "A caption.") |>
+    tab_caption(caption = "Another caption.") |>
+    rm_caption() |>
+    dt_options_get_value(option = "table_caption") |>
     expect_equal(NA_character_)
 
-  exibble %>%
-    gt() %>%
-    tab_caption(caption = "A caption.") %>%
-    rm_caption() %>%
-    tab_caption(caption = "Another caption.") %>%
-    rm_caption() %>%
-    dt_options_get_value(option = "table_caption") %>%
+  exibble |>
+    gt() |>
+    tab_caption(caption = "A caption.") |>
+    rm_caption() |>
+    tab_caption(caption = "Another caption.") |>
+    rm_caption() |>
+    dt_options_get_value(option = "table_caption") |>
     expect_equal(NA_character_)
 
   #
   # Expect no issues from using `rm_caption()` unnecessarily or repeatedly
   #
-  expect_no_warning(gt(exibble) %>% rm_caption())
-  expect_no_warning(gt(exibble) %>% rm_caption() %>% rm_caption())
-  expect_no_warning(gt(exibble, caption = "cap") %>% rm_caption() %>% rm_caption())
-  expect_no_warning(gt(exibble) %>% tab_caption(caption = "cap") %>% rm_caption() %>% rm_caption())
-  expect_no_warning(gt(exibble, caption = "cap") %>% tab_caption(caption = "cap") %>% rm_caption() %>% rm_caption())
+  expect_no_warning(gt(exibble) |> rm_caption())
+  expect_no_warning(gt(exibble) |> rm_caption() |> rm_caption())
+  expect_no_warning(gt(exibble, caption = "cap") |> rm_caption() |> rm_caption())
+  expect_no_warning(gt(exibble) |> tab_caption(caption = "cap") |> rm_caption() |> rm_caption())
+  expect_no_warning(gt(exibble, caption = "cap") |> tab_caption(caption = "cap") |> rm_caption() |> rm_caption())
 
   #
   # Ensure that a caption element is not rendered when using `rm_caption()`
   #
   expect_equal(
-    as.character(create_caption_component_h(data = gt(exibble, caption = "cap") %>% rm_caption())),
+    as.character(create_caption_component_h(data = gt(exibble, caption = "cap") |> rm_caption())),
     character(0L)
   )
+
   expect_equal(
-    as.character(create_caption_component_h(data = gt(exibble) %>% tab_caption(caption = "cap") %>% rm_caption())),
+    as.character(create_caption_component_h(data = gt(exibble) |> tab_caption(caption = "cap") |> rm_caption())),
     character(0L)
   )
 
   # Expect that a caption removal can also happen when using `tab_caption(caption = NA)`
   expect_equal(
-    as.character(create_caption_component_h(data = gt(exibble) %>% tab_caption(caption = "cap") %>% tab_caption(caption = NA))),
+    as.character(create_caption_component_h(data = gt(exibble) |> tab_caption(caption = "cap") |> tab_caption(caption = NA))),
     character(0L)
   )
+
   expect_equal(
-    as.character(create_caption_component_h(data = gt(exibble) %>% tab_caption(caption = "cap") %>% tab_caption(caption = NA_character_))),
+    as.character(create_caption_component_h(data = gt(exibble) |> tab_caption(caption = "cap") |> tab_caption(caption = NA_character_))),
     character(0L)
   )
+
   expect_equal(
-    as.character(create_caption_component_h(data = gt(exibble) %>% tab_caption(caption = "cap") %>% tab_caption(caption = NA_real_))),
+    as.character(create_caption_component_h(data = gt(exibble) |> tab_caption(caption = "cap") |> tab_caption(caption = NA_real_))),
     character(0L)
   )
+
   expect_equal(
-    as.character(create_caption_component_h(data = gt(exibble) %>% tab_caption(caption = "cap") %>% tab_caption(caption = NA_integer_))),
+    as.character(create_caption_component_h(data = gt(exibble) |> tab_caption(caption = "cap") |> tab_caption(caption = NA_integer_))),
     character(0L)
   )
 })

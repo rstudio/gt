@@ -1,7 +1,7 @@
 # text_case_match() works on the tab_spanner()
 
     Code
-      gt_tbl %>% text_case_match("boring " ~ "awesome ", .replace = "partial",
+      text_case_match(gt_tbl, "boring " ~ "awesome ", .replace = "partial",
       .locations = cells_column_spanners(2))
     Condition
       Error in `text_case_match()`:

@@ -1,7 +1,7 @@
 # fmt_integer() can render in the Indian numbering system
 
     Code
-      expected_tab <- tab %>% fmt_integer(columns = num, suffixing = TRUE, scale_by = 200,
+      expected_tab <- fmt_integer(tab, columns = num, suffixing = TRUE, scale_by = 200,
         system = "ind")
     Condition
       Warning:

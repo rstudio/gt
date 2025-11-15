@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -131,18 +131,13 @@ dt_summary_build <- function(data, context) {
 
       groups <- unique(stub_df$group_id)
 
-    } else if (
-      !is.null(groups) &&
-      is.character(groups) &&
-      length(groups) == 1 &&
-      groups == ":GRAND_SUMMARY:"
-    ) {
+    } else if (is_string(groups, ":GRAND_SUMMARY:")) {
 
       # If groups is given as ":GRAND_SUMMARY:" then use a
       # special group (`::GRAND_SUMMARY`)
       groups <- grand_summary_col
 
-    } else if (!is.null(groups) && is.character(groups)) {
+    } else if (is.character(groups)) {
 
       assert_rowgroups()
 
@@ -341,7 +336,7 @@ dt_summary_build <- function(data, context) {
 
             fmt_expr_components <- fmt_expr_values
             names(fmt_expr_components) <- fmt_expr_names
-            fmt_expr_components <- fmt_expr_components[fmt_expr_names != ""]
+            fmt_expr_components <- fmt_expr_components[nzchar(fmt_expr_names)]
 
             if ("rows" %in% names(fmt_expr_components)) {
 
@@ -474,10 +469,10 @@ dt_summary_build <- function(data, context) {
         .by = dplyr::all_of(rowname_col_private)
       )
 
-    summary_df_display_list[[i]] <-
-      summary_df_display_list[[i]][
-        match(arrangement, summary_df_display_list[[i]][[rowname_col_private]]), ] %>%
-      replace(is.na(.), missing_text)
+    temp_df <- summary_df_display_list[[i]][
+      match(arrangement, summary_df_display_list[[i]][[rowname_col_private]]), ]
+
+    summary_df_display_list[[i]] <- replace(temp_df, is.na(temp_df), missing_text)
   }
 
   # Return a list of lists, each of which have summary data frames for

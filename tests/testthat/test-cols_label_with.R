@@ -26,14 +26,14 @@ test_that("cols_label_with() works correctly", {
 
   # Create the `tbl_html_1` object with `gt()` and label all of the columns
   tbl_html_1 <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_label(
       col_1 = "col_a",
       col_2 = "col_b"
-    ) %>%
+    ) |>
     cols_label_with(
       fn = ~ gsub(x = ., pattern = "3", replacement = "c")
-    )  %>%
+    )  |>
     cols_label_with(
       fn = function(x) gsub(x = x, pattern = "4", replacement = "d")
     )
@@ -46,35 +46,35 @@ test_that("cols_label_with() works correctly", {
   )
 
   # Expect that the column labels are set
-  tbl_html_1 %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
-    selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
+  tbl_html_1 |>
+    render_as_html() |>
+    xml2::read_html() |>
+    selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']") |>
     expect_equal(c("col_a", "col_b", "col_c", "col_d"))
 
   # Create the `tbl_html_2` object with `gt()` and label all of the columns with
   # multiple instances of labeling
   tbl_html_2 <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_label(
       col_1 = "col_a",
       col_2 = "col_b"
-    ) %>%
+    ) |>
     cols_label_with(
       fn = ~ gsub(x = ., pattern = "3", replacement = "c")
-    )  %>%
+    )  |>
     cols_label_with(
       fn = function(x) gsub(x = x, pattern = "4", replacement = "d")
-    ) %>%
+    ) |>
     cols_label_with(
       fn = ~ gsub(x = ., pattern = "c", replacement = "3")
-    )  %>%
+    )  |>
     cols_label_with(
       fn = function(x) gsub(x = x, pattern = "d", replacement = "4")
-    ) %>%
+    ) |>
     cols_label_with(
       fn = ~ gsub(x = ., pattern = "3", replacement = "c")
-    )  %>%
+    )  |>
     cols_label_with(
       fn = function(x) gsub(x = x, pattern = "4", replacement = "d")
     )
@@ -88,7 +88,7 @@ test_that("cols_label_with() works correctly", {
   # Create the `tbl_html_3` object with `gt()` and label none
   # of the columns (return their labels)
   tbl_html_3 <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_label_with(fn = function(x) x)
 
   # Expect the original column names for `tbl` as values for
@@ -106,22 +106,24 @@ test_that("cols_label_with() works correctly", {
   )
 
   # Expect that the column labels are set as the column names
-  tbl_html_3 %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
-    selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
-    expect_equal(c("col_1", "col_2", "col_3", "col_4"))
+  expect_equal(
+    tbl_html_3 |>
+      render_as_html() |>
+      xml2::read_html() |>
+      selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']"),
+    c("col_1", "col_2", "col_3", "col_4")
+  )
 
   # Create the `tbl_html_4` object and embolden a column label with a
   # double pass of:
   # (1) applying Markdown symbols through `paste0()`
   # (2) applying the `md()` helper function
   tbl_html_4 <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_label_with(
       columns = col_1,
       fn = ~ paste0("**", ., "**")
-    ) %>%
+    ) |>
     cols_label_with(
       columns = col_1,
       fn = md
@@ -129,16 +131,17 @@ test_that("cols_label_with() works correctly", {
 
   # Expect to find that rendered column label for `col_1` has the <strong>
   # tag applied
-  tbl_html_4 %>%
-    render_as_html() %>%
-    expect_match("<strong>col_1</strong>")
+  expect_match(
+     render_as_html(tbl_html_4),
+    "<strong>col_1</strong>"
+  )
 
   # Create the `tbl_html_5` object and embolden a column label with a
   # single pass of:
   # (1) applying Markdown symbols through `paste0()`
   # (2) applying the `md()` helper function
   tbl_html_5 <-
-    gt(tbl) %>%
+    gt(tbl) |>
     cols_label_with(
       columns = col_1,
       fn = ~ md(paste0("**", ., "**"))
@@ -156,88 +159,112 @@ test_that("cols_label_with() works correctly", {
   #
 
   towny_gt_tbl <-
-    towny %>%
-    dplyr::slice_max(population_2021, n = 5) %>%
-    dplyr::select(name, latitude, longitude, ends_with("2016"), ends_with("2021")) %>%
-    gt() %>%
-    tab_spanner(columns = starts_with("pop"), label = "Population") %>%
+    towny |>
+    dplyr::slice_max(population_2021, n = 5) |>
+    dplyr::select(name, latitude, longitude, ends_with("2016"), ends_with("2021")) |>
+    gt() |>
+    tab_spanner(columns = starts_with("pop"), label = "Population") |>
     tab_spanner(columns = starts_with("den"), label = "Density")
 
   expect_equal(
-    towny_gt_tbl %>%
+    towny_gt_tbl |>
       cols_label_with(
         fn = function(x) gsub(".*_(.*)", "\\1", x)
-      ) %>%
-      render_as_html() %>%
-      xml2::read_html() %>%
+      ) |>
+      render_as_html() |>
+      xml2::read_html() |>
       selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']"),
-    towny_gt_tbl %>%
+    towny_gt_tbl |>
       cols_label_with(
         columns = c(population_2016, population_2021, density_2016, density_2021),
         fn = function(x) gsub(".*_(.*)", "\\1", x)
-      ) %>%
-      render_as_html() %>%
-      xml2::read_html() %>%
+      ) |>
+      render_as_html() |>
+      xml2::read_html() |>
       selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']")
   )
 
   expect_equal(
-    towny_gt_tbl %>%
+    towny_gt_tbl |>
       cols_label_with(
         fn = function(x) gsub(".*_(.*)", "\\1", x)
-      ) %>%
-      render_as_html() %>%
-      xml2::read_html() %>%
+      ) |>
+      render_as_html() |>
+      xml2::read_html() |>
       selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']"),
-    towny_gt_tbl %>%
+    towny_gt_tbl |>
       cols_label_with(
         columns =  c(population_2016, density_2016, population_2021, density_2021),
         fn = function(x) gsub(".*_(.*)", "\\1", x)
-      ) %>%
-      render_as_html() %>%
-      xml2::read_html() %>%
+      ) |>
+      render_as_html() |>
+      xml2::read_html() |>
       selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']")
   )
 
   expect_equal(
-    towny_gt_tbl %>%
+    towny_gt_tbl |>
       cols_label_with(
         fn = function(x) gsub(".*_(.*)", "\\1", x)
-      ) %>%
-      render_as_html() %>%
-      xml2::read_html() %>%
+      ) |>
+      render_as_html() |>
+      xml2::read_html() |>
       selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']"),
-    towny_gt_tbl %>%
+    towny_gt_tbl |>
       cols_label_with(
         columns = c(starts_with("pop"), starts_with("den")),
         fn = function(x) gsub(".*_(.*)", "\\1", x)
-      ) %>%
-      render_as_html() %>%
-      xml2::read_html() %>%
+      ) |>
+      render_as_html() |>
+      xml2::read_html() |>
       selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']")
   )
 
   expect_equal(
-    towny_gt_tbl %>%
+    towny_gt_tbl |>
       cols_label_with(
         fn = function(x) gsub(".*_(.*)", "\\1", x)
-      ) %>%
-      render_as_html() %>%
-      xml2::read_html() %>%
+      ) |>
+      render_as_html() |>
+      xml2::read_html() |>
       selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']"),
-    towny_gt_tbl %>%
+    towny_gt_tbl |>
       cols_label_with(
         columns = c(starts_with("den"), starts_with("pop")),
         fn = function(x) gsub(".*_(.*)", "\\1", x)
-      ) %>%
-      render_as_html() %>%
-      xml2::read_html() %>%
+      ) |>
+      render_as_html() |>
+      xml2::read_html() |>
       selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']")
   )
 
   # Expect an error if `fn` is missing
-  expect_error(gt(tbl) %>% cols_label_with(fn = NULL))
+  expect_error(gt(tbl) |> cols_label_with(fn = NULL))
 
   # Expect an error if any columns declared are not present
-  expect_error(gt(tbl) %>% cols_label_with(columns = col_a, fn = function(x) "col_1"))
+  expect_error(gt(tbl) |> cols_label_with(columns = col_a, fn = function(x) "col_1"))
+})
+
+test_that("check cols_label_with is applied gt_group", {
+
+  # Create a `gt_group` object of two `gt_tbl`s
+  # create gt group example
+  gt_tbl <- gt(mtcars_short)
+  gt_group <- gt_group(gt_tbl, gt_tbl)
+
+  # apply label to table and group
+  label_gt_tbl <-
+    gt_tbl |>
+    cols_label_with(
+      fn = ~ gsub("a", "A", .)
+    )
+
+  label_gt_group <-
+    gt_group |>
+    cols_label_with(
+      fn = ~ gsub("a", "A", .)
+    )
+
+  # Expect identical if function applied before or after group is constructed
+  expect_identical(label_gt_group, gt_group(label_gt_tbl, label_gt_tbl))
 })

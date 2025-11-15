@@ -19,8 +19,8 @@ tbl <-
 
 # Create a display table
 sh_caption_tbl <-
-  tbl %>%
-  gt(groupname_col = "groups") %>%
+  tbl |>
+  gt(groupname_col = "groups") |>
   tab_stubhead(label = "groups")
 
 sh_caption_tbl

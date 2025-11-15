@@ -6,8 +6,9 @@
 \usage{
 gt(
   data,
-  rowname_col = "rowname",
+  rowname_col = NULL,
   groupname_col = dplyr::group_vars(data),
+  omit_na_group = FALSE,
   process_md = FALSE,
   caption = NULL,
   rownames_to_stub = FALSE,
@@ -25,12 +26,15 @@ gt(
 
 A \code{data.frame} object or a tibble (\code{tbl_df}).}
 
-\item{rowname_col}{\emph{Column for row names/labels from \code{data}}
+\item{rowname_col}{\emph{Column(s) for row names/labels from \code{data}}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-The column name in the input \code{data} table to use as row labels to be placed
-in the table stub. If the \code{rownames_to_stub} option is \code{TRUE} then any
+The column name(s) in the input \code{data} table to use as row labels to be
+placed in the table stub. If multiple column names are provided, they will
+create a hierarchical stub layout where values from the leftmost column form
+the highest level of the hierarchy, proceeding to individual row identifiers
+in the rightmost column. If the \code{rownames_to_stub} option is \code{TRUE} then any
 column name provided to \code{rowname_col} will be ignored.}
 
 \item{groupname_col}{\emph{Column for group names/labels from \code{data}}
@@ -41,6 +45,17 @@ The column name in the input \code{data} table to use as group labels for
 generation of row groups. If the input \code{data} table has the \code{grouped_df}
 class (through use of \code{\link[dplyr:group_by]{dplyr::group_by()}} or associated \verb{group_by*()}
 functions) then any input here is ignored.}
+
+\item{omit_na_group}{\emph{Omit rows with NA in \code{groupname_col} from grouping}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should rows with \code{NA} values in the \code{groupname_col} be excluded from row
+group assignment? By default (\code{FALSE}), rows with \code{NA} in \code{groupname_col}
+will be assigned to a group called \code{"NA"}. When set to \code{TRUE}, rows with
+\code{NA} values will appear as ungrouped rows in the table body. This is useful
+when you want to include header or separator rows that shouldn't belong to
+any row group.}
 
 \item{process_md}{\emph{Process Markdown in \code{rowname_col} and \code{groupname_col}}
 

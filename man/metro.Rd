@@ -5,7 +5,7 @@
 \alias{metro}
 \title{The stations of the Paris Metro}
 \format{
-A tibble with 320 rows and 11 variables:
+A tibble with 321 rows and 11 variables:
 \describe{
 \item{name}{The name of the station.}
 \item{caption}{In some cases, a station will have a caption that might
@@ -38,7 +38,7 @@ show \code{NA} values.}
 metro
 }
 \description{
-A dataset with information on all 320 Paris Metro stations as of June 2024.
+A dataset with information on all 321 Paris Metro stations as of August 2025.
 Each record represents a station, describing which Metro lines are serviced
 by the station, which other connections are available, and annual passenger
 volumes. Basic location information is provided for each station in terms

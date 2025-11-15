@@ -1,21 +1,21 @@
 # Create a table based on `sp500`, with group names, rownames,
 # and four columns of values
 tbl <-
-  sp500 %>%
+  sp500 |>
   dplyr::filter(
     date >= "2015-01-05",
     date <= "2015-01-16"
-  ) %>%
-  dplyr::arrange(date) %>%
+  ) |>
+  dplyr::arrange(date) |>
   dplyr::mutate(
     week = paste0(
       "W", strftime(date, format = "%V"))
-  ) %>%
-  dplyr::select(-adj_close, -volume) %>%
+  ) |>
+  dplyr::select(-adj_close, -volume) |>
   gt(
     rowname_col = "date",
     groupname_col = "week"
-  ) %>%
+  ) |>
   tab_options(latex.use_longtable = TRUE)
 
 test_that("summary_rows() can make group-wise summaries", {
@@ -24,7 +24,7 @@ test_that("summary_rows() can make group-wise summaries", {
   # the 3 summary rows for this group represent the mean, sum,
   # and standard deviation of all numeric columns
   gt_tbl <-
-    tbl %>%
+    tbl |>
     summary_rows(
       groups = "W02",
       columns = c(open, high, low, close),
@@ -56,7 +56,7 @@ test_that("summary_rows() can make group-wise summaries", {
   # the 3 summary rows for this group represent the mean, sum,
   # and standard deviation of only the `open` column
   gt_tbl <-
-    tbl %>%
+    tbl |>
     summary_rows(
       groups = "W02",
       columns = open,
@@ -80,18 +80,18 @@ test_that("summary_rows() can make group-wise summaries", {
   expect_equal(summary[[1]]$columns, "open")
 
   # Expect that `summary[[1]]$fns` is a `list` object
-  expect_type(summary[[1]]$fns , "list")
+  expect_type(summary[[1]]$fns, "list")
 
   # Expect that the components of `summary[[1]]$fns` are lists
   expect_type(summary[[1]]$fns$average, "list")
-  expect_type(summary[[1]]$fns$total , "list")
+  expect_type(summary[[1]]$fns$total, "list")
   expect_type(summary[[1]]$fns$`std dev`, "list")
 
   # Create a table with summary rows for the `W02` and `W03`
   # groups; the 3 summary rows for these groups represent the mean,
   # sum, and standard deviation of only the `open` column
   gt_tbl <-
-    tbl %>%
+    tbl |>
     summary_rows(
       groups = c("W02", "W03"),
       columns = open,
@@ -116,14 +116,14 @@ test_that("summary_rows() can make group-wise summaries", {
 
   # Expect that the components of `summary[[1]]$fns` are lists
   expect_type(summary[[1]]$fns$average , "list")
-  expect_type(summary[[1]]$fns$total , "list")
+  expect_type(summary[[1]]$fns$total, "list")
   expect_type(summary[[1]]$fns$`std dev`, "list")
 
   # Create a table with summary rows for the `W02` and `W03`
   # groups; the 3 summary rows for these groups represent the mean,
   # sum, and standard deviation of only the `open` column
   gt_tbl <-
-    tbl %>%
+    tbl |>
     summary_rows(
       groups = everything(),
       columns = open,
@@ -147,14 +147,14 @@ test_that("summary_rows() can make group-wise summaries", {
   expect_equal(summary[[1]]$columns, "open")
 
   # Expect that the components of `summary[[1]]$fns` are lists
-  expect_type(summary[[1]]$fns$average , "list")
+  expect_type(summary[[1]]$fns$average, "list")
   expect_type(summary[[1]]$fns$total, "list")
-  expect_type(summary[[1]]$fns$`std dev` , "list")
+  expect_type(summary[[1]]$fns$`std dev`, "list")
 
   # Create a table with two sets of summary rows for all groups
   # and all columns
   gt_tbl <-
-    tbl %>%
+    tbl |>
     summary_rows(
       groups = everything(),
       columns = c(open, high, low, close),
@@ -163,7 +163,7 @@ test_that("summary_rows() can make group-wise summaries", {
         total = ~ sum(., na.rm = TRUE),
         `std dev` = ~ sd(., na.rm = TRUE)
       )
-    ) %>%
+    ) |>
     summary_rows(
       groups = everything(),
       columns = c(open, high, low, close),
@@ -198,7 +198,7 @@ test_that("summary_rows() can make group-wise summaries", {
   # Create a table with two sets of summary rows for all groups
   # and all columns
   gt_tbl <-
-    tbl %>%
+    tbl |>
     summary_rows(
       groups = everything(),
       columns = c(open, high),
@@ -207,7 +207,7 @@ test_that("summary_rows() can make group-wise summaries", {
         total = ~ sum(., na.rm = TRUE),
         `std dev` = ~ sd(., na.rm = TRUE)
       )
-    ) %>%
+    ) |>
     summary_rows(
       groups = everything(),
       columns = c(low, close),
@@ -248,7 +248,7 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
   # Create a table with a grand summary; the 3 summary rows for represent
   # the mean, sum, and standard deviation of all numeric columns
   gt_tbl <-
-    tbl %>%
+    tbl |>
     grand_summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -278,7 +278,7 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
   # the mean, sum, and standard deviation of all numeric columns; split
   # into 2 calls that allow for different formatting options
   gt_tbl <-
-    tbl %>%
+    tbl |>
     grand_summary_rows(
       columns = c(open, high),
       fns = list(
@@ -287,7 +287,7 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
         `std dev` = ~ sd(., na.rm = TRUE)
       ),
       fmt = list(~ fmt_number(., decimals = 3))
-    ) %>%
+    ) |>
     grand_summary_rows(
       columns = c(low, close),
       fns = list(
@@ -329,7 +329,7 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
   # summary rows represent the mean, sum, and standard deviation of
   # all numeric columns
   gt_tbl <-
-    tbl %>%
+    tbl |>
     summary_rows(
       groups = everything(),
       columns = c(open, high, low, close),
@@ -338,7 +338,7 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
         total = ~ sum(., na.rm = TRUE),
         `std dev` = ~ sd(., na.rm = TRUE)
       )
-    ) %>%
+    ) |>
     grand_summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -382,7 +382,7 @@ test_that("Using `groups = FALSE` in `summary_rows()` returns data unchanged", {
   # creates no summary rows
   expect_equal_gt(
     tbl,
-    tbl %>%
+    tbl |>
       summary_rows(
         groups = FALSE,
         columns = c(open, high, low, close),
@@ -398,10 +398,11 @@ test_that("Using `groups = FALSE` in `summary_rows()` returns data unchanged", {
 })
 
 test_that("summary_rows() informs to use grand_summary_rows() if no groups are present (#1292).", {
+
   expect_snapshot(error = TRUE,
-    mtcars_short %>%
-      dplyr::select(gear) %>%
-      gt::gt(rownames_to_stub = TRUE) %>%
+    mtcars_short |>
+      dplyr::select(gear) |>
+      gt::gt(rownames_to_stub = TRUE) |>
       gt::summary_rows(fns = "sum")
   )
 })
@@ -411,7 +412,7 @@ test_that("Using `groups = NULL` in `summary_rows()` is a deprecated option", {
 
   expect_warning(
     summary_tbl_1 <-
-      tbl %>%
+      tbl |>
       summary_rows(
         groups = NULL,
         columns = open,
@@ -431,7 +432,7 @@ test_that("Using `groups = NULL` in `summary_rows()` is a deprecated option", {
   # The equivalent of `summary_tbl_1` (and the non-deprecated way) is to
   # use `grand_summary_rows()` to make a grand summary
   summary_tbl_2 <-
-    tbl %>%
+    tbl |>
     grand_summary_rows(
       columns = open,
       fns = list(
@@ -449,7 +450,7 @@ test_that("Summary rows can be added to the top of any group", {
   # Create summary rows for the first group only and place the summary
   # at the top of the group
   summary_tbl_1 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       groups = "W02",
       fns = list(
@@ -464,13 +465,12 @@ test_that("Summary rows can be added to the top of any group", {
   # Take snapshots of `summary_tbl_1`
   expect_snapshot_html(summary_tbl_1)
   expect_snapshot_latex(summary_tbl_1)
-  # expect_snapshot_rtf(summary_tbl_1)
 
   # Create summary rows for the first group only, place the summary
   # at the top of the group, and place the group label into it's own
   # column in the LHS of stub
   summary_tbl_2 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       groups = "W02",
       fns = list(
@@ -480,19 +480,18 @@ test_that("Summary rows can be added to the top of any group", {
       ),
       fmt = ~ fmt_number(., use_seps = FALSE),
       side = "top"
-    ) %>%
+    ) |>
     tab_options(row_group.as_column = TRUE)
 
   # Take snapshots of `summary_tbl_2`
   expect_snapshot_html(summary_tbl_2)
   expect_snapshot_latex(summary_tbl_2)
-  # expect_snapshot_rtf(summary_tbl_2)
 
   # Create summary rows for the first and second groups in separate calls such
   # that the placement is at the top in the first group and at the bottom in
   # the second
   summary_tbl_3 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       groups = "W02",
       fns = list(
@@ -502,7 +501,7 @@ test_that("Summary rows can be added to the top of any group", {
       ),
       fmt = ~ fmt_number(., use_seps = FALSE),
       side = "top"
-    ) %>%
+    ) |>
     summary_rows(
       groups = "W03",
       fns = list(
@@ -517,13 +516,12 @@ test_that("Summary rows can be added to the top of any group", {
   # Take snapshots of `summary_tbl_3`
   expect_snapshot_html(summary_tbl_3)
   expect_snapshot_latex(summary_tbl_3)
-  # expect_snapshot_rtf(summary_tbl_3)
 
   # Create summary rows for the first and second groups in separate calls such
   # that the placement is at the top in the first group and at the bottom in
   # the second; place the group label into it's own column in the LHS of stub
   summary_tbl_4 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       groups = "W02",
       fns = list(
@@ -533,7 +531,7 @@ test_that("Summary rows can be added to the top of any group", {
       ),
       fmt = ~ fmt_number(., use_seps = FALSE),
       side = "top"
-    ) %>%
+    ) |>
     summary_rows(
       groups = "W03",
       fns = list(
@@ -543,20 +541,19 @@ test_that("Summary rows can be added to the top of any group", {
       ),
       fmt = ~ fmt_number(., use_seps = FALSE),
       side = "bottom"
-    ) %>%
+    ) |>
     tab_options(row_group.as_column = TRUE)
 
   # Take snapshots of `summary_tbl_4`
   expect_snapshot_html(summary_tbl_4)
   expect_snapshot_latex(summary_tbl_4)
-  # expect_snapshot_rtf(summary_tbl_4)
 })
 
 test_that("Grand summary rows can be added to the top of a table", {
 
   # Create grand summary rows and place them at the top of the table
   summary_tbl_1 <-
-    tbl %>%
+    tbl |>
     grand_summary_rows(
       fns = list(
         "min",
@@ -570,12 +567,11 @@ test_that("Grand summary rows can be added to the top of a table", {
   # Take snapshots of `summary_tbl_1`
   expect_snapshot_html(summary_tbl_1)
   expect_snapshot_latex(summary_tbl_1)
-  # expect_snapshot_rtf(summary_tbl_1)
 
   # Create grand summary rows and place them at the top of the table; put
   # the group label into it's own column in the LHS of stub
   summary_tbl_2 <-
-    tbl %>%
+    tbl |>
     grand_summary_rows(
       fns = list(
         "min",
@@ -584,13 +580,12 @@ test_that("Grand summary rows can be added to the top of a table", {
       ),
       fmt = ~ fmt_number(., use_seps = FALSE),
       side = "top"
-    ) %>%
+    ) |>
     tab_options(row_group.as_column = TRUE)
 
   # Take snapshots of `summary_tbl_2`
   expect_snapshot_html(summary_tbl_2)
   expect_snapshot_latex(summary_tbl_2)
-  # expect_snapshot_rtf(summary_tbl_2)
 })
 
 test_that("The ordering of groups shouldn't affect group/grand summary calcs", {
@@ -604,93 +599,93 @@ test_that("The ordering of groups shouldn't affect group/grand summary calcs", {
     )
 
   tbl_2 <-
-    tbl_1 %>%
+    tbl_1 |>
     dplyr::slice(6, 3, 5, 1, 4, 2)
 
   tbl_3 <-
-    tbl_2 %>%
+    tbl_2 |>
     dplyr::arrange(group, id)
 
   # Prepare a set gt tables with summary rows (using the same
   # `summary_rows()` call each time)
   gt_tbl_1 <-
-    tbl_1 %>%
-    dplyr::group_by(group) %>%
-    gt(rowname_col = "id") %>%
+    tbl_1 |>
+    dplyr::group_by(group) |>
+    gt(rowname_col = "id") |>
     summary_rows(groups = everything(), columns = value, fns = list("sum"))
 
   gt_tbl_1b <-
-    tbl_1 %>%
-    gt(rowname_col = "id", groupname_col = "group") %>%
+    tbl_1 |>
+    gt(rowname_col = "id", groupname_col = "group") |>
     summary_rows(groups = everything(), columns = value, fns = list("sum"))
 
   gt_tbl_2 <-
-    tbl_2 %>%
-    gt(rowname_col = "id", groupname_col = "group") %>%
+    tbl_2 |>
+    gt(rowname_col = "id", groupname_col = "group") |>
     summary_rows(groups = everything(), columns = value, fns = list("sum"))
 
   gt_tbl_3 <-
-    tbl_3 %>%
-    gt(rowname_col = "id", groupname_col = "group") %>%
+    tbl_3 |>
+    gt(rowname_col = "id", groupname_col = "group") |>
     summary_rows(groups = everything(), columns = value, fns = list("sum"))
 
   # Expect the correct values in summary rows of `gt_tbl`
-  gt_tbl_1 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
+  gt_tbl_1 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") |>
     expect_equal(c("3", "20", "99"))
 
   # Expect the HTML output tables of `gt_tbl_1` and `gt_tbl_1b` to be the same
   expect_equal_gt(gt_tbl_1, gt_tbl_1b)
 
   # Expect the correct values in summary rows of `gt_tbl_2`
-  gt_tbl_2 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
+  gt_tbl_2 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") |>
     expect_equal(c("3", "99", "20"))
 
   # Expect the correct values in summary rows of `gt_tbl_3`
-  gt_tbl_3 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
+  gt_tbl_3 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") |>
     expect_equal(c("20", "3", "99"))
 
   # Prepare a set gt tables with a grand summary (using the same
   # `grand_summary_rows()` call each time)
   gt_tbl_1_gs <-
-    tbl_1 %>%
-    dplyr::group_by(group) %>%
-    gt(rowname_col = "id") %>%
+    tbl_1 |>
+    dplyr::group_by(group) |>
+    gt(rowname_col = "id") |>
     grand_summary_rows(columns = value, fns = list("sum"))
 
   gt_tbl_1b_gs <-
-    tbl_1 %>%
-    gt(rowname_col = "id", groupname_col = "group") %>%
+    tbl_1 |>
+    gt(rowname_col = "id", groupname_col = "group") |>
     grand_summary_rows(columns = value, fns = list("sum"))
 
   gt_tbl_2_gs <-
-    tbl_2 %>%
-    gt(rowname_col = "id", groupname_col = "group") %>%
+    tbl_2 |>
+    gt(rowname_col = "id", groupname_col = "group") |>
     grand_summary_rows(columns = value, fns = list("sum"))
 
   gt_tbl_3_gs <-
-    tbl_3 %>%
-    gt(rowname_col = "id", groupname_col = "group") %>%
+    tbl_3 |>
+    gt(rowname_col = "id", groupname_col = "group") |>
     grand_summary_rows(columns = value, fns = list("sum"))
 
   # Expect the correct value in the grand summary row of `gt_tbl_gs`
-  gt_tbl_1_gs %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") %>%
+  gt_tbl_1_gs |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") |>
     expect_equal(c("122"))
 
   # Expect the HTML output tables of `gt_tbl_gs` and `gt_tbl_1b_gs` to be the same
   expect_equal_gt(gt_tbl_1_gs, gt_tbl_1b_gs)
 
   # Expect the correct value in the grand summary row of `gt_tbl_2_gs`
-  gt_tbl_2_gs %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") %>%
+  gt_tbl_2_gs |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") |>
     expect_equal(c("122"))
 
   # Expect the correct value in the grand summary row of `gt_tbl_3_gs`
-  gt_tbl_3_gs %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") %>%
+  gt_tbl_3_gs |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") |>
     expect_equal(c("122"))
 
   # Example where a columns is named `columns`
@@ -703,38 +698,38 @@ test_that("The ordering of groups shouldn't affect group/grand summary calcs", {
     )
 
   gt_tbl_4 <-
-    tbl_4 %>%
-    dplyr::group_by(group) %>%
-    gt(rowname_col = "id") %>%
-    summary_rows(groups = everything(), columns = c(value, columns), fns = list("sum")) %>%
+    tbl_4 |>
+    dplyr::group_by(group) |>
+    gt(rowname_col = "id") |>
+    summary_rows(groups = everything(), columns = c(value, columns), fns = list("sum")) |>
     grand_summary_rows(columns = c(value, columns), fns = list("sum"))
 
   # Expect the correct values in summary rows of `gt_tbl_4`
-  gt_tbl_4 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
+  gt_tbl_4 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") |>
     expect_equal(c("3", "6", "20", "40", "99", "198"))
 
   # Expect the correct values in the grand summary row of `gt_tbl_4`
-  gt_tbl_4 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") %>%
+  gt_tbl_4 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") |>
     expect_equal(c("122", "244"))
 
   gt_tbl_5 <-
-    tbl_4 %>%
-    dplyr::rename(grand_summary_col = columns) %>%
-    dplyr::group_by(group) %>%
-    gt(rowname_col = "id") %>%
-    summary_rows(groups = everything(), columns = c(value, grand_summary_col), fns = list("sum")) %>%
+    tbl_4 |>
+    dplyr::rename(grand_summary_col = columns) |>
+    dplyr::group_by(group) |>
+    gt(rowname_col = "id") |>
+    summary_rows(groups = everything(), columns = c(value, grand_summary_col), fns = list("sum")) |>
     grand_summary_rows(columns = c(value, grand_summary_col), fns = list("sum"))
 
   # Expect the correct values in summary rows of `gt_tbl_4`
-  gt_tbl_5 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
+  gt_tbl_5 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") |>
     expect_equal(c("3", "6", "20", "40", "99", "198"))
 
   # Expect the correct values in the grand summary row of `gt_tbl_4`
-  gt_tbl_5 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") %>%
+  gt_tbl_5 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") |>
     expect_equal(c("122", "244"))
 })
 
@@ -750,8 +745,8 @@ test_that("Summary cells can be created with NA/NaN-resulting values", {
 
   # Create a gt table with summary rows
   gt_tbl_1 <-
-    na_tbl %>%
-    gt(groupname_col = "group") %>%
+    na_tbl |>
+    gt(groupname_col = "group") |>
     summary_rows(
       groups = c("one", "two"),
       columns = c(na_1, na_2),
@@ -763,18 +758,18 @@ test_that("Summary cells can be created with NA/NaN-resulting values", {
 
   # Expect the correct values in all of the first and second
   # summary rows of `gt_tbl_1`
-  gt_tbl_1 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") %>%
+  gt_tbl_1 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") |>
     expect_equal(rep("0", 4))
 
-  gt_tbl_1 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_last_summary_row']") %>%
+  gt_tbl_1 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_summary_row gt_last_summary_row']") |>
     expect_equal(rep("—", 4))
 
   # Create a gt table with grand summary rows
   gt_tbl_2 <-
-    na_tbl %>%
-    gt(groupname_col = "group") %>%
+    na_tbl |>
+    gt(groupname_col = "group") |>
     grand_summary_rows(
       columns = c(na_1, na_2),
       fns = list(
@@ -785,19 +780,19 @@ test_that("Summary cells can be created with NA/NaN-resulting values", {
 
   # Expect the correct values in all of the first and second
   # grand summary rows of `gt_tbl_2`
-  gt_tbl_2 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row']") %>%
+  gt_tbl_2 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row']") |>
     expect_equal(rep("0", 2))
 
-  gt_tbl_2 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_last_summary_row']") %>%
+  gt_tbl_2 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_last_summary_row']") |>
     expect_equal(rep("—", 2))
 
   # Create a gt table with grand summary rows, replacing missing
   # values with the word "nil"
   gt_tbl_3 <-
-    na_tbl %>%
-    gt(groupname_col = "group") %>%
+    na_tbl |>
+    gt(groupname_col = "group") |>
     grand_summary_rows(
       columns = c(na_1, na_2),
       fns = list(
@@ -809,8 +804,8 @@ test_that("Summary cells can be created with NA/NaN-resulting values", {
 
   # Expect to see the `missing_text` values in all of the second
   # grand summary rows of `gt_tbl_3`
-  gt_tbl_3 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_last_summary_row']") %>%
+  gt_tbl_3 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_last_summary_row']") |>
     expect_equal(rep("nil", 2))
 })
 
@@ -819,17 +814,17 @@ test_that("Summary rows can be created when there is no stub", {
   # Create a table based on `sp500`, with
   # four columns of values
   tbl_2 <-
-    sp500 %>%
-    dplyr::filter(date >= "2015-01-05", date <= "2015-01-09") %>%
-    dplyr::arrange(date) %>%
-    dplyr::select(-adj_close, -volume) %>%
+    sp500 |>
+    dplyr::filter(date >= "2015-01-05", date <= "2015-01-09") |>
+    dplyr::arrange(date) |>
+    dplyr::select(-adj_close, -volume) |>
     gt()
 
   # Create a gt table with a grand summary;
   # the table doesn't have a stub (and there
   # are no row groups)
   gt_tbl <-
-    tbl_2 %>%
+    tbl_2 |>
     grand_summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -852,7 +847,7 @@ test_that("Summary row labels are added in narrow and wide tables", {
   tbl <-
     dplyr::tibble(
       groups = c(rep("one", 5), rep("two", 5)),
-      rows = 1:10 %>% as.character(),
+      rows = 1:10 |> as.character(),
       a = 1:10,
       b = 11:20,
       c = 21:30,
@@ -877,9 +872,9 @@ test_that("Summary row labels are added in narrow and wide tables", {
 
   # Generate a narrow gt table (4 columns)
   narrow_gt_tbl <-
-    tbl %>%
-    dplyr::select(c("groups", "rows", letters[1:4])) %>%
-    gt(rowname_col = "rows", groupname_col = "groups") %>%
+    tbl |>
+    dplyr::select(c("groups", "rows", letters[1:4])) |>
+    gt(rowname_col = "rows", groupname_col = "groups") |>
     summary_rows(
       groups = "one",
       columns = letters[1:4],
@@ -887,22 +882,22 @@ test_that("Summary row labels are added in narrow and wide tables", {
         the_sum = ~sum(.),
         mean = ~mean(.)
       )
-    ) %>%
+    ) |>
     grand_summary_rows(
       columns = letters[1:4],
       fns = list(
         the_sum = ~sum(.),
         mean = ~mean(.)
       )
-    ) %>%
+    ) |>
     tab_header(
       title = "The Table Title",
       subtitle = "The Table Subtitle"
-    ) %>%
+    ) |>
     tab_style(
       style = cell_text(align = "left"),
       locations = cells_title(groups = "title")
-    ) %>%
+    ) |>
     tab_style(
       style = cell_text(align = "left"),
       locations = cells_title(groups = "subtitle")
@@ -910,9 +905,9 @@ test_that("Summary row labels are added in narrow and wide tables", {
 
   # Generate a wide gt table (20 columns)
   wide_gt_tbl <-
-    tbl %>%
-    dplyr::select(c("groups", "rows", letters[1:(ncol(tbl) - 2)])) %>%
-    gt(rowname_col = "rows", groupname_col = "groups") %>%
+    tbl |>
+    dplyr::select(c("groups", "rows", letters[1:(ncol(tbl) - 2)])) |>
+    gt(rowname_col = "rows", groupname_col = "groups") |>
     summary_rows(
       groups = "one",
       columns = letters[1:(ncol(tbl) - 2)],
@@ -920,22 +915,22 @@ test_that("Summary row labels are added in narrow and wide tables", {
         the_sum = ~sum(.),
         mean = ~mean(.)
       )
-    ) %>%
+    ) |>
     grand_summary_rows(
       columns = letters[1:(ncol(tbl) - 2)],
       fns = list(
         the_sum = ~sum(.),
         mean = ~mean(.)
       )
-    ) %>%
+    ) |>
     tab_header(
       title = "The Table Title",
       subtitle = "The Table Subtitle"
-    ) %>%
+    ) |>
     tab_style(
       style = cell_text(align = "left"),
       locations = cells_title(groups = "title")
-    ) %>%
+    ) |>
     tab_style(
       style = cell_text(align = "left"),
       locations = cells_title(groups = "subtitle")
@@ -944,7 +939,7 @@ test_that("Summary row labels are added in narrow and wide tables", {
   # Expect that the row labels for the group-wise and grand summaries in
   # both tables have `"the_sum"` and `"mean"`
   expect_match(
-    narrow_gt_tbl %>%
+    narrow_gt_tbl |>
       as_raw_html(inline_css = FALSE),
     paste0(
       "<th id=\"summary_stub_one_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">the_sum</th>.*?",
@@ -955,7 +950,7 @@ test_that("Summary row labels are added in narrow and wide tables", {
   )
 
   expect_match(
-    wide_gt_tbl %>%
+    wide_gt_tbl |>
       as_raw_html(inline_css = FALSE),
     paste0(
       "<th id=\"summary_stub_one_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">the_sum</th>.*?",
@@ -972,7 +967,7 @@ test_that("Multiple ways of expressing formatting work equivalently", {
 
   expect_warning(
     gt_tbl_1 <-
-      tbl %>%
+      tbl |>
       summary_rows(
         groups = "W02",
         columns = c(open, high, low, close),
@@ -987,7 +982,7 @@ test_that("Multiple ways of expressing formatting work equivalently", {
   )
 
   gt_tbl_2 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       groups = "W02",
       columns = c(open, high, low, close),
@@ -1000,7 +995,7 @@ test_that("Multiple ways of expressing formatting work equivalently", {
     )
 
   gt_tbl_3 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       groups = "W02",
       columns = c(open, high, low, close),
@@ -1019,7 +1014,7 @@ test_that("Multiple ways of expressing formatting work equivalently", {
 test_that("Labels can be intrepreted from Markdown using `md()`", {
 
   summary_tbl_1 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       groups = "W02",
       columns = c(open, high, low, close),
@@ -1036,7 +1031,7 @@ test_that("Labels can be intrepreted from Markdown using `md()`", {
   expect_snapshot_rtf(summary_tbl_1)
 
   summary_tbl_2 <-
-    tbl %>%
+    tbl |>
     grand_summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1055,7 +1050,7 @@ test_that("Labels can be intrepreted from Markdown using `md()`", {
 test_that("Groups can be formatted selectively with a formatting group directive", {
 
   summary_tbl_1 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1072,7 +1067,7 @@ test_that("Groups can be formatted selectively with a formatting group directive
   expect_snapshot_rtf(summary_tbl_1)
 
   summary_tbl_2 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1094,7 +1089,7 @@ test_that("Groups can be formatted selectively with a formatting group directive
   # These summary tables should all be the same (using different ways to
   # express the same formatting)
   summary_tbl_3 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -1106,7 +1101,7 @@ test_that("Groups can be formatted selectively with a formatting group directive
       )
     )
   summary_tbl_4 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -1118,7 +1113,7 @@ test_that("Groups can be formatted selectively with a formatting group directive
       )
     )
   summary_tbl_5 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -1128,7 +1123,7 @@ test_that("Groups can be formatted selectively with a formatting group directive
       fmt = ~ fmt_currency(.)              # not using LHS group specification
     )
   summary_tbl_6 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -1140,7 +1135,7 @@ test_that("Groups can be formatted selectively with a formatting group directive
       )                                    # and wrapping in a list
     )
   summary_tbl_7 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -1150,7 +1145,7 @@ test_that("Groups can be formatted selectively with a formatting group directive
       fmt = everything() ~ fmt_currency(.) # specifying all groups with `everything()`
     )
   summary_tbl_8 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -1163,7 +1158,7 @@ test_that("Groups can be formatted selectively with a formatting group directive
       )
     )
   summary_tbl_9 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -1194,7 +1189,7 @@ test_that("Groups can be formatted selectively with a formatting group directive
   # express the same formatting for grand summary rows); importantly, any
   # group directive given in the LHS of the formula expressions is ignored
   summary_tbl_10 <-
-    tbl %>%
+    tbl |>
     grand_summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1204,8 +1199,9 @@ test_that("Groups can be formatted selectively with a formatting group directive
       ),
       fmt = "group" ~ fmt_number(., decimals = 3)
     )
+
   summary_tbl_11 <-
-    tbl %>%
+    tbl |>
     grand_summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1215,8 +1211,9 @@ test_that("Groups can be formatted selectively with a formatting group directive
       ),
       fmt = ~ fmt_number(., decimals = 3)
     )
+
   summary_tbl_12 <-
-    tbl %>%
+    tbl |>
     grand_summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1226,8 +1223,9 @@ test_that("Groups can be formatted selectively with a formatting group directive
       ),
       fmt = "W03" ~ fmt_number(., decimals = 3)
     )
+
   summary_tbl_13 <-
-    tbl %>%
+    tbl |>
     grand_summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1253,7 +1251,7 @@ test_that("Formatting can be performed on summary cells in certain columns and r
 
   # Perform formatting in selected columns
   summary_tbl_1 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1271,7 +1269,7 @@ test_that("Formatting can be performed on summary cells in certain columns and r
 
   # Perform formatting twice across two sets of distinct columns
   summary_tbl_2 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1292,7 +1290,7 @@ test_that("Formatting can be performed on summary cells in certain columns and r
 
   # Perform formatting across two sets of distinct columns and rows
   summary_tbl_3 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1313,7 +1311,7 @@ test_that("Formatting can be performed on summary cells in certain columns and r
 
   # Perform formatting at a single cell (targeting column, row, and group)
   summary_tbl_4 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1333,7 +1331,7 @@ test_that("Formatting can be performed on summary cells in certain columns and r
 
   # Perform formatting at two cells (targeting a column, two rows, and a group)
   summary_tbl_5 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1353,7 +1351,7 @@ test_that("Formatting can be performed on summary cells in certain columns and r
 
   # Perform formatting at a single column of a single group
   summary_tbl_6 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1373,7 +1371,7 @@ test_that("Formatting can be performed on summary cells in certain columns and r
 
   # Perform formatting at two columns of a single group
   summary_tbl_7 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1394,7 +1392,7 @@ test_that("Formatting can be performed on summary cells in certain columns and r
   # Perform the same summarizing as in `summary_tbl_5` except place the
   # `rows` argument at the end of the expression
   summary_tbl_8 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1411,7 +1409,7 @@ test_that("Formatting can be performed on summary cells in certain columns and r
 
   # Perform formatting at two columns of both groups
   summary_tbl_9 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1424,7 +1422,7 @@ test_that("Formatting can be performed on summary cells in certain columns and r
       )
     )
   summary_tbl_10 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1437,7 +1435,7 @@ test_that("Formatting can be performed on summary cells in certain columns and r
       )
     )
   summary_tbl_11 <-
-    tbl %>%
+    tbl |>
     summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1462,7 +1460,7 @@ test_that("Extracting a summary from a gt table is possible", {
   # deviation of all numeric columns; extract
   # the internal summary with `extract_summary()`
   gt_tbl_summary_groupwise <-
-    tbl %>%
+    tbl |>
     summary_rows(
       groups = c("W02", "W03"),
       columns = c(open, high, low, close),
@@ -1471,7 +1469,7 @@ test_that("Extracting a summary from a gt table is possible", {
         total = ~sum(., na.rm = TRUE),
         `std dev` = ~sd(., na.rm = TRUE)
       )
-    ) %>%
+    ) |>
     extract_summary()
 
   # Expect that the summary object is a list
@@ -1549,7 +1547,7 @@ test_that("Extracting a summary from a gt table is possible", {
   # standard deviation of all numeric columns;
   # extract the internal summary with `extract_summary()`
   gt_tbl_summary_grand <-
-    tbl %>%
+    tbl |>
     grand_summary_rows(
       columns = c(open, high, low, close),
       fns = list(
@@ -1557,7 +1555,7 @@ test_that("Extracting a summary from a gt table is possible", {
         total = ~sum(., na.rm = TRUE),
         `std dev` = ~sd(., na.rm = TRUE)
       )
-    ) %>%
+    ) |>
     extract_summary()
 
   # Expect that the summary object is a list
@@ -1608,18 +1606,18 @@ test_that("Creating summary rows works for hidden columns", {
   # columns of values; hide the 'open and
   # 'low' columns
   tbl <-
-    sp500 %>%
-    dplyr::filter(date >= "2015-01-05", date <= "2015-01-16") %>%
-    dplyr::arrange(date) %>%
+    sp500 |>
+    dplyr::filter(date >= "2015-01-05", date <= "2015-01-16") |>
+    dplyr::arrange(date) |>
     dplyr::mutate(
       week = paste0(
         "W", strftime(date, format = "%V"))
-    ) %>%
-    dplyr::select(-adj_close, -volume) %>%
+    ) |>
+    dplyr::select(-adj_close, -volume) |>
     gt(
       rowname_col = "date",
       groupname_col = "week"
-    ) %>%
+    ) |>
     cols_hide(columns = c(open, low))
 
   # Extend the gt table with summary rows for
@@ -1628,7 +1626,7 @@ test_that("Creating summary rows works for hidden columns", {
   # columns
   expect_no_error(
     gt_tbl <-
-      tbl %>%
+      tbl |>
       summary_rows(
         groups = "W02",
         columns = c(open, high, low, close),
@@ -1683,9 +1681,9 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   # The most basic table where rowname exists as a column; by default
   # a `"rowname"` column is used as the stub
   summary_tbl_1 <-
-    exibble %>%
-    dplyr::rename(rowname = row) %>%
-    gt() %>%
+    exibble |>
+    dplyr::rename(rowname = row) |>
+    gt() |>
     grand_summary_rows(
       columns = c(num, currency),
       fns = list(
@@ -1694,7 +1692,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
         avg = ~mean(., na.rm = TRUE)
       ),
       fmt = list( ~ fmt_number(.))
-    ) %>%
+    ) |>
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `summary_tbl_1`
@@ -1706,9 +1704,9 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   # `"rowname"` col won't be used as the stub; it exists as a visible column
   # and the stub is empty except for the grand summary labels
   summary_tbl_2 <-
-    exibble %>%
-    dplyr::rename(rowname = row) %>%
-    gt(rowname_col = NULL) %>%
+    exibble |>
+    dplyr::rename(rowname = row) |>
+    gt(rowname_col = NULL) |>
     grand_summary_rows(
       columns = c(num, currency),
       fns = list(
@@ -1717,7 +1715,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
         avg = ~mean(., na.rm = TRUE)
       ),
       fmt = list( ~ fmt_number(.))
-    ) %>%
+    ) |>
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `summary_tbl_2`
@@ -1731,9 +1729,9 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   # `summary_rows()` here because of the groupings) and the grand summary
   # row labels
   summary_tbl_3 <-
-    exibble %>%
-    dplyr::rename(rowname = row) %>%
-    gt(rowname_col = NULL, groupname_col = "group") %>%
+    exibble |>
+    dplyr::rename(rowname = row) |>
+    gt(rowname_col = NULL, groupname_col = "group") |>
     summary_rows(
       columns = c(num, currency),
       groups = c("grp_a", "grp_b"),
@@ -1741,7 +1739,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
         median = ~median(., na.rm = TRUE)
       ),
       fmt = list( ~ fmt_number(.))
-    ) %>%
+    ) |>
     grand_summary_rows(
       columns = c(num, currency),
       fns = list(
@@ -1750,7 +1748,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
         avg = ~mean(., na.rm = TRUE)
       ),
       fmt = list( ~ fmt_number(.))
-    ) %>%
+    ) |>
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `summary_tbl_3`
@@ -1761,9 +1759,9 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   # This table has a stub with values but it is utilizing the `"char"`
   # column for its labels (`"rowname"` and `"group"` are visible columns)
   summary_tbl_4 <-
-    exibble %>%
-    dplyr::rename(rowname = row) %>%
-    gt(rowname_col = "char") %>%
+    exibble |>
+    dplyr::rename(rowname = row) |>
+    gt(rowname_col = "char") |>
     grand_summary_rows(
       columns = c(num, currency),
       fns = list(
@@ -1772,7 +1770,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
         avg = ~mean(., na.rm = TRUE)
       ),
       fmt = list( ~ fmt_number(.))
-    ) %>%
+    ) |>
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `summary_tbl_4`
@@ -1783,9 +1781,9 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   # This table is a slight modification on `summary_tbl_4` in that the
   # `"group"` column is being used to generate row groups
   summary_tbl_5 <-
-    exibble %>%
-    dplyr::rename(rowname = row) %>%
-    gt(rowname_col = "char", groupname_col = "group") %>%
+    exibble |>
+    dplyr::rename(rowname = row) |>
+    gt(rowname_col = "char", groupname_col = "group") |>
     summary_rows(
       columns = c(num, currency),
       groups = c("grp_a", "grp_b"),
@@ -1793,7 +1791,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
         median = ~median(., na.rm = TRUE)
       ),
       fmt = list( ~ fmt_number(.))
-    ) %>%
+    ) |>
     grand_summary_rows(
       columns = c(num, currency),
       fns = list(
@@ -1802,7 +1800,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
         avg = ~mean(., na.rm = TRUE)
       ),
       fmt = list( ~ fmt_number(.))
-    ) %>%
+    ) |>
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `summary_tbl_5`
@@ -1813,9 +1811,9 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   # This table uses the `"rowname"` column to generate rownames in the stub,
   # and, the `"group"` column is used to form row groups
   summary_tbl_6 <-
-    exibble %>%
-    dplyr::rename(rowname = row) %>%
-    gt(rowname_col = "rowname", groupname_col = "group") %>%
+    exibble |>
+    dplyr::rename(rowname = row) |>
+    gt(rowname_col = "rowname", groupname_col = "group") |>
     summary_rows(
       columns = c(num, currency),
       groups = c("grp_a", "grp_b"),
@@ -1823,7 +1821,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
         median = ~median(., na.rm = TRUE)
       ),
       fmt = list( ~ fmt_number(.))
-    ) %>%
+    ) |>
     grand_summary_rows(
       columns = c(num, currency),
       fns = list(
@@ -1832,7 +1830,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
         avg = ~mean(., na.rm = TRUE)
       ),
       fmt = list( ~ fmt_number(.))
-    ) %>%
+    ) |>
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `summary_tbl_6`
@@ -1843,21 +1841,21 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   # This table has a single row group and the summary rows are to
   # be styled via `tab_style()`
   summary_tbl_7 <-
-    countrypops %>%
-    dplyr::filter(country_name == "Japan", year < 1970) %>%
-    dplyr::select(-contains("country")) %>%
-    dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) %>%
+    countrypops |>
+    dplyr::filter(country_name == "Japan", year < 1970) |>
+    dplyr::select(-contains("country")) |>
+    dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) |>
     gt(
       rowname_col = "year",
       groupname_col = "decade"
-    ) %>%
-    fmt_integer(columns = population) %>%
+    ) |>
+    fmt_integer(columns = population) |>
     summary_rows(
       groups = "1960s",
       columns = population,
       fns = list("min", "max"),
       fmt = ~ fmt_integer(.)
-    ) %>%
+    ) |>
     tab_style(
       style = list(
         cell_text(
@@ -1872,7 +1870,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
       locations = cells_stub_summary(
         groups = "1960s"
       )
-    ) %>%
+    ) |>
     tab_options(latex.use_longtable = TRUE)
 
   # Take snapshots of `summary_tbl_7`
@@ -1882,47 +1880,47 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
 
   # We should expect no errors or warnings when rendering each of these
   # tables to the different output formats
-  expect_no_error(summary_tbl_1 %>% render_as_html())
-  expect_no_error(summary_tbl_1 %>% as_latex())
-  expect_no_error(summary_tbl_1 %>% as_rtf())
-  expect_no_warning(summary_tbl_1 %>% render_as_html())
-  expect_no_warning(summary_tbl_1 %>% as_latex())
-  expect_no_warning(summary_tbl_1 %>% as_rtf())
+  expect_no_error(summary_tbl_1 |> render_as_html())
+  expect_no_error(summary_tbl_1 |> as_latex())
+  expect_no_error(summary_tbl_1 |> as_rtf())
+  expect_no_warning(summary_tbl_1 |> render_as_html())
+  expect_no_warning(summary_tbl_1 |> as_latex())
+  expect_no_warning(summary_tbl_1 |> as_rtf())
 
-  expect_no_error(summary_tbl_2 %>% render_as_html())
-  expect_no_error(summary_tbl_2 %>% as_latex())
-  expect_no_error(summary_tbl_2 %>% as_rtf())
-  expect_no_warning(summary_tbl_2 %>% render_as_html())
-  expect_no_warning(summary_tbl_2 %>% as_latex())
-  expect_no_warning(summary_tbl_2 %>% as_rtf())
+  expect_no_error(summary_tbl_2 |> render_as_html())
+  expect_no_error(summary_tbl_2 |> as_latex())
+  expect_no_error(summary_tbl_2 |> as_rtf())
+  expect_no_warning(summary_tbl_2 |> render_as_html())
+  expect_no_warning(summary_tbl_2 |> as_latex())
+  expect_no_warning(summary_tbl_2 |> as_rtf())
 
-  expect_no_error(summary_tbl_3 %>% render_as_html())
-  expect_no_error(summary_tbl_3 %>% as_latex())
-  expect_no_error(summary_tbl_3 %>% as_rtf())
-  expect_no_warning(summary_tbl_3 %>% render_as_html())
-  expect_no_warning(summary_tbl_3 %>% as_latex())
-  expect_no_warning(summary_tbl_3 %>% as_rtf())
+  expect_no_error(summary_tbl_3 |> render_as_html())
+  expect_no_error(summary_tbl_3 |> as_latex())
+  expect_no_error(summary_tbl_3 |> as_rtf())
+  expect_no_warning(summary_tbl_3 |> render_as_html())
+  expect_no_warning(summary_tbl_3 |> as_latex())
+  expect_no_warning(summary_tbl_3 |> as_rtf())
 
-  expect_no_error(summary_tbl_4 %>% render_as_html())
-  expect_no_error(summary_tbl_4 %>% as_latex())
-  expect_no_error(summary_tbl_4 %>% as_rtf())
-  expect_no_warning(summary_tbl_4 %>% render_as_html())
-  expect_no_warning(summary_tbl_4 %>% as_latex())
-  expect_no_warning(summary_tbl_4 %>% as_rtf())
+  expect_no_error(summary_tbl_4 |> render_as_html())
+  expect_no_error(summary_tbl_4 |> as_latex())
+  expect_no_error(summary_tbl_4 |> as_rtf())
+  expect_no_warning(summary_tbl_4 |> render_as_html())
+  expect_no_warning(summary_tbl_4 |> as_latex())
+  expect_no_warning(summary_tbl_4 |> as_rtf())
 
-  expect_no_error(summary_tbl_5 %>% render_as_html())
-  expect_no_error(summary_tbl_5 %>% as_latex())
-  expect_no_error(summary_tbl_5 %>% as_rtf())
-  expect_no_warning(summary_tbl_5 %>% render_as_html())
-  expect_no_warning(summary_tbl_5 %>% as_latex())
-  expect_no_warning(summary_tbl_5 %>% as_rtf())
+  expect_no_error(summary_tbl_5 |> render_as_html())
+  expect_no_error(summary_tbl_5 |> as_latex())
+  expect_no_error(summary_tbl_5 |> as_rtf())
+  expect_no_warning(summary_tbl_5 |> render_as_html())
+  expect_no_warning(summary_tbl_5 |> as_latex())
+  expect_no_warning(summary_tbl_5 |> as_rtf())
 
-  expect_no_error(summary_tbl_6 %>% render_as_html())
-  expect_no_error(summary_tbl_6 %>% as_latex())
-  expect_no_error(summary_tbl_6 %>% as_rtf())
-  expect_no_warning(summary_tbl_6 %>% render_as_html())
-  expect_no_warning(summary_tbl_6 %>% as_latex())
-  expect_no_warning(summary_tbl_6 %>% as_rtf())
+  expect_no_error(summary_tbl_6 |> render_as_html())
+  expect_no_error(summary_tbl_6 |> as_latex())
+  expect_no_error(summary_tbl_6 |> as_rtf())
+  expect_no_warning(summary_tbl_6 |> render_as_html())
+  expect_no_warning(summary_tbl_6 |> as_latex())
+  expect_no_warning(summary_tbl_6 |> as_rtf())
 })
 
 test_that("Summary rows can be styled comprehensively", {
@@ -1930,23 +1928,23 @@ test_that("Summary rows can be styled comprehensively", {
   # Generate a gt table with group and grand summary rows and style
   # every one of these cells in a single, comprehensive `tab_style()` stmt
   gt_tbl <-
-    gtcars %>%
-    dplyr::select(mfr, model, hp, trq) %>%
-    dplyr::filter(mfr %in% c("Lamborghini", "Maserati", "Aston Martin")) %>%
-    gt(rowname_col = "model", groupname_col = "mfr") %>%
+    gtcars |>
+    dplyr::select(mfr, model, hp, trq) |>
+    dplyr::filter(mfr %in% c("Lamborghini", "Maserati", "Aston Martin")) |>
+    gt(rowname_col = "model", groupname_col = "mfr") |>
     summary_rows(
       groups = everything(),
       fns = list(
         Minimum = ~min(.),
         Maximum = ~max(.)
       )
-    ) %>%
+    ) |>
     grand_summary_rows(
       fns = list(
         Minimum = ~min(.),
         Maximum = ~max(.)
       )
-    ) %>%
+    ) |>
     tab_style(
       style = list(
         cell_fill(color = "#DA291C"),
@@ -1966,20 +1964,20 @@ test_that("Summary rows can be styled comprehensively", {
 test_that("Summary rows can use other columns' data", {
 
   gt_tbl <-
-    sp500 %>%
-    dplyr::slice_head(n = 22) %>%
-    dplyr::select(date, close, volume) %>%
-    gt() %>%
+    sp500 |>
+    dplyr::slice_head(n = 22) |>
+    dplyr::select(date, close, volume) |>
+    gt() |>
     grand_summary_rows(
       columns = 'close',
       fns = list('Average close' = ~ mean(.)),
       fmt = list(~ fmt_number(.))
-    ) %>%
+    ) |>
     grand_summary_rows(
       columns = 'close',
       fns = list('Average volume weighted close' = ~ sum(. * volume) / sum(volume)),
       fmt = list(~ fmt_number(.))
-    ) %>%
+    ) |>
     grand_summary_rows(
       columns = 'close',
       fns = list('Sum of `volume` in `close`' = ~ sum(volume)),
@@ -2109,7 +2107,7 @@ test_that("The deprecated `formatter` arg and `...` still function properly", {
   # (the default value)
   expect_warning(
     gt_tbl_1 <-
-      tbl %>%
+      tbl |>
       summary_rows(
         groups = "W02",
         columns = c(open, high, low, close),
@@ -2123,8 +2121,8 @@ test_that("The deprecated `formatter` arg and `...` still function properly", {
   )
 
   # Expect the correct values in summary rows of `gt_tbl_1`
-  gt_tbl_1 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") %>%
+  gt_tbl_1 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") |>
     expect_equal(c("2,035.24", "2,048.56", "2,016.85", "2,031.21"))
 
   # Generate summary rows and use a formatting function in the deprecated
@@ -2132,7 +2130,7 @@ test_that("The deprecated `formatter` arg and `...` still function properly", {
   # yields a warning but works so long as `fmt = NULL` (the default value)
   expect_warning(
     gt_tbl_2 <-
-      tbl %>%
+      tbl |>
       summary_rows(
         groups = "W02",
         columns = c(open, high, low, close),
@@ -2148,8 +2146,8 @@ test_that("The deprecated `formatter` arg and `...` still function properly", {
   )
 
   # Expect the correct values in summary rows of `gt_tbl_2`
-  gt_tbl_2 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") %>%
+  gt_tbl_2 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") |>
     expect_equal(c("2035.23998", "2048.56198", "2016.85398", "2031.20800"))
 
   # Generate summary rows and use a formatting function in the deprecated
@@ -2158,7 +2156,7 @@ test_that("The deprecated `formatter` arg and `...` still function properly", {
   # `formatter` is ignored
   expect_no_warning(
     gt_tbl_3 <-
-      tbl %>%
+      tbl |>
       summary_rows(
         groups = "W02",
         columns = c(open, high, low, close),
@@ -2173,8 +2171,8 @@ test_that("The deprecated `formatter` arg and `...` still function properly", {
   )
 
   # Expect the correct values in summary rows of `gt_tbl_3`
-  gt_tbl_3 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") %>%
+  gt_tbl_3 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") |>
     expect_equal(c("2,035.23998", "2,048.56198", "2,016.85398", "2,031.20800"))
 
   # Generate summary rows and use a formatting function in the deprecated
@@ -2184,7 +2182,7 @@ test_that("The deprecated `formatter` arg and `...` still function properly", {
   # value given in `formatter` is ignored along with anything in `...`
   expect_no_warning(
     gt_tbl_4 <-
-      tbl %>%
+      tbl |>
       summary_rows(
         groups = "W02",
         columns = c(open, high, low, close),
@@ -2201,8 +2199,8 @@ test_that("The deprecated `formatter` arg and `...` still function properly", {
   )
 
   # Expect the correct values in summary rows of `gt_tbl_4`
-  gt_tbl_4 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") %>%
+  gt_tbl_4 |> render_as_html() |> xml2::read_html() |>
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") |>
     expect_equal(c("2,035.2", "2,048.6", "2,016.9", "2,031.2"))
 })
 

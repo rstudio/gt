@@ -14,12 +14,20 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
 #
 #------------------------------------------------------------------------------#
+
+# The functions below are adapted from the knitr package
+# (https://github.com/yihui/knitr), which is licensed under GPL-2 or later.
+# Copyright (c) 2012-2025 Yihui Xie
+# Original source: https://github.com/yihui/knitr/blob/main/R/utils.R
+#
+# These functions are copies of unexported functions from knitr and are
+# included here under the terms of the GPL-2 license.
 
 
 kable_caption <- function(label, caption, format) {
@@ -40,7 +48,11 @@ kable_caption <- function(label, caption, format) {
 
 create_label <- function(..., latex = FALSE) {
   if (isTRUE(knitr::opts_knit$get("bookdown.internal.label"))) {
-    lab1 <- "(\\#"
+    if (latex) {
+      lab1 <- "(\\#"
+    } else {
+      lab1 <- "(#"
+    }
     lab2 <- ")"
   } else if (latex) {
     lab1 <- "\\label{"

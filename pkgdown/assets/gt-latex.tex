@@ -121,15 +121,17 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 
@@ -183,9 +185,6 @@
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
 
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
 
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
@@ -202,7 +201,7 @@
 
 \title{LaTeX Quarto test}
 \author{}
-\date{2024-10-02}
+\date{2025-07-07}
 
 \begin{document}
 \maketitle
@@ -226,7 +225,7 @@ i Loading gt
 \end{Shaded}
 
 \begin{verbatim}
-[1] '0.11.0.9000'
+[1] '1.0.0.9000'
 \end{verbatim}
 
 \begin{Shaded}
@@ -236,7 +235,7 @@ i Loading gt
 \end{Shaded}
 
 \begin{verbatim}
-[1] '1.5.57'
+[1] '1.6.42'
 \end{verbatim}
 
 \newpage{}
@@ -258,9 +257,9 @@ i Loading gt
 \centering{
 
 \caption*{
-{\large background color}
+{\fontsize{20}{25}\selectfont  background color\fontsize{12}{15}\selectfont }
 } 
-\fontsize{12.0pt}{14.4pt}\selectfont
+\fontsize{12.0pt}{14.0pt}\selectfont
 \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}rlcrrrrll}
 \toprule
 \multicolumn{2}{c}{A spanner} &  &  &  &  &  &  &  \\ 
@@ -286,15 +285,15 @@ NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\_6 & grp\_b \
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{tab }\OtherTok{\textless{}{-}}\NormalTok{ exibble }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{tab }\OtherTok{\textless{}{-}}\NormalTok{ exibble }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{gt}\NormalTok{(}\AttributeTok{rowname\_col =} \StringTok{"row"}\NormalTok{, }\AttributeTok{groupname\_col =} \StringTok{"group"}\NormalTok{, }\AttributeTok{row\_group\_as\_column =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
-  \FunctionTok{tab\_spanner}\NormalTok{(}\StringTok{"spanners"}\NormalTok{, }\FunctionTok{c}\NormalTok{(char, num)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{tab\_spanner}\NormalTok{(}\StringTok{"Second level spanners"}\NormalTok{, }\FunctionTok{c}\NormalTok{(char, num, fctr)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{tab\_stubhead}\NormalTok{(}\StringTok{"Stubhead label"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_spanner}\NormalTok{(}\StringTok{"spanners"}\NormalTok{, }\FunctionTok{c}\NormalTok{(char, num)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{tab\_spanner}\NormalTok{(}\StringTok{"Second level spanners"}\NormalTok{, }\FunctionTok{c}\NormalTok{(char, num, fctr)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{tab\_stubhead}\NormalTok{(}\StringTok{"Stubhead label"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{tab\_style}\NormalTok{(}
     \AttributeTok{style =} \FunctionTok{list}\NormalTok{(}\FunctionTok{cell\_fill}\NormalTok{(}\StringTok{"\#f0f0f0"}\NormalTok{), }\FunctionTok{cell\_text}\NormalTok{(}\AttributeTok{weight =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \StringTok{"small"}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{)),}
     \FunctionTok{cells\_stubhead}\NormalTok{()}
-\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}} 
   \FunctionTok{tab\_header}\NormalTok{(}\AttributeTok{title =} \StringTok{"Stubhead styling and multiple spanner levels"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -304,9 +303,9 @@ NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\_6 & grp\_b \
 \centering{
 
 \caption*{
-{\large Stubhead styling and multiple spanner levels}
+{\fontsize{20}{25}\selectfont  Stubhead styling and multiple spanner levels\fontsize{12}{15}\selectfont }
 } 
-\fontsize{12.0pt}{14.4pt}\selectfont
+\fontsize{12.0pt}{14.0pt}\selectfont
 \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l|l|lrcrrrr}
 \toprule
 \multicolumn{2}{l}{} & \multicolumn{3}{c}{Second level spanners} &  &  &  &  \\ 
@@ -315,12 +314,12 @@ NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\_6 & grp\_b \
 \cmidrule(lr){3-4}
 \multicolumn{2}{c}{{\bfseries \small \cellcolor[HTML]{F0F0F0}{\textcolor[HTML]{0000FF}{Stubhead label}}}} & char & num & fctr & date & time & datetime & currency \\ 
 \midrule\addlinespace[2.5pt]
-\multirow{4}{*}{grp\_a} & row\_1 & apricot & 1.111e-01 & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\ 
+\multirow[t]{4}{*}{grp\_a} & row\_1 & apricot & 1.111e-01 & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\ 
  & row\_2 & banana & 2.222e+00 & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\ 
  & row\_3 & coconut & 3.333e+01 & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\ 
  & row\_4 & durian & 4.444e+02 & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\ 
 \midrule\addlinespace[2.5pt]
-\multirow{4}{*}{grp\_b} & row\_5 & NA & 5.550e+03 & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\ 
+\multirow[t]{4}{*}{grp\_b} & row\_5 & NA & 5.550e+03 & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\ 
  & row\_6 & fig & NA & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\ 
  & row\_7 & grapefruit & 7.770e+05 & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\ 
  & row\_8 & honeydew & 8.880e+06 & eight & 2015-08-15 & 20:20 & NA & 0.440 \\ 
@@ -342,18 +341,18 @@ levels}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{tab }\OtherTok{\textless{}{-}}\NormalTok{ pizzaplace }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(type }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"classic"}\NormalTok{, }\StringTok{"veggie"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(type, size) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{tab }\OtherTok{\textless{}{-}}\NormalTok{ pizzaplace }\SpecialCharTok{|\textgreater{}}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(type }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"classic"}\NormalTok{, }\StringTok{"veggie"}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(type, size) }\SpecialCharTok{|\textgreater{}}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarize}\NormalTok{(}
     \AttributeTok{sold =}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{n}\NormalTok{(),}
     \AttributeTok{income =} \FunctionTok{sum}\NormalTok{(price),}
     \AttributeTok{.groups =} \StringTok{"drop"}
-\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{gt}\NormalTok{(}\AttributeTok{rowname\_col =} \StringTok{"size"}\NormalTok{, }\AttributeTok{groupname\_col =} \StringTok{"type"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{tab\_header}\NormalTok{(}\AttributeTok{title =} \StringTok{"Complete output"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{fmt\_integer}\NormalTok{(}\AttributeTok{columns =}\NormalTok{ sold) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{fmt\_currency}\NormalTok{(}\AttributeTok{columns =}\NormalTok{ income) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{gt}\NormalTok{(}\AttributeTok{rowname\_col =} \StringTok{"size"}\NormalTok{, }\AttributeTok{groupname\_col =} \StringTok{"type"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{tab\_header}\NormalTok{(}\AttributeTok{title =} \StringTok{"Complete output"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{fmt\_integer}\NormalTok{(}\AttributeTok{columns =}\NormalTok{ sold) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{fmt\_currency}\NormalTok{(}\AttributeTok{columns =}\NormalTok{ income) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{summary\_rows}\NormalTok{(}
     \AttributeTok{fns =} \FunctionTok{list}\NormalTok{(}\AttributeTok{label =} \StringTok{"All Sizes"}\NormalTok{, }\AttributeTok{fn =} \StringTok{"sum"}\NormalTok{),}
     \AttributeTok{side =} \FunctionTok{c}\NormalTok{(}\StringTok{"top"}\NormalTok{),}
@@ -361,27 +360,27 @@ levels}
       \SpecialCharTok{\textasciitilde{}} \FunctionTok{fmt\_integer}\NormalTok{(., }\AttributeTok{columns =}\NormalTok{ sold),}
       \SpecialCharTok{\textasciitilde{}} \FunctionTok{fmt\_currency}\NormalTok{(., }\AttributeTok{columns =}\NormalTok{ income)}
 \NormalTok{    )}
-\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{tab\_options}\NormalTok{(}
     \AttributeTok{summary\_row.background.color =} \StringTok{"gray95"}\NormalTok{,}
     \AttributeTok{row\_group.as\_column =} \ConstantTok{TRUE}
-\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{tab\_stub\_indent}\NormalTok{(}
     \AttributeTok{rows =} \FunctionTok{everything}\NormalTok{(),}
     \AttributeTok{indent =} \DecValTok{2}
-\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{grand\_summary\_rows}\NormalTok{(}
     \AttributeTok{columns =} \FunctionTok{c}\NormalTok{(}\StringTok{"sold"}\NormalTok{, }\StringTok{"income"}\NormalTok{),}
     \AttributeTok{fns =} \FunctionTok{list}\NormalTok{(Sum }\SpecialCharTok{\textasciitilde{}} \FunctionTok{sum}\NormalTok{(.)),}
     \AttributeTok{fmt =} \SpecialCharTok{\textasciitilde{}} \FunctionTok{fmt\_number}\NormalTok{(.)}
-\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{tab\_caption}\NormalTok{(}\StringTok{"Here be caption text"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{tab\_caption}\NormalTok{(}\StringTok{"Here be caption text"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{tab\_spanner}\NormalTok{(}
     \AttributeTok{label =} \StringTok{"Spanner"}\NormalTok{,}
     \AttributeTok{columns =} \FunctionTok{c}\NormalTok{(}\StringTok{"sold"}\NormalTok{, }\StringTok{"income"}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{tab\_stubhead}\NormalTok{(}\StringTok{"Stubhead label"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{tab\_source\_note}\NormalTok{(}\StringTok{"Source: the pizzaria"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{tab\_stubhead}\NormalTok{(}\StringTok{"Stubhead label"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{tab\_source\_note}\NormalTok{(}\StringTok{"Source: the pizzaria"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{tab\_footnote}\NormalTok{(}\StringTok{"Pineapples not included"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -391,16 +390,16 @@ levels}
 \centering{
 
 \caption*{
-{\large Complete output}
+{\fontsize{20}{25}\selectfont  Complete output\fontsize{12}{15}\selectfont }
 } 
-\fontsize{12.0pt}{14.4pt}\selectfont
+\fontsize{12.0pt}{14.0pt}\selectfont
 \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l|l|rr}
 \toprule
 \multicolumn{2}{l}{} & \multicolumn{2}{c}{Spanner} \\ 
 \cmidrule(lr){3-4}
 \multicolumn{2}{c}{Stubhead label} & sold & income \\ 
 \midrule\addlinespace[2.5pt]
-\multirow{6}{*}{classic} & \multicolumn{1}{l|}{All Sizes} & 14,888 & \$220,053.10 \\ 
+\multirow[t]{6}{*}{classic} & \multicolumn{1}{l|}{All Sizes} & 14,888 & \$220,053.10 \\ 
 \cmidrule(l{-0.05em}r){2-4}
  & \hspace*{7.5pt} L & 4,057 & \$74,518.50 \\ 
  & \hspace*{7.5pt} M & 4,112 & \$60,581.75 \\ 
@@ -408,7 +407,7 @@ levels}
  & \hspace*{7.5pt} XL & 552 & \$14,076.00 \\ 
  & \hspace*{7.5pt} XXL & 28 & \$1,006.60 \\ 
 \midrule\addlinespace[2.5pt]
-\multirow{4}{*}{veggie} & \multicolumn{1}{l|}{All Sizes} & 11,649 & \$193,690.45 \\ 
+\multirow[t]{4}{*}{veggie} & \multicolumn{1}{l|}{All Sizes} & 11,649 & \$193,690.45 \\ 
 \cmidrule(l{-0.05em}r){2-4}
  & \hspace*{7.5pt} L & 5,403 & \$104,202.70 \\ 
  & \hspace*{7.5pt} M & 3,583 & \$57,101.00 \\ 

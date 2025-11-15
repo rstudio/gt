@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2024 gt authors
+#  Copyright (c) 2018-2025 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -406,15 +406,12 @@ get_tf_vals <- function(tf_style, locale) {
   }
 
   # Stop function if a numeric `tf_style` value is invalid
-  if (is.numeric(tf_style)) {
-
-    if (!(tf_style %in% tf_format_num_range)) {
-      cli::cli_abort(c(
-        "If using a numeric value for a `tf_style`, it must be
-        between `1` and `{nrow((tf_format_tbl))}`.",
-        "*" = "Use `info_tf_style()` for a useful visual reference."
-      ))
-    }
+  if (is.numeric(tf_style) && !(tf_style %in% tf_format_num_range)) {
+    cli::cli_abort(c(
+      "If using a numeric value for a `tf_style`, it must be
+      between `1` and `{nrow((tf_format_tbl))}`.",
+      "*" = "Use `info_tf_style()` for a useful visual reference."
+    ))
   }
 
   # Stop function if a character-based `tf_style` value is invalid
@@ -446,9 +443,9 @@ get_tf_vals <- function(tf_style, locale) {
 
     return(c(true_str, false_str))
 
-  } else {
-    return(unlist(tf_format_tbl_i[["characters"]]))
   }
+
+  unlist(tf_format_tbl_i[["characters"]])
 }
 
 #' Are string values 24 hour times?
@@ -538,9 +535,9 @@ resolve_footnote_placement <- function(
 
   if (cell_alignment == "right") {
     return("left")
-  } else {
-    return("right")
   }
+
+  "right"
 }
 
 get_alignment_at_body_cell <- function(
@@ -942,6 +939,12 @@ process_text <- function(text, context = "html") {
 
       return(text)
 
+    } else if (inherits(text, "from_latex")) {
+
+      text <- as.character(text)
+
+      return(text)
+
     } else {
 
       text <- escape_latex(text = text)
@@ -976,6 +979,10 @@ process_text <- function(text, context = "html") {
     if (inherits(text, "from_markdown")) {
 
       text <- markdown_to_xml(text)
+    } else if (is_html(text)) {
+
+      text <- markdown_to_xml(unescape_html(linebreak_br(text)))
+
     } else {
       text <- as.character(text)
     }
@@ -1032,6 +1039,13 @@ unescape_html <- function(text) {
   # universal linebreak
   text <- gsub("<br>", "\n", text, fixed = TRUE)
   text
+}
+
+
+#' apply a double newline for implementing universal line break in markdown
+#' @noRd
+linebreak_br <- function(x) {
+  gsub("<br>", "\n\n\n", x, fixed = TRUE)
 }
 
 #' Transform Markdown text to HTML and also perform HTML escaping
@@ -1118,6 +1132,8 @@ markdown_to_latex <- function(text, md_engine) {
             return(NA_character_)
           }
 
+          x <- gsub("<br>","..gt_linebreak_indicator..", x)
+
           if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
 
             if (grepl("<[a-zA-Z\\/][^>]*>", x)) {
@@ -1128,11 +1144,19 @@ markdown_to_latex <- function(text, md_engine) {
             }
           }
 
+
           if (names(md_engine_fn) == "commonmark") {
-            gsub("\\n$", "", md_engine_fn[[1]](text = x))
+           x <- gsub("\\n$", "", md_engine_fn[[1]](text = x))
           } else {
-            gsub("\\n$", "", md_engine_fn[[1]](text = x, format = "latex"))
+           x <- gsub("\\n$", "", md_engine_fn[[1]](text = x, format = "latex"))
           }
+
+          if(grepl("..gt\\_linebreak\\_indicator..", x, fixed = TRUE)){
+            x <- paste0("\\shortstack[l]{" ,gsub("..gt\\_linebreak\\_indicator..", " \\\\", x, fixed = TRUE), "}")
+          }
+
+          x
+
         }
       )
     )
@@ -1141,11 +1165,12 @@ markdown_to_latex <- function(text, md_engine) {
 
 # Transform Markdown text to ooxml
 markdown_to_xml <- function(text) {
+
   res <- vapply(
-    as.character(text),
+    gsub("<br>","\n\n",as.character(text)),
     FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
-    FUN = commonmark::markdown_xml
+    FUN = function(x, ...) commonmark::markdown_xml(linebreak_br(x), ...)
   )
   vapply(
     res,
@@ -2218,13 +2243,6 @@ resolve_border_side <- function(side) {
   )
 }
 
-#' Expand a path using fs::path_expand
-#'
-#' @noRd
-path_expand <- function(file) {
-  fs::path_expand(file)
-}
-
 # TODO: the `get_file_ext()` function overlaps greatly with `gtsave_file_ext()`;
 #       both are not vectorized
 
@@ -2252,6 +2270,27 @@ validate_marks <- function(marks, call = rlang::caller_env()) {
   }
   if (!is.character(marks)) {
     cli::cli_abort("The value for `marks` must be a character vector.", call = call)
+  }
+}
+
+validate_footnote_order <- function(order, call = rlang::caller_env()) {
+
+  order_keywords <- c("marks_first", "marks_last", "preserve_order")
+
+
+  if (length(order) <= 1) {
+    # make sure not length 0.
+    check_string(order, allow_empty = FALSE, allow_null = FALSE, call = call)
+    # only check keywords for length 1
+
+    rlang::arg_match0(
+      order,
+      order_keywords,
+      error_call = call
+    )
+  }
+  if (!is.character(order) | length(order)>1) {
+    cli::cli_abort("The value for `order` must be a character string. Acceptable values include: {.val {order_keywords}}", call = call)
   }
 }
 
@@ -2481,3 +2520,39 @@ data_get_image_tag <- function(file, dir = "images") {
 }
 
 #nocov end
+
+#' Function to iterate over the gt_tbls in a gt_group and apply a function
+#' @param data gt_group obj
+#' @param arg_list list of function arguments and function name from match.call in parent function
+#' @param call caller env
+#' @importFrom rlang caller_env
+#' @noRd
+apply_to_grp <- function(data, arg_list, call = caller_env()){
+  func <- as.character(arg_list[[1]])
+  args <- arg_list[-1]
+  # check function is a valid gt exported function
+  if(!(func %in% getNamespaceExports("gt"))){
+    cli::cli_abort("{.val {func}} is not an exported gt function")
+  }
+
+  for (i in seq_len(nrow(data$gt_tbls))) {
+    # pull out gt_tbl, apply function, reinsert into group
+    gt_tbl <- grp_pull(data, i)
+    # replace data arg with current gt_tbl
+    args[[1]] <- gt_tbl
+
+    #make it clear which table if an error occurs
+    gt_tbl <- tryCatch({
+      do.call(func, args, envir = call)
+    },
+    error = function(e) {
+      cli::cli_abort("Failure in Table {i}", parent = e)
+    })
+
+    data <- grp_replace(data, gt_tbl, .which = i)
+  }
+
+  data
+}
+
+
