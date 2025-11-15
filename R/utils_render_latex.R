@@ -1868,6 +1868,12 @@ create_fontsize_statement_l <- function(data) {
 
   size <- dt_options_get_value(data, "table_font_size")
 
+  # if font size is left unset, use the document's font at this point instead of
+  # emitting a font size change
+  if (is.na(size)) {
+    return("")
+  }
+
   fs_fmt <- "\\fontsize{%3.1fpt}{%3.1fpt}\\selectfont\n"
   if (grepl(pattern = "^[[:digit:]]+(\\%|in|cm|emu|em|pt|px)$", size)) {
     font_size <- parse_font_size_l(size)

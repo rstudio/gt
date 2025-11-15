@@ -6,6 +6,8 @@
 
 * Update latex Unicode conversions to be optional (default to TRUE) as well as make them work in-line (@thebioengineer, #2037, #2041)
 
+* Tables output to HTML and LaTeX now respect the document/browser default font sizes, only changing the size if the user sets the `table.font.size` option. (@capnrefsmmat, #1937)
+
 # gt 1.1.0
 
 ## New features

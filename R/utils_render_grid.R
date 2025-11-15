@@ -1346,6 +1346,11 @@ parse_vjust <- function(vjust) {
 # setting the font relative to the 'gt_table' font size.
 parse_fontsize <- function(size, base) {
 
+  # if fontsize is not set by the user, it will be NULL here; use the base fontsize
+  if (is.null(size)) {
+    return(base)
+  }
+
   new_size <- rep(base[1], length(size))
 
   # Parse percentages relative to base
