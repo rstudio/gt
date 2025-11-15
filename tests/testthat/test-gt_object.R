@@ -992,3 +992,34 @@ test_that("Formatting functions operate with a 'last-one-wins' approach", {
       )
     )
 })
+
+test_that("Empty dataframes with process_md = TRUE work correctly (issue #2081)", {
+  
+  # Test case 1: Empty dataframe with groupname_col and process_md = TRUE
+  # Should not throw "No replacements provided" error
+  expect_no_error(
+    mtcars[0, ] |> gt(groupname_col = "cyl", process_md = TRUE)
+  )
+  
+  # Test case 2: Empty grouped dataframe with process_md = TRUE
+  # Should not throw "No replacements provided" error
+  expect_no_error(
+    mtcars[0, ] |> dplyr::group_by(cyl) |> gt(process_md = TRUE)
+  )
+  
+  # Test case 3: Empty dataframe with rowname_col and process_md = TRUE
+  # Should continue to work as before
+  expect_no_error(
+    mtcars[0, ] |> gt(rowname_col = "cyl", process_md = TRUE)
+  )
+  
+  # Test case 4: Regression test - non-empty dataframes should still work
+  expect_no_error(
+    mtcars[1:5, ] |> gt(groupname_col = "cyl", process_md = TRUE)
+  )
+  
+  # Test case 5: Verify empty table is created with correct structure
+  empty_gt <- mtcars[0, ] |> gt(groupname_col = "cyl", process_md = TRUE)
+  expect_s3_class(empty_gt, "gt_tbl")
+  expect_equal(nrow(dt_data_get(empty_gt)), 0)
+})

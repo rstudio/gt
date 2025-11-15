@@ -145,7 +145,12 @@ dt_stub_df_init <- function(
 
       # dplyr::recode is superseded, and is slower now.
       # TODO consider using vctrs::vec_case_match when available r-lib/vctrs#1622
-      row_group_ids <- dplyr::recode(row_group_labels, !!!unique_row_group_ids)
+      # Handle empty dataframe case where unique_row_group_ids is empty
+      if (length(unique_row_group_ids) == 0) {
+        row_group_ids <- row_group_labels
+      } else {
+        row_group_ids <- dplyr::recode(row_group_labels, !!!unique_row_group_ids)
+      }
 
     } else {
       row_group_ids <- row_group_labels
