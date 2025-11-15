@@ -6,6 +6,8 @@
 
 * Update latex Unicode conversions to be optional (default to TRUE) as well as make them work in-line (@thebioengineer, #2037, #2041)
 
+* Fixed an issue with 0-row data frames with row groups and Markdown in the row group labels (`process_md` is TRUE). (#2081)
+
 # gt 1.1.0
 
 ## New features
