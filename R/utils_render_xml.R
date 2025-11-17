@@ -153,7 +153,7 @@ xml_tblGrid <- function(..., app = "word") {
 }
 
 # Table grid
-xml_gridcol <- function(width = NULL, app = "word") {
+xml_gridcol <- function(width = NULL, type = NULL, app = "word") {
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("gridCol", app),
@@ -1188,7 +1188,7 @@ create_table_props_component_xml <- function(data, align = c("center", "start", 
     )
 
   table_cols <- xml_tblGrid(
-      vapply(lapply(widths,xml_gridcol), as.character, as.character(0L))
+      vapply(lapply(widths, xml_gridcol), as.character, as.character(0L))
   )
 
   # htmltools::tagList(c(table_properties, table_cols))
