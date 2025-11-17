@@ -32,14 +32,20 @@ ooxml_tbl_properties <- function(ooxml_type, ...) {
   )
 }
 
-word_tbl_properties <- function(..., layout = c("autofit", "fixed"), justify = c("center", "start","end"), width="100%", look = c("First Row"), tableStyle=NULL) {
+word_tbl_cell_margins <- function() {
+  ooxml_tag("w:tblCellMar",
+    ooxml_tag("w:top", "w:w" = "0", "w:type" = "dxa"),
+    ooxml_tag("w:bottom", "w:w" = "0", "w:type" = "dxa"),
+    ooxml_tag("w:start", "w:w" = "60", "w:type" = "dxa"),
+    ooxml_tag("w:end", "w:w" = "60", "w:type" = "dxa")
+  )
+}
+
+word_tbl_properties <- function(..., layout = c("autofit", "fixed"), justify = c("center", "start", "end"), width="100%", tableStyle=NULL) {
   rlang::check_dots_empty()
 
   if (!rlang::is_character(width, n = 1)) {
     cli::cli_abort("{.arg width} must be a scalar character value.")
-  }
-  if (!rlang::is_character(look)) {
-    cli::cli_abort("{.arg look} must be a character vector.")
   }
 
   w_type <- "dxa"
@@ -49,30 +55,31 @@ word_tbl_properties <- function(..., layout = c("autofit", "fixed"), justify = c
   }
 
   ooxml_tag("w:tblPr", tag_class = "ooxml_tbl_properties",
-    ooxml_tag("w:tblLayout", "w:type" = rlang::arg_match(layout)),
-    ooxml_tag("w:jc", "w:val" = rlang::arg_match(justify)),
+    word_tbl_cell_margins(),
     ooxml_tag("w:tblW", "w:type" = w_type, "w:w" = width),
+    # ooxml_tag("w:tblLayout", "w:type" = rlang::arg_match(layout)),
     ooxml_tag("w:tblLook",
-      "w:firstColumn" = as.numeric("first column" %in% look),
-      "w:firstRow"    = as.numeric("first row" %in% look),
-      "w:lastCol"     = as.numeric("last column" %in% look),
-      "w:lastRow"     = as.numeric("last row" %in% look),
-      "w:noVBand"     = as.numeric(!"banded columns" %in% look),
-      "w:noHBand"     = as.numeric(!"banded rows" %in% look)
-    )
+      "w:firstRow"    = "0",
+      "w:lastRow"     = "0",
+      "w:firstColumn" = "0",
+      "w:lastColumn"  = "0",
+      "w:noVBand"     = "0",
+      "w:noHBand"     = "0"
+    ),
+    ooxml_tag("w:jc", "w:val" = rlang::arg_match(justify))
   )
 }
 
-pptx_tbl_properties <- function(..., look = c("First Column","Banded Rows"), tableStyle = NA) {
+pptx_tbl_properties <- function(..., tableStyle = NA) {
   rlang::check_dots_empty()
 
   ooxml_tag("a:tblPr", tag_class = "ooxml_tbl_properties",
-    "a:firstColumn" = as.numeric("first column" %in% look),
-    "a:firstRow"    = as.numeric("first row" %in% look),
-    "a:lastCol"     = as.numeric("last column" %in% look),
-    "a:lastRow"     = as.numeric("last row" %in% look),
-    "a:bandCol"     = as.numeric("banded columns" %in% look),
-    "a:bandRow"     = as.numeric("banded rows" %in% look),
+    "a:firstRow"    = "0",
+    "a:lastRow"     = "0",
+    "a:firstColumn" = "0",
+    "a:lastCol"     = "0",
+    "a:bandCol"     = "0",
+    "a:bandRow"     = "0",
 
     ooxml_tag("a:tableStyleId", tableStyle)
   )
@@ -81,10 +88,15 @@ pptx_tbl_properties <- function(..., look = c("First Column","Banded Rows"), tab
 ## tbl_grid -----------------------------------------------------------
 
 ooxml_tbl_grid <- function(ooxml_type, ...) {
+  dots <- list2(...)
+  if (identical(ooxml_type, "word") && all(purrr::map_lgl(dots, is.null))) {
+    return(NULL)
+  }
+
   tblGrid_tag <- switch_ooxml_tag(ooxml_type, "tblGrid")
   gridCol_tag <- switch_ooxml_tag(ooxml_type, "gridCol")
 
-  grid_cols <- lapply(list2(...), \(width) {
+  grid_cols <- lapply(dots, \(width) {
     if (is.null(width)) {
       ooxml_tag(gridCol_tag)
     } else if (ooxml_type == "word") {
@@ -341,9 +353,9 @@ ooxml_cell_border <- function(ooxml_type, ..., location, color = "black", size =
 
       ooxml_tag(tag, tag_class = "ooxml_cell_border",
         `w:val`   = type,
+        `w:sz`    = if (!is.null(size)) size * 8,
         `w:space` = 0,
-        `w:color` = color,
-        `w:sz`    = if (!is.null(size)) size * 8
+        `w:color` = color
       )
     },
     pptx = {

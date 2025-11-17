@@ -88,14 +88,12 @@ as_ooxml_tbl <- function(
 
 # table properties --------------------------------------------------------
 
-create_table_properties_ooxml <- function(ooxml_type, data, align = c("center", "start", "end"), look = c("first row")) {
+create_table_properties_ooxml <- function(ooxml_type, data, align = c("center", "start", "end")) {
   # TODO: set layout as autofit when dt_boxhead_get()$column_width
   #       are all NULL and figure out equivalent in pptx
   ooxml_tbl_properties(ooxml_type,
     justify = align,
-    # margins = list(left = 60, right = 60),
-    width   = "100%",
-    look    = look
+    width   = "100%"
   )
 }
 
