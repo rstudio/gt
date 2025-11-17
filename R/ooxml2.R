@@ -93,7 +93,7 @@ ooxml_tbl_grid <- function(ooxml_type, ...) {
       ooxml_tag(gridCol_tag, "w" = width)
     }
   })
-  ooxml_tag(tblGrid_tag, tag_class = "ooxml_tbl_grid", !!!gridCols)
+  ooxml_tag(tblGrid_tag, tag_class = "ooxml_tbl_grid", !!!grid_cols)
 }
 
 # tbl_row -----------------------------------------------------------
