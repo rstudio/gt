@@ -365,7 +365,7 @@ test_that("opt_table_font() sets the correct options", {
     compile_scss() |>
     as.character() |>
     html_fragment_within(
-      "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
+      "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap\");",
       ".gt_table {", "font-family: 'Dancing Script', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
     ) |>
     expect_true()
@@ -389,7 +389,7 @@ test_that("opt_table_font() sets the correct options", {
     compile_scss() |>
     as.character() |>
     html_fragment_within(
-      "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
+      "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap\");",
       ".gt_table {", "font-family: 'Dancing Script', serif, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
     ) |>
     expect_true()
@@ -399,7 +399,7 @@ test_that("opt_table_font() sets the correct options", {
     compile_scss() |>
     as.character() |>
     html_fragment_within(
-      "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
+      "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap\");",
       ".gt_table {", "font-family: 'Dancing Script', serif, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
     ) |>
     expect_true()
@@ -410,8 +410,8 @@ test_that("opt_table_font() sets the correct options", {
     compile_scss() |>
     as.character() |>
     html_fragment_within(
-      "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
-      "@import url(\"https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
+      "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap\");",
+      "@import url(\"https://fonts.googleapis.com/css2?family=Exo+2&display=swap\");",
       ".gt_table {", "font-family: serif, 'Dancing Script', Courier, 'Exo 2', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
     ) |>
     expect_true()
@@ -421,8 +421,8 @@ test_that("opt_table_font() sets the correct options", {
     compile_scss() |>
     as.character() |>
     html_fragment_within(
-      "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
-      "@import url(\"https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
+      "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap\");",
+      "@import url(\"https://fonts.googleapis.com/css2?family=Exo+2&display=swap\");",
       ".gt_table {", "font-family: serif, 'Dancing Script', Courier, 'Exo 2', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
     ) |>
     expect_true()
@@ -433,7 +433,7 @@ test_that("opt_table_font() sets the correct options", {
     compile_scss() |>
     as.character() |>
     html_fragment_within(
-      "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
+      "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap\");",
       ".gt_table {",
       "font-family: 'Dancing Script', Courier, Oxygen, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
     ) |>
