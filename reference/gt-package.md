@@ -38,6 +38,8 @@ Authors:
 - Alexandra Lauer <alexandralauer1@gmail.com>
   ([ORCID](https://orcid.org/0000-0002-4191-6301))
 
+- Romain François <romain@tada.science>
+
 - JooYoung Seo <jseo1005@illinois.edu>
   ([ORCID](https://orcid.org/0000-0002-4064-6012))
 
