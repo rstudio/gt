@@ -1,3 +1,60 @@
+as_word_ooxml <- function(
+  data,
+  align = "center",
+  caption_location = c("top", "bottom", "embed"),
+  caption_align = "left",
+  split = FALSE,
+  keep_with_next = TRUE,
+  autonum = TRUE
+) {
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  caption_location <- rlang::arg_match(caption_location)
+
+  # Build all table data objects through a common pipeline
+  value <- build_data(data = data, context = "word")
+
+  gt_xml <- NULL # same as c()
+
+  #
+  # Composition of Word table OOXML
+  #
+  # TODO: replace with ooxml code eventually
+  header_xml <-
+      as_word_tbl_header_caption(
+        data = value,
+        align = caption_align,
+        split = split,
+        keep_with_next = ifelse(caption_location == "bottom", FALSE, keep_with_next),
+        autonum = autonum
+      )
+
+  if (caption_location == "top") {
+    gt_xml <- c(gt_xml, header_xml)
+  }
+
+  tbl_xml <- as_ooxml_tbl("word",
+      data = value,
+      align = align,
+      split = split,
+      keep_with_next = keep_with_next,
+      embedded_heading = identical(caption_location, "embed")
+    )
+  tbl_xml <- as.character(tbl_xml)
+
+  gt_xml <- c(gt_xml, tbl_xml)
+
+  if (caption_location == "bottom") {
+    gt_xml <- c(gt_xml, header_xml)
+  }
+
+  gt_xml <- paste0(gt_xml, collapse = "")
+
+  gt_xml
+
+}
+
 as_ooxml_tbl <- function(
     ooxml_type,
     data,
@@ -10,7 +67,7 @@ as_ooxml_tbl <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  tbl_properties <- create_table_properties_ooxml(ooxml_type, data = data, align = align, split = split)
+  tbl_properties <- create_table_properties_ooxml(ooxml_type, data = data, align = align)
 
   # <a:tblGrid> is not optional in pptx, so create_table_grid must set it
   #
@@ -246,9 +303,9 @@ create_table_rows_ooxml <- function(ooxml_type, data, split = FALSE) {
   for (i in seq_len(nrow(body))) {
     rows <- list3(
       create_group_heading_row_ooxml(ooxml_type, data, i, split = split),
-      create_summary_section_row_ooxml(ooxml_type, data, i, "top", split = split),
+      create_summary_section_row_ooxml(ooxml_type, data, i, "top"),
       create_body_row_ooxml(ooxml_type, data, i, split = split),
-      create_summary_section_row_ooxml(ooxml_type, data, i, "bottom", split = split)
+      create_summary_section_row_ooxml(ooxml_type, data, i, "bottom")
     )
     out <- append(out, rows)
   }
