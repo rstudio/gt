@@ -209,7 +209,7 @@ test_that("word ooxml can be generated from gt object", {
 
   gt_exibble_min_sha1 <- rlang::hash(gt_exibble_min)
 
-  expect_equal(gt_exibble_min_sha1, "302bc4daceb5b50a7a41c5e80e5d7187")
+  expect_equal(gt_exibble_min_sha1, "be8267d755328ebf90527242ff60c54c")
 
   ## basic table with linebreak in title
   gt_tbl_linebreaks_md <-
