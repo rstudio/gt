@@ -517,6 +517,9 @@ ooxml_gridSpan <- function(ooxml_type, col_span = NULL) {
     return(NULL)
   }
   col_span <- as.integer(col_span)
+  if (col_span == 1) {
+    return(NULL)
+  }
 
   switch_ooxml(ooxml_type,
     word = ooxml_tag("w:gridSpan", "w:val" = col_span),
