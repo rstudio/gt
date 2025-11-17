@@ -23,6 +23,11 @@
   [\#2037](https://github.com/rstudio/gt/issues/2037),
   [\#2041](https://github.com/rstudio/gt/issues/2041))
 
+- Fix bug where latex spanner widths were based on incorrect column
+  widths ([@shannonhaughton](https://github.com/shannonhaughton),
+  [\#2016](https://github.com/rstudio/gt/issues/2016),
+  [\#1922](https://github.com/rstudio/gt/issues/1922))
+
 ## gt 1.1.0
 
 CRAN release: 2025-09-23
