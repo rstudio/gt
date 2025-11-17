@@ -250,6 +250,8 @@ ooxml_paragraph <- function(ooxml_type, ..., properties = NULL) {
 ooxml_paragraph_properties <- function(ooxml_type,
   ...,
   align = cell_style[["cell_text"]][["align"]] %||% "left",
+  keep_next = TRUE,
+  style = NULL,
   cell_style = NULL
 ) {
   rlang::check_dots_empty()
@@ -257,8 +259,10 @@ ooxml_paragraph_properties <- function(ooxml_type,
   switch_ooxml(ooxml_type,
     word = ooxml_tag("w:pPr", tag_class = "ooxml_paragraph_properties",
       ooxml_tag("w:spacing", "w:before" = "0", "w:after" = "60"),
-      ooxml_tag("w:keepNext"),
-      ooxml_tag("w:jc", "w:val" = arg_match_names(align, values = c(left = "start", right = "end", center = "center")))
+      if (keep_next) ooxml_tag("w:keepNext"),
+      if (!is.null(align)) ooxml_tag("w:jc", "w:val" = arg_match_names(align, values = c(left = "start", right = "end", center = "center"))),
+      if (!is.null(style)) ooxml_tag("w:pStyle", "w:val" = style)
+
     ),
     pptx = ooxml_tag("a:pPr", tag_class = "ooxml_paragraph_properties",
       "algn" = arg_match_names(align, values = c(left = "l", right = "r", center = "ctr")),
@@ -349,7 +353,7 @@ ooxml_cell_border <- function(ooxml_type, ..., location, color = "black", size =
       tag      <- arg_match_names(location, c("top" = "w:top", "left" = "w:start", "bottom" = "w:bottom", "right" = "w:end"))
       color    <- as_hex_code(color)
       size     <- check_between(size, min = .25, max = 12, null_ok = TRUE)
-      type     <- arg_match_names(type, c("solid" = "single", "dashed" = "dashed", "dotted" = "dotted", "hidden" = "none", "double" = "double"))
+      type     <- arg_match_names(type, c("single" = "single", "solid" = "single", "dashed" = "dashed", "dotted" = "dotted", "hidden" = "none", "double" = "double"))
 
       ooxml_tag(tag, tag_class = "ooxml_cell_border",
         `w:val`   = type,

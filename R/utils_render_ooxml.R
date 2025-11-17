@@ -77,14 +77,18 @@ as_ooxml_tbl <- function(
   tbl_spanner_rows <- create_spanner_rows_ooxml(ooxml_type, data = data, split = split)
   tbl_table_rows   <- create_table_rows_ooxml(ooxml_type, data = data, split = split)
 
+  tbl_heading_row  <- if (embedded_heading) {
+    create_heading_row(ooxml_type, data = data, split = split, keep_with_next = keep_with_next)
+  }
+
   ooxml_tbl(ooxml_type,
     properties = tbl_properties,
     grid       = tbl_grid,
+    tbl_heading_row,
     !!!tbl_spanner_rows,
     !!!tbl_table_rows
   )
 }
-
 
 # table properties --------------------------------------------------------
 
@@ -94,6 +98,118 @@ create_table_properties_ooxml <- function(ooxml_type, data, align = c("center", 
   ooxml_tbl_properties(ooxml_type,
     justify = align,
     width   = "100%"
+  )
+}
+
+
+# table heading rows ------------------------------------------------------
+
+create_heading_row <- function(ooxml_type, data, split = FALSE, keep_with_next = TRUE) {
+  if (!dt_heading_has_title(data = data)) {
+    return(NULL)
+  }
+
+  heading <- dt_heading_get(data = data)
+  footnotes_tbl <- dt_footnotes_get(data = data)
+  styles_tbl <- dt_styles_get(data = data)
+  stub_components <- dt_stub_components(data = data)
+  subtitle_defined <- dt_heading_has_subtitle(data = data)
+
+  header_title_style <-
+    styles_tbl[styles_tbl$locname == "title", ]$styles[1][[1]]
+
+  # Obtain the number of visible columns in the built table
+  n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
+  n_stub_cols <- length(dt_boxhead_get_var_by_type(data, type = "stub"))
+  n_cols <- n_data_cols + n_stub_cols
+
+  # Get table options
+  heading_border_bottom_color <- dt_options_get_value(data, option = "heading_border_bottom_color")
+
+  cell_properties <- ooxml_tbl_cell_properties(ooxml_type,
+    borders  = list(
+      top    = list(type = "solid", size = 2, color = heading_border_bottom_color),
+      bottom = list(type = "solid", size = 2, color = heading_border_bottom_color)
+    ),
+    fill     = header_title_style[["cell_fill"]][["color"]],
+    v_align  = header_title_style[["cell_text"]][["v_align"]],
+    col_span = n_cols,
+    margins  = list(
+      top = list(width = 25)
+    )
+  )
+
+  ooxml_tbl_row(ooxml_type, split = split,
+    ooxml_tbl_cell(ooxml_type, properties = cell_properties,
+      create_heading_row_title_paragraph(ooxml_type, data),
+      create_heading_row_subtitle_paragraph(ooxml_type, data)
+    )
+  )
+
+}
+
+create_heading_row_title_paragraph <- function(ooxml_type, data) {
+  heading <- dt_heading_get(data = data)
+  styles_tbl <- dt_styles_get(data = data)
+
+  header_title_style <-
+    styles_tbl[styles_tbl$locname == "title", ]$styles[1][[1]]
+
+  # Obtain the number of visible columns in the built table
+  n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
+  n_stub_cols <- length(dt_boxhead_get_var_by_type(data, type = "stub"))
+  n_cols <- n_data_cols + n_stub_cols
+
+  # Get table options
+  table_font_color <- dt_options_get_value(data, option = "table_font_color")
+  table_border_top_include <- dt_options_get_value(data, option = "table_border_top_include")
+
+  # TODO: deal with <md_container> stuff
+  # TODO: Get the footnote marks for the title
+
+  run_properties <- ooxml_run_properties(ooxml_type,
+    color = header_title_style[["cell_text"]][["color"]] %||% table_font_color,
+    size  = header_title_style[["cell_text"]][["color"]] %||% 24,
+    cell_style = header_title_style
+  )
+
+  ooxml_paragraph(ooxml_type,
+    properties = ooxml_paragraph_properties(ooxml_type,
+      style = "caption",
+      align = header_title_style[["cell_text"]][["color"]] %||% "center"
+    ),
+    ooxml_run(ooxml_type, properties = run_properties,
+      ooxml_text(ooxml_type, heading$title, space = "default")
+    )
+  )
+}
+
+create_heading_row_subtitle_paragraph <- function(ooxml_type, data) {
+  if (!dt_heading_has_subtitle(data = data)) {
+    return(NULL)
+  }
+
+  styles_tbl <- dt_styles_get(data = data)
+  heading <- dt_heading_get(data = data)
+  table_font_color <- dt_options_get_value(data, option = "table_font_color")
+
+  header_subtitle_style <- styles_tbl[styles_tbl$locname == "subtitle", ]$styles[1][[1]]
+
+  run_properties <- ooxml_run_properties(ooxml_type,
+    color = header_subtitle_style[["cell_text"]][["color"]] %||% table_font_color,
+    size  = header_subtitle_style[["cell_text"]][["color"]] %||% 16,
+    cell_style = header_subtitle_style
+  )
+
+  # TODO: investigate process_cell_content and the <md_container>
+  ooxml_paragraph(ooxml_type,
+    properties = ooxml_paragraph_properties(ooxml_type,
+      style = "caption",
+      align = header_subtitle_style[["cell_text"]][["color"]] %||% "center"
+    ),
+    ooxml_run(ooxml_type, properties = run_properties,
+      ooxml_text(ooxml_type, heading$subtitle, space = "default")
+    )
   )
 }
 
