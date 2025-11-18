@@ -15,45 +15,26 @@ as_word_ooxml <- function(
   # Build all table data objects through a common pipeline
   value <- build_data(data = data, context = "word")
 
-  gt_xml <- NULL # same as c()
-
-  #
-  # Composition of Word table OOXML
-  #
-  # TODO: replace with ooxml code eventually
-  header_xml <-
-      as_word_tbl_header_caption(
-        data = value,
-        align = caption_align,
-        split = split,
-        keep_with_next = ifelse(caption_location == "bottom", FALSE, keep_with_next),
-        autonum = autonum
-      )
-
-  if (caption_location == "top") {
-    gt_xml <- c(gt_xml, header_xml)
-  }
-
-  tbl_xml <- as_ooxml_tbl("word",
-      data = value,
+  embedded_heading <- identical(caption_location, "embed")
+  xml <- as_ooxml_tbl("word", data = value,
       align = align,
       split = split,
       keep_with_next = keep_with_next,
-      embedded_heading = identical(caption_location, "embed"),
+      embedded_heading = embedded_heading,
+      autonum = autonum
+  )
+  if (!embedded_heading) {
+    heading <- create_table_caption_contents_ooxml("word", data,
       autonum = autonum
     )
-  tbl_xml <- as.character(tbl_xml)
-
-  gt_xml <- c(gt_xml, tbl_xml)
-
-  if (caption_location == "bottom") {
-    gt_xml <- c(gt_xml, header_xml)
+    if (identical(caption_location, "top")) {
+      xml <- htmltools::tagList(!!!heading, xml)
+    } else {
+      xml <- htmltools::tagList(xml, !!!heading)
+    }
   }
 
-  gt_xml <- paste0(gt_xml, collapse = "")
-
-  gt_xml
-
+  paste(as.character(xml), collapse = "")
 }
 
 as_ooxml_tbl <- function(ooxml_type, data,
@@ -150,11 +131,15 @@ create_heading_row <- function(ooxml_type, data, split = FALSE, keep_with_next =
 }
 
 create_table_caption_contents_ooxml <- function(ooxml_type, data, autonum = TRUE) {
+  if (!dt_heading_has_title(data = data)) {
+    return(NULL)
+  }
+
   styles_tbl <- dt_styles_get(data = data)
   header_title_style <-
     styles_tbl[styles_tbl$locname == "title", ]$styles[1][[1]]
 
-  tagList(
+  htmltools::tagList(
     if (autonum) ooxml_table_autonum(ooxml_type,
       font = header_title_style[["cell_text"]][["font"]] %||% "Calibri",
       size = 24
