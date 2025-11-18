@@ -597,6 +597,37 @@ ooxml_weight <- function(ooxml_type, weight = NULL) {
   )
 }
 
+
+# ooxml_table_autonum -----------------------------------------------------
+
+ooxml_table_autonum <- function(ooxml_type, font = "Calibri", size = 12) {
+  if (ooxml_type == "pptx") {
+    return(NULL)
+  }
+
+  tagList(
+    ooxml_run("word", properties = ooxml_run_properties(ooxml_type, font = font, size = size),
+      ooxml_text("word", "Table", space = "preserve")
+    ),
+    ooxml_tag("w:r", ooxml_tag("w:fldChar", "w:fldCharType" = "begin", "w:dirty" = "true")),
+    ooxml_tag("w:r",
+      ooxml_tag("w:instrText", "xml:space" = "preserve", "w:dirty" = "true", " SEQ Table \\* ARABIC "),
+    ),
+    ooxml_tag("w:r", ooxml_tag("w:fldChar", "w:fldCharType" = "separate", "w:dirty" = "true")),
+    ooxml_tag("w:r",
+      ooxml_tag("w:noProof"),
+      ooxml_font("word", font = font),
+      ooxml_size("word", size = size),
+      ooxml_text("word", "1", space = "default")
+    ),
+    ooxml_tag("w:r", ooxml_tag("w:fldChar", "w:fldCharType" = "end", "w:dirty" = "true")),
+    ooxml_run("word", properties = ooxml_run_properties(ooxml_type, font = font, size = size),
+      ooxml_text("word", ": ", space = "preserve")
+    )
+  )
+}
+
+
 # ooxml_tag ---------------------------------------------------------------
 
 ooxml_tag <- function(tag, ..., tag_class = tag) {
