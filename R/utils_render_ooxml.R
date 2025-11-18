@@ -130,30 +130,38 @@ create_heading_row <- function(ooxml_type, data, split = FALSE, keep_with_next =
   # Get table options
   heading_border_bottom_color <- dt_options_get_value(data, option = "heading_border_bottom_color")
 
-  cell_properties <- ooxml_tbl_cell_properties(ooxml_type,
-    borders  = list(
-      top    = list(type = "solid", size = 2, color = heading_border_bottom_color),
-      bottom = list(type = "solid", size = 2, color = heading_border_bottom_color)
-    ),
-    fill     = header_title_style[["cell_fill"]][["color"]],
-    v_align  = header_title_style[["cell_text"]][["v_align"]],
-    col_span = n_cols,
-    margins  = list(
-      top = list(width = 25)
-    )
-  )
-
   ooxml_tbl_row(ooxml_type, split = split,
-    ooxml_tbl_cell(ooxml_type, properties = cell_properties,
-      if (autonum) ooxml_table_autonum(ooxml_type,
-        font = header_title_style[["cell_text"]][["font"]] %||% "Calibri",
-        size = 24
-      ),
-      create_heading_row_title_paragraph(ooxml_type, data),
-      create_heading_row_subtitle_paragraph(ooxml_type, data)
+    ooxml_tbl_cell(ooxml_type,
+      create_table_caption_contents_ooxml(ooxml_type, data, autonum = autonum),
+      properties = ooxml_tbl_cell_properties(ooxml_type,
+        borders  = list(
+          top    = list(type = "solid", size = 2, color = heading_border_bottom_color),
+          bottom = list(type = "solid", size = 2, color = heading_border_bottom_color)
+        ),
+        fill     = header_title_style[["cell_fill"]][["color"]],
+        v_align  = header_title_style[["cell_text"]][["v_align"]],
+        col_span = n_cols,
+        margins  = list(
+          top = list(width = 25)
+        )
+      )
     )
   )
+}
 
+create_table_caption_contents_ooxml <- function(ooxml_type, data, autonum = TRUE) {
+  styles_tbl <- dt_styles_get(data = data)
+  header_title_style <-
+    styles_tbl[styles_tbl$locname == "title", ]$styles[1][[1]]
+
+  tagList(
+    if (autonum) ooxml_table_autonum(ooxml_type,
+      font = header_title_style[["cell_text"]][["font"]] %||% "Calibri",
+      size = 24
+    ),
+    create_heading_row_title_paragraph(ooxml_type, data),
+    create_heading_row_subtitle_paragraph(ooxml_type, data)
+  )
 }
 
 create_heading_row_title_paragraph <- function(ooxml_type, data) {
