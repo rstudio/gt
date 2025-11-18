@@ -39,7 +39,8 @@ as_word_ooxml <- function(
       align = align,
       split = split,
       keep_with_next = keep_with_next,
-      embedded_heading = identical(caption_location, "embed")
+      embedded_heading = identical(caption_location, "embed"),
+      autonum = autonum
     )
   tbl_xml <- as.character(tbl_xml)
 
@@ -55,13 +56,12 @@ as_word_ooxml <- function(
 
 }
 
-as_ooxml_tbl <- function(
-    ooxml_type,
-    data,
+as_ooxml_tbl <- function(ooxml_type, data,
     align = "center",
     split = FALSE,
     keep_with_next = TRUE,
-    embedded_heading = FALSE
+    embedded_heading = FALSE,
+    autonum = TRUE
 ) {
 
   # Perform input object validation
@@ -78,7 +78,11 @@ as_ooxml_tbl <- function(
   tbl_table_rows   <- create_table_rows_ooxml(ooxml_type, data = data, split = split)
 
   tbl_heading_row  <- if (embedded_heading) {
-    create_heading_row(ooxml_type, data = data, split = split, keep_with_next = keep_with_next)
+    create_heading_row(ooxml_type, data = data,
+      split = split,
+      keep_with_next = keep_with_next,
+      autonum = autonum
+    )
   }
 
   ooxml_tbl(ooxml_type,
@@ -104,7 +108,7 @@ create_table_properties_ooxml <- function(ooxml_type, data, align = c("center", 
 
 # table heading rows ------------------------------------------------------
 
-create_heading_row <- function(ooxml_type, data, split = FALSE, keep_with_next = TRUE) {
+create_heading_row <- function(ooxml_type, data, split = FALSE, keep_with_next = TRUE, autonum = TRUE) {
   if (!dt_heading_has_title(data = data)) {
     return(NULL)
   }
@@ -141,6 +145,10 @@ create_heading_row <- function(ooxml_type, data, split = FALSE, keep_with_next =
 
   ooxml_tbl_row(ooxml_type, split = split,
     ooxml_tbl_cell(ooxml_type, properties = cell_properties,
+      if (autonum) ooxml_table_autonum(ooxml_type,
+        font = header_title_style[["cell_text"]][["font"]] %||% "Calibri",
+        size = 24
+      ),
       create_heading_row_title_paragraph(ooxml_type, data),
       create_heading_row_subtitle_paragraph(ooxml_type, data)
     )
