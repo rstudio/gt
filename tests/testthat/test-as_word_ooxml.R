@@ -9,6 +9,7 @@ test_that("word ooxml can be generated from gt object", {
   xml <- read_xml_word_nodes(as_word_ooxml(gt(exibble_min)))
   expect_equal(length(xml), 1)
   expect_equal(xml_name(xml), "tbl")
+  expect_equal(length(xml_find_all(xml, "//w:keepNext")), 18)
   # TODO: explore xml more precisely than with a snapshot
   expect_xml_snapshot(xml)
 
@@ -26,6 +27,7 @@ test_that("word ooxml can be generated from gt object", {
   expect_equal(xml_name(xml_top), c("p", "p", "tbl"))
   expect_xml_snapshot(xml_top[[1]])
   expect_xml_snapshot(xml_top[[2]])
+  expect_equal(length(xml_find_all(xml_top, "//w:keepNext")), 20)
   # check autonum nodes
   expect_equal(length(xml_find_all(xml_top, "//w:tr")), 2)
   expect_equal(length(xml_find_all(xml_top, "//w:instrText")), 1)
@@ -35,10 +37,9 @@ test_that("word ooxml can be generated from gt object", {
   xml_bottom <- read_xml_word_nodes(as_word_ooxml(gt_tbl_1, caption_location = "bottom"))
   expect_equal(length(xml_bottom), 3)
   expect_equal(xml_name(xml_bottom), c("tbl", "p", "p"))
-  expect_equal(xml_top[[1]], xml_bottom[[2]])
-  expect_equal(xml_top[[2]], xml_bottom[[3]])
   expect_equal(xml_top[[3]], xml_bottom[[1]])
   expect_equal(length(xml_find_all(xml_bottom, "//w:tr")), 2)
+  expect_equal(length(xml_find_all(xml_bottom, "//w:keepNext")), 18)
   # expect_snapshot_ooxml_word(gt_tbl_1, caption_location = "bottom")
 
   ## basic table with title embedded on the top of table
@@ -47,6 +48,7 @@ test_that("word ooxml can be generated from gt object", {
   expect_equal(length(xml_embed), 1)
   expect_equal(xml_name(xml_embed), c("tbl"))
   expect_equal(length(xml_find_all(xml_embed, "//w:tr")), 3)
+  expect_equal(length(xml_find_all(xml_embed, "//w:keepNext")), 20)
 
   title <- xml_find_all(xml_embed, "(//w:p)[1]")[[1]]
   expect_equal(title, xml_top[[1]])
@@ -64,26 +66,31 @@ test_that("word ooxml can be generated from gt object", {
 
   ## basic table with split enabled
   ## expect_snapshot_ooxml_word(gt_tbl_1, split = TRUE)
-  xml <- read_xml_word_nodes(as_word_ooxml(gt_tbl_1, split = FALSE))
+  xml_split <- read_xml_word_nodes(as_word_ooxml(gt_tbl_1, split = FALSE))
   expect_equal(
-    purrr::map_lgl(xml_find_all(xml, "//w:trPr"), \(x) {
+    purrr::map_lgl(xml_find_all(xml_split, "//w:trPr"), \(x) {
       length(xml_find_all(x, ".//w:cantSplit")) == 1
     }),
     c(TRUE, TRUE)
   )
+  expect_equal(length(xml_find_all(xml_split, "//w:keepNext")), 20)
+
 
   ## basic table with autonum disabled
   ## # expect_snapshot_ooxml_word(gt_tbl_1, autonum = FALSE)
-  xml <- read_xml_word_nodes(as_word_ooxml(gt_tbl_1, autonum = FALSE))
-  expect_equal(xml_name(xml), c("p", "p", "tbl"))
-  expect_xml_snapshot(xml[[1]])
-  expect_xml_snapshot(xml[[2]])
-  expect_equal(length(xml_find_all(xml, "//w:instrText")), 0)
-  expect_equal(length(xml_find_all(xml, "//w:fldChar")), 0)
+  xml_autonum_false <- read_xml_word_nodes(as_word_ooxml(gt_tbl_1, autonum = FALSE))
+  expect_equal(xml_name(xml_autonum_false), c("p", "p", "tbl"))
+  expect_xml_snapshot(xml_autonum_false[[1]])
+  expect_xml_snapshot(xml_autonum_false[[2]])
+  expect_equal(length(xml_find_all(xml_autonum_false, "//w:instrText")), 0)
+  expect_equal(length(xml_find_all(xml_autonum_false, "//w:fldChar")), 0)
+  expect_equal(length(xml_find_all(xml_autonum_false, "//w:keepNext")), 20)
 
-  ## basic table with keep_with_next disabled (should only appear in the column headers)
+  ## basic table with keep_with_next disabled
   ## # expect_snapshot_ooxml_word(gt_tbl_1, keep_with_next = FALSE)
-  #
+  xml_keep_next_false <- read_xml_word_nodes(as_word_ooxml(gt_tbl_1, keep_with_next = FALSE))
+  expect_equal(length(xml_find_all(xml_keep_next_false, "//w:keepNext")), 0)
+
   # ## Table with cell styling
   # gt_tbl_2 <-
   #   exibble[1:4, ] |>

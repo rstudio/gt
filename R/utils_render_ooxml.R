@@ -24,7 +24,9 @@ as_word_ooxml <- function(
       autonum = autonum
   )
   if (!embedded_heading) {
-    heading <- create_table_caption_contents_ooxml("word", data, autonum = autonum)
+    heading <- create_table_caption_contents_ooxml("word", data,
+      autonum = autonum, keep_with_next = if(caption_location == "bottom") FALSE else keep_with_next
+    )
     if (identical(caption_location, "top")) {
       xml <- htmltools::tagList(!!!heading, xml)
     } else {
@@ -53,8 +55,8 @@ as_ooxml_tbl <- function(ooxml_type, data,
   # things are different in word where we can have w:tblLayoutType="autofit" and then
   # not have a <w:tblGrid> node
   tbl_grid         <- create_table_grid_ooxml(ooxml_type, data = data)
-  tbl_spanner_rows <- create_spanner_rows_ooxml(ooxml_type, data = data, split = split)
-  tbl_table_rows   <- create_table_rows_ooxml(ooxml_type, data = data, split = split)
+  tbl_spanner_rows <- create_spanner_rows_ooxml(ooxml_type, data = data, split = split, keep_with_next = keep_with_next)
+  tbl_table_rows   <- create_table_rows_ooxml(ooxml_type, data = data, split = split, keep_with_next = keep_with_next)
 
   tbl_heading_row  <- if (embedded_heading) {
     create_heading_row(ooxml_type, data = data,
@@ -109,7 +111,7 @@ create_heading_row <- function(ooxml_type, data, split = FALSE, keep_with_next =
   # Get table options
   heading_border_bottom_color <- dt_options_get_value(data, option = "heading_border_bottom_color")
 
-  paragraphs <- create_table_caption_contents_ooxml(ooxml_type, data, autonum = autonum)
+  paragraphs <- create_table_caption_contents_ooxml(ooxml_type, data, autonum = autonum, keep_with_next = keep_with_next)
   ooxml_tbl_row(ooxml_type, split = split,
     ooxml_tbl_cell(ooxml_type, !!!paragraphs,
       properties = ooxml_tbl_cell_properties(ooxml_type,
@@ -128,18 +130,18 @@ create_heading_row <- function(ooxml_type, data, split = FALSE, keep_with_next =
   )
 }
 
-create_table_caption_contents_ooxml <- function(ooxml_type, data, autonum = TRUE) {
+create_table_caption_contents_ooxml <- function(ooxml_type, data, autonum = TRUE, keep_with_next = TRUE) {
   if (!dt_heading_has_title(data = data)) {
     return(NULL)
   }
 
   htmltools::tagList(
-    create_heading_row_title_paragraph(ooxml_type, data, autonum = autonum),
-    create_heading_row_subtitle_paragraph(ooxml_type, data)
+    create_heading_row_title_paragraph(ooxml_type, data, autonum = autonum, keep_with_next = keep_with_next),
+    create_heading_row_subtitle_paragraph(ooxml_type, data, keep_with_next = keep_with_next)
   )
 }
 
-create_heading_row_title_paragraph <- function(ooxml_type, data, autonum = TRUE) {
+create_heading_row_title_paragraph <- function(ooxml_type, data, autonum = TRUE, keep_with_next = TRUE) {
   heading <- dt_heading_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
 
@@ -167,7 +169,8 @@ create_heading_row_title_paragraph <- function(ooxml_type, data, autonum = TRUE)
   paragraph <- ooxml_paragraph(ooxml_type,
     properties = ooxml_paragraph_properties(ooxml_type,
       style = "caption",
-      align = header_title_style[["cell_text"]][["color"]] %||% "center"
+      align = header_title_style[["cell_text"]][["color"]] %||% "center",
+      keep_next = keep_with_next
     ),
     ooxml_run(ooxml_type, properties = run_properties,
       ooxml_text(ooxml_type, heading$title, space = "default")
@@ -185,7 +188,7 @@ create_heading_row_title_paragraph <- function(ooxml_type, data, autonum = TRUE)
   paragraph
 }
 
-create_heading_row_subtitle_paragraph <- function(ooxml_type, data) {
+create_heading_row_subtitle_paragraph <- function(ooxml_type, data, keep_with_next = TRUE) {
   if (!dt_heading_has_subtitle(data = data)) {
     return(NULL)
   }
@@ -206,7 +209,8 @@ create_heading_row_subtitle_paragraph <- function(ooxml_type, data) {
   ooxml_paragraph(ooxml_type,
     properties = ooxml_paragraph_properties(ooxml_type,
       style = "caption",
-      align = header_subtitle_style[["cell_text"]][["color"]] %||% "center"
+      align = header_subtitle_style[["cell_text"]][["color"]] %||% "center",
+      keep_next = keep_with_next
     ),
     ooxml_run(ooxml_type, properties = run_properties,
       ooxml_text(ooxml_type, heading$subtitle, space = "default")
@@ -229,7 +233,7 @@ create_table_grid_ooxml <- function(ooxml_type, data) {
 
 # spanner rows ------------------------------------------------------------
 
-create_spanner_rows_ooxml <- function(ooxml_type, data, split = FALSE) {
+create_spanner_rows_ooxml <- function(ooxml_type, data, split = FALSE, keep_with_next = TRUE) {
   if (dt_options_get_value(data = data, option = "column_labels_hidden")) {
     return(NULL)
   }
@@ -239,13 +243,13 @@ create_spanner_rows_ooxml <- function(ooxml_type, data, split = FALSE) {
 
   spanner_rows <- lapply(seq_len(spanner_row_count),
     create_spanner_row_ooxml,
-    ooxml_type = ooxml_type, data = data, split = split
+    ooxml_type = ooxml_type, data = data, split = split, keep_with_next = keep_with_next
   )
 
   spanner_rows
 }
 
-create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FALSE) {
+create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FALSE, keep_with_next = TRUE) {
   styles_tbl <- dt_styles_get(data = data)
   column_labels_vlines_color        <- dt_options_get_value(data = data, option = "column_labels_vlines_color")
   column_labels_border_top_color    <- dt_options_get_value(data = data, option = "column_labels_border_top_color")
@@ -265,7 +269,7 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
     0
   )
 
-  stub_cell <- create_spanner_row_stub_cell_ooxml(ooxml_type, data, i = span_row_idx)
+  stub_cell <- create_spanner_row_stub_cell_ooxml(ooxml_type, data, i = span_row_idx, keep_with_next = keep_with_next)
 
   col_alignment <- get_col_alignment(data)
 
@@ -311,7 +315,7 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
       }
     }
     paragraph_properties <- ooxml_paragraph_properties(ooxml_type,
-      align = align, cell_style = cell_style
+      align = align, cell_style = cell_style, keep_next = keep_with_next
     )
 
     ooxml_tbl_cell(ooxml_type, properties = cell_properties,
@@ -353,7 +357,7 @@ create_spanner_row_empty_cell_ooxml <- function(ooxml_type, data, span_row_idx =
   )
 }
 
-create_spanner_row_stub_cell_ooxml <- function(ooxml_type, data, i = 1) {
+create_spanner_row_stub_cell_ooxml <- function(ooxml_type, data, i = 1, keep_with_next = TRUE) {
   if (!dt_stub_df_exists(data = data)) {
     return(NULL)
   }
@@ -377,7 +381,7 @@ create_spanner_row_stub_cell_ooxml <- function(ooxml_type, data, i = 1) {
     )
 
     ooxml_tbl_cell(ooxml_type,
-      ooxml_paragraph(ooxml_type,
+      ooxml_paragraph(ooxml_type, properties = ooxml_paragraph_properties(ooxml_type, keep_next = keep_with_next),
         ooxml_run(ooxml_type,
           ooxml_text(ooxml_type,
             stubh$label,
@@ -411,16 +415,16 @@ create_spanner_row_stub_cell_ooxml <- function(ooxml_type, data, i = 1) {
 
 # table rows ---------------------------------------------------------------
 
-create_table_rows_ooxml <- function(ooxml_type, data, split = FALSE) {
+create_table_rows_ooxml <- function(ooxml_type, data, split = FALSE, keep_with_next = TRUE) {
   body <- dt_body_get(data = data)
 
   out <- list()
   for (i in seq_len(nrow(body))) {
     rows <- list3(
-      create_group_heading_row_ooxml(ooxml_type, data, i, split = split),
-      create_summary_section_row_ooxml(ooxml_type, data, i, "top"),
-      create_body_row_ooxml(ooxml_type, data, i, split = split),
-      create_summary_section_row_ooxml(ooxml_type, data, i, "bottom")
+      create_group_heading_row_ooxml(ooxml_type, data, i, split = split, keep_with_next = keep_with_next),
+      create_summary_section_row_ooxml(ooxml_type, data, i, "top", keep_with_next = keep_with_next),
+      create_body_row_ooxml(ooxml_type, data, i, split = split, keep_with_next = keep_with_next),
+      create_summary_section_row_ooxml(ooxml_type, data, i, "bottom", keep_with_next = keep_with_next)
     )
     out <- append(out, rows)
   }
@@ -428,7 +432,7 @@ create_table_rows_ooxml <- function(ooxml_type, data, split = FALSE) {
   out
 }
 
-create_group_heading_row_ooxml <- function(ooxml_type, data, i, split = FALSE) {
+create_group_heading_row_ooxml <- function(ooxml_type, data, i, split = FALSE, keep_with_next = TRUE) {
   groups_rows_df <- dt_groups_rows_get(data = data)
   if (is.null(groups_rows_df) || !i %in% groups_rows_df$row_start) {
     return(NULL)
@@ -450,7 +454,7 @@ create_group_heading_row_ooxml <- function(ooxml_type, data, i, split = FALSE) {
 
   ooxml_tbl_row(ooxml_type, split = split,
     ooxml_tbl_cell(ooxml_type,
-      ooxml_paragraph(ooxml_type,
+      ooxml_paragraph(ooxml_type, properties = ooxml_paragraph_properties(ooxml_type, keep_next = keep_with_next),
         ooxml_run(ooxml_type,
           ooxml_text(ooxml_type, group_label,
             space = cell_style[["cell_text"]][["whitespace"]] %||% "default"
@@ -473,8 +477,7 @@ create_group_heading_row_ooxml <- function(ooxml_type, data, i, split = FALSE) {
   )
 }
 
-# TODO
-create_summary_section_row_ooxml <- function(ooxml_type, data, i, side = c("top", "bottom")) {
+create_summary_section_row_ooxml <- function(ooxml_type, data, i, side = c("top", "bottom"), keep_with_next = TRUE) {
   styles_tbl <- dt_styles_get(data = data)
   summaries_present <- dt_summary_exists(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
@@ -522,19 +525,19 @@ create_summary_section_row_ooxml <- function(ooxml_type, data, i, side = c("top"
 
 ## body row ----------------------------------------------------------------
 
-create_body_row_ooxml <- function(ooxml_type, data, i, split = FALSE) {
+create_body_row_ooxml <- function(ooxml_type, data, i, split = FALSE, keep_with_next = TRUE) {
   vars <- dt_boxhead_get_vars_default(data = data)
   data_cells <- lapply(seq_along(vars), \(j) {
-    create_body_row_data_cell_ooxml(ooxml_type, data, i = i, j = j)
+    create_body_row_data_cell_ooxml(ooxml_type, data, i = i, j = j, keep_with_next = keep_with_next)
   })
 
   ooxml_tbl_row(ooxml_type, split = split,
-    create_body_row_stub_cell_ooxml(ooxml_type, data, i),
+    create_body_row_stub_cell_ooxml(ooxml_type, data, i, keep_with_next = keep_with_next),
     !!!data_cells
   )
 }
 
-create_body_row_stub_cell_ooxml <- function(ooxml_type, data, i) {
+create_body_row_stub_cell_ooxml <- function(ooxml_type, data, i, keep_with_next = TRUE) {
   stub_components   <- dt_stub_components(data = data)
   summaries_present <- dt_summary_exists(data = data)
   stub_available    <- dt_stub_components_has_rowname(stub_components) || summaries_present
@@ -549,11 +552,11 @@ create_body_row_stub_cell_ooxml <- function(ooxml_type, data, i) {
     cell_style <- cell_style$styles[1][[1]]
     text <- as.character(body[i, dt_boxhead_get_var_stub(data = data)])
 
-    create_body_row_cell_ooxml(ooxml_type, data, cell_style = cell_style, text = text)
+    create_body_row_cell_ooxml(ooxml_type, data, cell_style = cell_style, text = text, keep_with_next = keep_with_next)
   }
 }
 
-create_body_row_data_cell_ooxml <- function(ooxml_type, data, i, j) {
+create_body_row_data_cell_ooxml <- function(ooxml_type, data, i, j, keep_with_next = TRUE) {
   body <- dt_body_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
 
@@ -569,18 +572,19 @@ create_body_row_data_cell_ooxml <- function(ooxml_type, data, i, j) {
   text <- as.character(body[i, j])
   create_body_row_cell_ooxml(ooxml_type, data, text,
     cell_style = cell_style,
-    align = cell_style[["cell_text"]][["align"]] %||% vctrs::vec_slice(boxh$column_align, boxh$type == "default")[j]
+    align = cell_style[["cell_text"]][["align"]] %||% vctrs::vec_slice(boxh$column_align, boxh$type == "default")[j],
+    keep_with_next = keep_with_next
   )
 }
 
 
-create_body_row_cell_ooxml <- function(ooxml_type, data, text, cell_style, align = cell_style[["cell_text"]][["align"]]) {
+create_body_row_cell_ooxml <- function(ooxml_type, data, text, cell_style, align = cell_style[["cell_text"]][["align"]], keep_with_next = TRUE) {
   table_body_hlines_color   <- dt_options_get_value(data, option = "table_body_hlines_color")
   table_body_vlines_color   <- dt_options_get_value(data, option = "table_body_vlines_color")
   table_border_bottom_color <- dt_options_get_value(data, option = "table_border_bottom_color")
   table_border_top_color    <- dt_options_get_value(data, option = "table_border_top_color")
 
-  paragraph_properties <- ooxml_paragraph_properties(ooxml_type, cell_style = cell_style)
+  paragraph_properties <- ooxml_paragraph_properties(ooxml_type, cell_style = cell_style, keep_next = keep_with_next)
   ooxml_tbl_cell(ooxml_type,
     ooxml_paragraph(ooxml_type, properties = paragraph_properties,
       ooxml_run(ooxml_type, properties = ooxml_run_properties(ooxml_type, cell_style = cell_style),
