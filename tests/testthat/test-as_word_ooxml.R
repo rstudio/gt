@@ -90,35 +90,52 @@ test_that("word ooxml can be generated from gt object", {
   ## # expect_snapshot_ooxml_word(gt_tbl_1, keep_with_next = FALSE)
   xml_keep_next_false <- read_xml_word_nodes(as_word_ooxml(gt_tbl_1, keep_with_next = FALSE))
   expect_equal(length(xml_find_all(xml_keep_next_false, "//w:keepNext")), 0)
+})
 
-  # ## Table with cell styling
-  # gt_tbl_2 <-
-  #   exibble[1:4, ] |>
-  #   gt(rowname_col = "char") |>
-  #   tab_row_group("My Row Group 1", c(1:2)) |>
-  #   tab_row_group("My Row Group 2", c(3:4)) |>
-  #   tab_style(
-  #     style = cell_fill(color = "orange"),
-  #     locations = cells_body(columns = c(num, fctr, time, currency, group))
-  #   ) |>
-  #   tab_style(
-  #     style = cell_fill(color = "orange"),
-  #     locations = cells_body(columns = c(num, fctr, time, currency, group))
-  #   ) |>
-  #   tab_style(
-  #     style = cell_text(
-  #       color = "green",
-  #       font = "Biome",
-  #       style = "italic",
-  #       weight = "bold"
-  #     ),
-  #     locations = cells_stub()
-  #   ) |>
-  #   tab_style(
-  #     style = cell_text(color = "blue"),
-  #     locations = cells_row_groups()
-  #   )
-  #
+test_that("word ooxml can be generated from gt object with cell styling", {
+  ## Table with cell styling
+  gt_tbl_2 <-
+    exibble[1:4, ] |>
+    gt(rowname_col = "char") |>
+    tab_row_group("My Row Group 1", c(1:2)) |>
+    tab_row_group("My Row Group 2", c(3:4)) |>
+    tab_style(
+      style = cell_fill(color = "orange"),
+      locations = cells_body(columns = c(num, fctr, time, currency, group))
+    ) |>
+    tab_style(
+      style = cell_fill(color = "orange"),
+      locations = cells_body(columns = c(num, fctr, time, currency, group))
+    ) |>
+    tab_style(
+      style = cell_text(
+        color = "green",
+        font = "Biome",
+        style = "italic",
+        weight = "bold"
+      ),
+      locations = cells_stub()
+    ) |>
+    tab_style(
+      style = cell_text(color = "blue"),
+      locations = cells_row_groups()
+    )
+  xml <- read_xml_word_nodes(as_word_ooxml(gt_tbl_2, keep_with_next = FALSE))
+
+  # row groups
+  expect_equal(xml_attr(xml_find_all(xml, '//w:t[text() = "My Row Group 2"]/../w:rPr/w:color'), "val"), "0000FF")
+  expect_equal(xml_attr(xml_find_all(xml, '//w:t[text() = "My Row Group 2"]/../w:rPr/w:sz'), "val"), "20")
+  expect_equal(xml_attr(xml_find_all(xml, '//w:t[text() = "My Row Group 1"]/../w:rPr/w:color'), "val"), "0000FF")
+  expect_equal(xml_attr(xml_find_all(xml, '//w:t[text() = "My Row Group 1"]/../w:rPr/w:sz'), "val"), "20")
+
+  # body rows
+  xml_body <- xml_find_all(xml, "//w:tr")[c(3, 4, 6, 7)]
+  purrr::walk(xml_find_all(xml_body, "(.//w:tc)[1]//w:rPr"), \(node) {
+    expect_equal(xml_attr(xml_find_all(node, ".//w:rFonts"), "ascii"), "Biome")
+    expect_equal(xml_attr(xml_find_all(node, ".//w:sz"), "val"), "20")
+    expect_equal(length(xml_find_all(node, ".//w:i")), 1)
+    expect_equal(xml_attr(xml_find_all(node, ".//w:color"), "val"), "00FF00")
+  })
   # expect_snapshot_ooxml_word(gt_tbl_2, keep_with_next = FALSE)
   #
   # ## table with column and span styling

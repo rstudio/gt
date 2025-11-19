@@ -269,7 +269,10 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
     0
   )
 
-  stub_cell <- create_spanner_row_stub_cell_ooxml(ooxml_type, data, i = span_row_idx, keep_with_next = keep_with_next)
+  stub_cell <- create_spanner_row_stub_cell_ooxml(ooxml_type, data,
+    i = span_row_idx, keep_with_next = keep_with_next,
+    colspans = colspans
+  )
 
   col_alignment <- get_col_alignment(data)
 
@@ -357,7 +360,7 @@ create_spanner_row_empty_cell_ooxml <- function(ooxml_type, data, span_row_idx =
   )
 }
 
-create_spanner_row_stub_cell_ooxml <- function(ooxml_type, data, i = 1, keep_with_next = TRUE) {
+create_spanner_row_stub_cell_ooxml <- function(ooxml_type, data, i = 1, keep_with_next = TRUE, colspans = NULL) {
   if (!dt_stub_df_exists(data = data)) {
     return(NULL)
   }
