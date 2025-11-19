@@ -137,8 +137,21 @@ test_that("word ooxml can be generated from gt object with cell styling", {
     expect_equal(xml_attr(xml_find_all(node, ".//w:color"), "val"), "00FF00")
     expect_equal(xml_attr(xml_find_all(node, ".//w:b"), "val"), "true")
   })
-  # expect_snapshot_ooxml_word(gt_tbl_2, keep_with_next = FALSE)
-  #
+
+  # orange cells
+  purrr::walk(c(2, 3, 5, 7, 9), \(i) {
+    shd <- xml_find_all(xml_body, paste0("(.//w:tc)[", i, "]/w:tcPr/w:shd"))
+    expect_equal(xml_attr(shd, "fill"), rep("FFA500", 4))
+    expect_equal(xml_attr(shd, "val"), rep("clear", 4))
+    expect_equal(xml_attr(shd, "color"), rep("auto", 4))
+  })
+
+  # regular cells
+  purrr::walk(c(4, 6, 8), \(i) {
+    expect_equal(length(xml_find_all(xml_body, paste0("(.//w:tc)[", i, "]/w:tcPr/w:shd"))), 0)
+  })
+
+
   # ## table with column and span styling
   # gt_exibble_min <-
   #   exibble[1:4, ] |>
