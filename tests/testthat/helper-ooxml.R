@@ -115,3 +115,8 @@ read_xml_word_nodes <- function(x) {
     "</w:wrapper>"
   ))))
 }
+
+expect_xml_snapshot <- function(xml) {
+  expect_snapshot(writeLines(as.character(xml)))
+}
+
