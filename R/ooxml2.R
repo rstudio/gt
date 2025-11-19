@@ -293,7 +293,7 @@ ooxml_run_properties <- function(ooxml_type,
   style  = cell_style[["cell_text"]][["style"]],
   size   = cell_style[["cell_text"]][["size"]] %||% 10,
   color  = cell_style[["cell_text"]][["color"]],
-  weight = NULL,
+  weight = cell_style[["cell_text"]][["weight"]],
   cell_style = NULL
 ){
   rlang::check_dots_empty()
@@ -592,7 +592,7 @@ ooxml_weight <- function(ooxml_type, weight = NULL) {
   }
 
   switch_ooxml(ooxml_type,
-    word = ooxml_tag("w:b"),
+    word = ooxml_tag("w:b", "w:val" = "true"),
     pptx = splice3(b = "1")
   )
 }
