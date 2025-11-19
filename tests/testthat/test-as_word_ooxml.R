@@ -195,9 +195,10 @@ test_that("word ooxml can be generated from gt object with cell styling", {
   }
 
   # columns
-  # xml_find_all(xml, "//w:tr[3]/w:tc")
-
-
+  expect_equal(
+    xml_attr(xml_find_all(xml, "//w:tr[3]/w:tc/w:tcPr/w:shd"), "fill"),
+    rep("00FF00", 9)
+  )
 
   # columns
 

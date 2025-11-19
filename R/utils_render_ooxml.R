@@ -267,7 +267,6 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
     spanners_rle$lengths[match(seq_along(spanner_row_ids), sig_cells)],
     0
   )
-
   stub_cell <- create_spanner_row_stub_cell_ooxml(ooxml_type, data,
     i = span_row_idx, keep_with_next = keep_with_next,
     colspans = colspans
@@ -289,10 +288,19 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
       return(cell)
     }
 
-    cell_style <- vctrs::vec_slice(styles_tbl,
-      styles_tbl$locname %in% c("columns_groups") & styles_tbl$grpname %in% spanner_row_ids[i]
-    )
-    cell_style <- cell_style$styles[1][[1]]
+    if (span_row_idx == nrow(spanners)) {
+      # TODO: check this is ok, or split into create_spanner_row_ooxml()
+      #       and create_colnames_row_ooxml()
+      cell_style <- vctrs::vec_slice(styles_tbl,
+        styles_tbl$locname %in% c("columns_columns") & styles_tbl$colname %in% spanner_row_ids[i]
+      )
+      cell_style <- cell_style$styles[1][[1]]
+    } else {
+      cell_style <- vctrs::vec_slice(styles_tbl,
+        styles_tbl$locname %in% c("columns_groups") & styles_tbl$grpname %in% spanner_row_ids[i]
+      )
+      cell_style <- cell_style$styles[1][[1]]
+    }
 
     borders <- list(
       left = if (i == 1) { list(color = column_labels_vlines_color) },
@@ -316,6 +324,7 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
         align <- "center"
       }
     }
+
     paragraph_properties <- ooxml_paragraph_properties(ooxml_type,
       align = align, cell_style = cell_style, keep_next = keep_with_next
     )
