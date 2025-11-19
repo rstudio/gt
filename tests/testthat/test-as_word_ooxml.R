@@ -13,6 +13,7 @@ test_that("word ooxml can be generated from gt object", {
   expect_xml_snapshot(xml)
 
   ## basic table with title
+  # expect_snapshot_ooxml_word(gt_tbl_1)
   gt_tbl_1 <-
     exibble_min |>
     gt() |>
@@ -25,8 +26,10 @@ test_that("word ooxml can be generated from gt object", {
   expect_equal(xml_name(xml_top), c("p", "p", "tbl"))
   expect_xml_snapshot(xml_top[[1]])
   expect_xml_snapshot(xml_top[[2]])
+  # check autonum nodes
   expect_equal(length(xml_find_all(xml_top, "//w:tr")), 2)
-  # expect_snapshot_ooxml_word(gt_tbl_1)
+  expect_equal(length(xml_find_all(xml_top, "//w:instrText")), 1)
+  expect_equal(length(xml_find_all(xml_top, "//w:fldChar")), 3)
 
   ## basic table with title added below table
   xml_bottom <- read_xml_word_nodes(as_word_ooxml(gt_tbl_1, caption_location = "bottom"))
@@ -60,7 +63,7 @@ test_that("word ooxml can be generated from gt object", {
   )
 
   ## basic table with split enabled
-  ## # expect_snapshot_ooxml_word(gt_tbl_1, split = TRUE)
+  ## expect_snapshot_ooxml_word(gt_tbl_1, split = TRUE)
   xml <- read_xml_word_nodes(as_word_ooxml(gt_tbl_1, split = FALSE))
   expect_equal(
     purrr::map_lgl(xml_find_all(xml, "//w:trPr"), \(x) {
@@ -70,17 +73,16 @@ test_that("word ooxml can be generated from gt object", {
   )
 
   ## basic table with autonum disabled
-  # expect_snapshot_ooxml_word(gt_tbl_1, autonum = FALSE)
+  ## # expect_snapshot_ooxml_word(gt_tbl_1, autonum = FALSE)
   xml <- read_xml_word_nodes(as_word_ooxml(gt_tbl_1, autonum = FALSE))
   expect_equal(xml_name(xml), c("p", "p", "tbl"))
-  expect_snapshot(writeLines(as.character(xml[[1]])))
-  expect_snapshot(writeLines(as.character(xml[[2]])))
-  expect_snapshot(writeLines(as.character(xml[[3]])))
+  expect_xml_snapshot(xml[[1]])
+  expect_xml_snapshot(xml[[2]])
+  expect_equal(length(xml_find_all(xml, "//w:instrText")), 0)
+  expect_equal(length(xml_find_all(xml, "//w:fldChar")), 0)
 
-
-  ## basic table with keep_with_next disabled (should only appear in the column
-  ## headers)
-  ## #expect_snapshot_ooxml_word(gt_tbl_1, keep_with_next = FALSE)
+  ## basic table with keep_with_next disabled (should only appear in the column headers)
+  ## # expect_snapshot_ooxml_word(gt_tbl_1, keep_with_next = FALSE)
   #
   # ## Table with cell styling
   # gt_tbl_2 <-
