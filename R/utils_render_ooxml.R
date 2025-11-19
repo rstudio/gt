@@ -24,9 +24,7 @@ as_word_ooxml <- function(
       autonum = autonum
   )
   if (!embedded_heading) {
-    heading <- create_table_caption_contents_ooxml("word", data,
-      autonum = autonum
-    )
+    heading <- create_table_caption_contents_ooxml("word", data, autonum = autonum)
     if (identical(caption_location, "top")) {
       xml <- htmltools::tagList(!!!heading, xml)
     } else {
@@ -111,9 +109,9 @@ create_heading_row <- function(ooxml_type, data, split = FALSE, keep_with_next =
   # Get table options
   heading_border_bottom_color <- dt_options_get_value(data, option = "heading_border_bottom_color")
 
+  paragraphs <- create_table_caption_contents_ooxml(ooxml_type, data, autonum = autonum)
   ooxml_tbl_row(ooxml_type, split = split,
-    ooxml_tbl_cell(ooxml_type,
-      create_table_caption_contents_ooxml(ooxml_type, data, autonum = autonum),
+    ooxml_tbl_cell(ooxml_type, !!!paragraphs,
       properties = ooxml_tbl_cell_properties(ooxml_type,
         borders  = list(
           top    = list(type = "solid", size = 2, color = heading_border_bottom_color),
@@ -135,21 +133,13 @@ create_table_caption_contents_ooxml <- function(ooxml_type, data, autonum = TRUE
     return(NULL)
   }
 
-  styles_tbl <- dt_styles_get(data = data)
-  header_title_style <-
-    styles_tbl[styles_tbl$locname == "title", ]$styles[1][[1]]
-
   htmltools::tagList(
-    if (autonum) ooxml_table_autonum(ooxml_type,
-      font = header_title_style[["cell_text"]][["font"]] %||% "Calibri",
-      size = 24
-    ),
-    create_heading_row_title_paragraph(ooxml_type, data),
+    create_heading_row_title_paragraph(ooxml_type, data, autonum = autonum),
     create_heading_row_subtitle_paragraph(ooxml_type, data)
   )
 }
 
-create_heading_row_title_paragraph <- function(ooxml_type, data) {
+create_heading_row_title_paragraph <- function(ooxml_type, data, autonum = TRUE) {
   heading <- dt_heading_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
 
@@ -174,7 +164,7 @@ create_heading_row_title_paragraph <- function(ooxml_type, data) {
     cell_style = header_title_style
   )
 
-  ooxml_paragraph(ooxml_type,
+  paragraph <- ooxml_paragraph(ooxml_type,
     properties = ooxml_paragraph_properties(ooxml_type,
       style = "caption",
       align = header_title_style[["cell_text"]][["color"]] %||% "center"
@@ -183,6 +173,16 @@ create_heading_row_title_paragraph <- function(ooxml_type, data) {
       ooxml_text(ooxml_type, heading$title, space = "default")
     )
   )
+
+  if (autonum) {
+    nodes <- ooxml_table_autonum(ooxml_type,
+      font = header_title_style[["cell_text"]][["font"]] %||% "Calibri",
+      size = 24
+    )
+    paragraph <- htmltools::tagInsertChildren(paragraph, !!!nodes, after = 1)
+  }
+
+  paragraph
 }
 
 create_heading_row_subtitle_paragraph <- function(ooxml_type, data) {
