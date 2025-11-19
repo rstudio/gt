@@ -257,7 +257,6 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
 
   spanners    <- dt_spanners_print_matrix(data, include_hidden = FALSE)
   spanner_ids <- dt_spanners_print_matrix(data, include_hidden = FALSE, ids = TRUE)
-
   spanner_row_values <- spanners[span_row_idx,]
   spanner_row_ids <- spanner_ids[span_row_idx,]
 
@@ -408,8 +407,7 @@ create_spanner_row_stub_cell_ooxml <- function(ooxml_type, data, i = 1, keep_wit
       bottom = if (i == spanner_row_count) list(size = 8, color = column_labels_border_bottom_color)
     )
     ooxml_tbl_cell(ooxml_type,
-      row_span = "continue",
-      properties = ooxml_tbl_cell_properties(ooxml_type, borders = borders)
+      properties = ooxml_tbl_cell_properties(ooxml_type, borders = borders, row_span = "continue")
     )
   }
 

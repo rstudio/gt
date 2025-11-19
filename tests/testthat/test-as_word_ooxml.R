@@ -151,41 +151,58 @@ test_that("word ooxml can be generated from gt object with cell styling", {
     expect_equal(length(xml_find_all(xml_body, paste0("(.//w:tc)[", i, "]/w:tcPr/w:shd"))), 0)
   })
 
-
   # ## table with column and span styling
-  # gt_exibble_min <-
-  #   exibble[1:4, ] |>
-  #   gt(rowname_col = "char") |>
-  #   tab_row_group("My Row Group 1", c(1:2)) |>
-  #   tab_row_group("My Row Group 2", c(3:4)) |>
-  #   tab_spanner("My Span Label", columns = 1:5) |>
-  #   tab_spanner("My Span Label top", columns = 2:4, level = 2) |>
-  #   tab_style(
-  #     style = cell_text(color = "purple"),
-  #     locations = cells_column_labels()
-  #   ) |>
-  #   tab_style(
-  #     style = cell_fill(color = "green"),
-  #     locations = cells_column_labels()
-  #   ) |>
-  #   tab_style(
-  #     style = cell_fill(color = "orange"),
-  #     locations = cells_column_spanners("My Span Label")
-  #   ) |>
-  #   tab_style(
-  #     style = cell_fill(color = "red"),
-  #     locations = cells_column_spanners("My Span Label top")
-  #   ) |>
-  #   tab_style(
-  #     style = cell_fill(color = "pink"),
-  #     locations = cells_stubhead()
-  #   ) |>
-  #   as_word()
-  #
-  # gt_exibble_min_sha1 <- rlang::hash(gt_exibble_min)
-  #
-  # expect_equal(gt_exibble_min_sha1, "be8267d755328ebf90527242ff60c54c")
-  #
+  gt_exibble_min <-
+    exibble[1, ] |>
+    gt() |>
+    tab_spanner("My Span Label", columns = 1:5) |>
+    tab_spanner("My Span Label top", columns = 2:4, level = 2) |>
+    tab_style(
+      style = cell_text(color = "purple"),
+      locations = cells_column_labels()
+    ) |>
+    tab_style(
+      style = cell_fill(color = "green"),
+      locations = cells_column_labels()
+    ) |>
+    tab_style(
+      style = cell_fill(color = "orange"),
+      locations = cells_column_spanners("My Span Label")
+    ) |>
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_column_spanners("My Span Label top")
+    )
+
+  xml <- read_xml_word_nodes(as_word_ooxml(gt_exibble_min))
+
+  # level 2 span
+  for (j in c(1, 3:7)) {
+    expect_equal(xml_text(xml_find_all(xml, paste0("//w:tr[1]/w:tc[", j, "]//w:t"))), "")
+  }
+  xml_top_span <- xml_find_all(xml, "//w:tr[1]/w:tc[2]")
+  expect_equal(xml_attr(xml_find_all(xml_top_span, "./w:tcPr/w:gridSpan"), "val"), "3")
+  expect_equal(xml_attr(xml_find_all(xml_top_span, "./w:tcPr/w:shd"), "fill"), "FF0000")
+  expect_equal(xml_text(xml_find_all(xml_top_span, ".//w:t")), "My Span Label top")
+
+  # level 1 span
+  xml_bottom_span <- xml_find_all(xml, "//w:tr[2]/w:tc[1]")
+  expect_equal(xml_attr(xml_find_all(xml_bottom_span, "./w:tcPr/w:gridSpan"), "val"), "5")
+  expect_equal(xml_attr(xml_find_all(xml_bottom_span, "./w:tcPr/w:shd"), "fill"), "FFA500")
+  expect_equal(xml_text(xml_find_all(xml_bottom_span, ".//w:t")), "My Span Label")
+  for (j in c(2:5)) {
+    expect_equal(xml_text(xml_find_all(xml, paste0("//w:tr[2]/w:tc[", j, "]//w:t"))), "")
+  }
+
+  # columns
+  # xml_find_all(xml, "//w:tr[3]/w:tc")
+
+
+
+  # columns
+
+
+
   # ## basic table with linebreak in title
   # gt_tbl_linebreaks_md <-
   #   exibble_min |>
