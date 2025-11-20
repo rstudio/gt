@@ -82,6 +82,7 @@ render_formats <- function(data, skip_compat_check = FALSE, context) {
     # the context; if not, use the `default` function (which should
     # always be present)
     if (context %in% names(fmt$func)) {
+      # QUESTION: should this be fmt$func[[context]] ?
       eval_func <- context
     } else {
       eval_func <- "default"
@@ -842,13 +843,13 @@ summary_row_side <- function(data, group_id) {
 
 # Get the number of columns in the stub for layout purposes
 get_stub_column_count <- function(data) {
-  
+
   stub_layout <- get_stub_layout(data = data)
-  
+
   if (is.null(stub_layout)) {
     return(0)
   }
-  
+
   # Check if we have "rowname" in the layout
   if ("rowname" %in% stub_layout) {
     # Check if there are multiple stub columns
@@ -859,7 +860,7 @@ get_stub_column_count <- function(data) {
       return(length(stub_vars) + group_count)
     }
   }
-  
+
   # Default: return the length of the layout (original behavior)
   return(length(stub_layout))
 }
