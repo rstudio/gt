@@ -13,10 +13,10 @@ as_word_ooxml <- function(
   caption_location <- rlang::arg_match(caption_location)
 
   # Build all table data objects through a common pipeline
-  value <- build_data(data = data, context = "word")
+  data <- build_data(data, context = "word")
 
   embedded_heading <- identical(caption_location, "embed")
-  xml <- as_ooxml_tbl("word", data = value,
+  xml <- as_ooxml_tbl("word", data,
       align = align,
       split = split,
       keep_with_next = keep_with_next,
@@ -25,7 +25,8 @@ as_word_ooxml <- function(
   )
   if (!embedded_heading) {
     heading <- create_table_caption_contents_ooxml("word", data,
-      autonum = autonum, keep_with_next = if(caption_location == "bottom") FALSE else keep_with_next
+      autonum = autonum,
+      keep_with_next = if(caption_location == "bottom") FALSE else keep_with_next
     )
     if (identical(caption_location, "top")) {
       xml <- htmltools::tagList(!!!heading, xml)
@@ -166,12 +167,13 @@ create_heading_row_title_paragraph <- function(ooxml_type, data, autonum = TRUE,
     cell_style = header_title_style
   )
 
-  paragraph <- ooxml_paragraph(ooxml_type,
-    properties = ooxml_paragraph_properties(ooxml_type,
-      style = "caption",
-      align = header_title_style[["cell_text"]][["color"]] %||% "center",
-      keep_next = keep_with_next
-    ),
+  paragraph_properties <- ooxml_paragraph_properties(ooxml_type,
+    style = "caption",
+    align = header_title_style[["cell_text"]][["color"]] %||% "center",
+    keep_next = keep_with_next
+  )
+
+  paragraph <- ooxml_paragraph(ooxml_type, properties = paragraph_properties,
     ooxml_run(ooxml_type, properties = run_properties,
       ooxml_text(ooxml_type, heading$title, space = "default")
     )
