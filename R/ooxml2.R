@@ -1,4 +1,5 @@
 #' @importFrom grDevices col2rgb rgb
+#' @importFrom htmltools tagList
 NULL
 
 # tbl ----------------------------------------------------------
