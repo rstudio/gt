@@ -164,6 +164,10 @@ expect_snapshot_word <- function(gt_tbl, ...) {
   expect_snapshot(as_word(gt_tbl, ...))
 }
 
+expect_snapshot_ooxml_word <- function(gt_tbl, ...) {
+  expect_snapshot(as_word_ooxml(gt_tbl, ...))
+}
+
 expect_snapshot_rtf <- function(gt_tbl) {
   expect_snapshot(as_rtf(gt_tbl))
 }
