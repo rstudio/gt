@@ -732,3 +732,26 @@ ooxml_list <- function(ooxml_type, tag_class, tag_fun, ...) {
 splice3 <- function(...) {
   rlang::splice(list3(...))
 }
+
+
+# process_text() implementation -------------------------------------------
+
+process_text_ooxml <- function(text, ooxml_type = c("word", "pptx")) {
+  ooxml_type <- rlang::arg_match(ooxml_type)
+
+  if (inherits(text, "from_markdown")) {
+    return(markdown_to_ooxml(text, ooxml_type = ooxml_type))
+  }
+
+  if (is_html(text)) {
+    return(markdown_to_ooxml(unescape_html(linebreak_br(text)), ooxml_type = ooxml_type))
+  }
+
+  as.character(text)
+}
+
+markdown_to_ooxml <- function(text, ooxml_type) {
+  switch_ooxml(ooxml_type,
+    word = markdown_to_xml(text)
+  )
+}

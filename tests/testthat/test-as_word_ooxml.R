@@ -206,6 +206,19 @@ test_that("word ooxml can be generated from gt object with cell styling", {
 
 })
 
+test_that("process_text() handles ooxml/word", {
+  expect_equal(process_text("simple", context = "ooxml/word"), "simple")
+  expect_equal(
+    process_text(md("simple <br> markdown"), context = "ooxml/word"),
+    process_text(md("simple <br> markdown"), context = "word")
+  )
+  expect_equal(
+    process_text(html("simple <br> html"), context = "ooxml/word"),
+    process_text(html("simple <br> html"), context = "word")
+  )
+})
+
+
 test_that("word ooxml handles md() and html()", {
 
   # # ## basic table with linebreak in title

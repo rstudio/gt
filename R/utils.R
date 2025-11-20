@@ -989,6 +989,8 @@ process_text <- function(text, context = "html") {
 
     return(text)
 
+  } else if (grepl("^ooxml/", context)) {
+    return(process_text_ooxml(text, ooxml_type = sub("^ooxml/", "", context)))
   } else if (context == "grid") {
     # Skip any formatting (unless wrapped in from_md)
     if (inherits(text, "from_markdown")) {
