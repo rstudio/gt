@@ -204,7 +204,11 @@ test_that("word ooxml can be generated from gt object with cell styling", {
     rep("A020F0", 9)
   )
 
-  # ## basic table with linebreak in title
+})
+
+test_that("word ooxml handles md() and html()", {
+
+  # # ## basic table with linebreak in title
   # gt_tbl_linebreaks_md <-
   #   exibble_min |>
   #   gt() |>
@@ -212,7 +216,7 @@ test_that("word ooxml can be generated from gt object with cell styling", {
   #     title = md("TABLE <br> TITLE"),
   #     subtitle = md("table <br> subtitle")
   #   )
-  #
+
   # expect_snapshot_ooxml_word(gt_tbl_linebreaks_md)
   #
   # ## basic table with linebreak in title
