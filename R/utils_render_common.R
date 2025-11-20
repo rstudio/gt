@@ -82,7 +82,6 @@ render_formats <- function(data, skip_compat_check = FALSE, context) {
     # the context; if not, use the `default` function (which should
     # always be present)
     if (context %in% names(fmt$func)) {
-      # QUESTION: should this be fmt$func[[context]] ?
       eval_func <- context
     } else {
       eval_func <- "default"
