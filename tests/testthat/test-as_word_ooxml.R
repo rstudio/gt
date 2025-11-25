@@ -213,7 +213,6 @@ test_that("process_text() handles ooxml/word", {
   )
 })
 
-
 test_that("word ooxml handles md() and html()", {
 
   # Create a one-row table for these tests
@@ -228,18 +227,30 @@ test_that("word ooxml handles md() and html()", {
       subtitle = md("table <br> subtitle")
     )
   xml <- read_xml_word_nodes(as_word_ooxml(gt_tbl_linebreaks_md))
+  expect_equal(
+    xml_text(xml_find_all(xml[[1]], "(.//w:r)[last()]//w:t")),
+    "TABLE"
+  )
+  expect_equal(xml_text(xml_find_all(xml[[2]], ".//w:r//w:t")), "TITLE")
+  expect_equal(xml_text(xml_find_all(xml[[3]], ".//w:r//w:t")), "table")
+  expect_equal(xml_text(xml_find_all(xml[[4]], ".//w:r//w:t")), "subtitle")
 
-  # expect_snapshot_ooxml_word(gt_tbl_linebreaks_md)
-  #
-  # ## basic table with linebreak in title
-  # gt_tbl_linebreaks_html <-
-  #   exibble_min |>
-  #   gt() |>
-  #   tab_header(
-  #     title = html("TABLE <br> TITLE"),
-  #     subtitle = html("table <br> subtitle")
-  #   )
-  #
-  # expect_snapshot_ooxml_word(gt_tbl_linebreaks_html)
+  ## basic table with linebreak in title
+  gt_tbl_linebreaks_html <-
+    exibble_min |>
+    gt() |>
+    tab_header(
+      title = html("TABLE <br> TITLE"),
+      subtitle = html("table <br> subtitle")
+    )
+
+  xml <- read_xml_word_nodes(as_word_ooxml(gt_tbl_linebreaks_md))
+  expect_equal(
+    xml_text(xml_find_all(xml[[1]], "(.//w:r)[last()]//w:t")),
+    "TABLE"
+  )
+  expect_equal(xml_text(xml_find_all(xml[[2]], ".//w:r//w:t")), "TITLE")
+  expect_equal(xml_text(xml_find_all(xml[[3]], ".//w:r//w:t")), "table")
+  expect_equal(xml_text(xml_find_all(xml[[4]], ".//w:r//w:t")), "subtitle")
 })
 
