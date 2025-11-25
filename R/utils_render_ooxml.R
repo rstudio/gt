@@ -187,23 +187,19 @@ create_heading_row_subtitle_paragraph <- function(ooxml_type, data, keep_with_ne
 
   header_subtitle_style <- styles_tbl[styles_tbl$locname == "subtitle", ]$styles[1][[1]]
 
-  run_properties <- ooxml_run_properties(ooxml_type,
-    color = header_subtitle_style[["cell_text"]][["color"]] %||% table_font_color,
-    size  = header_subtitle_style[["cell_text"]][["color"]] %||% 16,
-    cell_style = header_subtitle_style
+  paragraphs <- parse_to_ooxml(heading$subtitle, ooxml_type = ooxml_type)
+  paragraphs <- process_cell_content_ooxml(ooxml_type, paragraphs, cell_style = header_subtitle_style,
+    whitespace = "default",
+
+    size_default  = 16,
+    color_default = table_font_color,
+
+    paragraph_style = "caption",
+    keep_with_next  = keep_with_next,
+    align_default   = "center"
   )
 
-  # TODO: investigate process_cell_content and the <md_container>
-  ooxml_paragraph(ooxml_type,
-    properties = ooxml_paragraph_properties(ooxml_type,
-      style = "caption",
-      align = header_subtitle_style[["cell_text"]][["color"]] %||% "center",
-      keep_next = keep_with_next
-    ),
-    ooxml_run(ooxml_type, properties = run_properties,
-      ooxml_text(ooxml_type, heading$subtitle, space = "default")
-    )
-  )
+  xml2_nodeset_to_tags(paragraphs)
 }
 
 # table grid --------------------------------------------------------------

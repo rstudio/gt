@@ -513,8 +513,8 @@
         <w:r>
           <w:rPr>
             <w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-            <w:sz w:val="32"/>
             <w:color w:val="333333"/>
+            <w:sz w:val="16"/>
           </w:rPr>
           <w:t xml:space="default">table subtitle</w:t>
         </w:r>
@@ -557,8 +557,8 @@
         <w:r>
           <w:rPr>
             <w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-            <w:sz w:val="32"/>
             <w:color w:val="333333"/>
+            <w:sz w:val="16"/>
           </w:rPr>
           <w:t xml:space="default">table subtitle</w:t>
         </w:r>
