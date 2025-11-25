@@ -143,19 +143,12 @@ create_table_caption_contents_ooxml <- function(ooxml_type, data, autonum = TRUE
 
 create_heading_row_title_paragraph <- function(ooxml_type, data, autonum = TRUE, keep_with_next = TRUE) {
   heading <- dt_heading_get(data = data)
+
   styles_tbl <- dt_styles_get(data = data)
-
-  header_title_style <-
-    styles_tbl[styles_tbl$locname == "title", ]$styles[1][[1]]
-
-  # Obtain the number of visible columns in the built table
-  n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
-  n_stub_cols <- length(dt_boxhead_get_var_by_type(data, type = "stub"))
-  n_cols <- n_data_cols + n_stub_cols
+  header_title_style <- styles_tbl[styles_tbl$locname == "title", ]$styles[1][[1]]
 
   # Get table options
   table_font_color <- dt_options_get_value(data, option = "table_font_color")
-  table_border_top_include <- dt_options_get_value(data, option = "table_border_top_include")
 
   paragraphs <- parse_to_ooxml(heading$title, ooxml_type = ooxml_type)
   paragraphs <- process_cell_content_ooxml(ooxml_type, paragraphs, cell_style = header_title_style,
@@ -178,7 +171,6 @@ create_heading_row_title_paragraph <- function(ooxml_type, data, autonum = TRUE,
     for (i in seq_len(length(autonum_nodes))) {
       xml_add_child(paragraphs[[1]], autonum_nodes[[i]], .where = i)
     }
-
   }
 
   xml2_nodeset_to_tags(paragraphs)
