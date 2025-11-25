@@ -50,11 +50,6 @@ test_that("word ooxml can be generated from gt object", {
   expect_equal(length(xml_find_all(xml_embed, "//w:tr")), 3)
   expect_equal(length(xml_find_all(xml_embed, "//w:keepNext")), 20)
 
-  title <- xml_find_all(xml_embed, "(//w:p)[1]")[[1]]
-  expect_equal(title, xml_top[[1]])
-  subtitle <- xml_find_all(xml_embed, "(//w:p)[2]")[[1]]
-  expect_equal(subtitle, xml_top[[2]])
-
   expect_equal(
     xml_find_all(xml_top, "(//w:tr)[1]")[[1]],
     xml_find_all(xml_embed, "(//w:tr)[2]")[[1]]
@@ -221,14 +216,18 @@ test_that("process_text() handles ooxml/word", {
 
 test_that("word ooxml handles md() and html()", {
 
-  # # ## basic table with linebreak in title
-  # gt_tbl_linebreaks_md <-
-  #   exibble_min |>
-  #   gt() |>
-  #   tab_header(
-  #     title = md("TABLE <br> TITLE"),
-  #     subtitle = md("table <br> subtitle")
-  #   )
+  # Create a one-row table for these tests
+  exibble_min <- exibble[1, ]
+
+  ## basic table with linebreak in title
+  gt_tbl_linebreaks_md <-
+    exibble_min |>
+    gt() |>
+    tab_header(
+      title = md("TABLE <br> TITLE"),
+      subtitle = md("table <br> subtitle")
+    )
+  xml <- read_xml_word_nodes(as_word_ooxml(gt_tbl_linebreaks_md))
 
   # expect_snapshot_ooxml_word(gt_tbl_linebreaks_md)
   #

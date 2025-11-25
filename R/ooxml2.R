@@ -90,7 +90,7 @@ pptx_tbl_properties <- function(..., tableStyle = NA) {
 
 ooxml_tbl_grid <- function(ooxml_type, ...) {
   dots <- list2(...)
-  if (identical(ooxml_type, "word") && all(purrr::map_lgl(dots, is.null))) {
+  if (identical(ooxml_type, "word") && all(sapply(dots, is.null))) {
     return(NULL)
   }
 
@@ -755,4 +755,281 @@ markdown_to_ooxml <- function(text, ooxml_type) {
   switch_ooxml(ooxml_type,
     word = markdown_to_xml(text)
   )
+}
+
+
+# parse_to_ooxml ----------------------------------------------------------
+
+parse_to_ooxml <- function(x, ooxml_type = c("word", "pptx"), ...) {
+  switch_ooxml(ooxml_type, word = parse_to_ooxml_word(x))
+}
+
+parse_to_ooxml_word <- function(x) {
+  if (is.null(x)) {
+    x <- parse_to_ooxml_word_simple("")
+  }
+
+  if (length(x) > 1) {
+    x <- gsub("^<md_container>(.*)</md_container>$", "\\1", x)
+    x <- paste0(x, collapse = "")
+    x <- paste0("<md_container>", x, "</md_container>")
+  }
+
+  if (!grepl("^<md_container>.*</md_container>$", x)) {
+    x <- parse_to_ooxml_word_simple(enc2utf8(htmltools::htmlEscape(x)))
+  }
+
+  parsed_xml_contents <- suppressWarnings(read_xml(add_ns(x)))
+  xml_children(parsed_xml_contents)
+}
+
+parse_to_ooxml_word_simple <- function(text = "") {
+  paste0('
+<md_container>
+  <w:p>
+    <w:pPr>
+      <w:spacing w:before="0" w:after="60"/>
+    </w:pPr>
+    <w:r>
+      <w:rPr/>
+      <w:t xml:space="default">', text, '</w:t>
+    </w:r>
+  </w:p>
+</md_container>')
+}
+
+
+# process cell content ----------------------------------------------------
+
+process_cell_content_ooxml <- function(
+  ooxml_type = c("word", "pptx"),
+  x,
+  ...,
+
+  # text
+  whitespace = c("default", "preserve"),
+
+  # run
+  font = NULL ,  font_default = "Calibri",
+  size = NULL ,  size_default = 20,
+  color = NULL,  color_default = "D3D3D3",
+  style = NULL,  style_default = NULL,
+  weight = NULL, weight_default = NULL,
+  stretch = NULL,
+
+  # paragraph
+  align = NULL, align_default = "left",
+  keep_with_next = TRUE,
+  paragraph_style = NULL,
+
+  # ...
+  cell_style = NULL
+
+) {
+  rlang::check_dots_empty()
+  ooxml_type <- rlang::arg_match(ooxml_type)
+
+  processed <- process_ooxml__paragraph(ooxml_type, nodes = x,
+    align          = cell_style[["cell_text"]][["align"]] %||% align_default,
+    keep_with_next = keep_with_next,
+    style          = paragraph_style
+  )
+
+  processed <- process_ooxml__run(ooxml_type, nodes = processed,
+    font       = cell_style[["cell_text"]][["font"]]   %||% font_default,
+    size       = cell_style[["cell_text"]][["color"]]  %||% size_default,
+    color      = cell_style[["cell_text"]][["color"]]  %||% color_default,
+    style      = cell_style[["cell_text"]][["style"]]  %||% style_default,
+    weight     = cell_style[["cell_text"]][["weight"]] %||% weight_default,
+    stretch    = stretch
+  )
+
+  processed <- process_ooxml__text(ooxml_type, nodes = processed,
+    whitespace = whitespace
+  )
+
+  # processed <- process_white_space_br_in_xml(processed, ...)
+  # processed <- process_drop_empty_styling_nodes(processed)
+
+  processed
+}
+
+process_ooxml__text <- function(ooxml_type, nodes, whitespace = c("default", "preserve")) {
+  whitespace <- rlang::arg_match(whitespace)
+
+  nodes_text <- xml_find_all(nodes, switch_ooxml(ooxml_type, word = "//w:t", pptx = "//a:t"))
+  for (txt in nodes_text) {
+    content <- xml_text(txt)
+    attr    <- xml_attr(txt, "space")
+
+    # If it's already set to preserve, respect preservation
+    if (attr != "preserve") {
+      ## options for white space: normal, nowrap, pre, pre-wrap, pre-line, break-spaces
+      ## normal drops all newlines and collapse spaces
+      ## general behavior based on: https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
+
+      ## collapse white spaces unless preserving it
+      if (!isTRUE(attr %in% c( "pre", "pre-wrap", "break-spaces"))) {
+        content <- gsub("\\s+|\\t+", " ", content)
+        xml_text(txt) <- content
+      }
+
+      spacing <- if (isTRUE(attr %in% c( "pre", "pre-wrap", "pre-line","break-spaces"))) {
+        "preserve"
+      } else {
+        "default"
+      }
+
+      xml_attr(txt, attr = "xml:space") <- spacing
+    }
+  }
+
+  nodes
+}
+
+process_ooxml__run <- function(ooxml_type, nodes,
+  font = NULL,
+  size = NULL,
+  color = NULL,
+  style = NULL,
+  weight = NULL,
+
+  stretch = NULL
+) {
+
+  switch_ooxml(ooxml_type,
+    word = process_ooxml__run_word(nodes, font = font, size = size, color = color, style = style, weight = weight, stretch = stretch),
+    pptx = process_ooxml__run_pptx(nodes, font = font, size = size, color = color, style = style, weight = weight, stretch = stretch),
+  )
+
+}
+
+process_ooxml__run_word <- function(nodes, font, size, color, style, weight, stretch) {
+
+  nodes_run <- xml_find_all(nodes, "//w:r")
+  for (run in nodes_run) {
+    run_image <- xml_find_first(run, ".//w:drawing")
+    run_style <- xml_find_first(run, ".//w:rPr")
+
+    if (length(run_image) > 0L) {
+
+      if (length(xml_find_first(run, ".//w:noProof")) == 0L) {
+        xml_add_child(run_style, "w:noProof")
+      }
+
+    } else {
+      # add styles if not already present
+      children <- xml_children(run_style)
+      names    <- xml_name(children, ns = xml_ns(nodes))
+
+      if (!"w:rFonts" %in% names) {
+        xml_add_child(run_style, "w:rFonts", "w:ascii" = font, "w:hAnsi" = font)
+      }
+
+      if (!"color" %in% names) {
+        color <- toupper(gsub("#", "", color))
+        xml_add_child(run_style, "w:color", "w:val" = color)
+      }
+
+      if (!"italic" %in% names && identical(style, "italic")) {
+        xml_add_child(run_style, "w:i")
+      }
+
+      if (!"weight" %in% names && identical(weight, "bold")) {
+        xml_add_child(run_style, "w:b")
+      }
+
+      if (!"spacing" %in% names && !is.null(stretch)) {
+        xml_add_child(run_style, "w:space", "w:val" = stretch_to_xml_stretch(stretch))
+      }
+
+      if ("w:sz" %in% names) {
+        xml_set_attr(xml_find_first(run_style, ".//w:sz"), "w:val", size)
+      } else {
+        xml_add_child(run_style, "w:sz", "w:val" = size)
+      }
+
+    }
+
+  }
+
+  nodes
+}
+
+process_ooxml__run_pptx <- function(nodes, font, size, color, style, weight, stretch) {
+  # TODO
+  nodes
+}
+
+process_ooxml__paragraph <- function(ooxml_type, nodes, align = NULL, keep_with_next = TRUE, style = NULL) {
+  switch_ooxml(ooxml_type,
+    word = process_ooxml__paragraph_word(nodes, align = align, keep_with_next = keep_with_next, style = style),
+    pptx = process_ooxml__paragraph_pptx(nodes, align = align, keep_with_next = keep_with_next, style = style),
+  )
+}
+
+process_ooxml__paragraph_word <- function(nodes, align = NULL, keep_with_next = TRUE, style = NULL) {
+  nodes_p <- xml_find_all(nodes, "//w:p")
+
+  # if there are no paragraph, add an empty one
+  if (length(nodes_p) == 0) {
+    xml_add_child(nodes, "w:p")
+    xml_add_child(xml_find_first(nodes, ".//w:p"), "w:pPr")
+    nodes_p <- xml_find_all(nodes, "//w:p")
+  }
+
+  for (p in nodes_p) {
+    # no extra processing when there are images
+    if (length(xml_find_first(p, ".//w:drawing")) > 0L){
+      next
+    }
+
+    pPr      <- xml_find_all(p, ".//w:pPr")
+    children <- xml_children(pPr)
+    names    <- xml_name(children)
+
+    if (!"spacing" %in% names) {
+      xml_add_child(pPr, "w:spacing", "before" = 0, "after" = 60)
+    }
+
+    if (isTRUE(keep_with_next)) {
+      if (!"keepNext" %in% names) {
+        xml_add_child(pPr, "w:keepNext")
+      }
+    } else {
+      if ("keepNext" %in% names) {
+        xml_remove(xml_find_first(pPr, ".//w:keepNext"))
+      }
+    }
+
+    if (!is.null(align)) {
+      val <- arg_match_names(align, c(left = "start", right = "end", center = "center"))
+    } else {
+      val <- "start"
+    }
+    if ("jc" %in% names) {
+      xml_set_attr(xml_find_first(pPr, ".//w:jc"), "w:val", val)
+    } else {
+      xml_add_child(pPr, "w:jc", "w:val" = val)
+    }
+
+    if (!"pStyle" %in% names && !is.null(style)) {
+      xml_add_child(pPr, "w:pStyle", "w:val" = style)
+    }
+
+  }
+
+  nodes
+}
+
+process_ooxml__paragraph_pptx <- function(nodes, align, stretch, keep_with_next, style) {
+  # TODO
+  nodes
+}
+
+xml2_nodeset_to_tags <- function(nodeset) {
+  tags <- lapply(nodeset, \(node) {
+    htmltools::HTML(as.character(node))
+  })
+  tagList(!!!tags)
 }

@@ -491,8 +491,8 @@
         <w:r>
           <w:rPr>
             <w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-            <w:sz w:val="48"/>
             <w:color w:val="333333"/>
+            <w:sz w:val="24"/>
           </w:rPr>
           <w:t xml:space="default">TABLE TITLE</w:t>
         </w:r>
@@ -535,8 +535,8 @@
         <w:r>
           <w:rPr>
             <w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-            <w:sz w:val="48"/>
             <w:color w:val="333333"/>
+            <w:sz w:val="24"/>
           </w:rPr>
           <w:t xml:space="default">TABLE TITLE</w:t>
         </w:r>

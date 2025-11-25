@@ -135,7 +135,6 @@ create_table_caption_contents_ooxml <- function(ooxml_type, data, autonum = TRUE
   if (!dt_heading_has_title(data = data)) {
     return(NULL)
   }
-
   htmltools::tagList(
     create_heading_row_title_paragraph(ooxml_type, data, autonum = autonum, keep_with_next = keep_with_next),
     create_heading_row_subtitle_paragraph(ooxml_type, data, keep_with_next = keep_with_next)
@@ -158,36 +157,31 @@ create_heading_row_title_paragraph <- function(ooxml_type, data, autonum = TRUE,
   table_font_color <- dt_options_get_value(data, option = "table_font_color")
   table_border_top_include <- dt_options_get_value(data, option = "table_border_top_include")
 
-  # TODO: deal with <md_container> stuff
-  # TODO: Get the footnote marks for the title
+  paragraphs <- parse_to_ooxml(heading$title, ooxml_type = ooxml_type)
+  paragraphs <- process_cell_content_ooxml(ooxml_type, paragraphs, cell_style = header_title_style,
+    whitespace = "default",
 
-  run_properties <- ooxml_run_properties(ooxml_type,
-    color = header_title_style[["cell_text"]][["color"]] %||% table_font_color,
-    size  = header_title_style[["cell_text"]][["color"]] %||% 24,
-    cell_style = header_title_style
-  )
+    size_default  = 24,
+    color_default = table_font_color,
 
-  paragraph_properties <- ooxml_paragraph_properties(ooxml_type,
-    style = "caption",
-    align = header_title_style[["cell_text"]][["color"]] %||% "center",
-    keep_next = keep_with_next
-  )
-
-  paragraph <- ooxml_paragraph(ooxml_type, properties = paragraph_properties,
-    ooxml_run(ooxml_type, properties = run_properties,
-      ooxml_text(ooxml_type, heading$title, space = "default")
-    )
+    paragraph_style = "caption",
+    keep_with_next  = keep_with_next,
+    align_default   = "center"
   )
 
   if (autonum) {
-    nodes <- ooxml_table_autonum(ooxml_type,
+    autonum_nodes <- as_xml_node(ooxml_table_autonum(ooxml_type,
       font = header_title_style[["cell_text"]][["font"]] %||% "Calibri",
       size = 24
-    )
-    paragraph <- htmltools::tagInsertChildren(paragraph, !!!nodes, after = 1)
+    ))
+
+    for (i in seq_len(length(autonum_nodes))) {
+      xml_add_child(paragraphs[[1]], autonum_nodes[[i]], .where = i)
+    }
+
   }
 
-  paragraph
+  xml2_nodeset_to_tags(paragraphs)
 }
 
 create_heading_row_subtitle_paragraph <- function(ooxml_type, data, keep_with_next = TRUE) {
