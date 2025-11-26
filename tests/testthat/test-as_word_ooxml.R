@@ -130,7 +130,7 @@ test_that("word ooxml can be generated from gt object with cell styling", {
     expect_equal(xml_attr(xml_find_all(node, ".//w:sz"), "val"), "20")
     expect_equal(length(xml_find_all(node, ".//w:i")), 1)
     expect_equal(xml_attr(xml_find_all(node, ".//w:color"), "val"), "00FF00")
-    expect_equal(xml_attr(xml_find_all(node, ".//w:b"), "val"), "true")
+    expect_equal(length(xml_find_all(node, ".//w:b")), 1)
   })
 
   # orange cells

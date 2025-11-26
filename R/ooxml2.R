@@ -193,19 +193,18 @@ ooxml_tbl_row_height <- function(ooxml_type, value, ..., error_call = current_en
 # ooxml_tbl_cell ----------------------------------------------------------
 
 ooxml_tbl_cell <- function(ooxml_type, ..., properties = NULL) {
-  content    <- ooxml_list(ooxml_type, "ooxml_paragraph", ooxml_paragraph, ...)
   properties <- check_inherits(properties, "ooxml_tbl_cell_properties", accept_null = TRUE)
 
   switch_ooxml(ooxml_type,
     word = ooxml_tag("w:tc", tag_class = "ooxml_tbl_cell",
-      properties, !!!content
+      properties, ...
     ),
     pptx = ooxml_tag("a:tc", tag_class = "ooxml_tbl_cell",
       properties,
       ooxml_tag("a:txBody", tag_class = "ooxml_text_body",
         ooxml_tag(tag = "a:bodyPr"),
         ooxml_tag(tag = "a:lstStyle"),
-        !!!content
+        ...
       )
     )
   )
@@ -765,7 +764,7 @@ parse_to_ooxml <- function(x, ooxml_type = c("word", "pptx"), ...) {
 }
 
 parse_to_ooxml_word <- function(x) {
-  if (is.null(x)) {
+  if (is.null(x) || length(x) == 0) {
     x <- parse_to_ooxml_word_simple("")
   }
 
@@ -784,8 +783,8 @@ parse_to_ooxml_word <- function(x) {
 }
 
 parse_to_ooxml_word_simple <- function(text = "") {
-  paste0('
-<md_container>
+  paste0(
+'<md_container>
   <w:p>
     <w:pPr>
       <w:spacing w:before="0" w:after="60"/>
@@ -812,7 +811,7 @@ process_cell_content_ooxml <- function(
   # run
   font = NULL ,  font_default = "Calibri",
   size = NULL ,  size_default = 20,
-  color = NULL,  color_default = "D3D3D3",
+  color = NULL,  color_default = NULL,
   style = NULL,  style_default = NULL,
   weight = NULL, weight_default = NULL,
   stretch = NULL,
@@ -829,7 +828,9 @@ process_cell_content_ooxml <- function(
   rlang::check_dots_empty()
   ooxml_type <- rlang::arg_match(ooxml_type)
 
-  processed <- process_ooxml__paragraph(ooxml_type, nodes = x,
+  processed <- parse_to_ooxml(x, ooxml_type = ooxml_type)
+
+  processed <- process_ooxml__paragraph(ooxml_type, nodes = processed,
     align          = cell_style[["cell_text"]][["align"]] %||% align_default,
     keep_with_next = keep_with_next,
     style          = paragraph_style
@@ -837,7 +838,7 @@ process_cell_content_ooxml <- function(
 
   processed <- process_ooxml__run(ooxml_type, nodes = processed,
     font       = cell_style[["cell_text"]][["font"]]   %||% font_default,
-    size       = cell_style[["cell_text"]][["color"]]  %||% size_default,
+    size       = cell_style[["cell_text"]][["size"]]   %||% size_default,
     color      = cell_style[["cell_text"]][["color"]]  %||% color_default,
     style      = cell_style[["cell_text"]][["style"]]  %||% style_default,
     weight     = cell_style[["cell_text"]][["weight"]] %||% weight_default,
@@ -848,6 +849,7 @@ process_cell_content_ooxml <- function(
     whitespace = whitespace
   )
 
+  # TODO
   # processed <- process_white_space_br_in_xml(processed, ...)
   # processed <- process_drop_empty_styling_nodes(processed)
 
@@ -926,7 +928,7 @@ process_ooxml__run_word <- function(nodes, font, size, color, style, weight, str
         xml_add_child(run_style, "w:rFonts", "w:ascii" = font, "w:hAnsi" = font)
       }
 
-      if (!"color" %in% names) {
+      if (!"color" %in% names && !is.null(color)) {
         color <- toupper(gsub("#", "", color))
         xml_add_child(run_style, "w:color", "w:val" = color)
       }
@@ -1027,7 +1029,7 @@ process_ooxml__paragraph_pptx <- function(nodes, align, stretch, keep_with_next,
   nodes
 }
 
-xml2_nodeset_to_tags <- function(nodeset) {
+to_tags <- function(nodeset) {
   tags <- lapply(nodeset, \(node) {
     htmltools::HTML(as.character(node))
   })
