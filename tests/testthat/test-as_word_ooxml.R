@@ -254,3 +254,11 @@ test_that("word ooxml handles md() and html()", {
   expect_equal(xml_text(xml_find_all(xml[[4]], ".//w:r//w:t")), "subtitle")
 })
 
+test_that("word ooxml escapes special characters in gt object", {
+  df <- data.frame(special_characters = "><&\n\r\"'", stringsAsFactors = FALSE)
+  xml <- read_xml_word_nodes(as_word_ooxml(gt(df)))
+
+  expect_snapshot(
+    xml_find_all(xml, "(//w:t)[last()]/text()")
+  )
+})

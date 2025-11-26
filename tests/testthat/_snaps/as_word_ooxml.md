@@ -564,3 +564,11 @@
         </w:r>
       </w:p>
 
+# word ooxml escapes special characters in gt object
+
+    Code
+      xml_find_all(xml, "(//w:t)[last()]/text()")
+    Output
+      {xml_nodeset (1)}
+      [1] &gt;&lt;&amp; "'
+
