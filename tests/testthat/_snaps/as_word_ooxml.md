@@ -572,3 +572,11 @@
       {xml_nodeset (1)}
       [1] &gt;&lt;&amp; "'
 
+# word ooxml escapes special characters in gt object footer
+
+    Code
+      xml_find_all(xml, "//w:tr[last()]//w:t")
+    Output
+      {xml_nodeset (1)}
+      [1] <w:t xml:space="default">p &lt; .05, &gt;&lt;&amp; "'</w:t>
+

@@ -271,11 +271,11 @@ test_that("word ooxml escapes special characters in gt object", {
   )
 })
 
-# test_that("word ooxml escapes special characters in gt object footer", {
-#
-#   gt_tbl <- gt(data.frame(num = 1)) |>
-#     tab_footnote(footnote = "p < .05, ><&\n\r\"'")
-#
-#   xml <- read_xml_word_nodes(as_word_ooxml(gt_tbl))
-#
-# })
+test_that("word ooxml escapes special characters in gt object footer", {
+
+  gt_tbl <- gt(data.frame(num = 1)) |>
+    tab_footnote(footnote = "p < .05, ><&\n\r\"'")
+
+  xml <- read_xml_word_nodes(as_word_ooxml(gt_tbl))
+  expect_snapshot(xml_find_all(xml, "//w:tr[last()]//w:t"))
+})
