@@ -55,9 +55,10 @@ as_ooxml_tbl <- function(ooxml_type, data,
   #
   # things are different in word where we can have w:tblLayoutType="autofit" and then
   # not have a <w:tblGrid> node
-  tbl_grid         <- create_table_grid_ooxml(ooxml_type, data = data)
-  tbl_spanner_rows <- create_spanner_rows_ooxml(ooxml_type, data = data, split = split, keep_with_next = keep_with_next)
-  tbl_table_rows   <- create_table_rows_ooxml(ooxml_type, data = data, split = split, keep_with_next = keep_with_next)
+  tbl_grid          <- create_table_grid_ooxml(ooxml_type, data = data)
+  tbl_spanner_rows  <- create_spanner_rows_ooxml(ooxml_type, data = data, split = split, keep_with_next = keep_with_next)
+  tbl_table_rows    <- create_table_rows_ooxml(ooxml_type, data = data, split = split, keep_with_next = keep_with_next)
+  tbl_footnote_rows <- create_footnote_rows_ooxml(ooxml_type, data = data, split = split, keep_with_next = keep_with_next)
 
   tbl_heading_row  <- if (embedded_heading) {
     create_heading_row(ooxml_type, data = data,
@@ -72,7 +73,8 @@ as_ooxml_tbl <- function(ooxml_type, data,
     grid       = tbl_grid,
     tbl_heading_row,
     !!!tbl_spanner_rows,
-    !!!tbl_table_rows
+    !!!tbl_table_rows,
+    !!!tbl_footnote_rows
   )
 }
 
@@ -204,6 +206,25 @@ create_heading_row_subtitle_paragraph <- function(ooxml_type, data, keep_with_ne
   )
 
   to_tags(paragraphs)
+}
+
+
+# footnote rows -----------------------------------------------------------
+
+create_footnote_rows_ooxml <- function(ooxml_type, data, split = split, keep_with_next = keep_with_next) {
+  footnotes_tbl <- dt_footnotes_get(data = data)
+  if (nrow(footnotes_tbl) == 0L) {
+    return(NULL)
+  }
+
+  stub_components <- dt_stub_components(data = data)
+
+  cell_style <- dt_styles_get(data = data)
+  cell_style <- cell_style[cell_style$locname == "footnotes", "styles", drop = TRUE]
+  cell_style <- cell_style[1][[1]]
+
+  NULL
+
 }
 
 # table grid --------------------------------------------------------------

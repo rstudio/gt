@@ -48,11 +48,8 @@ build_data <- function(data, context) {
   data <- render_substitutions(data = data, context = context)
   data <- migrate_unformatted_to_output(data = data, context = context)
 
-  # temporary
-  if (grepl("^ooxml/", context)) {
-    context <- "word"
-  }
   data <- perform_col_merge(data = data, context = context)
+
   data <- dt_body_reassemble(data = data)
 
   data <- reorder_stub_df(data = data)
