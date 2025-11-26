@@ -455,8 +455,32 @@ create_heading_component_l <- function(data) {
 #' @noRd
 create_columns_component_l <- function(data, colwidth_df) {
 
+
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
+  n_stub_cols <- 0
+
+  # if exists, get the length of the stub
+  if(length(stub_layout)>0){
+    stub_vars <- dt_boxhead_get_var_stub(data = data)
+    # Get the actual number of stub columns for the header
+    # This determines how many columns the stub header should span
+    if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
+      n_stub_cols <- length(stub_vars) + 1  # group_label + all rowname columns
+      # Get stub_df for width calculations
+      stub_df <- dplyr::filter(colwidth_df, type %in% c("row_group","stub")) %>%
+        dplyr::arrange(type)
+    } else if ("rowname" %in% stub_layout) {
+      stub_df <- dplyr::filter(colwidth_df, type == "stub")
+      n_stub_cols <- nrow(stub_df)
+    } else if ("group_label" %in% stub_layout) { # stub columns can exist in the dataset with only groups in the stub-layout.
+      n_stub_cols <- 1
+      stub_df <- dplyr::filter(colwidth_df, type == "row_group")
+    } else {
+      n_stub_cols <- length(stub_layout)
+      stub_df <- dplyr::filter(colwidth_df, type %in% c("stub", "row_group"))
+    }
+  }
 
   styles_tbl <- dt_styles_get(data = data)
 
@@ -593,7 +617,6 @@ create_columns_component_l <- function(data, colwidth_df) {
       )
 
     if (length(stub_layout) > 0) {
-
       # Get the actual number of stub columns for spanners
       if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
 
@@ -615,6 +638,8 @@ create_columns_component_l <- function(data, colwidth_df) {
       }
 
       stub_matrix <- matrix(nrow = nrow(spanners), ncol = n_stub_cols)
+      # retain stub names
+      colnames(stub_matrix) <- stub_df$var
 
       spanners <- cbind(stub_matrix, spanners)
       spanner_ids <- cbind(stub_matrix, spanner_ids)
@@ -630,6 +655,7 @@ create_columns_component_l <- function(data, colwidth_df) {
       # We need a parallel vector of spanner labels and this could
       # be part of the `spanners_rle` list
       spanners_rle$labels <- spanners_i[cumsum(spanners_rle$lengths)]
+      col_order  <- data.frame(var = colnames(spanner_ids))
       spanners_rle <- apply_spanner_styles_l(spanners_rle, styles_tbl)
 
       begins <- (cumsum(utils::head(c(0, spanners_rle$lengths), -1)) + 1)[!is.na(spanners_rle$values)]
@@ -638,10 +664,9 @@ create_columns_component_l <- function(data, colwidth_df) {
 
       is_spanner_na <- is.na(spanners_rle$values)
       is_spanner_single <- spanners_rle$lengths == 1
-
       firsts <- utils::head(cumsum(c(1L, spanners_rle$lengths)), -1L)
       lasts <- cumsum(spanners_rle$lengths)
-      span_widths <- calculate_multicolumn_width_text_l(begins = firsts, ends = lasts, colwidth_df = colwidth_df)
+      span_widths <- calculate_multicolumn_width_text_l(begins = firsts, ends = lasts, col_order = col_order ,colwidth_df = colwidth_df)
       tex_widths <-
         ifelse(
           nzchar(span_widths),
@@ -703,7 +728,7 @@ create_columns_component_l <- function(data, colwidth_df) {
 
       if (n_stub_cols > 1L) {
 
-        tex_stub_width <- calculate_multicolumn_width_text_l(begins = 1, ends = n_stub_cols, colwidth_df = colwidth_df)
+        tex_stub_width <- calculate_multicolumn_width_text_l(begins = 1, ends = n_stub_cols,  col_order = col_order, colwidth_df = colwidth_df)
         if (tex_stub_width == "") {
           mc_stub <- "l"
         } else {
@@ -2051,6 +2076,7 @@ create_colwidth_df_l <- function(data) {
 
   n <- dim(boxhead)[1L]
   width_df <- data.frame(
+    var = boxhead$var,
     type = boxhead$type,
     unspec = rep.int(0L, n),
     lw = rep.int(0L, n),
@@ -2124,9 +2150,16 @@ create_colwidth_df_l <- function(data) {
   width_df
 }
 
-calculate_multicolumn_width_text_l <- function(begins, ends, colwidth_df) {
-
+calculate_multicolumn_width_text_l <- function(begins, ends, col_order, colwidth_df) {
   out_text <- rep("", times = length(begins))
+
+  # order by column order to ensure correct columns are used
+  # this is important if data order has changed, or there are hidden columns etc
+  colwidth_df <- col_order %>%
+    dplyr::left_join(colwidth_df, by = "var") %>%
+    dplyr::filter(type != "hidden" )
+
+
 
   for (i in seq_along(begins)) {
     ind <- seq(from = begins[i], to = ends[i])
