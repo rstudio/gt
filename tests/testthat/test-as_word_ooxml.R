@@ -279,3 +279,123 @@ test_that("word ooxml escapes special characters in gt object footer", {
   xml <- read_xml_word_nodes(as_word_ooxml(gt_tbl))
   expect_snapshot(xml_find_all(xml, "//w:tr[last()]//w:t"))
 })
+
+test_that("multicolumn stub are supported", {
+  test_data <- dplyr::tibble(
+    mfr = c("Ford", "Ford", "BMW", "BMW", "Audi"),
+    model = c("GT", "F-150", "X5", "X3", "A4"),
+    trim = c("Base", "XLT", "xDrive35i", "sDrive28i", "Premium"),
+    year = c(2017, 2018, 2019, 2020, 2021),
+    hp = c(647, 450, 300, 228, 261),
+    msrp = c(447000, 28000, 57000, 34000, 37000)
+  )
+
+  # Three-column stub
+  triple_stub <- gt(test_data, rowname_col = c("mfr", "model", "trim"))
+
+  # The merge cells on the first column
+  xml <- read_xml(as_word_ooxml(triple_stub))
+  nodes_Ford <- xml_find_all(xml, ".//w:t[. = 'Ford']")
+  expect_equal(xml_attr(xml_find_all(nodes_Ford[[1]], "../../..//w:vMerge"), "val"), "restart")
+  expect_equal(xml_attr(xml_find_all(nodes_Ford[[2]], "../../..//w:vMerge"), "val"), "continue")
+
+  nodes_BMW <- xml_find_all(xml, ".//w:t[. = 'BMW']")
+  expect_equal(xml_attr(xml_find_all(nodes_BMW[[1]], "../../..//w:vMerge"), "val"), "restart")
+  expect_equal(xml_attr(xml_find_all(nodes_BMW[[2]], "../../..//w:vMerge"), "val"), "continue")
+
+  nodes_Audi <- xml_find_all(xml, ".//w:t[. = 'Audi']")
+  expect_equal(xml_length(xml_find_all(nodes_Audi[[1]], "../../..//w:vMerge")), 0)
+
+  # no other merge cells
+  expect_equal(length(xml_find_all(xml, ".//w:vMerge")), 4)
+
+  # no stub head, i.e. empty text
+  expect_equal(
+    xml_text(xml_find_all(xml, "(.//w:tr)[1]//w:t")),
+    c("", "year", "hp", "msrp")
+  )
+  tcPr <- xml_find_all(xml, "(.//w:tr)[1]/w:tc/w:tcPr")
+  expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:gridSpan"), "val"), "3")
+  for (i in 2:4) {
+    expect_equal(length(xml_find_all(tcPr[[i]], ".//w:gridSpan")), 0)
+  }
+
+  # one label: merged
+  xml <- test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
+    tab_stubhead("one") |>
+    as_word() %>%
+    read_xml()
+  tcPr <- xml_find_all(xml, "(.//w:tr)[1]/w:tc/w:tcPr")
+  expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:gridSpan"), "val"), "3")
+  for (i in 2:4) {
+    expect_equal(length(xml_find_all(tcPr[[i]], ".//w:gridSpan")), 0)
+  }
+
+  expect_equal(
+    xml_text(xml_find_all(xml, "(.//w:tr)[1]//w:t")),
+    c("one", "year", "hp", "msrp")
+  )
+
+  # 3 labels
+  xml <- test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
+    tab_stubhead(c("one", "two", "three")) |>
+    as_word() %>%
+    read_xml()
+
+  expect_equal(
+    xml_text(xml_find_all(xml, "(.//w:tr)[1]//w:t")),
+    c("one", "two", "three", "year", "hp", "msrp")
+  )
+
+  # add spanner
+  xml <- test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
+    tab_stubhead(c("one", "two", "three")) |>
+    tab_spanner(label = "span", columns = c(hp, msrp)) |>
+    as_word() %>%
+    read_xml()
+
+  expect_equal(
+    xml_text(xml_find_all(xml, "(.//w:tr)[1]//w:t")),
+    c("one", "two", "three", "", "span")
+  )
+  # first row
+  tcPr <- xml_find_all(xml, "(.//w:tr)[1]/w:tc/w:tcPr")
+  for (i in 1:3) {
+    expect_equal(xml_attr(xml_find_all(tcPr[[i]], ".//w:vMerge"), "val"), "restart")
+  }
+  expect_equal(xml_attr(xml_find_first(tcPr[[5]], ".//w:gridSpan"), "val"), "2")
+
+  # second row
+  tcPr <- xml_find_all(xml, "(.//w:tr)[2]/w:tc/w:tcPr")
+  for (i in 1:3) {
+    expect_equal(xml_attr(xml_find_all(tcPr[[i]], ".//w:vMerge"), "val"), "continue")
+  }
+
+  # spanner - one label
+  xml <- test_data |>
+    gt(rowname_col = c("mfr", "model", "trim")) |>
+    tab_stubhead(c("one")) |>
+    tab_spanner(label = "span", columns = c(hp, msrp)) |>
+    as_word() %>%
+    read_xml()
+
+  expect_equal(
+    xml_text(xml_find_all(xml, "(.//w:tr)[1]//w:t")),
+    c("one", "", "span")
+  )
+
+  # first row
+  tcPr <- xml_find_all(xml, "(.//w:tr)[1]/w:tc/w:tcPr")
+  expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:vMerge"), "val"), "restart")
+  expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:gridSpan"), "val"), "3")
+  expect_equal(xml_attr(xml_find_first(tcPr[[3]], ".//w:gridSpan"), "val"), "2")
+
+  # second row
+  tcPr <- xml_find_all(xml, "(.//w:tr)[2]/w:tc/w:tcPr")
+  expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:vMerge"), "val"), "continue")
+  expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:gridSpan"), "val"), "3")
+
+})

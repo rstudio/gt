@@ -217,7 +217,9 @@ create_footnote_rows_ooxml <- function(ooxml_type, data, split = split, keep_wit
     return(NULL)
   }
 
-  n_cols <- length(dt_boxhead_get_vars_default(data = data)) + length(dt_boxhead_get_var_by_type(data, type = "stub"))
+  n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
+  n_stub_cols <- length(dt_boxhead_get_var_by_type(data, type = "stub"))
+  n_cols <- n_data_cols + n_stub_cols
 
   cell_style <- dt_styles_get(data = data)
   cell_style <- cell_style[cell_style$locname == "footnotes", "styles", drop = TRUE]
@@ -306,8 +308,10 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
     spanners_rle$lengths[match(seq_along(spanner_row_ids), sig_cells)],
     0
   )
-  stub_cell <- create_spanner_row_stub_cell_ooxml(ooxml_type, data,
-    i = span_row_idx, keep_with_next = keep_with_next,
+
+  stub_cells <- create_spanner_row_stub_cells_ooxml(ooxml_type, data,
+    i = span_row_idx,
+    keep_with_next = keep_with_next,
     colspans = colspans
   )
 
@@ -341,13 +345,13 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
     cell_style <- cell_style$styles[1][[1]]
 
     borders <- list(
-      left = if (i == 1) { list(color = column_labels_vlines_color) },
-      right = if (i == (length(spanner_row_values) + 1 - colspans[i] )) { list(color = column_labels_vlines_color) },
+      left   = if (i == 1) { list(color = column_labels_vlines_color) },
+      right  = if (i == (length(spanner_row_values) + 1 - colspans[i] )) { list(color = column_labels_vlines_color) },
       bottom = list(size = 2, color = column_labels_border_bottom_color),
-      top = if (span_row_idx == 1) { list(size = 2, color = column_labels_border_top_color) }
+      top    = if (span_row_idx == 1) { list(size = 2, color = column_labels_border_top_color) }
     )
 
-    paragraphs <- process_cell_content_ooxml(ooxml_type, spanner_row_values[i],
+    content <- process_cell_content_ooxml(ooxml_type, spanner_row_values[i],
       cell_style     = cell_style,
       align_default  = if (span_row_idx == nrow(spanners)) col_alignment[i] else "center",
 
@@ -360,14 +364,12 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
         v_align  = cell_style[["cell_text"]][["v_align"]],
         col_span = colspans[i]
       ),
-      !!!to_tags(paragraphs)
+      !!!to_tags(content)
     )
 
   })
 
-  ooxml_tbl_row(ooxml_type, split = split, is_header = TRUE,
-    stub_cell, !!!cells
-  )
+  ooxml_tbl_row(ooxml_type, split = split, is_header = TRUE, !!!stub_cells, !!!cells)
 }
 
 create_spanner_row_empty_cell_ooxml <- function(ooxml_type, data, span_row_idx = 1, span_column_idx = 1, n) {
@@ -388,7 +390,7 @@ create_spanner_row_empty_cell_ooxml <- function(ooxml_type, data, span_row_idx =
   )
 }
 
-create_spanner_row_stub_cell_ooxml <- function(ooxml_type, data, i = 1, keep_with_next = TRUE, colspans = NULL) {
+create_spanner_row_stub_cells_ooxml <- function(ooxml_type, data, i = 1, keep_with_next = TRUE, colspans = NULL) {
   if (!dt_stub_df_exists(data = data)) {
     return(NULL)
   }
@@ -398,9 +400,29 @@ create_spanner_row_stub_cell_ooxml <- function(ooxml_type, data, i = 1, keep_wit
   column_labels_border_top_color    <- dt_options_get_value(data = data, option = "column_labels_border_top_color")
   column_labels_border_bottom_color <- dt_options_get_value(data = data, option = "column_labels_border_bottom_color")
 
-  if (i == 1) {
-    stubh <- dt_stubhead_get(data = data)
+  stubh <- dt_stubhead_get(data = data)
+  boxh <- dt_boxhead_get(data = data)
+  spanners <- dt_spanners_print_matrix(data, include_hidden = FALSE)
 
+  n_stub_cols   <- length(dt_boxhead_get_var_by_type(data, type = "stub"))
+  n_stubh_label <- length(stubh$label)
+  single_stub_label <- n_stubh_label <= 1
+  stub_offset       <- if(single_stub_label) 1 else n_stub_cols
+
+  headings_vars <- vctrs::vec_slice(boxh$var, boxh$type == "default")
+  headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
+
+  label <- if (n_stubh_label == 0) "" else stubh$label
+  headings_labels <- prepend_vec(headings_labels, label)
+  if (single_stub_label) {
+    headings_vars <- prepend_vec(headings_vars, "::stub")
+    stubhead_label_alignment <- "left"
+  } else {
+    headings_vars <- prepend_vec(headings_vars, rep("::stub", n_stub_cols))
+    stubhead_label_alignment <- rep("left", n_stub_cols)
+  }
+
+  if (i == 1) {
     cell_style <- styles_tbl[styles_tbl$locname %in% "stubhead", "styles", drop = TRUE]
     cell_style <- cell_style[1][[1]]
 
@@ -410,19 +432,45 @@ create_spanner_row_stub_cell_ooxml <- function(ooxml_type, data, i = 1, keep_wit
       left   = list(color = column_labels_vlines_color),
       right  = list(color = column_labels_vlines_color)
     )
-    content <- process_cell_content_ooxml(ooxml_type, stubh$label,
-      cell_style = cell_style,
-      keep_with_next = keep_with_next
-    )
 
-    ooxml_tbl_cell(ooxml_type, !!!to_tags(content),
-      properties = ooxml_tbl_cell_properties(ooxml_type,
-        borders  = borders,
-        fill     = cell_style[["cell_fill"]][["color"]],
-        v_align  = cell_style[["cell_text"]][["v_align"]],
-        col_span = colspans[i]
+    if (single_stub_label) {
+
+      content <- process_cell_content_ooxml(ooxml_type, headings_labels[1],
+        cell_style = cell_style,
+        keep_with_next = keep_with_next,
+        align_default = stubhead_label_alignment[1],
+        size_default  = 20
       )
-    )
+
+      tagList(ooxml_tbl_cell(ooxml_type, !!!to_tags(content),
+        properties = ooxml_tbl_cell_properties(ooxml_type,
+          borders  = borders,
+          fill     = cell_style[["cell_fill"]][["color"]],
+          v_align  = cell_style[["cell_text"]][["v_align"]],
+          col_span = if (n_stub_cols > 1) n_stub_cols,
+          row_span = if (nrow(spanners) > 1) "restart"
+        )
+      ))
+    } else {
+      cells <- lapply(seq_len(n_stub_cols), \(j) {
+        content <- process_cell_content_ooxml(ooxml_type, headings_labels[j],
+          cell_style = cell_style,
+          keep_with_next = keep_with_next,
+          align_default = stubhead_label_alignment[j],
+          size_default  = 20
+        )
+
+        ooxml_tbl_cell(ooxml_type, !!!to_tags(content),
+          properties = ooxml_tbl_cell_properties(ooxml_type,
+            borders  = borders,
+            fill     = cell_style[["cell_fill"]][["color"]],
+            v_align  = cell_style[["cell_text"]][["v_align"]],
+            row_span =  if (nrow(spanners) > 1) "restart"
+          )
+        )
+      })
+      tagList(!!!cells)
+    }
   } else {
     spanner_row_count <- dt_spanners_matrix_height(data = data, omit_columns_row = FALSE)
     borders <- list(
@@ -431,12 +479,29 @@ create_spanner_row_stub_cell_ooxml <- function(ooxml_type, data, i = 1, keep_wit
       bottom = if (i == spanner_row_count) list(size = 8, color = column_labels_border_bottom_color)
     )
 
-    content <- process_cell_content_ooxml(ooxml_type, "",
-      keep_with_next = keep_with_next
-    )
-    ooxml_tbl_cell(ooxml_type, !!!to_tags(content),
-      properties = ooxml_tbl_cell_properties(ooxml_type, borders = borders, row_span = "continue")
-    )
+    content <- process_cell_content_ooxml(ooxml_type, "", keep_with_next = keep_with_next)
+
+    if (single_stub_label) {
+      tagList(
+        ooxml_tbl_cell(ooxml_type, !!!to_tags(content),
+          properties = ooxml_tbl_cell_properties(ooxml_type,
+            borders = borders,
+            row_span = "continue",
+            col_span = if (n_stub_cols > 1) n_stub_cols
+          )
+        )
+      )
+    } else {
+      cells <- lapply(seq_len(n_stub_cols), \(j) {
+        ooxml_tbl_cell(ooxml_type, !!!to_tags(content),
+          properties = ooxml_tbl_cell_properties(ooxml_type,
+            borders = borders,
+            row_span = "continue"
+          )
+        )
+      })
+      tagList(!!!cells)
+    }
   }
 
 }
@@ -447,12 +512,14 @@ create_spanner_row_stub_cell_ooxml <- function(ooxml_type, data, i = 1, keep_wit
 create_table_rows_ooxml <- function(ooxml_type, data, split = FALSE, keep_with_next = TRUE) {
   body <- dt_body_get(data = data)
 
+  hierarchical_stub_info <- calculate_hierarchical_stub_rowspans(data)
+
   out <- list()
   for (i in seq_len(nrow(body))) {
     rows <- list3(
       create_group_heading_row_ooxml(ooxml_type, data, i, split = split, keep_with_next = keep_with_next),
       create_summary_section_row_ooxml(ooxml_type, data, i, "top", keep_with_next = keep_with_next),
-      create_body_row_ooxml(ooxml_type, data, i, split = split, keep_with_next = keep_with_next),
+      create_body_row_ooxml(ooxml_type, data, i, split = split, keep_with_next = keep_with_next, hierarchical_stub_info = hierarchical_stub_info),
       create_summary_section_row_ooxml(ooxml_type, data, i, "bottom", keep_with_next = keep_with_next)
     )
     out <- append(out, rows)
@@ -552,34 +619,51 @@ create_summary_section_row_ooxml <- function(ooxml_type, data, i, side = c("top"
 
 ## body row ----------------------------------------------------------------
 
-create_body_row_ooxml <- function(ooxml_type, data, i, split = FALSE, keep_with_next = TRUE) {
+create_body_row_ooxml <- function(ooxml_type, data, i, split = FALSE, keep_with_next = TRUE, hierarchical_stub_info = NULL) {
   vars <- dt_boxhead_get_vars_default(data = data)
   data_cells <- lapply(seq_along(vars), \(j) {
     create_body_row_data_cell_ooxml(ooxml_type, data, i = i, j = j, keep_with_next = keep_with_next)
   })
 
-  ooxml_tbl_row(ooxml_type, split = split,
-    create_body_row_stub_cell_ooxml(ooxml_type, data, i, keep_with_next = keep_with_next),
-    !!!data_cells
-  )
+  stub_cells <- create_body_row_stub_cells_ooxml(ooxml_type, data, i, keep_with_next = keep_with_next, hierarchical_stub_info = hierarchical_stub_info)
+  ooxml_tbl_row(ooxml_type, split = split, !!!stub_cells, !!!data_cells)
 }
 
-create_body_row_stub_cell_ooxml <- function(ooxml_type, data, i, keep_with_next = TRUE) {
+create_body_row_stub_cells_ooxml <- function(ooxml_type, data, i, keep_with_next = TRUE, hierarchical_stub_info = NULL) {
   stub_components   <- dt_stub_components(data = data)
   summaries_present <- dt_summary_exists(data = data)
+  body <- dt_body_get(data = data)
+  styles_tbl <- dt_styles_get(data = data)
+
   stub_available    <- dt_stub_components_has_rowname(stub_components) || summaries_present
+  n_stub_cols   <- length(dt_boxhead_get_var_by_type(data, type = "stub"))
 
   if (stub_available) {
-    body <- dt_body_get(data = data)
-    styles_tbl <- dt_styles_get(data = data)
 
     cell_style <- vctrs::vec_slice(styles_tbl,
       styles_tbl$locname == "stub" & styles_tbl$rownum == i
     )
     cell_style <- cell_style$styles[1][[1]]
-    text <- as.character(body[i, dt_boxhead_get_var_stub(data = data)])
 
-    create_body_row_cell_ooxml(ooxml_type, data, cell_style = cell_style, text = text, keep_with_next = keep_with_next)
+    lapply(seq_len(n_stub_cols), \(j) {
+      text <- as.character(body[i, dt_boxhead_get_var_stub(data = data)[j]])
+
+      create_body_row_cell_ooxml(ooxml_type, data,
+        cell_style = cell_style,
+        text = text,
+        keep_with_next = keep_with_next,
+        row_span = if (j < n_stub_cols) {
+          span <- hierarchical_stub_info[[j]]$rowspans[i]
+          mask <- hierarchical_stub_info[[j]]$display_mask[i]
+
+          if (span > 1) {
+            "restart"
+          } else if (!mask){
+            "continue"
+          }
+        }
+      )
+    })
   }
 }
 
@@ -596,7 +680,7 @@ create_body_row_data_cell_ooxml <- function(ooxml_type, data, i, j, keep_with_ne
 
   boxh  <- dt_boxhead_get(data = data)
 
-  text <- as.character(body[i, j])
+  text <- as.character(body[i, var])
 
   create_body_row_cell_ooxml(ooxml_type, data, text,
     cell_style = cell_style,
@@ -606,7 +690,7 @@ create_body_row_data_cell_ooxml <- function(ooxml_type, data, i, j, keep_with_ne
 }
 
 
-create_body_row_cell_ooxml <- function(ooxml_type, data, text, cell_style, align = cell_style[["cell_text"]][["align"]], keep_with_next = TRUE) {
+create_body_row_cell_ooxml <- function(ooxml_type, data, text, cell_style, align = cell_style[["cell_text"]][["align"]], keep_with_next = TRUE, row_span = NULL) {
   table_body_hlines_color   <- dt_options_get_value(data, option = "table_body_hlines_color")
   table_body_vlines_color   <- dt_options_get_value(data, option = "table_body_vlines_color")
   table_border_bottom_color <- dt_options_get_value(data, option = "table_border_bottom_color")
@@ -628,7 +712,8 @@ create_body_row_cell_ooxml <- function(ooxml_type, data, text, cell_style, align
       ),
       fill     = cell_style[["cell_fill"]][["color"]],
       v_align  = cell_style[["cell_text"]][["v_align"]],
-      margins  = NULL # TODO: is there something in cell_style for it ?
+      margins  = NULL,
+      row_span = row_span
     )
   )
 }
