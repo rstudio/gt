@@ -233,96 +233,6 @@ ooxml_tbl_cell_properties <- function(ooxml_type, ..., borders = NULL, fill = NU
   )
 }
 
-# ooxml_paragraph -----------------------------------------------------------------
-
-ooxml_paragraph <- function(ooxml_type, ..., properties = NULL) {
-  runs <- ooxml_list(ooxml_type, "ooxml_run", ooxml_run, ...)
-
-  tag <- switch_ooxml_tag(ooxml_type, "p")
-  ooxml_tag(tag, tag_class = "ooxml_paragraph",
-    check_inherits(properties, "ooxml_paragraph_properties", accept_null = TRUE),
-    !!!runs
-  )
-}
-
-# ooxml_paragraph_properties ---------------------------------------------------
-
-ooxml_paragraph_properties <- function(ooxml_type,
-  ...,
-  align = cell_style[["cell_text"]][["align"]] %||% "left",
-  keep_next = TRUE,
-  style = NULL,
-  cell_style = NULL
-) {
-  rlang::check_dots_empty()
-
-  switch_ooxml(ooxml_type,
-    word = ooxml_tag("w:pPr", tag_class = "ooxml_paragraph_properties",
-      ooxml_tag("w:spacing", "w:before" = "0", "w:after" = "60"),
-      if (keep_next) ooxml_tag("w:keepNext"),
-      if (!is.null(align)) ooxml_tag("w:jc", "w:val" = arg_match_names(align, values = c(left = "start", right = "end", center = "center"))),
-      if (!is.null(style)) ooxml_tag("w:pStyle", "w:val" = style)
-
-    ),
-    pptx = ooxml_tag("a:pPr", tag_class = "ooxml_paragraph_properties",
-      "algn" = arg_match_names(align, values = c(left = "l", right = "r", center = "ctr")),
-
-      ooxml_tag("a:spcBef", ooxml_tag("a:spcPts", val = "0")),
-      ooxml_tag("a:spcAft", ooxml_tag("a:spcPts", val = "300")),
-    )
-  )
-}
-
-# ooxml_run ---------------------------------------------------------------
-
-ooxml_run <- function(ooxml_type, x, ..., properties = NULL) {
-  rlang::check_dots_empty()
-
-  tag <- switch_ooxml_tag(ooxml_type, "r")
-  ooxml_tag(tag, tag_class = "ooxml_run",
-    check_inherits(properties, "ooxml_run_properties", accept_null = TRUE),
-    ooxml_text(ooxml_type, x)
-  )
-}
-
-# ooxml_run_properties ----------------------------------------------------
-
-ooxml_run_properties <- function(ooxml_type,
-  ...,
-  font   = cell_style[["cell_text"]][["font"]] %||% "Calibri",
-  style  = cell_style[["cell_text"]][["style"]],
-  size   = cell_style[["cell_text"]][["size"]] %||% 10,
-  color  = cell_style[["cell_text"]][["color"]],
-  weight = cell_style[["cell_text"]][["weight"]],
-  cell_style = NULL
-){
-  rlang::check_dots_empty()
-
-  tag <- switch_ooxml_tag(ooxml_type, "rPr")
-  ooxml_tag(tag, tag_class = "ooxml_run_properties",
-    ooxml_font(ooxml_type, font),
-    ooxml_size(ooxml_type, size),
-    ooxml_color(ooxml_type, color),
-    ooxml_style(ooxml_type, style),
-    ooxml_weight(ooxml_type, weight)
-  )
-}
-
-# ooxml_text --------------------------------------------------------------
-
-ooxml_text <- function(ooxml_type, x, ..., space = c("default", "preserve")) {
-  if (inherits(x, "ooxml_text")) {
-    return(x)
-  }
-  rlang::check_dots_empty()
-
-  tag <- switch_ooxml_tag(ooxml_type, "t")
-  ooxml_tag(tag, tag_class = "ooxml_text",
-    "xml:space" = rlang::arg_match(space),
-    htmltools::HTML(format(x))
-  )
-}
-
 # ooxml_cell_borders ------------------------------------------------------
 
 ooxml_cell_borders <- function(ooxml_type, border = NULL) {
@@ -606,8 +516,12 @@ ooxml_table_autonum <- function(ooxml_type, font = "Calibri", size = 12) {
   }
 
   tagList(
-    ooxml_run("word", properties = ooxml_run_properties(ooxml_type, font = font, size = size),
-      ooxml_text("word", "Table", space = "preserve")
+    ooxml_tag("w:r",
+      ooxml_tag("w:rPr",
+        ooxml_tag("w:rFonts", "w:ascii" = font, "w:hAnsi" = font),
+        ooxml_tag("w:sz", "w:val" = size)
+      ),
+      ooxml_tag("w:t", "xml:space" = "preserve", "Table")
     ),
     ooxml_tag("w:r", ooxml_tag("w:fldChar", "w:fldCharType" = "begin", "w:dirty" = "true")),
     ooxml_tag("w:r",
@@ -616,15 +530,20 @@ ooxml_table_autonum <- function(ooxml_type, font = "Calibri", size = 12) {
     ooxml_tag("w:r", ooxml_tag("w:fldChar", "w:fldCharType" = "separate", "w:dirty" = "true")),
     ooxml_tag("w:r",
       ooxml_tag("w:noProof"),
-      ooxml_font("word", font = font),
-      ooxml_size("word", size = size),
-      ooxml_text("word", "1", space = "default")
+      ooxml_tag("w:rFonts", "w:ascii" = font, "w:hAnsi" = font),
+      ooxml_tag("w:sz", "w:val" = size),
+      ooxml_tag("w:t", "w:space" = "default", "1")
     ),
     ooxml_tag("w:r", ooxml_tag("w:fldChar", "w:fldCharType" = "end", "w:dirty" = "true")),
-    ooxml_run("word", properties = ooxml_run_properties(ooxml_type, font = font, size = size),
-      ooxml_text("word", ": ", space = "preserve")
+    ooxml_tag("w:r",
+      ooxml_tag("w:rPr",
+        ooxml_tag("w:rFonts", "w:ascii" = font, "w:hAnsi" = font),
+        ooxml_tag("w:sz", "w:val" = size)
+      ),
+      ooxml_tag("w:t", "xml:space" = "preserve", ": ")
     )
   )
+
 }
 
 
@@ -959,7 +878,14 @@ process_ooxml__run_word <- function(nodes, font, size, color, style, weight, str
 }
 
 process_ooxml__run_pptx <- function(nodes, font, size, color, style, weight, stretch) {
-  # TODO
+
+    # ooxml_tag(tag, tag_class = "ooxml_run_properties",
+    # ooxml_font(ooxml_type, font),
+    # ooxml_size(ooxml_type, size),
+    # ooxml_color(ooxml_type, color),
+    # ooxml_style(ooxml_type, style),
+    # ooxml_weight(ooxml_type, weight)
+
   nodes
 }
 
@@ -1025,7 +951,23 @@ process_ooxml__paragraph_word <- function(nodes, align = NULL, keep_with_next = 
 }
 
 process_ooxml__paragraph_pptx <- function(nodes, align, stretch, keep_with_next, style) {
-  # TODO
+
+  #   switch_ooxml(ooxml_type,
+  #   word = ooxml_tag("w:pPr",
+  #     ooxml_tag("w:spacing", "w:before" = "0", "w:after" = "60"),
+  #     if (keep_next) ooxml_tag("w:keepNext"),
+  #     if (!is.null(align)) ooxml_tag("w:jc", "w:val" = arg_match_names(align, values = c(left = "start", right = "end", center = "center"))),
+  #     if (!is.null(style)) ooxml_tag("w:pStyle", "w:val" = style)
+  #
+  #   ),
+  #   pptx = ooxml_tag("a:pPr",
+  #     "algn" = arg_match_names(align, values = c(left = "l", right = "r", center = "ctr")),
+  #
+  #     ooxml_tag("a:spcBef", ooxml_tag("a:spcPts", val = "0")),
+  #     ooxml_tag("a:spcAft", ooxml_tag("a:spcPts", val = "300")),
+  #   )
+  # )
+
   nodes
 }
 
