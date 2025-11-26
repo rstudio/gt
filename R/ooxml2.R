@@ -736,7 +736,7 @@ process_cell_content_ooxml <- function(
   stretch = NULL,
 
   # paragraph
-  align = NULL, align_default = "left",
+  align = NULL, align_default = NULL,
   keep_with_next = TRUE,
   paragraph_style = NULL,
 
@@ -750,17 +750,17 @@ process_cell_content_ooxml <- function(
   processed <- parse_to_ooxml(x, ooxml_type = ooxml_type)
 
   processed <- process_ooxml__paragraph(ooxml_type, nodes = processed,
-    align          = cell_style[["cell_text"]][["align"]] %||% align_default,
+    align          = align %||% cell_style[["cell_text"]][["align"]] %||% align_default,
     keep_with_next = keep_with_next,
     style          = paragraph_style
   )
 
   processed <- process_ooxml__run(ooxml_type, nodes = processed,
-    font       = cell_style[["cell_text"]][["font"]]   %||% font_default,
-    size       = cell_style[["cell_text"]][["size"]]   %||% size_default,
-    color      = cell_style[["cell_text"]][["color"]]  %||% color_default,
-    style      = cell_style[["cell_text"]][["style"]]  %||% style_default,
-    weight     = cell_style[["cell_text"]][["weight"]] %||% weight_default,
+    font       = font   %||% cell_style[["cell_text"]][["font"]]   %||% font_default,
+    size       = size   %||% cell_style[["cell_text"]][["size"]]   %||% size_default,
+    color      = color  %||% cell_style[["cell_text"]][["color"]]  %||% color_default,
+    style      = style  %||% cell_style[["cell_text"]][["style"]]  %||% style_default,
+    weight     = weight %||%cell_style[["cell_text"]][["weight"]]  %||% weight_default,
     stretch    = stretch
   )
 
@@ -932,13 +932,13 @@ process_ooxml__paragraph_word <- function(nodes, align = NULL, keep_with_next = 
 
     if (!is.null(align)) {
       val <- arg_match_names(align, c(left = "start", right = "end", center = "center"))
-    } else {
-      val <- "start"
-    }
-    if ("jc" %in% names) {
-      xml_set_attr(xml_find_first(pPr, ".//w:jc"), "w:val", val)
-    } else {
-      xml_add_child(pPr, "w:jc", "w:val" = val)
+
+      if ("jc" %in% names) {
+        xml_set_attr(xml_find_first(pPr, ".//w:jc"), "w:val", val)
+      } else {
+        xml_add_child(pPr, "w:jc", "w:val" = val)
+      }
+
     }
 
     if (!"pStyle" %in% names && !is.null(style)) {

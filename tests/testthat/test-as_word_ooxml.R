@@ -12,6 +12,14 @@ test_that("word ooxml can be generated from gt object", {
   expect_equal(length(xml_find_all(xml, "//w:keepNext")), 18)
   # TODO: explore xml more precisely than with a snapshot
   expect_xml_snapshot(xml)
+  expect_equal(
+    xml_attr(xml_find_all(xml, "(//w:tr)[1]//w:pPr/w:jc"), "val"),
+    c("end", "start", "center", "end", "end", "end", "end", "start", "start")
+  )
+  expect_equal(
+    xml_attr(xml_find_all(xml, "(//w:tr)[2]//w:pPr/w:jc"), "val"),
+    c("end", "start", "center", "end", "end", "end", "end", "start", "start")
+  )
 
   ## basic table with title
   # expect_snapshot_ooxml_word(gt_tbl_1)
@@ -262,3 +270,12 @@ test_that("word ooxml escapes special characters in gt object", {
     xml_find_all(xml, "(//w:t)[last()]/text()")
   )
 })
+
+# test_that("word ooxml escapes special characters in gt object footer", {
+#
+#   gt_tbl <- gt(data.frame(num = 1)) |>
+#     tab_footnote(footnote = "p < .05, ><&\n\r\"'")
+#
+#   xml <- read_xml_word_nodes(as_word_ooxml(gt_tbl))
+#
+# })
