@@ -55,9 +55,10 @@ as_ooxml_tbl <- function(ooxml_type, data,
   #
   # things are different in word where we can have w:tblLayoutType="autofit" and then
   # not have a <w:tblGrid> node
-  tbl_grid         <- create_table_grid_ooxml(ooxml_type, data = data)
-  tbl_spanner_rows <- create_spanner_rows_ooxml(ooxml_type, data = data, split = split, keep_with_next = keep_with_next)
-  tbl_table_rows   <- create_table_rows_ooxml(ooxml_type, data = data, split = split, keep_with_next = keep_with_next)
+  tbl_grid          <- create_table_grid_ooxml(ooxml_type, data = data)
+  tbl_spanner_rows  <- create_spanner_rows_ooxml(ooxml_type, data = data, split = split, keep_with_next = keep_with_next)
+  tbl_table_rows    <- create_table_rows_ooxml(ooxml_type, data = data, split = split, keep_with_next = keep_with_next)
+  tbl_footnote_rows <- create_footnote_rows_ooxml(ooxml_type, data = data, split = split, keep_with_next = keep_with_next)
 
   tbl_heading_row  <- if (embedded_heading) {
     create_heading_row(ooxml_type, data = data,
@@ -72,7 +73,8 @@ as_ooxml_tbl <- function(ooxml_type, data,
     grid       = tbl_grid,
     tbl_heading_row,
     !!!tbl_spanner_rows,
-    !!!tbl_table_rows
+    !!!tbl_table_rows,
+    !!!tbl_footnote_rows
   )
 }
 
@@ -204,6 +206,55 @@ create_heading_row_subtitle_paragraph <- function(ooxml_type, data, keep_with_ne
   )
 
   to_tags(paragraphs)
+}
+
+
+# footnote rows -----------------------------------------------------------
+
+create_footnote_rows_ooxml <- function(ooxml_type, data, split = split, keep_with_next = keep_with_next) {
+  footnotes_tbl <- dt_footnotes_get(data = data)
+  if (nrow(footnotes_tbl) == 0L) {
+    return(NULL)
+  }
+
+  n_cols <- length(dt_boxhead_get_vars_default(data = data)) + length(dt_boxhead_get_var_by_type(data, type = "stub"))
+
+  cell_style <- dt_styles_get(data = data)
+  cell_style <- cell_style[cell_style$locname == "footnotes", "styles", drop = TRUE]
+  cell_style <- cell_style[1][[1]]
+
+  footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
+
+  separator <- dt_options_get_value(data = data, option = "footnotes_sep")
+
+  footnote_ids <- footnotes_tbl[["fs_id"]]
+  footnote_text <- footnotes_tbl[["footnotes"]]
+
+  footnote_rows <- lapply(seq_along(footnote_ids), function(i) {
+    # in the build stage, we don't process markdown for footnote text
+    # So, we process it now https://github.com/rstudio/gt/issues/1892
+    footnote_xml <- process_text_ooxml(footnote_text[[i]], ooxml_type)
+
+    # TODO: footnote marks for the subtitle
+
+    content <- process_cell_content_ooxml(ooxml_type, footnote_xml,
+      cell_style = cell_style,
+      keep_with_next = keep_with_next
+    )
+
+    ooxml_tbl_row(ooxml_type, split = split,
+      ooxml_tbl_cell(ooxml_type, !!!to_tags(content),
+        properties = ooxml_tbl_cell_properties(ooxml_type,
+          fill     = cell_style[["cell_fill"]][["color"]],
+          v_align  = cell_style[["cell_text"]][["v_align"]],
+          col_span = n_cols
+        )
+      )
+    )
+  })
+
+  tagList(!!!footnote_rows)
+
 }
 
 # table grid --------------------------------------------------------------
@@ -546,6 +597,7 @@ create_body_row_data_cell_ooxml <- function(ooxml_type, data, i, j, keep_with_ne
   boxh  <- dt_boxhead_get(data = data)
 
   text <- as.character(body[i, j])
+
   create_body_row_cell_ooxml(ooxml_type, data, text,
     cell_style = cell_style,
     align = cell_style[["cell_text"]][["align"]] %||% vctrs::vec_slice(boxh$column_align, boxh$type == "default")[j],
@@ -561,8 +613,9 @@ create_body_row_cell_ooxml <- function(ooxml_type, data, text, cell_style, align
   table_border_top_color    <- dt_options_get_value(data, option = "table_border_top_color")
 
   content <- process_cell_content_ooxml(ooxml_type, text,
-    cell_style = cell_style,
-    keep_with_next = keep_with_next
+    cell_style     = cell_style,
+    keep_with_next = keep_with_next,
+    align          = align
   )
 
   ooxml_tbl_cell(ooxml_type, !!!to_tags(content),

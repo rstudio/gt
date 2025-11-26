@@ -238,7 +238,7 @@
               <w:pPr>
                 <w:spacing w:before="0" w:after="60"/>
                 <w:keepNext/>
-                <w:jc w:val="start"/>
+                <w:jc w:val="end"/>
               </w:pPr>
               <w:r>
                 <w:rPr>
@@ -286,7 +286,7 @@
               <w:pPr>
                 <w:spacing w:before="0" w:after="60"/>
                 <w:keepNext/>
-                <w:jc w:val="start"/>
+                <w:jc w:val="center"/>
               </w:pPr>
               <w:r>
                 <w:rPr>
@@ -310,7 +310,7 @@
               <w:pPr>
                 <w:spacing w:before="0" w:after="60"/>
                 <w:keepNext/>
-                <w:jc w:val="start"/>
+                <w:jc w:val="end"/>
               </w:pPr>
               <w:r>
                 <w:rPr>
@@ -334,7 +334,7 @@
               <w:pPr>
                 <w:spacing w:before="0" w:after="60"/>
                 <w:keepNext/>
-                <w:jc w:val="start"/>
+                <w:jc w:val="end"/>
               </w:pPr>
               <w:r>
                 <w:rPr>
@@ -358,7 +358,7 @@
               <w:pPr>
                 <w:spacing w:before="0" w:after="60"/>
                 <w:keepNext/>
-                <w:jc w:val="start"/>
+                <w:jc w:val="end"/>
               </w:pPr>
               <w:r>
                 <w:rPr>
@@ -382,7 +382,7 @@
               <w:pPr>
                 <w:spacing w:before="0" w:after="60"/>
                 <w:keepNext/>
-                <w:jc w:val="start"/>
+                <w:jc w:val="end"/>
               </w:pPr>
               <w:r>
                 <w:rPr>
@@ -571,4 +571,12 @@
     Output
       {xml_nodeset (1)}
       [1] &gt;&lt;&amp; "'
+
+# word ooxml escapes special characters in gt object footer
+
+    Code
+      xml_find_all(xml, "//w:tr[last()]//w:t")
+    Output
+      {xml_nodeset (1)}
+      [1] <w:t xml:space="default">p &lt; .05, &gt;&lt;&amp; "'</w:t>
 
