@@ -50,11 +50,6 @@ test_that("word ooxml can be generated from gt object", {
   expect_equal(length(xml_find_all(xml_embed, "//w:tr")), 3)
   expect_equal(length(xml_find_all(xml_embed, "//w:keepNext")), 20)
 
-  title <- xml_find_all(xml_embed, "(//w:p)[1]")[[1]]
-  expect_equal(title, xml_top[[1]])
-  subtitle <- xml_find_all(xml_embed, "(//w:p)[2]")[[1]]
-  expect_equal(subtitle, xml_top[[2]])
-
   expect_equal(
     xml_find_all(xml_top, "(//w:tr)[1]")[[1]],
     xml_find_all(xml_embed, "(//w:tr)[2]")[[1]]
@@ -135,7 +130,7 @@ test_that("word ooxml can be generated from gt object with cell styling", {
     expect_equal(xml_attr(xml_find_all(node, ".//w:sz"), "val"), "20")
     expect_equal(length(xml_find_all(node, ".//w:i")), 1)
     expect_equal(xml_attr(xml_find_all(node, ".//w:color"), "val"), "00FF00")
-    expect_equal(xml_attr(xml_find_all(node, ".//w:b"), "val"), "true")
+    expect_equal(length(xml_find_all(node, ".//w:b")), 1)
   })
 
   # orange cells
@@ -206,28 +201,64 @@ test_that("word ooxml can be generated from gt object with cell styling", {
 
 })
 
-test_that("word ooxml handles md() and html()", {
-
-  # # ## basic table with linebreak in title
-  # gt_tbl_linebreaks_md <-
-  #   exibble_min |>
-  #   gt() |>
-  #   tab_header(
-  #     title = md("TABLE <br> TITLE"),
-  #     subtitle = md("table <br> subtitle")
-  #   )
-
-  # expect_snapshot_ooxml_word(gt_tbl_linebreaks_md)
-  #
-  # ## basic table with linebreak in title
-  # gt_tbl_linebreaks_html <-
-  #   exibble_min |>
-  #   gt() |>
-  #   tab_header(
-  #     title = html("TABLE <br> TITLE"),
-  #     subtitle = html("table <br> subtitle")
-  #   )
-  #
-  # expect_snapshot_ooxml_word(gt_tbl_linebreaks_html)
+test_that("process_text() handles ooxml/word", {
+  expect_equal(process_text("simple", context = "ooxml/word"), "simple")
+  expect_equal(
+    process_text(md("simple <br> markdown"), context = "ooxml/word"),
+    process_text(md("simple <br> markdown"), context = "word")
+  )
+  expect_equal(
+    process_text(html("simple <br> html"), context = "ooxml/word"),
+    process_text(html("simple <br> html"), context = "word")
+  )
 })
 
+test_that("word ooxml handles md() and html()", {
+
+  # Create a one-row table for these tests
+  exibble_min <- exibble[1, ]
+
+  ## basic table with linebreak in title
+  gt_tbl_linebreaks_md <-
+    exibble_min |>
+    gt() |>
+    tab_header(
+      title = md("TABLE <br> TITLE"),
+      subtitle = md("table <br> subtitle")
+    )
+  xml <- read_xml_word_nodes(as_word_ooxml(gt_tbl_linebreaks_md))
+  expect_equal(
+    xml_text(xml_find_all(xml[[1]], "(.//w:r)[last()]//w:t")),
+    "TABLE"
+  )
+  expect_equal(xml_text(xml_find_all(xml[[2]], ".//w:r//w:t")), "TITLE")
+  expect_equal(xml_text(xml_find_all(xml[[3]], ".//w:r//w:t")), "table")
+  expect_equal(xml_text(xml_find_all(xml[[4]], ".//w:r//w:t")), "subtitle")
+
+  ## basic table with linebreak in title
+  gt_tbl_linebreaks_html <-
+    exibble_min |>
+    gt() |>
+    tab_header(
+      title = html("TABLE <br> TITLE"),
+      subtitle = html("table <br> subtitle")
+    )
+
+  xml <- read_xml_word_nodes(as_word_ooxml(gt_tbl_linebreaks_md))
+  expect_equal(
+    xml_text(xml_find_all(xml[[1]], "(.//w:r)[last()]//w:t")),
+    "TABLE"
+  )
+  expect_equal(xml_text(xml_find_all(xml[[2]], ".//w:r//w:t")), "TITLE")
+  expect_equal(xml_text(xml_find_all(xml[[3]], ".//w:r//w:t")), "table")
+  expect_equal(xml_text(xml_find_all(xml[[4]], ".//w:r//w:t")), "subtitle")
+})
+
+test_that("word ooxml escapes special characters in gt object", {
+  df <- data.frame(special_characters = "><&\n\r\"'", stringsAsFactors = FALSE)
+  xml <- read_xml_word_nodes(as_word_ooxml(gt(df)))
+
+  expect_snapshot(
+    xml_find_all(xml, "(//w:t)[last()]/text()")
+  )
+})

@@ -459,7 +459,7 @@
         <w:r>
           <w:rPr>
             <w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-            <w:sz w:val="48"/>
+            <w:sz w:val="24"/>
           </w:rPr>
           <w:t xml:space="preserve">Table</w:t>
         </w:r>
@@ -475,8 +475,8 @@
         <w:r>
           <w:noProof/>
           <w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-          <w:sz w:val="48"/>
-          <w:t xml:space="default">1</w:t>
+          <w:sz w:val="24"/>
+          <w:t w:space="default">1</w:t>
         </w:r>
         <w:r>
           <w:fldChar w:fldCharType="end" w:dirty="true"/>
@@ -484,15 +484,15 @@
         <w:r>
           <w:rPr>
             <w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-            <w:sz w:val="48"/>
+            <w:sz w:val="24"/>
           </w:rPr>
           <w:t xml:space="preserve">: </w:t>
         </w:r>
         <w:r>
           <w:rPr>
             <w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-            <w:sz w:val="48"/>
             <w:color w:val="333333"/>
+            <w:sz w:val="24"/>
           </w:rPr>
           <w:t xml:space="default">TABLE TITLE</w:t>
         </w:r>
@@ -513,8 +513,8 @@
         <w:r>
           <w:rPr>
             <w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-            <w:sz w:val="32"/>
             <w:color w:val="333333"/>
+            <w:sz w:val="16"/>
           </w:rPr>
           <w:t xml:space="default">table subtitle</w:t>
         </w:r>
@@ -535,8 +535,8 @@
         <w:r>
           <w:rPr>
             <w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-            <w:sz w:val="48"/>
             <w:color w:val="333333"/>
+            <w:sz w:val="24"/>
           </w:rPr>
           <w:t xml:space="default">TABLE TITLE</w:t>
         </w:r>
@@ -557,10 +557,18 @@
         <w:r>
           <w:rPr>
             <w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
-            <w:sz w:val="32"/>
             <w:color w:val="333333"/>
+            <w:sz w:val="16"/>
           </w:rPr>
           <w:t xml:space="default">table subtitle</w:t>
         </w:r>
       </w:p>
+
+# word ooxml escapes special characters in gt object
+
+    Code
+      xml_find_all(xml, "(//w:t)[last()]/text()")
+    Output
+      {xml_nodeset (1)}
+      [1] &gt;&lt;&amp; "'
 
