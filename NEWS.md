@@ -8,6 +8,9 @@
 
 * Fix bug where latex spanner widths were based on incorrect column widths (@shannonhaughton, #2016, #1922)
 
+* Update latex to allow for horizontal alignment within cells (@thebioengineer, #2001)
+
+
 # gt 1.1.0
 
 ## New features
