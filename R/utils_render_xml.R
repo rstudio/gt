@@ -2330,25 +2330,13 @@ create_footnotes_component_xml <- function(
     return("")
   }
 
-  stub_components <- dt_stub_components(data = data)
-
   cell_style <- dt_styles_get(data = data)
   cell_style <- cell_style[cell_style$locname == "footnotes", "styles", drop = TRUE]
   cell_style <- cell_style[1][[1]]
 
-  n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
+  n_cols <- length(dt_boxhead_get_vars_default(data = data)) + length(dt_boxhead_get_var_by_type(data, type = "stub"))
 
-  # Determine whether the stub is available
-  stub_available <- dt_stub_components_has_rowname(stub_components = stub_components)
-
-  if (stub_available) {
-    n_cols <- n_data_cols + 1
-  } else {
-    n_cols <- n_data_cols
-  }
-
-  footnotes_tbl <-
-    dplyr::distinct(footnotes_tbl, fs_id, footnotes)
+  footnotes_tbl <- dplyr::distinct(footnotes_tbl, fs_id, footnotes)
 
   # Get the footnote separator option
   separator <- dt_options_get_value(data = data, option = "footnotes_sep")
