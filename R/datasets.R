@@ -93,10 +93,6 @@
 #' sunrise hadn't yet occurred by the `tst` value.}
 #' }
 #'
-#' @source Calculated Actinic Fluxes (290 - 700 nm) for Air Pollution
-#' Photochemistry Applications (Peterson, 1976), available at:
-#' <https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=9100JA26.txt>.
-#'
 #' @family datasets
 #' @section Dataset ID and Badge:
 #' DATA-2
