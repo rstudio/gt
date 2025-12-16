@@ -30,7 +30,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/rstudio/gt/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/rstudio/gt/blob/v1.2.0/DESCRIPTION)
 
 Iannone R, Cheng J, Schloerke B, Haughton S, Hughes E, Lauer A, François
 R, Seo J, Brevoort K, Roy O (2025). *gt: Easily Create
