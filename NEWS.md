@@ -2,7 +2,7 @@
 
 # gt 1.2.0
 
-* The new `fmt_number_si()` function format numeric values with SI prefixes and an optional unit (could be obtained from a separate column), automatically selecting the appropriate prefix to keep the mantissa in a readable range (#1999). (#2060)
+* The new `fmt_number_si()` function format numeric values with SI prefixes and an optional unit (which could be also be obtained from a separate column), automatically selecting the appropriate prefix to keep the mantissa in a readable range (#1999). (#2060)
 
 * Added the `summary_columns()` function to enable horizontal, row-wise aggregation (#382). (#2067)
 
@@ -10,7 +10,7 @@
 
 * Added the `omit_na_group` argument to the `gt()` function; when `TRUE`, rows with `NA` values in the `groupname_col` be excluded from row group assignment (the default of `FALSE` preserves the old behavior) (#1215). (#2062)
 
-* Ensure that the `stub()` helper works with tables having a multi-column stub (#2066). (#2069)
+* The `stub()` helper now works with tables having a multi-column stub (#2066). (#2069)
 
 * Fixed issue where loading in the Unicode conversion file (for LaTeX output tables) fails (#2048). (#2049)
 
