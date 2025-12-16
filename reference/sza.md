@@ -35,12 +35,6 @@ A tibble with 816 rows and 4 variables:
   The solar zenith angle in degrees, where `NA`s indicate that sunrise
   hadn't yet occurred by the `tst` value.
 
-## Source
-
-Calculated Actinic Fluxes (290 - 700 nm) for Air Pollution
-Photochemistry Applications (Peterson, 1976), available at:
-<https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=9100JA26.txt>.
-
 ## Details
 
 The solar zenith angle (SZA) is one measure that helps to describe the
