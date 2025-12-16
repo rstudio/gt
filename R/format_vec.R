@@ -780,7 +780,7 @@ vec_fmt_engineering <- function(
 #' 15-5
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v1.2.0` (December 16, 2025)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_number_si()].

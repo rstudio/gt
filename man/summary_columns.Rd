@@ -160,7 +160,7 @@ summary column that computes the average annual change using
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v1.2.0} (December 16, 2025)
 }
 
 \seealso{

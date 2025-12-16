@@ -161,7 +161,7 @@
 #' 6-4
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v1.2.0` (December 16, 2025)
 #'
 #' @export
 summary_columns <- function(

@@ -1393,7 +1393,7 @@ fmt_engineering <- function(
 #' 3-5
 #'
 #' @section Function Introduced:
-#' **In development**
+#' `v1.2.0` (December 16, 2025)
 #'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_number_si()].

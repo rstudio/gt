@@ -353,7 +353,7 @@ additional unit information (like "per hour") that gets merged in.
 
 \section{Function Introduced}{
 
-\strong{In development}
+\code{v1.2.0} (December 16, 2025)
 }
 
 \seealso{
