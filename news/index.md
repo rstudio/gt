@@ -1,6 +1,8 @@
 # Changelog
 
-## gt (development version)
+## gt 1.2.0
+
+CRAN release: 2025-12-16
 
 - The new
   [`fmt_number_si()`](https://gt.rstudio.com/reference/fmt_number_si.md)
@@ -10,6 +12,18 @@
   ([\#1999](https://github.com/rstudio/gt/issues/1999)).
   ([\#2060](https://github.com/rstudio/gt/issues/2060))
 
+- Added the
+  [`summary_columns()`](https://gt.rstudio.com/reference/summary_columns.md)
+  function to enable horizontal, row-wise aggregation
+  ([\#382](https://github.com/rstudio/gt/issues/382)).
+  ([\#2067](https://github.com/rstudio/gt/issues/2067))
+
+- Added the `min_sep_threshold` argument to numeric formatting
+  functions; this controls the minimum number of digits required in the
+  integer part of a number for grouping separators to be applied
+  ([\#908](https://github.com/rstudio/gt/issues/908)).
+  ([\#2064](https://github.com/rstudio/gt/issues/2064))
+
 - Added the `omit_na_group` argument to the
   [`gt()`](https://gt.rstudio.com/reference/gt.md) function; when
   `TRUE`, rows with `NA` values in the `groupname_col` be excluded from
@@ -17,20 +31,64 @@
   behavior) ([\#1215](https://github.com/rstudio/gt/issues/1215)).
   ([\#2062](https://github.com/rstudio/gt/issues/2062))
 
-- Update latex Unicode conversions to be optional (default to TRUE) as
-  well as make them work in-line
-  ([@thebioengineer](https://github.com/thebioengineer),
-  [\#2037](https://github.com/rstudio/gt/issues/2037),
-  [\#2041](https://github.com/rstudio/gt/issues/2041))
+- Ensure that the [`stub()`](https://gt.rstudio.com/reference/stub.md)
+  helper works with tables having a multi-column stub
+  ([\#2066](https://github.com/rstudio/gt/issues/2066)).
+  ([\#2069](https://github.com/rstudio/gt/issues/2069))
 
-- Fix bug where latex spanner widths were based on incorrect column
-  widths ([@shannonhaughton](https://github.com/shannonhaughton),
-  [\#2016](https://github.com/rstudio/gt/issues/2016),
-  [\#1922](https://github.com/rstudio/gt/issues/1922))
+- Fixed issue where loading in the Unicode conversion file (for LaTeX
+  output tables) fails
+  ([\#2048](https://github.com/rstudio/gt/issues/2048)).
+  ([\#2049](https://github.com/rstudio/gt/issues/2049))
 
-- Update latex to allow for horizontal alignment within cells
+- Added fix to make LaTeX Unicode conversion operations optional (as
+  well as make them work in-line)
+  ([\#2037](https://github.com/rstudio/gt/issues/2037),
+  [\#2041](https://github.com/rstudio/gt/issues/2041)).
   ([@thebioengineer](https://github.com/thebioengineer),
-  [\#2001](https://github.com/rstudio/gt/issues/2001))
+  [\#2042](https://github.com/rstudio/gt/issues/2042))
+
+- Fixed a bug where LaTeX spanner widths were based on incorrect column
+  widths ([\#1922](https://github.com/rstudio/gt/issues/1922),
+  [\#2016](https://github.com/rstudio/gt/issues/2016)).
+  ([@shannonhaughton](https://github.com/shannonhaughton),
+  [\#2079](https://github.com/rstudio/gt/issues/2079))
+
+- The
+  [`fmt_scientific()`](https://gt.rstudio.com/reference/fmt_scientific.md)
+  function should no longer error when formatting `Inf`/`-Inf` values in
+  a table column ([\#1516](https://github.com/rstudio/gt/issues/1516)).
+  ([\#2058](https://github.com/rstudio/gt/issues/2058))
+
+- Allow for horizontal alignment within cells of LaTeX output tables
+  ([\#2001](https://github.com/rstudio/gt/issues/2001)).
+  ([@thebioengineer](https://github.com/thebioengineer),
+  [\#2075](https://github.com/rstudio/gt/issues/2075))
+
+- Added functionality for handling tables with a multicolumn stub in the
+  Word output format.
+  ([@romainfrancois](https://github.com/romainfrancois),
+  [\#2074](https://github.com/rstudio/gt/issues/2074),
+  [\#2086](https://github.com/rstudio/gt/issues/2086))
+
+- We now correctly handle tables with a multicolumn stub in the RTF
+  output format ([\#2045](https://github.com/rstudio/gt/issues/2045)).
+  ([\#2061](https://github.com/rstudio/gt/issues/2061))
+
+- Added better support for LaTeX tables with a multicolumn stub
+  ([\#2044](https://github.com/rstudio/gt/issues/2044)).
+  ([\#2051](https://github.com/rstudio/gt/issues/2051))
+
+- The `countrypops` dataset has been updated to include population
+  values up to 2024.
+  ([\#2057](https://github.com/rstudio/gt/issues/2057))
+
+- GitHub Actions workflows were updated.
+  ([@olivroy](https://github.com/olivroy),
+  [\#2077](https://github.com/rstudio/gt/issues/2077))
+
+- Refactored pipe use, moving many pipes in the codebase from `%>%` to
+  `|>`. ([\#2056](https://github.com/rstudio/gt/issues/2056))
 
 ## gt 1.1.0
 
@@ -138,8 +196,9 @@ CRAN release: 2025-09-23
   [\#2027](https://github.com/rstudio/gt/issues/2027))
 
 - Add option to control the order of footnotes
+  ([\#2023](https://github.com/rstudio/gt/issues/2023)).
   ([@shannonhaughton](https://github.com/shannonhaughton),
-  [\#2023](https://github.com/rstudio/gt/issues/2023))
+  [\#2036](https://github.com/rstudio/gt/issues/2036))
 
 ## gt 1.0.0
 

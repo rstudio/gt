@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,12 +63,23 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="gt-development-version">gt (development version)<a class="anchor" aria-label="anchor" href="#gt-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.2.0" id="gt-120">gt 1.2.0<a class="anchor" aria-label="anchor" href="#gt-120"></a></h2><p class="text-muted">CRAN release: 2025-12-16</p>
 <ul><li><p>The new <code><a href="../reference/fmt_number_si.html">fmt_number_si()</a></code> function format numeric values with SI prefixes and an optional unit (could be obtained from a separate column), automatically selecting the appropriate prefix to keep the mantissa in a readable range (<a href="https://github.com/rstudio/gt/issues/1999" class="external-link">#1999</a>). (<a href="https://github.com/rstudio/gt/issues/2060" class="external-link">#2060</a>)</p></li>
+<li><p>Added the <code><a href="../reference/summary_columns.html">summary_columns()</a></code> function to enable horizontal, row-wise aggregation (<a href="https://github.com/rstudio/gt/issues/382" class="external-link">#382</a>). (<a href="https://github.com/rstudio/gt/issues/2067" class="external-link">#2067</a>)</p></li>
+<li><p>Added the <code>min_sep_threshold</code> argument to numeric formatting functions; this controls the minimum number of digits required in the integer part of a number for grouping separators to be applied (<a href="https://github.com/rstudio/gt/issues/908" class="external-link">#908</a>). (<a href="https://github.com/rstudio/gt/issues/2064" class="external-link">#2064</a>)</p></li>
 <li><p>Added the <code>omit_na_group</code> argument to the <code><a href="../reference/gt.html">gt()</a></code> function; when <code>TRUE</code>, rows with <code>NA</code> values in the <code>groupname_col</code> be excluded from row group assignment (the default of <code>FALSE</code> preserves the old behavior) (<a href="https://github.com/rstudio/gt/issues/1215" class="external-link">#1215</a>). (<a href="https://github.com/rstudio/gt/issues/2062" class="external-link">#2062</a>)</p></li>
-<li><p>Update latex Unicode conversions to be optional (default to TRUE) as well as make them work in-line (<a href="https://github.com/thebioengineer" class="external-link">@thebioengineer</a>, <a href="https://github.com/rstudio/gt/issues/2037" class="external-link">#2037</a>, <a href="https://github.com/rstudio/gt/issues/2041" class="external-link">#2041</a>)</p></li>
-<li><p>Fix bug where latex spanner widths were based on incorrect column widths (<a href="https://github.com/shannonhaughton" class="external-link">@shannonhaughton</a>, <a href="https://github.com/rstudio/gt/issues/2016" class="external-link">#2016</a>, <a href="https://github.com/rstudio/gt/issues/1922" class="external-link">#1922</a>)</p></li>
-<li><p>Update latex to allow for horizontal alignment within cells (<a href="https://github.com/thebioengineer" class="external-link">@thebioengineer</a>, <a href="https://github.com/rstudio/gt/issues/2001" class="external-link">#2001</a>)</p></li>
+<li><p>Ensure that the <code><a href="../reference/stub.html">stub()</a></code> helper works with tables having a multi-column stub (<a href="https://github.com/rstudio/gt/issues/2066" class="external-link">#2066</a>). (<a href="https://github.com/rstudio/gt/issues/2069" class="external-link">#2069</a>)</p></li>
+<li><p>Fixed issue where loading in the Unicode conversion file (for LaTeX output tables) fails (<a href="https://github.com/rstudio/gt/issues/2048" class="external-link">#2048</a>). (<a href="https://github.com/rstudio/gt/issues/2049" class="external-link">#2049</a>)</p></li>
+<li><p>Added fix to make LaTeX Unicode conversion operations optional (as well as make them work in-line) (<a href="https://github.com/rstudio/gt/issues/2037" class="external-link">#2037</a>, <a href="https://github.com/rstudio/gt/issues/2041" class="external-link">#2041</a>). (<a href="https://github.com/thebioengineer" class="external-link">@thebioengineer</a>, <a href="https://github.com/rstudio/gt/issues/2042" class="external-link">#2042</a>)</p></li>
+<li><p>Fixed a bug where LaTeX spanner widths were based on incorrect column widths (<a href="https://github.com/rstudio/gt/issues/1922" class="external-link">#1922</a>, <a href="https://github.com/rstudio/gt/issues/2016" class="external-link">#2016</a>). (<a href="https://github.com/shannonhaughton" class="external-link">@shannonhaughton</a>, <a href="https://github.com/rstudio/gt/issues/2079" class="external-link">#2079</a>)</p></li>
+<li><p>The <code><a href="../reference/fmt_scientific.html">fmt_scientific()</a></code> function should no longer error when formatting <code>Inf</code>/<code>-Inf</code> values in a table column (<a href="https://github.com/rstudio/gt/issues/1516" class="external-link">#1516</a>). (<a href="https://github.com/rstudio/gt/issues/2058" class="external-link">#2058</a>)</p></li>
+<li><p>Allow for horizontal alignment within cells of LaTeX output tables (<a href="https://github.com/rstudio/gt/issues/2001" class="external-link">#2001</a>). (<a href="https://github.com/thebioengineer" class="external-link">@thebioengineer</a>, <a href="https://github.com/rstudio/gt/issues/2075" class="external-link">#2075</a>)</p></li>
+<li><p>Added functionality for handling tables with a multicolumn stub in the Word output format. (<a href="https://github.com/romainfrancois" class="external-link">@romainfrancois</a>, <a href="https://github.com/rstudio/gt/issues/2074" class="external-link">#2074</a>, <a href="https://github.com/rstudio/gt/issues/2086" class="external-link">#2086</a>)</p></li>
+<li><p>We now correctly handle tables with a multicolumn stub in the RTF output format (<a href="https://github.com/rstudio/gt/issues/2045" class="external-link">#2045</a>). (<a href="https://github.com/rstudio/gt/issues/2061" class="external-link">#2061</a>)</p></li>
+<li><p>Added better support for LaTeX tables with a multicolumn stub (<a href="https://github.com/rstudio/gt/issues/2044" class="external-link">#2044</a>). (<a href="https://github.com/rstudio/gt/issues/2051" class="external-link">#2051</a>)</p></li>
+<li><p>The <code>countrypops</code> dataset has been updated to include population values up to 2024. (<a href="https://github.com/rstudio/gt/issues/2057" class="external-link">#2057</a>)</p></li>
+<li><p>GitHub Actions workflows were updated. (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/2077" class="external-link">#2077</a>)</p></li>
+<li><p>Refactored pipe use, moving many pipes in the codebase from <code>%&gt;%</code> to <code>|&gt;</code>. (<a href="https://github.com/rstudio/gt/issues/2056" class="external-link">#2056</a>)</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.0" id="gt-110">gt 1.1.0<a class="anchor" aria-label="anchor" href="#gt-110"></a></h2><p class="text-muted">CRAN release: 2025-09-23</p>
@@ -92,7 +103,7 @@
 <li><p>HTML output tables no longer have multiple instances of <code>&lt;tfoot&gt;</code> tags (<a href="https://github.com/rstudio/gt/issues/1296" class="external-link">#1296</a>). (<a href="https://github.com/rstudio/gt/issues/2025" class="external-link">#2025</a>)</p></li>
 <li><p>Fixed a length recycling issue when using gt with Quarto (<a href="https://github.com/rstudio/gt/issues/1985" class="external-link">#1985</a>). (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rstudio/gt/issues/1986" class="external-link">#1986</a>)</p></li>
 <li><p>The <code>metro</code> and <code>films</code> datasets have been updated. (<a href="https://github.com/rstudio/gt/issues/2026" class="external-link">#2026</a>, <a href="https://github.com/rstudio/gt/issues/2027" class="external-link">#2027</a>)</p></li>
-<li><p>Add option to control the order of footnotes (<a href="https://github.com/shannonhaughton" class="external-link">@shannonhaughton</a>, <a href="https://github.com/rstudio/gt/issues/2023" class="external-link">#2023</a>)</p></li>
+<li><p>Add option to control the order of footnotes (<a href="https://github.com/rstudio/gt/issues/2023" class="external-link">#2023</a>). (<a href="https://github.com/shannonhaughton" class="external-link">@shannonhaughton</a>, <a href="https://github.com/rstudio/gt/issues/2036" class="external-link">#2036</a>)</p></li>
 </ul></div>
 </div>
     <div class="section level2">
