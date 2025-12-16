@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,16 +59,19 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/rstudio/gt/blob/v1.2.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/rstudio/gt/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="gt-development-version">gt (development version)<a class="anchor" aria-label="anchor" href="#gt-development-version"></a></h2>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.0" id="gt-120">gt 1.2.0<a class="anchor" aria-label="anchor" href="#gt-120"></a></h2><p class="text-muted">CRAN release: 2025-12-16</p>
-<ul><li><p>The new <code><a href="../reference/fmt_number_si.html">fmt_number_si()</a></code> function format numeric values with SI prefixes and an optional unit (could be obtained from a separate column), automatically selecting the appropriate prefix to keep the mantissa in a readable range (<a href="https://github.com/rstudio/gt/issues/1999" class="external-link">#1999</a>). (<a href="https://github.com/rstudio/gt/issues/2060" class="external-link">#2060</a>)</p></li>
+<ul><li><p>The new <code><a href="../reference/fmt_number_si.html">fmt_number_si()</a></code> function format numeric values with SI prefixes and an optional unit (which could be also be obtained from a separate column), automatically selecting the appropriate prefix to keep the mantissa in a readable range (<a href="https://github.com/rstudio/gt/issues/1999" class="external-link">#1999</a>). (<a href="https://github.com/rstudio/gt/issues/2060" class="external-link">#2060</a>)</p></li>
 <li><p>Added the <code><a href="../reference/summary_columns.html">summary_columns()</a></code> function to enable horizontal, row-wise aggregation (<a href="https://github.com/rstudio/gt/issues/382" class="external-link">#382</a>). (<a href="https://github.com/rstudio/gt/issues/2067" class="external-link">#2067</a>)</p></li>
 <li><p>Added the <code>min_sep_threshold</code> argument to numeric formatting functions; this controls the minimum number of digits required in the integer part of a number for grouping separators to be applied (<a href="https://github.com/rstudio/gt/issues/908" class="external-link">#908</a>). (<a href="https://github.com/rstudio/gt/issues/2064" class="external-link">#2064</a>)</p></li>
 <li><p>Added the <code>omit_na_group</code> argument to the <code><a href="../reference/gt.html">gt()</a></code> function; when <code>TRUE</code>, rows with <code>NA</code> values in the <code>groupname_col</code> be excluded from row group assignment (the default of <code>FALSE</code> preserves the old behavior) (<a href="https://github.com/rstudio/gt/issues/1215" class="external-link">#1215</a>). (<a href="https://github.com/rstudio/gt/issues/2062" class="external-link">#2062</a>)</p></li>
-<li><p>Ensure that the <code><a href="../reference/stub.html">stub()</a></code> helper works with tables having a multi-column stub (<a href="https://github.com/rstudio/gt/issues/2066" class="external-link">#2066</a>). (<a href="https://github.com/rstudio/gt/issues/2069" class="external-link">#2069</a>)</p></li>
+<li><p>The <code><a href="../reference/stub.html">stub()</a></code> helper now works with tables having a multi-column stub (<a href="https://github.com/rstudio/gt/issues/2066" class="external-link">#2066</a>). (<a href="https://github.com/rstudio/gt/issues/2069" class="external-link">#2069</a>)</p></li>
 <li><p>Fixed issue where loading in the Unicode conversion file (for LaTeX output tables) fails (<a href="https://github.com/rstudio/gt/issues/2048" class="external-link">#2048</a>). (<a href="https://github.com/rstudio/gt/issues/2049" class="external-link">#2049</a>)</p></li>
 <li><p>Added fix to make LaTeX Unicode conversion operations optional (as well as make them work in-line) (<a href="https://github.com/rstudio/gt/issues/2037" class="external-link">#2037</a>, <a href="https://github.com/rstudio/gt/issues/2041" class="external-link">#2041</a>). (<a href="https://github.com/thebioengineer" class="external-link">@thebioengineer</a>, <a href="https://github.com/rstudio/gt/issues/2042" class="external-link">#2042</a>)</p></li>
 <li><p>Fixed a bug where LaTeX spanner widths were based on incorrect column widths (<a href="https://github.com/rstudio/gt/issues/1922" class="external-link">#1922</a>, <a href="https://github.com/rstudio/gt/issues/2016" class="external-link">#2016</a>). (<a href="https://github.com/shannonhaughton" class="external-link">@shannonhaughton</a>, <a href="https://github.com/rstudio/gt/issues/2079" class="external-link">#2079</a>)</p></li>

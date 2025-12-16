@@ -435,7 +435,7 @@ file.](https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_number
 
 ## Function Introduced
 
-**In development**
+`v1.2.0` (December 16, 2025)
 
 ## See also
 

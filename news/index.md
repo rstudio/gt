@@ -1,5 +1,7 @@
 # Changelog
 
+## gt (development version)
+
 ## gt 1.2.0
 
 CRAN release: 2025-12-16
@@ -7,8 +9,9 @@ CRAN release: 2025-12-16
 - The new
   [`fmt_number_si()`](https://gt.rstudio.com/reference/fmt_number_si.md)
   function format numeric values with SI prefixes and an optional unit
-  (could be obtained from a separate column), automatically selecting
-  the appropriate prefix to keep the mantissa in a readable range
+  (which could be also be obtained from a separate column),
+  automatically selecting the appropriate prefix to keep the mantissa in
+  a readable range
   ([\#1999](https://github.com/rstudio/gt/issues/1999)).
   ([\#2060](https://github.com/rstudio/gt/issues/2060))
 
@@ -31,8 +34,8 @@ CRAN release: 2025-12-16
   behavior) ([\#1215](https://github.com/rstudio/gt/issues/1215)).
   ([\#2062](https://github.com/rstudio/gt/issues/2062))
 
-- Ensure that the [`stub()`](https://gt.rstudio.com/reference/stub.md)
-  helper works with tables having a multi-column stub
+- The [`stub()`](https://gt.rstudio.com/reference/stub.md) helper now
+  works with tables having a multi-column stub
   ([\#2066](https://github.com/rstudio/gt/issues/2066)).
   ([\#2069](https://github.com/rstudio/gt/issues/2069))
 

@@ -254,7 +254,7 @@ applied.
 
 ## Function Introduced
 
-*In Development*
+`v1.2.0` (December 16, 2025)
 
 ## See also
 
