@@ -32,7 +32,7 @@ License: MIT + file LICENSE
 URL: https://gt.rstudio.com, https://github.com/rstudio/gt
 BugReports: https://github.com/rstudio/gt/issues
 Depends:
-    R (>= 3.6.0)
+    R (>= 4.1.0)
 Imports:
     base64enc (>= 0.1-3),
     bigD (>= 0.2),
