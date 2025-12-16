@@ -59,14 +59,14 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrr}\n\\toprule\nA\\textsuperscript{\\textit{1}} & A & A\\textsuperscript{\\textit{1}} & A \\\\ \n\\cmidrule(lr){1-1} \\cmidrule(lr){2-2} \\cmidrule(lr){3-3} \\cmidrule(lr){4-4}\nA\\_X & B\\_X & A\\_Y & B\\_Y \\\\ \n\\midrule\\addlinespace[2.5pt]\n1 & 2 & 3 & 4 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}note\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrr}\n\\toprule\n\\multicolumn{1}{c}{A\\textsuperscript{\\textit{1}}} & \\multicolumn{1}{c}{A} & \\multicolumn{1}{c}{A\\textsuperscript{\\textit{1}}} & \\multicolumn{1}{c}{A} \\\\ \n\\cmidrule(lr){1-1} \\cmidrule(lr){2-2} \\cmidrule(lr){3-3} \\cmidrule(lr){4-4}\nA\\_X & B\\_X & A\\_Y & B\\_Y \\\\ \n\\midrule\\addlinespace[2.5pt]\n1 & 2 & 3 & 4 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\vspace{.05em}\n\\textsuperscript{\\textit{1}} note\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrr}\n\\toprule\n\\multicolumn{2}{c}{A\\textsuperscript{\\textit{1}}} & \\multicolumn{2}{c}{A} \\\\ \n\\cmidrule(lr){1-2} \\cmidrule(lr){3-4}\nA\\_X & A\\_Y & B\\_X & B\\_Y \\\\ \n\\midrule\\addlinespace[2.5pt]\n1 & 3 & 2 & 4 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}note\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrr}\n\\toprule\n\\multicolumn{2}{c}{A\\textsuperscript{\\textit{1}}} & \\multicolumn{2}{c}{A} \\\\ \n\\cmidrule(lr){1-2} \\cmidrule(lr){3-4}\nA\\_X & A\\_Y & B\\_X & B\\_Y \\\\ \n\\midrule\\addlinespace[2.5pt]\n1 & 3 & 2 & 4 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\vspace{.05em}\n\\textsuperscript{\\textit{1}} note\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -80,14 +80,14 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrrrrrrrrr}\n\\toprule\nmpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb \\\\ \n\\midrule\\addlinespace[2.5pt]\n21.0 & 6 & 160 & 110 & 3.90 & 2.620 & 16.46 & 0 & 1 & 4 & 4 \\\\ \n21.0 & 6 & 160 & 110 & 3.90 & 2.875 & 17.02 & 0 & 1 & 4 & 4 \\\\ \n22.8 & 4 & 108 & 93 & 3.85 & 2.320 & 18.61 & 1 & 1 & 4 & 1 \\\\ \n21.4 & 6 & 258 & 110 & 3.08 & 3.215 & 19.44 & 1 & 0 & 3 & 1 \\\\ \n18.7 & 8 & 360 & 175 & 3.15 & 3.440 & 17.02 & 0 & 0 & 3 & 2 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\emph{Henderson and Velleman} (1981).\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrrrrrrrrr}\n\\toprule\nmpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb \\\\ \n\\midrule\\addlinespace[2.5pt]\n21.0 & 6 & 160 & 110 & 3.90 & 2.620 & 16.46 & 0 & 1 & 4 & 4 \\\\ \n21.0 & 6 & 160 & 110 & 3.90 & 2.875 & 17.02 & 0 & 1 & 4 & 4 \\\\ \n22.8 & 4 & 108 & 93 & 3.85 & 2.320 & 18.61 & 1 & 1 & 4 & 1 \\\\ \n21.4 & 6 & 258 & 110 & 3.08 & 3.215 & 19.44 & 1 & 0 & 3 & 1 \\\\ \n18.7 & 8 & 360 & 175 & 3.15 & 3.440 & 17.02 & 0 & 0 & 3 & 2 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\vspace{.05em}\n\\emph{Henderson and Velleman} (1981).\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrrrrrrrrr}\n\\toprule\nmpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb \\\\ \n\\midrule\\addlinespace[2.5pt]\n21.0 & 6 & 160 & 110 & 3.90 & 2.620 & 16.46 & 0 & 1 & 4 & 4 \\\\ \n21.0 & 6 & 160 & 110 & 3.90 & 2.875 & 17.02 & 0 & 1 & 4 & 4 \\\\ \n22.8 & 4 & 108 & 93 & 3.85 & 2.320 & 18.61 & 1 & 1 & 4 & 1 \\\\ \n21.4 & 6 & 258 & 110 & 3.08 & 3.215 & 19.44 & 1 & 0 & 3 & 1 \\\\ \n18.7 & 8 & 360 & 175 & 3.15 & 3.440 & 17.02 & 0 & 0 & 3 & 2 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\emph{Henderson and Velleman} (1981).\\\\\nThis was in Motor Trend magazine, hence the `mt`.\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrrrrrrrrr}\n\\toprule\nmpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb \\\\ \n\\midrule\\addlinespace[2.5pt]\n21.0 & 6 & 160 & 110 & 3.90 & 2.620 & 16.46 & 0 & 1 & 4 & 4 \\\\ \n21.0 & 6 & 160 & 110 & 3.90 & 2.875 & 17.02 & 0 & 1 & 4 & 4 \\\\ \n22.8 & 4 & 108 & 93 & 3.85 & 2.320 & 18.61 & 1 & 1 & 4 & 1 \\\\ \n21.4 & 6 & 258 & 110 & 3.08 & 3.215 & 19.44 & 1 & 0 & 3 & 1 \\\\ \n18.7 & 8 & 360 & 175 & 3.15 & 3.440 & 17.02 & 0 & 0 & 3 & 2 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\vspace{.05em}\n\\emph{Henderson and Velleman} (1981).\\\\\nThis was in Motor Trend magazine, hence the `mt`.\\\\\n\\end{minipage}\n\\endgroup\n"
 
 # A gt table contains the correct placement of row groups
 
