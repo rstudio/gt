@@ -1,3 +1,5 @@
+# gt (development version)
+
 # gt 1.2.0
 
 * The new `fmt_number_si()` function format numeric values with SI prefixes and an optional unit (could be obtained from a separate column), automatically selecting the appropriate prefix to keep the mantissa in a readable range (#1999). (#2060)
