@@ -1,15 +1,36 @@
 # gt 1.2.0
 
-* The new `fmt_number_si()` function format numeric values with SI prefixes and an optional unit (could be obtained from a separate column), automatically selecting the appropriate prefix to keep the mantissa in a readable range (#1999). (#2060) 
+* The new `fmt_number_si()` function format numeric values with SI prefixes and an optional unit (could be obtained from a separate column), automatically selecting the appropriate prefix to keep the mantissa in a readable range (#1999). (#2060)
+
+* Added the `summary_columns()` function to enable horizontal, row-wise aggregation (#382). (#2067)
+
+* Added the `min_sep_threshold` argument to numeric formatting functions; this controls the minimum number of digits required in the integer part of a number for grouping separators to be applied (#908). (#2064)
 
 * Added the `omit_na_group` argument to the `gt()` function; when `TRUE`, rows with `NA` values in the `groupname_col` be excluded from row group assignment (the default of `FALSE` preserves the old behavior) (#1215). (#2062)
 
-* Update latex Unicode conversions to be optional (default to TRUE) as well as make them work in-line (@thebioengineer, #2037, #2041)
+* Ensure that the `stub()` helper works with tables having a multi-column stub (#2066). (#2069)
 
-* Fix bug where latex spanner widths were based on incorrect column widths (@shannonhaughton, #2016, #1922)
+* Fixed issue where loading in the Unicode conversion file (for LaTeX output tables) fails (#2048). (#2049)
 
-* Update latex to allow for horizontal alignment within cells (@thebioengineer, #2001)
+* Added fix to make LaTeX Unicode conversion operations optional (as well as make them work in-line) (#2037, #2041). (@thebioengineer, #2042)
 
+* Fixed a bug where LaTeX spanner widths were based on incorrect column widths (#1922, #2016). (@shannonhaughton, #2079)
+
+* The `fmt_scientific()` function should no longer error when formatting `Inf`/`-Inf` values in a table column (#1516). (#2058)
+
+* Allow for horizontal alignment within cells of LaTeX output tables (#2001). (@thebioengineer, #2075)
+
+* Added functionality for handling tables with a multicolumn stub in the Word output format. (@romainfrancois, #2074, #2086)
+
+* We now correctly handle tables with a multicolumn stub in the RTF output format (#2045). (#2061)
+
+* Added better support for LaTeX tables with a multicolumn stub (#2044). (#2051)
+
+* The `countrypops` dataset has been updated to include population values up to 2024. (#2057)
+
+* GitHub Actions workflows were updated. (@olivroy, #2077)
+
+* Refactored pipe use, moving many pipes in the codebase from `%>%` to `|>`. (#2056)
 
 # gt 1.1.0
 
@@ -47,7 +68,7 @@
 
 * The `metro` and `films` datasets have been updated. (#2026, #2027)
 
-* Add option to control the order of footnotes (@shannonhaughton, #2023)
+* Add option to control the order of footnotes (#2023). (@shannonhaughton, #2036)
 
 # gt 1.0.0
 
