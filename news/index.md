@@ -28,6 +28,10 @@
   [\#2016](https://github.com/rstudio/gt/issues/2016),
   [\#1922](https://github.com/rstudio/gt/issues/1922))
 
+- Update latex to allow for horizontal alignment within cells
+  ([@thebioengineer](https://github.com/thebioengineer),
+  [\#2001](https://github.com/rstudio/gt/issues/2001))
+
 ## gt 1.1.0
 
 CRAN release: 2025-09-23
