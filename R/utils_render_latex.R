@@ -114,9 +114,9 @@ latex_group_row <- function(
   use_width <- ifelse(is.na(tab_width), "l", sprintf(">{\\raggedright\\arraybackslash}m{%s}", tab_width))
 
   if (is.na(group_name)) {
-    row_txt <- paste0(latex_multicolumn_cell("\\rule{0pt}{0pt}", alignment = use_width, width = n_cols, override_alignment = FALSE)," \\\\[-3.2ex] \n")
+    row_txt <- paste0(latex_multicolumn_cell("\\rule{0pt}{0pt}", alignment = use_width, ncols = n_cols, override_alignment = FALSE)," \\\\[-3.2ex] \n")
   } else {
-    row_txt <- paste0(latex_multicolumn_cell(group_name, alignment = use_width, width = n_cols, override_alignment = FALSE)," \\\\[2.5pt] \n")
+    row_txt <- paste0(latex_multicolumn_cell(group_name, alignment = use_width, ncols = n_cols, override_alignment = FALSE)," \\\\[2.5pt] \n")
   }
 
   paste0(
@@ -496,6 +496,7 @@ create_columns_component_l <- function(data, colwidth_df) {
   headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
 
   for (i in seq_along(headings_labels)) {
+
     styles_heading_i <-
       consolidate_cell_styles_l(
         dplyr::filter(
@@ -505,7 +506,16 @@ create_columns_component_l <- function(data, colwidth_df) {
         )
       )
 
-    headings_labels[i] <- apply_cell_styles_l(headings_labels[i], styles_heading_i)
+    colwidth_heading_i <- dplyr::filter(
+      colwidth_df,
+      var == headings_vars[i]
+    )
+
+    headings_labels[i] <- apply_cell_styles_l(
+      headings_labels[i],
+      styles_heading_i,
+      width = create_singlecolumn_width_text_l(pt = colwidth_heading_i$pt, lw = colwidth_heading_i$lw)
+      )
 
   }
 
@@ -544,10 +554,28 @@ create_columns_component_l <- function(data, colwidth_df) {
     if (has_multiple_labels) {
       # Create individual headers for each stub column
       # Process in reverse order since prepend_vec adds to the front
+
+      if (any(stub_df$unspec == 1L)) {
+        width_txt <- "c"
+      } else {
+        width_txt <-
+          sprintf(
+            ">{\\centering\\arraybackslash}m{%s}",
+            create_singlecolumn_width_text_l(
+              pt = sum(stub_df$pt),
+              lw = sum(stub_df$lw)
+            )
+          )
+      }
+
       for (i in rev(seq_along(stubh$label))) {
         stub_label <- ifelse(
           length(stubh$label[i]) > 0 && stubh$label[i] != "",
-          apply_cell_styles_l(stubh$label[i], styles_stubhead),
+          apply_cell_styles_l(
+            stubh$label[i],
+            styles_stubhead,
+            width = width_txt[i]
+            ),
           ""
         )
         headings_vars <- prepend_vec(headings_vars, sprintf("::stub%d", i))
@@ -557,9 +585,26 @@ create_columns_component_l <- function(data, colwidth_df) {
       # Single label spanning all stub columns (current behavior)
       headings_vars <- prepend_vec(headings_vars, "::stub")
 
+      if (any(stub_df$unspec == 1L)) {
+        width_txt <- "c"
+      } else {
+        width_txt <-
+          sprintf(
+            ">{\\centering\\arraybackslash}m{%s}",
+            create_singlecolumn_width_text_l(
+              pt = sum(stub_df$pt),
+              lw = sum(stub_df$lw)
+            )
+          )
+      }
+
       stub_label <- ifelse(
         length(stubh$label) > 0,
-        apply_cell_styles_l(stubh$label[1], styles_stubhead),
+        apply_cell_styles_l(
+          stubh$label[1],
+          styles_stubhead,
+          width = width_txt[1]
+          ),
         ""
       )
 
@@ -582,7 +627,7 @@ create_columns_component_l <- function(data, colwidth_df) {
           latex_multicolumn_cell(
             stub_label,
             alignment = width_txt,
-            width = n_stub_cols,
+            ncols = n_stub_cols,
             override_alignment = FALSE
           )
       }
@@ -694,8 +739,8 @@ create_columns_component_l <- function(data, colwidth_df) {
           latex_multicolumn_cell(
             x = span_label,
             alignment = tex_widths[[spanner_idx]],
-            width = span_length,
-            override_width = TRUE,
+            ncols = span_length,
+            override_ncols = TRUE,
             override_alignment = FALSE
           )
         }
@@ -895,7 +940,8 @@ create_body_component_l <- function(data, colwidth_df) {
   body_rows <-
     create_body_rows_l(
       data = data,
-      row_splits_body = row_splits_body
+      row_splits_body = row_splits_body,
+      colwidth_df = colwidth_df
     )
 
   # Apply formatting to group labels
@@ -916,7 +962,9 @@ create_body_component_l <- function(data, colwidth_df) {
             )
           )
 
-        groups_rows_df$group_label[i] <- apply_cell_styles_l(groups_rows_df$group_label[i], styles_groups)
+        width <- calculate_multicolumn_width_text_l(1, n_cols, col_order = dt_boxhead_get_vars(data), colwidth_df = colwidth_df)
+
+        groups_rows_df$group_label[i] <- apply_cell_styles_l(groups_rows_df$group_label[i], styles_groups, width = width)
       }
     }
 
@@ -1189,6 +1237,8 @@ summary_rows_for_group_l <- function(
 
   row_splits_summary <- split_row_content(summary_df)
 
+  ##? TODO: GET COLUMN WIDTH TO ADD TO ALIGNMENT
+
   if (stub_is_2) {
     row_splits_summary <-
       lapply(
@@ -1198,15 +1248,15 @@ summary_rows_for_group_l <- function(
           x[1] <- latex_multicolumn_cell(
             x = x[1],
             alignment = "l|",
-            width = 1,
-            override_width = TRUE,
+            ncols = 1,
+            override_ncols = TRUE,
             override_alignment = FALSE
           )
           x[2] <- latex_multicolumn_cell(
             x = x[2],
             alignment = "l|",
-            width = 1,
-            override_width = TRUE,
+            ncols = 1,
+            override_ncols = TRUE,
             override_alignment = FALSE
           )
           x
@@ -1376,7 +1426,8 @@ create_footer_component_l <- function(data) {
 # Function to build a vector of `body` rows
 create_body_rows_l <- function(
     data,
-    row_splits_body
+    row_splits_body,
+    colwidth_df
 ) {
 
   styles_tbl <- dt_styles_get(data = data)
@@ -1385,6 +1436,7 @@ create_body_rows_l <- function(
   # Obtain all of the visible (`"default"`), non-stub column names
   # for the table from the `boxh` object
   default_vars <- dt_boxhead_get_vars_default(data = data)
+
 
   stub_layout <- get_stub_layout(data = data)
 
@@ -1433,6 +1485,8 @@ create_body_rows_l <- function(
 
               colname_i <- vars[i]
 
+              content_i <- content[i]
+
               if (
                 !is.na(colname_i) &&
                 colname_i == "::group::" &&
@@ -1468,11 +1522,20 @@ create_body_rows_l <- function(
 
                 styles_body <- consolidate_cell_styles_l(styles_tbl_i_col)
 
-                content[i] <- apply_cell_styles_l(content[i], styles_body)
+                colwidth_i <- dplyr::filter(
+                  colwidth_df,
+                  var == colname_i
+                )
+
+                content[i] <- apply_cell_styles_l(
+                  content_i,
+                  styles_body,
+                  width = create_singlecolumn_width_text_l(pt = colwidth_i$pt, lw = colwidth_i$lw)
+                  )
 
               } else {
 
-                content[i] <- remove_footnote_encoding(content[i])
+                content[i] <- remove_footnote_encoding(content_i)
 
               }
 
@@ -1590,7 +1653,7 @@ create_summary_rows_l <- function(
                   x <- c(rep("", stub_width - 1), x)
 
                   x[seq_len(stub_width)] <- sapply(x[seq_len(stub_width)], function(x) {
-                    latex_multicolumn_cell(x, width = 1, alignment = "l|", override_alignment = FALSE)
+                    latex_multicolumn_cell(x, ncols = 1, alignment = "l|", override_alignment = FALSE)
                     })
 
                   x
@@ -1733,7 +1796,7 @@ consolidate_cell_styles_l <- function(styles_df) {
 #' a cell of text to be output in LaTeX.
 #'
 #' @noRd
-apply_cell_styles_l <- function(content, style_obj, type = "cell") {
+apply_cell_styles_l <- function(content, style_obj, type = "cell", width = "\\linewidth") {
 
   # Set default values for no footnote present
   just_content <- content
@@ -1768,7 +1831,8 @@ apply_cell_styles_l <- function(content, style_obj, type = "cell") {
           "}"
         ),
         style_obj,
-        type = type
+        type = type,
+        width = width
       )
   } else {
     out_text <- just_content
@@ -1864,7 +1928,15 @@ shortstack_alignment <- function(x, alignment){
   gsub("\\shortstack[l]",paste0("\\shortstack",shortstackalignment), x, fixed = TRUE)
 }
 
-.apply_style_cell_alignment <- function(x, style_obj, type = "cell") {
+parbox_wrapper <- function(x, width = "\\linewidth"){
+  if(sum(c("pt","lw") %in% colnames(width)) > 0){
+    width <- create_singlecolumn_width_text_l(width$pt, width$lw)
+  }
+  paste0("\\parbox{",width,"}{",x,"}")
+}
+
+
+.apply_style_cell_alignment <- function(x, style_obj, type = "cell", width = "\\linewidth") {
 
   if (is.null(style_obj[["cell_text"]][["align"]])) return(x)
 
@@ -1872,29 +1944,31 @@ shortstack_alignment <- function(x, alignment){
 
   if(type == "cell"){
     alignment <- c(
-      "center" = "c",
-      "justify" = "c",
-      "left" = "l",
-      "right" = "r"
+      "center" = ">{\\centering\\arraybackslash}",
+      "justify" = ">{\\centering\\arraybackslash}",
+      "left" = ">{\\raggedright\\arraybackslash}",
+      "right" = ">{\\raggedleft\\arraybackslash}"
     )[alignment]
 
-    latex_multicolumn_cell(x, alignment = alignment, width = 1)
+    alignment <- paste0(alignment,"m{",width,"}")
+
+    latex_multicolumn_cell(x, alignment = alignment, ncols = 1)
   }else if(type == "footnote"){
     latex_align_text(x, alignment = alignment)
   }
 }
 
-latex_multicolumn_cell <- function(x,  width = NULL, alignment = NULL, override_width = TRUE, override_alignment = TRUE){
+latex_multicolumn_cell <- function(x,  ncols = NULL, alignment = NULL, override_ncols = TRUE, override_alignment = TRUE){
 
   if (grepl("\\multicolumn", x, fixed = TRUE)) {
     pre_existing <- TRUE
-    existing_width <- gsub(".*(\\multicolumn)\\{(\\d+)\\}\\{(.*?)\\}\\{.+\\}", "\\2", x)
-    if(existing_width == ""){
-      existing_width <- NULL
+    existing_ncols <- gsub(".*(\\multicolumn)\\{(\\d+)\\}\\{(.*?)\\}\\{.+\\}", "\\2", x)
+    if(existing_ncols == ""){
+      existing_ncols <- NULL
     }
     existing_alignment <- gsub(".*(\\multicolumn)\\{(\\d+)\\}\\{(.*?)\\}\\{.+\\}", "\\3", x)
-    if(existing_width == ""){
-      existing_width <- NULL
+    if(existing_alignment == ""){
+      existing_alignment <- NULL
     }
   } else{
     pre_existing <- FALSE
@@ -1902,10 +1976,10 @@ latex_multicolumn_cell <- function(x,  width = NULL, alignment = NULL, override_
     existing_alignment <- NULL
   }
 
-  if(override_width){
-    width <- width %||% existing_width
+  if(override_ncols){
+    ncols <- ncols %||% existing_width
   }else{
-    width <- existing_width %||% width
+    ncols <- existing_width %||% ncols
   }
 
   if(override_alignment){
@@ -1914,12 +1988,12 @@ latex_multicolumn_cell <- function(x,  width = NULL, alignment = NULL, override_
     alignment <- existing_alignment %||% alignment
   }
 
-  new_multicolumn_statement <- paste0("\\multicolumn{",width,"}{",alignment,"}")
+  new_multicolumn_statement <- paste0("\\multicolumn{",ncols,"}{",alignment,"}")
 
   if(pre_existing){
-    gsub(paste0("\\multicolumn{",existing_width,"}{",existing_alignment,"}"), new_multicolumn_statement, x, fixed = TRUE)
+    gsub(paste0("\\multicolumn{",existing_ncols,"}{",existing_alignment,"}"), new_multicolumn_statement, x, fixed = TRUE)
   }else{
-    paste0(new_multicolumn_statement,"{",x,"}")
+    paste0(new_multicolumn_statement,"{",parbox_wrapper(x, width = "\\linewidth"),"}")
   }
 }
 
@@ -1940,7 +2014,7 @@ latex_align_text <- function(x, alignment){
     "right" = "\\raggedleft"
   )[alignment]
 
-  paste0("\\parbox{\\linewidth}{",alignment," ",x,"}")
+  parbox_wrapper(paste0(,alignment," ",x), "\\linewidth")
 
 }
 

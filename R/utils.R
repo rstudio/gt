@@ -1152,7 +1152,12 @@ markdown_to_latex <- function(text, md_engine) {
           }
 
           if(grepl("..gt\\_linebreak\\_indicator..", x, fixed = TRUE)){
-            x <- paste0("\\shortstack[l]{" ,gsub("..gt\\_linebreak\\_indicator..", " \\\\", x, fixed = TRUE), "}")
+            ## if there is a linebreak, wrap the text in a shortstack, and put it into a parbox that has the width set to linewidth
+            x <- paste0("\\shortstack[l]{" ,
+                        parbox_wrapper(
+                          gsub("..gt\\_linebreak\\_indicator..", " \\\\", x, fixed = TRUE),
+                          "\\linewidth"),
+                        "}")
           }
 
           x
