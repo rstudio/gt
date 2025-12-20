@@ -490,7 +490,6 @@ create_columns_component_l <- function(data, colwidth_df) {
       data = data,
       omit_columns_row = TRUE
     )
-
   # Get the column headings
   headings_vars <- dt_boxhead_get_vars_default(data = data)
   headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
@@ -511,10 +510,16 @@ create_columns_component_l <- function(data, colwidth_df) {
       var == headings_vars[i]
     )
 
+    if(sum(colwidth_heading_i$unspec) < 0){
+      width <- create_singlecolumn_width_text_l(pt = colwidth_heading_i$pt, lw = colwidth_heading_i$lw)
+    }else{
+      width <- ""
+    }
+
     headings_labels[i] <- apply_cell_styles_l(
       headings_labels[i],
       styles_heading_i,
-      width = create_singlecolumn_width_text_l(pt = colwidth_heading_i$pt, lw = colwidth_heading_i$lw)
+      width = width
       )
 
   }
@@ -948,6 +953,10 @@ create_body_component_l <- function(data, colwidth_df) {
   if (dim(groups_rows_df)[1L] > 0 && !all(is.na(groups_rows_df$group_label))) {
 
     styles_tbl <- dt_styles_get(data)
+    width <- calculate_multicolumn_width_text_l(1, n_cols, col_order = data.frame(var = dt_boxhead_get_vars(data)), colwidth_df = colwidth_df)
+    if(identical(width,"")){
+      width <- ""
+    }
 
     for (i in seq_along(groups_rows_df$group_label)) {
 
@@ -961,8 +970,6 @@ create_body_component_l <- function(data, colwidth_df) {
                 styles_tbl$grpname == groups_rows_df$group_id[i]
             )
           )
-
-        width <- calculate_multicolumn_width_text_l(1, n_cols, col_order = dt_boxhead_get_vars(data), colwidth_df = colwidth_df)
 
         groups_rows_df$group_label[i] <- apply_cell_styles_l(groups_rows_df$group_label[i], styles_groups, width = width)
       }
@@ -1527,10 +1534,16 @@ create_body_rows_l <- function(
                   var == colname_i
                 )
 
+                if(sum(colwidth_i$unspec < 0) > 1){
+                  cell_width <- create_singlecolumn_width_text_l(pt = colwidth_i$pt, lw = colwidth_i$lw)
+                }else{
+                  cell_width <- ""
+                }
+
                 content[i] <- apply_cell_styles_l(
                   content_i,
                   styles_body,
-                  width = create_singlecolumn_width_text_l(pt = colwidth_i$pt, lw = colwidth_i$lw)
+                  width = cell_width
                   )
 
               } else {
@@ -1929,6 +1942,12 @@ shortstack_alignment <- function(x, alignment){
 }
 
 parbox_wrapper <- function(x, width = "\\linewidth"){
+
+  ## if a parbox is already set, dont add more
+  if(grepl("parbox\\{.+?\\}", x)){
+    return(x)
+  }
+
   if(sum(c("pt","lw") %in% colnames(width)) > 0){
     width <- create_singlecolumn_width_text_l(width$pt, width$lw)
   }
@@ -1943,14 +1962,25 @@ parbox_wrapper <- function(x, width = "\\linewidth"){
   alignment <- style_obj[["cell_text"]][["align"]]
 
   if(type == "cell"){
-    alignment <- c(
-      "center" = ">{\\centering\\arraybackslash}",
-      "justify" = ">{\\centering\\arraybackslash}",
-      "left" = ">{\\raggedright\\arraybackslash}",
-      "right" = ">{\\raggedleft\\arraybackslash}"
-    )[alignment]
 
-    alignment <- paste0(alignment,"m{",width,"}")
+    if(!identical(width, "")){
+      alignment <- c(
+        "center" = ">{\\centering\\arraybackslash}",
+        "justify" = ">{\\centering\\arraybackslash}",
+        "left" = ">{\\raggedright\\arraybackslash}",
+        "right" = ">{\\raggedleft\\arraybackslash}"
+      )[alignment]
+
+      alignment <- paste0(alignment,"m{",width,"}")
+
+    }else{
+      alignment <- c(
+        "center" = "c",
+        "justify" = "c",
+        "left" = "l",
+        "right" = "r"
+      )[alignment]
+    }
 
     latex_multicolumn_cell(x, alignment = alignment, ncols = 1)
   }else if(type == "footnote"){
@@ -1993,11 +2023,20 @@ latex_multicolumn_cell <- function(x,  ncols = NULL, alignment = NULL, override_
   if(pre_existing){
     gsub(paste0("\\multicolumn{",existing_ncols,"}{",existing_alignment,"}"), new_multicolumn_statement, x, fixed = TRUE)
   }else{
-    paste0(new_multicolumn_statement,"{",parbox_wrapper(x, width = "\\linewidth"),"}")
+
+    if(grepl("m\\{.+\\}",alignment)){
+      x <- parbox_wrapper(x)
+    }else{
+      ## if no width set, remove the parbox if it is set to line width
+      x <- gsub("\\\\parbox\\{\\\\linewidth\\}\\{(.+?)\\}","\\1",x)
+    }
+
+    paste0(new_multicolumn_statement,"{",x,"}")
   }
 }
 
 latex_cleanup_multicolumn <- function(x){
+
   ## Fix missing alignment
   x <- gsub("(\\multicolumn\\{(\\d+)\\})\\{\\}(\\{.+?\\})", "\\1{l}\\2", x)
   ## Fix missing column width
