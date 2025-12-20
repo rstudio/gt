@@ -510,10 +510,10 @@ create_columns_component_l <- function(data, colwidth_df) {
       var == headings_vars[i]
     )
 
-    if(sum(colwidth_heading_i$unspec) < 0){
-      width <- create_singlecolumn_width_text_l(pt = colwidth_heading_i$pt, lw = colwidth_heading_i$lw)
-    }else{
+    if(sum(colwidth_heading_i$unspec > 0)){
       width <- ""
+    }else{
+      width <- create_singlecolumn_width_text_l(pt = colwidth_heading_i$pt, lw = colwidth_heading_i$lw)
     }
 
     headings_labels[i] <- apply_cell_styles_l(
@@ -2017,6 +2017,8 @@ latex_multicolumn_cell <- function(x,  ncols = NULL, alignment = NULL, override_
   }else{
     alignment <- existing_alignment %||% alignment
   }
+
+
 
   new_multicolumn_statement <- paste0("\\multicolumn{",ncols,"}{",alignment,"}")
 
