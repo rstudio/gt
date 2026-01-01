@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -2495,7 +2495,7 @@ calculate_hierarchical_stub_rowspans <- function(data) {
       # Must match current column value (handle NAs properly)
       curr_val <- col_values[row_idx]
       prev_val <- col_values[row_idx - 1]
-      
+
       # Two values match if they're both identical or both NA
       if (!identical(curr_val, prev_val)) {
         should_continue_span <- FALSE

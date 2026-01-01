@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -847,11 +847,11 @@ set_style.cells_stub <- function(loc, data, style) {
 
   # Get all stub variables for reference
   stub_vars <- dt_boxhead_get_var_stub(data = data)
-  
-  # Check if this is traditional usage (no columns parameter) 
+
+  # Check if this is traditional usage (no columns parameter)
   # vs. new usage (explicit columns parameter provided)
   is_traditional_usage <- is.null(loc$columns)
-  
+
   if (is_traditional_usage) {
     # For backward compatibility: traditional cells_stub() usage without columns parameter
     # Use the original "stub" locname for compatibility with existing code
@@ -873,7 +873,7 @@ set_style.cells_stub <- function(loc, data, style) {
         columns <- stub_vars
       }
     }
-    
+
     # Apply styling to each specified stub column using stub_column locname
     for (col in columns) {
       data <-

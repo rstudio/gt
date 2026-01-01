@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -436,11 +436,11 @@ resolve_cols_i <- function(
       stub_var <- dt_boxhead_get_var_stub(data = data)
 
       if (!is.null(stub_var) && !all(is.na(stub_var))) {
-        
+
         # Evaluate the stub() expression to get the column parameter if any
         stub_result <- rlang::eval_tidy(quo)
         column_idx <- attr(stub_result, "column")
-        
+
         # If column index is specified, select that specific stub column
         # (1 = rightmost, 2 = second from right, etc.)
         if (!is.null(column_idx)) {
@@ -450,7 +450,7 @@ resolve_cols_i <- function(
               "The {.arg column} argument in {.fn stub} must be a single positive integer."
             )
           }
-          
+
           # Check if the requested column exists
           if (column_idx > length(stub_var)) {
             cli::cli_abort(c(
@@ -458,13 +458,13 @@ resolve_cols_i <- function(
               "i" = "This table has {length(stub_var)} stub column{?s}."
             ))
           }
-          
+
           # Select from right to left (1 = rightmost)
           selected_stub_var <- stub_var[length(stub_var) - column_idx + 1]
           stub_col <- 1
           names(stub_col) <- selected_stub_var
           return(stub_col)
-          
+
         } else {
           # No column specified, return all stub columns
           stub_col <- seq_along(stub_var)

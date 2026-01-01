@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -23,7 +23,7 @@
 
 # The functions below are adapted from the knitr package
 # (https://github.com/yihui/knitr), which is licensed under GPL-2 or later.
-# Copyright (c) 2012-2025 Yihui Xie
+# Copyright (c) 2012-2026 Yihui Xie
 # Original source: https://github.com/yihui/knitr/blob/main/R/utils.R
 #
 # These functions are copies of unexported functions from knitr and are

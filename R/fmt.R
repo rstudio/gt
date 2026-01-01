@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -615,7 +615,7 @@ format_num_to_str <- function(
     # threshold=2: 10^4 (10000, 5 digits)
     # threshold=3: 10^5 (100000, 6 digits)
     magnitude_threshold <- 10^(min_sep_threshold + 2)
-    
+
     # Format all values first to determine their rounded magnitudes
     # We need to check rounded values because 999.5 with 0 decimals becomes "1000"
     # Suppress warnings when both big.mark and decimal.mark are empty strings
@@ -632,7 +632,7 @@ format_num_to_str <- function(
           decimal.mark = dec_mark
         )
       )
-    
+
     # Parse formatted strings to get rounded magnitudes
     # Handle both empty and non-empty dec_mark
     if (nzchar(dec_mark)) {
@@ -640,15 +640,15 @@ format_num_to_str <- function(
     } else {
       x_rounded <- suppressWarnings(as.numeric(x_str_test))
     }
-    
+
     # Determine which values should have separators based on rounded magnitude
     should_use_sep <- abs(x_rounded) >= magnitude_threshold
-    
+
     # Format values below threshold without separators (reuse test formatting)
     if (any(!should_use_sep, na.rm = TRUE)) {
       x_str_no_sep <- x_str_test[!should_use_sep]
     }
-    
+
     # Format values at or above threshold with separators
     # Suppress warnings when both big.mark and decimal.mark are empty strings
     if (any(should_use_sep, na.rm = TRUE)) {
@@ -666,7 +666,7 @@ format_num_to_str <- function(
           )
         )
     }
-    
+
     # Combine the results
     x_str <- character(length(x))
     if (any(!should_use_sep, na.rm = TRUE)) {
@@ -675,7 +675,7 @@ format_num_to_str <- function(
     if (any(should_use_sep, na.rm = TRUE)) {
       x_str[should_use_sep] <- x_str_sep
     }
-    
+
   } else {
     # No min_sep_threshold, use original behavior with separators
     # Suppress warnings when both big.mark and decimal.mark are empty strings
