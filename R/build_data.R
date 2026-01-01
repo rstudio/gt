@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -98,10 +98,10 @@ build_data <- function(data, context) {
 # for vec_*() functions
 # only build the body correctly.
 build_data_body <- function(data, context) {
-  
+
   data <- dt_body_build(data = data)
   data <- render_formats(data = data, skip_compat_check = TRUE, context = context)
   data <- migrate_unformatted_to_output(data = data, context = context)
-  
+
   data
 }
