@@ -1,4 +1,4 @@
 # License
 
-    YEAR: 2018-2025
+    YEAR: 2018-2026
     COPYRIGHT HOLDER: Posit Software, PBC
