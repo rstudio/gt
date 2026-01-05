@@ -1529,12 +1529,20 @@ create_body_rows_l <- function(
 
                 styles_body <- consolidate_cell_styles_l(styles_tbl_i_col)
 
-                colwidth_i <- dplyr::filter(
-                  colwidth_df,
-                  var == colname_i
-                )
+                if(identical(colname_i,"::stub::")){
+                  colwidth_i <- dplyr::filter(
+                    colwidth_df,
+                    type == "stub",
+                  )[i, ]
 
-                if(sum(colwidth_i$unspec < 0) > 1){
+                }else{
+                  colwidth_i <- dplyr::filter(
+                    colwidth_df,
+                    var == colname_i
+                    )
+                }
+
+                if(sum(colwidth_i$unspec < 1) > 0){
                   cell_width <- create_singlecolumn_width_text_l(pt = colwidth_i$pt, lw = colwidth_i$lw)
                 }else{
                   cell_width <- ""
