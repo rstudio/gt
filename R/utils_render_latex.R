@@ -233,7 +233,7 @@ create_table_start_l <- function(data, colwidth_df) {
     col_defs <- substr(colwidth_df_visible$column_align, 1, 1)
   }
 
-  # Add borders to the right of any columns in the stub
+  # # Add borders to the right of any columns in the stub
   if (length(stub_layout) > 0) {
 
     # Count the actual number of stub columns
@@ -2063,7 +2063,7 @@ latex_align_text <- function(x, alignment){
     "right" = "\\raggedleft"
   )[alignment]
 
-  parbox_wrapper(paste0(,alignment," ",x), "\\linewidth")
+  parbox_wrapper(paste0(alignment," ",x), "\\linewidth")
 
 }
 
