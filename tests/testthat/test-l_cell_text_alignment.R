@@ -117,14 +117,14 @@ test_that("multiplication works", {
 
   # right aligned with a line break
   # First footnote is w new minipage, so used parbox, raggedleft pushes all content to the right, shortstack is right aligned due to <br>
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft { \\shortstack[r]{FOOTNOTE  \\\\ test this}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft { \\shortstack[r]{{FOOTNOTE  \\\\ test this}}}}", fixed = TRUE)
 
   # second footnote just uses parbox and raggedleft
   expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft { FOOTNOTE3}}", fixed = TRUE)
 
   # Third listed footnote includes reference, so listed last even though its second footnote
   # used parbox, raggedleft pushes all content to the right, reference is listed before the shortstack, shortstack is right aligned due to <br>,
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\textsuperscript{\\textit{1}} \\shortstack[r]{FOOTNOTE2 \\\\ this}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\textsuperscript{\\textit{1}} \\shortstack[r]{{FOOTNOTE2 \\\\ this}}}", fixed = TRUE)
 
 
 })

@@ -706,16 +706,15 @@ create_columns_component_l <- function(data, colwidth_df) {
       # be part of the `spanners_rle` list
       spanners_rle$labels <- spanners_i[cumsum(spanners_rle$lengths)]
       col_order  <- data.frame(var = colnames(spanner_ids))
-      spanners_rle <- apply_spanner_styles_l(spanners_rle, styles_tbl)
-
-      begins <- (cumsum(utils::head(c(0, spanners_rle$lengths), -1)) + 1)[!is.na(spanners_rle$values)]
-      ends <- cumsum(spanners_rle$lengths)[!is.na(spanners_rle$values)]
-      cmidrule <- paste0("\\cmidrule(lr){", begins, "-", ends, "}")
 
       is_spanner_na <- is.na(spanners_rle$values)
       is_spanner_single <- spanners_rle$lengths == 1
       firsts <- utils::head(cumsum(c(1L, spanners_rle$lengths)), -1L)
       lasts <- cumsum(spanners_rle$lengths)
+      begins <- (cumsum(utils::head(c(0, spanners_rle$lengths), -1)) + 1)[!is.na(spanners_rle$values)]
+      ends <- cumsum(spanners_rle$lengths)[!is.na(spanners_rle$values)]
+      cmidrule <- paste0("\\cmidrule(lr){", begins, "-", ends, "}")
+
       span_widths <- calculate_multicolumn_width_text_l(begins = firsts, ends = lasts, col_order = col_order ,colwidth_df = colwidth_df)
       tex_widths <-
         ifelse(
@@ -723,6 +722,7 @@ create_columns_component_l <- function(data, colwidth_df) {
           paste0(">{\\centering\\arraybackslash}m{", span_widths, "}"),
           "c"
         )
+      spanners_rle <- apply_spanner_styles_l(spanners_rle, styles_tbl, widths = span_widths)
 
 
       multicol <- sapply(seq_along(spanners_rle$values),function(spanner_idx){
@@ -1377,8 +1377,18 @@ create_footer_component_l <- function(data) {
                        footnote_marks,
                        context,
                        styles_obj) {
+
+          footmark <- footnote_marks[[idx]]
+          footnote_latex <- process_text(footnotes[[idx]], context = context)
+
+          ## remove linewidth parbox within a shortstack for footnotes, already within a parbox
+          footnote_latex <- gsub("(?<=\\\\shortstack\\[.\\]\\{)\\\\parbox\\{\\\\linewidth\\}","",footnote_latex, perl = TRUE)
+
+          ## add footmark
+          footnote_latex <- paste(footmark, footnote_latex)
+
           apply_cell_styles_l(
-             paste(footnote_marks[[idx]], process_text(footnotes[[idx]], context = context)),
+            footnote_latex,
             styles_obj,
             type = "footnote"
             )
@@ -1949,10 +1959,10 @@ shortstack_alignment <- function(x, alignment){
   gsub("\\shortstack[l]",paste0("\\shortstack",shortstackalignment), x, fixed = TRUE)
 }
 
-parbox_wrapper <- function(x, width = "\\linewidth"){
+parbox_wrapper <- function(x, width = "\\linewidth", force_wrap = FALSE){
 
   ## if a parbox is already set, dont add more
-  if(grepl("parbox\\{.+?\\}", x)){
+  if(grepl("parbox\\{.+?\\}", x) & !force_wrap){
     return(x)
   }
 
@@ -1992,7 +2002,8 @@ parbox_wrapper <- function(x, width = "\\linewidth"){
 
     latex_multicolumn_cell(x, alignment = alignment, ncols = 1)
   }else if(type == "footnote"){
-    latex_align_text(x, alignment = alignment)
+
+    latex_align_text(x, alignment = alignment, force_wrap = TRUE)
   }
 }
 
@@ -2054,7 +2065,7 @@ latex_cleanup_multicolumn <- function(x){
   x
 }
 
-latex_align_text <- function(x, alignment){
+latex_align_text <- function(x, alignment, force_wrap = FALSE){
 
   alignment <- c(
     "center" = "\\centering",
@@ -2063,7 +2074,7 @@ latex_align_text <- function(x, alignment){
     "right" = "\\raggedleft"
   )[alignment]
 
-  parbox_wrapper(paste0(alignment," ",x), "\\linewidth")
+  parbox_wrapper(paste0(alignment," ",x), "\\linewidth", force_wrap = force_wrap)
 
 }
 
@@ -2140,7 +2151,7 @@ latex_align_text <- function(x, alignment){
 #' `apply_cell_styles_l()`.
 #'
 #' @noRd
-apply_spanner_styles_l <- function(spanners_rle, styles_tbl) {
+apply_spanner_styles_l <- function(spanners_rle, styles_tbl, widths) {
 
   for (i in seq_along(spanners_rle$labels)) {
 
@@ -2153,7 +2164,9 @@ apply_spanner_styles_l <- function(spanners_rle, styles_tbl) {
           dplyr::filter(styles_tbl, locname == 'columns_groups', grpname == grp_name)
         )
 
-      spanners_rle$labels[i] <- apply_cell_styles_l(spanners_rle$labels[i], styles_spanner)
+      width <- widths[i]
+
+      spanners_rle$labels[i] <- apply_cell_styles_l(spanners_rle$labels[i], styles_spanner, width = width)
     }
 
   }
