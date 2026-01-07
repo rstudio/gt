@@ -10,7 +10,7 @@ test_that("tab_spanner_delim() works correctly for LaTeX output tables", {
   expect_match(
     as_latex(tbl_latex) |> as.character(),
     paste0(
-      ".*multicolumn\\{2\\}\\{c\\}\\{Sepal\\}.*multicolumn\\{2\\}\\{c\\}\\{Petal\\}",
+      ".*multicolumn\\{2\\}\\{c\\}\\{\\{Sepal\\}\\}.*multicolumn\\{2\\}\\{c\\}\\{\\{Petal\\}\\}",
       ".*cmidrule\\(lr\\)\\{1-2\\}.*cmidrule\\(lr\\)\\{3-4\\}",
       ".*Length & Width & Length & Width & Species.*"
       )
@@ -30,7 +30,7 @@ test_that("tab_spanner_delim() works correctly for LaTeX output tables", {
   expect_match(
     as_latex(tbl_latex) |> as.character(),
     paste0(
-      ".*multicolumn\\{2\\}\\{c\\}\\{Sepal\\} &  &  &  .*",
+      ".*multicolumn\\{2\\}\\{c\\}\\{\\{Sepal\\}\\} &  &  &  .*",
       ".cmidrule\\(lr\\)\\{1-2\\}.*",
       "Length & Width & Petal.Length & Petal.Width & Species.*"
     )
@@ -51,7 +51,7 @@ test_that("tab_spanner_delim() works correctly for LaTeX output tables", {
   expect_match(
     as_latex(tbl_latex) |> as.character(),
     paste0(
-      ".*multicolumn\\{2\\}\\{c\\}\\{Sepal\\} &  &  &  .*",
+      ".*multicolumn\\{2\\}\\{c\\}\\{\\{Sepal\\}\\} &  &  &  .*",
       ".cmidrule\\(lr\\)\\{1-2\\}.*",
       "Length & Width & Petal.Length & Petal.Width & Species.*"
     )
