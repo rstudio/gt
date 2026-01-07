@@ -1381,11 +1381,25 @@ create_footer_component_l <- function(data) {
           footmark <- footnote_marks[[idx]]
           footnote_latex <- process_text(footnotes[[idx]], context = context)
 
-          ## remove linewidth parbox within a shortstack for footnotes, already within a parbox
-          footnote_latex <- gsub("(?<=\\\\shortstack\\[.\\]\\{)\\\\parbox\\{.+?\\}\\{(.+?)\\}","\\1",footnote_latex, perl = TRUE)
+          # if in a shortstack, footmark should be within the shortstack
+          if(grepl("\\\\shortstack", footnote_latex)){
 
-          ## add footmark
-          footnote_latex <- paste(footmark, footnote_latex)
+            ## remove linewidth parbox within a shortstack for footnotes, already within a parbox
+            footnote_latex <- gsub("(?<=\\\\shortstack\\[.\\]\\{)\\\\parbox\\{.+?\\}\\{(.+?)\\}","\\1",footnote_latex, perl = TRUE)
+
+            ## add footmark within shortstack
+            if(nzchar(footmark)){
+              footnote_latex <- gsub("(\\\\shortstack\\[.\\]\\{)(.+?\\})",paste0("\\1",gsub("\\","\\\\",footmark, fixed=TRUE)," \\2"), footnote_latex, perl = TRUE)
+            }
+
+          }else{
+            ## add footmark
+            footnote_latex <- paste(footmark, footnote_latex)
+          }
+
+
+
+
 
           apply_cell_styles_l(
             footnote_latex,
@@ -1493,6 +1507,10 @@ create_body_rows_l <- function(
             styles_tbl_i <- vctrs::vec_slice(styles_tbl, styles_tbl$rownum == x)
 
             if (nrow(styles_tbl_i) < 1L) {
+
+              ## if styling set, remove the parbox if it is set to line width
+              content <- gsub("\\\\parbox\\{\\\\linewidth\\}\\{(.+?)\\}","\\1",content)
+
               # Remove any latex footnote encoding
               content <- remove_footnote_encoding(content)
               return(paste(paste(content, collapse = " & "), "\\\\ \n"))
@@ -1566,6 +1584,11 @@ create_body_rows_l <- function(
 
               } else {
 
+                browser()
+
+                ## if styling set, remove the parbox if it is set to line width
+                content_i <- gsub("\\\\parbox\\{\\\\linewidth\\}\\{(.+?)\\}","\\1",content_i)
+
                 content[i] <- remove_footnote_encoding(content_i)
 
               }
@@ -1585,8 +1608,43 @@ create_body_rows_l <- function(
 # cells not modified by tab_style calls.
 remove_footnote_encoding <- function(x) {
 
-  gsub("%%%(right|left):", "", x)
+  for( i in seq_along(x)){
 
+    x_i <- x[i]
+
+    if(grepl("\\\\shortstack",x_i)){
+      if(grepl("%%%right:",x_i)){
+        footmark_text <- regmatches(x_i, regexec("(?<=%%%right:).+$", x_i, perl = TRUE))[[1]]
+        if(grepl("%%%left:", footmark_text)){
+          footmark_text <- regmatches(footmark_text, regexec(".+?(?=%%%left:)", footmark_text, perl = TRUE))[[1]]
+        }
+        content_x <- regmatches(x_i, regexec(".+?(?=%%%right:)", x_i, perl = TRUE))[[1]]
+        x_i <- gsub("(\\\\shortstack\\[.\\]\\{.+)(\\}+$)",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\2"), content_x, perl = TRUE)
+      }
+
+      if(grepl("%%%left:",x_i)){
+        footmark_text <- regmatches(x_i, regexec("(?<=%%%left:).+?$", x_i, perl = TRUE))[[1]]
+        content_x <- regmatches(x_i, regexec(".+?(?=%%%left:)", x_i, perl = TRUE))[[1]]
+        ## add footmark within shortstack
+        x_i <- gsub("(\\\\shortstack\\[.\\]\\{)(.+?\\})",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\2"), content_x, perl = TRUE)
+
+      }
+
+    }else{
+      if(grepl("%%%right:",x_i)){
+        x_i <- gsub("%%%(right):", "", x_i)
+      }
+      if(grepl("%%%left:", x_i)){
+
+        footmark_text <- regmatches(x_i, regexec("(?<=%%%left:).+?$", x_i, perl = TRUE))[[1]]
+        content_x <- regmatches(x_i, regexec(".+?(?=%%%left:)", x_i, perl = TRUE))[[1]]
+        x_i <- paste(footmark_text, content_x)
+      }
+    }
+
+    x[[i]] <- x_i
+  }
+  x
 }
 
 # Function that converts gt font sizes to LaTeX equivalents
@@ -2002,8 +2060,6 @@ parbox_wrapper <- function(x, width = "\\linewidth", force_wrap = FALSE){
         "right" = "r"
       )[alignment]
     }
-
-
 
     latex_multicolumn_cell(x, alignment = tex_alignment, ncols = 1)
 
