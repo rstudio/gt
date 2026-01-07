@@ -1382,7 +1382,7 @@ create_footer_component_l <- function(data) {
           footnote_latex <- process_text(footnotes[[idx]], context = context)
 
           ## remove linewidth parbox within a shortstack for footnotes, already within a parbox
-          footnote_latex <- gsub("(?<=\\\\shortstack\\[.\\]\\{)\\\\parbox\\{\\\\linewidth\\}","",footnote_latex, perl = TRUE)
+          footnote_latex <- gsub("(?<=\\\\shortstack\\[.\\]\\{)\\\\parbox\\{.+?\\}\\{(.+?)\\}","\\1",footnote_latex, perl = TRUE)
 
           ## add footmark
           footnote_latex <- paste(footmark, footnote_latex)
@@ -1982,17 +1982,20 @@ parbox_wrapper <- function(x, width = "\\linewidth", force_wrap = FALSE){
   if(type == "cell"){
 
     if(!identical(width, "")){
-      alignment <- c(
+      tex_alignment <- c(
         "center" = ">{\\centering\\arraybackslash}",
         "justify" = ">{\\centering\\arraybackslash}",
         "left" = ">{\\raggedright\\arraybackslash}",
         "right" = ">{\\raggedleft\\arraybackslash}"
       )[alignment]
 
-      alignment <- paste0(alignment,"m{",width,"}")
+      tex_alignment <- paste0(tex_alignment,"m{",width,"}")
+
+      ## needs additional alignment control when using a set width/parbox
+      x <- latex_align_text(x, alignment = alignment)
 
     }else{
-      alignment <- c(
+      tex_alignment <- c(
         "center" = "c",
         "justify" = "c",
         "left" = "l",
@@ -2000,7 +2003,10 @@ parbox_wrapper <- function(x, width = "\\linewidth", force_wrap = FALSE){
       )[alignment]
     }
 
-    latex_multicolumn_cell(x, alignment = alignment, ncols = 1)
+
+
+    latex_multicolumn_cell(x, alignment = tex_alignment, ncols = 1)
+
   }else if(type == "footnote"){
 
     latex_align_text(x, alignment = alignment, force_wrap = TRUE)
@@ -2067,14 +2073,19 @@ latex_cleanup_multicolumn <- function(x){
 
 latex_align_text <- function(x, alignment, force_wrap = FALSE){
 
-  alignment <- c(
+  tex_alignment <- c(
     "center" = "\\centering",
     "justify" = "\\sloppy\\setlength\\parfillskip{0pt}",
     "left" = "\\raggedright",
     "right" = "\\raggedleft"
   )[alignment]
 
-  parbox_wrapper(paste0(alignment," ",x), "\\linewidth", force_wrap = force_wrap)
+  ## if there is already a parbox, set alignment within that
+  if(grepl("\\parbox", x)){
+    x <- gsub("\\\\parbox\\{(.+?)\\}{", paste0("\\\\parbox{\\1}{",gsub("\\","\\\\", tex_alignment, fixed = TRUE)," "), x, perl = TRUE)
+  }else{
+    parbox_wrapper(paste0(tex_alignment," ",x), "\\linewidth", force_wrap = force_wrap)
+  }
 
 }
 
@@ -2163,6 +2174,10 @@ apply_spanner_styles_l <- function(spanners_rle, styles_tbl, widths) {
         consolidate_cell_styles_l(
           dplyr::filter(styles_tbl, locname == 'columns_groups', grpname == grp_name)
         )
+
+      if(rlang::is_empty(styles_spanner)){
+        styles_spanner <- list(cell_text = list(align = "center"))
+      }
 
       width <- widths[i]
 
