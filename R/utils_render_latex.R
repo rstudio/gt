@@ -1649,11 +1649,7 @@ remove_footnote_encoding <- function(x) {
         }else{
           x_i <- gsub("((\\\\parbox\\{.+?\\}\\{).+?)((\\}\\s*)+$)",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\3"), content_x, perl = TRUE)
         }
-      }
-
-
-
-      if(grepl("%%%left:",x_i)){
+      } else if(grepl("%%%left:",x_i)){
         footmark_text <- regmatches(x_i, regexec("(?<=%%%left:).+?$", x_i, perl = TRUE))[[1]]
         content_x <- regmatches(x_i, regexec(".+?(?=%%%left:)", x_i, perl = TRUE))[[1]]
         ## add footmark within shortstack
