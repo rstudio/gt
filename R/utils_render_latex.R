@@ -1581,7 +1581,8 @@ create_body_rows_l <- function(
                   content_i,
                   styles_body,
                   width = cell_width
-                  )
+                  ) |>
+                  remove_footnote_encoding()
 
               } else {
 
@@ -1623,11 +1624,18 @@ create_body_rows_l <- function(
 # cells not modified by tab_style calls.
 remove_footnote_encoding <- function(x) {
 
+  ## if no footnotes, move along
+  if((sum(grepl("%%%(right|left):",x)) == 0)){
+    return(x)
+  }
+
+  ## if there are footnotes, loop through
+
   for( i in seq_along(x)){
 
     x_i <- x[i]
 
-    if(grepl("\\\\shortstack",x_i)){
+    if(grepl("\\\\(shortstack|parbox)",x_i)){
 
       if(grepl("%%%right:",x_i)){
         footmark_text <- regmatches(x_i, regexec("(?<=%%%right:).+$", x_i, perl = TRUE))[[1]]
@@ -1635,7 +1643,12 @@ remove_footnote_encoding <- function(x) {
           footmark_text <- regmatches(footmark_text, regexec(".+?(?=%%%left:)", footmark_text, perl = TRUE))[[1]]
         }
         content_x <- regmatches(x_i, regexec(".+?(?=%%%right:)", x_i, perl = TRUE))[[1]]
-        x_i <- gsub("(\\\\shortstack\\[.\\]\\{(\\\\parbox\\{.+?\\}\\{)*.+?)((\\}\\s*)+$)",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\3"), content_x, perl = TRUE)
+
+        if(grepl("\\\\shortstack", content_x)){
+          x_i <- gsub("(\\\\shortstack\\[.\\]\\{(\\\\parbox\\{.+?\\}\\{)*.+?)((\\}\\s*)+$)",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\3"), content_x, perl = TRUE)
+        }else{
+          x_i <- gsub("((\\\\parbox\\{.+?\\}\\{).+?)((\\}\\s*)+$)",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\3"), content_x, perl = TRUE)
+        }
       }
 
 
@@ -1644,8 +1657,11 @@ remove_footnote_encoding <- function(x) {
         footmark_text <- regmatches(x_i, regexec("(?<=%%%left:).+?$", x_i, perl = TRUE))[[1]]
         content_x <- regmatches(x_i, regexec(".+?(?=%%%left:)", x_i, perl = TRUE))[[1]]
         ## add footmark within shortstack
-        x_i <- gsub("(\\\\shortstack\\[.\\]\\{(\\\\parbox\\{.+?\\}\\{)*)(.+?\\})",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\3"), content_x, perl = TRUE)
-
+        if(grepl("\\\\shortstack", content_x)){
+          x_i <- gsub("(\\\\shortstack\\[.\\]\\{(\\\\parbox\\{.+?\\}\\{)*)(.+?\\})",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\3"), content_x, perl = TRUE)
+        }else{
+          x_i <- gsub("((\\\\parbox\\{.+?\\}\\{).+?)\\s(.+?((\\}\\s*)+$))",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\3"), content_x, perl = TRUE)
+        }
 
       }
 
@@ -1946,9 +1962,18 @@ apply_cell_styles_l <- function(content, style_obj, type = "cell", width = "\\li
     out_text <- just_content
   }
 
-  ifelse(mark_side == "right",
-         paste0(out_text, mark),
-         paste0(mark, out_text))
+
+  if(isTRUE(mark != "")){
+    out_text <- ifelse(mark_side == "right" ,
+         paste0(out_text, "%%%right:",mark),
+         paste0(out_text, "%%%left:",mark)
+         )
+
+    out_text <- remove_footnote_encoding(out_text)
+
+  }
+
+  out_text
 
 }
 
