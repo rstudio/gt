@@ -1506,7 +1506,8 @@ create_body_rows_l <- function(
 
             styles_tbl_i <- vctrs::vec_slice(styles_tbl, styles_tbl$rownum == x)
 
-            if (nrow(styles_tbl_i) < 1L) {
+            ## no styling, no column widths set
+            if (nrow(styles_tbl_i) < 1L & nrow(colwidth_df) == sum(colwidth_df$unspec > 0)) {
 
               ## if styling set, remove the parbox if it is set to line width
               content <- gsub("\\\\parbox\\{\\\\linewidth\\}\\{(.+?)\\}","\\1",content)
@@ -1584,10 +1585,24 @@ create_body_rows_l <- function(
 
               } else {
 
-                browser()
+                if(identical(colname_i,"::stub::")){
+                  colwidth_i <- dplyr::filter(
+                    colwidth_df,
+                    type == "stub",
+                  )[i, ]
+
+                }else{
+                  colwidth_i <- dplyr::filter(
+                    colwidth_df,
+                    var == colname_i
+                  )
+                }
+
+                if(!sum(colwidth_i$unspec < 1) > 0){
+                  content_i <- gsub("\\\\parbox\\{\\\\linewidth\\}\\{(.+?)\\}","\\1",content_i)
+                }
 
                 ## if styling set, remove the parbox if it is set to line width
-                content_i <- gsub("\\\\parbox\\{\\\\linewidth\\}\\{(.+?)\\}","\\1",content_i)
 
                 content[i] <- remove_footnote_encoding(content_i)
 
@@ -1613,20 +1628,24 @@ remove_footnote_encoding <- function(x) {
     x_i <- x[i]
 
     if(grepl("\\\\shortstack",x_i)){
+
       if(grepl("%%%right:",x_i)){
         footmark_text <- regmatches(x_i, regexec("(?<=%%%right:).+$", x_i, perl = TRUE))[[1]]
         if(grepl("%%%left:", footmark_text)){
           footmark_text <- regmatches(footmark_text, regexec(".+?(?=%%%left:)", footmark_text, perl = TRUE))[[1]]
         }
         content_x <- regmatches(x_i, regexec(".+?(?=%%%right:)", x_i, perl = TRUE))[[1]]
-        x_i <- gsub("(\\\\shortstack\\[.\\]\\{.+)(\\}+$)",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\2"), content_x, perl = TRUE)
+        x_i <- gsub("(\\\\shortstack\\[.\\]\\{(\\\\parbox\\{.+?\\}\\{)*.+?)((\\}\\s*)+$)",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\3"), content_x, perl = TRUE)
       }
+
+
 
       if(grepl("%%%left:",x_i)){
         footmark_text <- regmatches(x_i, regexec("(?<=%%%left:).+?$", x_i, perl = TRUE))[[1]]
         content_x <- regmatches(x_i, regexec(".+?(?=%%%left:)", x_i, perl = TRUE))[[1]]
         ## add footmark within shortstack
-        x_i <- gsub("(\\\\shortstack\\[.\\]\\{)(.+?\\})",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\2"), content_x, perl = TRUE)
+        x_i <- gsub("(\\\\shortstack\\[.\\]\\{(\\\\parbox\\{.+?\\}\\{)*)(.+?\\})",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\3"), content_x, perl = TRUE)
+
 
       }
 

@@ -117,14 +117,14 @@ test_that("latex cell alignment works - basic table", {
 
   # right aligned with a line break
   # First footnote is w new minipage, so used parbox, raggedleft pushes all content to the right, shortstack is right aligned due to <br>
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft { \\shortstack[r]{FOOTNOTE  \\\\ test this}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{FOOTNOTE  \\\\ test this}}}", fixed = TRUE)
 
   # second footnote just uses parbox and raggedleft
   expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft { FOOTNOTE3}}", fixed = TRUE)
 
   # Third listed footnote includes reference, so listed last even though its second footnote
   # used parbox, raggedleft pushes all content to the right, reference is listed before the shortstack, shortstack is right aligned due to <br>,
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\textsuperscript{\\textit{1}} \\shortstack[r]{FOOTNOTE2 \\\\ this}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}} FOOTNOTE2 \\\\ this}}}", fixed = TRUE)
 
 
 })
@@ -253,14 +253,57 @@ test_that("latex cell alignment works - set width columns table means parbox is 
 
   # right aligned with a line break
   # First footnote is w new minipage, so used parbox, raggedleft pushes all content to the right, shortstack is right aligned due to <br>
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft { \\shortstack[r]{FOOTNOTE  \\\\ test this}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{FOOTNOTE  \\\\ test this}}}", fixed = TRUE)
 
   # second footnote just uses parbox and raggedleft
   expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft { FOOTNOTE3}}", fixed = TRUE)
 
   # Third listed footnote includes reference, so listed last even though its second footnote
   # used parbox, raggedleft pushes all content to the right, reference is listed before the shortstack, shortstack is right aligned due to <br>,
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\textsuperscript{\\textit{1}} \\shortstack[r]{FOOTNOTE2 \\\\ this}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}} FOOTNOTE2 \\\\ this}}}", fixed = TRUE)
+
+
+})
+
+test_that("latex cell alignment works - basic table with footnotes", {
+
+  test_data <- data.frame(
+    estimate = c(
+      "123 <br>(0.1234) this is super wide. like super wide. such a wide column",
+      "val"
+    ),
+    col2 = c("testA", "test1"),
+    col3 = c("testB", "test2"),
+    col4 = c("testC", "test3")
+  )
+
+  # Create a `tbl_latex` object with `gt()`;
+  # Apply a variety of types of content needing a mix of different alignments
+  gt_tbl <- test_data |>
+    gt() |>
+    fmt_markdown() |>
+    tab_footnote(footnote = md("FOOTNOTE<br> this"), locations = cells_body(1,1)) |>
+    tab_footnote(footnote = md("FOOTNOTE2<br> this"), locations = cells_body(1,1), placement = "left") |>
+    tab_footnote(footnote = md("FOOTNOTE3<br> this"), locations = cells_body(1,2), placement = "left") |>
+    tab_style(style = cell_text(align = "right"), locations = cells_footnotes()) %>%
+    cols_width(
+      estimate ~ pct(40),
+      col2 ~ pct(20),
+      col3 ~ pct(20),
+      col4 ~ pct(20)
+    )
+
+  tbl_latex <- gt_tbl |>
+    as_latex() |>
+    as.character()
+
+
+  # Expect a character vector
+  expect_length(tbl_latex, 1)
+
+
+  ## footnote is located within shortstack
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}} FOOTNOTE \\\\ this}}}", fixed = TRUE)
 
 
 })
