@@ -59,14 +59,14 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrr}\n\\toprule\n\\multicolumn{1}{c}{{A}}\\textsuperscript{\\textit{1}} & \\multicolumn{1}{c}{{A}} & \\multicolumn{1}{c}{{A}}\\textsuperscript{\\textit{1}} & \\multicolumn{1}{c}{{A}} \\\\ \n\\cmidrule(lr){1-1} \\cmidrule(lr){2-2} \\cmidrule(lr){3-3} \\cmidrule(lr){4-4}\nA\\_X & B\\_X & A\\_Y & B\\_Y \\\\ \n\\midrule\\addlinespace[2.5pt]\n1 & 2 & 3 & 4 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\vspace{.05em}\n\\textsuperscript{\\textit{1}} note\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrr}\n\\toprule\n\\multicolumn{1}{c}{{A}}\\textsuperscript{\\textit{1}} & \\multicolumn{1}{c}{{A}} & \\multicolumn{1}{c}{{A}}\\textsuperscript{\\textit{1}} & \\multicolumn{1}{c}{{A}} \\\\ \n\\cmidrule(lr){1-1} \\cmidrule(lr){2-2} \\cmidrule(lr){3-3} \\cmidrule(lr){4-4}\nA\\_X & B\\_X & A\\_Y & B\\_Y \\\\ \n\\midrule\\addlinespace[2.5pt]\n1 & 2 & 3 & 4 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\vspace{.05em}\n\\textsuperscript{\\textit{1}}note\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrr}\n\\toprule\n\\multicolumn{2}{c}{{A}}\\textsuperscript{\\textit{1}} & \\multicolumn{2}{c}{{A}} \\\\ \n\\cmidrule(lr){1-2} \\cmidrule(lr){3-4}\nA\\_X & A\\_Y & B\\_X & B\\_Y \\\\ \n\\midrule\\addlinespace[2.5pt]\n1 & 3 & 2 & 4 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\vspace{.05em}\n\\textsuperscript{\\textit{1}} note\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrr}\n\\toprule\n\\multicolumn{2}{c}{{A}}\\textsuperscript{\\textit{1}} & \\multicolumn{2}{c}{{A}} \\\\ \n\\cmidrule(lr){1-2} \\cmidrule(lr){3-4}\nA\\_X & A\\_Y & B\\_X & B\\_Y \\\\ \n\\midrule\\addlinespace[2.5pt]\n1 & 3 & 2 & 4 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\vspace{.05em}\n\\textsuperscript{\\textit{1}}note\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 

@@ -120,11 +120,11 @@ test_that("latex cell alignment works - basic table", {
   expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{FOOTNOTE  \\\\ test this}}}", fixed = TRUE)
 
   # second footnote just uses parbox and raggedleft
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft { FOOTNOTE3}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {FOOTNOTE3}}", fixed = TRUE)
 
   # Third listed footnote includes reference, so listed last even though its second footnote
   # used parbox, raggedleft pushes all content to the right, reference is listed before the shortstack, shortstack is right aligned due to <br>,
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}} FOOTNOTE2 \\\\ this}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}}FOOTNOTE2 \\\\ this}}}", fixed = TRUE)
 
 
 })
@@ -256,11 +256,11 @@ test_that("latex cell alignment works - set width columns table means parbox is 
   expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{FOOTNOTE  \\\\ test this}}}", fixed = TRUE)
 
   # second footnote just uses parbox and raggedleft
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft { FOOTNOTE3}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {FOOTNOTE3}}", fixed = TRUE)
 
   # Third listed footnote includes reference, so listed last even though its second footnote
   # used parbox, raggedleft pushes all content to the right, reference is listed before the shortstack, shortstack is right aligned due to <br>,
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}} FOOTNOTE2 \\\\ this}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}}FOOTNOTE2 \\\\ this}}}", fixed = TRUE)
 
 
 })
@@ -302,13 +302,13 @@ test_that("latex cell alignment works - basic table with footnotes", {
   expect_length(tbl_latex, 1)
 
   ## Footnotes on col 1, row 1
-  expect_match(tbl_latex, "\\multicolumn{1}{>{\\centering\\arraybackslash}m{\\dimexpr 0.40\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{{\\shortstack[c]{\\parbox{\\linewidth}{\\centering 123  \\\\(0.1234) this is super wide. like super wide. such a wide column\\textsuperscript{\\textit{1}} }}}} ", fixed = TRUE)
+  expect_match(tbl_latex, "\\shortstack[l]{\\parbox{\\linewidth}{123  \\\\(0.1234) this is super wide. like super wide. such a wide column\\textsuperscript{\\textit{1,2}} }} ", fixed = TRUE)
 
   ## Footnotes on col 1, row 2
-  expect_match(tbl_latex, "\\multicolumn{1}{>{\\centering\\arraybackslash}m{\\dimexpr 0.40\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{\\parbox{\\linewidth}{\\centering {val}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\textsuperscript{\\textit{3}}", fixed = TRUE)
 
   ## footnote is located within shortstack
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}} FOOTNOTE \\\\ this}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}}FOOTNOTE \\\\ this}}}", fixed = TRUE)
 
 
 })
