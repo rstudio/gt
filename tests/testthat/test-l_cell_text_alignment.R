@@ -97,7 +97,7 @@ test_that("latex cell alignment works - basic table", {
   ### Body ----
 
   # First row first column value is a multi-row that is centered
-  expect_match(tbl_latex, "\\multicolumn{1}{c}{{\\shortstack[c]{123  \\\\(0.1234) this is super wide. like super wide. such a wide column}}}\\textsuperscript{\\textit{1}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\multicolumn{1}{c}{{\\shortstack[c]{123  \\\\(0.1234) this is super wide. like super wide. such a wide column\\textsuperscript{\\textit{1}} }}}", fixed = TRUE)
 
   # The rest are centered
   # like the first row, second column
@@ -233,7 +233,7 @@ test_that("latex cell alignment works - set width columns table means parbox is 
   ### Body ----
 
   # First row first column value is a multi-row that is centered
-  expect_match(tbl_latex, "\\multicolumn{1}{>{\\centering\\arraybackslash}m{\\dimexpr 0.40\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{{\\shortstack[c]{\\parbox{\\linewidth}{\\centering 123  \\\\(0.1234) this is super wide. like super wide. such a wide column}}}}\\textsuperscript{\\textit{1}} ", fixed = TRUE)
+  expect_match(tbl_latex, "\\multicolumn{1}{>{\\centering\\arraybackslash}m{\\dimexpr 0.40\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{{\\shortstack[c]{\\parbox{\\linewidth}{\\centering 123  \\\\(0.1234) this is super wide. like super wide. such a wide column\\textsuperscript{\\textit{1}} }}}} ", fixed = TRUE)
 
   # The rest are centered
   # like the first row, second column
@@ -301,6 +301,11 @@ test_that("latex cell alignment works - basic table with footnotes", {
   # Expect a character vector
   expect_length(tbl_latex, 1)
 
+  ## Footnotes on col 1, row 1
+  expect_match(tbl_latex, "\\multicolumn{1}{>{\\centering\\arraybackslash}m{\\dimexpr 0.40\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{{\\shortstack[c]{\\parbox{\\linewidth}{\\centering 123  \\\\(0.1234) this is super wide. like super wide. such a wide column\\textsuperscript{\\textit{1}} }}}} ", fixed = TRUE)
+
+  ## Footnotes on col 1, row 2
+  expect_match(tbl_latex, "\\multicolumn{1}{>{\\centering\\arraybackslash}m{\\dimexpr 0.40\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{\\parbox{\\linewidth}{\\centering {val}}}", fixed = TRUE)
 
   ## footnote is located within shortstack
   expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}} FOOTNOTE \\\\ this}}}", fixed = TRUE)

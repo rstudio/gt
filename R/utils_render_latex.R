@@ -1389,17 +1389,13 @@ create_footer_component_l <- function(data) {
 
             ## add footmark within shortstack
             if(nzchar(footmark)){
-              footnote_latex <- gsub("(\\\\shortstack\\[.\\]\\{)(.+?\\})",paste0("\\1",gsub("\\","\\\\",footmark, fixed=TRUE)," \\2"), footnote_latex, perl = TRUE)
+              footnote_latex <- gsub("(\\\\shortstack\\[.\\]\\{)(.+?\\})",paste0("\\1",gsub("\\","\\\\",footmark, fixed=TRUE),"\\2"), footnote_latex, perl = TRUE)
             }
 
           }else{
             ## add footmark
-            footnote_latex <- paste(footmark, footnote_latex)
+            footnote_latex <- paste0(footmark, footnote_latex)
           }
-
-
-
-
 
           apply_cell_styles_l(
             footnote_latex,
@@ -1412,8 +1408,6 @@ create_footer_component_l <- function(data) {
         context = "latex",
         styles_obj = styles_footnote
       )
-
-
 
     if (footnotes_multiline) {
       footnotes <- paste_right(paste(footnotes, collapse = "\\\\\n"), "\\\\\n")
@@ -1669,7 +1663,7 @@ remove_footnote_encoding <- function(x) {
 
         footmark_text <- regmatches(x_i, regexec("(?<=%%%left:).+?$", x_i, perl = TRUE))[[1]]
         content_x <- regmatches(x_i, regexec(".+?(?=%%%left:)", x_i, perl = TRUE))[[1]]
-        x_i <- paste(footmark_text, content_x)
+        x_i <- paste0(footmark_text, content_x)
       }
     }
 

@@ -297,7 +297,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n0.1111\\textsuperscript{\\textit{1}} & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\vspace{.05em}\n A footnote.\\\\\n\\textsuperscript{\\textit{1}} A footnote.\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\textsuperscript{\\textit{1}} 0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\vspace{.05em}\n A footnote.\\\\\n\\textsuperscript{\\textit{1}} A footnote.\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
@@ -426,7 +426,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n0.1111\\textsuperscript{\\textit{1}} & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\vspace{.05em}\n A footnote.  A second footnote. \\textsuperscript{\\textit{1}} location note\\\\\n\\end{minipage}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\textsuperscript{\\textit{1}} 0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\vspace{.05em}\n A footnote.  A second footnote. \\textsuperscript{\\textit{1}} location note\\\\\n\\end{minipage}\n\\endgroup\n"
 
 ---
 
