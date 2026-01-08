@@ -621,7 +621,7 @@
     Code
       gt_tbl_linebreaks
     Output
-      [1] "\\begin{table}[t]\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  \\shortstack[l]{\\parbox{\\linewidth}{TABLE  \\\\ TITLE}}\\fontsize{12}{15}\\selectfont } \\\\ \n{\\fontsize{14}{17}\\selectfont  \\shortstack[l]{\\parbox{\\linewidth}{table  \\\\ subtitle}}\\fontsize{12}{15}\\selectfont }\n} \n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{tabular*}{\\linewidth}{@{\\extracolsep{\\fill}}l}\n\\toprule\nx \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\shortstack[l]{\\parbox{\\linewidth}{x \\\\y}} \\\\ \n\\bottomrule\n\\end{tabular*}\n\\end{table}\n"
+      [1] "\\begin{table}[t]\n\\caption*{\n{\\fontsize{20}{25}\\selectfont  \\shortstack[l]{\\parbox{\\linewidth}{TABLE  \\\\ TITLE}}\\fontsize{12}{15}\\selectfont } \\\\ \n{\\fontsize{14}{17}\\selectfont  \\shortstack[l]{\\parbox{\\linewidth}{table  \\\\ subtitle}}\\fontsize{12}{15}\\selectfont }\n} \n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{tabular*}{\\linewidth}{@{\\extracolsep{\\fill}}l}\n\\toprule\nx \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\shortstack[l]{x \\\\y} \\\\ \n\\bottomrule\n\\end{tabular*}\n\\end{table}\n"
       attr(,"class")
       [1] "knit_asis"
       attr(,"knit_meta")

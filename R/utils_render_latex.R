@@ -1598,7 +1598,7 @@ create_body_rows_l <- function(
                   )
                 }
 
-                if(!sum(colwidth_i$unspec < 1) > 0){
+                if(isFALSE(sum(colwidth_i$unspec < 1) > 0)){
                   content_i <- gsub("\\\\parbox\\{\\\\linewidth\\}\\{(.+?)\\}","\\1",content_i)
                 }
 
