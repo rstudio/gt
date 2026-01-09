@@ -85,3 +85,30 @@ test_that("info_google_fonts() works correctly", {
     c(38, 4)
   )
 })
+
+test_that("info_flags() works correctly", {
+
+  # Expect that `info_flags()` is a gt table
+  expect_s3_class(info_flags(), c("gt_tbl", "data.frame"))
+
+  # Expect that the function doesn't error
+  expect_no_error(info_flags())
+})
+
+test_that("info_icons() works correctly", {
+
+  # Expect that `info_icons()` is a gt table
+  expect_s3_class(info_icons(), c("gt_tbl", "data.frame"))
+
+  # Expect that the function doesn't error
+  expect_no_error(info_icons())
+})
+
+test_that("info_unit_conversions() works correctly", {
+
+  # Expect that `info_unit_conversions()` is a gt table
+  expect_s3_class(info_unit_conversions(), c("gt_tbl", "data.frame"))
+
+  # Expect that the function doesn't error
+  expect_no_error(info_unit_conversions())
+})

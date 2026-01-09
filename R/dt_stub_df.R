@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -68,38 +68,38 @@ dt_stub_df_init <- function(
 
     # For multiple columns, we need to handle them as a hierarchy
     if (length(rowname_col) > 1) {
-      
+
       # Set all columns as stub columns in the boxhead
       for (col in rowname_col) {
         data <- dt_boxhead_set_stub(data = data, var = col)
       }
-      
+
       # Reorder the boxhead to match the order specified in rowname_col
       # This ensures stub columns appear in the order the user specified
       dt_boxhead <- dt_boxhead_get(data = data)
-      
+
       # Split boxhead into stub and non-stub rows
       stub_rows <- dt_boxhead[dt_boxhead$var %in% rowname_col, ]
       non_stub_rows <- dt_boxhead[!dt_boxhead$var %in% rowname_col, ]
-      
+
       # Reorder stub rows to match rowname_col order
       stub_rows <- stub_rows[match(rowname_col, stub_rows$var), ]
-      
+
       # Combine: stub rows first (in specified order), then non-stub rows
       dt_boxhead <- rbind(stub_rows, non_stub_rows)
       rownames(dt_boxhead) <- NULL
-      
+
       # Update the boxhead
       data <- dt_boxhead_set(data = data, boxh = dt_boxhead)
-      
+
       # Use the rightmost column as the primary row ID
       rightmost_col <- rowname_col[length(rowname_col)]
       rownames <- data_tbl[[rightmost_col]]
       row_id <- create_unique_id_vals(rownames, simplify = process_md)
-      
+
       # Place the `row_id` values into `stub_df$row_id`
       stub_df[["row_id"]] <- row_id
-      
+
     } else {
       # Original single column logic
       data <- dt_boxhead_set_stub(data = data, var = rowname_col)

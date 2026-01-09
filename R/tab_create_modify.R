@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -1774,10 +1774,10 @@ tab_row_group <- function(
 #'
 #'   `vector<character>` // **required**
 #'
-#'   The text to be used as the stubhead label(s). For tables with multi-column 
-#'   stubs, you can provide either a single label that spans all stub columns, or 
-#'   a vector of labels with one label for each stub column. We can optionally use 
-#'   [md()] or [html()] to style the text as Markdown or to retain HTML elements 
+#'   The text to be used as the stubhead label(s). For tables with multi-column
+#'   stubs, you can provide either a single label that spans all stub columns, or
+#'   a vector of labels with one label for each stub column. We can optionally use
+#'   [md()] or [html()] to style the text as Markdown or to retain HTML elements
 #'   in the text.
 #'
 #' @return An object of class `gt_tbl`.
@@ -1914,7 +1914,7 @@ tab_stubhead <- function(
 
   # Validate the label parameter for multi-column stubs
   stub_vars <- dt_boxhead_get_var_stub(data = data)
-  
+
   if (length(stub_vars) > 1 && !any(is.na(stub_vars))) {
     # Multi-column stub case
     if (length(label) > 1) {
