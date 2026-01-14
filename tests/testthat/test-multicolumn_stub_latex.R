@@ -702,3 +702,49 @@ test_that("tab_stubhead() with styles works in LaTeX multicolumn stub", {
   expect_true(grepl("Model", latex_output))
   expect_true(grepl("Trim", latex_output))
 })
+
+test_that("cells_stub() alignment styles work in LaTeX multicolumn stub", {
+
+  # Regression test for LaTeX alignment in multi-column stubs
+  # cells_stub() should apply alignment to all stub columns in LaTeX output
+  gt_tbl <-
+    exibble |>
+    gt(rowname_col = c("group", "char")) |>
+    tab_style(
+      style = list(cell_text(align = "right")),
+      locations = list(cells_stub())
+    )
+
+  latex_output <- as.character(as_latex(gt_tbl))
+
+  # Both stub columns should have right alignment applied via \multicolumn{1}{r}
+  # Count occurrences of right-aligned multicolumn for stub cells
+  # Each row should have 2 right-aligned stub cells (group and char columns)
+  right_align_count <- length(
+    gregexpr("\\\\multicolumn\\{1\\}\\{r\\}", latex_output)[[1]]
+  )
+
+ # 8 rows * 2 stub columns = 16 right-aligned cells
+  expect_gte(right_align_count, 16)
+
+  # Verify specific content is right-aligned
+  expect_true(grepl("\\\\multicolumn\\{1\\}\\{r\\}\\{\\{grp\\\\_a\\}\\}", latex_output))
+  expect_true(grepl("\\\\multicolumn\\{1\\}\\{r\\}\\{\\{apricot\\}\\}", latex_output))
+
+  # Test with explicit columns = NULL (should behave the same)
+  gt_tbl_null <-
+    exibble |>
+    gt(rowname_col = c("group", "char")) |>
+    tab_style(
+      style = list(cell_text(align = "right")),
+      locations = list(cells_stub(columns = NULL))
+    )
+
+  latex_output_null <- as.character(as_latex(gt_tbl_null))
+
+  # Should also have right alignment for both columns
+  right_align_count_null <- length(
+    gregexpr("\\\\multicolumn\\{1\\}\\{r\\}", latex_output_null)[[1]]
+  )
+  expect_gte(right_align_count_null, 16)
+})
