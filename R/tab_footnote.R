@@ -703,8 +703,13 @@ set_footnote.cells_stub <- function(
   # vs. new usage (explicit columns parameter provided)
   is_traditional_usage <- is.null(loc$columns)
 
-  if (is_traditional_usage) {
-    # For backward compatibility: traditional cells_stub() usage without columns parameter
+  # For multi-column stubs, we need to apply footnotes to all stub columns
+  # even in traditional usage mode (when columns = NULL means "all columns")
+  has_multicolumn_stub <- length(stub_vars) > 1 && !all(is.na(stub_vars))
+
+  if (is_traditional_usage && !has_multicolumn_stub) {
+    # For backward compatibility with single-column stubs: traditional
+    # cells_stub() usage without columns parameter
     # Use the original "stub" locname for compatibility with existing code
     data <-
       dt_footnotes_add(
@@ -719,7 +724,8 @@ set_footnote.cells_stub <- function(
       )
   } else {
     # New usage: per-column stub footnotes
-    # If no stub columns are resolved, apply to all stub columns (backward compatibility)
+    # If no stub columns are resolved (traditional usage with multi-column stub,
+    # or columns = NULL was explicitly provided), apply to all stub columns
     if (length(columns) == 0) {
       if (!all(is.na(stub_vars))) {
         columns <- stub_vars
