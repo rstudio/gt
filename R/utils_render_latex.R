@@ -196,6 +196,7 @@ create_table_start_l <- function(data, colwidth_df) {
   # - `>{\centering\arraybackslash}` <- center alignment
   # the `\arraybackslash` command is used to restore the behavior of the
   # `\\` command in the table (all of this uses the CTAN `array` package)
+
   if (any(colwidth_df_visible$unspec < 1L)) {
 
     col_defs <- NULL
@@ -234,7 +235,7 @@ create_table_start_l <- function(data, colwidth_df) {
   }
 
   # # Add borders to the right of any columns in the stub
-  if (length(stub_layout) > 0) {
+  if (length(stub_layout) > 0 & dt_options_get_value(data, "latex_stub_separate")) {
 
     # Count the actual number of stub columns
     # When we have both group_label and rowname, we have 2 columns
@@ -1247,6 +1248,13 @@ summary_rows_for_group_l <- function(
   ##? TODO: GET COLUMN WIDTH TO ADD TO ALIGNMENT
 
   if (stub_is_2) {
+
+    rowsplit_alignment <- "l"
+
+    if(dt_options_get_value(data, "latex_stub_separate")){
+      rowsplit_alignment <- paste0(rowsplit_alignment,"|")
+    }
+
     row_splits_summary <-
       lapply(
         row_splits_summary,
@@ -1254,14 +1262,14 @@ summary_rows_for_group_l <- function(
           x <- c("", x)
           x[1] <- latex_multicolumn_cell(
             x = x[1],
-            alignment = "l|",
+            alignment = rowsplit_alignment,
             ncols = 1,
             override_ncols = TRUE,
             override_alignment = FALSE
           )
           x[2] <- latex_multicolumn_cell(
             x = x[2],
-            alignment = "l|",
+            alignment = rowsplit_alignment,
             ncols = 1,
             override_ncols = TRUE,
             override_alignment = FALSE
@@ -1759,6 +1767,11 @@ create_summary_rows_l <- function(
 
           if (stub_width > 1) {
 
+            rowsplit_alignment <- "l"
+            if(dt_options_get_value(data, "latex_stub_separate")){
+              rowsplit_alignment <- paste0(rowsplit_alignment,"|")
+            }
+
             row_splits_summary <-
               lapply(
                 row_splits_summary,
@@ -1767,7 +1780,7 @@ create_summary_rows_l <- function(
                   x <- c(rep("", stub_width - 1), x)
 
                   x[seq_len(stub_width)] <- sapply(x[seq_len(stub_width)], function(x) {
-                    latex_multicolumn_cell(x, ncols = 1, alignment = "l|", override_alignment = FALSE)
+                    latex_multicolumn_cell(x, ncols = 1, alignment = rowsplit_alignment, override_alignment = FALSE)
                     })
 
                   x

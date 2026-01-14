@@ -903,6 +903,7 @@ tab_options <- function(
     quarto.disable_processing = NULL,
     latex.use_longtable = NULL,
     latex.header_repeat = NULL,
+    latex.stub_separate = NULL,
     latex.toprule = NULL,
     latex.bottomrule = NULL,
     latex.tbl.pos = NULL,

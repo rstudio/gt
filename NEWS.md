@@ -1,6 +1,8 @@
 # gt (development version)
 
-* Update how long text that has a line break or is horizontally aligned in a cell (stubs, labels, table body).
+* Update how long text that has a line break or is horizontally aligned in a cell (stubs, labels, table body). (@thebioengineer)
+
+* Added option to control if vertical bars are added for stubs in Latex outputs (#2096). (@thebioengineer)
 
 # gt 1.2.0
 

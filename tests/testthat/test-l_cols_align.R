@@ -70,3 +70,38 @@ test_that("cols_align() works correctly for LaTeX output tables", {
   expect_length(tbl_latex, 1)
   expect_match(tbl_latex, ".*begin\\{longtable\\}\\{rrrrrr\\}.*")
 })
+
+test_that("cols_align() works correctly for LaTeX output tables with stubs and options", {
+
+  # Create a object with `gt()`;
+  #  the `cyl`, `mpg`, and `disp` columns are stub columns,
+  #  the `mpg`, `cyl`, and `drat` columns are aligned left,
+  gt_tbl <- gt(mtcars_short, rowname_col = c("cyl","mpg","disp")) |>
+    cols_align(align = "left", columns = c(mpg, cyl, drat)) |>
+    tab_options(latex.use_longtable = TRUE)
+
+
+  # Create tbl_latex
+  tbl_latex <- gt_tbl |>
+    as_latex() |>
+    as.character()
+
+  # Expect a characteristic pattern
+  expect_length(tbl_latex, 1)
+  ## all stubs are left aligned (first 3 columns), separated by vertical lines
+  ## drat is also left aligned (5th column)
+  expect_match(tbl_latex, ".*begin\\{longtable\\}\\{l|l|l|rlrrrrrr\\}.*")
+
+  # Create tbl_latex, but set latex.stub_separate to FALSE
+  tbl_latex <- gt_tbl |>
+    tab_options(latex.stub_separate = FALSE) |>
+    as_latex() |>
+    as.character()
+
+  # Expect a characteristic pattern
+  expect_length(tbl_latex, 1)
+  ## all stubs are left aligned (first 3 columns),
+  ## drat is also left aligned (5th column)
+  expect_match(tbl_latex, ".*begin\\{longtable\\}\\{lllrlrrrrrr\\}.*")
+
+})

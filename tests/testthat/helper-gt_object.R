@@ -77,7 +77,7 @@ expect_tab <- function(tab, df) {
   expect_length(dt_substitutions_get(data = tab), 0)
   expect_equal(dim(dt_styles_get(data = tab)), c(0, 7))
   # If adding a new option to tab_options(), update here
-  expect_equal(dim(dt_options_get(data = tab)), c(199, 5))
+  expect_equal(dim(dt_options_get(data = tab)), c(200, 5))
   expect_length(dt_transforms_get(data = tab), 0)
 
   # Expect that extracted df has the same column
