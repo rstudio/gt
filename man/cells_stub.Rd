@@ -94,8 +94,7 @@ dataset. We'll color all of the \code{month} values in the table stub with
 For multi-column stubs, you can target specific columns. Here's an example
 with a table that has multiple stub columns:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Create a table with multi-column stub
-dplyr::tibble(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   country = rep(c("USA", "Canada"), each = 3),
   region = rep(c("North", "South", "West"), 2),
   pop_2020 = c(5000, 3000, 2000, 4000, 3500, 1500),
@@ -112,11 +111,14 @@ dplyr::tibble(
   )
 }\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_stub_2.png" alt="This image of a table was generated from the second code example in the `cells_stub()` help file." style="width:100\%;">
+}}
+
 You can also use content-based targeting to target rows by their actual values
 rather than calculating row indices:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Content-based targeting example
-gtcars |>
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(mfr, model, year, hp, msrp) |>
   dplyr::slice(1:8) |>
   gt(rowname_col = c("mfr", "model")) |>
@@ -129,6 +131,10 @@ gtcars |>
     locations = cells_stub(rows = c("BMW", "Audi"), columns = "mfr")
   )
 }\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_stub_3.png" alt="This image of a table was generated from the third code example in the `cells_stub()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{

@@ -840,6 +840,7 @@ set_style.cells_body <- function(loc, data, style) {
 set_style.cells_stub <- function(loc, data, style) {
 
   call <- call("cells_stub")
+
   resolved <- resolve_cells_stub(data = data, object = loc, call = call)
 
   columns <- resolved$columns
@@ -850,10 +851,17 @@ set_style.cells_stub <- function(loc, data, style) {
 
   # Check if this is traditional usage (no columns parameter)
   # vs. new usage (explicit columns parameter provided)
+
   is_traditional_usage <- is.null(loc$columns)
 
-  if (is_traditional_usage) {
-    # For backward compatibility: traditional cells_stub() usage without columns parameter
+  # For multi-column stubs, we need to apply styles to all stub columns
+
+  # even in traditional usage mode (when columns = NULL means "all columns")
+  has_multicolumn_stub <- length(stub_vars) > 1 && !all(is.na(stub_vars))
+
+  if (is_traditional_usage && !has_multicolumn_stub) {
+    # For backward compatibility with single-column stubs: traditional
+    # cells_stub() usage without columns parameter
     # Use the original "stub" locname for compatibility with existing code
     data <-
       dt_styles_add(
@@ -867,7 +875,8 @@ set_style.cells_stub <- function(loc, data, style) {
       )
   } else {
     # New usage: per-column stub styling
-    # If no stub columns are resolved, apply to all stub columns (backward compatibility)
+    # If no stub columns are resolved (traditional usage with multi-column stub,
+    # or columns = NULL was explicitly provided), apply to all stub columns
     if (length(columns) == 0) {
       if (!all(is.na(stub_vars))) {
         columns <- stub_vars

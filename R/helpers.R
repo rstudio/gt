@@ -1687,7 +1687,6 @@ cells_group <- function(groups = everything()) {
 #' with a table that has multiple stub columns:
 #'
 #' ```r
-#' # Create a table with multi-column stub
 #' dplyr::tibble(
 #'   country = rep(c("USA", "Canada"), each = 3),
 #'   region = rep(c("North", "South", "West"), 2),
@@ -1705,11 +1704,14 @@ cells_group <- function(groups = everything()) {
 #'   )
 #' ```
 #'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_stub_2.png")`
+#' }}
+#'
 #' You can also use content-based targeting to target rows by their actual values
 #' rather than calculating row indices:
 #'
 #' ```r
-#' # Content-based targeting example
 #' gtcars |>
 #'   dplyr::select(mfr, model, year, hp, msrp) |>
 #'   dplyr::slice(1:8) |>
@@ -1723,6 +1725,10 @@ cells_group <- function(groups = everything()) {
 #'     locations = cells_stub(rows = c("BMW", "Audi"), columns = "mfr")
 #'   )
 #' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_stub_3.png")`
+#' }}
 #'
 #' @family location helper functions
 #' @section Function ID:
