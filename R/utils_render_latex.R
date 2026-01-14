@@ -1464,12 +1464,14 @@ create_body_rows_l <- function(
 ) {
 
   styles_tbl <- dt_styles_get(data = data)
-  styles_tbl <- vctrs::vec_slice(styles_tbl, styles_tbl$locname %in% c("stub", "data", "row_groups"))
+  styles_tbl <- vctrs::vec_slice(
+    styles_tbl,
+    styles_tbl$locname %in% c("stub", "stub_column", "data", "row_groups")
+  )
 
   # Obtain all of the visible (`"default"`), non-stub column names
   # for the table from the `boxh` object
   default_vars <- dt_boxhead_get_vars_default(data = data)
-
 
   stub_layout <- get_stub_layout(data = data)
 
@@ -1479,17 +1481,27 @@ create_body_rows_l <- function(
   stub_vars <- dt_boxhead_get_var_stub(data = data)
   n_stub_cols <- if (length(stub_vars) == 1 && is.na(stub_vars)) 0 else length(stub_vars)
 
+  # For multi-column stubs, use actual column names as placeholders to enable
+  # per-column styling; for single-column stubs, use ::stub:: for backward compat
   if (is.null(stub_layout)) {
     vars <- default_vars
   } else if (!is.null(stub_layout) && !stub_is_2 && stub_layout == "rowname") {
-    # Create a ::stub:: placeholder for each stub column
-    vars <- c(rep("::stub::", n_stub_cols), default_vars)
+    # Use actual stub column names as placeholders for proper style targeting
+    if (n_stub_cols > 1) {
+      vars <- c(paste0("::stub_", stub_vars, "::"), default_vars)
+    } else {
+      vars <- c("::stub::", default_vars)
+    }
   } else if (!is.null(stub_layout) && !stub_is_2 && stub_layout == "group_label") {
     vars <- c("::group::", default_vars)
   } else if (!is.null(stub_layout) && stub_is_2) {
     # When we have both group_label and rowname columns
-    # Create a ::stub:: placeholder for each stub column, plus the group column
-    vars <- c("::group::", rep("::stub::", n_stub_cols), default_vars)
+    # Use actual stub column names as placeholders for proper style targeting
+    if (n_stub_cols > 1) {
+      vars <- c("::group::", paste0("::stub_", stub_vars, "::"), default_vars)
+    } else {
+      vars <- c("::group::", "::stub::", default_vars)
+    }
   }
 
   if ("::group::" %in% vars) {
@@ -1537,11 +1549,40 @@ create_body_rows_l <- function(
               } else if (
                 !is.na(colname_i) &&
                 colname_i == "::stub::" &&
-                "stub" %in% styles_tbl_i[["locname"]]
+                any(c("stub", "stub_column") %in% styles_tbl_i[["locname"]])
               ) {
 
-                styles_tbl_i_col <- vctrs::vec_slice(styles_tbl_i, styles_tbl_i$locname == "stub")
-                #styles_i_col <- styles_tbl_i_col[["styles"]]
+                # For single-column stubs, check both "stub" and "stub_column" locnames
+                styles_tbl_i_col <- vctrs::vec_slice(
+                  styles_tbl_i,
+                  styles_tbl_i$locname %in% c("stub", "stub_column")
+                )
+
+              } else if (
+                !is.na(colname_i) &&
+                grepl("^::stub_.*::$", colname_i) &&
+                any(c("stub", "stub_column") %in% styles_tbl_i[["locname"]])
+              ) {
+
+                # For multi-column stubs with named placeholders (e.g., ::stub_group::)
+                # Extract the actual column name from the placeholder
+                actual_col <- gsub("^::stub_(.*)::$", "\\1", colname_i)
+
+                # Get styles for this specific stub column (stub_column locname)
+                # or fall back to general stub styles
+                stub_col_styles <- vctrs::vec_slice(
+                  styles_tbl_i,
+                  styles_tbl_i$locname == "stub_column" &
+                    styles_tbl_i$colname == actual_col
+                )
+                general_stub_styles <- vctrs::vec_slice(
+                  styles_tbl_i,
+                  styles_tbl_i$locname == "stub"
+                )
+                styles_tbl_i_col <- vctrs::vec_rbind(
+                  stub_col_styles,
+                  general_stub_styles
+                )
 
               } else if (
                 "data" %in% styles_tbl_i[["locname"]] &&
@@ -1560,17 +1601,20 @@ create_body_rows_l <- function(
 
                 styles_body <- consolidate_cell_styles_l(styles_tbl_i_col)
 
-                if(identical(colname_i,"::stub::")){
+                if (
+                  identical(colname_i, "::stub::") ||
+                  grepl("^::stub_.*::$", colname_i)
+                ) {
                   colwidth_i <- dplyr::filter(
                     colwidth_df,
                     type == "stub",
                   )[i, ]
 
-                }else{
+                } else {
                   colwidth_i <- dplyr::filter(
                     colwidth_df,
                     var == colname_i
-                    )
+                  )
                 }
 
                 if(sum(colwidth_i$unspec < 1) > 0){
@@ -1588,13 +1632,16 @@ create_body_rows_l <- function(
 
               } else {
 
-                if(identical(colname_i,"::stub::")){
+                if (
+                  identical(colname_i, "::stub::") ||
+                  grepl("^::stub_.*::$", colname_i)
+                ) {
                   colwidth_i <- dplyr::filter(
                     colwidth_df,
                     type == "stub",
                   )[i, ]
 
-                }else{
+                } else {
                   colwidth_i <- dplyr::filter(
                     colwidth_df,
                     var == colname_i
