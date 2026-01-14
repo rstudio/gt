@@ -237,6 +237,7 @@ reorder_stub_df <- function(data) {
 
   row_groups <- dt_row_groups_get(data = data)
 
+  # First, reorder by row groups
   rows_df <-
     get_row_reorder_df(
       groups = row_groups,
@@ -245,7 +246,87 @@ reorder_stub_df <- function(data) {
 
   stub_df <- stub_df[rows_df$rownum_final, ]
 
+  # Then, apply any row ordering directives
+  stub_df <- apply_row_order_directives(data = data, stub_df = stub_df)
+
   dt_stub_df_set(data = data, stub_df = stub_df)
+}
+
+# Function to apply the lazy row ordering directives captured by `row_order()`
+apply_row_order_directives <- function(data, stub_df) {
+
+  # Get the row order directives
+  row_order_directives <- dt_row_order_get(data = data)
+
+  # If there are no directives, return stub_df unchanged
+  if (length(row_order_directives) == 0) {
+    return(stub_df)
+  }
+
+  # Get the original data table for evaluating ordering expressions
+  data_tbl <- dt_data_get(data = data)
+
+  # Apply each directive in order
+  for (directive in row_order_directives) {
+
+    by <- directive$by
+    groups <- directive$groups
+    reverse <- directive$reverse
+
+    # Determine which rows to order
+    if (is.null(groups)) {
+      # Order all rows together (within their current group context)
+      unique_groups <- unique(stub_df$group_id)
+    } else {
+      # Only order rows in specified groups
+      unique_groups <- groups
+    }
+
+    # Process each group separately to maintain group boundaries
+    for (grp in unique_groups) {
+
+      # Find rows belonging to this group
+      if (is.na(grp)) {
+        grp_mask <- is.na(stub_df$group_id)
+      } else {
+        grp_mask <- stub_df$group_id == grp & !is.na(stub_df$group_id)
+      }
+
+      grp_indices <- which(grp_mask)
+
+      if (length(grp_indices) <= 1) {
+        next # No need to sort a single row or empty group
+      }
+
+      # Get the original row numbers for this group
+      original_rownum <- stub_df$rownum_i[grp_indices]
+
+      # Create a temporary data frame for ordering
+      # using the original data values at those row positions
+      temp_df <- data_tbl[original_rownum, , drop = FALSE]
+
+      # Build the ordering using the quosures
+      # Evaluate each quosure in the context of the temp data
+      order_args <- lapply(by, function(quo) {
+        rlang::eval_tidy(quo, data = temp_df)
+      })
+
+      # Add decreasing argument if reverse is TRUE
+      order_args$decreasing <- reverse
+
+      # Get the new order for this group
+      new_order <- do.call(order, order_args)
+
+      # Reorder the group indices in stub_df
+      stub_df[grp_indices, ] <- stub_df[grp_indices[new_order], ]
+    }
+  }
+
+  # Reset row names
+
+  rownames(stub_df) <- NULL
+
+  stub_df
 }
 
 dt_stub_groupname_has_na <- function(data) {

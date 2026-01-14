@@ -48,9 +48,12 @@ build_data <- function(data, context) {
   data <- render_substitutions(data = data, context = context)
   data <- migrate_unformatted_to_output(data = data, context = context)
   data <- perform_col_merge(data = data, context = context)
+
+  # Reorder stub_df first (handles group ordering and row_order() directives),
+ # then reassemble body using the reordered stub_df
+  data <- reorder_stub_df(data = data)
   data <- dt_body_reassemble(data = data)
 
-  data <- reorder_stub_df(data = data)
   data <- reorder_footnotes(data = data)
   data <- reorder_styles(data = data)
 
