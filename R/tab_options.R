@@ -551,7 +551,16 @@
 #'   every page. Setting this parameter to `TRUE` will add a `\endhead` command
 #'   after the table headers so LaTeX knows where the headers end and will
 #'   repeat them on every page.
+
+#' @param latex.stub_separate
 #'
+#'   * Specify if the stub columns should have separating veritcal bars or not*
+#'
+#'   For tables, it may be desirable to have vertical bars separating the stub from the
+#'   rest of the table columns. Setting this parameter to `TRUE` will add a `|` command
+#'   in the latex table alignment so a border is added to the right hand side of every
+#'   stub column. Setting this parameter to `FALSE` will disable this. The default is `TRUE`.
+
 #' @param latex.toprule,latex.bottomrule
 #'
 #'   * Specify if an hrule should be put in the table at the top (latex.toprule) or bottom (latex.bottomrule)*

@@ -196,6 +196,7 @@ tab_options(
   quarto.disable_processing = NULL,
   latex.use_longtable = NULL,
   latex.header_repeat = NULL,
+  latex.stub_separate = NULL,
   latex.toprule = NULL,
   latex.bottomrule = NULL,
   latex.tbl.pos = NULL,
@@ -680,6 +681,15 @@ For Long tables, it may be desirable to have the column headers repeat on
 every page. Setting this parameter to \code{TRUE} will add a \verb{\\endhead} command
 after the table headers so LaTeX knows where the headers end and will
 repeat them on every page.
+}}
+
+\item{latex.stub_separate}{\itemize{
+\item Specify if the stub columns should have separating veritcal bars or not*
+
+For tables, it may be desirable to have vertical bars separating the stub from the
+rest of the table columns. Setting this parameter to \code{TRUE} will add a \code{|} command
+in the latex table alignment so a border is added to the right hand side of every
+stub column. Setting this parameter to \code{FALSE} will disable this. The default is \code{TRUE}.
 }}
 
 \item{latex.toprule, latex.bottomrule}{\itemize{
