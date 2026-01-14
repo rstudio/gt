@@ -118,3 +118,178 @@ row_group_order <- function(
     row_groups = groups
   )
 }
+
+
+# row_order() ------------------------------------------------------------------
+#' Modify the order of rows within groups
+#'
+#' @description
+#'
+#' We can modify the display order of rows within any row groups in a **gt**
+#' object with `row_order()`. One or more column names can be provided to define
+#' the sorting criteria. By default, rows are sorted in ascending order; use
+#' `reverse = TRUE` to sort in descending order. The ordering is applied lazily
+#' during the table build phase, ensuring it works alongside other row-reordering
+#' operations.
+#'
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` // **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param ... *Column expressions for ordering*
+#'
+#'   `<column expressions>` // **required**
+#'
+#'   Column names or expressions describing how to order the rows. Multiple
+#'   columns can be specified for hierarchical sorting, where the first column
+#'   is the primary sort key.
+#'
+#' @param groups *Specification of row group IDs*
+#'
+#'   `vector<character>|NULL` // *default:* `NULL`
+#'
+#'   An optional character vector of row group ID values to target. If `NULL`
+#'   (the default), the ordering is applied to rows in all groups. If specified,
+#'   only rows within the indicated groups will be reordered.
+#'
+#' @param reverse *Reverse the sort order*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   Should the sort order be reversed (i.e., descending)? By default this is
+#'   `FALSE`, which sorts in ascending order.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Let's use the [`gtcars`] dataset to demonstrate row ordering within groups.
+#' We'll create a **gt** table grouped by country and then order rows within
+#' each group by the car price in descending order.
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::select(mfr, model, ctry_origin, msrp) |>
+#'   dplyr::filter(ctry_origin %in% c("Japan", "United Kingdom")) |>
+#'   dplyr::slice_head(n = 12) |>
+#'   gt(groupname_col = "ctry_origin") |>
+#'   row_order(msrp, reverse = TRUE) |>
+#'   fmt_currency(columns = msrp, decimals = 0) |>
+#'   tab_options(column_labels.hidden = TRUE)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_row_order_1.png")`
+#' }}
+#'
+#' Using [`towny`], we can order rows only within specific groups. Here we
+#' order Ontario municipalities by population density in 2021, but only for
+#' the "city" and "town" groups (leaving "township" rows in their original
+#' order):
+#'
+#' ```r
+#' towny |>
+#'   dplyr::filter(csd_type %in% c("city", "town", "township")) |>
+#'   dplyr::select(name, csd_type, population_2021, density_2021) |>
+#'   dplyr::slice_head(n = 5, by = csd_type) |>
+#'   gt(groupname_col = "csd_type") |>
+#'   fmt_integer(columns = population_2021) |>
+#'   fmt_number(columns = density_2021, decimals = 1) |>
+#'   row_order(density_2021, groups = c("city", "town"), reverse = TRUE)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_row_order_2.png")`
+#' }}
+#'
+#' Using [`countrypops`], multiple sorting columns can be specified for
+#' hierarchical ordering. Here we create a table grouped by year, and sort
+#' countries by population within each year:
+#'
+#' ```r
+#' countrypops |>
+#'   filter(country_code_2 %in% c("BR", "RU", "IN", "CN", "US", "ID")) |>
+#'   filter(year %in% c(2000, 2010, 2020)) |>
+#'   select(year, country_name, population) |>
+#'   gt(groupname_col = "year", row_group_as_column = TRUE) |>
+#'   fmt_integer(columns = population) |>
+#'   row_order(population, reverse = TRUE) |>
+#'   opt_vertical_padding(scale = 0.5)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_row_order_3.png")`
+#' }}
+#'
+#' @family row addition/modification functions
+#' @section Function ID:
+#' 6-4
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @seealso [row_group_order()], which orders the groups themselves.
+#'
+#' @export
+row_order <- function(
+    data,
+    ...,
+    groups = NULL,
+    reverse = FALSE
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Capture the ordering expressions as quosures
+  by <- rlang::enquos(...)
+
+  # Stop function if no ordering expressions are provided
+  if (length(by) == 0) {
+    cli::cli_abort(
+      "At least one column must be provided for ordering."
+    )
+  }
+
+  # Validate `groups` argument if provided
+  if (!is.null(groups)) {
+
+    # Stop function if `groups` is not a `character` vector
+    if (!inherits(groups, "character")) {
+      cli::cli_abort(
+        "The values provided for `groups` must be a character vector."
+      )
+    }
+
+    # Get the current arrangement of the row groups
+    arrange_groups <- dt_row_groups_get(data = data)
+
+    # Stop function if any value in `groups` doesn't match a group name
+    if (!all(groups %in% arrange_groups)) {
+
+      cli::cli_abort(c(
+        "All values given as `groups` must correspond to `group_id` values.",
+        "*" = "The following `group_id` values can be
+        used {.str {arrange_groups}}."
+      ))
+    }
+  }
+
+  # Validate `reverse` argument
+  if (!is.logical(reverse) || length(reverse) != 1) {
+    cli::cli_abort(
+      "The `reverse` argument must be a single logical value."
+    )
+  }
+
+  # Store the ordering directive (to be applied during build phase)
+  dt_row_order_add(
+    data = data,
+    by = by,
+    groups = groups,
+    reverse = reverse
+  )
+}

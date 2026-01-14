@@ -174,6 +174,7 @@ reference:
     - summary_rows
     - grand_summary_rows
     - row_group_order
+    - row_order
     - rows_add
     - summary_columns
 

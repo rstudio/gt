@@ -337,7 +337,7 @@
 #'
 #' @family row addition/modification functions
 #' @section Function ID:
-#' 6-4
+#' 6-5
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)

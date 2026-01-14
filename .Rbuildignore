@@ -151,6 +151,8 @@ tests/testthat/_snaps/removal_functions.md
 tests/testthat/test-rows_add.R
 tests/testthat/_snaps/rows_add.md
 
+tests/testthat/test-row_order.R
+
 tests/testthat/test-rtf_cols_width.R
 tests/testthat/_snaps/rtf_cols_width.md
 

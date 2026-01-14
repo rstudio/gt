@@ -158,7 +158,7 @@
 #'
 #' @family row addition/modification functions
 #' @section Function ID:
-#' 6-4
+#' 6-6
 #'
 #' @section Function Introduced:
 #' `v1.2.0` (December 16, 2025)

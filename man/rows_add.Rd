@@ -322,7 +322,7 @@ a subset of the columns when generating new rows through \code{rows_add()}.
 
 \section{Function ID}{
 
-6-4
+6-5
 }
 
 \section{Function Introduced}{
@@ -334,6 +334,7 @@ a subset of the columns when generating new rows through \code{rows_add()}.
 Other row addition/modification functions: 
 \code{\link{grand_summary_rows}()},
 \code{\link{row_group_order}()},
+\code{\link{row_order}()},
 \code{\link{summary_columns}()},
 \code{\link{summary_rows}()}
 }
