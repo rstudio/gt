@@ -99,7 +99,7 @@ hidden_stub <-
 test_that("spanner widths are calculated correctly",{
 
   # All spanner widths should be year + trim = 22
-  pattern <- "\\{\\\\dimexpr\\s*0\\.22.*?\\}\\{a spanner\\}"
+  pattern <- "\\{\\\\dimexpr\\s*0\\.22.*?\\}\\{\\\\centering \\{a spanner\\}"
 
   # No stub with spanner
   expect_true(grepl(pattern, as.character(no_stub %>% as_latex())))
@@ -114,7 +114,7 @@ test_that("spanner widths are calculated correctly",{
   expect_true(grepl(pattern, as.character(group_and_stub %>% as_latex())))
 
   # Hidden columns should add to model + trim = 30
-  pattern_2 <- "\\{\\\\dimexpr\\s*0\\.30.*?\\}\\{a spanner\\}"
+  pattern_2 <- "\\{\\\\dimexpr\\s*0\\.30.*?\\}\\{\\\\centering \\{a spanner\\}"
 
   # Hidden columns
   expect_true(grepl(pattern_2, as.character(hidden_columns %>% as_latex())))
