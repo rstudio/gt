@@ -53,40 +53,53 @@ operations.
 
 Let's use the \code{\link{gtcars}} dataset to demonstrate row ordering within groups.
 We'll create a \strong{gt} table grouped by country and then order rows within
-each group by horsepower in descending order.
+each group by the car price in descending order.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
-  dplyr::select(mfr, model, ctry_origin, hp, mpg_c) |>
+  dplyr::select(mfr, model, ctry_origin, msrp) |>
+  dplyr::filter(ctry_origin \%in\% c("Japan", "United Kingdom")) |>
   dplyr::slice_head(n = 12) |>
   gt(groupname_col = "ctry_origin") |>
-  row_order(hp, reverse = TRUE)
+  row_order(msrp, reverse = TRUE) |>
+  fmt_currency(columns = msrp, decimals = 0) |>
+  tab_options(column_labels.hidden = TRUE)
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_row_order_1.png" alt="This image of a table was generated from the first code example in the `row_order()` help file." style="width:100\%;">
 }}
 
-We can also order rows only within specific groups. Here we order by \code{mpg_c}
-in ascending order, but only for the "Germany" group:
+Using \code{\link{towny}}, we can order rows only within specific groups. Here we
+order Ontario municipalities by population density in 2021, but only for
+the "city" and "town" groups (leaving "township" rows in their original
+order):
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
-  dplyr::select(mfr, model, ctry_origin, hp, mpg_c) |>
-  dplyr::slice_head(n = 12) |>
-  gt(groupname_col = "ctry_origin") |>
-  row_order(mpg_c, groups = "Germany")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::filter(csd_type \%in\% c("city", "town", "township")) |>
+  dplyr::select(name, csd_type, population_2021, density_2021) |>
+  dplyr::slice_head(n = 5, by = csd_type) |>
+  gt(groupname_col = "csd_type") |>
+  fmt_integer(columns = population_2021) |>
+  fmt_number(columns = density_2021, decimals = 1) |>
+  row_order(density_2021, groups = c("city", "town"), reverse = TRUE)
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_row_order_2.png" alt="This image of a table was generated from the second code example in the `row_order()` help file." style="width:100\%;">
 }}
 
-Multiple sorting columns can be specified for hierarchical ordering:
+Using \code{\link{countrypops}}, multiple sorting columns can be specified for
+hierarchical ordering. Here we create a table grouped by year, and sort
+countries by population within each year:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
-  dplyr::select(mfr, model, ctry_origin, year, hp) |>
-  dplyr::slice_head(n = 12) |>
-  gt(groupname_col = "ctry_origin") |>
-  row_order(year, hp, reverse = TRUE)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  filter(country_code_2 \%in\% c("BR", "RU", "IN", "CN", "US", "ID")) |>
+  filter(year \%in\% c(2000, 2010, 2020)) |>
+  select(year, country_name, population) |>
+  gt(groupname_col = "year", row_group_as_column = TRUE) |>
+  fmt_integer(columns = population) |>
+  row_order(population, reverse = TRUE) |>
+  opt_vertical_padding(scale = 0.5)
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

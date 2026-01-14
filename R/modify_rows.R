@@ -168,43 +168,56 @@ row_group_order <- function(
 #'
 #' Let's use the [`gtcars`] dataset to demonstrate row ordering within groups.
 #' We'll create a **gt** table grouped by country and then order rows within
-#' each group by horsepower in descending order.
+#' each group by the car price in descending order.
 #'
 #' ```r
 #' gtcars |>
-#'   dplyr::select(mfr, model, ctry_origin, hp, mpg_c) |>
+#'   dplyr::select(mfr, model, ctry_origin, msrp) |>
+#'   dplyr::filter(ctry_origin %in% c("Japan", "United Kingdom")) |>
 #'   dplyr::slice_head(n = 12) |>
 #'   gt(groupname_col = "ctry_origin") |>
-#'   row_order(hp, reverse = TRUE)
+#'   row_order(msrp, reverse = TRUE) |>
+#'   fmt_currency(columns = msrp, decimals = 0) |>
+#'   tab_options(column_labels.hidden = TRUE)
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_row_order_1.png")`
 #' }}
 #'
-#' We can also order rows only within specific groups. Here we order by `mpg_c`
-#' in ascending order, but only for the "Germany" group:
+#' Using [`towny`], we can order rows only within specific groups. Here we
+#' order Ontario municipalities by population density in 2021, but only for
+#' the "city" and "town" groups (leaving "township" rows in their original
+#' order):
 #'
 #' ```r
-#' gtcars |>
-#'   dplyr::select(mfr, model, ctry_origin, hp, mpg_c) |>
-#'   dplyr::slice_head(n = 12) |>
-#'   gt(groupname_col = "ctry_origin") |>
-#'   row_order(mpg_c, groups = "Germany")
+#' towny |>
+#'   dplyr::filter(csd_type %in% c("city", "town", "township")) |>
+#'   dplyr::select(name, csd_type, population_2021, density_2021) |>
+#'   dplyr::slice_head(n = 5, by = csd_type) |>
+#'   gt(groupname_col = "csd_type") |>
+#'   fmt_integer(columns = population_2021) |>
+#'   fmt_number(columns = density_2021, decimals = 1) |>
+#'   row_order(density_2021, groups = c("city", "town"), reverse = TRUE)
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_row_order_2.png")`
 #' }}
 #'
-#' Multiple sorting columns can be specified for hierarchical ordering:
+#' Using [`countrypops`], multiple sorting columns can be specified for
+#' hierarchical ordering. Here we create a table grouped by year, and sort
+#' countries by population within each year:
 #'
 #' ```r
-#' gtcars |>
-#'   dplyr::select(mfr, model, ctry_origin, year, hp) |>
-#'   dplyr::slice_head(n = 12) |>
-#'   gt(groupname_col = "ctry_origin") |>
-#'   row_order(year, hp, reverse = TRUE)
+#' countrypops |>
+#'   filter(country_code_2 %in% c("BR", "RU", "IN", "CN", "US", "ID")) |>
+#'   filter(year %in% c(2000, 2010, 2020)) |>
+#'   select(year, country_name, population) |>
+#'   gt(groupname_col = "year", row_group_as_column = TRUE) |>
+#'   fmt_integer(columns = population) |>
+#'   row_order(population, reverse = TRUE) |>
+#'   opt_vertical_padding(scale = 0.5)
 #' ```
 #'
 #' \if{html}{\out{
