@@ -1456,7 +1456,7 @@ create_body_rows_l <- function(
 ) {
 
   styles_tbl <- dt_styles_get(data = data)
-  styles_tbl <- vctrs::vec_slice(styles_tbl, styles_tbl$locname %in% c("stub", "data", "row_groups"))
+  styles_tbl <- vctrs::vec_slice(styles_tbl, styles_tbl$locname %in% c("stub", "stub_column", "data", "row_groups"))
 
   # Obtain all of the visible (`"default"`), non-stub column names
   # for the table from the `boxh` object
@@ -1536,6 +1536,15 @@ create_body_rows_l <- function(
                 #styles_i_col <- styles_tbl_i_col[["styles"]]
 
               } else if (
+                !is.na(colname_i) &&
+                colname_i == "::stub::" &&
+                "stub_column" %in% styles_tbl_i[["locname"]]
+              ) {
+
+                styles_tbl_i_col <- vctrs::vec_slice(styles_tbl_i, styles_tbl_i$locname == "stub_column" & styles_tbl_i$colname == stub_vars[[i]])
+                #styles_i_col <- styles_tbl_i_col[["styles"]]
+
+              }else if (
                 "data" %in% styles_tbl_i[["locname"]] &&
                 !is.na(colname_i) &&
                 colname_i %in% styles_tbl_i[["colname"]]

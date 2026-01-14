@@ -238,6 +238,33 @@ test_that("Basic multicolumn stub footnotes render correctly", {
   expect_snapshot(as.character(as_latex(gt_tbl)))
 })
 
+test_that("Basic multicolumn stub with styling applied to the different columns render correctly", {
+
+  # Create table with multicolumn stub and style each column differently
+  gt_tbl <-
+    test_data |>
+    gt(rowname_col = c("mfr", "model", "trim"), id = "test") |>
+    tab_style(
+      style = list(cell_text(align = "left")),
+      locations = list(cells_stub(columns = "mfr"))
+    ) |>
+    tab_style(
+      style = list(cell_text(align = "right")),
+      locations = list(cells_stub(columns = "model"))
+    ) |>
+    tab_style(
+      style = list(cell_text(align = "center")),
+      locations = list(cells_stub(columns = "trim"))
+    )
+
+  # Test HTML output
+  expect_snapshot(cat(as_raw_html(gt_tbl)))
+
+  # Test LaTeX output
+  expect_snapshot(as.character(as_latex(gt_tbl)))
+})
+
+
 test_that("Multicolumn stub footnotes with visual order priority", {
 
   # Create table with footnotes in call order ('Ford' first, then 'GT')
