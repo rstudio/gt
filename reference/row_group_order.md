@@ -72,6 +72,7 @@ file.](https://raw.githubusercontent.com/rstudio/gt/master/images/man_row_group_
 
 Other row addition/modification functions:
 [`grand_summary_rows()`](https://gt.rstudio.com/reference/grand_summary_rows.md),
+[`row_order()`](https://gt.rstudio.com/reference/row_order.md),
 [`rows_add()`](https://gt.rstudio.com/reference/rows_add.md),
 [`summary_columns()`](https://gt.rstudio.com/reference/summary_columns.md),
 [`summary_rows()`](https://gt.rstudio.com/reference/summary_rows.md)

@@ -494,6 +494,9 @@ function lets us modify the ordering of any row groups in the table.
 - [`row_group_order()`](https://gt.rstudio.com/reference/row_group_order.md)
   : Modify the ordering of any row groups
 
+- [`row_order()`](https://gt.rstudio.com/reference/row_order.md) :
+  Modify the order of rows within groups
+
 - [`rows_add()`](https://gt.rstudio.com/reference/rows_add.md) :
 
   Add one or more rows to a **gt** table
