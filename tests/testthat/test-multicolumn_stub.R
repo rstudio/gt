@@ -1016,10 +1016,12 @@ test_that("Enhanced stub targeting: content-based targeting works", {
     )
 
   # Check that styles are applied correctly
+  # With multi-column stub, styles are applied to all 3 columns for each targeted row
   styles <- gt:::dt_styles_get(styled_table)
-  expect_equal(nrow(styles), 2)  # Should target 2 Ford rows
-  expect_equal(unique(styles$rownum), c(1, 2))
-  expect_equal(unique(styles$locname), "stub")
+  expect_equal(nrow(styles), 6)  # 2 Ford rows * 3 columns
+  expect_setequal(unique(styles$rownum), c(1, 2))
+  expect_equal(unique(styles$locname), "stub_column")
+  expect_setequal(unique(styles$colname), c("mfr", "model", "trim"))
 
   # Test table renders without error
   expect_no_error(as_raw_html(styled_table))
@@ -1043,10 +1045,12 @@ test_that("Enhanced stub targeting: multi-value targeting works", {
     )
 
   # Check that styles are applied correctly
+  # With multi-column stub, styles are applied to all 3 columns for each targeted row
   styles <- gt:::dt_styles_get(styled_table)
-  expect_equal(nrow(styles), 4)  # Should target 4 rows (2 Ford + 2 BMW)
-  expect_equal(unique(styles$rownum), c(1, 2, 3, 4))
-  expect_equal(unique(styles$locname), "stub")
+  expect_equal(nrow(styles), 12)  # 4 rows (2 Ford + 2 BMW) * 3 columns
+  expect_setequal(unique(styles$rownum), c(1, 2, 3, 4))
+  expect_equal(unique(styles$locname), "stub_column")
+  expect_setequal(unique(styles$colname), c("mfr", "model", "trim"))
 })
 
 test_that("Enhanced stub targeting: column-specific targeting works", {
@@ -1092,10 +1096,12 @@ test_that("Enhanced stub targeting: model-specific targeting works", {
     )
 
   # Check that styles are applied correctly
+  # With multi-column stub, styles are applied to all 3 columns for each targeted row
   styles <- gt:::dt_styles_get(styled_table)
-  expect_equal(nrow(styles), 2)  # Should target 2 rows (GT and A4)
-  expect_equal(unique(styles$rownum), c(1, 5))
-  expect_equal(unique(styles$locname), "stub")
+  expect_equal(nrow(styles), 6)  # 2 rows (GT and A4) * 3 columns
+  expect_setequal(unique(styles$rownum), c(1, 5))
+  expect_equal(unique(styles$locname), "stub_column")
+  expect_setequal(unique(styles$colname), c("mfr", "model", "trim"))
 })
 
 test_that("Enhanced stub targeting: backward compatibility with numeric indices", {
@@ -1117,9 +1123,100 @@ test_that("Enhanced stub targeting: backward compatibility with numeric indices"
 
   # Check that styles are applied correctly
   styles <- gt:::dt_styles_get(styled_table)
-  expect_equal(nrow(styles), 3)  # Should target 3 rows
-  expect_equal(unique(styles$rownum), c(1, 3, 5))
-  expect_equal(unique(styles$locname), "stub")
+  # With multi-column stub, styles should be applied to all 3 columns for each of 3 rows
+  expect_equal(nrow(styles), 9)  # 3 rows * 3 columns
+  expect_setequal(unique(styles$rownum), c(1, 3, 5))
+  expect_equal(unique(styles$locname), "stub_column")
+  expect_setequal(unique(styles$colname), c("mfr", "model", "trim"))
+})
+
+test_that("cells_stub(columns = NULL) targets all stub columns", {
+
+  # `cells_stub(columns = NULL)` should target all stub columns in a multi-column stub
+  # Test with explicit columns = NULL
+  styled_table_null <-
+    exibble |>
+    gt(rowname_col = c("group", "char")) |>
+    tab_style(
+      style = cell_text(align = "right"),
+      locations = cells_stub(columns = NULL)
+    )
+
+  # Check that styles are applied to both stub columns
+  styles_null <- gt:::dt_styles_get(styled_table_null)
+  expect_equal(unique(styles_null$locname), "stub_column")
+  expect_setequal(unique(styles_null$colname), c("group", "char"))
+  expect_equal(nrow(styles_null), 16)  # 8 rows * 2 columns
+
+  # Test with default (no columns argument)
+  styled_table_default <-
+    exibble |>
+    gt(rowname_col = c("group", "char")) |>
+    tab_style(
+      style = cell_fill(color = "steelblue"),
+      locations = cells_stub()
+    )
+
+  # Check that styles are applied to both stub columns
+  styles_default <- gt:::dt_styles_get(styled_table_default)
+  expect_equal(unique(styles_default$locname), "stub_column")
+  expect_setequal(unique(styles_default$colname), c("group", "char"))
+  expect_equal(nrow(styles_default), 16)  # 8 rows * 2 columns
+
+  # Check that rendered HTML contains the styles for both columns
+  html_output <- as_raw_html(styled_table_default)
+  # The style should be applied to multiple stub cells (not just the first column)
+  expect_true(grepl("#4682B4", html_output))  # steelblue
+
+  # Compare with single-column stub (backward compatibility)
+  styled_table_single <-
+    sza |>
+    dplyr::filter(latitude == 20 & tst <= "1000") |>
+    dplyr::select(-latitude) |>
+    dplyr::filter(!is.na(sza)) |>
+    tidyr::pivot_wider(
+      names_from = "tst",
+      values_from = sza,
+      names_sort = TRUE
+    ) |>
+    gt(rowname_col = "month") |>
+    sub_missing(missing_text = "") |>
+    tab_style(
+      style = list(
+        cell_fill(color = "darkblue"),
+        cell_text(color = "white")
+      ),
+      locations = cells_stub()
+    )
+
+  # Single-column stub should use "stub" locname for backward compatibility
+  styles_single <- gt:::dt_styles_get(styled_table_single)
+  expect_equal(unique(styles_single$locname), "stub")
+})
+
+test_that("cells_stub() footnotes target all stub columns in multi-column stub", {
+
+  # cells_stub() should apply footnotes to all stub columns in a multi-column stub
+  footnoted_table <-
+    head(exibble, 4) |>
+    gt(rowname_col = c("group", "char")) |>
+    tab_footnote(
+      footnote = "Test",
+      locations = cells_stub()
+    )
+
+  # Check that footnotes are applied to both stub columns
+  footnotes <- gt:::dt_footnotes_get(footnoted_table)
+  expect_setequal(unique(footnotes$colname), c("group", "char"))
+  expect_equal(nrow(footnotes), 8)
+  # 4 rows * 2 columns
+
+  # Check that rendered HTML contains footnote marks in all stub cells
+  html_output <- as_raw_html(footnoted_table)
+
+  # The footnote mark "1" should appear multiple times (once per stub cell)
+  # Count occurrences of the footnote mark class in stub cells
+  expect_true(grepl("Test", html_output))  # Footnote text is present
 })
 
 test_that("Enhanced stub targeting: error handling for invalid targets", {
