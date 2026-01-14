@@ -748,3 +748,35 @@ test_that("cells_stub() alignment styles work in LaTeX multicolumn stub", {
   )
   expect_gte(right_align_count_null, 16)
 })
+
+test_that("cells_stub() footnotes work in LaTeX multicolumn stub", {
+
+  # Regression test for LaTeX footnotes in multi-column stubs
+  # cells_stub() should apply footnotes to all stub columns in LaTeX output
+
+  gt_tbl <-
+    head(exibble, 4) |>
+    gt(rowname_col = c("group", "char")) |>
+    tab_footnote(
+      footnote = "Test",
+      locations = cells_stub()
+    )
+
+  latex_output <- as.character(as_latex(gt_tbl))
+
+  # Should render without error
+  expect_no_error(as_latex(gt_tbl))
+
+  # Footnote text should appear in the output
+  expect_true(grepl("Test", latex_output))
+
+  # Footnote marks should be present in stub cells
+  # Due to hierarchical stub merging: 1 mark for "grp_a" in the group column
+  # (subsequent group rows are empty) + 4 marks for the char column
+  # (apricot, banana, coconut, durian) = 5 marks in cells + 1 in footnote section
+  # The format is \textsuperscript{\textit{1}}
+  footnote_mark_count <- length(
+    gregexpr("\\\\textsuperscript\\{\\\\textit\\{1\\}\\}", latex_output)[[1]]
+  )
+  expect_equal(footnote_mark_count, 6)
+})
