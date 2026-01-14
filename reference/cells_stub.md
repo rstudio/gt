@@ -117,7 +117,6 @@ file.](https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_stub
 For multi-column stubs, you can target specific columns. Here's an
 example with a table that has multiple stub columns:
 
-    # Create a table with multi-column stub
     dplyr::tibble(
       country = rep(c("USA", "Canada"), each = 3),
       region = rep(c("North", "South", "West"), 2),
@@ -134,10 +133,13 @@ example with a table that has multiple stub columns:
         locations = cells_stub(columns = "region", rows = c(1, 3, 5))
       )
 
+![This image of a table was generated from the second code example in
+the \`cells_stub()\` help
+file.](https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_stub_2.png)
+
 You can also use content-based targeting to target rows by their actual
 values rather than calculating row indices:
 
-    # Content-based targeting example
     gtcars |>
       dplyr::select(mfr, model, year, hp, msrp) |>
       dplyr::slice(1:8) |>
@@ -150,6 +152,10 @@ values rather than calculating row indices:
         style = cell_text(weight = "bold"),
         locations = cells_stub(rows = c("BMW", "Audi"), columns = "mfr")
       )
+
+![This image of a table was generated from the third code example in the
+\`cells_stub()\` help
+file.](https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_stub_3.png)
 
 ## Function ID
 
