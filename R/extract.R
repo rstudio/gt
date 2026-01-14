@@ -325,6 +325,9 @@ extract_body <- function(
     return(out_df)
   }
 
+  # Reorder stub_df first (handles group ordering and row_order() directives),
+  # then reassemble body using the reordered stub_df
+  data <- reorder_stub_df(data = data)
   data <- dt_body_reassemble(data = data)
 
   if (identical(build_stage, "body_reassembled")) {
@@ -341,7 +344,6 @@ extract_body <- function(
     return(out_df)
   }
 
-  data <- reorder_stub_df(data = data)
   data <- reorder_footnotes(data = data)
   data <- reorder_styles(data = data)
 
