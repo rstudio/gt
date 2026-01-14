@@ -34,13 +34,13 @@ Source:
 
 Iannone R, Cheng J, Schloerke B, Haughton S, Hughes E, Lauer A, François
 R, Seo J, Brevoort K, Roy O (2026). *gt: Easily Create
-Presentation-Ready Display Tables*. R package version 1.2.0.9000,
+Presentation-Ready Display Tables*. R package version 1.2.0.9001,
 <https://gt.rstudio.com>.
 
     @Manual{,
       title = {gt: Easily Create Presentation-Ready Display Tables},
       author = {Richard Iannone and Joe Cheng and Barret Schloerke and Shannon Haughton and Ellis Hughes and Alexandra Lauer and Romain François and JooYoung Seo and Ken Brevoort and Olivier Roy},
       year = {2026},
-      note = {R package version 1.2.0.9000},
+      note = {R package version 1.2.0.9001},
       url = {https://gt.rstudio.com},
     }

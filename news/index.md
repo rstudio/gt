@@ -2,6 +2,9 @@
 
 ## gt (development version)
 
+- Update how long text that has a line break or is horizontally aligned
+  in a cell (stubs, labels, table body).
+
 ## gt 1.2.0
 
 CRAN release: 2025-12-16
