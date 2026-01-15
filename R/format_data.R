@@ -368,7 +368,7 @@ fmt_scientific <- function(
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by, system = "intl")
 
-  valid_class <- c("numeric", "integer")
+  valid_class <- c("numeric", "integer", "integer64")
   check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # If `n_sigfig` is defined (and not `NA`) modify the number of
@@ -898,7 +898,7 @@ fmt_engineering <- function(
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by, system = "intl")
 
-  valid_class <- c("numeric", "integer")
+  valid_class <- c("numeric", "integer", "integer64")
   check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -1518,7 +1518,7 @@ fmt_number_si <- function(
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
-  valid_class <- c("numeric", "integer")
+  valid_class <- c("numeric", "integer", "integer64")
   check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -2116,7 +2116,7 @@ fmt_percent <- function(
   locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
-  valid_class <- c("numeric", "integer")
+  valid_class <- c("numeric", "integer", "integer64")
   check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   if (scale_values) {
@@ -2426,7 +2426,7 @@ fmt_partsper <- function(
   locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
-  valid_class <- c("numeric", "integer")
+  valid_class <- c("numeric", "integer", "integer64")
   check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Scale values according to `to_units` value
@@ -2801,7 +2801,7 @@ fmt_fraction <- function(
     ))
   }
 
-  valid_class <- c("numeric", "integer")
+  valid_class <- c("numeric", "integer", "integer64")
   check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Use locale-based `sep_mark` if a locale ID is provided
@@ -3200,10 +3200,10 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' `fmt_currency()` is compatible with body cells that are of the `"numeric"` or
-#' `"integer"` types. Any other types of body cells are ignored during
-#' formatting. This is to say that cells of incompatible data types may be
-#' targeted, but there will be no attempt to format them.
+#' `fmt_currency()` is compatible with body cells that are of the `"numeric"`,
+#' `"integer"`, or `"integer64"` types. Any other types of body cells are
+#' ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
@@ -3522,7 +3522,7 @@ fmt_currency <- function(
   locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
-  valid_class <- c("numeric", "integer")
+  valid_class <- c("numeric", "integer", "integer64")
   check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Resolve the currency either from direct input in `currency` or
@@ -3731,7 +3731,7 @@ fmt_roman <- function(
   # Ensure that arguments are matched
   case <- rlang::arg_match0(case, values = c("upper", "lower"))
 
-  valid_class <- c("numeric", "integer")
+  valid_class <- c("numeric", "integer", "integer64")
   check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -3969,7 +3969,7 @@ fmt_index <- function(
   # Use locale-based `idx_set` if a locale ID is provided
   idx_set <- get_locale_idx_set(locale)
 
-  valid_class <- c("numeric", "integer")
+  valid_class <- c("numeric", "integer", "integer64")
   check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -4338,7 +4338,7 @@ fmt_spelled_num <- function(
   # Obtain a locale-based `num_spellout_set` vector
   num_spellout_set <- get_locale_num_spellout(locale = locale)
 
-  valid_class <- c("numeric", "integer")
+  valid_class <- c("numeric", "integer", "integer64")
   check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -4650,7 +4650,7 @@ fmt_bytes <- function(
   locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
-  valid_class <- c("numeric", "integer")
+  valid_class <- c("numeric", "integer", "integer64")
   check_columns_valid_if_strict(data, {{ columns }}, valid_class)
 
   # Use locale-based marks if a locale ID is provided

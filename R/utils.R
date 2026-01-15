@@ -2437,7 +2437,17 @@ column_classes_are_valid <- function(data, columns, valid_classes, call = rlang:
       FUN.VALUE = logical(1),
       USE.NAMES = FALSE,
       # TRUE if inherits any of the valid classes
-      FUN = function(x) inherits(x, valid_classes)
+      FUN = function(x) {
+        # Check standard inheritance
+        if (inherits(x, valid_classes)) {
+          return(TRUE)
+        }
+        # If valid_classes includes numeric or integer types, also check for bit64::integer64
+        if (any(c("numeric", "integer") %in% valid_classes) && inherits(x, "integer64")) {
+          return(TRUE)
+        }
+        FALSE
+      }
     )
   )
 }
