@@ -243,9 +243,10 @@ An object of class `gt_tbl`.
 ## Compatibility of formatting function with data values
 
 `fmt_integer()` is compatible with body cells that are of the
-`"numeric"` or `"integer"` types. Any other types of body cells are
-ignored during formatting. This is to say that cells of incompatible
-data types may be targeted, but there will be no attempt to format them.
+`"numeric"`, `"integer"`, or `"integer64"` types. Any other types of
+body cells are ignored during formatting. This is to say that cells of
+incompatible data types may be targeted, but there will be no attempt to
+format them.
 
 ## Compatibility of arguments with the [`from_column()`](https://gt.rstudio.com/reference/from_column.md) helper function
 
