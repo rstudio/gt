@@ -122,6 +122,7 @@ tests/testthat/_snaps/image.md
 
 tests/testthat/test-info_tables.R
 tests/testthat/test-input_data_validation.R
+tests/testthat/test-integer64.R
 
 tests/testthat/test-l_fmt_date_time.R
 
