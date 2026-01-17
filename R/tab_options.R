@@ -556,10 +556,9 @@
 #'
 #'   * Specify if the stub columns should have separating veritcal bars or not*
 #'
-#'   For tables, it may be desirable to have vertical bars separating the stub from the
-#'   rest of the table columns. Setting this parameter to `TRUE` will add a `|` command
-#'   in the latex table alignment so a border is added to the right hand side of every
-#'   stub column. Setting this parameter to `FALSE` will disable this. The default is `TRUE`.
+#'   Vertical bars typically separate the stub from the rest of the table columns.
+#'   Setting this parameter to `FALSE` will remove that vertical separator line
+#'   from the stub/body interface.
 
 #' @param latex.toprule,latex.bottomrule
 #'
