@@ -132,7 +132,19 @@ is_compatible_formatter <- function(table, column, rows, compat) {
     return(TRUE)
   }
 
-  inherits(table[[column]][rows], compat)
+  column_data <- table[[column]][rows]
+  
+  # Check for standard class inheritance
+  if (inherits(column_data, compat)) {
+    return(TRUE)
+  }
+  
+  # If compat includes numeric or integer types, also check for bit64::integer64
+  if (any(c("numeric", "integer") %in% compat) && inherits(column_data, "integer64")) {
+    return(TRUE)
+  }
+  
+  FALSE
 }
 
 #' Render any formatting directives available in the `substitutions` list

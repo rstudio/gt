@@ -1445,6 +1445,11 @@ num_fmt_factory <- function(
 
   function(x) {
 
+    # Convert bit64::integer64 to numeric for formatting
+    if (inherits(x, "integer64")) {
+      x <- as.numeric(x)
+    }
+
     # Create `x_str` with the same length as `x`
     x_str <- rep_len(NA_character_, length(x))
 
