@@ -274,6 +274,7 @@ dt_options_tbl <-
     "quarto_use_bootstrap",              FALSE,  "quarto",           "logical", FALSE,
     "latex_use_longtable",               FALSE,  "latex",            "logical", FALSE,
     "latex_header_repeat",               FALSE,  "latex",            "logical", FALSE,
+    "stub_separate",                     FALSE,  "stub",             "logical",  TRUE,
     "latex_toprule",                     FALSE,  "latex",            "logical",  TRUE,
     "latex_bottomrule",                  FALSE,  "latex",            "logical",  TRUE,
     "latex_tbl_pos",                     FALSE,  "latex",            "value",   "t",
