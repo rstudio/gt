@@ -237,6 +237,14 @@
 #'
 #'   The style, width, and color properties for the vertical border of the table
 #'   stub.
+#' 
+#' @param stub.separate
+#'   *Specify whether the stub should have a separating vertical bar or not*
+#'
+#'   Vertical bars typically separate the stub from the rest of the table columns.
+#'   Setting this parameter to `FALSE` will remove that vertical separator line
+#'   from the stub/body interface. Currently supported for HTML and LaTeX output
+#'   formats. The default is `TRUE`.
 #'
 #' @param stub_row_group.font.size,stub_row_group.font.weight,stub_row_group.text_transform,stub_row_group.border.style,stub_row_group.border.width,stub_row_group.border.color
 #'   *Properties of the row group column in the table stub*
@@ -542,7 +550,6 @@
 #'   use the `longtable` environment which will not float and may span multiple
 #'   pages.
 #'
-#'
 #' @param latex.header_repeat
 #'
 #'   * Specify if the header should repeat or not across pages*
@@ -551,15 +558,7 @@
 #'   every page. Setting this parameter to `TRUE` will add a `\endhead` command
 #'   after the table headers so LaTeX knows where the headers end and will
 #'   repeat them on every page.
-
-#' @param latex.stub_separate
-#'
-#'   * Specify if the stub columns should have separating veritcal bars or not*
-#'
-#'   Vertical bars typically separate the stub from the rest of the table columns.
-#'   Setting this parameter to `FALSE` will remove that vertical separator line
-#'   from the stub/body interface.
-
+#' 
 #' @param latex.toprule,latex.bottomrule
 #'
 #'   * Specify if an hrule should be put in the table at the top (latex.toprule) or bottom (latex.bottomrule)*
@@ -568,7 +567,6 @@
 #'   lines in the table via `\toprule` and `\bottomrule`. Setting these
 #'   parameters to `FALSE` will instead not have these commands added, which
 #'   lets the tables be produced without the top and bottom lines.
-#'
 #'
 #' @param latex.tbl.pos
 #'
@@ -820,6 +818,7 @@ tab_options <- function(
     stub.border.width = NULL,
     stub.border.color = NULL,
     stub.indent_length = NULL,
+    stub.separate = NULL,
     stub_row_group.font.size = NULL,
     stub_row_group.font.weight = NULL,
     stub_row_group.text_transform = NULL,
@@ -911,7 +910,6 @@ tab_options <- function(
     quarto.disable_processing = NULL,
     latex.use_longtable = NULL,
     latex.header_repeat = NULL,
-    latex.stub_separate = NULL,
     latex.toprule = NULL,
     latex.bottomrule = NULL,
     latex.tbl.pos = NULL,

@@ -235,7 +235,7 @@ create_table_start_l <- function(data, colwidth_df) {
   }
 
   # # Add borders to the right of any columns in the stub
-  if (length(stub_layout) > 0 & dt_options_get_value(data, "latex_stub_separate")) {
+  if (length(stub_layout) > 0 && dt_options_get_value(data, "stub_separate")) {
 
     # Count the actual number of stub columns
     # When we have both group_label and rowname, we have 2 columns
@@ -1251,8 +1251,8 @@ summary_rows_for_group_l <- function(
 
     rowsplit_alignment <- "l"
 
-    if(dt_options_get_value(data, "latex_stub_separate")){
-      rowsplit_alignment <- paste0(rowsplit_alignment,"|")
+    if (dt_options_get_value(data, "stub_separate")) {
+      rowsplit_alignment <- paste0(rowsplit_alignment, "|")
     }
 
     row_splits_summary <-
@@ -1325,7 +1325,7 @@ create_table_end_l <- function(data) {
 
 
   paste0(
-    if(include_bottomrule){"\\bottomrule\n"},
+    if (include_bottomrule){"\\bottomrule\n"},
     ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
            "\\end{longtable}\n",
            "\\end{tabular*}\n"),
@@ -1393,11 +1393,11 @@ create_footer_component_l <- function(data) {
           if(grepl("\\\\shortstack", footnote_latex)){
 
             ## remove linewidth parbox within a shortstack for footnotes, already within a parbox
-            footnote_latex <- gsub("(?<=\\\\shortstack\\[.\\]\\{)\\\\parbox\\{.+?\\}\\{(.+?)\\}","\\1",footnote_latex, perl = TRUE)
+            footnote_latex <- gsub("(?<=\\\\shortstack\\[.\\]\\{)\\\\parbox\\{.+?\\}\\{(.+?)\\}","\\1", footnote_latex, perl = TRUE)
 
             ## add footmark within shortstack
             if(nzchar(footmark)){
-              footnote_latex <- gsub("(\\\\shortstack\\[.\\]\\{)(.+?\\})",paste0("\\1",gsub("\\","\\\\",footmark, fixed=TRUE),"\\2"), footnote_latex, perl = TRUE)
+              footnote_latex <- gsub("(\\\\shortstack\\[.\\]\\{)(.+?\\})",paste0("\\1",gsub("\\","\\\\", footmark, fixed=TRUE),"\\2"), footnote_latex, perl = TRUE)
             }
 
           }else{
@@ -1605,6 +1605,7 @@ create_body_rows_l <- function(
                   identical(colname_i, "::stub::") ||
                   grepl("^::stub_.*::$", colname_i)
                 ) {
+
                   colwidth_i <- dplyr::filter(
                     colwidth_df,
                     type == "stub",
@@ -1617,16 +1618,17 @@ create_body_rows_l <- function(
                   )
                 }
 
-                if(sum(colwidth_i$unspec < 1) > 0){
+                if (sum(colwidth_i$unspec < 1) > 0) {
                   cell_width <- create_singlecolumn_width_text_l(pt = colwidth_i$pt, lw = colwidth_i$lw)
-                }else{
+                } else {
                   cell_width <- ""
                 }
 
-                content[i] <- apply_cell_styles_l(
-                  content_i,
-                  styles_body,
-                  width = cell_width
+                content[i] <-
+                  apply_cell_styles_l(
+                    content_i,
+                    styles_body,
+                    width = cell_width
                   ) |>
                   remove_footnote_encoding()
 
@@ -1648,12 +1650,11 @@ create_body_rows_l <- function(
                   )
                 }
 
-                if(isFALSE(sum(colwidth_i$unspec < 1) > 0)){
-                  content_i <- gsub("\\\\parbox\\{\\\\linewidth\\}\\{(.+?)\\}","\\1",content_i)
+                if (isFALSE(sum(colwidth_i$unspec < 1) > 0)) {
+                  content_i <- gsub("\\\\parbox\\{\\\\linewidth\\}\\{(.+?)\\}", "\\1", content_i)
                 }
 
-                ## if styling set, remove the parbox if it is set to line width
-
+                # If styling set, remove the parbox if it is set to line width
                 content[i] <- remove_footnote_encoding(content_i)
 
               }
@@ -1673,48 +1674,48 @@ create_body_rows_l <- function(
 # cells not modified by tab_style calls.
 remove_footnote_encoding <- function(x) {
 
-  ## if no footnotes, move along
-  if((sum(grepl("%%%(right|left):",x)) == 0)){
+  # If no footnotes, move along
+  if ((sum(grepl("%%%(right|left):",x)) == 0)) {
     return(x)
   }
 
-  ## if there are footnotes, loop through
-
-  for( i in seq_along(x)){
+  # If there are footnotes, loop through
+  for (i in seq_along(x)) {
 
     x_i <- x[i]
 
-    if(grepl("\\\\(shortstack|parbox)",x_i)){
+    if (grepl("\\\\(shortstack|parbox)", x_i)) {
 
-      if(grepl("%%%right:",x_i)){
+      if (grepl("%%%right:", x_i)) {
         footmark_text <- regmatches(x_i, regexec("(?<=%%%right:).+$", x_i, perl = TRUE))[[1]]
-        if(grepl("%%%left:", footmark_text)){
+        if (grepl("%%%left:", footmark_text)) {
           footmark_text <- regmatches(footmark_text, regexec(".+?(?=%%%left:)", footmark_text, perl = TRUE))[[1]]
         }
         content_x <- regmatches(x_i, regexec(".+?(?=%%%right:)", x_i, perl = TRUE))[[1]]
 
-        if(grepl("\\\\shortstack", content_x)){
-          x_i <- gsub("(\\\\shortstack\\[.\\]\\{(\\\\parbox\\{.+?\\}\\{)*.+?)((\\}\\s*)+$)",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\3"), content_x, perl = TRUE)
-        }else{
-          x_i <- gsub("((\\\\parbox\\{.+?\\}\\{).+?)((\\}\\s*)+$)",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\3"), content_x, perl = TRUE)
+        if (grepl("\\\\shortstack", content_x)) {
+          x_i <- gsub("(\\\\shortstack\\[.\\]\\{(\\\\parbox\\{.+?\\}\\{)*.+?)((\\}\\s*)+$)", paste0("\\1", gsub("\\", "\\\\", footmark_text, fixed=TRUE), " \\3"), content_x, perl = TRUE)
+        } else {
+          x_i <- gsub("((\\\\parbox\\{.+?\\}\\{).+?)((\\}\\s*)+$)", paste0("\\1", gsub("\\", "\\\\", footmark_text, fixed=TRUE), " \\3"), content_x, perl = TRUE)
         }
-      } else if(grepl("%%%left:",x_i)){
+      } else if (grepl("%%%left:",x_i)) {
         footmark_text <- regmatches(x_i, regexec("(?<=%%%left:).+?$", x_i, perl = TRUE))[[1]]
         content_x <- regmatches(x_i, regexec(".+?(?=%%%left:)", x_i, perl = TRUE))[[1]]
-        ## add footmark within shortstack
-        if(grepl("\\\\shortstack", content_x)){
-          x_i <- gsub("(\\\\shortstack\\[.\\]\\{(\\\\parbox\\{.+?\\}\\{)*)(.+?\\})",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\3"), content_x, perl = TRUE)
-        }else{
-          x_i <- gsub("((\\\\parbox\\{.+?\\}\\{).+?)\\s(.+?((\\}\\s*)+$))",paste0("\\1",gsub("\\","\\\\",footmark_text, fixed=TRUE)," \\3"), content_x, perl = TRUE)
+        
+        # Add footmark within shortstack
+        if (grepl("\\\\shortstack", content_x)) {
+          x_i <- gsub("(\\\\shortstack\\[.\\]\\{(\\\\parbox\\{.+?\\}\\{)*)(.+?\\})", paste0("\\1", gsub("\\", "\\\\", footmark_text, fixed=TRUE), " \\3"), content_x, perl = TRUE)
+        } else {
+          x_i <- gsub("((\\\\parbox\\{.+?\\}\\{).+?)\\s(.+?((\\}\\s*)+$))", paste0("\\1", gsub("\\", "\\\\", footmark_text, fixed=TRUE), " \\3"), content_x, perl = TRUE)
         }
 
       }
 
-    }else{
-      if(grepl("%%%right:",x_i)){
+    } else {
+      if (grepl("%%%right:",x_i)) {
         x_i <- gsub("%%%(right):", "", x_i)
       }
-      if(grepl("%%%left:", x_i)){
+      if (grepl("%%%left:", x_i)) {
 
         footmark_text <- regmatches(x_i, regexec("(?<=%%%left:).+?$", x_i, perl = TRUE))[[1]]
         content_x <- regmatches(x_i, regexec(".+?(?=%%%left:)", x_i, perl = TRUE))[[1]]
@@ -1742,11 +1743,13 @@ convert_font_size_l <- function(x) {
     `default` = ""
   )
 
+  if (as.character(x) %in% names(size_map)) {
 
-  if (as.character(x) %in% names(size_map)){
     return(size_map[[x]])
-  }else if(grepl("(pt|%|px|in|cm|emu|em)",x)){
-    return(.apply_style_fontsize_l(list('cell_text' = list('size' = round(parse_font_size_l(x))))))
+
+  } else if (grepl("(pt|%|px|in|cm|emu|em)", x)) {
+
+    return(.apply_style_fontsize_l(list("cell_text" = list("size" = round(parse_font_size_l(x))))))
   }
 
   NULL
@@ -1815,8 +1818,8 @@ create_summary_rows_l <- function(
           if (stub_width > 1) {
 
             rowsplit_alignment <- "l"
-            if(dt_options_get_value(data, "latex_stub_separate")){
-              rowsplit_alignment <- paste0(rowsplit_alignment,"|")
+            if (dt_options_get_value(data, "stub_separate")) {
+              rowsplit_alignment <- paste0(rowsplit_alignment, "|")
             }
 
             row_splits_summary <-
@@ -1828,7 +1831,7 @@ create_summary_rows_l <- function(
 
                   x[seq_len(stub_width)] <- sapply(x[seq_len(stub_width)], function(x) {
                     latex_multicolumn_cell(x, ncols = 1, alignment = rowsplit_alignment, override_alignment = FALSE)
-                    })
+                  })
 
                   x
                 }
@@ -1890,10 +1893,12 @@ derive_table_width_statement_l <- function(data) {
 
   # Bookends are not required if a table width is not specified
   # of if using floating table
-  if (table_width == "auto" ||
-      !dt_options_get_value(data = data, option = "latex_use_longtable")) {
+  if (
+    table_width == "auto" ||
+      !dt_options_get_value(data = data, option = "latex_use_longtable")
+  ) {
 
-    statement <- ''
+    statement <- ""
 
   } else if (endsWith(table_width, "%")) {
 
@@ -1929,7 +1934,6 @@ derive_table_width_statement_l <- function(data) {
   }
 
   statement
-
 }
 
 #' Consolidate Cell Styles
