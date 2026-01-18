@@ -105,6 +105,7 @@ tab_options(
   stub.border.width = NULL,
   stub.border.color = NULL,
   stub.indent_length = NULL,
+  stub.separate = NULL,
   stub_row_group.font.size = NULL,
   stub_row_group.font.weight = NULL,
   stub_row_group.text_transform = NULL,
@@ -196,7 +197,6 @@ tab_options(
   quarto.disable_processing = NULL,
   latex.use_longtable = NULL,
   latex.header_repeat = NULL,
-  latex.stub_separate = NULL,
   latex.toprule = NULL,
   latex.bottomrule = NULL,
   latex.tbl.pos = NULL,
@@ -418,6 +418,13 @@ stub.}
 The width of each indentation level for row labels in the stub. The
 indentation can be set by using \code{\link[=tab_stub_indent]{tab_stub_indent()}}. By default this is
 \code{"5px"}.}
+
+\item{stub.separate}{\emph{Specify whether the stub should have a separating vertical bar or not}
+
+Vertical bars typically separate the stub from the rest of the table columns.
+Setting this parameter to \code{FALSE} will remove that vertical separator line
+from the stub/body interface. Currently supported for HTML and LaTeX output
+formats. The default is \code{TRUE}.}
 
 \item{stub_row_group.font.size, stub_row_group.font.weight, stub_row_group.text_transform, stub_row_group.border.style, stub_row_group.border.width, stub_row_group.border.color}{\emph{Properties of the row group column in the table stub}
 
@@ -681,15 +688,6 @@ For Long tables, it may be desirable to have the column headers repeat on
 every page. Setting this parameter to \code{TRUE} will add a \verb{\\endhead} command
 after the table headers so LaTeX knows where the headers end and will
 repeat them on every page.
-}}
-
-\item{latex.stub_separate}{\itemize{
-\item Specify if the stub columns should have separating veritcal bars or not*
-
-For tables, it may be desirable to have vertical bars separating the stub from the
-rest of the table columns. Setting this parameter to \code{TRUE} will add a \code{|} command
-in the latex table alignment so a border is added to the right hand side of every
-stub column. Setting this parameter to \code{FALSE} will disable this. The default is \code{TRUE}.
 }}
 
 \item{latex.toprule, latex.bottomrule}{\itemize{
