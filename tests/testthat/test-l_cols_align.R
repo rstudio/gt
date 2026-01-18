@@ -92,9 +92,9 @@ test_that("cols_align() works correctly for LaTeX output tables with stubs and o
   ## drat is also left aligned (5th column)
   expect_match(tbl_latex, ".*begin\\{longtable\\}\\{l|l|l|rlrrrrrr\\}.*")
 
-  # Create tbl_latex, but set latex.stub_separate to FALSE
+  # Create tbl_latex, but set stub.separate to FALSE
   tbl_latex <- gt_tbl |>
-    tab_options(latex.stub_separate = FALSE) |>
+    tab_options(stub.separate = FALSE) |>
     as_latex() |>
     as.character()
 
