@@ -1032,122 +1032,6 @@ info_google_fonts <- function() {
   readRDS(system_file("gt_tables/info_google_fonts.rds"))
 }
 
-# info_flags() -----------------------------------------------------------------
-#' View a table with all available flags for `fmt_flag()`
-#'
-#' @description
-#'
-#' [fmt_flag()] can be used to render flag icons within body cells that have
-#' 2-letter country codes. There are a lot of countries, so, calling
-#' `info_flags()` can be helpful in showing all of the valid and supported
-#' country codes along with their flag icons.
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Get a table of info on all the available flag icons.
-#'
-#' ```r
-#' info_flags()
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_info_flags_1.png")`
-#' }}
-#'
-#' @family information functions
-#' @section Function ID:
-#' 11-7
-#'
-#' @section Function Introduced:
-#' `v0.10.0` (October 7, 2023)
-#'
-#' @export
-info_flags <- function() {
-  readRDS(system_file("gt_tables/info_flags.rds"))
-}
-
-# info_icons() -----------------------------------------------------------------
-#' View a table with all available Font Awesome icons for `fmt_icon()`
-#'
-#' @description
-#'
-#' [fmt_icon()] can be used to render *Font Awesome* icons within
-#' body cells that reference the icon names. Further to this, the text
-#' transformation functions (e.g., [text_case_match()]) allow for the insertion
-#' of these icons as replacement text (so long as you use the `fa()` function
-#' from the **fontawesome** package). Because there is a very large number of
-#' icons available to use in *Font Awesome*, `info_icons()` can be used to
-#' provide us with a table that lists all the icons along with their short and
-#' full names (either can be used with [fmt_icon()]). It also contains
-#' acceptable codes for [fmt_country()]
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Get a table of info on all the available *Font Awesome* icons.
-#'
-#' ```r
-#' info_icons()
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_info_icons_1.png")`
-#' }}
-#'
-#' @family information functions
-#' @section Function ID:
-#' 11-8
-#'
-#' @section Function Introduced:
-#' `v0.10.0` (October 7, 2023)
-#'
-#' @export
-info_icons <- function() {
-  readRDS(system_file("gt_tables/info_icons.rds"))
-}
-
-# info_unit_conversions() ------------------------------------------------------
-#' View a table with all units that can be converted by `unit_conversion()`
-#'
-#' @description
-#'
-#' [unit_conversion()] can be used to yield conversion factors across compatible
-#' pairs of units. This is useful for expressing values in different units and
-#' the conversion can be performed via the `scale_by` argument available in
-#' several formatting functions. When calling [unit_conversion()], one must
-#' supply two string-based keywords to specify the value's current units and the
-#' desired units. All of these keywords are provided in the table shown by
-#' calling `info_unit_conversions()`.
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Get a table of info on all the available keywords for unit conversions.
-#'
-#' ```r
-#' info_unit_conversions()
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_info_unit_conversions_1.png")`
-#' }}
-#'
-#' @family information functions
-#' @section Function ID:
-#' 11-9
-#'
-#' @section Function Introduced:
-#' `v0.11.0` (July 9, 2024)
-#'
-#' @export
-info_unit_conversions <- function() {
-  readRDS(system_file("gt_tables/info_conversions.rds"))
-}
-
 # info_tf_style() --------------------------------------------------------------
 #' View a table with info on TRUE/FALSE formatting styles
 #'
@@ -1185,7 +1069,7 @@ info_unit_conversions <- function() {
 #'
 #' @family information functions
 #' @section Function ID:
-#' 11-10
+#' 11-7
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -1351,4 +1235,120 @@ info_tf_style <- function(locale = NULL) {
   gt_tbl <- opt_vertical_padding(gt_tbl, scale = 0.7)
 
   gt_tbl
+}
+
+# info_flags() -----------------------------------------------------------------
+#' View a table with all available flags for `fmt_flag()`
+#'
+#' @description
+#'
+#' [fmt_flag()] can be used to render flag icons within body cells that have
+#' 2-letter country codes. There are a lot of countries, so, calling
+#' `info_flags()` can be helpful in showing all of the valid and supported
+#' country codes along with their flag icons.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Get a table of info on all the available flag icons.
+#'
+#' ```r
+#' info_flags()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_info_flags_1.png")`
+#' }}
+#'
+#' @family information functions
+#' @section Function ID:
+#' 11-8
+#'
+#' @section Function Introduced:
+#' `v0.10.0` (October 7, 2023)
+#'
+#' @export
+info_flags <- function() {
+  readRDS(system_file("gt_tables/info_flags.rds"))
+}
+
+# info_icons() -----------------------------------------------------------------
+#' View a table with all available Font Awesome icons for `fmt_icon()`
+#'
+#' @description
+#'
+#' [fmt_icon()] can be used to render *Font Awesome* icons within
+#' body cells that reference the icon names. Further to this, the text
+#' transformation functions (e.g., [text_case_match()]) allow for the insertion
+#' of these icons as replacement text (so long as you use the `fa()` function
+#' from the **fontawesome** package). Because there is a very large number of
+#' icons available to use in *Font Awesome*, `info_icons()` can be used to
+#' provide us with a table that lists all the icons along with their short and
+#' full names (either can be used with [fmt_icon()]). It also contains
+#' acceptable codes for [fmt_country()]
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Get a table of info on all the available *Font Awesome* icons.
+#'
+#' ```r
+#' info_icons()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_info_icons_1.png")`
+#' }}
+#'
+#' @family information functions
+#' @section Function ID:
+#' 11-9
+#'
+#' @section Function Introduced:
+#' `v0.10.0` (October 7, 2023)
+#'
+#' @export
+info_icons <- function() {
+  readRDS(system_file("gt_tables/info_icons.rds"))
+}
+
+# info_unit_conversions() ------------------------------------------------------
+#' View a table with all units that can be converted by `unit_conversion()`
+#'
+#' @description
+#'
+#' [unit_conversion()] can be used to yield conversion factors across compatible
+#' pairs of units. This is useful for expressing values in different units and
+#' the conversion can be performed via the `scale_by` argument available in
+#' several formatting functions. When calling [unit_conversion()], one must
+#' supply two string-based keywords to specify the value's current units and the
+#' desired units. All of these keywords are provided in the table shown by
+#' calling `info_unit_conversions()`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Get a table of info on all the available keywords for unit conversions.
+#'
+#' ```r
+#' info_unit_conversions()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_info_unit_conversions_1.png")`
+#' }}
+#'
+#' @family information functions
+#' @section Function ID:
+#' 11-10
+#'
+#' @section Function Introduced:
+#' `v0.11.0` (July 9, 2024)
+#'
+#' @export
+info_unit_conversions <- function() {
+  readRDS(system_file("gt_tables/info_conversions.rds"))
 }
