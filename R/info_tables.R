@@ -1081,7 +1081,7 @@ info_google_fonts <- function() {
     )
 
   styles_summary <-
-    gt:::google_styles_tbl |>
+    google_styles_tbl |>
     dplyr::mutate(weight = as.integer(weight)) |>
     dplyr::filter(name %in% recommended) |>
     dplyr::group_by(name, style) |>
@@ -1098,7 +1098,7 @@ info_google_fonts <- function() {
     dplyr::summarize(weight_ranges = paste(weight_range, collapse = "<br>"), .groups = "keep")
 
   source_notes <-
-    gt:::google_styles_tbl |>
+    google_styles_tbl |>
     dplyr::filter(name %in% recommended) |>
     dplyr::distinct(name, copyright) |>
     dplyr::mutate(name = paste0("**", name, "** ")) |>
@@ -1110,7 +1110,7 @@ info_google_fonts <- function() {
     paste(gsub("..", ".", source_notes, fixed = TRUE), ".")
 
   google_font_tbl_int <-
-    gt:::google_font_tbl |>
+    google_font_tbl |>
     dplyr::filter(name %in% recommended) |>
     dplyr::left_join(styles_summary, by = "name") |>
     dplyr::mutate(
