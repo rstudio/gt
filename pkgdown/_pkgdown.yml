@@ -294,6 +294,7 @@ reference:
     - info_locales
     - info_paletteer
     - info_google_fonts
+    - info_tf_style
     - info_flags
     - info_icons
     - info_unit_conversions
