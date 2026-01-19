@@ -1431,7 +1431,7 @@ info_tf_style <- function(locale = NULL) {
 #' @export
 info_flags <- function() {
 
-  countrypops <- country_name <- country_code_2 <- flag <- NULL
+  country_name <- country_code_2 <- flag <- NULL
 
   countrypops |>
     dplyr::select(country_name, country_code_2) |>
