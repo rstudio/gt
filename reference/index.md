@@ -593,6 +593,9 @@ and on our recommendations for which Google Fonts to try in your tables
 - [`info_google_fonts()`](https://gt.rstudio.com/reference/info_google_fonts.md)
   : View a table on recommended Google Fonts
 
+- [`info_tf_style()`](https://gt.rstudio.com/reference/info_tf_style.md)
+  : View a table with info on TRUE/FALSE formatting styles
+
 - [`info_flags()`](https://gt.rstudio.com/reference/info_flags.md) :
 
   View a table with all available flags for

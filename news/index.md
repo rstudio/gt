@@ -4,6 +4,11 @@
 
 - Update how long text that has a line break or is horizontally aligned
   in a cell (stubs, labels, table body).
+  ([@thebioengineer](https://github.com/thebioengineer))
+
+- Added `stub.separate` option to control if vertical bars/borders are
+  added for stubs ([\#2096](https://github.com/rstudio/gt/issues/2096)).
+  ([@thebioengineer](https://github.com/thebioengineer))
 
 ## gt 1.2.0
 

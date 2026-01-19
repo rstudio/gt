@@ -105,7 +105,9 @@ fmt_tf(
   `locale` option, so, a `"yes"` value will instead be `"ja"` when
   `locale = "de"`. Options 4 through to 10 involve pairs of symbols
   (e.g., `"check-mark"` displays a check mark for `TRUE` and an X symbol
-  for `FALSE`).
+  for `FALSE`). There are 10 `TRUE`/`FALSE` styles and their short names
+  can be viewed using
+  [`info_tf_style()`](https://gt.rstudio.com/reference/info_tf_style.md).
 
 - pattern:
 
@@ -274,6 +276,11 @@ and a description of their output values. The output from styles `4` to
 | 8   | `"arrows"`       | `<Upwards Arrow>`, `<Downwards Arrow>`                           |
 | 9   | `"triangles"`    | `<Black Up-Pointing Triangle>`, `<Black Down-Pointing Triangle>` |
 | 10  | `"triangles-lr"` | `<Heavy Check Mark>`, `<Heavy Ballot X>`                         |
+
+We can use the
+[`info_tf_style()`](https://gt.rstudio.com/reference/info_tf_style.md)
+function to view a similar table of `TRUE`/`FALSE` styles with example
+output.
 
 ## Adapting output to a specific `locale`
 

@@ -830,17 +830,17 @@ addv_tbl <-
 addv_tbl
 ```
 
-| xx.x: Demographic and Baseline Data                                      |                    |             |             |            |            |               |               |              |              |
-|--------------------------------------------------------------------------|--------------------|-------------|-------------|------------|------------|---------------|---------------|--------------|--------------|
-| xx.x.x: Major Protocol Deviations and Relationship to COVID-19 - ITT Set |                    |             |             |            |            |               |               |              |              |
-|                                                                          | PARCAT1            | n_Placebo_N | n_Placebo_Y | n_Drug 1_N | n_Drug 1_Y | pct_Placebo_N | pct_Placebo_Y | pct_Drug 1_N | pct_Drug 1_Y |
-| Subjects with at least:                                                  | NA                 | NA          | NA          | NA         | NA         | NA            | NA            | NA           | NA           |
-| At least one major Protocol Deviation                                    | OVERALL            | 24          | 15          | 23         | 5          | 26.666667     | 16.666667     | 25.555556    | 5.555556     |
-| GTQ not completed month 3.                                               | PROTOCOL DEVIATION | 7           | 0           | 12         | 0          | 7.777778      | 0.000000      | 13.333333    | 0.000000     |
-| Lab values not taken month 3.                                            | PROTOCOL DEVIATION | 12          | 3           | 7          | 0          | 13.333333     | 3.333333      | 7.777778     | 0.000000     |
-| GTQ not completed month 6.                                               | PROTOCOL DEVIATION | 7           | 2           | 7          | 1          | 7.777778      | 2.222222      | 7.777778     | 1.111111     |
-| Month 3 Visit not done.                                                  | PROTOCOL DEVIATION | 9           | 4           | 3          | 1          | 10.000000     | 4.444444      | 3.333333     | 1.111111     |
-| Month 6 Visit not done.                                                  | PROTOCOL DEVIATION | 9           | 8           | 9          | 3          | 10.000000     | 8.888889      | 10.000000    | 3.333333     |
+| xx.x: Demographic and Baseline Data                                      |                      |             |             |            |            |               |               |              |              |
+|--------------------------------------------------------------------------|----------------------|-------------|-------------|------------|------------|---------------|---------------|--------------|--------------|
+| xx.x.x: Major Protocol Deviations and Relationship to COVID-19 - ITT Set |                      |             |             |            |            |               |               |              |              |
+|                                                                          | Parameter Category 1 | n_Placebo_N | n_Placebo_Y | n_Drug 1_N | n_Drug 1_Y | pct_Placebo_N | pct_Placebo_Y | pct_Drug 1_N | pct_Drug 1_Y |
+| Subjects with at least:                                                  | NA                   | NA          | NA          | NA         | NA         | NA            | NA            | NA           | NA           |
+| At least one major Protocol Deviation                                    | OVERALL              | 24          | 15          | 23         | 5          | 26.666667     | 16.666667     | 25.555556    | 5.555556     |
+| GTQ not completed month 3.                                               | PROTOCOL DEVIATION   | 7           | 0           | 12         | 0          | 7.777778      | 0.000000      | 13.333333    | 0.000000     |
+| Lab values not taken month 3.                                            | PROTOCOL DEVIATION   | 12          | 3           | 7          | 0          | 13.333333     | 3.333333      | 7.777778     | 0.000000     |
+| GTQ not completed month 6.                                               | PROTOCOL DEVIATION   | 7           | 2           | 7          | 1          | 7.777778      | 2.222222      | 7.777778     | 1.111111     |
+| Month 3 Visit not done.                                                  | PROTOCOL DEVIATION   | 9           | 4           | 3          | 1          | 10.000000     | 4.444444      | 3.333333     | 1.111111     |
+| Month 6 Visit not done.                                                  | PROTOCOL DEVIATION   | 9           | 8           | 9          | 3          | 10.000000     | 8.888889      | 10.000000    | 3.333333     |
 
 In a next step, we would like to create a summary row for all individual
 PDs to get the overall number of individual PDs, as well as the
@@ -872,20 +872,20 @@ addv_tbl <-
 addv_tbl
 ```
 
-| xx.x: Demographic and Baseline Data                                      |                    |             |             |            |            |               |               |              |              |
-|--------------------------------------------------------------------------|--------------------|-------------|-------------|------------|------------|---------------|---------------|--------------|--------------|
-| xx.x.x: Major Protocol Deviations and Relationship to COVID-19 - ITT Set |                    |             |             |            |            |               |               |              |              |
-|                                                                          | PARCAT1            | n_Placebo_N | n_Placebo_Y | n_Drug 1_N | n_Drug 1_Y | pct_Placebo_N | pct_Placebo_Y | pct_Drug 1_N | pct_Drug 1_Y |
-|                                                                          |                    |             |             |            |            |               |               |              |              |
-| Subjects with at least:                                                  | NA                 | NA          | NA          | NA         | NA         | NA            | NA            | NA           | NA           |
-| At least one major Protocol Deviation                                    | OVERALL            | 24          | 15          | 23         | 5          | 26.666667     | 16.666667     | 25.555556    | 5.555556     |
-|                                                                          |                    |             |             |            |            |               |               |              |              |
-| Study Procedure Deviations                                               | —                  | 44          | 17          | 38         | 5          | 48.88889      | 18.88889      | 42.22222     | 5.555556     |
-| GTQ not completed month 3.                                               | PROTOCOL DEVIATION | 7           | 0           | 12         | 0          | 7.777778      | 0.000000      | 13.333333    | 0.000000     |
-| Lab values not taken month 3.                                            | PROTOCOL DEVIATION | 12          | 3           | 7          | 0          | 13.333333     | 3.333333      | 7.777778     | 0.000000     |
-| GTQ not completed month 6.                                               | PROTOCOL DEVIATION | 7           | 2           | 7          | 1          | 7.777778      | 2.222222      | 7.777778     | 1.111111     |
-| Month 3 Visit not done.                                                  | PROTOCOL DEVIATION | 9           | 4           | 3          | 1          | 10.000000     | 4.444444      | 3.333333     | 1.111111     |
-| Month 6 Visit not done.                                                  | PROTOCOL DEVIATION | 9           | 8           | 9          | 3          | 10.000000     | 8.888889      | 10.000000    | 3.333333     |
+| xx.x: Demographic and Baseline Data                                      |                      |             |             |            |            |               |               |              |              |
+|--------------------------------------------------------------------------|----------------------|-------------|-------------|------------|------------|---------------|---------------|--------------|--------------|
+| xx.x.x: Major Protocol Deviations and Relationship to COVID-19 - ITT Set |                      |             |             |            |            |               |               |              |              |
+|                                                                          | Parameter Category 1 | n_Placebo_N | n_Placebo_Y | n_Drug 1_N | n_Drug 1_Y | pct_Placebo_N | pct_Placebo_Y | pct_Drug 1_N | pct_Drug 1_Y |
+|                                                                          |                      |             |             |            |            |               |               |              |              |
+| Subjects with at least:                                                  | NA                   | NA          | NA          | NA         | NA         | NA            | NA            | NA           | NA           |
+| At least one major Protocol Deviation                                    | OVERALL              | 24          | 15          | 23         | 5          | 26.666667     | 16.666667     | 25.555556    | 5.555556     |
+|                                                                          |                      |             |             |            |            |               |               |              |              |
+| Study Procedure Deviations                                               | —                    | 44          | 17          | 38         | 5          | 48.88889      | 18.88889      | 42.22222     | 5.555556     |
+| GTQ not completed month 3.                                               | PROTOCOL DEVIATION   | 7           | 0           | 12         | 0          | 7.777778      | 0.000000      | 13.333333    | 0.000000     |
+| Lab values not taken month 3.                                            | PROTOCOL DEVIATION   | 12          | 3           | 7          | 0          | 13.333333     | 3.333333      | 7.777778     | 0.000000     |
+| GTQ not completed month 6.                                               | PROTOCOL DEVIATION   | 7           | 2           | 7          | 1          | 7.777778      | 2.222222      | 7.777778     | 1.111111     |
+| Month 3 Visit not done.                                                  | PROTOCOL DEVIATION   | 9           | 4           | 3          | 1          | 10.000000     | 4.444444      | 3.333333     | 1.111111     |
+| Month 6 Visit not done.                                                  | PROTOCOL DEVIATION   | 9           | 8           | 9          | 3          | 10.000000     | 8.888889      | 10.000000    | 3.333333     |
 
 We only kept the column `PARCAT1` to facilitate the generation of the
 row group. We can hide this column now using

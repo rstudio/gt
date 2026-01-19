@@ -176,6 +176,7 @@ components, the subcomponents, and the element that can adjusted.</p>
 <span>  stub.border.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stub.border.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stub.indent_length <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stub.separate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stub_row_group.font.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stub_row_group.font.weight <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stub_row_group.text_transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -522,6 +523,14 @@ stub.</p></dd>
 <p>The width of each indentation level for row labels in the stub. The
 indentation can be set by using <code><a href="tab_stub_indent.html">tab_stub_indent()</a></code>. By default this is
 <code>"5px"</code>.</p></dd>
+
+
+<dt id="arg-stub-separate">stub.separate<a class="anchor" aria-label="anchor" href="#arg-stub-separate"></a></dt>
+<dd><p><em>Specify whether the stub should have a separating vertical bar or not</em></p>
+<p>Vertical bars typically separate the stub from the rest of the table columns.
+Setting this parameter to <code>FALSE</code> will remove that vertical separator line
+from the stub/body interface. Currently supported for HTML and LaTeX output
+formats. The default is <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-stub-row-group-font-size-stub-row-group-font-weight-stub-row-group-text-transform-stub-row-group-border-style-stub-row-group-border-width-stub-row-group-border-color">stub_row_group.font.size, stub_row_group.font.weight, stub_row_group.text_transform, stub_row_group.border.style, stub_row_group.border.width, stub_row_group.border.color<a class="anchor" aria-label="anchor" href="#arg-stub-row-group-font-size-stub-row-group-font-weight-stub-row-group-text-transform-stub-row-group-border-style-stub-row-group-border-width-stub-row-group-border-color"></a></dt>

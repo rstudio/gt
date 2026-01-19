@@ -54,5 +54,6 @@ Other information functions:
 [`info_icons()`](https://gt.rstudio.com/reference/info_icons.md),
 [`info_locales()`](https://gt.rstudio.com/reference/info_locales.md),
 [`info_paletteer()`](https://gt.rstudio.com/reference/info_paletteer.md),
+[`info_tf_style()`](https://gt.rstudio.com/reference/info_tf_style.md),
 [`info_time_style()`](https://gt.rstudio.com/reference/info_time_style.md),
 [`info_unit_conversions()`](https://gt.rstudio.com/reference/info_unit_conversions.md)

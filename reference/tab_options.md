@@ -107,6 +107,7 @@ tab_options(
   stub.border.width = NULL,
   stub.border.color = NULL,
   stub.indent_length = NULL,
+  stub.separate = NULL,
   stub_row_group.font.size = NULL,
   stub_row_group.font.weight = NULL,
   stub_row_group.text_transform = NULL,
@@ -539,6 +540,16 @@ tab_options(
   indentation can be set by using
   [`tab_stub_indent()`](https://gt.rstudio.com/reference/tab_stub_indent.md).
   By default this is `"5px"`.
+
+- stub.separate:
+
+  *Specify whether the stub should have a separating vertical bar or
+  not*
+
+  Vertical bars typically separate the stub from the rest of the table
+  columns. Setting this parameter to `FALSE` will remove that vertical
+  separator line from the stub/body interface. Currently supported for
+  HTML and LaTeX output formats. The default is `TRUE`.
 
 - stub_row_group.font.size, stub_row_group.font.weight,
   stub_row_group.text_transform, stub_row_group.border.style,
