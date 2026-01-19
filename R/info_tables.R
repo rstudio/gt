@@ -1434,7 +1434,7 @@ info_flags <- function() {
   countrypops |>
     dplyr::select(country_name, country_code_2) |>
     dplyr::distinct() |>
-    tibble::add_row(country_name = "European Union", country_code_2 = "EU") |>
+    dplyr::add_row(country_name = "European Union", country_code_2 = "EU") |>
     dplyr::arrange(country_code_2) |>
     dplyr::mutate(flag = country_code_2) |>
     gt() |>
