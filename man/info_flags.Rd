@@ -30,7 +30,7 @@ Get a table of info on all the available flag icons.
 
 \section{Function ID}{
 
-11-7
+11-8
 }
 
 \section{Function Introduced}{

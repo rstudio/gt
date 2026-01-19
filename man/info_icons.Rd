@@ -35,7 +35,7 @@ Get a table of info on all the available \emph{Font Awesome} icons.
 
 \section{Function ID}{
 
-11-8
+11-9
 }
 
 \section{Function Introduced}{

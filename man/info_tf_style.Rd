@@ -42,12 +42,12 @@ used by supplying a number code or format name to \code{\link[=fmt_tf]{fmt_tf()}
 
 \section{Function ID}{
 
-11-10
+11-7
 }
 
 \section{Function Introduced}{
 
-\code{v0.12.0} (January 18, 2026)
+\emph{In Development}
 }
 
 \seealso{
