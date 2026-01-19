@@ -681,6 +681,8 @@ summary_rows_g <- function(data, group_id, side_grand_summary = "bottom") {
   summary_row_type[group_type] <- "group"
 
   summary_df <- list_of_summaries$summary_df_display_list[group_id]
+  # Remove array attributes so vctrs::list_sizes() accepts it as a plain list
+  attributes(summary_df) <- list(names = names(summary_df))
 
   n_rows <- vctrs::list_sizes(summary_df)
 
