@@ -43,6 +43,7 @@ utils::globalVariables(
     "colors",
     "conv",
     "copyright",
+    "countrypops",
     "curr_code",
     "curr_name",
     "curr_number",
