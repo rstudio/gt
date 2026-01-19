@@ -1431,6 +1431,8 @@ info_tf_style <- function(locale = NULL) {
 #' @export
 info_flags <- function() {
 
+  countrypops <- country_name <- country_code_2 <- flag <- NULL
+
   countrypops |>
     dplyr::select(country_name, country_code_2) |>
     dplyr::distinct() |>
@@ -1541,6 +1543,8 @@ info_flags <- function() {
 #' @export
 info_icons <- function() {
 
+  icon <- full_name <- NULL
+
   fa_icons_vec <- readRDS(file = system_file("gt_tables/fa_icons_vec.rds"))
 
   icons_tbl_gt <-
@@ -1640,6 +1644,8 @@ info_icons <- function() {
 #'
 #' @export
 info_unit_conversions <- function() {
+
+  from <- NULL
 
   conversions_tbl <-
     conversion_factors |>
