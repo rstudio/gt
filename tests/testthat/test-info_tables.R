@@ -112,3 +112,22 @@ test_that("info_unit_conversions() works correctly", {
   # Expect that the function doesn't error
   expect_no_error(info_unit_conversions())
 })
+
+test_that("info_tf_style() works correctly", {
+
+  # Expect that `info_tf_style()` is a gt table
+  expect_s3_class(info_tf_style(), c("gt_tbl", "data.frame"))
+
+  # Expect the internal source data frame to be of specific dimensions
+  # (10 tf_styles, 5 columns: tf_style, format_name, true_val, false_val, locale_aware)
+  expect_equal(
+    info_tf_style() |>
+      dt_data_get() |>
+      dim(),
+    c(10, 5)
+  )
+
+  # Expect that using a locale parameter doesn't error
+  expect_no_error(info_tf_style(locale = "fr"))
+  expect_no_error(info_tf_style(locale = "de"))
+})
