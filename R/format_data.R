@@ -5694,7 +5694,9 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #'   these options for `tf_style` are locale-aware through the `locale` option,
 #'   so, a `"yes"` value will instead be `"ja"` when `locale = "de"`. Options
 #'   4 through to 10 involve pairs of symbols (e.g., `"check-mark"` displays
-#'   a check mark for `TRUE` and an X symbol for `FALSE`).
+#'   a check mark for `TRUE` and an X symbol for `FALSE`). There are 10
+#'   `TRUE`/`FALSE` styles and their short names can be viewed using
+#'   [info_tf_style()].
 #'
 #' @param true_val *Text to use for `TRUE` values*
 #'
@@ -5806,6 +5808,9 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' | 8  | `"arrows"`    | `<Upwards Arrow>`, `<Downwards Arrow>`          |
 #' | 9  | `"triangles"` | `<Black Up-Pointing Triangle>`, `<Black Down-Pointing Triangle>`|
 #' | 10 | `"triangles-lr"`| `<Heavy Check Mark>`, `<Heavy Ballot X>`      |
+#'
+#' We can use the [info_tf_style()] function to view a similar table of
+#' `TRUE`/`FALSE` styles with example output.
 #'
 #' @section Adapting output to a specific `locale`:
 #'

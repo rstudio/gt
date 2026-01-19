@@ -1216,8 +1216,8 @@ info_google_fonts <- function() {
 #'
 #' @section Examples:
 #'
-#' Get a table of info on the different TRUE/FALSE-formatting styles (which are
-#' used by supplying a number code or format name to [fmt_tf()]).
+#' Get a table of info on the different `TRUE`/`FALSE`-formatting styles (which
+#' are used by supplying a number code or format name to [fmt_tf()]).
 #'
 #' ```r
 #' info_tf_style()
