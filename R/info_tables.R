@@ -929,7 +929,15 @@ info_locales <- function(begins_with = NULL) {
 info_paletteer <- function(color_pkgs = NULL) {
 
   if (is.null(color_pkgs)) {
-    return(readRDS(system_file("gt_tables/info_paletteer.rds")))
+
+    color_pkgs <-
+      c(
+        "awtools", "dichromat", "dutchmasters", "ggsci", "ggpomological",
+        "ggthemes", "ghibli", "grDevices", "jcolors", "LaCroixColoR",
+        "NineteenEightyR", "nord", "ochRe", "palettetown", "pals",
+        "Polychrome", "quickpalette", "rcartocolor", "RColorBrewer",
+        "Redmonder", "tidyquant", "wesanderson", "yarrr"
+      )
   }
 
   palettes_strips_df <-
@@ -1029,7 +1037,364 @@ info_paletteer <- function(color_pkgs = NULL) {
 #'
 #' @export
 info_google_fonts <- function() {
-  readRDS(system_file("gt_tables/info_google_fonts.rds"))
+
+  recommended <-
+    c(
+      "Anonymous Pro",
+      "Archivo Narrow",
+      "Bio Rhyme",
+      "Cabin",
+      "Cardo",
+      "Chivo",
+      "Crimson Text",
+      "Encode Sans",
+      "Exo 2",
+      "Fira Code",
+      "Fira Sans",
+      "IBM Plex Mono",
+      "IBM Plex Sans",
+      "Inconsolata",
+      "Inter",
+      "Karla",
+      "Lato",
+      "Libre Baskerville",
+      "Libre Franklin",
+      "Lora",
+      "Merriweather",
+      "Montserrat",
+      "Mulish",
+      "Open Sans",
+      "Playfair Display",
+      "Poppins",
+      "Proza Libre",
+      "PT Sans",
+      "PT Serif",
+      "Public Sans",
+      "Raleway",
+      "Roboto",
+      "Rubik",
+      "Source Sans Pro",
+      "Source Serif Pro",
+      "Space Mono",
+      "Spectral",
+      "Work Sans"
+    )
+
+  styles_summary <-
+    google_styles_tbl |>
+    dplyr::mutate(weight = as.integer(weight)) |>
+    dplyr::filter(name %in% recommended) |>
+    dplyr::group_by(name, style) |>
+    dplyr::summarize(min_weight = min(weight), max_weight = max(weight), .groups = "keep") |>
+    dplyr::ungroup() |>
+    dplyr::arrange(name, dplyr::desc(style)) |>
+    dplyr::mutate(weight_range = dplyr::case_when(
+      style == "normal" & min_weight != max_weight ~ paste0("n&nbsp;", min_weight, "&#8209;", max_weight),
+      style == "normal" & min_weight == max_weight ~ paste0("n&nbsp;", min_weight),
+      style == "italic" & min_weight != max_weight ~ paste0("*i*&nbsp;", min_weight, "&#8209;", max_weight),
+      style == "italic" & min_weight == max_weight ~ paste0("*i*&nbsp;", min_weight)
+    )) |>
+    dplyr::group_by(name) |>
+    dplyr::summarize(weight_ranges = paste(weight_range, collapse = "<br>"), .groups = "keep")
+
+  source_notes <-
+    google_styles_tbl |>
+    dplyr::filter(name %in% recommended) |>
+    dplyr::distinct(name, copyright) |>
+    dplyr::mutate(name = paste0("**", name, "** ")) |>
+    dplyr::mutate(name_copy = paste0(name, copyright)) |>
+    dplyr::pull(name_copy) |>
+    paste(collapse = ". ")
+
+  source_notes <-
+    paste(gsub("..", ".", source_notes, fixed = TRUE), ".")
+
+  google_font_tbl_int <-
+    google_font_tbl |>
+    dplyr::filter(name %in% recommended) |>
+    dplyr::left_join(styles_summary, by = "name") |>
+    dplyr::mutate(
+      category = tolower(category),
+      category = str_title_case(category),
+      category = gsub("_", " ", category, fixed = TRUE),
+      category = gsub("serif", "Serif", category, fixed = TRUE)
+    ) |>
+    dplyr::select(-license, -date_added, -designer) |>
+    dplyr::mutate(samp = paste0(LETTERS[1:13], letters[1:13], collapse = ""))
+
+  google_font_tbl_gt <-
+    google_font_tbl_int |>
+    dplyr::arrange(category) |>
+    gt(rowname_col = "name", groupname_col = "category") |>
+    fmt_markdown(columns = "weight_ranges") |>
+    tab_style(
+      style = list(
+        cell_text(size = px(8), font = "Courier"),
+        cell_fill(color = "#F7F7F7")
+      ),
+      locations = cells_body(columns = "weight_ranges")
+    ) |>
+    tab_style(
+      style = cell_text(size = px(24)),
+      locations = cells_title(groups = "title")
+    ) |>
+    tab_style(
+      style = cell_text(size = px(18)),
+      locations = cells_title(groups = "subtitle")
+    ) |>
+    tab_style(
+      style = cell_text(size = px(28), indent = px(5)),
+      locations = cells_body(columns = "samp")
+    ) |>
+    tab_style(
+      style = cell_text(size = px(14)),
+      locations = cells_stub()
+    ) |>
+    tab_style(
+      style = cell_text(size = px(18), weight = "600"),
+      locations = cells_row_groups()
+    ) |>
+    tab_header(
+      title = md("Recommended *Google Fonts* for **gt**"),
+      subtitle = md("Fonts like these can be accessed using the `google_font()` function.<br><br>")
+    ) |>
+    opt_align_table_header("left") |>
+    opt_table_lines("none") |>
+    tab_options(
+      table.width = px(800),
+      column_labels.hidden = TRUE,
+      row_group.padding = px(12),
+      data_row.padding = px(4),
+      table_body.hlines.style = "solid",
+      table_body.hlines.width = px(1),
+      table_body.hlines.color = "#F7F7F7",
+      row_group.border.top.style = "solid",
+      row_group.border.top.width = px(1),
+      row_group.border.bottom.width = px(1),
+      table.border.bottom.style = "solid",
+      table.border.bottom.width = px(1),
+      table.border.bottom.color = "#F7F7F7",
+      source_notes.font.size = px(10),
+      source_notes.padding = px(6)
+    ) |>
+    tab_source_note(md(source_notes))
+
+  for (i in seq(nrow(google_font_tbl_int))) {
+
+    google_font_tbl_gt <-
+      google_font_tbl_gt |>
+      tab_style(
+        style = cell_text(font = google_font(name = google_font_tbl_int$name[i])),
+        locations = cells_body(columns = samp, rows = google_font_tbl_int$name[i])
+      )
+  }
+
+  google_font_tbl_gt
+}
+
+# info_tf_style() --------------------------------------------------------------
+#' View a table with info on TRUE/FALSE formatting styles
+#'
+#' @description
+#'
+#' [fmt_tf()] lets us format logical values in a convenient manner using preset
+#' styles. The table generated by `info_tf_style()` provides a quick reference
+#' to all styles, with associated format names and example output values.
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for displaying formatted
+#'   TRUE/FALSE values according to the locale's rules. Examples include `"en"`
+#'   for English (United States) and `"fr"` for French (France). We can call
+#'   [info_locales()] for a useful reference for all of the locales that are
+#'   supported. Note that only styles 1-3 (`"true-false"`, `"yes-no"`, and
+#'   `"up-down"`) support localization.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Get a table of info on the different `TRUE`/`FALSE`-formatting styles (which
+#' are used by supplying a number code or format name to [fmt_tf()]).
+#'
+#' ```r
+#' info_tf_style()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_info_tf_style_1.png")`
+#' }}
+#'
+#' @family information functions
+#' @section Function ID:
+#' 11-7
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+info_tf_style <- function(locale = NULL) {
+
+  true_val <- false_val <- locale_aware <- NULL
+
+  if (is.null(locale)) {
+    locale <- "en"
+  }
+
+  # Create the data frame with tf_style information
+  tf_df <- data.frame(
+    tf_style = 1:10,
+    format_name = c(
+      "true-false", "yes-no", "up-down",
+      "check-mark", "circles", "squares",
+      "diamonds", "arrows", "triangles", "triangles-lr"
+    ),
+    true_val = c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
+    false_val = c(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE),
+    locale_aware = c(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE),
+    stringsAsFactors = FALSE
+  )
+
+  # Process locale_aware column to be text BEFORE creating the gt table
+  locale_aware_rows <- tf_df$locale_aware
+
+  tf_df$locale_aware[locale_aware_rows] <- "LOCALE-AWARE"
+  tf_df$locale_aware[!locale_aware_rows] <- ""
+
+  gt_tbl <- gt(tf_df, rowname_col = "tf_style", locale = locale)
+
+  gt_tbl <-
+    fmt_tf(
+      gt_tbl,
+      columns = true_val,
+      tf_style = from_column(column = "format_name"),
+      locale = locale
+    )
+
+  gt_tbl <-
+    fmt_tf(
+      gt_tbl,
+      columns = false_val,
+      tf_style = from_column(column = "format_name"),
+      locale = locale
+    )
+
+  gt_tbl <-
+    text_transform(
+      gt_tbl,
+      locations = cells_body(
+        columns = locale_aware,
+        rows = locale_aware == "LOCALE-AWARE"
+      ),
+      fn = function(x) {
+        paste0(
+          "<span style='",
+          "color: darkslategray; font-weight: 700; font-size: 12px; ",
+          "border: solid 1px; background: aliceblue; border-color: steelblue; ",
+          "border-width: 2px; border-radius: 4px; padding: 0px 8px 0px 8px;",
+          "'>", x, "</span>"
+        )
+      }
+    )
+
+  gt_tbl <-
+    cols_label(
+      gt_tbl,
+      format_name = "Format Name",
+      true_val = "TRUE Output",
+      false_val = "FALSE Output",
+      locale_aware = ""
+    )
+
+  gt_tbl <-
+    cols_width(
+      gt_tbl,
+      tf_style ~ px(60),
+      format_name ~ px(220),
+      true_val ~ px(110),
+      false_val ~ px(110),
+      locale_aware ~ px(195)
+    )
+
+  gt_tbl <- opt_align_table_header(gt_tbl, align = "left")
+
+  gt_tbl <-
+    cols_align(
+      gt_tbl,
+      align = "center",
+      columns = c(true_val, false_val, locale_aware)
+    )
+
+  gt_tbl <-
+    tab_style(
+      gt_tbl,
+      style = cell_text(
+        font = system_fonts(name = "monospace-code"),
+        size = px(12)
+      ),
+      locations = cells_body(columns = format_name)
+    )
+
+  gt_tbl <-
+    tab_style(
+      gt_tbl,
+      style =
+        cell_borders(
+          sides = "r",
+          color = "lightblue",
+          weight = px(1.5)
+        ),
+      locations = cells_body(columns = format_name)
+    )
+
+  gt_tbl <- opt_all_caps(gt_tbl)
+
+  gt_tbl <- opt_stylize(gt_tbl, style = 6)
+
+  gt_tbl <-
+    tab_style(
+      gt_tbl,
+      style = cell_text(size = px(24)),
+      locations = cells_title(groups = "title")
+    )
+
+  gt_tbl <-
+    tab_style(
+      gt_tbl,
+      style = cell_text(size = px(18)),
+      locations = cells_title(groups = "subtitle")
+    )
+
+  gt_tbl <-
+    tab_options(
+      gt_tbl,
+      table.border.top.style = "hidden",
+      column_labels.border.bottom.style = "hidden"
+    )
+
+  gt_tbl <-
+    tab_header(
+      gt_tbl,
+      title = "TRUE/FALSE Formatting Options",
+      subtitle = md(
+        paste0(
+          "Usable in the `fmt_tf()` function. Styles 1-3 support localization ",
+          "(<span style=\"text-transform:none;\">", locale, "</span>).<br><br>"
+        )
+      )
+    )
+
+  gt_tbl <- opt_align_table_header(gt_tbl, align = "left")
+
+  gt_tbl <- opt_table_lines(gt_tbl, extent = "none")
+
+  gt_tbl <- opt_horizontal_padding(gt_tbl, scale = 2)
+
+  gt_tbl <- opt_vertical_padding(gt_tbl, scale = 0.7)
+
+  gt_tbl
 }
 
 # info_flags() -----------------------------------------------------------------
@@ -1058,14 +1423,85 @@ info_google_fonts <- function() {
 #'
 #' @family information functions
 #' @section Function ID:
-#' 11-7
+#' 11-8
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
 #' @export
 info_flags <- function() {
-  readRDS(system_file("gt_tables/info_flags.rds"))
+
+  countrypops <- country_name <- country_code_2 <- flag <- NULL
+
+  countrypops |>
+    dplyr::select(country_name, country_code_2) |>
+    dplyr::distinct() |>
+    dplyr::add_row(country_name = "European Union", country_code_2 = "EU") |>
+    dplyr::arrange(country_code_2) |>
+    dplyr::mutate(flag = country_code_2) |>
+    gt() |>
+    fmt_flag(columns = flag) |>
+    cols_move_to_start(columns = flag) |>
+    cols_label(
+      flag = "",
+      country_name = "Entity",
+      country_code_2 = "Code"
+    ) |>
+    tab_style(
+      style = list(
+        cell_text(
+          font = system_fonts(name = "monospace-code"),
+          size = px(12)
+        ),
+        cell_borders(
+          sides = c("l", "r"),
+          color = "lightblue",
+          weight = px(1.5))
+      ),
+      locations = cells_body(columns = country_name)
+    ) |>
+    tab_style(
+      style = cell_text(
+        font = system_fonts(name = "monospace-code"),
+        size = px(12)
+      ),
+      locations = cells_body(columns = c(country_name, country_code_2))
+    ) |>
+    tab_style(
+      style = css(position = "sticky", top = "-1em", `z-index` = 10),
+      locations = cells_column_labels()
+    ) |>
+    tab_style(
+      style = cell_fill(color = "white"),
+      locations = cells_body(columns = flag)
+    ) |>
+    cols_align(align = "center", columns = flag) |>
+    cols_width(
+      flag ~ px(80),
+      country_name ~ px(480),
+      country_code_2 ~ px(240)
+    ) |>
+    opt_all_caps() |>
+    opt_stylize(style = 6) |>
+    tab_style(
+      style = cell_text(size = px(24)),
+      locations = cells_title(groups = "title")
+    ) |>
+    tab_style(
+      style = cell_text(size = px(18)),
+      locations = cells_title(groups = "subtitle")
+    ) |>
+    tab_options(
+      table.border.top.style = "hidden",
+      column_labels.border.bottom.style = "hidden",
+      container.height = px(620)
+    ) |>
+    tab_header(
+      title = md("Complete List of Flag Icons Usable in **gt**"),
+      subtitle = md("Flags like these can be used with the `fmt_flag()` function.<br><br>")
+    ) |>
+    opt_align_table_header("left") |>
+    opt_table_lines("none")
 }
 
 # info_icons() -----------------------------------------------------------------
@@ -1099,14 +1535,77 @@ info_flags <- function() {
 #'
 #' @family information functions
 #' @section Function ID:
-#' 11-8
+#' 11-9
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
 #'
 #' @export
 info_icons <- function() {
-  readRDS(system_file("gt_tables/info_icons.rds"))
+
+  icon <- full_name <- NULL
+
+  fa_icons_vec <- readRDS(file = system_file("gt_tables/fa_icons_vec.rds"))
+
+  icons_tbl_gt <-
+    fontawesome:::fa_tbl |>
+    dplyr::select(icon = name, label, icon_name = name, full_name) |>
+    dplyr::mutate(icon = fa_icons_vec) |>
+    gt() |>
+    fmt_markdown(columns = icon) |>
+    cols_label(icon = "") |>
+    cols_label_with(fn = function(x) gsub("_", " ", x)) |>
+    tab_style(
+      style = list(
+        cell_text(
+          font = system_fonts(name = "monospace-code"),
+          size = px(12)
+        ),
+        cell_borders(
+          sides = c("l", "r"),
+          color = "lightblue",
+          weight = px(1.5))
+      ),
+      locations = cells_body(columns = -icon)
+    ) |>
+    tab_style(
+      style = css(position = "sticky", top = "-1em", `z-index` = 10),
+      locations = cells_column_labels()
+    ) |>
+    tab_style(
+      style = cell_fill(color = "lightblue"),
+      locations = cells_body(columns = icon)
+    ) |>
+    cols_align(align = "center", columns = icon) |>
+    cols_width(
+      icon ~ px(60),
+      label ~ px(240),
+      icon_name ~ px(240),
+      full_name ~ px(260)
+    ) |>
+    opt_all_caps() |>
+    opt_stylize(style = 6) |>
+    tab_style(
+      style = cell_text(size = px(24)),
+      locations = cells_title(groups = "title")
+    ) |>
+    tab_style(
+      style = cell_text(size = px(18)),
+      locations = cells_title(groups = "subtitle")
+    ) |>
+    tab_options(
+      table.border.top.style = "hidden",
+      column_labels.border.bottom.style = "hidden",
+      container.height = px(620)
+    ) |>
+    tab_header(
+      title = md("Complete List of *Font Awesome* Icons Usable in **gt**"),
+      subtitle = md("Icons like these can be used with the `fmt_icon()` function.<br><br>")
+    ) |>
+    opt_align_table_header("left") |>
+    opt_table_lines("none")
+
+  icons_tbl_gt
 }
 
 # info_unit_conversions() ------------------------------------------------------
@@ -1138,12 +1637,108 @@ info_icons <- function() {
 #'
 #' @family information functions
 #' @section Function ID:
-#' 11-9
+#' 11-10
 #'
 #' @section Function Introduced:
 #' `v0.11.0` (July 9, 2024)
 #'
 #' @export
 info_unit_conversions <- function() {
-  readRDS(system_file("gt_tables/info_conversions.rds"))
+
+  from <- NULL
+
+  conversions_tbl <-
+    conversion_factors |>
+    dplyr::distinct(type, from) |>
+    dplyr::mutate(name = gsub(".*\\.", "", from)) |>
+    dplyr::mutate(name = gsub("-", " ", name)) |>
+    dplyr::mutate(name = gsub("therm us", "US therm", name)) |>
+    dplyr::mutate(name = gsub("g force", "g-force", name)) |>
+    dplyr::mutate(name = gsub("british ", "British ", name)) |>
+    dplyr::mutate(name = gsub("imperial$", "(Imperial)", name)) |>
+    dplyr::mutate(name = gsub("foodcalorie", "food calorie", name)) |>
+    dplyr::mutate(name = gsub("foot pound", "foot-pound", name)) |>
+    dplyr::mutate(name = gsub("pound force", "pound-force", name)) |>
+    dplyr::mutate(name = gsub("std", "std.", name)) |>
+    dplyr::select(type, name, from)
+
+  conversions_tbl_gt <-
+    conversions_tbl |>
+    gt(groupname_col = "type", id = "unit_conversion") |>
+    rows_add(
+      type = "temperature", name = "degree Celsius", from = "temperature.celsius",
+    ) |>
+    rows_add(
+      type = "temperature", name = "degree Fahrenheit", from = "temperature.fahrenheit"
+    ) |>
+    rows_add(
+      type = "temperature", name = "kelvin", from = "temperature.kelvin"
+    ) |>
+    rows_add(
+      type = "temperature", name = "rankine", from = "temperature.rankine"
+    ) |>
+    cols_label(
+      name = "Unit",
+      from = "Keyword"
+    ) |>
+    cols_width(
+      name ~ px(300),
+      from ~ px(300)
+    ) |>
+    tab_style(
+      style = list(
+        cell_text(
+          font = system_fonts(name = "monospace-code"),
+          size = px(12)
+        ),
+        cell_borders(
+          sides = "l",
+          color = "lightblue",
+          weight = px(1.5))
+      ),
+      locations = cells_body(columns = from)
+    ) |>
+    tab_style(
+      style = css(position = "sticky", top = "-1em", `z-index` = 10),
+      locations = cells_column_labels()
+    ) |>
+    opt_all_caps() |>
+    opt_stylize(style = 6) |>
+    tab_style(
+      style = cell_text(size = px(24)),
+      locations = cells_title(groups = "title")
+    ) |>
+    tab_style(
+      style = cell_text(size = px(18)),
+      locations = cells_title(groups = "subtitle")
+    ) |>
+    tab_options(
+      table.border.top.style = "hidden",
+      column_labels.border.bottom.style = "hidden",
+      container.height = px(620)
+    ) |>
+    tab_header(
+      title = md("Units that are compatible with `unit_conversion()`"),
+      subtitle = md("Use pairs of keyword values from a common group.<br><br>")
+    ) |>
+    opt_align_table_header("left") |>
+    opt_table_lines("none") |>
+    opt_horizontal_padding(scale = 2) |>
+    opt_css(
+      css = "
+    #unit_conversion .gt_group_heading {
+      padding-top: 18px;
+      padding-bottom: 4px;
+      padding-left: 10px;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }"
+    ) |>
+    row_group_order(groups = c(
+      "acceleration", "angle", "area", "consumption", "digital",
+      "duration", "energy", "force", "length", "mass",
+      "pressure", "speed", "temperature", "torque", "volume"
+    ))
+
+  conversions_tbl_gt
 }

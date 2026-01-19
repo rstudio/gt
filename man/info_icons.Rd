@@ -35,7 +35,7 @@ Get a table of info on all the available \emph{Font Awesome} icons.
 
 \section{Function ID}{
 
-11-8
+11-9
 }
 
 \section{Function Introduced}{
@@ -51,6 +51,7 @@ Other information functions:
 \code{\link{info_google_fonts}()},
 \code{\link{info_locales}()},
 \code{\link{info_paletteer}()},
+\code{\link{info_tf_style}()},
 \code{\link{info_time_style}()},
 \code{\link{info_unit_conversions}()}
 }
