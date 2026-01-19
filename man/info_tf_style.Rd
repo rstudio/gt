@@ -29,8 +29,8 @@ to all styles, with associated format names and example output values.
 \section{Examples}{
 
 
-Get a table of info on the different TRUE/FALSE-formatting styles (which are
-used by supplying a number code or format name to \code{\link[=fmt_tf]{fmt_tf()}}).
+Get a table of info on the different \code{TRUE}/\code{FALSE}-formatting styles (which
+are used by supplying a number code or format name to \code{\link[=fmt_tf]{fmt_tf()}}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{info_tf_style()
 }\if{html}{\out{</div>}}
