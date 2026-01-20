@@ -237,13 +237,18 @@ test_that("cols_width() works correctly in LaTeX output tables when row_group_as
       stub() ~ px(100),
       vals ~ px(50)
     ) |>
+    tab_style(style = list(cell_text(align = "right")), cells_stub()) |>
     as_latex() |>
     as.character()
 
   expect_length(tbl_rgac, 1)
 
+  ## rowgroup column
   expect_match(tbl_rgac, "\\\\multirow\\[t\\]\\{3\\}\\{=\\}\\{\\\\shortstack\\[l\\]\\{\\\\parbox\\{\\\\linewidth\\}\\{Group A \\\\\\\\test\\}\\}\\}")
   expect_match(tbl_rgac, "\\\\multirow\\[t\\]\\{3\\}\\{=\\}\\{Group B\\}")
+
+  ## styling stub
+  expect_match(tbl_rgac, "\\multicolumn{1}{>{\\raggedleft\\arraybackslash}m{\\dimexpr 75.00pt -2\\tabcolsep-1.5\\arrayrulewidth}}{\\parbox{\\linewidth}{\\raggedleft {1}}}", fixed = TRUE)
 
 
 
@@ -261,13 +266,17 @@ test_that("cols_width() works correctly in LaTeX output tables when row_group_as
       stub() ~ px(100),
       vals ~ px(50)
     ) |>
+    tab_style(style = list(cell_text(align = "right")), cells_stub()) |>
     as_latex() |>
     as.character()
 
   expect_length(tbl_rgnac, 1)
 
+  ## rowgroup column
   expect_match(tbl_rgnac, "\\\\multicolumn\\{2\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}m\\{262.5pt\\}\\}\\{\\\\shortstack\\[l\\]\\{\\\\parbox\\{\\\\linewidth\\}\\{Group A \\\\\\\\test\\}\\}\\}")
   expect_match(tbl_rgnac, "\\\\multicolumn\\{2\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}m\\{262.5pt\\}\\}\\{\\\\parbox\\{\\\\linewidth\\}\\{Group B\\}\\}")
 
+  ## styling stub
+  expect_match(tbl_rgnac, "\\multicolumn{1}{>{\\raggedleft\\arraybackslash}m{\\dimexpr 75.00pt -2\\tabcolsep-1.5\\arrayrulewidth}}{\\parbox{\\linewidth}{\\raggedleft {1}}}", fixed = TRUE)
 
 })

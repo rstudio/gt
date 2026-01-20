@@ -1606,10 +1606,15 @@ create_body_rows_l <- function(
                   grepl("^::stub_.*::$", colname_i)
                 ) {
 
+                  i_offset <- 0
+                  if("::group::" %in% vars){
+                    i_offset <- 1
+                  }
+
                   colwidth_i <- dplyr::filter(
                     colwidth_df,
                     type == "stub",
-                  )[i, ]
+                  )[i-i_offset, ]
 
                 } else if( identical(colname_i, "::group::")){
                   colwidth_i <- dplyr::filter(
@@ -1645,10 +1650,15 @@ create_body_rows_l <- function(
                   identical(colname_i, "::stub::") ||
                   grepl("^::stub_.*::$", colname_i)
                 ) {
+                  i_offset <- 0
+                  if("::group::" %in% vars){
+                    i_offset <- 1
+                  }
+
                   colwidth_i <- dplyr::filter(
                     colwidth_df,
                     type == "stub",
-                  )[i, ]
+                  )[i-i_offset, ]
 
                 } else if( identical(colname_i, "::group::")){
                   colwidth_i <- dplyr::filter(
