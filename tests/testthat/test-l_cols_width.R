@@ -213,3 +213,61 @@ test_that("cols_width() works correctly in LaTeX output tables", {
 
   expect_match(tbl_latex_tabul, "\\\\begin\\{tabular\\*\\}\\{\\\\linewidth\\}\\{@\\{\\\\extracolsep\\{\\\\fill\\}\\}>\\{\\\\raggedright\\\\arraybackslash\\}p\\{\\\\dimexpr 37.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedright\\\\arraybackslash\\}p\\{\\\\dimexpr 56.25pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}|>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 112.50pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{\\\\dimexpr 150.00pt -2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}\\}")
 })
+
+
+test_that("cols_width() works correctly in LaTeX output tables when row_group_as_column is TRUE or FALSE", {
+
+  tbl <-
+    dplyr::tibble(
+      row = 1:6,
+      group = c(rep("Group A<br>test", 3), rep("Group B", 3)),
+      vals = 1:6
+    )
+
+  tbl_rgac <- tbl |>
+    gt(
+      rowname_col = "row",
+      groupname_col = "group",
+      row_group_as_column = TRUE,
+      process_md = TRUE
+    ) |>
+    fmt_markdown() |>
+    cols_width(
+      row_group() ~ px(200),
+      stub() ~ px(100),
+      vals ~ px(50)
+    ) |>
+    as_latex() |>
+    as.character()
+
+  expect_length(tbl_rgac, 1)
+
+  expect_match(tbl_rgac, "\\\\multirow\\[t\\]\\{3\\}\\{=\\}\\{\\\\shortstack\\[l\\]\\{\\\\parbox\\{\\\\linewidth\\}\\{Group A \\\\\\\\test\\}\\}\\}")
+  expect_match(tbl_rgac, "\\\\multirow\\[t\\]\\{3\\}\\{=\\}\\{Group B\\}")
+
+
+
+  tbl_rgnac <- tbl |>
+    gt(
+      rowname_col = "row",
+      groupname_col = "group",
+      row_group_as_column = FALSE,
+      process_md = TRUE
+    ) |>
+    fmt_roman(columns = stub()) |>
+    fmt_markdown() |>
+    cols_width(
+      row_group() ~ px(200),
+      stub() ~ px(100),
+      vals ~ px(50)
+    ) |>
+    as_latex() |>
+    as.character()
+
+  expect_length(tbl_rgnac, 1)
+
+  expect_match(tbl_rgnac, "\\\\multicolumn\\{2\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}m\\{262.5pt\\}\\}\\{\\\\shortstack\\[l\\]\\{\\\\parbox\\{\\\\linewidth\\}\\{Group A \\\\\\\\test\\}\\}\\}")
+  expect_match(tbl_rgnac, "\\\\multicolumn\\{2\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}m\\{262.5pt\\}\\}\\{\\\\parbox\\{\\\\linewidth\\}\\{Group B\\}\\}")
+
+
+})
