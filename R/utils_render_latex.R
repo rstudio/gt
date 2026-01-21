@@ -1607,22 +1607,22 @@ create_body_rows_l <- function(
                 ) {
 
                   i_offset <- 0
-                  if("::group::" %in% vars){
+                  if ("::group::" %in% vars) {
                     i_offset <- 1
                   }
 
                   colwidth_i <- dplyr::filter(
                     colwidth_df,
                     type == "stub",
-                  )[i-i_offset, ]
+                  )[i - i_offset, ]
 
-                } else if( identical(colname_i, "::group::")){
+                } else if (identical(colname_i, "::group::")) {
                   colwidth_i <- dplyr::filter(
                     colwidth_df,
-                    type  == "row_group"
+                    type == "row_group"
                   )
 
-                }else {
+                } else {
                   colwidth_i <- dplyr::filter(
                     colwidth_df,
                     var == colname_i
@@ -1630,7 +1630,7 @@ create_body_rows_l <- function(
                 }
 
                 cell_width <- ""
-                if (nrow(colwidth_i) > 0){
+                if (nrow(colwidth_i) > 0) {
                   if (sum(colwidth_i$unspec < 1) > 0) {
                     cell_width <- create_singlecolumn_width_text_l(pt = colwidth_i$pt, lw = colwidth_i$lw)
                   }
@@ -1651,19 +1651,19 @@ create_body_rows_l <- function(
                   grepl("^::stub_.*::$", colname_i)
                 ) {
                   i_offset <- 0
-                  if("::group::" %in% vars){
+                  if ("::group::" %in% vars) {
                     i_offset <- 1
                   }
 
                   colwidth_i <- dplyr::filter(
                     colwidth_df,
                     type == "stub",
-                  )[i-i_offset, ]
+                  )[i - i_offset, ]
 
-                } else if( identical(colname_i, "::group::")){
+                } else if (identical(colname_i, "::group::")) {
                   colwidth_i <- dplyr::filter(
                     colwidth_df,
-                    type  == "row_group"
+                    type == "row_group"
                   )
 
                 } else {
