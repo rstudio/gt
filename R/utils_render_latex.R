@@ -1606,10 +1606,21 @@ create_body_rows_l <- function(
                   grepl("^::stub_.*::$", colname_i)
                 ) {
 
+                  i_offset <- 0
+                  if ("::group::" %in% vars) {
+                    i_offset <- 1
+                  }
+
                   colwidth_i <- dplyr::filter(
                     colwidth_df,
                     type == "stub",
-                  )[i, ]
+                  )[i - i_offset, ]
+
+                } else if (identical(colname_i, "::group::")) {
+                  colwidth_i <- dplyr::filter(
+                    colwidth_df,
+                    type == "row_group"
+                  )
 
                 } else {
                   colwidth_i <- dplyr::filter(
@@ -1618,10 +1629,11 @@ create_body_rows_l <- function(
                   )
                 }
 
-                if (sum(colwidth_i$unspec < 1) > 0) {
-                  cell_width <- create_singlecolumn_width_text_l(pt = colwidth_i$pt, lw = colwidth_i$lw)
-                } else {
-                  cell_width <- ""
+                cell_width <- ""
+                if (nrow(colwidth_i) > 0) {
+                  if (sum(colwidth_i$unspec < 1) > 0) {
+                    cell_width <- create_singlecolumn_width_text_l(pt = colwidth_i$pt, lw = colwidth_i$lw)
+                  }
                 }
 
                 content[i] <-
@@ -1638,10 +1650,21 @@ create_body_rows_l <- function(
                   identical(colname_i, "::stub::") ||
                   grepl("^::stub_.*::$", colname_i)
                 ) {
+                  i_offset <- 0
+                  if ("::group::" %in% vars) {
+                    i_offset <- 1
+                  }
+
                   colwidth_i <- dplyr::filter(
                     colwidth_df,
                     type == "stub",
-                  )[i, ]
+                  )[i - i_offset, ]
+
+                } else if (identical(colname_i, "::group::")) {
+                  colwidth_i <- dplyr::filter(
+                    colwidth_df,
+                    type == "row_group"
+                  )
 
                 } else {
                   colwidth_i <- dplyr::filter(
@@ -1701,7 +1724,7 @@ remove_footnote_encoding <- function(x) {
       } else if (grepl("%%%left:",x_i)) {
         footmark_text <- regmatches(x_i, regexec("(?<=%%%left:).+?$", x_i, perl = TRUE))[[1]]
         content_x <- regmatches(x_i, regexec(".+?(?=%%%left:)", x_i, perl = TRUE))[[1]]
-        
+
         # Add footmark within shortstack
         if (grepl("\\\\shortstack", content_x)) {
           x_i <- gsub("(\\\\shortstack\\[.\\]\\{(\\\\parbox\\{.+?\\}\\{)*)(.+?\\})", paste0("\\1", gsub("\\", "\\\\", footmark_text, fixed=TRUE), " \\3"), content_x, perl = TRUE)
