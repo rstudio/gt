@@ -10,6 +10,10 @@
   added for stubs ([\#2096](https://github.com/rstudio/gt/issues/2096)).
   ([@thebioengineer](https://github.com/thebioengineer))
 
+- Fixed handling of row_groups_as_column=TRUE for latex columns
+  ([\#2110](https://github.com/rstudio/gt/issues/2110)).
+  ([@thebioengineer](https://github.com/thebioengineer))
+
 ## gt 1.2.0
 
 CRAN release: 2025-12-16
