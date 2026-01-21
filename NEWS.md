@@ -4,6 +4,8 @@
 
 * Added `stub.separate` option to control if vertical bars/borders are added for stubs (#2096). (@thebioengineer)
 
+* Fixed handling of row_groups_as_column=TRUE for latex columns (#2110). (@thebioengineer)
+
 # gt 1.2.0
 
 * The new `fmt_number_si()` function format numeric values with SI prefixes and an optional unit (which could be also be obtained from a separate column), automatically selecting the appropriate prefix to keep the mantissa in a readable range (#1999). (#2060)
