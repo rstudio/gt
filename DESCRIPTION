@@ -55,6 +55,7 @@ Imports:
     vctrs,
     xml2 (>= 1.3.6)
 Suggests:
+    bit64,
     farver,
     fontawesome (>= 0.5.2),
     ggplot2,
