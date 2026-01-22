@@ -1,4 +1,4 @@
-# gt (development version)
+# gt 1.3.0
 
 * Update how long text that has a line break or is horizontally aligned in a cell (stubs, labels, table body). (@thebioengineer)
 
