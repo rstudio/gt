@@ -114,7 +114,7 @@ countries by population within each year:
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v1.3.0} (January 22, 2026)
 }
 
 \seealso{
