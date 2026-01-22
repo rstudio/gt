@@ -1,18 +1,75 @@
 # Changelog
 
-## gt (development version)
+## gt 1.3.0
 
-- Update how long text that has a line break or is horizontally aligned
-  in a cell (stubs, labels, table body).
-  ([@thebioengineer](https://github.com/thebioengineer))
+CRAN release: 2026-01-22
 
-- Added `stub.separate` option to control if vertical bars/borders are
-  added for stubs ([\#2096](https://github.com/rstudio/gt/issues/2096)).
-  ([@thebioengineer](https://github.com/thebioengineer))
+### New features
 
-- Fixed handling of row_groups_as_column=TRUE for latex columns
+- The new [`row_order()`](https://gt.rstudio.com/reference/row_order.md)
+  function makes it possible to order rows within groups by one or more
+  columns. This complements the existing
+  [`row_group_order()`](https://gt.rstudio.com/reference/row_group_order.md)
+  function, which reorders the groups themselves
+  ([\#1112](https://github.com/rstudio/gt/issues/1112)).
+  ([\#2099](https://github.com/rstudio/gt/issues/2099))
+
+- Added the
+  [`info_tf_style()`](https://gt.rstudio.com/reference/info_tf_style.md)
+  function, which provides a quick reference table showing all available
+  styles for formatting `TRUE`/`FALSE` values with
+  [`fmt_tf()`](https://gt.rstudio.com/reference/fmt_tf.md)
+  ([\#2107](https://github.com/rstudio/gt/issues/2107)).
+  ([\#2108](https://github.com/rstudio/gt/issues/2108))
+
+### Minor improvements and bug fixes
+
+- Numeric formatting functions (e.g.,
+  [`fmt_number()`](https://gt.rstudio.com/reference/fmt_number.md),
+  [`fmt_integer()`](https://gt.rstudio.com/reference/fmt_integer.md),
+  [`fmt_currency()`](https://gt.rstudio.com/reference/fmt_currency.md),
+  etc.) now work with
+  [`bit64::integer64`](https://rdrr.io/pkg/bit64/man/bit64-package.html)
+  columns ([\#1932](https://github.com/rstudio/gt/issues/1932)).
+  ([\#2106](https://github.com/rstudio/gt/issues/2106))
+
+- Several improvements were made to LaTeX output tables: text in cells
+  is now wrapped correctly when the cell has a specified width, and
+  footnotes placed in such cells are now correctly rendered.
+  ([@thebioengineer](https://github.com/thebioengineer),
+  [\#2097](https://github.com/rstudio/gt/issues/2097))
+
+- The new `stub.separate` option in
+  [`tab_options()`](https://gt.rstudio.com/reference/tab_options.md)
+  controls whether vertical lines are displayed at the stub boundary;
+  this works with both HTML and LaTeX output
+  ([\#2096](https://github.com/rstudio/gt/issues/2096)).
+  ([@thebioengineer](https://github.com/thebioengineer),
+  [\#2101](https://github.com/rstudio/gt/issues/2101))
+
+- The [`cells_stub()`](https://gt.rstudio.com/reference/cells_stub.md)
+  location helper now correctly targets all stub columns when using a
+  multi-column stub
+  ([\#2100](https://github.com/rstudio/gt/issues/2100)).
+  ([\#2102](https://github.com/rstudio/gt/issues/2102))
+
+- Improved multi-column stub styling in LaTeX output tables; the
+  [`cells_stub()`](https://gt.rstudio.com/reference/cells_stub.md)
+  helper now works properly for adding footnotes and applying styles to
+  stub cells in LaTeX
+  ([\#2103](https://github.com/rstudio/gt/issues/2103)).
+  ([\#2104](https://github.com/rstudio/gt/issues/2104))
+
+- When using `row_group_as_column = TRUE` for LaTeX output tables,
+  column widths are now correctly computed
   ([\#2110](https://github.com/rstudio/gt/issues/2110)).
-  ([@thebioengineer](https://github.com/thebioengineer))
+  ([@thebioengineer](https://github.com/thebioengineer),
+  [\#2112](https://github.com/rstudio/gt/issues/2112))
+
+- Fixed an issue where applying styling to `columns = everything()`
+  could miss columns when a multi-column stub is present
+  ([\#2094](https://github.com/rstudio/gt/issues/2094)).
+  ([\#2113](https://github.com/rstudio/gt/issues/2113))
 
 ## gt 1.2.0
 
