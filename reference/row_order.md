@@ -119,7 +119,7 @@ file.](https://raw.githubusercontent.com/rstudio/gt/master/images/man_row_order_
 
 ## Function Introduced
 
-*In Development*
+`v1.3.0` (January 22, 2026)
 
 ## See also
 
