@@ -1,10 +1,26 @@
 # gt 1.3.0
 
-* Update how long text that has a line break or is horizontally aligned in a cell (stubs, labels, table body). (@thebioengineer)
+## New features
 
-* Added `stub.separate` option to control if vertical bars/borders are added for stubs (#2096). (@thebioengineer)
+* The new `row_order()` function makes it possible to order rows within groups by one or more columns. This complements the existing `row_group_order()` function, which reorders the groups themselves (#1112). (#2099)
 
-* Fixed handling of row_groups_as_column=TRUE for latex columns (#2110). (@thebioengineer)
+* Added the `info_tf_style()` function, which provides a quick reference table showing all available styles for formatting `TRUE`/`FALSE` values with `fmt_tf()` (#2107). (#2108)
+
+## Minor improvements and bug fixes
+
+* Numeric formatting functions (e.g., `fmt_number()`, `fmt_integer()`, `fmt_currency()`, etc.) now work with `bit64::integer64` columns (#1932). (#2106)
+
+* Several improvements were made to LaTeX output tables: text in cells is now wrapped correctly when the cell has a specified width, and footnotes placed in such cells are now correctly rendered. (@thebioengineer, #2097)
+
+* The new `stub.separate` option in `tab_options()` controls whether vertical lines are displayed at the stub boundary; this works with both HTML and LaTeX output (#2096). (@thebioengineer, #2101)
+
+* The `cells_stub()` location helper now correctly targets all stub columns when using a multi-column stub (#2100). (#2102)
+
+* Improved multi-column stub styling in LaTeX output tables; the `cells_stub()` helper now works properly for adding footnotes and applying styles to stub cells in LaTeX (#2103). (#2104)
+
+* When using `row_group_as_column = TRUE` for LaTeX output tables, column widths are now correctly computed (#2110). (@thebioengineer, #2112)
+
+* Fixed an issue where applying styling to `columns = everything()` could miss columns when a multi-column stub is present (#2094). (#2113)
 
 # gt 1.2.0
 
