@@ -139,6 +139,16 @@ test_that("A gt table can be made from a table with no rows", {
   # usual components and that they have all of the
   # expected dimensions and features
   expect_tab(tab = tab, df = data_e |> dplyr::group_by(group))
+
+  # Create a `gt_tbl` object with `gt()` and a
+  # grouped version of the `data_e` dataset
+  # Also process Markdown in rowname and groupname columns (issue #2081)
+  tab <- gt(dplyr::group_by(data_e, group), process_md = TRUE)
+
+  # Expect that the `gt_tbl` object has all of the
+  # usual components and that they have all of the
+  # expected dimensions and features
+  expect_tab(tab = tab, df = data_e |> dplyr::group_by(group))
 })
 
 test_that("A gt table can use UTF-8 chars in any system locale", {

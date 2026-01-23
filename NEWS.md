@@ -58,6 +58,8 @@
 
 * Refactored pipe use, moving many pipes in the codebase from `%>%` to `|>`. (#2056)
 
+* Fixed an issue with 0-row data frames with row groups and Markdown in the row group labels (`process_md` is TRUE). (#2081)
+
 # gt 1.1.0
 
 ## New features
