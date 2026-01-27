@@ -1227,7 +1227,7 @@ summary_rows_for_group_l <- function(
         # The value of colnum in styles_summary differs for
         # group and grand summaries
         if (summary_row_type == "group") {
-          row_pos <- (row_num - floor(row_num)) * 100L
+          row_pos <- round((row_num - floor(row_num)) * 100L,0)
         } else {
           row_pos <- row_num
         }
@@ -2115,7 +2115,7 @@ apply_cell_styles_l <- function(content, style_obj, type = "cell", width = "\\li
 
 .apply_style_alignment_shortstack <- function(x, style_obj) {
 
-  if(!grepl("\\shortstack[l]", x, fixed = TRUE)){return(x)}
+  if(!isTRUE(grepl("\\shortstack[l]", x, fixed = TRUE))){return(x)}
 
   alignment <- style_obj[["cell_text"]][["align"]]
 
