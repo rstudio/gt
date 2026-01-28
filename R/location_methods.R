@@ -61,6 +61,24 @@ add_summary_location_row <- function(
 
   summary_data <- dt_summary_get(data = data)
 
+  # Redundant if #1608 is fixed.
+  msg_no_summary <- c(
+    "!" = "Can't find summary data.",
+    "i" = "Call {.fn summary_rows} before {.fn tab_footnote}/{.fn tab_style}."
+  )
+  if (length(summary_data) == 0) {
+    # Error early if can't find summary data. and try to add
+    cli::cli_abort(msg_no_summary, call = call)
+  } else {
+    # try to identify if only grand summary rows are present
+    # by checking if all grps are grand summary.
+    grps <- unlist(lapply(summary_data, function(x) x$groups))
+
+    if (identical(unique(grps), ":GRAND_SUMMARY:")) {
+      cli::cli_abort(msg_no_summary, call = call)
+    }
+  }
+
   summary_data_summaries <-
     vapply(
       seq(summary_data),
@@ -182,6 +200,24 @@ add_grand_summary_location_row <- function(
 ) {
   call <- call(class(loc)[[1L]])
   summary_data <- dt_summary_get(data = data)
+
+  # Redundant if #1608 is fixed.
+  msg_no_grand_summary <- c(
+    "!" = "Can't find grand summary data.",
+    "i" = "Call {.fn grand_summary_rows} before {.fn tab_footnote}/{.fn tab_style}."
+  )
+  if (length(summary_data) == 0) {
+    # Error early if can't find summary data. and try to add
+    cli::cli_abort(msg_no_grand_summary, call = call)
+  } else {
+    # try to identify if only summary rows are present
+    # by checking if any grps are grand summary.
+    grps <- unlist(lapply(summary_data, function(x) x$groups))
+
+    if (!":GRAND_SUMMARY:" %in% grps) {
+      cli::cli_abort(msg_no_grand_summary, call = call)
+    }
+  }
 
   id_vals <-
     unique(

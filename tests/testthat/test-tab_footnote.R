@@ -261,6 +261,38 @@ test_that("tab_footnote() works for summary location", {
   )
 })
 
+test_that("tab_footnote() + cells_grand_summary_rows() errors well with absent grand summary rows", {
+
+  # Error well if grand summary is not initialized
+  expect_snapshot(error = TRUE, {
+    # error well if no grand summary exists.
+    exibble %>%
+      gt() %>%
+      tab_footnote("foot grand summary", cells_stub_grand_summary())
+
+    # Error well if a summary is present.
+    exibble %>%
+      gt(groupname_col = "group") %>%
+      summary_rows(columns = tidyselect::where(is.numeric), fns = "sum") %>%
+      tab_footnote("foot grand summary", cells_grand_summary())
+  })
+})
+
+test_that("tab_footnote() + cells_summary() errors well with absent summary rows", {
+  # Error well if summary is not initialized
+  expect_snapshot(error = TRUE, {
+    # error well if no grand summary exists.
+    exibble %>%
+      gt(groupname_col = "group") %>%
+      tab_footnote("foot summary", cells_summary())
+
+    # Error well if a summary is present.
+    exibble %>%
+      gt(groupname_col = "group") %>%
+      grand_summary_rows(columns = tidyselect::where(is.numeric), fns = "sum") %>%
+      tab_footnote("foot summary", cells_stub_summary())
+  })
+
 test_that("tab_footnote() adds footnote marks for in the summary stub (#1832)", {
 
   # Apply a footnote to the grand summary stub cells.
