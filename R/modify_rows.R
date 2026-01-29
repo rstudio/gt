@@ -229,7 +229,7 @@ row_group_order <- function(
 #' 6-4
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v1.3.0` (January 22, 2026)
 #'
 #' @seealso [row_group_order()], which orders the groups themselves.
 #'
