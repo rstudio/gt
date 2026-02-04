@@ -249,7 +249,31 @@ reorder_stub_df <- function(data) {
   # Then, apply any row ordering directives
   stub_df <- apply_row_order_directives(data = data, stub_df = stub_df)
 
+  # Finally, filter out any hidden rows
+  stub_df <- filter_hidden_rows(data = data, stub_df = stub_df)
+
   dt_stub_df_set(data = data, stub_df = stub_df)
+}
+
+# Function to filter out hidden rows from stub_df
+filter_hidden_rows <- function(data, stub_df) {
+
+  # Get the hidden rows
+
+  hidden_rows <- dt_rows_hidden_get(data = data)
+
+  # If there are no hidden rows, return stub_df unchanged
+  if (length(hidden_rows) == 0) {
+    return(stub_df)
+  }
+
+  # Filter out rows where rownum_i is in the hidden list
+  stub_df <- stub_df[!stub_df$rownum_i %in% hidden_rows, ]
+
+  # Reset row names
+  rownames(stub_df) <- NULL
+
+  stub_df
 }
 
 # Function to apply the lazy row ordering directives captured by `row_order()`
