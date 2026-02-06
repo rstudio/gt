@@ -764,10 +764,9 @@ info_locales <- function(begins_with = NULL) {
   )
 
   tab_1$group <-
-    dplyr::case_match(
+    dplyr::replace_values(
       tab_1$group,
-      c("\u00a0", "\u202f") ~ "space",
-      .default = tab_1$group
+      c("\u00a0", "\u202f") ~ "space"
     )
 
   tab_1 <- tab_1[c("locale", "display_name", "group", "decimal")]

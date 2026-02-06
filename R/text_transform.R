@@ -410,7 +410,7 @@ text_case_match <- function(
 
       if (.replace == "all") {
 
-        x <- dplyr::case_match(.x = unlist(x), !!!x_list, .default = unlist(.default))
+        x <- dplyr::recode_values(x = unlist(x), !!!x_list, default = unlist(.default))
 
       } else {
 
