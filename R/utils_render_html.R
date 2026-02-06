@@ -1100,6 +1100,15 @@ create_body_component_h <- function(data) {
   has_stub_column <- "rowname" %in% stub_layout
   has_two_col_stub <- "group_label" %in% stub_layout
 
+  # Calculate the actual number of stub columns for styling purposes
+  # This accounts for multi-column stubs (e.g., rowname_col = c("col1", "col2"))
+  stub_vars <- dt_boxhead_get_var_stub(data = data)
+  n_stub_cols <- if (has_stub_column && !all(is.na(stub_vars))) {
+    length(stub_vars)
+  } else {
+    0L
+  }
+
   # Create ID components for every column that will be rendered
   col_names_id <-
     c(
@@ -1432,7 +1441,7 @@ create_body_component_h <- function(data) {
       build_row_styles_with_stub_columns(
         styles_resolved_row = styles_row,
         stub_column_styles = stub_column_styles,
-        include_stub = has_stub_column,
+        n_stub_cols = n_stub_cols,
         n_cols = n_data_cols,
         data = data
       )
@@ -2174,10 +2183,12 @@ summary_rows_for_group_h <- function(
         }
     }
 
+    # For summary rows, use 1 stub column (the summary label column)
+    # unless we have a two-column stub which is handled separately
     row_styles <-
       build_row_styles(
         styles_resolved_row = styles_resolved_row,
-        include_stub = TRUE,
+        n_stub_cols = 1L,
         n_cols = n_data_cols
       )
 
@@ -2291,7 +2302,7 @@ summary_rows_for_group_h <- function(
 
 build_row_styles <- function(
     styles_resolved_row,
-    include_stub,
+    n_stub_cols,
     n_cols
 ) {
 
@@ -2301,13 +2312,14 @@ build_row_styles <- function(
   # styles_resolved_row, and it's OK for a column not to appear in
   # styles_resolved_row, and it's OK for styles_resolved_row to have 0 rows.
   #
-  # If `include_stub` is TRUE, then a row with column==0 will be used as the
-  # stub style.
+  # If `n_stub_cols` > 0, then rows with colnum <= 0 will be used for stub
+  # styles. For multi-column stubs, colnum values can be negative to indicate
+  # which stub column (with more negative = more leftward).
 
   # This function's implementation can't tolerate colnum of NA, or illegal
   # colnum values. Check and throw early.
   if (
-    !isTRUE(all(styles_resolved_row$colnum %in% c(0, seq_len(n_cols)))) ||
+    !isTRUE(all(styles_resolved_row$colnum %in% c(seq(-n_stub_cols + 1, 0), seq_len(n_cols)))) ||
     anyDuplicated(styles_resolved_row$colnum) > 0L
   ) {
     cli::cli_abort(
@@ -2315,19 +2327,23 @@ build_row_styles <- function(
     )
   }
 
-  n_cols <- n_cols + include_stub
-  result <- rep_len(NA_character_, n_cols)
+  n_total_cols <- n_cols + n_stub_cols
+  result <- rep_len(NA_character_, n_total_cols)
 
   # The subset of styles_resolved_row that applies to data
   idx <- styles_resolved_row$colnum > 0
-  result[styles_resolved_row$colnum[idx] + include_stub] <- styles_resolved_row$html_style[idx]
+  result[styles_resolved_row$colnum[idx] + n_stub_cols] <- styles_resolved_row$html_style[idx]
 
-  # If a stub exists, we need to prepend a style (or NULL) to the result.
-  if (include_stub) {
+  # If stub columns exist, apply stub styles
+  if (n_stub_cols > 0) {
+    # Handle colnum == 0 (applies to all stub columns for backward compatibility)
     idx_0 <- styles_resolved_row$colnum == 0
     stub_style <- styles_resolved_row$html_style[idx_0]
     if (!is_empty(stub_style)) {
-      result[1] <- stub_style
+      # Apply to all stub columns
+      for (i in seq_len(n_stub_cols)) {
+        result[i] <- stub_style
+      }
     }
   }
 
@@ -2337,7 +2353,7 @@ build_row_styles <- function(
 build_row_styles_with_stub_columns <- function(
     styles_resolved_row,
     stub_column_styles,
-    include_stub,
+    n_stub_cols,
     n_cols,
     data
 ) {
@@ -2345,12 +2361,12 @@ build_row_styles_with_stub_columns <- function(
   # First, build normal row styles
   row_styles <- build_row_styles(
     styles_resolved_row = styles_resolved_row,
-    include_stub = include_stub,
+    n_stub_cols = n_stub_cols,
     n_cols = n_cols
   )
 
-  # If we have stub column styles and a stub exists, modify the stub styles
-  if (include_stub && nrow(stub_column_styles) > 0) {
+  # If we have stub column styles and stub columns exist, modify the stub styles
+  if (n_stub_cols > 0 && nrow(stub_column_styles) > 0) {
 
     # Get stub variables to map column names to positions
     stub_vars <- dt_boxhead_get_var_stub(data = data)
@@ -2385,7 +2401,7 @@ build_row_styles_with_stub_columns <- function(
   }
 
   # For multi-column stubs, modify border widths for internal columns
-  if (include_stub) {
+  if (n_stub_cols > 0) {
     stub_vars <- dt_boxhead_get_var_stub(data = data)
 
     if (length(stub_vars) > 1 && !all(is.na(stub_vars))) {

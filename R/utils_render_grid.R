@@ -779,10 +779,11 @@ summary_rows_g <- function(data, group_id, side_grand_summary = "bottom") {
         }
     }
 
+    # For summary rows, use 1 stub column (the summary label column)
     row_styles <-
       build_row_styles(
         styles_resolved_row = styles_resolved_row,
-        include_stub = TRUE,
+        n_stub_cols = 1L,
         n_cols = n_data_cols
       )
 

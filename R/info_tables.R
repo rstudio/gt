@@ -1231,7 +1231,7 @@ info_google_fonts <- function() {
 #' 11-7
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v1.3.0` (January 22, 2026)
 #'
 #' @export
 info_tf_style <- function(locale = NULL) {
