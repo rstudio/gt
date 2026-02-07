@@ -5419,11 +5419,11 @@ extract_duration_pattern <- function(
 ) {
 
   x_val_i_type <-
-    dplyr::case_match(
+    dplyr::recode_values(
       value,
       1 ~ "one",
       0 ~ "zero",
-      .default = "other"
+      default = "other"
     )
 
   pattern <- patterns[grepl(paste0(sub("s$", "", time_p), ".*?.", x_val_i_type), names(patterns))][[1]]

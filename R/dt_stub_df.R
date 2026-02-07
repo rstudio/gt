@@ -141,11 +141,8 @@ dt_stub_df_init <- function(
 
       unique_row_group_ids <-
         create_unique_id_vals(unique_row_group_labels, simplify = process_md)
-      names(unique_row_group_ids) <- unique_row_group_labels
 
-      # dplyr::recode is superseded, and is slower now.
-      # TODO consider using vctrs::vec_case_match when available r-lib/vctrs#1622
-      row_group_ids <- dplyr::recode(row_group_labels, !!!unique_row_group_ids)
+      row_group_ids <- dplyr::replace_values(row_group_labels, from = unique_row_group_ids, to = unique_row_group_labels)
 
     } else {
       row_group_ids <- row_group_labels

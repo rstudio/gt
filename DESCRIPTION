@@ -39,7 +39,7 @@ Imports:
     bitops (>= 1.0-7),
     cli (>= 3.6.3),
     commonmark (>= 1.9.1),
-    dplyr (>= 1.1.4),
+    dplyr (>= 1.2.0),
     fs (>= 1.6.4),
     glue (>= 1.8.0),
     htmltools (>= 0.5.8.1),
@@ -52,7 +52,7 @@ Imports:
     sass (>= 0.4.9),
     scales (>= 1.3.0),
     tidyselect (>= 1.2.1),
-    vctrs,
+    vctrs (>= 0.7.0),
     xml2 (>= 1.3.6)
 Suggests:
     bit64,
