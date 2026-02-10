@@ -26,7 +26,7 @@ test_that("rows_hide() works with integer indices", {
   tbl_hidden <- gt(exibble) |> rows_hide(rows = 1:3)
 
   # Extract hidden rows from the internal structure
- hidden_rows <- gt:::dt_rows_hidden_get(tbl_hidden)
+  hidden_rows <- gt:::dt_rows_hidden_get(tbl_hidden)
 
   expect_equal(hidden_rows, 1:3)
 })
@@ -61,6 +61,7 @@ test_that("rows_unhide() correctly reveals hidden rows", {
     rows_hide(rows = everything())
 
   hidden_rows <- gt:::dt_rows_hidden_get(tbl_hidden)
+
   expect_equal(hidden_rows, 1:8)
 
   tbl_revealed <-
@@ -68,6 +69,7 @@ test_that("rows_unhide() correctly reveals hidden rows", {
     rows_unhide(rows = c("row_1", "row_5"))
 
   hidden_rows_after <- gt:::dt_rows_hidden_get(tbl_revealed)
+
   expect_equal(hidden_rows_after, c(2L, 3L, 4L, 6L, 7L, 8L))
 })
 
@@ -142,27 +144,25 @@ test_that("footnotes skip hidden rows in indexing", {
 
 test_that("styles targeting hidden rows are gracefully handled", {
 
- # This previously caused an error:
-  # "replacement has length zero" in reorder_styles()
   expect_no_error({
-    tbl <- gtcars |>
+    tbl <-
+      gtcars |>
       dplyr::select(mfr, model, year, hp, msrp) |>
       dplyr::slice_head(n = 10) |>
       gt() |>
       fmt_currency(columns = msrp, decimals = 0) |>
-      # Style is applied to rows meeting the condition
       tab_style(
         style = cell_fill(color = "lightgreen"),
         locations = cells_body(columns = msrp, rows = msrp > 200000)
       ) |>
-      # Then some of those styled rows are hidden
       rows_hide(rows = msrp > 500000)
 
     as_raw_html(tbl)
   })
 
   # Verify the table renders and visible styled rows still have styles
-  tbl <- gtcars |>
+  tbl <-
+    gtcars |>
     dplyr::select(mfr, model, msrp) |>
     dplyr::slice_head(n = 5) |>
     gt() |>
@@ -176,14 +176,15 @@ test_that("styles targeting hidden rows are gracefully handled", {
   html_output <- as_raw_html(tbl)
 
   # The styled color should still appear for visible rows
- expect_true(grepl("90EE90", html_output))  # lightgreen hex
+  expect_true(grepl("90EE90", html_output))
 })
 
 test_that("footnotes targeting hidden rows are gracefully handled", {
 
   # Footnotes on rows that get hidden should not cause errors
   expect_no_error({
-    tbl <- exibble[1:5, ] |>
+    tbl <-
+      exibble[1:5, ] |>
       gt(rowname_col = "row") |>
       tab_footnote(
         footnote = "This row will be hidden",
@@ -195,7 +196,8 @@ test_that("footnotes targeting hidden rows are gracefully handled", {
   })
 
   # The footnote for the hidden row should not appear
-  tbl <- exibble[1:5, ] |>
+  tbl <-
+    exibble[1:5, ] |>
     gt(rowname_col = "row") |>
     tab_footnote(
       footnote = "Hidden row footnote",
@@ -217,13 +219,13 @@ test_that("footnotes targeting hidden rows are gracefully handled", {
 test_that("hiding all rows in a group removes the group header", {
 
   # Create a grouped table with cars from different countries
-  tbl <- gtcars |>
+  tbl <-
+    gtcars |>
     dplyr::filter(ctry_origin %in% c("Germany", "Italy", "United States")) |>
     dplyr::select(mfr, model, ctry_origin, hp, msrp) |>
     dplyr::slice_head(n = 4, by = ctry_origin) |>
     gt(groupname_col = "ctry_origin") |>
     fmt_currency(columns = msrp, decimals = 0) |>
-    # Hide all cars with hp < 570 (this removes all German cars)
     rows_hide(rows = hp < 570)
 
   html_output <- as_raw_html(tbl)
@@ -238,19 +240,13 @@ test_that("hiding all rows in a group removes the group header", {
 
 test_that("complex footnotes with hidden rows render correctly", {
 
-
   # This test validates that footnote numbering is correct when:
-
   # - Multiple footnotes target individual rows
-
   # - Some footnotes span across multiple rows (including hidden ones)
-
   # - Some rows are hidden
-
   # The final render should have correct sequential numbering with no gaps
-
-
-  tbl <- countrypops |>
+  tbl <-
+    countrypops |>
     dplyr::filter(country_name == "Brazil", year %in% 2017:2021) |>
     gt(rowname_col = "year") |>
     fmt_integer(columns = population) |>
