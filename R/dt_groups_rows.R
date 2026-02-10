@@ -56,7 +56,8 @@ dt_groups_rows_build <- function(data, context) {
     table_body <- dt_data_get(data = data)
     # For multiple stub columns, use the rightmost (primary) column for rowname
     primary_stub_var <- stub_var[length(stub_var)]
-    stub_df[["rowname"]] <- as.character(table_body[[primary_stub_var]])
+    # Use rownum_i to get the correct row values (handles hidden rows)
+    stub_df[["rowname"]] <- as.character(table_body[[primary_stub_var]][stub_df$rownum_i])
   }
   # what happens if dt_stub_df doesn't exist?
 
@@ -86,6 +87,10 @@ dt_groups_rows_build <- function(data, context) {
     groups_rows[i, "row_start"] <- min(rows_matched)
     groups_rows[i, "row_end"] <- max(rows_matched)
   }
+
+  # Remove groups that have no visible rows (row_start/row_end are NA)
+  # This can happen when all rows in a group are hidden via rows_hide()
+  groups_rows <- groups_rows[!is.na(groups_rows$row_start), ]
 
   # Join `built_group_label` values to the `groups_rows` table
   if (nrow(groups_rows) > 0) {

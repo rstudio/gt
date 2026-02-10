@@ -169,6 +169,8 @@ Other row addition/modification functions:
 \code{\link{row_group_order}()},
 \code{\link{row_order}()},
 \code{\link{rows_add}()},
+\code{\link{rows_hide}()},
+\code{\link{rows_unhide}()},
 \code{\link{summary_rows}()}
 }
 \concept{row addition/modification functions}

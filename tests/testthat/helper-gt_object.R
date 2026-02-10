@@ -115,7 +115,7 @@ gt_attr_names <- function() {
 
   c(
     "_data", "_boxhead",
-    "_stub_df", "_row_groups", "_row_order",
+    "_stub_df", "_row_groups", "_row_order", "_rows_hidden",
     "_heading", "_spanners", "_stubhead",
     "_footnotes", "_source_notes", "_formats", "_substitutions", "_styles",
     "_summary", "_summary_cols", "_summary_cols_build",
