@@ -287,13 +287,18 @@ columns around (the `cols_move*()` functions).
 
 ## Adding or modifying rows
 
-There are two functions that will add rows to a **gt** table:
+There are several functions for working with rows in a **gt** table.
 [`summary_rows()`](https://gt.rstudio.com/reference/summary_rows.md) and
-[`grand_summary_rows()`](https://gt.rstudio.com/reference/grand_summary_rows.md).
-These functions will both add summary rows but one will do it in a
-groupwise fashion while the other will create grand summary rows. The
+[`grand_summary_rows()`](https://gt.rstudio.com/reference/grand_summary_rows.md)
+add summary rows (groupwise or as grand summaries). The
+[`rows_add()`](https://gt.rstudio.com/reference/rows_add.md) function
+lets us add data rows. We can hide rows from view with
+[`rows_hide()`](https://gt.rstudio.com/reference/rows_hide.md) and
+reveal them with
+[`rows_unhide()`](https://gt.rstudio.com/reference/rows_unhide.md). The
 [`row_group_order()`](https://gt.rstudio.com/reference/row_group_order.md)
-function lets us modify the ordering of any row groups in the table.
+and [`row_order()`](https://gt.rstudio.com/reference/row_order.md)
+functions let us modify the ordering of row groups and rows.
 
 - [`summary_rows()`](https://gt.rstudio.com/reference/summary_rows.md) :
   Add group-wise summary rows using aggregation functions
@@ -310,6 +315,12 @@ function lets us modify the ordering of any row groups in the table.
 - [`rows_add()`](https://gt.rstudio.com/reference/rows_add.md) :
 
   Add one or more rows to a **gt** table
+
+- [`rows_hide()`](https://gt.rstudio.com/reference/rows_hide.md) : Hide
+  one or more rows
+
+- [`rows_unhide()`](https://gt.rstudio.com/reference/rows_unhide.md) :
+  Unhide one or more rows
 
 - [`summary_columns()`](https://gt.rstudio.com/reference/summary_columns.md)
   : Add summary columns using aggregation functions

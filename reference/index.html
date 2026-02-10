@@ -624,7 +624,7 @@
       </dl></div><div class="section level2">
       <h2 id="adding-or-modifying-rows">Adding or modifying rows<a class="anchor" aria-label="anchor" href="#adding-or-modifying-rows"></a></h2>
 
-      <div class="section-desc"><p>There are two functions that will add rows to a <strong>gt</strong> table: <code><a href="../reference/summary_rows.html">summary_rows()</a></code> and <code><a href="../reference/grand_summary_rows.html">grand_summary_rows()</a></code>. These functions will both add summary rows but one will do it in a groupwise fashion while the other will create grand summary rows. The <code><a href="../reference/row_group_order.html">row_group_order()</a></code> function lets us modify the ordering of any row groups in the table.</p></div>
+      <div class="section-desc"><p>There are several functions for working with rows in a <strong>gt</strong> table. <code><a href="../reference/summary_rows.html">summary_rows()</a></code> and <code><a href="../reference/grand_summary_rows.html">grand_summary_rows()</a></code> add summary rows (groupwise or as grand summaries). The <code><a href="../reference/rows_add.html">rows_add()</a></code> function lets us add data rows. We can hide rows from view with <code><a href="../reference/rows_hide.html">rows_hide()</a></code> and reveal them with <code><a href="../reference/rows_unhide.html">rows_unhide()</a></code>. The <code><a href="../reference/row_group_order.html">row_group_order()</a></code> and <code><a href="../reference/row_order.html">row_order()</a></code> functions let us modify the ordering of row groups and rows.</p></div>
 
       <dl></dl></div><div class="section level2">
 
@@ -665,6 +665,20 @@
 
         </dt>
         <dd>Add one or more rows to a <strong>gt</strong> table</dd>
+
+        <dt>
+
+          <code><a href="rows_hide.html">rows_hide()</a></code>
+
+        </dt>
+        <dd>Hide one or more rows</dd>
+
+        <dt>
+
+          <code><a href="rows_unhide.html">rows_unhide()</a></code>
+
+        </dt>
+        <dd>Unhide one or more rows</dd>
 
         <dt>
 

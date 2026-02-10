@@ -427,4 +427,6 @@ Other row addition/modification functions:
 [`row_group_order()`](https://gt.rstudio.com/reference/row_group_order.md),
 [`row_order()`](https://gt.rstudio.com/reference/row_order.md),
 [`rows_add()`](https://gt.rstudio.com/reference/rows_add.md),
+[`rows_hide()`](https://gt.rstudio.com/reference/rows_hide.md),
+[`rows_unhide()`](https://gt.rstudio.com/reference/rows_unhide.md),
 [`summary_columns()`](https://gt.rstudio.com/reference/summary_columns.md)
