@@ -56,7 +56,7 @@ test_that("gt_group() can be used to contain gt tables and existing gt_groups", 
 
   gt_tbls_1 <- gt_group(.list = gt_list)
 
-  # Expect that the `gt_grp_2` object produced by `gt_group()`
+  # Expect that the `gt_tbls_1` object produced by `gt_group()`
   # has the 'gt_group' class
   expect_s3_class(gt_tbls_1, "gt_group")
   expect_type(gt_tbls_1, "list")
