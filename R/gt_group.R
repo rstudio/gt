@@ -34,11 +34,11 @@
 #' can be printed independently and table separation (usually a page break)
 #' occurs between each of those.
 #'
-#' @param ... *One or more gt table data objects*
+#' @param ... *One or more gt table or gt_group data objects*
 #'
 #'   `obj:<gt_tbl>` // (`optional`)
 #'
-#'   One or more **gt** table (`gt_tbl`) objects, typically generated via the
+#'   One or more **gt** table (`gt_tbl`) or (`gt_group`) objects, typically generated via the
 #'   [gt()] function.
 #'
 #' @param .list *Alternative to `...`*

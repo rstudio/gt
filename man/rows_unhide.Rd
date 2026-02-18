@@ -36,10 +36,14 @@ rows and there is motivation to reveal one or more of those.
 \details{
 The hiding and unhiding of rows is internally a rendering directive, so, all
 rows that are 'hidden' are still accessible and useful in any expression
-provided to a \code{columns} argument. The \code{rows_unhide()} function quietly
-changes the visible state of a row (much like the \code{\link[=rows_hide]{rows_hide()}} function) and
+provided to a \code{rows} argument. The \code{rows_unhide()} function quietly changes
+the visible state of a row (much like the \code{\link[=rows_hide]{rows_hide()}} function) and doesn
 doesn't yield warnings or messages when changing the state of already-visible
 rows.
+
+Note that unhiding rows will cause them to be included in any \code{\link[=summary_rows]{summary_rows()}}
+or \code{\link[=grand_summary_rows]{grand_summary_rows()}} calculations, as these aggregations only operate on
+visible rows.
 }
 \section{Examples}{
 
