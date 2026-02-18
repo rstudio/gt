@@ -78,6 +78,27 @@ gt_group <- function(
     return(init_gt_group_list())
   }
 
+  # Check if there are any existing gt_groups in the list, if so flatten
+  group_check <- sapply(gt_tbl_list, function(x)
+    inherits(x, "gt_group"))
+
+  if (sum(group_check) > 0) {
+    flattened_list <- lapply(gt_tbl_list, function(x) {
+      if (inherits(x, "gt_group")) {
+        no_tbls <- nrow(x[["gt_tbls"]])
+        # pull out each gt_tbl
+        gt_tables <- lapply(seq_len(no_tbls), function(i) {
+          grp_pull(x, which = i)
+        })
+      } else{
+        list(x)
+      }
+
+    })
+
+    gt_tbl_list <- unlist(flattened_list, recursive = FALSE)
+  }
+
   # Initialize the `gt_group` object and create
   # an empty `gt_tbl_tbl` object
   gt_group <- init_gt_group_list()
@@ -86,9 +107,7 @@ gt_group <- function(
   #
   # Process gt tables and add records to the `gt_tbl_tbl` object
   #
-
   for (i in seq_along(gt_tbl_list)) {
-
     gt_tbl_tbl_i <- generate_gt_tbl_tbl_i(i = i, gt_tbl = gt_tbl_list[[i]])
     gt_tbl_tbl <- dplyr::bind_rows(gt_tbl_tbl, gt_tbl_tbl_i)
   }
