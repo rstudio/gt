@@ -90,10 +90,9 @@ gt_group <- function(
         gt_tables <- lapply(seq_len(no_tbls), function(i) {
           grp_pull(x, which = i)
         })
-      } else{
+      } else {
         list(x)
       }
-
     })
 
     gt_tbl_list <- unlist(flattened_list, recursive = FALSE)
