@@ -1,5 +1,7 @@
 # gt (development version)
 
+* Expand functionality of `gt_group()` to allow `gt_group` objects to be combined with `gt_tbls` (#2128)
+
 # gt 1.3.0
 
 ## New features

@@ -38,11 +38,16 @@ not necessary.
 \details{
 The hiding of rows is internally a rendering directive, so, all rows that are
 'hidden' are still accessible and useful in any expression provided to a
-\code{columns} argument (for column-level operations). Furthermore, \code{rows_hide()}
-(as with many \strong{gt} functions) can be placed anywhere in a pipeline of
-\strong{gt} function calls (acting as a promise to hide rows when the timing is
-right). However, there's perhaps greater readability when placing this call
-closer to the end of such a pipeline.
+\code{rows} argument. Furthermore, \code{rows_hide()} (as with many \strong{gt} functions)
+can be placed anywhere in a pipeline of \strong{gt} function calls (acting as a
+promise to hide rows when the timing is right). However, there's perhaps
+greater readability when placing this call closer to the end of such a
+pipeline.
+
+Note that when using \code{\link[=summary_rows]{summary_rows()}} or \code{\link[=grand_summary_rows]{grand_summary_rows()}}, the
+aggregation calculations will only include the visible rows. Hidden rows are
+excluded from summary computations. This allows summary values to dynamically
+reflect the currently visible data.
 
 \code{rows_hide()} quietly changes the visible state of a row (much like
 \code{\link[=rows_unhide]{rows_unhide()}}) and doesn't yield warnings or messages when changing the
