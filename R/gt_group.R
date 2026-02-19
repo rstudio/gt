@@ -36,10 +36,10 @@
 #'
 #' @param ... *One or more gt table or gt_group data objects*
 #'
-#'   `obj:<gt_tbl>` // (`optional`)
+#'   `obj:<gt_tbl|gt_group>` // (`optional`)
 #'
-#'   One or more **gt** table (`gt_tbl`) or (`gt_group`) objects, typically generated via the
-#'   [gt()] function.
+#'   One or more **gt** table (`gt_tbl`) or (`gt_group`) objects, typically
+#'   generated via the [gt()] function.
 #'
 #' @param .list *Alternative to `...`*
 #'
