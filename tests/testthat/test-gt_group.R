@@ -61,6 +61,21 @@ test_that("gt_group() can be used to contain gt tables and existing gt_groups", 
   expect_s3_class(gt_tbls_1, "gt_group")
   expect_type(gt_tbls_1, "list")
 
+  # The gt_group should contain 4 tables:
+  # 2 individual tables + 1 group of 2 tables (flattened)
+  expect_equal(nrow(gt_tbls_1[["gt_tbls"]]), 4L)
+
+  # Verify that the flattened tables match the originals
+  expect_equal(grp_pull(gt_tbls_1, 1), gt_tbl_1)
+  expect_equal(grp_pull(gt_tbls_1, 2), gt_tbl_2)
+  expect_equal(grp_pull(gt_tbls_1, 3), grp_pull(gt_grp_1, 1))
+  expect_equal(grp_pull(gt_tbls_1, 4), grp_pull(gt_grp_1, 2))
+
+  # Expect that `gt_group()` also works when passing gt_group objects via `...`
+  gt_tbls_2 <- gt_group(gt_tbl_1, gt_grp_1)
+  expect_s3_class(gt_tbls_2, "gt_group")
+  expect_equal(nrow(gt_tbls_2[["gt_tbls"]]), 3L)
+
   # Setting the option `.use_grp_opts` means that the internal
   # component of similar naming is set to that logical value
   # Create a `gt_group` object with `gt_group()`
