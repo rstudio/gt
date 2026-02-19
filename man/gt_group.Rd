@@ -9,10 +9,10 @@ gt_group(..., .list = list2(...), .use_grp_opts = FALSE)
 \arguments{
 \item{...}{\emph{One or more gt table or gt_group data objects}
 
-\verb{obj:<gt_tbl>} // (\code{optional})
+\verb{obj:<gt_tbl|gt_group>} // (\code{optional})
 
-One or more \strong{gt} table (\code{gt_tbl}) or (\code{gt_group}) objects, typically generated via the
-\code{\link[=gt]{gt()}} function.}
+One or more \strong{gt} table (\code{gt_tbl}) or (\code{gt_group}) objects, typically
+generated via the \code{\link[=gt]{gt()}} function.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
