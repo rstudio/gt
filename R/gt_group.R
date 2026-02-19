@@ -98,6 +98,15 @@ gt_group <- function(
     gt_tbl_list <- unlist(flattened_list, recursive = FALSE)
   }
 
+  # Check that all items in the list are `gt_tbl` objects
+  is_gt_tbl <- vapply(gt_tbl_list, FUN = inherits, FUN.VALUE = logical(1), "gt_tbl")
+
+  if (!all(is_gt_tbl)) {
+    cli::cli_abort(
+      "All objects supplied to {.fn gt_group} must be {.cls gt_tbl} or {.cls gt_group} objects."
+    )
+  }
+
   # Initialize the `gt_group` object and create
   # an empty `gt_tbl_tbl` object
   gt_group <- init_gt_group_list()
