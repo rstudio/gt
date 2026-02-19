@@ -17,12 +17,13 @@ gt_group(..., .list = list2(...), .use_grp_opts = FALSE)
 
 - ...:
 
-  *One or more gt table data objects*
+  *One or more gt table or gt_group data objects*
 
-  `obj:<gt_tbl>` // (`optional`)
+  `obj:<gt_tbl|gt_group>` // (`optional`)
 
-  One or more **gt** table (`gt_tbl`) objects, typically generated via
-  the [`gt()`](https://gt.rstudio.com/reference/gt.md) function.
+  One or more **gt** table (`gt_tbl`) or (`gt_group`) objects, typically
+  generated via the [`gt()`](https://gt.rstudio.com/reference/gt.md)
+  function.
 
 - .list:
 

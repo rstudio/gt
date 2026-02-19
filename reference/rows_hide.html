@@ -120,11 +120,15 @@ down to the rows we need (e.g., <code>[column_1] &gt; 100 &amp; [column_2] &lt; 
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The hiding of rows is internally a rendering directive, so, all rows that are
 'hidden' are still accessible and useful in any expression provided to a
-<code>columns</code> argument (for column-level operations). Furthermore, <code>rows_hide()</code>
-(as with many <strong>gt</strong> functions) can be placed anywhere in a pipeline of
-<strong>gt</strong> function calls (acting as a promise to hide rows when the timing is
-right). However, there's perhaps greater readability when placing this call
-closer to the end of such a pipeline.</p>
+<code>rows</code> argument. Furthermore, <code>rows_hide()</code> (as with many <strong>gt</strong> functions)
+can be placed anywhere in a pipeline of <strong>gt</strong> function calls (acting as a
+promise to hide rows when the timing is right). However, there's perhaps
+greater readability when placing this call closer to the end of such a
+pipeline.</p>
+<p>Note that when using <code><a href="summary_rows.html">summary_rows()</a></code> or <code><a href="grand_summary_rows.html">grand_summary_rows()</a></code>, the
+aggregation calculations will only include the visible rows. Hidden rows are
+excluded from summary computations. This allows summary values to dynamically
+reflect the currently visible data.</p>
 <p><code>rows_hide()</code> quietly changes the visible state of a row (much like
 <code><a href="rows_unhide.html">rows_unhide()</a></code>) and doesn't yield warnings or messages when changing the
 state of already-hidden rows.</p>

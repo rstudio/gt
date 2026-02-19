@@ -52,11 +52,18 @@ An object of class `gt_tbl`.
 
 The hiding of rows is internally a rendering directive, so, all rows
 that are 'hidden' are still accessible and useful in any expression
-provided to a `columns` argument (for column-level operations).
-Furthermore, `rows_hide()` (as with many **gt** functions) can be placed
-anywhere in a pipeline of **gt** function calls (acting as a promise to
-hide rows when the timing is right). However, there's perhaps greater
-readability when placing this call closer to the end of such a pipeline.
+provided to a `rows` argument. Furthermore, `rows_hide()` (as with many
+**gt** functions) can be placed anywhere in a pipeline of **gt**
+function calls (acting as a promise to hide rows when the timing is
+right). However, there's perhaps greater readability when placing this
+call closer to the end of such a pipeline.
+
+Note that when using
+[`summary_rows()`](https://gt.rstudio.com/reference/summary_rows.md) or
+[`grand_summary_rows()`](https://gt.rstudio.com/reference/grand_summary_rows.md),
+the aggregation calculations will only include the visible rows. Hidden
+rows are excluded from summary computations. This allows summary values
+to dynamically reflect the currently visible data.
 
 `rows_hide()` quietly changes the visible state of a row (much like
 [`rows_unhide()`](https://gt.rstudio.com/reference/rows_unhide.md)) and

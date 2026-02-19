@@ -51,11 +51,16 @@ An object of class `gt_tbl`.
 
 The hiding and unhiding of rows is internally a rendering directive, so,
 all rows that are 'hidden' are still accessible and useful in any
-expression provided to a `columns` argument. The `rows_unhide()`
-function quietly changes the visible state of a row (much like the
+expression provided to a `rows` argument. The `rows_unhide()` function
+quietly changes the visible state of a row (much like the
 [`rows_hide()`](https://gt.rstudio.com/reference/rows_hide.md) function)
-and doesn't yield warnings or messages when changing the state of
+and doesn doesn't yield warnings or messages when changing the state of
 already-visible rows.
+
+Note that unhiding rows will cause them to be included in any
+[`summary_rows()`](https://gt.rstudio.com/reference/summary_rows.md) or
+[`grand_summary_rows()`](https://gt.rstudio.com/reference/grand_summary_rows.md)
+calculations, as these aggregations only operate on visible rows.
 
 ## Examples
 

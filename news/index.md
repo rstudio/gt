@@ -2,6 +2,11 @@
 
 ## gt (development version)
 
+- Expand functionality of
+  [`gt_group()`](https://gt.rstudio.com/reference/gt_group.md) to allow
+  `gt_group` objects to be combined with `gt_tbls`
+  ([\#2128](https://github.com/rstudio/gt/issues/2128))
+
 ## gt 1.3.0
 
 CRAN release: 2026-01-22
