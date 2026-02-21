@@ -2835,3 +2835,33 @@ test_that("multicolumn stub are supported", {
   expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:gridSpan"), "val"), "3")
 
 })
+
+test_that("word ooxml handles empty markdown cells gt object", {
+
+  # Create a one-row table for these tests
+  gt_empty_md <- exibble[1, 1:2] |>
+    dplyr::mutate(num = " ") |>
+    gt() |>
+    cols_label(
+      num = md(" "),
+      char = md("char")
+    ) |>
+    fmt_markdown()
+
+  ## convert to word xml nodeset
+  xml <- gt_empty_md %>% as_word() %>% xml2::read_xml()
+
+  table_cells <- xml_find_all(xml, ".//w:tc//w:t")
+
+  expect_equal(
+    as.character(table_cells),
+    c(
+      "<w:t xml:space=\"default\"/>",
+      "<w:t xml:space=\"preserve\">char</w:t>",
+      "<w:t xml:space=\"default\"/>",
+      "<w:t xml:space=\"preserve\">apricot</w:t>"
+    )
+  )
+
+})
+
