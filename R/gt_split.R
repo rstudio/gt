@@ -177,7 +177,7 @@ gt_split <- function(
     gt_tbl_i <- gt_tbl_main
 
     gt_tbl_i[["_data"]] <- gt_tbl_i[["_data"]][row_range_list[[i]], ]
-    gt_tbl_i[["_stub_df"]] <- gt_tbl_i[["_stub_df"]][1:length(row_range_list[[i]]), ]
+    gt_tbl_i[["_stub_df"]] <- gt_tbl_i[["_stub_df"]][seq_along(row_range_list[[i]]), ]
 
     if (!is.null(col_slice_at)) {
 
