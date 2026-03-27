@@ -29,9 +29,8 @@ test_that("as_typst() uses figure for enriched tables in auto mode", {
   expect_match(typst_output, "^#figure\\(")
   expect_match(typst_output, "table\\(")
   expect_match(typst_output, "stack\\(dir: ttb, spacing: 0\\.9em")
+  expect_match(typst_output, "stack\\(dir: ttb, spacing: 0\\.35em, block\\[Data listing from \\*gtcars\\*\\], block\\[`gtcars` is an R dataset\\]\\)")
   expect_no_match(typst_output, "#align\\(center\\)\\[")
-  expect_match(typst_output, "Data listing from \\*gtcars\\*")
-  expect_match(typst_output, "`gtcars` is an R dataset")
   expect_no_match(typst_output, "#strong\\[Data listing from")
   expect_no_match(typst_output, "#emph\\[`gtcars` is an R dataset\\]")
   expect_no_match(typst_output, "#linebreak\\(")
@@ -59,11 +58,12 @@ test_that("as_typst() container argument controls top-level structure", {
     gt() |>
     tab_caption("A Typst caption")
 
-  expect_no_match(as_typst(gt_tbl, container = "table"), "#figure\\(")
-  expect_match(
-    as_typst(gt_tbl, container = "table"),
-    "A Typst caption"
+  expect_warning(
+    table_only <- as_typst(gt_tbl, container = "table"),
+    "Auxiliary Typst table content is dropped when `container = \"table\"`."
   )
+  expect_no_match(table_only, "#figure\\(")
+  expect_no_match(table_only, "A Typst caption")
 
   forced_figure <- as_typst(gt_tbl |> rm_caption(), container = "figure")
   expect_match(forced_figure, "^#figure\\(")
@@ -180,6 +180,85 @@ test_that("as_typst() styles notes with local Typst text wrappers", {
     as_typst()
 
   expect_match(typst_output, "block\\[#text\\(fill: rgb\\(\"#FF0000\"\\)\\)\\[source note\\]\\]")
+})
+
+test_that("as_typst() renders heading and footer regions as explicit Typst blocks", {
+
+  typst_output <-
+    exibble[1:2, c("num", "char")] |>
+    gt() |>
+    tab_header(title = "Title", subtitle = "Subtitle") |>
+    tab_source_note("Source note") |>
+    as_typst()
+
+  expect_match(
+    typst_output,
+    "stack\\(dir: ttb, spacing: 0\\.35em, block\\[Title\\], block\\[Subtitle\\]\\)"
+  )
+  expect_match(
+    typst_output,
+    "stack\\(dir: ttb, spacing: 0\\.45em, block\\[Source note\\]\\)"
+  )
+})
+
+test_that("as_typst() drops all auxiliary content for forced bare tables", {
+
+  gt_tbl <-
+    exibble[1:2, c("num", "char")] |>
+    gt() |>
+    tab_header(title = "Title", subtitle = "Subtitle") |>
+    tab_caption("Caption") |>
+    tab_footnote(
+      footnote = "Footnote",
+      locations = cells_body(columns = num, rows = 1)
+    ) |>
+    tab_source_note("Source note")
+
+  expect_warning(
+    typst_output <- as_typst(gt_tbl, container = "table"),
+    "Auxiliary Typst table content is dropped when `container = \"table\"`."
+  )
+
+  expect_match(typst_output, "^#table\\(")
+  expect_no_match(typst_output, "#figure\\(")
+  expect_no_match(typst_output, "Title")
+  expect_no_match(typst_output, "Subtitle")
+  expect_no_match(typst_output, "Caption")
+  expect_no_match(typst_output, "Footnote")
+  expect_no_match(typst_output, "Source note")
+})
+
+test_that("as_typst() maps whitespace controls conservatively in cells and notes", {
+
+  typst_output <-
+    dplyr::tibble(
+      label = c("nowrap", "pre", "pre-wrap"),
+      text = c("Alpha Beta", "A  B", "A  B")
+    ) |>
+    gt() |>
+    tab_style(
+      style = cell_text(whitespace = "nowrap"),
+      locations = cells_body(columns = text, rows = 1)
+    ) |>
+    tab_style(
+      style = cell_text(whitespace = "pre"),
+      locations = cells_body(columns = text, rows = 2)
+    ) |>
+    tab_style(
+      style = cell_text(whitespace = "pre-wrap"),
+      locations = cells_body(columns = text, rows = 3)
+    ) |>
+    tab_source_note("note with  two spaces") |>
+    tab_style(
+      style = cell_text(whitespace = "pre-wrap", align = "right", indent = px(8)),
+      locations = cells_source_notes()
+    ) |>
+    as_typst()
+
+  expect_match(typst_output, "\\[Alpha~Beta\\]")
+  expect_match(typst_output, "\\[A~~B\\]")
+  expect_match(typst_output, "\\[A ~B\\]")
+  expect_match(typst_output, "#align\\(right\\)\\[#pad\\(left: 6pt\\)\\[note with ~two spaces\\]\\]")
 })
 
 test_that("as_typst() styles heading blocks with fill and text color", {

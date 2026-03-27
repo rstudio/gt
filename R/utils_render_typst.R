@@ -62,6 +62,19 @@ as_typst_string <- function(data, container = "auto", label = NULL, breakable = 
   has_footer <- length(footer_components) > 0L && any(nzchar(footer_components))
   has_auxiliary_content <- has_caption || has_heading || has_footer
 
+  if (identical(container, "table") && has_auxiliary_content) {
+    cli::cli_warn(c(
+      "Auxiliary Typst table content is dropped when `container = \"table\"`.",
+      "*" = "Titles, subtitles, captions, footnotes, and source notes require figure semantics in Typst."
+    ))
+    has_caption <- FALSE
+    has_heading <- FALSE
+    has_footer <- FALSE
+    heading_component <- character(0L)
+    footer_components <- character(0L)
+    has_auxiliary_content <- FALSE
+  }
+
   use_figure <-
     switch(
       container,
@@ -71,8 +84,8 @@ as_typst_string <- function(data, container = "auto", label = NULL, breakable = 
     )
 
   table_component <- create_table_component_typst(data = data, styles_tbl = styles_tbl)
-  heading_region <- typst_region_component(heading_component, spacing = "0.35em")
-  footer_region <- typst_region_component(footer_components, spacing = "0.45em")
+  heading_region <- typst_region_component(heading_component, spacing = "0.35em", force_stack = TRUE)
+  footer_region <- typst_region_component(footer_components, spacing = "0.45em", force_stack = TRUE)
 
   main_component <-
     if (use_figure) {
@@ -189,7 +202,8 @@ create_heading_component_typst <- function(data, styles_tbl = dt_styles_get(data
       heading_lines,
       typst_render_block_or_text(
         heading$title,
-        style_obj = typst_style_for_heading(styles_tbl = styles_tbl, locname = "title")
+        style_obj = typst_style_for_heading(styles_tbl = styles_tbl, locname = "title"),
+        force_block = TRUE
       )
     )
   }
@@ -199,7 +213,8 @@ create_heading_component_typst <- function(data, styles_tbl = dt_styles_get(data
       heading_lines,
       typst_render_block_or_text(
         heading$subtitle,
-        style_obj = typst_style_for_heading(styles_tbl = styles_tbl, locname = "subtitle")
+        style_obj = typst_style_for_heading(styles_tbl = styles_tbl, locname = "subtitle"),
+        force_block = TRUE
       )
     )
   }
@@ -212,7 +227,10 @@ create_heading_component_typst <- function(data, styles_tbl = dt_styles_get(data
 }
 
 create_caption_component_typst <- function(caption) {
-  process_text(caption, context = "typst")
+  typst_render_block_or_text(
+    process_text(caption, context = "typst"),
+    force_block = TRUE
+  )
 }
 
 create_figure_component_typst <- function(
@@ -976,15 +994,14 @@ typst_span_cell <- function(text, style_obj = NULL, colspan = 1L, align = NULL, 
 }
 
 typst_note_block <- function(text, style_obj = NULL) {
-  modifiers <- typst_block_modifiers(style_obj)
-  rendered <- typst_inner_from_content_expr(
-    typst_styled_content_expr(text = text, style_obj = style_obj, strong = FALSE)
+  typst_render_block_or_text(
+    text = text,
+    style_obj = style_obj,
+    force_block = TRUE
   )
-  rendered <- typst_wrap_block_region(rendered, style_obj)
-  paste0("block", modifiers, "[", rendered, "]")
 }
 
-typst_region_component <- function(components, spacing = "0.35em") {
+typst_region_component <- function(components, spacing = "0.35em", force_stack = FALSE) {
 
   components <- components[!is.na(components) & nzchar(components)]
 
@@ -992,7 +1009,7 @@ typst_region_component <- function(components, spacing = "0.35em") {
     return(character(0L))
   }
 
-  if (length(components) == 1L) {
+  if (length(components) == 1L && !isTRUE(force_stack)) {
     return(components[[1L]])
   }
 
@@ -1026,7 +1043,15 @@ typst_inner_from_content_expr <- function(content_expr) {
 typst_styled_content_expr <- function(text, style_obj = NULL, strong = FALSE) {
 
   style_obj <- style_obj %||% list()
-  inner <- typst_inner_from_content_expr(typst_content_expr(typst_apply_text_transform(text, style_obj)))
+  inner <-
+    typst_inner_from_content_expr(
+      typst_content_expr(
+        typst_apply_whitespace(
+          text = typst_apply_text_transform(text, style_obj),
+          whitespace = style_obj[["cell_text"]][["whitespace"]] %||% NULL
+        )
+      )
+    )
 
   font <- style_obj[["cell_text"]][["font"]]
   weight <- style_obj[["cell_text"]][["weight"]]
@@ -1063,6 +1088,93 @@ typst_styled_content_expr <- function(text, style_obj = NULL, strong = FALSE) {
   }
 
   paste0("[", inner, "]")
+}
+
+typst_apply_whitespace <- function(text, whitespace = NULL) {
+
+  text <- text %||% ""
+
+  if (is.null(whitespace) || identical(whitespace, "normal") || !nzchar(text)) {
+    return(text)
+  }
+
+  whitespace <- as.character(whitespace)[1]
+
+  switch(
+    whitespace,
+    nowrap = typst_nowrap_text(text),
+    pre = typst_preserve_text(text, wrap = FALSE),
+    "pre-wrap" = typst_preserve_text(text, wrap = TRUE),
+    text
+  )
+}
+
+typst_nowrap_text <- function(text) {
+
+  text <- gsub("\r\n?", "\n", text)
+  text <- gsub("\n+", " ", text)
+  gsub(" ", "~", text, fixed = TRUE)
+}
+
+typst_preserve_text <- function(text, wrap = TRUE) {
+
+  text <- gsub("\r\n?", "\n", text)
+  lines <- strsplit(text, "\n", fixed = TRUE)[[1]]
+
+  rendered_lines <-
+    vapply(lines, typst_preserve_line, character(1L), wrap = wrap, USE.NAMES = FALSE)
+
+  paste(rendered_lines, collapse = "#linebreak()")
+}
+
+typst_preserve_line <- function(text, wrap = TRUE) {
+
+  if (!nzchar(text)) {
+    return("")
+  }
+
+  chars <- strsplit(text, "", fixed = TRUE)[[1]]
+  out <- character(0L)
+  i <- 1L
+
+  while (i <= length(chars)) {
+
+    if (identical(chars[[i]], " ")) {
+      j <- i
+
+      while (j <= length(chars) && identical(chars[[j]], " ")) {
+        j <- j + 1L
+      }
+
+      run_length <- j - i
+
+      out <- c(
+        out,
+        if (wrap && run_length > 0L) {
+          paste0(" ", strrep("~", max(0L, run_length - 1L)))
+        } else {
+          strrep("~", run_length)
+        }
+      )
+
+      i <- j
+      next
+    }
+
+    if (identical(chars[[i]], "\t")) {
+      out <- c(
+        out,
+        if (wrap) " ~" else "~~"
+      )
+      i <- i + 1L
+      next
+    }
+
+    out <- c(out, chars[[i]])
+    i <- i + 1L
+  }
+
+  paste0(out, collapse = "")
 }
 
 typst_color_expr <- function(color) {
@@ -1219,13 +1331,13 @@ typst_render_block_text <- function(text, style_obj = NULL) {
   )
 }
 
-typst_render_block_or_text <- function(text, style_obj = NULL) {
+typst_render_block_or_text <- function(text, style_obj = NULL, force_block = FALSE) {
   style_obj <- style_obj %||% list()
   modifiers <- typst_block_modifiers(style_obj)
   rendered <- typst_render_block_text(text = text, style_obj = style_obj)
   rendered <- typst_wrap_block_region(rendered, style_obj)
 
-  if (identical(modifiers, "")) {
+  if (identical(modifiers, "") && !isTRUE(force_block)) {
     return(rendered)
   }
 

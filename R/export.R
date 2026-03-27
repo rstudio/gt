@@ -716,9 +716,11 @@ as_word_tbl_body <- function(
 #'   `singl-kw:[auto|table|figure]` // *default:* `"auto"`
 #'
 #'   Determines the top-level Typst construct used for the export. With
-#'   `"auto"`, a table caption supplied through [tab_caption()] causes the table
-#'   to be wrapped in a `figure(...)` with `kind: table`; otherwise, a bare
-#'   `table(...)` is emitted. Use `"table"` to always emit a bare table, or
+#'   `"auto"`, auxiliary content such as titles, subtitles, captions,
+#'   footnotes, or source notes causes the table to be wrapped in a
+#'   `figure(...)` with `kind: table`; otherwise, a bare `table(...)` is
+#'   emitted. Use `"table"` to always emit a bare table; any auxiliary content
+#'   that requires figure semantics will be dropped with a warning. Use
 #'   `"figure"` to always emit a figure-wrapped table.
 #'
 #' @param label *Optional Typst label*
