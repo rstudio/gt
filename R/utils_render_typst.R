@@ -897,7 +897,8 @@ render_header_rows_typst <- function(header_rows, fill_plan) {
                 header_rows[[i]]$cells[[j]],
                 row_index = i - 1L,
                 col_start = col_positions[[j]],
-                fill_plan = fill_plan
+                fill_plan = fill_plan,
+                disable_justify = TRUE
               )
             },
             character(1L)
@@ -920,14 +921,15 @@ render_body_rows_typst <- function(body_rows, fill_plan) {
       paste(
         vapply(
           seq_along(body_rows[[i]]$cells),
-          function(j) {
-            typst_render_cell_spec(
-              body_rows[[i]]$cells[[j]],
-              row_index = header_count + i - 1L,
-              col_start = col_positions[[j]],
-              fill_plan = fill_plan
-            )
-          },
+            function(j) {
+              typst_render_cell_spec(
+                body_rows[[i]]$cells[[j]],
+                row_index = header_count + i - 1L,
+                col_start = col_positions[[j]],
+                fill_plan = fill_plan,
+                disable_justify = FALSE
+              )
+            },
           character(1L)
         ),
         collapse = ", "
@@ -937,7 +939,7 @@ render_body_rows_typst <- function(body_rows, fill_plan) {
   )
 }
 
-typst_render_cell_spec <- function(cell, row_index, col_start, fill_plan) {
+typst_render_cell_spec <- function(cell, row_index, col_start, fill_plan, disable_justify = FALSE) {
 
   style_obj <- cell$style %||% list()
   suppress_fill <- typst_fill_is_lifted(
@@ -947,7 +949,7 @@ typst_render_cell_spec <- function(cell, row_index, col_start, fill_plan) {
     colspan = cell$colspan %||% 1L,
     style_obj = style_obj
   )
-  suppress_stroke <- typst_stroke_is_lifted(
+  residual_stroke <- typst_residual_stroke(
     fill_plan = fill_plan,
     row_index = row_index,
     col_start = col_start,
@@ -962,18 +964,19 @@ typst_render_cell_spec <- function(cell, row_index, col_start, fill_plan) {
     align = cell$align,
     strong = isTRUE(cell$strong),
     suppress_fill = suppress_fill,
-    suppress_stroke = suppress_stroke
+    stroke_obj = residual_stroke %||% typst_empty_stroke(),
+    disable_justify = disable_justify
   )
 }
 
-typst_span_cell <- function(text, style_obj = NULL, colspan = 1L, align = NULL, strong = FALSE, suppress_fill = FALSE, suppress_stroke = FALSE) {
+typst_span_cell <- function(text, style_obj = NULL, colspan = 1L, align = NULL, strong = FALSE, suppress_fill = FALSE, stroke_obj = NULL, disable_justify = FALSE) {
 
   effective_align <-
     typst_cell_align_expr(
       h_align = align %||% style_obj[["cell_text"]][["align"]] %||% NULL,
       v_align = style_obj[["cell_text"]][["v_align"]] %||% NULL
     )
-  stroke_expr <- typst_stroke_expr(style_obj)
+  stroke_expr <- typst_stroke_serialize(stroke_obj)
 
   modifiers <- c(
     if (colspan > 1L) paste0("colspan: ", colspan),
@@ -981,10 +984,13 @@ typst_span_cell <- function(text, style_obj = NULL, colspan = 1L, align = NULL, 
     if (!suppress_fill && !is.null(style_obj[["cell_fill"]][["color"]])) {
       paste0("fill: ", typst_color_expr(style_obj[["cell_fill"]][["color"]]))
     },
-    if (!suppress_stroke && !is.null(stroke_expr)) paste0("stroke: ", stroke_expr)
+    if (!is.null(stroke_expr)) paste0("stroke: ", stroke_expr)
   )
 
   content <- typst_styled_content_expr(text = text, style_obj = style_obj, strong = strong)
+  if (isTRUE(disable_justify)) {
+    content <- typst_disable_justify_in_content_expr(content)
+  }
 
   if (length(modifiers) == 0) {
     return(content)
@@ -1038,6 +1044,11 @@ typst_wrap_strong <- function(content_expr) {
 
 typst_inner_from_content_expr <- function(content_expr) {
   sub("^\\[(.*)\\]$", "\\1", content_expr)
+}
+
+typst_disable_justify_in_content_expr <- function(content_expr) {
+  inner <- typst_inner_from_content_expr(content_expr)
+  paste0("[#set par(justify: false)\n", inner, "]")
 }
 
 typst_styled_content_expr <- function(text, style_obj = NULL, strong = FALSE) {
@@ -1650,10 +1661,33 @@ typst_size_expr <- function(size) {
   "1em"
 }
 
-typst_stroke_expr <- function(style_obj = NULL) {
+typst_empty_stroke <- function() {
+  stats::setNames(vector("list", 4L), c("left", "right", "top", "bottom"))
+}
+
+typst_stroke_is_empty <- function(stroke_obj) {
+  is.null(stroke_obj) || !any(vapply(stroke_obj, Negate(is.null), logical(1L)))
+}
+
+typst_stroke_side_expr <- function(color = "#000000", width = "1px", style = "solid") {
+  dash <- switch(
+    style,
+    dashed = ', dash: "dashed"',
+    dotted = ', dash: "dotted"',
+    ""
+  )
+
+  paste0(
+    "(paint: ", typst_color_expr(color),
+    ", thickness: ", typst_length_expr(width),
+    dash, ")"
+  )
+}
+
+typst_normalize_stroke <- function(style_obj = NULL) {
   style_obj <- style_obj %||% list()
   border_keys <- c("cell_border_left", "cell_border_right", "cell_border_top", "cell_border_bottom")
-  parts <- character(0L)
+  stroke_obj <- typst_empty_stroke()
 
   # Preserve explicit per-side borders exactly as resolved from `gt` styles.
   # If neighboring cells both specify a shared edge, emit both; do not
@@ -1667,28 +1701,90 @@ typst_stroke_expr <- function(style_obj = NULL) {
     width <- border[["width"]] %||% "1px"
     style <- border[["style"]] %||% "solid"
 
-    dash <- switch(
-      style,
-      dashed = ', dash: "dashed"',
-      dotted = ', dash: "dotted"',
-      ""
-    )
-
-    parts <- c(
-      parts,
-      paste0(
-        side, ": (paint: ", typst_color_expr(color),
-        ", thickness: ", typst_length_expr(width),
-        dash, ")"
-      )
-    )
+    stroke_obj[[side]] <- typst_stroke_side_expr(color = color, width = width, style = style)
   }
 
-  if (length(parts) == 0L) {
+  if (typst_stroke_is_empty(stroke_obj)) {
     return(NULL)
   }
 
+  stroke_obj
+}
+
+typst_stroke_serialize <- function(stroke_obj = NULL) {
+  if (typst_stroke_is_empty(stroke_obj)) {
+    return(NULL)
+  }
+
+  sides <- names(stroke_obj)[vapply(stroke_obj, Negate(is.null), logical(1L))]
+  parts <- vapply(sides, function(side) paste0(side, ": ", stroke_obj[[side]]), character(1L))
   paste0("(", paste(parts, collapse = ", "), ")")
+}
+
+typst_stroke_expr <- function(style_obj = NULL) {
+  typst_stroke_serialize(typst_normalize_stroke(style_obj))
+}
+
+typst_stroke_merge <- function(base = NULL, overlay = NULL) {
+  base <- base %||% typst_empty_stroke()
+  overlay <- overlay %||% typst_empty_stroke()
+  out <- base
+
+  for (side in names(out)) {
+    if (!is.null(overlay[[side]])) {
+      out[[side]] <- overlay[[side]]
+    }
+  }
+
+  if (typst_stroke_is_empty(out)) {
+    return(NULL)
+  }
+
+  out
+}
+
+typst_stroke_subtract <- function(stroke_obj = NULL, covered_obj = NULL) {
+  stroke_obj <- stroke_obj %||% typst_empty_stroke()
+  covered_obj <- covered_obj %||% typst_empty_stroke()
+  out <- stroke_obj
+
+  for (side in names(out)) {
+    if (!is.null(out[[side]]) && identical(out[[side]], covered_obj[[side]])) {
+      out[[side]] <- NULL
+    }
+  }
+
+  if (typst_stroke_is_empty(out)) {
+    return(NULL)
+  }
+
+  out
+}
+
+typst_common_stroke <- function(cells) {
+  if (length(cells) == 0L) {
+    return(NULL)
+  }
+
+  common <- typst_empty_stroke()
+
+  for (side in names(common)) {
+    side_values <- lapply(cells, function(cell) cell[[side]])
+    non_null <- vapply(side_values, Negate(is.null), logical(1L))
+
+    if (all(non_null)) {
+      unique_vals <- unique(unlist(side_values, use.names = FALSE))
+      if (length(unique_vals) == 1L) {
+        common[[side]] <- unique_vals[[1L]]
+      }
+    }
+  }
+
+  if (typst_stroke_is_empty(common)) {
+    return(NULL)
+  }
+
+  common
 }
 
 typst_length_expr <- function(value) {
@@ -1743,7 +1839,19 @@ typst_table_fill_plan <- function(header_rows, body_rows, n_cols) {
   all_rows <- c(header_rows, body_rows)
 
   if (length(all_rows) == 0L) {
-    return(list(fill_spec = NULL, row_fill_map = list(), col_fill_map = list(), default_fill = NULL, header_rows = seq_along(header_rows)))
+    return(
+      list(
+        fill_spec = NULL,
+        row_fill_map = list(),
+        col_fill_map = list(),
+        default_fill = NULL,
+        stroke_spec = NULL,
+        default_stroke = NULL,
+        row_stroke_map = list(),
+        col_stroke_map = list(),
+        header_rows = seq_along(header_rows)
+      )
+    )
   }
 
   fill_grid <-
@@ -1751,11 +1859,7 @@ typst_table_fill_plan <- function(header_rows, body_rows, n_cols) {
       rbind,
       lapply(all_rows, typst_expand_row_fill_values, n_cols = n_cols)
     )
-  stroke_grid <-
-    do.call(
-      rbind,
-      lapply(all_rows, typst_expand_row_stroke_values, n_cols = n_cols)
-    )
+  stroke_grid <- lapply(all_rows, typst_expand_row_stroke_values, n_cols = n_cols)
 
   default_fill <- NULL
   body_data_idx <- which(vapply(body_rows, `[[`, character(1L), "row_kind") == "data")
@@ -1832,16 +1936,98 @@ typst_table_fill_plan <- function(header_rows, body_rows, n_cols) {
       NULL
     }
 
-  stroke_values <- unique(stroke_grid[nzchar(stroke_grid)])
+  default_stroke <- typst_common_stroke(unlist(stroke_grid, recursive = FALSE))
+  if (!is.null(default_stroke)) {
+    stroke_grid <- lapply(
+      stroke_grid,
+      function(row) {
+        lapply(row, typst_stroke_subtract, covered_obj = default_stroke)
+      }
+    )
+  }
+
+  row_stroke_map <- list()
+  row_has_lift <- rep(FALSE, length(stroke_grid))
+  for (i in seq_along(stroke_grid)) {
+    row_stroke <- typst_common_stroke(stroke_grid[[i]])
+    if (!is.null(row_stroke)) {
+      row_stroke_map[[as.character(i - 1L)]] <- row_stroke
+      row_has_lift[[i]] <- TRUE
+      stroke_grid[[i]] <- lapply(stroke_grid[[i]], typst_stroke_subtract, covered_obj = row_stroke)
+    }
+  }
+
+  col_stroke_map <- list()
+  for (j in seq_len(n_cols)) {
+    active_rows <- which(!row_has_lift)
+    if (length(active_rows) == 0L) {
+      next
+    }
+
+    col_cells <- lapply(
+      active_rows,
+      function(i) {
+        row <- stroke_grid[[i]]
+        if (length(row) < j) {
+          return(NULL)
+        }
+        row[[j]]
+      }
+    )
+    col_stroke <- typst_common_stroke(col_cells)
+
+    if (!is.null(col_stroke)) {
+      col_stroke_map[[as.character(j - 1L)]] <- col_stroke
+      for (i in active_rows) {
+        if (length(stroke_grid[[i]]) >= j) {
+          stroke_grid[[i]][[j]] <- typst_stroke_subtract(stroke_grid[[i]][[j]], covered_obj = col_stroke)
+        }
+      }
+    }
+  }
+
+  row_stroke_clauses <- character(0L)
+  if (length(row_stroke_map) > 0L) {
+    row_ids <- as.integer(names(row_stroke_map))
+    row_stroke_clauses <- vapply(
+      seq_along(row_ids),
+      FUN.VALUE = character(1L),
+      FUN = function(i) {
+        combined <- typst_stroke_merge(default_stroke, row_stroke_map[[i]])
+        paste0("if y == ", row_ids[[i]], " { ", typst_stroke_serialize(combined), " }")
+      }
+    )
+  }
+
+  col_stroke_clauses <- character(0L)
+  if (length(col_stroke_map) > 0L) {
+    col_ids <- as.integer(names(col_stroke_map))
+    col_stroke_clauses <- vapply(
+      seq_along(col_ids),
+      FUN.VALUE = character(1L),
+      FUN = function(i) {
+        combined <- typst_stroke_merge(default_stroke, col_stroke_map[[i]])
+        paste0("if x == ", col_ids[[i]], " { ", typst_stroke_serialize(combined), " }")
+      }
+    )
+  }
+
+  stroke_clauses <- c(row_stroke_clauses, col_stroke_clauses)
   stroke_spec <-
-    if (
-      length(stroke_values) == 1L &&
-        length(stroke_grid) > 0L &&
-        all(nzchar(stroke_grid))
-    ) {
-      stroke_values[[1L]]
+    if (length(stroke_clauses) > 0L) {
+      default_clause <- if (!is.null(default_stroke)) {
+        paste0("{ ", typst_stroke_serialize(default_stroke), " }")
+      } else {
+        "{ none }"
+      }
+      paste0(
+        "(x, y) => ",
+        paste(stroke_clauses, collapse = " else "),
+        " else ",
+        default_clause
+      )
     } else {
-      NULL
+      typst_stroke_serialize(default_stroke)
     }
 
   list(
@@ -1850,6 +2036,9 @@ typst_table_fill_plan <- function(header_rows, body_rows, n_cols) {
     row_fill_map = row_fill_map,
     col_fill_map = col_fill_map,
     default_fill = default_fill,
+    default_stroke = default_stroke,
+    row_stroke_map = row_stroke_map,
+    col_stroke_map = col_stroke_map,
     header_rows = seq_along(header_rows)
   )
 }
@@ -1882,29 +2071,48 @@ typst_fill_is_lifted <- function(fill_plan, row_index, col_start, colspan, style
 
 typst_expand_row_stroke_values <- function(row, n_cols) {
 
-  strokes <- character(0L)
+  strokes <- vector("list", 0L)
 
   for (cell in row$cells) {
-    stroke_value <- typst_stroke_expr(cell$style)
-    strokes <- c(strokes, rep(stroke_value %||% "", cell$colspan %||% 1L))
+    stroke_value <- typst_normalize_stroke(cell$style)
+    strokes <- c(strokes, rep(list(stroke_value), cell$colspan %||% 1L))
   }
 
   if (length(strokes) < n_cols) {
-    strokes <- c(strokes, rep("", n_cols - length(strokes)))
+    strokes <- c(strokes, rep(list(NULL), n_cols - length(strokes)))
   }
 
   strokes[seq_len(n_cols)]
 }
 
-typst_stroke_is_lifted <- function(fill_plan, row_index, col_start, colspan, style_obj) {
+typst_residual_stroke <- function(fill_plan, row_index, col_start, colspan, style_obj) {
+  stroke_obj <- typst_normalize_stroke(style_obj)
 
-  stroke_expr <- typst_stroke_expr(style_obj)
-
-  if (is.null(fill_plan$stroke_spec) || is.null(stroke_expr)) {
-    return(FALSE)
+  if (is.null(stroke_obj)) {
+    return(NULL)
   }
 
-  identical(fill_plan$stroke_spec, stroke_expr)
+  covered <- fill_plan$default_stroke
+  row_lifted <- fill_plan$row_stroke_map[[as.character(row_index)]]
+
+  if (!is.null(row_lifted)) {
+    covered <- typst_stroke_merge(covered, row_lifted)
+    return(typst_stroke_subtract(stroke_obj, covered))
+  }
+
+  cols <- seq.int(col_start - 1L, length.out = colspan)
+  if (length(cols) > 0L) {
+    col_maps <- lapply(cols, function(col) fill_plan$col_stroke_map[[as.character(col)]])
+    non_null <- vapply(col_maps, Negate(is.null), logical(1L))
+    if (all(non_null)) {
+      serialized <- vapply(col_maps, typst_stroke_serialize, character(1L))
+      if (length(unique(serialized)) == 1L) {
+        covered <- typst_stroke_merge(covered, col_maps[[1L]])
+      }
+    }
+  }
+
+  typst_stroke_subtract(stroke_obj, covered)
 }
 
 typst_compose_blocks <- function(components) {
