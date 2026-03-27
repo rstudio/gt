@@ -148,3 +148,66 @@ test_that("Quarto Typst knit_print preserves Typst styling constructs", {
   expect_match(out_chr, "fill: \\(x, y\\) => if y == 0 \\{ rgb\\(\"#1F3C88\"\\) \\} else \\{ none \\}")
   expect_match(out_chr, "#text\\(fill: rgb\\(\"#FFFFFF\"\\)\\)")
 })
+
+test_that("Quarto Typst knit_print renders styled fills and explicit borders", {
+
+  skip_if(Sys.which("quarto") == "")
+
+  withr::local_envvar(c("QUARTO_BIN_PATH" = dirname(Sys.which("quarto"))))
+
+  qmd_path <- tempfile(fileext = ".qmd")
+  typ_path <- sub("\\.qmd$", ".typ", qmd_path)
+  repo_path <- normalizePath(".", winslash = "/", mustWork = TRUE)
+
+  qmd_lines <- c(
+    "---",
+    "title: \"Typst Styling Smoke Test\"",
+    "format:",
+    "  typst:",
+    "    keep-typ: true",
+    "---",
+    "",
+    "```{r}",
+    sprintf("devtools::load_all(%s, quiet = TRUE)", dQuote(repo_path)),
+    "library(gt)",
+    "library(dplyr)",
+    "",
+    "exibble[1:3, c(\"num\", \"char\", \"currency\")] |>",
+    "  gt() |>",
+    "  tab_header(title = \"Styled\") |>",
+    "  tab_style(",
+    "    style = list(",
+    "      cell_fill(color = \"#1F3C88\"),",
+    "      cell_text(color = \"white\", weight = \"bold\")",
+    "    ),",
+    "    locations = cells_column_labels()",
+    "  ) |>",
+    "  tab_style(",
+    "    style = cell_fill(color = \"#E3F2FD\"),",
+    "    locations = cells_body(columns = char)",
+    "  ) |>",
+    "  tab_style(",
+    "    style = cell_borders(sides = c(\"right\", \"left\"), color = \"red\", weight = px(2)),",
+    "    locations = cells_body(columns = c(num, char), rows = 1)",
+    "  )",
+    "```"
+  )
+
+  writeLines(qmd_lines, qmd_path, useBytes = TRUE)
+
+  expect_no_error(
+    system2(
+      Sys.which("quarto"),
+      c("render", qmd_path, "--to", "typst"),
+      stdout = TRUE,
+      stderr = TRUE
+    )
+  )
+
+  expect_true(file.exists(typ_path))
+
+  typ_out <- paste(readLines(typ_path, warn = FALSE), collapse = "\n")
+  expect_match(typ_out, "kind: \"quarto-float-tbl\"", fixed = TRUE)
+  expect_match(typ_out, "fill: ", fixed = TRUE)
+  expect_match(typ_out, "stroke: ", fixed = TRUE)
+})

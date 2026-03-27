@@ -179,9 +179,14 @@ create_table_component_typst <- function(data, styles_tbl = dt_styles_get(data =
 
   column_spec <- typst_columns_spec(data = data)
   align_spec <- typst_align_spec(data = data)
+  visible_columns <- typst_visible_columns(data = data)
   header_rows <- create_header_rows_typst(data = data, styles_tbl = styles_tbl)
   body_rows <- create_body_rows_typst(data = data, styles_tbl = styles_tbl)
-  fill_plan <- typst_table_fill_plan(header_rows = header_rows, body_rows = body_rows)
+  fill_plan <- typst_table_fill_plan(
+    header_rows = header_rows,
+    body_rows = body_rows,
+    n_cols = max(1L, nrow(visible_columns))
+  )
 
   contents <- c(
     render_header_rows_typst(header_rows = header_rows, fill_plan = fill_plan),
@@ -436,13 +441,22 @@ create_summary_component_typst <- function(
         seq_along(cells),
         function(j) {
           col_meta <- visible_columns[j, , drop = FALSE]
-          style_obj <-
+          colname <-
             if (col_meta$type == "default") {
+              col_meta$var
+            } else if (col_meta$type == "stub" && j == stub_slots) {
+              NA_character_
+            } else {
+              NULL
+            }
+
+          style_obj <-
+            if (!is.null(colname)) {
               typst_style_for_summary_cell(
                 styles_tbl = styles_tbl,
                 locname = locname,
                 grpname = group_id,
-                colname = col_meta$var,
+                colname = colname,
                 rownum = i
               )
             } else {
@@ -763,15 +777,21 @@ render_header_rows_typst <- function(header_rows, fill_plan) {
   vapply(
     seq_along(header_rows),
     function(i) {
+      col_positions <- cumsum(c(1L, vapply(header_rows[[i]]$cells, function(cell) cell$colspan %||% 1L, integer(1L))))
       paste0(
         "table.header(",
         paste(
           vapply(
-            header_rows[[i]]$cells,
-            typst_render_cell_spec,
-            character(1L),
-            row_index = i - 1L,
-            fill_plan = fill_plan
+            seq_along(header_rows[[i]]$cells),
+            function(j) {
+              typst_render_cell_spec(
+                header_rows[[i]]$cells[[j]],
+                row_index = i - 1L,
+                col_start = col_positions[[j]],
+                fill_plan = fill_plan
+              )
+            },
+            character(1L)
           ),
           collapse = ", "
         ),
@@ -787,13 +807,19 @@ render_body_rows_typst <- function(body_rows, fill_plan) {
   vapply(
     seq_along(body_rows),
     function(i) {
+      col_positions <- cumsum(c(1L, vapply(body_rows[[i]]$cells, function(cell) cell$colspan %||% 1L, integer(1L))))
       paste(
         vapply(
-          body_rows[[i]]$cells,
-          typst_render_cell_spec,
-          character(1L),
-          row_index = header_count + i - 1L,
-          fill_plan = fill_plan
+          seq_along(body_rows[[i]]$cells),
+          function(j) {
+            typst_render_cell_spec(
+              body_rows[[i]]$cells[[j]],
+              row_index = header_count + i - 1L,
+              col_start = col_positions[[j]],
+              fill_plan = fill_plan
+            )
+          },
+          character(1L)
         ),
         collapse = ", "
       )
@@ -802,12 +828,14 @@ render_body_rows_typst <- function(body_rows, fill_plan) {
   )
 }
 
-typst_render_cell_spec <- function(cell, row_index, fill_plan) {
+typst_render_cell_spec <- function(cell, row_index, col_start, fill_plan) {
 
   style_obj <- cell$style %||% list()
   suppress_fill <- typst_fill_is_lifted(
     fill_plan = fill_plan,
     row_index = row_index,
+    col_start = col_start,
+    colspan = cell$colspan %||% 1L,
     style_obj = style_obj
   )
 
@@ -823,7 +851,11 @@ typst_render_cell_spec <- function(cell, row_index, fill_plan) {
 
 typst_span_cell <- function(text, style_obj = NULL, colspan = 1L, align = NULL, strong = FALSE, suppress_fill = FALSE) {
 
-  effective_align <- align %||% style_obj[["cell_text"]][["align"]] %||% NULL
+  effective_align <-
+    typst_cell_align_expr(
+      h_align = align %||% style_obj[["cell_text"]][["align"]] %||% NULL,
+      v_align = style_obj[["cell_text"]][["v_align"]] %||% NULL
+    )
   stroke_expr <- typst_stroke_expr(style_obj)
 
   modifiers <- c(
@@ -846,7 +878,11 @@ typst_span_cell <- function(text, style_obj = NULL, colspan = 1L, align = NULL, 
 
 typst_note_block <- function(text, style_obj = NULL) {
   modifiers <- typst_block_modifiers(style_obj)
-  paste0("block", modifiers, typst_styled_content_expr(text = text, style_obj = style_obj, strong = FALSE))
+  rendered <- typst_inner_from_content_expr(
+    typst_styled_content_expr(text = text, style_obj = style_obj, strong = FALSE)
+  )
+  rendered <- typst_wrap_block_region(rendered, style_obj)
+  paste0("block", modifiers, "[", rendered, "]")
 }
 
 typst_content_expr <- function(text) {
@@ -874,30 +910,38 @@ typst_styled_content_expr <- function(text, style_obj = NULL, strong = FALSE) {
   style_obj <- style_obj %||% list()
   inner <- typst_inner_from_content_expr(typst_content_expr(typst_apply_text_transform(text, style_obj)))
 
+  font <- style_obj[["cell_text"]][["font"]]
   weight <- style_obj[["cell_text"]][["weight"]]
   style <- style_obj[["cell_text"]][["style"]]
   decorate <- style_obj[["cell_text"]][["decorate"]]
   color <- style_obj[["cell_text"]][["color"]]
   size <- style_obj[["cell_text"]][["size"]]
-
+  weight_expr <- typst_weight_expr(weight)
   if (!is.null(color)) {
     inner <- paste0("#text(fill: ", typst_color_expr(color), ")[", inner, "]")
   }
 
-  if (!is.null(decorate) && identical(decorate, "underline")) {
-    inner <- paste0("#underline[", inner, "]")
-  }
+  inner <- typst_apply_text_decoration(inner, decorate)
 
   if (!is.null(style) && style %in% c("italic", "oblique")) {
     inner <- paste0("#emph[", inner, "]")
   }
 
-  if ((isTRUE(strong) && !identical(weight, "normal")) || (!is.null(weight) && weight %in% c("bold", "bolder"))) {
+  if ((isTRUE(strong) && is.null(weight_expr)) || (typst_is_bold_weight(weight) && is.null(weight_expr))) {
     inner <- paste0("#strong[", inner, "]")
   }
 
   if (!is.null(size)) {
     inner <- paste0("#text(size: ", typst_size_expr(size), ")[", inner, "]")
+  }
+
+  font_expr <- typst_font_expr(font)
+  if (!is.null(font_expr)) {
+    inner <- paste0("#text(font: ", font_expr, ")[", inner, "]")
+  }
+
+  if (!is.null(weight_expr)) {
+    inner <- paste0("#text(weight: ", weight_expr, ")[", inner, "]")
   }
 
   paste0("[", inner, "]")
@@ -991,16 +1035,25 @@ typst_style_for_row_group <- function(styles_tbl, grpname) {
 }
 
 typst_style_for_summary_cell <- function(styles_tbl, locname, grpname, colname, rownum = NULL) {
+  col_match <-
+    if (is.null(colname) || is.na(colname)) {
+      is.na(styles_tbl$colname)
+    } else {
+      styles_tbl$colname == colname
+    }
+
   styles_df <-
     vctrs::vec_slice(
       styles_tbl,
       styles_tbl$locname == locname &
         styles_tbl$grpname == grpname &
-        styles_tbl$colname == colname
+        col_match
     )
 
   if (!is.null(rownum) && nrow(styles_df) > 1L && "rownum" %in% names(styles_df)) {
-    styles_df <- vctrs::vec_slice(styles_df, round(styles_df$rownum) == rownum)
+    row_targets <- sort(unique(styles_df$rownum))
+    row_target <- row_targets[[min(rownum, length(row_targets))]]
+    styles_df <- vctrs::vec_slice(styles_df, styles_df$rownum == row_target)
   }
 
   typst_consolidate_cell_styles(styles_df)
@@ -1052,6 +1105,7 @@ typst_render_block_or_text <- function(text, style_obj = NULL) {
   style_obj <- style_obj %||% list()
   modifiers <- typst_block_modifiers(style_obj)
   rendered <- typst_render_block_text(text = text, style_obj = style_obj)
+  rendered <- typst_wrap_block_region(rendered, style_obj)
 
   if (identical(modifiers, "")) {
     return(rendered)
@@ -1062,14 +1116,15 @@ typst_render_block_or_text <- function(text, style_obj = NULL) {
 
 typst_block_modifiers <- function(style_obj = NULL) {
   style_obj <- style_obj %||% list()
+  stroke_expr <- typst_stroke_expr(style_obj)
   args <- c(
     if (!is.null(style_obj[["cell_fill"]][["color"]])) {
       paste0("fill: ", typst_color_expr(style_obj[["cell_fill"]][["color"]]))
     },
-    if (!is.null(typst_stroke_expr(style_obj))) {
-      paste0("stroke: ", typst_stroke_expr(style_obj))
+    if (!is.null(stroke_expr)) {
+      paste0("stroke: ", stroke_expr)
     },
-    if (!is.null(style_obj[["cell_fill"]][["color"]]) || !is.null(typst_stroke_expr(style_obj))) {
+    if (!is.null(style_obj[["cell_fill"]][["color"]]) || !is.null(stroke_expr)) {
       "inset: 6pt"
     }
   )
@@ -1098,6 +1153,143 @@ typst_apply_text_transform <- function(text, style_obj = NULL) {
   )
 }
 
+typst_apply_text_decoration <- function(inner, decorate = NULL) {
+
+  if (is.null(decorate) || !nzchar(decorate)) {
+    return(inner)
+  }
+
+  decorate_parts <- strsplit(decorate, "\\s+")[[1]]
+
+  for (part in decorate_parts) {
+    inner <-
+      switch(
+        part,
+        underline = paste0("#underline[", inner, "]"),
+        overline = paste0("#overline[", inner, "]"),
+        "line-through" = paste0("#strike[", inner, "]"),
+        inner
+      )
+  }
+
+  inner
+}
+
+typst_is_bold_weight <- function(weight) {
+
+  if (is.null(weight)) {
+    return(FALSE)
+  }
+
+  if (is.numeric(weight)) {
+    return(weight >= 600)
+  }
+
+  weight %in% c("bold", "bolder")
+}
+
+typst_weight_expr <- function(weight) {
+
+  if (is.null(weight)) {
+    return(NULL)
+  }
+
+  if (is.numeric(weight)) {
+    mapped <-
+      dplyr::case_when(
+        weight <= 200 ~ "\"light\"",
+        weight <= 400 ~ "\"regular\"",
+        weight <= 500 ~ "\"medium\"",
+        weight <= 600 ~ "\"semibold\"",
+        weight <= 800 ~ "\"bold\"",
+        TRUE ~ "\"black\""
+      )
+
+    return(mapped[[1L]])
+  }
+
+  switch(
+    as.character(weight)[1],
+    lighter = "\"light\"",
+    normal = NULL,
+    bold = "\"bold\"",
+    bolder = "\"black\"",
+    NULL
+  )
+}
+
+typst_font_expr <- function(font) {
+
+  if (is.null(font) || length(font) == 0L) {
+    return(NULL)
+  }
+
+  fonts <- as.character(font)
+  if (length(fonts) == 1L && grepl(",", fonts, fixed = TRUE)) {
+    fonts <- trimws(unlist(strsplit(fonts, ",", fixed = TRUE)))
+  }
+  fonts <- gsub("^['\"]|['\"]$", "", fonts)
+  fonts <- fonts[!is.na(fonts) & nzchar(fonts)]
+
+  if (length(fonts) == 0L) {
+    return(NULL)
+  }
+
+  fonts <- gsub("\\\\", "\\\\\\\\", fonts)
+  fonts <- gsub("\"", "\\\\\"", fonts, fixed = TRUE)
+  font_items <- paste0("\"", fonts, "\"")
+
+  if (length(font_items) == 1L) {
+    return(font_items)
+  }
+
+  paste0("(", paste(font_items, collapse = ", "), ")")
+}
+
+typst_wrap_block_region <- function(rendered, style_obj = NULL) {
+
+  style_obj <- style_obj %||% list()
+  align <- typst_cell_align_expr(style_obj[["cell_text"]][["align"]] %||% NULL, NULL)
+  indent <- style_obj[["cell_text"]][["indent"]]
+
+  if (!is.null(indent)) {
+    rendered <- paste0("#pad(left: ", typst_length_expr(indent), ")[", rendered, "]")
+  }
+
+  if (!is.null(align) && align %in% c("left", "center", "right")) {
+    rendered <- paste0("#align(", align, ")[", rendered, "]")
+  }
+
+  rendered
+}
+
+typst_cell_align_expr <- function(h_align = NULL, v_align = NULL) {
+
+  h_expr <-
+    switch(
+      h_align %||% "",
+      left = "left",
+      center = "center",
+      right = "right",
+      NULL
+    )
+
+  v_expr <-
+    switch(
+      v_align %||% "",
+      top = "top",
+      middle = "horizon",
+      bottom = "bottom",
+      NULL
+    )
+
+  if (!is.null(h_expr) && !is.null(v_expr)) {
+    return(paste0(v_expr, " + ", h_expr))
+  }
+
+  h_expr %||% v_expr
+}
+
 typst_size_expr <- function(size) {
   if (is.null(size)) {
     return("1em")
@@ -1108,7 +1300,7 @@ typst_size_expr <- function(size) {
   }
 
   size <- as.character(size)[1]
-  mapped <- c(
+  mapped_values <- c(
     "xx-small" = "0.6em",
     "x-small" = "0.75em",
     "small" = "0.9em",
@@ -1117,9 +1309,10 @@ typst_size_expr <- function(size) {
     "x-large" = "1.4em",
     "xx-large" = "1.7em",
     "xxx-large" = "2em"
-  )[[size]]
+  )
+  mapped <- unname(mapped_values[size])
 
-  if (!is.null(mapped)) {
+  if (length(mapped) == 1L && !is.na(mapped)) {
     return(mapped)
   }
 
@@ -1140,6 +1333,9 @@ typst_stroke_expr <- function(style_obj = NULL) {
   border_keys <- c("cell_border_left", "cell_border_right", "cell_border_top", "cell_border_bottom")
   parts <- character(0L)
 
+  # Preserve explicit per-side borders exactly as resolved from `gt` styles.
+  # If neighboring cells both specify a shared edge, emit both; do not
+  # suppress or merge borders heuristically in the Typst renderer.
   for (key in border_keys) {
     border <- style_obj[[key]]
     if (is.null(border)) next
@@ -1196,59 +1392,80 @@ typst_length_expr <- function(value) {
   "1pt"
 }
 
-typst_row_fill_color <- function(row) {
-  fills <- unique(
-    vapply(
-      row$cells,
-      FUN.VALUE = character(1L),
-      FUN = function(cell) cell$style[["cell_fill"]][["color"]] %||% ""
-    )
-  )
-  fills <- fills[nzchar(fills)]
-
-  if (length(fills) == 1L && length(row$cells) > 0) {
+typst_row_fill_color <- function(fill_values) {
+  fills <- unique(fill_values[nzchar(fill_values)])
+  if (length(fills) == 1L && length(fill_values) > 0L && all(nzchar(fill_values))) {
     return(fills[[1L]])
   }
-
   ""
 }
 
-typst_table_fill_plan <- function(header_rows, body_rows) {
+typst_expand_row_fill_values <- function(row, n_cols) {
+
+  fills <- character(0L)
+
+  for (cell in row$cells) {
+    fill_color <- cell$style[["cell_fill"]][["color"]] %||% ""
+    fills <- c(fills, rep(fill_color, cell$colspan %||% 1L))
+  }
+
+  if (length(fills) < n_cols) {
+    fills <- c(fills, rep("", n_cols - length(fills)))
+  }
+
+  fills[seq_len(n_cols)]
+}
+
+typst_table_fill_plan <- function(header_rows, body_rows, n_cols) {
+
+  all_rows <- c(header_rows, body_rows)
+
+  if (length(all_rows) == 0L) {
+    return(list(fill_spec = NULL, row_fill_map = list(), col_fill_map = list(), default_fill = NULL, header_rows = seq_along(header_rows)))
+  }
+
+  fill_grid <-
+    do.call(
+      rbind,
+      lapply(all_rows, typst_expand_row_fill_values, n_cols = n_cols)
+    )
+
+  default_fill <- NULL
+  body_data_idx <- which(vapply(body_rows, `[[`, character(1L), "row_kind") == "data")
+  if (length(body_data_idx) > 0L) {
+    data_grid <- fill_grid[length(header_rows) + body_data_idx, , drop = FALSE]
+    data_fills <- unique(data_grid[nzchar(data_grid)])
+    if (length(data_fills) == 1L && all(nzchar(data_grid)) && all(data_grid == data_fills[[1L]])) {
+      default_fill <- data_fills[[1L]]
+      fill_grid[length(header_rows) + body_data_idx, ] <- ""
+    }
+  }
 
   row_fill_map <- list()
-  header_fill_rows <- integer(0L)
-
-  if (length(header_rows) > 0L) {
-    for (i in seq_along(header_rows)) {
-      fill_color <- typst_row_fill_color(header_rows[[i]])
-      if (nzchar(fill_color)) {
-        row_fill_map[[as.character(i - 1L)]] <- fill_color
-        header_fill_rows <- c(header_fill_rows, i)
-      }
+  for (i in seq_len(nrow(fill_grid))) {
+    fill_color <- typst_row_fill_color(fill_grid[i, ])
+    if (nzchar(fill_color)) {
+      row_fill_map[[as.character(i - 1L)]] <- fill_color
+      fill_grid[i, ] <- ""
     }
   }
 
-  body_data_idx <- which(vapply(body_rows, `[[`, character(1L), "row_kind") == "data")
-
-  if (length(body_data_idx) >= 2L) {
-    fills <- vapply(body_rows[body_data_idx], typst_row_fill_color, character(1L))
-    if (all(nzchar(fills))) {
-      unique_fills <- unique(fills)
-      if (length(unique_fills) <= 2L) {
-        alternating <- all(fills == unique_fills[(seq_along(fills) - 1L) %% length(unique_fills) + 1L])
-        if (alternating) {
-          for (i in seq_along(body_data_idx)) {
-            row_fill_map[[as.character(length(header_rows) + body_data_idx[i] - 1L)]] <- fills[[i]]
-          }
-        }
-      }
+  col_fill_map <- list()
+  for (j in seq_len(n_cols)) {
+    col_vals <- fill_grid[, j]
+    fills <- unique(col_vals[nzchar(col_vals)])
+    if (length(fills) == 1L && all(col_vals == "" | col_vals == fills[[1L]]) && any(nzchar(col_vals))) {
+      col_fill_map[[as.character(j - 1L)]] <- fills[[1L]]
+      fill_grid[, j] <- ""
     }
   }
 
-  fill_spec <- NULL
+  clauses <- character(0L)
+
   if (length(row_fill_map) > 0L) {
     row_ids <- as.integer(names(row_fill_map))
-    clauses <-
+    clauses <- c(
+      clauses,
       vapply(
         seq_along(row_ids),
         FUN.VALUE = character(1L),
@@ -1256,20 +1473,71 @@ typst_table_fill_plan <- function(header_rows, body_rows) {
           paste0("if y == ", row_ids[[i]], " { ", typst_color_expr(row_fill_map[[i]]), " }")
         }
       )
-    fill_spec <- paste0("(x, y) => ", paste(clauses, collapse = " else "), " else { none }")
+    )
   }
+
+  if (length(col_fill_map) > 0L) {
+    col_ids <- as.integer(names(col_fill_map))
+    clauses <- c(
+      clauses,
+      vapply(
+        seq_along(col_ids),
+        FUN.VALUE = character(1L),
+        FUN = function(i) {
+          paste0("if x == ", col_ids[[i]], " { ", typst_color_expr(col_fill_map[[i]]), " }")
+        }
+      )
+    )
+  }
+
+  if (!is.null(default_fill)) {
+    clauses <- c(clauses, paste0("{ ", typst_color_expr(default_fill), " }"))
+  } else {
+    clauses <- c(clauses, "{ none }")
+  }
+
+  fill_spec <-
+    if (length(clauses) > 1L) {
+      paste0("(x, y) => ", paste(clauses[-length(clauses)], collapse = " else "), " else ", clauses[[length(clauses)]])
+    } else if (!is.null(default_fill)) {
+      typst_color_expr(default_fill)
+    } else {
+      NULL
+    }
 
   list(
     fill_spec = fill_spec,
     row_fill_map = row_fill_map,
+    col_fill_map = col_fill_map,
+    default_fill = default_fill,
     header_rows = seq_along(header_rows)
   )
 }
 
-typst_fill_is_lifted <- function(fill_plan, row_index, style_obj) {
+typst_fill_is_lifted <- function(fill_plan, row_index, col_start, colspan, style_obj) {
   fill_color <- style_obj[["cell_fill"]][["color"]] %||% ""
-  lifted <- fill_plan$row_fill_map[[as.character(row_index)]]
-  nzchar(fill_color) && !is.null(lifted) && identical(fill_color, lifted)
+
+  if (!nzchar(fill_color)) {
+    return(FALSE)
+  }
+
+  row_lifted <- fill_plan$row_fill_map[[as.character(row_index)]]
+  if (!is.null(row_lifted) && identical(fill_color, row_lifted)) {
+    return(TRUE)
+  }
+
+  cols <- seq.int(col_start - 1L, length.out = colspan)
+  col_lifted <- vapply(cols, function(col) fill_plan$col_fill_map[[as.character(col)]] %||% "", character(1L))
+
+  if (length(col_lifted) > 0L && all(nzchar(col_lifted)) && all(col_lifted == fill_color)) {
+    return(TRUE)
+  }
+
+  if (!is.null(fill_plan$default_fill) && identical(fill_color, fill_plan$default_fill)) {
+    return(TRUE)
+  }
+
+  FALSE
 }
 
 typst_compose_blocks <- function(components) {

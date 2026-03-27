@@ -115,7 +115,7 @@ test_that("as_typst() lifts uniform header fill and text styling", {
 
   expect_match(typst_output, "fill: \\(x, y\\) => if y == 0 \\{ rgb\\(\"#1F3C88\"\\) \\} else \\{ none \\}")
   expect_match(typst_output, "#text\\(fill: rgb\\(\"#FFFFFF\"\\)\\)")
-  expect_match(typst_output, "#strong\\[")
+  expect_match(typst_output, "#text\\(weight: \"bold\"\\)")
   expect_no_match(typst_output, "table\\.cell\\(fill: rgb\\(\"#1F3C88\"\\)\\)")
 })
 
@@ -175,7 +175,7 @@ test_that("as_typst() styles heading blocks with fill and text color", {
   expect_match(typst_output, "#text\\(fill: rgb\\(\"#0000FF\"\\)\\)")
 })
 
-test_that("as_typst() supports text alignment, decoration, size, and borders", {
+test_that("as_typst() supports text alignment, decoration, size, font, and borders", {
 
   typst_output <-
     gtcars |>
@@ -187,7 +187,9 @@ test_that("as_typst() supports text alignment, decoration, size, and borders", {
         cell_text(
           decorate = "underline",
           size = "large",
-          align = "center"
+          align = "center",
+          v_align = "middle",
+          font = c("Fira Sans", "Arial")
         ),
         cell_fill(color = "#FFEEAA"),
         cell_borders(sides = "all", color = "red", weight = px(2))
@@ -196,11 +198,154 @@ test_that("as_typst() supports text alignment, decoration, size, and borders", {
     ) |>
     as_typst()
 
-  expect_match(typst_output, "table\\.cell\\(align: center, fill: rgb\\(\"#FFEEAA\"\\), stroke:")
+  expect_match(typst_output, "if x == 1 \\{ rgb\\(\"#FFEEAA\"\\) \\}")
+  expect_match(typst_output, "table\\.cell\\(align: horizon \\+ center, stroke:")
   expect_match(typst_output, "paint: red")
   expect_match(typst_output, "thickness: 1\\.5pt")
   expect_match(typst_output, "#text\\(size: 1\\.2em\\)")
+  expect_match(typst_output, "#text\\(font: \\(\"Fira Sans\", \"Arial\"\\)\\)")
   expect_match(typst_output, "#underline\\[")
+})
+
+test_that("as_typst() supports additional decoration and block-region alignment/indent", {
+
+  typst_output <-
+    exibble[1:2, c("num", "char")] |>
+    gt() |>
+    tab_header(title = "Title", subtitle = "Subtitle") |>
+    tab_source_note("Source note") |>
+    tab_style(
+      style = cell_text(
+        align = "right",
+        indent = px(12),
+        decorate = "underline overline",
+        font = "IBM Plex Sans"
+      ),
+      locations = cells_title(groups = "title")
+    ) |>
+    tab_style(
+      style = cell_text(
+        align = "center",
+        indent = px(8),
+        weight = 700
+      ),
+      locations = cells_source_notes()
+    ) |>
+    as_typst()
+
+  expect_match(typst_output, "#align\\(right\\)\\[#pad\\(left: 9pt\\)")
+  expect_match(typst_output, "#overline\\[#underline\\[")
+  expect_match(typst_output, "#text\\(font: \"IBM Plex Sans\"\\)")
+  expect_match(typst_output, "#align\\(center\\)\\[#pad\\(left: 6pt\\)")
+  expect_match(typst_output, "#text\\(weight: \"bold\"\\)\\[Source note\\]")
+})
+
+test_that("as_typst() maps numeric weights and vertical alignment conservatively", {
+
+  typst_output <-
+    exibble[1:1, c("num", "char")] |>
+    gt() |>
+    tab_style(
+      style = cell_text(weight = 500, v_align = "top"),
+      locations = cells_body(columns = num, rows = 1)
+    ) |>
+    tab_style(
+      style = cell_text(weight = 900, v_align = "bottom"),
+      locations = cells_body(columns = char, rows = 1)
+    ) |>
+    as_typst()
+
+  expect_match(typst_output, "table\\.cell\\(align: top\\)")
+  expect_match(typst_output, "table\\.cell\\(align: bottom\\)")
+  expect_match(typst_output, "#text\\(weight: \"medium\"\\)")
+  expect_match(typst_output, "#text\\(weight: \"black\"\\)")
+})
+
+test_that("as_typst() lifts exact column and default body fills", {
+
+  column_fill_output <-
+    exibble[1:3, c("num", "char", "currency")] |>
+    gt() |>
+    tab_style(
+      style = cell_fill(color = "#E3F2FD"),
+      locations = cells_body(columns = char)
+    ) |>
+    as_typst()
+
+  expect_match(column_fill_output, "if x == 1 \\{ rgb\\(\"#E3F2FD\"\\) \\}")
+  expect_no_match(column_fill_output, "table\\.cell\\(fill: rgb\\(\"#E3F2FD\"\\)")
+
+  default_fill_output <-
+    exibble[1:3, c("num", "char", "currency")] |>
+    gt() |>
+    tab_style(
+      style = cell_fill(color = "#FAFAFA"),
+      locations = cells_body()
+    ) |>
+    as_typst()
+
+  expect_match(default_fill_output, "fill: rgb\\(\"#FAFAFA\"\\)")
+  expect_no_match(default_fill_output, "table\\.cell\\(fill: rgb\\(\"#FAFAFA\"\\)")
+})
+
+test_that("as_typst() preserves intentionally duplicated shared edges", {
+
+  typst_output <-
+    exibble[1:1, c("num", "char")] |>
+    gt() |>
+    tab_style(
+      style = cell_borders(sides = "right", color = "red", weight = px(2)),
+      locations = cells_body(columns = num, rows = 1)
+    ) |>
+    tab_style(
+      style = cell_borders(sides = "left", color = "blue", weight = px(3)),
+      locations = cells_body(columns = char, rows = 1)
+    ) |>
+    as_typst()
+
+  expect_match(typst_output, "right: \\(paint: red, thickness: 1\\.5pt\\)")
+  expect_match(typst_output, "left: \\(paint: blue, thickness: 2\\.25pt\\)")
+})
+
+test_that("as_typst() styles summary and stub summary cells", {
+
+  typst_output <-
+    exibble[1:5, c("row", "group", "num", "currency")] |>
+    gt(rowname_col = "row", groupname_col = "group") |>
+    summary_rows(
+      groups = "grp_a",
+      columns = c(num, currency),
+      fns = list(list(label = "Total", fn = "sum")),
+      fmt = ~ fmt_number(., decimals = 1)
+    ) |>
+    grand_summary_rows(
+      columns = c(num, currency),
+      fns = list(list(label = "Grand total", fn = "sum")),
+      fmt = ~ fmt_number(., decimals = 1)
+    ) |>
+    tab_style(
+      style = list(
+        cell_fill(color = "#FFF8E1"),
+        cell_text(color = "#B26A00", weight = "bold")
+      ),
+      locations = cells_summary(groups = "grp_a", columns = c(num, currency), rows = 1)
+    ) |>
+    tab_style(
+      style = cell_text(color = "#1565C0", weight = "bold"),
+      locations = cells_stub_summary(groups = "grp_a", rows = 1)
+    ) |>
+    tab_style(
+      style = cell_text(color = "#2E7D32", weight = "bold"),
+      locations = cells_stub_grand_summary(rows = 1)
+    ) |>
+    as_typst()
+
+  expect_match(typst_output, "rgb\\(\"#FFF8E1\"\\)")
+  expect_match(typst_output, "rgb\\(\"#B26A00\"\\)")
+  expect_match(typst_output, "rgb\\(\"#1565C0\"\\)")
+  expect_match(typst_output, "rgb\\(\"#2E7D32\"\\)")
+  expect_match(typst_output, "Total")
+  expect_match(typst_output, "Grand total")
 })
 
 test_that("as_typst() escapes Typst-sensitive plain text in table content", {
