@@ -27,14 +27,11 @@ test_that("as_typst() uses figure for enriched tables in auto mode", {
     as_typst()
 
   expect_match(typst_output, "^#figure\\(")
-  expect_match(typst_output, "#table\\(")
-  expect_match(typst_output, "\\[")
-  expect_no_match(typst_output, "block\\[")
+  expect_match(typst_output, "table\\(")
+  expect_match(typst_output, "stack\\(dir: ttb, spacing: 0\\.9em")
   expect_no_match(typst_output, "#align\\(center\\)\\[")
   expect_match(typst_output, "Data listing from \\*gtcars\\*")
   expect_match(typst_output, "`gtcars` is an R dataset")
-  expect_no_match(typst_output, "\\[Data listing from \\*gtcars\\*\\]")
-  expect_no_match(typst_output, "\\[`gtcars` is an R dataset\\]")
   expect_no_match(typst_output, "#strong\\[Data listing from")
   expect_no_match(typst_output, "#emph\\[`gtcars` is an R dataset\\]")
   expect_no_match(typst_output, "#linebreak\\(")
@@ -71,6 +68,37 @@ test_that("as_typst() container argument controls top-level structure", {
   forced_figure <- as_typst(gt_tbl |> rm_caption(), container = "figure")
   expect_match(forced_figure, "^#figure\\(")
   expect_match(forced_figure, "kind: table")
+})
+
+test_that("as_typst() emits automatic and explicit Typst labels", {
+
+  auto_labeled <-
+    exibble[1:2, c("num", "char")] |>
+    gt(id = "demo_table") |>
+    as_typst()
+
+  expect_match(auto_labeled, "<demo_table>$")
+
+  explicit_labeled <-
+    exibble[1:2, c("num", "char")] |>
+    gt() |>
+    as_typst(label = "custom-label")
+
+  expect_match(explicit_labeled, "<custom-label>$")
+  expect_no_match(exibble[1:2, c("num", "char")] |> gt(id = "x") |> as_typst(label = FALSE), "<x>$")
+})
+
+test_that("as_typst() can make figure-wrapped output breakable", {
+
+  typst_output <-
+    exibble[1:2, c("num", "char")] |>
+    gt(id = "long_demo") |>
+    tab_caption("Captioned table") |>
+    as_typst(breakable = TRUE)
+
+  expect_match(typst_output, "^#context \\{")
+  expect_match(typst_output, "show figure\\.where\\(kind: table\\): set block\\(breakable: true\\)")
+  expect_match(typst_output, "<long_demo>$")
 })
 
 test_that("as_typst() preserves notes and markdown-rich content", {
@@ -151,7 +179,7 @@ test_that("as_typst() styles notes with local Typst text wrappers", {
     ) |>
     as_typst()
 
-  expect_match(typst_output, "#block\\[#text\\(fill: rgb\\(\"#FF0000\"\\)\\)\\[source note\\]\\]")
+  expect_match(typst_output, "block\\[#text\\(fill: rgb\\(\"#FF0000\"\\)\\)\\[source note\\]\\]")
 })
 
 test_that("as_typst() styles heading blocks with fill and text color", {
@@ -171,7 +199,7 @@ test_that("as_typst() styles heading blocks with fill and text color", {
     ) |>
     as_typst()
 
-  expect_match(typst_output, "#block\\(fill: rgb\\(\"#DDDDEE\"\\), inset: 6pt\\)")
+  expect_match(typst_output, "block\\(fill: rgb\\(\"#DDDDEE\"\\), inset: 6pt\\)")
   expect_match(typst_output, "#text\\(fill: rgb\\(\"#0000FF\"\\)\\)")
 })
 
@@ -207,6 +235,31 @@ test_that("as_typst() supports text alignment, decoration, size, font, and borde
   expect_match(typst_output, "#underline\\[")
 })
 
+test_that("as_typst() lifts exact whole-table stroke patterns", {
+
+  typst_output <-
+    exibble[1:2, c("num", "char")] |>
+    gt() |>
+    tab_style(
+      style = cell_borders(sides = "all", color = "#444444", weight = px(1)),
+      locations = cells_column_labels()
+    ) |>
+    tab_style(
+      style = cell_borders(sides = "all", color = "#444444", weight = px(1)),
+      locations = cells_body()
+    ) |>
+    as_typst()
+
+  expect_match(
+    typst_output,
+    "stroke: \\(left: \\(paint: rgb\\(\"#444444\"\\), thickness: 0\\.75pt\\), right: \\(paint: rgb\\(\"#444444\"\\), thickness: 0\\.75pt\\), top: \\(paint: rgb\\(\"#444444\"\\), thickness: 0\\.75pt\\), bottom: \\(paint: rgb\\(\"#444444\"\\), thickness: 0\\.75pt\\)\\),"
+  )
+  expect_no_match(
+    typst_output,
+    "table\\.cell\\(stroke: \\(left: \\(paint: rgb\\(\"#444444\"\\)"
+  )
+})
+
 test_that("as_typst() supports additional decoration and block-region alignment/indent", {
 
   typst_output <-
@@ -233,10 +286,10 @@ test_that("as_typst() supports additional decoration and block-region alignment/
     ) |>
     as_typst()
 
-  expect_match(typst_output, "#align\\(right\\)\\[#pad\\(left: 9pt\\)")
+  expect_match(typst_output, "align\\(right\\)\\[#pad\\(left: 9pt\\)")
   expect_match(typst_output, "#overline\\[#underline\\[")
   expect_match(typst_output, "#text\\(font: \"IBM Plex Sans\"\\)")
-  expect_match(typst_output, "#align\\(center\\)\\[#pad\\(left: 6pt\\)")
+  expect_match(typst_output, "align\\(center\\)\\[#pad\\(left: 6pt\\)")
   expect_match(typst_output, "#text\\(weight: \"bold\"\\)\\[Source note\\]")
 })
 

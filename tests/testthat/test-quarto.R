@@ -100,6 +100,23 @@ test_that("Quarto Typst knit_print emits Quarto-flavored table figures", {
   expect_match(out_chr, "caption: figure.caption(", fixed = TRUE)
 })
 
+test_that("Quarto Typst knit_print prefixes automatic labels with tbl-", {
+
+  withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
+  old_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+  withr::defer(knitr::opts_knit$set(rmarkdown.pandoc.to = old_to))
+  knitr::opts_knit$set(rmarkdown.pandoc.to = "typst")
+
+  tab <-
+    exibble[1:2, c("num", "char")] |>
+    gt(id = "demo-table") |>
+    tab_caption("A caption")
+
+  out_chr <- as.character(knit_print.gt_tbl(tab))
+
+  expect_match(out_chr, "<tbl-demo-table>", fixed = TRUE)
+})
+
 test_that("Quarto Typst knit_print escapes Typst-sensitive plain text", {
 
   withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))

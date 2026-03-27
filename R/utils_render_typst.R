@@ -51,7 +51,7 @@ footnote_mark_to_typst <- function(
   mark
 }
 
-as_typst_string <- function(data, container = "auto", quarto = FALSE) {
+as_typst_string <- function(data, container = "auto", label = NULL, breakable = FALSE, quarto = FALSE) {
 
   table_caption <- dt_options_get_value(data = data, option = "table_caption")
   has_caption <- !all(is.na(table_caption))
@@ -71,29 +71,47 @@ as_typst_string <- function(data, container = "auto", quarto = FALSE) {
     )
 
   table_component <- create_table_component_typst(data = data, styles_tbl = styles_tbl)
+  heading_region <- typst_region_component(heading_component, spacing = "0.35em")
+  footer_region <- typst_region_component(footer_components, spacing = "0.45em")
+
   main_component <-
     if (use_figure) {
       figure_body <-
-        typst_compose_content(c(heading_component, table_component, footer_components))
+        typst_compose_content(c(heading_region, table_component, footer_region))
 
-      create_figure_component_typst(
+      figure_component <-
+        create_figure_component_typst(
         data = data,
         body_component = figure_body,
         caption = if (has_caption) table_caption else NULL,
         quarto = quarto
       )
+
+      if (isTRUE(breakable)) {
+        figure_kind <- if (quarto) "\"quarto-float-tbl\"" else "table"
+        figure_component <- typst_make_figure_breakable(figure_component, kind = figure_kind)
+      }
+
+      figure_component
     } else {
       table_component
     }
 
   components <- c(
-    if (!use_figure) heading_component,
+    if (!use_figure) heading_region,
     main_component,
     if (!use_figure && has_caption) create_caption_component_typst(table_caption),
-    if (!use_figure) footer_components
+    if (!use_figure) footer_region
   )
 
-  typst_compose_blocks(components)
+  output <- typst_compose_blocks(components)
+  label_name <- typst_resolve_label(data = data, label = label, quarto = quarto)
+
+  if (!is.null(label_name)) {
+    output <- paste0(output, "\n<", label_name, ">")
+  }
+
+  output
 }
 
 create_heading_component_typst <- function(data, styles_tbl = dt_styles_get(data = data)) {
@@ -202,6 +220,7 @@ create_table_component_typst <- function(data, styles_tbl = dt_styles_get(data =
     paste0("  columns: ", column_spec, ","),
     paste0("  align: ", align_spec, ","),
     if (!is.null(fill_plan$fill_spec)) paste0("  fill: ", fill_plan$fill_spec, ","),
+    if (!is.null(fill_plan$stroke_spec)) paste0("  stroke: ", fill_plan$stroke_spec, ","),
     paste0("  ", paste(contents, collapse = ",\n  ")),
     ")"
   )
@@ -838,6 +857,13 @@ typst_render_cell_spec <- function(cell, row_index, col_start, fill_plan) {
     colspan = cell$colspan %||% 1L,
     style_obj = style_obj
   )
+  suppress_stroke <- typst_stroke_is_lifted(
+    fill_plan = fill_plan,
+    row_index = row_index,
+    col_start = col_start,
+    colspan = cell$colspan %||% 1L,
+    style_obj = style_obj
+  )
 
   typst_span_cell(
     text = cell$text,
@@ -845,11 +871,12 @@ typst_render_cell_spec <- function(cell, row_index, col_start, fill_plan) {
     colspan = cell$colspan %||% 1L,
     align = cell$align,
     strong = isTRUE(cell$strong),
-    suppress_fill = suppress_fill
+    suppress_fill = suppress_fill,
+    suppress_stroke = suppress_stroke
   )
 }
 
-typst_span_cell <- function(text, style_obj = NULL, colspan = 1L, align = NULL, strong = FALSE, suppress_fill = FALSE) {
+typst_span_cell <- function(text, style_obj = NULL, colspan = 1L, align = NULL, strong = FALSE, suppress_fill = FALSE, suppress_stroke = FALSE) {
 
   effective_align <-
     typst_cell_align_expr(
@@ -864,7 +891,7 @@ typst_span_cell <- function(text, style_obj = NULL, colspan = 1L, align = NULL, 
     if (!suppress_fill && !is.null(style_obj[["cell_fill"]][["color"]])) {
       paste0("fill: ", typst_color_expr(style_obj[["cell_fill"]][["color"]]))
     },
-    if (!is.null(stroke_expr)) paste0("stroke: ", stroke_expr)
+    if (!suppress_stroke && !is.null(stroke_expr)) paste0("stroke: ", stroke_expr)
   )
 
   content <- typst_styled_content_expr(text = text, style_obj = style_obj, strong = strong)
@@ -883,6 +910,25 @@ typst_note_block <- function(text, style_obj = NULL) {
   )
   rendered <- typst_wrap_block_region(rendered, style_obj)
   paste0("block", modifiers, "[", rendered, "]")
+}
+
+typst_region_component <- function(components, spacing = "0.35em") {
+
+  components <- components[!is.na(components) & nzchar(components)]
+
+  if (length(components) == 0L) {
+    return(character(0L))
+  }
+
+  if (length(components) == 1L) {
+    return(components[[1L]])
+  }
+
+  paste0(
+    "stack(dir: ttb, spacing: ", spacing, ", ",
+    paste(vapply(components, typst_component_argument, character(1L)), collapse = ", "),
+    ")"
+  )
 }
 
 typst_content_expr <- function(text) {
@@ -1112,6 +1158,48 @@ typst_render_block_or_text <- function(text, style_obj = NULL) {
   }
 
   paste0("block", modifiers, "[", rendered, "]")
+}
+
+typst_make_figure_breakable <- function(component, kind) {
+  paste0(
+    "context {\n",
+    "  show figure.where(kind: ", kind, "): set block(breakable: true)\n",
+    "  ", gsub("\n", "\n  ", component, fixed = TRUE), "\n",
+    "}"
+  )
+}
+
+typst_resolve_label <- function(data, label = NULL, quarto = FALSE) {
+
+  if (isFALSE(label)) {
+    return(NULL)
+  }
+
+  label_value <-
+    if (is.null(label)) {
+      dt_options_get_value(data = data, option = "table_id")
+    } else {
+      label
+    }
+
+  if (length(label_value) == 0L || all(is.na(label_value))) {
+    return(NULL)
+  }
+
+  label_value <- as.character(label_value)[1]
+  label_value <- gsub("[^A-Za-z0-9_.:-]+", "-", label_value)
+  label_value <- gsub("^-+|-+$", "", label_value)
+  label_value <- gsub("-{2,}", "-", label_value)
+
+  if (!nzchar(label_value)) {
+    return(NULL)
+  }
+
+  if (quarto && !startsWith(label_value, "tbl-")) {
+    label_value <- paste0("tbl-", label_value)
+  }
+
+  label_value
 }
 
 typst_block_modifiers <- function(style_obj = NULL) {
@@ -1429,6 +1517,11 @@ typst_table_fill_plan <- function(header_rows, body_rows, n_cols) {
       rbind,
       lapply(all_rows, typst_expand_row_fill_values, n_cols = n_cols)
     )
+  stroke_grid <-
+    do.call(
+      rbind,
+      lapply(all_rows, typst_expand_row_stroke_values, n_cols = n_cols)
+    )
 
   default_fill <- NULL
   body_data_idx <- which(vapply(body_rows, `[[`, character(1L), "row_kind") == "data")
@@ -1505,8 +1598,21 @@ typst_table_fill_plan <- function(header_rows, body_rows, n_cols) {
       NULL
     }
 
+  stroke_values <- unique(stroke_grid[nzchar(stroke_grid)])
+  stroke_spec <-
+    if (
+      length(stroke_values) == 1L &&
+        length(stroke_grid) > 0L &&
+        all(nzchar(stroke_grid))
+    ) {
+      stroke_values[[1L]]
+    } else {
+      NULL
+    }
+
   list(
     fill_spec = fill_spec,
+    stroke_spec = stroke_spec,
     row_fill_map = row_fill_map,
     col_fill_map = col_fill_map,
     default_fill = default_fill,
@@ -1540,6 +1646,33 @@ typst_fill_is_lifted <- function(fill_plan, row_index, col_start, colspan, style
   FALSE
 }
 
+typst_expand_row_stroke_values <- function(row, n_cols) {
+
+  strokes <- character(0L)
+
+  for (cell in row$cells) {
+    stroke_value <- typst_stroke_expr(cell$style)
+    strokes <- c(strokes, rep(stroke_value %||% "", cell$colspan %||% 1L))
+  }
+
+  if (length(strokes) < n_cols) {
+    strokes <- c(strokes, rep("", n_cols - length(strokes)))
+  }
+
+  strokes[seq_len(n_cols)]
+}
+
+typst_stroke_is_lifted <- function(fill_plan, row_index, col_start, colspan, style_obj) {
+
+  stroke_expr <- typst_stroke_expr(style_obj)
+
+  if (is.null(fill_plan$stroke_spec) || is.null(stroke_expr)) {
+    return(FALSE)
+  }
+
+  identical(fill_plan$stroke_spec, stroke_expr)
+}
+
 typst_compose_blocks <- function(components) {
 
   components <- components[!is.na(components) & nzchar(components)]
@@ -1556,26 +1689,11 @@ typst_compose_blocks <- function(components) {
     return(paste0("#", component))
   }
 
-  rendered_components <-
-    vapply(
-      components,
-      FUN.VALUE = character(1L),
-      FUN = function(component) {
-        if (!typst_component_needs_eval(component)) {
-          component
-        } else {
-          paste0("#", component)
-        }
-      }
-    )
-
   paste0(
-    "#block[\n",
-    paste(
-      rendered_components,
-      collapse = "\n\n"
-    ),
-    "\n]"
+    "#stack(dir: ttb, spacing: 0.9em",
+    if (length(components) > 0L) ", " else "",
+    paste(vapply(components, typst_component_argument, character(1L)), collapse = ", "),
+    ")"
   )
 }
 
@@ -1587,23 +1705,14 @@ typst_compose_content <- function(components) {
     return("[]")
   }
 
-  rendered_components <-
-    vapply(
-      components,
-      FUN.VALUE = character(1L),
-      FUN = function(component) {
-        if (!typst_component_needs_eval(component)) {
-          component
-        } else {
-          paste0("#", component)
-        }
-      }
-    )
+  if (length(components) == 1L) {
+    return(typst_component_argument(components[[1L]]))
+  }
 
   paste0(
-    "[\n",
-    paste(rendered_components, collapse = "\n\n"),
-    "\n]"
+    "stack(dir: ttb, spacing: 0.9em, ",
+    paste(vapply(components, typst_component_argument, character(1L)), collapse = ", "),
+    ")"
   )
 }
 
@@ -1617,5 +1726,22 @@ typst_component_needs_eval <- function(component) {
     return(FALSE)
   }
 
-  grepl("^[A-Za-z][A-Za-z0-9_.]*\\s*(\\(|\\[)", component)
+  grepl("^[A-Za-z][A-Za-z0-9_.]*\\s*(\\(|\\[|\\{)", component)
+}
+
+typst_component_argument <- function(component) {
+
+  if (startsWith(component, "#")) {
+    component <- sub("^#", "", component)
+  }
+
+  if (startsWith(component, "[")) {
+    return(component)
+  }
+
+  if (typst_component_needs_eval(component)) {
+    return(component)
+  }
+
+  typst_content_expr(component)
 }
