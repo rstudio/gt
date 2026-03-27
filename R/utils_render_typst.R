@@ -114,6 +114,71 @@ as_typst_string <- function(data, container = "auto", label = NULL, breakable = 
   output
 }
 
+as_typst_quarto_knit_output <- function(data) {
+
+  table_caption <- dt_options_get_value(data = data, option = "table_caption")
+  has_caption <- !all(is.na(table_caption))
+  label_name <- typst_resolve_label(data = data, label = NULL, quarto = TRUE)
+
+  if (!has_caption) {
+    typst_output <- as_typst_string(
+      data = data,
+      container = "auto",
+      label = if (!is.null(label_name)) label_name else FALSE,
+      quarto = FALSE
+    )
+
+    return(
+      paste0("\n```{=typst}\n", typst_output, "\n```\n\n")
+    )
+  }
+
+  if (is.null(label_name)) {
+    typst_output <- as_typst_string(
+      data = data,
+      container = "auto",
+      label = FALSE,
+      quarto = TRUE
+    )
+
+    return(
+      paste0("\n```{=typst}\n", typst_output, "\n```\n\n")
+    )
+  }
+
+  data_body <-
+    dt_options_set_value(
+      data = data,
+      option = "table_caption",
+      value = NA_character_
+    )
+
+  body_output <- as_typst_string(
+    data = data_body,
+    container = "table",
+    label = FALSE,
+    quarto = FALSE
+  )
+
+  caption_text <- typst_quarto_caption_markdown(table_caption)
+  div_open <-
+    if (!is.null(label_name)) {
+      paste0("::: {#", label_name, "}")
+    } else {
+      ":::"
+    }
+
+  paste0(
+    "\n",
+    div_open,
+    "\n\n```{=typst}\n",
+    body_output,
+    "\n```\n\n",
+    caption_text,
+    "\n:::\n\n"
+  )
+}
+
 create_heading_component_typst <- function(data, styles_tbl = dt_styles_get(data = data)) {
 
   heading <- dt_heading_get(data = data)
@@ -156,6 +221,13 @@ create_figure_component_typst <- function(
     caption = NULL,
     quarto = FALSE
 ) {
+
+  body_component <-
+    if (quarto) {
+      typst_content_block_argument(body_component)
+    } else {
+      body_component
+    }
 
   lines <- c(
     "figure(",
@@ -1744,4 +1816,39 @@ typst_component_argument <- function(component) {
   }
 
   typst_content_expr(component)
+}
+
+typst_content_block_argument <- function(component) {
+
+  if (startsWith(component, "[")) {
+    return(component)
+  }
+
+  if (startsWith(component, "#")) {
+    component <- sub("^#", "", component)
+  }
+
+  rendered <-
+    if (typst_component_needs_eval(component)) {
+      paste0("#", component)
+    } else {
+      component
+    }
+
+  paste0(
+    "[\n  ",
+    gsub("\n", "\n  ", rendered, fixed = TRUE),
+    "\n]"
+  )
+}
+
+typst_quarto_caption_markdown <- function(caption) {
+
+  caption_text <- as.character(caption)[1]
+
+  if (is.na(caption_text) || !nzchar(caption_text)) {
+    return("")
+  }
+
+  caption_text
 }

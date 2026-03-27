@@ -94,17 +94,23 @@ knit_print.gt_tbl <- function(x, ..., inline = FALSE) {
 
   } else if (knitr_is_typst_output()) {
 
-    typst_output <-
-      as_typst_string(
-        data = build_data(data = x, context = "typst"),
-        container = "auto",
-        quarto = check_quarto()
-      )
+    data <- build_data(data = x, context = "typst")
 
-    x <-
-      knitr::asis_output(
-        paste("```{=typst}", typst_output, "```\n\n", sep = "\n")
-      )
+    if (check_quarto()) {
+      x <- knitr::asis_output(as_typst_quarto_knit_output(data))
+    } else {
+      typst_output <-
+        as_typst_string(
+          data = data,
+          container = "auto",
+          quarto = FALSE
+        )
+
+      x <-
+        knitr::asis_output(
+          paste("```{=typst}", typst_output, "```\n\n", sep = "\n")
+        )
+    }
 
   } else if (knitr::is_latex_output()) {
 

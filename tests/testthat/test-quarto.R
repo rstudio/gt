@@ -95,9 +95,12 @@ test_that("Quarto Typst knit_print emits Quarto-flavored table figures", {
   out <- knit_print.gt_tbl(tab)
   out_chr <- as.character(out)
 
+  expect_match(out_chr, "```\\{=typst\\}")
   expect_match(out_chr, "kind: \"quarto-float-tbl\"", fixed = TRUE)
   expect_match(out_chr, "supplement: \"Table\"", fixed = TRUE)
   expect_match(out_chr, "caption: figure.caption(", fixed = TRUE)
+  expect_match(out_chr, "\\[\n\\s*#stack\\(", perl = TRUE)
+  expect_no_match(out_chr, "^:::", perl = TRUE)
 })
 
 test_that("Quarto Typst knit_print prefixes automatic labels with tbl-", {
@@ -114,7 +117,7 @@ test_that("Quarto Typst knit_print prefixes automatic labels with tbl-", {
 
   out_chr <- as.character(knit_print.gt_tbl(tab))
 
-  expect_match(out_chr, "<tbl-demo-table>", fixed = TRUE)
+  expect_match(out_chr, "::: {#tbl-demo-table}", fixed = TRUE)
 })
 
 test_that("Quarto Typst knit_print escapes Typst-sensitive plain text", {
@@ -137,7 +140,8 @@ test_that("Quarto Typst knit_print escapes Typst-sensitive plain text", {
 
   expect_true(grepl("\\@heading \\<tbl-x\\>", out_chr, fixed = TRUE))
   expect_true(grepl("[\\$100]", out_chr, fixed = TRUE))
-  expect_match(out_chr, "caption: figure.caption\\(")
+  expect_match(out_chr, "```\\{=typst\\}")
+  expect_match(out_chr, "caption \\\\#1")
 })
 
 test_that("Quarto Typst knit_print preserves Typst styling constructs", {
@@ -224,7 +228,56 @@ test_that("Quarto Typst knit_print renders styled fills and explicit borders", {
   expect_true(file.exists(typ_path))
 
   typ_out <- paste(readLines(typ_path, warn = FALSE), collapse = "\n")
-  expect_match(typ_out, "kind: \"quarto-float-tbl\"", fixed = TRUE)
+  expect_match(typ_out, "kind: table", fixed = TRUE)
   expect_match(typ_out, "fill: ", fixed = TRUE)
   expect_match(typ_out, "stroke: ", fixed = TRUE)
+})
+
+test_that("Quarto Typst knit_print supports @tbl references through crossref divs", {
+
+  skip_if(Sys.which("quarto") == "")
+
+  withr::local_envvar(c("QUARTO_BIN_PATH" = dirname(Sys.which("quarto"))))
+
+  qmd_path <- tempfile(fileext = ".qmd")
+  typ_path <- sub("\\.qmd$", ".typ", qmd_path)
+  repo_path <- normalizePath(".", winslash = "/", mustWork = TRUE)
+
+  qmd_lines <- c(
+    "---",
+    "title: \"Typst Crossref Smoke Test\"",
+    "format:",
+    "  typst:",
+    "    keep-typ: true",
+    "---",
+    "",
+    "See @tbl-demo-crossref.",
+    "",
+    "```{r}",
+    sprintf("devtools::load_all(%s, quiet = TRUE)", dQuote(repo_path)),
+    "library(gt)",
+    "",
+    "exibble[1:2, c(\"num\", \"char\")] |>",
+    "  gt(id = \"demo-crossref\") |>",
+    "  tab_caption(\"Crossref caption\")",
+    "```"
+  )
+
+  writeLines(qmd_lines, qmd_path, useBytes = TRUE)
+
+  render_out <-
+    system2(
+      Sys.which("quarto"),
+      c("render", qmd_path, "--to", "typst"),
+      stdout = TRUE,
+      stderr = TRUE
+    )
+
+  expect_false(any(grepl("Unable to resolve crossref", render_out, fixed = TRUE)))
+  expect_true(file.exists(typ_path))
+
+  typ_out <- paste(readLines(typ_path, warn = FALSE), collapse = "\n")
+  expect_match(typ_out, "See #ref\\(<tbl-demo-crossref>, supplement: \\[Table\\]\\)\\.")
+  expect_match(typ_out, "kind: \"quarto-float-tbl\"", fixed = TRUE)
+  expect_match(typ_out, "<tbl-demo-crossref>", fixed = TRUE)
 })
