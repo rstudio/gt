@@ -122,3 +122,29 @@ test_that("Quarto Typst knit_print escapes Typst-sensitive plain text", {
   expect_true(grepl("[\\$100]", out_chr, fixed = TRUE))
   expect_match(out_chr, "caption: figure.caption\\(")
 })
+
+test_that("Quarto Typst knit_print preserves Typst styling constructs", {
+
+  withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
+  old_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+  withr::defer(knitr::opts_knit$set(rmarkdown.pandoc.to = old_to))
+  knitr::opts_knit$set(rmarkdown.pandoc.to = "typst")
+
+  tab <-
+    gtcars |>
+    dplyr::select(mfr, model, hp) |>
+    dplyr::slice(1:3) |>
+    gt() |>
+    tab_style(
+      style = list(
+        cell_fill(color = "#1F3C88"),
+        cell_text(color = "white", weight = "bold")
+      ),
+      locations = cells_column_labels()
+    )
+
+  out_chr <- as.character(knit_print.gt_tbl(tab))
+
+  expect_match(out_chr, "fill: \\(x, y\\) => if y == 0 \\{ rgb\\(\"#1F3C88\"\\) \\} else \\{ none \\}")
+  expect_match(out_chr, "#text\\(fill: rgb\\(\"#FFFFFF\"\\)\\)")
+})

@@ -97,6 +97,112 @@ test_that("as_typst() preserves notes and markdown-rich content", {
   expect_match(typst_output, "A _source_ note\\.")
 })
 
+test_that("as_typst() lifts uniform header fill and text styling", {
+
+  typst_output <-
+    gtcars |>
+    dplyr::select(mfr, model, hp) |>
+    dplyr::slice(1:3) |>
+    gt() |>
+    tab_style(
+      style = list(
+        cell_fill(color = "#1F3C88"),
+        cell_text(color = "white", weight = "bold")
+      ),
+      locations = cells_column_labels()
+    ) |>
+    as_typst()
+
+  expect_match(typst_output, "fill: \\(x, y\\) => if y == 0 \\{ rgb\\(\"#1F3C88\"\\) \\} else \\{ none \\}")
+  expect_match(typst_output, "#text\\(fill: rgb\\(\"#FFFFFF\"\\)\\)")
+  expect_match(typst_output, "#strong\\[")
+  expect_no_match(typst_output, "table\\.cell\\(fill: rgb\\(\"#1F3C88\"\\)\\)")
+})
+
+test_that("as_typst() emits per-cell fill and text color for irregular styles", {
+
+  typst_output <-
+    gtcars |>
+    dplyr::select(mfr, model, msrp, hp) |>
+    dplyr::slice(1:4) |>
+    gt() |>
+    fmt_currency(columns = msrp, decimals = 0) |>
+    data_color(
+      columns = c(msrp, hp),
+      palette = c("#F7FBFF", "#6BAED6", "#08306B")
+    ) |>
+    as_typst()
+
+  expect_match(typst_output, "table\\.cell\\(fill: rgb\\(\"#08306B\"\\)\\)")
+  expect_match(typst_output, "table\\.cell\\(fill: rgb\\(\"#AED0E9\"\\)\\)")
+  expect_match(typst_output, "#text\\(fill: rgb\\(\"#FFFFFF\"\\)\\)")
+  expect_match(typst_output, "#text\\(fill: rgb\\(\"#000000\"\\)\\)")
+})
+
+test_that("as_typst() styles notes with local Typst text wrappers", {
+
+  typst_output <-
+    exibble[1:3, c("num", "char", "time")] |>
+    gt() |>
+    tab_source_note("source note") |>
+    tab_style(
+      style = cell_text(color = "red"),
+      locations = cells_source_notes()
+    ) |>
+    as_typst()
+
+  expect_match(typst_output, "#block\\[#text\\(fill: rgb\\(\"#FF0000\"\\)\\)\\[source note\\]\\]")
+})
+
+test_that("as_typst() styles heading blocks with fill and text color", {
+
+  typst_output <-
+    gtcars |>
+    dplyr::select(mfr, model) |>
+    dplyr::slice(1:1) |>
+    gt() |>
+    tab_header(title = "Title") |>
+    tab_style(
+      style = list(
+        cell_fill(color = "#DDDDEE"),
+        cell_text(color = "blue", weight = "bold")
+      ),
+      locations = cells_title(groups = "title")
+    ) |>
+    as_typst()
+
+  expect_match(typst_output, "#block\\(fill: rgb\\(\"#DDDDEE\"\\), inset: 6pt\\)")
+  expect_match(typst_output, "#text\\(fill: rgb\\(\"#0000FF\"\\)\\)")
+})
+
+test_that("as_typst() supports text alignment, decoration, size, and borders", {
+
+  typst_output <-
+    gtcars |>
+    dplyr::select(mfr, model) |>
+    dplyr::slice(1:1) |>
+    gt() |>
+    tab_style(
+      style = list(
+        cell_text(
+          decorate = "underline",
+          size = "large",
+          align = "center"
+        ),
+        cell_fill(color = "#FFEEAA"),
+        cell_borders(sides = "all", color = "red", weight = px(2))
+      ),
+      locations = cells_body(columns = model, rows = 1)
+    ) |>
+    as_typst()
+
+  expect_match(typst_output, "table\\.cell\\(align: center, fill: rgb\\(\"#FFEEAA\"\\), stroke:")
+  expect_match(typst_output, "paint: red")
+  expect_match(typst_output, "thickness: 1\\.5pt")
+  expect_match(typst_output, "#text\\(size: 1\\.2em\\)")
+  expect_match(typst_output, "#underline\\[")
+})
+
 test_that("as_typst() escapes Typst-sensitive plain text in table content", {
 
   typst_output <-
