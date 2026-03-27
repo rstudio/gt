@@ -294,6 +294,19 @@ test_that("process_text() works correctly", {
   expect_equal(processed_html, html_text, ignore_attr = TRUE)
 })
 
+test_that("process_text() escapes Typst-sensitive plain text", {
+
+  typst_text <- process_text(
+    text = "price $100 @ref <tbl-x> #tag [x] *strong* _emph_ `code`",
+    context = "typst"
+  )
+
+  expect_equal(
+    typst_text,
+    "price \\$100 \\@ref \\<tbl-x\\> \\#tag \\[x\\] \\*strong\\* \\_emph\\_ \\`code\\`"
+  )
+})
+
 test_that("apply_pattern_fmt_x() works correctly", {
 
   # Set formatted values in a character vector

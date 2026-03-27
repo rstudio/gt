@@ -699,6 +699,79 @@ as_word_tbl_body <- function(
   as.character(word_tbl)
 }
 
+# as_typst() -------------------------------------------------------------------
+#' Output a **gt** object as Typst
+#'
+#' @description
+#'
+#' Get the Typst content from a `gt_tbl` object as a single-element character
+#' vector. This object can be placed inside a raw Typst block (e.g.,
+#' ```` ```{=typst} ```` in Quarto) or written to a `.typ` file for inclusion
+#' in a Typst document.
+#'
+#' @inheritParams gtsave
+#'
+#' @param container *Top-level Typst container*
+#'
+#'   `singl-kw:[auto|table|figure]` // *default:* `"auto"`
+#'
+#'   Determines the top-level Typst construct used for the export. With
+#'   `"auto"`, a table caption supplied through [tab_caption()] causes the table
+#'   to be wrapped in a `figure(...)` with `kind: table`; otherwise, a bare
+#'   `table(...)` is emitted. Use `"table"` to always emit a bare table, or
+#'   `"figure"` to always emit a figure-wrapped table.
+#'
+#' @section Examples:
+#'
+#' Use a subset of the [`gtcars`] dataset to create a **gt** table. Add a header
+#' with [tab_header()] and then export the table as Typst code using the
+#' `as_typst()` function.
+#'
+#' ```r
+#' tab_typst <-
+#'   gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
+#'   tab_header(
+#'     title = md("Data listing from **gtcars**"),
+#'     subtitle = md("`gtcars` is an R dataset")
+#'   ) |>
+#'   as_typst()
+#' ```
+#'
+#' What's returned is a single-element vector containing the Typst code for the
+#' table and any associated notes.
+#'
+#' @family table export functions
+#' @section Function ID:
+#' 13-6
+#'
+#' @section Function Introduced:
+#' `v1.0.0` (March 26, 2026)
+#'
+#' @export
+as_typst <- function(
+    data,
+    container = c("auto", "table", "figure")
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  container <-
+    rlang::arg_match0(
+      container,
+      values = c("auto", "table", "figure")
+    )
+
+  # Build table data using a Typst-specific rendering context so that text,
+  # units, and footnote marks are resolved as native Typst content.
+  data <- build_data(data = data, context = "typst")
+
+  as_typst_string(data = data, container = container)
+}
+
 # as_gtable() ------------------------------------------------------------------
 #' Transform a **gt** table to a `gtable` object
 #'

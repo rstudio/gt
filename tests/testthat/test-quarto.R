@@ -78,3 +78,47 @@ test_that("Quarto produces the valid output", {
   expect_snapshot_html(tab)
   expect_snapshot_latex(tab)
 })
+
+test_that("Quarto Typst knit_print emits Quarto-flavored table figures", {
+
+  withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
+  old_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+  withr::defer(knitr::opts_knit$set(rmarkdown.pandoc.to = old_to))
+  knitr::opts_knit$set(rmarkdown.pandoc.to = "typst")
+
+  tab <-
+    exibble[1:2, c("num", "char")] |>
+    gt() |>
+    tab_header(title = "A title") |>
+    tab_caption("A caption")
+
+  out <- knit_print.gt_tbl(tab)
+  out_chr <- as.character(out)
+
+  expect_match(out_chr, "kind: \"quarto-float-tbl\"", fixed = TRUE)
+  expect_match(out_chr, "supplement: \"Table\"", fixed = TRUE)
+  expect_match(out_chr, "caption: figure.caption(", fixed = TRUE)
+})
+
+test_that("Quarto Typst knit_print escapes Typst-sensitive plain text", {
+
+  withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
+  old_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+  withr::defer(knitr::opts_knit$set(rmarkdown.pandoc.to = old_to))
+  knitr::opts_knit$set(rmarkdown.pandoc.to = "typst")
+
+  tab <-
+    dplyr::tibble(
+      item = "cash",
+      value = "$100"
+    ) |>
+    gt() |>
+    tab_header(title = "@heading <tbl-x>") |>
+    tab_caption("caption #1")
+
+  out_chr <- as.character(knit_print.gt_tbl(tab))
+
+  expect_true(grepl("\\@heading \\<tbl-x\\>", out_chr, fixed = TRUE))
+  expect_true(grepl("[\\$100]", out_chr, fixed = TRUE))
+  expect_match(out_chr, "caption: figure.caption\\(")
+})

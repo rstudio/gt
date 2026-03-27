@@ -989,6 +989,25 @@ process_text <- function(text, context = "html") {
 
     return(text)
 
+  } else if (context == "typst") {
+
+    # Text processing for Typst output
+
+    if (inherits(text, "from_markdown")) {
+
+      text <- markdown_to_typst(text)
+
+    } else if (is_html(text)) {
+
+      text <- markdown_to_typst(unescape_html(linebreak_br(text)))
+
+    } else {
+
+      text <- typst_escape_markup(as.character(text))
+    }
+
+    return(text)
+
   } else if (grepl("^ooxml/", context)) {
     return(process_text_ooxml(text, ooxml_type = sub("^ooxml/", "", context)))
   } else if (context == "grid") {
@@ -1168,6 +1187,96 @@ markdown_to_latex <- function(text, md_engine) {
       )
     )
   )
+}
+
+#' Transform Markdown text to Typst markup
+#' @noRd
+markdown_to_typst <- function(text) {
+
+  res <- vapply(
+    as.character(text),
+    FUN.VALUE = character(1L),
+    USE.NAMES = FALSE,
+    FUN = function(x) {
+
+      if (is.na(x)) {
+        return(NA_character_)
+      }
+
+      doc <- xml2::read_xml(commonmark::markdown_xml(linebreak_br(x)))
+      typst_render_markdown_node(xml2::xml_root(doc))
+    }
+  )
+
+  sub("\n$", "", res)
+}
+
+#' @noRd
+typst_render_markdown_children <- function(node, collapse = "") {
+  paste0(vapply(xml2::xml_children(node), typst_render_markdown_node, character(1L)), collapse = collapse)
+}
+
+#' @noRd
+typst_render_markdown_node <- function(node) {
+
+  node_name <- xml2::xml_name(node)
+
+  switch(
+    node_name,
+    document = {
+      blocks <- vapply(xml2::xml_children(node), typst_render_markdown_node, character(1L))
+      paste(blocks[nzchar(blocks)], collapse = "\n\n")
+    },
+    paragraph = typst_render_markdown_children(node),
+    text = typst_escape_markup(xml2::xml_text(node)),
+    softbreak = " ",
+    linebreak = " #linebreak() ",
+    emph = paste0("_", typst_render_markdown_children(node), "_"),
+    strong = paste0("*", typst_render_markdown_children(node), "*"),
+    code = paste0("`", gsub("`", "\\`", xml2::xml_text(node), fixed = TRUE), "`"),
+    code_block = paste0("```", xml2::xml_text(node), "```"),
+    item = {
+      children <- vapply(xml2::xml_children(node), typst_render_markdown_node, character(1L))
+      paste(children[nzchar(children)], collapse = "\n")
+    },
+    list = {
+      list_type <- xml2::xml_attr(node, "type", default = "bullet")
+      prefix <- if (identical(list_type, "ordered")) "+ " else "- "
+      items <- vapply(xml2::xml_children(node), typst_render_markdown_node, character(1L))
+      paste0(prefix, items, collapse = "\n")
+    },
+    link = {
+      link_text <- typst_render_markdown_children(node)
+      destination <- xml2::xml_attr(node, "destination", default = "")
+      if (nzchar(destination)) {
+        paste0(link_text, " (", typst_escape_markup(destination), ")")
+      } else {
+        link_text
+      }
+    },
+    html_inline = ,
+    html_block = typst_escape_markup(xml2::xml_text(node)),
+    typst_render_markdown_children(node)
+  )
+}
+
+#' Escape Typst markup-sensitive characters in plain text
+#' @noRd
+typst_escape_markup <- function(text) {
+
+  text <- enc2utf8(text %||% "")
+  text <- gsub("\\", "\\\\", text, fixed = TRUE)
+  text <- gsub("#", "\\#", text, fixed = TRUE)
+  text <- gsub("$", "\\$", text, fixed = TRUE)
+  text <- gsub("[", "\\[", text, fixed = TRUE)
+  text <- gsub("]", "\\]", text, fixed = TRUE)
+  text <- gsub("*", "\\*", text, fixed = TRUE)
+  text <- gsub("_", "\\_", text, fixed = TRUE)
+  text <- gsub("`", "\\`", text, fixed = TRUE)
+  text <- gsub("@", "\\@", text, fixed = TRUE)
+  text <- gsub("<", "\\<", text, fixed = TRUE)
+  text <- gsub(">", "\\>", text, fixed = TRUE)
+  text
 }
 
 # Transform Markdown text to ooxml
