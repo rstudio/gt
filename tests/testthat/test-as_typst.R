@@ -142,8 +142,7 @@ test_that("as_typst() lifts uniform header fill and text styling", {
     as_typst()
 
   expect_match(typst_output, "fill: \\(x, y\\) => if y == 0 \\{ rgb\\(\"#1F3C88\"\\) \\} else \\{ none \\}")
-  expect_match(typst_output, "#text\\(fill: rgb\\(\"#FFFFFF\"\\)\\)")
-  expect_match(typst_output, "#text\\(weight: \"bold\"\\)")
+  expect_match(typst_output, "#text\\(fill: rgb\\(\"#FFFFFF\"\\), weight: \"bold\"\\)")
   expect_no_match(typst_output, "table\\.cell\\(fill: rgb\\(\"#1F3C88\"\\)\\)")
 })
 
@@ -163,8 +162,8 @@ test_that("as_typst() emits per-cell fill and text color for irregular styles", 
 
   expect_match(typst_output, "table\\.cell\\(fill: rgb\\(\"#08306B\"\\)\\)")
   expect_match(typst_output, "table\\.cell\\(fill: rgb\\(\"#AED0E9\"\\)\\)")
-  expect_match(typst_output, "#text\\(fill: rgb\\(\"#FFFFFF\"\\)\\)")
-  expect_match(typst_output, "#text\\(fill: rgb\\(\"#000000\"\\)\\)")
+  expect_match(typst_output, "#text\\(fill: rgb\\(\"#FFFFFF\"\\)")
+  expect_match(typst_output, "#text\\(fill: rgb\\(\"#000000\"\\)")
 })
 
 test_that("as_typst() styles notes with local Typst text wrappers", {
@@ -279,7 +278,7 @@ test_that("as_typst() styles heading blocks with fill and text color", {
     as_typst()
 
   expect_match(typst_output, "block\\(fill: rgb\\(\"#DDDDEE\"\\), inset: 6pt\\)")
-  expect_match(typst_output, "#text\\(fill: rgb\\(\"#0000FF\"\\)\\)")
+  expect_match(typst_output, "#text\\(fill: rgb\\(\"#0000FF\"\\), weight: \"bold\"\\)")
 })
 
 test_that("as_typst() supports text alignment, decoration, size, font, and borders", {
@@ -416,10 +415,10 @@ test_that("as_typst() merges outer Typst text wrappers while preserving wrapper 
 
   expect_match(
     typst_output,
-    "#text\\(size:\\s*13\\.5pt, font: \"Arial\", stretch: 112\\.5%, weight: \"bold\"\\)\\[#emph\\[#overline\\[#underline\\[#text\\(fill: rgb\\(\"#0D47A1\"\\)\\)\\[apricot\\]\\]\\]\\]\\]"
+    "#text\\(fill: rgb\\(\"#0D47A1\"\\), size:\\s*13\\.5pt, font: \"Arial\", stretch: 112\\.5%, weight: \"bold\"\\)\\[#emph\\[#overline\\[#underline\\[apricot\\]\\]\\]\\]"
   )
-  expect_no_match(typst_output, "#text\\(stretch: 112\\.5%\\)\\[#text\\(font:")
-  expect_no_match(typst_output, "#text\\(font: \"Arial\"\\)\\[#text\\(size:")
+  expect_no_match(typst_output, "#text\\(stretch: 112\\.5%\\)\\[#text\\(")
+  expect_no_match(typst_output, "#text\\(weight: \"bold\"\\)\\[#text\\(")
 })
 
 test_that("as_typst() maps numeric weights and vertical alignment conservatively", {

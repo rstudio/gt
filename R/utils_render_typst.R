@@ -1061,9 +1061,6 @@ typst_styled_content_expr <- function(text, style_obj = NULL, strong = FALSE) {
   color <- style_obj[["cell_text"]][["color"]]
   size <- style_obj[["cell_text"]][["size"]]
   weight_expr <- typst_weight_expr(weight)
-  if (!is.null(color)) {
-    inner <- paste0("#text(fill: ", typst_color_expr(color), ")[", inner, "]")
-  }
 
   inner <- typst_apply_text_decoration(inner, decorate)
 
@@ -1078,6 +1075,7 @@ typst_styled_content_expr <- function(text, style_obj = NULL, strong = FALSE) {
   font_expr <- typst_font_expr(font)
   stretch_expr <- typst_stretch_expr(stretch)
   outer_text_args <- typst_text_args(
+    fill = if (!is.null(color)) typst_color_expr(color) else NULL,
     size = if (!is.null(size)) typst_size_expr(size) else NULL,
     font = font_expr,
     stretch = stretch_expr,

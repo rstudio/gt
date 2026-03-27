@@ -167,7 +167,7 @@ test_that("Quarto Typst knit_print preserves Typst styling constructs", {
   out_chr <- as.character(knit_print.gt_tbl(tab))
 
   expect_match(out_chr, "fill: \\(x, y\\) => if y == 0 \\{ rgb\\(\"#1F3C88\"\\) \\} else \\{ none \\}")
-  expect_match(out_chr, "#text\\(fill: rgb\\(\"#FFFFFF\"\\)\\)")
+  expect_match(out_chr, "#text\\(fill: rgb\\(\"#FFFFFF\"\\), weight: \"bold\"\\)")
 })
 
 test_that("Quarto Typst knit_print renders styled fills and explicit borders", {
