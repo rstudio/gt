@@ -309,8 +309,7 @@ test_that("as_typst() supports text alignment, decoration, size, font, and borde
   expect_match(typst_output, "table\\.cell\\(align: horizon \\+ center, stroke:")
   expect_match(typst_output, "paint: red")
   expect_match(typst_output, "thickness: 1\\.5pt")
-  expect_match(typst_output, "#text\\(size: 1\\.2em\\)")
-  expect_match(typst_output, "#text\\(font: \\(\"Fira Sans\", \"Arial\"\\)\\)")
+  expect_match(typst_output, "#text\\(size: 1\\.2em, font: \\(\"Fira Sans\", \"Arial\"\\)\\)")
   expect_match(typst_output, "#underline\\[")
 })
 
@@ -370,6 +369,57 @@ test_that("as_typst() supports additional decoration and block-region alignment/
   expect_match(typst_output, "#text\\(font: \"IBM Plex Sans\"\\)")
   expect_match(typst_output, "align\\(center\\)\\[#pad\\(left: 6pt\\)")
   expect_match(typst_output, "#text\\(weight: \"bold\"\\)\\[Source note\\]")
+})
+
+test_that("as_typst() maps text stretch values to Typst ratios", {
+
+  typst_output <-
+    exibble[1:3, c("num", "char")] |>
+    gt() |>
+    tab_style(
+      style = cell_text(stretch = "semi-expanded"),
+      locations = cells_body(columns = char, rows = 1)
+    ) |>
+    tab_style(
+      style = cell_text(stretch = "ultra-condensed"),
+      locations = cells_body(columns = char, rows = 2)
+    ) |>
+    tab_style(
+      style = cell_text(stretch = "extra-expanded"),
+      locations = cells_body(columns = char, rows = 3)
+    ) |>
+    as_typst()
+
+  expect_match(typst_output, "#text\\(stretch: 112\\.5%\\)")
+  expect_match(typst_output, "#text\\(stretch: 50%\\)")
+  expect_match(typst_output, "#text\\(stretch: 150%\\)")
+})
+
+test_that("as_typst() merges outer Typst text wrappers while preserving wrapper order", {
+
+  typst_output <-
+    exibble[1:1, c("num", "char")] |>
+    gt() |>
+    tab_style(
+      style = cell_text(
+        color = "#0D47A1",
+        size = px(18),
+        font = "Arial",
+        stretch = "semi-expanded",
+        weight = "bold",
+        style = "italic",
+        decorate = "underline overline"
+      ),
+      locations = cells_body(columns = char, rows = 1)
+    ) |>
+    as_typst()
+
+  expect_match(
+    typst_output,
+    "#text\\(size:\\s*13\\.5pt, font: \"Arial\", stretch: 112\\.5%, weight: \"bold\"\\)\\[#emph\\[#overline\\[#underline\\[#text\\(fill: rgb\\(\"#0D47A1\"\\)\\)\\[apricot\\]\\]\\]\\]\\]"
+  )
+  expect_no_match(typst_output, "#text\\(stretch: 112\\.5%\\)\\[#text\\(font:")
+  expect_no_match(typst_output, "#text\\(font: \"Arial\"\\)\\[#text\\(size:")
 })
 
 test_that("as_typst() maps numeric weights and vertical alignment conservatively", {

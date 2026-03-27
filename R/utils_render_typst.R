@@ -1056,6 +1056,7 @@ typst_styled_content_expr <- function(text, style_obj = NULL, strong = FALSE) {
   font <- style_obj[["cell_text"]][["font"]]
   weight <- style_obj[["cell_text"]][["weight"]]
   style <- style_obj[["cell_text"]][["style"]]
+  stretch <- style_obj[["cell_text"]][["stretch"]]
   decorate <- style_obj[["cell_text"]][["decorate"]]
   color <- style_obj[["cell_text"]][["color"]]
   size <- style_obj[["cell_text"]][["size"]]
@@ -1074,20 +1075,30 @@ typst_styled_content_expr <- function(text, style_obj = NULL, strong = FALSE) {
     inner <- paste0("#strong[", inner, "]")
   }
 
-  if (!is.null(size)) {
-    inner <- paste0("#text(size: ", typst_size_expr(size), ")[", inner, "]")
-  }
-
   font_expr <- typst_font_expr(font)
-  if (!is.null(font_expr)) {
-    inner <- paste0("#text(font: ", font_expr, ")[", inner, "]")
-  }
+  stretch_expr <- typst_stretch_expr(stretch)
+  outer_text_args <- typst_text_args(
+    size = if (!is.null(size)) typst_size_expr(size) else NULL,
+    font = font_expr,
+    stretch = stretch_expr,
+    weight = weight_expr
+  )
 
-  if (!is.null(weight_expr)) {
-    inner <- paste0("#text(weight: ", weight_expr, ")[", inner, "]")
+  if (length(outer_text_args) > 0L) {
+    inner <- paste0("#text(", paste(outer_text_args, collapse = ", "), ")[", inner, "]")
   }
 
   paste0("[", inner, "]")
+}
+
+typst_text_args <- function(fill = NULL, size = NULL, font = NULL, stretch = NULL, weight = NULL) {
+  c(
+    if (!is.null(fill)) paste0("fill: ", fill),
+    if (!is.null(size)) paste0("size: ", size),
+    if (!is.null(font)) paste0("font: ", font),
+    if (!is.null(stretch)) paste0("stretch: ", stretch),
+    if (!is.null(weight)) paste0("weight: ", weight)
+  )
 }
 
 typst_apply_whitespace <- function(text, whitespace = NULL) {
@@ -1516,6 +1527,47 @@ typst_font_expr <- function(font) {
   }
 
   paste0("(", paste(font_items, collapse = ", "), ")")
+}
+
+typst_stretch_expr <- function(stretch) {
+
+  if (is.null(stretch) || length(stretch) == 0L) {
+    return(NULL)
+  }
+
+  if (is.numeric(stretch)) {
+    stretch_value <- as.numeric(stretch)[1]
+    if (is.na(stretch_value)) {
+      return(NULL)
+    }
+    return(paste0(formatC(stretch_value, digits = 15, format = "fg"), "%"))
+  }
+
+  stretch <- as.character(stretch)[1]
+
+  if (grepl("^[0-9.]+%$", stretch)) {
+    return(stretch)
+  }
+
+  mapped_values <- c(
+    "ultra-condensed" = "50%",
+    "extra-condensed" = "62.5%",
+    "condensed" = "75%",
+    "semi-condensed" = "87.5%",
+    "normal" = "100%",
+    "semi-expanded" = "112.5%",
+    "expanded" = "125%",
+    "extra-expanded" = "150%",
+    "ultra-expanded" = "200%"
+  )
+
+  mapped <- unname(mapped_values[stretch])
+
+  if (length(mapped) == 1L && !is.na(mapped)) {
+    return(mapped)
+  }
+
+  NULL
 }
 
 typst_wrap_block_region <- function(rendered, style_obj = NULL) {
