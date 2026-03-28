@@ -1,18 +1,27 @@
 skip_on_cran()
 
+with_typst_knit_context <- function(code) {
+  withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
+  local_mocked_bindings(
+    check_quarto = function() TRUE,
+    knitr_is_typst_output = function() TRUE
+  )
+  old_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+  withr::defer(knitr::opts_knit$set(rmarkdown.pandoc.to = old_to))
+  knitr::opts_knit$set(rmarkdown.pandoc.to = "typst")
+  force(code)
+}
+
 test_that("Rendering in Quarto doesn't error with empty string (#1769)", {
 
   withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
 
   tbl <- mtcars_short |> dplyr::select(mpg, cyl) |> gt()
 
-  # note that these don't produce the same output.
-  # render_as_html(tbl |> cols_label(mpg = "")),
-  # render_as_html(tbl |> cols_label(mpg = md("")))
   expect_no_match_html(
     tbl |> cols_label(mpg = gt::md("")),
     ">mpg</th>", fixed = TRUE
-    )
+  )
 
   expect_match_html(
     tbl |> cols_label(mpg = gt::md("")),
@@ -31,11 +40,10 @@ test_that("Rendering in Quarto produces valid html (#1839)", {
 
   tbl <-
     mtcars_short |>
-    dplyr::select(mpg, cyl) |> gt() |> tab_spanner(md("markdown"), c(mpg, cyl))
+    dplyr::select(mpg, cyl) |>
+    gt() |>
+    tab_spanner(md("markdown"), c(mpg, cyl))
 
-  # note that these don't produce the same output.
-  # render_as_html(tbl |> cols_label(mpg = "")),
-  # render_as_html(tbl |> cols_label(mpg = md("")))
   expect_no_match_html(
     tbl |> cols_label(mpg = gt::md("")),
     "&gt;&lt;", fixed = TRUE
@@ -49,13 +57,12 @@ test_that("Rendering in Quarto produces valid html (#1839)", {
 
 test_that("Quarto produces the valid output", {
 
-  # Currently, some parts are invalid
   withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
 
   tab <-
     exibble |>
     dplyr::select(num, char, fctr) |>
-    dplyr::mutate(x = "- 1") |> # create bullet list
+    dplyr::mutate(x = "- 1") |>
     dplyr::slice_head(n  = 5) |>
     gt() |>
     fmt_markdown(num) |>
@@ -79,140 +86,78 @@ test_that("Quarto produces the valid output", {
   expect_snapshot_latex(tab)
 })
 
-test_that("Quarto Typst knit_print emits Quarto-flavored table figures", {
+test_that("Quarto Typst knit_print uses a raw figure path for unlabeled captioned tables", {
 
-  withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
-  old_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
-  withr::defer(knitr::opts_knit$set(rmarkdown.pandoc.to = old_to))
-  knitr::opts_knit$set(rmarkdown.pandoc.to = "typst")
+  with_typst_knit_context({
+    tab <-
+      exibble[1:2, c("num", "char")] |>
+      gt() |>
+      tab_header(title = "A title") |>
+      tab_caption("A caption")
 
-  tab <-
-    exibble[1:2, c("num", "char")] |>
-    gt() |>
-    tab_header(title = "A title") |>
-    tab_caption("A caption")
+    out_chr <- as.character(knit_print.gt_tbl(tab))
 
-  out <- knit_print.gt_tbl(tab)
-  out_chr <- as.character(out)
-
-  expect_match(out_chr, "```\\{=typst\\}")
-  expect_match(out_chr, "kind: \"quarto-float-tbl\"", fixed = TRUE)
-  expect_match(out_chr, "supplement: \"Table\"", fixed = TRUE)
-  expect_match(out_chr, "caption: figure.caption(", fixed = TRUE)
-  expect_match(out_chr, "\\[\n\\s*#stack\\(", perl = TRUE)
-  expect_no_match(out_chr, "^:::", perl = TRUE)
+    expect_match(out_chr, "```\\{=typst\\}")
+    expect_match(out_chr, "kind: \"quarto-float-tbl\"", fixed = TRUE)
+    expect_match(out_chr, "supplement: \"Table\"", fixed = TRUE)
+    expect_match(out_chr, "caption: figure.caption(", fixed = TRUE)
+    expect_match(out_chr, "\\[\n\\s*#stack\\(", perl = TRUE)
+    expect_no_match(out_chr, "^:::", perl = TRUE)
+  })
 })
 
-test_that("Quarto Typst knit_print prefixes automatic labels with tbl-", {
+test_that("Quarto Typst knit_print uses a crossref-div path for labeled captioned tables", {
 
-  withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
-  old_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
-  withr::defer(knitr::opts_knit$set(rmarkdown.pandoc.to = old_to))
-  knitr::opts_knit$set(rmarkdown.pandoc.to = "typst")
+  with_typst_knit_context({
+    tab <-
+      exibble[1:2, c("num", "char")] |>
+      gt(id = "demo-table") |>
+      tab_header(title = "A title", subtitle = "A subtitle") |>
+      tab_footnote("A footnote", locations = cells_body(columns = num, rows = 1)) |>
+      tab_source_note("A source note") |>
+      tab_caption("caption #1 @x <tbl-y>")
 
-  tab <-
-    exibble[1:2, c("num", "char")] |>
-    gt(id = "demo-table") |>
-    tab_caption("A caption")
+    out_chr <- as.character(knit_print.gt_tbl(tab))
 
-  out_chr <- as.character(knit_print.gt_tbl(tab))
-
-  expect_match(out_chr, "::: {#tbl-demo-table}", fixed = TRUE)
+    expect_match(out_chr, "::: \\{#tbl-demo-table\\}")
+    expect_match(out_chr, "A title")
+    expect_match(out_chr, "A subtitle")
+    expect_match(out_chr, "A footnote")
+    expect_match(out_chr, "A source note")
+    expect_match(out_chr, "caption \\\\#1 \\\\@x \\\\<tbl-y\\\\>")
+  })
 })
 
-test_that("Quarto Typst knit_print preserves auxiliary Typst content in crossref divs", {
+test_that("Quarto Typst knit_print preserves Typst-safe escaping and styling constructs", {
 
-  withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
-  old_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
-  withr::defer(knitr::opts_knit$set(rmarkdown.pandoc.to = old_to))
-  knitr::opts_knit$set(rmarkdown.pandoc.to = "typst")
+  with_typst_knit_context({
+    tab <-
+      dplyr::tibble(
+        item = "cash",
+        value = "$100"
+      ) |>
+      gt() |>
+      tab_header(title = "@heading <tbl-x>") |>
+      tab_style(
+        style = list(
+          cell_fill(color = "#1F3C88"),
+          cell_text(color = "white", weight = "bold")
+        ),
+        locations = cells_column_labels()
+      ) |>
+      tab_caption("caption #1")
 
-  tab <-
-    exibble[1:2, c("num", "char")] |>
-    gt(id = "demo-table") |>
-    tab_header(title = "A title", subtitle = "A subtitle") |>
-    tab_footnote("A footnote", locations = cells_body(columns = num, rows = 1)) |>
-    tab_source_note("A source note") |>
-    tab_caption("A caption")
+    out_chr <- as.character(knit_print.gt_tbl(tab))
 
-  out_chr <- as.character(knit_print.gt_tbl(tab))
-
-  expect_match(out_chr, "::: \\{#tbl-demo-table\\}")
-  expect_match(out_chr, "A title")
-  expect_match(out_chr, "A subtitle")
-  expect_match(out_chr, "A footnote")
-  expect_match(out_chr, "A source note")
+    expect_true(grepl("\\@heading \\<tbl-x\\>", out_chr, fixed = TRUE))
+    expect_true(grepl("[\\$100]", out_chr, fixed = TRUE))
+    expect_match(out_chr, "fill: \\(x, y\\) => if y == 0 \\{")
+    expect_match(out_chr, "rgb\\(\"#1F3C88\"\\)")
+    expect_match(out_chr, "#text\\(fill: rgb\\(\"#FFFFFF\"\\), weight: \"bold\"\\)")
+  })
 })
 
-test_that("Quarto Typst knit_print escapes Typst-sensitive plain text", {
-
-  withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
-  old_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
-  withr::defer(knitr::opts_knit$set(rmarkdown.pandoc.to = old_to))
-  knitr::opts_knit$set(rmarkdown.pandoc.to = "typst")
-
-  tab <-
-    dplyr::tibble(
-      item = "cash",
-      value = "$100"
-    ) |>
-    gt() |>
-    tab_header(title = "@heading <tbl-x>") |>
-    tab_caption("caption #1")
-
-  out_chr <- as.character(knit_print.gt_tbl(tab))
-
-  expect_true(grepl("\\@heading \\<tbl-x\\>", out_chr, fixed = TRUE))
-  expect_true(grepl("[\\$100]", out_chr, fixed = TRUE))
-  expect_match(out_chr, "```\\{=typst\\}")
-  expect_match(out_chr, "caption \\\\#1")
-})
-
-test_that("Quarto Typst knit_print escapes plain-text captions inside crossref divs", {
-
-  withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
-  old_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
-  withr::defer(knitr::opts_knit$set(rmarkdown.pandoc.to = old_to))
-  knitr::opts_knit$set(rmarkdown.pandoc.to = "typst")
-
-  tab <-
-    exibble[1:2, c("num", "char")] |>
-    gt(id = "demo-table") |>
-    tab_caption("caption #1 @x <tbl-y>")
-
-  out_chr <- as.character(knit_print.gt_tbl(tab))
-
-  expect_match(out_chr, "caption \\\\#1 \\\\@x \\\\<tbl-y\\\\>")
-})
-
-test_that("Quarto Typst knit_print preserves Typst styling constructs", {
-
-  withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
-  old_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
-  withr::defer(knitr::opts_knit$set(rmarkdown.pandoc.to = old_to))
-  knitr::opts_knit$set(rmarkdown.pandoc.to = "typst")
-
-  tab <-
-    gtcars |>
-    dplyr::select(mfr, model, hp) |>
-    dplyr::slice(1:3) |>
-    gt() |>
-    tab_style(
-      style = list(
-        cell_fill(color = "#1F3C88"),
-        cell_text(color = "white", weight = "bold")
-      ),
-      locations = cells_column_labels()
-    )
-
-  out_chr <- as.character(knit_print.gt_tbl(tab))
-
-  expect_match(out_chr, "fill: \\(x, y\\) => if y == 0 \\{")
-  expect_match(out_chr, "rgb\\(\"#1F3C88\"\\)")
-  expect_match(out_chr, "#text\\(fill: rgb\\(\"#FFFFFF\"\\), weight: \"bold\"\\)")
-})
-
-test_that("Quarto Typst knit_print renders styled fills and explicit borders", {
+test_that("Quarto Typst render smoke test covers styling, crossrefs, and plain-text caption escaping", {
 
   skip_if(Sys.which("quarto") == "")
 
@@ -224,11 +169,13 @@ test_that("Quarto Typst knit_print renders styled fills and explicit borders", {
 
   qmd_lines <- c(
     "---",
-    "title: \"Typst Styling Smoke Test\"",
+    "title: \"Typst Smoke Test\"",
     "format:",
     "  typst:",
     "    keep-typ: true",
     "---",
+    "",
+    "See @tbl-demo-smoke.",
     "",
     "```{r}",
     sprintf("devtools::load_all(%s, quiet = TRUE)", dQuote(repo_path)),
@@ -236,7 +183,7 @@ test_that("Quarto Typst knit_print renders styled fills and explicit borders", {
     "library(dplyr)",
     "",
     "exibble[1:3, c(\"num\", \"char\", \"currency\")] |>",
-    "  gt() |>",
+    "  gt(id = \"demo-smoke\") |>",
     "  tab_header(title = \"Styled\") |>",
     "  tab_style(",
     "    style = list(",
@@ -252,56 +199,8 @@ test_that("Quarto Typst knit_print renders styled fills and explicit borders", {
     "  tab_style(",
     "    style = cell_borders(sides = c(\"right\", \"left\"), color = \"red\", weight = px(2)),",
     "    locations = cells_body(columns = c(num, char), rows = 1)",
-    "  )",
-    "```"
-  )
-
-  writeLines(qmd_lines, qmd_path, useBytes = TRUE)
-
-  expect_no_error(
-    system2(
-      Sys.which("quarto"),
-      c("render", qmd_path, "--to", "typst"),
-      stdout = TRUE,
-      stderr = TRUE
-    )
-  )
-
-  expect_true(file.exists(typ_path))
-
-  typ_out <- paste(readLines(typ_path, warn = FALSE), collapse = "\n")
-  expect_match(typ_out, "kind: table", fixed = TRUE)
-  expect_match(typ_out, "fill: ", fixed = TRUE)
-  expect_match(typ_out, "paint: red", fixed = TRUE)
-})
-
-test_that("Quarto Typst knit_print supports @tbl references through crossref divs", {
-
-  skip_if(Sys.which("quarto") == "")
-
-  withr::local_envvar(c("QUARTO_BIN_PATH" = dirname(Sys.which("quarto"))))
-
-  qmd_path <- tempfile(fileext = ".qmd")
-  typ_path <- sub("\\.qmd$", ".typ", qmd_path)
-  repo_path <- normalizePath(".", winslash = "/", mustWork = TRUE)
-
-  qmd_lines <- c(
-    "---",
-    "title: \"Typst Crossref Smoke Test\"",
-    "format:",
-    "  typst:",
-    "    keep-typ: true",
-    "---",
-    "",
-    "See @tbl-demo-crossref.",
-    "",
-    "```{r}",
-    sprintf("devtools::load_all(%s, quiet = TRUE)", dQuote(repo_path)),
-    "library(gt)",
-    "",
-    "exibble[1:2, c(\"num\", \"char\")] |>",
-    "  gt(id = \"demo-crossref\") |>",
-    "  tab_caption(\"Crossref caption\")",
+    "  ) |>",
+    "  tab_caption(\"caption #1 @x <tbl-y>\")",
     "```"
   )
 
@@ -319,55 +218,9 @@ test_that("Quarto Typst knit_print supports @tbl references through crossref div
   expect_true(file.exists(typ_path))
 
   typ_out <- paste(readLines(typ_path, warn = FALSE), collapse = "\n")
-  expect_match(typ_out, "See #ref\\(<tbl-demo-crossref>, supplement: \\[Table\\]\\)\\.")
+  expect_match(typ_out, "See #ref\\(<tbl-demo-smoke>, supplement: \\[Table\\]\\)\\.")
   expect_match(typ_out, "kind: \"quarto-float-tbl\"", fixed = TRUE)
-  expect_match(typ_out, "<tbl-demo-crossref>", fixed = TRUE)
-})
-
-test_that("Quarto Typst crossref div captions compile with plain-text special characters", {
-
-  skip_if(Sys.which("quarto") == "")
-
-  withr::local_envvar(c("QUARTO_BIN_PATH" = dirname(Sys.which("quarto"))))
-
-  qmd_path <- tempfile(fileext = ".qmd")
-  typ_path <- sub("\\.qmd$", ".typ", qmd_path)
-  repo_path <- normalizePath(".", winslash = "/", mustWork = TRUE)
-
-  qmd_lines <- c(
-    "---",
-    "title: \"Typst Crossref Caption Escape Smoke Test\"",
-    "format:",
-    "  typst:",
-    "    keep-typ: true",
-    "---",
-    "",
-    "See @tbl-demo-caption.",
-    "",
-    "```{r}",
-    sprintf("devtools::load_all(%s, quiet = TRUE)", dQuote(repo_path)),
-    "library(gt)",
-    "",
-    "exibble[1:2, c(\"num\", \"char\")] |>",
-    "  gt(id = \"demo-caption\") |>",
-    "  tab_caption(\"caption #1 @x <tbl-y>\")",
-    "```"
-  )
-
-  writeLines(qmd_lines, qmd_path, useBytes = TRUE)
-
-  expect_no_error(
-    system2(
-      Sys.which("quarto"),
-      c("render", qmd_path, "--to", "typst"),
-      stdout = TRUE,
-      stderr = TRUE
-    )
-  )
-
-  expect_true(file.exists(typ_path))
-
-  typ_out <- paste(readLines(typ_path, warn = FALSE), collapse = "\n")
-  expect_match(typ_out, "See #ref\\(<tbl-demo-caption>, supplement: \\[Table\\]\\)\\.")
+  expect_match(typ_out, "fill: ", fixed = TRUE)
+  expect_match(typ_out, "paint: red", fixed = TRUE)
   expect_match(typ_out, "caption \\\\#1 \\\\@x \\\\<tbl-y\\\\>")
 })
