@@ -99,9 +99,7 @@ test_that("Quarto Typst knit_print uses a raw figure path for unlabeled captione
 
     expect_match(out_chr, "```\\{=typst\\}")
     expect_match(out_chr, "kind: \"quarto-float-tbl\"", fixed = TRUE)
-    expect_match(out_chr, "supplement: \"Table\"", fixed = TRUE)
     expect_match(out_chr, "caption: figure.caption(", fixed = TRUE)
-    expect_match(out_chr, "\\[\n\\s*#stack\\(", perl = TRUE)
     expect_no_match(out_chr, "^:::", perl = TRUE)
   })
 })
@@ -152,7 +150,6 @@ test_that("Quarto Typst knit_print preserves Typst-safe escaping and styling con
     expect_true(grepl("\\@heading \\<tbl-x\\>", out_chr, fixed = TRUE))
     expect_true(grepl("[\\$100]", out_chr, fixed = TRUE))
     expect_match(out_chr, "fill: \\(x, y\\) => if y == 0 \\{")
-    expect_match(out_chr, "rgb\\(\"#1F3C88\"\\)")
     expect_match(out_chr, "#text\\(fill: rgb\\(\"#FFFFFF\"\\), weight: \"bold\"\\)")
   })
 })

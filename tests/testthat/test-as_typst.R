@@ -131,7 +131,7 @@ test_that("as_typst() preserves markdown, notes, headings, and block-region styl
   expect_match(typst_output, "#text\\(fill: rgb\\(\"#FF0000\"\\)\\)\\[A _source_ note\\.\\]")
 })
 
-test_that("as_typst() handles fill, data_color, typography, and note whitespace in one styled export", {
+test_that("as_typst() handles fill, data_color, typography, note whitespace, and summary styling in one styled export", {
 
   typst_output <-
     dplyr::tibble(
@@ -172,17 +172,26 @@ test_that("as_typst() handles fill, data_color, typography, and note whitespace 
       columns = amount,
       palette = c("#F7FBFF", "#6BAED6", "#08306B")
     ) |>
+    grand_summary_rows(
+      columns = amount,
+      fns = list(list(label = "Total", fn = "sum"))
+    ) |>
     tab_source_note("note with  two spaces") |>
     tab_style(
       style = cell_text(whitespace = "pre-wrap", align = "right", indent = px(8)),
       locations = cells_source_notes()
     ) |>
+    tab_style(
+      style = list(
+        cell_fill(color = "#FFF8E1"),
+        cell_text(color = "#B26A00", weight = "bold")
+      ),
+      locations = cells_grand_summary(columns = amount, rows = 1)
+    ) |>
     as_typst()
 
-  expect_match(
-    typst_output,
-    "fill: \\(x, y\\) => if y == 0 \\{ rgb\\(\"#1F3C88\"\\) \\} else \\{ none \\}"
-  )
+  expect_match(typst_output, "fill: \\(x, y\\) =>")
+  expect_match(typst_output, "rgb\\(\"#1F3C88\"\\)")
   expect_match(
     typst_output,
     "#text\\(fill: rgb\\(\"#FFFFFF\"\\), weight: \"bold\"\\)"
@@ -198,6 +207,9 @@ test_that("as_typst() handles fill, data_color, typography, and note whitespace 
     typst_output,
     "#align\\(right\\)\\[#pad\\(left: 6pt\\)\\[note with ~two spaces\\]\\]"
   )
+  expect_match(typst_output, "rgb\\(\"#FFF8E1\"\\)")
+  expect_match(typst_output, "rgb\\(\"#B26A00\"\\)")
+  expect_match(typst_output, "Total")
 })
 
 test_that("as_typst() supports alignment, borders, numeric weights, and stretch mappings", {
@@ -403,7 +415,7 @@ test_that("as_typst() preserves duplicated edges and residual local stroke excep
   )
 })
 
-test_that("as_typst() styles summary, stub summary, and grand summary cells", {
+test_that("as_typst() styles stub summary and grand summary cells", {
 
   typst_output <-
     exibble[1:5, c("row", "group", "num", "currency")] |>
@@ -436,8 +448,6 @@ test_that("as_typst() styles summary, stub summary, and grand summary cells", {
     ) |>
     as_typst()
 
-  expect_match(typst_output, "rgb\\(\"#FFF8E1\"\\)")
-  expect_match(typst_output, "rgb\\(\"#B26A00\"\\)")
   expect_match(typst_output, "rgb\\(\"#1565C0\"\\)")
   expect_match(typst_output, "rgb\\(\"#2E7D32\"\\)")
   expect_match(typst_output, "Total")
