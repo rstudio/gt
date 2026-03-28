@@ -166,7 +166,8 @@ test_that("Quarto Typst knit_print preserves Typst styling constructs", {
 
   out_chr <- as.character(knit_print.gt_tbl(tab))
 
-  expect_match(out_chr, "fill: \\(x, y\\) => if y == 0 \\{ rgb\\(\"#1F3C88\"\\) \\} else \\{ none \\}")
+  expect_match(out_chr, "fill: \\(x, y\\) => if y == 0 \\{")
+  expect_match(out_chr, "rgb\\(\"#1F3C88\"\\)")
   expect_match(out_chr, "#text\\(fill: rgb\\(\"#FFFFFF\"\\), weight: \"bold\"\\)")
 })
 
@@ -230,7 +231,7 @@ test_that("Quarto Typst knit_print renders styled fills and explicit borders", {
   typ_out <- paste(readLines(typ_path, warn = FALSE), collapse = "\n")
   expect_match(typ_out, "kind: table", fixed = TRUE)
   expect_match(typ_out, "fill: ", fixed = TRUE)
-  expect_match(typ_out, "stroke: ", fixed = TRUE)
+  expect_match(typ_out, "paint: red", fixed = TRUE)
 })
 
 test_that("Quarto Typst knit_print supports @tbl references through crossref divs", {

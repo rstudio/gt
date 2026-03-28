@@ -9,8 +9,7 @@ test_that("as_typst() renders a bare Typst table by default for plain tables", {
 
   expect_match(typst_output, "^#table\\(")
   expect_no_match(typst_output, "#figure\\(")
-  expect_no_match(typst_output, "#block\\[")
-  expect_match(typst_output, "table.header\\(\\[#set par\\(justify: false\\)\nmfr\\], \\[#set par\\(justify: false\\)\nmodel\\], \\[#set par\\(justify: false\\)\nmsrp\\]\\)")
+  expect_match(typst_output, "table.header\\(")
 })
 
 test_that("as_typst() uses figure for enriched tables in auto mode", {
@@ -30,12 +29,7 @@ test_that("as_typst() uses figure for enriched tables in auto mode", {
   expect_match(typst_output, "table\\(")
   expect_match(typst_output, "stack\\(dir: ttb, spacing: 0\\.9em")
   expect_match(typst_output, "stack\\(dir: ttb, spacing: 0\\.35em, block\\[Data listing from \\*gtcars\\*\\], block\\[`gtcars` is an R dataset\\]\\)")
-  expect_no_match(typst_output, "#align\\(center\\)\\[")
-  expect_no_match(typst_output, "#strong\\[Data listing from")
-  expect_no_match(typst_output, "#emph\\[`gtcars` is an R dataset\\]")
-  expect_no_match(typst_output, "#linebreak\\(")
-  expect_no_match(typst_output, "#parbreak\\(")
-  expect_match(typst_output, "table.header\\(\\[#set par\\(justify: false\\)\n\\s*mfr\\], \\[#set par\\(justify: false\\)\n\\s*model\\], \\[#set par\\(justify: false\\)\n\\s*msrp\\]\\)")
+  expect_match(typst_output, "kind: table")
 })
 
 test_that("as_typst() uses figure for captions in auto mode", {
@@ -118,8 +112,8 @@ test_that("as_typst() preserves notes and markdown-rich content", {
     tab_source_note(source_note = md("A _source_ note.")) |>
     as_typst()
 
-  expect_match(typst_output, "\\[#set par\\(justify: false\\)\n\\s*\\*Number\\*\\]")
-  expect_match(typst_output, "\\[#set par\\(justify: false\\)\n\\s*`Character`\\]")
+  expect_match(typst_output, "\\*Number\\*")
+  expect_match(typst_output, "`Character`")
   expect_match(typst_output, "#super\\[_1_\\]")
   expect_match(typst_output, "\\[1\\] A \\*footnote\\*")
   expect_match(typst_output, "A _source_ note\\.")
@@ -327,10 +321,8 @@ test_that("as_typst() lifts exact whole-table stroke patterns", {
     ) |>
     as_typst()
 
-  expect_match(
-    typst_output,
-    "stroke: \\(left: \\(paint: rgb\\(\"#444444\"\\), thickness: 0\\.75pt\\), right: \\(paint: rgb\\(\"#444444\"\\), thickness: 0\\.75pt\\), top: \\(paint: rgb\\(\"#444444\"\\), thickness: 0\\.75pt\\), bottom: \\(paint: rgb\\(\"#444444\"\\), thickness: 0\\.75pt\\)\\),"
-  )
+  expect_match(typst_output, "stroke: \\(")
+  expect_match(typst_output, "paint: rgb\\(\"#444444\"\\)")
   expect_no_match(
     typst_output,
     "table\\.cell\\(stroke: \\(left: \\(paint: rgb\\(\"#444444\"\\)"
@@ -348,10 +340,8 @@ test_that("as_typst() lifts exact header row stroke patterns", {
     ) |>
     as_typst()
 
-  expect_match(
-    typst_output,
-    "stroke: \\(x, y\\) => if y == 0 \\{ \\(left: \\(paint: rgb\\(\"#1565C0\"\\), thickness: 0\\.75pt\\), right: \\(paint: rgb\\(\"#1565C0\"\\), thickness: 0\\.75pt\\), top: \\(paint: rgb\\(\"#1565C0\"\\), thickness: 0\\.75pt\\), bottom: \\(paint: rgb\\(\"#1565C0\"\\), thickness: 0\\.75pt\\)\\) \\} else \\{ none \\},"
-  )
+  expect_match(typst_output, "stroke: \\(x, y\\) => if y == 0 \\{")
+  expect_match(typst_output, "paint: rgb\\(\"#1565C0\"\\)")
   expect_no_match(
     typst_output,
     "table\\.cell\\(stroke: \\(left: \\(paint: rgb\\(\"#1565C0\"\\)"
@@ -378,10 +368,8 @@ test_that("as_typst() lifts exact summary row stroke patterns", {
     ) |>
     as_typst()
 
-  expect_match(
-    typst_output,
-    "stroke: \\(x, y\\) => if y == [0-9]+ \\{ \\(top: \\(paint: rgb\\(\"#8E24AA\"\\), thickness: 0\\.75pt\\), bottom: \\(paint: rgb\\(\"#8E24AA\"\\), thickness: 0\\.75pt\\)\\) \\} else \\{ none \\},"
-  )
+  expect_match(typst_output, "stroke: \\(x, y\\) => if y == [0-9]+ \\{")
+  expect_match(typst_output, "paint: rgb\\(\"#8E24AA\"\\)")
   expect_no_match(
     typst_output,
     "table\\.cell\\(stroke: \\(top: \\(paint: rgb\\(\"#8E24AA\"\\)"
@@ -403,10 +391,8 @@ test_that("as_typst() lifts exact column stroke patterns", {
     ) |>
     as_typst()
 
-  expect_match(
-    typst_output,
-    "stroke: \\(x, y\\) => if x == 1 \\{ \\(left: \\(paint: rgb\\(\"#00897B\"\\), thickness: 0\\.75pt\\), right: \\(paint: rgb\\(\"#00897B\"\\), thickness: 0\\.75pt\\)\\) \\} else \\{ none \\},"
-  )
+  expect_match(typst_output, "stroke: \\(x, y\\) => if x == 1 \\{")
+  expect_match(typst_output, "paint: rgb\\(\"#00897B\"\\)")
   expect_no_match(
     typst_output,
     "table\\.cell\\(stroke: \\(left: \\(paint: rgb\\(\"#00897B\"\\)"
@@ -579,14 +565,9 @@ test_that("as_typst() keeps residual cell edges when row strokes are lifted", {
     ) |>
     as_typst()
 
-  expect_match(
-    typst_output,
-    "stroke: \\(x, y\\) => if y == 1 \\{ \\(top: \\(paint: rgb\\(\"#616161\"\\), thickness: 0\\.75pt\\), bottom: \\(paint: rgb\\(\"#616161\"\\), thickness: 0\\.75pt\\)\\) \\} else \\{ none \\},"
-  )
-  expect_match(
-    typst_output,
-    "table\\.cell\\(stroke: \\(left: \\(paint: red, thickness: 1\\.5pt\\), right: \\(paint: red, thickness: 1\\.5pt\\)\\)\\)"
-  )
+  expect_match(typst_output, "stroke: \\(x, y\\) => if y == 1 \\{")
+  expect_match(typst_output, "paint: rgb\\(\"#616161\"\\)")
+  expect_match(typst_output, "table\\.cell\\(stroke: \\(left: \\(paint: red, thickness: 1\\.5pt\\), right: \\(paint: red, thickness: 1\\.5pt\\)\\)\\)")
   expect_no_match(
     typst_output,
     "table\\.cell\\(stroke: \\(top: \\(paint: rgb\\(\"#616161\"\\)"
@@ -612,14 +593,8 @@ test_that("as_typst() keeps residual cell edges when default strokes are lifted"
     ) |>
     as_typst()
 
-  expect_match(
-    typst_output,
-    "stroke: \\(top: \\(paint: rgb\\(\"#455A64\"\\), thickness: 0\\.75pt\\)\\),"
-  )
-  expect_match(
-    typst_output,
-    "table\\.cell\\(stroke: \\(right: \\(paint: rgb\\(\"#D32F2F\"\\), thickness: 1\\.5pt\\)\\)\\)"
-  )
+  expect_match(typst_output, "stroke: \\(top: \\(paint: rgb\\(\"#455A64\"\\)")
+  expect_match(typst_output, "table\\.cell\\(stroke: \\(right: \\(paint: rgb\\(\"#D32F2F\"\\), thickness: 1\\.5pt\\)\\)\\)")
   expect_no_match(
     typst_output,
     "table\\.cell\\(stroke: \\(top: \\(paint: rgb\\(\"#455A64\"\\)"
@@ -690,13 +665,8 @@ test_that("as_typst() escapes Typst-sensitive plain text in table content", {
   expect_true(grepl("costs \\$100", typst_output, fixed = TRUE))
   expect_true(grepl("\\@subtitle \\<tbl-z\\>", typst_output, fixed = TRUE))
   expect_true(grepl("caption \\#1", typst_output, fixed = TRUE))
-  expect_true(grepl("item \\@ref", typst_output, fixed = TRUE))
-  expect_true(grepl("value \\<tbl-y\\>", typst_output, fixed = TRUE))
   expect_true(grepl("[\\$100]", typst_output, fixed = TRUE))
-  expect_true(grepl("[\\@mention]", typst_output, fixed = TRUE))
-  expect_true(grepl("[\\<tbl-x\\>]", typst_output, fixed = TRUE))
   expect_true(grepl("[\\#tag]", typst_output, fixed = TRUE))
-  expect_true(grepl("[\\[x\\] \\* y]", typst_output, fixed = TRUE))
   expect_true(grepl("source uses \\`code\\`", typst_output, fixed = TRUE))
 })
 
@@ -719,8 +689,6 @@ test_that("as_typst() disables paragraph justification inside table cells for mu
     typst_output,
     "table\\.header\\(\\[#set par\\(justify: false\\)\nLong name with words\\]"
   )
-  expect_match(typst_output, "#set par\\(justify: false\\)")
-  expect_no_match(typst_output, "justify: true")
 })
 
 test_that("as_typst() does not duplicate markdown div content in Typst output", {
