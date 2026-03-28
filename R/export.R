@@ -730,8 +730,8 @@ as_word_tbl_body <- function(
 #'   An optional label to append to the emitted Typst object using Typst's
 #'   `<label>` syntax. By default (`NULL`), a label is emitted only when the
 #'   underlying **gt** table has a non-missing `id` value (set via [gt()]). Use
-#'   `FALSE` to suppress label emission, or supply a string to force a specific
-#'   label.
+#'   `TRUE` to force the same automatic behavior, `FALSE` to suppress label
+#'   emission, or supply a string to force a specific label.
 #'
 #' @param breakable *Make figure-wrapped Typst output break across pages?*
 #'
@@ -787,6 +787,10 @@ as_typst <- function(
       container,
       values = c("auto", "table", "figure")
     )
+
+  if (!is.null(label) && !isFALSE(label) && !isTRUE(label)) {
+    check_string(label, allow_empty = FALSE, allow_na = FALSE)
+  }
 
   check_bool(breakable, allow_na = FALSE)
 

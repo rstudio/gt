@@ -82,6 +82,17 @@ test_that("as_typst() emits automatic and explicit Typst labels", {
   expect_no_match(exibble[1:2, c("num", "char")] |> gt(id = "x") |> as_typst(label = FALSE), "<x>$")
 })
 
+test_that("as_typst() treats label = TRUE as automatic labeling", {
+
+  typst_output <-
+    exibble[1:2, c("num", "char")] |>
+    gt(id = "demo_table") |>
+    as_typst(label = TRUE)
+
+  expect_match(typst_output, "<demo_table>$")
+  expect_no_match(typst_output, "<TRUE>$")
+})
+
 test_that("as_typst() can make figure-wrapped output breakable", {
 
   typst_output <-
@@ -700,15 +711,49 @@ test_that("as_typst() does not duplicate markdown div content in Typst output", 
     fmt_markdown(columns = lines) |>
     as_typst()
 
+  expect_match(typst_output, "\\[1\\]")
+  expect_match(typst_output, "\\[1, 5, 8\\]")
+  expect_no_match(typst_output, "\\<div\\>")
   expect_equal(
-    lengths(regmatches(typst_output, gregexpr("\\<div\\>1\\</div\\>", typst_output, fixed = TRUE))),
+    lengths(regmatches(typst_output, gregexpr("\\[1\\]", typst_output))),
     1L
   )
   expect_equal(
-    lengths(regmatches(typst_output, gregexpr("\\<div\\>1, 5, 8\\</div\\>", typst_output, fixed = TRUE))),
+    lengths(regmatches(typst_output, gregexpr("\\[1, 5, 8\\]", typst_output))),
     1L
   )
-  expect_no_match(typst_output, "\\<div\\>1\\</div\\>.*\\<div\\>1\\</div\\>")
+})
+
+test_that("as_typst() unwraps inert markdown div and span wrappers", {
+
+  typst_output <-
+    dplyr::tibble(
+      block = "<div>plain block</div>",
+      inline = "mix <span>inline text</span> end"
+    ) |>
+    gt() |>
+    fmt_markdown(columns = everything()) |>
+    as_typst()
+
+  expect_match(typst_output, "\\[plain block\\]")
+  expect_match(typst_output, "\\[mix inline text end\\]")
+  expect_no_match(typst_output, "\\<div\\>")
+  expect_no_match(typst_output, "\\<span\\>")
+})
+
+test_that("as_typst() keeps attributed html wrappers escaped in markdown content", {
+
+  typst_output <-
+    dplyr::tibble(
+      html = "<div class=\"note\">styled block</div>"
+    ) |>
+    gt() |>
+    fmt_markdown(columns = everything()) |>
+    as_typst()
+
+  expect_true(
+    grepl("[\\<div class=\"note\"\\>styled block\\</div\\>]", typst_output, fixed = TRUE)
+  )
 })
 
 test_that("as_typst() renders spanners, row groups, and summaries", {

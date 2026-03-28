@@ -166,12 +166,7 @@ as_typst_quarto_knit_output <- function(data) {
       value = NA_character_
     )
 
-  body_output <- as_typst_string(
-    data = data_body,
-    container = "table",
-    label = FALSE,
-    quarto = FALSE
-  )
+  body_output <- as_typst_quarto_crossref_body(data = data_body)
 
   caption_text <- typst_quarto_caption_markdown(table_caption)
   div_open <-
@@ -190,6 +185,22 @@ as_typst_quarto_knit_output <- function(data) {
     caption_text,
     "\n:::\n\n"
   )
+}
+
+as_typst_quarto_crossref_body <- function(data) {
+
+  styles_tbl <- dt_styles_get(data = data)
+  heading_component <- create_heading_component_typst(data = data, styles_tbl = styles_tbl)
+  footer_components <- create_footer_component_typst(data = data, styles_tbl = styles_tbl)
+  table_component <- create_table_component_typst(data = data, styles_tbl = styles_tbl)
+  heading_region <- typst_region_component(heading_component, spacing = "0.35em", force_stack = TRUE)
+  footer_region <- typst_region_component(footer_components, spacing = "0.45em", force_stack = TRUE)
+
+  typst_compose_blocks(c(
+    heading_region,
+    table_component,
+    footer_region
+  ))
 }
 
 create_heading_component_typst <- function(data, styles_tbl = dt_styles_get(data = data)) {
@@ -1380,7 +1391,7 @@ typst_resolve_label <- function(data, label = NULL, quarto = FALSE) {
   }
 
   label_value <-
-    if (is.null(label)) {
+    if (is.null(label) || isTRUE(label)) {
       dt_options_get_value(data = data, option = "table_id")
     } else {
       label
@@ -2214,11 +2225,21 @@ typst_content_block_argument <- function(component) {
 
 typst_quarto_caption_markdown <- function(caption) {
 
+  if (inherits(caption, "from_markdown") || is_html(caption)) {
+    return(as.character(caption)[1])
+  }
+
   caption_text <- as.character(caption)[1]
 
   if (is.na(caption_text) || !nzchar(caption_text)) {
     return("")
   }
 
-  caption_text
+  typst_quarto_escape_markdown_text(caption_text)
+}
+
+typst_quarto_escape_markdown_text <- function(text) {
+
+  text <- gsub("\\\\", "\\\\\\\\", text)
+  gsub("([*_\\[\\]`<>#@])", "\\\\\\1", text, perl = TRUE)
 }
