@@ -3000,6 +3000,14 @@ fmt_fraction <- function(
                 gsub(" ", "", non_fraction_part),
                 paste0("{\\super ", num_vec, "}/{\\sub ", denom_vec, "}")
               )
+
+          } else if (context == "typst") {
+
+            x_str[has_a_fraction] <-
+              paste0(
+                gsub(" ", "", non_fraction_part),
+                paste0("#super[", num_vec, "]/#sub[", denom_vec, "]")
+              )
           }
         }
 
@@ -6194,6 +6202,17 @@ fmt_tf <- function(
           context = "word"
         )
       },
+      typst = function(x) {
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          colors = colors,
+          pattern = pattern,
+          context = "typst"
+        )
+      },
       default = function(x) {
         format_tf_by_context(
           x,
@@ -6240,7 +6259,13 @@ format_tf_by_context <- function(
     true_val_color <- false_val_color <- na_val_color <- NULL
   }
 
-  if (context == "html" && !is.null(colors)) {
+  if (context == "typst" && !is.null(colors)) {
+
+    true_val <- make_typst_text_with_color(text = true_val, color = true_val_color)
+    false_val <- make_typst_text_with_color(text = false_val, color = false_val_color)
+    na_val <- make_typst_text_with_color(text = na_val, color = na_val_color)
+
+  } else if (context == "html" && !is.null(colors)) {
 
     # Ensure that any empty strings are replaced with a '<br />'
     # when in an HTML context; this avoids the potential collapse of
@@ -10461,6 +10486,12 @@ fmt_markdown <- function(
         }
         process_text(md(x), context = "html")
       },
+      typst = function(x) {
+        if (!is.character(x)) {
+          x <- as.character(x)
+        }
+        markdown_to_typst(x)
+      },
       latex = function(x) {
         markdown_to_latex(x, md_engine = md_engine)
       },
@@ -10492,6 +10523,62 @@ fmt_markdown <- function(
             commonmark::markdown_text
           )
         )
+      }
+    )
+  )
+}
+
+# fmt_typst() -------------------------------------------------------------------
+#' Format cells with raw Typst markup
+#'
+#' @description
+#'
+#' `fmt_typst()` lets you format cell values as raw Typst markup. The content
+#' will pass through to Typst output without escaping, allowing you to use
+#' native Typst syntax in table cells. In non-Typst output contexts, the
+#' content is passed through as plain text.
+#'
+#' @inheritParams fmt_number
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-50
+#'
+#' @section Function Introduced:
+#' `v0.13.0` (2026-03-26)
+#'
+#' @export
+fmt_typst <- function(
+    data,
+    columns = everything(),
+    rows = everything()
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      typst = function(x) {
+        # Pass through raw Typst content without escaping
+        if (!is.character(x)) {
+          x <- as.character(x)
+        }
+        x
+      },
+      default = function(x) {
+        # For non-Typst contexts, pass through as plain text
+        if (!is.character(x)) {
+          x <- as.character(x)
+        }
+        x
       }
     )
   )

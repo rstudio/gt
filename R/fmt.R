@@ -875,7 +875,8 @@ context_missing_text <- function(missing_text, context) {
       html = ,
       grid = ,
       latex = ,
-      word =
+      word = ,
+      typst =
         {
           if (!is_asis && missing_text == "---") {
             "\U02014"
@@ -923,7 +924,8 @@ context_plusminus_mark <- function(plusminus_mark, context) {
     html = ,
     latex = ,
     grid = ,
-    word =
+    word = ,
+    typst =
       {
         if (!is_asis && plusminus_mark == " +/- ") {
           " \U000B1 "
@@ -986,6 +988,7 @@ context_lte_mark <- function(context) {
     context,
     grid = ,
     word = ,
+    typst = ,
     html = "\U02264",
     latex = "$\\leq$",
     "<="
@@ -1002,6 +1005,7 @@ context_gte_mark <- function(context) {
     context,
     grid = ,
     word = ,
+    typst = ,
     html = "\U02265",
     latex = "$\\geq$",
     ">="
@@ -1016,6 +1020,7 @@ context_minus_mark <- function(context) {
 
   switch(
     context,
+    typst = ,
     html = "\U02212",
     "-"
   )
@@ -1086,6 +1091,7 @@ context_exp_marks <- function(context) {
     html = c("&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>", "</sup>"),
     latex = c(" $\\times$ 10\\textsuperscript{", "}"),
     rtf = c(" \\'d7 10{\\super ", "}"),
+    typst = c(" \U000D7 10#super[", "]"),
     word = c(" \U000D7 10^", ""),
     c(" \U000D7 10^", "")
   )
@@ -1112,6 +1118,7 @@ context_exp_str <- function(context, exp_style) {
         html = "<sub style='font-size: 65%;'>10</sub>",
         latex = "{}_10",
         rtf = "{\\sub 10}",
+        typst = "#sub[10]",
         word = "10^",
         "E"
       )

@@ -263,6 +263,7 @@ Other helper functions:
 \code{\link{random_id}()},
 \code{\link{row_group}()},
 \code{\link{stub}()},
+\code{\link{typst}()},
 \code{\link{unit_conversion}()}
 }
 \concept{helper functions}

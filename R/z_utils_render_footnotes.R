@@ -788,6 +788,9 @@ place_footnote_on_left <- function(text, mark, context) {
 
   } else if (context == "rtf") {
     text <- paste(mark, text)
+
+  } else if (context == "typst") {
+    text <- paste0(mark, "\U000A0", text)
   }
 
   text
@@ -967,7 +970,8 @@ footnotes_dispatch <-
     rtf = footnote_mark_to_rtf,
     grid = footnote_mark_to_grid,
     latex = footnote_mark_to_latex,
-    word = footnote_mark_to_xml
+    word = footnote_mark_to_xml,
+    typst = footnote_mark_to_typst
   )
 
 apply_footnotes_method <-
@@ -976,5 +980,6 @@ apply_footnotes_method <-
     rtf = paste0,
     grid = paste0,
     latex = paste_footnote_latex,
-    word = paste_footnote_xml
+    word = paste_footnote_xml,
+    typst = paste0
   )

@@ -23,7 +23,7 @@
 
 
 # Define the contexts
-all_contexts <- c("html", "grid", "latex", "rtf", "word", "default")
+all_contexts <- c("html", "grid", "latex", "rtf", "word", "typst", "default")
 
 missing_val_token <- "::missing_val::"
 
@@ -610,6 +610,10 @@ perform_col_merge <- function(data, context) {
         pattern_unequal <- "$<<1>>^{+<<3>>}_{-<<2>>}$"
 
       } else if (context == "rtf") {
+
+        pattern_unequal <- "<<1>>(+<<3>>, -<<2>>)"
+
+      } else if (context == "typst") {
 
         pattern_unequal <- "<<1>>(+<<3>>, -<<2>>)"
       }

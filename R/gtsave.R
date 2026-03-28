@@ -29,7 +29,7 @@
 #'
 #' `gtsave()` makes it easy to save a **gt** table to a file. The function
 #' guesses the file type by the extension provided in the output filename,
-#' producing either an HTML, PDF, PNG, LaTeX, RTF, or Word (.docx) file.
+#' producing either an HTML, PDF, PNG, LaTeX, RTF, Typst, or Word (.docx) file.
 #'
 #' @details
 #'
@@ -65,6 +65,10 @@
 #' document. The LaTeX and RTF saving functions don't have any options to pass
 #' to `...`.
 #'
+#' If the output filename extension is `.typ`, a Typst source file is produced.
+#' This file can be compiled to PDF using Typst directly or used in Quarto
+#' documents with `format: typst`.
+#'
 #' If the output filename extension is `.docx`, a Word document file is
 #' produced. This process is facilitated by the **rmarkdown** package, so this
 #' package needs to be installed before attempting to save any table as a
@@ -77,7 +81,8 @@
 #'   `scalar<character>` // **required**
 #'
 #'   The file name to create on disk. Ensure that an extension compatible with
-#'   the output types is provided (`.html`, `.tex`, `.ltx`, `.rtf`, `.docx`). If
+#'   the output types is provided (`.html`, `.tex`, `.ltx`, `.rtf`, `.typ`,
+#'   `.docx`). If
 #'   a custom save function is provided then the file extension is disregarded.
 #'
 #' @param path *Output path*
@@ -183,6 +188,7 @@ gtsave <- function(
       "*" = "`.pdf`          (PDF file)",
       "*" = "`.tex`, `.rnw`  (LaTeX file)",
       "*" = "`.rtf`          (RTF file)",
+      "*" = "`.typ`          (Typst file)",
       "*" = "`.docx`         (Word file)"
     ))
   }
@@ -197,6 +203,7 @@ gtsave <- function(
     "rnw" = ,
     "tex" = gt_save_latex(data = data, filename, path, ...),
     "rtf" = gt_save_rtf(data = data, filename, path, ...),
+    "typ" = gt_save_typst(data = data, filename, path, ...),
     "png" = ,
     "pdf" = gt_save_webshot(data = data, filename, path, ...),
     "docx" = gt_save_docx(data = data, filename, path, ...),
@@ -209,6 +216,7 @@ gtsave <- function(
         "*" = "`.pdf`          (PDF file)",
         "*" = "`.tex`, `.rnw`  (LaTeX file)",
         "*" = "`.rtf`          (RTF file)",
+        "*" = "`.typ`          (Typst file)",
         "*" = "`.docx`         (Word file)"
       ))
     }
@@ -417,6 +425,39 @@ gt_save_rtf <- function(
     gsub("!!!!!RAW-KNITR-CONTENT|RAW-KNITR-CONTENT!!!!!", "", rtf_lines)
 
   writeLines(rtf_lines, con = filename)
+}
+
+#' Saving function for a Typst (.typ) file
+#'
+#' @noRd
+gt_save_typst <- function(
+    data,
+    filename,
+    path = NULL,
+    ...
+) {
+
+  filename <- gtsave_filename(path = path, filename = filename)
+
+  if (is_gt_tbl(data = data)) {
+
+    typst_str <- as_typst(data = data)
+
+  } else if (is_gt_group(data = data)) {
+
+    typst_tbls <- NULL
+
+    seq_tbls <- seq_len(nrow(data$gt_tbls))
+
+    for (i in seq_tbls) {
+      typst_tbl_i <- as_typst(grp_pull(data, which = i))
+      typst_tbls <- c(typst_tbls, typst_tbl_i)
+    }
+
+    typst_str <- paste(typst_tbls, collapse = "\n#pagebreak()\n")
+  }
+
+  writeLines(as.character(typst_str), con = filename)
 }
 
 #' Saving function for a Word (docx) file

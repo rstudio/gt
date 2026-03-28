@@ -284,6 +284,167 @@ as_latex <- function(data) {
   }
   }
 
+# as_typst() -------------------------------------------------------------------
+#' Output a **gt** object as Typst
+#'
+#' @description
+#'
+#' Get the Typst content from a `gt_tbl` object as a single-element character
+#' vector. This object can be used with `writeLines()` to generate a valid .typ
+#' file, or it will be automatically rendered in Quarto documents targeting
+#' Typst output.
+#'
+#' @inheritParams gtsave
+#'
+#' @return An object of class `typst_text`.
+#'
+#' @family table export functions
+#' @section Function ID:
+#' 13-10
+#'
+#' @section Function Introduced:
+#' `v0.13.0` (2026-03-26)
+#'
+#' @export
+as_typst <- function(data) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Build all table data objects through a common pipeline
+  data <- build_data(data = data, context = "typst")
+
+  # Composition of Typst -------------------------------------------------------
+
+  # Global set rules — font first, then fill, then size (matches Typst convention)
+  set_rules <- ""
+
+  # Font names — filter out CSS-only names that Typst can't resolve.
+  # If font_names is NULL or empty, don't emit #set text(font:) so the
+  # table inherits the document's font settings (important for Quarto/Typst
+  # documents that set their own fonts).
+  css_only_fonts <- c("-apple-system", "BlinkMacSystemFont", "system-ui",
+                      "Apple Color Emoji", "Segoe UI Emoji",
+                      "Segoe UI Symbol", "Noto Color Emoji")
+  font_names <- dt_options_get_value(data = data, option = "table_font_names")
+  if (!is.null(font_names) && length(font_names) > 0L && !identical(font_names, "")) {
+    typst_fonts <- font_names[!font_names %in% css_only_fonts]
+    if (length(typst_fonts) > 0L) {
+      font_str <- paste0("\"", typst_fonts, "\"", collapse = ", ")
+      set_rules <- paste0(set_rules, "#set text(font: (", font_str, "))\n")
+    }
+  }
+
+  # Font color — use light color if background is dark
+  font_color <- dt_options_get_value(data = data, option = "table_font_color")
+  font_color_light <- dt_options_get_value(data = data, option = "table_font_color_light")
+  bg_color_val <- dt_options_get_value(data = data, option = "table_background_color")
+
+  if (!is.null(bg_color_val) && nzchar(bg_color_val) && bg_color_val != "#FFFFFF") {
+    tryCatch({
+      rgb_vals <- grDevices::col2rgb(bg_color_val)
+      luminance <- (0.299 * rgb_vals[1] + 0.587 * rgb_vals[2] + 0.114 * rgb_vals[3]) / 255
+      if (luminance < 0.5 && !is.null(font_color_light) && nzchar(font_color_light)) {
+        font_color <- font_color_light
+      }
+    }, error = function(e) NULL)
+  }
+
+  if (!is.null(font_color) && nzchar(font_color)) {
+    typst_color <- css_color_to_typst(font_color)
+    if (!is.null(typst_color)) {
+      set_rules <- paste0(set_rules, "#set text(fill: ", typst_color, ")\n")
+    }
+  }
+
+  font_size <- dt_options_get_value(data = data, option = "table_font_size")
+  if (!is.null(font_size) && nzchar(font_size) && font_size != "16px") {
+    typst_size <- css_length_to_typst_text_size(font_size)
+    if (!is.null(typst_size)) {
+      set_rules <- paste0(set_rules, "#set text(size: ", typst_size, ")\n")
+    }
+  }
+
+  font_weight <- dt_options_get_value(data = data, option = "table_font_weight")
+  if (!is.null(font_weight) && nzchar(font_weight) && font_weight != "normal") {
+    typst_weight <- css_weight_to_typst(font_weight)
+    set_rules <- paste0(set_rules, "#set text(weight: \"", typst_weight, "\")\n")
+  }
+
+  font_style <- dt_options_get_value(data = data, option = "table_font_style")
+  if (!is.null(font_style) && nzchar(font_style) && font_style != "normal") {
+    set_rules <- paste0(set_rules, "#set text(style: \"", font_style, "\")\n")
+  }
+
+  # Create the heading component (title/subtitle above the table)
+  heading_component <- create_heading_component_t(data = data)
+
+  # Create the table start (#table( with columns, align, stroke, inset)
+  table_start <- create_table_start_t(data = data)
+
+  # Create the columns component (table.header with heading + spanners + labels)
+  # Heading goes inside table.header() for page-break repetition
+  columns_component <- create_columns_component_t(data = data, heading_content = heading_component)
+
+  # Create the body component (data rows, group rows, summary rows)
+  body_component <- create_body_component_t(data = data)
+
+  # Create the table end (bottom rule + closing paren)
+  table_end <- create_table_end_t(data = data)
+
+  # Create the footer component (footnotes + source notes below the table)
+  footer_component <- create_footer_component_t(data = data)
+
+  # Check for table_caption to wrap in #figure()
+  table_caption <- dt_options_get_value(data = data, option = "table_caption")
+
+  # Compose the table body (start through end)
+  # Heading and footer go INSIDE the table as table.cell rows
+  table_body <- paste0(
+    table_start,
+    columns_component,
+    body_component,
+    footer_component,
+    table_end
+  )
+
+  # Wrap in #figure() if caption is set
+  if (!is.null(table_caption) && !is.na(table_caption) && nzchar(table_caption)) {
+    caption_text <- process_text(table_caption, context = "typst")
+    table_id <- dt_options_get_value(data = data, option = "table_id")
+    label_str <- if (!is.null(table_id) && !is.na(table_id) && nzchar(table_id)) {
+      paste0(" <", table_id, ">")
+    } else {
+      ""
+    }
+    table_body <- paste0(
+      "#figure(\n",
+      table_body,
+      ", caption: [", caption_text, "],\n",
+      ")", label_str, "\n"
+    )
+  }
+
+  # Table width — wrap in #block(width:) if not auto
+  table_width <- dt_options_get_value(data = data, option = "table_width")
+  if (!is.null(table_width) && table_width != "auto") {
+    typst_width <- css_length_to_typst(table_width)
+    if (!is.null(typst_width)) {
+      table_body <- paste0("#block(width: ", typst_width, ")[\n", table_body, "]\n")
+    }
+  }
+
+  # Compose the Typst output (heading + footer are inside table_body)
+  typst_str <- paste0(
+    set_rules,
+    table_body
+  )
+
+  class(typst_str) <- "typst_text"
+
+  typst_str
+}
+
 # as_rtf() ---------------------------------------------------------------------
 #' Output a **gt** object as RTF
 #'

@@ -391,6 +391,10 @@ render_units <- function(units_object, context = "html") {
       unit <- escape_latex(unit)
       unit_subscript <- escape_latex(unit_subscript)
       exponent <- escape_latex(exponent)
+    } else if (context == "typst") {
+      unit <- escape_typst(unit)
+      unit_subscript <- escape_typst(unit_subscript)
+      exponent <- escape_typst(exponent)
     }
 
     if (
@@ -399,6 +403,12 @@ render_units <- function(units_object, context = "html") {
       !chemical_formula
     ) {
       unit <- gsub("x", "&times;", unit, fixed = TRUE)
+    } else if (
+      context == "typst" &&
+      grepl("x10", unit) &&
+      !chemical_formula
+    ) {
+      unit <- gsub("x", "\U000D7", unit, fixed = TRUE)
     }
 
     unit <- units_symbol_replacements(text = unit, context = context)
@@ -414,6 +424,8 @@ render_units <- function(units_object, context = "html") {
         unit <- gsub("\n$", "", unit)
       } else if (context == "rtf") {
         unit <- markdown_to_rtf(text = unit)
+      } else if (context == "typst") {
+        unit <- markdown_to_typst(text = unit)
       }
     }
 
@@ -429,6 +441,8 @@ render_units <- function(units_object, context = "html") {
         unit_subscript <- gsub("\n$", "", unit_subscript)
       } else if (context == "rtf") {
         unit_subscript <- markdown_to_rtf(text = unit_subscript)
+      } else if (context == "typst") {
+        unit_subscript <- markdown_to_typst(text = unit_subscript)
       }
     }
 
@@ -444,6 +458,8 @@ render_units <- function(units_object, context = "html") {
         exponent <- gsub("\n$", "", exponent)
       } else if (context == "rtf") {
         exponent <- markdown_to_rtf(text = exponent)
+      } else if (context == "typst") {
+        exponent <- markdown_to_typst(text = exponent)
       }
     }
 
@@ -495,6 +511,8 @@ render_units <- function(units_object, context = "html") {
           exponent <- gsub("-", "&minus;", exponent)
         } else if (context == "latex") {
           exponent <- gsub("-", "--", exponent)
+        } else if (context == "typst") {
+          exponent <- gsub("-", "\U02212", exponent)
         }
 
         exponent <- units_to_superscript(content = exponent, context = context)
@@ -575,6 +593,10 @@ units_to_superscript <- function(content, context = "html") {
       )
   }
 
+  if (context == "typst") {
+    out <- paste0("#super[", content, "]")
+  }
+
   out
 }
 
@@ -611,6 +633,10 @@ units_to_subscript <- function(content, context = "html") {
           xml_t(content)
         )
       )
+  }
+
+  if (context == "typst") {
+    out <- paste0("#sub[", content, "]")
   }
 
   out
@@ -726,7 +752,7 @@ units_symbol_replacements <- function(
     text <- replace_units_symbol(text, ":omega:", ":omega:", "&omega;")
   }
 
-  if (context == "word") {
+  if (context %in% c("word", "typst")) {
 
     text <- replace_units_symbol(text, "^um$", "um", paste0("\U003BC", "m"))
     text <- replace_units_symbol(text, "^uL$", "uL", paste0("\U003BC", "L"))

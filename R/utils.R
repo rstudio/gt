@@ -972,6 +972,35 @@ process_text <- function(text, context = "html") {
       return(text)
     }
 
+  } else if (context == "typst") {
+
+    # Text processing for Typst output
+
+    if (inherits(text, "from_markdown")) {
+
+      text <- markdown_to_typst(text = text)
+
+      return(text)
+
+    } else if (inherits(text, "from_typst")) {
+
+      text <- as.character(text)
+
+      return(text)
+
+    } else if (is_html(text)) {
+
+      text <- as.character(text)
+
+      return(text)
+
+    } else {
+
+      text <- escape_typst(text = text)
+
+      return(text)
+    }
+
   } else if (context == "word") {
 
     # Text processing for Word output

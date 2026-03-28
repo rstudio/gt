@@ -85,6 +85,7 @@ Other helper functions:
 \code{\link{random_id}()},
 \code{\link{stub}()},
 \code{\link{system_fonts}()},
+\code{\link{typst}()},
 \code{\link{unit_conversion}()}
 }
 \concept{helper functions}

@@ -189,6 +189,40 @@ latex <- function(text) {
   text
 }
 
+# typst() ----------------------------------------------------------------------
+#' Interpret input text as Typst-formatted text
+#'
+#' @description
+#'
+#' For certain pieces of text (like in column labels or table headings) we may
+#' want to express them as raw Typst markup. The `typst()` function will guard
+#' the input from being escaped in the Typst output context.
+#'
+#' @param text *Typst text*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   The text that is understood to be Typst markup, which is to be preserved in
+#'   the Typst output context.
+#'
+#' @return A character object of class `from_typst`. It's tagged as a Typst
+#'   fragment that is not to be sanitized.
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-32
+#'
+#' @section Function Introduced:
+#' `v0.13.0` (2026-03-26)
+#'
+#' @export
+typst <- function(text) {
+
+  # Apply the `from_typst` class
+  class(text) <- "from_typst"
+  text
+}
+
 # px() -------------------------------------------------------------------------
 #' Helper for providing a numeric value as pixels value
 #'
@@ -3216,6 +3250,78 @@ escape_latex <- function(text, unicode_conversion = getOption("gt.latex.unicode_
       regmatches(text[!na_text], m2) <- latex_unicode
     }
   }
+
+  text
+}
+
+# escape_typst() ---------------------------------------------------------------
+#' Escape Typst special characters
+#'
+#' Typst markup mode treats several characters as special: backslash, hash,
+#' dollar, at-sign, angle brackets, asterisk, underscore, backtick, tilde,
+#' and square brackets. This function prefixes each with a backslash.
+#'
+#' @param text A character vector.
+#' @return A character vector with Typst special characters escaped.
+#'
+#' @noRd
+escape_typst <- function(text) {
+
+  if (length(text) < 1L) return(text)
+  if (all(is.na(text))) return(text)
+
+  na_text <- is.na(text)
+
+  # Typst special chars in markup mode: \ # $ @ < > * _ ` ~ [ ]
+  # Must escape backslash first to avoid double-escaping
+  text[!na_text] <- gsub("\\\\", "\\\\\\\\", text[!na_text])
+  text[!na_text] <- gsub("#", "\\\\#", text[!na_text])
+  text[!na_text] <- gsub("\\$", "\\\\$", text[!na_text])
+  text[!na_text] <- gsub("@", "\\\\@", text[!na_text])
+  text[!na_text] <- gsub("<", "\\\\<", text[!na_text])
+  text[!na_text] <- gsub(">", "\\\\>", text[!na_text])
+  text[!na_text] <- gsub("\\*", "\\\\*", text[!na_text])
+  text[!na_text] <- gsub("_", "\\\\_", text[!na_text])
+  text[!na_text] <- gsub("`", "\\\\`", text[!na_text])
+  text[!na_text] <- gsub("~", "\\\\~", text[!na_text])
+  text[!na_text] <- gsub("\\[", "\\\\[", text[!na_text])
+  text[!na_text] <- gsub("\\]", "\\\\]", text[!na_text])
+
+  text
+}
+
+# escape_typst_safe() ----------------------------------------------------------
+#' Escape Typst special characters (idempotent)
+#'
+#' Like `escape_typst()` but skips characters already preceded by a backslash.
+#' This is safe to call on text that may have already been partially escaped.
+#'
+#' @param text A character vector.
+#' @return A character vector with unescaped Typst special characters escaped.
+#'
+#' @noRd
+escape_typst_safe <- function(text) {
+
+  if (length(text) < 1L) return(text)
+  if (all(is.na(text))) return(text)
+
+  na_text <- is.na(text)
+
+  # Escape each special char only if NOT already preceded by \
+  # Use negative lookbehind (?<!\\) in PCRE
+  # Backslash first (escape lone backslashes not already part of an escape sequence)
+  text[!na_text] <- gsub("(?<!\\\\)\\\\(?![\\\\.#$@<>*_`~\\[\\]])", "\\\\\\\\", text[!na_text], perl = TRUE)
+  text[!na_text] <- gsub("(?<!\\\\)#", "\\\\#", text[!na_text], perl = TRUE)
+  text[!na_text] <- gsub("(?<!\\\\)\\$", "\\\\$", text[!na_text], perl = TRUE)
+  text[!na_text] <- gsub("(?<!\\\\)@", "\\\\@", text[!na_text], perl = TRUE)
+  text[!na_text] <- gsub("(?<!\\\\)<", "\\\\<", text[!na_text], perl = TRUE)
+  text[!na_text] <- gsub("(?<!\\\\)>", "\\\\>", text[!na_text], perl = TRUE)
+  text[!na_text] <- gsub("(?<!\\\\)\\*", "\\\\*", text[!na_text], perl = TRUE)
+  text[!na_text] <- gsub("(?<!\\\\)_", "\\\\_", text[!na_text], perl = TRUE)
+  text[!na_text] <- gsub("(?<!\\\\)`", "\\\\`", text[!na_text], perl = TRUE)
+  text[!na_text] <- gsub("(?<!\\\\)~", "\\\\~", text[!na_text], perl = TRUE)
+  text[!na_text] <- gsub("(?<!\\\\)\\[", "\\\\[", text[!na_text], perl = TRUE)
+  text[!na_text] <- gsub("(?<!\\\\)\\]", "\\\\]", text[!na_text], perl = TRUE)
 
   text
 }

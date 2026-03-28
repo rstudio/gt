@@ -11,6 +11,7 @@
       * `.pdf` (PDF file)
       * `.tex`, `.rnw` (LaTeX file)
       * `.rtf` (RTF file)
+      * `.typ` (Typst file)
       * `.docx` (Word file)
     Code
       gtsave(gt(exibble), filename = "exibble")
@@ -23,6 +24,7 @@
       * `.pdf` (PDF file)
       * `.tex`, `.rnw` (LaTeX file)
       * `.rtf` (RTF file)
+      * `.typ` (Typst file)
       * `.docx` (Word file)
 
 # gtsave() creates docx files as expected

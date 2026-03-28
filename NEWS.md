@@ -1,5 +1,7 @@
 # gt (development version)
 
+* Added native Typst output support. Tables can now be rendered directly to Typst markup using `as_typst()`, saved to `.typ` files with `gtsave()`, and automatically rendered in Quarto documents with `format: typst`. This produces idiomatic Typst tables with proper `table.header()` for page-break repetition, `#super[]`/`#sub[]` for footnotes and units, cell styling via `table.cell()` properties, and support for all major `tab_options()` including borders, fonts, colors, padding, row striping, and column label customization. New exported functions: `as_typst()`, `typst()` (text helper), and `fmt_typst()` (raw Typst cell formatter). The `fmt_markdown()` function also gains a Typst handler for proper bold, italic, strikethrough, and link conversion. (@malcolmbarrett, #2134)
+
 * Expand functionality of `gt_group()` to allow `gt_group` objects to be combined with `gt_tbls` (#2128)
 
 # gt 1.3.0
@@ -109,7 +111,7 @@
 * Fixed an issue in `fmt_number()` where `drop_trailing_dec_mark` would be ignored if `use_seps = FALSE` (#1961). (@olivroy, #1962).
 
 * Fixed an issue where `fmt_markdown()` could create strange output in Quarto (html and Typst formats) (#1957). (@olivroy, #1958, [quarto-dev/quarto-cli#11932](https://github.com/quarto-dev/quarto-cli/issues/11932), [quarto-dev/quarto-cli#11610](https://github.com/quarto-dev/quarto-cli/issues/11610)).
- 
+
 * The default table position in LaTeX is now "t" instead of "!t" (@AaronGullickson, #1935).
 
 * Fixed an issue where cross-references would fail in bookdown::html_document2 (@olivroy, #1948)
@@ -146,9 +148,9 @@
 
 * Interactive tables now respect more styling options, namely: `column_labels.background.color`, `row_group.background.color`, `row_group.font.weight`, `table_body.hlines.style`, `table.font.weight`, `table.font.size`, and `stub.font.weight`. (#1693)
 
-* `opt_interactive()` now works when columns are merged with `cols_merge()`. (@olivroy, #1785) 
+* `opt_interactive()` now works when columns are merged with `cols_merge()`. (@olivroy, #1785)
 
-* `opt_interactive()` now works when columns are substituted with `sub_*()`. (@olivroy, #1759) 
+* `opt_interactive()` now works when columns are substituted with `sub_*()`. (@olivroy, #1759)
 
 * More support for `cells_stubhead()` styling and footnotes in interactive tables.
 
@@ -340,7 +342,7 @@
 
 * Most functions now produce better error messages if not provided with a `gt_tbl` object. (#1504, #1624)
 
-* The URL formatting through `fmt_url()` has been improved by preventing link text breaking across lines (#1509). (#1537) 
+* The URL formatting through `fmt_url()` has been improved by preventing link text breaking across lines (#1509). (#1537)
 
 * We now remove some unnecessary newlines in the HTML text produced by `as_raw_html()`, which caused an issue when integrating **gt** tables into **blastula** email messages (#1506). (#1520)
 
@@ -364,7 +366,7 @@
 
 * There are two basic types of nanoplots available: `"line"` and `"bar"`. A line plot shows individual data points and has smooth connecting lines between them to allow for easier scanning of values. You can opt for straight-line connections between data points, or, no connections at all (it's up to you). The data you feed into a line plot can consist of a single vector of values (resulting in equally-spaced *y* values), or, you can supply two vectors representative of *x* and *y*.
 
-* A bar plot is built a little bit differently. The focus is on evenly-spaced bars (requiring a single vector of values) that project from a zero line, clearly showing the difference between positive and negative values. 
+* A bar plot is built a little bit differently. The focus is on evenly-spaced bars (requiring a single vector of values) that project from a zero line, clearly showing the difference between positive and negative values.
 
 * By default, any type of nanoplot will have basic interactivity. One can hover over the data points and vertical guides will display values ascribed to each. A guide on the left-hand side of the plot area will display the minimal and maximal *y* values on hover.
 
@@ -428,7 +430,7 @@
 
 * The `gtsave()` function now works with `gt_group` objects (usually generated through `gt_split()` or `gt_group()`) (#1354). (#1365)
 
-* All `gt_group` objects can now be printed using R Markdown or Quarto (#1286). (#1332)  
+* All `gt_group` objects can now be printed using R Markdown or Quarto (#1286). (#1332)
 
 * When using `fmt_currency()` with a locale value set, **gt** will now use that to automatically select the locale's default currency. While some countries can have multiple currencies, we opt for the most-widely used currency (users could alternatively specify the currency code and `info_currencies()` contains all supported currencies used in the package) (#1346). (#1347)
 
@@ -693,7 +695,7 @@
 
 * The `fmt_fraction()` formatter was added, allowing for flexible formatting of numerical values to mixed fractions of configurable accuracy (#402). (#753)
 
-* Added the `opt_horizontal_padding()` and `opt_vertical_padding()` functions to easily expand or contract an HTML table in the horizontal and vertical directions (#868). (#882) 
+* Added the `opt_horizontal_padding()` and `opt_vertical_padding()` functions to easily expand or contract an HTML table in the horizontal and vertical directions (#868). (#882)
 
 * There is now a `locale` argument in the `gt()` function. If set, formatter functions like `fmt_number()` will automatically use this global locale while formatting. There also remains the option to override the global locale with any non-`NULL` value set for `locale` within a `fmt_*()` call (#682). (#866)
 
@@ -701,7 +703,7 @@
 
 * There is now more flexibility, improved documentation, and more testing/reliability for the date/time formatting functions (`fmt_date()`, `fmt_time()`, and `fmt_datetime()`). Now, `Date` and `POSIXct` columns are allowed to be formatted with these functions. With `fmt_datetime()`, we can even supply a format code for generation of custom dates/times (#612, #775, #800). (#801)
 
-* Footnote marks for HTML tables now have an improved appearance. They are slightly larger, set better against the text they follow, and, asterisks are specially handled such that their sizing is consistent with other marks (#511). (#876) 
+* Footnote marks for HTML tables now have an improved appearance. They are slightly larger, set better against the text they follow, and, asterisks are specially handled such that their sizing is consistent with other marks (#511). (#876)
 
 * Further improving support for color value inputs, **gt** now allows shorthand hexadecimal color values (like `#333`) and the use of the `transparent` CSS color keyword (#839, #856). (#870)
 
@@ -755,7 +757,7 @@ This release focuses on improvements to two main areas:
     * References to columns (by way of the `columns` argument in many **gt** functions) now better adhere to **tidyselect** semantics.
     * Instead of using `columns = vars(a, b)`, we now use `columns = c(a, b)` (`columns = c("a", "b")` also works, and this type of expression always has been an option in **gt**).
     * Other **tidyselect** idioms should also work; things like using `where()` to target columns (e.g., `gt(exibble) %>% cols_hide(columns = where(is.numeric))` will hide all numeric columns) and negation (e.g., `columns = -c(a, b)`) function as expected.
-  
+
 ## Breaking changes and deprecations
 
 * Column labels subordinate to column spanner labels had their alignment forced to be `"center"` but now there is no specialized alignment of column labels under spanners. Should you need the old behavior, `tab_style()` can be used along with `cell_text(align = "center")` for all columns that live under spanners. (#662)

@@ -92,6 +92,13 @@ knit_print.gt_tbl <- function(x, ..., inline = FALSE) {
 
     x <- as_rtf(x)
 
+  } else if (knitr_is_typst_output()) {
+
+    x <-
+      knitr::asis_output(
+        paste("```{=typst}", as_typst(x), "```\n\n", sep = "\n")
+      )
+
   } else if (knitr::is_latex_output()) {
 
     x <- as_latex(x)
@@ -129,6 +136,24 @@ knit_print.gt_group <- function(x, ...) {
 
     # TODO: make this work for RTF
     x <- as_rtf(x)
+
+  } else if (knitr_is_typst_output()) {
+
+    typst_tbls <- NULL
+
+    seq_tbls <- seq_len(nrow(x$gt_tbls))
+
+    for (i in seq_tbls) {
+      typst_tbl_i <- as_typst(grp_pull(x, which = i))
+      typst_tbls <- c(typst_tbls, typst_tbl_i)
+    }
+
+    typst_tbls_combined <- paste(typst_tbls, collapse = "\n#pagebreak()\n")
+
+    x <-
+      knitr::asis_output(
+        paste("```{=typst}", typst_tbls_combined, "```\n\n", sep = "\n")
+      )
 
   } else if (knitr::is_latex_output()) {
 
@@ -254,8 +279,18 @@ print.rtf_text <- function(x, ...) {
   cat(paste(x, collapse = "\n"))
 }
 
+#' @export
+print.typst_text <- function(x, ...) {
+
+  cat(paste(x, collapse = "\n"))
+}
+
 knitr_is_rtf_output <- function() {
   "rtf" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
+}
+
+knitr_is_typst_output <- function() {
+  "typst" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
 }
 
 knitr_is_word_output <- function() {
