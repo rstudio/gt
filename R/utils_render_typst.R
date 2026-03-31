@@ -131,13 +131,32 @@ as_typst_quarto_knit_output <- function(data) {
 
   table_caption <- dt_options_get_value(data = data, option = "table_caption")
   has_caption <- !all(is.na(table_caption))
-  label_name <- typst_resolve_label(data = data, label = NULL, quarto = TRUE)
+  chunk_opts <- typst_quarto_chunk_float_options()
+  chunk_owns_float <- isTRUE(chunk_opts[["owns_float"]])
+
+  if (chunk_owns_float) {
+
+    if (has_caption) {
+      data <-
+        dt_options_set_value(
+          data = data,
+          option = "table_caption",
+          value = NA_character_
+        )
+    }
+
+    body_output <- as_typst_quarto_crossref_body(data = data)
+
+    return(
+      paste0("\n```{=typst}\n", body_output, "\n```\n\n")
+    )
+  }
 
   if (!has_caption) {
     typst_output <- as_typst_string(
       data = data,
       container = "auto",
-      label = if (!is.null(label_name)) label_name else FALSE,
+      label = FALSE,
       quarto = FALSE
     )
 
@@ -146,44 +165,50 @@ as_typst_quarto_knit_output <- function(data) {
     )
   }
 
-  if (is.null(label_name)) {
-    typst_output <- as_typst_string(
-      data = data,
-      container = "auto",
-      label = FALSE,
-      quarto = TRUE
-    )
-
-    return(
-      paste0("\n```{=typst}\n", typst_output, "\n```\n\n")
-    )
-  }
-
-  data_body <-
-    dt_options_set_value(
-      data = data,
-      option = "table_caption",
-      value = NA_character_
-    )
-
-  body_output <- as_typst_quarto_crossref_body(data = data_body)
-
-  caption_text <- typst_quarto_caption_markdown(table_caption)
-  div_open <-
-    if (!is.null(label_name)) {
-      paste0("::: {#", label_name, "}")
-    } else {
-      ":::"
-    }
+  typst_output <- as_typst_string(
+    data = data,
+    container = "auto",
+    label = FALSE,
+    quarto = TRUE
+  )
 
   paste0(
-    "\n",
-    div_open,
-    "\n\n```{=typst}\n",
-    body_output,
-    "\n```\n\n",
-    caption_text,
-    "\n:::\n\n"
+    "\n```{=typst}\n",
+    typst_output,
+    "\n```\n\n"
+  )
+}
+
+typst_quarto_chunk_float_options <- function() {
+
+  if (!rlang::is_installed("knitr")) {
+    return(list(
+      label = NULL,
+      tbl_cap = NULL,
+      owns_float = FALSE
+    ))
+  }
+
+  opts <- knitr::opts_current$get()
+  label_value <- opts[["label"]] %||% NULL
+  tbl_cap_value <- opts[["tbl-cap"]] %||% NULL
+
+  has_tbl_label <-
+    !is.null(label_value) &&
+    length(label_value) > 0L &&
+    !all(is.na(label_value)) &&
+    startsWith(as.character(label_value)[1], "tbl-")
+
+  has_tbl_cap <-
+    !is.null(tbl_cap_value) &&
+    length(tbl_cap_value) > 0L &&
+    !all(is.na(tbl_cap_value)) &&
+    nzchar(as.character(tbl_cap_value)[1])
+
+  list(
+    label = label_value,
+    tbl_cap = tbl_cap_value,
+    owns_float = has_tbl_label || has_tbl_cap
   )
 }
 

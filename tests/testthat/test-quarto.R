@@ -104,12 +104,19 @@ test_that("Quarto Typst knit_print uses a raw figure path for unlabeled captione
   })
 })
 
-test_that("Quarto Typst knit_print uses a crossref-div path for labeled captioned tables", {
+test_that("Quarto Typst knit_print lets Quarto own chunk-labeled table floats", {
 
   with_typst_knit_context({
+    old_label <- knitr::opts_current$get("label")
+    old_tbl_cap <- knitr::opts_current$get("tbl-cap")
+    withr::defer(knitr::opts_current$set(label = old_label))
+    withr::defer(knitr::opts_current$set(`tbl-cap` = old_tbl_cap))
+    knitr::opts_current$set(label = "tbl-demo-table")
+    knitr::opts_current$set(`tbl-cap` = "Chunk caption")
+
     tab <-
       exibble[1:2, c("num", "char")] |>
-      gt(id = "demo-table") |>
+      gt() |>
       tab_header(title = "A title", subtitle = "A subtitle") |>
       tab_footnote("A footnote", locations = cells_body(columns = num, rows = 1)) |>
       tab_source_note("A source note") |>
@@ -117,12 +124,13 @@ test_that("Quarto Typst knit_print uses a crossref-div path for labeled captione
 
     out_chr <- as.character(knit_print.gt_tbl(tab))
 
-    expect_match(out_chr, "::: \\{#tbl-demo-table\\}")
+    expect_match(out_chr, "```\\{=typst\\}")
+    expect_no_match(out_chr, "kind: \"quarto-float-tbl\"", fixed = TRUE)
+    expect_no_match(out_chr, "caption: figure.caption(", fixed = TRUE)
     expect_match(out_chr, "A title")
     expect_match(out_chr, "A subtitle")
     expect_match(out_chr, "A footnote")
     expect_match(out_chr, "A source note")
-    expect_match(out_chr, "caption \\\\#1 \\\\@x \\\\<tbl-y\\\\>")
   })
 })
 
@@ -175,12 +183,14 @@ test_that("Quarto Typst render smoke test covers styling, crossrefs, and plain-t
     "See @tbl-demo-smoke.",
     "",
     "```{r}",
+    "#| label: tbl-demo-smoke",
+    "#| tbl-cap: Chunk caption for the smoke test.",
     sprintf("devtools::load_all(%s, quiet = TRUE)", dQuote(repo_path)),
     "library(gt)",
     "library(dplyr)",
     "",
     "exibble[1:3, c(\"num\", \"char\", \"currency\")] |>",
-    "  gt(id = \"demo-smoke\") |>",
+    "  gt() |>",
     "  tab_header(title = \"Styled\") |>",
     "  tab_style(",
     "    style = list(",
@@ -196,8 +206,7 @@ test_that("Quarto Typst render smoke test covers styling, crossrefs, and plain-t
     "  tab_style(",
     "    style = cell_borders(sides = c(\"right\", \"left\"), color = \"red\", weight = px(2)),",
     "    locations = cells_body(columns = c(num, char), rows = 1)",
-    "  ) |>",
-    "  tab_caption(\"caption #1 @x <tbl-y>\")",
+    "  )",
     "```"
   )
 
@@ -216,8 +225,9 @@ test_that("Quarto Typst render smoke test covers styling, crossrefs, and plain-t
 
   typ_out <- paste(readLines(typ_path, warn = FALSE), collapse = "\n")
   expect_match(typ_out, "See #ref\\(<tbl-demo-smoke>, supplement: \\[Table\\]\\)\\.")
+  expect_match(typ_out, "Chunk caption for the smoke test\\.")
   expect_match(typ_out, "kind: \"quarto-float-tbl\"", fixed = TRUE)
   expect_match(typ_out, "fill: ", fixed = TRUE)
   expect_match(typ_out, "paint: red", fixed = TRUE)
-  expect_match(typ_out, "caption \\\\#1 \\\\@x \\\\<tbl-y\\\\>")
+  expect_no_match(typ_out, "#figure\\(\\[\\s*#figure\\(", perl = TRUE)
 })
