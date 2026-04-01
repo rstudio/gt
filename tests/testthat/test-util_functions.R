@@ -307,6 +307,29 @@ test_that("process_text() escapes Typst-sensitive plain text", {
   )
 })
 
+test_that("markdown_to_typst() preserves major markdown features", {
+
+  expect_equal(
+    markdown_to_typst("[OpenAI](https://openai.com)"),
+    "#link(\"https://openai.com\")[OpenAI]"
+  )
+
+  expect_equal(
+    markdown_to_typst("before [OpenAI](https://openai.com) after"),
+    "before #link(\"https://openai.com\")[OpenAI] after"
+  )
+
+  expect_equal(
+    markdown_to_typst("![alt text](img.png)"),
+    "#image(\"img.png\", alt: \"alt text\")"
+  )
+
+  expect_equal(
+    markdown_to_typst("> quoted text"),
+    "#quote(block: true)[quoted text]"
+  )
+})
+
 test_that("apply_pattern_fmt_x() works correctly", {
 
   # Set formatted values in a character vector

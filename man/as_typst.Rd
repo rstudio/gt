@@ -4,7 +4,12 @@
 \alias{as_typst}
 \title{Output a \strong{gt} object as Typst}
 \usage{
-as_typst(data, container = c("auto", "table", "figure"))
+as_typst(
+  data,
+  container = c("auto", "table", "figure"),
+  label = NULL,
+  breakable = FALSE
+)
 }
 \arguments{
 \item{data}{\emph{The gt table data object}
@@ -19,10 +24,31 @@ This is the \strong{gt} table object that is commonly created through use of the
 \verb{singl-kw:[auto|table|figure]} // \emph{default:} \code{"auto"}
 
 Determines the top-level Typst construct used for the export. With
-\code{"auto"}, a table caption supplied through \code{\link[=tab_caption]{tab_caption()}} causes the table
-to be wrapped in a \code{figure(...)} with \code{kind: table}; otherwise, a bare
-\code{table(...)} is emitted. Use \code{"table"} to always emit a bare table, or
+\code{"auto"}, auxiliary content such as titles, subtitles, captions,
+footnotes, or source notes causes the table to be wrapped in a
+\code{figure(...)} with \code{kind: table}; otherwise, a bare \code{table(...)} is
+emitted. Use \code{"table"} to always emit a bare table; any auxiliary content
+that requires figure semantics will be dropped with a warning. Use
 \code{"figure"} to always emit a figure-wrapped table.}
+
+\item{label}{\emph{Optional Typst label}
+
+\code{NULL}, \verb{scalar<character>}, or \verb{scalar<logical>} // \emph{default:} \code{NULL}
+
+An optional label to append to the emitted Typst object using Typst's
+\verb{<label>} syntax. By default (\code{NULL}), a label is emitted only when the
+underlying \strong{gt} table has a non-missing \code{id} value (set via \code{\link[=gt]{gt()}}). Use
+\code{TRUE} to force the same automatic behavior, \code{FALSE} to suppress label
+emission, or supply a string to force a specific label.}
+
+\item{breakable}{\emph{Make figure-wrapped Typst output break across pages?}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+When \code{TRUE} and the Typst export uses a \code{figure(...)}, the figure is wrapped
+in a local Typst \code{context} block that sets \code{block(breakable: true)} for
+\code{figure.where(kind: table)}. This has no effect for bare \code{table(...)}
+output.}
 }
 \description{
 Get the Typst content from a \code{gt_tbl} object as a single-element character

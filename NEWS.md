@@ -9,6 +9,8 @@
 * gt no longer export deprecated `dplyr::vars()` and `dplyr::one_of()`. (#2150)
 * Ensure `keep_with_next` parameter is applied consistently in `as_word` (#2149)
 
+* Added Typst output support with the new `as_typst()` export function, Typst-aware `knit_print()`/`gtsave(.typ)` handling, Quarto-friendly table and cross-reference output, and support for styled tables with captions, notes, summaries, labels, and markdown content.
+
 # gt 1.3.0
 
 ## New features

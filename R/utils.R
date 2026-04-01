@@ -1245,14 +1245,39 @@ typst_render_markdown_node <- function(node) {
       items <- vapply(xml2::xml_children(node), typst_render_markdown_node, character(1L))
       paste0(prefix, items, collapse = "\n")
     },
+    block_quote = {
+      quote_body <- typst_render_markdown_children(node, collapse = "\n\n")
+      paste0("#quote(block: true)[", quote_body, "]")
+    },
     link = {
       link_text <- typst_render_markdown_children(node)
       destination <- xml2::xml_attr(node, "destination", default = "")
       if (nzchar(destination)) {
-        paste0(link_text, " (", typst_escape_markup(destination), ")")
+        paste0(
+          "#link(",
+          typst_string_literal(destination),
+          ")[",
+          link_text,
+          "]"
+        )
       } else {
         link_text
       }
+    },
+    image = {
+      image_alt <- xml2::xml_text(node)
+      destination <- xml2::xml_attr(node, "destination", default = "")
+
+      if (!nzchar(destination)) {
+        return(image_alt)
+      }
+
+      paste0(
+        "#image(",
+        typst_string_literal(destination),
+        if (nzchar(image_alt)) paste0(", alt: ", typst_string_literal(image_alt)),
+        ")"
+      )
     },
     html_inline = typst_render_markdown_html_inline(node),
     html_block = typst_render_markdown_html_block(node),
@@ -1324,6 +1349,16 @@ typst_escape_markup <- function(text) {
   text <- gsub("<", "\\<", text, fixed = TRUE)
   text <- gsub(">", "\\>", text, fixed = TRUE)
   text
+}
+
+#' Escape text for a Typst string literal
+#' @noRd
+typst_string_literal <- function(text) {
+
+  text <- enc2utf8(text %||% "")
+  text <- gsub("\\", "\\\\", text, fixed = TRUE)
+  text <- gsub("\"", "\\\"", text, fixed = TRUE)
+  paste0("\"", text, "\"")
 }
 
 # Transform Markdown text to ooxml
