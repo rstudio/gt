@@ -151,12 +151,13 @@ test_that("Quarto Typst knit_print preserves Typst-safe escaping and styling con
         ),
         locations = cells_column_labels()
       ) |>
-      tab_caption("caption #1")
+      tab_caption("caption #1 $100")
 
     out_chr <- as.character(knit_print.gt_tbl(tab))
 
     expect_true(grepl("\\@heading \\<tbl-x\\>", out_chr, fixed = TRUE))
     expect_true(grepl("[\\$100]", out_chr, fixed = TRUE))
+    expect_true(grepl("caption \\#1 \\$100", out_chr, fixed = TRUE))
     expect_match(out_chr, "fill: \\(x, y\\) => if y == 0 \\{")
     expect_match(out_chr, "#text\\(fill: rgb\\(\"#FFFFFF\"\\), weight: \"bold\"\\)")
   })

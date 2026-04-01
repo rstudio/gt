@@ -1233,7 +1233,7 @@ typst_render_markdown_node <- function(node) {
     linebreak = " #linebreak() ",
     emph = paste0("_", typst_render_markdown_children(node), "_"),
     strong = paste0("*", typst_render_markdown_children(node), "*"),
-    code = paste0("`", gsub("`", "\\`", xml2::xml_text(node), fixed = TRUE), "`"),
+    code = paste0("`", typst_escape_code(xml2::xml_text(node)), "`"),
     code_block = paste0("```", xml2::xml_text(node), "```"),
     item = {
       children <- vapply(xml2::xml_children(node), typst_render_markdown_node, character(1L))
@@ -1337,18 +1337,16 @@ typst_inert_html_wrapper_match <- function(text) {
 typst_escape_markup <- function(text) {
 
   text <- enc2utf8(text %||% "")
-  text <- gsub("\\", "\\\\", text, fixed = TRUE)
-  text <- gsub("#", "\\#", text, fixed = TRUE)
-  text <- gsub("$", "\\$", text, fixed = TRUE)
-  text <- gsub("[", "\\[", text, fixed = TRUE)
-  text <- gsub("]", "\\]", text, fixed = TRUE)
-  text <- gsub("*", "\\*", text, fixed = TRUE)
-  text <- gsub("_", "\\_", text, fixed = TRUE)
-  text <- gsub("`", "\\`", text, fixed = TRUE)
-  text <- gsub("@", "\\@", text, fixed = TRUE)
-  text <- gsub("<", "\\<", text, fixed = TRUE)
-  text <- gsub(">", "\\>", text, fixed = TRUE)
+  text <- gsub("([\\\\#$\\[\\]\\*_`@<>])", "\\\\\\1", text, perl = TRUE)
   text
+}
+
+#' Escape literal text for inline Typst code spans
+#' @noRd
+typst_escape_code <- function(text) {
+
+  text <- enc2utf8(text %||% "")
+  gsub("([\\\\`])", "\\\\\\1", text, perl = TRUE)
 }
 
 #' Escape text for a Typst string literal

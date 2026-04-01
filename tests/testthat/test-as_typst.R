@@ -7,7 +7,7 @@ test_that("as_typst() uses native table and figure semantics", {
     gt() |>
     as_typst()
 
-  expect_match(plain_output, "^#table\\(")
+  expect_match(plain_output, "table\\(")
   expect_no_match(plain_output, "#figure\\(")
   expect_match(plain_output, "table.header\\(")
 
@@ -46,7 +46,7 @@ test_that("as_typst() container semantics stay explicit", {
     table_only <- as_typst(gt_tbl, container = "table"),
     "Auxiliary Typst table content is dropped when `container = \"table\"`."
   )
-  expect_match(table_only, "^#table\\(")
+  expect_match(table_only, "table\\(")
   expect_no_match(table_only, "#figure\\(")
   expect_no_match(table_only, "Title|Subtitle|A Typst caption|Footnote|Source note")
 
@@ -454,6 +454,59 @@ test_that("as_typst() styles stub summary and grand summary cells", {
   expect_match(typst_output, "Grand total")
 })
 
+test_that("as_typst() renders widths and table-level layout options", {
+
+  typst_output <-
+    dplyr::tibble(
+      item = c("Alpha", "Beta"),
+      value = c(10, 20)
+    ) |>
+    gt() |>
+    cols_width(
+      item ~ px(120),
+      value ~ pct(40)
+    ) |>
+    tab_options(
+      table.width = pct(80),
+      table.font.size = px(20),
+      data_row.padding = px(30)
+    ) |>
+    as_typst()
+
+  expect_match(typst_output, "^#context \\{")
+  expect_match(typst_output, "set text\\(size:\\s*15pt\\)")
+  expect_match(typst_output, "set table\\.cell\\(inset: 22\\.5pt\\)")
+  expect_match(typst_output, "block\\(width: 80%\\)")
+  expect_match(typst_output, "columns: \\(90pt, 40%\\)")
+})
+
+test_that("as_typst() resolves summary styles by summary row position", {
+
+  typst_output <-
+    exibble[1:5, c("row", "group", "num", "currency")] |>
+    gt(rowname_col = "row", groupname_col = "group") |>
+    summary_rows(
+      groups = "grp_a",
+      columns = c(num, currency),
+      fns = list(
+        list(label = "Total", fn = "sum"),
+        list(label = "Avg", fn = "mean")
+      )
+    ) |>
+    tab_style(
+      style = cell_text(color = "#1565C0", weight = "bold"),
+      locations = cells_stub_summary(groups = "grp_a", rows = 1)
+    ) |>
+    tab_style(
+      style = cell_text(color = "#C62828", weight = "bold"),
+      locations = cells_summary(groups = "grp_a", columns = num, rows = 2)
+    ) |>
+    as_typst()
+
+  expect_match(typst_output, "#text\\(fill: rgb\\(\"#1565C0\"\\), weight: \"bold\"\\)\\[Total\\]")
+  expect_match(typst_output, "#text\\(fill: rgb\\(\"#C62828\"\\), weight: \"bold\"\\)\\[120\\.0158\\]")
+})
+
 test_that("as_typst() escapes Typst-sensitive plain text across table regions", {
 
   typst_output <-
@@ -499,7 +552,7 @@ test_that("as_typst() handles known multiline-label and markdown-wrapper issue r
 
   expect_match(
     multiline_output,
-    "table\\.header\\(\\[#set par\\(justify: false\\)\nLong name with words\\]"
+    "table\\.header\\(\\[#set par\\(justify: false\\)\n\\s*Long name with words\\]"
   )
 
   unwrapped_output <-

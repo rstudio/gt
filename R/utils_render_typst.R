@@ -351,7 +351,10 @@ create_table_component_typst <- function(data, styles_tbl = dt_styles_get(data =
     ")"
   )
 
-  paste(table_lines, collapse = "\n")
+  typst_apply_table_options(
+    component = paste(table_lines, collapse = "\n"),
+    data = data
+  )
 }
 
 create_header_rows_typst <- function(data, styles_tbl = dt_styles_get(data = data)) {
@@ -725,7 +728,7 @@ typst_visible_columns <- function(data) {
 
   widths <- lapply(
     vars,
-    FUN = function(var) boxh$column_width[boxh$var == var][[1]]
+    FUN = function(var) typst_resolve_scalar_value(boxh$column_width[boxh$var == var][[1]])
   )
 
   vctrs::data_frame(
@@ -756,34 +759,17 @@ typst_columns_spec <- function(data) {
 
 typst_column_width_value <- function(width) {
 
+  width <- typst_resolve_scalar_value(width)
+
   if (is.null(width) || length(width) == 0 || is.na(width)) {
     return("auto")
   }
 
-  width <- as.character(width)[1]
-
-  if (width %in% c("auto", "min-content", "max-content")) {
+  if (width %in% c("", "auto", "min-content", "max-content")) {
     return("auto")
   }
 
-  if (grepl("^[0-9.]+%$", width)) {
-    return(width)
-  }
-
-  if (grepl("^[0-9.]+fr$", width)) {
-    return(width)
-  }
-
-  if (grepl("^[0-9.]+px$", width)) {
-    width_num <- as.numeric(sub("px$", "", width))
-    return(paste0(formatC(width_num * 0.75, digits = 15, format = "fg"), "pt"))
-  }
-
-  if (grepl("^[0-9.]+(pt|cm|mm|in|em)$", width)) {
-    return(width)
-  }
-
-  "auto"
+  typst_measure_expr(width, default = "auto")
 }
 
 typst_align_spec <- function(data) {
@@ -1336,10 +1322,12 @@ typst_style_for_summary_cell <- function(styles_tbl, locname, grpname, colname, 
         col_match
     )
 
-  if (!is.null(rownum) && nrow(styles_df) > 1L && "rownum" %in% names(styles_df)) {
-    row_targets <- sort(unique(styles_df$rownum))
-    row_target <- row_targets[[min(rownum, length(row_targets))]]
-    styles_df <- vctrs::vec_slice(styles_df, styles_df$rownum == row_target)
+  if (!is.null(rownum) && "rownum" %in% names(styles_df)) {
+    row_target <- typst_summary_style_rownum(styles_df = styles_df, rownum = rownum)
+
+    if (!is.null(row_target)) {
+      styles_df <- vctrs::vec_slice(styles_df, styles_df$rownum == row_target)
+    }
   }
 
   typst_consolidate_cell_styles(styles_df)
@@ -1824,8 +1812,15 @@ typst_common_stroke <- function(cells) {
 }
 
 typst_length_expr <- function(value) {
-  if (is.null(value) || length(value) == 0 || is.na(value)) {
-    return("1pt")
+  typst_measure_expr(value, default = "1pt")
+}
+
+typst_measure_expr <- function(value, default = "1pt") {
+
+  value <- typst_resolve_scalar_value(value)
+
+  if (is.null(value) || length(value) == 0 || is.na(value) || !nzchar(value)) {
+    return(default)
   }
 
   if (is.numeric(value)) {
@@ -1833,6 +1828,10 @@ typst_length_expr <- function(value) {
   }
 
   value <- as.character(value)[1]
+
+  if (grepl("^[0-9.]+%$", value) || grepl("^[0-9.]+fr$", value)) {
+    return(value)
+  }
 
   if (grepl("^[0-9.]+px$", value)) {
     value_num <- as.numeric(sub("px$", "", value))
@@ -1843,7 +1842,122 @@ typst_length_expr <- function(value) {
     return(value)
   }
 
-  "1pt"
+  default
+}
+
+typst_resolve_scalar_value <- function(value) {
+
+  if (is.null(value) || length(value) == 0L) {
+    return(NULL)
+  }
+
+  while (is.list(value) && length(value) > 0L) {
+    value <- value[[1L]]
+  }
+
+  if (is.null(value) || length(value) == 0L || all(is.na(value))) {
+    return(NULL)
+  }
+
+  if (length(value) > 1L) {
+    value <- value[[1L]]
+  }
+
+  value
+}
+
+typst_apply_table_options <- function(component, data) {
+
+  width <- typst_table_width_expr(data = data)
+  font_size <- typst_table_font_size_expr(data = data)
+  inset <- typst_table_inset_expr(data = data)
+
+  if (!is.null(width)) {
+    component <- paste0(
+      "block(width: ", width, ")",
+      typst_content_block_argument(component)
+    )
+  }
+
+  context_lines <- c(
+    if (!is.null(font_size)) paste0("set text(size: ", font_size, ")"),
+    if (!is.null(inset)) paste0("set table.cell(inset: ", inset, ")")
+  )
+
+  if (length(context_lines) == 0L) {
+    return(component)
+  }
+
+  paste0(
+    "context {\n",
+    "  ", paste(context_lines, collapse = "\n  "), "\n",
+    "  ", gsub("\n", "\n  ", typst_code_component(component), fixed = TRUE), "\n",
+    "}"
+  )
+}
+
+typst_code_component <- function(component) {
+
+  if (startsWith(component, "#")) {
+    return(sub("^#", "", component))
+  }
+
+  component
+}
+
+typst_table_width_expr <- function(data) {
+
+  width <- dt_options_get_value(data = data, option = "table_width")
+  width <- typst_resolve_scalar_value(width)
+
+  if (is.null(width) || identical(width, "auto")) {
+    return(NULL)
+  }
+
+  typst_measure_expr(width, default = NULL)
+}
+
+typst_table_font_size_expr <- function(data) {
+
+  size <- dt_options_get_value(data = data, option = "table_font_size")
+  size <- typst_resolve_scalar_value(size)
+
+  if (is.null(size) || identical(size, "auto")) {
+    return(NULL)
+  }
+
+  typst_size_expr(size)
+}
+
+typst_table_inset_expr <- function(data) {
+
+  padding <- dt_options_get_value(data = data, option = "data_row_padding")
+  padding <- typst_resolve_scalar_value(padding)
+
+  if (is.null(padding) || identical(padding, "auto")) {
+    return(NULL)
+  }
+
+  typst_length_expr(padding)
+}
+
+typst_summary_style_rownum <- function(styles_df, rownum) {
+
+  row_values <- sort(unique(styles_df$rownum))
+
+  if (length(row_values) == 0L) {
+    return(NULL)
+  }
+
+  if (rownum %in% row_values) {
+    return(rownum)
+  }
+
+  if (isTRUE(all(row_values == floor(row_values)))) {
+    return(NULL)
+  }
+
+  row_values[[min(rownum, length(row_values))]]
 }
 
 typst_row_fill_color <- function(fill_values) {
@@ -2246,25 +2360,4 @@ typst_content_block_argument <- function(component) {
     gsub("\n", "\n  ", rendered, fixed = TRUE),
     "\n]"
   )
-}
-
-typst_quarto_caption_markdown <- function(caption) {
-
-  if (inherits(caption, "from_markdown") || is_html(caption)) {
-    return(as.character(caption)[1])
-  }
-
-  caption_text <- as.character(caption)[1]
-
-  if (is.na(caption_text) || !nzchar(caption_text)) {
-    return("")
-  }
-
-  typst_quarto_escape_markdown_text(caption_text)
-}
-
-typst_quarto_escape_markdown_text <- function(text) {
-
-  text <- gsub("\\\\", "\\\\\\\\", text)
-  gsub("([*_\\[\\]`<>#@])", "\\\\\\1", text, perl = TRUE)
 }

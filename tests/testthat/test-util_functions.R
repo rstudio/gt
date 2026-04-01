@@ -328,6 +328,11 @@ test_that("markdown_to_typst() preserves major markdown features", {
     markdown_to_typst("> quoted text"),
     "#quote(block: true)[quoted text]"
   )
+
+  expect_equal(
+    markdown_to_typst("price `$100` and [@ref](https://example.com)"),
+    "price `$100` and #link(\"https://example.com\")[\\@ref]"
+  )
 })
 
 test_that("apply_pattern_fmt_x() works correctly", {
