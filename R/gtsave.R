@@ -449,7 +449,7 @@ gt_save_typst <- function(
 
   if (is_gt_tbl(data = data)) {
 
-    typst_lines <- as_typst(data = data)
+    typst_lines <- as_typst(data = data, ...)
 
   } else if (is_gt_group(data = data)) {
 
@@ -458,7 +458,7 @@ gt_save_typst <- function(
     seq_tbls <- seq_len(nrow(data$gt_tbls))
 
     for (i in seq_tbls) {
-      typst_lines_i <- as_typst(grp_pull(data, which = i))
+      typst_lines_i <- as_typst(grp_pull(data, which = i), ...)
       typst_lines <- c(typst_lines, typst_lines_i)
     }
 
