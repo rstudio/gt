@@ -90,14 +90,10 @@ as_typst_string <- function(data, container = "auto", label = NULL, breakable = 
     heading_component = heading_component,
     footer_components = footer_components,
     caption = if (has_caption) table_caption else NULL,
+    label = typst_resolve_label(data = data, label = label, quarto = quarto),
     breakable = breakable,
     quarto = quarto
   )
-  label_name <- typst_resolve_label(data = data, label = label, quarto = quarto)
-
-  if (!is.null(label_name)) {
-    output <- paste0(output, "\n<", label_name, ">")
-  }
 
   output
 }
@@ -194,6 +190,7 @@ typst_render_components_typst <- function(
     heading_component = NULL,
     footer_components = NULL,
     caption = NULL,
+    label = NULL,
     breakable = FALSE,
     quarto = FALSE
 ) {
@@ -206,7 +203,12 @@ typst_render_components_typst <- function(
     footer_components <- create_footer_component_typst(data = data, styles_tbl = styles_tbl)
   }
 
-  table_component <- create_table_component_typst(data = data, styles_tbl = styles_tbl)
+  table_component <-
+    create_table_component_typst(
+      data = data,
+      styles_tbl = styles_tbl,
+      label = if (!use_figure) label else NULL
+    )
   heading_region <- typst_region_component(heading_component, spacing = "0.35em", force_stack = TRUE)
   footer_region <- typst_region_component(footer_components, spacing = "0.45em", force_stack = TRUE)
 
@@ -219,6 +221,7 @@ typst_render_components_typst <- function(
           data = data,
           body_component = figure_body,
           caption = caption,
+          label = label,
           quarto = quarto
         )
 
@@ -285,6 +288,7 @@ create_figure_component_typst <- function(
     data,
     body_component,
     caption = NULL,
+    label = NULL,
     quarto = FALSE
 ) {
 
@@ -328,10 +332,19 @@ create_figure_component_typst <- function(
   }
 
   lines <- c(lines, ")")
+
+  if (!is.null(label)) {
+    lines[[length(lines)]] <- paste0(lines[[length(lines)]], "\n<", label, ">")
+  }
+
   paste(lines, collapse = "\n")
 }
 
-create_table_component_typst <- function(data, styles_tbl = dt_styles_get(data = data)) {
+create_table_component_typst <- function(
+    data,
+    styles_tbl = dt_styles_get(data = data),
+    label = NULL
+) {
 
   column_spec <- typst_columns_spec(data = data)
   align_spec <- typst_align_spec(data = data)
@@ -365,7 +378,8 @@ create_table_component_typst <- function(data, styles_tbl = dt_styles_get(data =
 
   typst_apply_table_options(
     component = paste(table_lines, collapse = "\n"),
-    data = data
+    data = data,
+    label = label
   )
 }
 
@@ -1878,7 +1892,11 @@ typst_resolve_scalar_value <- function(value) {
   value
 }
 
-typst_apply_table_options <- function(component, data) {
+typst_apply_table_options <- function(component, data, label = NULL) {
+
+  if (!is.null(label)) {
+    component <- paste0(component, "\n<", label, ">")
+  }
 
   width <- typst_table_width_expr(data = data)
   font_size <- typst_table_font_size_expr(data = data)

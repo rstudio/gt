@@ -55,7 +55,7 @@ output_types <- c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 #'
 #' @param output *Output format*
 #'
-  #'   `singl-kw:[auto|plain|html|latex|rtf|word|typst]` // *default:* `"auto"`
+#'   `singl-kw:[auto|plain|html|latex|rtf|word|typst]` // *default:* `"auto"`
 #'
 #'   The output style of the resulting character vector. This can either be
 #'   `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`, `"word"`,

@@ -62,7 +62,8 @@ test_that("as_typst() supports automatic labels, explicit labels, and breakable 
     gt(id = "demo_table") |>
     as_typst(label = TRUE)
 
-  expect_match(auto_labeled, "<demo_table>$")
+  expect_match(auto_labeled, "<demo_table>")
+  expect_no_match(auto_labeled, "<demo_table>$")
   expect_no_match(auto_labeled, "<TRUE>$")
 
   explicit_labeled <-
@@ -70,7 +71,8 @@ test_that("as_typst() supports automatic labels, explicit labels, and breakable 
     gt() |>
     as_typst(label = "custom-label")
 
-  expect_match(explicit_labeled, "<custom-label>$")
+  expect_match(explicit_labeled, "<custom-label>")
+  expect_no_match(explicit_labeled, "<custom-label>$")
   expect_no_match(
     exibble[1:2, c("num", "char")] |> gt(id = "x") |> as_typst(label = FALSE),
     "<x>$"
@@ -87,7 +89,40 @@ test_that("as_typst() supports automatic labels, explicit labels, and breakable 
     breakable_output,
     "show figure\\.where\\(kind: table\\): set block\\(breakable: true\\)"
   )
-  expect_match(breakable_output, "<long_demo>$")
+  expect_match(breakable_output, "<long_demo>")
+  expect_no_match(breakable_output, "<long_demo>$")
+
+  skip_if(Sys.which("typst") == "")
+
+  figure_labeled <-
+    exibble[1:2, c("num", "char")] |>
+    gt(id = "demo_table") |>
+    tab_caption("Caption") |>
+    as_typst(label = TRUE)
+
+  typ_path <- tempfile(fileext = ".typ")
+  pdf_path <- sub("\\.typ$", ".pdf", typ_path)
+
+  writeLines(
+    c(
+      "See @demo_table.",
+      "",
+      figure_labeled
+    ),
+    typ_path,
+    useBytes = TRUE
+  )
+
+  compile_out <-
+    system2(
+      Sys.which("typst"),
+      c("compile", typ_path, pdf_path),
+      stdout = TRUE,
+      stderr = TRUE
+    )
+
+  expect_null(attr(compile_out, "status"))
+  expect_true(file.exists(pdf_path))
 })
 
 test_that("as_typst() renders spanners, row groups, and summaries", {
