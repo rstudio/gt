@@ -338,6 +338,21 @@ test_that("markdown_to_typst() preserves major markdown features", {
     markdown_to_typst("```r\nSys.Date()\n```"),
     "```r\nSys.Date()\n```"
   )
+
+  expect_equal(
+    markdown_to_typst("<div>\nplain block\n</div>"),
+    "plain block"
+  )
+
+  expect_equal(
+    markdown_to_typst("- a\n  - b\n- c"),
+    "- a\n  - b\n- c"
+  )
+
+  expect_equal(
+    markdown_to_typst("1. a\n   1. b\n2. c"),
+    "+ a\n  + b\n+ c"
+  )
 })
 
 test_that("apply_pattern_fmt_x() works correctly", {

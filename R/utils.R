@@ -1244,15 +1244,17 @@ typst_render_markdown_node <- function(node) {
 
       paste0("```", info, "\n", code_text, "```")
     },
-    item = {
-      children <- vapply(xml2::xml_children(node), typst_render_markdown_node, character(1L))
-      paste(children[nzchar(children)], collapse = "\n")
-    },
+    item = typst_render_markdown_item(node),
     list = {
       list_type <- xml2::xml_attr(node, "type", default = "bullet")
       prefix <- if (identical(list_type, "ordered")) "+ " else "- "
-      items <- vapply(xml2::xml_children(node), typst_render_markdown_node, character(1L))
-      paste0(prefix, items, collapse = "\n")
+      items <- vapply(
+        xml2::xml_children(node),
+        typst_render_markdown_list_item,
+        character(1L),
+        prefix = prefix
+      )
+      paste(items[nzchar(items)], collapse = "\n")
     },
     block_quote = {
       quote_body <- typst_render_markdown_children(node, collapse = "\n\n")
@@ -1328,7 +1330,7 @@ typst_is_inert_html_inline_wrapper <- function(text) {
 typst_inert_html_wrapper_match <- function(text) {
 
   text_trim <- trimws(text)
-  match <- regexec("^<(div|span)>(.*)</\\1>$", text_trim, perl = TRUE)
+  match <- regexec("^<(div|span)>([\\s\\S]*)</\\1>$", text_trim, perl = TRUE)
   captures <- regmatches(text_trim, match)[[1]]
 
   if (length(captures) == 0L) {
@@ -1338,6 +1340,60 @@ typst_inert_html_wrapper_match <- function(text) {
   list(
     tag = captures[2],
     inner = captures[3]
+  )
+}
+
+#' @noRd
+typst_render_markdown_item <- function(node) {
+
+  children <- xml2::xml_children(node)
+
+  if (length(children) == 0L) {
+    return("")
+  }
+
+  parts <- vapply(children, typst_render_markdown_node, character(1L))
+  keep <- nzchar(parts)
+  parts <- parts[keep]
+  children <- children[keep]
+
+  if (length(parts) == 0L) {
+    return("")
+  }
+
+  out <- parts[[1L]]
+
+  if (length(parts) == 1L) {
+    return(out)
+  }
+
+  for (i in 2:length(parts)) {
+    prev_name <- xml2::xml_name(children[[i - 1L]])
+    curr_name <- xml2::xml_name(children[[i]])
+    separator <- if (identical(curr_name, "list") || identical(prev_name, "list")) "\n" else "\n\n"
+    out <- paste0(out, separator, parts[[i]])
+  }
+
+  out
+}
+
+#' @noRd
+typst_render_markdown_list_item <- function(node, prefix) {
+
+  text <- typst_render_markdown_item(node)
+
+  if (!nzchar(text)) {
+    return(prefix)
+  }
+
+  lines <- strsplit(text, "\n", fixed = TRUE)[[1]]
+
+  paste(
+    c(
+      paste0(prefix, lines[[1L]]),
+      if (length(lines) > 1L) paste0("  ", lines[-1L])
+    ),
+    collapse = "\n"
   )
 }
 
