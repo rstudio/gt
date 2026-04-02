@@ -83,41 +83,16 @@ as_typst_string <- function(data, container = "auto", label = NULL, breakable = 
       figure = TRUE
     )
 
-  table_component <- create_table_component_typst(data = data, styles_tbl = styles_tbl)
-  heading_region <- typst_region_component(heading_component, spacing = "0.35em", force_stack = TRUE)
-  footer_region <- typst_region_component(footer_components, spacing = "0.45em", force_stack = TRUE)
-
-  main_component <-
-    if (use_figure) {
-      figure_body <-
-        typst_compose_content(c(heading_region, table_component, footer_region))
-
-      figure_component <-
-        create_figure_component_typst(
-        data = data,
-        body_component = figure_body,
-        caption = if (has_caption) table_caption else NULL,
-        quarto = quarto
-      )
-
-      if (isTRUE(breakable)) {
-        figure_kind <- if (quarto) "\"quarto-float-tbl\"" else "table"
-        figure_component <- typst_make_figure_breakable(figure_component, kind = figure_kind)
-      }
-
-      figure_component
-    } else {
-      table_component
-    }
-
-  components <- c(
-    if (!use_figure) heading_region,
-    main_component,
-    if (!use_figure && has_caption) create_caption_component_typst(table_caption),
-    if (!use_figure) footer_region
+  output <- typst_render_components_typst(
+    data = data,
+    styles_tbl = styles_tbl,
+    use_figure = use_figure,
+    heading_component = heading_component,
+    footer_components = footer_components,
+    caption = if (has_caption) table_caption else NULL,
+    breakable = breakable,
+    quarto = quarto
   )
-
-  output <- typst_compose_blocks(components)
   label_name <- typst_resolve_label(data = data, label = label, quarto = quarto)
 
   if (!is.null(label_name)) {
@@ -132,23 +107,21 @@ as_typst_quarto_knit_output <- function(data) {
   table_caption <- dt_options_get_value(data = data, option = "table_caption")
   has_caption <- !all(is.na(table_caption))
   chunk_opts <- typst_quarto_chunk_float_options()
-  chunk_owns_float <- isTRUE(chunk_opts[["owns_float"]])
+  quarto_owns_float <- isTRUE(chunk_opts[["quarto_owns_float"]])
+  suppress_gt_caption <- isTRUE(chunk_opts[["suppress_gt_caption"]])
+  styles_tbl <- dt_styles_get(data = data)
 
-  if (chunk_owns_float) {
-
-    if (has_caption) {
-      data <-
-        dt_options_set_value(
-          data = data,
-          option = "table_caption",
-          value = NA_character_
-        )
-    }
-
-    body_output <- as_typst_quarto_crossref_body(data = data)
-
+  if (quarto_owns_float) {
+    typst_output <- typst_render_components_typst(
+      data = data,
+      styles_tbl = styles_tbl,
+      use_figure = FALSE,
+      caption = if (suppress_gt_caption) NULL else if (has_caption) table_caption else NULL,
+      breakable = FALSE,
+      quarto = FALSE
+    )
     return(
-      paste0("\n```{=typst}\n", body_output, "\n```\n\n")
+      paste0("\n```{=typst}\n", typst_output, "\n```\n\n")
     )
   }
 
@@ -185,7 +158,8 @@ typst_quarto_chunk_float_options <- function() {
     return(list(
       label = NULL,
       tbl_cap = NULL,
-      owns_float = FALSE
+      quarto_owns_float = FALSE,
+      suppress_gt_caption = FALSE
     ))
   }
 
@@ -208,23 +182,61 @@ typst_quarto_chunk_float_options <- function() {
   list(
     label = label_value,
     tbl_cap = tbl_cap_value,
-    owns_float = has_tbl_label || has_tbl_cap
+    quarto_owns_float = has_tbl_label || has_tbl_cap,
+    suppress_gt_caption = has_tbl_label || has_tbl_cap
   )
 }
 
-as_typst_quarto_crossref_body <- function(data) {
+typst_render_components_typst <- function(
+    data,
+    styles_tbl = dt_styles_get(data = data),
+    use_figure = FALSE,
+    heading_component = NULL,
+    footer_components = NULL,
+    caption = NULL,
+    breakable = FALSE,
+    quarto = FALSE
+) {
 
-  styles_tbl <- dt_styles_get(data = data)
-  heading_component <- create_heading_component_typst(data = data, styles_tbl = styles_tbl)
-  footer_components <- create_footer_component_typst(data = data, styles_tbl = styles_tbl)
+  if (is.null(heading_component)) {
+    heading_component <- create_heading_component_typst(data = data, styles_tbl = styles_tbl)
+  }
+
+  if (is.null(footer_components)) {
+    footer_components <- create_footer_component_typst(data = data, styles_tbl = styles_tbl)
+  }
+
   table_component <- create_table_component_typst(data = data, styles_tbl = styles_tbl)
   heading_region <- typst_region_component(heading_component, spacing = "0.35em", force_stack = TRUE)
   footer_region <- typst_region_component(footer_components, spacing = "0.45em", force_stack = TRUE)
 
+  main_component <-
+    if (use_figure) {
+      figure_body <- typst_compose_content(c(heading_region, table_component, footer_region))
+
+      figure_component <-
+        create_figure_component_typst(
+          data = data,
+          body_component = figure_body,
+          caption = caption,
+          quarto = quarto
+        )
+
+      if (isTRUE(breakable)) {
+        figure_kind <- if (quarto) "\"quarto-float-tbl\"" else "table"
+        figure_component <- typst_make_figure_breakable(figure_component, kind = figure_kind)
+      }
+
+      figure_component
+    } else {
+      table_component
+    }
+
   typst_compose_blocks(c(
-    heading_region,
-    table_component,
-    footer_region
+    if (!use_figure) heading_region,
+    main_component,
+    if (!use_figure && !is.null(caption)) create_caption_component_typst(caption),
+    if (!use_figure) footer_region
   ))
 }
 

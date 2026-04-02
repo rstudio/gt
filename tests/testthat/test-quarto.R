@@ -104,7 +104,7 @@ test_that("Quarto Typst knit_print uses a raw figure path for unlabeled captione
   })
 })
 
-test_that("Quarto Typst knit_print lets Quarto own chunk-labeled table floats", {
+test_that("Quarto Typst knit_print suppresses gt captions when Quarto owns the float via tbl-cap", {
 
   with_typst_knit_context({
     old_label <- knitr::opts_current$get("label")
@@ -127,10 +127,37 @@ test_that("Quarto Typst knit_print lets Quarto own chunk-labeled table floats", 
     expect_match(out_chr, "```\\{=typst\\}")
     expect_no_match(out_chr, "kind: \"quarto-float-tbl\"", fixed = TRUE)
     expect_no_match(out_chr, "caption: figure.caption(", fixed = TRUE)
+    expect_no_match(out_chr, "caption \\#1 @x <tbl-y>", fixed = TRUE)
     expect_match(out_chr, "A title")
     expect_match(out_chr, "A subtitle")
     expect_match(out_chr, "A footnote")
     expect_match(out_chr, "A source note")
+  })
+})
+
+test_that("Quarto Typst knit_print suppresses gt captions when Quarto owns the float via label", {
+
+  with_typst_knit_context({
+    old_label <- knitr::opts_current$get("label")
+    old_tbl_cap <- knitr::opts_current$get("tbl-cap")
+    withr::defer(knitr::opts_current$set(label = old_label))
+    withr::defer(knitr::opts_current$set(`tbl-cap` = old_tbl_cap))
+    knitr::opts_current$set(label = "tbl-demo-table")
+    knitr::opts_current$set(`tbl-cap` = NULL)
+
+    tab <-
+      exibble[1:2, c("num", "char")] |>
+      gt() |>
+      tab_header(title = "A title") |>
+      tab_caption("GT caption")
+
+    out_chr <- as.character(knit_print.gt_tbl(tab))
+
+    expect_match(out_chr, "```\\{=typst\\}")
+    expect_no_match(out_chr, "kind: \"quarto-float-tbl\"", fixed = TRUE)
+    expect_no_match(out_chr, "caption: figure.caption(", fixed = TRUE)
+    expect_no_match(out_chr, "GT caption", fixed = TRUE)
+    expect_match(out_chr, "A title")
   })
 })
 
