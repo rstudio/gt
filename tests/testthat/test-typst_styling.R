@@ -251,6 +251,8 @@ test_that("as_typst() escapes Typst-sensitive plain text across table regions", 
 
 test_that("as_typst() handles known multiline-label and markdown-wrapper issue repros", {
 
+  withr::local_options(list(gt.html_tag_check = FALSE))
+
   multiline_output <-
     dplyr::tibble(
       "Long name with words" = c(1, 2, 3),
@@ -291,11 +293,6 @@ test_that("as_typst() handles known multiline-label and markdown-wrapper issue r
     fmt_markdown(columns = everything()) |>
     as_typst()
 
-  expect_true(
-    grepl(
-      "[\\<div class=\"note\"\\>styled block\\</div\\>]",
-      attributed_wrapper_output,
-      fixed = TRUE
-    )
-  )
+  expect_match(attributed_wrapper_output, "\\[styled block\\]")
+  expect_no_match(attributed_wrapper_output, "\\<div class=\"note\"\\>")
 })

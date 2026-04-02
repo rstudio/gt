@@ -1204,6 +1204,14 @@ markdown_to_typst <- function(text) {
       }
 
       doc <- xml2::read_xml(commonmark::markdown_xml(linebreak_br(x)))
+
+      if (isTRUE(getOption("gt.html_tag_check", TRUE)) && typst_markdown_has_html_nodes(doc)) {
+        cli::cli_warn(c(
+          "HTML tags found, and they will be removed.",
+          "*" = "Set `options(gt.html_tag_check = FALSE)` to disable this check."
+        ))
+      }
+
       typst_render_markdown_node(xml2::xml_root(doc))
     }
   )
@@ -1305,7 +1313,7 @@ typst_render_markdown_html_inline <- function(node) {
     return("")
   }
 
-  typst_escape_markup(html_text)
+  ""
 }
 
 #' @noRd
@@ -1318,19 +1326,19 @@ typst_render_markdown_html_block <- function(node) {
     return(markdown_to_typst(wrapper$inner))
   }
 
-  typst_escape_markup(html_text)
+  ""
 }
 
 #' @noRd
 typst_is_inert_html_inline_wrapper <- function(text) {
-  grepl("^</?(div|span)>$", trimws(text), perl = TRUE)
+  grepl("^</?(div|span)(\\s+[^>]*)?>$", trimws(text), perl = TRUE)
 }
 
 #' @noRd
 typst_inert_html_wrapper_match <- function(text) {
 
   text_trim <- trimws(text)
-  match <- regexec("^<(div|span)>([\\s\\S]*)</\\1>$", text_trim, perl = TRUE)
+  match <- regexec("^<(div|span)(\\s+[^>]*)?>([\\s\\S]*)</\\1>$", text_trim, perl = TRUE)
   captures <- regmatches(text_trim, match)[[1]]
 
   if (length(captures) == 0L) {
@@ -1339,8 +1347,13 @@ typst_inert_html_wrapper_match <- function(text) {
 
   list(
     tag = captures[2],
-    inner = captures[3]
+    inner = captures[4]
   )
+}
+
+#' @noRd
+typst_markdown_has_html_nodes <- function(doc) {
+  length(xml2::xml_find_all(doc, ".//*[local-name() = 'html_inline' or local-name() = 'html_block']")) > 0L
 }
 
 #' @noRd

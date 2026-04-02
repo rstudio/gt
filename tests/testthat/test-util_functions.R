@@ -339,9 +339,28 @@ test_that("markdown_to_typst() preserves major markdown features", {
     "```r\nSys.Date()\n```"
   )
 
-  expect_equal(
-    markdown_to_typst("<div>\nplain block\n</div>"),
-    "plain block"
+  expect_warning(
+    expect_equal(
+      markdown_to_typst("<div>\nplain block\n</div>"),
+      "plain block"
+    ),
+    "HTML tags found, and they will be removed."
+  )
+
+  expect_warning(
+    expect_equal(
+      markdown_to_typst("<span class=\"x\">plain</span>"),
+      "plain"
+    ),
+    "HTML tags found, and they will be removed."
+  )
+
+  expect_warning(
+    expect_equal(
+      markdown_to_typst("<div class=\"x\">\nplain block\n</div>"),
+      "plain block"
+    ),
+    "HTML tags found, and they will be removed."
   )
 
   expect_equal(
@@ -352,6 +371,18 @@ test_that("markdown_to_typst() preserves major markdown features", {
   expect_equal(
     markdown_to_typst("1. a\n   1. b\n2. c"),
     "+ a\n  + b\n+ c"
+  )
+})
+
+test_that("markdown_to_typst() can suppress HTML-tag warnings via option", {
+
+  withr::local_options(list(gt.html_tag_check = FALSE))
+
+  expect_no_warning(
+    expect_equal(
+      markdown_to_typst("<span class=\"x\">plain</span>"),
+      "plain"
+    )
   )
 })
 
