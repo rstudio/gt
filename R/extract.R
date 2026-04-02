@@ -108,10 +108,11 @@
 #'
 #' @param output *Output format*
 #'
-#'   `singl-kw:[html|latex|rtf|word]` // *default:* `"html"`
+#'   `singl-kw:[html|latex|rtf|word|grid|typst]` // *default:* `"html"`
 #'
 #'   The output format of the resulting data frame. This can either be
-#'   `"html"` (the default), `"latex"`, `"rtf"`, or `"word"`.
+#'   `"html"` (the default), `"latex"`, `"rtf"`, `"word"`, `"grid"`, or
+#'   `"typst"`.
 #'
 #' @return A data frame or tibble object containing the table body.
 #'
@@ -187,7 +188,7 @@ extract_body <- function(
     incl_hidden_cols = FALSE,
     incl_stub_cols = TRUE,
     ...,
-    output = c("html", "latex", "rtf", "word", "grid")
+    output = c("html", "latex", "rtf", "word", "grid", "typst")
 ) {
 
   # Perform input object validation
@@ -209,7 +210,7 @@ extract_body <- function(
   output <-
     rlang::arg_match0(
       output,
-      values = c("html", "latex", "rtf", "word", "grid")
+      values = c("html", "latex", "rtf", "word", "grid", "typst")
     )
 
   rlang::check_dots_empty()

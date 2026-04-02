@@ -10,7 +10,7 @@ extract_body(
   incl_hidden_cols = FALSE,
   incl_stub_cols = TRUE,
   ...,
-  output = c("html", "latex", "rtf", "word", "grid")
+  output = c("html", "latex", "rtf", "word", "grid", "typst")
 )
 }
 \arguments{
@@ -56,10 +56,11 @@ clarity but clearly marked with the names \code{"::group_id::"} and
 
 \item{output}{\emph{Output format}
 
-\verb{singl-kw:[html|latex|rtf|word]} // \emph{default:} \code{"html"}
+\verb{singl-kw:[html|latex|rtf|word|grid|typst]} // \emph{default:} \code{"html"}
 
 The output format of the resulting data frame. This can either be
-\code{"html"} (the default), \code{"latex"}, \code{"rtf"}, or \code{"word"}.}
+\code{"html"} (the default), \code{"latex"}, \code{"rtf"}, \code{"word"}, \code{"grid"}, or
+\code{"typst"}.}
 }
 \value{
 A data frame or tibble object containing the table body.

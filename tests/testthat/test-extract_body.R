@@ -1292,3 +1292,19 @@ test_that("Extraction of the table body works with variation in arguments", {
       extract_body(incl_stub_cols = FALSE, incl_hidden_cols = TRUE)
   )
 })
+
+test_that("extract_body() supports Typst output", {
+
+  tbl_body <-
+    exibble |>
+    dplyr::slice(1:2) |>
+    dplyr::select(num, currency, char) |>
+    gt() |>
+    fmt_currency(columns = currency) |>
+    tab_footnote("note", locations = cells_body(columns = currency, rows = 1)) |>
+    extract_body(output = "typst")
+
+  expect_equal(tbl_body$num, c("0.1111", "2.2220"))
+  expect_equal(tbl_body$currency, c("#super[_1_]\u00a0\\$49.95", "\\$17.95"))
+  expect_equal(tbl_body$char, c("apricot", "banana"))
+})
