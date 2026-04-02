@@ -1234,7 +1234,16 @@ typst_render_markdown_node <- function(node) {
     emph = paste0("_", typst_render_markdown_children(node), "_"),
     strong = paste0("*", typst_render_markdown_children(node), "*"),
     code = paste0("`", typst_escape_code(xml2::xml_text(node)), "`"),
-    code_block = paste0("```", xml2::xml_text(node), "```"),
+    code_block = {
+      info <- xml2::xml_attr(node, "info", default = "")
+      code_text <- xml2::xml_text(node)
+
+      if (nzchar(code_text) && !grepl("\n$", code_text)) {
+        code_text <- paste0(code_text, "\n")
+      }
+
+      paste0("```", info, "\n", code_text, "```")
+    },
     item = {
       children <- vapply(xml2::xml_children(node), typst_render_markdown_node, character(1L))
       paste(children[nzchar(children)], collapse = "\n")

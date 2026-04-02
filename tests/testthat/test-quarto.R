@@ -259,3 +259,23 @@ test_that("Quarto Typst render smoke test covers styling, crossrefs, and plain-t
   expect_match(typ_out, "paint: red", fixed = TRUE)
   expect_no_match(typ_out, "#figure\\(\\[\\s*#figure\\(", perl = TRUE)
 })
+
+test_that("Typst knit_print() for gt_group emits Typst blocks instead of HTML", {
+
+  old_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+  withr::defer(knitr::opts_knit$set(rmarkdown.pandoc.to = old_to))
+  knitr::opts_knit$set(rmarkdown.pandoc.to = "typst")
+
+  grp <-
+    gt_group(
+      gt(exibble[1:2, c("num", "char")]),
+      gt(exibble[3:4, c("num", "char")])
+    )
+
+  out_chr <- as.character(knit_print.gt_group(grp))
+
+  expect_match(out_chr, "```\\{=typst\\}")
+  expect_match(out_chr, "#pagebreak\\(\\)")
+  expect_no_match(out_chr, "<!--html_preserve-->")
+  expect_no_match(out_chr, "<table")
+})
