@@ -62,8 +62,7 @@ test_that("as_typst() supports automatic labels, explicit labels, and breakable 
     gt(id = "demo_table") |>
     as_typst(label = TRUE)
 
-  expect_match(auto_labeled, "<demo_table>")
-  expect_no_match(auto_labeled, "<demo_table>$")
+  expect_match(auto_labeled, "<demo_table>$")
   expect_no_match(auto_labeled, "<TRUE>$")
 
   explicit_labeled <-
@@ -71,8 +70,7 @@ test_that("as_typst() supports automatic labels, explicit labels, and breakable 
     gt() |>
     as_typst(label = "custom-label")
 
-  expect_match(explicit_labeled, "<custom-label>")
-  expect_no_match(explicit_labeled, "<custom-label>$")
+  expect_match(explicit_labeled, "<custom-label>$")
   expect_no_match(
     exibble[1:2, c("num", "char")] |> gt(id = "x") |> as_typst(label = FALSE),
     "<x>$"

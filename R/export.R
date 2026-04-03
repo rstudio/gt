@@ -766,7 +766,7 @@ as_word_tbl_body <- function(
 #'
 #' @family table export functions
 #' @section Function ID:
-#' 13-6
+#' 13-10
 #'
 #' @section Function Introduced:
 #' `v1.0.0` (March 26, 2026)

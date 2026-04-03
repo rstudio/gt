@@ -1893,11 +1893,6 @@ typst_resolve_scalar_value <- function(value) {
 }
 
 typst_apply_table_options <- function(component, data, label = NULL) {
-
-  if (!is.null(label)) {
-    component <- paste0(component, "\n<", label, ">")
-  }
-
   width <- typst_table_width_expr(data = data)
   font_size <- typst_table_font_size_expr(data = data)
   inset <- typst_table_inset_expr(data = data)
@@ -1914,16 +1909,20 @@ typst_apply_table_options <- function(component, data, label = NULL) {
     if (!is.null(inset)) paste0("set table.cell(inset: ", inset, ")")
   )
 
-  if (length(context_lines) == 0L) {
-    return(component)
+  if (length(context_lines) > 0L) {
+    component <- paste0(
+      "context {\n",
+      "  ", paste(context_lines, collapse = "\n  "), "\n",
+      "  ", gsub("\n", "\n  ", typst_code_component(component), fixed = TRUE), "\n",
+      "}"
+    )
   }
 
-  paste0(
-    "context {\n",
-    "  ", paste(context_lines, collapse = "\n  "), "\n",
-    "  ", gsub("\n", "\n  ", typst_code_component(component), fixed = TRUE), "\n",
-    "}"
-  )
+  if (!is.null(label)) {
+    component <- paste0(component, "\n<", label, ">")
+  }
+
+  component
 }
 
 typst_code_component <- function(component) {
