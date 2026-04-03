@@ -241,3 +241,20 @@ test_that("gtsave() forwards Typst export options", {
   expect_no_match(out, "#figure\\(")
   expect_no_match(out, "Captioned")
 })
+test_that("gtsave() can write Typst output for gt_group", {
+
+  path <- tempfile(fileext = ".typ")
+
+  grp <-
+    gt_group(
+      exibble[1:2, c("num", "char")] |> gt(),
+      exibble[3:4, c("num", "char")] |> gt()
+    )
+
+  expect_no_error(gtsave(grp, path))
+
+  out <- paste(readLines(path, warn = FALSE), collapse = "\n")
+
+  expect_match(out, "table\\(")
+  expect_match(out, "#pagebreak\\(\\)")
+})

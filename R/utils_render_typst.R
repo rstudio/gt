@@ -104,7 +104,6 @@ as_typst_quarto_knit_output <- function(data) {
   has_caption <- !all(is.na(table_caption))
   chunk_opts <- typst_quarto_chunk_float_options()
   quarto_owns_float <- isTRUE(chunk_opts[["quarto_owns_float"]])
-  suppress_gt_caption <- isTRUE(chunk_opts[["suppress_gt_caption"]])
   styles_tbl <- dt_styles_get(data = data)
 
   if (quarto_owns_float) {
@@ -112,7 +111,7 @@ as_typst_quarto_knit_output <- function(data) {
       data = data,
       styles_tbl = styles_tbl,
       use_figure = FALSE,
-      caption = if (suppress_gt_caption) NULL else if (has_caption) table_caption else NULL,
+      caption = NULL,
       breakable = FALSE,
       quarto = FALSE
     )
@@ -154,8 +153,7 @@ typst_quarto_chunk_float_options <- function() {
     return(list(
       label = NULL,
       tbl_cap = NULL,
-      quarto_owns_float = FALSE,
-      suppress_gt_caption = FALSE
+      quarto_owns_float = FALSE
     ))
   }
 
@@ -178,8 +176,7 @@ typst_quarto_chunk_float_options <- function() {
   list(
     label = label_value,
     tbl_cap = tbl_cap_value,
-    quarto_owns_float = has_tbl_label || has_tbl_cap,
-    suppress_gt_caption = has_tbl_label || has_tbl_cap
+    quarto_owns_float = has_tbl_label || has_tbl_cap
   )
 }
 
