@@ -181,9 +181,8 @@ test_that("as_typst() renders widths and table-level layout options", {
     ) |>
     as_typst()
 
-  expect_match(typst_output, "^#context \\{")
-  expect_match(typst_output, "set text\\(size:\\s*15pt\\)")
-  expect_match(typst_output, "set table\\.cell\\(inset: 22\\.5pt\\)")
+  expect_match(typst_output, "^#text\\(size:\\s*15pt,")
+  expect_match(typst_output, "inset: 22\\.5pt")
   expect_match(typst_output, "block\\(width: 80%\\)")
   expect_match(typst_output, "columns: \\(90pt, 40%\\)")
 })

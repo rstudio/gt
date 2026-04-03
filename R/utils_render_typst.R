@@ -83,7 +83,7 @@ as_typst_string <- function(data, container = "auto", label = NULL, breakable = 
       figure = TRUE
     )
 
-  output <- typst_render_components_typst(
+  output <- typst_render_table_string(
     data = data,
     styles_tbl = styles_tbl,
     use_figure = use_figure,
@@ -107,7 +107,7 @@ as_typst_quarto_knit_output <- function(data) {
   styles_tbl <- dt_styles_get(data = data)
 
   if (quarto_owns_float) {
-    typst_output <- typst_render_components_typst(
+    typst_output <- typst_render_table_string(
       data = data,
       styles_tbl = styles_tbl,
       use_figure = FALSE,
@@ -180,7 +180,7 @@ typst_quarto_chunk_float_options <- function() {
   )
 }
 
-typst_render_components_typst <- function(
+typst_render_table_string <- function(
     data,
     styles_tbl = dt_styles_get(data = data),
     use_figure = FALSE,
@@ -345,6 +345,7 @@ create_table_component_typst <- function(
 
   column_spec <- typst_columns_spec(data = data)
   align_spec <- typst_align_spec(data = data)
+  inset <- typst_table_inset_expr(data = data)
   visible_columns <- typst_visible_columns(data = data)
   header_rows <- create_header_rows_typst(data = data, styles_tbl = styles_tbl)
   body_rows <- create_body_rows_typst(data = data, styles_tbl = styles_tbl)
@@ -355,8 +356,8 @@ create_table_component_typst <- function(
   )
 
   contents <- c(
-    render_header_rows_typst(header_rows = header_rows, fill_plan = fill_plan),
-    render_body_rows_typst(body_rows = body_rows, fill_plan = fill_plan)
+    typst_render_header_rows(header_rows = header_rows, fill_plan = fill_plan),
+    typst_render_body_rows(body_rows = body_rows, fill_plan = fill_plan)
   )
 
   if (length(contents) == 0) {
@@ -365,6 +366,7 @@ create_table_component_typst <- function(
 
   table_lines <- c(
     "table(",
+    if (!is.null(inset)) paste0("  inset: ", inset, ","),
     paste0("  columns: ", column_spec, ","),
     paste0("  align: ", align_spec, ","),
     if (!is.null(fill_plan$fill_spec)) paste0("  fill: ", fill_plan$fill_spec, ","),
@@ -450,7 +452,7 @@ create_column_label_rows_typst <- function(data, styles_tbl = dt_styles_get(data
       function(i) {
         style_obj <-
           if (visible_columns$type[i] == "stub" && !all(is.na(dt_boxhead_get_var_stub(data = data)))) {
-            typst_style_for_stubhead(styles_tbl = styles_tbl)
+            typst_style_for_heading(styles_tbl = styles_tbl, locname = "stubhead")
           } else {
             typst_style_for_column_label(styles_tbl = styles_tbl, colname = visible_columns$var[i])
           }
@@ -683,7 +685,7 @@ create_footer_component_typst <- function(data, styles_tbl = dt_styles_get(data 
         function(text) {
           typst_note_block(
             text = text,
-            style_obj = typst_style_for_note(styles_tbl = styles_tbl, locname = "footnotes")
+            style_obj = typst_style_for_heading(styles_tbl = styles_tbl, locname = "footnotes")
           )
         },
         character(1L)
@@ -701,7 +703,7 @@ create_footer_component_typst <- function(data, styles_tbl = dt_styles_get(data 
         function(text) {
           typst_note_block(
             text = text,
-            style_obj = typst_style_for_note(styles_tbl = styles_tbl, locname = "source_notes")
+            style_obj = typst_style_for_heading(styles_tbl = styles_tbl, locname = "source_notes")
           )
         },
         character(1L)
@@ -809,41 +811,6 @@ typst_align_spec <- function(data) {
   paste0("(", paste(alignments, collapse = ", "), ")")
 }
 
-typst_cells_from_runs <- function(values, strong = FALSE) {
-
-  cells <- character(0L)
-  i <- 1L
-
-  while (i <= length(values)) {
-
-    value <- values[i]
-    run_length <- 1L
-
-    while (
-      i + run_length <= length(values) &&
-      identical(is.na(values[i + run_length]), is.na(value)) &&
-      identical(values[i + run_length], value)
-    ) {
-      run_length <- run_length + 1L
-    }
-
-    text <- if (is.na(value)) "" else value
-
-    cells <- c(
-      cells,
-      typst_span_cell(
-        text = text,
-        colspan = run_length,
-        align = if (nzchar(text)) "center" else NULL,
-        strong = strong && nzchar(text)
-      )
-    )
-
-    i <- i + run_length
-  }
-
-  cells
-}
 
 typst_cellspecs_from_runs <- function(values, data, styles_tbl, level, default_vars, strong = FALSE) {
 
@@ -927,7 +894,7 @@ typst_body_row_spec <- function(values, rownum, visible_columns, styles_tbl) {
   list(kind = "body", row_kind = "data", rownum = rownum, cells = cells)
 }
 
-render_header_rows_typst <- function(header_rows, fill_plan) {
+typst_render_header_rows <- function(header_rows, fill_plan) {
   vapply(
     seq_along(header_rows),
     function(i) {
@@ -957,7 +924,7 @@ render_header_rows_typst <- function(header_rows, fill_plan) {
   )
 }
 
-render_body_rows_typst <- function(body_rows, fill_plan) {
+typst_render_body_rows <- function(body_rows, fill_plan) {
   header_count <- length(fill_plan$header_rows)
   vapply(
     seq_along(body_rows),
@@ -1082,10 +1049,6 @@ typst_content_expr <- function(text) {
   paste0("[", text, "]")
 }
 
-typst_wrap_strong <- function(content_expr) {
-  inner <- sub("^\\[(.*)\\]$", "\\1", content_expr)
-  paste0("[*", inner, "*]")
-}
 
 typst_inner_from_content_expr <- function(content_expr) {
   sub("^\\[(.*)\\]$", "\\1", content_expr)
@@ -1124,7 +1087,7 @@ typst_styled_content_expr <- function(text, style_obj = NULL, strong = FALSE) {
     inner <- paste0("#emph[", inner, "]")
   }
 
-  if ((isTRUE(strong) && is.null(weight_expr)) || (typst_is_bold_weight(weight) && is.null(weight_expr))) {
+  if (isTRUE(strong) && is.null(weight_expr)) {
     inner <- paste0("#strong[", inner, "]")
   }
 
@@ -1314,11 +1277,6 @@ typst_style_for_heading <- function(styles_tbl, locname) {
   )
 }
 
-typst_style_for_stubhead <- function(styles_tbl) {
-  typst_consolidate_cell_styles(
-    vctrs::vec_slice(styles_tbl, styles_tbl$locname == "stubhead")
-  )
-}
 
 typst_style_for_row_group <- function(styles_tbl, grpname) {
   typst_consolidate_cell_styles(
@@ -1356,11 +1314,6 @@ typst_style_for_summary_cell <- function(styles_tbl, locname, grpname, colname, 
   typst_consolidate_cell_styles(styles_df)
 }
 
-typst_style_for_note <- function(styles_tbl, locname) {
-  typst_consolidate_cell_styles(
-    vctrs::vec_slice(styles_tbl, styles_tbl$locname == locname)
-  )
-}
 
 typst_style_for_body_cell <- function(styles_tbl, col_meta, rownum) {
 
@@ -1906,15 +1859,6 @@ typst_resolve_scalar_value <- function(value) {
 typst_apply_table_options <- function(component, data, label = NULL) {
   width <- typst_table_width_expr(data = data)
   font_size <- typst_table_font_size_expr(data = data)
-  inset <- typst_table_inset_expr(data = data)
-
-  if (!is.null(inset)) {
-    component <- sub(
-      "^table\\(\n",
-      paste0("table(\n  inset: ", inset, ",\n"),
-      component
-    )
-  }
 
   if (!is.null(width)) {
     component <- paste0(
@@ -2038,6 +1982,7 @@ typst_table_fill_plan <- function(header_rows, body_rows, n_cols) {
     )
   }
 
+  # Phase 1: Extract per-cell fill and stroke grids from row specs
   fill_grid <-
     do.call(
       rbind,
@@ -2045,6 +1990,7 @@ typst_table_fill_plan <- function(header_rows, body_rows, n_cols) {
     )
   stroke_grid <- lapply(all_rows, typst_expand_row_stroke_values, n_cols = n_cols)
 
+  # Phase 2: Lift fills — promote common fills from cell level up to default/row/column
   default_fill <- NULL
   body_data_idx <- which(vapply(body_rows, `[[`, character(1L), "row_kind") == "data")
   if (length(body_data_idx) > 0L) {
@@ -2075,51 +2021,20 @@ typst_table_fill_plan <- function(header_rows, body_rows, n_cols) {
     }
   }
 
-  clauses <- character(0L)
-
-  if (length(row_fill_map) > 0L) {
-    row_ids <- as.integer(names(row_fill_map))
-    clauses <- c(
-      clauses,
-      vapply(
-        seq_along(row_ids),
-        FUN.VALUE = character(1L),
-        FUN = function(i) {
-          paste0("if y == ", row_ids[[i]], " { ", typst_color_expr(row_fill_map[[i]]), " }")
-        }
-      )
-    )
-  }
-
-  if (length(col_fill_map) > 0L) {
-    col_ids <- as.integer(names(col_fill_map))
-    clauses <- c(
-      clauses,
-      vapply(
-        seq_along(col_ids),
-        FUN.VALUE = character(1L),
-        FUN = function(i) {
-          paste0("if x == ", col_ids[[i]], " { ", typst_color_expr(col_fill_map[[i]]), " }")
-        }
-      )
-    )
-  }
-
-  if (!is.null(default_fill)) {
-    clauses <- c(clauses, paste0("{ ", typst_color_expr(default_fill), " }"))
-  } else {
-    clauses <- c(clauses, "{ none }")
-  }
+  # Phase 3: Build fill conditional expression (x, y) => if y == N { ... } else ...
+  cond_fill_clauses <- typst_build_conditional_clauses(row_fill_map, col_fill_map, typst_color_expr)
+  default_fill_clause <- if (!is.null(default_fill)) paste0("{ ", typst_color_expr(default_fill), " }") else "{ none }"
 
   fill_spec <-
-    if (length(clauses) > 1L) {
-      paste0("(x, y) => ", paste(clauses[-length(clauses)], collapse = " else "), " else ", clauses[[length(clauses)]])
+    if (length(cond_fill_clauses) > 0L) {
+      paste0("(x, y) => ", paste(c(cond_fill_clauses, default_fill_clause), collapse = " else "))
     } else if (!is.null(default_fill)) {
       typst_color_expr(default_fill)
     } else {
       NULL
     }
 
+  # Phase 4: Lift strokes — promote common strokes from cell level up to default/row/column
   default_stroke <- typst_common_stroke(unlist(stroke_grid, recursive = FALSE))
   if (!is.null(default_stroke)) {
     stroke_grid <- lapply(
@@ -2170,46 +2085,20 @@ typst_table_fill_plan <- function(header_rows, body_rows, n_cols) {
     }
   }
 
-  row_stroke_clauses <- character(0L)
-  if (length(row_stroke_map) > 0L) {
-    row_ids <- as.integer(names(row_stroke_map))
-    row_stroke_clauses <- vapply(
-      seq_along(row_ids),
-      FUN.VALUE = character(1L),
-      FUN = function(i) {
-        combined <- typst_stroke_merge(default_stroke, row_stroke_map[[i]])
-        paste0("if y == ", row_ids[[i]], " { ", typst_stroke_serialize(combined), " }")
-      }
-    )
+  # Phase 5: Build stroke conditional expression (x, y) => if y == N { ... } else ...
+  stroke_serializer <- function(stroke_obj) {
+    typst_stroke_serialize(typst_stroke_merge(default_stroke, stroke_obj))
   }
+  cond_stroke_clauses <- typst_build_conditional_clauses(row_stroke_map, col_stroke_map, stroke_serializer)
 
-  col_stroke_clauses <- character(0L)
-  if (length(col_stroke_map) > 0L) {
-    col_ids <- as.integer(names(col_stroke_map))
-    col_stroke_clauses <- vapply(
-      seq_along(col_ids),
-      FUN.VALUE = character(1L),
-      FUN = function(i) {
-        combined <- typst_stroke_merge(default_stroke, col_stroke_map[[i]])
-        paste0("if x == ", col_ids[[i]], " { ", typst_stroke_serialize(combined), " }")
-      }
-    )
-  }
-
-  stroke_clauses <- c(row_stroke_clauses, col_stroke_clauses)
   stroke_spec <-
-    if (length(stroke_clauses) > 0L) {
+    if (length(cond_stroke_clauses) > 0L) {
       default_clause <- if (!is.null(default_stroke)) {
         paste0("{ ", typst_stroke_serialize(default_stroke), " }")
       } else {
         "{ none }"
       }
-      paste0(
-        "(x, y) => ",
-        paste(stroke_clauses, collapse = " else "),
-        " else ",
-        default_clause
-      )
+      paste0("(x, y) => ", paste(c(cond_stroke_clauses, default_clause), collapse = " else "))
     } else {
       typst_stroke_serialize(default_stroke)
     }
@@ -2225,6 +2114,25 @@ typst_table_fill_plan <- function(header_rows, body_rows, n_cols) {
     col_stroke_map = col_stroke_map,
     header_rows = seq_along(header_rows)
   )
+}
+
+typst_build_conditional_clauses <- function(row_map, col_map, serializer_fn) {
+  clauses <- character(0L)
+  if (length(row_map) > 0L) {
+    row_ids <- as.integer(names(row_map))
+    clauses <- c(clauses, vapply(
+      seq_along(row_ids), FUN.VALUE = character(1L),
+      FUN = function(i) paste0("if y == ", row_ids[[i]], " { ", serializer_fn(row_map[[i]]), " }")
+    ))
+  }
+  if (length(col_map) > 0L) {
+    col_ids <- as.integer(names(col_map))
+    clauses <- c(clauses, vapply(
+      seq_along(col_ids), FUN.VALUE = character(1L),
+      FUN = function(i) paste0("if x == ", col_ids[[i]], " { ", serializer_fn(col_map[[i]]), " }")
+    ))
+  }
+  clauses
 }
 
 typst_fill_is_lifted <- function(fill_plan, row_index, col_start, colspan, style_obj) {
