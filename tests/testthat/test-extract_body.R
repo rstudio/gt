@@ -1308,3 +1308,14 @@ test_that("extract_body() supports Typst output", {
   expect_equal(tbl_body$currency, c("#super[_1_]\u00a0\\$49.95", "\\$17.95"))
   expect_equal(tbl_body$char, c("apricot", "banana"))
 })
+
+test_that("extract_cells() supports Typst output", {
+
+  expect_equal(
+    exibble |>
+      dplyr::slice(1:2) |>
+      gt() |>
+      extract_cells(columns = num, rows = 1:2, output = "typst"),
+    c("0.1111", "2.2220")
+  )
+})

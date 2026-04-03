@@ -342,7 +342,7 @@ test_that("markdown_to_typst() preserves major markdown features", {
   expect_warning(
     expect_equal(
       markdown_to_typst("<div>\nplain block\n</div>"),
-      "plain block"
+      ""
     ),
     "HTML tags found, and they will be removed."
   )
@@ -358,7 +358,7 @@ test_that("markdown_to_typst() preserves major markdown features", {
   expect_warning(
     expect_equal(
       markdown_to_typst("<div class=\"x\">\nplain block\n</div>"),
-      "plain block"
+      ""
     ),
     "HTML tags found, and they will be removed."
   )

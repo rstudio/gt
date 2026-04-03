@@ -614,7 +614,7 @@ extract_cells <- function(
     data,
     columns,
     rows = everything(),
-    output = c("auto", "plain", "html", "latex", "rtf", "word", "grid")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "grid", "typst")
 ) {
 
   # Perform input object validation
@@ -624,7 +624,7 @@ extract_cells <- function(
   output <-
     rlang::arg_match0(
       output,
-      values = c("auto", "plain", "html", "latex", "rtf", "word", "grid")
+      values = c("auto", "plain", "html", "latex", "rtf", "word", "grid", "typst")
     )
 
   if (output == "auto") {

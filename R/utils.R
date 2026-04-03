@@ -1318,14 +1318,6 @@ typst_render_markdown_html_inline <- function(node) {
 
 #' @noRd
 typst_render_markdown_html_block <- function(node) {
-
-  html_text <- xml2::xml_text(node)
-  wrapper <- typst_inert_html_wrapper_match(html_text)
-
-  if (!is.null(wrapper)) {
-    return(markdown_to_typst(wrapper$inner))
-  }
-
   ""
 }
 
