@@ -82,7 +82,7 @@ test_that("as_typst() supports labels and breakable figures", {
     tab_caption("Captioned table") |>
     as_typst(breakable = TRUE)
 
-  expect_match(breakable_output, "^#context \\{")
+  expect_match(breakable_output, "^#\\{")
   expect_match(
     breakable_output,
     "show figure\\.where\\(kind: table\\): set block\\(breakable: true\\)"

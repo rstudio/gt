@@ -1412,10 +1412,24 @@ typst_render_block_or_text <- function(text, style_obj = NULL, force_block = FAL
 }
 
 typst_make_figure_breakable <- function(component, kind) {
+  component_lines <- strsplit(component, "\n", fixed = TRUE)[[1]]
+  label <- NULL
+
+  if (
+    length(component_lines) > 1L &&
+    grepl("^<[^>\n]+>$", component_lines[[length(component_lines)]], perl = TRUE)
+  ) {
+    label <- component_lines[[length(component_lines)]]
+    component <- paste(component_lines[-length(component_lines)], collapse = "\n")
+  }
+
   paste0(
-    "context {\n",
+    "#{\n",
     "  show figure.where(kind: ", kind, "): set block(breakable: true)\n",
-    "  ", gsub("\n", "\n  ", component, fixed = TRUE), "\n",
+    "  [\n",
+    "    #", gsub("\n", "\n    ", component, fixed = TRUE), "\n",
+    if (!is.null(label)) paste0("    ", label, "\n"),
+    "  ]\n",
     "}"
   )
 }
@@ -1894,6 +1908,14 @@ typst_apply_table_options <- function(component, data, label = NULL) {
   font_size <- typst_table_font_size_expr(data = data)
   inset <- typst_table_inset_expr(data = data)
 
+  if (!is.null(inset)) {
+    component <- sub(
+      "^table\\(\n",
+      paste0("table(\n  inset: ", inset, ",\n"),
+      component
+    )
+  }
+
   if (!is.null(width)) {
     component <- paste0(
       "block(width: ", width, ")",
@@ -1901,17 +1923,13 @@ typst_apply_table_options <- function(component, data, label = NULL) {
     )
   }
 
-  context_lines <- c(
-    if (!is.null(font_size)) paste0("set text(size: ", font_size, ")"),
-    if (!is.null(inset)) paste0("set table.cell(inset: ", inset, ")")
-  )
-
-  if (length(context_lines) > 0L) {
+  if (!is.null(font_size)) {
     component <- paste0(
-      "context {\n",
-      "  ", paste(context_lines, collapse = "\n  "), "\n",
-      "  ", gsub("\n", "\n  ", typst_code_component(component), fixed = TRUE), "\n",
-      "}"
+      "text(size: ",
+      font_size,
+      ", ",
+      component,
+      ")"
     )
   }
 
@@ -1921,16 +1939,6 @@ typst_apply_table_options <- function(component, data, label = NULL) {
 
   component
 }
-
-typst_code_component <- function(component) {
-
-  if (startsWith(component, "#")) {
-    return(sub("^#", "", component))
-  }
-
-  component
-}
-
 typst_table_width_expr <- function(data) {
 
   width <- dt_options_get_value(data = data, option = "table_width")
