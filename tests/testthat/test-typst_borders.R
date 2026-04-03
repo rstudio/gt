@@ -1,4 +1,4 @@
-test_that("as_typst() supports alignment, borders, numeric weights, and stretch mappings", {
+test_that("as_typst() renders alignment, borders, numeric weights, and stretch values", {
 
   typst_output <-
     gtcars |>
@@ -43,7 +43,7 @@ test_that("as_typst() supports alignment, borders, numeric weights, and stretch 
   expect_match(typst_output, "#text\\(stretch: 50%\\)")
 })
 
-test_that("as_typst() lifts exact whole-table stroke patterns", {
+test_that("as_typst() consolidates repeated whole-table stroke patterns", {
 
   typst_output <-
     exibble[1:2, c("num", "char")] |>
@@ -66,7 +66,7 @@ test_that("as_typst() lifts exact whole-table stroke patterns", {
   )
 })
 
-test_that("as_typst() lifts exact header row stroke patterns", {
+test_that("as_typst() consolidates repeated header row stroke patterns", {
 
   typst_output <-
     exibble[1:2, c("num", "char")] |>
@@ -85,7 +85,7 @@ test_that("as_typst() lifts exact header row stroke patterns", {
   )
 })
 
-test_that("as_typst() lifts exact summary row stroke patterns", {
+test_that("as_typst() consolidates repeated summary row stroke patterns", {
 
   typst_output <-
     exibble[1:5, c("row", "group", "num", "currency")] |>
@@ -113,7 +113,7 @@ test_that("as_typst() lifts exact summary row stroke patterns", {
   )
 })
 
-test_that("as_typst() lifts exact column stroke patterns", {
+test_that("as_typst() consolidates repeated column stroke patterns", {
 
   typst_output <-
     exibble[1:3, c("num", "char", "currency")] |>
@@ -136,7 +136,7 @@ test_that("as_typst() lifts exact column stroke patterns", {
   )
 })
 
-test_that("as_typst() preserves duplicated edges and residual local stroke exceptions", {
+test_that("as_typst() preserves duplicated edges and local stroke exceptions", {
 
   duplicated_edges <-
     exibble[1:1, c("num", "char")] |>

@@ -1193,8 +1193,32 @@ markdown_to_latex <- function(text, md_engine) {
 #' @noRd
 markdown_to_typst <- function(text) {
 
+  text <- as.character(text)
+
+  has_html_nodes <- vapply(
+    text,
+    FUN.VALUE = logical(1L),
+    USE.NAMES = FALSE,
+    FUN = function(x) {
+
+      if (is.na(x)) {
+        return(FALSE)
+      }
+
+      doc <- xml2::read_xml(commonmark::markdown_xml(linebreak_br(x)))
+      typst_markdown_has_html_nodes(doc)
+    }
+  )
+
+  if (isTRUE(getOption("gt.html_tag_check", TRUE)) && any(has_html_nodes)) {
+    cli::cli_warn(c(
+      "HTML tags found, and they will be removed.",
+      "*" = "Set `options(gt.html_tag_check = FALSE)` to disable this check."
+    ))
+  }
+
   res <- vapply(
-    as.character(text),
+    text,
     FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
     FUN = function(x) {
@@ -1204,13 +1228,6 @@ markdown_to_typst <- function(text) {
       }
 
       doc <- xml2::read_xml(commonmark::markdown_xml(linebreak_br(x)))
-
-      if (isTRUE(getOption("gt.html_tag_check", TRUE)) && typst_markdown_has_html_nodes(doc)) {
-        cli::cli_warn(c(
-          "HTML tags found, and they will be removed.",
-          "*" = "Set `options(gt.html_tag_check = FALSE)` to disable this check."
-        ))
-      }
 
       typst_render_markdown_node(xml2::xml_root(doc))
     }

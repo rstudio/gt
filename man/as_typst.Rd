@@ -86,7 +86,7 @@ table and any associated notes.
 
 \section{Function Introduced}{
 
-\code{v1.0.0} (March 26, 2026)
+\code{v1.4.0}
 }
 
 \seealso{

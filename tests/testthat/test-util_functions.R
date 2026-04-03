@@ -386,6 +386,22 @@ test_that("markdown_to_typst() can suppress HTML-tag warnings via option", {
   )
 })
 
+test_that("markdown_to_typst() warns once per vectorized call", {
+
+  warnings <- character(0L)
+
+  withCallingHandlers(
+    markdown_to_typst(c("<span>a</span>", "<span>b</span>", "<span>c</span>")),
+    warning = function(w) {
+      warnings <<- c(warnings, conditionMessage(w))
+      invokeRestart("muffleWarning")
+    }
+  )
+
+  expect_length(warnings, 1L)
+  expect_match(warnings[[1]], "HTML tags found, and they will be removed.")
+})
+
 test_that("apply_pattern_fmt_x() works correctly", {
 
   # Set formatted values in a character vector

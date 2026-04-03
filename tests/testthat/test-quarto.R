@@ -86,7 +86,7 @@ test_that("Quarto produces the valid output", {
   expect_snapshot_latex(tab)
 })
 
-test_that("Quarto Typst knit_print uses a raw figure path for unlabeled captioned tables", {
+test_that("Quarto Typst knit_print() renders captioned tables as raw Typst figures", {
 
   with_typst_knit_context({
     tab <-
@@ -104,7 +104,7 @@ test_that("Quarto Typst knit_print uses a raw figure path for unlabeled captione
   })
 })
 
-test_that("Quarto Typst knit_print suppresses gt captions when Quarto owns the float via tbl-cap", {
+test_that("Quarto Typst knit_print() defers captions to Quarto when `tbl-cap` is set", {
 
   with_typst_knit_context({
     old_label <- knitr::opts_current$get("label")
@@ -135,7 +135,7 @@ test_that("Quarto Typst knit_print suppresses gt captions when Quarto owns the f
   })
 })
 
-test_that("Quarto Typst knit_print suppresses gt captions when Quarto owns the float via label", {
+test_that("Quarto Typst knit_print() defers captions to Quarto when the chunk label owns the float", {
 
   with_typst_knit_context({
     old_label <- knitr::opts_current$get("label")
@@ -161,7 +161,7 @@ test_that("Quarto Typst knit_print suppresses gt captions when Quarto owns the f
   })
 })
 
-test_that("Quarto Typst knit_print preserves Typst-safe escaping and styling constructs", {
+test_that("Quarto Typst knit_print() preserves Typst-safe escaping and styling", {
 
   with_typst_knit_context({
     tab <-
@@ -190,7 +190,7 @@ test_that("Quarto Typst knit_print preserves Typst-safe escaping and styling con
   })
 })
 
-test_that("Quarto Typst render smoke test covers styling, crossrefs, and plain-text caption escaping", {
+test_that("Quarto Typst rendering works with styling, crossrefs, and plain-text caption escaping", {
 
   skip_if(Sys.which("quarto") == "")
 
@@ -260,7 +260,7 @@ test_that("Quarto Typst render smoke test covers styling, crossrefs, and plain-t
   expect_no_match(typ_out, "#figure\\(\\[\\s*#figure\\(", perl = TRUE)
 })
 
-test_that("Typst knit_print() for gt_group emits Typst blocks instead of HTML", {
+test_that("Typst knit_print() for gt_group emits Typst blocks", {
 
   old_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
   withr::defer(knitr::opts_knit$set(rmarkdown.pandoc.to = old_to))

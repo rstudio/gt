@@ -1,4 +1,4 @@
-test_that("as_typst() uses native table and figure semantics", {
+test_that("as_typst() renders tables with table or figure containers", {
 
   plain_output <-
     gtcars |>
@@ -29,7 +29,7 @@ test_that("as_typst() uses native table and figure semantics", {
   expect_match(enriched_output, "stack\\(dir: ttb, spacing: 0\\.35em")
 })
 
-test_that("as_typst() container semantics stay explicit", {
+test_that("as_typst() respects the container option", {
 
   gt_tbl <-
     exibble[1:3, c("num", "char", "time")] |>
@@ -55,7 +55,7 @@ test_that("as_typst() container semantics stay explicit", {
   expect_match(forced_figure, "kind: table")
 })
 
-test_that("as_typst() supports automatic labels, explicit labels, and breakable figures", {
+test_that("as_typst() supports labels and breakable figures", {
 
   auto_labeled <-
     exibble[1:2, c("num", "char")] |>
@@ -158,7 +158,7 @@ test_that("as_typst() renders a simple plain table", {
   expect_snapshot_typst(gt_tbl)
 })
 
-test_that("as_typst() renders a complex styled figure table", {
+test_that("as_typst() renders a styled figure table", {
 
   gt_tbl <-
     exibble[1:5, c("row", "group", "num", "currency", "char")] |>
