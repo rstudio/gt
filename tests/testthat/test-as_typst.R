@@ -10,6 +10,9 @@ test_that("as_typst() renders tables with table or figure containers", {
   expect_match(plain_output, "table\\(")
   expect_no_match(plain_output, "#figure\\(")
   expect_match(plain_output, "table.header\\(")
+  expect_match(plain_output, "stroke:")
+  expect_match(plain_output, "top: \\(paint: rgb\\(\"#A8A8A8\"\\), thickness: 1\\.5pt\\)")
+  expect_match(plain_output, "bottom: \\(paint: rgb\\(\"#D3D3D3\"\\), thickness: 1\\.5pt\\)")
 
   enriched_output <-
     gtcars |>
@@ -156,6 +159,23 @@ test_that("as_typst() renders a simple plain table", {
     gt()
 
   expect_snapshot_typst(gt_tbl)
+})
+
+test_that("as_typst() can suppress default bare-table rules with tab_options()", {
+
+  plain_output <-
+    exibble[1:2, c("num", "char")] |>
+    gt() |>
+    tab_options(
+      table.border.top.style = "none",
+      table.border.bottom.style = "none",
+      column_labels.border.bottom.style = "none"
+    ) |>
+    as_typst()
+
+  expect_match(plain_output, "table\\(")
+  expect_match(plain_output, "table.header\\(")
+  expect_no_match(plain_output, "stroke:")
 })
 
 test_that("as_typst() renders a styled figure table", {

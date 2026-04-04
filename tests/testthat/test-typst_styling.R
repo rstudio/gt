@@ -279,7 +279,7 @@ test_that("as_typst() handles known multiline-label and markdown-wrapper issue r
     fmt_markdown(columns = everything()) |>
     as_typst()
 
-  expect_match(unwrapped_output, "\\[\\]")
+  expect_match(unwrapped_output, "\\[plain block\\]")
   expect_match(unwrapped_output, "\\[mix inline text end\\]")
   expect_no_match(unwrapped_output, "\\<div\\>")
   expect_no_match(unwrapped_output, "\\<span\\>")

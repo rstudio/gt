@@ -737,8 +737,8 @@ as_word_tbl_body <- function(
 #'
 #'   `scalar<logical>` // *default:* `FALSE`
 #'
-#'   When `TRUE` and the Typst export uses a `figure(...)`, the figure is wrapped
-#'   in a local Typst `context` block that sets `block(breakable: true)` for
+#'   When `TRUE` and the Typst export uses a `figure(...)`, the emitted Typst
+#'   applies a local `show` rule that sets `block(breakable: true)` for
 #'   `figure.where(kind: table)`. This has no effect for bare `table(...)`
 #'   output.
 #'

@@ -45,8 +45,8 @@ emission, or supply a string to force a specific label.}
 
 \verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
-When \code{TRUE} and the Typst export uses a \code{figure(...)}, the figure is wrapped
-in a local Typst \code{context} block that sets \code{block(breakable: true)} for
+When \code{TRUE} and the Typst export uses a \code{figure(...)}, the emitted Typst
+applies a local \code{show} rule that sets \code{block(breakable: true)} for
 \code{figure.where(kind: table)}. This has no effect for bare \code{table(...)}
 output.}
 }

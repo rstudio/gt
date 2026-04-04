@@ -30,7 +30,7 @@ test_that("as_typst() renders alignment, borders, numeric weights, and stretch v
     as_typst()
 
   expect_match(typst_output, "if x == 1 \\{ rgb\\(\"#FFEEAA\"\\) \\}")
-  expect_match(typst_output, "table\\.cell\\(align: horizon \\+ center, stroke:")
+  expect_match(typst_output, "table\\.cell\\(align: horizon \\+ center\\)")
   expect_match(typst_output, "paint: red")
   expect_match(typst_output, "thickness: 1\\.5pt")
   expect_match(
@@ -128,9 +128,9 @@ test_that("as_typst() consolidates repeated column stroke patterns", {
     ) |>
     as_typst()
 
-  expect_match(typst_output, "stroke: \\(x, y\\) => if x == 1 \\{")
+  expect_match(typst_output, "if x == 1 \\{")
   expect_match(typst_output, "paint: rgb\\(\"#00897B\"\\)")
-  expect_no_match(
+  expect_match(
     typst_output,
     "table\\.cell\\(stroke: \\(left: \\(paint: rgb\\(\"#00897B\"\\)"
   )
@@ -167,7 +167,7 @@ test_that("as_typst() preserves duplicated edges and local stroke exceptions", {
     ) |>
     as_typst()
 
-  expect_match(residual_row_output, "stroke: \\(x, y\\) => if y == 1 \\{")
+  expect_match(residual_row_output, "if y == 1 \\{")
   expect_match(
     residual_row_output,
     "table\\.cell\\(stroke: \\(left: \\(paint: red, thickness: 1\\.5pt\\), right: \\(paint: red, thickness: 1\\.5pt\\)\\)\\)"

@@ -352,7 +352,8 @@ create_table_component_typst <- function(
   fill_plan <- typst_table_fill_plan(
     header_rows = header_rows,
     body_rows = body_rows,
-    n_cols = max(1L, nrow(visible_columns))
+    n_cols = max(1L, nrow(visible_columns)),
+    data = data
   )
 
   contents <- c(
@@ -1962,7 +1963,7 @@ typst_expand_row_fill_values <- function(row, n_cols) {
   fills[seq_len(n_cols)]
 }
 
-typst_table_fill_plan <- function(header_rows, body_rows, n_cols) {
+typst_table_fill_plan <- function(header_rows, body_rows, n_cols, data = NULL) {
 
   all_rows <- c(header_rows, body_rows)
 
@@ -1989,6 +1990,11 @@ typst_table_fill_plan <- function(header_rows, body_rows, n_cols) {
       lapply(all_rows, typst_expand_row_fill_values, n_cols = n_cols)
     )
   stroke_grid <- lapply(all_rows, typst_expand_row_stroke_values, n_cols = n_cols)
+  stroke_grid <- typst_apply_default_table_strokes(
+    stroke_grid = stroke_grid,
+    data = data,
+    header_rows = header_rows
+  )
 
   # Phase 2: Lift fills — promote common fills from cell level up to default/row/column
   default_fill <- NULL
@@ -2175,6 +2181,108 @@ typst_expand_row_stroke_values <- function(row, n_cols) {
   }
 
   strokes[seq_len(n_cols)]
+}
+
+typst_option_border_side <- function(data, prefix, side, include = NULL) {
+
+  if (is.null(data)) {
+    return(NULL)
+  }
+
+  if (!is.null(include)) {
+    include_value <- dt_options_get_value(data = data, option = include)
+    include_value <- typst_resolve_scalar_value(include_value)
+
+    if (!isTRUE(include_value)) {
+      return(NULL)
+    }
+  }
+
+  style <- dt_options_get_value(data = data, option = paste0(prefix, "_style"))
+  width <- dt_options_get_value(data = data, option = paste0(prefix, "_width"))
+  color <- dt_options_get_value(data = data, option = paste0(prefix, "_color"))
+
+  style <- typst_resolve_scalar_value(style)
+  width <- typst_resolve_scalar_value(width)
+  color <- typst_resolve_scalar_value(color)
+
+  if (is.null(style) || identical(style, "none")) {
+    return(NULL)
+  }
+
+  stroke_obj <- typst_empty_stroke()
+  stroke_obj[[side]] <- typst_stroke_side_expr(
+    color = color %||% "#000000",
+    width = width %||% "1px",
+    style = style %||% "solid"
+  )
+
+  stroke_obj
+}
+
+typst_apply_row_edge_stroke <- function(stroke_row, side, edge_value) {
+
+  if (is.null(edge_value) || length(stroke_row) == 0L) {
+    return(stroke_row)
+  }
+
+  lapply(
+    stroke_row,
+    function(cell_stroke) {
+      edge_stroke <- typst_empty_stroke()
+      edge_stroke[[side]] <- edge_value[[side]]
+      typst_stroke_merge(cell_stroke, edge_stroke)
+    }
+  )
+}
+
+typst_apply_default_table_strokes <- function(stroke_grid, data, header_rows) {
+
+  if (is.null(data) || length(stroke_grid) == 0L) {
+    return(stroke_grid)
+  }
+
+  top_rule <- typst_option_border_side(
+    data = data,
+    prefix = "table_border_top",
+    side = "top",
+    include = "table_border_top_include"
+  )
+  header_rule <- typst_option_border_side(
+    data = data,
+    prefix = "column_labels_border_bottom",
+    side = "bottom"
+  )
+  bottom_rule <- typst_option_border_side(
+    data = data,
+    prefix = "table_border_bottom",
+    side = "bottom",
+    include = "table_border_bottom_include"
+  )
+
+  if (!is.null(top_rule)) {
+    stroke_grid[[1L]] <- typst_apply_row_edge_stroke(stroke_grid[[1L]], "top", top_rule)
+  }
+
+  if (!is.null(header_rule) && length(header_rows) > 0L) {
+    header_index <- length(header_rows)
+    stroke_grid[[header_index]] <- typst_apply_row_edge_stroke(
+      stroke_grid[[header_index]],
+      "bottom",
+      header_rule
+    )
+  }
+
+  if (!is.null(bottom_rule)) {
+    last_index <- length(stroke_grid)
+    stroke_grid[[last_index]] <- typst_apply_row_edge_stroke(
+      stroke_grid[[last_index]],
+      "bottom",
+      bottom_rule
+    )
+  }
+
+  stroke_grid
 }
 
 typst_residual_stroke <- function(fill_plan, row_index, col_start, colspan, style_obj) {
