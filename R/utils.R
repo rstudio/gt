@@ -1335,6 +1335,14 @@ typst_render_markdown_html_inline <- function(node) {
 
 #' @noRd
 typst_render_markdown_html_block <- function(node) {
+
+  html_text <- xml2::xml_text(node)
+  wrapper <- typst_inert_html_wrapper_match(html_text)
+
+  if (!is.null(wrapper)) {
+    return(markdown_to_typst(wrapper$inner))
+  }
+
   ""
 }
 
@@ -1347,7 +1355,7 @@ typst_is_inert_html_inline_wrapper <- function(text) {
 typst_inert_html_wrapper_match <- function(text) {
 
   text_trim <- trimws(text)
-  match <- regexec("^<(div|span)(\\s+[^>]*)?>([\\s\\S]*)</\\1>$", text_trim, perl = TRUE)
+  match <- regexec("^<(div|span)>([\\s\\S]*)</\\1>$", text_trim, perl = TRUE)
   captures <- regmatches(text_trim, match)[[1]]
 
   if (length(captures) == 0L) {
@@ -1356,7 +1364,7 @@ typst_inert_html_wrapper_match <- function(text) {
 
   list(
     tag = captures[2],
-    inner = captures[4]
+    inner = captures[3]
   )
 }
 
