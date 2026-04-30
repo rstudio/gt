@@ -336,14 +336,21 @@ ooxml_tbl_cell <- function(ooxml_type, ..., properties = NULL, col_span = NULL, 
 
 # ooxml_tbl_cell_properties --------------------------------------------------------------
 
-ooxml_tbl_cell_properties <- function(ooxml_type, ..., borders = NULL, fill = NULL, margins = NULL, row_span = NULL, col_span = NULL, v_align = NULL) {
+ooxml_tbl_cell_properties <- function(ooxml_type, ..., borders = NULL, fill = NULL, margins = NULL,
+                                       row_span = NULL, col_span = NULL, v_align = NULL, v_merge = FALSE) {
   rlang::check_dots_empty()
-
 
   margins  <- ooxml_tbl_cell_margins(ooxml_type, margins)
   borders  <- ooxml_cell_borders(ooxml_type, borders)
   fill     <- ooxml_fill(ooxml_type, fill)
-  v_merge  <- ooxml_vMerge(ooxml_type, row_span)
+  v_merge_tag <- if (isTRUE(v_merge)) {
+    switch_ooxml(ooxml_type,
+      word = ooxml_tag("w:vMerge"),           # continuation: no val attribute
+      pptx = ooxml_tag("a:vMerge")            # continuation
+    )
+  } else {
+    ooxml_vMerge(ooxml_type, row_span)
+  }
   v_align  <- ooxml_vAlign(ooxml_type, v_align)
   gridSpan <- ooxml_gridSpan(ooxml_type, col_span)
 
@@ -354,7 +361,7 @@ ooxml_tbl_cell_properties <- function(ooxml_type, ..., borders = NULL, fill = NU
     margins,
     gridSpan,
     fill,
-    v_merge,
+    v_merge_tag,
     v_align
   )
 }
