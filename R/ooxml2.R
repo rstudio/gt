@@ -291,43 +291,69 @@ ooxml_tbl_row_height <- function(ooxml_type, value, ..., error_call = current_en
 
 # ooxml_tbl_cell ----------------------------------------------------------
 
-ooxml_tbl_cell <- function(ooxml_type, ..., properties = NULL, col_span = NULL) {
+ooxml_tbl_cell <- function(ooxml_type, ..., properties = NULL, col_span = NULL, row_span = NULL) {
+
   if (identical(properties, "remove cell")) {
     return(NULL)
   }
+
   properties <- check_inherits(properties, "ooxml_tbl_cell_properties", accept_null = TRUE)
 
   switch_ooxml(ooxml_type,
-    word = ooxml_tag("w:tc", tag_class = "ooxml_tbl_cell",
-      properties, ...
-    ),
-    pptx = ooxml_tag("a:tc", tag_class = "ooxml_tbl_cell", if (!is.null(col_span) && !identical(col_span, 1L)) splice3(gridSpan = col_span),
-      ooxml_tag("a:txBody", tag_class = "ooxml_text_body",
-        ooxml_tag(tag = "a:bodyPr", vertOverflow="clip", horzOverflow="clip", wrap="square", rtlCol="0", anchor="ctr"),
-        ooxml_tag(tag = "a:lstStyle"),
-        ...
-      ),
-      properties,
+    word = {
+      ooxml_tag("w:tc", tag_class = "ooxml_tbl_cell", properties, ...)
+    },
+    pptx = {
 
-    )
+      if(identical(row_span, 0) | identical(col_span, 0)){
+        ooxml_tag("a:tc", tag_class = "ooxml_tbl_cell",
+                  if (!is.null(col_span) && isTRUE(col_span > 1L)) splice3(gridSpan = col_span),
+                  if (identical(col_span, 0)) splice3(hMerge = 1),
+                  if (!is.null(row_span) &&  isTRUE(row_span > 1L)) splice3(rowSpan = row_span),
+                  if (identical(row_span, 0)) splice3(vMerge = 1),
+                  ooxml_tag("a:txBody", tag_class = "ooxml_text_body",
+                            ooxml_tag(tag = "a:bodyPr"),
+                            ooxml_tag(tag = "a:lstStyle"),
+                            ooxml_tag(tag = "a:p", ooxml_tag(tag = "a:endParaRPr"))
+                  )
+        )
+
+      }else{
+        ooxml_tag("a:tc", tag_class = "ooxml_tbl_cell",
+                  if (!is.null(col_span) && isTRUE(col_span > 1L)) splice3(gridSpan = col_span),
+                  if (!is.null(row_span) &&  isTRUE(row_span > 1L)) splice3(rowSpan = row_span),
+                  ooxml_tag("a:txBody", tag_class = "ooxml_text_body",
+                            ooxml_tag(tag = "a:bodyPr", vertOverflow="clip", horzOverflow="clip", wrap="square", rtlCol="0", anchor="ctr"),
+                            ooxml_tag(tag = "a:lstStyle"),
+                            ...
+                  ),
+                  properties
+        )
+      }
+    }
   )
 }
 
 # ooxml_tbl_cell_properties --------------------------------------------------------------
 
-ooxml_tbl_cell_properties <- function(ooxml_type, ..., borders = NULL, fill = NULL, margins = NULL, row_span = NULL, col_span = NULL, v_align = NULL) {
+ooxml_tbl_cell_properties <- function(ooxml_type, ..., borders = NULL, fill = NULL, margins = NULL,
+                                       row_span = NULL, col_span = NULL, v_align = NULL, v_merge = FALSE) {
   rlang::check_dots_empty()
-
-  if (ooxml_type == "pptx" && identical(row_span, 0)) {
-    return("remove cell")
-  }
 
   margins  <- ooxml_tbl_cell_margins(ooxml_type, margins)
   borders  <- ooxml_cell_borders(ooxml_type, borders)
   fill     <- ooxml_fill(ooxml_type, fill)
-  v_merge  <- ooxml_vMerge(ooxml_type, row_span)
+  v_merge_tag <- if (isTRUE(v_merge)) {
+    switch_ooxml(ooxml_type,
+      word = ooxml_tag("w:vMerge"),           # continuation: no val attribute
+      pptx = ooxml_tag("a:vMerge")            # continuation
+    )
+  } else {
+    ooxml_vMerge(ooxml_type, row_span)
+  }
   v_align  <- ooxml_vAlign(ooxml_type, v_align)
   gridSpan <- ooxml_gridSpan(ooxml_type, col_span)
+
 
   tag <- switch_ooxml_tag(ooxml_type, "tcPr")
   ooxml_tag(tag, tag_class = "ooxml_tbl_cell_properties",
@@ -335,7 +361,7 @@ ooxml_tbl_cell_properties <- function(ooxml_type, ..., borders = NULL, fill = NU
     margins,
     gridSpan,
     fill,
-    v_merge,
+    v_merge_tag,
     v_align
   )
 }
@@ -343,21 +369,35 @@ ooxml_tbl_cell_properties <- function(ooxml_type, ..., borders = NULL, fill = NU
 # ooxml_cell_borders ------------------------------------------------------
 
 ooxml_cell_borders <- function(ooxml_type, border = NULL) {
+
   if (is.null(border)) {
     return(NULL)
   }
 
-  xml_border <- lapply(c("top", "bottom", "left", "right"), function(location) {
-    if (is.null(border[[location]])) {
-      return(NULL)
-    }
+  border_order <- switch(ooxml_type,
+      word = c("top", "bottom", "left", "right"),
+      pptx = c("left", "right", "top", "bottom")
+  )
 
+  xml_border <- lapply(border_order, function(location) {
+    if (is.null(border[[location]])){
+      return(ooxml_cell_border_default(ooxml_type = ooxml_type, location = location))
+    }
     x <- border[[location]]
     rlang::exec(ooxml_cell_border, ooxml_type = ooxml_type, location = location, !!!x)
   })
 
-  tag <- switch_ooxml_tag(ooxml_type, word = "tcBorders", pptx = "tcBdr")
-  ooxml_tag(tag, tag_class = "ooxml_cell_borders", !!!xml_border)
+  switch_ooxml(ooxml_type,
+    word = {
+      tag <- switch_ooxml_tag(ooxml_type, word = "tcBorders", pptx = "tcBdr")
+      ooxml_tag(tag, tag_class = "ooxml_cell_borders", !!!xml_border)
+    },
+    pptx = {
+      tagList3(xml_border)
+    }
+  )
+
+
 }
 
 # ooxml_cell_border -------------------------------------------------------
@@ -382,7 +422,7 @@ ooxml_cell_border <- function(ooxml_type, ..., location, color = "black", size =
     pptx = {
       tag   <- arg_match_names(location, c("top"="a:lnT","left"="a:lnL","bottom"="a:lnB","right"="a:lnR"))
 
-      size  <- check_between(size, min = 0, max = 10, default = .5)
+      size  <- check_between(size, min = 0, max = 10, default = 1.3333)
       style <- convert_border_style_pptx(type)
 
       if (is.null(style[["compound"]])) {
@@ -398,10 +438,28 @@ ooxml_cell_border <- function(ooxml_type, ..., location, color = "black", size =
         `cap`  = "flat",
         `cmpd` = style[["compound"]],
         `algn` = "ctr",
-
+        ooxml_fill(ooxml_type, color = color),
         dash,
-        ooxml_fill(ooxml_type, color = color)
+        ooxml_tag("a:round"),
+        ooxml_line_end(loc = "head"),
+        ooxml_line_end(loc = "tail")
       )
+    }
+  )
+}
+
+ooxml_cell_border_default <- function(ooxml_type, location){
+
+  switch_ooxml(ooxml_type,
+    word = {NULL},
+    pptx = {
+      ooxml_cell_border(
+        ooxml_type = ooxml_type,
+        location = location,
+        color = NULL,
+        size = 1,
+        type = "solid"
+        )
     }
   )
 }
@@ -412,9 +470,9 @@ px_to_emu <- function(x) {
 
 
 border_style_pptx <- list(
-  "solid"  = list(compound = "single", dash_style = NULL),
-  "dashed" = list(compound = "single", dash_style = "dash"),
-  "dotted" = list(compound = "single", dash_style = "dot"),
+  "solid"  = list(compound = "sng", dash_style = "solid"),
+  "dashed" = list(compound = "sng", dash_style = "dash"),
+  "dotted" = list(compound = "sng", dash_style = "dot"),
   "hidden" = list(compound = NULL,     dash_style = NULL),
   "double" = list(compound = "dbl",    dash_style = NULL)
 )
@@ -428,6 +486,24 @@ convert_border_style_pptx <- function(x, error_call = caller_env()){
     border_style_pptx[["hidden"]]
   }
 }
+
+# type = line end decoration, ie. triangle, arrowhead, etc
+# w = Specifies the line end width in relation to the line width.
+# len = Specifies the line end length in relation to the line width.
+ooxml_line_end <- function(loc = c("head","tail"), type = "none", w = "med", len = "med"){
+
+  loc <- match.arg(loc)
+
+  tag <- paste0("a:",loc, "End")
+
+  ooxml_tag(tag = tag,
+            tag_class = paste0("ooxml_cell_border_",loc,"_end"),
+            `type` = type,
+            `w` = w,
+            `len` = len
+            )
+}
+
 
 # ooxml_fill --------------------------------------------------------------
 
@@ -485,13 +561,14 @@ ooxml_tbl_cell_margins <- function(ooxml_type, margins = NULL) {
   pptx_tbl_cell_margins <- function() {
 
     if (is.null(margins)) {
-      return(rlang::splice(list(
-        marT = "45720",
-        marB = "45720",
-        marL = "45720",
-        marR = "45720",
-        anchor = "ctr"
-      )))
+      return(NULL)
+      # return(rlang::splice(list(
+      #   marT = "45720",
+      #   marB = "45720",
+      #   marL = "45720",
+      #   marR = "45720",
+      #   anchor = "ctr"
+      # )))
     }
 
     attrs_margins <- lapply(c("top", "bottom", "left", "right"), function(location) {
@@ -1778,7 +1855,8 @@ gt_as_pptx_post_processing <- function(path) {
   on.exit(unlink(temp_dir, recursive = TRUE))
   unzip(path, exdir = temp_dir)
 
-  xml_styles <- read_xml(file.path(temp_dir, "ppt", "tableStyles.xml"))
+  ooxml_tableStyles_path <- file.path(temp_dir, "ppt", "tableStyles.xml")
+  xml_styles <- read_xml(ooxml_tableStyles_path)
   tbl_styles <- xml_attr(xml_styles, "def")
 
   slides <- list.files(file.path(temp_dir, "ppt", "slides"), full.names = TRUE, pattern = "^slide")

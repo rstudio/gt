@@ -606,12 +606,15 @@ output:
   md_file <- tempfile(fileext = ".md")
 
   writeLines(md_text, con = md_file)
+
+  temp_filename <- tempfile(fileext = paste0(".",tools::file_ext(filename)))
   rmarkdown::pandoc_convert(
     input  = md_file,
-    output = filename
+    output = temp_filename
   )
 
-  gt_as_pptx_post_processing(path = filename)
+  gt_as_pptx_post_processing(path = temp_filename)
+  file.rename(temp_filename, filename)
 
 }
 
