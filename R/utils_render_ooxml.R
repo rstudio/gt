@@ -477,6 +477,7 @@ create_spanner_rows_ooxml <- function(ooxml_type, data, split = FALSE, keep_with
 }
 
 create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FALSE, keep_with_next = TRUE) {
+
   styles_tbl <- dt_styles_get(data = data)
   column_labels_vlines_color        <- dt_options_get_value(data = data, option = "column_labels_vlines_color")
   column_labels_border_top_color    <- dt_options_get_value(data = data, option = "column_labels_border_top_color")
@@ -490,14 +491,15 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
   spanner_ids <- dt_spanners_print_matrix(data, include_hidden = FALSE, ids = TRUE)
   spanner_row_values <- spanners[span_row_idx,]
   spanner_row_ids <- spanner_ids[span_row_idx,]
+  colspans <- get_cell_spans(spanner_row_ids)
 
-  spanners_rle <- rle(spanner_row_ids)
-  sig_cells <- c(1, utils::head(cumsum(spanners_rle$lengths) + 1, -1))
-  colspans <- ifelse(
-    seq_along(spanner_row_values) %in% sig_cells,
-    spanners_rle$lengths[match(seq_along(spanner_row_ids), sig_cells)],
-    0
-  )
+  cell_style_row <- span_row_idx - (nrow(spanners) + 1)
+
+  if(span_row_idx > 1){
+    col_span_above <-  get_cell_spans(spanner_ids[span_row_idx-1,])
+  }else{
+    col_span_above <- rep(1, times = ncol(spanner_ids))
+  }
 
   stub_cells <- create_spanner_row_stub_cells_ooxml(ooxml_type, data,
     i = span_row_idx,
@@ -507,15 +509,11 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
 
   col_alignment <- get_col_alignment(data)
 
-  values <- if (span_row_idx == nrow(spanners)) {
-    headings_labels
-  } else {
-    spanner_row_values
-  }
+  values <- spanner_row_values
 
   cells <- lapply(seq_along(values), \(i) {
     # NA check FIRST - empty placeholder cells, not hMerge cells
-    if (is.na(spanner_row_ids[i])) {
+    if (is.na(spanner_row_ids[i]) | colspans[i] == 0) {
       cell <- create_spanner_row_empty_cell_ooxml(ooxml_type, data,
         span_row_idx    = span_row_idx,
         span_column_idx = i,
@@ -525,53 +523,23 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
       return(cell)
     }
 
-    if (colspans[i] == 0) {
-      # hMerge continuation cell - carry top/bottom borders from the group-start spanner
-      group_start_i    <- max(which(colspans[seq_len(i)] > 0))
-      group_spanner_id <- spanner_row_ids[group_start_i]
-      cont_borders     <- NULL
-      if (!is.na(group_spanner_id) && span_row_idx < nrow(spanners)) {
-        cs_rows <- vctrs::vec_slice(styles_tbl,
-          styles_tbl$locname %in% "columns_groups" & styles_tbl$grpname %in% group_spanner_id
-        )
-        if (nrow(cs_rows) > 0) {
-          cs_cont <- do.call(c, cs_rows$styles)
-          bt <- cs_cont[["cell_border_top"]]
-          bb <- cs_cont[["cell_border_bottom"]]
-          cont_borders <- list(
-            top    = if (!is.null(bt)) list(color = bt[["color"]], size = convert_to_px(bt[["width"]] %||% "2px"), type = bt[["style"]] %||% "solid"),
-            bottom = if (!is.null(bb)) list(color = bb[["color"]], size = convert_to_px(bb[["width"]] %||% "2px"), type = bb[["style"]] %||% "solid")
-          )
-        }
-      }
-      return(ooxml_merge_cell(ooxml_type, borders = cont_borders))
-    }
+    ## i is rownum
+    ## j is column number
+    cell_style <- get_cell_style_ooxml(
+      styles_tbl = styles_tbl,
+      i = cell_style_row, # rows ## DO NOT CHANGE
+      j = i # columns ## DO NOT CHANGE - i here is the column index
+    )
 
-    if (is.na(spanner_row_ids[i])) {
-      cell <- create_spanner_row_empty_cell_ooxml(ooxml_type, data,
-        span_row_idx    = span_row_idx,
-        span_column_idx = i,
-        n               = length(values),
-        col_var         = headings_vars[i]
-      )
-      return(cell)
-    }
+    ## get cell from above and its styling
+    cell_above_style <- get_cell_style_ooxml(
+      styles_tbl = styles_tbl,
+      i = cell_style_row - 1, # rows ## DO NOT CHANGE
+      j = get_span_i_cell(col_span_above, i)  # columns ## DO NOT CHANGE - i here is the column index
+    )
 
-    if (span_row_idx == nrow(spanners)) {
-      # TODO: check this is ok, or split into create_spanner_row_ooxml()
-      #       and create_colnames_row_ooxml()
-      cell_style <- vctrs::vec_slice(styles_tbl,
-        styles_tbl$locname %in% c("columns_columns") & styles_tbl$colname %in% spanner_row_ids[i]
-      )
-    } else {
-      cell_style <- vctrs::vec_slice(styles_tbl,
-        styles_tbl$locname %in% c("columns_groups") & styles_tbl$grpname %in% spanner_row_ids[i]
-      )
-    }
     # Merge all style rows for this cell (each tab_style border side is a separate row)
-    cell_style <- do.call(c, cell_style$styles)
-
-    border_top    <- cell_style[["cell_border_top"]]
+    border_top    <- cell_above_style[["cell_border_bottom"]] %||% cell_style[["cell_border_top"]]
     border_bottom <- cell_style[["cell_border_bottom"]]
     border_left   <- cell_style[["cell_border_left"]]
     border_right  <- cell_style[["cell_border_right"]]
@@ -613,7 +581,6 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
     content <- process_cell_content_ooxml(ooxml_type, values[i],
       cell_style     = cell_style,
       align_default  = if (span_row_idx == nrow(spanners)) col_alignment[i] else "center",
-
       keep_with_next = keep_with_next
     )
     ooxml_tbl_cell(ooxml_type, col_span = colspans[i], properties = ooxml_tbl_cell_properties(ooxml_type,
@@ -628,6 +595,26 @@ create_spanner_row_ooxml <- function(ooxml_type, data, span_row_idx, split = FAL
   })
 
   ooxml_tbl_row(ooxml_type, split = split, is_header = TRUE, !!!stub_cells, !!!cells)
+}
+
+get_cell_spans <- function(x){
+
+  spanners_rle <- rle(x)
+  sig_cells <- c(1, utils::head(cumsum(spanners_rle$lengths) + 1, -1))
+  ifelse(
+    seq_along(x) %in% sig_cells,
+    spanners_rle$lengths[match(seq_along(x), sig_cells)],
+    0
+  )
+
+}
+
+get_span_i_cell <- function(spans, i){
+  new_i <- i
+  while(spans[new_i] == 0){
+   new_i <- i-1
+  }
+  new_i
 }
 
 create_spanner_row_empty_cell_ooxml <- function(ooxml_type, data, span_row_idx = 1, span_column_idx = 1, n,
@@ -988,9 +975,13 @@ create_body_row_data_cell_ooxml <- function(ooxml_type, data, i, j, keep_with_ne
   )
 }
 
-slice_cell_style_tbl <- function(styles_tbl, location, i = NULL, j = NULL, colname = NULL){
+slice_cell_style_tbl <- function(styles_tbl, location = NULL, i = NULL, j = NULL, colname = NULL){
 
-  slice_bool <-  styles_tbl$locname %in% location
+  slice_bool <- rep(TRUE, times = nrow(styles_tbl))
+
+  if(!rlang::is_empty(location)){
+    slice_bool <- slice_bool & styles_tbl$locname %in% location
+  }
 
   if(!rlang::is_empty(i)){
     slice_bool <- slice_bool & styles_tbl$rownum == i
@@ -1008,9 +999,18 @@ slice_cell_style_tbl <- function(styles_tbl, location, i = NULL, j = NULL, colna
 
 }
 
-get_cell_style_ooxml <- function(styles_tbl, location, i = NULL, j = NULL, colname = NULL){
+
+
+## i is rownum
+## j is column number
+get_cell_style_ooxml <- function(styles_tbl, location = NULL, i = NULL, j = NULL, colname = NULL){
 
   cell_style <- slice_cell_style_tbl(styles_tbl, location = location, i = i, j = j, colname = colname)
+
+  ## check border for cell below if top border isn't set
+  if(is.null(cell_style[["cell_border_top"]])){
+    cell_style[["cell_border_top"]] <- slice_cell_style_tbl(styles_tbl, location = location, i = i - 1 , j = j, colname = colname)[["cell_border_bottom"]]
+  }
 
   ## check border for cell below if bottom border isn't set
   if(is.null(cell_style[["cell_border_bottom"]])){
@@ -1020,6 +1020,11 @@ get_cell_style_ooxml <- function(styles_tbl, location, i = NULL, j = NULL, colna
   ## check border for cell to the right if right border isn't set
   if(is.null(cell_style[["cell_border_right"]])){
     cell_style[["cell_border_right"]] <- slice_cell_style_tbl(styles_tbl, location = location, i = i, j = j + 1, colname = colname)[["cell_border_left"]]
+  }
+
+  ## check border for cell to the left if left border isn't set
+  if(is.null(cell_style[["cell_border_left"]])){
+    cell_style[["cell_border_left"]] <- slice_cell_style_tbl(styles_tbl, location = location, i = i, j = j - 1, colname = colname)[["cell_border_right"]]
   }
 
   cell_style
