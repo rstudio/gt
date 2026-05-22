@@ -42,6 +42,64 @@ test_that("gt_group() can be used to contain gt tables", {
   expect_s3_class(gt_tbls_1[["gt_tbl_options"]], "tbl_df")
 })
 
+test_that("gt_group() can be used to contain gt tables and existing gt_groups", {
+
+  # Create two different `gt_tbl` table objects
+  gt_tbl_1 <- gt(exibble)
+  gt_tbl_2 <- gt(gtcars)
+
+  # Create a `gt_group` object with `gt_group()`
+  gt_grp_1 <- gt_group(gt_tbl_1, gt_tbl_2)
+
+  # Create a new gt group from a list of all existing tables - including a gt_group
+  gt_list <- list(gt_tbl_1, gt_tbl_2, gt_grp_1)
+
+  gt_tbls_1 <- gt_group(.list = gt_list)
+
+  # Expect that the `gt_tbls_1` object produced by `gt_group()`
+  # has the 'gt_group' class
+  expect_s3_class(gt_tbls_1, "gt_group")
+  expect_type(gt_tbls_1, "list")
+
+  # The gt_group should contain 4 tables:
+  # 2 individual tables + 1 group of 2 tables (flattened)
+  expect_equal(nrow(gt_tbls_1[["gt_tbls"]]), 4L)
+
+  # Verify that the flattened tables match the originals
+  expect_equal(grp_pull(gt_tbls_1, 1), gt_tbl_1)
+  expect_equal(grp_pull(gt_tbls_1, 2), gt_tbl_2)
+  expect_equal(grp_pull(gt_tbls_1, 3), grp_pull(gt_grp_1, 1))
+  expect_equal(grp_pull(gt_tbls_1, 4), grp_pull(gt_grp_1, 2))
+
+  # Expect that `gt_group()` also works when passing gt_group objects via `...`
+  gt_tbls_2 <- gt_group(gt_tbl_1, gt_grp_1)
+  expect_s3_class(gt_tbls_2, "gt_group")
+  expect_equal(nrow(gt_tbls_2[["gt_tbls"]]), 3L)
+
+  # Setting the option `.use_grp_opts` means that the internal
+  # component of similar naming is set to that logical value
+  # Create a `gt_group` object with `gt_group()`
+  gt_tbls_3 <- gt_group(.list = gt_list, .use_grp_opts = TRUE)
+  expect_true(gt_tbls_3[["use_grp_opts"]])
+  gt_tbls_4 <- gt_group(.list = gt_list, .use_grp_opts = FALSE)
+  expect_false(gt_tbls_4[["use_grp_opts"]])
+
+  # Not setting it means it will be FALSE by default
+  gt_tbls_5 <- gt_group(.list = gt_list)
+  expect_false(gt_tbls_5[["use_grp_opts"]])
+
+  # Expect specific components inside of a 'gt_group' object
+  expect_named(
+    gt_tbls_1,
+    c("gt_tbls", "gt_tbl_options", "use_grp_opts")
+  )
+
+  # Expect that the 'gt_tbls' and `gt_tbl_options` objects inside of
+  # 'gt_group' are both tibbles
+  expect_s3_class(gt_tbls_1[["gt_tbls"]], "tbl_df")
+  expect_s3_class(gt_tbls_1[["gt_tbl_options"]], "tbl_df")
+})
+
 test_that("grp_pull() can be used to extract a table from a group", {
 
   # Create two different `gt_tbl` table objects

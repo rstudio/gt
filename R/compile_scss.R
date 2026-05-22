@@ -31,6 +31,26 @@ compile_scss <- function(data, id = NULL) {
   gt_options_tbl <-
     gt_options_tbl[gt_options_tbl$scss & !is.na(gt_options_tbl$value), ]
 
+  # If stub.separate is FALSE, override stub border style to "none"
+  stub_separate <- dt_options_get_value(data = data, option = "stub_separate")
+
+  if (!is.na(stub_separate) && !stub_separate) {
+    
+    stub_border_idx <-
+      which(gt_options_tbl$parameter == "stub_border_style")
+    
+    if (length(stub_border_idx) > 0) {
+      gt_options_tbl$value[[stub_border_idx]] <- "none"
+    }
+    
+    stub_row_group_border_idx <-
+      which(gt_options_tbl$parameter == "stub_row_group_border_style")
+    
+    if (length(stub_row_group_border_idx) > 0) {
+      gt_options_tbl$value[[stub_row_group_border_idx]] <- "none"
+    }
+  }
+
   color_rows <- grepl("_color", gt_options_tbl$parameter, fixed = TRUE)
 
   gt_options_tbl <-

@@ -56,7 +56,9 @@ The \code{TRUE}/\code{FALSE} mapping style to use. By default this is the short 
 these options for \code{tf_style} are locale-aware through the \code{locale} option,
 so, a \code{"yes"} value will instead be \code{"ja"} when \code{locale = "de"}. Options
 4 through to 10 involve pairs of symbols (e.g., \code{"check-mark"} displays
-a check mark for \code{TRUE} and an X symbol for \code{FALSE}).}
+a check mark for \code{TRUE} and an X symbol for \code{FALSE}). There are 10
+\code{TRUE}/\code{FALSE} styles and their short names can be viewed using
+\code{\link[=info_tf_style]{info_tf_style()}}.}
 
 \item{pattern}{\emph{Specification of the formatting pattern}
 
@@ -213,6 +215,10 @@ described in terms of the Unicode character names used for the \code{TRUE} and
    9 \tab \code{"triangles"} \tab \verb{<Black Up-Pointing Triangle>}, \verb{<Black Down-Pointing Triangle>} \cr
    10 \tab \code{"triangles-lr"} \tab \verb{<Heavy Check Mark>}, \verb{<Heavy Ballot X>} \cr
 }
+
+
+We can use the \code{\link[=info_tf_style]{info_tf_style()}} function to view a similar table of
+\code{TRUE}/\code{FALSE} styles with example output.
 }
 
 \section{Adapting output to a specific \code{locale}}{

@@ -33,7 +33,7 @@ Get a table of info on all the available keywords for unit conversions.
 
 \section{Function ID}{
 
-11-9
+11-10
 }
 
 \section{Function Introduced}{
@@ -50,6 +50,7 @@ Other information functions:
 \code{\link{info_icons}()},
 \code{\link{info_locales}()},
 \code{\link{info_paletteer}()},
+\code{\link{info_tf_style}()},
 \code{\link{info_time_style}()}
 }
 \concept{information functions}

@@ -1,6 +1,6 @@
 skip_on_os("linux")
 
-library(lubridate)
+suppressPackageStartupMessages(library(lubridate))
 
 test_that("fmt_date() works correctly", {
 

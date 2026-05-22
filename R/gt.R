@@ -389,6 +389,7 @@ gt <- function(
     )
   data <- dt_row_groups_init(data = data)
   data <- dt_row_order_init(data = data)
+  data <- dt_rows_hidden_init(data = data)
   data <- dt_heading_init(data = data)
   data <- dt_spanners_init(data = data)
   data <- dt_stubhead_init(data = data)
