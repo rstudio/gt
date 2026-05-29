@@ -1193,7 +1193,6 @@ create_columns_component_rtf <- function(data) {
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
-
   # Determine the finalized number of spanner rows
   spanner_row_count <-
     dt_spanners_matrix_height(
@@ -1240,16 +1239,25 @@ create_columns_component_rtf <- function(data) {
     if (has_multiple_labels) {
       # Add individual headers for each stub column
       headings_labels <- prepend_vec(headings_labels, stubh$label)
-    } else {
-      # Single label (original behavior)
-      headings_labels <-
-        prepend_vec(
-          headings_labels,
-          c(
-            if (length(stubh$label) > 0) stubh$label else "",
-            rep("", length(stub_layout) - 1)
-          )
+    } else{
+
+      if (length(stubh$label) > 0){
+          stub_labs <- stubh$label
+        } else {
+          stub_labs <-  ""
+        }
+      
+      if(has_multi_column_stub) {
+        # combine widths for stub columns into a single width for the first column when columns are combined
+        col_widths <- c(
+          sum(col_widths[seq_along(stub_vars)]),
+          col_widths[-seq_along(stub_vars)]
         )
+      }
+
+      # Single label (original behavior)
+      headings_labels <-prepend_vec(headings_labels,stub_labs)
+            
     }
   }
 
@@ -1271,8 +1279,8 @@ create_columns_component_rtf <- function(data) {
     # Only merge if we have a single label spanning multiple columns
     if (!has_multiple_labels && length(stub_layout) > 1) {
       # Create merge keys for the stub columns
-      stub_merge_keys <- c(1, rep(2:(length(stub_layout)), each = 1))
-      merge_keys_cells <- c(stub_merge_keys, rep(0, get_effective_number_of_columns(data = data) - length(stub_layout)))
+      stub_merge_keys <- c(1, rep(2:(length(stubh$label)), each = 1))
+      merge_keys_cells <- c(stub_merge_keys, rep(0, get_effective_number_of_columns(data = data) - length(stubh$label)))
     }
   }
 
@@ -1375,8 +1383,8 @@ create_columns_component_rtf <- function(data) {
             )
           }
         )
-
-      if (length(stub_layout) > 0) {
+      
+      if (length(stub_layout) > 0) {   
 
         level_i_spanners <-
           c(
@@ -1396,7 +1404,7 @@ create_columns_component_rtf <- function(data) {
                   # )
                 )
               ),
-              length(stub_layout)
+              ifelse(is.null(stubh$label), 1, length(stubh$label))
             ),
             level_i_spanners
           )
