@@ -1853,7 +1853,7 @@ cmark_rules_ooxml_pptx <- list2(
 gt_as_pptx_post_processing <- function(path) {
   temp_dir <- tempfile()
   on.exit(unlink(temp_dir, recursive = TRUE))
-  unzip(path, exdir = temp_dir)
+  utils::unzip(path, exdir = temp_dir)
 
   ooxml_tableStyles_path <- file.path(temp_dir, "ppt", "tableStyles.xml")
   xml_styles <- read_xml(ooxml_tableStyles_path)
@@ -1879,7 +1879,7 @@ gt_as_pptx_post_processing <- function(path) {
   }
 
   old <- setwd(temp_dir)
-  zip(path, files = list.files(temp_dir, recursive = TRUE), flags = "-q")
+  utils::zip(path, files = list.files(temp_dir, recursive = TRUE), flags = "-q")
   setwd(old)
 
   path
