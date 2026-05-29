@@ -637,9 +637,12 @@ create_spanner_row_empty_cell_ooxml <- function(ooxml_type, data, span_row_idx =
 }
 
 create_spanner_row_stub_cells_ooxml <- function(ooxml_type, data, i = 1, keep_with_next = TRUE, colspans = NULL) {
+
   if (!dt_stub_df_exists(data = data)) {
     return(NULL)
   }
+
+
 
   styles_tbl <- dt_styles_get(data = data)
   column_labels_vlines_color        <- dt_options_get_value(data = data, option = "column_labels_vlines_color")
@@ -649,6 +652,7 @@ create_spanner_row_stub_cells_ooxml <- function(ooxml_type, data, i = 1, keep_wi
   stubh <- dt_stubhead_get(data = data)
   boxh <- dt_boxhead_get(data = data)
   spanners <- dt_spanners_print_matrix(data, include_hidden = FALSE)
+  spanner_row_count <- dt_spanners_matrix_height(data = data, omit_columns_row = FALSE)
 
   n_stub_cols   <- length(dt_boxhead_get_var_by_type(data, type = "stub"))
   n_stubh_label <- length(stubh$label)
@@ -676,13 +680,19 @@ create_spanner_row_stub_cells_ooxml <- function(ooxml_type, data, i = 1, keep_wi
     borders <- list(
       top    = list(color = column_labels_border_top_color),
       left   = list(color = column_labels_vlines_color),
-      right  = list(color = column_labels_vlines_color)
+      right  = list(color = column_labels_vlines_color),
+      bottom = if (i == spanner_row_count) list(size = 2, color = column_labels_border_bottom_color)
     )
 
-    content <- process_cell_content_ooxml(ooxml_type, "", keep_with_next = keep_with_next)
-
-
     if (single_stub_label) {
+
+      lab <- ifelse(i == spanner_row_count, headings_labels[1], "")
+      content <- process_cell_content_ooxml(ooxml_type, lab,
+                                            cell_style = cell_style,
+                                            keep_with_next = keep_with_next,
+                                            align_default = stubhead_label_alignment[1],
+                                            size_default  = 20
+      )
 
       tagList(ooxml_tbl_cell(ooxml_type, !!!to_tags(content), col_span = if (n_stub_cols > 1) n_stub_cols,
         properties = ooxml_tbl_cell_properties(ooxml_type,
@@ -695,7 +705,16 @@ create_spanner_row_stub_cells_ooxml <- function(ooxml_type, data, i = 1, keep_wi
       ))
 
     } else {
+
       cells <- lapply(seq_len(n_stub_cols), \(j) {
+
+        lab <- ifelse(i == spanner_row_count, headings_labels[j], "")
+        content <- process_cell_content_ooxml(ooxml_type, lab,
+                                              cell_style = cell_style,
+                                              keep_with_next = keep_with_next,
+                                              align_default = stubhead_label_alignment[j],
+                                              size_default  = 20
+        )
         ooxml_tbl_cell(ooxml_type, !!!to_tags(content),
           properties = ooxml_tbl_cell_properties(ooxml_type,
             borders  = borders,
@@ -709,7 +728,6 @@ create_spanner_row_stub_cells_ooxml <- function(ooxml_type, data, i = 1, keep_wi
     }
   } else {
 
-    spanner_row_count <- dt_spanners_matrix_height(data = data, omit_columns_row = FALSE)
     borders <- list(
       left   = list(color = column_labels_vlines_color),
       right  = list(color = column_labels_vlines_color),
