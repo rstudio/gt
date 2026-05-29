@@ -1,5 +1,7 @@
 # gt (development version)
 
+* Update RTF handling of stub columns and spans to handle multicolumn stubs (#2118)
+
 # gt 1.3.0
 
 ## New features
