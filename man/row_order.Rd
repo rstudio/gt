@@ -114,7 +114,7 @@ countries by population within each year:
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v1.3.0} (January 22, 2026)
 }
 
 \seealso{
@@ -124,6 +124,8 @@ Other row addition/modification functions:
 \code{\link{grand_summary_rows}()},
 \code{\link{row_group_order}()},
 \code{\link{rows_add}()},
+\code{\link{rows_hide}()},
+\code{\link{rows_unhide}()},
 \code{\link{summary_columns}()},
 \code{\link{summary_rows}()}
 }

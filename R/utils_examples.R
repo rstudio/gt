@@ -283,7 +283,7 @@ write_gt_examples_qmd_files <- function(
         )
       ) |>
       dplyr::mutate(
-        group = dplyr::case_match(family,
+        group = dplyr::recode_values(family,
           1 ~ "Table creation",
           2 ~ "Creating or modifying parts of a table",
           3 ~ "Formatting column data",
