@@ -1286,7 +1286,6 @@ create_columns_component_rtf <- function(data) {
             rtf_raw(headings_labels[x])
           ),
           h_align = col_alignment[x],
-          # h_merge = merge_keys_cells[x],
           borders = list(
             rtf_border("bottom", color = column_labels_border_bottom_color, width = 20)#,
             # rtf_border("top", color = column_labels_border_top_color, width = 40),
