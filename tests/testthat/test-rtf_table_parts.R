@@ -164,7 +164,7 @@ test_that("A gt table retains its column alignment", {
   rtf_lines <- as_rtf(tbl_rtf)
   rtf_align <- regmatches(rtf_lines, gregexpr("\\\\q[rl]", rtf_lines)) |> unlist()
 
-  expect_equal(rtf_align, rep(c("\\ql","\\ql","\\qr","\\ql"), 3))
+  expect_equal(rtf_align, c("\\ql","\\qr","\\ql",rep(c("\\ql","\\ql","\\qr","\\ql"), 2)))
 
   # all right
   tbl_rtf2 <-

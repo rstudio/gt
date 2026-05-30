@@ -1238,6 +1238,13 @@ create_columns_component_rtf <- function(data) {
       col_widths = col_widths,
       n_cols = get_effective_number_of_columns(data = data)
     )
+  
+    # Get the column alignments
+  col_alignment <-
+    c(
+      dt_boxhead_get_alignments_in_stub(data = data),
+      dt_boxhead_get_vars_align_default(data = data)
+    )
 
   # Get the column headings
   headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
@@ -1261,6 +1268,13 @@ create_columns_component_rtf <- function(data) {
           sum(col_widths[seq_along(stub_vars)]),
           col_widths[-seq_along(stub_vars)]
         )
+        
+        ## preserve the alignment of the first stub column and drop the rest when columns are combined
+        col_alignment <- c(
+          col_alignment[seq_along(stub_vars)][1],
+          col_alignment[-seq_along(stub_vars)]
+        )
+
       }
 
       # Single label (original behavior)
@@ -1269,12 +1283,7 @@ create_columns_component_rtf <- function(data) {
     }
   }
 
-  # Get the column alignments
-  col_alignment <-
-    c(
-      dt_boxhead_get_alignments_in_stub(data = data),
-      dt_boxhead_get_vars_align_default(data = data)
-    )
+  
 
   cell_list <-
     lapply(
