@@ -764,10 +764,9 @@ info_locales <- function(begins_with = NULL) {
   )
 
   tab_1$group <-
-    dplyr::case_match(
+    dplyr::replace_values(
       tab_1$group,
-      c("\u00a0", "\u202f") ~ "space",
-      .default = tab_1$group
+      c("\u00a0", "\u202f") ~ "space"
     )
 
   tab_1 <- tab_1[c("locale", "display_name", "group", "decimal")]
@@ -1232,7 +1231,7 @@ info_google_fonts <- function() {
 #' 11-7
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v1.3.0` (January 22, 2026)
 #'
 #' @export
 info_tf_style <- function(locale = NULL) {
