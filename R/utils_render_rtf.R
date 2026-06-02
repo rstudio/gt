@@ -1192,12 +1192,13 @@ create_columns_component_rtf <- function(data) {
   boxh <- dt_boxhead_get(data = data)
   stub_layout <- get_stub_layout(data = data)
   stub_vars <- dt_boxhead_get_var_stub(data = data)
-
+  headings_vars <- dt_boxhead_get_vars_default(data = data)
+  
   ## Determine if we have a multi-column stub and if there are multiple labels for the stub columns
   if(length(stub_layout) > 0) {
     # Check if we have multiple stubhead labels for multi-column stub
     if("group_label" %in% stub_layout){
-      stub_vars <- c(boxh$var[boxh$type == "row_group"], stub_vars)
+      stub_vars <- setdiff(c(boxh$var[boxh$type == "row_group"], stub_vars),c("::rowname::",NA))
     }
     has_multi_column_stub <- length(stub_vars) > 1 && !any(is.na(stub_vars))
     has_multiple_labels <- has_multi_column_stub && length(stubh$label) > 1
@@ -1245,6 +1246,8 @@ create_columns_component_rtf <- function(data) {
       dt_boxhead_get_alignments_in_stub(data = data),
       dt_boxhead_get_vars_align_default(data = data)
     )
+  
+  merge_keys_cells <- rep(0, get_effective_number_of_columns(data = data))
 
   # Get the column headings
   headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
@@ -1261,20 +1264,12 @@ create_columns_component_rtf <- function(data) {
         } else {
           stub_labs <-  ""
         }
-      
+            
       if(has_multi_column_stub) {
-        # combine widths for stub columns into a single width for the first column when columns are combined
-        col_widths <- c(
-          sum(col_widths[seq_along(stub_vars)]),
-          col_widths[-seq_along(stub_vars)]
-        )
-        
-        ## preserve the alignment of the first stub column and drop the rest when columns are combined
-        col_alignment <- c(
-          col_alignment[seq_along(stub_vars)][1],
-          col_alignment[-seq_along(stub_vars)]
-        )
-
+        ## repeat the single label for each stub column if we have a multi-column stub, even if only one label is provided
+        stub_labs <- c(stub_labs, rep("", times = length(stub_vars)-1))
+        ## merge stub column labels if we have a multi-column stub
+        merge_keys_cells[seq_along(stub_vars)] <- c(1, rep(2, length(stub_vars) - 1))
       }
 
       # Single label (original behavior)
@@ -1282,8 +1277,6 @@ create_columns_component_rtf <- function(data) {
             
     }
   }
-
-  
 
   cell_list <-
     lapply(
@@ -1295,6 +1288,7 @@ create_columns_component_rtf <- function(data) {
             rtf_raw(headings_labels[x])
           ),
           h_align = col_alignment[x],
+          h_merge = merge_keys_cells[x],
           borders = list(
             rtf_border("bottom", color = column_labels_border_bottom_color, width = 20)#,
             # rtf_border("top", color = column_labels_border_top_color, width = 40),
@@ -1388,14 +1382,15 @@ create_columns_component_rtf <- function(data) {
 
         level_i_spanners <-
           c(
-            rep(
-              list(
-                rtf_tbl_cell(
+            lapply(
+              seq_along(stub_vars),\(stub_var_idx){
+              rtf_tbl_cell(
                   rtf_font(
                     font_size = 10,
                     rtf_raw("")
                   ),
-                  h_align = "center"#,
+                  h_align = "center",
+                  h_merge = merge_keys_cells[stub_var_idx]
                   # borders = list(
                   #   rtf_border("top", color = column_labels_border_top_color, width = 40),
                   #   rtf_border("bottom", color = column_labels_border_bottom_color),
@@ -1403,9 +1398,7 @@ create_columns_component_rtf <- function(data) {
                   #   rtf_border("right", color = column_labels_vlines_color)
                   # )
                 )
-              ),
-              ifelse(is.null(stubh$label), 1, length(stubh$label))
-            ),
+            }),
             level_i_spanners
           )
       }
@@ -1423,7 +1416,7 @@ create_columns_component_rtf <- function(data) {
             )
           )
         )
-    }
+              }
   } else {
     spanner_rows <- ""
   }
