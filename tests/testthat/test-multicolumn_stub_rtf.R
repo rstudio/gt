@@ -305,15 +305,25 @@ test_that("Multicolumn stub RTF with single stubhead label",{
 
   ## check that header labels are present in the RTF output
   expect_true(grepl("Manufacturer/Model/Trim", header_cells[[1]]))
-  expect_true(grepl("year", header_cells[[2]]))
-  expect_true(grepl("hp", header_cells[[3]]))
-  expect_true(grepl("msrp", header_cells[[4]]))
+  expect_false(grepl("Manufacturer/Model/Trim", header_cells[[2]])) ## should be filler blank cell
+  expect_false(grepl("Manufacturer/Model/Trim", header_cells[[3]])) ## should be fillter blank cell
+  expect_true(grepl("year", header_cells[[4]]))
+  expect_true(grepl("hp", header_cells[[5]]))
+  expect_true(grepl("msrp", header_cells[[6]]))
 
   ## check that the stubhead label cell widths are correct 
-  expect_true(grepl("\\\\cellx4680", header_cells[[1]])) # should span all three stub columns, 1560*3 twips wide
-  expect_true(grepl("\\\\cellx6240", header_cells[[2]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx7800", header_cells[[3]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx9360", header_cells[[4]])) #1560 twips wider 
+  expect_true(grepl("\\\\cellx1560", header_cells[[1]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx3120", header_cells[[2]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx4680", header_cells[[3]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx6240", header_cells[[4]])) #1560 twips wider 
+  expect_true(grepl("\\\\cellx7800", header_cells[[5]])) #1560 twips wider 
+  expect_true(grepl("\\\\cellx9360", header_cells[[6]])) #1560 twips wider 
+
+  # check that hmerge is present for the first three cells and not the fourth cell
+  expect_true(grepl("\\\\clmgf", header_cells[[1]])) # start horizontal merge for spanner cell
+  expect_true(grepl("\\\\clmrg", header_cells[[2]])) # contiue horizontal merge for spanner cell
+  expect_true(grepl("\\\\clmrg", header_cells[[3]])) # contiue horizontal merge for spanner cell
+  expect_false(grepl("\\\\clmrg", header_cells[[4]])) # end horizontal merge for spanner cell, is separate cell from spanner cell
 
 })
 
@@ -339,15 +349,17 @@ test_that("Multicolumn stub RTF without passing stubhead labels",{
   expect_false(grepl("model", header_cells[[1]]))
   expect_false(grepl("trim", header_cells[[1]]))
 
-  expect_true(grepl("year", header_cells[[2]]))
-  expect_true(grepl("hp", header_cells[[3]]))
-  expect_true(grepl("msrp", header_cells[[4]]))
+  expect_true(grepl("year", header_cells[[4]]))
+  expect_true(grepl("hp", header_cells[[5]]))
+  expect_true(grepl("msrp", header_cells[[6]]))
 
   ## check that the stubhead label cell widths are correct 
-  expect_true(grepl("\\\\cellx4680", header_cells[[1]])) # should span all three stub columns, 1560*3 twips wide
-  expect_true(grepl("\\\\cellx6240", header_cells[[2]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx7800", header_cells[[3]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx9360", header_cells[[4]])) #1560 twips wider 
+  expect_true(grepl("\\\\cellx1560", header_cells[[1]])) # 1560 twips wide
+  expect_true(grepl("\\\\cellx3120", header_cells[[2]])) # 1560 twips wide
+  expect_true(grepl("\\\\cellx4680", header_cells[[3]])) # 1560 twips wide
+  expect_true(grepl("\\\\cellx6240", header_cells[[4]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx7800", header_cells[[5]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx9360", header_cells[[6]])) #1560 twips wider 
 })
 
 test_that("Multicolumn stub RTF with spanning labels over 1 column",{
@@ -365,33 +377,37 @@ test_that("Multicolumn stub RTF with spanning labels over 1 column",{
   rtfs <- as.character(rtf_output)
 
   ## extract table rows
-  tbl_rows <- regmatches(rtfs, gregexpr("\\\\trowd.+?\\\\row", rtfs))[[1]]
+  tbl_rows <- regmatches(rtfs, gregexpr("\\\\trowd.+?\\\\row\\n", rtfs))[[1]]
   ## break row
   header_row_1_cells <- regmatches(tbl_rows[[1]], gregexpr("\\\\pard.+?}\\\\cell", tbl_rows[[1]]))[[1]]
   header_row_2_cells <- regmatches(tbl_rows[[2]], gregexpr("\\\\pard.+?}\\\\cell", tbl_rows[[2]]))[[1]]
 
   ## Check that the first header row contains the spanner label
-  expect_true(grepl("span", header_row_1_cells[[2]]))
-  expect_true(grepl("\\\\cellx4680", header_row_1_cells[[1]])) # should span all three stub columns, 1560*3 twips wide
-  expect_true(grepl("\\\\cellx6240", header_row_1_cells[[2]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx7800", header_row_1_cells[[3]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx9360", header_row_1_cells[[4]])) #1560 twips wider 
+  expect_true(grepl("span", header_row_1_cells[[4]]))
+  expect_false(grepl("span", header_row_1_cells[[3]]))
+  expect_true(grepl("\\\\cellx1560", header_row_1_cells[[1]])) # 1560 twips wide
+  expect_true(grepl("\\\\cellx3120", header_row_1_cells[[2]])) # 1560 twips wide
+  expect_true(grepl("\\\\cellx4680", header_row_1_cells[[3]])) # 1560 twips wide
+  expect_true(grepl("\\\\cellx6240", header_row_1_cells[[4]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx7800", header_row_1_cells[[5]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx9360", header_row_1_cells[[6]])) #1560 twips wider 
 
   ## check that second header row labels
-  ### first cell should not contain any of the stub column labels since they should be blank when no stubhead labels are passed
+  ### cells over stub should not contain any of the stub column labels since they should be blank when no stubhead labels are passed
   expect_false(grepl("mfr", header_row_2_cells[[1]]))
-  expect_false(grepl("model", header_row_2_cells[[1]]))
-  expect_false(grepl("trim", header_row_2_cells[[1]]))
-
-  expect_true(grepl("year", header_row_2_cells[[2]]))
-  expect_true(grepl("hp", header_row_2_cells[[3]]))
-  expect_true(grepl("msrp", header_row_2_cells[[4]]))
+  expect_false(grepl("model", header_row_2_cells[[2]]))
+  expect_false(grepl("trim", header_row_2_cells[[3]]))
+  expect_true(grepl("year", header_row_2_cells[[4]]))
+  expect_true(grepl("hp", header_row_2_cells[[5]]))
+  expect_true(grepl("msrp", header_row_2_cells[[6]]))
 
   ## check that the cell widths are correct 
-  expect_true(grepl("\\\\cellx4680", header_row_2_cells[[1]])) # should span all three stub columns, 1560*3 twips wide
-  expect_true(grepl("\\\\cellx6240", header_row_2_cells[[2]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx7800", header_row_2_cells[[3]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx9360", header_row_2_cells[[4]])) #1560 twips wider 
+  expect_true(grepl("\\\\cellx1560", header_row_2_cells[[1]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx3120", header_row_2_cells[[2]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx4680", header_row_2_cells[[3]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx6240", header_row_2_cells[[4]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx7800", header_row_2_cells[[5]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx9360", header_row_2_cells[[6]])) #1560 twips wider 
   
   
 })
@@ -417,14 +433,17 @@ test_that("Multicolumn stub RTF with spanning labels over 2 columns",{
   header_row_2_cells <- regmatches(tbl_rows[[2]], gregexpr("\\\\pard.+?}\\\\cell", tbl_rows[[2]]))[[1]]
 
   ## Check that the first header row contains the spanner label
-  expect_true(grepl("span", header_row_1_cells[[2]]))
-  expect_true(grepl("\\\\cellx4680", header_row_1_cells[[1]])) # should span all three stub columns, 1560*3 twips wide
-  expect_true(grepl("\\\\cellx6240", header_row_1_cells[[2]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx7800", header_row_1_cells[[3]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx9360", header_row_1_cells[[4]])) #1560 twips wider 
-  expect_true(grepl("\\\\clmgf", header_row_1_cells[[2]])) # start horizontal merge for spanner cell
-  expect_true(grepl("\\\\clmrg", header_row_1_cells[[3]])) # contiue horizontal merge for spanner cell
-  expect_false(grepl("\\\\clmrg", header_row_1_cells[[4]])) # end horizontal merge for spanner cell, is separate cell from spanner cell
+  expect_true(grepl("span", header_row_1_cells[[4]]))
+  expect_true(grepl("\\\\cellx1560", header_row_1_cells[[1]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx3120", header_row_1_cells[[2]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx4680", header_row_1_cells[[3]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx6240", header_row_1_cells[[4]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx7800", header_row_1_cells[[5]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx9360", header_row_1_cells[[6]])) #1560 twips wider 
+
+  expect_true(grepl("\\\\clmgf", header_row_1_cells[[4]])) # start horizontal merge for spanner cell
+  expect_true(grepl("\\\\clmrg", header_row_1_cells[[5]])) # contiue horizontal merge for spanner cell
+  expect_false(grepl("\\\\clmrg", header_row_1_cells[[6]])) # end horizontal merge for spanner cell, is separate cell from spanner cell
 
   ## check that second header row labels
   ### first cell should not contain any of the stub column labels since they should be blank when no stubhead labels are passed
@@ -432,17 +451,18 @@ test_that("Multicolumn stub RTF with spanning labels over 2 columns",{
   expect_false(grepl("model", header_row_2_cells[[1]]))
   expect_false(grepl("trim", header_row_2_cells[[1]]))
 
-  expect_true(grepl("year", header_row_2_cells[[2]]))
-  expect_true(grepl("hp", header_row_2_cells[[3]]))
-  expect_true(grepl("msrp", header_row_2_cells[[4]]))
+  expect_true(grepl("year", header_row_2_cells[[4]]))
+  expect_true(grepl("hp", header_row_2_cells[[5]]))
+  expect_true(grepl("msrp", header_row_2_cells[[6]]))
 
   ## check that the cell widths are correct 
-  expect_true(grepl("\\\\cellx4680", header_row_2_cells[[1]])) # should span all three stub columns, 1560*3 twips wide
-  expect_true(grepl("\\\\cellx6240", header_row_2_cells[[2]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx7800", header_row_2_cells[[3]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx9360", header_row_2_cells[[4]])) #1560 twips wider 
+  expect_true(grepl("\\\\cellx1560", header_row_2_cells[[1]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx3120", header_row_2_cells[[2]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx4680", header_row_2_cells[[3]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx6240", header_row_2_cells[[4]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx7800", header_row_2_cells[[5]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx9360", header_row_2_cells[[6]])) #1560 twips wider 
 
-  
 })
 
 test_that("Multicolumn stub RTF with spanning labels over 2 columns with single stubhead label",{
@@ -467,27 +487,31 @@ test_that("Multicolumn stub RTF with spanning labels over 2 columns with single 
   header_row_2_cells <- regmatches(tbl_rows[[2]], gregexpr("\\\\pard.+?}\\\\cell", tbl_rows[[2]]))[[1]]
 
   ## Check that the first header row contains the spanner label
-  expect_true(grepl("span", header_row_1_cells[[2]]))
-  expect_true(grepl("\\\\cellx4680", header_row_1_cells[[1]])) # should span all three stub columns, 1560*3 twips wide
-  expect_true(grepl("\\\\cellx6240", header_row_1_cells[[2]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx7800", header_row_1_cells[[3]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx9360", header_row_1_cells[[4]])) #1560 twips wider 
-  expect_true(grepl("\\\\clmgf", header_row_1_cells[[2]])) # start horizontal merge for spanner cell
-  expect_true(grepl("\\\\clmrg", header_row_1_cells[[3]])) # contiue horizontal merge for spanner cell
-  expect_false(grepl("\\\\clmrg", header_row_1_cells[[4]])) # end horizontal merge for spanner cell, is separate cell from spanner cell
+  expect_true(grepl("span", header_row_1_cells[[4]]))
+  expect_true(grepl("\\\\cellx1560", header_row_1_cells[[1]])) # 1560 twips wide
+  expect_true(grepl("\\\\cellx3120", header_row_1_cells[[2]])) # 1560 twips wide
+  expect_true(grepl("\\\\cellx4680", header_row_1_cells[[3]])) # 1560 twips wide
+  expect_true(grepl("\\\\cellx6240", header_row_1_cells[[4]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx7800", header_row_1_cells[[5]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx9360", header_row_1_cells[[6]])) #1560 twips wider 
+  expect_true(grepl("\\\\clmgf", header_row_1_cells[[4]])) # start horizontal merge for spanner cell
+  expect_true(grepl("\\\\clmrg", header_row_1_cells[[5]])) # contiue horizontal merge for spanner cell
+  expect_false(grepl("\\\\clmrg", header_row_1_cells[[6]])) # end horizontal merge for spanner cell, is separate cell from spanner cell
 
   ## check that second header row labels
   ### first cell should not contain any of the stub column labels since they should be blank when no stubhead labels are passed
   expect_true(grepl("Manufacturer/Model/Trim", header_row_2_cells[[1]]))
-  expect_true(grepl("year", header_row_2_cells[[2]]))
-  expect_true(grepl("hp", header_row_2_cells[[3]]))
-  expect_true(grepl("msrp", header_row_2_cells[[4]]))
+  expect_true(grepl("year", header_row_2_cells[[4]]))
+  expect_true(grepl("hp", header_row_2_cells[[5]]))
+  expect_true(grepl("msrp", header_row_2_cells[[6]]))
 
   ## check that the cell widths are correct 
-  expect_true(grepl("\\\\cellx4680", header_row_2_cells[[1]])) # should span all three stub columns, 1560*3 twips wide
-  expect_true(grepl("\\\\cellx6240", header_row_2_cells[[2]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx7800", header_row_2_cells[[3]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx9360", header_row_2_cells[[4]])) #1560 twips wider 
+  expect_true(grepl("\\\\cellx1560", header_row_2_cells[[1]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx3120", header_row_2_cells[[2]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx4680", header_row_2_cells[[3]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx6240", header_row_2_cells[[4]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx7800", header_row_2_cells[[5]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx9360", header_row_2_cells[[6]])) #1560 twips wider 
 
 })
   
@@ -570,32 +594,36 @@ test_that("Multicolumn stub RTF with multilayer spanning labels over 2 columns w
   header_row_3_cells <- regmatches(tbl_rows[[3]], gregexpr("\\\\pard.+?}\\\\cell\\n", tbl_rows[[3]]))[[1]]
 
   ## check that the first header row contains the spanner label
-  expect_true(grepl("span2", header_row_1_cells[[2]]))
-  expect_false(grepl("span2", header_row_1_cells[[3]]))
   expect_true(grepl("span2", header_row_1_cells[[4]]))
+  expect_false(grepl("span2", header_row_1_cells[[5]]))
+  expect_true(grepl("span2", header_row_1_cells[[6]]))
 
   ## Check that the first header row contains the spanner label
-  expect_true(grepl("span", header_row_2_cells[[2]]))
-  expect_true(grepl("\\\\cellx4680", header_row_2_cells[[1]])) # should span all three stub columns, 1560*3 twips wide
-  expect_true(grepl("\\\\cellx6240", header_row_2_cells[[2]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx7800", header_row_2_cells[[3]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx9360", header_row_2_cells[[4]])) #1560 twips wider 
-  expect_true(grepl("\\\\clmgf", header_row_2_cells[[2]])) # start horizontal merge for spanner cell
-  expect_true(grepl("\\\\clmrg", header_row_2_cells[[3]])) # contiue horizontal merge for spanner cell
-  expect_false(grepl("\\\\clmrg", header_row_2_cells[[4]])) # end horizontal merge for spanner cell, is separate cell from spanner cell
+  expect_true(grepl("span", header_row_2_cells[[4]]))
+  expect_true(grepl("\\\\cellx1560", header_row_2_cells[[1]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx3120", header_row_2_cells[[2]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx4680", header_row_2_cells[[3]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx6240", header_row_2_cells[[4]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx7800", header_row_2_cells[[5]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx9360", header_row_2_cells[[6]])) #1560 twips wider 
+  expect_true(grepl("\\\\clmgf", header_row_2_cells[[4]])) # start horizontal merge for spanner cell
+  expect_true(grepl("\\\\clmrg", header_row_2_cells[[5]])) # contiue horizontal merge for spanner cell
+  expect_false(grepl("\\\\clmrg", header_row_2_cells[[6]])) # end horizontal merge for spanner cell, is separate cell from spanner cell
 
   ## check that second header row labels
   ### first cell should not contain any of the stub column labels since they should be blank when no stubhead labels are passed
   expect_true(grepl("Manufacturer/Model/Trim", header_row_3_cells[[1]]))
-  expect_true(grepl("year", header_row_3_cells[[2]]))
-  expect_true(grepl("hp", header_row_3_cells[[3]]))
-  expect_true(grepl("msrp", header_row_3_cells[[4]]))
+  expect_true(grepl("year", header_row_3_cells[[4]]))
+  expect_true(grepl("hp", header_row_3_cells[[5]]))
+  expect_true(grepl("msrp", header_row_3_cells[[6]]))
 
   ## check that the cell widths are correct 
-  expect_true(grepl("\\\\cellx4680", header_row_3_cells[[1]])) # should span all three stub columns, 1560*3 twips wide
-  expect_true(grepl("\\\\cellx6240", header_row_3_cells[[2]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx7800", header_row_3_cells[[3]])) #1560 twips wider
-  expect_true(grepl("\\\\cellx9360", header_row_3_cells[[4]])) #1560 twips wider 
+  expect_true(grepl("\\\\cellx1560", header_row_3_cells[[1]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx3120", header_row_3_cells[[2]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx4680", header_row_3_cells[[3]])) #1560 twips wide
+  expect_true(grepl("\\\\cellx6240", header_row_3_cells[[4]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx7800", header_row_3_cells[[5]])) #1560 twips wider
+  expect_true(grepl("\\\\cellx9360", header_row_3_cells[[6]])) #1560 twips wider 
 
 })
   
