@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -158,10 +158,10 @@
 #'
 #' @family row addition/modification functions
 #' @section Function ID:
-#' 6-4
+#' 6-6
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v1.2.0` (December 16, 2025)
 #'
 #' @export
 summary_columns <- function(

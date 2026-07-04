@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -68,38 +68,38 @@ dt_stub_df_init <- function(
 
     # For multiple columns, we need to handle them as a hierarchy
     if (length(rowname_col) > 1) {
-      
+
       # Set all columns as stub columns in the boxhead
       for (col in rowname_col) {
         data <- dt_boxhead_set_stub(data = data, var = col)
       }
-      
+
       # Reorder the boxhead to match the order specified in rowname_col
       # This ensures stub columns appear in the order the user specified
       dt_boxhead <- dt_boxhead_get(data = data)
-      
+
       # Split boxhead into stub and non-stub rows
       stub_rows <- dt_boxhead[dt_boxhead$var %in% rowname_col, ]
       non_stub_rows <- dt_boxhead[!dt_boxhead$var %in% rowname_col, ]
-      
+
       # Reorder stub rows to match rowname_col order
       stub_rows <- stub_rows[match(rowname_col, stub_rows$var), ]
-      
+
       # Combine: stub rows first (in specified order), then non-stub rows
       dt_boxhead <- rbind(stub_rows, non_stub_rows)
       rownames(dt_boxhead) <- NULL
-      
+
       # Update the boxhead
       data <- dt_boxhead_set(data = data, boxh = dt_boxhead)
-      
+
       # Use the rightmost column as the primary row ID
       rightmost_col <- rowname_col[length(rowname_col)]
       rownames <- data_tbl[[rightmost_col]]
       row_id <- create_unique_id_vals(rownames, simplify = process_md)
-      
+
       # Place the `row_id` values into `stub_df$row_id`
       stub_df[["row_id"]] <- row_id
-      
+
     } else {
       # Original single column logic
       data <- dt_boxhead_set_stub(data = data, var = rowname_col)
@@ -141,11 +141,8 @@ dt_stub_df_init <- function(
 
       unique_row_group_ids <-
         create_unique_id_vals(unique_row_group_labels, simplify = process_md)
-      names(unique_row_group_ids) <- unique_row_group_labels
 
-      # dplyr::recode is superseded, and is slower now.
-      # TODO consider using vctrs::vec_case_match when available r-lib/vctrs#1622
-      row_group_ids <- dplyr::recode(row_group_labels, !!!unique_row_group_ids)
+      row_group_ids <- dplyr::replace_values(row_group_labels, from = unique_row_group_ids, to = unique_row_group_labels)
 
     } else {
       row_group_ids <- row_group_labels
@@ -237,6 +234,7 @@ reorder_stub_df <- function(data) {
 
   row_groups <- dt_row_groups_get(data = data)
 
+  # First, reorder by row groups
   rows_df <-
     get_row_reorder_df(
       groups = row_groups,
@@ -245,7 +243,111 @@ reorder_stub_df <- function(data) {
 
   stub_df <- stub_df[rows_df$rownum_final, ]
 
+  # Then, apply any row ordering directives
+  stub_df <- apply_row_order_directives(data = data, stub_df = stub_df)
+
+  # Finally, filter out any hidden rows
+  stub_df <- filter_hidden_rows(data = data, stub_df = stub_df)
+
   dt_stub_df_set(data = data, stub_df = stub_df)
+}
+
+# Function to filter out hidden rows from stub_df
+filter_hidden_rows <- function(data, stub_df) {
+
+  # Get the hidden rows
+
+  hidden_rows <- dt_rows_hidden_get(data = data)
+
+  # If there are no hidden rows, return stub_df unchanged
+  if (length(hidden_rows) == 0) {
+    return(stub_df)
+  }
+
+  # Filter out rows where rownum_i is in the hidden list
+  stub_df <- stub_df[!stub_df$rownum_i %in% hidden_rows, ]
+
+  # Reset row names
+  rownames(stub_df) <- NULL
+
+  stub_df
+}
+
+# Function to apply the lazy row ordering directives captured by `row_order()`
+apply_row_order_directives <- function(data, stub_df) {
+
+  # Get the row order directives
+  row_order_directives <- dt_row_order_get(data = data)
+
+  # If there are no directives, return stub_df unchanged
+  if (length(row_order_directives) == 0) {
+    return(stub_df)
+  }
+
+  # Get the original data table for evaluating ordering expressions
+  data_tbl <- dt_data_get(data = data)
+
+  # Apply each directive in order
+  for (directive in row_order_directives) {
+
+    by <- directive$by
+    groups <- directive$groups
+    reverse <- directive$reverse
+
+    # Determine which rows to order
+    if (is.null(groups)) {
+      # Order all rows together (within their current group context)
+      unique_groups <- unique(stub_df$group_id)
+    } else {
+      # Only order rows in specified groups
+      unique_groups <- groups
+    }
+
+    # Process each group separately to maintain group boundaries
+    for (grp in unique_groups) {
+
+      # Find rows belonging to this group
+      if (is.na(grp)) {
+        grp_mask <- is.na(stub_df$group_id)
+      } else {
+        grp_mask <- stub_df$group_id == grp & !is.na(stub_df$group_id)
+      }
+
+      grp_indices <- which(grp_mask)
+
+      if (length(grp_indices) <= 1) {
+        next # No need to sort a single row or empty group
+      }
+
+      # Get the original row numbers for this group
+      original_rownum <- stub_df$rownum_i[grp_indices]
+
+      # Create a temporary data frame for ordering
+      # using the original data values at those row positions
+      temp_df <- data_tbl[original_rownum, , drop = FALSE]
+
+      # Build the ordering using the quosures
+      # Evaluate each quosure in the context of the temp data
+      order_args <- lapply(by, function(quo) {
+        rlang::eval_tidy(quo, data = temp_df)
+      })
+
+      # Add decreasing argument if reverse is TRUE
+      order_args$decreasing <- reverse
+
+      # Get the new order for this group
+      new_order <- do.call(order, order_args)
+
+      # Reorder the group indices in stub_df
+      stub_df[grp_indices, ] <- stub_df[grp_indices[new_order], ]
+    }
+  }
+
+  # Reset row names
+
+  rownames(stub_df) <- NULL
+
+  stub_df
 }
 
 dt_stub_groupname_has_na <- function(data) {

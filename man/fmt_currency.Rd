@@ -295,10 +295,10 @@ inputs to the \code{currency} argument.
 \section{Compatibility of formatting function with data values}{
 
 
-\code{fmt_currency()} is compatible with body cells that are of the \code{"numeric"} or
-\code{"integer"} types. Any other types of body cells are ignored during
-formatting. This is to say that cells of incompatible data types may be
-targeted, but there will be no attempt to format them.
+\code{fmt_currency()} is compatible with body cells that are of the \code{"numeric"},
+\code{"integer"}, or \code{"integer64"} types. Any other types of body cells are
+ignored during formatting. This is to say that cells of incompatible data
+types may be targeted, but there will be no attempt to format them.
 }
 
 \section{Compatibility of arguments with the \code{from_column()} helper function}{

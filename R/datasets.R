@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -92,10 +92,6 @@
 #' \item{sza}{The solar zenith angle in degrees, where `NA`s indicate that
 #' sunrise hadn't yet occurred by the `tst` value.}
 #' }
-#'
-#' @source Calculated Actinic Fluxes (290 - 700 nm) for Air Pollution
-#' Photochemistry Applications (Peterson, 1976), available at:
-#' <https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=9100JA26.txt>.
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -237,10 +237,10 @@
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' `fmt_number()` is compatible with body cells that are of the `"numeric"` or
-#' `"integer"` types. Any other types of body cells are ignored during
-#' formatting. This is to say that cells of incompatible data types may be
-#' targeted, but there will be no attempt to format them.
+#' `fmt_number()` is compatible with body cells that are of the `"numeric"`,
+#' `"integer"`, or `"integer64"` types. Any other types of body cells are
+#' ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
@@ -540,7 +540,8 @@ fmt_number <- function(
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by, system)
 
-  valid_class <- c("numeric", "integer")
+  valid_class <- c("numeric", "integer", "integer64")
+
   check_columns_valid_if_strict(data, {{ columns }}, valid_class, call = fn_call)
 
   # Set the `formatC_format` option according to whether number
@@ -685,10 +686,10 @@ fmt_number <- function(
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' `fmt_integer()` is compatible with body cells that are of the `"numeric"` or
-#' `"integer"` types. Any other types of body cells are ignored during
-#' formatting. This is to say that cells of incompatible data types may be
-#' targeted, but there will be no attempt to format them.
+#' `fmt_integer()` is compatible with body cells that are of the `"numeric"`,
+#' `"integer"`, or `"integer64"` types. Any other types of body cells are
+#' ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'

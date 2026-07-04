@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -57,12 +57,9 @@ dt_body_reassemble <- function(data) {
   body <- dt_body_get(data = data)
   stub_df <- dt_stub_df_get(data = data)
 
-  groups <- dt_row_groups_get(data = data)
-
-  # Get the reordering df (`rows_df`) for the data rows
-  rows_df <- get_row_reorder_df(groups = groups, stub_df = stub_df)
-
-  rows <- rows_df$rownum_final
+  # Use the rownum_i values from stub_df which reflect the current row order
+  # (including both group ordering and any row_order() directives)
+  rows <- stub_df$rownum_i
 
   cols <- dt_boxhead_get_vars(data = data)
 

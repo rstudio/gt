@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -283,7 +283,7 @@ write_gt_examples_qmd_files <- function(
         )
       ) |>
       dplyr::mutate(
-        group = dplyr::case_match(family,
+        group = dplyr::recode_values(family,
           1 ~ "Table creation",
           2 ~ "Creating or modifying parts of a table",
           3 ~ "Formatting column data",

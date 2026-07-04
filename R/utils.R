@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -1152,7 +1152,12 @@ markdown_to_latex <- function(text, md_engine) {
           }
 
           if(grepl("..gt\\_linebreak\\_indicator..", x, fixed = TRUE)){
-            x <- paste0("\\shortstack[l]{" ,gsub("..gt\\_linebreak\\_indicator..", " \\\\", x, fixed = TRUE), "}")
+            ## if there is a linebreak, wrap the text in a shortstack, and put it into a parbox that has the width set to linewidth
+            x <- paste0("\\shortstack[l]{" ,
+                        parbox_wrapper(
+                          gsub("..gt\\_linebreak\\_indicator..", " \\\\", x, fixed = TRUE),
+                          "\\linewidth"),
+                        "}")
           }
 
           x
@@ -2432,7 +2437,17 @@ column_classes_are_valid <- function(data, columns, valid_classes, call = rlang:
       FUN.VALUE = logical(1),
       USE.NAMES = FALSE,
       # TRUE if inherits any of the valid classes
-      FUN = function(x) inherits(x, valid_classes)
+      FUN = function(x) {
+        # Check standard inheritance
+        if (inherits(x, valid_classes)) {
+          return(TRUE)
+        }
+        # If valid_classes includes numeric or integer types, also check for bit64::integer64
+        if (any(c("numeric", "integer") %in% valid_classes) && inherits(x, "integer64")) {
+          return(TRUE)
+        }
+        FALSE
+      }
     )
   )
 }

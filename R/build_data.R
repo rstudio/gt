@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -48,9 +48,12 @@ build_data <- function(data, context) {
   data <- render_substitutions(data = data, context = context)
   data <- migrate_unformatted_to_output(data = data, context = context)
   data <- perform_col_merge(data = data, context = context)
+
+  # Reorder stub_df first (handles group ordering and row_order() directives),
+ # then reassemble body using the reordered stub_df
+  data <- reorder_stub_df(data = data)
   data <- dt_body_reassemble(data = data)
 
-  data <- reorder_stub_df(data = data)
   data <- reorder_footnotes(data = data)
   data <- reorder_styles(data = data)
 
@@ -98,10 +101,10 @@ build_data <- function(data, context) {
 # for vec_*() functions
 # only build the body correctly.
 build_data_body <- function(data, context) {
-  
+
   data <- dt_body_build(data = data)
   data <- render_formats(data = data, skip_compat_check = TRUE, context = context)
   data <- migrate_unformatted_to_output(data = data, context = context)
-  
+
   data
 }

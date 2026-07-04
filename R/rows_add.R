@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -337,7 +337,7 @@
 #'
 #' @family row addition/modification functions
 #' @section Function ID:
-#' 6-4
+#' 6-5
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)

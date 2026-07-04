@@ -122,11 +122,14 @@ tests/testthat/_snaps/image.md
 
 tests/testthat/test-info_tables.R
 tests/testthat/test-input_data_validation.R
+tests/testthat/test-integer64.R
 
 tests/testthat/test-l_fmt_date_time.R
 
 tests/testthat/test-l_summary_rows.R
 tests/testthat/_snaps/l_summary_rows.md
+
+tests/testthat/test-l_tab_spanner_delim.R
 
 tests/testthat/test-l_table_parts.R
 tests/testthat/_snaps/l_table_parts.md
@@ -149,6 +152,8 @@ tests/testthat/_snaps/removal_functions.md
 tests/testthat/test-rows_add.R
 tests/testthat/_snaps/rows_add.md
 
+tests/testthat/test-row_order.R
+
 tests/testthat/test-rtf_cols_width.R
 tests/testthat/_snaps/rtf_cols_width.md
 
@@ -159,6 +164,10 @@ tests/testthat/test-rtf_summary_rows.R
 tests/testthat/_snaps/rtf_summary_rows.md
 
 tests/testthat/test-stub.R
+
+tests/testthat/test-stub_separate.R
+tests/testthat/_snaps/stub_separate.md
+
 tests/testthat/test-substitution.R
 
 tests/testthat/test-summary_rows.R
@@ -205,6 +214,7 @@ tests/testthat/test-utils_render_grid.R
 tests/testthat/_snaps/utils_render_grid.md
 
 tests/testthat/test-utils_render_html.R
+tests/testthat/test-utils_render_latex.R
 tests/testthat/test-utils_render_rtf.R
 tests/testthat/test-utils_units.R
 

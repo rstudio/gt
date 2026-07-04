@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -681,6 +681,8 @@ summary_rows_g <- function(data, group_id, side_grand_summary = "bottom") {
   summary_row_type[group_type] <- "group"
 
   summary_df <- list_of_summaries$summary_df_display_list[group_id]
+  # Remove array attributes so vctrs::list_sizes() accepts it as a plain list
+  attributes(summary_df) <- list(names = names(summary_df))
 
   n_rows <- vctrs::list_sizes(summary_df)
 
@@ -777,10 +779,11 @@ summary_rows_g <- function(data, group_id, side_grand_summary = "bottom") {
         }
     }
 
+    # For summary rows, use 1 stub column (the summary label column)
     row_styles <-
       build_row_styles(
         styles_resolved_row = styles_resolved_row,
-        include_stub = TRUE,
+        n_stub_cols = 1L,
         n_cols = n_data_cols
       )
 

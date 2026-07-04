@@ -233,7 +233,7 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v1.2.0} (December 16, 2025)
 }
 
 \seealso{

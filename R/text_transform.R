@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -410,7 +410,7 @@ text_case_match <- function(
 
       if (.replace == "all") {
 
-        x <- dplyr::case_match(.x = unlist(x), !!!x_list, .default = unlist(.default))
+        x <- dplyr::recode_values(x = unlist(x), !!!x_list, default = unlist(.default))
 
       } else {
 

@@ -69,7 +69,10 @@ specifying the new ordering in \code{groups}.
 \seealso{
 Other row addition/modification functions: 
 \code{\link{grand_summary_rows}()},
+\code{\link{row_order}()},
 \code{\link{rows_add}()},
+\code{\link{rows_hide}()},
+\code{\link{rows_unhide}()},
 \code{\link{summary_columns}()},
 \code{\link{summary_rows}()}
 }

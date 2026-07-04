@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -780,7 +780,7 @@ vec_fmt_engineering <- function(
 #' 15-5
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v1.2.0` (December 16, 2025)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_number_si()].

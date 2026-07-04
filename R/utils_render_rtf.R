@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -1236,7 +1236,7 @@ create_columns_component_rtf <- function(data) {
     stub_vars <- dt_boxhead_get_var_stub(data = data)
     has_multi_column_stub <- length(stub_vars) > 1 && !any(is.na(stub_vars))
     has_multiple_labels <- has_multi_column_stub && length(stubh$label) > 1
-    
+
     if (has_multiple_labels) {
       # Add individual headers for each stub column
       headings_labels <- prepend_vec(headings_labels, stubh$label)
@@ -1267,7 +1267,7 @@ create_columns_component_rtf <- function(data) {
     stub_vars <- dt_boxhead_get_var_stub(data = data)
     has_multi_column_stub <- length(stub_vars) > 1 && !any(is.na(stub_vars))
     has_multiple_labels <- has_multi_column_stub && length(stubh$label) > 1
-    
+
     # Only merge if we have a single label spanning multiple columns
     if (!has_multiple_labels && length(stub_layout) > 1) {
       # Create merge keys for the stub columns
@@ -1495,19 +1495,19 @@ create_body_component_rtf <- function(data) {
   # Apply hierarchical stub merging for multiple stub columns
   # (hide repeated values in all columns except the rightmost)
   has_stub_column <- "rowname" %in% stub_layout
-  
+
   if (has_stub_column) {
     stub_vars <- dt_boxhead_get_var_stub(data = data)
-    
+
     if (length(stub_vars) > 1 && !any(is.na(stub_vars))) {
 
       # Get original body data to check for consecutive repeating values
       original_body <- dt_data_get(data = data)
-      
+
       # Process all stub columns except the rightmost one
       hierarchy_vars <- stub_vars[-length(stub_vars)]
       stub_matrix <- as.matrix(original_body[, hierarchy_vars, drop = FALSE])
-      
+
       # Determine which columns to hide based on hierarchical grouping
       for (col_idx in seq_along(hierarchy_vars)) {
 
@@ -1516,15 +1516,15 @@ create_body_component_rtf <- function(data) {
         if ("group_label" %in% stub_layout) {
           matrix_col_idx <- col_idx + 1
         }
-        
+
         for (row_idx in 2:n_rows) {
           should_hide <- TRUE
-          
+
           # Check if current value matches previous value
           if (stub_matrix[row_idx, col_idx] != stub_matrix[row_idx - 1, col_idx]) {
             should_hide <- FALSE
           }
-          
+
           # Also check that all columns to the left match
           if (should_hide && col_idx > 1) {
             for (left_col_idx in 1:(col_idx - 1)) {
@@ -1534,7 +1534,7 @@ create_body_component_rtf <- function(data) {
               }
             }
           }
-          
+
           # Hide the value by making it empty if conditions are met
           if (should_hide) {
             cell_matrix[[row_idx, matrix_col_idx]] <- ""

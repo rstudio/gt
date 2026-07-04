@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -388,6 +388,8 @@ gt <- function(
       process_md = process_md
     )
   data <- dt_row_groups_init(data = data)
+  data <- dt_row_order_init(data = data)
+  data <- dt_rows_hidden_init(data = data)
   data <- dt_heading_init(data = data)
   data <- dt_spanners_init(data = data)
   data <- dt_stubhead_init(data = data)

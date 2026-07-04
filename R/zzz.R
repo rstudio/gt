@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2025 gt authors
+#  Copyright (c) 2018-2026 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -43,6 +43,7 @@ utils::globalVariables(
     "colors",
     "conv",
     "copyright",
+    "countrypops",
     "curr_code",
     "curr_name",
     "curr_number",

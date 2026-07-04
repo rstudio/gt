@@ -702,3 +702,81 @@ test_that("tab_stubhead() with styles works in LaTeX multicolumn stub", {
   expect_true(grepl("Model", latex_output))
   expect_true(grepl("Trim", latex_output))
 })
+
+test_that("cells_stub() alignment styles work in LaTeX multicolumn stub", {
+
+  # Regression test for LaTeX alignment in multi-column stubs
+  # cells_stub() should apply alignment to all stub columns in LaTeX output
+  gt_tbl <-
+    exibble |>
+    gt(rowname_col = c("group", "char")) |>
+    tab_style(
+      style = list(cell_text(align = "right")),
+      locations = list(cells_stub())
+    )
+
+  latex_output <- as.character(as_latex(gt_tbl))
+
+  # Both stub columns should have right alignment applied via \multicolumn{1}{r}
+  # Count occurrences of right-aligned multicolumn for stub cells
+  # Each row should have 2 right-aligned stub cells (group and char columns)
+  right_align_count <- length(
+    gregexpr("\\\\multicolumn\\{1\\}\\{r\\}", latex_output)[[1]]
+  )
+
+ # 8 rows * 2 stub columns = 16 right-aligned cells
+  expect_gte(right_align_count, 16)
+
+  # Verify specific content is right-aligned
+  expect_true(grepl("\\\\multicolumn\\{1\\}\\{r\\}\\{\\{grp\\\\_a\\}\\}", latex_output))
+  expect_true(grepl("\\\\multicolumn\\{1\\}\\{r\\}\\{\\{apricot\\}\\}", latex_output))
+
+  # Test with explicit columns = NULL (should behave the same)
+  gt_tbl_null <-
+    exibble |>
+    gt(rowname_col = c("group", "char")) |>
+    tab_style(
+      style = list(cell_text(align = "right")),
+      locations = list(cells_stub(columns = NULL))
+    )
+
+  latex_output_null <- as.character(as_latex(gt_tbl_null))
+
+  # Should also have right alignment for both columns
+  right_align_count_null <- length(
+    gregexpr("\\\\multicolumn\\{1\\}\\{r\\}", latex_output_null)[[1]]
+  )
+  expect_gte(right_align_count_null, 16)
+})
+
+test_that("cells_stub() footnotes work in LaTeX multicolumn stub", {
+
+  # Regression test for LaTeX footnotes in multi-column stubs
+  # cells_stub() should apply footnotes to all stub columns in LaTeX output
+
+  gt_tbl <-
+    head(exibble, 4) |>
+    gt(rowname_col = c("group", "char")) |>
+    tab_footnote(
+      footnote = "Test",
+      locations = cells_stub()
+    )
+
+  latex_output <- as.character(as_latex(gt_tbl))
+
+  # Should render without error
+  expect_no_error(as_latex(gt_tbl))
+
+  # Footnote text should appear in the output
+  expect_true(grepl("Test", latex_output))
+
+  # Footnote marks should be present in stub cells
+  # Due to hierarchical stub merging: 1 mark for "grp_a" in the group column
+  # (subsequent group rows are empty) + 4 marks for the char column
+  # (apricot, banana, coconut, durian) = 5 marks in cells + 1 in footnote section
+  # The format is \textsuperscript{\textit{1}}
+  footnote_mark_count <- length(
+    gregexpr("\\\\textsuperscript\\{\\\\textit\\{1\\}\\}", latex_output)[[1]]
+  )
+  expect_equal(footnote_mark_count, 6)
+})
