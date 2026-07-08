@@ -1502,7 +1502,7 @@ create_heading_component_xml <- function(
               }
             )
           },
-          keep_with_next = TRUE
+          keep_with_next = keep_with_next
         )
       )
     )
@@ -1651,7 +1651,7 @@ create_columns_component_xml <- function(
               bottom = cell_border(size = 16, color = column_labels_border_bottom_color)
             ),
             col_span = if (n_stub_cols > 1) n_stub_cols,
-            keep_with_next = TRUE
+            keep_with_next = keep_with_next
           )
       } else {
         for (stub_id in seq_len(n_stub_cols)) {
@@ -1663,7 +1663,7 @@ create_columns_component_xml <- function(
                 right = cell_border(color = column_labels_vlines_color),
                 bottom = cell_border(size = 16, color = column_labels_border_bottom_color)
               ),
-              keep_with_next = TRUE
+              keep_with_next = keep_with_next
             )
         }
       }
@@ -1772,7 +1772,7 @@ create_columns_component_xml <- function(
                   left = cell_border(color = column_labels_vlines_color),
                   right = cell_border(color = column_labels_vlines_color)
                 ),
-                keep_with_next = TRUE
+                keep_with_next = keep_with_next
               )
           } else {
             for (stub_id in seq_len(n_stub_cols)) {
@@ -1795,7 +1795,7 @@ create_columns_component_xml <- function(
                     left = cell_border(color = column_labels_vlines_color),
                     right = cell_border(color = column_labels_vlines_color)
                   ),
-                  keep_with_next = TRUE
+                  keep_with_next = keep_with_next
                 )
             }
           }
@@ -1813,7 +1813,7 @@ create_columns_component_xml <- function(
                   right = cell_border(color = column_labels_vlines_color),
                   bottom = if (span_row_idx == nrow(spanners)) { cell_border(size = 16, color = column_labels_border_bottom_color) }
                 ),
-                keep_with_next = TRUE
+                keep_with_next = keep_with_next
               )
           } else {
             for (stub_id in seq_len(n_stub_cols)) {
@@ -1825,7 +1825,7 @@ create_columns_component_xml <- function(
                     right = cell_border(color = column_labels_vlines_color),
                     bottom = if (span_row_idx == nrow(spanners)) { cell_border(size = 16, color = column_labels_border_bottom_color) }
                   ),
-                  keep_with_next = TRUE
+                  keep_with_next = keep_with_next
                 )
             }
           }
