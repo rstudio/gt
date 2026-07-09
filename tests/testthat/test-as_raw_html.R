@@ -1,5 +1,9 @@
 test_that("as_raw_html() produces the same table every time", {
 
+  # Coverage instrumentation perturbs the rendered output, so these fixed-hash
+  # determinism checks are not meaningful (and don't match) under covr (#2123)
+  skip_on_covr()
+
   gt_html_1 <-
     gt(exibble, id = "test") |>
     as_raw_html(inline_css = TRUE)

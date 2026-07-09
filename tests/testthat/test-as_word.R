@@ -114,6 +114,10 @@ check_suggests <- function() {
 
 test_that("word ooxml can be generated from gt object", {
 
+  # This block includes a fixed-hash determinism check that coverage
+  # instrumentation perturbs, so it is skipped under covr (#2123)
+  skip_on_covr()
+
   # Create a one-row table for these tests
   exibble_min <- exibble[1, ]
 
