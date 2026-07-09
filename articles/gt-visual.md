@@ -3,6 +3,7 @@
 Code
 
 ``` r
+
 library(gt)
 ```
 
@@ -14,6 +15,7 @@ LaTeX](https://gt.rstudio.com/gt-latex.pdf)
 Code
 
 ``` r
+
 tab <- exibble |>
   gt() |>
   tab_options(
@@ -40,6 +42,7 @@ background color
 Code
 
 ``` r
+
 tab <- exibble |>
   gt(rowname_col = "row", groupname_col = "group", row_group_as_column = TRUE) |>
   tab_spanner("spanners", c(char, num)) |>
@@ -69,6 +72,7 @@ Stubhead styling and multiple spanner levels
 Code
 
 ``` r
+
 tab <- pizzaplace |>
   dplyr::filter(type %in% c("classic", "veggie")) |>
   dplyr::group_by(type, size) |>
@@ -120,7 +124,8 @@ tab <- pizzaplace |>
 
 - [TABLE]
 
-  Here be caption text
+  Here be caption text {.table .gt_table
+  quarto-disable-processing="false" quarto-bootstrap="false"}
 
 Complete output
 

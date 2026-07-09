@@ -2,6 +2,8 @@
 
 ## gt (development version)
 
+- Update RTF handling of stub columns and spans to handle multicolumn
+  stubs ([\#2118](https://github.com/rstudio/gt/issues/2118))
 - Expand functionality of
   [`gt_group()`](https://gt.rstudio.com/reference/gt_group.md) to allow
   `gt_group` objects to be combined with `gt_tbls`
@@ -36,7 +38,7 @@ CRAN release: 2026-01-22
   [`fmt_integer()`](https://gt.rstudio.com/reference/fmt_integer.md),
   [`fmt_currency()`](https://gt.rstudio.com/reference/fmt_currency.md),
   etc.) now work with
-  [`bit64::integer64`](https://rdrr.io/pkg/bit64/man/bit64-package.html)
+  [`bit64::integer64`](https://bit64.r-lib.org/reference/bit64-package.html)
   columns ([\#1932](https://github.com/rstudio/gt/issues/1932)).
   ([\#2106](https://github.com/rstudio/gt/issues/2106))
 
@@ -1987,6 +1989,7 @@ CRAN release: 2022-11-16
   ([\#1097](https://github.com/rstudio/gt/issues/1097))
 
   ``` r
+
   dplyr::tibble(x = c("**a**", "b", "*c*"), y = c("*A*", "*B*", "*B*"), z = 1:3) %>%
     gt(rowname_col = "x", groupname_col = "y", process_md = TRUE)
   ```

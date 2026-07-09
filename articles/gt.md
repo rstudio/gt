@@ -23,6 +23,7 @@ That’s okay though, we can use use **dplyr** and prepare a tibble from
 it:
 
 ``` r
+
 # Take the `islands` dataset and use some
 # dplyr functionality to obtain the ten
 # biggest islands in the world
@@ -61,6 +62,7 @@ Table** as output. As an aside, we could have easily used a data frame
 instead as valid **Table Data** for **gt**.
 
 ``` r
+
 # Create a display table showing ten of
 # the largest islands in the world
 gt_tbl <- gt(islands_tbl)
@@ -124,6 +126,7 @@ the [`tab_header()`](https://gt.rstudio.com/reference/tab_header.md)
 function:
 
 ``` r
+
 # Make a display table with the `islands_tbl`
 # table; put a heading just above the column labels
 gt_tbl <-
@@ -161,6 +164,7 @@ optional part of the **Header**. We may also style the `title` and
 example with the table data truncated for brevity:
 
 ``` r
+
 # Use markdown for the heading's `title` and `subtitle` to
 # add bold and italicized characters
 gt(islands_tbl[1:2, ]) |>
@@ -185,6 +189,7 @@ also allows for Markdown inputs) except it can be called multiple
 times—each invocation results in the addition of a source note.
 
 ``` r
+
 # Display the `islands_tbl` data with a heading and
 # two source notes
 gt_tbl <-
@@ -244,6 +249,7 @@ cell. Let’s add a footnote that references the `North America` and
 `South America` cells in the `name` column:
 
 ``` r
+
 # Add footnotes (the same text) to two different
 # cell; data cells are targeted with `data_cells()`
 gt_tbl <-
@@ -288,6 +294,7 @@ similar except we are supplying a conditional statement that gets the
 lowest population.
 
 ``` r
+
 # Determine the row that contains the
 # largest landmass ('Asia')
 largest <-
@@ -318,25 +325,25 @@ gt_tbl <-
 gt_tbl
 ```
 
-| Large Landmasses of the World                                       |         |
-|---------------------------------------------------------------------|---------|
-| The top ten largest are presented                                   |         |
-| name                                                                | size    |
-| Asia                                                                | ¹ 16988 |
-| Africa                                                              | 11506   |
-| North America²                                                      | 9390    |
-| South America²                                                      | 6795    |
-| Antarctica                                                          | 5500    |
-| Europe                                                              | 3745    |
-| Australia                                                           | 2968    |
-| Greenland                                                           | 840     |
-| New Guinea                                                          | 306     |
-| Borneo                                                              | ³ 280   |
-| ¹ The **largest** by area.                                          |         |
-| ² The Americas.                                                     |         |
-| ³ The lowest by area.                                               |         |
-| Source: The World Almanac and Book of Facts, 1975, page 406.        |         |
-| Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley. |         |
+| Large Landmasses of the World |  |
+|----|----|
+| The top ten largest are presented |  |
+| name | size |
+| Asia | ¹ 16988 |
+| Africa | 11506 |
+| North America² | 9390 |
+| South America² | 6795 |
+| Antarctica | 5500 |
+| Europe | 3745 |
+| Australia | 2968 |
+| Greenland | 840 |
+| New Guinea | 306 |
+| Borneo | ³ 280 |
+| ¹ The **largest** by area. |  |
+| ² The Americas. |  |
+| ³ The lowest by area. |  |
+| Source: The World Almanac and Book of Facts, 1975, page 406. |  |
+| Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley. |  |
 
 We were able to supply the reference locations in the table by using the
 [`cells_body()`](https://gt.rstudio.com/reference/cells_body.md) helper
@@ -362,6 +369,7 @@ with our `islands_tbl` dataset by modifying the call to
 [`gt()`](https://gt.rstudio.com/reference/gt.md):
 
 ``` r
+
 # Create a gt table showing ten of the
 # largest islands in the world; this
 # time with a stub
@@ -392,6 +400,7 @@ This label can be added with
 [`tab_stubhead()`](https://gt.rstudio.com/reference/tab_stubhead.md):
 
 ``` r
+
 # Generate a simple table with a stub
 # and add a stubhead label
 gt_tbl <-
@@ -424,6 +433,7 @@ To apply our table parts as before (up to and including the footnotes)
 we use the following statements:
 
 ``` r
+
 # Display the `islands_tbl` data with a stub,
 # a heading, source notes, and footnotes
 gt_tbl <-
@@ -455,24 +465,24 @@ gt_tbl <-
 gt_tbl
 ```
 
-| Large Landmasses of the World                                       |         |
-|---------------------------------------------------------------------|---------|
-| The top ten largest are presented                                   |         |
-| landmass                                                            | size    |
-| Asia                                                                | ¹ 16988 |
-| Africa                                                              | 11506   |
-| North America                                                       | 9390    |
-| South America                                                       | 6795    |
-| Antarctica                                                          | ² 5500  |
-| Europe                                                              | 3745    |
-| Australia                                                           | 2968    |
-| Greenland                                                           | 840     |
-| New Guinea                                                          | 306     |
-| Borneo                                                              | 280     |
-| ¹ The **largest** by area.                                          |         |
-| ² The lowest by population.                                         |         |
-| Source: The World Almanac and Book of Facts, 1975, page 406.        |         |
-| Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley. |         |
+| Large Landmasses of the World |  |
+|----|----|
+| The top ten largest are presented |  |
+| landmass | size |
+| Asia | ¹ 16988 |
+| Africa | 11506 |
+| North America | 9390 |
+| South America | 6795 |
+| Antarctica | ² 5500 |
+| Europe | 3745 |
+| Australia | 2968 |
+| Greenland | 840 |
+| New Guinea | 306 |
+| Borneo | 280 |
+| ¹ The **largest** by area. |  |
+| ² The lowest by population. |  |
+| Source: The World Almanac and Book of Facts, 1975, page 406. |  |
+| Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley. |  |
 
 Let’s incorporate row groups into the display table. This divides rows
 into groups, creating *row groups*, and results in a display of a *row
@@ -488,6 +498,7 @@ Here we will create three row groups (with row group labels `continent`,
 `country`, and `subregion`) to have a grouping of rows.
 
 ``` r
+
 # Create three row groups with the
 # `tab_row_group()` function
 gt_tbl <-
@@ -509,27 +520,27 @@ gt_tbl <-
 gt_tbl
 ```
 
-| Large Landmasses of the World                                       |         |
-|---------------------------------------------------------------------|---------|
-| The top ten largest are presented                                   |         |
-| landmass                                                            | size    |
-| subregion                                                           |         |
-| New Guinea                                                          | 306     |
-| Borneo                                                              | 280     |
-| country                                                             |         |
-| Australia                                                           | 2968    |
-| Greenland                                                           | 840     |
-| continent                                                           |         |
-| Asia                                                                | ¹ 16988 |
-| Africa                                                              | 11506   |
-| North America                                                       | 9390    |
-| South America                                                       | 6795    |
-| Antarctica                                                          | ² 5500  |
-| Europe                                                              | 3745    |
-| ¹ The **largest** by area.                                          |         |
-| ² The lowest by population.                                         |         |
-| Source: The World Almanac and Book of Facts, 1975, page 406.        |         |
-| Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley. |         |
+| Large Landmasses of the World |  |
+|----|----|
+| The top ten largest are presented |  |
+| landmass | size |
+| subregion |  |
+| New Guinea | 306 |
+| Borneo | 280 |
+| country |  |
+| Australia | 2968 |
+| Greenland | 840 |
+| continent |  |
+| Asia | ¹ 16988 |
+| Africa | 11506 |
+| North America | 9390 |
+| South America | 6795 |
+| Antarctica | ² 5500 |
+| Europe | 3745 |
+| ¹ The **largest** by area. |  |
+| ² The lowest by population. |  |
+| Source: The World Almanac and Book of Facts, 1975, page 406. |  |
+| Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley. |  |
 
 Three *row groups* have been made since there are three unique
 categories under `groupname`. Across the top of each *row group* is the
@@ -588,6 +599,7 @@ label*. We can do this with
 [`tab_spanner()`](https://gt.rstudio.com/reference/tab_spanner.md).
 
 ``` r
+
 # Modify the `airquality` dataset by adding the year
 # of the measurements (1973) and limiting to 10 rows
 airquality_m <-
@@ -628,6 +640,7 @@ We can do two more things to make this presentable:
 Let’s do both of these things in the next example.
 
 ``` r
+
 # Move the time-based columns to the start of
 # the column series; modify the column labels of
 # the measurement-based columns

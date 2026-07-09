@@ -23,6 +23,7 @@ An object of class `knit_asis`.
 Here is an example Rnw document that shows how `gt_latex_dependencies()`
 can be used in conjunction with a **gt** table:
 
+
     %!sweave=knitr
 
     \documentclass{article}

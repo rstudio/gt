@@ -30,6 +30,7 @@ needs. Here is a brief example of how to use **gt** to create a table
 from the included `sp500` dataset:
 
 ``` r
+
 library(gt)
 
 # Define the start and end dates for the data range
@@ -133,6 +134,7 @@ package, discuss some ideas, engage with others, and much more!
 The **gt** package can be installed from **CRAN** with:
 
 ``` r
+
 install.packages("gt")
 ```
 
@@ -140,6 +142,7 @@ You can also choose to install the development version of **gt** from
 **GitHub**:
 
 ``` r
+
 devtools::install_github("rstudio/gt")
 ```
 

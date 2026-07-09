@@ -34,6 +34,7 @@ them.
 
 Inside the document's YAML metadata, please include:
 
+
     output:
       pdf_document: # Change to appropriate LaTeX template
         includes:
@@ -41,6 +42,7 @@ Inside the document's YAML metadata, please include:
 
 The `gt_packages.sty` file would then contain the listed dependencies
 above:
+
 
       \usepackage{booktabs, caption, longtable, colortbl, array}
 

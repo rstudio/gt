@@ -7,6 +7,7 @@ fictional trial. Every column is equipped with a label attribute
 allowing the users to get familiar with the data.
 
 ``` r
+
 rx_adsl |> str()
 #> tibble [182 × 14] (S3: tbl_df/tbl/data.frame)
 #>  $ STUDYID : chr [1:182] "GT01" "GT01" "GT01" "GT01" ...
@@ -49,6 +50,7 @@ shape of our desired table and then use **gt** functions to create the
 output table:
 
 ``` r
+
 custom_summary <- function(df, group_var, sum_var) {
   group_var <- rlang::ensym(group_var)
   sum_var <- rlang::ensym(sum_var)
@@ -143,6 +145,7 @@ should be grouped by category, with labels as rownames. In addition, we
 can give our table a nice title and subtitle.
 
 ``` r
+
 rx_adsl_tbl <-
   adsl_summary |>
   gt(
@@ -157,31 +160,31 @@ rx_adsl_tbl <-
 rx_adsl_tbl
 ```
 
-| x.x: Demographic Characteristics                      |             |            |            |           |             |            |             |            |             |            |
-|-------------------------------------------------------|-------------|------------|------------|-----------|-------------|------------|-------------|------------|-------------|------------|
-| x.x.x: Demographic Characteristics - ITT Analysis Set |             |            |            |           |             |            |             |            |             |            |
-|                                                       | val_Placebo | val_Drug 1 | sd_Placebo | sd_Drug 1 | min_Placebo | min_Drug 1 | max_Placebo | max_Drug 1 | pct_Placebo | pct_Drug 1 |
-| Age (Years)                                           |             |            |            |           |             |            |             |            |             |            |
-| n                                                     | 90.00000    | 90.00000   | NA         | NA        | NA          | NA         | NA          | NA         | NA          | NA         |
-| Mean (SD)                                             | 41.16667    | 39.17778   | 6.137470   | 5.620144  | NA          | NA         | NA          | NA         | NA          | NA         |
-| Median                                                | 41.00000    | 38.50000   | NA         | NA        | NA          | NA         | NA          | NA         | NA          | NA         |
-| Min - Max                                             | NA          | NA         | NA         | NA        | 27.00000    | 29.00000   | 56.00000    | 55.00000   | NA          | NA         |
-| Age Group, n (%)                                      |             |            |            |           |             |            |             |            |             |            |
-| \<40                                                  | 36.00000    | 49.00000   | NA         | NA        | NA          | NA         | NA          | NA         | 0.40000000  | 0.54444444 |
-| \>=40                                                 | 54.00000    | 41.00000   | NA         | NA        | NA          | NA         | NA          | NA         | 0.60000000  | 0.45555556 |
-| Sex, n (%)                                            |             |            |            |           |             |            |             |            |             |            |
-| Male                                                  | 59.00000    | 57.00000   | NA         | NA        | NA          | NA         | NA          | NA         | 0.65555556  | 0.63333333 |
-| Female                                                | 25.00000    | 32.00000   | NA         | NA        | NA          | NA         | NA          | NA         | 0.27777778  | 0.35555556 |
-| Undifferentiated                                      | 6.00000     | 1.00000    | NA         | NA        | NA          | NA         | NA          | NA         | 0.06666667  | 0.01111111 |
-| Ethnicity, n (%)                                      |             |            |            |           |             |            |             |            |             |            |
-| Hispanic or Latino                                    | 38.00000    | 29.00000   | NA         | NA        | NA          | NA         | NA          | NA         | 0.42222222  | 0.32222222 |
-| Not Hispanic or Latino                                | 46.00000    | 50.00000   | NA         | NA        | NA          | NA         | NA          | NA         | 0.51111111  | 0.55555556 |
-| Missing                                               | 6.00000     | 11.00000   | NA         | NA        | NA          | NA         | NA          | NA         | 0.06666667  | 0.12222222 |
-| Body Mass Index (kg/m2)                               |             |            |            |           |             |            |             |            |             |            |
-| n                                                     | 90.00000    | 90.00000   | NA         | NA        | NA          | NA         | NA          | NA         | NA          | NA         |
-| Mean (SD)                                             | 26.17161    | 27.16897   | 4.884631   | 4.973972  | NA          | NA         | NA          | NA         | NA          | NA         |
-| Median                                                | 26.04285    | 26.89705   | NA         | NA        | NA          | NA         | NA          | NA         | NA          | NA         |
-| Min - Max                                             | NA          | NA         | NA         | NA        | 18.08861    | 18.02748   | 34.48886    | 34.80553   | NA          | NA         |
+| x.x: Demographic Characteristics |  |  |  |  |  |  |  |  |  |  |
+|----|----|----|----|----|----|----|----|----|----|----|
+| x.x.x: Demographic Characteristics - ITT Analysis Set |  |  |  |  |  |  |  |  |  |  |
+|  | val_Placebo | val_Drug 1 | sd_Placebo | sd_Drug 1 | min_Placebo | min_Drug 1 | max_Placebo | max_Drug 1 | pct_Placebo | pct_Drug 1 |
+| Age (Years) |  |  |  |  |  |  |  |  |  |  |
+| n | 90.00000 | 90.00000 | NA | NA | NA | NA | NA | NA | NA | NA |
+| Mean (SD) | 41.16667 | 39.17778 | 6.137470 | 5.620144 | NA | NA | NA | NA | NA | NA |
+| Median | 41.00000 | 38.50000 | NA | NA | NA | NA | NA | NA | NA | NA |
+| Min - Max | NA | NA | NA | NA | 27.00000 | 29.00000 | 56.00000 | 55.00000 | NA | NA |
+| Age Group, n (%) |  |  |  |  |  |  |  |  |  |  |
+| \<40 | 36.00000 | 49.00000 | NA | NA | NA | NA | NA | NA | 0.40000000 | 0.54444444 |
+| \>=40 | 54.00000 | 41.00000 | NA | NA | NA | NA | NA | NA | 0.60000000 | 0.45555556 |
+| Sex, n (%) |  |  |  |  |  |  |  |  |  |  |
+| Male | 59.00000 | 57.00000 | NA | NA | NA | NA | NA | NA | 0.65555556 | 0.63333333 |
+| Female | 25.00000 | 32.00000 | NA | NA | NA | NA | NA | NA | 0.27777778 | 0.35555556 |
+| Undifferentiated | 6.00000 | 1.00000 | NA | NA | NA | NA | NA | NA | 0.06666667 | 0.01111111 |
+| Ethnicity, n (%) |  |  |  |  |  |  |  |  |  |  |
+| Hispanic or Latino | 38.00000 | 29.00000 | NA | NA | NA | NA | NA | NA | 0.42222222 | 0.32222222 |
+| Not Hispanic or Latino | 46.00000 | 50.00000 | NA | NA | NA | NA | NA | NA | 0.51111111 | 0.55555556 |
+| Missing | 6.00000 | 11.00000 | NA | NA | NA | NA | NA | NA | 0.06666667 | 0.12222222 |
+| Body Mass Index (kg/m2) |  |  |  |  |  |  |  |  |  |  |
+| n | 90.00000 | 90.00000 | NA | NA | NA | NA | NA | NA | NA | NA |
+| Mean (SD) | 26.17161 | 27.16897 | 4.884631 | 4.973972 | NA | NA | NA | NA | NA | NA |
+| Median | 26.04285 | 26.89705 | NA | NA | NA | NA | NA | NA | NA | NA |
+| Min - Max | NA | NA | NA | NA | 18.08861 | 18.02748 | 34.48886 | 34.80553 | NA | NA |
 
 As a first step, let’s try to format the columns, formatting counts,
 min, max and medians with
@@ -196,6 +199,7 @@ mean and sd values with
 in the next step.
 
 ``` r
+
 rx_adsl_tbl <-
   rx_adsl_tbl |>
   fmt_integer(
@@ -220,31 +224,31 @@ rx_adsl_tbl <-
 rx_adsl_tbl
 ```
 
-| x.x: Demographic Characteristics                      |             |            |            |           |             |            |             |            |             |            |
-|-------------------------------------------------------|-------------|------------|------------|-----------|-------------|------------|-------------|------------|-------------|------------|
-| x.x.x: Demographic Characteristics - ITT Analysis Set |             |            |            |           |             |            |             |            |             |            |
-|                                                       | val_Placebo | val_Drug 1 | sd_Placebo | sd_Drug 1 | min_Placebo | min_Drug 1 | max_Placebo | max_Drug 1 | pct_Placebo | pct_Drug 1 |
-| Age (Years)                                           |             |            |            |           |             |            |             |            |             |            |
-| n                                                     | 90          | 90         | NA         | NA        | NA          | NA         | NA          | NA         | NA          | NA         |
-| Mean (SD)                                             | 41.2        | 39.2       | 6.14       | 5.62      | NA          | NA         | NA          | NA         | NA          | NA         |
-| Median                                                | 41          | 38         | NA         | NA        | NA          | NA         | NA          | NA         | NA          | NA         |
-| Min - Max                                             | NA          | NA         | NA         | NA        | 27          | 29         | 56          | 55         | NA          | NA         |
-| Age Group, n (%)                                      |             |            |            |           |             |            |             |            |             |            |
-| \<40                                                  | 36          | 49         | NA         | NA        | NA          | NA         | NA          | NA         | 40.0%       | 54.4%      |
-| \>=40                                                 | 54          | 41         | NA         | NA        | NA          | NA         | NA          | NA         | 60.0%       | 45.6%      |
-| Sex, n (%)                                            |             |            |            |           |             |            |             |            |             |            |
-| Male                                                  | 59          | 57         | NA         | NA        | NA          | NA         | NA          | NA         | 65.6%       | 63.3%      |
-| Female                                                | 25          | 32         | NA         | NA        | NA          | NA         | NA          | NA         | 27.8%       | 35.6%      |
-| Undifferentiated                                      | 6           | 1          | NA         | NA        | NA          | NA         | NA          | NA         | 6.7%        | 1.1%       |
-| Ethnicity, n (%)                                      |             |            |            |           |             |            |             |            |             |            |
-| Hispanic or Latino                                    | 38          | 29         | NA         | NA        | NA          | NA         | NA          | NA         | 42.2%       | 32.2%      |
-| Not Hispanic or Latino                                | 46          | 50         | NA         | NA        | NA          | NA         | NA          | NA         | 51.1%       | 55.6%      |
-| Missing                                               | 6           | 11         | NA         | NA        | NA          | NA         | NA          | NA         | 6.7%        | 12.2%      |
-| Body Mass Index (kg/m2)                               |             |            |            |           |             |            |             |            |             |            |
-| n                                                     | 90          | 90         | NA         | NA        | NA          | NA         | NA          | NA         | NA          | NA         |
-| Mean (SD)                                             | 26.2        | 27.2       | 4.88       | 4.97      | NA          | NA         | NA          | NA         | NA          | NA         |
-| Median                                                | 26          | 27         | NA         | NA        | NA          | NA         | NA          | NA         | NA          | NA         |
-| Min - Max                                             | NA          | NA         | NA         | NA        | 18          | 18         | 34          | 35         | NA          | NA         |
+| x.x: Demographic Characteristics |  |  |  |  |  |  |  |  |  |  |
+|----|----|----|----|----|----|----|----|----|----|----|
+| x.x.x: Demographic Characteristics - ITT Analysis Set |  |  |  |  |  |  |  |  |  |  |
+|  | val_Placebo | val_Drug 1 | sd_Placebo | sd_Drug 1 | min_Placebo | min_Drug 1 | max_Placebo | max_Drug 1 | pct_Placebo | pct_Drug 1 |
+| Age (Years) |  |  |  |  |  |  |  |  |  |  |
+| n | 90 | 90 | NA | NA | NA | NA | NA | NA | NA | NA |
+| Mean (SD) | 41.2 | 39.2 | 6.14 | 5.62 | NA | NA | NA | NA | NA | NA |
+| Median | 41 | 38 | NA | NA | NA | NA | NA | NA | NA | NA |
+| Min - Max | NA | NA | NA | NA | 27 | 29 | 56 | 55 | NA | NA |
+| Age Group, n (%) |  |  |  |  |  |  |  |  |  |  |
+| \<40 | 36 | 49 | NA | NA | NA | NA | NA | NA | 40.0% | 54.4% |
+| \>=40 | 54 | 41 | NA | NA | NA | NA | NA | NA | 60.0% | 45.6% |
+| Sex, n (%) |  |  |  |  |  |  |  |  |  |  |
+| Male | 59 | 57 | NA | NA | NA | NA | NA | NA | 65.6% | 63.3% |
+| Female | 25 | 32 | NA | NA | NA | NA | NA | NA | 27.8% | 35.6% |
+| Undifferentiated | 6 | 1 | NA | NA | NA | NA | NA | NA | 6.7% | 1.1% |
+| Ethnicity, n (%) |  |  |  |  |  |  |  |  |  |  |
+| Hispanic or Latino | 38 | 29 | NA | NA | NA | NA | NA | NA | 42.2% | 32.2% |
+| Not Hispanic or Latino | 46 | 50 | NA | NA | NA | NA | NA | NA | 51.1% | 55.6% |
+| Missing | 6 | 11 | NA | NA | NA | NA | NA | NA | 6.7% | 12.2% |
+| Body Mass Index (kg/m2) |  |  |  |  |  |  |  |  |  |  |
+| n | 90 | 90 | NA | NA | NA | NA | NA | NA | NA | NA |
+| Mean (SD) | 26.2 | 27.2 | 4.88 | 4.97 | NA | NA | NA | NA | NA | NA |
+| Median | 26 | 27 | NA | NA | NA | NA | NA | NA | NA | NA |
+| Min - Max | NA | NA | NA | NA | 18 | 18 | 34 | 35 | NA | NA |
 
 This looks way better but our table still has a rather wide style. To
 collapse the columns appropriately, we will use
@@ -254,6 +258,7 @@ respectively. We will use the `pattern` argument to specify our custom
 merging pattern.
 
 ``` r
+
 rx_adsl_tbl <-
   rx_adsl_tbl |>
   cols_merge(
@@ -268,31 +273,31 @@ rx_adsl_tbl <-
 rx_adsl_tbl
 ```
 
-| x.x: Demographic Characteristics                      |             |             |
-|-------------------------------------------------------|-------------|-------------|
-| x.x.x: Demographic Characteristics - ITT Analysis Set |             |             |
-|                                                       | val_Placebo | val_Drug 1  |
-| Age (Years)                                           |             |             |
-| n                                                     | 90          | 90          |
-| Mean (SD)                                             | 41.2 (6.14) | 39.2 (5.62) |
-| Median                                                | 41          | 38          |
-| Min - Max                                             | 27 - 56     | 29 - 55     |
-| Age Group, n (%)                                      |             |             |
-| \<40                                                  | 36 (40.0%)  | 49 (54.4%)  |
-| \>=40                                                 | 54 (60.0%)  | 41 (45.6%)  |
-| Sex, n (%)                                            |             |             |
-| Male                                                  | 59 (65.6%)  | 57 (63.3%)  |
-| Female                                                | 25 (27.8%)  | 32 (35.6%)  |
-| Undifferentiated                                      | 6 (6.7%)    | 1 (1.1%)    |
-| Ethnicity, n (%)                                      |             |             |
-| Hispanic or Latino                                    | 38 (42.2%)  | 29 (32.2%)  |
-| Not Hispanic or Latino                                | 46 (51.1%)  | 50 (55.6%)  |
-| Missing                                               | 6 (6.7%)    | 11 (12.2%)  |
-| Body Mass Index (kg/m2)                               |             |             |
-| n                                                     | 90          | 90          |
-| Mean (SD)                                             | 26.2 (4.88) | 27.2 (4.97) |
-| Median                                                | 26          | 27          |
-| Min - Max                                             | 18 - 34     | 18 - 35     |
+| x.x: Demographic Characteristics |  |  |
+|----|----|----|
+| x.x.x: Demographic Characteristics - ITT Analysis Set |  |  |
+|  | val_Placebo | val_Drug 1 |
+| Age (Years) |  |  |
+| n | 90 | 90 |
+| Mean (SD) | 41.2 (6.14) | 39.2 (5.62) |
+| Median | 41 | 38 |
+| Min - Max | 27 - 56 | 29 - 55 |
+| Age Group, n (%) |  |  |
+| \<40 | 36 (40.0%) | 49 (54.4%) |
+| \>=40 | 54 (60.0%) | 41 (45.6%) |
+| Sex, n (%) |  |  |
+| Male | 59 (65.6%) | 57 (63.3%) |
+| Female | 25 (27.8%) | 32 (35.6%) |
+| Undifferentiated | 6 (6.7%) | 1 (1.1%) |
+| Ethnicity, n (%) |  |  |
+| Hispanic or Latino | 38 (42.2%) | 29 (32.2%) |
+| Not Hispanic or Latino | 46 (51.1%) | 50 (55.6%) |
+| Missing | 6 (6.7%) | 11 (12.2%) |
+| Body Mass Index (kg/m2) |  |  |
+| n | 90 | 90 |
+| Mean (SD) | 26.2 (4.88) | 27.2 (4.97) |
+| Median | 26 | 27 |
+| Min - Max | 18 - 34 | 18 - 35 |
 
 Now that looks more like a demographic table. But let’s take a step back
 and understand the merging pattern.
@@ -318,6 +323,7 @@ and left-align the title with
 [`opt_align_table_header()`](https://gt.rstudio.com/reference/opt_align_table_header.md).
 
 ``` r
+
 rx_adsl_tbl <-
   rx_adsl_tbl |>
   tab_stub_indent(
@@ -329,31 +335,31 @@ rx_adsl_tbl <-
 rx_adsl_tbl
 ```
 
-| x.x: Demographic Characteristics                      |             |             |
-|-------------------------------------------------------|-------------|-------------|
-| x.x.x: Demographic Characteristics - ITT Analysis Set |             |             |
-|                                                       | val_Placebo | val_Drug 1  |
-| Age (Years)                                           |             |             |
-| n                                                     | 90          | 90          |
-| Mean (SD)                                             | 41.2 (6.14) | 39.2 (5.62) |
-| Median                                                | 41          | 38          |
-| Min - Max                                             | 27 - 56     | 29 - 55     |
-| Age Group, n (%)                                      |             |             |
-| \<40                                                  | 36 (40.0%)  | 49 (54.4%)  |
-| \>=40                                                 | 54 (60.0%)  | 41 (45.6%)  |
-| Sex, n (%)                                            |             |             |
-| Male                                                  | 59 (65.6%)  | 57 (63.3%)  |
-| Female                                                | 25 (27.8%)  | 32 (35.6%)  |
-| Undifferentiated                                      | 6 (6.7%)    | 1 (1.1%)    |
-| Ethnicity, n (%)                                      |             |             |
-| Hispanic or Latino                                    | 38 (42.2%)  | 29 (32.2%)  |
-| Not Hispanic or Latino                                | 46 (51.1%)  | 50 (55.6%)  |
-| Missing                                               | 6 (6.7%)    | 11 (12.2%)  |
-| Body Mass Index (kg/m2)                               |             |             |
-| n                                                     | 90          | 90          |
-| Mean (SD)                                             | 26.2 (4.88) | 27.2 (4.97) |
-| Median                                                | 26          | 27          |
-| Min - Max                                             | 18 - 34     | 18 - 35     |
+| x.x: Demographic Characteristics |  |  |
+|----|----|----|
+| x.x.x: Demographic Characteristics - ITT Analysis Set |  |  |
+|  | val_Placebo | val_Drug 1 |
+| Age (Years) |  |  |
+| n | 90 | 90 |
+| Mean (SD) | 41.2 (6.14) | 39.2 (5.62) |
+| Median | 41 | 38 |
+| Min - Max | 27 - 56 | 29 - 55 |
+| Age Group, n (%) |  |  |
+| \<40 | 36 (40.0%) | 49 (54.4%) |
+| \>=40 | 54 (60.0%) | 41 (45.6%) |
+| Sex, n (%) |  |  |
+| Male | 59 (65.6%) | 57 (63.3%) |
+| Female | 25 (27.8%) | 32 (35.6%) |
+| Undifferentiated | 6 (6.7%) | 1 (1.1%) |
+| Ethnicity, n (%) |  |  |
+| Hispanic or Latino | 38 (42.2%) | 29 (32.2%) |
+| Not Hispanic or Latino | 46 (51.1%) | 50 (55.6%) |
+| Missing | 6 (6.7%) | 11 (12.2%) |
+| Body Mass Index (kg/m2) |  |  |
+| n | 90 | 90 |
+| Mean (SD) | 26.2 (4.88) | 27.2 (4.97) |
+| Median | 26 | 27 |
+| Min - Max | 18 - 34 | 18 - 35 |
 
 Let’s now change the column width of our Placebo and Drug 1 columns and
 align all values to the center, making use of
@@ -361,6 +367,7 @@ align all values to the center, making use of
 [`cols_align()`](https://gt.rstudio.com/reference/cols_align.md).
 
 ``` r
+
 rx_adsl_tbl <-
   rx_adsl_tbl |>
   cols_width(
@@ -375,31 +382,31 @@ rx_adsl_tbl <-
 rx_adsl_tbl
 ```
 
-| x.x: Demographic Characteristics                      |             |             |
-|-------------------------------------------------------|-------------|-------------|
-| x.x.x: Demographic Characteristics - ITT Analysis Set |             |             |
-|                                                       | val_Placebo | val_Drug 1  |
-| Age (Years)                                           |             |             |
-| n                                                     | 90          | 90          |
-| Mean (SD)                                             | 41.2 (6.14) | 39.2 (5.62) |
-| Median                                                | 41          | 38          |
-| Min - Max                                             | 27 - 56     | 29 - 55     |
-| Age Group, n (%)                                      |             |             |
-| \<40                                                  | 36 (40.0%)  | 49 (54.4%)  |
-| \>=40                                                 | 54 (60.0%)  | 41 (45.6%)  |
-| Sex, n (%)                                            |             |             |
-| Male                                                  | 59 (65.6%)  | 57 (63.3%)  |
-| Female                                                | 25 (27.8%)  | 32 (35.6%)  |
-| Undifferentiated                                      | 6 (6.7%)    | 1 (1.1%)    |
-| Ethnicity, n (%)                                      |             |             |
-| Hispanic or Latino                                    | 38 (42.2%)  | 29 (32.2%)  |
-| Not Hispanic or Latino                                | 46 (51.1%)  | 50 (55.6%)  |
-| Missing                                               | 6 (6.7%)    | 11 (12.2%)  |
-| Body Mass Index (kg/m2)                               |             |             |
-| n                                                     | 90          | 90          |
-| Mean (SD)                                             | 26.2 (4.88) | 27.2 (4.97) |
-| Median                                                | 26          | 27          |
-| Min - Max                                             | 18 - 34     | 18 - 35     |
+| x.x: Demographic Characteristics |  |  |
+|----|----|----|
+| x.x.x: Demographic Characteristics - ITT Analysis Set |  |  |
+|  | val_Placebo | val_Drug 1 |
+| Age (Years) |  |  |
+| n | 90 | 90 |
+| Mean (SD) | 41.2 (6.14) | 39.2 (5.62) |
+| Median | 41 | 38 |
+| Min - Max | 27 - 56 | 29 - 55 |
+| Age Group, n (%) |  |  |
+| \<40 | 36 (40.0%) | 49 (54.4%) |
+| \>=40 | 54 (60.0%) | 41 (45.6%) |
+| Sex, n (%) |  |  |
+| Male | 59 (65.6%) | 57 (63.3%) |
+| Female | 25 (27.8%) | 32 (35.6%) |
+| Undifferentiated | 6 (6.7%) | 1 (1.1%) |
+| Ethnicity, n (%) |  |  |
+| Hispanic or Latino | 38 (42.2%) | 29 (32.2%) |
+| Not Hispanic or Latino | 46 (51.1%) | 50 (55.6%) |
+| Missing | 6 (6.7%) | 11 (12.2%) |
+| Body Mass Index (kg/m2) |  |  |
+| n | 90 | 90 |
+| Mean (SD) | 26.2 (4.88) | 27.2 (4.97) |
+| Median | 26 | 27 |
+| Min - Max | 18 - 34 | 18 - 35 |
 
 In a final step we can now take care of the column names and assign
 something more meaningful. Out column header should be the name of the
@@ -410,6 +417,7 @@ ability to handle lists, we summarize our new column labels in a named
 list.
 
 ``` r
+
 ### Count subjects per arm and summarize values in a list
 arm_n <-
   rx_adsl |>
@@ -431,31 +439,31 @@ rx_adsl_tbl <-
 rx_adsl_tbl
 ```
 
-| x.x: Demographic Characteristics                      |                     |                    |
-|-------------------------------------------------------|---------------------|--------------------|
-| x.x.x: Demographic Characteristics - ITT Analysis Set |                     |                    |
-|                                                       | Placebo N=90 (100%) | Drug 1 N=90 (100%) |
-| Age (Years)                                           |                     |                    |
-| n                                                     | 90                  | 90                 |
-| Mean (SD)                                             | 41.2 (6.14)         | 39.2 (5.62)        |
-| Median                                                | 41                  | 38                 |
-| Min - Max                                             | 27 - 56             | 29 - 55            |
-| Age Group, n (%)                                      |                     |                    |
-| \<40                                                  | 36 (40.0%)          | 49 (54.4%)         |
-| \>=40                                                 | 54 (60.0%)          | 41 (45.6%)         |
-| Sex, n (%)                                            |                     |                    |
-| Male                                                  | 59 (65.6%)          | 57 (63.3%)         |
-| Female                                                | 25 (27.8%)          | 32 (35.6%)         |
-| Undifferentiated                                      | 6 (6.7%)            | 1 (1.1%)           |
-| Ethnicity, n (%)                                      |                     |                    |
-| Hispanic or Latino                                    | 38 (42.2%)          | 29 (32.2%)         |
-| Not Hispanic or Latino                                | 46 (51.1%)          | 50 (55.6%)         |
-| Missing                                               | 6 (6.7%)            | 11 (12.2%)         |
-| Body Mass Index (kg/m2)                               |                     |                    |
-| n                                                     | 90                  | 90                 |
-| Mean (SD)                                             | 26.2 (4.88)         | 27.2 (4.97)        |
-| Median                                                | 26                  | 27                 |
-| Min - Max                                             | 18 - 34             | 18 - 35            |
+| x.x: Demographic Characteristics |  |  |
+|----|----|----|
+| x.x.x: Demographic Characteristics - ITT Analysis Set |  |  |
+|  | Placebo N=90 (100%) | Drug 1 N=90 (100%) |
+| Age (Years) |  |  |
+| n | 90 | 90 |
+| Mean (SD) | 41.2 (6.14) | 39.2 (5.62) |
+| Median | 41 | 38 |
+| Min - Max | 27 - 56 | 29 - 55 |
+| Age Group, n (%) |  |  |
+| \<40 | 36 (40.0%) | 49 (54.4%) |
+| \>=40 | 54 (60.0%) | 41 (45.6%) |
+| Sex, n (%) |  |  |
+| Male | 59 (65.6%) | 57 (63.3%) |
+| Female | 25 (27.8%) | 32 (35.6%) |
+| Undifferentiated | 6 (6.7%) | 1 (1.1%) |
+| Ethnicity, n (%) |  |  |
+| Hispanic or Latino | 38 (42.2%) | 29 (32.2%) |
+| Not Hispanic or Latino | 46 (51.1%) | 50 (55.6%) |
+| Missing | 6 (6.7%) | 11 (12.2%) |
+| Body Mass Index (kg/m2) |  |  |
+| n | 90 | 90 |
+| Mean (SD) | 26.2 (4.88) | 27.2 (4.97) |
+| Median | 26 | 27 |
+| Min - Max | 18 - 34 | 18 - 35 |
 
 ### Response / Event Rate Analysis Tables
 
@@ -473,6 +481,7 @@ subgroup defined by `AAGEGR1`, where confidence intervals around the
 event rates are computed using the Clopper Pearson method.
 
 ``` r
+
 rx_responders <-
   rx_adsl |>
   dplyr::filter(ITTFL == "Y") |>
@@ -544,6 +553,7 @@ and subtitle. Here we are using
 again.
 
 ``` r
+
 rx_resp_tbl <- rx_responders |>
   gt() |>
   tab_header(
@@ -555,12 +565,12 @@ rx_resp_tbl <- rx_responders |>
 rx_resp_tbl
 ```
 
-| x.x: Efficacy Data                                         |                |               |                 |                |             |            |               |              |                |               |          |           |          |
-|------------------------------------------------------------|----------------|---------------|-----------------|----------------|-------------|------------|---------------|--------------|----------------|---------------|----------|-----------|----------|
-| x.x.x: Occurence of Event per Subgroup - {gt} Analysis Set |                |               |                 |                |             |            |               |              |                |               |          |           |          |
-| Age Group                                                  | n_resp_Placebo | n_resp_Drug 1 | n_total_Placebo | n_total_Drug 1 | pct_Placebo | pct_Drug 1 | ci_up_Placebo | ci_up_Drug 1 | ci_low_Placebo | ci_low_Drug 1 | or       | or_ci_low | or_ci_up |
-| \<40                                                       | 17             | 33            | 36              | 49             | 47.22222    | 67.34694   | 64.51362      | 80.05147     | 30.40506       | 52.45993      | 2.305147 | 0.950602  | 5.589829 |
-| \>=40                                                      | 23             | 29            | 54              | 41             | 42.59259    | 70.73171   | 56.79174      | 83.87014     | 29.23473       | 54.46260      | 3.257246 | 1.375207  | 7.714953 |
+| x.x: Efficacy Data |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| x.x.x: Occurence of Event per Subgroup - {gt} Analysis Set |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Age Group | n_resp_Placebo | n_resp_Drug 1 | n_total_Placebo | n_total_Drug 1 | pct_Placebo | pct_Drug 1 | ci_up_Placebo | ci_up_Drug 1 | ci_low_Placebo | ci_low_Drug 1 | or | or_ci_low | or_ci_up |
+| \<40 | 17 | 33 | 36 | 49 | 47.22222 | 67.34694 | 64.51362 | 80.05147 | 30.40506 | 52.45993 | 2.305147 | 0.950602 | 5.589829 |
+| \>=40 | 23 | 29 | 54 | 41 | 42.59259 | 70.73171 | 56.79174 | 83.87014 | 29.23473 | 54.46260 | 3.257246 | 1.375207 | 7.714953 |
 
 Next, we are formatting the columns for counts to integers with
 [`fmt_integer()`](https://gt.rstudio.com/reference/fmt_integer.md),
@@ -570,6 +580,7 @@ decimals, in both cases using
 [`fmt_number()`](https://gt.rstudio.com/reference/fmt_number.md).
 
 ``` r
+
 rx_resp_tbl <-
   rx_resp_tbl |>
   fmt_integer(columns = starts_with("n_")) |>
@@ -579,12 +590,12 @@ rx_resp_tbl <-
 rx_resp_tbl
 ```
 
-| x.x: Efficacy Data                                         |                |               |                 |                |             |            |               |              |                |               |      |           |          |
-|------------------------------------------------------------|----------------|---------------|-----------------|----------------|-------------|------------|---------------|--------------|----------------|---------------|------|-----------|----------|
-| x.x.x: Occurence of Event per Subgroup - {gt} Analysis Set |                |               |                 |                |             |            |               |              |                |               |      |           |          |
-| Age Group                                                  | n_resp_Placebo | n_resp_Drug 1 | n_total_Placebo | n_total_Drug 1 | pct_Placebo | pct_Drug 1 | ci_up_Placebo | ci_up_Drug 1 | ci_low_Placebo | ci_low_Drug 1 | or   | or_ci_low | or_ci_up |
-| \<40                                                       | 17             | 33            | 36              | 49             | 47.2        | 67.3       | 64.5          | 80.1         | 30.4           | 52.5          | 2.31 | 0.95      | 5.59     |
-| \>=40                                                      | 23             | 29            | 54              | 41             | 42.6        | 70.7       | 56.8          | 83.9         | 29.2           | 54.5          | 3.26 | 1.38      | 7.71     |
+| x.x: Efficacy Data |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| x.x.x: Occurence of Event per Subgroup - {gt} Analysis Set |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Age Group | n_resp_Placebo | n_resp_Drug 1 | n_total_Placebo | n_total_Drug 1 | pct_Placebo | pct_Drug 1 | ci_up_Placebo | ci_up_Drug 1 | ci_low_Placebo | ci_low_Drug 1 | or | or_ci_low | or_ci_up |
+| \<40 | 17 | 33 | 36 | 49 | 47.2 | 67.3 | 64.5 | 80.1 | 30.4 | 52.5 | 2.31 | 0.95 | 5.59 |
+| \>=40 | 23 | 29 | 54 | 41 | 42.6 | 70.7 | 56.8 | 83.9 | 29.2 | 54.5 | 3.26 | 1.38 | 7.71 |
 
 We can now merge the columns for participants with events, total number
 of participants and percentage of participants with events, as well as
@@ -594,6 +605,7 @@ indicate the intervention group we are adding tab spanners with
 [`tab_spanner()`](https://gt.rstudio.com/reference/tab_spanner.md).
 
 ``` r
+
 rx_resp_tbl <-
   rx_resp_tbl |>
   cols_merge(
@@ -637,6 +649,7 @@ using
 to manually add a row group label *Age*.
 
 ``` r
+
 rx_resp_tbl <-
   rx_resp_tbl |>
   tab_row_group(
@@ -662,6 +675,7 @@ can apply a more convenient column width and left-align the first
 column.
 
 ``` r
+
 rx_resp_tbl <-
   rx_resp_tbl |>
   cols_align(
@@ -699,6 +713,7 @@ change the default symbol choice of
 from numbers to letters, we add `tab_options(footnote.marks = letters)`.
 
 ``` r
+
 rx_resp_tbl <-
   rx_resp_tbl |>
   tab_footnote(
@@ -724,6 +739,7 @@ summary row, indicating whether a subject in the ITT population in
 subject level summary, individual PDs are summarized.
 
 ``` r
+
 rx_addv |> str()
 #> tibble [291 × 20] (S3: tbl_df/tbl/data.frame)
 #>  $ STUDYID : chr [1:291] "GT01" "GT01" "GT01" "GT01" ...
@@ -777,6 +793,7 @@ need to apply some data wrangling with functions from **dplyr** and
 **tidyr**.
 
 ``` r
+
 addv_sum <-
   rx_addv |>
   dplyr::group_by(TRTA) |>
@@ -818,6 +835,7 @@ start by exposing the dataset to `gt` and add our usual left-aligned
 headers.
 
 ``` r
+
 addv_tbl <-
   addv_sum |>
   gt(rowname_col = "PARAM") |>
@@ -830,17 +848,17 @@ addv_tbl <-
 addv_tbl
 ```
 
-| xx.x: Demographic and Baseline Data                                      |                      |             |             |            |            |               |               |              |              |
-|--------------------------------------------------------------------------|----------------------|-------------|-------------|------------|------------|---------------|---------------|--------------|--------------|
-| xx.x.x: Major Protocol Deviations and Relationship to COVID-19 - ITT Set |                      |             |             |            |            |               |               |              |              |
-|                                                                          | Parameter Category 1 | n_Placebo_N | n_Placebo_Y | n_Drug 1_N | n_Drug 1_Y | pct_Placebo_N | pct_Placebo_Y | pct_Drug 1_N | pct_Drug 1_Y |
-| Subjects with at least:                                                  | NA                   | NA          | NA          | NA         | NA         | NA            | NA            | NA           | NA           |
-| At least one major Protocol Deviation                                    | OVERALL              | 24          | 15          | 23         | 5          | 26.666667     | 16.666667     | 25.555556    | 5.555556     |
-| GTQ not completed month 3.                                               | PROTOCOL DEVIATION   | 7           | 0           | 12         | 0          | 7.777778      | 0.000000      | 13.333333    | 0.000000     |
-| Lab values not taken month 3.                                            | PROTOCOL DEVIATION   | 12          | 3           | 7          | 0          | 13.333333     | 3.333333      | 7.777778     | 0.000000     |
-| GTQ not completed month 6.                                               | PROTOCOL DEVIATION   | 7           | 2           | 7          | 1          | 7.777778      | 2.222222      | 7.777778     | 1.111111     |
-| Month 3 Visit not done.                                                  | PROTOCOL DEVIATION   | 9           | 4           | 3          | 1          | 10.000000     | 4.444444      | 3.333333     | 1.111111     |
-| Month 6 Visit not done.                                                  | PROTOCOL DEVIATION   | 9           | 8           | 9          | 3          | 10.000000     | 8.888889      | 10.000000    | 3.333333     |
+| xx.x: Demographic and Baseline Data |  |  |  |  |  |  |  |  |  |
+|----|----|----|----|----|----|----|----|----|----|
+| xx.x.x: Major Protocol Deviations and Relationship to COVID-19 - ITT Set |  |  |  |  |  |  |  |  |  |
+|  | Parameter Category 1 | n_Placebo_N | n_Placebo_Y | n_Drug 1_N | n_Drug 1_Y | pct_Placebo_N | pct_Placebo_Y | pct_Drug 1_N | pct_Drug 1_Y |
+| Subjects with at least: | NA | NA | NA | NA | NA | NA | NA | NA | NA |
+| At least one major Protocol Deviation | OVERALL | 24 | 15 | 23 | 5 | 26.666667 | 16.666667 | 25.555556 | 5.555556 |
+| GTQ not completed month 3. | PROTOCOL DEVIATION | 7 | 0 | 12 | 0 | 7.777778 | 0.000000 | 13.333333 | 0.000000 |
+| Lab values not taken month 3. | PROTOCOL DEVIATION | 12 | 3 | 7 | 0 | 13.333333 | 3.333333 | 7.777778 | 0.000000 |
+| GTQ not completed month 6. | PROTOCOL DEVIATION | 7 | 2 | 7 | 1 | 7.777778 | 2.222222 | 7.777778 | 1.111111 |
+| Month 3 Visit not done. | PROTOCOL DEVIATION | 9 | 4 | 3 | 1 | 10.000000 | 4.444444 | 3.333333 | 1.111111 |
+| Month 6 Visit not done. | PROTOCOL DEVIATION | 9 | 8 | 9 | 3 | 10.000000 | 8.888889 | 10.000000 | 3.333333 |
 
 In a next step, we would like to create a summary row for all individual
 PDs to get the overall number of individual PDs, as well as the
@@ -855,6 +873,7 @@ after the overall summary. Finally, we can create a summary row, using
 functions are possible, but `fn = 'sum'` does the job for us).
 
 ``` r
+
 addv_tbl <-
   addv_tbl |>
   tab_row_group(
@@ -872,26 +891,27 @@ addv_tbl <-
 addv_tbl
 ```
 
-| xx.x: Demographic and Baseline Data                                      |                      |             |             |            |            |               |               |              |              |
-|--------------------------------------------------------------------------|----------------------|-------------|-------------|------------|------------|---------------|---------------|--------------|--------------|
-| xx.x.x: Major Protocol Deviations and Relationship to COVID-19 - ITT Set |                      |             |             |            |            |               |               |              |              |
-|                                                                          | Parameter Category 1 | n_Placebo_N | n_Placebo_Y | n_Drug 1_N | n_Drug 1_Y | pct_Placebo_N | pct_Placebo_Y | pct_Drug 1_N | pct_Drug 1_Y |
-|                                                                          |                      |             |             |            |            |               |               |              |              |
-| Subjects with at least:                                                  | NA                   | NA          | NA          | NA         | NA         | NA            | NA            | NA           | NA           |
-| At least one major Protocol Deviation                                    | OVERALL              | 24          | 15          | 23         | 5          | 26.666667     | 16.666667     | 25.555556    | 5.555556     |
-|                                                                          |                      |             |             |            |            |               |               |              |              |
-| Study Procedure Deviations                                               | —                    | 44          | 17          | 38         | 5          | 48.88889      | 18.88889      | 42.22222     | 5.555556     |
-| GTQ not completed month 3.                                               | PROTOCOL DEVIATION   | 7           | 0           | 12         | 0          | 7.777778      | 0.000000      | 13.333333    | 0.000000     |
-| Lab values not taken month 3.                                            | PROTOCOL DEVIATION   | 12          | 3           | 7          | 0          | 13.333333     | 3.333333      | 7.777778     | 0.000000     |
-| GTQ not completed month 6.                                               | PROTOCOL DEVIATION   | 7           | 2           | 7          | 1          | 7.777778      | 2.222222      | 7.777778     | 1.111111     |
-| Month 3 Visit not done.                                                  | PROTOCOL DEVIATION   | 9           | 4           | 3          | 1          | 10.000000     | 4.444444      | 3.333333     | 1.111111     |
-| Month 6 Visit not done.                                                  | PROTOCOL DEVIATION   | 9           | 8           | 9          | 3          | 10.000000     | 8.888889      | 10.000000    | 3.333333     |
+| xx.x: Demographic and Baseline Data |  |  |  |  |  |  |  |  |  |
+|----|----|----|----|----|----|----|----|----|----|
+| xx.x.x: Major Protocol Deviations and Relationship to COVID-19 - ITT Set |  |  |  |  |  |  |  |  |  |
+|  | Parameter Category 1 | n_Placebo_N | n_Placebo_Y | n_Drug 1_N | n_Drug 1_Y | pct_Placebo_N | pct_Placebo_Y | pct_Drug 1_N | pct_Drug 1_Y |
+|  |  |  |  |  |  |  |  |  |  |
+| Subjects with at least: | NA | NA | NA | NA | NA | NA | NA | NA | NA |
+| At least one major Protocol Deviation | OVERALL | 24 | 15 | 23 | 5 | 26.666667 | 16.666667 | 25.555556 | 5.555556 |
+|  |  |  |  |  |  |  |  |  |  |
+| Study Procedure Deviations | — | 44 | 17 | 38 | 5 | 48.88889 | 18.88889 | 42.22222 | 5.555556 |
+| GTQ not completed month 3. | PROTOCOL DEVIATION | 7 | 0 | 12 | 0 | 7.777778 | 0.000000 | 13.333333 | 0.000000 |
+| Lab values not taken month 3. | PROTOCOL DEVIATION | 12 | 3 | 7 | 0 | 13.333333 | 3.333333 | 7.777778 | 0.000000 |
+| GTQ not completed month 6. | PROTOCOL DEVIATION | 7 | 2 | 7 | 1 | 7.777778 | 2.222222 | 7.777778 | 1.111111 |
+| Month 3 Visit not done. | PROTOCOL DEVIATION | 9 | 4 | 3 | 1 | 10.000000 | 4.444444 | 3.333333 | 1.111111 |
+| Month 6 Visit not done. | PROTOCOL DEVIATION | 9 | 8 | 9 | 3 | 10.000000 | 8.888889 | 10.000000 | 3.333333 |
 
 We only kept the column `PARCAT1` to facilitate the generation of the
 row group. We can hide this column now using
 [`cols_hide()`](https://gt.rstudio.com/reference/cols_hide.md):
 
 ``` r
+
 addv_tbl <-
   addv_tbl |>
   cols_hide(columns = "PARCAT1")
@@ -899,26 +919,27 @@ addv_tbl <-
 addv_tbl
 ```
 
-| xx.x: Demographic and Baseline Data                                      |             |             |            |            |               |               |              |              |
-|--------------------------------------------------------------------------|-------------|-------------|------------|------------|---------------|---------------|--------------|--------------|
-| xx.x.x: Major Protocol Deviations and Relationship to COVID-19 - ITT Set |             |             |            |            |               |               |              |              |
-|                                                                          | n_Placebo_N | n_Placebo_Y | n_Drug 1_N | n_Drug 1_Y | pct_Placebo_N | pct_Placebo_Y | pct_Drug 1_N | pct_Drug 1_Y |
-|                                                                          |             |             |            |            |               |               |              |              |
-| Subjects with at least:                                                  | NA          | NA          | NA         | NA         | NA            | NA            | NA           | NA           |
-| At least one major Protocol Deviation                                    | 24          | 15          | 23         | 5          | 26.666667     | 16.666667     | 25.555556    | 5.555556     |
-|                                                                          |             |             |            |            |               |               |              |              |
-| Study Procedure Deviations                                               | 44          | 17          | 38         | 5          | 48.88889      | 18.88889      | 42.22222     | 5.555556     |
-| GTQ not completed month 3.                                               | 7           | 0           | 12         | 0          | 7.777778      | 0.000000      | 13.333333    | 0.000000     |
-| Lab values not taken month 3.                                            | 12          | 3           | 7          | 0          | 13.333333     | 3.333333      | 7.777778     | 0.000000     |
-| GTQ not completed month 6.                                               | 7           | 2           | 7          | 1          | 7.777778      | 2.222222      | 7.777778     | 1.111111     |
-| Month 3 Visit not done.                                                  | 9           | 4           | 3          | 1          | 10.000000     | 4.444444      | 3.333333     | 1.111111     |
-| Month 6 Visit not done.                                                  | 9           | 8           | 9          | 3          | 10.000000     | 8.888889      | 10.000000    | 3.333333     |
+| xx.x: Demographic and Baseline Data |  |  |  |  |  |  |  |  |
+|----|----|----|----|----|----|----|----|----|
+| xx.x.x: Major Protocol Deviations and Relationship to COVID-19 - ITT Set |  |  |  |  |  |  |  |  |
+|  | n_Placebo_N | n_Placebo_Y | n_Drug 1_N | n_Drug 1_Y | pct_Placebo_N | pct_Placebo_Y | pct_Drug 1_N | pct_Drug 1_Y |
+|  |  |  |  |  |  |  |  |  |
+| Subjects with at least: | NA | NA | NA | NA | NA | NA | NA | NA |
+| At least one major Protocol Deviation | 24 | 15 | 23 | 5 | 26.666667 | 16.666667 | 25.555556 | 5.555556 |
+|  |  |  |  |  |  |  |  |  |
+| Study Procedure Deviations | 44 | 17 | 38 | 5 | 48.88889 | 18.88889 | 42.22222 | 5.555556 |
+| GTQ not completed month 3. | 7 | 0 | 12 | 0 | 7.777778 | 0.000000 | 13.333333 | 0.000000 |
+| Lab values not taken month 3. | 12 | 3 | 7 | 0 | 13.333333 | 3.333333 | 7.777778 | 0.000000 |
+| GTQ not completed month 6. | 7 | 2 | 7 | 1 | 7.777778 | 2.222222 | 7.777778 | 1.111111 |
+| Month 3 Visit not done. | 9 | 4 | 3 | 1 | 10.000000 | 4.444444 | 3.333333 | 1.111111 |
+| Month 6 Visit not done. | 9 | 8 | 9 | 3 | 10.000000 | 8.888889 | 10.000000 | 3.333333 |
 
 Now that the table has roughly the right shape, we can start to format
 all numeric columns and merge columns for n’s and percentages by
 intervention group and COVID-19 relationship flag.
 
 ``` r
+
 addv_tbl <-
   addv_tbl |>
   sub_missing(
@@ -955,6 +976,7 @@ This looks more like a PD table! We can now modify the column names and
 create a cascade of column spanners.
 
 ``` r
+
 addv_tbl <-
   addv_tbl |>
   tab_spanner(
@@ -999,6 +1021,7 @@ one PD during the course of the study. The footnote is added with
 the row `At least one major Protocol Deviation`.
 
 ``` r
+
 addv_tbl <-
   addv_tbl |>
   tab_footnote(
@@ -1018,6 +1041,7 @@ centering all other columns. Note that for the indentation, we can still
 use the hidden column `PARCAT1` to identify individual PDs.
 
 ``` r
+
 addv_tbl |>
   cols_align(
     align = "center",

@@ -35,19 +35,20 @@ solely the [`gt()`](https://gt.rstudio.com/reference/gt.md) function
 with no other options:
 
 ``` r
+
 exibble |> gt()
 ```
 
-| num       | char       | fctr  | date       | time  | datetime         | currency  | row   | group |
-|-----------|------------|-------|------------|-------|------------------|-----------|-------|-------|
-| 1.111e-01 | apricot    | one   | 2015-01-15 | 13:35 | 2018-01-01 02:22 | 49.950    | row_1 | grp_a |
-| 2.222e+00 | banana     | two   | 2015-02-15 | 14:40 | 2018-02-02 14:33 | 17.950    | row_2 | grp_a |
-| 3.333e+01 | coconut    | three | 2015-03-15 | 15:45 | 2018-03-03 03:44 | 1.390     | row_3 | grp_a |
-| 4.444e+02 | durian     | four  | 2015-04-15 | 16:50 | 2018-04-04 15:55 | 65100.000 | row_4 | grp_a |
-| 5.550e+03 | NA         | five  | 2015-05-15 | 17:55 | 2018-05-05 04:00 | 1325.810  | row_5 | grp_b |
-| NA        | fig        | six   | 2015-06-15 | NA    | 2018-06-06 16:11 | 13.255    | row_6 | grp_b |
-| 7.770e+05 | grapefruit | seven | NA         | 19:10 | 2018-07-07 05:22 | NA        | row_7 | grp_b |
-| 8.880e+06 | honeydew   | eight | 2015-08-15 | 20:20 | NA               | 0.440     | row_8 | grp_b |
+| num | char | fctr | date | time | datetime | currency | row | group |
+|----|----|----|----|----|----|----|----|----|
+| 1.111e-01 | apricot | one | 2015-01-15 | 13:35 | 2018-01-01 02:22 | 49.950 | row_1 | grp_a |
+| 2.222e+00 | banana | two | 2015-02-15 | 14:40 | 2018-02-02 14:33 | 17.950 | row_2 | grp_a |
+| 3.333e+01 | coconut | three | 2015-03-15 | 15:45 | 2018-03-03 03:44 | 1.390 | row_3 | grp_a |
+| 4.444e+02 | durian | four | 2015-04-15 | 16:50 | 2018-04-04 15:55 | 65100.000 | row_4 | grp_a |
+| 5.550e+03 | NA | five | 2015-05-15 | 17:55 | 2018-05-05 04:00 | 1325.810 | row_5 | grp_b |
+| NA | fig | six | 2015-06-15 | NA | 2018-06-06 16:11 | 13.255 | row_6 | grp_b |
+| 7.770e+05 | grapefruit | seven | NA | 19:10 | 2018-07-07 05:22 | NA | row_7 | grp_b |
+| 8.880e+06 | honeydew | eight | 2015-08-15 | 20:20 | NA | 0.440 | row_8 | grp_b |
 
 We’ll create a table stub with both row labels (using the `row` column)
 and row groups (using the `group` column). The end result will be a
@@ -59,6 +60,7 @@ dropped through a
 statement.
 
 ``` r
+
 # Create a gt table using the `exibble` dataset
 exibble_a <-
   exibble |>
@@ -116,6 +118,7 @@ provide our preferred names by naming the functions within the list
 (e.g, `list(average = "mean", total = "sum", SD = "sd")`).
 
 ``` r
+
 # Create group-wise summary rows for both
 # groups (using `groups = everything()`); use the
 # `mean()`, `sum()`, and `sd()` functions
@@ -184,6 +187,7 @@ and so we get `NA` outputs from
 *names-and-formulae* method.
 
 ``` r
+
 # Create group-wise summary rows for both
 # groups (using `groups = everything()`); we will
 # use names and formulas this time in `fns`
@@ -231,6 +235,7 @@ resulting summary cell data is also formatted in the same way (including
 the options of `decimals = 3`).
 
 ``` r
+
 # Define a named list of aggregation
 # functions and summary row labels
 fns_labels <-
@@ -298,6 +303,7 @@ aggregate values that share the same summary rows as for the `num`
 column, adds two more rows, and uses currency formatting:
 
 ``` r
+
 # Create group-wise summary rows as
 # before, supply `fns_labels` to `fns`,
 # and format the cell summary data
@@ -371,6 +377,7 @@ different table cell types. Here’s an example of that, which additional
 passes the `fr_BE` locale to all functions that take a `locale` value.
 
 ``` r
+
 # Provide common formatting parameters to a list
 # object named `formats`; the number of decimal
 # places will be `2` and the locale is "fr_BE"
@@ -467,6 +474,7 @@ Notice that, in the resulting table, a stub is created just for the
 summary row labels (they have to go somewhere).
 
 ``` r
+
 # Create a simple grand summary on a gt
 # table that contains no stub
 exibble_g <-
@@ -499,6 +507,7 @@ A grand summary can be used in conjunction with group-wise summaries.
 Here’s an table where both types of summaries are present:
 
 ``` r
+
 # Using the table in `exibble_f`, create
 # grand summary rows (using two separate
 # calls of `grand_summary_rows()` since
@@ -586,6 +595,7 @@ The cell background color for both types of summary cells is modified
 and two footnotes are added.
 
 ``` r
+
 # Using the gt table of `exibble_h` as a
 # starting point, style summary cells with
 # `tab_options()` and add two footnotes
@@ -655,12 +665,14 @@ Taking the `gt_summary` object, we get a list of tibbles containing the
 summary data while preserving the correct data types:
 
 ``` r
+
 # Extract the summary data from `exibble_d`
 # to a list  object
 summary_list <- exibble_d |> extract_summary()
 ```
 
 ``` r
+
 # Print out the summary for the `grp_a` group
 summary_list$summary_df_data_list$grp_a
 #> # A tibble: 3 × 8
@@ -672,6 +684,7 @@ summary_list$summary_df_data_list$grp_a
 ```
 
 ``` r
+
 # Print out the summary for the `grp_b` group
 summary_list$summary_df_data_list$grp_b
 #> # A tibble: 3 × 8
@@ -702,6 +715,7 @@ are structured in a way that facilitates direct input back to
 summary table where the summary rows are now data rows:
 
 ``` r
+
 # Take `exibble_d`, which internally has a list
 # of summary data frames, extract the summaries,
 # and then combine them; input that into `gt()`,
@@ -744,6 +758,7 @@ value. The output from this function is always a formatted `character`
 string.
 
 ``` r
+
 # Define a function that gives the
 # highest two values above a threshold
 agg_highest_two_above_value <- function(x, threshold) {
@@ -789,6 +804,7 @@ a look at how `agg_highest_two_above_value()` can be used with
 [`fmt_passthrough()`](https://gt.rstudio.com/reference/fmt_passthrough.md).
 
 ``` r
+
 # Create a gt table with `exibble_a` and use
 # the custom function with a threshold of `20`;
 # `fmt_passthrough()` allows for minimal formatting
@@ -824,6 +840,7 @@ character outputs that were generated by the
 `agg_highest_two_above_value()` function.
 
 ``` r
+
 # Extract the summary list from `exibble_j`
 # and inspect using `str()`
 exibble_j |>

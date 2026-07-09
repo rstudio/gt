@@ -9,6 +9,7 @@ the tibble using
 [`dplyr::glimpse()`](https://pillar.r-lib.org/reference/glimpse.html):
 
 ``` r
+
 # This is `gtcars`
 glimpse(gtcars)
 #> Rows: 47
@@ -34,6 +35,7 @@ For the purpose of simply learning more about **gt**, let’s reduce this
 47-row tibble to one that has only 8 rows with a little **dplyr**ing:
 
 ``` r
+
 # Get a subset of 8 cars from the `gtcars` dataset: two
 # from each manufacturer country of origin except the UK
 gtcars_8 <-
@@ -95,26 +97,27 @@ display table that arranges the cars into row groups, with the name of
 the group displayed prominently above.
 
 ``` r
+
 # Use `group_by()` on `gtcars` and pass that to `gt()`
 gtcars_8 |>
   group_by(ctry_origin) |>
   gt()
 ```
 
-| mfr           | model        | year | trim             | bdy_style   | hp  | hp_rpm | trq | trq_rpm | mpg_c | mpg_h | drivetrain | trsmn | msrp   |
-|---------------|--------------|------|------------------|-------------|-----|--------|-----|---------|-------|-------|------------|-------|--------|
-| Germany       |              |      |                  |             |     |        |     |         |       |       |            |       |        |
-| BMW           | 6-Series     | 2016 | 640 I Coupe      | coupe       | 315 | 5800   | 330 | 1400    | 20    | 30    | rwd        | 8am   | 77300  |
-| BMW           | i8           | 2016 | Mega World Coupe | coupe       | 357 | 5800   | 420 | 3700    | 28    | 29    | awd        | 6am   | 140700 |
-| Italy         |              |      |                  |             |     |        |     |         |       |       |            |       |        |
-| Ferrari       | 458 Speciale | 2015 | Base Coupe       | coupe       | 597 | 9000   | 398 | 6000    | 13    | 17    | rwd        | 7a    | 291744 |
-| Ferrari       | 458 Spider   | 2015 | Base             | convertible | 562 | 9000   | 398 | 6000    | 13    | 17    | rwd        | 7a    | 263553 |
-| Japan         |              |      |                  |             |     |        |     |         |       |       |            |       |        |
-| Acura         | NSX          | 2017 | Base Coupe       | coupe       | 573 | 6500   | 476 | 2000    | 21    | 22    | awd        | 9a    | 156000 |
-| Nissan        | GT-R         | 2016 | Premium Coupe    | coupe       | 545 | 6400   | 436 | 3200    | 16    | 22    | awd        | 6a    | 101770 |
-| United States |              |      |                  |             |     |        |     |         |       |       |            |       |        |
-| Ford          | GT           | 2017 | Base Coupe       | coupe       | 647 | 6250   | 550 | 5900    | 11    | 18    | rwd        | 7a    | 447000 |
-| Chevrolet     | Corvette     | 2016 | Z06 Coupe        | coupe       | 650 | 6400   | 650 | 3600    | 15    | 22    | rwd        | 7m    | 88345  |
+| mfr | model | year | trim | bdy_style | hp | hp_rpm | trq | trq_rpm | mpg_c | mpg_h | drivetrain | trsmn | msrp |
+|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| Germany |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| BMW | 6-Series | 2016 | 640 I Coupe | coupe | 315 | 5800 | 330 | 1400 | 20 | 30 | rwd | 8am | 77300 |
+| BMW | i8 | 2016 | Mega World Coupe | coupe | 357 | 5800 | 420 | 3700 | 28 | 29 | awd | 6am | 140700 |
+| Italy |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Ferrari | 458 Speciale | 2015 | Base Coupe | coupe | 597 | 9000 | 398 | 6000 | 13 | 17 | rwd | 7a | 291744 |
+| Ferrari | 458 Spider | 2015 | Base | convertible | 562 | 9000 | 398 | 6000 | 13 | 17 | rwd | 7a | 263553 |
+| Japan |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Acura | NSX | 2017 | Base Coupe | coupe | 573 | 6500 | 476 | 2000 | 21 | 22 | awd | 9a | 156000 |
+| Nissan | GT-R | 2016 | Premium Coupe | coupe | 545 | 6400 | 436 | 3200 | 16 | 22 | awd | 6a | 101770 |
+| United States |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Ford | GT | 2017 | Base Coupe | coupe | 647 | 6250 | 550 | 5900 | 11 | 18 | rwd | 7a | 447000 |
+| Chevrolet | Corvette | 2016 | Z06 Coupe | coupe | 650 | 6400 | 650 | 3600 | 15 | 22 | rwd | 7m | 88345 |
 
 Getting the row groups in the preferred order can be done easily with
 [`dplyr::arrange()`](https://dplyr.tidyverse.org/reference/arrange.html).
@@ -123,26 +126,27 @@ manufacturer (`mfr`) and then sorted by highest sticker price (`msrp`)
 to lowest.
 
 ``` r
+
 gtcars_8 |>
   group_by(ctry_origin) |>
   arrange(mfr, desc(msrp)) |>
   gt()
 ```
 
-| mfr           | model        | year | trim             | bdy_style   | hp  | hp_rpm | trq | trq_rpm | mpg_c | mpg_h | drivetrain | trsmn | msrp   |
-|---------------|--------------|------|------------------|-------------|-----|--------|-----|---------|-------|-------|------------|-------|--------|
-| Japan         |              |      |                  |             |     |        |     |         |       |       |            |       |        |
-| Acura         | NSX          | 2017 | Base Coupe       | coupe       | 573 | 6500   | 476 | 2000    | 21    | 22    | awd        | 9a    | 156000 |
-| Nissan        | GT-R         | 2016 | Premium Coupe    | coupe       | 545 | 6400   | 436 | 3200    | 16    | 22    | awd        | 6a    | 101770 |
-| Germany       |              |      |                  |             |     |        |     |         |       |       |            |       |        |
-| BMW           | i8           | 2016 | Mega World Coupe | coupe       | 357 | 5800   | 420 | 3700    | 28    | 29    | awd        | 6am   | 140700 |
-| BMW           | 6-Series     | 2016 | 640 I Coupe      | coupe       | 315 | 5800   | 330 | 1400    | 20    | 30    | rwd        | 8am   | 77300  |
-| United States |              |      |                  |             |     |        |     |         |       |       |            |       |        |
-| Chevrolet     | Corvette     | 2016 | Z06 Coupe        | coupe       | 650 | 6400   | 650 | 3600    | 15    | 22    | rwd        | 7m    | 88345  |
-| Ford          | GT           | 2017 | Base Coupe       | coupe       | 647 | 6250   | 550 | 5900    | 11    | 18    | rwd        | 7a    | 447000 |
-| Italy         |              |      |                  |             |     |        |     |         |       |       |            |       |        |
-| Ferrari       | 458 Speciale | 2015 | Base Coupe       | coupe       | 597 | 9000   | 398 | 6000    | 13    | 17    | rwd        | 7a    | 291744 |
-| Ferrari       | 458 Spider   | 2015 | Base             | convertible | 562 | 9000   | 398 | 6000    | 13    | 17    | rwd        | 7a    | 263553 |
+| mfr | model | year | trim | bdy_style | hp | hp_rpm | trq | trq_rpm | mpg_c | mpg_h | drivetrain | trsmn | msrp |
+|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| Japan |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Acura | NSX | 2017 | Base Coupe | coupe | 573 | 6500 | 476 | 2000 | 21 | 22 | awd | 9a | 156000 |
+| Nissan | GT-R | 2016 | Premium Coupe | coupe | 545 | 6400 | 436 | 3200 | 16 | 22 | awd | 6a | 101770 |
+| Germany |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| BMW | i8 | 2016 | Mega World Coupe | coupe | 357 | 5800 | 420 | 3700 | 28 | 29 | awd | 6am | 140700 |
+| BMW | 6-Series | 2016 | 640 I Coupe | coupe | 315 | 5800 | 330 | 1400 | 20 | 30 | rwd | 8am | 77300 |
+| United States |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Chevrolet | Corvette | 2016 | Z06 Coupe | coupe | 650 | 6400 | 650 | 3600 | 15 | 22 | rwd | 7m | 88345 |
+| Ford | GT | 2017 | Base Coupe | coupe | 647 | 6250 | 550 | 5900 | 11 | 18 | rwd | 7a | 447000 |
+| Italy |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Ferrari | 458 Speciale | 2015 | Base Coupe | coupe | 597 | 9000 | 398 | 6000 | 13 | 17 | rwd | 7a | 291744 |
+| Ferrari | 458 Spider | 2015 | Base | convertible | 562 | 9000 | 398 | 6000 | 13 | 17 | rwd | 7a | 263553 |
 
 We could also use factor levels to get a more particular ordering within
 `arrange()`. For example, we can first arrange the groups themselves
@@ -152,6 +156,7 @@ then arrange by `mfr` and descending `msrp` as before. Then,
 this to [`gt()`](https://gt.rstudio.com/reference/gt.md).
 
 ``` r
+
 # Define our preferred order for `ctry_origin`
 order_countries <- c("Germany", "Italy", "United States", "Japan")
 
@@ -164,20 +169,20 @@ gtcars_8 |>
   gt()
 ```
 
-| mfr           | model        | year | trim             | bdy_style   | hp  | hp_rpm | trq | trq_rpm | mpg_c | mpg_h | drivetrain | trsmn | msrp   |
-|---------------|--------------|------|------------------|-------------|-----|--------|-----|---------|-------|-------|------------|-------|--------|
-| Germany       |              |      |                  |             |     |        |     |         |       |       |            |       |        |
-| BMW           | i8           | 2016 | Mega World Coupe | coupe       | 357 | 5800   | 420 | 3700    | 28    | 29    | awd        | 6am   | 140700 |
-| BMW           | 6-Series     | 2016 | 640 I Coupe      | coupe       | 315 | 5800   | 330 | 1400    | 20    | 30    | rwd        | 8am   | 77300  |
-| Italy         |              |      |                  |             |     |        |     |         |       |       |            |       |        |
-| Ferrari       | 458 Speciale | 2015 | Base Coupe       | coupe       | 597 | 9000   | 398 | 6000    | 13    | 17    | rwd        | 7a    | 291744 |
-| Ferrari       | 458 Spider   | 2015 | Base             | convertible | 562 | 9000   | 398 | 6000    | 13    | 17    | rwd        | 7a    | 263553 |
-| United States |              |      |                  |             |     |        |     |         |       |       |            |       |        |
-| Chevrolet     | Corvette     | 2016 | Z06 Coupe        | coupe       | 650 | 6400   | 650 | 3600    | 15    | 22    | rwd        | 7m    | 88345  |
-| Ford          | GT           | 2017 | Base Coupe       | coupe       | 647 | 6250   | 550 | 5900    | 11    | 18    | rwd        | 7a    | 447000 |
-| Japan         |              |      |                  |             |     |        |     |         |       |       |            |       |        |
-| Acura         | NSX          | 2017 | Base Coupe       | coupe       | 573 | 6500   | 476 | 2000    | 21    | 22    | awd        | 9a    | 156000 |
-| Nissan        | GT-R         | 2016 | Premium Coupe    | coupe       | 545 | 6400   | 436 | 3200    | 16    | 22    | awd        | 6a    | 101770 |
+| mfr | model | year | trim | bdy_style | hp | hp_rpm | trq | trq_rpm | mpg_c | mpg_h | drivetrain | trsmn | msrp |
+|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| Germany |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| BMW | i8 | 2016 | Mega World Coupe | coupe | 357 | 5800 | 420 | 3700 | 28 | 29 | awd | 6am | 140700 |
+| BMW | 6-Series | 2016 | 640 I Coupe | coupe | 315 | 5800 | 330 | 1400 | 20 | 30 | rwd | 8am | 77300 |
+| Italy |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Ferrari | 458 Speciale | 2015 | Base Coupe | coupe | 597 | 9000 | 398 | 6000 | 13 | 17 | rwd | 7a | 291744 |
+| Ferrari | 458 Spider | 2015 | Base | convertible | 562 | 9000 | 398 | 6000 | 13 | 17 | rwd | 7a | 263553 |
+| United States |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Chevrolet | Corvette | 2016 | Z06 Coupe | coupe | 650 | 6400 | 650 | 3600 | 15 | 22 | rwd | 7m | 88345 |
+| Ford | GT | 2017 | Base Coupe | coupe | 647 | 6250 | 550 | 5900 | 11 | 18 | rwd | 7a | 447000 |
+| Japan |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Acura | NSX | 2017 | Base Coupe | coupe | 573 | 6500 | 476 | 2000 | 21 | 22 | awd | 9a | 156000 |
+| Nissan | GT-R | 2016 | Premium Coupe | coupe | 545 | 6400 | 436 | 3200 | 16 | 22 | awd | 6a | 101770 |
 
 The last variation is to combine the manufacturer name with the model
 name, using those combined strings as row labels for the table. This is
@@ -191,6 +196,7 @@ we can now use the `rowname_col` argument to specify a column that will
 serve as row labels (which is the newly made `car` column).
 
 ``` r
+
 # Reorder the table rows by our specific ordering of groups
 tab <-
   gtcars_8 |>
@@ -207,20 +213,20 @@ tab <-
 tab
 ```
 
-|                      | year | trim             | bdy_style   | hp  | hp_rpm | trq | trq_rpm | mpg_c | mpg_h | drivetrain | trsmn | msrp   |
-|----------------------|------|------------------|-------------|-----|--------|-----|---------|-------|-------|------------|-------|--------|
-| Germany              |      |                  |             |     |        |     |         |       |       |            |       |        |
-| BMW i8               | 2016 | Mega World Coupe | coupe       | 357 | 5800   | 420 | 3700    | 28    | 29    | awd        | 6am   | 140700 |
-| BMW 6-Series         | 2016 | 640 I Coupe      | coupe       | 315 | 5800   | 330 | 1400    | 20    | 30    | rwd        | 8am   | 77300  |
-| Italy                |      |                  |             |     |        |     |         |       |       |            |       |        |
-| Ferrari 458 Speciale | 2015 | Base Coupe       | coupe       | 597 | 9000   | 398 | 6000    | 13    | 17    | rwd        | 7a    | 291744 |
-| Ferrari 458 Spider   | 2015 | Base             | convertible | 562 | 9000   | 398 | 6000    | 13    | 17    | rwd        | 7a    | 263553 |
-| United States        |      |                  |             |     |        |     |         |       |       |            |       |        |
-| Chevrolet Corvette   | 2016 | Z06 Coupe        | coupe       | 650 | 6400   | 650 | 3600    | 15    | 22    | rwd        | 7m    | 88345  |
-| Ford GT              | 2017 | Base Coupe       | coupe       | 647 | 6250   | 550 | 5900    | 11    | 18    | rwd        | 7a    | 447000 |
-| Japan                |      |                  |             |     |        |     |         |       |       |            |       |        |
-| Acura NSX            | 2017 | Base Coupe       | coupe       | 573 | 6500   | 476 | 2000    | 21    | 22    | awd        | 9a    | 156000 |
-| Nissan GT-R          | 2016 | Premium Coupe    | coupe       | 545 | 6400   | 436 | 3200    | 16    | 22    | awd        | 6a    | 101770 |
+|  | year | trim | bdy_style | hp | hp_rpm | trq | trq_rpm | mpg_c | mpg_h | drivetrain | trsmn | msrp |
+|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| Germany |  |  |  |  |  |  |  |  |  |  |  |  |
+| BMW i8 | 2016 | Mega World Coupe | coupe | 357 | 5800 | 420 | 3700 | 28 | 29 | awd | 6am | 140700 |
+| BMW 6-Series | 2016 | 640 I Coupe | coupe | 315 | 5800 | 330 | 1400 | 20 | 30 | rwd | 8am | 77300 |
+| Italy |  |  |  |  |  |  |  |  |  |  |  |  |
+| Ferrari 458 Speciale | 2015 | Base Coupe | coupe | 597 | 9000 | 398 | 6000 | 13 | 17 | rwd | 7a | 291744 |
+| Ferrari 458 Spider | 2015 | Base | convertible | 562 | 9000 | 398 | 6000 | 13 | 17 | rwd | 7a | 263553 |
+| United States |  |  |  |  |  |  |  |  |  |  |  |  |
+| Chevrolet Corvette | 2016 | Z06 Coupe | coupe | 650 | 6400 | 650 | 3600 | 15 | 22 | rwd | 7m | 88345 |
+| Ford GT | 2017 | Base Coupe | coupe | 647 | 6250 | 550 | 5900 | 11 | 18 | rwd | 7a | 447000 |
+| Japan |  |  |  |  |  |  |  |  |  |  |  |  |
+| Acura NSX | 2017 | Base Coupe | coupe | 573 | 6500 | 476 | 2000 | 21 | 22 | awd | 9a | 156000 |
+| Nissan GT-R | 2016 | Premium Coupe | coupe | 545 | 6400 | 436 | 3200 | 16 | 22 | awd | 6a | 101770 |
 
 ### Hiding and Moving Some Columns
 
@@ -242,6 +248,7 @@ but there are options here in **gt** via
 [`cols_move_to_end()`](https://gt.rstudio.com/reference/cols_move_to_end.md).
 
 ``` r
+
 # Use a few `cols_*()` functions to hide and move columns
 tab <-
   tab |>
@@ -255,20 +262,20 @@ tab <-
 tab
 ```
 
-|                      | year | trim             | trsmn | mpg_c | mpg_h | hp  | hp_rpm | trq | trq_rpm | msrp   |
-|----------------------|------|------------------|-------|-------|-------|-----|--------|-----|---------|--------|
-| Germany              |      |                  |       |       |       |     |        |     |         |        |
-| BMW i8               | 2016 | Mega World Coupe | 6am   | 28    | 29    | 357 | 5800   | 420 | 3700    | 140700 |
-| BMW 6-Series         | 2016 | 640 I Coupe      | 8am   | 20    | 30    | 315 | 5800   | 330 | 1400    | 77300  |
-| Italy                |      |                  |       |       |       |     |        |     |         |        |
-| Ferrari 458 Speciale | 2015 | Base Coupe       | 7a    | 13    | 17    | 597 | 9000   | 398 | 6000    | 291744 |
-| Ferrari 458 Spider   | 2015 | Base             | 7a    | 13    | 17    | 562 | 9000   | 398 | 6000    | 263553 |
-| United States        |      |                  |       |       |       |     |        |     |         |        |
-| Chevrolet Corvette   | 2016 | Z06 Coupe        | 7m    | 15    | 22    | 650 | 6400   | 650 | 3600    | 88345  |
-| Ford GT              | 2017 | Base Coupe       | 7a    | 11    | 18    | 647 | 6250   | 550 | 5900    | 447000 |
-| Japan                |      |                  |       |       |       |     |        |     |         |        |
-| Acura NSX            | 2017 | Base Coupe       | 9a    | 21    | 22    | 573 | 6500   | 476 | 2000    | 156000 |
-| Nissan GT-R          | 2016 | Premium Coupe    | 6a    | 16    | 22    | 545 | 6400   | 436 | 3200    | 101770 |
+|  | year | trim | trsmn | mpg_c | mpg_h | hp | hp_rpm | trq | trq_rpm | msrp |
+|----|----|----|----|----|----|----|----|----|----|----|
+| Germany |  |  |  |  |  |  |  |  |  |  |
+| BMW i8 | 2016 | Mega World Coupe | 6am | 28 | 29 | 357 | 5800 | 420 | 3700 | 140700 |
+| BMW 6-Series | 2016 | 640 I Coupe | 8am | 20 | 30 | 315 | 5800 | 330 | 1400 | 77300 |
+| Italy |  |  |  |  |  |  |  |  |  |  |
+| Ferrari 458 Speciale | 2015 | Base Coupe | 7a | 13 | 17 | 597 | 9000 | 398 | 6000 | 291744 |
+| Ferrari 458 Spider | 2015 | Base | 7a | 13 | 17 | 562 | 9000 | 398 | 6000 | 263553 |
+| United States |  |  |  |  |  |  |  |  |  |  |
+| Chevrolet Corvette | 2016 | Z06 Coupe | 7m | 15 | 22 | 650 | 6400 | 650 | 3600 | 88345 |
+| Ford GT | 2017 | Base Coupe | 7a | 11 | 18 | 647 | 6250 | 550 | 5900 | 447000 |
+| Japan |  |  |  |  |  |  |  |  |  |  |
+| Acura NSX | 2017 | Base Coupe | 9a | 21 | 22 | 573 | 6500 | 476 | 2000 | 156000 |
+| Nissan GT-R | 2016 | Premium Coupe | 6a | 16 | 22 | 545 | 6400 | 436 | 3200 | 101770 |
 
 ### Putting Columns Into Groups
 
@@ -285,6 +292,7 @@ styled with Markdown by using the
 [`md()`](https://gt.rstudio.com/reference/md.md) helper.
 
 ``` r
+
 # Put the first three columns under a spanner
 # column with the label 'Performance'
 tab <-
@@ -336,6 +344,7 @@ this relabeling possible. It accepts a series of named arguments in the
 form of `<column_name> = <column_label>, ...`.
 
 ``` r
+
 # Perform three column merges to better present
 # MPG, HP, and torque; relabel all the remaining
 # columns for a nicer-looking presentation
@@ -382,6 +391,7 @@ for the `rows` argument and this means we want to apply the formatting
 to the entire column of data.
 
 ``` r
+
 # Format the `msrp` column to USD currency
 # with no display of the currency subunits
 tab <-
@@ -424,6 +434,7 @@ would like to target the data cells in all columns except `year` and
 to its own `columns` argument.
 
 ``` r
+
 # Center-align three columns in the gt table and
 # modify the text size of a few columns of data
 tab <-
@@ -461,6 +472,7 @@ function we provide here is a bit complicated but it will build strings
 in the `trsmn` column that read better in a display table.
 
 ``` r
+
 # Transform the column of text in `trsmn` using
 # a custom function within `text_transform()`;
 # here `x` represents a character vector defined
@@ -506,6 +518,7 @@ the subtitle provides additional information (though that isn’t quite
 the case in our example below).
 
 ``` r
+
 # Add a table title and subtitle; we can use
 # markdown with the `md()` helper function
 tab <-
@@ -531,6 +544,7 @@ function. Here, we supply a web URL and by using Markdown (with
 link to the source of the data.
 
 ``` r
+
 # Add a source note to the bottom of the table; this
 # appears below the footnotes
 tab <-
@@ -592,6 +606,7 @@ in all of the
 statements first (again, any in order) and expect the same output table.
 
 ``` r
+
 # Use dplyr functions to get the car with the best city gas mileage;
 # this will be used to target the correct cell for a footnote
 best_gas_mileage_city <-

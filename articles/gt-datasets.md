@@ -65,6 +65,7 @@ requirements:
 5.  provide a descriptive title
 
 ``` r
+
 # Get vectors of 2-letter country codes for each region of Oceania
 Australasia <- c("AU", "NZ")
 Melanesia <- c("NC", "PG", "SB", "VU")
@@ -125,12 +126,12 @@ visiting [this page](https://en.wikipedia.org/wiki/Solar_zenith_angle).
 The `sza` dataset is a tibble with 816 rows and 4 variables. Here are
 explanations for each of the variables:
 
-| Column   | Type | Description                                                                                                        |
-|----------|------|--------------------------------------------------------------------------------------------------------------------|
-| latitude | dbl  | The latitude in decimal degrees for the observations                                                               |
-| month    | fct  | The measurement month; all calculations where conducted for the first day of each month                            |
-| tst      | chr  | The true solar time at the given latitude and date (first of month) for which the solar zenith angle is calculated |
-| sza      | dbl  | The solar zenith angle in degrees, where NAs indicate that sunrise hadn't yet occurred by the tst value            |
+| Column | Type | Description |
+|----|----|----|
+| latitude | dbl | The latitude in decimal degrees for the observations |
+| month | fct | The measurement month; all calculations where conducted for the first day of each month |
+| tst | chr | The true solar time at the given latitude and date (first of month) for which the solar zenith angle is calculated |
+| sza | dbl | The solar zenith angle in degrees, where NAs indicate that sunrise hadn't yet occurred by the tst value |
 
 #### An `sza` Example
 
@@ -153,6 +154,7 @@ The table that we’ll create from `sza` will meet these requirements:
     options to reduce text size and row padding
 
 ``` r
+
 # Create a gt table based on a preprocessed `sza`
 sza |>
   filter(latitude == 20) |>
@@ -188,19 +190,19 @@ for luggage, and have room to spare.
 The `gtcars` dataset is a tibble with 47 rows and 15 variables. Here are
 explanations for each of the variables:
 
-| Column       | Type | Description                                                                                                                                                                                                              |
-|--------------|------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| mfr          | chr  | The name of the car manufacturer                                                                                                                                                                                         |
-| model        | chr  | The car's model name                                                                                                                                                                                                     |
-| year         | int  | The car's model year                                                                                                                                                                                                     |
-| trim         | chr  | A short description of the car model's trim                                                                                                                                                                              |
-| bdy_style    | chr  | An identifier of the car's body style, which is either coupe, convertible, sedan, or hatchback                                                                                                                           |
-| hp, hp_rpm   | int  | The car's horsepower and the associated RPM level                                                                                                                                                                        |
-| trq, trq_rpm | int  | The car's torque and the associated RPM level                                                                                                                                                                            |
-| mpg_c, mpg_h | int  | The miles per gallon fuel efficiency rating for city and highway driving                                                                                                                                                 |
-| drivetrain   | chr  | The car's drivetrain which, for this dataset is either rwd (Rear Wheel Drive) or awd (All Wheel Drive)                                                                                                                   |
-| trsmn        | chr  | The codified transmission type, where the number part is the number of gears; the car could have automatic transmission (a), manual transmission (m), an option to switch between both types (am), or, direct drive (dd) |
-| ctry_origin  | chr  | The country name for where the vehicle manufacturer is headquartered                                                                                                                                                     |
+| Column | Type | Description |
+|----|----|----|
+| mfr | chr | The name of the car manufacturer |
+| model | chr | The car's model name |
+| year | int | The car's model year |
+| trim | chr | A short description of the car model's trim |
+| bdy_style | chr | An identifier of the car's body style, which is either coupe, convertible, sedan, or hatchback |
+| hp, hp_rpm | int | The car's horsepower and the associated RPM level |
+| trq, trq_rpm | int | The car's torque and the associated RPM level |
+| mpg_c, mpg_h | int | The miles per gallon fuel efficiency rating for city and highway driving |
+| drivetrain | chr | The car's drivetrain which, for this dataset is either rwd (Rear Wheel Drive) or awd (All Wheel Drive) |
+| trsmn | chr | The codified transmission type, where the number part is the number of gears; the car could have automatic transmission (a), manual transmission (m), an option to switch between both types (am), or, direct drive (dd) |
+| ctry_origin | chr | The country name for where the vehicle manufacturer is headquartered |
 
 #### A `gtcars` Example
 
@@ -222,6 +224,7 @@ The table that we’ll create from `gtcars` will meet these requirements:
     marks are lowercase letters
 
 ``` r
+
 # Create a gt table based on a preprocessed `gtcars`
 gtcars |>
   filter(ctry_origin == "Germany") |>
@@ -251,19 +254,19 @@ gtcars |>
   opt_footnote_marks(marks = "letters")
 ```
 
-| Select German Automobiles                           |                |           |
-|-----------------------------------------------------|----------------|-----------|
-| Car                                                 | Drivetrain^(a) | MSRP^(b)  |
-| BMW i8                                              | AWD            | \$140,700 |
-| BMW M6                                              | RWD            | \$113,400 |
-| Audi R8                                             | AWD            | \$115,900 |
-| Audi S8                                             | AWD            | \$114,900 |
-| Mercedes-Benz AMG GT                                | RWD            | \$129,900 |
-| Mercedes-Benz SL-Class                              | RWD            | \$85,050  |
-| Porsche 911                                         | RWD            | \$84,300  |
-| Porsche Panamera                                    | RWD            | \$78,100  |
-| ^(a) AWD = All Wheel Drive, RWD = Rear Wheel Drive. |                |           |
-| ^(b) Prices in USD.                                 |                |           |
+| Select German Automobiles |  |  |
+|----|----|----|
+| Car | Drivetrain^(a) | MSRP^(b) |
+| BMW i8 | AWD | \$140,700 |
+| BMW M6 | RWD | \$113,400 |
+| Audi R8 | AWD | \$115,900 |
+| Audi S8 | AWD | \$114,900 |
+| Mercedes-Benz AMG GT | RWD | \$129,900 |
+| Mercedes-Benz SL-Class | RWD | \$85,050 |
+| Porsche 911 | RWD | \$84,300 |
+| Porsche Panamera | RWD | \$78,100 |
+| ^(a) AWD = All Wheel Drive, RWD = Rear Wheel Drive. |  |  |
+| ^(b) Prices in USD. |  |  |
 
 ### `sp500`
 
@@ -279,12 +282,12 @@ There is daily S&P 500 data available in the `sp500` dataset, with daily
 indicators (price statistics, `volume`, etc.) from 1950 to 2015,
 inclusive. There are 16,607 rows in the dataset, and 7 variables:
 
-| Column                 | Type | Description                                                                                     |
-|------------------------|------|-------------------------------------------------------------------------------------------------|
-| date                   | date | The date expressed as \`Date\` values                                                           |
-| open, high, low, close | dbl  | The day's opening, high, low, and closing prices in USD; the close price is adjusted for splits |
-| volume                 | dbl  | The number of trades for the given \`date\`                                                     |
-| adj_close              | dbl  | The close price adjusted for both dividends and splits                                          |
+| Column | Type | Description |
+|----|----|----|
+| date | date | The date expressed as \`Date\` values |
+| open, high, low, close | dbl | The day's opening, high, low, and closing prices in USD; the close price is adjusted for splits |
+| volume | dbl | The number of trades for the given \`date\` |
+| adj_close | dbl | The close price adjusted for both dividends and splits |
 
 #### An `sp500` Example
 
@@ -304,6 +307,7 @@ The table that we’ll create from `sp500` will meet these requirements:
     alongside the `close` price as appropriate
 
 ``` r
+
 # Define the start and end dates for the data range
 start_date <- "2010-06-02"
 end_date <- "2010-06-15"
@@ -386,15 +390,15 @@ to be cheerful about.
 
 Let’s learn more about how this fascinating dataset is structured:
 
-| Column | Type | Description                                                                                                                                                   |
-|--------|------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| id     | chr  | The ID for the order, which consists of one or more pizzas at a given \`date\` and \`time\`                                                                   |
-| date   | chr  | A character representation of the order \`date\`, expressed in the ISO 8601 date format (YYYY-MM-DD)                                                          |
-| time   | chr  | A character representation of the order time, expressed as a 24-hour time the ISO 8601 extended time format (hh:mm:ss)                                        |
-| name   | chr  | The short name for the pizza                                                                                                                                  |
-| size   | chr  | The size of the pizza, which can either be S, M, L, XL (rare!), or XXL (even rarer!); most pizzas are available in the S, M, and L sizes but exceptions apply |
-| type   | chr  | The category or type of pizza, which can either be \`classic\`, \`chicken\`, \`supreme\`, or \`veggie\`                                                       |
-| price  | dbl  | The price of the pizza and the amount that it sold for (in USD)                                                                                               |
+| Column | Type | Description |
+|----|----|----|
+| id | chr | The ID for the order, which consists of one or more pizzas at a given \`date\` and \`time\` |
+| date | chr | A character representation of the order \`date\`, expressed in the ISO 8601 date format (YYYY-MM-DD) |
+| time | chr | A character representation of the order time, expressed as a 24-hour time the ISO 8601 extended time format (hh:mm:ss) |
+| name | chr | The short name for the pizza |
+| size | chr | The size of the pizza, which can either be S, M, L, XL (rare!), or XXL (even rarer!); most pizzas are available in the S, M, and L sizes but exceptions apply |
+| type | chr | The category or type of pizza, which can either be \`classic\`, \`chicken\`, \`supreme\`, or \`veggie\` |
+| price | dbl | The price of the pizza and the amount that it sold for (in USD) |
 
 #### A `pizzaplace` Example
 
@@ -414,6 +418,7 @@ requirements:
 7.  color the row groups and summary cells to add a little pizzazz
 
 ``` r
+
 # Create a gt table based on a preprocessed `pizzaplace`
 pizzaplace |>
   dplyr::group_by(type, size) |>
@@ -475,15 +480,15 @@ rows, has clear ordering of data, and the columns contain data that can
 be tested with the various **gt** formatter functions (`fmt*()`). Here
 is a table describing the columns of `exibble`:
 
-| Column               | Type | Description                                                                                                                            |
-|----------------------|------|----------------------------------------------------------------------------------------------------------------------------------------|
-| num                  | dbl  | A numeric column ordered with increasingly larger values                                                                               |
-| char                 | chr  | A character column composed of names of fruits from a to h                                                                             |
-| fctr                 | fct  | A factor column with numbers from 1 to 8, written out                                                                                  |
-| date, time, datetime | chr  | Character columns with dates, times, and datetimes                                                                                     |
-| currency             | dbl  | A numeric column that is useful for testing currency-based formatting                                                                  |
-| row                  | chr  | A character column in the format \`row_X\` which can be useful for testing with row label in a table stub                              |
-| group                | chr  | A character column with four \`grp_a\` values and four \`grp_b\` values which can be useful for testing tables that contain row groups |
+| Column | Type | Description |
+|----|----|----|
+| num | dbl | A numeric column ordered with increasingly larger values |
+| char | chr | A character column composed of names of fruits from a to h |
+| fctr | fct | A factor column with numbers from 1 to 8, written out |
+| date, time, datetime | chr | Character columns with dates, times, and datetimes |
+| currency | dbl | A numeric column that is useful for testing currency-based formatting |
+| row | chr | A character column in the format \`row_X\` which can be useful for testing with row label in a table stub |
+| group | chr | A character column with four \`grp_a\` values and four \`grp_b\` values which can be useful for testing tables that contain row groups |
 
 #### An `exibble` Example
 
@@ -503,6 +508,7 @@ column `currency` will be formatted as a currency with `fmt_currency`
 and we’ll consider these values to be euros (`currency = "EUR"`).
 
 ``` r
+
 # Create a gt table based on `exibble`
 exibble |>
   gt(
@@ -538,15 +544,15 @@ exibble |>
   )
 ```
 
-|       | num          | char       | fctr  | date         | time    | datetime            | currency   |
-|-------|--------------|------------|-------|--------------|---------|---------------------|------------|
-| grp_a |              |            |       |              |         |                     |            |
-| row_1 | 0.11         | apricot    | one   | Jan 15, 2015 | 1:35 PM | Jan 1, 2018 2:22 AM | €49.95     |
-| row_2 | 2.22         | banana     | two   | Feb 15, 2015 | 2:40 PM | Feb 2, 2018 2:33 PM | €17.95     |
-| row_3 | 33.33        | coconut    | three | Mar 15, 2015 | 3:45 PM | Mar 3, 2018 3:44 AM | €1.39      |
-| row_4 | 444.40       | durian     | four  | Apr 15, 2015 | 4:50 PM | Apr 4, 2018 3:55 PM | €65,100.00 |
-| grp_b |              |            |       |              |         |                     |            |
-| row_5 | 5,550.00     | NA         | five  | May 15, 2015 | 5:55 PM | May 5, 2018 4:00 AM | €1,325.81  |
-| row_6 | NA           | fig        | six   | Jun 15, 2015 | NA      | Jun 6, 2018 4:11 PM | €13.26     |
-| row_7 | 777,000.00   | grapefruit | seven | NA           | 7:10 PM | Jul 7, 2018 5:22 AM | NA         |
-| row_8 | 8,880,000.00 | honeydew   | eight | Aug 15, 2015 | 8:20 PM | NA                  | €0.44      |
+|  | num | char | fctr | date | time | datetime | currency |
+|----|----|----|----|----|----|----|----|
+| grp_a |  |  |  |  |  |  |  |
+| row_1 | 0.11 | apricot | one | Jan 15, 2015 | 1:35 PM | Jan 1, 2018 2:22 AM | €49.95 |
+| row_2 | 2.22 | banana | two | Feb 15, 2015 | 2:40 PM | Feb 2, 2018 2:33 PM | €17.95 |
+| row_3 | 33.33 | coconut | three | Mar 15, 2015 | 3:45 PM | Mar 3, 2018 3:44 AM | €1.39 |
+| row_4 | 444.40 | durian | four | Apr 15, 2015 | 4:50 PM | Apr 4, 2018 3:55 PM | €65,100.00 |
+| grp_b |  |  |  |  |  |  |  |
+| row_5 | 5,550.00 | NA | five | May 15, 2015 | 5:55 PM | May 5, 2018 4:00 AM | €1,325.81 |
+| row_6 | NA | fig | six | Jun 15, 2015 | NA | Jun 6, 2018 4:11 PM | €13.26 |
+| row_7 | 777,000.00 | grapefruit | seven | NA | 7:10 PM | Jul 7, 2018 5:22 AM | NA |
+| row_8 | 8,880,000.00 | honeydew | eight | Aug 15, 2015 | 8:20 PM | NA | €0.44 |
