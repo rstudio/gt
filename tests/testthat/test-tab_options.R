@@ -146,7 +146,7 @@ test_that("The internal `opts_df` table can be correctly modified", {
   c(dt_options_get_value(data = data, option = "table_font_size"),
     dt_options_get_value(data = tbl_html, option = "table_font_size")
   ) |>
-    expect_equal(c("16px", "14px"))
+    expect_identical(c(NA_character_, "14px"))
 
   # Modify the `table.font.size` option using just a numeric value
   tbl_html <- data |> tab_options(table.font.size = 14)
@@ -155,7 +155,7 @@ test_that("The internal `opts_df` table can be correctly modified", {
   c(dt_options_get_value(data = data, option = "table_font_size"),
     dt_options_get_value(data = tbl_html, option = "table_font_size")
   ) |>
-    expect_equal(c("16px", "14px"))
+    expect_identical(c(NA_character_, "14px"))
 
   # Modify the `table.border.top.style` option
   tbl_html <- data |> tab_options(table.border.top.style = "dashed")

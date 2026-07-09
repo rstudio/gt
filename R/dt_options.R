@@ -88,7 +88,7 @@ dt_options_tbl <-
     "table_background_color",             TRUE,  "table",            "value",   "#FFFFFF",
     "table_additional_css",              FALSE,  "table",            "values",  character(0L),
     "table_font_names",                  FALSE,  "table",            "values",  default_fonts_vec,
-    "table_font_size",                    TRUE,  "table",            "px",      "16px",
+    "table_font_size",                    TRUE,  "table",            "px",      NA_character_,
     "table_font_weight",                  TRUE,  "table",            "value",   "normal",
     "table_font_style",                   TRUE,  "table",            "value",   "normal",
     "table_font_color",                   TRUE,  "table",            "value",   "#333333",

@@ -5,7 +5,7 @@ test_that("as_raw_html() produces the same table every time", {
     as_raw_html(inline_css = TRUE)
 
   gt_html_1_sha1 <- rlang::hash(gt_html_1)
-  expect_equal(gt_html_1_sha1, "8239e0f3ca66f190ddc8836fb42b416a")
+  expect_equal(gt_html_1_sha1, "efeb37bb526090b737f843e85667bf91")
 
   gt_html_2 <-
     gt(
@@ -114,7 +114,7 @@ test_that("as_raw_html() produces the same table every time", {
     as_raw_html(inline_css = TRUE)
 
   gt_html_2_sha1 <- rlang::hash(gt_html_2)
-  expect_equal(gt_html_2_sha1, "139ac41fc8765826201656f786a58fb8")
+  expect_equal(gt_html_2_sha1, "72e7894f50278f400f0ac11f379f27d0")
 
   # Expect that font family values with multiple words (i.e., have a space
   # character) added with `tab_style()` preserve single-quote characters

@@ -61,6 +61,8 @@
 
 * Refactored pipe use, moving many pipes in the codebase from `%>%` to `|>`. (#2056)
 
+* Tables output to HTML and LaTeX now respect the document/browser default font sizes, only changing the size if the user sets the `table.font.size` option. (@capnrefsmmat, #1937)
+
 # gt 1.1.0
 
 ## New features

@@ -57,12 +57,12 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begin{table}[t]\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{tabular*}{\\linewidth}{@{\\extracolsep{\\fill}}l|rr}\n\\toprule\nItem & col\\_a & col\\_b \\\\ \n\\midrule\\addlinespace[2.5pt]\nRow 1 & 10 & 100 \\\\ \nRow 2 & 20 & 200 \\\\ \nRow 3 & 30 & 300 \\\\ \n\\bottomrule\n\\end{tabular*}\n\\end{table}\n"
+      [1] "\\begin{table}[t]\n\\begin{tabular*}{\\linewidth}{@{\\extracolsep{\\fill}}l|rr}\n\\toprule\nItem & col\\_a & col\\_b \\\\ \n\\midrule\\addlinespace[2.5pt]\nRow 1 & 10 & 100 \\\\ \nRow 2 & 20 & 200 \\\\ \nRow 3 & 30 & 300 \\\\ \n\\bottomrule\n\\end{tabular*}\n\\end{table}\n"
 
 ---
 
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begin{table}[t]\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{tabular*}{\\linewidth}{@{\\extracolsep{\\fill}}lrr}\n\\toprule\nItem & col\\_a & col\\_b \\\\ \n\\midrule\\addlinespace[2.5pt]\nRow 1 & 10 & 100 \\\\ \nRow 2 & 20 & 200 \\\\ \nRow 3 & 30 & 300 \\\\ \n\\bottomrule\n\\end{tabular*}\n\\end{table}\n"
+      [1] "\\begin{table}[t]\n\\begin{tabular*}{\\linewidth}{@{\\extracolsep{\\fill}}lrr}\n\\toprule\nItem & col\\_a & col\\_b \\\\ \n\\midrule\\addlinespace[2.5pt]\nRow 1 & 10 & 100 \\\\ \nRow 2 & 20 & 200 \\\\ \nRow 3 & 30 & 300 \\\\ \n\\bottomrule\n\\end{tabular*}\n\\end{table}\n"
 
