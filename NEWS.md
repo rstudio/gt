@@ -2,6 +2,7 @@
 
 * Update RTF handling of stub columns and spans to handle multicolumn stubs (#2118)
 * Expand functionality of `gt_group()` to allow `gt_group` objects to be combined with `gt_tbls` (#2128)
+* Fixed an issue where `gt_split` objects only contained data for the first split table and all other splits contained NA (#2130)
 
 # gt 1.3.0
 
