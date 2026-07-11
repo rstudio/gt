@@ -168,6 +168,10 @@ expect_snapshot_rtf <- function(gt_tbl) {
   expect_snapshot(as_rtf(gt_tbl))
 }
 
+expect_snapshot_typst <- function(gt_tbl) {
+  expect_snapshot(as_typst(gt_tbl))
+}
+
 #' Test if two gt tables are equal (or equivalent)
 #'
 #' @param gt_tbl1,gt_tbl2 A pair of gt tables to test for equality

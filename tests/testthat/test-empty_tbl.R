@@ -16,6 +16,8 @@ test_that("We can render empty gt tables with empty data frames", {
 
   expect_no_error(gt(empty_tbl) |> as_word())
 
+  expect_no_error(gt(empty_tbl) |> as_typst())
+
   # An empty table (having columns) can be rendered
   # in different output formats without failing
   expect_no_error(gt(empty_w_cols_tbl) |> render_as_html())
@@ -25,6 +27,8 @@ test_that("We can render empty gt tables with empty data frames", {
   expect_no_error(gt(empty_w_cols_tbl) |> as_rtf())
 
   expect_no_error(gt(empty_w_cols_tbl) |> as_word())
+
+  expect_no_error(gt(empty_w_cols_tbl) |> as_typst())
 
   # An empty table (having some rows though) can be rendered
   # in different output formats without failing
@@ -36,6 +40,8 @@ test_that("We can render empty gt tables with empty data frames", {
   expect_no_error(gt(empty_w_rows_tbl) |> as_rtf())
 
   expect_no_error(gt(empty_w_rows_tbl) |> as_word())
+
+  expect_no_error(gt(empty_w_rows_tbl) |> as_typst())
 })
 
 test_that("We can start from empty tables and sometimes add columns", {

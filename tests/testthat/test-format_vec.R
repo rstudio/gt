@@ -429,6 +429,15 @@ test_that("vec_fmt_number() works", {
     )
 })
 
+test_that("vec_fmt_number() supports Typst output", {
+
+  vec_fmt_number(c(5.2, 8.65), output = "typst") |>
+    expect_equal(c("5.20", "8.65"))
+
+  vec_fmt_number(c(5.2, -8.65), accounting = TRUE, output = "typst") |>
+    expect_equal(c("5.20", "(8.65)"))
+})
+
 test_that("vec_fmt_integer() works", {
 
   vec_fmt_integer(vec_num_1, output = "plain") |>

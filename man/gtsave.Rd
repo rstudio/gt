@@ -19,8 +19,9 @@ This is the \strong{gt} table object that is commonly created through use of the
 \verb{scalar<character>} // \strong{required}
 
 The file name to create on disk. Ensure that an extension compatible with
-the output types is provided (\code{.html}, \code{.tex}, \code{.ltx}, \code{.rtf}, \code{.docx}). If
-a custom save function is provided then the file extension is disregarded.}
+the output types is provided (\code{.html}, \code{.tex}, \code{.ltx}, \code{.rtf}, \code{.typ},
+\code{.docx}). If a custom save function is provided then the file extension is
+disregarded.}
 
 \item{path}{\emph{Output path}
 
@@ -41,7 +42,8 @@ The file name (invisibly) if the export process is successful.
 \description{
 \code{gtsave()} makes it easy to save a \strong{gt} table to a file. The function
 guesses the file type by the extension provided in the output filename,
-producing either an HTML, PDF, PNG, LaTeX, RTF, or Word (.docx) file.
+producing either an HTML, PDF, PNG, LaTeX, RTF, Typst, or Word (.docx)
+file.
 }
 \details{
 Output filenames with either the \code{.html} or \code{.htm} extensions will produce an
@@ -126,6 +128,11 @@ With the \code{.rtf} extension, we'll get an RTF document.
 
 }\if{html}{\out{</div>}}
 
+With the \code{.typ} extension, we'll get a Typst fragment.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> gtsave("tab_1.typ")
+}\if{html}{\out{</div>}}
+
 With the \code{.docx} extension, we'll get a word/docx document.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> gtsave("tab_1.docx")
@@ -148,6 +155,7 @@ Other table export functions:
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
+\code{\link{as_typst}()},
 \code{\link{as_word}()},
 \code{\link{extract_body}()},
 \code{\link{extract_cells}()},

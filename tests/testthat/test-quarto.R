@@ -1,18 +1,27 @@
 skip_on_cran()
 
+with_typst_knit_context <- function(code) {
+  withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
+  local_mocked_bindings(
+    check_quarto = function() TRUE,
+    knitr_is_typst_output = function() TRUE
+  )
+  old_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+  withr::defer(knitr::opts_knit$set(rmarkdown.pandoc.to = old_to))
+  knitr::opts_knit$set(rmarkdown.pandoc.to = "typst")
+  force(code)
+}
+
 test_that("Rendering in Quarto doesn't error with empty string (#1769)", {
 
   withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
 
   tbl <- mtcars_short |> dplyr::select(mpg, cyl) |> gt()
 
-  # note that these don't produce the same output.
-  # render_as_html(tbl |> cols_label(mpg = "")),
-  # render_as_html(tbl |> cols_label(mpg = md("")))
   expect_no_match_html(
     tbl |> cols_label(mpg = gt::md("")),
     ">mpg</th>", fixed = TRUE
-    )
+  )
 
   expect_match_html(
     tbl |> cols_label(mpg = gt::md("")),
@@ -31,11 +40,10 @@ test_that("Rendering in Quarto produces valid html (#1839)", {
 
   tbl <-
     mtcars_short |>
-    dplyr::select(mpg, cyl) |> gt() |> tab_spanner(md("markdown"), c(mpg, cyl))
+    dplyr::select(mpg, cyl) |>
+    gt() |>
+    tab_spanner(md("markdown"), c(mpg, cyl))
 
-  # note that these don't produce the same output.
-  # render_as_html(tbl |> cols_label(mpg = "")),
-  # render_as_html(tbl |> cols_label(mpg = md("")))
   expect_no_match_html(
     tbl |> cols_label(mpg = gt::md("")),
     "&gt;&lt;", fixed = TRUE
@@ -49,13 +57,12 @@ test_that("Rendering in Quarto produces valid html (#1839)", {
 
 test_that("Quarto produces the valid output", {
 
-  # Currently, some parts are invalid
   withr::local_envvar(c("QUARTO_BIN_PATH" = "path"))
 
   tab <-
     exibble |>
     dplyr::select(num, char, fctr) |>
-    dplyr::mutate(x = "- 1") |> # create bullet list
+    dplyr::mutate(x = "- 1") |>
     dplyr::slice_head(n  = 5) |>
     gt() |>
     fmt_markdown(num) |>
@@ -77,4 +84,128 @@ test_that("Quarto produces the valid output", {
 
   expect_snapshot_html(tab)
   expect_snapshot_latex(tab)
+})
+
+test_that("Quarto Typst knit_print() renders captioned tables as raw Typst figures", {
+
+  with_typst_knit_context({
+    tab <-
+      exibble[1:2, c("num", "char")] |>
+      gt() |>
+      tab_header(title = "A title") |>
+      tab_caption("A caption")
+
+    out_chr <- as.character(knit_print.gt_tbl(tab))
+
+    expect_match(out_chr, "```\\{=typst\\}")
+    expect_match(out_chr, "kind: \"quarto-float-tbl\"", fixed = TRUE)
+    expect_match(out_chr, "caption: figure.caption(", fixed = TRUE)
+    expect_no_match(out_chr, "^:::", perl = TRUE)
+  })
+})
+
+test_that("Quarto Typst knit_print() defers captions to Quarto when `tbl-cap` is set", {
+
+  with_typst_knit_context({
+    old_label <- knitr::opts_current$get("label")
+    old_tbl_cap <- knitr::opts_current$get("tbl-cap")
+    withr::defer(knitr::opts_current$set(label = old_label))
+    withr::defer(knitr::opts_current$set(`tbl-cap` = old_tbl_cap))
+    knitr::opts_current$set(label = "tbl-demo-table")
+    knitr::opts_current$set(`tbl-cap` = "Chunk caption")
+
+    tab <-
+      exibble[1:2, c("num", "char")] |>
+      gt() |>
+      tab_header(title = "A title", subtitle = "A subtitle") |>
+      tab_footnote("A footnote", locations = cells_body(columns = num, rows = 1)) |>
+      tab_source_note("A source note") |>
+      tab_caption("caption #1 @x <tbl-y>")
+
+    out_chr <- as.character(knit_print.gt_tbl(tab))
+
+    expect_match(out_chr, "```\\{=typst\\}")
+    expect_no_match(out_chr, "kind: \"quarto-float-tbl\"", fixed = TRUE)
+    expect_no_match(out_chr, "caption: figure.caption(", fixed = TRUE)
+    expect_no_match(out_chr, "caption \\#1 @x <tbl-y>", fixed = TRUE)
+    expect_match(out_chr, "A title")
+    expect_match(out_chr, "A subtitle")
+    expect_match(out_chr, "A footnote")
+    expect_match(out_chr, "A source note")
+  })
+})
+
+test_that("Quarto Typst knit_print() defers captions to Quarto when the chunk label owns the float", {
+
+  with_typst_knit_context({
+    old_label <- knitr::opts_current$get("label")
+    old_tbl_cap <- knitr::opts_current$get("tbl-cap")
+    withr::defer(knitr::opts_current$set(label = old_label))
+    withr::defer(knitr::opts_current$set(`tbl-cap` = old_tbl_cap))
+    knitr::opts_current$set(label = "tbl-demo-table")
+    knitr::opts_current$set(`tbl-cap` = NULL)
+
+    tab <-
+      exibble[1:2, c("num", "char")] |>
+      gt() |>
+      tab_header(title = "A title") |>
+      tab_caption("GT caption")
+
+    out_chr <- as.character(knit_print.gt_tbl(tab))
+
+    expect_match(out_chr, "```\\{=typst\\}")
+    expect_no_match(out_chr, "kind: \"quarto-float-tbl\"", fixed = TRUE)
+    expect_no_match(out_chr, "caption: figure.caption(", fixed = TRUE)
+    expect_no_match(out_chr, "GT caption", fixed = TRUE)
+    expect_match(out_chr, "A title")
+  })
+})
+
+test_that("Quarto Typst knit_print() preserves Typst-safe escaping and styling", {
+
+  with_typst_knit_context({
+    tab <-
+      dplyr::tibble(
+        item = "cash",
+        value = "$100"
+      ) |>
+      gt() |>
+      tab_header(title = "@heading <tbl-x>") |>
+      tab_style(
+        style = list(
+          cell_fill(color = "#1F3C88"),
+          cell_text(color = "white", weight = "bold")
+        ),
+        locations = cells_column_labels()
+      ) |>
+      tab_caption("caption #1 $100")
+
+    out_chr <- as.character(knit_print.gt_tbl(tab))
+
+    expect_true(grepl("\\@heading \\<tbl-x\\>", out_chr, fixed = TRUE))
+    expect_true(grepl("[\\$100]", out_chr, fixed = TRUE))
+    expect_true(grepl("caption \\#1 \\$100", out_chr, fixed = TRUE))
+    expect_match(out_chr, "fill: \\(x, y\\) => if y == 0 \\{")
+    expect_match(out_chr, "#text\\(fill: rgb\\(\"#FFFFFF\"\\), weight: \"bold\"\\)")
+  })
+})
+
+test_that("Typst knit_print() for gt_group emits Typst blocks", {
+
+  old_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+  withr::defer(knitr::opts_knit$set(rmarkdown.pandoc.to = old_to))
+  knitr::opts_knit$set(rmarkdown.pandoc.to = "typst")
+
+  grp <-
+    gt_group(
+      gt(exibble[1:2, c("num", "char")]),
+      gt(exibble[3:4, c("num", "char")])
+    )
+
+  out_chr <- as.character(knit_print.gt_group(grp))
+
+  expect_match(out_chr, "```\\{=typst\\}")
+  expect_match(out_chr, "#pagebreak\\(\\)")
+  expect_no_match(out_chr, "<!--html_preserve-->")
+  expect_no_match(out_chr, "<table")
 })

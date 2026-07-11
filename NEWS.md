@@ -3,6 +3,8 @@
 * Update RTF handling of stub columns and spans to handle multicolumn stubs (#2118)
 * Expand functionality of `gt_group()` to allow `gt_group` objects to be combined with `gt_tbls` (#2128)
 
+* Added Typst output support with the new `as_typst()` export function. Typst output is also supported in `knit_print()`, `gtsave(.typ)`, Quarto rendering, and styled tables with captions, notes, summaries, labels, and markdown content.
+
 # gt 1.3.0
 
 ## New features

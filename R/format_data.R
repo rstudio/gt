@@ -3000,6 +3000,13 @@ fmt_fraction <- function(
                 gsub(" ", "", non_fraction_part),
                 paste0("{\\super ", num_vec, "}/{\\sub ", denom_vec, "}")
               )
+          } else if (context == "typst") {
+
+            x_str[has_a_fraction] <-
+              paste0(
+                gsub(" ", "", non_fraction_part),
+                paste0("`", num_vec, "/", denom_vec, "`")
+              )
           }
         }
 
@@ -10467,6 +10474,9 @@ fmt_markdown <- function(
       rtf = function(x) {
         markdown_to_rtf(x)
       },
+      typst = function(x) {
+        markdown_to_typst(x)
+      },
       word = function(x) {
         markdown_to_xml(x)
       },
@@ -10711,6 +10721,24 @@ fmt_passthrough <- function(
 
         if (escape) {
           x_str <- process_text(text = x_str, context = "rtf")
+        }
+
+        x_str
+      },
+      typst = function(x) {
+
+        # Create `x_str` with same length as `x`
+        x_str <- rep_len(NA_character_, length(x))
+
+        # Handle formatting of pattern
+        x_str <-
+          apply_pattern_fmt_x(
+            pattern,
+            values = x
+          )
+
+        if (escape) {
+          x_str <- process_text(text = x_str, context = "typst")
         }
 
         x_str

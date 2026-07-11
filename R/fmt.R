@@ -875,6 +875,7 @@ context_missing_text <- function(missing_text, context) {
       html = ,
       grid = ,
       latex = ,
+      typst = ,
       word =
         {
           if (!is_asis && missing_text == "---") {
@@ -923,6 +924,7 @@ context_plusminus_mark <- function(plusminus_mark, context) {
     html = ,
     latex = ,
     grid = ,
+    typst = ,
     word =
       {
         if (!is_asis && plusminus_mark == " +/- ") {
@@ -985,6 +987,7 @@ context_lte_mark <- function(context) {
   switch(
     context,
     grid = ,
+    typst = ,
     word = ,
     html = "\U02264",
     latex = "$\\leq$",
@@ -1001,6 +1004,7 @@ context_gte_mark <- function(context) {
   switch(
     context,
     grid = ,
+    typst = ,
     word = ,
     html = "\U02265",
     latex = "$\\geq$",
@@ -1179,6 +1183,15 @@ context_symbol_str <- function(context, symbol) {
           )#,
           #  c("\\text{", "}")
           #)
+        }
+      },
+      typst = {
+        if (inherits(symbol, "AsIs")) {
+          symbol
+        } else {
+          typst_escape_markup(
+            get_currency_str(currency = symbol, fallback_to_code = TRUE)
+          )
         }
       },
       get_currency_str(currency = symbol, fallback_to_code = TRUE)

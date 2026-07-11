@@ -989,6 +989,25 @@ process_text <- function(text, context = "html") {
 
     return(text)
 
+  } else if (context == "typst") {
+
+    # Text processing for Typst output
+
+    if (inherits(text, "from_markdown")) {
+
+      text <- markdown_to_typst(text)
+
+    } else if (is_html(text)) {
+
+      text <- markdown_to_typst(unescape_html(linebreak_br(text)))
+
+    } else {
+
+      text <- typst_escape_markup(as.character(text))
+    }
+
+    return(text)
+
   } else if (context == "grid") {
     # Skip any formatting (unless wrapped in from_md)
     if (inherits(text, "from_markdown")) {
@@ -1166,6 +1185,271 @@ markdown_to_latex <- function(text, md_engine) {
       )
     )
   )
+}
+
+#' Transform Markdown text to Typst markup
+#' @noRd
+markdown_to_typst <- function(text) {
+
+  text <- as.character(text)
+
+  has_html_nodes <- vapply(
+    text,
+    FUN.VALUE = logical(1L),
+    USE.NAMES = FALSE,
+    FUN = function(x) {
+
+      if (is.na(x)) {
+        return(FALSE)
+      }
+
+      doc <- xml2::read_xml(commonmark::markdown_xml(linebreak_br(x)))
+      typst_markdown_has_html_nodes(doc)
+    }
+  )
+
+  if (isTRUE(getOption("gt.html_tag_check", TRUE)) && any(has_html_nodes)) {
+    cli::cli_warn(c(
+      "HTML tags found, and they will be removed.",
+      "*" = "Set `options(gt.html_tag_check = FALSE)` to disable this check."
+    ))
+  }
+
+  res <- vapply(
+    text,
+    FUN.VALUE = character(1L),
+    USE.NAMES = FALSE,
+    FUN = function(x) {
+
+      if (is.na(x)) {
+        return(NA_character_)
+      }
+
+      doc <- xml2::read_xml(commonmark::markdown_xml(linebreak_br(x)))
+
+      typst_render_markdown_node(xml2::xml_root(doc))
+    }
+  )
+
+  sub("\n$", "", res)
+}
+
+#' @noRd
+typst_render_markdown_children <- function(node, collapse = "") {
+  paste0(vapply(xml2::xml_children(node), typst_render_markdown_node, character(1L)), collapse = collapse)
+}
+
+#' @noRd
+typst_render_markdown_node <- function(node) {
+
+  node_name <- xml2::xml_name(node)
+
+  switch(
+    node_name,
+    document = {
+      blocks <- vapply(xml2::xml_children(node), typst_render_markdown_node, character(1L))
+      paste(blocks[nzchar(blocks)], collapse = "\n\n")
+    },
+    paragraph = typst_render_markdown_children(node),
+    text = typst_escape_markup(xml2::xml_text(node)),
+    softbreak = " ",
+    linebreak = " #linebreak() ",
+    emph = paste0("_", typst_render_markdown_children(node), "_"),
+    strong = paste0("*", typst_render_markdown_children(node), "*"),
+    code = paste0("`", typst_escape_code(xml2::xml_text(node)), "`"),
+    code_block = {
+      info <- xml2::xml_attr(node, "info", default = "")
+      code_text <- xml2::xml_text(node)
+
+      if (nzchar(code_text) && !grepl("\n$", code_text)) {
+        code_text <- paste0(code_text, "\n")
+      }
+
+      paste0("```", info, "\n", code_text, "```")
+    },
+    item = typst_render_markdown_item(node),
+    list = {
+      list_type <- xml2::xml_attr(node, "type", default = "bullet")
+      prefix <- if (identical(list_type, "ordered")) "+ " else "- "
+      items <- vapply(
+        xml2::xml_children(node),
+        typst_render_markdown_list_item,
+        character(1L),
+        prefix = prefix
+      )
+      paste(items[nzchar(items)], collapse = "\n")
+    },
+    block_quote = {
+      quote_body <- typst_render_markdown_children(node, collapse = "\n\n")
+      paste0("#quote(block: true)[", quote_body, "]")
+    },
+    link = {
+      link_text <- typst_render_markdown_children(node)
+      destination <- xml2::xml_attr(node, "destination", default = "")
+      if (nzchar(destination)) {
+        paste0(
+          "#link(",
+          typst_string_literal(destination),
+          ")[",
+          link_text,
+          "]"
+        )
+      } else {
+        link_text
+      }
+    },
+    image = {
+      image_alt <- xml2::xml_text(node)
+      destination <- xml2::xml_attr(node, "destination", default = "")
+
+      if (!nzchar(destination)) {
+        return(image_alt)
+      }
+
+      paste0(
+        "#image(",
+        typst_string_literal(destination),
+        if (nzchar(image_alt)) paste0(", alt: ", typst_string_literal(image_alt)),
+        ")"
+      )
+    },
+    html_inline = typst_render_markdown_html_inline(node),
+    html_block = typst_render_markdown_html_block(node),
+    typst_render_markdown_children(node)
+  )
+}
+
+#' @noRd
+typst_render_markdown_html_inline <- function(node) {
+
+  html_text <- xml2::xml_text(node)
+
+  if (typst_is_inert_html_inline_wrapper(html_text)) {
+    return("")
+  }
+
+  ""
+}
+
+#' @noRd
+typst_render_markdown_html_block <- function(node) {
+
+  html_text <- xml2::xml_text(node)
+  wrapper <- typst_inert_html_wrapper_match(html_text)
+
+  if (!is.null(wrapper)) {
+    return(markdown_to_typst(wrapper$inner))
+  }
+
+  ""
+}
+
+#' @noRd
+typst_is_inert_html_inline_wrapper <- function(text) {
+  grepl("^</?(div|span)(\\s+[^>]*)?>$", trimws(text), perl = TRUE)
+}
+
+#' @noRd
+typst_inert_html_wrapper_match <- function(text) {
+
+  text_trim <- trimws(text)
+  match <- regexec("^<(div|span)>([\\s\\S]*)</\\1>$", text_trim, perl = TRUE)
+  captures <- regmatches(text_trim, match)[[1]]
+
+  if (length(captures) == 0L) {
+    return(NULL)
+  }
+
+  list(
+    tag = captures[2],
+    inner = captures[3]
+  )
+}
+
+#' @noRd
+typst_markdown_has_html_nodes <- function(doc) {
+  length(xml2::xml_find_all(doc, ".//*[local-name() = 'html_inline' or local-name() = 'html_block']")) > 0L
+}
+
+#' @noRd
+typst_render_markdown_item <- function(node) {
+
+  children <- xml2::xml_children(node)
+
+  if (length(children) == 0L) {
+    return("")
+  }
+
+  parts <- vapply(children, typst_render_markdown_node, character(1L))
+  keep <- nzchar(parts)
+  parts <- parts[keep]
+  children <- children[keep]
+
+  if (length(parts) == 0L) {
+    return("")
+  }
+
+  out <- parts[[1L]]
+
+  if (length(parts) == 1L) {
+    return(out)
+  }
+
+  for (i in 2:length(parts)) {
+    prev_name <- xml2::xml_name(children[[i - 1L]])
+    curr_name <- xml2::xml_name(children[[i]])
+    separator <- if (identical(curr_name, "list") || identical(prev_name, "list")) "\n" else "\n\n"
+    out <- paste0(out, separator, parts[[i]])
+  }
+
+  out
+}
+
+#' @noRd
+typst_render_markdown_list_item <- function(node, prefix) {
+
+  text <- typst_render_markdown_item(node)
+
+  if (!nzchar(text)) {
+    return(prefix)
+  }
+
+  lines <- strsplit(text, "\n", fixed = TRUE)[[1]]
+
+  paste(
+    c(
+      paste0(prefix, lines[[1L]]),
+      if (length(lines) > 1L) paste0("  ", lines[-1L])
+    ),
+    collapse = "\n"
+  )
+}
+
+#' Escape Typst markup-sensitive characters in plain text
+#' @noRd
+typst_escape_markup <- function(text) {
+
+  text <- enc2utf8(text %||% "")
+  text <- gsub("([\\\\#$\\[\\]\\*_`@<>])", "\\\\\\1", text, perl = TRUE)
+  text
+}
+
+#' Escape literal text for inline Typst code spans
+#' @noRd
+typst_escape_code <- function(text) {
+
+  text <- enc2utf8(text %||% "")
+  gsub("([\\\\`])", "\\\\\\1", text, perl = TRUE)
+}
+
+#' Escape text for a Typst string literal
+#' @noRd
+typst_string_literal <- function(text) {
+
+  text <- enc2utf8(text %||% "")
+  text <- gsub("\\", "\\\\", text, fixed = TRUE)
+  text <- gsub("\"", "\\\"", text, fixed = TRUE)
+  paste0("\"", text, "\"")
 }
 
 # Transform Markdown text to ooxml

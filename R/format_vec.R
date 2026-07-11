@@ -21,7 +21,7 @@
 #
 #------------------------------------------------------------------------------#
 
-output_types <- c("auto", "plain", "html", "latex", "rtf", "word")
+output_types <- c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 
 # vec_fmt_number() -------------------------------------------------------------
 #' Format a vector as numeric values
@@ -55,12 +55,12 @@ output_types <- c("auto", "plain", "html", "latex", "rtf", "word")
 #'
 #' @param output *Output format*
 #'
-#'   `singl-kw:[auto|plain|html|latex|rtf|word]` // *default:* `"auto"`
+#'   `singl-kw:[auto|plain|html|latex|rtf|word|typst]` // *default:* `"auto"`
 #'
 #'   The output style of the resulting character vector. This can either be
-#'   `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`, or
-#'   `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the `"auto"`
-#'   option will choose the correct `output` value
+#'   `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`, `"word"`,
+#'   or `"typst"`. In **knitr** rendering (i.e., Quarto or R Markdown), the
+#'   `"auto"` option will choose the correct `output` value
 #'
 #' @param locale *Locale identifier*
 #'
@@ -172,7 +172,7 @@ vec_fmt_number <- function(
     force_sign = FALSE,
     min_sep_threshold = 1,
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if `x` is not a vector or is incompatible with the formatting
@@ -316,7 +316,7 @@ vec_fmt_integer <- function(
     force_sign = FALSE,
     min_sep_threshold = 1,
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -467,7 +467,7 @@ vec_fmt_scientific <- function(
     force_sign_m = FALSE,
     force_sign_n = FALSE,
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -624,7 +624,7 @@ vec_fmt_engineering <- function(
     force_sign_m = FALSE,
     force_sign_n = FALSE,
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -800,7 +800,7 @@ vec_fmt_number_si <- function(
     force_sign = FALSE,
     incl_space = TRUE,
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -976,7 +976,7 @@ vec_fmt_percent <- function(
     incl_space = FALSE,
     placement = "right",
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -1156,7 +1156,7 @@ vec_fmt_partsper <- function(
     force_sign = FALSE,
     incl_space = "auto",
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -1299,7 +1299,7 @@ vec_fmt_fraction <- function(
     pattern = "{x}",
     sep_mark = ",",
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -1494,7 +1494,7 @@ vec_fmt_currency <- function(
     placement = "left",
     incl_space = FALSE,
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -1607,7 +1607,7 @@ vec_fmt_roman <- function(
     x,
     case = c("upper", "lower"),
     pattern = "{x}",
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -1729,7 +1729,7 @@ vec_fmt_index <- function(
     index_algo = c("repeat", "excel"),
     pattern = "{x}",
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -1868,7 +1868,7 @@ vec_fmt_spelled_num <- function(
     x,
     pattern = "{x}",
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -2019,7 +2019,7 @@ vec_fmt_bytes <- function(
     min_sep_threshold = 1,
     incl_space = TRUE,
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -2213,7 +2213,7 @@ vec_fmt_date <- function(
     date_style = "iso",
     pattern = "{x}",
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -2385,7 +2385,7 @@ vec_fmt_time <- function(
     time_style = "iso",
     pattern = "{x}",
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -3206,7 +3206,7 @@ vec_fmt_datetime <- function(
     tz = NULL,
     pattern = "{x}",
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -3403,7 +3403,7 @@ vec_fmt_duration <- function(
     sep_mark = ",",
     force_sign = FALSE,
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -3502,7 +3502,7 @@ vec_fmt_duration <- function(
 vec_fmt_markdown <- function(
     x,
     md_engine = c("markdown", "commonmark"),
-    output = c("auto", "plain", "html", "latex", "rtf", "word")
+    output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 ) {
 
   # Check that `x` is a vector with rlang::is_vector
@@ -3620,6 +3620,8 @@ determine_output_format <- function() {
 
   if (knitr_is_rtf_output()) {
     return("rtf")
+  } else if (knitr_is_typst_output()) {
+    return("typst")
   } else if (knitr::is_latex_output()) {
     return("latex")
   } else if (knitr_is_word_output()) {

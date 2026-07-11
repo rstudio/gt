@@ -779,7 +779,7 @@ place_footnote_on_left <- function(text, mark, context) {
 
     text <- apply_footnotes_method[[context]](text, mark, position = "left")
 
-  } else if (context == "html" || context == "grid") {
+  } else if (context == "html" || context == "grid" || context == "typst") {
 
     # Footnote placement on the left of the cell text; ensure that a
     # non-breaking space (added here as Unicode's 'NO-BREAK SPACE',
@@ -967,6 +967,7 @@ footnotes_dispatch <-
     rtf = footnote_mark_to_rtf,
     grid = footnote_mark_to_grid,
     latex = footnote_mark_to_latex,
+    typst = footnote_mark_to_typst,
     word = footnote_mark_to_xml
   )
 
@@ -976,5 +977,6 @@ apply_footnotes_method <-
     rtf = paste0,
     grid = paste0,
     latex = paste_footnote_latex,
+    typst = paste0,
     word = paste_footnote_xml
   )
