@@ -114,9 +114,7 @@ check_suggests <- function() {
 
 test_that("word ooxml can be generated from gt object", {
 
-  # This block includes a fixed-hash determinism check that coverage
-  # instrumentation perturbs, so it is skipped under covr (#2123)
-  skip_on_covr()
+  skip_if_not_installed("rlang", "1.3.0")
 
   # Create a one-row table for these tests
   exibble_min <- exibble[1, ]
@@ -213,7 +211,7 @@ test_that("word ooxml can be generated from gt object", {
 
   gt_exibble_min_sha1 <- rlang::hash(gt_exibble_min)
 
-  expect_equal(gt_exibble_min_sha1, "be8267d755328ebf90527242ff60c54c")
+  expect_equal(gt_exibble_min_sha1, "b6d9b0a75074ea7423ca192bbf4ac81e")
 
   ## basic table with linebreak in title
   gt_tbl_linebreaks_md <-
@@ -2781,7 +2779,7 @@ test_that("multicolumn stub are supported", {
   xml <- test_data |>
     gt(rowname_col = c("mfr", "model", "trim")) |>
     tab_stubhead(c("one", "two", "three")) |>
-    as_word() %>%
+    as_word() |>
     read_xml()
 
   expect_equal(
