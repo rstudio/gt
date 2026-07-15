@@ -5,6 +5,8 @@
 \alias{gt-package}
 \title{gt: Easily Create Presentation-Ready Display Tables}
 \description{
+\if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
+
 Build display tables from tabular data with an easy-to-use set of functions. With its progressive approach, we can construct display tables with a cohesive set of table parts. Table values can be formatted using any of the included formatting functions. Footnotes and cell styles can be precisely added through a location targeting system. The way in which 'gt' handles things for you means that you don't often have to worry about the fine details.
 }
 \seealso{
@@ -21,6 +23,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Richard Iannone \email{rich@posit.co} (\href{https://orcid.org/0000-0003-3925-190X}{ORCID})
   \item Joe Cheng \email{joe@posit.co}
   \item Barret Schloerke \email{barret@posit.co} (\href{https://orcid.org/0000-0001-9986-114X}{ORCID})
   \item Shannon Haughton \email{shannon.l.haughton@gsk.com}

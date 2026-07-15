@@ -163,9 +163,9 @@ string: \code{""}.
 }
 
 \seealso{
-Other text transforming functions: 
-\code{\link{text_case_match}()},
-\code{\link{text_case_when}()},
-\code{\link{text_replace}()}
+Other text transforming functions:
+\code{\link[=text_case_match]{text_case_match()}},
+\code{\link[=text_case_when]{text_case_when()}},
+\code{\link[=text_replace]{text_replace()}}
 }
 \concept{text transforming functions}

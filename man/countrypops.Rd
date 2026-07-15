@@ -44,7 +44,7 @@ DATA-1
 }
 
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{constants}},
 \code{\link{exibble}},
 \code{\link{films}},

@@ -125,9 +125,9 @@ times in the subtitle.
 }
 
 \seealso{
-Other image addition functions: 
-\code{\link{ggplot_image}()},
-\code{\link{local_image}()},
-\code{\link{test_image}()}
+Other image addition functions:
+\code{\link[=ggplot_image]{ggplot_image()}},
+\code{\link[=local_image]{local_image()}},
+\code{\link[=test_image]{test_image()}}
 }
 \concept{image addition functions}

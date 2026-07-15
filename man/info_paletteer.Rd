@@ -89,15 +89,15 @@ from the \strong{paletteer} package).
 }
 
 \seealso{
-Other information functions: 
-\code{\link{info_currencies}()},
-\code{\link{info_date_style}()},
-\code{\link{info_flags}()},
-\code{\link{info_google_fonts}()},
-\code{\link{info_icons}()},
-\code{\link{info_locales}()},
-\code{\link{info_tf_style}()},
-\code{\link{info_time_style}()},
-\code{\link{info_unit_conversions}()}
+Other information functions:
+\code{\link[=info_currencies]{info_currencies()}},
+\code{\link[=info_date_style]{info_date_style()}},
+\code{\link[=info_flags]{info_flags()}},
+\code{\link[=info_google_fonts]{info_google_fonts()}},
+\code{\link[=info_icons]{info_icons()}},
+\code{\link[=info_locales]{info_locales()}},
+\code{\link[=info_tf_style]{info_tf_style()}},
+\code{\link[=info_time_style]{info_time_style()}},
+\code{\link[=info_unit_conversions]{info_unit_conversions()}}
 }
 \concept{information functions}
