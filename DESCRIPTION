@@ -45,7 +45,6 @@ Imports:
     htmltools (>= 0.5.8.1),
     htmlwidgets (>= 1.6.4),
     juicyjuice (>= 0.1.0),
-    magrittr (>= 2.0.3),
     markdown (>= 1.13),
     reactable (>= 0.4.4),
     rlang (>= 1.1.4),

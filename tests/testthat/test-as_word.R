@@ -2764,7 +2764,7 @@ test_that("multicolumn stub are supported", {
   xml <- test_data |>
     gt(rowname_col = c("mfr", "model", "trim")) |>
     tab_stubhead("one") |>
-    as_word() %>%
+    as_word() |>
     read_xml()
   tcPr <- xml_find_all(xml, "(.//w:tr)[1]/w:tc/w:tcPr")
   expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:gridSpan"), "val"), "3")
@@ -2794,7 +2794,7 @@ test_that("multicolumn stub are supported", {
     gt(rowname_col = c("mfr", "model", "trim")) |>
     tab_stubhead(c("one", "two", "three")) |>
     tab_spanner(label = "span", columns = c(hp, msrp)) |>
-    as_word() %>%
+    as_word() |>
     read_xml()
 
   expect_equal(
@@ -2819,7 +2819,7 @@ test_that("multicolumn stub are supported", {
     gt(rowname_col = c("mfr", "model", "trim")) |>
     tab_stubhead(c("one")) |>
     tab_spanner(label = "span", columns = c(hp, msrp)) |>
-    as_word() %>%
+    as_word() |>
     read_xml()
 
   expect_equal(
