@@ -343,10 +343,16 @@ test_that("cols_width() works correctly in LaTeX output tables when row_group_as
     c(
       ## rowgroup column
       "\\\\multicolumn\\{3\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}m\\{337.5pt\\}\\}\\{\\\\shortstack\\[l\\]\\{\\\\parbox\\{\\\\linewidth\\}\\{Group A \\\\\\\\test\\}\\}\\}",
-      "\\\\multicolumn\\{3\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}m\\{337.5pt\\}\\}\\{\\\\parbox\\{\\\\linewidth\\}\\{Group B\\}\\}",
+      "\\\\multicolumn\\{3\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}m\\{337.5pt\\}\\}\\{\\\\parbox\\{\\\\linewidth\\}\\{Group B\\}\\}"
+    )
+  )
+  expect_match_latex(
+    tbl_rgnac,
+    c(
       ## styling stub
       "\\multicolumn{1}{>{\\raggedleft\\arraybackslash}m{\\dimexpr 75.00pt -2\\tabcolsep-1.5\\arrayrulewidth}}{\\parbox{\\linewidth}{\\raggedleft {1}}}",
       "\\multicolumn{1}{>{\\raggedleft\\arraybackslash}m{\\dimexpr 75.00pt -2\\tabcolsep-1.5\\arrayrulewidth}}{\\parbox{\\linewidth}{\\raggedleft {A}}}"
-    )
+    ),
+    fixed = TRUE
   )
 })
