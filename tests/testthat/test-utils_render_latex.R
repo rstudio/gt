@@ -102,23 +102,23 @@ test_that("spanner widths are calculated correctly",{
   pattern <- "\\{\\\\dimexpr\\s*0\\.22.*?\\}\\{\\\\centering \\{a spanner\\}"
 
   # No stub with spanner
-  expect_true(grepl(pattern, as.character(no_stub %>% as_latex())))
+  expect_match_latex(no_stub, pattern)
 
   # Single rowname stub with spanner
-  expect_true(grepl(pattern, as.character(single_stub %>% as_latex())))
+  expect_match_latex(single_stub, pattern)
 
   # Multiple rowname stubs with spanner
-  expect_true(grepl(pattern, as.character(multi_stub %>% as_latex())))
+  expect_match_latex(multi_stub, pattern)
 
   # Group and multiple rowname stubs
-  expect_true(grepl(pattern, as.character(group_and_stub %>% as_latex())))
+  expect_match_latex(group_and_stub, pattern)
 
   # Hidden columns should add to model + trim = 30
   pattern_2 <- "\\{\\\\dimexpr\\s*0\\.30.*?\\}\\{\\\\centering \\{a spanner\\}"
 
   # Hidden columns
-  expect_true(grepl(pattern_2, as.character(hidden_columns %>% as_latex())))
+  expect_match_latex(hidden_columns, pattern_2)
 
   # Hidden stub columns
-  expect_true(grepl(pattern_2, as.character(hidden_stub %>% as_latex())))
+  expect_match_latex(hidden_stub, pattern_2)
 })
