@@ -2958,7 +2958,7 @@ parse_to_xml <- function(x, ...) {
   ##check if wrapped in ooxml
   ## get what it starts with and assign
 
-  if (is.null(x)) {
+  if (is.null(x) | identical(x,"<md_container></md_container>")) {
     x <-
       xml_p(
         xml_pPr(

@@ -485,14 +485,18 @@ gt_save_docx <- function(
     con = word_md_file
   )
 
+  temp_filename <- tempfile(fileext = paste0(".",tools::file_ext(filename)))
   rmarkdown::pandoc_convert(
     input = word_md_file,
-    output = filename
+    output = temp_filename,
   )
 
   if (needs_gt_as_word_post_processing(word_md_text)) {
-    gt_as_word_post_processing(path = filename)
+    gt_as_word_post_processing(path = temp_filename)
   }
+
+  file.rename(temp_filename, filename)
+
 }
 
 #' Get the lowercase extension from a filename
