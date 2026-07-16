@@ -177,7 +177,7 @@ direction.}
 A color-mapping function. The function should be able to take a vector of
 data values as input and return an equal-length vector of color values. The
 \verb{scales::col_*()} functions (i.e.,\code{\link[scales:col_numeric]{scales::col_numeric()}},
-\code{\link[scales:col_numeric]{scales::col_bin()}}, and \code{\link[scales:col_numeric]{scales::col_factor()}}) can be invoked here with
+\code{\link[scales:col_bin]{scales::col_bin()}}, and \code{\link[scales:col_factor]{scales::col_factor()}}) can be invoked here with
 options, as those functions themselves return a color-mapping function.}
 
 \item{apply_to}{\emph{How to apply color}
@@ -294,7 +294,7 @@ two-element numeric vector describing the range of values, if provided.
 \subsection{\code{"bin"}}{
 
 The \code{"bin"} method provides a mapping of continuous numeric data to
-value-based bins. Internally, this uses \code{\link[scales:col_numeric]{scales::col_bin()}} which itself
+value-based bins. Internally, this uses \code{\link[scales:col_bin]{scales::col_bin()}} which itself
 uses \code{\link[base:cut]{base::cut()}}. As with the \code{"numeric"} method, \code{"bin"} is meant for
 numeric data cell values. The use of a \code{domain} value is supported with this
 method. The \code{bins} argument in \code{data_color()} is specific to this method,
@@ -305,7 +305,7 @@ vector of cut points.
 \subsection{\code{"quantile"}}{
 
 The \code{"quantile"} method provides a mapping of continuous numeric data to
-quantiles. Internally, this uses \code{\link[scales:col_numeric]{scales::col_quantile()}} which itself uses
+quantiles. Internally, this uses \code{\link[scales:col_quantile]{scales::col_quantile()}} which itself uses
 \code{\link[stats:quantile]{stats::quantile()}}. Input data cell values should be numeric, as with the
 \code{"numeric"} and \code{"bin"} methods. A numeric \code{domain} value is supported with
 this method. The \code{quantiles} argument in \code{data_color()} controls the number
@@ -317,7 +317,7 @@ of equal-size quantiles to use.
 The \code{"factor"} method provides a mapping of factors to colors. With discrete
 palettes, color interpolation is used when the number of factors does not
 match the number of colors in the palette. Internally, this uses
-\code{\link[scales:col_numeric]{scales::col_factor()}}. Input data cell values can be of any type
+\code{\link[scales:col_factor]{scales::col_factor()}}. Input data cell values can be of any type
 (i.e., factor, character, numeric values, and more are supported). The
 optional input to \code{domain} should take the form of categorical data. The
 \code{levels} and \code{ordered} arguments in \code{data_color()} support this method.
@@ -691,42 +691,42 @@ gray cells for the missing values (we also removed the \code{"NA"} text with
 }
 
 \seealso{
-Other data formatting functions: 
-\code{\link{fmt}()},
-\code{\link{fmt_auto}()},
-\code{\link{fmt_bins}()},
-\code{\link{fmt_bytes}()},
-\code{\link{fmt_chem}()},
-\code{\link{fmt_country}()},
-\code{\link{fmt_currency}()},
-\code{\link{fmt_date}()},
-\code{\link{fmt_datetime}()},
-\code{\link{fmt_duration}()},
-\code{\link{fmt_email}()},
-\code{\link{fmt_engineering}()},
-\code{\link{fmt_flag}()},
-\code{\link{fmt_fraction}()},
-\code{\link{fmt_icon}()},
-\code{\link{fmt_image}()},
-\code{\link{fmt_index}()},
-\code{\link{fmt_integer}()},
-\code{\link{fmt_markdown}()},
-\code{\link{fmt_number}()},
-\code{\link{fmt_number_si}()},
-\code{\link{fmt_partsper}()},
-\code{\link{fmt_passthrough}()},
-\code{\link{fmt_percent}()},
-\code{\link{fmt_roman}()},
-\code{\link{fmt_scientific}()},
-\code{\link{fmt_spelled_num}()},
-\code{\link{fmt_tf}()},
-\code{\link{fmt_time}()},
-\code{\link{fmt_units}()},
-\code{\link{fmt_url}()},
-\code{\link{sub_large_vals}()},
-\code{\link{sub_missing}()},
-\code{\link{sub_small_vals}()},
-\code{\link{sub_values}()},
-\code{\link{sub_zero}()}
+Other data formatting functions:
+\code{\link[=fmt]{fmt()}},
+\code{\link[=fmt_auto]{fmt_auto()}},
+\code{\link[=fmt_bins]{fmt_bins()}},
+\code{\link[=fmt_bytes]{fmt_bytes()}},
+\code{\link[=fmt_chem]{fmt_chem()}},
+\code{\link[=fmt_country]{fmt_country()}},
+\code{\link[=fmt_currency]{fmt_currency()}},
+\code{\link[=fmt_date]{fmt_date()}},
+\code{\link[=fmt_datetime]{fmt_datetime()}},
+\code{\link[=fmt_duration]{fmt_duration()}},
+\code{\link[=fmt_email]{fmt_email()}},
+\code{\link[=fmt_engineering]{fmt_engineering()}},
+\code{\link[=fmt_flag]{fmt_flag()}},
+\code{\link[=fmt_fraction]{fmt_fraction()}},
+\code{\link[=fmt_icon]{fmt_icon()}},
+\code{\link[=fmt_image]{fmt_image()}},
+\code{\link[=fmt_index]{fmt_index()}},
+\code{\link[=fmt_integer]{fmt_integer()}},
+\code{\link[=fmt_markdown]{fmt_markdown()}},
+\code{\link[=fmt_number]{fmt_number()}},
+\code{\link[=fmt_number_si]{fmt_number_si()}},
+\code{\link[=fmt_partsper]{fmt_partsper()}},
+\code{\link[=fmt_passthrough]{fmt_passthrough()}},
+\code{\link[=fmt_percent]{fmt_percent()}},
+\code{\link[=fmt_roman]{fmt_roman()}},
+\code{\link[=fmt_scientific]{fmt_scientific()}},
+\code{\link[=fmt_spelled_num]{fmt_spelled_num()}},
+\code{\link[=fmt_tf]{fmt_tf()}},
+\code{\link[=fmt_time]{fmt_time()}},
+\code{\link[=fmt_units]{fmt_units()}},
+\code{\link[=fmt_url]{fmt_url()}},
+\code{\link[=sub_large_vals]{sub_large_vals()}},
+\code{\link[=sub_missing]{sub_missing()}},
+\code{\link[=sub_small_vals]{sub_small_vals()}},
+\code{\link[=sub_values]{sub_values()}},
+\code{\link[=sub_zero]{sub_zero()}}
 }
 \concept{data formatting functions}

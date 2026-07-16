@@ -24,8 +24,7 @@ test_that("The various color utility functions work correctly", {
       "rgba(0,0,0,0)", "rgba(128,    20 , 94, 1.000)"
     )
   ) |>
-    all() |>
-    expect_true()
+    expect_all_true()
 
   # Expect that any other strings will return FALSE values
   is_rgba_col(
@@ -34,8 +33,7 @@ test_that("The various color utility functions work correctly", {
       "#FFFFFF", "rgba(128,    20 , 94, a)"
     )
   ) |>
-    any() |>
-    expect_false()
+    expect_all_false()
 
   # Expect that `expand_short_hex()` reliably transforms shorthand hexadecimal
   # colors (`#RGB` and `#RGBA`) to their expanded counterparts

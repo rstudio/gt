@@ -469,7 +469,7 @@ create_columns_component_l <- function(data, colwidth_df) {
     if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
       n_stub_cols <- length(stub_vars) + 1  # group_label + all rowname columns
       # Get stub_df for width calculations
-      stub_df <- dplyr::filter(colwidth_df, type %in% c("row_group","stub")) %>%
+      stub_df <- dplyr::filter(colwidth_df, type %in% c("row_group","stub")) |>
         dplyr::arrange(type)
     } else if ("rowname" %in% stub_layout) {
       stub_df <- dplyr::filter(colwidth_df, type == "stub")
@@ -2483,8 +2483,8 @@ calculate_multicolumn_width_text_l <- function(begins, ends, col_order, colwidth
 
   # order by column order to ensure correct columns are used
   # this is important if data order has changed, or there are hidden columns etc
-  colwidth_df <- col_order %>%
-    dplyr::left_join(colwidth_df, by = "var") %>%
+  colwidth_df <- col_order |>
+    dplyr::left_join(colwidth_df, by = "var") |>
     dplyr::filter(type != "hidden" )
 
 

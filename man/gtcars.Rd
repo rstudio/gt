@@ -65,7 +65,7 @@ DATA-3
 dplyr::glimpse(gtcars)
 }
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},

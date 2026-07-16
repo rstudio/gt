@@ -60,16 +60,3 @@ tidyselect::where
 #' @importFrom htmltools css
 #' @export
 htmltools::css
-
-#' @importFrom magrittr %>%
-#' @export
-magrittr::`%>%`
-
-# TODO Avoid reexporting those helpers eventually -----
-#' @importFrom dplyr vars
-#' @export
-dplyr::vars
-
-#' @importFrom tidyselect one_of
-#' @export
-tidyselect::one_of

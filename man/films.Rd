@@ -55,7 +55,7 @@ DATA-9
 dplyr::glimpse(films)
 }
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},

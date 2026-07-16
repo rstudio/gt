@@ -1193,7 +1193,7 @@ create_columns_component_rtf <- function(data) {
   stub_layout <- get_stub_layout(data = data)
   stub_vars <- dt_boxhead_get_var_stub(data = data)
   headings_vars <- dt_boxhead_get_vars_default(data = data)
-  
+
   ## Determine if we have a multi-column stub and if there are multiple labels for the stub columns
   if(length(stub_layout) > 0) {
     # Check if we have multiple stubhead labels for multi-column stub
@@ -1239,14 +1239,14 @@ create_columns_component_rtf <- function(data) {
       col_widths = col_widths,
       n_cols = get_effective_number_of_columns(data = data)
     )
-  
+
     # Get the column alignments
   col_alignment <-
     c(
       dt_boxhead_get_alignments_in_stub(data = data),
       dt_boxhead_get_vars_align_default(data = data)
     )
-  
+
   merge_keys_cells <- rep(0, get_effective_number_of_columns(data = data))
 
   # Get the column headings
@@ -1264,7 +1264,7 @@ create_columns_component_rtf <- function(data) {
         } else {
           stub_labs <-  ""
         }
-            
+
       if(has_multi_column_stub) {
         ## repeat the single label for each stub column if we have a multi-column stub, even if only one label is provided
         stub_labs <- c(stub_labs, rep("", times = length(stub_vars)-1))
@@ -1274,7 +1274,7 @@ create_columns_component_rtf <- function(data) {
 
       # Single label (original behavior)
       headings_labels <-prepend_vec(headings_labels,stub_labs)
-            
+
     }
   }
 
@@ -1377,8 +1377,8 @@ create_columns_component_rtf <- function(data) {
             )
           }
         )
-      
-      if (length(stub_layout) > 0) {   
+
+      if (length(stub_layout) > 0) {
 
         level_i_spanners <-
           c(
@@ -1420,7 +1420,7 @@ create_columns_component_rtf <- function(data) {
   } else {
     spanner_rows <- ""
   }
-  
+
 
   row_list_column_labels <-
     list(
