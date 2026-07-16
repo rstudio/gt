@@ -114,17 +114,19 @@ countries by population within each year:
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v1.3.0} (January 22, 2026)
 }
 
 \seealso{
 \code{\link[=row_group_order]{row_group_order()}}, which orders the groups themselves.
 
-Other row addition/modification functions: 
-\code{\link{grand_summary_rows}()},
-\code{\link{row_group_order}()},
-\code{\link{rows_add}()},
-\code{\link{summary_columns}()},
-\code{\link{summary_rows}()}
+Other row addition/modification functions:
+\code{\link[=grand_summary_rows]{grand_summary_rows()}},
+\code{\link[=row_group_order]{row_group_order()}},
+\code{\link[=rows_add]{rows_add()}},
+\code{\link[=rows_hide]{rows_hide()}},
+\code{\link[=rows_unhide]{rows_unhide()}},
+\code{\link[=summary_columns]{summary_columns()}},
+\code{\link[=summary_rows]{summary_rows()}}
 }
 \concept{row addition/modification functions}

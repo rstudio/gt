@@ -141,11 +141,8 @@ dt_stub_df_init <- function(
 
       unique_row_group_ids <-
         create_unique_id_vals(unique_row_group_labels, simplify = process_md)
-      names(unique_row_group_ids) <- unique_row_group_labels
 
-      # dplyr::recode is superseded, and is slower now.
-      # TODO consider using vctrs::vec_case_match when available r-lib/vctrs#1622
-      row_group_ids <- dplyr::recode(row_group_labels, !!!unique_row_group_ids)
+      row_group_ids <- dplyr::replace_values(row_group_labels, from = unique_row_group_ids, to = unique_row_group_labels)
 
     } else {
       row_group_ids <- row_group_labels
@@ -249,7 +246,31 @@ reorder_stub_df <- function(data) {
   # Then, apply any row ordering directives
   stub_df <- apply_row_order_directives(data = data, stub_df = stub_df)
 
+  # Finally, filter out any hidden rows
+  stub_df <- filter_hidden_rows(data = data, stub_df = stub_df)
+
   dt_stub_df_set(data = data, stub_df = stub_df)
+}
+
+# Function to filter out hidden rows from stub_df
+filter_hidden_rows <- function(data, stub_df) {
+
+  # Get the hidden rows
+
+  hidden_rows <- dt_rows_hidden_get(data = data)
+
+  # If there are no hidden rows, return stub_df unchanged
+  if (length(hidden_rows) == 0) {
+    return(stub_df)
+  }
+
+  # Filter out rows where rownum_i is in the hidden list
+  stub_df <- stub_df[!stub_df$rownum_i %in% hidden_rows, ]
+
+  # Reset row names
+  rownames(stub_df) <- NULL
+
+  stub_df
 }
 
 # Function to apply the lazy row ordering directives captured by `row_order()`

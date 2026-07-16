@@ -456,18 +456,18 @@ display of nicely-formatted units.
 \code{\link[=tab_spanner_delim]{tab_spanner_delim()}} to create spanners and new column labels with
 delimited column names.
 
-Other part creation/modification functions: 
-\code{\link{tab_caption}()},
-\code{\link{tab_footnote}()},
-\code{\link{tab_header}()},
-\code{\link{tab_info}()},
-\code{\link{tab_options}()},
-\code{\link{tab_row_group}()},
-\code{\link{tab_source_note}()},
-\code{\link{tab_spanner_delim}()},
-\code{\link{tab_stub_indent}()},
-\code{\link{tab_stubhead}()},
-\code{\link{tab_style}()},
-\code{\link{tab_style_body}()}
+Other part creation/modification functions:
+\code{\link[=tab_caption]{tab_caption()}},
+\code{\link[=tab_footnote]{tab_footnote()}},
+\code{\link[=tab_header]{tab_header()}},
+\code{\link[=tab_info]{tab_info()}},
+\code{\link[=tab_options]{tab_options()}},
+\code{\link[=tab_row_group]{tab_row_group()}},
+\code{\link[=tab_source_note]{tab_source_note()}},
+\code{\link[=tab_spanner_delim]{tab_spanner_delim()}},
+\code{\link[=tab_stub_indent]{tab_stub_indent()}},
+\code{\link[=tab_stubhead]{tab_stubhead()}},
+\code{\link[=tab_style]{tab_style()}},
+\code{\link[=tab_style_body]{tab_style_body()}}
 }
 \concept{part creation/modification functions}

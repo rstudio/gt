@@ -331,11 +331,13 @@ a subset of the columns when generating new rows through \code{rows_add()}.
 }
 
 \seealso{
-Other row addition/modification functions: 
-\code{\link{grand_summary_rows}()},
-\code{\link{row_group_order}()},
-\code{\link{row_order}()},
-\code{\link{summary_columns}()},
-\code{\link{summary_rows}()}
+Other row addition/modification functions:
+\code{\link[=grand_summary_rows]{grand_summary_rows()}},
+\code{\link[=row_group_order]{row_group_order()}},
+\code{\link[=row_order]{row_order()}},
+\code{\link[=rows_hide]{rows_hide()}},
+\code{\link[=rows_unhide]{rows_unhide()}},
+\code{\link[=summary_columns]{summary_columns()}},
+\code{\link[=summary_rows]{summary_rows()}}
 }
 \concept{row addition/modification functions}

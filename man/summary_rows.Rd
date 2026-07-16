@@ -376,11 +376,13 @@ summary rows with \code{\link[=tab_style]{tab_style()}}.
 }
 
 \seealso{
-Other row addition/modification functions: 
-\code{\link{grand_summary_rows}()},
-\code{\link{row_group_order}()},
-\code{\link{row_order}()},
-\code{\link{rows_add}()},
-\code{\link{summary_columns}()}
+Other row addition/modification functions:
+\code{\link[=grand_summary_rows]{grand_summary_rows()}},
+\code{\link[=row_group_order]{row_group_order()}},
+\code{\link[=row_order]{row_order()}},
+\code{\link[=rows_add]{rows_add()}},
+\code{\link[=rows_hide]{rows_hide()}},
+\code{\link[=rows_unhide]{rows_unhide()}},
+\code{\link[=summary_columns]{summary_columns()}}
 }
 \concept{row addition/modification functions}

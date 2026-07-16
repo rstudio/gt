@@ -172,17 +172,20 @@ reference:
 
   - title: Adding or modifying rows
     desc: >
-      There are two functions that will add rows to a **gt** table:
-      `summary_rows()` and `grand_summary_rows()`. These functions will both add
-      summary rows but one will do it in a groupwise fashion while the other
-      will create grand summary rows. The `row_group_order()` function lets us
-      modify the ordering of any row groups in the table.
+      There are several functions for working with rows in a **gt** table.
+      `summary_rows()` and `grand_summary_rows()` add summary rows (groupwise
+      or as grand summaries). The `rows_add()` function lets us add data rows.
+      We can hide rows from view with `rows_hide()` and reveal them with
+      `rows_unhide()`. The `row_group_order()` and `row_order()` functions let
+      us modify the ordering of row groups and rows.
     contents:
     - summary_rows
     - grand_summary_rows
     - row_group_order
     - row_order
     - rows_add
+    - rows_hide
+    - rows_unhide
     - summary_columns
 
   - title: Removing parts of a table

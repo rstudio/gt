@@ -7,12 +7,12 @@
 gt_group(..., .list = list2(...), .use_grp_opts = FALSE)
 }
 \arguments{
-\item{...}{\emph{One or more gt table data objects}
+\item{...}{\emph{One or more gt table or gt_group data objects}
 
-\verb{obj:<gt_tbl>} // (\code{optional})
+\verb{obj:<gt_tbl|gt_group>} // (\code{optional})
 
-One or more \strong{gt} table (\code{gt_tbl}) objects, typically generated via the
-\code{\link[=gt]{gt()}} function.}
+One or more \strong{gt} table (\code{gt_tbl}) or (\code{gt_group}) objects, typically
+generated via the \code{\link[=gt]{gt()}} function.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
@@ -49,13 +49,13 @@ occurs between each of those.
 }
 
 \seealso{
-Other table group functions: 
-\code{\link{grp_add}()},
-\code{\link{grp_clone}()},
-\code{\link{grp_options}()},
-\code{\link{grp_pull}()},
-\code{\link{grp_replace}()},
-\code{\link{grp_rm}()},
-\code{\link{gt_split}()}
+Other table group functions:
+\code{\link[=grp_add]{grp_add()}},
+\code{\link[=grp_clone]{grp_clone()}},
+\code{\link[=grp_options]{grp_options()}},
+\code{\link[=grp_pull]{grp_pull()}},
+\code{\link[=grp_replace]{grp_replace()}},
+\code{\link[=grp_rm]{grp_rm()}},
+\code{\link[=gt_split]{gt_split()}}
 }
 \concept{table group functions}

@@ -1,5 +1,10 @@
 # gt (development version)
 
+* Update RTF handling of stub columns and spans to handle multicolumn stubs (#2118)
+* Expand functionality of `gt_group()` to allow `gt_group` objects to be combined with `gt_tbls` (#2128)
+* gt no longer exports `%>%`. You may either switch to the base pipe or call `library(magrittr)`. (#2150)
+* gt no longer export deprecated `dplyr::vars()` and `dplyr::one_of()`. (#2150)
+
 # gt 1.3.0
 
 ## New features

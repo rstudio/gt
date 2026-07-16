@@ -40,8 +40,8 @@ Update the selection in an interactive \strong{gt} table rendered using
 }
 
 \seealso{
-Other Shiny functions: 
-\code{\link{gt_output}()},
-\code{\link{render_gt}()}
+Other Shiny functions:
+\code{\link[=gt_output]{gt_output()}},
+\code{\link[=render_gt]{render_gt()}}
 }
 \concept{Shiny functions}
