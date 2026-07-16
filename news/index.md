@@ -8,6 +8,13 @@
   [`gt_group()`](https://gt.rstudio.com/reference/gt_group.md) to allow
   `gt_group` objects to be combined with `gt_tbls`
   ([\#2128](https://github.com/rstudio/gt/issues/2128))
+- gt no longer exports `%>%`. You may either switch to the base pipe or
+  call [`library(magrittr)`](https://magrittr.tidyverse.org).
+  ([\#2150](https://github.com/rstudio/gt/issues/2150))
+- gt no longer export deprecated
+  [`dplyr::vars()`](https://dplyr.tidyverse.org/reference/vars.html) and
+  [`dplyr::one_of()`](https://tidyselect.r-lib.org/reference/one_of.html).
+  ([\#2150](https://github.com/rstudio/gt/issues/2150))
 
 ## gt 1.3.0
 
@@ -2582,12 +2589,12 @@ This release focuses on improvements to two main areas:
   result in a warning message.
   ([\#718](https://github.com/rstudio/gt/issues/718))
 
-- While [`vars()`](https://dplyr.tidyverse.org/reference/vars.html) is
+- While [`vars()`](https://ggplot2.tidyverse.org/reference/vars.html) is
   still reexported in **gt**, its use with the `columns` argument
   (present in a large number of functions) is deprecated and a warning
   message will appear if it is used. In a later release, it can be
   expected that
-  [`vars()`](https://dplyr.tidyverse.org/reference/vars.html) will no
+  [`vars()`](https://ggplot2.tidyverse.org/reference/vars.html) will no
   longer be reexported.
   ([\#718](https://github.com/rstudio/gt/issues/718))
 

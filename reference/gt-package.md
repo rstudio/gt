@@ -25,6 +25,9 @@ Useful links:
 
 Authors:
 
+- Richard Iannone <rich@posit.co>
+  ([ORCID](https://orcid.org/0000-0003-3925-190X))
+
 - Joe Cheng <joe@posit.co>
 
 - Barret Schloerke <barret@posit.co>
