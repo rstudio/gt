@@ -114,6 +114,8 @@ check_suggests <- function() {
 
 test_that("word ooxml can be generated from gt object", {
 
+  skip_if_not_installed("rlang", "1.3.0")
+
   # Create a one-row table for these tests
   exibble_min <- exibble[1, ]
 
@@ -208,7 +210,7 @@ test_that("word ooxml can be generated from gt object", {
 
   gt_exibble_min_sha1 <- rlang::hash(gt_exibble_min)
 
-  expect_equal(gt_exibble_min_sha1, "be8267d755328ebf90527242ff60c54c")
+  expect_equal(gt_exibble_min_sha1, "b6d9b0a75074ea7423ca192bbf4ac81e")
 
   ## basic table with linebreak in title
   gt_tbl_linebreaks_md <-
@@ -2795,7 +2797,7 @@ test_that("multicolumn stub are supported", {
   xml <- test_data |>
     gt(rowname_col = c("mfr", "model", "trim")) |>
     tab_stubhead("one") |>
-    as_word() %>%
+    as_word() |>
     read_xml()
   tcPr <- xml_find_all(xml, "(.//w:tr)[1]/w:tc/w:tcPr")
   expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:gridSpan"), "val"), "3")
@@ -2812,7 +2814,7 @@ test_that("multicolumn stub are supported", {
   xml <- test_data |>
     gt(rowname_col = c("mfr", "model", "trim")) |>
     tab_stubhead(c("one", "two", "three")) |>
-    as_word() %>%
+    as_word() |>
     read_xml()
 
   expect_equal(
@@ -2825,7 +2827,7 @@ test_that("multicolumn stub are supported", {
     gt(rowname_col = c("mfr", "model", "trim")) |>
     tab_stubhead(c("one", "two", "three")) |>
     tab_spanner(label = "span", columns = c(hp, msrp)) |>
-    as_word() %>%
+    as_word() |>
     read_xml()
 
   expect_equal(
@@ -2850,7 +2852,7 @@ test_that("multicolumn stub are supported", {
     gt(rowname_col = c("mfr", "model", "trim")) |>
     tab_stubhead(c("one")) |>
     tab_spanner(label = "span", columns = c(hp, msrp)) |>
-    as_word() %>%
+    as_word() |>
     read_xml()
 
   expect_equal(
@@ -2870,3 +2872,33 @@ test_that("multicolumn stub are supported", {
   expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//w:gridSpan"), "val"), "3")
 
 })
+
+test_that("word ooxml handles empty markdown cells gt object", {
+
+  # Create a one-row table for these tests
+  gt_empty_md <- exibble[1, 1:2] |>
+    dplyr::mutate(num = " ") |>
+    gt() |>
+    cols_label(
+      num = md(" "),
+      char = md("char")
+    ) |>
+    fmt_markdown()
+
+  ## convert to word xml nodeset
+  xml <- gt_empty_md %>% as_word() %>% xml2::read_xml()
+
+  table_cells <- xml_find_all(xml, ".//w:tc//w:t")
+
+  expect_equal(
+    as.character(table_cells),
+    c(
+      "<w:t xml:space=\"default\"/>",
+      "<w:t xml:space=\"preserve\">char</w:t>",
+      "<w:t xml:space=\"default\"/>",
+      "<w:t xml:space=\"preserve\">apricot</w:t>"
+    )
+  )
+
+})
+

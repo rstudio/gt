@@ -127,8 +127,8 @@ shinyApp(ui = ui, server = server)
 }
 
 \seealso{
-Other Shiny functions: 
-\code{\link{gt_output}()},
-\code{\link{gt_update_select}()}
+Other Shiny functions:
+\code{\link[=gt_output]{gt_output()}},
+\code{\link[=gt_update_select]{gt_update_select()}}
 }
 \concept{Shiny functions}

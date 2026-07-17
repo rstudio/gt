@@ -98,9 +98,9 @@ the labels of the three columns.
 }
 
 \seealso{
-Other text transforming functions: 
-\code{\link{text_case_match}()},
-\code{\link{text_replace}()},
-\code{\link{text_transform}()}
+Other text transforming functions:
+\code{\link[=text_case_match]{text_case_match()}},
+\code{\link[=text_replace]{text_replace()}},
+\code{\link[=text_transform]{text_transform()}}
 }
 \concept{text transforming functions}

@@ -34,8 +34,9 @@ expect_tab_colnames <- function(
 
     # Expect that the `group_id` column of the `stub_df`
     # object is entirely filled with NAs
-    expect_true(
-      all(is.na(dt_stub_df_get(data = tab)[["group_id"]]))
+    expect_setequal(
+      dt_stub_df_get(data = tab)[["group_id"]],
+      NA
     )
   }
 }

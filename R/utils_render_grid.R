@@ -1075,13 +1075,11 @@ render_grid_svg <- function(label, style, margin) {
   # and they cannot be displayed interactively in {grid} anyway.
   label <- gsub("<title(.*?)</title>", "", label)
 
-  svg_string <- regexpr("<svg(.*?)>.*</svg>", label)
-  svg_string <- regmatches(label, svg_string)
+  svg_string <- str_extract_one(label, "<svg(.*?)>.*</svg>")
   svg_string <- gsub("\n", "", svg_string)
   svg_string <- trimws(svg_string)
 
-  svg_style <- regexpr("style=\"(.*?)\"", svg_string)
-  svg_style <- regmatches(svg_string, svg_style)
+  svg_style <- str_extract_one(svg_string, "style=\"(.*?)\"")
   svg_style <- gsub("^style=\"|\"$", "", svg_style)
   svg_style <- strsplit(svg_style, ";", fixed = TRUE)
   svg_style <- trimws(unlist(svg_style))
@@ -1113,42 +1111,34 @@ render_grid_svg <- function(label, style, margin) {
 
     # If style attribute was incomplete; try to derive width/height from viewbox
     viewbox <-
-      regexpr("viewBox=\"(.*?)\"", svg_string) %>%
-      regmatches(x = svg_string) %>%
-      gsub(pattern = "^viewBox=\"|\"$", replacement = "") %>%
-      strsplit(" ") %>%
-      unlist() %>%
-      as.numeric()
+      gsub(
+        pattern = "^viewBox=\"|\"$",
+        replacement = "",
+        x = str_extract_one(svg_string, "viewBox=\"(.*?)\"")
+      )
+    viewbox <- as.numeric(
+      unlist(
+        strsplit(viewbox, " ", fixed = TRUE)
+      )
+    )
 
     if (length(viewbox) != 4) {
 
       viewbox <- c(0, 0, 0, 0)
-
-      svg_tag <-
-        regexpr("^<svg(.*?)>", svg_string) %>%
-        regmatches(x = svg_string)
+      # extract pattern
+      svg_tag <- str_extract_one(svg_string, "^<svg(.*?)>")
 
       if (grepl("width", svg_tag, fixed = TRUE) && grepl("height", svg_tag, fixed = TRUE)) {
 
         # Try extract width from tag
-        w <-
-          regexpr("width=(.*?) ", svg_tag) %>%
-          regmatches(x = svg_tag)
+        w <- str_extract_one(svg_tag, "width=(.*?) ")
 
-        viewbox[3] <-
-          regexpr("\\d+", w) %>%
-          regmatches(x = w) %>%
-          as.numeric()
+        viewbox[3] <- as.numeric(str_extract_one(w, "\\d+"))
 
         # Try extract height from tag
-        h <-
-          regexpr("height=(.*?) ", svg_tag) %>%
-          regmatches(x = svg_tag)
+        h <- str_extract_one(svg_tag, "height=(.*?) ")
 
-        viewbox[4] <-
-          regexpr("\\d+", h) %>%
-          regmatches(x = h) %>%
-          as.numeric()
+        viewbox[4] <- as.numeric(str_extract_one(h, "\\d+"))
 
       } else {
         viewbox <- c(0, 0, 20, 20)
@@ -1187,13 +1177,12 @@ render_grid_svg <- function(label, style, margin) {
 
   raster <- try_fetch(
     {
-        # charToRaw("") return character(0)
-        charToRaw(svg_string) %>%
-        rsvg::rsvg_nativeraster(width = w) %>%
-        grid::rasterGrob(
-          width = width, height = height,
-          x = x, y = y, hjust = hjust, vjust = vjust
-        )
+      # charToRaw("") return character(0)
+      grid::rasterGrob(
+        rsvg::rsvg_nativeraster(svg = charToRaw(svg_string), width = w),
+        width = width, height = height,
+        x = x, y = y, hjust = hjust, vjust = vjust
+      )
     },
     error = function(...) {
       zero <- grid::unit(0, .grid_unit)

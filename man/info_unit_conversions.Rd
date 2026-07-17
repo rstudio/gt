@@ -42,15 +42,15 @@ Get a table of info on all the available keywords for unit conversions.
 }
 
 \seealso{
-Other information functions: 
-\code{\link{info_currencies}()},
-\code{\link{info_date_style}()},
-\code{\link{info_flags}()},
-\code{\link{info_google_fonts}()},
-\code{\link{info_icons}()},
-\code{\link{info_locales}()},
-\code{\link{info_paletteer}()},
-\code{\link{info_tf_style}()},
-\code{\link{info_time_style}()}
+Other information functions:
+\code{\link[=info_currencies]{info_currencies()}},
+\code{\link[=info_date_style]{info_date_style()}},
+\code{\link[=info_flags]{info_flags()}},
+\code{\link[=info_google_fonts]{info_google_fonts()}},
+\code{\link[=info_icons]{info_icons()}},
+\code{\link[=info_locales]{info_locales()}},
+\code{\link[=info_paletteer]{info_paletteer()}},
+\code{\link[=info_tf_style]{info_tf_style()}},
+\code{\link[=info_time_style]{info_time_style()}}
 }
 \concept{information functions}

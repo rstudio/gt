@@ -56,13 +56,13 @@ the number of indices for tables present in the \code{gt_group} object.
 }
 
 \seealso{
-Other table group functions: 
-\code{\link{grp_add}()},
-\code{\link{grp_clone}()},
-\code{\link{grp_options}()},
-\code{\link{grp_pull}()},
-\code{\link{grp_rm}()},
-\code{\link{gt_group}()},
-\code{\link{gt_split}()}
+Other table group functions:
+\code{\link[=grp_add]{grp_add()}},
+\code{\link[=grp_clone]{grp_clone()}},
+\code{\link[=grp_options]{grp_options()}},
+\code{\link[=grp_pull]{grp_pull()}},
+\code{\link[=grp_rm]{grp_rm()}},
+\code{\link[=gt_group]{gt_group()}},
+\code{\link[=gt_split]{gt_split()}}
 }
 \concept{table group functions}

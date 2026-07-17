@@ -41,7 +41,7 @@ DATA-4
 dplyr::glimpse(sp500)
 }
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},

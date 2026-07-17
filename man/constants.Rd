@@ -51,7 +51,7 @@ DATA-12
 dplyr::glimpse(constants)
 }
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{countrypops}},
 \code{\link{exibble}},
 \code{\link{films}},
