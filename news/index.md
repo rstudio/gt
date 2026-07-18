@@ -15,6 +15,8 @@
   [`dplyr::vars()`](https://dplyr.tidyverse.org/reference/vars.html) and
   [`dplyr::one_of()`](https://tidyselect.r-lib.org/reference/one_of.html).
   ([\#2150](https://github.com/rstudio/gt/issues/2150))
+- Ensure `keep_with_next` parameter is applied consistently in `as_word`
+  ([\#2149](https://github.com/rstudio/gt/issues/2149))
 
 ## gt 1.3.0
 
