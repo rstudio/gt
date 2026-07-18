@@ -145,8 +145,7 @@ test_that("word ooxml can be generated from gt object", {
   ## basic table with autonum disabled
   expect_snapshot_word(gt_tbl_1, autonum = FALSE)
 
-  ## basic table with keep_with_next disabled (should only appear in the column
-  ## headers)
+  ## basic table with keep_with_next disabled
   expect_snapshot_word(gt_tbl_1, keep_with_next = FALSE)
 
   ## Table with cell styling
@@ -234,6 +233,42 @@ test_that("word ooxml can be generated from gt object", {
     )
 
   expect_snapshot_word(gt_tbl_linebreaks_html)
+})
+
+test_that("word keep_with_next controls keepNext tags across table parts", {
+
+  gt_tbl <-
+    exibble[1:3, ] |>
+    gt(rowname_col = "row") |>
+    tab_header(
+      title = "TABLE TITLE",
+      subtitle = "table subtitle"
+    ) |>
+    tab_footnote(
+      footnote = "fn note",
+      locations = cells_body(columns = num, rows = 1)
+    ) |>
+    tab_source_note(source_note = "src note")
+
+  xml_keep_false <- xml2::read_xml(as_word(gt_tbl, keep_with_next = FALSE, caption_location = "embed"))
+  xml_keep_true <- xml2::read_xml(as_word(gt_tbl, keep_with_next = TRUE, caption_location = "embed"))
+
+  expect_equal(length(xml2::xml_find_all(xml_keep_false, ".//w:keepNext")), 0)
+  expect_gt(length(xml2::xml_find_all(xml_keep_true, ".//w:keepNext")), 0)
+
+  footnote_row_true <- xml2::xml_find_first(xml_keep_true, ".//w:tr[contains(string(.), 'fn note')]")
+  source_row_true <- xml2::xml_find_first(xml_keep_true, ".//w:tr[contains(string(.), 'src note')]")
+  caption_row_true <- xml2::xml_find_first(xml_keep_true, ".//w:tr[contains(string(.), 'TABLE TITLE')]")
+  footnote_row_false <- xml2::xml_find_first(xml_keep_false, ".//w:tr[contains(string(.), 'fn note')]")
+  source_row_false <- xml2::xml_find_first(xml_keep_false, ".//w:tr[contains(string(.), 'src note')]")
+  caption_row_false <- xml2::xml_find_first(xml_keep_false, ".//w:tr[contains(string(.), 'TABLE TITLE')]")
+
+  expect_equal(length(xml2::xml_find_all(footnote_row_true, ".//w:keepNext")), 1)
+  expect_equal(length(xml2::xml_find_all(source_row_true, ".//w:keepNext")), 1)
+  expect_equal(length(xml2::xml_find_all(caption_row_true, ".//w:keepNext")), 2)
+  expect_equal(length(xml2::xml_find_all(footnote_row_false, ".//w:keepNext")), 0)
+  expect_equal(length(xml2::xml_find_all(source_row_false, ".//w:keepNext")), 0)
+  expect_equal(length(xml2::xml_find_all(caption_row_false, ".//w:keepNext")), 0)
 })
 
 test_that("word ooxml escapes special characters in gt object", {
