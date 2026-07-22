@@ -385,15 +385,13 @@ test_that("The correct color values are obtained when defining a palette", {
     selection_value("style") |>
     gsub("(background-color: |; color: .*)", "", x = _) |>
     is_rgba_col() |>
-    all() |>
-    expect_true()
+    expect_all_true()
 
   # Expect that all alpha values are 0.5 (or "80" as a hex value)
   gsub("(background-color: |; color: .*)", "", selection_value(tbl_html_5, "style")) |>
     rgba_to_hex() |>
     substring(8, 9) |>
-    unique() |>
-    expect_equal("80")
+    expect_setequal("80")
 
   # Converting the 'rgba()' values back into hexadecimal form and
   # removing the alpha channel (by use of `html_color()`) is expected
@@ -571,8 +569,7 @@ test_that("data_color() works with classed colors (#1155)", {
        gsub("(.*: |;$)", "", x = _)) %in%
       c("#000000", "#FFFFFF")
   ) |>
-    all() |>
-    expect_true()
+    expect_all_true()
 })
 
 test_that("Color palettes can be obtained from the paletteer package", {
@@ -1328,8 +1325,7 @@ test_that("The correct color values are obtained when using a color fn", {
     selection_value("style") |>
     gsub("(background-color: |; color: .*)", "", x = _) |>
     is_rgba_col() |>
-    all() |>
-    expect_true()
+    expect_all_true()
 
   # Expect that all alpha values are 0.5 (or "80" as a hex value)
   (
@@ -1512,8 +1508,7 @@ test_that("The correct color values are obtained when using a color fn", {
     selection_value("style") |>
     gsub("(background-color: |; color: .*)", "", x = _) |>
     is_rgba_col() |>
-    all() |>
-    expect_true()
+    expect_all_true()
 
   # Expect that all alpha values are 0.5 (or "80" as a hex value)
   (
@@ -1621,8 +1616,7 @@ test_that("The various color utility functions work correctly", {
       "rgba(0,0,0,0)", "rgba(128,    20 , 94, 1.000)"
       )
     ) |>
-    all() |>
-    expect_true()
+    expect_all_true()
 
   # Expect that any other strings will return FALSE values
   is_rgba_col(
@@ -1631,8 +1625,7 @@ test_that("The various color utility functions work correctly", {
       "#FFFFFF", "rgba(128,    20 , 94, a)"
     )
     ) |>
-    any() |>
-    expect_false()
+    expect_all_false()
 
   # Expect that the `rgba_to_hex()` function reliably returns
   # color strings in the hexadecimal format of #RRGGBBAA

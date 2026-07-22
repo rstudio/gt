@@ -147,9 +147,9 @@ with Fontawesome icons furnished by the \strong{fontawesome} R package.
 }
 
 \seealso{
-Other text transforming functions: 
-\code{\link{text_case_when}()},
-\code{\link{text_replace}()},
-\code{\link{text_transform}()}
+Other text transforming functions:
+\code{\link[=text_case_when]{text_case_when()}},
+\code{\link[=text_replace]{text_replace()}},
+\code{\link[=text_transform]{text_transform()}}
 }
 \concept{text transforming functions}

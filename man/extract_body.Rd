@@ -208,14 +208,14 @@ won't be shown in the returned data unless we use \code{incl_hidden_cols = TRUE}
 }
 
 \seealso{
-Other table export functions: 
-\code{\link{as_gtable}()},
-\code{\link{as_latex}()},
-\code{\link{as_raw_html}()},
-\code{\link{as_rtf}()},
-\code{\link{as_word}()},
-\code{\link{extract_cells}()},
-\code{\link{extract_summary}()},
-\code{\link{gtsave}()}
+Other table export functions:
+\code{\link[=as_gtable]{as_gtable()}},
+\code{\link[=as_latex]{as_latex()}},
+\code{\link[=as_raw_html]{as_raw_html()}},
+\code{\link[=as_rtf]{as_rtf()}},
+\code{\link[=as_word]{as_word()}},
+\code{\link[=extract_cells]{extract_cells()}},
+\code{\link[=extract_summary]{extract_summary()}},
+\code{\link[=gtsave]{gtsave()}}
 }
 \concept{table export functions}

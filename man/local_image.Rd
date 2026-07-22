@@ -86,9 +86,9 @@ sizes.
 }
 
 \seealso{
-Other image addition functions: 
-\code{\link{ggplot_image}()},
-\code{\link{test_image}()},
-\code{\link{web_image}()}
+Other image addition functions:
+\code{\link[=ggplot_image]{ggplot_image()}},
+\code{\link[=test_image]{test_image()}},
+\code{\link[=web_image]{web_image()}}
 }
 \concept{image addition functions}

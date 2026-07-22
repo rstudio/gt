@@ -63,7 +63,7 @@ DATA-16
 dplyr::glimpse(nuclides)
 }
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},

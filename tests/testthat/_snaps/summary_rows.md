@@ -10097,7 +10097,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|r}\n\\toprule\n & population \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{2}{l}{1960s} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n1960 & 93,216,000 \\\\ \n1961 & 94,055,000 \\\\ \n1962 & 94,933,000 \\\\ \n1963 & 95,900,000 \\\\ \n1964 & 96,903,000 \\\\ \n1965 & 97,952,000 \\\\ \n1966 & 98,851,000 \\\\ \n1967 & 99,879,000 \\\\ \n1968 & 101,011,000 \\\\ \n1969 & 102,219,000 \\\\ \n\\midrule \n{\\bfseries \\cellcolor[HTML]{rgba(173,216,230,0.5)}{min}} & 93,216,000 \\\\ \nmax & 102,219,000 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|r}\n\\toprule\n & population \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{2}{l}{1960s} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n1960 & 93,216,000 \\\\ \n1961 & 94,055,000 \\\\ \n1962 & 94,933,000 \\\\ \n1963 & 95,900,000 \\\\ \n1964 & 96,903,000 \\\\ \n1965 & 97,952,000 \\\\ \n1966 & 98,851,000 \\\\ \n1967 & 99,879,000 \\\\ \n1968 & 101,011,000 \\\\ \n1969 & 102,219,000 \\\\ \n\\midrule \n{\\bfseries \\cellcolor[HTML]{rgba(173,216,230,0.5)}{min}} & 93,216,000 \\\\ \n{\\bfseries \\cellcolor[HTML]{rgba(173,216,230,0.5)}{max}} & 102,219,000 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 

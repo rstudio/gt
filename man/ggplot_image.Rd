@@ -109,9 +109,9 @@ function.
 }
 
 \seealso{
-Other image addition functions: 
-\code{\link{local_image}()},
-\code{\link{test_image}()},
-\code{\link{web_image}()}
+Other image addition functions:
+\code{\link[=local_image]{local_image()}},
+\code{\link[=test_image]{test_image()}},
+\code{\link[=web_image]{web_image()}}
 }
 \concept{image addition functions}

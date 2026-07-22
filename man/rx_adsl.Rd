@@ -72,7 +72,7 @@ DATA-17
 dplyr::glimpse(rx_adsl)
 }
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},

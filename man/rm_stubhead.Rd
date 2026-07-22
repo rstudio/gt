@@ -70,11 +70,11 @@ it can be removed with \code{rm_stubhead()}.
 }
 
 \seealso{
-Other part removal functions: 
-\code{\link{rm_caption}()},
-\code{\link{rm_footnotes}()},
-\code{\link{rm_header}()},
-\code{\link{rm_source_notes}()},
-\code{\link{rm_spanners}()}
+Other part removal functions:
+\code{\link[=rm_caption]{rm_caption()}},
+\code{\link[=rm_footnotes]{rm_footnotes()}},
+\code{\link[=rm_header]{rm_header()}},
+\code{\link[=rm_source_notes]{rm_source_notes()}},
+\code{\link[=rm_spanners]{rm_spanners()}}
 }
 \concept{part removal functions}

@@ -60,7 +60,7 @@ DATA-8
 dplyr::glimpse(peeps)
 }
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},

@@ -57,7 +57,7 @@ DATA-2
 dplyr::glimpse(sza)
 }
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},

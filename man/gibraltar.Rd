@@ -48,7 +48,7 @@ DATA-11
 dplyr::glimpse(gibraltar)
 }
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},

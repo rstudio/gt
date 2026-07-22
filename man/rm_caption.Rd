@@ -74,11 +74,11 @@ be removed with \code{rm_caption()}.
 }
 
 \seealso{
-Other part removal functions: 
-\code{\link{rm_footnotes}()},
-\code{\link{rm_header}()},
-\code{\link{rm_source_notes}()},
-\code{\link{rm_spanners}()},
-\code{\link{rm_stubhead}()}
+Other part removal functions:
+\code{\link[=rm_footnotes]{rm_footnotes()}},
+\code{\link[=rm_header]{rm_header()}},
+\code{\link[=rm_source_notes]{rm_source_notes()}},
+\code{\link[=rm_spanners]{rm_spanners()}},
+\code{\link[=rm_stubhead]{rm_stubhead()}}
 }
 \concept{part removal functions}

@@ -299,7 +299,7 @@ dates formatted with the English locale in the \code{datetime} column.
 }
 
 \seealso{
-Other table creation functions: 
-\code{\link{gt_preview}()}
+Other table creation functions:
+\code{\link[=gt_preview]{gt_preview()}}
 }
 \concept{table creation functions}

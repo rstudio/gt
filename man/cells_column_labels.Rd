@@ -86,19 +86,19 @@ Add footnotes to the column labels with \code{\link[=tab_footnote]{tab_footnote(
 }
 
 \seealso{
-Other location helper functions: 
-\code{\link{cells_body}()},
-\code{\link{cells_column_spanners}()},
-\code{\link{cells_footnotes}()},
-\code{\link{cells_grand_summary}()},
-\code{\link{cells_row_groups}()},
-\code{\link{cells_source_notes}()},
-\code{\link{cells_stub}()},
-\code{\link{cells_stub_grand_summary}()},
-\code{\link{cells_stub_summary}()},
-\code{\link{cells_stubhead}()},
-\code{\link{cells_summary}()},
-\code{\link{cells_title}()},
+Other location helper functions:
+\code{\link[=cells_body]{cells_body()}},
+\code{\link[=cells_column_spanners]{cells_column_spanners()}},
+\code{\link[=cells_footnotes]{cells_footnotes()}},
+\code{\link[=cells_grand_summary]{cells_grand_summary()}},
+\code{\link[=cells_row_groups]{cells_row_groups()}},
+\code{\link[=cells_source_notes]{cells_source_notes()}},
+\code{\link[=cells_stub]{cells_stub()}},
+\code{\link[=cells_stub_grand_summary]{cells_stub_grand_summary()}},
+\code{\link[=cells_stub_summary]{cells_stub_summary()}},
+\code{\link[=cells_stubhead]{cells_stubhead()}},
+\code{\link[=cells_summary]{cells_summary()}},
+\code{\link[=cells_title]{cells_title()}},
 \code{\link{location-helper}}
 }
 \concept{location helper functions}

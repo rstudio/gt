@@ -89,19 +89,19 @@ greatly reduced, resulting in a more compact table.
 }
 
 \seealso{
-Other table option functions: 
-\code{\link{opt_align_table_header}()},
-\code{\link{opt_all_caps}()},
-\code{\link{opt_css}()},
-\code{\link{opt_footnote_marks}()},
-\code{\link{opt_footnote_order}()},
-\code{\link{opt_footnote_spec}()},
-\code{\link{opt_horizontal_padding}()},
-\code{\link{opt_interactive}()},
-\code{\link{opt_row_striping}()},
-\code{\link{opt_stylize}()},
-\code{\link{opt_table_font}()},
-\code{\link{opt_table_lines}()},
-\code{\link{opt_table_outline}()}
+Other table option functions:
+\code{\link[=opt_align_table_header]{opt_align_table_header()}},
+\code{\link[=opt_all_caps]{opt_all_caps()}},
+\code{\link[=opt_css]{opt_css()}},
+\code{\link[=opt_footnote_marks]{opt_footnote_marks()}},
+\code{\link[=opt_footnote_order]{opt_footnote_order()}},
+\code{\link[=opt_footnote_spec]{opt_footnote_spec()}},
+\code{\link[=opt_horizontal_padding]{opt_horizontal_padding()}},
+\code{\link[=opt_interactive]{opt_interactive()}},
+\code{\link[=opt_row_striping]{opt_row_striping()}},
+\code{\link[=opt_stylize]{opt_stylize()}},
+\code{\link[=opt_table_font]{opt_table_font()}},
+\code{\link[=opt_table_lines]{opt_table_lines()}},
+\code{\link[=opt_table_outline]{opt_table_outline()}}
 }
 \concept{table option functions}

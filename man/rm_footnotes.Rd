@@ -120,11 +120,11 @@ would give the correct index value to \code{footnotes}.
 }
 
 \seealso{
-Other part removal functions: 
-\code{\link{rm_caption}()},
-\code{\link{rm_header}()},
-\code{\link{rm_source_notes}()},
-\code{\link{rm_spanners}()},
-\code{\link{rm_stubhead}()}
+Other part removal functions:
+\code{\link[=rm_caption]{rm_caption()}},
+\code{\link[=rm_header]{rm_header()}},
+\code{\link[=rm_source_notes]{rm_source_notes()}},
+\code{\link[=rm_spanners]{rm_spanners()}},
+\code{\link[=rm_stubhead]{rm_stubhead()}}
 }
 \concept{part removal functions}

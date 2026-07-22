@@ -469,7 +469,7 @@ create_columns_component_l <- function(data, colwidth_df) {
     if ("group_label" %in% stub_layout && "rowname" %in% stub_layout) {
       n_stub_cols <- length(stub_vars) + 1  # group_label + all rowname columns
       # Get stub_df for width calculations
-      stub_df <- dplyr::filter(colwidth_df, type %in% c("row_group","stub")) %>%
+      stub_df <- dplyr::filter(colwidth_df, type %in% c("row_group","stub")) |>
         dplyr::arrange(type)
     } else if ("rowname" %in% stub_layout) {
       stub_df <- dplyr::filter(colwidth_df, type == "stub")
@@ -1227,7 +1227,7 @@ summary_rows_for_group_l <- function(
         # The value of colnum in styles_summary differs for
         # group and grand summaries
         if (summary_row_type == "group") {
-          row_pos <- (row_num - floor(row_num)) * 100L
+          row_pos <- round((row_num - floor(row_num)) * 100L,0)
         } else {
           row_pos <- row_num
         }
@@ -2115,7 +2115,7 @@ apply_cell_styles_l <- function(content, style_obj, type = "cell", width = "\\li
 
 .apply_style_alignment_shortstack <- function(x, style_obj) {
 
-  if(!grepl("\\shortstack[l]", x, fixed = TRUE)){return(x)}
+  if(!isTRUE(grepl("\\shortstack[l]", x, fixed = TRUE))){return(x)}
 
   alignment <- style_obj[["cell_text"]][["align"]]
 
@@ -2483,8 +2483,8 @@ calculate_multicolumn_width_text_l <- function(begins, ends, col_order, colwidth
 
   # order by column order to ensure correct columns are used
   # this is important if data order has changed, or there are hidden columns etc
-  colwidth_df <- col_order %>%
-    dplyr::left_join(colwidth_df, by = "var") %>%
+  colwidth_df <- col_order |>
+    dplyr::left_join(colwidth_df, by = "var") |>
     dplyr::filter(type != "hidden" )
 
 

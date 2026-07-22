@@ -423,7 +423,13 @@ str_has_match <- function(string, pattern, negate = FALSE) {
     out
   }
 }
-
+# like stringr::str_extract() from https://stringr.tidyverse.org/articles/from-base.html
+str_extract_one <- function(string, pattern) {
+  regmatches(
+    x = string,
+    m = regexpr(pattern, string)
+  )
+}
 str_trim_sides <- function(string) {
   sub("\\s+$", "", sub("^\\s+", "", string))
 }

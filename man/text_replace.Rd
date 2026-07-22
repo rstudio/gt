@@ -93,9 +93,9 @@ tags, wraps literal parentheses around it, and prepends a line break tag.
 }
 
 \seealso{
-Other text transforming functions: 
-\code{\link{text_case_match}()},
-\code{\link{text_case_when}()},
-\code{\link{text_transform}()}
+Other text transforming functions:
+\code{\link[=text_case_match]{text_case_match()}},
+\code{\link[=text_case_when]{text_case_when()}},
+\code{\link[=text_transform]{text_transform()}}
 }
 \concept{text transforming functions}

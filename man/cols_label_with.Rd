@@ -165,22 +165,22 @@ interpreted as Markdown text.
 }
 
 \seealso{
-Other column modification functions: 
-\code{\link{cols_add}()},
-\code{\link{cols_align}()},
-\code{\link{cols_align_decimal}()},
-\code{\link{cols_hide}()},
-\code{\link{cols_label}()},
-\code{\link{cols_merge}()},
-\code{\link{cols_merge_n_pct}()},
-\code{\link{cols_merge_range}()},
-\code{\link{cols_merge_uncert}()},
-\code{\link{cols_move}()},
-\code{\link{cols_move_to_end}()},
-\code{\link{cols_move_to_start}()},
-\code{\link{cols_nanoplot}()},
-\code{\link{cols_unhide}()},
-\code{\link{cols_units}()},
-\code{\link{cols_width}()}
+Other column modification functions:
+\code{\link[=cols_add]{cols_add()}},
+\code{\link[=cols_align]{cols_align()}},
+\code{\link[=cols_align_decimal]{cols_align_decimal()}},
+\code{\link[=cols_hide]{cols_hide()}},
+\code{\link[=cols_label]{cols_label()}},
+\code{\link[=cols_merge]{cols_merge()}},
+\code{\link[=cols_merge_n_pct]{cols_merge_n_pct()}},
+\code{\link[=cols_merge_range]{cols_merge_range()}},
+\code{\link[=cols_merge_uncert]{cols_merge_uncert()}},
+\code{\link[=cols_move]{cols_move()}},
+\code{\link[=cols_move_to_end]{cols_move_to_end()}},
+\code{\link[=cols_move_to_start]{cols_move_to_start()}},
+\code{\link[=cols_nanoplot]{cols_nanoplot()}},
+\code{\link[=cols_unhide]{cols_unhide()}},
+\code{\link[=cols_units]{cols_units()}},
+\code{\link[=cols_width]{cols_width()}}
 }
 \concept{column modification functions}

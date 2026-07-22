@@ -32,26 +32,26 @@ argument of variable length (the default is 10 letters).
 }
 
 \seealso{
-Other helper functions: 
-\code{\link{adjust_luminance}()},
-\code{\link{cell_borders}()},
-\code{\link{cell_fill}()},
-\code{\link{cell_text}()},
-\code{\link{currency}()},
-\code{\link{default_fonts}()},
-\code{\link{escape_latex}()},
-\code{\link{from_column}()},
-\code{\link{google_font}()},
-\code{\link{gt_latex_dependencies}()},
-\code{\link{html}()},
-\code{\link{latex}()},
-\code{\link{md}()},
-\code{\link{nanoplot_options}()},
-\code{\link{pct}()},
-\code{\link{px}()},
-\code{\link{row_group}()},
-\code{\link{stub}()},
-\code{\link{system_fonts}()},
-\code{\link{unit_conversion}()}
+Other helper functions:
+\code{\link[=adjust_luminance]{adjust_luminance()}},
+\code{\link[=cell_borders]{cell_borders()}},
+\code{\link[=cell_fill]{cell_fill()}},
+\code{\link[=cell_text]{cell_text()}},
+\code{\link[=currency]{currency()}},
+\code{\link[=default_fonts]{default_fonts()}},
+\code{\link[=escape_latex]{escape_latex()}},
+\code{\link[=from_column]{from_column()}},
+\code{\link[=google_font]{google_font()}},
+\code{\link[=gt_latex_dependencies]{gt_latex_dependencies()}},
+\code{\link[=html]{html()}},
+\code{\link[=latex]{latex()}},
+\code{\link[=md]{md()}},
+\code{\link[=nanoplot_options]{nanoplot_options()}},
+\code{\link[=pct]{pct()}},
+\code{\link[=px]{px()}},
+\code{\link[=row_group]{row_group()}},
+\code{\link[=stub]{stub()}},
+\code{\link[=system_fonts]{system_fonts()}},
+\code{\link[=unit_conversion]{unit_conversion()}}
 }
 \concept{helper functions}

@@ -386,8 +386,8 @@ test_that("A gt table can be made with grouped data - two groups", {
   # Expect the first row of data to match that which is expected
   (
     html_tbl |>
-    rvest::html_nodes("[class='gt_row gt_center']") |>
-    rvest::html_text()
+      rvest::html_nodes("[class='gt_row gt_center']") |>
+      rvest::html_text()
   )[1:8] |>
     expect_equal(
       c(
@@ -498,8 +498,8 @@ test_that("`groupname_col` in gt() will override any grouped data", {
   # Expect the first row of data to match that which is expected
   (
     html_tbl |>
-    rvest::html_nodes("[class='gt_row gt_center']") |>
-    rvest::html_text()
+      rvest::html_nodes("[class='gt_row gt_center']") |>
+      rvest::html_text()
   )[1:8] |>
     expect_equal(
       c(
@@ -583,8 +583,8 @@ test_that("rowname_col in gt() will be overridden by `rownames_to_stub = TRUE`",
   # Expect the first row of data to match that which is expected
   (
     html_tbl |>
-    rvest::html_nodes("[class='gt_row gt_center']") |>
-    rvest::html_text()
+      rvest::html_nodes("[class='gt_row gt_center']") |>
+      rvest::html_text()
   )[1:11] |>
     expect_equal(
       c(
@@ -659,8 +659,8 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
   # Expect the first row of data to match that which is expected
   (
     html_tbl |>
-    rvest::html_nodes("[class='gt_row gt_center']") |>
-    rvest::html_text()
+      rvest::html_nodes("[class='gt_row gt_center']") |>
+      rvest::html_text()
   )[1:10] |>
     expect_equal(
       c(
@@ -753,17 +753,15 @@ test_that("Escapable characters in rownames are handled correctly in each output
 
   # Expect that the stub and body rows are escaped correctly
   # when rendered as LaTeX
-  expect_match(
-    gt(tbl, rownames_to_stub = TRUE) |>
-      as_latex() |> as.character(),
+  expect_match_latex(
+    gt(tbl, rownames_to_stub = TRUE),
     "\\$row\\_latex & \\$latex & latex \\\\ ",
     fixed = TRUE
   )
 
   # Using a tibble (removes row names) and setting `column_1` as the stub
-  expect_match(
-    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") |>
-      as_latex() |> as.character(),
+  expect_match_latex(
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1"),
     "\\$latex & latex \\\\ ",
     fixed = TRUE
   )

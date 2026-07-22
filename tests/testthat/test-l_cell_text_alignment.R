@@ -285,7 +285,7 @@ test_that("latex cell alignment works - basic table with footnotes", {
     tab_footnote(footnote = md("FOOTNOTE<br> this"), locations = cells_body(1,1)) |>
     tab_footnote(footnote = md("FOOTNOTE2<br> this"), locations = cells_body(1,1), placement = "left") |>
     tab_footnote(footnote = md("FOOTNOTE3<br> this"), locations = cells_body(1,2), placement = "left") |>
-    tab_style(style = cell_text(align = "right"), locations = cells_footnotes()) %>%
+    tab_style(style = cell_text(align = "right"), locations = cells_footnotes()) |>
     cols_width(
       estimate ~ pct(40),
       col2 ~ pct(20),
