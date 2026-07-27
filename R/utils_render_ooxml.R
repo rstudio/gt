@@ -451,7 +451,7 @@ create_table_grid_ooxml <- function(ooxml_type, data, table_width = NULL) {
 
   widths <- boxh[boxh$type %in% c("default", "stub"), , drop = FALSE]
   # returns vector of column widths where `stub` is first
-  widths <- dplyr::arrange(widths, dplyr::desc(type))$column_width %>%
+  widths <- dplyr::arrange(widths, dplyr::desc(type))$column_width |>
     lapply(unlist)
 
   # widths may be NULL, pct(), px() ...

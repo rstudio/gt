@@ -165,7 +165,7 @@ derive_ooxml_width_pptx <- function(widths, table_width = NULL){
 
   ## convert defined cols to EMU
   if(sum(defined_cols) > 0){
-    defined_cols_widths <- widths[defined_cols] %>% sapply(function(.x){
+    defined_cols_widths <- widths[defined_cols] |> sapply(function(.x){
       if(grepl("(in|pt|cm|emu|em)$", x = .x)){
         px <- convert_to_px(.x)
       }else{
