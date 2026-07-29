@@ -444,7 +444,7 @@ the minimum number of digits, with zero-padding as necessary.\tabular{lll}{
 
 The day of week in month returns a numerical value indicating the number of
 times a given weekday had occurred in the month (e.g., '2nd Monday in
-March'). This conveniently resolves to predicable case structure where ranges
+March'). This conveniently resolves to predictable case structure where ranges
 of day of the month values return predictable day of week in month values:
 \itemize{
 \item days \code{1} - \code{7} -> \code{1}
