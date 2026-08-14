@@ -98,6 +98,14 @@
 #'   A logical value that allows for removal of trailing zeros (those redundant
 #'   zeros after the decimal mark).
 #'
+#' @param drop_leading_zero *Drop the leading zero*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   A logical value that determines whether a leading zero should be dropped
+#'   from values between -1 and 1. When set to `TRUE`, a value such as `0.75`
+#'   will be formatted as `.75` and `-0.35` will be formatted as `-.35`.
+#'
 #' @param drop_trailing_dec_mark *Drop the trailing decimal mark*
 #'
 #'   `scalar<logical>` // *default:* `TRUE`
@@ -253,6 +261,7 @@
 #' - `n_sigfig`
 #' - `drop_trailing_zeros`
 #' - `drop_trailing_dec_mark`
+#' - `drop_leading_zero`
 #' - `use_seps`
 #' - `accounting`
 #' - `scale_by`
@@ -372,6 +381,19 @@
 #' `r man_get_image_tag(file = "man_fmt_number_4.png")`
 #' }}
 #'
+#' When working with values bounded between -1 and 1 (such as correlations or
+#' proportions), you might want to drop the leading zero to save space and follow
+#' conventions used in certain fields. Use `drop_leading_zero = TRUE` to do this.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   x = c("polarity", "intensity", "trust"),
+#'   r = c(0.75, -0.013, 0.928)
+#' ) |>
+#'   gt() |>
+#'   fmt_number(columns = r, decimals = 3, drop_leading_zero = TRUE)
+#' ```
+#'
 #' Another strategy for dealing with precision of decimals is to have a separate
 #' column of values that specify how many decimal digits to retain. Such a
 #' column can be added via [cols_add()] or it can be part of the input table for
@@ -419,6 +441,7 @@ fmt_number <- function(
     n_sigfig = NULL,
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark = TRUE,
+    drop_leading_zero = FALSE,
     use_seps = TRUE,
     accounting = FALSE,
     scale_by = 1.0,
@@ -445,6 +468,7 @@ fmt_number <- function(
   # - n_sigfig
   # - drop_trailing_zeros
   # - drop_trailing_dec_mark
+  # - drop_leading_zero
   # - use_seps
   # - accounting
   # - scale_by
@@ -501,6 +525,7 @@ fmt_number <- function(
           n_sigfig = p_i$n_sigfig %||% n_sigfig,
           drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
           drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          drop_leading_zero = p_i$drop_leading_zero %||% drop_leading_zero,
           use_seps = p_i$use_seps %||% use_seps,
           accounting = p_i$accounting %||% accounting,
           scale_by = p_i$scale_by %||% scale_by,
@@ -601,6 +626,7 @@ fmt_number <- function(
             dec_mark = dec_mark,
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = drop_trailing_dec_mark,
+            drop_leading_zero = drop_leading_zero,
             format = formatC_format,
             min_sep_threshold = min_sep_threshold,
             system = system
