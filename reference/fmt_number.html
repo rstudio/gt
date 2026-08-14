@@ -126,6 +126,7 @@ formatting specific to the chosen locale</p></li>
 <span>  n_sigfig <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop_trailing_zeros <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  drop_trailing_dec_mark <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  drop_leading_zero <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  use_seps <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  accounting <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  scale_by <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -204,6 +205,14 @@ zeros after the decimal mark).</p></dd>
 <p>A logical value that determines whether decimal marks should always appear
 even if there are no decimal digits to display after formatting (e.g., <code>23</code>
 becomes <code>23.</code> if <code>FALSE</code>). By default trailing decimal marks are not shown.</p></dd>
+
+
+<dt id="arg-drop-leading-zero">drop_leading_zero<a class="anchor" aria-label="anchor" href="#arg-drop-leading-zero"></a></dt>
+<dd><p><em>Drop the leading zero</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
+<p>A logical value that determines whether a leading zero should be dropped
+from values between -1 and 1. When set to <code>TRUE</code>, a value such as <code>0.75</code>
+will be formatted as <code>.75</code> and <code>-0.35</code> will be formatted as <code>-.35</code>.</p></dd>
 
 
 <dt id="arg-use-seps">use_seps<a class="anchor" aria-label="anchor" href="#arg-use-seps"></a></dt>
@@ -355,6 +364,7 @@ arguments provide support for <code><a href="from_column.html">from_column()</a>
 <li><p><code>n_sigfig</code></p></li>
 <li><p><code>drop_trailing_zeros</code></p></li>
 <li><p><code>drop_trailing_dec_mark</code></p></li>
+<li><p><code>drop_leading_zero</code></p></li>
 <li><p><code>use_seps</code></p></li>
 <li><p><code>accounting</code></p></li>
 <li><p><code>scale_by</code></p></li>
@@ -450,6 +460,15 @@ runs of trailing zeros in the decimal part with <code>drop_trailing_zeros = TRUE
 <span>    latitude <span class="op">=</span> <span class="st">"Location"</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_number_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_number()` help file." style="width:100%;"></p>
+<p>When working with values bounded between -1 and 1 (such as correlations or
+proportions), you might want to drop the leading zero to save space and follow
+conventions used in certain fields. Use <code>drop_leading_zero = TRUE</code> to do this.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"polarity"</span>, <span class="st">"intensity"</span>, <span class="st">"trust"</span><span class="op">)</span>,</span>
+<span>  r <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>, <span class="op">-</span><span class="fl">0.013</span>, <span class="fl">0.928</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">r</span>, decimals <span class="op">=</span> <span class="fl">3</span>, drop_leading_zero <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Another strategy for dealing with precision of decimals is to have a separate
 column of values that specify how many decimal digits to retain. Such a
 column can be added via <code><a href="cols_add.html">cols_add()</a></code> or it can be part of the input table for

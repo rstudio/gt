@@ -57,6 +57,7 @@ fmt_currency(
   use_subunits = TRUE,
   decimals = NULL,
   drop_trailing_dec_mark = TRUE,
+  drop_leading_zero = FALSE,
   use_seps = TRUE,
   min_sep_threshold = 1,
   accounting = FALSE,
@@ -204,6 +205,17 @@ fmt_currency(
   formatting. For example, when `use_subunits = FALSE` or `decimals = 0`
   a formatted value such as `"$23"` can be fashioned as `"$23."` by
   setting `drop_trailing_dec_mark = FALSE`.
+
+- drop_leading_zero:
+
+  *Drop the leading zero*
+
+  `scalar<logical>` // *default:* `FALSE`
+
+  A logical value that determines whether a leading zero should be
+  dropped from values between -1 and 1. When set to `TRUE`, a value such
+  as `0.75` will be formatted as `.75` and `-0.35` will be formatted as
+  `-.35`.
 
 - use_seps:
 
@@ -404,6 +416,8 @@ arguments provide support for
 - `decimals`
 
 - `drop_trailing_dec_mark`
+
+- `drop_leading_zero`
 
 - `use_seps`
 

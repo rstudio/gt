@@ -2,6 +2,17 @@
 
 ## gt (development version)
 
+- Numeric formatting functions
+  ([`fmt_number()`](https://gt.rstudio.com/reference/fmt_number.md),
+  [`fmt_scientific()`](https://gt.rstudio.com/reference/fmt_scientific.md),
+  [`fmt_engineering()`](https://gt.rstudio.com/reference/fmt_engineering.md),
+  [`fmt_percent()`](https://gt.rstudio.com/reference/fmt_percent.md),
+  [`fmt_currency()`](https://gt.rstudio.com/reference/fmt_currency.md),
+  and others) gain a `drop_leading_zero` argument. Setting this to
+  `TRUE` removes the leading zero from values between -1 and 1 (e.g.,
+  `0.75` becomes `.75`), which is useful for displaying correlations,
+  p-values, and other bounded statistics
+  ([\#2146](https://github.com/rstudio/gt/issues/2146)).
 - Update RTF handling of stub columns and spans to handle multicolumn
   stubs ([\#2118](https://github.com/rstudio/gt/issues/2118))
 - Expand functionality of

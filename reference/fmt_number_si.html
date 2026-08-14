@@ -125,6 +125,7 @@ prefixes (powers of 1000)</p></li>
 <span>  n_sigfig <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop_trailing_zeros <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  drop_trailing_dec_mark <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  drop_leading_zero <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  use_seps <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  scale_by <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  pattern <span class="op">=</span> <span class="st">"{x}"</span>,</span>
@@ -210,6 +211,14 @@ magnitudes. When specified, the <code>decimals</code> argument is ignored.</p></
 <p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>Remove the decimal mark if all decimal places are zero (e.g., "1." becomes
 "1").</p></dd>
+
+
+<dt id="arg-drop-leading-zero">drop_leading_zero<a class="anchor" aria-label="anchor" href="#arg-drop-leading-zero"></a></dt>
+<dd><p><em>Drop the leading zero</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
+<p>A logical value that determines whether a leading zero should be dropped
+from values between -1 and 1. When set to <code>TRUE</code>, a value such as <code>0.75</code>
+will be formatted as <code>.75</code> and <code>-0.35</code> will be formatted as <code>-.35</code>.</p></dd>
 
 
 <dt id="arg-use-seps">use_seps<a class="anchor" aria-label="anchor" href="#arg-use-seps"></a></dt>
@@ -319,6 +328,8 @@ decimal places.</p></li>
 per row.</p></li>
 <li><p><code>drop_trailing_dec_mark</code>: The option to drop trailing decimal marks can be
 controlled per row.</p></li>
+<li><p><code>drop_leading_zero</code>: The option to drop the leading zero can be controlled
+per row.</p></li>
 <li><p><code>use_seps</code>: The use of digit separators can be enabled or disabled on a
 per-row basis.</p></li>
 <li><p><code>scale_by</code>: The scale multiplier can be different for each row.</p></li>

@@ -37,6 +37,7 @@ fmt_scientific(
   n_sigfig = NULL,
   drop_trailing_zeros = FALSE,
   drop_trailing_dec_mark = TRUE,
+  drop_leading_zero = FALSE,
   scale_by = 1,
   exp_style = "x10n",
   pattern = "{x}",
@@ -146,6 +147,17 @@ fmt_scientific(
   appear even if there are no decimal digits to display after formatting
   (e.g., `23` becomes `23.` if `FALSE`). By default trailing decimal
   marks are not shown.
+
+- drop_leading_zero:
+
+  *Drop the leading zero*
+
+  `scalar<logical>` // *default:* `FALSE`
+
+  A logical value that determines whether a leading zero should be
+  dropped from values between -1 and 1. When set to `TRUE`, a value such
+  as `0.75` will be formatted as `.75` and `-0.35` will be formatted as
+  `-.35`.
 
 - scale_by:
 
@@ -257,6 +269,8 @@ arguments provide support for
 - `drop_trailing_zeros`
 
 - `drop_trailing_dec_mark`
+
+- `drop_leading_zero`
 
 - `scale_by`
 

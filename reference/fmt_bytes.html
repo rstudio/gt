@@ -136,6 +136,7 @@ formatting specific to the chosen locale</p></li>
 <span>  n_sigfig <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop_trailing_zeros <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  drop_trailing_dec_mark <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  drop_leading_zero <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  use_seps <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  min_sep_threshold <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  pattern <span class="op">=</span> <span class="st">"{x}"</span>,</span>
@@ -220,6 +221,14 @@ zeros after the decimal mark).</p></dd>
 <p>A logical value that determines whether decimal marks should always appear
 even if there are no decimal digits to display after formatting (e.g., <code>23</code>
 becomes <code>23.</code> if <code>FALSE</code>). By default trailing decimal marks are not shown.</p></dd>
+
+
+<dt id="arg-drop-leading-zero">drop_leading_zero<a class="anchor" aria-label="anchor" href="#arg-drop-leading-zero"></a></dt>
+<dd><p><em>Drop the leading zero</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
+<p>A logical value that determines whether a leading zero should be dropped
+from values between -1 and 1. When set to <code>TRUE</code>, a value such as <code>0.75</code>
+will be formatted as <code>.75</code> and <code>-0.35</code> will be formatted as <code>-.35</code>.</p></dd>
 
 
 <dt id="arg-use-seps">use_seps<a class="anchor" aria-label="anchor" href="#arg-use-seps"></a></dt>
@@ -322,6 +331,7 @@ provide support for <code><a href="from_column.html">from_column()</a></code>:</
 <li><p><code>n_sigfig</code></p></li>
 <li><p><code>drop_trailing_zeros</code></p></li>
 <li><p><code>drop_trailing_dec_mark</code></p></li>
+<li><p><code>drop_leading_zero</code></p></li>
 <li><p><code>use_seps</code></p></li>
 <li><p><code>pattern</code></p></li>
 <li><p><code>sep_mark</code></p></li>

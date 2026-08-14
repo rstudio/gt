@@ -36,6 +36,7 @@ fmt_number_si(
   n_sigfig = NULL,
   drop_trailing_zeros = FALSE,
   drop_trailing_dec_mark = TRUE,
+  drop_leading_zero = FALSE,
   use_seps = TRUE,
   scale_by = 1,
   pattern = "{x}",
@@ -160,6 +161,17 @@ fmt_number_si(
 
   Remove the decimal mark if all decimal places are zero (e.g., "1."
   becomes "1").
+
+- drop_leading_zero:
+
+  *Drop the leading zero*
+
+  `scalar<logical>` // *default:* `FALSE`
+
+  A logical value that determines whether a leading zero should be
+  dropped from values between -1 and 1. When set to `TRUE`, a value such
+  as `0.75` will be formatted as `.75` and `-0.35` will be formatted as
+  `-.35`.
 
 - use_seps:
 
@@ -297,6 +309,9 @@ arguments provide support for
 
 - `drop_trailing_dec_mark`: The option to drop trailing decimal marks
   can be controlled per row.
+
+- `drop_leading_zero`: The option to drop the leading zero can be
+  controlled per row.
 
 - `use_seps`: The use of digit separators can be enabled or disabled on
   a per-row basis.
