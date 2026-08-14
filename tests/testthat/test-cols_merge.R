@@ -293,6 +293,35 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
     (tbl_gt_13 |> render_formats_test("html"))[["a"]],
     c("11TRUE", "2", "33X", "4")
   )
+
+  # Angle brackets in data values should not break `<<`/`>>` pattern
+  # processing (#2153)
+  tbl_angle <- gt(data.frame(a = "A", b = "<B", stringsAsFactors = FALSE))
+
+  expect_equal(
+    (tbl_angle |>
+       cols_merge(columns = c(a, b), pattern = "<<{1}{2}>>") |>
+       render_formats_test("latex"))[["a"]],
+    "A<B"
+  )
+
+  expect_equal(
+    (tbl_angle |>
+       cols_merge(columns = c(a, b), pattern = "<<{1}{2}>>") |>
+       render_formats_test("html"))[["a"]],
+    "A&lt;B"
+  )
+
+  tbl_angle_miss <- gt(data.frame(
+    a = c("A", "C"), b = c("<B", NA), stringsAsFactors = FALSE
+  ))
+
+  expect_equal(
+    (tbl_angle_miss |>
+       cols_merge(columns = c(a, b), pattern = "{1} <<({2})>>") |>
+       render_formats_test("latex"))[["a"]],
+    c("A (<B)", "C ")
+  )
 })
 
 test_that("cols_merge_uncert() works correctly", {
