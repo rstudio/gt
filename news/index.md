@@ -13,6 +13,10 @@
   `0.75` becomes `.75`), which is useful for displaying correlations,
   p-values, and other bounded statistics
   ([\#2146](https://github.com/rstudio/gt/issues/2146)).
+- Fixed [`cols_merge()`](https://gt.rstudio.com/reference/cols_merge.md)
+  with `<<`/`>>` patterns producing corrupted output when data values
+  contain `<` or `>` characters, particularly in LaTeX output
+  ([\#2153](https://github.com/rstudio/gt/issues/2153)).
 - Update RTF handling of stub columns and spans to handle multicolumn
   stubs ([\#2118](https://github.com/rstudio/gt/issues/2118))
 - Expand functionality of
