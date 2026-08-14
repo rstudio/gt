@@ -145,6 +145,36 @@ test_that("vec_fmt_number() works", {
       )
     )
 
+  vec_fmt_number(vec_num_1, drop_leading_zero = TRUE, output = "plain") |>
+    expect_equal(
+      c(
+        "-2.50", "-2.00", "-1.50", "-1.00", "-.50",
+        ".00", ".50", "1.00", "1.50", "2.00", "2.50", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, drop_leading_zero = TRUE, output = "html") |>
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50"), paste0("\U02212", "2.00"),
+        paste0("\U02212", "1.50"), paste0("\U02212", "1.00"),
+        paste0("\U02212", ".50"),
+        ".00", ".50", "1.00", "1.50",
+        "2.00", "2.50", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(
+    vec_num_1, drop_leading_zero = TRUE,
+    drop_trailing_zeros = TRUE, output = "plain"
+  ) |>
+    expect_equal(
+      c(
+        "-2.5", "-2", "-1.5", "-1", "-.5",
+        "0", ".5", "1", "1.5", "2", "2.5", "NA", "Inf"
+      )
+    )
+
   vec_fmt_number(vec_num_1, n_sigfig = 3, output = "plain") |>
     expect_equal(
       c(
