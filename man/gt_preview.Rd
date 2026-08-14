@@ -79,7 +79,7 @@ and the last row.
 }
 
 \seealso{
-Other table creation functions:
-\code{\link[=gt]{gt()}}
+Other table creation functions: 
+\code{\link{gt}()}
 }
 \concept{table creation functions}

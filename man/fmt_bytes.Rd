@@ -13,6 +13,7 @@ fmt_bytes(
   n_sigfig = NULL,
   drop_trailing_zeros = TRUE,
   drop_trailing_dec_mark = TRUE,
+  drop_leading_zero = FALSE,
   use_seps = TRUE,
   min_sep_threshold = 1,
   pattern = "{x}",
@@ -94,6 +95,14 @@ zeros after the decimal mark).}
 A logical value that determines whether decimal marks should always appear
 even if there are no decimal digits to display after formatting (e.g., \code{23}
 becomes \code{23.} if \code{FALSE}). By default trailing decimal marks are not shown.}
+
+\item{drop_leading_zero}{\emph{Drop the leading zero}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+A logical value that determines whether a leading zero should be dropped
+from values between -1 and 1. When set to \code{TRUE}, a value such as \code{0.75}
+will be formatted as \code{.75} and \code{-0.35} will be formatted as \code{-.35}.}
 
 \item{use_seps}{\emph{Use digit group separators}
 
@@ -216,6 +225,7 @@ provide support for \code{\link[=from_column]{from_column()}}:
 \item \code{n_sigfig}
 \item \code{drop_trailing_zeros}
 \item \code{drop_trailing_dec_mark}
+\item \code{drop_leading_zero}
 \item \code{use_seps}
 \item \code{pattern}
 \item \code{sep_mark}
@@ -295,42 +305,42 @@ this time showing byte sizes as binary values by using \code{standard = "binary"
 \seealso{
 The vector-formatting version of this function: \code{\link[=vec_fmt_bytes]{vec_fmt_bytes()}}.
 
-Other data formatting functions:
-\code{\link[=data_color]{data_color()}},
-\code{\link[=fmt]{fmt()}},
-\code{\link[=fmt_auto]{fmt_auto()}},
-\code{\link[=fmt_bins]{fmt_bins()}},
-\code{\link[=fmt_chem]{fmt_chem()}},
-\code{\link[=fmt_country]{fmt_country()}},
-\code{\link[=fmt_currency]{fmt_currency()}},
-\code{\link[=fmt_date]{fmt_date()}},
-\code{\link[=fmt_datetime]{fmt_datetime()}},
-\code{\link[=fmt_duration]{fmt_duration()}},
-\code{\link[=fmt_email]{fmt_email()}},
-\code{\link[=fmt_engineering]{fmt_engineering()}},
-\code{\link[=fmt_flag]{fmt_flag()}},
-\code{\link[=fmt_fraction]{fmt_fraction()}},
-\code{\link[=fmt_icon]{fmt_icon()}},
-\code{\link[=fmt_image]{fmt_image()}},
-\code{\link[=fmt_index]{fmt_index()}},
-\code{\link[=fmt_integer]{fmt_integer()}},
-\code{\link[=fmt_markdown]{fmt_markdown()}},
-\code{\link[=fmt_number]{fmt_number()}},
-\code{\link[=fmt_number_si]{fmt_number_si()}},
-\code{\link[=fmt_partsper]{fmt_partsper()}},
-\code{\link[=fmt_passthrough]{fmt_passthrough()}},
-\code{\link[=fmt_percent]{fmt_percent()}},
-\code{\link[=fmt_roman]{fmt_roman()}},
-\code{\link[=fmt_scientific]{fmt_scientific()}},
-\code{\link[=fmt_spelled_num]{fmt_spelled_num()}},
-\code{\link[=fmt_tf]{fmt_tf()}},
-\code{\link[=fmt_time]{fmt_time()}},
-\code{\link[=fmt_units]{fmt_units()}},
-\code{\link[=fmt_url]{fmt_url()}},
-\code{\link[=sub_large_vals]{sub_large_vals()}},
-\code{\link[=sub_missing]{sub_missing()}},
-\code{\link[=sub_small_vals]{sub_small_vals()}},
-\code{\link[=sub_values]{sub_values()}},
-\code{\link[=sub_zero]{sub_zero()}}
+Other data formatting functions: 
+\code{\link{data_color}()},
+\code{\link{fmt}()},
+\code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
+\code{\link{fmt_currency}()},
+\code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
+\code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_flag}()},
+\code{\link{fmt_fraction}()},
+\code{\link{fmt_icon}()},
+\code{\link{fmt_image}()},
+\code{\link{fmt_index}()},
+\code{\link{fmt_integer}()},
+\code{\link{fmt_markdown}()},
+\code{\link{fmt_number}()},
+\code{\link{fmt_number_si}()},
+\code{\link{fmt_partsper}()},
+\code{\link{fmt_passthrough}()},
+\code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
+\code{\link{fmt_scientific}()},
+\code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
+\code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
+\code{\link{fmt_url}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_values}()},
+\code{\link{sub_zero}()}
 }
 \concept{data formatting functions}

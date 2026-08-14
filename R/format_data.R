@@ -98,6 +98,7 @@
 #' - `decimals`
 #' - `drop_trailing_zeros`
 #' - `drop_trailing_dec_mark`
+#' - `drop_leading_zero`
 #' - `scale_by`
 #' - `exp_style`
 #' - `pattern`
@@ -263,6 +264,7 @@ fmt_scientific <- function(
     n_sigfig = NULL,
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark = TRUE,
+    drop_leading_zero = FALSE,
     scale_by = 1.0,
     exp_style = "x10n",
     pattern = "{x}",
@@ -286,6 +288,7 @@ fmt_scientific <- function(
   # - n_sigfig
   # - drop_trailing_zeros
   # - drop_trailing_dec_mark
+  # - drop_leading_zero
   # - scale_by
   # - exp_style
   # - pattern
@@ -332,6 +335,7 @@ fmt_scientific <- function(
           n_sigfig = p_i$n_sigfig %||% n_sigfig,
           drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
           drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          drop_leading_zero = p_i$drop_leading_zero %||% drop_leading_zero,
           scale_by = p_i$scale_by %||% scale_by,
           exp_style = p_i$exp_style %||% exp_style,
           pattern = p_i$pattern %||% pattern,
@@ -445,6 +449,7 @@ fmt_scientific <- function(
               dec_mark = dec_mark,
               drop_trailing_zeros = FALSE,
               drop_trailing_dec_mark = FALSE,
+              drop_leading_zero = drop_leading_zero,
               format = "e",
               replace_minus_mark = FALSE
             )
@@ -660,6 +665,7 @@ fmt_scientific <- function(
 #' - `decimals`
 #' - `drop_trailing_zeros`
 #' - `drop_trailing_dec_mark`
+#' - `drop_leading_zero`
 #' - `scale_by`
 #' - `exp_style`
 #' - `pattern`
@@ -795,6 +801,7 @@ fmt_engineering <- function(
     decimals = 2,
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark = TRUE,
+    drop_leading_zero = FALSE,
     scale_by = 1.0,
     exp_style = "x10n",
     pattern = "{x}",
@@ -817,6 +824,7 @@ fmt_engineering <- function(
   # - decimals
   # - drop_trailing_zeros
   # - drop_trailing_dec_mark
+  # - drop_leading_zero
   # - scale_by
   # - exp_style
   # - pattern
@@ -862,6 +870,7 @@ fmt_engineering <- function(
           decimals = p_i$decimals %||% decimals,
           drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
           drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          drop_leading_zero = p_i$drop_leading_zero %||% drop_leading_zero,
           scale_by = p_i$scale_by %||% scale_by,
           exp_style = p_i$exp_style %||% exp_style,
           pattern = p_i$pattern %||% pattern,
@@ -972,6 +981,7 @@ fmt_engineering <- function(
             dec_mark = dec_mark,
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = drop_trailing_dec_mark,
+            drop_leading_zero = drop_leading_zero,
             format = "f",
             replace_minus_mark = FALSE
           )
@@ -1171,6 +1181,14 @@ fmt_engineering <- function(
 #'   Remove the decimal mark if all decimal places are zero (e.g., "1." becomes
 #'   "1").
 #'
+#' @param drop_leading_zero *Drop the leading zero*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   A logical value that determines whether a leading zero should be dropped
+#'   from values between -1 and 1. When set to `TRUE`, a value such as `0.75`
+#'   will be formatted as `.75` and `-0.35` will be formatted as `-.35`.
+#'
 #' @param use_seps *Use digit group separators*
 #'
 #'   `scalar<logical>` // *default:* `TRUE`
@@ -1272,6 +1290,8 @@ fmt_engineering <- function(
 #'   per row.
 #' - `drop_trailing_dec_mark`: The option to drop trailing decimal marks can be
 #'   controlled per row.
+#' - `drop_leading_zero`: The option to drop the leading zero can be controlled
+#'   per row.
 #' - `use_seps`: The use of digit separators can be enabled or disabled on a
 #'   per-row basis.
 #' - `scale_by`: The scale multiplier can be different for each row.
@@ -1409,6 +1429,7 @@ fmt_number_si <- function(
     n_sigfig = NULL,
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark = TRUE,
+    drop_leading_zero = FALSE,
     use_seps = TRUE,
     scale_by = 1,
     pattern = "{x}",
@@ -1435,6 +1456,7 @@ fmt_number_si <- function(
   # - n_sigfig
   # - drop_trailing_zeros
   # - drop_trailing_dec_mark
+  # - drop_leading_zero
   # - use_seps
   # - scale_by
   # - pattern
@@ -1486,6 +1508,7 @@ fmt_number_si <- function(
           n_sigfig = p_i$n_sigfig %||% n_sigfig,
           drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
           drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          drop_leading_zero = p_i$drop_leading_zero %||% drop_leading_zero,
           use_seps = p_i$use_seps %||% use_seps,
           scale_by = p_i$scale_by %||% scale_by,
           pattern = p_i$pattern %||% pattern,
@@ -1560,6 +1583,7 @@ fmt_number_si <- function(
             dec_mark = dec_mark,
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = drop_trailing_dec_mark,
+            drop_leading_zero = drop_leading_zero,
             format = formatC_format,
             system = "intl"
           )
@@ -1715,6 +1739,7 @@ fmt_symbol <- function(
     decimals = NULL,
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark = TRUE,
+    drop_leading_zero = FALSE,
     use_seps = TRUE,
     min_sep_threshold = 1,
     scale_by = 1.0,
@@ -1793,6 +1818,7 @@ fmt_symbol <- function(
               dec_mark = dec_mark,
               drop_trailing_zeros = drop_trailing_zeros,
               drop_trailing_dec_mark = drop_trailing_dec_mark,
+              drop_leading_zero = drop_leading_zero,
               min_sep_threshold = min_sep_threshold,
               system = system
             )
@@ -1813,6 +1839,7 @@ fmt_symbol <- function(
               dec_mark = dec_mark,
               drop_trailing_zeros = drop_trailing_zeros,
               drop_trailing_dec_mark = drop_trailing_dec_mark,
+              drop_leading_zero = drop_leading_zero,
               min_sep_threshold = min_sep_threshold,
               system = system
             )
@@ -1936,6 +1963,7 @@ fmt_symbol <- function(
 #' - `decimals`
 #' - `drop_trailing_zeros`
 #' - `drop_trailing_dec_mark`
+#' - `drop_leading_zero`
 #' - `scale_values`
 #' - `use_seps`
 #' - `accounting`
@@ -2010,6 +2038,7 @@ fmt_percent <- function(
     decimals = 2,
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark = TRUE,
+    drop_leading_zero = FALSE,
     scale_values = TRUE,
     use_seps = TRUE,
     min_sep_threshold = 1,
@@ -2036,6 +2065,7 @@ fmt_percent <- function(
   # - decimals
   # - drop_trailing_zeros
   # - drop_trailing_dec_mark
+  # - drop_leading_zero
   # - scale_values
   # - use_seps
   # - min_sep_threshold
@@ -2085,6 +2115,7 @@ fmt_percent <- function(
           decimals = p_i$decimals %||% decimals,
           drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
           drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          drop_leading_zero = p_i$drop_leading_zero %||% drop_leading_zero,
           scale_values = p_i$scale_values %||% scale_values,
           use_seps = p_i$use_seps %||% use_seps,
           min_sep_threshold = p_i$min_sep_threshold %||% min_sep_threshold,
@@ -2138,6 +2169,7 @@ fmt_percent <- function(
     decimals = decimals,
     drop_trailing_zeros = drop_trailing_zeros,
     drop_trailing_dec_mark = drop_trailing_dec_mark,
+    drop_leading_zero = drop_leading_zero,
     use_seps = use_seps,
     min_sep_threshold = min_sep_threshold,
     scale_by = scale_by,
@@ -2247,6 +2279,7 @@ fmt_percent <- function(
 #' - `decimals`
 #' - `drop_trailing_zeros`
 #' - `drop_trailing_dec_mark`
+#' - `drop_leading_zero`
 #' - `scale_values`
 #' - `use_seps`
 #' - `pattern`
@@ -2320,6 +2353,7 @@ fmt_partsper <- function(
     decimals = 2,
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark = TRUE,
+    drop_leading_zero = FALSE,
     scale_values = TRUE,
     use_seps = TRUE,
     pattern = "{x}",
@@ -2345,6 +2379,7 @@ fmt_partsper <- function(
   # - decimals
   # - drop_trailing_zeros
   # - drop_trailing_dec_mark
+  # - drop_leading_zero
   # - scale_values
   # - use_seps
   # - pattern
@@ -2393,6 +2428,7 @@ fmt_partsper <- function(
           decimals = p_i$decimals %||% decimals,
           drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
           drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          drop_leading_zero = p_i$drop_leading_zero %||% drop_leading_zero,
           scale_values = p_i$scale_values %||% scale_values,
           use_seps = p_i$use_seps %||% use_seps,
           pattern = p_i$pattern %||% pattern,
@@ -2488,6 +2524,7 @@ fmt_partsper <- function(
     decimals = decimals,
     drop_trailing_zeros = drop_trailing_zeros,
     drop_trailing_dec_mark = drop_trailing_dec_mark,
+    drop_leading_zero = drop_leading_zero,
     use_seps = use_seps,
     scale_by = scale_by,
     suffixing = FALSE,
@@ -3216,6 +3253,7 @@ round_gt <- function(x, digits = 0) {
 #' - `use_subunits`
 #' - `decimals`
 #' - `drop_trailing_dec_mark`
+#' - `drop_leading_zero`
 #' - `use_seps`
 #' - `accounting`
 #' - `scale_by`
@@ -3411,6 +3449,7 @@ fmt_currency <- function(
     use_subunits = TRUE,
     decimals = NULL,
     drop_trailing_dec_mark = TRUE,
+    drop_leading_zero = FALSE,
     use_seps = TRUE,
     min_sep_threshold = 1,
     accounting = FALSE,
@@ -3439,6 +3478,7 @@ fmt_currency <- function(
   # - use_subunits
   # - decimals
   # - drop_trailing_dec_mark
+  # - drop_leading_zero
   # - use_seps
   # - min_sep_threshold
   # - accounting
@@ -3490,6 +3530,7 @@ fmt_currency <- function(
           use_subunits = p_i$use_subunits %||% use_subunits,
           decimals = p_i$decimals %||% decimals,
           drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          drop_leading_zero = p_i$drop_leading_zero %||% drop_leading_zero,
           use_seps = p_i$use_seps %||% use_seps,
           min_sep_threshold = p_i$min_sep_threshold %||% min_sep_threshold,
           accounting = p_i$accounting %||% accounting,
@@ -3553,6 +3594,7 @@ fmt_currency <- function(
     decimals = decimals,
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark = drop_trailing_dec_mark,
+    drop_leading_zero = drop_leading_zero,
     use_seps = use_seps,
     min_sep_threshold = min_sep_threshold,
     scale_by = scale_by,
@@ -4471,6 +4513,7 @@ fmt_spelled_num <- function(
 #' - `n_sigfig`
 #' - `drop_trailing_zeros`
 #' - `drop_trailing_dec_mark`
+#' - `drop_leading_zero`
 #' - `use_seps`
 #' - `pattern`
 #' - `sep_mark`
@@ -4552,6 +4595,7 @@ fmt_bytes <- function(
     n_sigfig = NULL,
     drop_trailing_zeros = TRUE,
     drop_trailing_dec_mark = TRUE,
+    drop_leading_zero = FALSE,
     use_seps = TRUE,
     min_sep_threshold = 1,
     pattern = "{x}",
@@ -4576,6 +4620,7 @@ fmt_bytes <- function(
   # - n_sigfig
   # - drop_trailing_zeros
   # - drop_trailing_dec_mark
+  # - drop_leading_zero
   # - use_seps
   # - min_sep_threshold
   # - pattern
@@ -4623,6 +4668,7 @@ fmt_bytes <- function(
           n_sigfig = p_i$n_sigfig %||% n_sigfig,
           drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
           drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          drop_leading_zero = p_i$drop_leading_zero %||% drop_leading_zero,
           use_seps = p_i$use_seps %||% use_seps,
           min_sep_threshold = p_i$min_sep_threshold %||% min_sep_threshold,
           pattern = p_i$pattern %||% pattern,
@@ -4713,6 +4759,7 @@ fmt_bytes <- function(
             dec_mark = dec_mark,
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = drop_trailing_dec_mark,
+            drop_leading_zero = drop_leading_zero,
             min_sep_threshold = min_sep_threshold,
             format = formatC_format
           )
