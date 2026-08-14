@@ -179,6 +179,10 @@ gt_split <- function(
     gt_tbl_i[["_data"]] <- gt_tbl_i[["_data"]][row_range_list[[i]], ]
     gt_tbl_i[["_stub_df"]] <- gt_tbl_i[["_stub_df"]][row_range_list[[i]], ]
 
+    groups_in_slice <- unique(gt_tbl_i[["_stub_df"]][["group_id"]])
+    gt_tbl_i[["_row_groups"]] <-
+      gt_tbl_i[["_row_groups"]][gt_tbl_i[["_row_groups"]] %in% groups_in_slice]
+
     if (!is.null(col_slice_at)) {
 
       # Get all visible vars in their finalized order
