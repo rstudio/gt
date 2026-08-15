@@ -17,6 +17,10 @@
   with `<<`/`>>` patterns producing corrupted output when data values
   contain `<` or `>` characters, particularly in LaTeX output
   ([\#2153](https://github.com/rstudio/gt/issues/2153)).
+- Fixed [`gt_split()`](https://gt.rstudio.com/reference/gt_split.md)
+  failing on grouped data.frames by filtering stale row group metadata
+  after subsetting rows
+  ([\#2089](https://github.com/rstudio/gt/issues/2089)).
 - Update RTF handling of stub columns and spans to handle multicolumn
   stubs ([\#2118](https://github.com/rstudio/gt/issues/2118))
 - Expand functionality of
