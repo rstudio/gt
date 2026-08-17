@@ -10,6 +10,7 @@ vec_fmt_scientific(
   n_sigfig = NULL,
   drop_trailing_zeros = FALSE,
   drop_trailing_dec_mark = TRUE,
+  drop_leading_zero = FALSE,
   scale_by = 1,
   exp_style = "x10n",
   pattern = "{x}",
@@ -63,6 +64,14 @@ zeros after the decimal mark).}
 A logical value that determines whether decimal marks should always appear
 even if there are no decimal digits to display after formatting (e.g., \code{23}
 becomes \code{23.} if \code{FALSE}). By default trailing decimal marks are not shown.}
+
+\item{drop_leading_zero}{\emph{Drop the leading zero}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+A logical value that determines whether a leading zero should be dropped
+from values between -1 and 1. When set to \code{TRUE}, a value such as \code{0.75}
+will be formatted as \code{.75} and \code{-0.35} will be formatted as \code{-.35}.}
 
 \item{scale_by}{\emph{Scale values by a fixed multiplier}
 
@@ -233,23 +242,23 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 The variant function intended for formatting \strong{gt} table data:
 \code{\link[=fmt_scientific]{fmt_scientific()}}.
 
-Other vector formatting functions:
-\code{\link[=vec_fmt_bytes]{vec_fmt_bytes()}},
-\code{\link[=vec_fmt_currency]{vec_fmt_currency()}},
-\code{\link[=vec_fmt_date]{vec_fmt_date()}},
-\code{\link[=vec_fmt_datetime]{vec_fmt_datetime()}},
-\code{\link[=vec_fmt_duration]{vec_fmt_duration()}},
-\code{\link[=vec_fmt_engineering]{vec_fmt_engineering()}},
-\code{\link[=vec_fmt_fraction]{vec_fmt_fraction()}},
-\code{\link[=vec_fmt_index]{vec_fmt_index()}},
-\code{\link[=vec_fmt_integer]{vec_fmt_integer()}},
-\code{\link[=vec_fmt_markdown]{vec_fmt_markdown()}},
-\code{\link[=vec_fmt_number]{vec_fmt_number()}},
-\code{\link[=vec_fmt_number_si]{vec_fmt_number_si()}},
-\code{\link[=vec_fmt_partsper]{vec_fmt_partsper()}},
-\code{\link[=vec_fmt_percent]{vec_fmt_percent()}},
-\code{\link[=vec_fmt_roman]{vec_fmt_roman()}},
-\code{\link[=vec_fmt_spelled_num]{vec_fmt_spelled_num()}},
-\code{\link[=vec_fmt_time]{vec_fmt_time()}}
+Other vector formatting functions: 
+\code{\link{vec_fmt_bytes}()},
+\code{\link{vec_fmt_currency}()},
+\code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_datetime}()},
+\code{\link{vec_fmt_duration}()},
+\code{\link{vec_fmt_engineering}()},
+\code{\link{vec_fmt_fraction}()},
+\code{\link{vec_fmt_index}()},
+\code{\link{vec_fmt_integer}()},
+\code{\link{vec_fmt_markdown}()},
+\code{\link{vec_fmt_number}()},
+\code{\link{vec_fmt_number_si}()},
+\code{\link{vec_fmt_partsper}()},
+\code{\link{vec_fmt_percent}()},
+\code{\link{vec_fmt_roman}()},
+\code{\link{vec_fmt_spelled_num}()},
+\code{\link{vec_fmt_time}()}
 }
 \concept{vector formatting functions}

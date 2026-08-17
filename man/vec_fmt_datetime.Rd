@@ -394,7 +394,7 @@ the minimum number of digits, with zero-padding as necessary.\tabular{lll}{
 
 The day of week in month returns a numerical value indicating the number of
 times a given weekday had occurred in the month (e.g., '2nd Monday in
-March'). This conveniently resolves to predicable case structure where ranges
+March'). This conveniently resolves to predictable case structure where ranges
 of day of the month values return predictable day of week in month values:
 \itemize{
 \item days \code{1} - \code{7} -> \code{1}
@@ -918,23 +918,23 @@ applied.
 The variant function intended for formatting \strong{gt} table data:
 \code{\link[=fmt_datetime]{fmt_datetime()}}.
 
-Other vector formatting functions:
-\code{\link[=vec_fmt_bytes]{vec_fmt_bytes()}},
-\code{\link[=vec_fmt_currency]{vec_fmt_currency()}},
-\code{\link[=vec_fmt_date]{vec_fmt_date()}},
-\code{\link[=vec_fmt_duration]{vec_fmt_duration()}},
-\code{\link[=vec_fmt_engineering]{vec_fmt_engineering()}},
-\code{\link[=vec_fmt_fraction]{vec_fmt_fraction()}},
-\code{\link[=vec_fmt_index]{vec_fmt_index()}},
-\code{\link[=vec_fmt_integer]{vec_fmt_integer()}},
-\code{\link[=vec_fmt_markdown]{vec_fmt_markdown()}},
-\code{\link[=vec_fmt_number]{vec_fmt_number()}},
-\code{\link[=vec_fmt_number_si]{vec_fmt_number_si()}},
-\code{\link[=vec_fmt_partsper]{vec_fmt_partsper()}},
-\code{\link[=vec_fmt_percent]{vec_fmt_percent()}},
-\code{\link[=vec_fmt_roman]{vec_fmt_roman()}},
-\code{\link[=vec_fmt_scientific]{vec_fmt_scientific()}},
-\code{\link[=vec_fmt_spelled_num]{vec_fmt_spelled_num()}},
-\code{\link[=vec_fmt_time]{vec_fmt_time()}}
+Other vector formatting functions: 
+\code{\link{vec_fmt_bytes}()},
+\code{\link{vec_fmt_currency}()},
+\code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_duration}()},
+\code{\link{vec_fmt_engineering}()},
+\code{\link{vec_fmt_fraction}()},
+\code{\link{vec_fmt_index}()},
+\code{\link{vec_fmt_integer}()},
+\code{\link{vec_fmt_markdown}()},
+\code{\link{vec_fmt_number}()},
+\code{\link{vec_fmt_number_si}()},
+\code{\link{vec_fmt_partsper}()},
+\code{\link{vec_fmt_percent}()},
+\code{\link{vec_fmt_roman}()},
+\code{\link{vec_fmt_scientific}()},
+\code{\link{vec_fmt_spelled_num}()},
+\code{\link{vec_fmt_time}()}
 }
 \concept{vector formatting functions}

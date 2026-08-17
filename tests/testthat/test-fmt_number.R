@@ -80,6 +80,38 @@ test_that("fmt_number() works correctly in the HTML context", {
     c("1,836.23", "2,763.39", "937.29", "643", "212.23", "0", paste0("\U02212", "23.24"))
   )
 
+  # Format values with `drop_leading_zero = TRUE` to remove the leading
+
+  # zero from values between -1 and 1
+  data_tbl_small <-
+    data.frame(
+      val = c(0.75, -0.35, 0.013, -0.999, 0, 1.5, -2.0, 0.00),
+      stringsAsFactors = FALSE
+    )
+  tab_small <- gt(data_tbl_small)
+
+  expect_equal(
+    (tab_small |>
+       fmt_number(columns = val, decimals = 3,
+                  drop_leading_zero = TRUE) |>
+       render_formats_test("html"))[["val"]],
+    c(".750", paste0("\U02212", ".350"), ".013",
+      paste0("\U02212", ".999"), ".000", "1.500",
+      paste0("\U02212", "2.000"), ".000")
+  )
+
+  # Combine `drop_leading_zero` with `drop_trailing_zeros`
+  expect_equal(
+    (tab_small |>
+       fmt_number(columns = val, decimals = 3,
+                  drop_leading_zero = TRUE,
+                  drop_trailing_zeros = TRUE) |>
+       render_formats_test("html"))[["val"]],
+    c(".75", paste0("\U02212", ".35"), ".013",
+      paste0("\U02212", ".999"), "0", "1.5",
+      paste0("\U02212", "2"), "0")
+  )
+
   # Format the `num_1` column to 2 decimal places, don't use digit
   # grouping separators, use all other defaults
   expect_equal(

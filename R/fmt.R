@@ -564,6 +564,7 @@ format_num_to_str <- function(
     dec_mark,
     drop_trailing_zeros,
     drop_trailing_dec_mark,
+    drop_leading_zero = FALSE,
     format = "f",
     replace_minus_mark = TRUE,
     min_sep_threshold = 1,
@@ -744,6 +745,15 @@ format_num_to_str <- function(
       )
   }
 
+  if (drop_leading_zero) {
+    neg_lead_zero <- startsWith(x_str, paste0("-0", dec_mark))
+    x_str[neg_lead_zero] <-
+      paste0("-", substring(x_str[neg_lead_zero], 3L))
+
+    pos_lead_zero <- startsWith(x_str, paste0("0", dec_mark))
+    x_str[pos_lead_zero] <- substring(x_str[pos_lead_zero], 2L)
+  }
+
   # Replace the minus mark (a hyphen) with a context-specific minus sign
   if (replace_minus_mark) {
     x_str <- format_minus(x_str = x_str, x = x, context = context)
@@ -765,6 +775,7 @@ format_num_to_str_c <- function(
     dec_mark,
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark,
+    drop_leading_zero = FALSE,
     min_sep_threshold = 1,
     system = c("intl", "ind")
 ) {
@@ -780,6 +791,7 @@ format_num_to_str_c <- function(
     dec_mark = dec_mark,
     drop_trailing_zeros = drop_trailing_zeros,
     drop_trailing_dec_mark = drop_trailing_dec_mark,
+    drop_leading_zero = drop_leading_zero,
     min_sep_threshold = min_sep_threshold,
     format = "f",
     system = system

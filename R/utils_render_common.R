@@ -397,6 +397,8 @@ resolve_secondary_pattern <- function(x) {
 
     matched <- unlist(regmatches(x, m))[1]
 
+    if (is.na(matched)) break
+
     m_start <- as.integer(m[[1]])
     m_length <- attr(m[[1]], "match.length")
 
@@ -509,9 +511,20 @@ perform_col_merge <- function(data, context) {
           "i" = "Review {.arg pattern} provided to {.fn cols_merge}."
         ))
       }
+
+      has_secondary <- grepl("<<.*?>>", pattern)
+
+      if (has_secondary) {
+        glue_src_data <-
+          lapply(glue_src_data, function(vals) {
+            vals <- gsub("<", "\x01", vals, fixed = TRUE)
+            gsub(">", "\x02", vals, fixed = TRUE)
+          })
+      }
+
       glued_cols <- as.character(glue_gt(glue_src_data, pattern))
 
-      if (grepl("<<.*?>>", pattern)) {
+      if (has_secondary) {
 
         glued_cols <-
           vapply(
@@ -522,6 +535,8 @@ perform_col_merge <- function(data, context) {
           )
 
         glued_cols <- gsub("<<|>>", "", glued_cols)
+        glued_cols <- gsub("\x01", "<", glued_cols, fixed = TRUE)
+        glued_cols <- gsub("\x02", ">", glued_cols, fixed = TRUE)
       }
 
       glued_cols <- gsub(missing_val_token, "NA", glued_cols, fixed = TRUE)
