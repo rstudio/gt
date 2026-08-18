@@ -1909,8 +1909,6 @@ test_that("pptx_ooxml can be generated with defined cell borders",{
 
   gtsave(gtcars_tbl, filename = "test.pptx")
 
-  shell.exec("test.pptx")
-
   gtcars_tbl2 <-
     gtcars |>
     dplyr::filter(ctry_origin == "United Kingdom") |>
