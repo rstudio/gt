@@ -978,6 +978,7 @@ footnote_mark_to_ooxml_word <- function(data, mark, location = c("ref", "ftr")) 
 }
 
 footnote_mark_to_ooxml_pptx <- function(data, mark, location = c("ref", "ftr")) {
+
   location <- match.arg(location)
   if (length(mark) == 1 && is.na(mark)) return("")
   spec <- get_footnote_spec_by_location(data = data, location = location) %||% "^i"
