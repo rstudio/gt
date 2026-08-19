@@ -206,7 +206,7 @@ test_that("pptx ooxml can be generated from gt object with cell styling", {
         style = "italic",
         weight = "bold"
       ),
-      locations = cells_stub()
+      locations = cells_stub() ## applied to all stub
     ) |>
     tab_style(
       style = cell_text(color = "blue"),
@@ -270,9 +270,6 @@ test_that("pptx ooxml can be generated from gt object with cell styling", {
 
   # level 2 span
 
-  for (j in c(3:4)) {
-    expect_equal(xml_attr(xml_find_all(xml, paste0("//a:tr[1]//a:tc[", j, "]")), "hMerge"), "1")
-  }
   for (j in c(1, 5:9)) {
     expect_equal(xml_text(xml_find_all(xml, paste0("//a:tr[1]/a:tc[", j, "]//a:t"))), "")
   }
@@ -287,9 +284,6 @@ test_that("pptx ooxml can be generated from gt object with cell styling", {
   expect_equal(xml_attr(xml_find_all(xml_bottom_span, "./a:tcPr/a:solidFill/a:srgbClr"), "val"), "FFA500")
   expect_equal(xml_text(xml_find_all(xml_bottom_span, ".//a:t")), "My Span Label")
 
-  for (j in c(3:5)) {
-    expect_equal(xml_attr(xml_find_all(xml, paste0("//a:tr[2]//a:tc[", j, "]")), "hMerge"), "1")
-  }
   for (j in c(6:9)) {
     expect_equal(xml_text(xml_find_all(xml, paste0("//a:tr[2]/a:tc[", j, "]//a:t"))), "")
   }
@@ -367,6 +361,7 @@ test_that("word ooxml escapes special characters in gt object footer", {
 })
 
 test_that("multicolumn stub are supported", {
+
   test_data <- dplyr::tibble(
     mfr = c("Ford", "Ford", "BMW", "BMW", "Audi"),
     model = c("GT", "F-150", "X5", "X3", "A4"),
@@ -398,7 +393,7 @@ test_that("multicolumn stub are supported", {
   # no stub head, i.e. empty text
   expect_equal(
     xml_text(xml_find_all(xml, "(.//a:tr)[1]//a:t")),
-    c("", "year", "hp", "msrp")
+    c("", "", "", "year", "hp", "msrp")
   )
 
   tc <- xml_find_all(xml, "(.//a:tr)[1]/a:tc")
@@ -416,7 +411,7 @@ test_that("multicolumn stub are supported", {
 
   expect_equal(
     xml_text(xml_find_all(xml, "(.//a:tr)[1]//a:t")),
-    c("one", "year", "hp", "msrp")
+    c("one", "", "", "year", "hp", "msrp")
   )
 
   # 3 labels
@@ -441,7 +436,7 @@ test_that("multicolumn stub are supported", {
 
   expect_equal(
     xml_text(xml_find_all(xml, "(.//a:tr)[1]//a:t")),
-    c("one", "two", "three", "", "span")
+    c("", "", "", "", "span",  "")
   )
 
   tcPr <- xml_find_all(xml, "(.//a:tr)[1]/a:tc/a:tcPr")
@@ -453,7 +448,7 @@ test_that("multicolumn stub are supported", {
 
   # second row
   tcPr <- xml_find_all(xml, "(.//a:tr)[2]/a:tc/a:tcPr")
-  expect_equal(length(tcPr), 3)
+  expect_equal(length(tcPr), 6)
   expect_equal(length(xml_find_all(tcPr, ".//a:rowSpan")), 0)
 
   # spanner - one label
@@ -466,17 +461,18 @@ test_that("multicolumn stub are supported", {
 
   expect_equal(
     xml_text(xml_find_all(xml, "(.//a:tr)[1]//a:t")),
-    c("one", "", "span")
+    c("", "", "", "", "span", "")
   )
 
   # first row
   tcPr <- xml_find_all(xml, "(.//a:tr)[1]/a:tc/a:tcPr")
   expect_equal(xml_attr(xml_find_all(tcPr[[1]], ".//a:rowSpan"), "val"), "2")
-  expect_equal(xml_attr(xml_find_all(xml, "(.//a:tr)[1]/a:tc"), "gridSpan"), c("3", NA, "2", NA))
+  expect_equal(xml_attr(xml_find_all(xml, "(.//a:tr)[1]/a:tc"), "gridSpan"), c("3", NA, NA, NA, "2", NA))
 
   # second row
   tcPr <- xml_find_all(xml, "(.//a:tr)[2]/a:tc/a:tcPr")
   expect_equal(length(xml_find_all(tcPr[[1]], ".//a:rowSpan")), 0)
+
 })
 
 test_that("tables can be added to a pptx doc", {
@@ -606,7 +602,7 @@ test_that("tables with spans can be added to a pptx doc", {
 
   expect_equal(
     xml_text(xml_find_all(slide, ".//p:graphicFrame//a:tbl/a:tr[1]//a:t")),
-    rep(c("", "My Column Span", ""), c(2L, 1L, 4L))
+    rep(c("", "My Column Span", ""), c(2L, 1L, 6L))
   )
   expect_equal(
     xml_attr(xml_find_all(slide, ".//p:graphicFrame//a:tbl/a:tr[1]//a:tc"), "gridSpan"),
@@ -665,7 +661,7 @@ test_that("tables with multi-level spans can be added to a pptx doc", {
 
   expect_equal(
     xml_text(xml_find_all(slide, ".//p:graphicFrame//a:tbl/a:tr[1]//a:t")),
-    c("", "My Column Span L2", "", "", "", "")
+    c("", "My Column Span L2", "", "", "", "", "", "", "")
   )
   expect_equal(
     xml_attr(xml_find_all(slide, ".//p:graphicFrame//a:tbl/a:tr[1]//a:tc"), "gridSpan"),
@@ -674,7 +670,7 @@ test_that("tables with multi-level spans can be added to a pptx doc", {
 
   expect_equal(
     xml_text(xml_find_all(slide, ".//p:graphicFrame//a:tbl/a:tr[2]//a:t")),
-    c("My 1st Column Span L1", "", "", "My 2nd Column Span L1")
+    c("My 1st Column Span L1", "", "", "", "", "", "", "My 2nd Column Span L1", "")
   )
   expect_equal(
     xml_attr(xml_find_all(slide, ".//p:graphicFrame//a:tbl/a:tr[2]//a:tc"), "gridSpan"),
@@ -819,17 +815,22 @@ test_that("long tables with spans can be added to a word doc", {
       lower_case = c(letters,letters)
     ) |>
     gt() |>
-    tab_header(title = "LETTERS") |>
+    tab_header(title = "LETTERS Title") |>
     tab_spanner(
-      "LETTERS",
+      "LETTERS_SPAN",
       columns = 1:2
     )
 
   slide <- gt_to_pptx_slide(gt_letters)[[1]]
 
   expect_equal(
+    xml_text(xml_find_first(slide, ".//a:t[1]")),
+    c("LETTERS Title")
+  )
+
+  expect_equal(
     xml_text(xml_find_all(slide, ".//a:tr[1]//a:t")),
-    c("LETTERS")
+    c("LETTERS_SPAN","")
   )
 
   expect_equal(
@@ -841,6 +842,7 @@ test_that("long tables with spans can be added to a word doc", {
     xml_text(xml_find_all(slide, ".//a:tr[position() > 1]//a:tc[2]//a:t")),
     c("lower_case", letters, letters)
   )
+
 })
 
 test_that("tables with cell & text coloring can be added to a pptx doc - no spanner", {
@@ -987,17 +989,17 @@ test_that("tables with cell & text coloring can be added to a word doc - with sp
 
   expect_equal(
     xml_text(xml_find_all(slide, ".//a:tr[1]//a:t")),
-    rep(c("", "My Span Label top", ""), c(2L, 1L, 5L))
+    rep(c("", "My Span Label top", ""), c(2L, 1L, 6L))
   )
 
   expect_equal(
     xml_text(xml_find_all(slide, ".//a:tr[2]//a:t")),
-    rep(c("My Span Label", ""), c(1L, 4L))
+    rep(c("","My Span Label", ""), c(1L,1L,7L))
   )
 
   expect_equal(
     xml_text(xml_find_all(slide, ".//a:tr[3]//a:t")),
-    c("num", "fctr", "date", "time", "datetime", "currency", "row", "group")
+    c("","num", "fctr", "date", "time", "datetime", "currency", "row", "group")
   )
 
   expect_equal(
@@ -1042,16 +1044,25 @@ test_that("tables with cell & text coloring can be added to a word doc - with sp
     "FF0000"
   )
 
+  ## stub
   expect_equal(
     xml_attr(xml_find_all(slide, ".//a:tr[2]//a:tc[1]//a:tcPr/a:solidFill/a:srgbClr"), "val"),
+    "FFC0CB"
+  )
+
+  ## span label
+  expect_equal(
+    xml_attr(xml_find_all(slide, ".//a:tr[2]//a:tc[2]//a:tcPr/a:solidFill/a:srgbClr"), "val"),
     "FFA500"
   )
 
+  ## Column label row cells (including stub header)
   expect_equal(
     xml_attr(xml_find_all(slide, ".//a:tr[3]//a:tc//a:tcPr/a:solidFill/a:srgbClr"), "val"),
-    rep("00FF00", 8L)
+    c("FFC0CB",rep("00FF00", 8L))
   )
 
+  ## column label text
   expect_equal(
     xml_attr(xml_find_all(slide, ".//a:tr[3]//a:tc//a:defRPr/a:solidFill/a:srgbClr"), "val"),
     rep("A020F0", 8L)
@@ -1905,9 +1916,10 @@ test_that("pptx_ooxml can be generated with defined cell borders",{
     tab_style(style = list(cell_borders(color = "pink")),
               locations = cells_stub(rows = 2, columns = 1))
 
-  gt_exibble_min_xml <- read_xml_pptx_nodes(as_pptx_ooxml(gtcars_tbl))
+  xml <- read_xml_pptx_nodes(as_pptx_ooxml(gtcars_tbl))
+  expect_xml_snapshot(xml)
 
-  gtsave(gtcars_tbl, filename = "test.pptx")
+  # gtsave(gtcars_tbl, "test.pptx")
 
   gtcars_tbl2 <-
     gtcars |>
@@ -1919,13 +1931,16 @@ test_that("pptx_ooxml can be generated with defined cell borders",{
     tab_style(style = list(cell_borders(color = "red")),
               locations = cells_column_spanners(spanners = "span1"))|>
     tab_style(style = list(cell_borders(color = "orange")),
-              locations = cells_column_spanners(spanners = "span2"))
+              locations = cells_column_spanners(spanners = "span2")) |>
+    tab_footnote(
+      footnote = "Test Footnote in Span",
+      location = cells_column_spanners(spanners = "span1")
+    )
 
+  xml_tbl2 <- read_xml_pptx_nodes(as_pptx_ooxml(gtcars_tbl2))
+  expect_xml_snapshot(xml_tbl2)
 
-  gtsave(gtcars_tbl, filename = "test.pptx")
-
-
-
+  # gtsave(gtcars_tbl2, "test.pptx")
 
 
 })
