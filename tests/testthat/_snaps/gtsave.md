@@ -12,6 +12,7 @@
       * `.tex`, `.rnw` (LaTeX file)
       * `.rtf` (RTF file)
       * `.docx` (Word file)
+      * `.pptx` (PowerPoint file)
     Code
       gtsave(gt(exibble), filename = "exibble")
     Condition
@@ -24,6 +25,7 @@
       * `.tex`, `.rnw` (LaTeX file)
       * `.rtf` (RTF file)
       * `.docx` (Word file)
+      * `.pptx` (PowerPoint file)
 
 # gtsave() creates docx files as expected
 

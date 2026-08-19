@@ -77,7 +77,6 @@ render_formats <- function(data, skip_compat_check = FALSE, context) {
 
   # Render input data to output data where formatting is specified
   for (fmt in formats)  {
-
     # Determine if the formatting function has a function relevant to
     # the context; if not, use the `default` function (which should
     # always be present)

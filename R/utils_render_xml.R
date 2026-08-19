@@ -153,7 +153,7 @@ xml_tblGrid <- function(..., app = "word") {
 }
 
 # Table grid
-xml_gridcol <- function(width = NULL, app = "word") {
+xml_gridcol <- function(width = NULL, type = NULL, app = "word") {
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("gridCol", app),
@@ -1187,9 +1187,9 @@ create_table_props_component_xml <- function(data, align = c("center", "start", 
       xml_jc(val = c(center = "center", start = "start", end = "end", end = "right", start = "left")[[align]])
     )
 
-  # table_cols <- xml_tblGrid(
-  #     vapply(lapply(widths,xml_gridcol), as.character, as.character(0L))
-  # )
+  table_cols <- xml_tblGrid(
+      vapply(lapply(widths, xml_gridcol), as.character, as.character(0L))
+  )
 
   # htmltools::tagList(c(table_properties, table_cols))
 
@@ -1742,7 +1742,6 @@ create_columns_component_xml <- function(
       spanner_cell_vals <- list()
 
       # Create the cell for the stubhead labels
-
       if (stub_available) {
 
         if (span_row_idx == 1) {
@@ -2668,7 +2667,6 @@ xml_table_cell <- function(
 # Table Cell content management/Processing ----
 
 process_cell_content <- function(x, ...) {
-
   processed <- parse_to_xml(x)
   processed <- process_cell_content_ooxml_t(processed, ...)
   processed <- process_cell_content_ooxml_r(processed, ...)
@@ -3006,12 +3004,12 @@ parse_to_xml <- function(x, ...) {
 
   ## add namespace for later processing
   parsed_xml_contents <-
-    suppressWarnings(read_xml(add_ns(x)))
+    suppressWarnings(read_xml(add_ns(x, "word")))
 
   xml_children(parsed_xml_contents)
 }
 
-as_xml_node <- function(x, create_ns = FALSE) {
+as_xml_node <- function(x, create_ns = FALSE, ooxml_type = "word") {
 
   x <- paste(
     "<node_container>",
@@ -3020,26 +3018,33 @@ as_xml_node <- function(x, create_ns = FALSE) {
   )
 
   if (create_ns) {
-    x <- add_ns(x)
+    x <- add_ns(x, ooxml_type)
   }
 
   suppressWarnings(xml_children(as_xml_document(x)))
 }
 
-add_ns <- function(x) {
+ooxml_ns <- function(ooxml_type = "word") {
+  switch_ooxml(ooxml_type,
+    word = c(
+      "xmlns:r"   = "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+      "xmlns:w"   = "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+      "xmlns:w14" = "http://schemas.microsoft.com/office/word/2010/wordml",
+      "xmlns:wp"  = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+    ),
 
-  x <- suppressWarnings(read_xml(x))
-
-  xml2::xml_set_attrs(
-    x,
-    c(
-      `xmlns:r` = "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
-      `xmlns:w` = "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
-      `xmlns:w14` = "http://schemas.microsoft.com/office/word/2010/wordml",
-      `xmlns:wp` = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+    pptx = c(
+      "xmlns:p" = "http://schemas.openxmlformats.org/presentationml/2006/main",
+      "xmlns:a" = "http://schemas.openxmlformats.org/drawingml/2006/main",
+      "xmlns:r" = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
     )
   )
+}
 
+add_ns <- function(x, ooxml_type = "word") {
+  x <- suppressWarnings(read_xml(x))
+
+  xml2::xml_set_attrs(x, ooxml_ns(ooxml_type))
   as.character(x)
 }
 

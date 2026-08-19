@@ -183,7 +183,8 @@ gtsave <- function(
       "*" = "`.pdf`          (PDF file)",
       "*" = "`.tex`, `.rnw`  (LaTeX file)",
       "*" = "`.rtf`          (RTF file)",
-      "*" = "`.docx`         (Word file)"
+      "*" = "`.docx`         (Word file)",
+      "*" = "`.pptx`         (PowerPoint file)"
     ))
   }
 
@@ -200,6 +201,7 @@ gtsave <- function(
     "png" = ,
     "pdf" = gt_save_webshot(data = data, filename, path, ...),
     "docx" = gt_save_docx(data = data, filename, path, ...),
+    "pptx" = gt_save_pptx(data = data, filename, path, ...),
     {
       cli::cli_abort(c(
         "The file extension supplied (`.{file_ext}`) cannot be used.",
@@ -209,7 +211,8 @@ gtsave <- function(
         "*" = "`.pdf`          (PDF file)",
         "*" = "`.tex`, `.rnw`  (LaTeX file)",
         "*" = "`.rtf`          (RTF file)",
-        "*" = "`.docx`         (Word file)"
+        "*" = "`.docx`         (Word file)",
+        "*" = "`.pptx`         (PowerPoint file)"
       ))
     }
   )
@@ -428,7 +431,8 @@ gt_save_docx <- function(
     path = NULL,
     ...,
     autonum = TRUE,
-    open = rlang::is_interactive()
+    open = rlang::is_interactive(),
+    as_word_func = as_word
 ) {
 
   # Because creation of a .docx container is somewhat difficult, we
@@ -444,7 +448,7 @@ gt_save_docx <- function(
       paste0(
         c(
           "```{=openxml}",
-          enc2utf8(as_word(data = data, autonum = autonum)),
+          enc2utf8(as_word_func(data = data, autonum = autonum, ...)),
           "```",
           ""),
         collapse = "\n"
@@ -457,7 +461,7 @@ gt_save_docx <- function(
     seq_tbls <- seq_len(nrow(data$gt_tbls))
 
     for (i in seq_tbls) {
-      word_tbl_i <- as_word(grp_pull(data, which = i), autonum = autonum)
+      word_tbl_i <- as_word_func(grp_pull(data, which = i), autonum = autonum, ...)
       word_tbls <- c(word_tbls, word_tbl_i)
     }
 
@@ -495,6 +499,125 @@ gt_save_docx <- function(
     gt_as_word_post_processing(path = temp_filename)
   }
 
+  file.rename(temp_filename, filename)
+
+}
+
+read_xml_pptx_nodes <- function(x) {
+  xml2::xml_children(suppressWarnings(xml2::read_xml(paste0(
+    '<w:wrapper xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">',
+    paste(x, collapse = ""),
+    "</w:wrapper>"
+  ))))
+}
+
+#' Saving function for a Word (docx) file
+#'
+#' @noRd
+gt_save_pptx <- function(
+    data,
+    filename,
+    path = NULL,
+    ...,
+    open = rlang::is_interactive()
+) {
+
+  # Because creation of a .docx container is somewhat difficult, we
+  # require the rmarkdown package to be installed to generate this
+  # type of output
+  rlang::check_installed("rmarkdown", "to save gt tables as Word documents.")
+
+  filename <- gtsave_filename(path = path, filename = filename)
+
+  if (is_gt_group(data = data)) {
+    cli::cli_abort("grouped tables are not supported yet")
+  }
+
+  xml <- read_xml_pptx_nodes(as_pptx_ooxml(data = data, ...))
+
+  offset <- 0
+  txt <- character(length(xml))
+
+  # TODO: better adjust offsets, i.e. calculate height of each <p> and <tbl>
+  for(i in seq_along(xml)) {
+    node <- xml[[i]]
+    title <- xml_text(xml_find_first(node, ".//a:t"))
+    txt_cy     <- sprintf("%d", offset + 200000)
+    txt_offset <- sprintf("%d", offset)
+    if (xml_name(node) == "p") {
+      txt[i] <- glue::glue('
+<p:sp>
+  <p:nvSpPr>
+    <p:cNvPr id="{i + 1}" name="{title}"/>
+    <p:cNvSpPr/>
+    <p:nvPr/>
+  </p:nvSpPr>
+  <p:spPr>
+    <a:xfrm>
+      <!-- position + size of the text box -->
+      <a:off x="0" y="{txt_offset}"/>
+      <a:ext cx="9144000" cy="{txt_cy}"/>
+    </a:xfrm>
+  </p:spPr>
+  <p:txBody>
+    <a:bodyPr/>
+    <a:lstStyle/>
+      {as.character(node)}
+  </p:txBody>
+</p:sp>
+      ')
+      offset <- offset + 200000
+    } else if (xml_name(node) == "tbl") {
+      height <- 6858000 - length(xml_find_all(xml, './/p:spTree/p:sp')) * 200000 - 100000
+
+      txt_cy <- sprintf("%d", height)
+      txt_offset <- sprintf("%d", offset)
+      txt[i] <- glue::glue('
+<p:graphicFrame>
+  <p:nvGraphicFramePr>
+    <p:cNvPr id="{i + 1}" name="Table 1"/>
+    <p:cNvGraphicFramePr/>
+    <p:nvPr/>
+  </p:nvGraphicFramePr>
+  <p:xfrm>
+    <a:off x="0" y="{txt_offset}"/>
+    <a:ext cx="9144000" cy="{txt_cy}"/>
+  </p:xfrm>
+  <a:graphic>
+    <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/table">
+      { as.character(node) }
+    </a:graphicData>
+  </a:graphic>
+</p:graphicFrame>
+      ')
+      offset <- offset + height
+    }
+
+  }
+
+  md_text <- glue::glue('
+---
+output:
+  powerpoint_presentation:
+    md_extensions: +raw_attribute
+---
+
+```{{=openxml}}
+{paste(txt, collapse = "\n\n")}
+```
+')
+
+  md_file <- tempfile(fileext = ".md")
+
+  writeLines(md_text, con = md_file)
+
+  temp_filename <- tempfile(fileext = paste0(".",tools::file_ext(filename)))
+  rmarkdown::pandoc_convert(
+    input  = md_file,
+    output = temp_filename
+  )
+
+  gt_as_pptx_post_processing(path = temp_filename)
   file.rename(temp_filename, filename)
 
 }

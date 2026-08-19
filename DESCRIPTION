@@ -42,6 +42,7 @@ Imports:
     dplyr (>= 1.2.0),
     fs (>= 1.6.4),
     glue (>= 1.8.0),
+    grDevices,
     htmltools (>= 0.5.8.1),
     htmlwidgets (>= 1.6.4),
     juicyjuice (>= 0.1.0),
@@ -73,7 +74,8 @@ Suggests:
     testthat (>= 3.3.0),
     tidyr (>= 1.0.0),
     webshot2 (>= 0.1.0),
-    withr
+    withr, 
+    officer
 Config/Needs/coverage: officer
 Config/Needs/website: quarto
 ByteCompile: true

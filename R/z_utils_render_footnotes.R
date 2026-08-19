@@ -478,7 +478,6 @@ resolve_footnotes_styles <- function(data, tbl_type) {
 
 #' @noRd
 set_footnote_marks_columns <- function(data, context = "html") {
-
   boxh <- dt_boxhead_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
 
@@ -961,13 +960,50 @@ apply_footnotes_to_summary <- function(data, context = "html") {
   )
 }
 
+footnote_mark_to_ooxml_word <- function(data, mark, location = c("ref", "ftr")) {
+  location <- match.arg(location)
+  if (length(mark) == 1 && is.na(mark)) return("")
+  spec <- get_footnote_spec_by_location(data = data, location = location) %||% "^i"
+  if (grepl("\\(|\\[", spec)) mark <- paste0("(", mark)
+  if (grepl("\\)|\\]", spec)) mark <- paste0(mark, ")")
+  tags <- ooxml_tag("w:r",
+    ooxml_tag("w:rPr",
+      ooxml_tag("w:vertAlign", "w:val" = if (grepl("^", spec, fixed = TRUE)) "superscript" else "baseline"),
+      if (grepl("i", spec, fixed = TRUE)) ooxml_tag("w:i"),
+      if (grepl("b", spec, fixed = TRUE)) ooxml_tag("w:b")
+    ),
+    ooxml_tag("w:t", "xml:space" = "default", mark)
+  )
+  as.character(tags)
+}
+
+footnote_mark_to_ooxml_pptx <- function(data, mark, location = c("ref", "ftr")) {
+
+  location <- match.arg(location)
+  if (length(mark) == 1 && is.na(mark)) return("")
+  spec <- get_footnote_spec_by_location(data = data, location = location) %||% "^i"
+  if (grepl("\\(|\\[", spec)) mark <- paste0("(", mark)
+  if (grepl("\\)|\\]", spec)) mark <- paste0(mark, ")")
+  styles <- list()
+  if (grepl("i", spec, fixed = TRUE)) styles[["i"]] <- "1"
+  if (grepl("b", spec, fixed = TRUE)) styles[["b"]] <- "1"
+  if (grepl("^", spec, fixed = TRUE)) styles[["baseline"]] <- "30000"
+  tags <- ooxml_tag("a:r",
+    ooxml_tag("a:rPr", !!!styles),
+    ooxml_tag("a:t", "xml:space" = "default", mark)
+  )
+  as.character(tags)
+}
+
 footnotes_dispatch <-
   list(
     html = footnote_mark_to_html,
     rtf = footnote_mark_to_rtf,
     grid = footnote_mark_to_grid,
     latex = footnote_mark_to_latex,
-    word = footnote_mark_to_xml
+    word = footnote_mark_to_xml,
+    "ooxml/word" = footnote_mark_to_ooxml_word,
+    "ooxml/pptx" = footnote_mark_to_ooxml_pptx
   )
 
 apply_footnotes_method <-
@@ -976,5 +1012,7 @@ apply_footnotes_method <-
     rtf = paste0,
     grid = paste0,
     latex = paste_footnote_latex,
-    word = paste_footnote_xml
+    word = paste_footnote_xml,
+    "ooxml/word" = function(...) paste_footnote_ooxml("word", ...),
+    "ooxml/pptx" = function(...) paste_footnote_ooxml("pptx", ...)
   )

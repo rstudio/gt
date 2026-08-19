@@ -47,6 +47,7 @@ build_data <- function(data, context) {
   data <- render_formats(data = data, skip_compat_check = FALSE, context = context)
   data <- render_substitutions(data = data, context = context)
   data <- migrate_unformatted_to_output(data = data, context = context)
+
   data <- perform_col_merge(data = data, context = context)
 
   # Reorder stub_df first (handles group ordering and row_order() directives),
