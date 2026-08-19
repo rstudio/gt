@@ -3,8 +3,16 @@
     Code
       gtsave(gt(exibble), filename = "exibble.bat")
     Condition
-      Error in `c()`:
-      ! argument 10 is empty
+      Error in `gtsave()`:
+      ! The file extension supplied (`.bat`) cannot be used.
+      i We can use:
+      * `.html`, `.htm` (HTML file)
+      * `.png` (PNG file)
+      * `.pdf` (PDF file)
+      * `.tex`, `.rnw` (LaTeX file)
+      * `.rtf` (RTF file)
+      * `.docx` (Word file)
+      * `.pptx` (PowerPoint file)
     Code
       gtsave(gt(exibble), filename = "exibble")
     Condition

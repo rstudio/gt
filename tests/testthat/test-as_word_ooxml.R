@@ -1269,9 +1269,9 @@ test_that("tables with cell & text coloring can be added to a word doc - with sp
         y |> xml2::xml_find_all(".//w:shd") |> xml2::xml_attr(attr = "fill")
       })}),
     list(
-      list("FFC0CB", character(0L), "FF0000", character(0L), character(0L), character(0L), character(0L), character(0L)),
-      list(character(0L), "FFA500", character(0L), character(0L), character(0L), character(0L)),
-      list(character(0L), "00FF00", "00FF00", "00FF00", "00FF00", "00FF00", "00FF00", "00FF00", "00FF00")
+      list("FFC0CB", character(0L), "FF0000", character(0L), character(0L),  character(0L), character(0L), character(0L)),
+      list("FFC0CB", "FFA500", character(0L), character(0), character(0), character(0)),
+      list("FFC0CB", "00FF00", "00FF00", "00FF00", "00FF00", "00FF00",  "00FF00", "00FF00", "00FF00")
       )
   )
 

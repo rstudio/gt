@@ -38,7 +38,7 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
                 <w:bottom w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
                 <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
@@ -61,8 +61,9 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
                 <w:bottom w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
@@ -83,8 +84,9 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
                 <w:bottom w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
@@ -105,8 +107,9 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
                 <w:bottom w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
@@ -127,8 +130,9 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
                 <w:bottom w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
@@ -149,8 +153,9 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
                 <w:bottom w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
@@ -171,8 +176,9 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
                 <w:bottom w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
@@ -193,8 +199,9 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
                 <w:bottom w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
@@ -215,8 +222,9 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
                 <w:bottom w:val="single" w:sz="4" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
                 <w:end w:val="single" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
@@ -243,10 +251,10 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:bottom w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:end w:val="single" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:bottom w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:end w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
@@ -267,10 +275,10 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:bottom w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:end w:val="single" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:bottom w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:end w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
@@ -291,10 +299,10 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:bottom w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:end w:val="single" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:bottom w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:end w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
@@ -315,10 +323,10 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:bottom w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:end w:val="single" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:bottom w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:end w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
@@ -339,10 +347,10 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:bottom w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:end w:val="single" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:bottom w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:end w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
@@ -363,10 +371,10 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:bottom w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:end w:val="single" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:bottom w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:end w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
@@ -387,10 +395,10 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:bottom w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:end w:val="single" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:bottom w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:end w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
@@ -411,10 +419,10 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:bottom w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:end w:val="single" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:bottom w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:end w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
@@ -435,10 +443,10 @@
           <w:tc>
             <w:tcPr>
               <w:tcBorders>
-                <w:top w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:bottom w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:start w:val="single" w:space="0" w:color="D3D3D3"/>
-                <w:end w:val="single" w:space="0" w:color="D3D3D3"/>
+                <w:top w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:bottom w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:start w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
+                <w:end w:val="single" w:sz="2.666" w:space="0" w:color="D3D3D3"/>
               </w:tcBorders>
             </w:tcPr>
             <w:p>
