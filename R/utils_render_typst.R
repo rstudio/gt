@@ -61,6 +61,7 @@ as_typst_string <- function(data, container = "auto", label = NULL, breakable = 
   has_heading <- length(heading_component) > 0L && any(nzchar(heading_component))
   has_footer <- length(footer_components) > 0L && any(nzchar(footer_components))
   has_auxiliary_content <- has_caption || has_heading || has_footer
+  label <- typst_resolve_label(data = data, label = label, quarto = quarto)
 
   if (identical(container, "table") && has_auxiliary_content) {
     cli::cli_warn(c(
@@ -78,8 +79,8 @@ as_typst_string <- function(data, container = "auto", label = NULL, breakable = 
   use_figure <-
     switch(
       container,
-      auto = has_auxiliary_content,
-      table = FALSE,
+      auto = has_auxiliary_content || !is.null(label),
+      table = !is.null(label),
       figure = TRUE
     )
 
@@ -90,7 +91,7 @@ as_typst_string <- function(data, container = "auto", label = NULL, breakable = 
     heading_component = heading_component,
     footer_components = footer_components,
     caption = if (has_caption) table_caption else NULL,
-    label = typst_resolve_label(data = data, label = label, quarto = quarto),
+    label = label,
     breakable = breakable,
     quarto = quarto
   )
@@ -384,6 +385,8 @@ create_table_component_typst <- function(
 }
 
 create_header_rows_typst <- function(data, styles_tbl = dt_styles_get(data = data)) {
+
+  if (isTRUE(dt_options_get_value(data = data, option = "column_labels_hidden"))) return(list())
 
   c(
     create_spanner_rows_typst(data = data, styles_tbl = styles_tbl),
@@ -1043,7 +1046,7 @@ typst_content_expr <- function(text) {
 
   text <- text %||% ""
 
-  if (length(text) == 0 || is.na(text) || identical(text, "NA")) {
+  if (length(text) == 0 || is.na(text)) {
     text <- ""
   }
 

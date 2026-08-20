@@ -6535,6 +6535,7 @@ fmt_units <- function(
       word = function(x) {
         format_units_by_context(x, context = "word")
       },
+      typst = function(x) format_units_by_context(x, context = "typst"),
       default = function(x) {
         format_units_by_context(x, context = "plain")
       }
@@ -6801,6 +6802,7 @@ fmt_chem <- function(
           context = "word"
         )
       },
+      typst = function(x) format_units_by_context(x, TRUE, "typst"),
       default = function(x) {
         format_units_by_context(
           x,
@@ -8197,6 +8199,7 @@ fmt_email <- function(
         x_str[is.na(x)] <- NA_character_
         x_str
       },
+      typst = function(x) process_text(x, context = "typst"),
     latex = function(x) {
       x
     },
