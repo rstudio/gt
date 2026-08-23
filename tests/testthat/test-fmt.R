@@ -550,3 +550,523 @@ test_that("paste_right() works correctly", {
 
   expect_error(paste_left(x = c("c1", "c2", "c3"), x_right = c("r1", "r2")))
 })
+
+test_that("normalize_locale() works correctly", {
+
+  # NULL locale returns NULL
+  expect_null(normalize_locale(NULL))
+
+  # Underscores are converted to hyphens
+  expect_equal(normalize_locale("en_US"), "en")
+
+  # Default locales (e.g., 'en-US') map to their base locale ('en')
+  expect_equal(normalize_locale("en-US"), "en")
+  expect_equal(normalize_locale("de-DE"), "de")
+
+  # Non-default locales are returned with hyphens substituted
+  expect_equal(normalize_locale("fr-CA"), "fr-CA")
+  expect_equal(normalize_locale("zh_Hant"), "zh-Hant")
+})
+
+test_that("validate_locale() works correctly", {
+
+  # NULL locale returns NULL
+  expect_null(validate_locale(NULL))
+
+  # A valid locale is returned unchanged
+  expect_equal(validate_locale("en"), "en")
+  expect_equal(validate_locale("de"), "de")
+
+  # Underscore separators are normalised to hyphens before lookup
+  expect_equal(validate_locale("en_US"), "en-US")
+
+  # A default locale (en-US) is also accepted
+  expect_equal(validate_locale("en-US"), "en-US")
+
+  # An invalid locale raises an error
+  expect_error(validate_locale("xx-ZZ"), class = "rlang_error")
+})
+
+test_that("validate_currency() works correctly", {
+
+  # A `gt_currency` object passes through without error
+  expect_no_error(validate_currency(currency("USD")))
+
+  # A valid ISO currency code passes through
+  expect_no_error(validate_currency("USD"))
+  expect_no_error(validate_currency("EUR"))
+
+  # A valid currency symbol string passes through
+  expect_no_error(validate_currency("dollar"))
+
+  # An invalid currency raises an error
+  expect_error(validate_currency("ZZZZ"), class = "rlang_error")
+})
+
+test_that("get_locale_min_sep_threshold() works correctly", {
+
+  # NULL locale returns the default
+  expect_equal(get_locale_min_sep_threshold(locale = NULL, default = 1L), 1L)
+  expect_equal(get_locale_min_sep_threshold(locale = NULL, default = 2L), 2L)
+
+  # Invalid locale raises an error
+  expect_error(get_locale_min_sep_threshold(locale = "xx-ZZ", default = 1L))
+
+  # A valid locale returns the correct threshold
+  expect_equal(get_locale_min_sep_threshold(locale = "en", default = 1L), 1L)
+})
+
+test_that("get_locale_range_pattern() works correctly", {
+
+  # NULL locale uses 'en' and returns the en range pattern (with 0→1, 1→2)
+  en_raw <- locales$range_pattern[locales$locale == "en"]
+  en_expected <- gsub("0", "1", gsub("1", "2", en_raw, fixed = TRUE), fixed = TRUE)
+  expect_equal(get_locale_range_pattern(NULL), en_expected)
+
+  # A specific locale returns its own (transformed) pattern
+  expect_type(get_locale_range_pattern("de"), "character")
+  expect_length(get_locale_range_pattern("de"), 1L)
+})
+
+test_that("get_locale_currency_code() works correctly", {
+
+  # NULL locale returns 'USD'
+  expect_equal(get_locale_currency_code(NULL), "USD")
+
+  # A locale with a valid currency code returns that code
+  expect_equal(get_locale_currency_code("en"), "USD")
+  expect_equal(get_locale_currency_code("de"), "EUR")
+
+  # A locale where currency_code is NA returns 'USD'
+  expect_equal(get_locale_currency_code("ar"), "USD")
+})
+
+test_that("get_locale_idx_set() works correctly", {
+
+  # NULL locale returns LETTERS
+  expect_equal(get_locale_idx_set(NULL), LETTERS)
+
+  # An invalid locale raises an error (validate_length_one)
+  expect_error(get_locale_idx_set("xx-ZZ"))
+
+  # A valid locale returns a length-1 value (stored as a list-column in the lookup)
+  result <- get_locale_idx_set("en")
+  expect_length(result, 1L)
+})
+
+test_that("get_locale_num_spellout() works correctly", {
+
+  # NULL locale uses 'en' and returns the English spellout vector
+  result <- get_locale_num_spellout(NULL)
+  expect_type(result, "character")
+  expect_true(length(result) > 0)
+
+  # 'sr-Latn' variant is normalised to 'sr-Latn' key in spelled_num
+  result_sr <- get_locale_num_spellout("sr-Latn-RS")
+  result_base <- get_locale_num_spellout("sr-Latn")
+  expect_equal(result_sr, result_base)
+
+  # A locale that exists only as a subtag falls back to the language ('fr-CA' -> 'fr')
+  result_fr_ca <- get_locale_num_spellout("fr-CA")
+  result_fr    <- get_locale_num_spellout("fr")
+  expect_equal(result_fr_ca, result_fr)
+
+  # A completely unknown locale falls back to 'en'
+  result_unknown <- get_locale_num_spellout("zz")
+  expect_equal(result_unknown, get_locale_num_spellout("en"))
+})
+
+test_that("get_locale_no_table_data_text() works correctly", {
+
+  # NULL locale uses 'en'
+  en_text <- get_locale_no_table_data_text(NULL)
+  expect_type(en_text, "character")
+  expect_length(en_text, 1L)
+
+  # A known locale returns its localised string
+  de_text <- get_locale_no_table_data_text("de")
+  expect_false(identical(de_text, en_text))
+
+  # An invalid locale raises an error
+  expect_error(get_locale_no_table_data_text("xx-ZZ"))
+})
+
+test_that("get_locale_segments() works correctly", {
+
+  # A simple locale without hyphens returns itself
+  expect_equal(get_locale_segments("en"), "en")
+
+  # A locale with one segment returns both the full and the root
+  expect_equal(get_locale_segments("en-US"), c("en-US", "en"))
+
+  # A three-part locale returns all progressive segments
+  expect_equal(
+    get_locale_segments("zh-Hant-TW"),
+    c("zh-Hant-TW", "zh-Hant", "zh")
+  )
+})
+
+test_that("resolve_locale() works correctly", {
+
+  tab <- gt(data.frame(x = 1))
+
+  # NULL locale falls back to the data's locale (NULL by default → returns NULL)
+  expect_null(resolve_locale(tab, NULL))
+
+  # 'und' maps to 'en'
+  expect_equal(resolve_locale(tab, "und"), "en")
+
+  # A valid locale is normalised and validated
+  expect_equal(resolve_locale(tab, "en-US"), "en")
+  expect_equal(resolve_locale(tab, "de"), "de")
+})
+
+test_that("get_currency_decimals() works correctly", {
+
+  curr_obj <- currency("USD")
+
+  # gt_currency: NULL decimals + use_subunits → 2
+  expect_equal(get_currency_decimals(curr_obj, NULL, TRUE), 2)
+
+  # gt_currency: explicit decimals + use_subunits → that value
+  expect_equal(get_currency_decimals(curr_obj, 3, TRUE), 3)
+
+  # gt_currency: !use_subunits → 0
+  expect_equal(get_currency_decimals(curr_obj, NULL, FALSE), 0)
+
+  # Normal currency symbol: NULL decimals + use_subunits → 2
+  expect_equal(get_currency_decimals("dollar", NULL, TRUE), 2)
+
+  # Normal currency code: NULL decimals + use_subunits → from exponent (numeric)
+  expect_true(is.numeric(get_currency_decimals("USD", NULL, TRUE)))
+
+  # NULL decimals + !use_subunits → 0
+  expect_equal(get_currency_decimals("USD", NULL, FALSE), 0)
+
+  # Explicit decimals are always returned as-is
+  expect_equal(get_currency_decimals("USD", 4, TRUE), 4)
+})
+
+test_that("scale_x_values() works correctly", {
+
+  # A function as scale_by is called directly on x
+  expect_equal(scale_x_values(1:3, scale_by = function(x) x * 2), c(2, 4, 6))
+
+  # A scalar multiplies all values
+  expect_equal(scale_x_values(c(1, 2, 3), scale_by = 10), c(10, 20, 30))
+
+  # A vector of the same length multiplies element-wise
+  expect_equal(scale_x_values(c(1, 2, 3), scale_by = c(1, 2, 3)), c(1, 4, 9))
+
+  # A vector of the wrong length raises an error
+  expect_error(
+    scale_x_values(1:3, scale_by = c(2, 3)),
+    class = "rlang_error"
+  )
+})
+
+test_that("insert_seps_ind() works correctly", {
+
+  # Empty string passes through unchanged
+  expect_equal(insert_seps_ind(""), "")
+
+  # Fewer than 4 digits: no separators
+  expect_equal(insert_seps_ind("123"), "123")
+
+  # Exactly 4 digits: one separator after position 1
+  expect_equal(insert_seps_ind("1234"), "1,234")
+
+  # Classic Indian grouping: 1,23,45,678
+  expect_equal(insert_seps_ind("12345678"), "1,23,45,678")
+
+  # Non-digit characters raise an error
+  expect_error(insert_seps_ind("12A4"), class = "rlang_error")
+})
+
+test_that("to_latex_math_mode() works correctly", {
+
+  # Non-latex context: values passed through unchanged
+  expect_equal(to_latex_math_mode(c("1.23", "-4.56"), "html"), c("1.23", "-4.56"))
+
+  # Latex context: values wrapped in $...$
+  expect_equal(to_latex_math_mode(c("1.23", "-4.56"), "latex"), c("$1.23$", "$-4.56$"))
+
+  # Latex + textperthousand: $ starts before the number, closes before the mark
+  result <- to_latex_math_mode(c("123\\textperthousand"), "latex")
+  expect_true(grepl("\\$123", result))
+  expect_true(grepl("\\\\textperthousand", result))
+})
+
+test_that("context_missing_text() works correctly", {
+
+  # HTML: '---' → em dash
+  expect_equal(context_missing_text("---", "html"), "\U02014")
+
+  # HTML: '--' → en dash
+  expect_equal(context_missing_text("--", "html"), "\U02013")
+
+  # HTML: blank → <br />
+  expect_equal(context_missing_text("", "html"), "<br />")
+  expect_equal(context_missing_text("  ", "html"), "<br />")
+
+  # RTF: '---' and '--' get RTF equivalents
+  expect_equal(context_missing_text("---", "rtf"), "\\'97")
+  expect_equal(context_missing_text("--",  "rtf"), "\\'96")
+
+  # AsIs values bypass substitution
+  expect_equal(context_missing_text(I("---"), "html"), I("---"))
+
+  # word context mirrors html for em/en dash
+  expect_equal(context_missing_text("---", "word"), "\U02014")
+})
+
+test_that("context_plusminus_mark() works correctly", {
+
+  # html/latex/grid/word: ' +/- ' → ' ± '
+  for (ctx in c("html", "latex", "grid", "word")) {
+    expect_equal(context_plusminus_mark(" +/- ", ctx), " \U000B1 ", info = ctx)
+  }
+
+  # rtf: ' +/- ' → RTF form
+  expect_equal(context_plusminus_mark(" +/- ", "rtf"), " \\'b1 ")
+
+  # A custom value is returned unchanged
+  for (ctx in c("html", "rtf")) {
+    expect_equal(context_plusminus_mark("±", ctx), "±", info = ctx)
+  }
+
+  # AsIs bypasses substitution
+  expect_equal(context_plusminus_mark(I(" +/- "), "html"), I(" +/- "))
+})
+
+test_that("resolve_small_vals_text() works correctly", {
+
+  expect_equal(resolve_small_vals_text(0.001, "<{x}"), "<0.001")
+  expect_equal(resolve_small_vals_text(-0.5, "below {x}"), "below 0.5")
+})
+
+test_that("context_large_vals_text() works correctly", {
+
+  # '>={x}' with positive sign → ≥ threshold
+  result_pos <- context_large_vals_text(1000, ">={x}", "+", "html")
+  expect_true(grepl("1000", as.character(result_pos)))
+  expect_true(inherits(result_pos, "AsIs"))
+
+  # '>={x}' with negative sign → ≤ -threshold
+  result_neg <- context_large_vals_text(1000, ">={x}", "-", "html")
+  expect_true(grepl("1000", as.character(result_neg)))
+  expect_true(inherits(result_neg, "AsIs"))
+
+  # Custom pattern: {x} is substituted
+  expect_equal(context_large_vals_text(999, "over {x}!", "+", "html"), "over 999!")
+})
+
+test_that("context_lte_mark() and context_gte_mark() work correctly", {
+
+  # html / grid / word → unicode symbols
+  expect_equal(context_lte_mark("html"),        "\U02264")
+  expect_equal(context_lte_mark("grid"),        "\U02264")
+  expect_equal(context_lte_mark("word"),        "\U02264")
+  expect_equal(context_gte_mark("html"),        "\U02265")
+
+  # latex → LaTeX math commands
+  expect_equal(context_lte_mark("latex"), "$\\leq$")
+  expect_equal(context_gte_mark("latex"), "$\\geq$")
+
+  # rtf / other → plain ASCII
+  expect_equal(context_lte_mark("rtf"), "<=")
+  expect_equal(context_gte_mark("rtf"), ">=")
+})
+
+test_that("context_minus_mark() works correctly", {
+
+  expect_equal(context_minus_mark("html"), "\U02212")
+  expect_equal(context_minus_mark("latex"), "-")
+  expect_equal(context_minus_mark("rtf"),   "-")
+})
+
+test_that("context_percent_mark() works correctly", {
+
+  expect_equal(context_percent_mark("latex"), "\\%")
+  expect_equal(context_percent_mark("html"),  "%")
+  expect_equal(context_percent_mark("rtf"),   "%")
+})
+
+test_that("context_permille_mark() and context_permyriad_mark() work correctly", {
+
+  expect_equal(context_permille_mark("latex"), "\\textperthousand")
+  expect_equal(context_permille_mark("rtf"),   "\\'89")
+  expect_equal(context_permille_mark("html"),  "\U02030")
+
+  expect_equal(context_permyriad_mark("latex"), "\\textpertenthousand")
+  expect_equal(context_permyriad_mark("rtf"),   "\\uc0\\u8241")
+  expect_equal(context_permyriad_mark("html"),  "\U02031")
+})
+
+test_that("context_parens_marks() works correctly", {
+
+  # All contexts return the same ASCII pair
+  for (ctx in c("html", "latex", "rtf", "word")) {
+    expect_equal(context_parens_marks(ctx), c("(", ")"), info = ctx)
+  }
+})
+
+test_that("context_exp_marks() works correctly", {
+
+  html_marks <- context_exp_marks("html")
+  expect_length(html_marks, 2L)
+  expect_true(grepl("10<sup", html_marks[1], fixed = TRUE))
+
+  latex_marks <- context_exp_marks("latex")
+  expect_true(grepl("times", latex_marks[1]))
+
+  rtf_marks <- context_exp_marks("rtf")
+  expect_true(grepl("super", rtf_marks[1]))
+
+  word_marks <- context_exp_marks("word")
+  expect_equal(word_marks[2], "")
+
+  grid_marks <- context_exp_marks("grid")
+  expect_equal(grid_marks[2], "")
+})
+
+test_that("context_exp_str() works correctly", {
+
+  # Default (non-low-ten, non-letter) → 'E'
+  expect_equal(context_exp_str("html", "x10n"), "E")
+
+  # 'low-ten' varies by context
+  expect_equal(context_exp_str("html",  "low-ten"), "<sub style='font-size: 65%;'>10</sub>")
+  expect_equal(context_exp_str("latex", "low-ten"), "{}_10")
+  expect_equal(context_exp_str("rtf",   "low-ten"), "{\\sub 10}")
+  expect_equal(context_exp_str("word",  "low-ten"), "10^")
+  expect_equal(context_exp_str("grid",  "low-ten"), "E")
+
+  # Single letter uses that letter
+  expect_equal(context_exp_str("html", "e"),  "e")
+  expect_equal(context_exp_str("html", "E"),  "E")
+
+  # Letter + '1' uses the letter only
+  expect_equal(context_exp_str("html", "e1"), "e")
+})
+
+test_that("context_symbol_str() works correctly", {
+
+  # NULL symbol → empty string
+  expect_equal(context_symbol_str("html", NULL), "")
+
+  # '%' → context-correct percent mark
+  expect_equal(context_symbol_str("html",  "%"), "%")
+  expect_equal(context_symbol_str("latex", "%"), "\\%")
+
+  # gt_currency object: html context returns HTML currency string
+  curr_usd <- currency("USD")
+  result <- context_symbol_str("html", curr_usd)
+  expect_type(result, "character")
+  expect_length(result, 1L)
+
+  # gt_currency missing the context and no default → error
+  bad_curr <- structure(list(xyz = "oops"), class = "gt_currency")
+  expect_error(context_symbol_str("html", bad_curr), class = "rlang_error")
+})
+
+test_that("format_minus() works correctly", {
+
+  # All non-negative values: pass through unchanged
+  expect_equal(
+    format_minus(c("1.0", "2.0"), c(1, 2), "html"),
+    c("1.0", "2.0")
+  )
+
+  # Negative values: hyphen is replaced with the context minus mark
+  result_html <- format_minus(c("-1.0", "2.0"), c(-1, 2), "html")
+  expect_equal(result_html, c(paste0("\U02212", "1.0"), "2.0"))
+
+  # RTF and other contexts keep the plain hyphen minus
+  result_rtf <- format_minus(c("-1.0", "2.0"), c(-1, 2), "rtf")
+  expect_equal(result_rtf, c("-1.0", "2.0"))
+})
+
+test_that("format_as_accounting() works correctly", {
+
+  # accounting = FALSE: pass through unchanged
+  expect_equal(
+    format_as_accounting(c("-1.00", "2.00"), c(-1, 2), "html", FALSE),
+    c("-1.00", "2.00")
+  )
+
+  # accounting = TRUE, all positive: pass through unchanged
+  expect_equal(
+    format_as_accounting(c("1.00", "2.00"), c(1, 2), "html", TRUE),
+    c("1.00", "2.00")
+  )
+
+  # accounting = TRUE, some negative: negatives get parentheses (minus removed)
+  result <- format_as_accounting(
+    c("\U021221.00", "2.00"),
+    c(-1, 2),
+    "html",
+    TRUE
+  )
+  expect_true(grepl("^\\(", result[1]))
+  expect_true(grepl("\\)$", result[1]))
+  expect_equal(result[2], "2.00")
+})
+
+test_that("get_arg_names() works correctly", {
+
+  # No filtering: returns all formals
+  all_args <- get_arg_names("fmt_number")
+  expect_true("decimals" %in% all_args)
+  expect_true("data" %in% all_args)
+
+  # in_args: returns exactly those names
+  expect_equal(
+    get_arg_names("fmt_number", in_args = c("decimals", "sep_mark")),
+    c("decimals", "sep_mark")
+  )
+
+  # all_args_except: returns all minus the excluded set
+  filtered <- get_arg_names("fmt_number", all_args_except = c("data", "columns", "rows"))
+  expect_false("data" %in% filtered)
+  expect_true("decimals" %in% filtered)
+
+  # Both in_args and all_args_except → error
+  expect_error(
+    get_arg_names("fmt_number", in_args = "x", all_args_except = "y"),
+    class = "rlang_error"
+  )
+})
+
+test_that("args_have_gt_column_obj() works correctly", {
+
+  # No gt_column object in the list → FALSE
+  expect_false(args_have_gt_column_obj(list(a = 1, b = "x")))
+
+  # At least one gt_column object → TRUE
+  col_obj <- structure(list(column = "mpg"), class = "gt_column")
+  expect_true(args_have_gt_column_obj(list(a = 1, b = col_obj)))
+})
+
+test_that("num_fmt_factory() handles NA and integer64 inputs", {
+
+  fmt_fn <- num_fmt_factory(
+    context  = "html",
+    pattern  = "{x}",
+    format_fn = function(x, context) as.character(round(x, 2))
+  )
+
+  # NA values are preserved as NA_character_
+  result <- fmt_fn(c(1.5, NA, 3.0))
+  expect_equal(result, c("1.5", NA_character_, "3"))
+
+  # All-NA input
+  expect_equal(fmt_fn(c(NA_real_, NA_real_)), c(NA_character_, NA_character_))
+
+  # integer64 input is converted to numeric before formatting
+  skip_if_not_installed("bit64")
+  x64 <- bit64::as.integer64(c(1000, 2000))
+  result64 <- fmt_fn(x64)
+  expect_type(result64, "character")
+  expect_length(result64, 2L)
+})
