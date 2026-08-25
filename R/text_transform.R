@@ -654,8 +654,11 @@ text_transform_at_location.cells_body <- function(
 
     if (col %in% colnames(body)) {
 
-      body[[col]][stub_df$rownum_i %in% loc$rows] <-
-        fn(body[[col]][stub_df$rownum_i %in% loc$rows])
+      rows_i <- stub_df$rownum_i %in% loc$rows
+      # Decode HTML entities (e.g. &amp; -> &) so that fn() receives plain
+      # display text rather than HTML-escaped text; fn() output is treated
+      # as HTML, consistent with text_transform()'s documented contract
+      body[[col]][rows_i] <- fn(decode_html_entities(body[[col]][rows_i]))
     }
   }
 
@@ -693,8 +696,8 @@ text_transform_at_location.cells_stub <- function(
   # Apply transformation to each specified stub column
   for (stub_var in target_columns) {
     if (stub_var %in% colnames(body)) {
-      body[[stub_var]][stub_df$rownum_i %in% loc$rows] <-
-        fn(body[[stub_var]][stub_df$rownum_i %in% loc$rows])
+      rows_i <- stub_df$rownum_i %in% loc$rows
+      body[[stub_var]][rows_i] <- fn(decode_html_entities(body[[stub_var]][rows_i]))
     }
   }
 
