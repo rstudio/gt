@@ -543,3 +543,36 @@ test_that("apply_to_grp works", {
   # captures error of individual table and table number
   expect_snapshot(apply_to_grp(gt_group_error, arg_list), error=TRUE)
 })
+
+test_that("Empty table with columns shows no-data message in HTML (#1881)", {
+
+  empty_tbl <- dplyr::tibble(x = character(), y = numeric()) |> gt()
+
+  html_out <- as_raw_html(empty_tbl)
+
+  # Default locale message is rendered in a td spanning all columns
+  expect_true(grepl("gt_no_data", html_out, fixed = TRUE))
+  expect_true(grepl("Table has no data", html_out))
+  expect_true(grepl("colspan", html_out, fixed = TRUE))
+
+  # Custom message via tab_options()
+  custom_out <- dplyr::tibble(x = character()) |>
+    gt() |>
+    tab_options(table.no_data_message = "This query returned 0 results") |>
+    as_raw_html()
+  expect_true(grepl("This query returned 0 results", custom_out, fixed = TRUE))
+  expect_false(grepl("Table has no data", custom_out))
+
+  # Empty string suppresses the message
+  suppressed_out <- dplyr::tibble(x = character()) |>
+    gt() |>
+    tab_options(table.no_data_message = "") |>
+    as_raw_html()
+  expect_false(grepl("gt_no_data", suppressed_out, fixed = TRUE))
+
+  # Non-empty tables are unaffected
+  normal_out <- dplyr::tibble(x = "hello") |>
+    gt() |>
+    as_raw_html()
+  expect_false(grepl("gt_no_data", normal_out, fixed = TRUE))
+})
