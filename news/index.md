@@ -32,6 +32,11 @@
   [`stringr::str_to_title()`](https://stringr.tidyverse.org/reference/case.html)
   now receive and transform plain text as expected
   ([\#2033](https://github.com/rstudio/gt/issues/2033)).
+- Tables with no data rows now display a locale-appropriate message
+  (e.g., `"Table has no data"`) in the body area for both HTML and LaTeX
+  output. The message can be customized via
+  `tab_options(table.no_data_message = "...")` or suppressed by setting
+  it to `""` ([\#1881](https://github.com/rstudio/gt/issues/1881)).
 - Fixed multi-column stub rowspans incorrectly crossing row-group
   boundaries when adjacent groups share the same stub value, which
   caused group labels to appear in the wrong rows
