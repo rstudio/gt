@@ -2336,10 +2336,13 @@ build_row_styles <- function(
 
   # If stub columns exist, apply stub styles
   if (n_stub_cols > 0) {
+
     # Handle colnum == 0 (applies to all stub columns for backward compatibility)
     idx_0 <- styles_resolved_row$colnum == 0
     stub_style <- styles_resolved_row$html_style[idx_0]
+
     if (!is_empty(stub_style)) {
+
       # Apply to all stub columns
       for (i in seq_len(n_stub_cols)) {
         result[i] <- stub_style
@@ -2378,19 +2381,27 @@ build_row_styles_with_stub_columns <- function(
 
       # Apply per-column stub styles
       for (j in seq_len(nrow(stub_column_styles))) {
+
         col_name <- stub_column_styles$colname[j]
+
         if (col_name %in% names(stub_positions)) {
+
           stub_pos <- stub_positions[col_name]
+
           # Apply style to the correct stub position
           # Each stub column has its own position in the row_styles array
           if (stub_pos <= length(row_styles)) {
-            # MERGE styles instead of overwriting
+
+            # Merge styles instead of overwriting
             existing_style <- row_styles[stub_pos]
             new_style <- stub_column_styles$html_style[j]
 
             if (is.na(existing_style) || existing_style == "") {
+
               row_styles[stub_pos] <- new_style
+
             } else if (!is.na(new_style) && new_style != "") {
+
               # Merge CSS styles by combining them
               row_styles[stub_pos] <- paste(existing_style, new_style, sep = "; ")
             }
@@ -2485,8 +2496,26 @@ calculate_hierarchical_stub_rowspans <- function(data) {
     return(NULL)
   }
 
-  # Create a matrix of stub values (excluding the rightmost column which is the row identifier)
-  hierarchy_vars <- stub_vars[-length(stub_vars)]  # Remove rightmost stub column
+  # Build a per-row group-id vector so that spans never cross group boundaries.
+  # Two consecutive rows with the same stub value but in different row groups
+  # must not be merged.
+  groups_rows_df <- dt_groups_rows_get(data = data)
+  row_group_ids <- rep(NA_character_, n_rows)
+
+  for (gi in seq_len(nrow(groups_rows_df))) {
+
+    g_start <- groups_rows_df$row_start[[gi]]
+    g_end <- groups_rows_df$row_end[[gi]]
+
+    if (!is.na(g_start) && !is.na(g_end) && g_start <= n_rows) {
+      row_group_ids[seq(g_start, min(g_end, n_rows))] <-
+        groups_rows_df$group_id[[gi]]
+    }
+  }
+
+  # Create a matrix of stub values (excluding the rightmost column which is the
+  # row identifier)
+  hierarchy_vars <- stub_vars[-length(stub_vars)]  # Remove rightmost stub col
   stub_matrix <- as.matrix(original_body[, hierarchy_vars, drop = FALSE])
 
   # Initialize rowspan information
@@ -2507,6 +2536,11 @@ calculate_hierarchical_stub_rowspans <- function(data) {
     for (row_idx in 2:n_rows) {
       # Check if current row should continue the span from previous row
       should_continue_span <- TRUE
+
+      # Never merge cells across row-group boundaries
+      if (!identical(row_group_ids[row_idx], row_group_ids[row_idx - 1])) {
+        should_continue_span <- FALSE
+      }
 
       # Must match current column value (handle NAs properly)
       curr_val <- col_values[row_idx]
@@ -2530,14 +2564,19 @@ calculate_hierarchical_stub_rowspans <- function(data) {
       }
 
       if (should_continue_span) {
+
         # Continue the current span
         display_mask[row_idx] <- FALSE
+
       } else {
+
         # End current span and start a new one
         span_length <- row_idx - current_span_start
+
         if (span_length > 1) {
           rowspans[current_span_start] <- span_length
         }
+
         current_span_start <- row_idx
       }
     }
