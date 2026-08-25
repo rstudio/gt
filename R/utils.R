@@ -1043,6 +1043,18 @@ unescape_html <- function(text) {
   text
 }
 
+# Decode only the five standard HTML character entities that htmlEscape() inserts.
+# Unlike unescape_html(), this does NOT touch <br> tags, so it is safe to use
+# on values that may already contain HTML markup (e.g. from fmt_* functions).
+decode_html_entities <- function(text) {
+  text <- gsub("&amp;",  "&",  text, fixed = TRUE)
+  text <- gsub("&lt;",   "<",  text, fixed = TRUE)
+  text <- gsub("&gt;",   ">",  text, fixed = TRUE)
+  text <- gsub("&quot;", '"',  text, fixed = TRUE)
+  text <- gsub("&#39;",  "'",  text, fixed = TRUE)
+  text
+}
+
 
 #' apply a double newline for implementing universal line break in markdown
 #' @noRd
