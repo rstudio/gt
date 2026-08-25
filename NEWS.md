@@ -4,6 +4,7 @@
 * Fixed `cols_merge()` with `<<`/`>>` patterns producing corrupted output when data values contain `<` or `>` characters, particularly in LaTeX output (#2153).
 * Fixed `gt_split()` failing on grouped data.frames by filtering stale row group metadata after subsetting rows (#2089).
 * Fixed `md()` in a column label causing the column to expand to full page width (`\linewidth`) in LaTeX/PDF output when no explicit column width is set (#2124).
+* Fixed `text_transform()` passing HTML-escaped text (e.g., `&amp;`) to the user-supplied function instead of the original display text; functions like `stringr::str_to_title()` now receive and transform plain text as expected (#2033).
 * Fixed multi-column stub rowspans incorrectly crossing row-group boundaries when adjacent groups share the same stub value, which caused group labels to appear in the wrong rows (#2121).
 * Update RTF handling of stub columns and spans to handle multicolumn stubs (#2118)
 * Expand functionality of `gt_group()` to allow `gt_group` objects to be combined with `gt_tbls` (#2128)
