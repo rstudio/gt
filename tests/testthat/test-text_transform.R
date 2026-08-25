@@ -492,3 +492,41 @@ test_that("text_replace() works", {
 
   expect_match_html(tr, "---")
 })
+
+test_that("text_transform() decodes HTML entities before calling fn", {
+
+  # Ampersands and other special characters must arrive at fn() as plain text,
+  # not as HTML entities, so that simple string functions work correctly.
+  tbl_amp <- dplyr::tibble(
+    pairs = c("MAC & CHEESE", "STRAWBERRY & VANILLA", "LEMON & GINGER")
+  )
+
+  result_html <- tbl_amp |>
+    gt() |>
+    text_transform(
+      fn = function(x) tools::toTitleCase(tolower(x)),
+      locations = cells_body(columns = pairs)
+    ) |>
+    as_raw_html()
+
+  # Must not contain the wrongly title-cased entity &Amp;
+  expect_false(grepl("&Amp;", result_html, fixed = TRUE))
+
+  # Must render the title-cased ampersand correctly
+  expect_true(grepl("Mac & Cheese", result_html, fixed = TRUE))
+  expect_true(grepl("Strawberry & Vanilla", result_html, fixed = TRUE))
+
+  # HTML injection from fn() must still work
+  tbl_bold <- dplyr::tibble(x = "hello")
+
+  result_bold <-
+    tbl_bold |>
+    gt() |>
+    text_transform(
+      fn = function(x) paste0("<b>", x, "</b>"),
+      locations = cells_body(columns = x)
+    ) |>
+    as_raw_html()
+
+  expect_true(grepl("<b>hello</b>", result_bold, fixed = TRUE))
+})
