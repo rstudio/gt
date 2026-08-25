@@ -1494,3 +1494,53 @@ test_that("Stub styles with colnum=0 apply to all stub columns", {
   expect_equal(nrow(stub_styles), 16)
   expect_setequal(unique(stub_styles$colname), c("char", "fctr"))
 })
+
+test_that("Multicolumn stub rowspans do not cross row-group boundaries", {
+
+  # When a stub column value is the same at the boundary between two row groups,
+  # the rowspan mustn't cross that boundary. Groups C and D both start with
+  # symbol=1, so the C/D boundary was being merged incorrectly, causing group
+  # labels to appear in the wrong rows.
+  sample_data <- dplyr::tibble(
+    subject = c(rep("A", 3), rep("B", 4), rep("C", 2), rep("D", 2), rep("E", 3)),
+    symbol  = c(1, 1, 2,  1, 1, 2, 2,  1, 1,  1, 2,  2, 2, 1),
+    value   = seq_len(14) * 0.1
+  )
+
+  gt_tbl <-
+    gt(
+      sample_data,
+      rowname_col = c("symbol", "value"),
+      groupname_col = "subject"
+    )
+
+  # Build the rowspan info and verify group boundaries are respected
+  built <- gt:::build_data(gt_tbl, context = "html")
+  rowspan_info <- gt:::calculate_hierarchical_stub_rowspans(built)
+
+  # `symbol` is the only hierarchy column (value is rightmost, excluded).
+  expect_true("symbol" %in% names(rowspan_info))
+
+  rowspans <- rowspan_info[["symbol"]]$rowspans
+  display  <- rowspan_info[["symbol"]]$display_mask
+
+  # Row 9 ends group C (symbol=1). Row 10 starts group D (also symbol=1).
+  # The display mask for row 10 must be TRUE (its own cell, not hidden by a
+  # cross-group rowspan).
+  expect_true(display[10])
+
+  # Similarly, row 11 ends group D (symbol=2). Row 12 starts group E (symbol=2).
+  expect_true(display[12])
+
+  # Spans within the same group are still allowed:
+  # Group A rows 1-2 both have symbol=1, so row 1 should span 2 and row 2 hidden.
+  expect_equal(rowspans[1], 2L)
+  expect_false(display[2])
+
+  # Group C rows 8-9 both have symbol=1, so row 8 should span 2 and row 9 hidden.
+  expect_equal(rowspans[8], 2L)
+  expect_false(display[9])
+
+  # Rendering must not error
+  expect_no_error(as_raw_html(gt_tbl))
+})
