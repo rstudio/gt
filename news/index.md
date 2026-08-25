@@ -21,6 +21,17 @@
   failing on grouped data.frames by filtering stale row group metadata
   after subsetting rows
   ([\#2089](https://github.com/rstudio/gt/issues/2089)).
+- Fixed [`md()`](https://gt.rstudio.com/reference/md.md) in a column
+  label causing the column to expand to full page width (`\linewidth`)
+  in LaTeX/PDF output when no explicit column width is set
+  ([\#2124](https://github.com/rstudio/gt/issues/2124)).
+- Fixed
+  [`text_transform()`](https://gt.rstudio.com/reference/text_transform.md)
+  passing HTML-escaped text (e.g., `&amp;`) to the user-supplied
+  function instead of the original display text; functions like
+  [`stringr::str_to_title()`](https://stringr.tidyverse.org/reference/case.html)
+  now receive and transform plain text as expected
+  ([\#2033](https://github.com/rstudio/gt/issues/2033)).
 - Fixed multi-column stub rowspans incorrectly crossing row-group
   boundaries when adjacent groups share the same stub value, which
   caused group labels to appear in the wrong rows
