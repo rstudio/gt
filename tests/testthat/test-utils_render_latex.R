@@ -137,3 +137,30 @@ test_that("md() with <br> in column label does not produce \\linewidth in LaTeX 
   expect_false(grepl("\\parbox{\\linewidth}", latex_out, fixed = TRUE))
   expect_true(grepl("\\shortstack", latex_out, fixed = TRUE))
 })
+
+test_that("Empty table shows no-data message in LaTeX output (#1881)", {
+
+  empty_tbl <- dplyr::tibble(x = character(), y = numeric()) |> gt()
+
+  latex_out <- as.character(as_latex(empty_tbl))
+
+  # Default locale message is rendered in a \multicolumn cell
+  expect_true(grepl("multicolumn", latex_out, fixed = TRUE))
+  expect_true(grepl("Table has no data", latex_out))
+
+  # Custom message
+  custom_out <- dplyr::tibble(x = character()) |>
+    gt() |>
+    tab_options(table.no_data_message = "No results found") |>
+    as_latex() |>
+    as.character()
+  expect_true(grepl("No results found", custom_out, fixed = TRUE))
+
+  # Suppressed (empty string disables the message)
+  suppressed_out <- dplyr::tibble(x = character()) |>
+    gt() |>
+    tab_options(table.no_data_message = "") |>
+    as_latex() |>
+    as.character()
+  expect_false(grepl("multicolumn", suppressed_out, fixed = TRUE))
+})
