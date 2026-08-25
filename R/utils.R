@@ -57,6 +57,18 @@ is_gt_tbl_empty_w_cols <- function(data) {
   ncol(data_tbl) > 0 && nrow(data_tbl) == 0
 }
 
+# Returns the no-data message for a table with columns but zero rows.
+# Uses the `table_no_data_message` option when set, otherwise falls back to
+# the locale-appropriate string.  Returns NULL when the message is "".
+get_no_data_message <- function(data) {
+  msg <- dt_options_get_value(data = data, option = "table_no_data_message")
+  if (is.na(msg)) {
+    tbl_locale <- dt_locale_get_value(data = data)
+    msg <- get_locale_no_table_data_text(locale = tbl_locale)
+  }
+  if (identical(msg, "")) NULL else msg
+}
+
 # Adjustments for a completely empty table (no columns and no rows)
 adjust_gt_tbl_empty <- function(data) {
 
