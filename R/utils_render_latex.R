@@ -513,6 +513,9 @@ create_columns_component_l <- function(data, colwidth_df) {
 
     if(sum(colwidth_heading_i$unspec > 0)){
       width <- ""
+      # Strip \parbox{\linewidth} that markdown_to_latex() inserts for <br> in md() labels;
+      # without a column width, \linewidth expands to the full text width (same strip done for body cells)
+      headings_labels[i] <- gsub("\\\\parbox\\{\\\\linewidth\\}\\{(.+?)\\}", "\\1", headings_labels[i])
     }else{
       width <- create_singlecolumn_width_text_l(pt = colwidth_heading_i$pt, lw = colwidth_heading_i$lw)
     }

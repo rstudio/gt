@@ -3,6 +3,7 @@
 * Numeric formatting functions (`fmt_number()`, `fmt_scientific()`, `fmt_engineering()`, `fmt_percent()`, `fmt_currency()`, and others) gain a `drop_leading_zero` argument. Setting this to `TRUE` removes the leading zero from values between -1 and 1 (e.g., `0.75` becomes `.75`), which is useful for displaying correlations, p-values, and other bounded statistics (#2146).
 * Fixed `cols_merge()` with `<<`/`>>` patterns producing corrupted output when data values contain `<` or `>` characters, particularly in LaTeX output (#2153).
 * Fixed `gt_split()` failing on grouped data.frames by filtering stale row group metadata after subsetting rows (#2089).
+* Fixed `md()` in a column label causing the column to expand to full page width (`\linewidth`) in LaTeX/PDF output when no explicit column width is set (#2124).
 * Fixed multi-column stub rowspans incorrectly crossing row-group boundaries when adjacent groups share the same stub value, which caused group labels to appear in the wrong rows (#2121).
 * Update RTF handling of stub columns and spans to handle multicolumn stubs (#2118)
 * Expand functionality of `gt_group()` to allow `gt_group` objects to be combined with `gt_tbls` (#2128)
