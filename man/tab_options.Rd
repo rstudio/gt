@@ -12,6 +12,7 @@ tab_options(
   table.margin.left = NULL,
   table.margin.right = NULL,
   table.background.color = NULL,
+  table.no_data_message = NULL,
   table.additional_css = NULL,
   table.font.names = NULL,
   table.font.size = NULL,
@@ -250,6 +251,13 @@ the following child elements: \code{heading}, \code{column_labels}, \code{row_gr
 \code{stub}, \code{summary_row}, \code{grand_summary_row}, \code{footnotes}, and
 \code{source_notes}. A color name or a hexadecimal color code should be
 provided.}
+
+\item{table.no_data_message}{\emph{Message displayed in the body of an empty table}
+
+When a table has no data rows, this message is displayed in a full-width
+cell spanning the body area. Setting this to \code{NA} (the default) uses the
+locale-appropriate text (e.g., \code{"No data available in table"} for the
+\code{"en"} locale). Set to \code{""} to suppress the message entirely.}
 
 \item{table.additional_css}{\emph{Additional CSS}
 
