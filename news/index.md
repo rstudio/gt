@@ -21,6 +21,10 @@
   failing on grouped data.frames by filtering stale row group metadata
   after subsetting rows
   ([\#2089](https://github.com/rstudio/gt/issues/2089)).
+- Fixed multi-column stub rowspans incorrectly crossing row-group
+  boundaries when adjacent groups share the same stub value, which
+  caused group labels to appear in the wrong rows
+  ([\#2121](https://github.com/rstudio/gt/issues/2121)).
 - Update RTF handling of stub columns and spans to handle multicolumn
   stubs ([\#2118](https://github.com/rstudio/gt/issues/2118))
 - Expand functionality of
