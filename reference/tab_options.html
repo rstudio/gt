@@ -84,6 +84,7 @@ components, the subcomponents, and the element that can adjusted.</p>
 <span>  table.margin.left <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table.margin.right <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table.background.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.no_data_message <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table.additional_css <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table.font.names <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table.font.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -330,6 +331,14 @@ the following child elements: <code>heading</code>, <code>column_labels</code>, 
 <code>stub</code>, <code>summary_row</code>, <code>grand_summary_row</code>, <code>footnotes</code>, and
 <code>source_notes</code>. A color name or a hexadecimal color code should be
 provided.</p></dd>
+
+
+<dt id="arg-table-no-data-message">table.no_data_message<a class="anchor" aria-label="anchor" href="#arg-table-no-data-message"></a></dt>
+<dd><p><em>Message displayed in the body of an empty table</em></p>
+<p>When a table has no data rows, this message is displayed in a full-width
+cell spanning the body area. Setting this to <code>NA</code> (the default) uses the
+locale-appropriate text (e.g., <code>"No data available in table"</code> for the
+<code>"en"</code> locale). Set to <code>""</code> to suppress the message entirely.</p></dd>
 
 
 <dt id="arg-table-additional-css">table.additional_css<a class="anchor" aria-label="anchor" href="#arg-table-additional-css"></a></dt>

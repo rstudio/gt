@@ -14,6 +14,7 @@ tab_options(
   table.margin.left = NULL,
   table.margin.right = NULL,
   table.background.color = NULL,
+  table.no_data_message = NULL,
   table.additional_css = NULL,
   table.font.names = NULL,
   table.font.size = NULL,
@@ -275,6 +276,16 @@ tab_options(
   `row_group`, `stub`, `summary_row`, `grand_summary_row`, `footnotes`,
   and `source_notes`. A color name or a hexadecimal color code should be
   provided.
+
+- table.no_data_message:
+
+  *Message displayed in the body of an empty table*
+
+  When a table has no data rows, this message is displayed in a
+  full-width cell spanning the body area. Setting this to `NA` (the
+  default) uses the locale-appropriate text (e.g.,
+  `"No data available in table"` for the `"en"` locale). Set to `""` to
+  suppress the message entirely.
 
 - table.additional_css:
 
