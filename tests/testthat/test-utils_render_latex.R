@@ -122,3 +122,18 @@ test_that("spanner widths are calculated correctly",{
   # Hidden stub columns
   expect_match_latex(hidden_stub, pattern_2)
 })
+
+test_that("md() with <br> in column label does not produce \\linewidth in LaTeX output", {
+
+  gt_tbl <-
+    countrypops |>
+    head(5) |>
+    gt() |>
+    cols_label(country_code_2 ~ md("country<br>code"))
+
+  latex_out <- as.character(as_latex(gt_tbl))
+
+  # The header should use \shortstack for line breaking, but NOT \parbox{\linewidth}
+  expect_false(grepl("\\parbox{\\linewidth}", latex_out, fixed = TRUE))
+  expect_true(grepl("\\shortstack", latex_out, fixed = TRUE))
+})
