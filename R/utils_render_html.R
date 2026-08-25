@@ -1685,7 +1685,25 @@ create_body_component_h <- function(data) {
   }
 
   if (n_rows == 0) {
-    body_rows <- list()
+    no_data_msg <- get_no_data_message(data = data)
+    if (!is.null(no_data_msg)) {
+      body_rows <- list(
+        htmltools::tags$tr(
+          htmltools::tags$td(
+            class = "gt_row gt_no_data",
+            colspan = n_cols_total,
+            style = htmltools::css(
+              `text-align` = "center",
+              `font-style` = "italic",
+              color = "inherit"
+            ),
+            no_data_msg
+          )
+        )
+      )
+    } else {
+      body_rows <- list()
+    }
   } else {
     ns <- lengths(body_rows_data$row_df)
     body_rows_data_flat <- lapply(body_rows_data, function(x) unlist(x, recursive = FALSE))

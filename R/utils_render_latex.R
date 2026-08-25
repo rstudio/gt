@@ -1134,6 +1134,15 @@ create_body_component_l <- function(data, colwidth_df) {
 
   body_rows <- unlist(body_rows)
 
+  if (n_rows == 0) {
+    no_data_msg <- get_no_data_message(data = data)
+    if (!is.null(no_data_msg)) {
+      body_rows <- paste0(
+        "\\multicolumn{", n_cols, "}{c}{\\textit{", no_data_msg, "}} \\\\ \n"
+      )
+    }
+  }
+
   #
   # Add grand summary rows
   #
