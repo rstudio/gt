@@ -73,6 +73,13 @@
 #'   `source_notes`. A color name or a hexadecimal color code should be
 #'   provided.
 #'
+#' @param table.no_data_message *Message displayed in the body of an empty table*
+#'
+#'   When a table has no data rows, this message is displayed in a full-width
+#'   cell spanning the body area. Setting this to `NA` (the default) uses the
+#'   locale-appropriate text (e.g., `"No data available in table"` for the
+#'   `"en"` locale). Set to `""` to suppress the message entirely.
+#'
 #' @param table.additional_css *Additional CSS*
 #'
 #'   The `table.additional_css` option can be used to supply an additional block
@@ -725,6 +732,7 @@ tab_options <- function(
     table.margin.left = NULL,
     table.margin.right = NULL,
     table.background.color = NULL,
+    table.no_data_message = NULL,
     table.additional_css = NULL,
     table.font.names = NULL,
     table.font.size = NULL,
