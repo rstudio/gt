@@ -252,7 +252,9 @@ migrate_unformatted_to_output <- function(data, context) {
     }
   }
 
-  dt_body_set(data = data, body = body)
+  data <- dt_body_set(data = data, body = body)
+  data <- dt__set(data, "_build_context", context)
+  data
 }
 
 #' Perform any text transformations
@@ -268,7 +270,8 @@ perform_text_transforms <- function(data) {
       text_transform_at_location(
         loc = transform$resolved,
         data = data,
-        fn = transform$fn
+        fn = transform$fn,
+        plain_text = isTRUE(transform$plain_text)
       )
   }
 
