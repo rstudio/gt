@@ -129,8 +129,8 @@ test_that("text_transform() works correctly", {
 
   # Expect that each component of `transforms` has the names
   # `resolved` and `fn`
-  expect_named(transforms[[1]], c("resolved", "fn"))
-  expect_named(transforms[[2]], c("resolved", "fn"))
+  expect_named(transforms[[1]], c("resolved", "fn", "plain_text"))
+  expect_named(transforms[[2]], c("resolved", "fn", "plain_text"))
 
   # Expect that `resolved` subcomponent of `transforms` has the names
   # `columns` and `rows`
@@ -529,4 +529,56 @@ test_that("text_transform() decodes HTML entities before calling fn", {
     as_raw_html()
 
   expect_true(grepl("<b>hello</b>", result_bold, fixed = TRUE))
+})
+
+test_that("text_replace() matches plain-text patterns consistently in LaTeX output", {
+
+  tbl <-
+    dplyr::tibble(
+      names = c("test_x", "test_y", "test_z"),
+      col1 = 1:3
+    )
+
+  latex_out <-
+    tbl |>
+    gt() |>
+    text_replace(pattern = "test_x", replacement = "Worked!") |>
+    as_latex() |>
+    as.character()
+
+  # Pattern with underscore matches in LaTeX just as it does in HTML
+  expect_true(grepl("Worked!", latex_out, fixed = TRUE))
+
+  # Non-targeted rows remain LaTeX-escaped
+  expect_true(grepl("test\\_y", latex_out, fixed = TRUE))
+  expect_true(grepl("test\\_z", latex_out, fixed = TRUE))
+
+  # Plain-text replacement containing LaTeX special chars is re-escaped
+  latex_out2 <-
+    tbl |>
+    gt() |>
+    text_replace(
+      pattern = "test_x",
+      replacement = "R&D"
+    ) |>
+    as_latex() |>
+    as.character()
+
+  expect_true(grepl("R\\&D", latex_out2, fixed = TRUE))
+
+  # text_transform() in LaTeX still receives/returns LaTeX-escaped content
+  # (toupper preserves the \_ escape so the output is valid LaTeX)
+  tbl2 <- dplyr::tibble(names = "hello_world", col1 = 1)
+
+  latex_out3 <-
+    tbl2 |>
+    gt() |>
+    text_transform(
+      locations = cells_body(columns = names),
+      fn = function(x) toupper(x)
+    ) |>
+    as_latex() |>
+    as.character()
+
+  expect_true(grepl("HELLO\\_WORLD", latex_out3, fixed = TRUE))
 })
