@@ -32,6 +32,12 @@
   [`stringr::str_to_title()`](https://stringr.tidyverse.org/reference/case.html)
   now receive and transform plain text as expected
   ([\#2033](https://github.com/rstudio/gt/issues/2033)).
+- Fixed
+  [`text_replace()`](https://gt.rstudio.com/reference/text_replace.md)
+  failing to match patterns containing LaTeX special characters (e.g.,
+  underscores) in LaTeX/PDF output. The same plain-text pattern now
+  works consistently in both HTML and LaTeX
+  ([\#1592](https://github.com/rstudio/gt/issues/1592)).
 - Tables with no data rows now display a locale-appropriate message
   (e.g., `"Table has no data"`) in the body area for both HTML and LaTeX
   output. The message can be customized via
