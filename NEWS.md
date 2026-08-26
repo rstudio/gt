@@ -5,6 +5,7 @@
 * Fixed `gt_split()` failing on grouped data.frames by filtering stale row group metadata after subsetting rows (#2089).
 * Fixed `md()` in a column label causing the column to expand to full page width (`\linewidth`) in LaTeX/PDF output when no explicit column width is set (#2124).
 * Fixed `text_transform()` passing HTML-escaped text (e.g., `&amp;`) to the user-supplied function instead of the original display text; functions like `stringr::str_to_title()` now receive and transform plain text as expected (#2033).
+* Fixed `text_replace()` failing to match patterns containing LaTeX special characters (e.g., underscores) in LaTeX/PDF output. The same plain-text pattern now works consistently in both HTML and LaTeX (#1592).
 * Tables with no data rows now display a locale-appropriate message (e.g., `"Table has no data"`) in the body area for both HTML and LaTeX output. The message can be customized via `tab_options(table.no_data_message = "...")` or suppressed by setting it to `""` (#1881).
 * Fixed multi-column stub rowspans incorrectly crossing row-group boundaries when adjacent groups share the same stub value, which caused group labels to appear in the wrong rows (#2121).
 * Update RTF handling of stub columns and spans to handle multicolumn stubs (#2118)
