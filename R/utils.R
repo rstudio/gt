@@ -1067,6 +1067,20 @@ decode_html_entities <- function(text) {
   text
 }
 
+decode_latex_special_chars <- function(text) {
+  text <- gsub("\\_",               "_",  text, fixed = TRUE)
+  text <- gsub("\\&",               "&",  text, fixed = TRUE)
+  text <- gsub("\\%",               "%",  text, fixed = TRUE)
+  text <- gsub("\\$",               "$",  text, fixed = TRUE)
+  text <- gsub("\\#",               "#",  text, fixed = TRUE)
+  text <- gsub("\\{",               "{",  text, fixed = TRUE)
+  text <- gsub("\\}",               "}",  text, fixed = TRUE)
+  text <- gsub("\\textasciitilde{}", "~",  text, fixed = TRUE)
+  text <- gsub("\\textasciicircum{}", "^", text, fixed = TRUE)
+  text <- gsub("\\textbackslash{}", "\\", text, fixed = TRUE)
+  text
+}
+
 
 #' apply a double newline for implementing universal line break in markdown
 #' @noRd
