@@ -111,7 +111,8 @@ text_replace <- function(
     locations = locations,
     fn = function(x) {
       gsub(pattern = pattern, replacement = replacement, x, perl = TRUE)
-    }
+    },
+    plain_text = TRUE
   )
 }
 
@@ -606,7 +607,7 @@ text_transform <- function(
 }
 
 # Helper function to create text_*()
-text_transform_impl <- function(data, fn, locations, call = rlang::caller_env()) {
+text_transform_impl <- function(data, fn, locations, plain_text = FALSE, call = rlang::caller_env()) {
 
   # Resolve into a list of locations
   locations <- as_locations(locations = locations)
@@ -616,7 +617,7 @@ text_transform_impl <- function(data, fn, locations, call = rlang::caller_env())
   for (loc in locations) {
     withCallingHandlers(
       # Personalize call if text_case_match() or other.
-      data <- dt_transforms_add(data = data, loc = loc, fn = fn),
+      data <- dt_transforms_add(data = data, loc = loc, fn = fn, plain_text = plain_text),
       error = function(e) {
         cli::cli_abort("Failed to resolve location.", parent = e, call = call)
       })
@@ -631,7 +632,7 @@ text_transform_impl <- function(data, fn, locations, call = rlang::caller_env())
 # specified location with fn(contents). The `fn` may be invoked several times,
 # as the location may not be naturally vectorizable as a single call. The return
 # value is the transformed `data`
-text_transform_at_location <- function(loc, data, fn = identity) {
+text_transform_at_location <- function(loc, data, fn = identity, plain_text = FALSE) {
   UseMethod("text_transform_at_location")
 }
 
@@ -640,7 +641,8 @@ text_transform_at_location <- function(loc, data, fn = identity) {
 text_transform_at_location.cells_body <- function(
     loc,
     data,
-    fn = identity
+    fn = identity,
+    plain_text = FALSE
 ) {
 
   body <- dt_body_get(data = data)
@@ -649,16 +651,28 @@ text_transform_at_location.cells_body <- function(
 
   stub_df <- dt_stub_df_get(data = data)
 
+  build_context <- dt__get(data, "_build_context") %||% "html"
+  is_latex <- identical(build_context, "latex")
+
   # Do one vectorized operation per column
   for (col in loc$colnames) {
 
     if (col %in% colnames(body)) {
 
       rows_i <- stub_df$rownum_i %in% loc$rows
-      # Decode HTML entities (e.g. &amp; -> &) so that fn() receives plain
-      # display text rather than HTML-escaped text; fn() output is treated
-      # as HTML, consistent with text_transform()'s documented contract
-      body[[col]][rows_i] <- fn(decode_html_entities(body[[col]][rows_i]))
+      vals <- body[[col]][rows_i]
+
+      if (plain_text && is_latex) {
+        # For plain-text operations in LaTeX: decode special chars before fn()
+        # so the pattern sees display text, then re-escape the result so the
+        # output remains valid LaTeX.
+        body[[col]][rows_i] <- escape_latex(fn(decode_latex_special_chars(vals)))
+      } else {
+        # For HTML (and non-plain-text LaTeX): decode HTML entities so fn()
+        # receives display text rather than &amp;-encoded text. fn() output is
+        # treated as raw HTML, consistent with text_transform()'s contract.
+        body[[col]][rows_i] <- fn(decode_html_entities(vals))
+      }
     }
   }
 
@@ -670,7 +684,8 @@ text_transform_at_location.cells_body <- function(
 text_transform_at_location.cells_stub <- function(
     loc,
     data,
-    fn = identity
+    fn = identity,
+    plain_text = FALSE
 ) {
 
   body <- dt_body_get(data = data)
@@ -693,11 +708,19 @@ text_transform_at_location.cells_stub <- function(
     stub_vars  # Apply to all stub columns if none specified
   }
 
+  build_context <- dt__get(data, "_build_context") %||% "html"
+  is_latex <- identical(build_context, "latex")
+
   # Apply transformation to each specified stub column
   for (stub_var in target_columns) {
     if (stub_var %in% colnames(body)) {
       rows_i <- stub_df$rownum_i %in% loc$rows
-      body[[stub_var]][rows_i] <- fn(decode_html_entities(body[[stub_var]][rows_i]))
+      vals <- body[[stub_var]][rows_i]
+      if (plain_text && is_latex) {
+        body[[stub_var]][rows_i] <- escape_latex(fn(decode_latex_special_chars(vals)))
+      } else {
+        body[[stub_var]][rows_i] <- fn(decode_html_entities(vals))
+      }
     }
   }
 
@@ -709,7 +732,8 @@ text_transform_at_location.cells_stub <- function(
 text_transform_at_location.cells_column_labels <- function(
     loc,
     data,
-    fn = identity
+    fn = identity,
+    plain_text = FALSE
 ) {
 
   boxh <- dt_boxhead_get(data = data)
@@ -741,7 +765,8 @@ text_transform_at_location.cells_column_labels <- function(
 text_transform_at_location.cells_column_spanners <- function(
     loc,
     data,
-    fn = identity
+    fn = identity,
+    plain_text = FALSE
 ) {
 
   spanners_df <- dt_spanners_get(data = data)
@@ -769,7 +794,8 @@ text_transform_at_location.cells_column_spanners <- function(
 text_transform_at_location.cells_row_groups <- function(
     loc,
     data,
-    fn = identity
+    fn = identity,
+    plain_text = FALSE
 ) {
 
   row_group_vec <- dt_row_groups_get(data = data)
