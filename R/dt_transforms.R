@@ -36,12 +36,12 @@ dt_transforms_init <- function(data) {
   dt_transforms_set(data = data, transforms = list())
 }
 
-dt_transforms_add <- function(data, loc, fn) {
+dt_transforms_add <- function(data, loc, fn, plain_text = FALSE) {
 
   existing_transforms <- dt_transforms_get(data = data)
   resolved <- resolve_location(loc = loc, data = data)
 
-  added_transform <- list(resolved = resolved, fn = fn)
+  added_transform <- list(resolved = resolved, fn = fn, plain_text = plain_text)
 
   transforms <-
     c(
