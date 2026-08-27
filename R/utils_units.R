@@ -414,6 +414,8 @@ render_units <- function(units_object, context = "html") {
         unit <- gsub("\n$", "", unit)
       } else if (context == "rtf") {
         unit <- markdown_to_rtf(text = unit)
+      } else if (context == "typst") {
+        unit <- markdown_to_typst(text = unit)
       }
     }
 
@@ -429,6 +431,8 @@ render_units <- function(units_object, context = "html") {
         unit_subscript <- gsub("\n$", "", unit_subscript)
       } else if (context == "rtf") {
         unit_subscript <- markdown_to_rtf(text = unit_subscript)
+      } else if (context == "typst") {
+        unit_subscript <- markdown_to_typst(text = unit_subscript)
       }
     }
 
@@ -444,6 +448,8 @@ render_units <- function(units_object, context = "html") {
         exponent <- gsub("\n$", "", exponent)
       } else if (context == "rtf") {
         exponent <- markdown_to_rtf(text = exponent)
+      } else if (context == "typst") {
+        exponent <- markdown_to_typst(text = exponent)
       }
     }
 
@@ -575,6 +581,10 @@ units_to_superscript <- function(content, context = "html") {
       )
   }
 
+  if (context == "typst") {
+    out <- paste0("#super[", content, "]")
+  }
+
   out
 }
 
@@ -613,6 +623,10 @@ units_to_subscript <- function(content, context = "html") {
       )
   }
 
+  if (context == "typst") {
+    out <- paste0("#sub[", content, "]")
+  }
+
   out
 }
 
@@ -649,6 +663,10 @@ units_symbol_replacements <- function(
 
   if (context == "latex") {
     text <- replace_units_symbol(text, "^-", "^-", "--")
+  }
+
+  if (context == "typst") {
+    text <- replace_units_symbol(text, "^-", "^-", "\U2212")
   }
 
   if (context %in% c("html", "rtf", "latex")) {
@@ -724,6 +742,29 @@ units_symbol_replacements <- function(
     text <- replace_units_symbol(text, ":psi:", ":psi:", "&psi;")
     text <- replace_units_symbol(text, ":Omega:", ":Omega:", "&Omega;")
     text <- replace_units_symbol(text, ":omega:", ":omega:", "&omega;")
+  }
+
+  if (context == "typst") {
+
+    text <- replace_units_symbol(text, "^um$", "um", paste0("\U03BC", "m"))
+    text <- replace_units_symbol(text, "^uL$", "uL", paste0("\U03BC", "L"))
+    text <- replace_units_symbol(text, "^umol", "^umol", paste0("\U03BC", "mol"))
+    text <- replace_units_symbol(text, "^ug$", "ug", paste0("\U03BC", "g"))
+    text <- replace_units_symbol(text, ":micro:", ":micro:", "\U03BC")
+    text <- replace_units_symbol(text, ":mu:", ":mu:", "\U03BC")
+    text <- replace_units_symbol(text, "^ohm$", "ohm", "\U2126")
+    text <- replace_units_symbol(text, ":ohm:", ":ohm:", "\U2126")
+    text <- replace_units_symbol(text, ":angstrom:", ":angstrom:", "\U212B")
+    text <- replace_units_symbol(text, ":times:", ":times:", "\U00D7")
+    text <- replace_units_symbol(text, ":plusminus:", ":plusminus:", "\U00B1")
+    text <- replace_units_symbol(text, ":permil:", ":permil:", "\U2030")
+    text <- replace_units_symbol(text, ":permille:", ":permille:", "\U2030")
+    text <- replace_units_symbol(text, ":degree:", ":degree:", "\U00B0")
+    text <- replace_units_symbol(text, ":degrees:", ":degrees:", "\U00B0")
+    text <- replace_units_symbol(text, "degC", "degC", paste0("\U00B0", "C"))
+    text <- replace_units_symbol(text, "degF", "degF", paste0("\U00B0", "F"))
+    text <- replace_units_symbol(text, ":space:", ":space:", " ")
+    text <- replace_units_symbol(text, ":thinspace:", ":thinspace:", "\U2009")
   }
 
   if (context == "word") {

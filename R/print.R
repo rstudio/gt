@@ -92,6 +92,26 @@ knit_print.gt_tbl <- function(x, ..., inline = FALSE) {
 
     x <- as_rtf(x)
 
+  } else if (knitr_is_typst_output()) {
+
+    data <- build_data(data = x, context = "typst")
+
+    if (check_quarto()) {
+      x <- knitr::asis_output(as_typst_quarto_knit_output(data))
+    } else {
+      typst_output <-
+        as_typst_string(
+          data = data,
+          container = "auto",
+          quarto = FALSE
+        )
+
+      x <-
+        knitr::asis_output(
+          paste("```{=typst}", typst_output, "```\n\n", sep = "\n")
+        )
+    }
+
   } else if (knitr::is_latex_output()) {
 
     x <- as_latex(x)
@@ -134,6 +154,36 @@ knit_print.gt_group <- function(x, ...) {
 
     # TODO: make this work for LaTeX
     x <- as_latex(x)
+
+  } else if (knitr_is_typst_output()) {
+
+    typst_tbls <- NULL
+
+    seq_tbls <- seq_len(nrow(x$gt_tbls))
+
+    for (i in seq_tbls) {
+
+      gt_tbl_i <- grp_pull(x, which = i)
+
+      if (check_quarto()) {
+        typst_tbl_i <-
+          as_typst_quarto_knit_output(
+            build_data(data = gt_tbl_i, context = "typst")
+          )
+      } else {
+        typst_tbl_i <-
+          paste(
+            "```{=typst}",
+            as_typst(gt_tbl_i),
+            "```\n\n",
+            sep = "\n"
+          )
+      }
+
+      typst_tbls <- c(typst_tbls, typst_tbl_i)
+    }
+
+    x <- knitr::asis_output(paste(typst_tbls, collapse = page_break_typst()))
 
   } else if (knitr_is_word_output()) {
 
@@ -258,10 +308,18 @@ knitr_is_rtf_output <- function() {
   "rtf" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
 }
 
+knitr_is_typst_output <- function() {
+  "typst" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
+}
+
 knitr_is_word_output <- function() {
   "docx" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
 }
 
 page_break_word <- function() {
   "\n\n<w:p><w:r><w:br w:type=\"page\" /></w:r></w:p>\n\n"
+}
+
+page_break_typst <- function() {
+  "\n```{=typst}\n#pagebreak()\n```\n\n"
 }
