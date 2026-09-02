@@ -2100,8 +2100,7 @@ summary_rows_for_group_h <- function(
   default_vars <- dt_boxhead_get_vars_default(data = data)
 
   stub_layout <- get_stub_layout(data = data)
-
-  stub_is_2 <- length(stub_layout) > 1
+  n_stub_cols <- get_stub_column_count(data = data)
 
   summary_row_lines <- list()
 
@@ -2138,8 +2137,8 @@ summary_rows_for_group_h <- function(
   # Get the number of columns for the body cells only
   n_data_cols <- get_number_of_visible_data_columns(data = data)
 
-  if (stub_is_2) {
-    n_cols_total <- n_cols_total - 1
+  if (n_stub_cols > 1L) {
+    n_cols_total <- n_cols_total - (n_stub_cols - 1L)
   }
 
   extra_classes <- rep_len(list(NULL), n_cols_total)
@@ -2148,8 +2147,8 @@ summary_rows_for_group_h <- function(
   # Create a default list of colspan values for the summary row
   col_span_vals <- rep_len(list(NULL), n_cols_total)
 
-  if (stub_is_2 && summary_row_type == "grand") {
-    col_span_vals[[1]] <- 2L
+  if (n_stub_cols > 1L && summary_row_type == "grand") {
+    col_span_vals[[1]] <- n_stub_cols
   }
 
   # Default to a left alignment for the summary row labels and obtain the
@@ -2201,8 +2200,8 @@ summary_rows_for_group_h <- function(
         }
     }
 
-    # For summary rows, use 1 stub column (the summary label column)
-    # unless we have a two-column stub which is handled separately
+    # Summary rows have one rendered stub cell; with multicolumn stubs,
+    # that cell spans the applicable stub columns
     row_styles <-
       build_row_styles(
         styles_resolved_row = styles_resolved_row,
