@@ -214,6 +214,40 @@ test_that("`get_stub_layout()` works with summary rows", {
   expect_equal(stub_vars, c("mfr", "model"))
 })
 
+test_that("grand summary rows render correctly with multicolumn stubs (#2164)", {
+
+  sample_data <-
+    data.frame(
+      cat1 = c("aeroplane", "aeroplane", "helicopter", "helicopter"),
+      cat2 = c("Cessna Skyhawk", "Piper Cherokee", "Robinson R22", "Bell 47G"),
+      Count = c(123, 45, 30, 12)
+    )
+
+  gt_tbl <-
+    sample_data |>
+    gt(rowname_col = c("cat1", "cat2")) |>
+    grand_summary_rows(
+      columns = "Count",
+      fns = list(Total = ~ sum(., na.rm = TRUE))
+    )
+
+  expect_no_warning(
+    html <- gt_tbl |> render_as_html() |> xml2::read_html()
+  )
+
+  summary_row <-
+    xml2::xml_find_first(
+      html,
+      ".//tr[contains(@class, 'gt_grand_summary_row')]"
+    )
+
+  summary_cells <- xml2::xml_find_all(summary_row, "./th | ./td")
+
+  expect_length(summary_cells, 2)
+  expect_equal(xml2::xml_text(summary_cells), c("Total", "210"))
+  expect_equal(xml2::xml_attr(summary_cells[[1]], "colspan"), "2")
+})
+
 test_that("Basic multicolumn stub footnotes render correctly", {
 
   # Create table with multicolumn stub and footnotes
