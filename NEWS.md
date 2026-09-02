@@ -13,6 +13,7 @@
 * gt no longer exports `%>%`. You may either switch to the base pipe or call `library(magrittr)`. (#2150)
 * gt no longer export deprecated `dplyr::vars()` and `dplyr::one_of()`. (#2150)
 * Ensure `keep_with_next` parameter is applied consistently in `as_word` (#2149)
+* Fixed `cells_stub()` incorrectly resolving footnote row indices when a multi-column stub has repeated labels across non-contiguous groups. (#2168)
 
 # gt 1.3.0
 
