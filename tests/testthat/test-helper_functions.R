@@ -558,3 +558,107 @@ test_that(" from_column() works correctly", {
     )
   )
 })
+
+test_that("unit_conversion() works for non-temperature conversions", {
+
+  # Same unit → identity factor 1
+  expect_equal(unit_conversion("length.meter", "length.meter"), 1.0)
+
+  # Known factor: 1 m = 0.001 km
+  expect_equal(unit_conversion("length.meter", "length.kilometer"), 0.001)
+
+  # Inverse: 1 km = 1000 m
+  expect_equal(unit_conversion("length.kilometer", "length.meter"), 1000)
+
+  # Unknown `from` unit
+  expect_error(unit_conversion("not-a-unit", "length.meter"), class = "rlang_error")
+
+  # Unknown `to` unit
+  expect_error(unit_conversion("length.meter", "not-a-unit"), class = "rlang_error")
+
+  # Valid units from different categories (incompatible)
+  expect_error(
+    unit_conversion("length.meter", "acceleration.g-force"),
+    class = "rlang_error"
+  )
+})
+
+test_that("unit_conversion() works for temperature conversions", {
+
+  # C → F: 0°C = 32°F, 100°C = 212°F
+  f_cf <- unit_conversion("C", "F")
+  expect_true(is.function(f_cf))
+  expect_equal(f_cf(0),   32)
+  expect_equal(f_cf(100), 212)
+
+  # F → C: 32°F = 0°C
+  expect_equal(unit_conversion("F", "C")(32), 0)
+
+  # C → K: 0°C = 273.15 K
+  expect_equal(unit_conversion("C", "K")(0), 273.15)
+
+  # C → R: 0°C = 491.67 R
+  expect_equal(unit_conversion("C", "R")(0), 491.67)
+
+  # R → K: 0 R = 0 K
+  expect_equal(unit_conversion("R", "K")(0), 0)
+
+  # Same-temperature-unit → identity scalar 1
+  expect_equal(unit_conversion("C", "C"), 1)
+  expect_equal(unit_conversion("F", "F"), 1)
+  expect_equal(unit_conversion("K", "K"), 1)
+  expect_equal(unit_conversion("R", "R"), 1)
+
+  # Keyword aliases map to the same conversions
+  expect_equal(unit_conversion("celsius", "fahrenheit")(0), 32)
+  expect_equal(unit_conversion("temperature.celsius", "temperature.fahrenheit")(0), 32)
+  expect_equal(unit_conversion("temp.kelvin", "rankine")(0), 0)
+  expect_equal(unit_conversion("temperature.rankine", "temp.celsius")(491.67), 0)
+})
+
+test_that("normalize_temp_keyword() maps all aliases correctly", {
+
+  # Celsius aliases
+  for (kw in c("temperature.celsius", "temp.celsius", "celsius",
+               "temperature.C", "temp.C", "C")) {
+    expect_equal(gt:::normalize_temp_keyword(kw), "C", info = kw)
+  }
+
+  # Fahrenheit aliases
+  for (kw in c("temperature.fahrenheit", "temp.fahrenheit", "fahrenheit",
+               "temperature.F", "temp.F", "F")) {
+    expect_equal(gt:::normalize_temp_keyword(kw), "F", info = kw)
+  }
+
+  # Kelvin aliases
+  for (kw in c("temperature.kelvin", "temp.kelvin", "kelvin",
+               "temperature.K", "temp.K", "K")) {
+    expect_equal(gt:::normalize_temp_keyword(kw), "K", info = kw)
+  }
+
+  # Rankine aliases
+  for (kw in c("temperature.rankine", "temp.rankine", "rankine",
+               "temperature.R", "temp.R", "R")) {
+    expect_equal(gt:::normalize_temp_keyword(kw), "R", info = kw)
+  }
+})
+
+test_that("temperature_conversions() returns functions or 1 for all 16 pairs", {
+
+  units <- c("C", "F", "K", "R")
+
+  for (u in units) {
+    # Same unit → 1 (identity scalar)
+    result <- gt:::temperature_conversions(u, u)
+    expect_equal(result, 1, info = paste0(u, "->", u))
+  }
+
+  # All cross-unit conversions return functions
+  for (f in units) {
+    for (t in units) {
+      if (f == t) next
+      fn <- gt:::temperature_conversions(f, t)
+      expect_true(is.function(fn), info = paste0(f, "->", t))
+    }
+  }
+})
