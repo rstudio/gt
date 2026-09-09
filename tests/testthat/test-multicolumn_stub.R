@@ -235,13 +235,11 @@ test_that("grand summary rows render correctly with multicolumn stubs (#2164)", 
     html <- gt_tbl |> render_as_html() |> xml2::read_html()
   )
 
-  summary_row <-
-    xml2::xml_find_first(
+  summary_cells <-
+    xml2::xml_find_all(
       html,
-      ".//tr[contains(@class, 'gt_grand_summary_row')]"
+      ".//th[contains(@class, 'gt_grand_summary_row')] | .//td[contains(@class, 'gt_grand_summary_row')]"
     )
-
-  summary_cells <- xml2::xml_find_all(summary_row, "./th | ./td")
 
   expect_length(summary_cells, 2)
   expect_equal(xml2::xml_text(summary_cells), c("Total", "210"))
