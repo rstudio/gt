@@ -1224,3 +1224,153 @@ test_that("summary_columns() works with md() wrapped in list() (backward compati
   expect_s3_class(label, "from_markdown")
   expect_equal(as.character(label), "**Total**")
 })
+
+test_that("summary_columns() side = 'left' places the new column before the data columns", {
+
+  df <- data.frame(a = 1:3, b = 4:6, c = 7:9)
+
+  gt_tbl <-
+    df |>
+    gt() |>
+    summary_columns(
+      columns  = c(a, b, c),
+      fns      = ~ sum(.),
+      new_col_names = "total",
+      side     = "left"
+    )
+
+  col_order <- colnames(gt_tbl[["_data"]])
+  expect_equal(col_order[1], "total")
+  expect_true(all(c("a", "b", "c") %in% col_order))
+
+  # Values should still be computed correctly
+  expect_equal(gt_tbl[["_data"]][["total"]], c(12, 15, 18))
+})
+
+test_that("summary_columns() side = 'left' with multiple columns preserves insertion order", {
+
+  df <- data.frame(x = 1:3, y = 4:6)
+
+  gt_tbl <-
+    df |>
+    gt() |>
+    summary_columns(
+      columns       = c(x, y),
+      fns           = list(~ sum(.), ~ mean(.)),
+      new_col_names = c("s", "m"),
+      side          = "left"
+    )
+
+  col_order <- colnames(gt_tbl[["_data"]])
+  # Both summary columns should precede the data columns
+  expect_true(which(col_order == "s") < which(col_order == "x"))
+  expect_true(which(col_order == "m") < which(col_order == "x"))
+})
+
+test_that("summary_columns() fmt argument applies formatting to the new column", {
+
+  df <- data.frame(a = c(1000, 2000, 3000), b = c(500, 600, 700))
+
+  gt_tbl <-
+    df |>
+    gt() |>
+    summary_columns(
+      columns = c(a, b),
+      fns     = ~ sum(.),
+      fmt     = ~ fmt_number(., decimals = 1)
+    )
+
+  expect_s3_class(gt_tbl, "gt_tbl")
+
+  # The fmt argument should have been stored in the summary col spec
+  summary_cols <- gt:::dt_summary_cols_get(data = gt_tbl)
+  expect_false(is.null(summary_cols[[1]][["fmt"]]))
+})
+
+test_that("summary_columns() errors on duplicate new_col_names", {
+
+  df <- data.frame(x = 1:3, y = 4:6)
+
+  expect_error(
+    df |>
+      gt() |>
+      summary_columns(
+        columns       = c(x, y),
+        fns           = list(~ sum(.), ~ mean(.)),
+        new_col_names = c("dup", "dup")
+      ),
+    regexp = "[Dd]uplicate"
+  )
+})
+
+test_that("normalize_summary_col_fn() warns on two-sided formula and strips LHS", {
+
+  df <- data.frame(x = 1:3, y = 4:6)
+
+  expect_warning(
+    df |>
+      gt() |>
+      summary_columns(columns = c(x, y), fns = label ~ sum(.)),
+    regexp = "left-hand side"
+  )
+
+  # Despite the warning the result is still a valid gt_tbl
+  gt_tbl <- suppressWarnings(
+    df |>
+      gt() |>
+      summary_columns(columns = c(x, y), fns = label ~ sum(.))
+  )
+  expect_s3_class(gt_tbl, "gt_tbl")
+})
+
+test_that("normalize_summary_col_fn() handles unknown character function name", {
+
+  df <- data.frame(x = 1:3, y = 4:6)
+
+  # A non-built-in function name is wrapped in a formula without na.rm
+  # (the formula text will contain the unknown name)
+  gt_tbl <-
+    df |>
+    gt() |>
+    summary_columns(
+      columns       = c(x, y),
+      fns           = "prod",
+      new_col_names = "product"
+    )
+
+  expect_s3_class(gt_tbl, "gt_tbl")
+  expect_true("product" %in% colnames(gt_tbl[["_data"]]))
+})
+
+test_that("extract_fn_name() extracts names from simple formulas", {
+
+  expect_equal(gt:::extract_fn_name(~ sum(.)), "sum")
+  expect_equal(gt:::extract_fn_name(~ mean(.)), "mean")
+  expect_equal(gt:::extract_fn_name(~ sd(.)), "sd")
+})
+
+test_that("extract_fn_name() returns NA for non-call RHS in formula", {
+
+  # RHS is a symbol (e.g. ~ x), not a call
+  expect_equal(gt:::extract_fn_name(~ x), NA_character_)
+})
+
+test_that("extract_fn_name() returns NA for bare functions", {
+
+  expect_equal(gt:::extract_fn_name(sum), NA_character_)
+  expect_equal(gt:::extract_fn_name(mean), NA_character_)
+})
+
+test_that("normalize_fmt_col_fn() strips LHS from two-sided formula", {
+
+  result <- gt:::normalize_fmt_col_fn(label ~ fmt_number(.))
+  expect_true(rlang::is_formula(result))
+  expect_null(rlang::f_lhs(result))
+})
+
+test_that("normalize_fmt_col_fn() returns NULL for non-formula input", {
+
+  expect_null(gt:::normalize_fmt_col_fn(NULL))
+  expect_null(gt:::normalize_fmt_col_fn(character(0)))
+  expect_null(gt:::normalize_fmt_col_fn("not-a-formula"))
+})
