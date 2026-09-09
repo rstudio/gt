@@ -55,3 +55,21 @@ test_that("bookdown-style crossrefs are added when appropriate", {
 
   expect_caption_eq("test", "test")
 })
+
+test_that("Higher-level column spanner is displayed correctly when multi-column stub is present", {
+  gt_tab <- gtcars[1:2, 1:5] |>
+    gt(rowname_col = c("mfr", "model")) |>
+    tab_spanner(label = "spanner1", columns = 3:5) |>
+    tab_spanner(label = "spanner2", columns = 3:5)
+
+  tbl_html <- gt_tab |> gt::as_raw_html()
+
+  doc <- xml2::read_html(tbl_html)
+
+  # The first <th> in the first header row is the empty top-left corner cell
+  top_left_th <- xml2::xml_find_first(doc, "(//thead/tr)[1]/th[1]")
+
+  # The stub occupies 2 columns here (row-group label + row label), so the
+  # corner cell must colspan across both -- not just 1.
+  expect_identical(xml2::xml_attr(top_left_th, "colspan"), "2")
+})
