@@ -1203,3 +1203,82 @@ test_that("sub_values() works correctly", {
   # Expect an error if the `fn` is not a function
   expect_error(gt(data_tbl) |> sub_values(fn = "A", replacement = "error"))
 })
+
+test_that("fmt_missing() fires a deprecation warning and delegates to sub_missing()", {
+
+  tab <- gt(data.frame(x = c(1, NA, 3)))
+
+  # The deprecation warning should fire
+  expect_warning(
+    fmt_missing(tab, columns = "x"),
+    regexp = "deprecated"
+  )
+
+  # The output should be identical to sub_missing()
+  result_deprecated  <- suppressWarnings(
+    fmt_missing(tab, columns = "x", missing_text = "N/A") |>
+      render_formats_test(context = "html")
+  )
+  result_current <-
+    sub_missing(tab, columns = "x", missing_text = "N/A") |>
+      render_formats_test(context = "html")
+
+  expect_equal(result_deprecated, result_current)
+})
+
+test_that("sub_values() fn= error branches are handled correctly", {
+
+  tab <- gt(data.frame(x = c("a", "b", "c")))
+
+  # fn returning a numeric vector (not logical) → error
+  expect_error(
+    tab |>
+      sub_values(fn = function(x) as.numeric(x == "a"), replacement = "X") |>
+      render_formats_test(context = "html"),
+    regexp = "logical vector"
+  )
+
+  # fn returning wrong-length logical → error
+  expect_error(
+    tab |>
+      sub_values(fn = function(x) c(TRUE, FALSE), replacement = "X") |>
+      render_formats_test(context = "html"),
+    regexp = "same as"
+  )
+})
+
+test_that("sub_values() fn= treats NA in the logical result as FALSE", {
+
+  tab <- gt(data.frame(x = c("a", "b", "c")))
+
+  # fn returning a logical with NA: NA treated as FALSE (row not replaced)
+  result <-
+    tab |>
+      sub_values(fn = function(x) c(TRUE, NA, FALSE), replacement = "X") |>
+      render_formats_test(context = "html")
+
+  expect_equal(result[["x"]], c("X", "b", "c"))
+})
+
+test_that("sub_small_vals() and sub_large_vals() work across all output contexts", {
+
+  tab <- gt(data.frame(n = c(0.00001, 1, 1000000)))
+
+  for (ctx in c("html", "latex", "rtf", "default")) {
+    result <-
+      tab |>
+        sub_small_vals(columns = n, threshold = 0.001) |>
+        render_formats_test(context = ctx)
+    # The first value (0.00001 < 0.001) should be substituted
+    expect_false(result[["n"]][1] == "1e-05", info = paste("context:", ctx))
+  }
+
+  for (ctx in c("html", "latex", "rtf", "default")) {
+    result <-
+      tab |>
+        sub_large_vals(columns = n, threshold = 100000) |>
+        render_formats_test(context = ctx)
+    # The third value (1000000 > 100000) should be substituted
+    expect_false(result[["n"]][3] == "1e+06", info = paste("context:", ctx))
+  }
+})
