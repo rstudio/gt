@@ -62,6 +62,9 @@
   ([\#2150](https://github.com/rstudio/gt/issues/2150))
 - Ensure `keep_with_next` parameter is applied consistently in `as_word`
   ([\#2149](https://github.com/rstudio/gt/issues/2149))
+- Fixed higher-level column spanners not displaying correctly when
+  multi-column stub is present
+  ([\#2170](https://github.com/rstudio/gt/issues/2170))
 - Fixed [`cells_stub()`](https://gt.rstudio.com/reference/cells_stub.md)
   incorrectly resolving footnote row indices when a multi-column stub
   has repeated labels across non-contiguous groups.
