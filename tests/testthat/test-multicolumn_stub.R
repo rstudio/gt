@@ -466,6 +466,16 @@ test_that("Two-column stub footnotes", {
   expect_snapshot(cat(as_raw_html(gt_tbl)))
 })
 
+test_that("Multi-column stub cell targeting with repeated labels", {
+
+  # Create table with repeated labels in non-contiguous blocks
+  gt_tab <- data.frame(a = c("a", "b", "a"), b = 1:3, c = 11:13) |>
+    gt(rowname_col = c("a", "b")) |>
+    tab_footnote("Footnote", cells_stub(rows = 3, columns = 1))
+
+  expect_identical(gt_tab$`_footnotes`$rownum, 3L)
+})
+
 test_that("Single stub column footnotes (regression test)", {
 
   # Create table with single stub column (should still work)
