@@ -1043,12 +1043,14 @@ create_columns_component_h <- function(data) {
 
       if (length(stub_layout) > 0 && i == 1) {
 
+        n_stub_cols <- get_stub_column_count(data)
+
         level_i_spanners <-
           htmltools::tagList(
             htmltools::tags$th(
               rowspan = max(higher_spanner_rows_idx),
-              colspan = length(stub_layout),
-              scope = ifelse(length(stub_layout) > 1, "colgroup", "col")
+              colspan = n_stub_cols,
+              scope = ifelse(n_stub_cols > 1, "colgroup", "col")
             ),
             level_i_spanners
           )

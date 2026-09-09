@@ -1321,10 +1321,15 @@ resolve_hierarchical_stub_indices <- function(
 
   #
   # For hierarchical stubs, we need to map each row to its group leader
-  # The group leader is the first row with the same values in all columns
-  # to the left of (and including) the target column
+  # The group leader is the highest row in the contiguous block of cells
+  # with the same values in all columns to the left of (and including)
+  # the target column
+  # Searching only within the block of contiguous cells avoids targeting
+  # a row with identical values in an unrelated, non-adjacant group further
+  # up the table
   #
 
+  grouping_cols <- stub_vars[1:target_pos]
   corrected_indices <- integer(length(row_indices))
 
   for (i in seq_along(row_indices)) {
@@ -1338,24 +1343,25 @@ resolve_hierarchical_stub_indices <- function(
 
     # Get the values for the hierarchical grouping columns (up to and
     # including the target)
-    grouping_cols <- stub_vars[1:target_pos]
     target_values <- data_tbl[row_idx, grouping_cols, drop = FALSE]
 
-    # Find the first row that has the same values in all grouping columns
-    group_leader <- NA
+    # Find the highest row in the contiguous block of cells that has the same
+    # values in all grouping columns
+    group_leader <- row_idx
 
-    for (j in 1:nrow(data_tbl)) {
+    for (j in rev(seq_len(row_idx - 1L))) {
 
       current_values <- data_tbl[j, grouping_cols, drop = FALSE]
 
-      if (all(target_values == current_values, na.rm = TRUE)) {
-        group_leader <- j
-        break
-      }
+      # Stop when contiguous block of identical cells ends, when NA values are
+      # encountered or when the top of the table is reached (loop ends)
+      if (!isTRUE(all(target_values == current_values))) break
+      group_leader <- j
     }
 
-    # Use the group leader if found, otherwise use the original index
-    corrected_indices[i] <- if (!is.na(group_leader)) group_leader else row_idx
+    # Use the group leader (which in case of no contiguous group is simply the
+    # original index)
+    corrected_indices[i] <- group_leader
   }
 
   return(corrected_indices)
