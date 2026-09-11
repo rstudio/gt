@@ -164,3 +164,54 @@ test_that("Empty table shows no-data message in LaTeX output (#1881)", {
     as.character()
   expect_false(grepl("multicolumn", suppressed_out, fixed = TRUE))
 })
+
+# LaTeX utility unit tests ----------------------------------------------------
+
+test_that("latex_group() wraps content in LaTeX braces", {
+
+  expect_equal(latex_group("\\textbf{Hello}"), "{\\textbf{Hello}}")
+  expect_equal(latex_group("a", "b", "c"), "{abc}")
+  expect_equal(latex_group(""), "{}")
+})
+
+test_that("sprintf_unless_na() applies sprintf only to non-NA values", {
+
+  expect_equal(sprintf_unless_na("(%s)", "abc"), "(abc)")
+  expect_equal(sprintf_unless_na("(%s)", NA_character_), NA_character_)
+
+  # Vectorized
+  result <- sprintf_unless_na("\\textbf{%s}", c("A", NA, "B"))
+  expect_equal(result, c("\\textbf{A}", NA_character_, "\\textbf{B}"))
+})
+
+test_that("latex_body_row() formats a row for LaTeX tabular output", {
+
+  result_row <- latex_body_row(c("A", "B", "C"), type = "row")
+  expect_true(grepl("A & B & C", result_row))
+  expect_true(grepl("\\\\", result_row))
+
+  result_group <- latex_body_row(c("X", "Y"), type = "group")
+  expect_true(grepl("X & Y", result_group))
+})
+
+test_that("latex_heading_row() formats a heading row with midrule", {
+
+  result <- latex_heading_row(c("Col1", "Col2"))
+  expect_true(grepl("Col1 & Col2", result))
+  expect_true(grepl("\\\\midrule", result))
+  expect_false(grepl("\\\\endhead", result))
+
+  result_repeat <- latex_heading_row(c("Col1", "Col2"), header_repeat = TRUE)
+  expect_true(grepl("\\\\endhead", result_repeat))
+})
+
+test_that("convert_font_size_l() maps keyword sizes to LaTeX commands", {
+
+  expect_equal(convert_font_size_l("small"), "\\small ")
+  expect_equal(convert_font_size_l("large"), "\\large ")
+  expect_equal(convert_font_size_l("xx-small"), "\\tiny ")
+  expect_equal(convert_font_size_l("xxx-large"), "\\huge ")
+  expect_equal(convert_font_size_l("default"), "")
+  # Unknown string returns NULL
+  expect_null(convert_font_size_l("unknown-size"))
+})
