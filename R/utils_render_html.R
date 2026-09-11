@@ -884,7 +884,7 @@ create_columns_component_h <- function(data) {
               colspan = colspans[i],
               style = spanner_style,
               scope = ifelse(colspans[i] > 1, "colgroup", "col"),
-              id = spanner_ids[level_1_index, ][i],
+              id = valid_html_id(spanner_ids[level_1_index, ][i]),
               htmltools::tags$div(
                 class = "gt_column_spanner",
                 htmltools::HTML(spanners[level_1_index, ][i])
@@ -1030,7 +1030,7 @@ create_columns_component_h <- function(data) {
               colspan = colspans[j],
               style = spanner_style,
               scope = ifelse(colspans[j] > 1, "colgroup", "col"),
-              id = spanner_ids_row[j],
+              id = valid_html_id(spanner_ids_row[j]),
               if (spanner_ids_row[j] != "") {
                 htmltools::tags$div(
                   class = "gt_column_spanner",
