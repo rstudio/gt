@@ -884,7 +884,7 @@ create_columns_component_h <- function(data) {
               colspan = colspans[i],
               style = spanner_style,
               scope = ifelse(colspans[i] > 1, "colgroup", "col"),
-              id = spanner_ids[level_1_index, ][i],
+              id = valid_html_id(spanner_ids[level_1_index, ][i]),
               htmltools::tags$div(
                 class = "gt_column_spanner",
                 htmltools::HTML(spanners[level_1_index, ][i])
@@ -1030,7 +1030,7 @@ create_columns_component_h <- function(data) {
               colspan = colspans[j],
               style = spanner_style,
               scope = ifelse(colspans[j] > 1, "colgroup", "col"),
-              id = spanner_ids_row[j],
+              id = valid_html_id(spanner_ids_row[j]),
               if (spanner_ids_row[j] != "") {
                 htmltools::tags$div(
                   class = "gt_column_spanner",
@@ -1112,13 +1112,17 @@ create_body_component_h <- function(data) {
   }
 
   # Create ID components for every column that will be rendered
+  # Apply valid_html_id() so that headers attributes on <td> elements match
+  # the id attributes on <th> elements (e.g., spaces become hyphens)
   col_names_id <-
-    c(
-      if ((n_cols_total - n_data_cols) > 0) {
-        # For all stub columns, use generic stub IDs for backward compatibility
-        paste0("stub_", seq_len(n_cols_total - n_data_cols))
-      },
-      dt_boxhead_get_vars_default(data = data)
+    valid_html_id(
+      c(
+        if ((n_cols_total - n_data_cols) > 0) {
+          # For all stub columns, use generic stub IDs for backward compatibility
+          paste0("stub_", seq_len(n_cols_total - n_data_cols))
+        },
+        dt_boxhead_get_vars_default(data = data)
+      )
     )
 
   # Get a matrix of all cells in the body (not including summary cells)
@@ -1226,7 +1230,7 @@ create_body_component_h <- function(data) {
           class = group_class,
           style = row_style_group_heading_row,
           scope = if (n_cols_total > 1) "colgroup" else "col",
-          id = group_label,
+          id = valid_html_id(group_label),
           htmltools::HTML(group_label)
         )
       )
@@ -1282,11 +1286,11 @@ create_body_component_h <- function(data) {
 
         group_col_td <-
           htmltools::tags$td(
-            headers = group_id,
+            headers = valid_html_id(group_id),
             rowspan = rowspan_val,
             class = "gt_row gt_left gt_stub_row_group",
             style = row_style_group_heading_row,
-            id = group_id,
+            id = valid_html_id(group_id),
             htmltools::HTML(group_label)
           )
 
@@ -1815,7 +1819,7 @@ render_row_data <- function(
 
   has_group <- !is.na(current_group_id)
   header <- paste0(
-    ifelse(has_group, current_group_id, ""), ifelse(has_group, " ", ""),
+    ifelse(has_group, valid_html_id(current_group_id), ""), ifelse(has_group, " ", ""),
     row_id_i, ifelse(has_group | nzchar(row_id_i), " ", ""),
     col_id_i
   )
@@ -2223,7 +2227,7 @@ summary_rows_for_group_h <- function(
               alignment_classes,
               extra_classes,
               row_styles,
-              names(summary_df),
+              valid_html_id(names(summary_df)),
               FUN = function(x, col_span, alignment_class, extra_class, cell_style, col_name) {
                 extra_class <- c(extra_class, summary_row_class)
 
@@ -2267,8 +2271,8 @@ summary_rows_for_group_h <- function(
                         )
                       } else {
                         paste0(
-                          group_id, " summary_stub_",
-                          group_id, "_", j, " ", col_name, "\""
+                          valid_html_id(group_id), " summary_stub_",
+                          valid_html_id(group_id), "_", j, " ", col_name, "\""
                         )
                       }
                     )
@@ -2480,10 +2484,12 @@ as_css_font_family_attr <- function(font_vec, value_only = FALSE) {
 }
 
 valid_html_id <- function(x) {
+  needs_fix <- !is.na(x) & nzchar(x)
   # Make sure it starts with a letter.
   valid_ids <- grepl("^[A-z]", x)
-  x[!valid_ids] <- paste0("a", x[!valid_ids])
-  gsub("\\s+", "-", x)
+  x[needs_fix & !valid_ids] <- paste0("a", x[needs_fix & !valid_ids])
+  x[needs_fix] <- gsub("\\s+", "-", x[needs_fix])
+  x
 }
 
 # Function to calculate rowspan values for hierarchical stub columns
