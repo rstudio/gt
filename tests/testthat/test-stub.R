@@ -432,7 +432,7 @@ test_that("The stub can be formatted with `fmt_*()` functions and `stub()", {
     expect_equal(c("1 footnote `3`", "2 footnote `4`"))
 })
 
-test_that("gt(row_group_as_column = TRUE) works with multiple `groupname_col` (#1552)", {
+test_that("gt(row_group_as_column = TRUE) works with multiple `groupname_col`", {
   many_grps <- gt(
     utils::head(gtcars, n = 8),
     groupname_col = c("ctry_origin", "mfr"),
@@ -452,4 +452,87 @@ test_that("gt(row_group_as_column = TRUE) works with multiple `groupname_col` (#
     row_groups[2],
     "Italy.+Ferrari"
   )
+})
+
+test_that("summary_rows(side = 'top') with row_group.as_column = TRUE aligns correctly", {
+
+  tbl_data <-
+    data.frame(
+      x = 1:7, y = 10:16, z = letters[1:7],
+      grp = rep(c("X", "Y"), c(4, 3))
+    )
+
+  # Without rowname column
+  gt_tbl <-
+    tbl_data |>
+    gt(groupname_col = "grp") |>
+    summary_rows(columns = c("x", "y"), fns = "mean", side = "top") |>
+    tab_options(row_group.as_column = TRUE)
+
+  tbl_html <-
+    gt_tbl |>
+    render_as_html() |>
+    xml2::read_html()
+
+  body_rows <- xml2::xml_find_all(tbl_html, "//tbody/tr")
+
+  # The summary row (row 1) should have 4 cells matching the 4 header columns:
+  # summary label in stub, then x, y, z values
+  summary_cells_1 <- xml2::xml_find_all(body_rows[[1]], ".//td|.//th")
+  expect_equal(length(summary_cells_1), 4L)
+
+  # The first body row (row 2) should have 4 cells: the group label cell
+
+  # (with rowspan spanning all body rows) plus x, y, z
+  body_cells_1 <- xml2::xml_find_all(body_rows[[2]], ".//td|.//th")
+  expect_equal(length(body_cells_1), 4L)
+
+  group_cell <- body_cells_1[[1]]
+  expect_equal(xml2::xml_attr(group_cell, "rowspan"), "4")
+  expect_equal(xml2::xml_text(group_cell), "X")
+
+  # Remaining body rows should have 3 cells (covered by rowspan)
+  for (i in 3:5) {
+    cells <- xml2::xml_find_all(body_rows[[i]], ".//td|.//th")
+    expect_equal(length(cells), 3L)
+  }
+
+  # Second group summary row
+  summary_cells_2 <- xml2::xml_find_all(body_rows[[6]], ".//td|.//th")
+  expect_equal(length(summary_cells_2), 4L)
+
+  body_cells_2 <- xml2::xml_find_all(body_rows[[7]], ".//td|.//th")
+  expect_equal(length(body_cells_2), 4L)
+  expect_equal(xml2::xml_attr(body_cells_2[[1]], "rowspan"), "3")
+  expect_equal(xml2::xml_text(body_cells_2[[1]]), "Y")
+
+  # With rowname column: group cell should be on the summary row with
+  # rowspan covering both summary and body rows
+  gt_tbl_rn <-
+    data.frame(
+      x = 1:7, y = 10:16, z = letters[1:7],
+      grp = rep(c("X", "Y"), c(4, 3)),
+      rn = paste0("row", 1:7)
+    ) |>
+    gt(groupname_col = "grp", rowname_col = "rn") |>
+    summary_rows(columns = c("x", "y"), fns = "mean", side = "top") |>
+    tab_options(row_group.as_column = TRUE)
+
+  tbl_html_rn <- gt_tbl_rn |>
+    render_as_html() |>
+    xml2::read_html()
+
+  body_rows_rn <- xml2::xml_find_all(tbl_html_rn, "//tbody/tr")
+
+  # Summary row should have 5 cells: group (rowspan), label, x, y, z
+  summary_cells_rn <- xml2::xml_find_all(body_rows_rn[[1]], ".//td|.//th")
+  expect_equal(length(summary_cells_rn), 5L)
+  expect_equal(xml2::xml_attr(summary_cells_rn[[1]], "rowspan"), "5")
+  expect_equal(xml2::xml_text(summary_cells_rn[[1]]), "X")
+
+  # Body rows should have 4 cells (covered by group rowspan)
+  for (i in 2:5) {
+    cells <- xml2::xml_find_all(body_rows_rn[[i]], ".//td|.//th")
+    expect_equal(length(cells), 4L)
+  }
 })
