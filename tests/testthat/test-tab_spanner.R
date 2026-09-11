@@ -1175,3 +1175,117 @@ test_that("tab_spanner() can't render multiple spanners in interactive tables an
     c("date", "num")
   )
 })
+
+test_that("tab_style() on column spanners works regardless of pipeline order", {
+
+  check_suggests()
+
+  df <- data.frame(a = c(1, 2), b = c(3, 4))
+
+  # Style AFTER spanner (the previously working order)
+  tbl_style_after <-
+    df |>
+    gt() |>
+    tab_spanner(label = "spanner", columns = c(a, b)) |>
+    tab_style(
+      style = cell_text(weight = "bold"),
+      locations = cells_column_spanners()
+    ) |>
+    render_as_html() |>
+    xml2::read_html()
+
+  # Style BEFORE spanner (the previously broken order)
+  tbl_style_before <-
+    df |>
+    gt() |>
+    tab_style(
+      style = cell_text(weight = "bold"),
+      locations = cells_column_spanners()
+    ) |>
+    tab_spanner(label = "spanner", columns = c(a, b)) |>
+    render_as_html() |>
+    xml2::read_html()
+
+  styles_after <- selection_value(tbl_style_after, "style")
+  styles_before <- selection_value(tbl_style_before, "style")
+
+  expect_true(any(grepl("font-weight: bold", styles_after)))
+  expect_true(any(grepl("font-weight: bold", styles_before)))
+  expect_equal(styles_after, styles_before)
+})
+
+test_that("tab_style() before tab_spanner() works with named spanners", {
+
+  check_suggests()
+
+  df <- data.frame(a = 1, b = 2, c = 3, d = 4)
+
+  # Style targeting a specific spanner by ID, defined after the style call
+  tbl_html <-
+    df |>
+    gt() |>
+    tab_style(
+      style = cell_fill("green"),
+      locations = cells_column_spanners()
+    ) |>
+    tab_spanner(label = "AB", id = "ab", columns = c(a, b)) |>
+    tab_spanner(label = "CD", id = "cd", columns = c(c, d)) |>
+    render_as_html() |>
+    xml2::read_html()
+
+  styled_vals <- selection_value(tbl_html, "style")
+
+  # Both spanners should get the green fill since everything() was used
+  expect_equal(
+    sum(grepl("background-color: #00FF00", styled_vals)),
+    2L
+  )
+})
+
+test_that("multiple deferred tab_style() calls on spanners all apply", {
+
+  check_suggests()
+
+  df <- data.frame(a = 1, b = 2)
+
+  tbl_html <-
+    df |>
+    gt() |>
+    tab_style(
+      style = cell_text(weight = "bold"),
+      locations = cells_column_spanners()
+    ) |>
+    tab_style(
+      style = cell_fill("red"),
+      locations = cells_column_spanners()
+    ) |>
+    tab_spanner(label = "sp", columns = c(a, b)) |>
+    render_as_html() |>
+    xml2::read_html()
+
+  styled_vals <- selection_value(tbl_html, "style")
+
+  expect_true(any(grepl("font-weight: bold", styled_vals)))
+  expect_true(any(grepl("background-color: #FF0000", styled_vals)))
+})
+
+test_that("tab_style() on spanners still works normally when spanners exist", {
+
+  check_suggests()
+
+  # The normal (non-deferred) path should be unaffected
+  tbl_html <-
+    data.frame(a = 1, b = 2) |>
+    gt() |>
+    tab_spanner(label = "sp", id = "sp", columns = c(a, b)) |>
+    tab_style(
+      style = cell_fill("blue"),
+      locations = cells_column_spanners(spanners = "sp")
+    ) |>
+    render_as_html() |>
+    xml2::read_html()
+
+  styled_vals <- selection_value(tbl_html, "style")
+
+  expect_true(any(grepl("background-color: #0000FF", styled_vals)))
+})

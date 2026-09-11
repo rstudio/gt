@@ -762,6 +762,17 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
 #' @export
 set_style.cells_column_spanners <- function(loc, data, style) {
+
+  spanners <- dt_spanners_get(data = data)
+  spanner_ids <- spanners$spanner_id[!is.na(spanners$spanner_id)]
+
+  # Defer resolution when no spanners exist yet so that
+
+  # pipeline order (tab_style before/after tab_spanner) doesn't matter
+  if (length(spanner_ids) == 0L) {
+    return(dt_deferred_styles_add(data = data, loc = loc, style = style))
+  }
+
   call <- call("cells_column_spanners")
   resolved <- resolve_cells_column_spanners(data = data, object = loc, call = call)
 

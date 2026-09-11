@@ -72,6 +72,10 @@ build_data <- function(data, context) {
 
   # Resolution of footnotes and styles --------------------------------------
 
+  # Resolve any styles that were deferred (e.g., tab_style called
+  # before tab_spanner) as all structural components exist by this point
+  data <- resolve_deferred_styles(data = data)
+
   # Resolve footnotes and styles
   data <- resolve_footnotes_styles(data = data, tbl_type = "footnotes")
   data <- resolve_footnotes_styles(data = data, tbl_type = "styles")

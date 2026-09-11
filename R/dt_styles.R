@@ -127,3 +127,40 @@ dt_styles_pluck <- function(
   # `vec_slice()` is much faster than `[`
   vctrs::vec_slice(styles_tbl, idx)
 }
+
+# -- Deferred styles ----------------------------------------------------------
+
+.dt_deferred_styles_key <- "_deferred_styles"
+
+dt_deferred_styles_get <- function(data) {
+  dt__get(data, .dt_deferred_styles_key)
+}
+
+dt_deferred_styles_set <- function(data, deferred) {
+  dt__set(data, .dt_deferred_styles_key, deferred)
+}
+
+dt_deferred_styles_init <- function(data) {
+  dt_deferred_styles_set(data = data, deferred = list())
+}
+
+dt_deferred_styles_add <- function(data, loc, style) {
+  deferred <- dt_deferred_styles_get(data = data)
+  deferred <- c(deferred, list(list(loc = loc, style = style)))
+  dt_deferred_styles_set(data = data, deferred = deferred)
+}
+
+resolve_deferred_styles <- function(data) {
+
+  deferred <- dt_deferred_styles_get(data = data)
+
+  if (length(deferred) == 0L) {
+    return(data)
+  }
+
+  for (item in deferred) {
+    data <- set_style(loc = item$loc, data = data, style = item$style)
+  }
+
+  dt_deferred_styles_init(data = data)
+}
