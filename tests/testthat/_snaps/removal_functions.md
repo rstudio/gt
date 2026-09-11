@@ -8,7 +8,7 @@
         <thead>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -20,7 +20,7 @@
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Words">
               <div class="gt_column_spanner">Words</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date and Time">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date-and-Time">
               <div class="gt_column_spanner">Date and Time</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Numbers">
@@ -165,7 +165,7 @@
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -177,7 +177,7 @@
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Words">
               <div class="gt_column_spanner">Words</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date and Time">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date-and-Time">
               <div class="gt_column_spanner">Date and Time</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Numbers">
@@ -459,7 +459,7 @@
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -613,7 +613,7 @@
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -623,7 +623,7 @@
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Words">
               <div class="gt_column_spanner">Words</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date and Time">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date-and-Time">
               <div class="gt_column_spanner">Date and Time</div>
             </th>
             <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="currency">currency</th>
@@ -764,7 +764,7 @@
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -775,7 +775,7 @@
             </th>
             <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="char">char</th>
             <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="2" colspan="1" scope="col" id="fctr">fctr</th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date and Time">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date-and-Time">
               <div class="gt_column_spanner">Date and Time</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Numbers">
@@ -924,7 +924,7 @@
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Words">
               <div class="gt_column_spanner">Words</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date and Time">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date-and-Time">
               <div class="gt_column_spanner">Date and Time</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Numbers">
@@ -1069,7 +1069,7 @@
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="a::stub">A Stubhead Label</th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -1211,7 +1211,7 @@
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="a::stub">A Stubhead Label</th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -1359,7 +1359,7 @@
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Words">
               <div class="gt_column_spanner">Words</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date and Time">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date-and-Time">
               <div class="gt_column_spanner">Date and Time</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Numbers">
@@ -1641,7 +1641,7 @@
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -1653,7 +1653,7 @@
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Words">
               <div class="gt_column_spanner">Words</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date and Time">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date-and-Time">
               <div class="gt_column_spanner">Date and Time</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Numbers">
@@ -1792,7 +1792,7 @@
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -1804,7 +1804,7 @@
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Words">
               <div class="gt_column_spanner">Words</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date and Time">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date-and-Time">
               <div class="gt_column_spanner">Date and Time</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Numbers">
@@ -1946,7 +1946,7 @@
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -1958,7 +1958,7 @@
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Words">
               <div class="gt_column_spanner">Words</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date and Time">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date-and-Time">
               <div class="gt_column_spanner">Date and Time</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Numbers">
@@ -2100,7 +2100,7 @@
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -2112,7 +2112,7 @@
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Words">
               <div class="gt_column_spanner">Words</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date and Time">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date-and-Time">
               <div class="gt_column_spanner">Date and Time</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Numbers">
@@ -2251,7 +2251,7 @@
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -2263,7 +2263,7 @@
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Words">
               <div class="gt_column_spanner">Words</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date and Time">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date-and-Time">
               <div class="gt_column_spanner">Date and Time</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Numbers">
@@ -2402,7 +2402,7 @@
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -2414,7 +2414,7 @@
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Words">
               <div class="gt_column_spanner">Words</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date and Time">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date-and-Time">
               <div class="gt_column_spanner">Date and Time</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Numbers">
@@ -2556,7 +2556,7 @@
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -2568,7 +2568,7 @@
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Words">
               <div class="gt_column_spanner">Words</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date and Time">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date-and-Time">
               <div class="gt_column_spanner">Date and Time</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Numbers">
@@ -2710,7 +2710,7 @@
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -2722,7 +2722,7 @@
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Words">
               <div class="gt_column_spanner">Words</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date and Time">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date-and-Time">
               <div class="gt_column_spanner">Date and Time</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Numbers">
@@ -2860,7 +2860,7 @@
           </tr>
           <tr class="gt_col_headings gt_spanner_row">
             <th rowspan="1" colspan="1" scope="col"></th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand Spanner">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="7" scope="colgroup" id="Grand-Spanner">
               <div class="gt_column_spanner">Grand Spanner</div>
             </th>
           </tr>
@@ -2872,7 +2872,7 @@
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Words">
               <div class="gt_column_spanner">Words</div>
             </th>
-            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date and Time">
+            <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Date-and-Time">
               <div class="gt_column_spanner">Date and Time</div>
             </th>
             <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="1" scope="col" id="Numbers">
