@@ -2484,10 +2484,12 @@ as_css_font_family_attr <- function(font_vec, value_only = FALSE) {
 }
 
 valid_html_id <- function(x) {
+  needs_fix <- !is.na(x) & nzchar(x)
   # Make sure it starts with a letter.
   valid_ids <- grepl("^[A-z]", x)
-  x[!valid_ids] <- paste0("a", x[!valid_ids])
-  gsub("\\s+", "-", x)
+  x[needs_fix & !valid_ids] <- paste0("a", x[needs_fix & !valid_ids])
+  x[needs_fix] <- gsub("\\s+", "-", x[needs_fix])
+  x
 }
 
 # Function to calculate rowspan values for hierarchical stub columns
