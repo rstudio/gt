@@ -1230,7 +1230,7 @@ create_body_component_h <- function(data) {
           class = group_class,
           style = row_style_group_heading_row,
           scope = if (n_cols_total > 1) "colgroup" else "col",
-          id = group_label,
+          id = valid_html_id(group_label),
           htmltools::HTML(group_label)
         )
       )
@@ -1286,11 +1286,11 @@ create_body_component_h <- function(data) {
 
         group_col_td <-
           htmltools::tags$td(
-            headers = group_id,
+            headers = valid_html_id(group_id),
             rowspan = rowspan_val,
             class = "gt_row gt_left gt_stub_row_group",
             style = row_style_group_heading_row,
-            id = group_id,
+            id = valid_html_id(group_id),
             htmltools::HTML(group_label)
           )
 
@@ -1819,7 +1819,7 @@ render_row_data <- function(
 
   has_group <- !is.na(current_group_id)
   header <- paste0(
-    ifelse(has_group, current_group_id, ""), ifelse(has_group, " ", ""),
+    ifelse(has_group, valid_html_id(current_group_id), ""), ifelse(has_group, " ", ""),
     row_id_i, ifelse(has_group | nzchar(row_id_i), " ", ""),
     col_id_i
   )
@@ -2227,7 +2227,7 @@ summary_rows_for_group_h <- function(
               alignment_classes,
               extra_classes,
               row_styles,
-              names(summary_df),
+              valid_html_id(names(summary_df)),
               FUN = function(x, col_span, alignment_class, extra_class, cell_style, col_name) {
                 extra_class <- c(extra_class, summary_row_class)
 
@@ -2271,8 +2271,8 @@ summary_rows_for_group_h <- function(
                         )
                       } else {
                         paste0(
-                          group_id, " summary_stub_",
-                          group_id, "_", j, " ", col_name, "\""
+                          valid_html_id(group_id), " summary_stub_",
+                          valid_html_id(group_id), "_", j, " ", col_name, "\""
                         )
                       }
                     )
