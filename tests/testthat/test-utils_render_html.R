@@ -143,3 +143,70 @@ test_that("Group names with spaces produce consistent id/headers references", {
 
   expect_headers_match_ids(html)
 })
+
+test_that("as_css_font_family_attr() produces correct CSS font-family declarations", {
+
+  # Single font without spaces
+  expect_equal(
+    as_css_font_family_attr("Arial"),
+    "font-family: Arial;"
+  )
+
+  # Font with spaces gets quoted
+  expect_equal(
+    as_css_font_family_attr("Times New Roman"),
+    "font-family: 'Times New Roman';"
+  )
+
+  # Multiple fonts
+  result <- as_css_font_family_attr(c("Arial", "Helvetica", "sans-serif"))
+  expect_equal(result, "font-family: Arial, Helvetica, sans-serif;")
+
+  # value_only = TRUE omits the CSS property wrapper
+  expect_equal(
+    as_css_font_family_attr("Arial", value_only = TRUE),
+    "Arial"
+  )
+  expect_equal(
+    as_css_font_family_attr("Times New Roman", value_only = TRUE),
+    "'Times New Roman'"
+  )
+})
+
+test_that("valid_html_id() ensures ids start with a letter and replaces spaces", {
+
+  # Already valid
+  expect_equal(valid_html_id("myid"), "myid")
+
+  # Starts with digit: gets prefixed with 'a'
+  expect_equal(valid_html_id("1invalid"), "a1invalid")
+
+  # Spaces replaced with hyphens
+  expect_equal(valid_html_id("my id"), "my-id")
+
+  # NA passthrough
+  expect_equal(valid_html_id(NA_character_), NA_character_)
+
+  # Empty string passthrough
+  expect_equal(valid_html_id(""), "")
+
+  # Vectorized
+  result <- valid_html_id(c("valid", "1bad", "has space"))
+  expect_equal(result, c("valid", "a1bad", "has-space"))
+})
+
+test_that("get_font_stack() returns a character vector for each named stack", {
+
+  result <- get_font_stack("system-ui")
+  expect_type(result, "character")
+  expect_true(length(result) > 0)
+
+  result2 <- get_font_stack("monospace-code")
+  expect_type(result2, "character")
+  expect_true(length(result2) > 0)
+
+  # add_emoji = FALSE excludes emoji fonts
+  result_no_emoji <- get_font_stack("system-ui", add_emoji = FALSE)
+  result_with_emoji <- get_font_stack("system-ui", add_emoji = TRUE)
+  expect_true(length(result_no_emoji) <= length(result_with_emoji))
+})
