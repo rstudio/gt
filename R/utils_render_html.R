@@ -1112,13 +1112,17 @@ create_body_component_h <- function(data) {
   }
 
   # Create ID components for every column that will be rendered
+  # Apply valid_html_id() so that headers attributes on <td> elements match
+  # the id attributes on <th> elements (e.g., spaces become hyphens)
   col_names_id <-
-    c(
-      if ((n_cols_total - n_data_cols) > 0) {
-        # For all stub columns, use generic stub IDs for backward compatibility
-        paste0("stub_", seq_len(n_cols_total - n_data_cols))
-      },
-      dt_boxhead_get_vars_default(data = data)
+    valid_html_id(
+      c(
+        if ((n_cols_total - n_data_cols) > 0) {
+          # For all stub columns, use generic stub IDs for backward compatibility
+          paste0("stub_", seq_len(n_cols_total - n_data_cols))
+        },
+        dt_boxhead_get_vars_default(data = data)
+      )
     )
 
   # Get a matrix of all cells in the body (not including summary cells)
