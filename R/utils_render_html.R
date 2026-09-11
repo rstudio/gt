@@ -1262,7 +1262,8 @@ create_body_component_h <- function(data) {
         group_id = group_id
       )
 
-      if (has_two_col_stub && identical(group_summary_row_side, "top")) {
+      if (has_two_col_stub && identical(group_summary_row_side, "top") &&
+          "rowname" %in% stub_layout) {
         summary_rows_group_df <-
           list_of_summaries[["summary_df_display_list"]][[group_id]]
 
@@ -1479,7 +1480,8 @@ create_body_component_h <- function(data) {
       # contains the number of rows to span
       # TODO: replace with condition for summary rows at bottom
 
-      if (!(i %in% summary_locations && group_summary_row_side == "top")) {
+      if (!(i %in% summary_locations && group_summary_row_side == "top" &&
+            "rowname" %in% stub_layout)) {
         row_span_vals_i[[1]] <-
           group_row_end - group_row_start + 1 + summary_row_count
       }
@@ -1622,7 +1624,8 @@ create_body_component_h <- function(data) {
       group_start &&
       !is.null(group_summary_row_side) &&
       !is.na(group_summary_row_side) &&
-      group_summary_row_side == "top"
+      group_summary_row_side == "top" &&
+      "rowname" %in% stub_layout
     ) {
 
       row_df <- row_df[-1]
