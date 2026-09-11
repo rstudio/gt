@@ -576,3 +576,86 @@ test_that("Empty table with columns shows no-data message in HTML (#1881)", {
     as_raw_html()
   expect_false(grepl("gt_no_data", normal_out, fixed = TRUE))
 })
+
+test_that("decode_html_entities() decodes the five standard HTML entities", {
+
+  expect_equal(decode_html_entities("&amp;"), "&")
+  expect_equal(decode_html_entities("&lt;"), "<")
+  expect_equal(decode_html_entities("&gt;"), ">")
+  expect_equal(decode_html_entities("&quot;"), '"')
+  expect_equal(decode_html_entities("&#39;"), "'")
+
+  # Multiple entities in one string
+  expect_equal(
+    decode_html_entities("Tom &amp; Jerry &lt;show&gt;"),
+    "Tom & Jerry <show>"
+  )
+
+  # Passthrough of non-entity text
+  expect_equal(decode_html_entities("hello world"), "hello world")
+
+  # Does NOT convert <br> tags (unlike unescape_html)
+  expect_equal(decode_html_entities("a<br>b"), "a<br>b")
+})
+
+test_that("decode_latex_special_chars() unescapes LaTeX-escaped characters", {
+
+  expect_equal(decode_latex_special_chars("\\_"), "_")
+  expect_equal(decode_latex_special_chars("\\&"), "&")
+  expect_equal(decode_latex_special_chars("\\%"), "%")
+  expect_equal(decode_latex_special_chars("\\$"), "$")
+  expect_equal(decode_latex_special_chars("\\#"), "#")
+  expect_equal(decode_latex_special_chars("\\{"), "{")
+  expect_equal(decode_latex_special_chars("\\}"), "}")
+  expect_equal(decode_latex_special_chars("\\textasciitilde{}"), "~")
+  expect_equal(decode_latex_special_chars("\\textasciicircum{}"), "^")
+  expect_equal(decode_latex_special_chars("\\textbackslash{}"), "\\")
+
+  # Passthrough
+  expect_equal(decode_latex_special_chars("hello"), "hello")
+})
+
+test_that("linebreak_br() replaces <br> with triple newlines", {
+
+  expect_equal(linebreak_br("a<br>b"), "a\n\n\nb")
+  expect_equal(linebreak_br("no break"), "no break")
+  expect_equal(linebreak_br("a<br>b<br>c"), "a\n\n\nb\n\n\nc")
+})
+
+test_that("is_string_time() identifies valid ISO 8601 time strings", {
+
+  # Valid times
+  expect_true(is_string_time("12:30"))
+  expect_true(is_string_time("08:05:30"))
+  expect_true(is_string_time("23:59:59.999"))
+
+  # Invalid format
+  expect_false(is_string_time("not-a-time"))
+  expect_false(is_string_time("12"))
+  expect_false(is_string_time(NA_character_))
+
+  # Vectorized
+  result <- is_string_time(c("12:30", "abc", "09:15:00"))
+  expect_equal(result, c(TRUE, FALSE, TRUE))
+})
+
+test_that("get_tf_vals() returns correct values for numeric tf_style", {
+
+  # Numeric style index: style 1 should return TRUE/FALSE character labels
+  result <- get_tf_vals(tf_style = 1, locale = "en")
+  expect_length(result, 2)
+
+  # Character-encoded numeric style acts the same as numeric
+  result_chr <- get_tf_vals(tf_style = "1", locale = "en")
+  expect_equal(result, result_chr)
+
+  # Style name works too (format name uses hyphens)
+  result_named <- get_tf_vals(tf_style = "true-false", locale = "en")
+  expect_length(result_named, 2)
+
+  # Out-of-range numeric style errors
+  expect_error(get_tf_vals(tf_style = 9999, locale = "en"), class = "rlang_error")
+
+  # Invalid character style errors
+  expect_error(get_tf_vals(tf_style = "not_a_style", locale = "en"), class = "rlang_error")
+})
