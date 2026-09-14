@@ -294,6 +294,114 @@ test_that("process_text() works correctly", {
   expect_equal(processed_html, html_text, ignore_attr = TRUE)
 })
 
+test_that("process_text() escapes Typst-sensitive plain text", {
+
+  typst_text <- process_text(
+    text = "price $100 @ref <tbl-x> #tag [x] *strong* _emph_ `code`",
+    context = "typst"
+  )
+
+  expect_equal(
+    typst_text,
+    "price \\$100 \\@ref \\<tbl-x\\> \\#tag \\[x\\] \\*strong\\* \\_emph\\_ \\`code\\`"
+  )
+})
+
+test_that("markdown_to_typst() preserves major markdown features", {
+
+  expect_equal(
+    markdown_to_typst("[OpenAI](https://openai.com)"),
+    "#link(\"https://openai.com\")[OpenAI]"
+  )
+
+  expect_equal(
+    markdown_to_typst("before [OpenAI](https://openai.com) after"),
+    "before #link(\"https://openai.com\")[OpenAI] after"
+  )
+
+  expect_equal(
+    markdown_to_typst("![alt text](img.png)"),
+    "#image(\"img.png\", alt: \"alt text\")"
+  )
+
+  expect_equal(
+    markdown_to_typst("> quoted text"),
+    "#quote(block: true)[quoted text]"
+  )
+
+  expect_equal(
+    markdown_to_typst("price `$100` and [@ref](https://example.com)"),
+    "price `$100` and #link(\"https://example.com\")[\\@ref]"
+  )
+
+  expect_equal(
+    markdown_to_typst("```r\nSys.Date()\n```"),
+    "```r\nSys.Date()\n```"
+  )
+
+  expect_warning(
+    expect_equal(
+      markdown_to_typst("<div>\nplain block\n</div>"),
+      "plain block"
+    ),
+    "HTML tags found, and they will be removed."
+  )
+
+  expect_warning(
+    expect_equal(
+      markdown_to_typst("<span class=\"x\">plain</span>"),
+      "plain"
+    ),
+    "HTML tags found, and they will be removed."
+  )
+
+  expect_warning(
+    expect_equal(
+      markdown_to_typst("<div class=\"x\">\nplain block\n</div>"),
+      ""
+    ),
+    "HTML tags found, and they will be removed."
+  )
+
+  expect_equal(
+    markdown_to_typst("- a\n  - b\n- c"),
+    "- a\n  - b\n- c"
+  )
+
+  expect_equal(
+    markdown_to_typst("1. a\n   1. b\n2. c"),
+    "+ a\n  + b\n+ c"
+  )
+})
+
+test_that("markdown_to_typst() can suppress HTML-tag warnings via option", {
+
+  withr::local_options(list(gt.html_tag_check = FALSE))
+
+  expect_no_warning(
+    expect_equal(
+      markdown_to_typst("<span class=\"x\">plain</span>"),
+      "plain"
+    )
+  )
+})
+
+test_that("markdown_to_typst() warns once per vectorized call", {
+
+  warnings <- character(0L)
+
+  withCallingHandlers(
+    markdown_to_typst(c("<span>a</span>", "<span>b</span>", "<span>c</span>")),
+    warning = function(w) {
+      warnings <<- c(warnings, conditionMessage(w))
+      invokeRestart("muffleWarning")
+    }
+  )
+
+  expect_length(warnings, 1L)
+  expect_match(warnings[[1]], "HTML tags found, and they will be removed.")
+})
+
 test_that("apply_pattern_fmt_x() works correctly", {
 
   # Set formatted values in a character vector

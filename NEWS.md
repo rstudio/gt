@@ -16,6 +16,8 @@
 * Fixed higher-level column spanners not displaying correctly when multi-column stub is present (#2170)
 * Fixed `cells_stub()` incorrectly resolving footnote row indices when a multi-column stub has repeated labels across non-contiguous groups. (#2168)
 
+* Added Typst output support with the new `as_typst()` export function. Typst output is also supported in `knit_print()`, `gtsave(.typ)`, Quarto rendering, and styled tables with captions, notes, summaries, labels, and markdown content.
+
 # gt 1.3.0
 
 ## New features

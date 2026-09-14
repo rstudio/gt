@@ -16,7 +16,7 @@ vec_fmt_duration(
   sep_mark = ",",
   force_sign = FALSE,
   locale = NULL,
-  output = c("auto", "plain", "html", "latex", "rtf", "word")
+  output = c("auto", "plain", "html", "latex", "rtf", "word", "typst")
 )
 }
 \arguments{
@@ -132,12 +132,12 @@ useful reference for all of the locales that are supported.}
 
 \item{output}{\emph{Output format}
 
-\verb{singl-kw:[auto|plain|html|latex|rtf|word]} // \emph{default:} \code{"auto"}
+\verb{singl-kw:[auto|plain|html|latex|rtf|word|typst]} // \emph{default:} \code{"auto"}
 
 The output style of the resulting character vector. This can either be
-\code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or
-\code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the \code{"auto"}
-option will choose the correct \code{output} value}
+\code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, \code{"word"},
+or \code{"typst"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
+\code{"auto"} option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
