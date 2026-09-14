@@ -1285,6 +1285,41 @@ create_body_component_h <- function(data) {
 
         row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
 
+        # Inherit vertical-align from body cell styles when no explicit
+        # row_groups vertical-align is set
+        has_explicit_valign <-
+          !is_empty(row_style_group_heading_row) &&
+          any(grepl("vertical-align", row_style_group_heading_row))
+
+        if (!has_explicit_valign) {
+          first_row <- groups_rows_df$row_start[[i]]
+          body_styles_tbl <- dt_styles_pluck(
+            styles_tbl = styles_tbl,
+            locname = "data",
+            rownum = first_row
+          )
+          body_valigns <- grep(
+            "vertical-align",
+            body_styles_tbl[["html_style"]],
+            value = TRUE
+          )
+          if (length(body_valigns) > 0) {
+            valign_match <- regmatches(
+              body_valigns[[1]],
+              regexpr("vertical-align:\\s*[^;]+", body_valigns[[1]])
+            )
+            if (length(valign_match) > 0) {
+              valign_css <- paste0(valign_match, ";")
+              if (is_empty(row_style_group_heading_row)) {
+                row_style_group_heading_row <- valign_css
+              } else {
+                row_style_group_heading_row <-
+                  paste(row_style_group_heading_row, valign_css, sep = " ")
+              }
+            }
+          }
+        }
+
         group_col_td <-
           htmltools::tags$td(
             headers = valid_html_id(group_id),
@@ -1498,6 +1533,34 @@ create_body_component_h <- function(data) {
       row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
       if (is_empty(row_style_group_heading_row)) {
         row_style_group_heading_row <- NA_character_
+      }
+
+      # Inherit vertical-align from body cell styles when no explicit
+      # row_groups vertical-align is set
+      has_explicit_valign <-
+        !is.na(row_style_group_heading_row) &&
+        grepl("vertical-align", row_style_group_heading_row)
+
+      if (!has_explicit_valign) {
+        body_valigns <- vapply(
+          row_styles[!is.na(row_styles)],
+          function(s) {
+            m <- regmatches(s, regexpr("vertical-align:\\s*[^;]+", s))
+            if (length(m) > 0) m else NA_character_
+          },
+          character(1),
+          USE.NAMES = FALSE
+        )
+        body_valigns <- body_valigns[!is.na(body_valigns)]
+        if (length(body_valigns) > 0) {
+          valign_css <- paste0(body_valigns[[1]], ";")
+          if (is.na(row_style_group_heading_row)) {
+            row_style_group_heading_row <- valign_css
+          } else {
+            row_style_group_heading_row <-
+              paste(row_style_group_heading_row, valign_css, sep = " ")
+          }
+        }
       }
 
       # Add style of row group cell to vector

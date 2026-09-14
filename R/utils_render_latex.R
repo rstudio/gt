@@ -1551,12 +1551,34 @@ create_body_rows_l <- function(
 
               if (
                 !is.na(colname_i) &&
-                colname_i == "::group::" &&
-                "row_groups" %in% styles_tbl_i[["locname"]]
+                colname_i == "::group::"
               ) {
 
-                styles_tbl_i_col <- vctrs::vec_slice(styles_tbl_i, styles_tbl_i$locname == "row_groups")
-                #styles_i_col <- styles_tbl_i_col[["styles"]]
+                if ("row_groups" %in% styles_tbl_i[["locname"]]) {
+                  styles_tbl_i_col <- vctrs::vec_slice(
+                    styles_tbl_i, styles_tbl_i$locname == "row_groups"
+                  )
+                } else if ("data" %in% styles_tbl_i[["locname"]]) {
+                  # Inherit v_align from body cell styles when no explicit
+                  # row_groups styles are set
+                  data_styles <- vctrs::vec_slice(
+                    styles_tbl_i, styles_tbl_i$locname == "data"
+                  )
+                  has_valign <- vapply(
+                    data_styles[["styles"]],
+                    function(s) !is.null(s[["cell_text"]][["v_align"]]),
+                    logical(1)
+                  )
+                  if (any(has_valign)) {
+                    styles_tbl_i_col <- vctrs::vec_slice(
+                      data_styles, which(has_valign)[1]
+                    )
+                  } else {
+                    styles_tbl_i_col <- NULL
+                  }
+                } else {
+                  styles_tbl_i_col <- NULL
+                }
 
               } else if (
                 !is.na(colname_i) &&

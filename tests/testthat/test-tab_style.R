@@ -626,3 +626,126 @@ test_that("Using fonts in `from_column()` works within `cell_*()` fns", {
   # Perform snapshot test
   expect_snapshot_html(gt_tbl_1)
 })
+
+test_that("row_group_as_column stub inherits v_align from cells_body()", {
+
+  tbl_html <-
+    exibble |>
+    dplyr::mutate(group = "groupA") |>
+    gt(groupname_col = "group", row_group_as_column = TRUE) |>
+    tab_style(
+      style = cell_text(v_align = "bottom"),
+      locations = cells_body(columns = everything())
+    ) |>
+    render_as_html() |>
+    xml2::read_html()
+
+  stub_style <-
+    rvest::html_attr(
+      rvest::html_nodes(tbl_html, ".gt_stub_row_group"),
+      "style"
+    )
+
+  expect_length(stub_style, 1)
+  expect_match(stub_style, "vertical-align: bottom")
+})
+
+test_that("row_group_as_column stub inherits v_align = 'middle' from cells_body()", {
+
+  tbl_html <-
+    exibble |>
+    dplyr::mutate(group = "groupA") |>
+    gt(groupname_col = "group", row_group_as_column = TRUE) |>
+    tab_style(
+      style = cell_text(v_align = "middle"),
+      locations = cells_body(columns = everything())
+    ) |>
+    render_as_html() |>
+    xml2::read_html()
+
+  stub_style <-
+    rvest::html_attr(
+      rvest::html_nodes(tbl_html, ".gt_stub_row_group"),
+      "style"
+    )
+
+  expect_length(stub_style, 1)
+  expect_match(stub_style, "vertical-align: middle")
+})
+
+test_that("cells_row_groups() v_align overrides cells_body() inheritance", {
+
+  tbl_html <-
+    exibble |>
+    dplyr::mutate(group = "groupA") |>
+    gt(groupname_col = "group", row_group_as_column = TRUE) |>
+    tab_style(
+      style = cell_text(v_align = "bottom"),
+      locations = cells_body(columns = everything())
+    ) |>
+    tab_style(
+      style = cell_text(v_align = "top"),
+      locations = cells_row_groups()
+    ) |>
+    render_as_html() |>
+    xml2::read_html()
+
+  stub_style <-
+    rvest::html_attr(
+      rvest::html_nodes(tbl_html, ".gt_stub_row_group"),
+      "style"
+    )
+
+  expect_length(stub_style, 1)
+  expect_match(stub_style, "vertical-align: top")
+  expect_no_match(stub_style, "vertical-align: bottom")
+})
+
+test_that("row_group_as_column stub inherits v_align with multiple groups", {
+
+  tbl_html <-
+    exibble |>
+    dplyr::mutate(
+      group = ifelse(dplyr::row_number() <= 4, "groupA", "groupB")
+    ) |>
+    gt(groupname_col = "group", row_group_as_column = TRUE) |>
+    tab_style(
+      style = cell_text(v_align = "bottom"),
+      locations = cells_body(columns = everything())
+    ) |>
+    render_as_html() |>
+    xml2::read_html()
+
+  stub_styles <-
+    rvest::html_attr(
+      rvest::html_nodes(tbl_html, ".gt_stub_row_group"),
+      "style"
+    )
+
+  expect_length(stub_styles, 2)
+  expect_match(stub_styles[1], "vertical-align: bottom")
+  expect_match(stub_styles[2], "vertical-align: bottom")
+})
+
+test_that("row_group_as_column stub has no extra v_align when body has none", {
+
+  tbl_html <-
+    exibble |>
+    dplyr::mutate(group = "groupA") |>
+    gt(groupname_col = "group", row_group_as_column = TRUE) |>
+    render_as_html() |>
+    xml2::read_html()
+
+  stub_style <-
+    rvest::html_attr(
+      rvest::html_nodes(tbl_html, ".gt_stub_row_group"),
+      "style"
+    )
+
+  expect_length(stub_style, 1)
+
+  # When no v_align is set on body cells, the stub should not
+  # get an inherited vertical-align inline style
+  has_valign <- grepl("vertical-align", stub_style)
+  expect_false(has_valign)
+})
