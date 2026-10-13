@@ -68,22 +68,22 @@ test_that("latex cell alignment works - basic table", {
 
   # confirm level 3 span is centered, is in a shortstack due to the <br>, multicolumn is a column width of 1 and left aligned
   # and shortstack is c
-  expect_match(tbl_latex, "\\multicolumn{1}{c}{{\\shortstack[c]{level 3  \\\\span}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\multicolumn{1}{c}{{\\shortstack[c]{\\strut level 3  \\\\span\\strut}}}", fixed = TRUE)
 
   # confirm level 2 span is left aligned,is in a shortstack due to the <br>, multicolumn is a column width of 3 and left aligned
   # and shortstack is c
-  expect_match(tbl_latex, "\\multicolumn{3}{l}{{\\shortstack[c]{level 2  \\\\span}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\multicolumn{3}{l}{{\\shortstack[c]{\\strut level 2  \\\\span\\strut}}}", fixed = TRUE)
 
 
   # confirm level 1 spans
 
   # First is is right aligned,is in a shortstack due to the <br>, multicolumn is a column width of 2 and right aligned
   # and shortstack is r
-  expect_match(tbl_latex, "\\multicolumn{2}{r}{{\\shortstack[r]{level 1  \\\\span 1}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\multicolumn{2}{r}{{\\shortstack[r]{\\strut level 1  \\\\span 1\\strut}}}", fixed = TRUE)
 
   # second is is right aligned,is in a shortstack due to the <br>, multicolumn is a column width of 2 and right aligned
   # and shortstack is c
-  expect_match(tbl_latex, "\\multicolumn{2}{c}{{\\shortstack[c]{level 1  \\\\span 2}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\multicolumn{2}{c}{{\\shortstack[c]{\\strut level 1  \\\\span 2\\strut}}}", fixed = TRUE)
 
   ### Column Labels ----
 
@@ -97,7 +97,7 @@ test_that("latex cell alignment works - basic table", {
   ### Body ----
 
   # First row first column value is a multi-row that is centered
-  expect_match(tbl_latex, "\\multicolumn{1}{c}{{\\shortstack[c]{123  \\\\(0.1234) this is super wide. like super wide. such a wide column\\textsuperscript{\\textit{1}} }}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\multicolumn{1}{c}{{\\shortstack[c]{\\strut 123  \\\\(0.1234) this is super wide. like super wide. such a wide column\\strut\\textsuperscript{\\textit{1}} }}}", fixed = TRUE)
 
   # The rest are centered
   # like the first row, second column
@@ -117,14 +117,14 @@ test_that("latex cell alignment works - basic table", {
 
   # right aligned with a line break
   # First footnote is w new minipage, so used parbox, raggedleft pushes all content to the right, shortstack is right aligned due to <br>
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{FOOTNOTE  \\\\ test this}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\strut FOOTNOTE  \\\\ test this\\strut}}}", fixed = TRUE)
 
   # second footnote just uses parbox and raggedleft
   expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {FOOTNOTE3}}", fixed = TRUE)
 
   # Third listed footnote includes reference, so listed last even though its second footnote
   # used parbox, raggedleft pushes all content to the right, reference is listed before the shortstack, shortstack is right aligned due to <br>,
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}}FOOTNOTE2 \\\\ this}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}}\\strut FOOTNOTE2 \\\\ this\\strut}}}", fixed = TRUE)
 
 
 })
@@ -205,21 +205,21 @@ test_that("latex cell alignment works - set width columns table means parbox is 
 
   # confirm level 3 span is centered, is in a shortstack due to the <br>, multicolumn is a column width of 1 and left aligned
   # and shortstack is c
-  expect_match(tbl_latex, "\\multicolumn{1}{>{\\centering\\arraybackslash}m{\\dimexpr 0.40\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{{\\shortstack[c]{\\parbox{\\linewidth}{\\centering level 3  \\\\span}}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\multicolumn{1}{>{\\centering\\arraybackslash}m{\\dimexpr 0.40\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{{\\shortstack[c]{\\parbox{\\linewidth}{\\centering \\strut level 3  \\\\span\\strut}}}}", fixed = TRUE)
   # confirm level 2 span is left aligned,is in a shortstack due to the <br>, multicolumn is a column width of 3 and left aligned
   # and shortstack is c
-  expect_match(tbl_latex, "\\multicolumn{3}{>{\\raggedright\\arraybackslash}m{\\dimexpr 0.60\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{{\\shortstack[l]{\\parbox{\\linewidth}{\\raggedright level 2  \\\\span}}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\multicolumn{3}{>{\\raggedright\\arraybackslash}m{\\dimexpr 0.60\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{{\\shortstack[l]{\\parbox{\\linewidth}{\\raggedright \\strut level 2  \\\\span\\strut}}}}", fixed = TRUE)
 
 
   # confirm level 1 spans
 
   # First is is right aligned,is in a shortstack due to the <br>, multicolumn is a column width of 2 and right aligned
   # and shortstack is r
-  expect_match(tbl_latex, "\\multicolumn{2}{>{\\raggedleft\\arraybackslash}m{\\dimexpr 0.60\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{{\\shortstack[r]{\\parbox{\\linewidth}{\\raggedleft level 1  \\\\span 1}}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\multicolumn{2}{>{\\raggedleft\\arraybackslash}m{\\dimexpr 0.60\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{{\\shortstack[r]{\\parbox{\\linewidth}{\\raggedleft \\strut level 1  \\\\span 1\\strut}}}}", fixed = TRUE)
 
   # second is is right aligned,is in a shortstack due to the <br>, multicolumn is a column width of 2 and right aligned
   # and shortstack is c
-  expect_match(tbl_latex, "\\multicolumn{2}{>{\\centering\\arraybackslash}m{\\dimexpr 0.40\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{{\\shortstack[c]{\\parbox{\\linewidth}{\\centering level 1  \\\\span 2}}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\multicolumn{2}{>{\\centering\\arraybackslash}m{\\dimexpr 0.40\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{{\\shortstack[c]{\\parbox{\\linewidth}{\\centering \\strut level 1  \\\\span 2\\strut}}}}", fixed = TRUE)
 
   ### Column Labels ----
 
@@ -233,7 +233,7 @@ test_that("latex cell alignment works - set width columns table means parbox is 
   ### Body ----
 
   # First row first column value is a multi-row that is centered
-  expect_match(tbl_latex, "\\multicolumn{1}{>{\\centering\\arraybackslash}m{\\dimexpr 0.40\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{{\\shortstack[c]{\\parbox{\\linewidth}{\\centering 123  \\\\(0.1234) this is super wide. like super wide. such a wide column\\textsuperscript{\\textit{1}} }}}} ", fixed = TRUE)
+  expect_match(tbl_latex, "\\multicolumn{1}{>{\\centering\\arraybackslash}m{\\dimexpr 0.40\\linewidth -2\\tabcolsep-1.5\\arrayrulewidth}}{{\\shortstack[c]{\\parbox{\\linewidth}{\\centering \\strut 123  \\\\(0.1234) this is super wide. like super wide. such a wide column\\strut\\textsuperscript{\\textit{1}} }}}} ", fixed = TRUE)
 
   # The rest are centered
   # like the first row, second column
@@ -253,14 +253,14 @@ test_that("latex cell alignment works - set width columns table means parbox is 
 
   # right aligned with a line break
   # First footnote is w new minipage, so used parbox, raggedleft pushes all content to the right, shortstack is right aligned due to <br>
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{FOOTNOTE  \\\\ test this}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\strut FOOTNOTE  \\\\ test this\\strut}}}", fixed = TRUE)
 
   # second footnote just uses parbox and raggedleft
   expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {FOOTNOTE3}}", fixed = TRUE)
 
   # Third listed footnote includes reference, so listed last even though its second footnote
   # used parbox, raggedleft pushes all content to the right, reference is listed before the shortstack, shortstack is right aligned due to <br>,
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}}FOOTNOTE2 \\\\ this}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}}\\strut FOOTNOTE2 \\\\ this\\strut}}}", fixed = TRUE)
 
 
 })
@@ -302,13 +302,13 @@ test_that("latex cell alignment works - basic table with footnotes", {
   expect_length(tbl_latex, 1)
 
   ## Footnotes on col 1, row 1
-  expect_match(tbl_latex, "\\shortstack[l]{\\parbox{\\linewidth}{123  \\\\(0.1234) this is super wide. like super wide. such a wide column\\textsuperscript{\\textit{1,2}} }} ", fixed = TRUE)
+  expect_match(tbl_latex, "\\shortstack[l]{\\parbox{\\linewidth}{\\strut 123  \\\\(0.1234) this is super wide. like super wide. such a wide column\\strut\\textsuperscript{\\textit{1,2}} }} ", fixed = TRUE)
 
   ## Footnotes on col 1, row 2
   expect_match(tbl_latex, "\\textsuperscript{\\textit{3}}", fixed = TRUE)
 
   ## footnote is located within shortstack
-  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}}FOOTNOTE \\\\ this}}}", fixed = TRUE)
+  expect_match(tbl_latex, "\\parbox{\\linewidth}{\\raggedleft {\\shortstack[r]{\\textsuperscript{\\textit{1}}\\strut FOOTNOTE \\\\ this\\strut}}}", fixed = TRUE)
 
 
 })
