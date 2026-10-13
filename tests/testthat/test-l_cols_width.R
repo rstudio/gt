@@ -244,7 +244,7 @@ test_that("cols_width() works correctly in LaTeX output tables when row_group_as
   expect_length(tbl_rgac, 1)
 
   ## rowgroup column
-  expect_match(tbl_rgac, "\\\\multirow\\[t\\]\\{3\\}\\{=\\}\\{\\\\shortstack\\[l\\]\\{\\\\parbox\\{\\\\linewidth\\}\\{Group A \\\\\\\\test\\}\\}\\}")
+  expect_match(tbl_rgac, "\\\\multirow\\[t\\]\\{3\\}\\{=\\}\\{\\\\shortstack\\[l\\]\\{\\\\parbox\\{\\\\linewidth\\}\\{\\\\strut Group A \\\\\\\\test\\\\strut\\}\\}\\}")
   expect_match(tbl_rgac, "\\\\multirow\\[t\\]\\{3\\}\\{=\\}\\{Group B\\}")
 
   ## styling stub
@@ -273,7 +273,7 @@ test_that("cols_width() works correctly in LaTeX output tables when row_group_as
   expect_length(tbl_rgnac, 1)
 
   ## rowgroup column
-  expect_match(tbl_rgnac, "\\\\multicolumn\\{2\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}m\\{262.5pt\\}\\}\\{\\\\shortstack\\[l\\]\\{\\\\parbox\\{\\\\linewidth\\}\\{Group A \\\\\\\\test\\}\\}\\}")
+  expect_match(tbl_rgnac, "\\\\multicolumn\\{2\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}m\\{262.5pt\\}\\}\\{\\\\shortstack\\[l\\]\\{\\\\parbox\\{\\\\linewidth\\}\\{\\\\strut Group A \\\\\\\\test\\\\strut\\}\\}\\}")
   expect_match(tbl_rgnac, "\\\\multicolumn\\{2\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}m\\{262.5pt\\}\\}\\{\\\\parbox\\{\\\\linewidth\\}\\{Group B\\}\\}")
 
   ## styling stub
@@ -312,7 +312,7 @@ test_that("cols_width() works correctly in LaTeX output tables when row_group_as
   expect_length(tbl_rgac, 1)
 
   ## rowgroup column
-  expect_match(tbl_rgac, "\\\\multirow\\[t\\]\\{3\\}\\{=\\}\\{\\\\shortstack\\[l\\]\\{\\\\parbox\\{\\\\linewidth\\}\\{Group A \\\\\\\\test\\}\\}\\}")
+  expect_match(tbl_rgac, "\\\\multirow\\[t\\]\\{3\\}\\{=\\}\\{\\\\shortstack\\[l\\]\\{\\\\parbox\\{\\\\linewidth\\}\\{\\\\strut Group A \\\\\\\\test\\\\strut\\}\\}\\}")
   expect_match(tbl_rgac, "\\\\multirow\\[t\\]\\{3\\}\\{=\\}\\{Group B\\}")
 
   ## styling stub
@@ -342,7 +342,7 @@ test_that("cols_width() works correctly in LaTeX output tables when row_group_as
     tbl_rgnac,
     c(
       ## rowgroup column
-      "\\\\multicolumn\\{3\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}m\\{337.5pt\\}\\}\\{\\\\shortstack\\[l\\]\\{\\\\parbox\\{\\\\linewidth\\}\\{Group A \\\\\\\\test\\}\\}\\}",
+      "\\\\multicolumn\\{3\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}m\\{337.5pt\\}\\}\\{\\\\shortstack\\[l\\]\\{\\\\parbox\\{\\\\linewidth\\}\\{\\\\strut Group A \\\\\\\\test\\\\strut\\}\\}\\}",
       "\\\\multicolumn\\{3\\}\\{>\\{\\\\raggedright\\\\arraybackslash\\}m\\{337.5pt\\}\\}\\{\\\\parbox\\{\\\\linewidth\\}\\{Group B\\}\\}"
     )
   )

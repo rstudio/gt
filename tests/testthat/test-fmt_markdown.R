@@ -262,3 +262,26 @@ test_that("fmt_markdown() works correctly with factors", {
     "<span class='gt_from_md'>This is Markdown <em>text</em>.</span>"
   )
 })
+
+test_that("fmt_markdown() line breaks in LaTeX are padded with struts (#2178)", {
+
+  long_string <-
+    "GENERAL LONGER STRING/<br>TO SHOW WRAPPING/<br>ISSUES IN LATEX"
+
+  # Create a `gt_tbl` object where cells have line breaks
+  # in a fixed-width column; adjacent rows shouldn't overlap
+  # so the parbox should begin and end with a `\strut`
+  tab <-
+    dplyr::tibble(id = c("test123", "test456"), long = long_string) |>
+    gt() |>
+    fmt_markdown() |>
+    cols_width(id ~ pct(80), long ~ pct(20))
+
+  expect_equal(
+    (tab |> render_formats_test(context = "latex"))[["long"]][[1]],
+    paste0(
+      "\\shortstack[l]{\\parbox{\\linewidth}{\\strut GENERAL LONGER STRING/ ",
+      "\\\\TO SHOW WRAPPING/ \\\\ISSUES IN LATEX\\strut}}"
+    )
+  )
+})

@@ -1193,9 +1193,15 @@ markdown_to_latex <- function(text, md_engine) {
 
           if(grepl("..gt\\_linebreak\\_indicator..", x, fixed = TRUE)){
             ## if there is a linebreak, wrap the text in a shortstack, and put it into a parbox that has the width set to linewidth
+            ## struts at the start and end of the parbox ensure that its first and last lines
+            ## have full line height/depth so that text in adjacent rows doesn't overlap
             x <- paste0("\\shortstack[l]{" ,
                         parbox_wrapper(
-                          gsub("..gt\\_linebreak\\_indicator..", " \\\\", x, fixed = TRUE),
+                          paste0(
+                            "\\strut ",
+                            gsub("..gt\\_linebreak\\_indicator..", " \\\\", x, fixed = TRUE),
+                            "\\strut"
+                          ),
                           "\\linewidth"),
                         "}")
           }
