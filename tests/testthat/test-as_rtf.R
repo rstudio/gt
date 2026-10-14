@@ -108,3 +108,12 @@ test_that("table with image refs work - local only - setting image widths and he
     )
   )
 })
+
+test_that("Unformatted Date values retain their display value in RTF", {
+
+  date_table <- gt(data.frame(date = as.Date("2020-01-15")))
+  rtf <- as.character(as_rtf(date_table))
+
+  expect_match(rtf, "2020-01-15", fixed = TRUE)
+  expect_false(grepl("18276", rtf, fixed = TRUE))
+})
