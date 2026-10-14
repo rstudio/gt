@@ -1,6 +1,6 @@
 # gt (development version)
 
-* Fixed LaTeX output for unformatted `Date` columns, which now show calendar dates instead of day counts since the Unix epoch (#2177).
+* Fixed LaTeX and RTF output for unformatted `Date` columns, which now show calendar dates instead of day counts since the Unix epoch (#2177).
 * Numeric formatting functions (`fmt_number()`, `fmt_scientific()`, `fmt_engineering()`, `fmt_percent()`, `fmt_currency()`, and others) gain a `drop_leading_zero` argument. Setting this to `TRUE` removes the leading zero from values between -1 and 1 (e.g., `0.75` becomes `.75`), which is useful for displaying correlations, p-values, and other bounded statistics (#2146).
 * Fixed `cols_merge()` with `<<`/`>>` patterns producing corrupted output when data values contain `<` or `>` characters, particularly in LaTeX output (#2153).
 * Fixed `gt_split()` failing on grouped data.frames by filtering stale row group metadata after subsetting rows (#2089).
