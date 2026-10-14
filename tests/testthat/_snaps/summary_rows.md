@@ -147,7 +147,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -166,7 +166,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -185,7 +185,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -204,7 +204,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -223,7 +223,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -249,7 +249,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -268,7 +268,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -287,7 +287,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -306,7 +306,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -325,7 +325,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -1143,7 +1143,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -1162,7 +1162,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -1181,7 +1181,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -1200,7 +1200,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -1219,7 +1219,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -1302,7 +1302,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -1321,7 +1321,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -1340,7 +1340,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -1359,7 +1359,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -1378,7 +1378,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -1535,7 +1535,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -1554,7 +1554,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -1573,7 +1573,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -1592,7 +1592,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -1611,7 +1611,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -1637,7 +1637,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -1656,7 +1656,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -1675,7 +1675,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -1694,7 +1694,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -1713,7 +1713,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -1942,7 +1942,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -1961,7 +1961,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -1980,7 +1980,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -1999,7 +1999,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -2018,7 +2018,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -2101,7 +2101,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -2120,7 +2120,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -2139,7 +2139,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -2158,7 +2158,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -2177,7 +2177,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -2406,7 +2406,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -2425,7 +2425,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -2444,7 +2444,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -2463,7 +2463,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -2482,7 +2482,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -2565,7 +2565,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -2584,7 +2584,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -2603,7 +2603,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -2622,7 +2622,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -2641,7 +2641,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -2870,7 +2870,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -2889,7 +2889,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -2908,7 +2908,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -2927,7 +2927,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -2946,7 +2946,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -3029,7 +3029,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -3048,7 +3048,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -3067,7 +3067,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -3086,7 +3086,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -3105,7 +3105,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -3319,7 +3319,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -3338,7 +3338,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -3357,7 +3357,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -3376,7 +3376,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -3395,7 +3395,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -3421,7 +3421,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -3440,7 +3440,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -3459,7 +3459,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -3478,7 +3478,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -3497,7 +3497,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -3726,7 +3726,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -3745,7 +3745,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -3764,7 +3764,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -3783,7 +3783,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -3802,7 +3802,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -3885,7 +3885,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -3904,7 +3904,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -3923,7 +3923,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -3942,7 +3942,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -3961,7 +3961,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -4190,7 +4190,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -4209,7 +4209,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -4228,7 +4228,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -4247,7 +4247,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -4266,7 +4266,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -4349,7 +4349,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -4368,7 +4368,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -4387,7 +4387,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -4406,7 +4406,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -4425,7 +4425,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -4654,7 +4654,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -4673,7 +4673,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -4692,7 +4692,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -4711,7 +4711,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -4730,7 +4730,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -4813,7 +4813,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -4832,7 +4832,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -4851,7 +4851,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -4870,7 +4870,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -4889,7 +4889,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -5118,7 +5118,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -5137,7 +5137,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -5156,7 +5156,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -5175,7 +5175,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -5194,7 +5194,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -5277,7 +5277,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -5296,7 +5296,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -5315,7 +5315,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -5334,7 +5334,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -5353,7 +5353,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -5582,7 +5582,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -5601,7 +5601,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -5620,7 +5620,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -5639,7 +5639,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -5658,7 +5658,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -5741,7 +5741,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -5760,7 +5760,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -5779,7 +5779,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -5798,7 +5798,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -5817,7 +5817,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -6046,7 +6046,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -6065,7 +6065,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -6084,7 +6084,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -6103,7 +6103,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -6122,7 +6122,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -6205,7 +6205,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -6224,7 +6224,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -6243,7 +6243,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -6262,7 +6262,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -6281,7 +6281,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -6510,7 +6510,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -6529,7 +6529,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -6548,7 +6548,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -6567,7 +6567,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -6586,7 +6586,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -6669,7 +6669,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -6688,7 +6688,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -6707,7 +6707,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -6726,7 +6726,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -6745,7 +6745,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
