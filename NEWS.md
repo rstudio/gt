@@ -12,9 +12,9 @@
 
 * Tables with no data rows now display a locale-appropriate message (e.g., `"Table has no data"`) in the body area for both HTML and LaTeX output. The message can be customized via `tab_options(table.no_data_message = "...")` or suppressed by setting it to `""` (#1881).
 
-## Breaking changes
+## Upcoming changes
 
-* gt no longer re-exports `%>%`. You may either switch to the base pipe (`|>`) or call `library(magrittr)`. gt also no longer re-exports the deprecated `dplyr::vars()` and `tidyselect::one_of()` functions. (@olivroy, #2150)
+* gt's internals and documentation now use the base pipe (`|>`) throughout. gt still re-exports `%>%`, `dplyr::vars()`, and `tidyselect::one_of()`, but these re-exports will be removed in a future release. Packages relying on them should import them directly from magrittr, dplyr, or tidyselect. (@olivroy, #2150)
 
 ## Minor improvements and bug fixes
 
