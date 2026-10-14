@@ -104,7 +104,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \n\\midrule \naverage & 2027.83099 & — & — & — \\\\ \ntotal & 20278.30990 & — & — & — \\\\ \nstd dev & 22.14929 & — & — & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \n\\midrule \naverage & 2027.83099 & — & — & — \\\\ \ntotal & 20278.30990 & — & — & — \\\\ \nstd dev & 22.14929 & — & — & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -147,7 +147,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -166,7 +166,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -185,7 +185,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -204,7 +204,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -223,7 +223,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -249,7 +249,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -268,7 +268,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -287,7 +287,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -306,7 +306,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -325,7 +325,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -496,7 +496,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nmin & 2005.55 & 2029.61 & 1992.44 & 2002.61 \\\\ \nmax & 2063.45 & 2064.43 & 2038.33 & 2062.14 \\\\ \navg & 2035.24 & 2048.56 & 2016.85 & 2031.21 \\\\ \n\\midrule \n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nmin & 2005.55 & 2029.61 & 1992.44 & 2002.61 \\\\ \nmax & 2063.45 & 2064.43 & 2038.33 & 2062.14 \\\\ \navg & 2035.24 & 2048.56 & 2016.85 & 2031.21 \\\\ \n\\midrule \n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -589,7 +589,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|l|rrrr}\n\\toprule\n\\multicolumn{2}{c}{} & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{8}{*}{W02} & \\multicolumn{1}{l|}{min} & 2005.55 & 2029.61 & 1992.44 & 2002.61 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 2063.45 & 2064.43 & 2038.33 & 2062.14 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 2035.24 & 2048.56 & 2016.85 & 2031.21 \\\\ \n\\cmidrule(l{-0.05em}r){2-6}\n & 16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n & 16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n & 16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n & 16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n & 16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{5}{*}{W03} & 16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n & 16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n & 16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n & 16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n & 16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|l|rrrr}\n\\toprule\n\\multicolumn{2}{c}{} & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{8}{*}{W02} & \\multicolumn{1}{l|}{min} & 2005.55 & 2029.61 & 1992.44 & 2002.61 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 2063.45 & 2064.43 & 2038.33 & 2062.14 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 2035.24 & 2048.56 & 2016.85 & 2031.21 \\\\ \n\\cmidrule(l{-0.05em}r){2-6}\n & 2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n & 2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n & 2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n & 2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n & 2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{5}{*}{W03} & 2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n & 2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n & 2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n & 2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n & 2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -702,7 +702,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nmin & 2005.55 & 2029.61 & 1992.44 & 2002.61 \\\\ \nmax & 2063.45 & 2064.43 & 2038.33 & 2062.14 \\\\ \navg & 2035.24 & 2048.56 & 2016.85 & 2031.21 \\\\ \n\\midrule \n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \nmin & 1992.25 & 2018.40 & 1988.12 & 1992.67 \\\\ \nmax & 2046.13 & 2056.93 & 2022.58 & 2028.26 \\\\ \navg & 2020.42 & 2033.29 & 1999.77 & 2014.93 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\nmin & 2005.55 & 2029.61 & 1992.44 & 2002.61 \\\\ \nmax & 2063.45 & 2064.43 & 2038.33 & 2062.14 \\\\ \navg & 2035.24 & 2048.56 & 2016.85 & 2031.21 \\\\ \n\\midrule \n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \nmin & 1992.25 & 2018.40 & 1988.12 & 1992.67 \\\\ \nmax & 2046.13 & 2056.93 & 2022.58 & 2028.26 \\\\ \navg & 2020.42 & 2033.29 & 1999.77 & 2014.93 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -810,7 +810,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|l|rrrr}\n\\toprule\n\\multicolumn{2}{c}{} & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{8}{*}{W02} & \\multicolumn{1}{l|}{min} & 2005.55 & 2029.61 & 1992.44 & 2002.61 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 2063.45 & 2064.43 & 2038.33 & 2062.14 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 2035.24 & 2048.56 & 2016.85 & 2031.21 \\\\ \n\\cmidrule(l{-0.05em}r){2-6}\n & 16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n & 16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n & 16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n & 16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n & 16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{8}{*}{W03} & 16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n & 16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n & 16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n & 16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n & 16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\cmidrule(l{-0.05em}r){2-6}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 1992.25 & 2018.40 & 1988.12 & 1992.67 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 2046.13 & 2056.93 & 2022.58 & 2028.26 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 2020.42 & 2033.29 & 1999.77 & 2014.93 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|l|rrrr}\n\\toprule\n\\multicolumn{2}{c}{} & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{8}{*}{W02} & \\multicolumn{1}{l|}{min} & 2005.55 & 2029.61 & 1992.44 & 2002.61 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 2063.45 & 2064.43 & 2038.33 & 2062.14 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 2035.24 & 2048.56 & 2016.85 & 2031.21 \\\\ \n\\cmidrule(l{-0.05em}r){2-6}\n & 2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n & 2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n & 2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n & 2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n & 2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{8}{*}{W03} & 2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n & 2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n & 2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n & 2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n & 2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\cmidrule(l{-0.05em}r){2-6}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 1992.25 & 2018.40 & 1988.12 & 1992.67 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 2046.13 & 2056.93 & 2022.58 & 2028.26 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 2020.42 & 2033.29 & 1999.77 & 2014.93 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 # Grand summary rows can be added to the top of a table
 
@@ -908,7 +908,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\nmin & 1992.25 & 2018.40 & 1988.12 & 1992.67 \\\\ \nmax & 2063.45 & 2064.43 & 2038.33 & 2062.14 \\\\ \navg & 2027.83 & 2040.92 & 2008.31 & 2023.07 \\\\ \n\\midrule \n\\midrule \n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\nmin & 1992.25 & 2018.40 & 1988.12 & 1992.67 \\\\ \nmax & 2063.45 & 2064.43 & 2038.33 & 2062.14 \\\\ \navg & 2027.83 & 2040.92 & 2008.31 & 2023.07 \\\\ \n\\midrule \n\\midrule \n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -1002,7 +1002,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|l|rrrr}\n\\toprule\n\\multicolumn{2}{c}{} & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 1992.25 & 2018.40 & 1988.12 & 1992.67 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 2063.45 & 2064.43 & 2038.33 & 2062.14 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 2027.83 & 2040.92 & 2008.31 & 2023.07 \\\\ \n\\midrule \n\\midrule \n\\multirow[t]{5}{*}{W02} & 16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n & 16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n & 16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n & 16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n & 16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{5}{*}{W03} & 16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n & 16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n & 16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n & 16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n & 16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|l|rrrr}\n\\toprule\n\\multicolumn{2}{c}{} & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{min} & 1992.25 & 2018.40 & 1988.12 & 1992.67 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{max} & 2063.45 & 2064.43 & 2038.33 & 2062.14 \\\\ \n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{avg} & 2027.83 & 2040.92 & 2008.31 & 2023.07 \\\\ \n\\midrule \n\\midrule \n\\multirow[t]{5}{*}{W02} & 2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n & 2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n & 2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n & 2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n & 2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multirow[t]{5}{*}{W03} & 2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n & 2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n & 2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n & 2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n & 2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 # Labels can be intrepreted from Markdown using `md()`
 
@@ -1100,7 +1100,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \n\\textbf{Average} & 2035.23998 & 2048.56198 & 2016.8540 & 2031.2080 \\\\ \nSum & 10176.19990 & 10242.80990 & 10084.2699 & 10156.0400 \\\\ \n\\emph{S.D.} & 23.65756 & 17.47612 & 18.5372 & 22.9171 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \n\\textbf{Average} & 2035.23998 & 2048.56198 & 2016.8540 & 2031.2080 \\\\ \nSum & 10176.19990 & 10242.80990 & 10084.2699 & 10156.0400 \\\\ \n\\emph{S.D.} & 23.65756 & 17.47612 & 18.5372 & 22.9171 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -1143,7 +1143,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -1162,7 +1162,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -1181,7 +1181,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -1200,7 +1200,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -1219,7 +1219,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -1302,7 +1302,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -1321,7 +1321,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -1340,7 +1340,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -1359,7 +1359,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -1378,7 +1378,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -1492,7 +1492,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \n\\midrule \n\\textbf{Average} & 2027.83099 & 2040.92498 & 2008.31298 & 2023.06900 \\\\ \nSum & 20278.30990 & 20409.24980 & 20083.12980 & 20230.69000 \\\\ \n\\emph{S.D.} & 22.14929 & 18.70516 & 18.34602 & 19.82022 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \n\\midrule \n\\textbf{Average} & 2027.83099 & 2040.92498 & 2008.31298 & 2023.06900 \\\\ \nSum & 20278.30990 & 20409.24980 & 20083.12980 & 20230.69000 \\\\ \n\\emph{S.D.} & 22.14929 & 18.70516 & 18.34602 & 19.82022 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -1535,7 +1535,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -1554,7 +1554,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -1573,7 +1573,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -1592,7 +1592,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -1611,7 +1611,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -1637,7 +1637,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -1656,7 +1656,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -1675,7 +1675,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -1694,7 +1694,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -1713,7 +1713,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -1899,7 +1899,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & 2,035.240 & 2,048.562 & 2,016.854 & 2,031.208 \\\\ \ntotal & 10,176.200 & 10,242.810 & 10,084.270 & 10,156.040 \\\\ \nstd dev & 23.658 & 17.476 & 18.537 & 22.917 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & 2020.42200 & 2033.28798 & 1999.77198 & 2014.9300 \\\\ \ntotal & 10102.11000 & 10166.43990 & 9998.85990 & 10074.6500 \\\\ \nstd dev & 20.17218 & 18.33064 & 15.20847 & 13.8957 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & 2,035.240 & 2,048.562 & 2,016.854 & 2,031.208 \\\\ \ntotal & 10,176.200 & 10,242.810 & 10,084.270 & 10,156.040 \\\\ \nstd dev & 23.658 & 17.476 & 18.537 & 22.917 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & 2020.42200 & 2033.28798 & 1999.77198 & 2014.9300 \\\\ \ntotal & 10102.11000 & 10166.43990 & 9998.85990 & 10074.6500 \\\\ \nstd dev & 20.17218 & 18.33064 & 15.20847 & 13.8957 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -1942,7 +1942,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -1961,7 +1961,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -1980,7 +1980,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -1999,7 +1999,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -2018,7 +2018,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -2101,7 +2101,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -2120,7 +2120,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -2139,7 +2139,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -2158,7 +2158,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -2177,7 +2177,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -2363,7 +2363,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & 2,035.240 & 2,048.562 & 2,016.854 & 2,031.208 \\\\ \ntotal & 10,176.200 & 10,242.810 & 10,084.270 & 10,156.040 \\\\ \nstd dev & 23.658 & 17.476 & 18.537 & 22.917 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & \\$2,020.42 & \\$2,033.29 & \\$1,999.77 & \\$2,014.93 \\\\ \ntotal & \\$10,102.11 & \\$10,166.44 & \\$9,998.86 & \\$10,074.65 \\\\ \nstd dev & \\$20.17 & \\$18.33 & \\$15.21 & \\$13.90 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & 2,035.240 & 2,048.562 & 2,016.854 & 2,031.208 \\\\ \ntotal & 10,176.200 & 10,242.810 & 10,084.270 & 10,156.040 \\\\ \nstd dev & 23.658 & 17.476 & 18.537 & 22.917 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & \\$2,020.42 & \\$2,033.29 & \\$1,999.77 & \\$2,014.93 \\\\ \ntotal & \\$10,102.11 & \\$10,166.44 & \\$9,998.86 & \\$10,074.65 \\\\ \nstd dev & \\$20.17 & \\$18.33 & \\$15.21 & \\$13.90 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -2406,7 +2406,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -2425,7 +2425,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -2444,7 +2444,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -2463,7 +2463,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -2482,7 +2482,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -2565,7 +2565,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -2584,7 +2584,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -2603,7 +2603,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -2622,7 +2622,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -2641,7 +2641,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -2827,7 +2827,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & \\$2,035.24 & \\$2,048.56 & \\$2,016.85 & \\$2,031.21 \\\\ \ntotal & \\$10,176.20 & \\$10,242.81 & \\$10,084.27 & \\$10,156.04 \\\\ \nstd dev & \\$23.66 & \\$17.48 & \\$18.54 & \\$22.92 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & \\$2,020.42 & \\$2,033.29 & \\$1,999.77 & \\$2,014.93 \\\\ \ntotal & \\$10,102.11 & \\$10,166.44 & \\$9,998.86 & \\$10,074.65 \\\\ \nstd dev & \\$20.17 & \\$18.33 & \\$15.21 & \\$13.90 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & \\$2,035.24 & \\$2,048.56 & \\$2,016.85 & \\$2,031.21 \\\\ \ntotal & \\$10,176.20 & \\$10,242.81 & \\$10,084.27 & \\$10,156.04 \\\\ \nstd dev & \\$23.66 & \\$17.48 & \\$18.54 & \\$22.92 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & \\$2,020.42 & \\$2,033.29 & \\$1,999.77 & \\$2,014.93 \\\\ \ntotal & \\$10,102.11 & \\$10,166.44 & \\$9,998.86 & \\$10,074.65 \\\\ \nstd dev & \\$20.17 & \\$18.33 & \\$15.21 & \\$13.90 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -2870,7 +2870,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -2889,7 +2889,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -2908,7 +2908,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -2927,7 +2927,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -2946,7 +2946,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -3029,7 +3029,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -3048,7 +3048,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -3067,7 +3067,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -3086,7 +3086,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -3105,7 +3105,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -3276,7 +3276,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \n\\midrule \naverage & 2,027.831 & 2,040.925 & 2,008.313 & 2,023.069 \\\\ \ntotal & 20,278.310 & 20,409.250 & 20,083.130 & 20,230.690 \\\\ \nstd dev & 22.149 & 18.705 & 18.346 & 19.820 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \n\\midrule \naverage & 2,027.831 & 2,040.925 & 2,008.313 & 2,023.069 \\\\ \ntotal & 20,278.310 & 20,409.250 & 20,083.130 & 20,230.690 \\\\ \nstd dev & 22.149 & 18.705 & 18.346 & 19.820 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -3319,7 +3319,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -3338,7 +3338,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -3357,7 +3357,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -3376,7 +3376,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -3395,7 +3395,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -3421,7 +3421,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -3440,7 +3440,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -3459,7 +3459,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -3478,7 +3478,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -3497,7 +3497,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -3683,7 +3683,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & <2,035.24> & <2,048.56> & 2016.85398 & 2031.2080 \\\\ \ntotal & <10,176.20> & <10,242.81> & 10084.26990 & 10156.0400 \\\\ \nstd dev & <23.66> & <17.48> & 18.53720 & 22.9171 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & <2,020.42> & <2,033.29> & 1999.77198 & 2014.9300 \\\\ \ntotal & <10,102.11> & <10,166.44> & 9998.85990 & 10074.6500 \\\\ \nstd dev & <20.17> & <18.33> & 15.20847 & 13.8957 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & <2,035.24> & <2,048.56> & 2016.85398 & 2031.2080 \\\\ \ntotal & <10,176.20> & <10,242.81> & 10084.26990 & 10156.0400 \\\\ \nstd dev & <23.66> & <17.48> & 18.53720 & 22.9171 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & <2,020.42> & <2,033.29> & 1999.77198 & 2014.9300 \\\\ \ntotal & <10,102.11> & <10,166.44> & 9998.85990 & 10074.6500 \\\\ \nstd dev & <20.17> & <18.33> & 15.20847 & 13.8957 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -3726,7 +3726,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -3745,7 +3745,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -3764,7 +3764,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -3783,7 +3783,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -3802,7 +3802,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -3885,7 +3885,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -3904,7 +3904,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -3923,7 +3923,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -3942,7 +3942,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -3961,7 +3961,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -4147,7 +4147,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & <2,035.24> & <2,048.56> & [2,016.85] & [2,031.21] \\\\ \ntotal & <10,176.20> & <10,242.81> & [10,084.27] & [10,156.04] \\\\ \nstd dev & <23.66> & <17.48> & [18.54] & [22.92] \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & <2,020.42> & <2,033.29> & [1,999.77] & [2,014.93] \\\\ \ntotal & <10,102.11> & <10,166.44> & [9,998.86] & [10,074.65] \\\\ \nstd dev & <20.17> & <18.33> & [15.21] & [13.90] \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & <2,035.24> & <2,048.56> & [2,016.85] & [2,031.21] \\\\ \ntotal & <10,176.20> & <10,242.81> & [10,084.27] & [10,156.04] \\\\ \nstd dev & <23.66> & <17.48> & [18.54] & [22.92] \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & <2,020.42> & <2,033.29> & [1,999.77] & [2,014.93] \\\\ \ntotal & <10,102.11> & <10,166.44> & [9,998.86] & [10,074.65] \\\\ \nstd dev & <20.17> & <18.33> & [15.21] & [13.90] \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -4190,7 +4190,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -4209,7 +4209,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -4228,7 +4228,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -4247,7 +4247,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -4266,7 +4266,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -4349,7 +4349,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -4368,7 +4368,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -4387,7 +4387,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -4406,7 +4406,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -4425,7 +4425,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -4611,7 +4611,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & <2,035.24> & <2,048.56> & 2016.85398 & 2031.2080 \\\\ \ntotal & 10176.19990 & 10242.80990 & [10,084.27] & [10,156.04] \\\\ \nstd dev & 23.65756 & 17.47612 & 18.53720 & 22.9171 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & <2,020.42> & <2,033.29> & 1999.77198 & 2014.9300 \\\\ \ntotal & 10102.11000 & 10166.43990 & [9,998.86] & [10,074.65] \\\\ \nstd dev & 20.17218 & 18.33064 & 15.20847 & 13.8957 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & <2,035.24> & <2,048.56> & 2016.85398 & 2031.2080 \\\\ \ntotal & 10176.19990 & 10242.80990 & [10,084.27] & [10,156.04] \\\\ \nstd dev & 23.65756 & 17.47612 & 18.53720 & 22.9171 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & <2,020.42> & <2,033.29> & 1999.77198 & 2014.9300 \\\\ \ntotal & 10102.11000 & 10166.43990 & [9,998.86] & [10,074.65] \\\\ \nstd dev & 20.17218 & 18.33064 & 15.20847 & 13.8957 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -4654,7 +4654,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -4673,7 +4673,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -4692,7 +4692,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -4711,7 +4711,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -4730,7 +4730,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -4813,7 +4813,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -4832,7 +4832,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -4851,7 +4851,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -4870,7 +4870,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -4889,7 +4889,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -5075,7 +5075,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & 2035.23998 & 2048.56198 & 2016.85398 & 2031.2080 \\\\ \ntotal & 10176.19990 & 10242.80990 & 10084.26990 & 10156.0400 \\\\ \nstd dev & 23.65756 & 17.47612 & 18.53720 & 22.9171 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & <2,020.42> & 2033.28798 & 1999.77198 & 2014.9300 \\\\ \ntotal & 10102.11000 & 10166.43990 & 9998.85990 & 10074.6500 \\\\ \nstd dev & 20.17218 & 18.33064 & 15.20847 & 13.8957 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & 2035.23998 & 2048.56198 & 2016.85398 & 2031.2080 \\\\ \ntotal & 10176.19990 & 10242.80990 & 10084.26990 & 10156.0400 \\\\ \nstd dev & 23.65756 & 17.47612 & 18.53720 & 22.9171 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & <2,020.42> & 2033.28798 & 1999.77198 & 2014.9300 \\\\ \ntotal & 10102.11000 & 10166.43990 & 9998.85990 & 10074.6500 \\\\ \nstd dev & 20.17218 & 18.33064 & 15.20847 & 13.8957 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -5118,7 +5118,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -5137,7 +5137,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -5156,7 +5156,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -5175,7 +5175,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -5194,7 +5194,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -5277,7 +5277,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -5296,7 +5296,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -5315,7 +5315,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -5334,7 +5334,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -5353,7 +5353,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -5539,7 +5539,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & 2035.23998 & 2048.56198 & 2016.85398 & 2031.2080 \\\\ \ntotal & 10176.19990 & 10242.80990 & 10084.26990 & 10156.0400 \\\\ \nstd dev & 23.65756 & 17.47612 & 18.53720 & 22.9171 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & <2,020.42> & 2033.28798 & 1999.77198 & 2014.9300 \\\\ \ntotal & <10,102.11> & 10166.43990 & 9998.85990 & 10074.6500 \\\\ \nstd dev & 20.17218 & 18.33064 & 15.20847 & 13.8957 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & 2035.23998 & 2048.56198 & 2016.85398 & 2031.2080 \\\\ \ntotal & 10176.19990 & 10242.80990 & 10084.26990 & 10156.0400 \\\\ \nstd dev & 23.65756 & 17.47612 & 18.53720 & 22.9171 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & <2,020.42> & 2033.28798 & 1999.77198 & 2014.9300 \\\\ \ntotal & <10,102.11> & 10166.43990 & 9998.85990 & 10074.6500 \\\\ \nstd dev & 20.17218 & 18.33064 & 15.20847 & 13.8957 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -5582,7 +5582,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -5601,7 +5601,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -5620,7 +5620,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -5639,7 +5639,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -5658,7 +5658,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -5741,7 +5741,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -5760,7 +5760,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -5779,7 +5779,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -5798,7 +5798,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -5817,7 +5817,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -6003,7 +6003,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & 2035.23998 & 2048.56198 & 2016.85398 & 2031.2080 \\\\ \ntotal & 10176.19990 & 10242.80990 & 10084.26990 & 10156.0400 \\\\ \nstd dev & 23.65756 & 17.47612 & 18.53720 & 22.9171 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & <2,020.42> & 2033.28798 & 1999.77198 & 2014.9300 \\\\ \ntotal & <10,102.11> & 10166.43990 & 9998.85990 & 10074.6500 \\\\ \nstd dev & <20.17> & 18.33064 & 15.20847 & 13.8957 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & 2035.23998 & 2048.56198 & 2016.85398 & 2031.2080 \\\\ \ntotal & 10176.19990 & 10242.80990 & 10084.26990 & 10156.0400 \\\\ \nstd dev & 23.65756 & 17.47612 & 18.53720 & 22.9171 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & <2,020.42> & 2033.28798 & 1999.77198 & 2014.9300 \\\\ \ntotal & <10,102.11> & 10166.43990 & 9998.85990 & 10074.6500 \\\\ \nstd dev & <20.17> & 18.33064 & 15.20847 & 13.8957 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -6046,7 +6046,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -6065,7 +6065,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -6084,7 +6084,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -6103,7 +6103,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -6122,7 +6122,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -6205,7 +6205,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -6224,7 +6224,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -6243,7 +6243,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -6262,7 +6262,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -6281,7 +6281,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
@@ -6467,7 +6467,7 @@
     Code
       as.character(as_latex(gt_tbl))
     Output
-      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & 2035.23998 & 2048.56198 & 2016.85398 & 2031.2080 \\\\ \ntotal & 10176.19990 & 10242.80990 & 10084.26990 & 10156.0400 \\\\ \nstd dev & 23.65756 & 17.47612 & 18.53720 & 22.9171 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & <2,020.42> & 2033.28798 & 1999.77198 & <2,014.93> \\\\ \ntotal & <10,102.11> & 10166.43990 & 9998.85990 & <10,074.65> \\\\ \nstd dev & <20.17> & 18.33064 & 15.20847 & <13.90> \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
+      [1] "\\begingroup\n\\fontsize{12.0pt}{14.0pt}\\selectfont\n\\begin{longtable}{l|rrrr}\n\\toprule\n & open & high & low & close \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W02} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-05 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n2015-01-06 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n2015-01-07 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n2015-01-08 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n2015-01-09 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & 2035.23998 & 2048.56198 & 2016.85398 & 2031.2080 \\\\ \ntotal & 10176.19990 & 10242.80990 & 10084.26990 & 10156.0400 \\\\ \nstd dev & 23.65756 & 17.47612 & 18.53720 & 22.9171 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{5}{l}{W03} \\\\[2.5pt] \n\\midrule\\addlinespace[2.5pt]\n2015-01-12 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n2015-01-13 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n2015-01-14 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n2015-01-15 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n2015-01-16 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & <2,020.42> & 2033.28798 & 1999.77198 & <2,014.93> \\\\ \ntotal & <10,102.11> & 10166.43990 & 9998.85990 & <10,074.65> \\\\ \nstd dev & <20.17> & 18.33064 & 15.20847 & <13.90> \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
 ---
 
@@ -6510,7 +6510,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16440}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-05}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2054.44}}\cell
@@ -6529,7 +6529,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16441}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-06}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2022.15}}\cell
@@ -6548,7 +6548,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16442}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-07}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2005.55}}\cell
@@ -6567,7 +6567,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16443}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-08}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2030.61}}\cell
@@ -6586,7 +6586,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16444}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-09}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2063.45}}\cell
@@ -6669,7 +6669,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16447}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-12}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2046.13}}\cell
@@ -6688,7 +6688,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16448}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-13}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2031.58}}\cell
@@ -6707,7 +6707,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16449}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-14}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2018.40}}\cell
@@ -6726,7 +6726,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16450}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 2013.75}}\cell
@@ -6745,7 +6745,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
-      \intbl {\f0 {\f0\fs20 16451}}\cell
+      \intbl {\f0 {\f0\fs20 2015-01-16}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
       \intbl {\f0 {\f0\fs20 1992.25}}\cell
