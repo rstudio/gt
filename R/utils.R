@@ -959,7 +959,7 @@ process_text <- function(text, context = "html") {
 
     } else {
 
-      text <- escape_latex(text = text)
+      text <- escape_latex(text = as.character(text))
 
       return(text)
     }

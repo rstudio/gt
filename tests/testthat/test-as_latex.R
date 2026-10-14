@@ -33,6 +33,15 @@ test_that("Table width correctly output in LaTeX using longtable", {
   )
 })
 
+test_that("Unformatted Date values retain their display value in LaTeX", {
+
+  date_table <- gt(data.frame(date = as.Date("2020-01-15")))
+  latex <- as.character(as_latex(date_table))
+
+  expect_match(latex, "2020-01-15", fixed = TRUE)
+  expect_false(grepl("18276", latex, fixed = TRUE))
+})
+
 test_that("Table width correctly output in LaTeX using tabular*", {
 
   gt_latex_width_1 <-
