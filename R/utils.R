@@ -979,7 +979,7 @@ process_text <- function(text, context = "html") {
 
     } else {
 
-      text <- escape_rtf(text)
+      text <- escape_rtf(as.character(text))
 
       return(text)
     }
