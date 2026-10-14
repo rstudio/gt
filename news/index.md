@@ -2,6 +2,9 @@
 
 ## gt (development version)
 
+- Fixed LaTeX and RTF output for unformatted `Date` columns, which now
+  show calendar dates instead of day counts since the Unix epoch
+  ([\#2177](https://github.com/rstudio/gt/issues/2177)).
 - Numeric formatting functions
   ([`fmt_number()`](https://gt.rstudio.com/reference/fmt_number.md),
   [`fmt_scientific()`](https://gt.rstudio.com/reference/fmt_scientific.md),
