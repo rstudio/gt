@@ -1,10 +1,21 @@
 # Changelog
 
-## gt (development version)
+## gt 1.4.0
 
-- Fixed LaTeX and RTF output for unformatted `Date` columns, which now
-  show calendar dates instead of day counts since the Unix epoch
-  ([\#2177](https://github.com/rstudio/gt/issues/2177)).
+CRAN release: 2026-10-15
+
+### New features
+
+- The new [`rows_hide()`](https://gt.rstudio.com/reference/rows_hide.md)
+  and [`rows_unhide()`](https://gt.rstudio.com/reference/rows_unhide.md)
+  functions control row visibility, mirroring
+  [`cols_hide()`](https://gt.rstudio.com/reference/cols_hide.md) and
+  [`cols_unhide()`](https://gt.rstudio.com/reference/cols_unhide.md).
+  Hidden rows are excluded from the rendered table but can still be
+  targeted in `rows` expressions, and summary rows are calculated from
+  the visible rows only.
+  ([\#2127](https://github.com/rstudio/gt/issues/2127))
+
 - Numeric formatting functions
   ([`fmt_number()`](https://gt.rstudio.com/reference/fmt_number.md),
   [`fmt_scientific()`](https://gt.rstudio.com/reference/fmt_scientific.md),
@@ -16,18 +27,71 @@
   `0.75` becomes `.75`), which is useful for displaying correlations,
   p-values, and other bounded statistics
   ([\#2146](https://github.com/rstudio/gt/issues/2146)).
+  ([\#2155](https://github.com/rstudio/gt/issues/2155))
+
+- Tables can now be saved as PowerPoint files with
+  [`gtsave()`](https://gt.rstudio.com/reference/gtsave.md) by using the
+  `.pptx` file extension. This is powered by a new OOXML rendering
+  engine that aims to unify Word and PowerPoint output
+  ([\#97](https://github.com/rstudio/gt/issues/97)).
+  ([@thebioengineer](https://github.com/thebioengineer),
+  [@romainfrancois](https://github.com/romainfrancois),
+  [\#2158](https://github.com/rstudio/gt/issues/2158))
+
+- [`gt_group()`](https://gt.rstudio.com/reference/gt_group.md) can now
+  combine `gt_group` objects with `gt_tbl` objects
+  ([\#2128](https://github.com/rstudio/gt/issues/2128)).
+  ([@shannonhaughton](https://github.com/shannonhaughton),
+  [\#2129](https://github.com/rstudio/gt/issues/2129))
+
+- Tables with no data rows now display a locale-appropriate message
+  (e.g., `"Table has no data"`) in the body area for both HTML and LaTeX
+  output. The message can be customized via
+  `tab_options(table.no_data_message = "...")` or suppressed by setting
+  it to `""` ([\#1881](https://github.com/rstudio/gt/issues/1881)).
+
+### Upcoming changes
+
+- gt’s internals and documentation now use the base pipe (`|>`)
+  throughout. gt still re-exports `%>%`,
+  [`dplyr::vars()`](https://dplyr.tidyverse.org/reference/vars.html),
+  and
+  [`tidyselect::one_of()`](https://tidyselect.r-lib.org/reference/one_of.html),
+  but these re-exports will be removed in a future release. Packages
+  relying on them should import them directly from magrittr, dplyr, or
+  tidyselect. ([@olivroy](https://github.com/olivroy),
+  [\#2150](https://github.com/rstudio/gt/issues/2150))
+
+### Minor improvements and bug fixes
+
+- Fixed LaTeX and RTF output for unformatted `Date` columns, which now
+  show calendar dates instead of day counts since the Unix epoch
+  ([\#2177](https://github.com/rstudio/gt/issues/2177)).
+  ([@LeonidasZhak](https://github.com/LeonidasZhak),
+  [\#2180](https://github.com/rstudio/gt/issues/2180))
+
+- Rows in LaTeX output tables no longer overlap when cell text contains
+  line breaks ([\#2178](https://github.com/rstudio/gt/issues/2178)).
+  ([\#2179](https://github.com/rstudio/gt/issues/2179))
+
 - Fixed [`cols_merge()`](https://gt.rstudio.com/reference/cols_merge.md)
   with `<<`/`>>` patterns producing corrupted output when data values
   contain `<` or `>` characters, particularly in LaTeX output
   ([\#2153](https://github.com/rstudio/gt/issues/2153)).
+  ([\#2156](https://github.com/rstudio/gt/issues/2156))
+
 - Fixed [`gt_split()`](https://gt.rstudio.com/reference/gt_split.md)
-  failing on grouped data.frames by filtering stale row group metadata
+  failing on grouped data frames by filtering stale row group metadata
   after subsetting rows
   ([\#2089](https://github.com/rstudio/gt/issues/2089)).
+  ([\#2157](https://github.com/rstudio/gt/issues/2157))
+
 - Fixed [`md()`](https://gt.rstudio.com/reference/md.md) in a column
   label causing the column to expand to full page width (`\linewidth`)
   in LaTeX/PDF output when no explicit column width is set
   ([\#2124](https://github.com/rstudio/gt/issues/2124)).
+  ([\#2162](https://github.com/rstudio/gt/issues/2162))
+
 - Fixed
   [`text_transform()`](https://gt.rstudio.com/reference/text_transform.md)
   passing HTML-escaped text (e.g., `&amp;`) to the user-supplied
@@ -35,43 +99,101 @@
   [`stringr::str_to_title()`](https://stringr.tidyverse.org/reference/case.html)
   now receive and transform plain text as expected
   ([\#2033](https://github.com/rstudio/gt/issues/2033)).
+  ([\#2163](https://github.com/rstudio/gt/issues/2163))
+
 - Fixed
   [`text_replace()`](https://gt.rstudio.com/reference/text_replace.md)
   failing to match patterns containing LaTeX special characters (e.g.,
   underscores) in LaTeX/PDF output. The same plain-text pattern now
   works consistently in both HTML and LaTeX
   ([\#1592](https://github.com/rstudio/gt/issues/1592)).
-- Tables with no data rows now display a locale-appropriate message
-  (e.g., `"Table has no data"`) in the body area for both HTML and LaTeX
-  output. The message can be customized via
-  `tab_options(table.no_data_message = "...")` or suppressed by setting
-  it to `""` ([\#1881](https://github.com/rstudio/gt/issues/1881)).
+  ([\#2165](https://github.com/rstudio/gt/issues/2165))
+
+- Styles applied with
+  [`tab_style()`](https://gt.rstudio.com/reference/tab_style.md) to
+  [`cells_column_spanners()`](https://gt.rstudio.com/reference/cells_column_spanners.md)
+  are no longer dropped when
+  [`tab_style()`](https://gt.rstudio.com/reference/tab_style.md) is
+  called before
+  [`tab_spanner()`](https://gt.rstudio.com/reference/tab_spanner.md)
+  ([\#1438](https://github.com/rstudio/gt/issues/1438)).
+  ([\#2174](https://github.com/rstudio/gt/issues/2174))
+
+- The `headers` attributes on `<td>` elements in HTML output tables now
+  match the `id` attributes of their column headings when column names
+  contain spaces, improving accessibility
+  ([\#2085](https://github.com/rstudio/gt/issues/2085)).
+  ([\#2173](https://github.com/rstudio/gt/issues/2173))
+
+- The vertical alignment of the row group column (with
+  `row_group_as_column = TRUE`) can now be set with
+  [`tab_style()`](https://gt.rstudio.com/reference/tab_style.md) through
+  body cell styles.
+  ([\#2176](https://github.com/rstudio/gt/issues/2176))
+
+- Fixed cell misalignment when using `summary_rows(side = "top")` with
+  `row_group.as_column = TRUE` and no stub column
+  ([\#1561](https://github.com/rstudio/gt/issues/1561)).
+  ([\#2175](https://github.com/rstudio/gt/issues/2175))
+
+- Styling can now be applied to summary rows in LaTeX output tables
+  without error ([\#2117](https://github.com/rstudio/gt/issues/2117)).
+  ([@thebioengineer](https://github.com/thebioengineer),
+  [\#2123](https://github.com/rstudio/gt/issues/2123))
+
 - Fixed multi-column stub rowspans incorrectly crossing row-group
   boundaries when adjacent groups share the same stub value, which
   caused group labels to appear in the wrong rows
   ([\#2121](https://github.com/rstudio/gt/issues/2121)).
-- Update RTF handling of stub columns and spans to handle multicolumn
-  stubs ([\#2118](https://github.com/rstudio/gt/issues/2118))
-- Expand functionality of
-  [`gt_group()`](https://gt.rstudio.com/reference/gt_group.md) to allow
-  `gt_group` objects to be combined with `gt_tbls`
-  ([\#2128](https://github.com/rstudio/gt/issues/2128))
-- gt no longer exports `%>%`. You may either switch to the base pipe or
-  call [`library(magrittr)`](https://magrittr.tidyverse.org).
-  ([\#2150](https://github.com/rstudio/gt/issues/2150))
-- gt no longer export deprecated
-  [`dplyr::vars()`](https://dplyr.tidyverse.org/reference/vars.html) and
-  [`dplyr::one_of()`](https://tidyselect.r-lib.org/reference/one_of.html).
-  ([\#2150](https://github.com/rstudio/gt/issues/2150))
-- Ensure `keep_with_next` parameter is applied consistently in `as_word`
-  ([\#2149](https://github.com/rstudio/gt/issues/2149))
-- Fixed higher-level column spanners not displaying correctly when
+  ([\#2161](https://github.com/rstudio/gt/issues/2161))
+
+- Fixed grand summary rows rendering incorrectly in HTML output tables
+  with a multi-column stub
+  ([\#2164](https://github.com/rstudio/gt/issues/2164)).
+  ([@ChidiebereNjoku](https://github.com/ChidiebereNjoku),
+  [\#2167](https://github.com/rstudio/gt/issues/2167))
+
+- Fixed higher-level column spanners not displaying correctly when a
   multi-column stub is present
-  ([\#2170](https://github.com/rstudio/gt/issues/2170))
+  ([\#2170](https://github.com/rstudio/gt/issues/2170)).
+  ([@ysaidani](https://github.com/ysaidani),
+  [\#2171](https://github.com/rstudio/gt/issues/2171))
+
 - Fixed [`cells_stub()`](https://gt.rstudio.com/reference/cells_stub.md)
   incorrectly resolving footnote row indices when a multi-column stub
-  has repeated labels across non-contiguous groups.
-  ([\#2168](https://github.com/rstudio/gt/issues/2168))
+  has repeated labels across non-contiguous groups
+  ([\#2168](https://github.com/rstudio/gt/issues/2168)).
+  ([@ysaidani](https://github.com/ysaidani),
+  [\#2169](https://github.com/rstudio/gt/issues/2169))
+
+- Improved RTF handling of column headers and spanners in tables with a
+  multi-column stub
+  ([\#2118](https://github.com/rstudio/gt/issues/2118)).
+  ([@thebioengineer](https://github.com/thebioengineer),
+  [\#2145](https://github.com/rstudio/gt/issues/2145))
+
+- Empty strings marked with
+  [`md()`](https://gt.rstudio.com/reference/md.md) are now handled
+  correctly in Word output tables
+  ([\#2119](https://github.com/rstudio/gt/issues/2119)).
+  ([@thebioengineer](https://github.com/thebioengineer),
+  [\#2120](https://github.com/rstudio/gt/issues/2120))
+
+- The `keep_with_next` parameter is now applied consistently in
+  [`as_word()`](https://gt.rstudio.com/reference/as_word.md)
+  ([\#2149](https://github.com/rstudio/gt/issues/2149)).
+  ([@shannonhaughton](https://github.com/shannonhaughton),
+  [\#2151](https://github.com/rstudio/gt/issues/2151))
+
+- Removed usage of
+  [`dplyr::case_match()`](https://dplyr.tidyverse.org/reference/case_match.html),
+  which is deprecated as of dplyr 1.2.0.
+  ([@olivroy](https://github.com/olivroy),
+  [\#2125](https://github.com/rstudio/gt/issues/2125))
+
+- Fixed several typos in the documentation.
+  ([@jeis4wpi](https://github.com/jeis4wpi),
+  [\#2152](https://github.com/rstudio/gt/issues/2152))
 
 ## gt 1.3.0
 
@@ -2646,12 +2768,12 @@ This release focuses on improvements to two main areas:
   result in a warning message.
   ([\#718](https://github.com/rstudio/gt/issues/718))
 
-- While [`vars()`](https://ggplot2.tidyverse.org/reference/vars.html) is
+- While [`vars()`](https://dplyr.tidyverse.org/reference/vars.html) is
   still reexported in **gt**, its use with the `columns` argument
   (present in a large number of functions) is deprecated and a warning
   message will appear if it is used. In a later release, it can be
   expected that
-  [`vars()`](https://ggplot2.tidyverse.org/reference/vars.html) will no
+  [`vars()`](https://dplyr.tidyverse.org/reference/vars.html) will no
   longer be reexported.
   ([\#718](https://github.com/rstudio/gt/issues/718))
 
