@@ -1,5 +1,7 @@
 # Changelog
 
+## gt (development version)
+
 ## gt 1.4.0
 
 CRAN release: 2026-10-15
