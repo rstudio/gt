@@ -62,6 +62,8 @@
 
 * Fixed several typos in the documentation. (@jeis4wpi, #2152)
 
+* Added Typst output support with the new `as_typst()` export function. Typst output is also supported in `knit_print()`, `gtsave(.typ)`, Quarto rendering, and styled tables with captions, notes, summaries, labels, and markdown content.
+
 # gt 1.3.0
 
 ## New features

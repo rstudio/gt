@@ -699,6 +699,113 @@ as_word_tbl_body <- function(
   as.character(word_tbl)
 }
 
+# as_typst() -------------------------------------------------------------------
+#' Output a **gt** object as Typst
+#'
+#' @description
+#'
+#' Get the Typst content from a `gt_tbl` object as a single-element character
+#' vector. This object can be placed inside a raw Typst block (e.g.,
+#' ```` ```{=typst} ```` in Quarto) or written to a `.typ` file for inclusion
+#' in a Typst document.
+#'
+#' @inheritParams gtsave
+#'
+#' @param container *Top-level Typst container*
+#'
+#'   `singl-kw:[auto|table|figure]` // *default:* `"auto"`
+#'
+#'   Determines the top-level Typst construct used for the export. With
+#'   `"auto"`, auxiliary content such as titles, subtitles, captions,
+#'   footnotes, or source notes causes the table to be wrapped in a
+#'   `figure(...)` with `kind: table`; otherwise, a bare `table(...)` is
+#'   emitted. Use `"table"` to always emit a bare table; any auxiliary content
+#'   that requires figure semantics will be dropped with a warning. Use
+#'   `"figure"` to always emit a figure-wrapped table.
+#'
+#' @param label *Optional Typst label*
+#'
+#'   `NULL`, `scalar<character>`, or `scalar<logical>` // *default:* `NULL`
+#'
+#'   An optional label to append to the emitted Typst object using Typst's
+#'   `<label>` syntax. By default (`NULL`), a label is emitted only when the
+#'   underlying **gt** table has a non-missing `id` value (set via [gt()]). Use
+#'   `TRUE` to force the same automatic behavior, `FALSE` to suppress label
+#'   emission, or supply a string to force a specific label.
+#'
+#' @param breakable *Make figure-wrapped Typst output break across pages?*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   When `TRUE` and the Typst export uses a `figure(...)`, the emitted Typst
+#'   applies a local `show` rule that sets `block(breakable: true)` for
+#'   `figure.where(kind: table)`. This has no effect for bare `table(...)`
+#'   output.
+#'
+#' @section Examples:
+#'
+#' Use a subset of the [`gtcars`] dataset to create a **gt** table. Add a header
+#' with [tab_header()] and then export the table as Typst code using the
+#' `as_typst()` function.
+#'
+#' ```r
+#' tab_typst <-
+#'   gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
+#'   tab_header(
+#'     title = md("Data listing from **gtcars**"),
+#'     subtitle = md("`gtcars` is an R dataset")
+#'   ) |>
+#'   as_typst()
+#' ```
+#'
+#' What's returned is a single-element vector containing the Typst code for the
+#' table and any associated notes.
+#'
+#' @family table export functions
+#' @section Function ID:
+#' 13-10
+#'
+#' @section Function Introduced:
+#' `v1.4.0`
+#'
+#' @export
+as_typst <- function(
+    data,
+    container = c("auto", "table", "figure"),
+    label = NULL,
+    breakable = FALSE
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  container <-
+    rlang::arg_match0(
+      container,
+      values = c("auto", "table", "figure")
+    )
+
+  if (!is.null(label) && !isFALSE(label) && !isTRUE(label)) {
+    check_string(label, allow_empty = FALSE, allow_na = FALSE)
+  }
+
+  check_bool(breakable, allow_na = FALSE)
+
+  # Build table data using a Typst-specific rendering context so that text,
+  # units, and footnote marks are resolved as native Typst content.
+  data <- build_data(data = data, context = "typst")
+
+  as_typst_string(
+    data = data,
+    container = container,
+    label = label,
+    breakable = breakable
+  )
+}
+
 # as_gtable() ------------------------------------------------------------------
 #' Transform a **gt** table to a `gtable` object
 #'

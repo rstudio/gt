@@ -83,6 +83,7 @@ test_that("All exported functions validate the incoming `data` object", {
   expect_error(exibble |> as_raw_html(), regexp = regexp_stop)
   expect_error(exibble |> as_latex(), regexp = regexp_stop)
   expect_error(exibble |> as_rtf(), regexp = regexp_stop)
+  expect_error(exibble |> as_typst(), regexp = regexp_stop)
   expect_error(exibble |> opt_stylize(), regexp = regexp_stop)
   expect_error(exibble |> opt_interactive(), regexp = regexp_stop)
   expect_error(exibble |> opt_footnote_marks(), regexp = regexp_stop)

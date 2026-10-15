@@ -146,6 +146,7 @@ sub_missing <- function(
           )
         ifelse(is.na(x), missing_text, NA_character_)
       },
+      typst = function(x) ifelse(is.na(x), context_missing_text(missing_text, "typst"), NA_character_),
       default = function(x) {
         ifelse(is.na(x), missing_text, NA_character_)
       }
@@ -273,6 +274,7 @@ sub_zero <- function(
         zero_text <- process_text(zero_text, context = "latex")
         ifelse(is.numeric(x) & x == 0, zero_text, NA_character_)
       },
+      typst = function(x) ifelse(is.numeric(x) & x == 0, process_text(zero_text, "typst"), NA_character_),
       default = function(x) {
         zero_text <- process_text(zero_text, context = "default")
         ifelse(is.numeric(x) & x == 0, zero_text, NA_character_)
@@ -523,6 +525,7 @@ sub_small_vals <- function(
           context = "ooxml/word"
         )
       },
+      typst = function(x) sub_replace_small_vals(x, threshold, sign, small_pattern, "typst"),
       default = function(x) {
 
         sub_replace_small_vals(
@@ -775,6 +778,7 @@ sub_large_vals <- function(
         )
       },
 
+      typst = function(x) sub_replace_large_vals(x, threshold, sign, large_pattern, "typst"),
       default = function(x) {
 
         sub_replace_large_vals(
@@ -1063,6 +1067,7 @@ sub_values <- function(
           context = "latex"
         )
       },
+      typst = function(x) sub_replace_value(x, values, pattern, replacement, "typst"),
       default = function(x) {
 
         sub_replace_value(
