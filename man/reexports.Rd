@@ -13,6 +13,9 @@
 \alias{any_of}
 \alias{where}
 \alias{css}
+\alias{\%>\%}
+\alias{vars}
+\alias{one_of}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -20,8 +23,12 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
+  \item{dplyr}{\code{\link[dplyr]{vars}}}
+
   \item{htmltools}{\code{\link[htmltools]{css}}}
 
-  \item{tidyselect}{\code{\link[tidyselect]{all_of}}, \code{\link[tidyselect:all_of]{any_of}}, \code{\link[tidyselect:starts_with]{contains}}, \code{\link[tidyselect:starts_with]{ends_with}}, \code{\link[tidyselect]{everything}}, \code{\link[tidyselect:starts_with]{matches}}, \code{\link[tidyselect:starts_with]{num_range}}, \code{\link[tidyselect]{starts_with}}, \code{\link[tidyselect]{where}}}
+  \item{magrittr}{\code{\link[magrittr:pipe]{\%>\%}}}
+
+  \item{tidyselect}{\code{\link[tidyselect]{all_of}}, \code{\link[tidyselect:all_of]{any_of}}, \code{\link[tidyselect:starts_with]{contains}}, \code{\link[tidyselect:starts_with]{ends_with}}, \code{\link[tidyselect]{everything}}, \code{\link[tidyselect:starts_with]{matches}}, \code{\link[tidyselect:starts_with]{num_range}}, \code{\link[tidyselect]{one_of}}, \code{\link[tidyselect]{starts_with}}, \code{\link[tidyselect]{where}}}
 }}
 

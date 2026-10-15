@@ -60,3 +60,16 @@ tidyselect::where
 #' @importFrom htmltools css
 #' @export
 htmltools::css
+
+# TODO: Stop reexporting these once reverse dependencies have migrated -----
+#' @importFrom magrittr %>%
+#' @export
+magrittr::`%>%`
+
+#' @importFrom dplyr vars
+#' @export
+dplyr::vars
+
+#' @importFrom tidyselect one_of
+#' @export
+tidyselect::one_of
