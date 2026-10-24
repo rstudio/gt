@@ -94,6 +94,26 @@ There's a quick reference [here](https://commonmark.org/help/).
   )
 })
 
+test_that("fmt_markdown() uses block containers when rendered by Quarto", {
+  withr::local_envvar(QUARTO_BIN_PATH = "quarto")
+
+  tab <-
+    tibble::tibble(
+      text = c("- bullet point 1\n- bullet point 2", "*inline text*")
+    ) |>
+    gt() |>
+    fmt_markdown()
+
+  output <- (tab |> render_formats_test(context = "html"))[["text"]]
+
+  expect_match(output[[1]], "^<div data-qmd-base64=")
+  expect_match(output[[1]], "<div class='gt_from_md'>")
+  expect_match(output[[1]], "<li>bullet point 1</li>")
+  expect_match(output[[1]], "<li>bullet point 2</li>")
+  expect_match(output[[2]], "^<span data-qmd-base64=")
+  expect_match(output[[2]], "<span class='gt_from_md'>")
+})
+
 test_that("LaTeX formulas render correctly in HTML", {
 
   gt_tbl <-

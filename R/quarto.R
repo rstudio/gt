@@ -60,12 +60,31 @@ process_md_quarto <- function(text, md_engine_fn) {
     )
 
   # Tweak start and end of non_na_text
-  non_na_text <- paste0("<span data-qmd-base64=\"", non_na_text, "\">")
+  # Use block containers when Markdown contains block-level HTML; Quarto
+  # otherwise parses lists as inline content and duplicates their text.
+  block_tags <-
+    paste0(
+      "address|article|aside|blockquote|div|dl|fieldset|figure|footer|",
+      "h[1-6]|header|hr|main|nav|ol|p|pre|section|table|ul"
+    )
+
+  block_content <-
+    grepl(
+      paste0("<(", block_tags, ")([[:space:]>])"),
+      non_na_text_processed
+    )
+
+  container_tag <- ifelse(block_content, "div", "span")
 
   non_na_text <-
     paste0(
-      non_na_text, "<span class='gt_from_md'>",
-      non_na_text_processed, "</span></span>"
+      "<", container_tag, " data-qmd-base64=\"", non_na_text, "\">"
+    )
+
+  non_na_text <-
+    paste0(
+      non_na_text, "<", container_tag, " class='gt_from_md'>",
+      non_na_text_processed, "</", container_tag, "></", container_tag, ">"
     )
 
   text[nzchar(text, keepNA = FALSE)] <- non_na_text

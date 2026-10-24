@@ -20,6 +20,8 @@
 
 ## Minor improvements and bug fixes
 
+* Fixed duplicate text in Quarto output when `fmt_markdown()` cells contain a list without preceding text (#2140).
+
 * Fixed LaTeX and RTF output for unformatted `Date` columns, which now show calendar dates instead of day counts since the Unix epoch (#2177). (@LeonidasZhak, #2180)
 
 * Rows in LaTeX output tables no longer overlap when cell text contains line breaks (#2178). (#2179)
