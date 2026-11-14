@@ -1,3 +1,46 @@
+# tab_footnote() + cells_grand_summary_rows() errors well with absent grand summary rows
+
+    Code
+      exibble %>% gt() %>% tab_footnote("foot grand summary",
+        cells_stub_grand_summary())
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "foot grand summary".
+      Caused by error in `cells_stub_grand_summary()`:
+      ! Can't find grand summary data.
+      i Call `grand_summary_rows()` before `tab_footnote()`/`tab_style()`.
+    Code
+      exibble %>% gt(groupname_col = "group") %>% summary_rows(columns = tidyselect::where(
+        is.numeric), fns = "sum") %>% tab_footnote("foot grand summary",
+        cells_grand_summary())
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "foot grand summary".
+      Caused by error in `cells_grand_summary()`:
+      ! Can't find grand summary data.
+      i Call `grand_summary_rows()` before `tab_footnote()`/`tab_style()`.
+
+# tab_footnote() + cells_summary() errors well with absent summary rows
+
+    Code
+      exibble %>% gt(groupname_col = "group") %>% tab_footnote("foot summary",
+        cells_summary())
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "foot summary".
+      Caused by error in `cells_summary()`:
+      ! Can't find summary data.
+      i Call `summary_rows()` before `tab_footnote()`/`tab_style()`.
+    Code
+      exibble %>% gt(groupname_col = "group") %>% grand_summary_rows(columns = tidyselect::where(
+        is.numeric), fns = "sum") %>% tab_footnote("foot summary", cells_stub_summary())
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "foot summary".
+      Caused by error in `cells_stub_summary()`:
+      ! Can't find summary data.
+      i Call `summary_rows()` before `tab_footnote()`/`tab_style()`.
+
 # Footnotes with no location are rendered correctly
 
     Code
